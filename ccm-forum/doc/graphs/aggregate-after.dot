@@ -1,0 +1,43 @@
+digraph xslt_dependency_graph {
+    bboard -> workspace [arrowhead=inv,comment="xsl:import"];
+    CategorySupport -> bebop [arrowhead=inv,comment="xsl:import"];
+    chat_en -> {permissions; workspace} [arrowhead=inv,comment="xsl:import"];
+    docs -> {cms; workspace} [arrowhead=inv,comment="xsl:import"];
+    docs_en -> docs [arrowhead=inv,comment="xsl:import"];
+    faq -> {comments; workspace} [arrowhead=inv,comment="xsl:import"];
+    forum -> workspace [arrowhead=inv,comment="xsl:import"];
+    glossary -> workspace [arrowhead=inv,comment="xsl:import"];
+    km -> {n4_used_by_km; CategorySupport} [arrowhead=inv,comment="xsl:import"];
+    login_ecm_en -> bebop [arrowhead=inv,comment="xsl:import"];
+    login_en -> {bebop; ui} [arrowhead=inv,comment="xsl:import"];
+    requests -> bboard [arrowhead=inv,comment="xsl:import"];
+    requests -> AbstractCollectionTable [arrowhead=invdot,comment="xsl:include"];
+    tapestry -> bebop [arrowhead=inv,comment="xsl:import"];
+    workspace -> {km; n4_used_by_workspace} [arrowhead=inv,comment="xsl:import"]; 
+
+    AbstractCollectionTable [shape=ellipse,label="AbstractCollectionTable",comment="toolbox/xsl/AbstractCollectionTable.xsl",style=dotted];
+    bboard [shape=ellipse,label="bboard",comment="bboard/xsl/bboard.xsl"];
+    bebop [shape=ellipse,label="bebop",comment="bebop/xsl/bebop.xsl",style=dotted];
+    CategorySupport [shape=ellipse,label="CategorySupport",comment="km/xsl/CategorySupport.xsl"];
+    chat_en [shape=ellipse,label="chat_en",comment="chat/xsl/chat_en.xsl"];
+    cms [shape=ellipse,label="cms",comment="content-section/xsl/cms.xsl",style=dotted];
+    comments [shape=ellipse,label="comments",comment="comments/xsl/comments.xsl"];
+    docs [shape=ellipse,label="docs",comment="docs/xsl/docs.xsl"];
+    docs_en [shape=ellipse,label="docs_en",comment="docs/xsl/docs_en.xsl"];
+    faq [shape=ellipse,label="faq",comment="faq/xsl/faq.xsl"];
+    forum [shape=ellipse,label="forum",comment="forum/xsl/forum.xsl"];
+    forum_confirm [shape=ellipse,label="forum-confirm",comment="inbound/xsl/forum-confirm.xsl"];
+    glossary [shape=ellipse,label="glossary",comment="glossary/xsl/glossary.xsl"];
+    km [shape=ellipse,label="km",comment="km/xsl/km.xsl"];
+    login_ecm_en [shape=ellipse,label="login_ecm_en",comment="login/xsl/login_ecm_en.xsl"];
+    login_en [shape=ellipse,label="login_en",comment="login/xsl/login_en.xsl"];
+    n4_used_by_km [shape=box,label="4 files\nused by km",comment="aggregate_node"];
+    n4_used_by_workspace [shape=box,label="4 files\nused by workspace",comment="aggregate_node"];
+    permissions [shape=ellipse,label="permissions",comment="permissions/xsl/permissions.xsl",style=dotted];
+    requests [shape=ellipse,label="requests",comment="km/xsl/requests.xsl"];
+    tapestry [shape=ellipse,label="tapestry",comment="tapestry/xsl/tapestry.xsl"];
+    ui [shape=ellipse,label="ui",comment="ui/xsl/ui.xsl",style=dotted];
+    upload_confirm [shape=ellipse,label="upload-confirm",comment="inbound/xsl/upload-confirm.xsl"];
+    user_rejected [shape=ellipse,label="user-rejected",comment="inbound/xsl/user-rejected.xsl"];
+    workspace [shape=ellipse,label="workspace",comment="jigsaw/xsl/workspace.xsl"];
+}

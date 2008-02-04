@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=621}]"><cms:name>arts-and-leisure-621</cms:name><cms:language>en</cms:language><cms:title>Loans, donations and bequests</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=621}]"><cms:name>arts-and-leisure-621-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords></cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=621}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Want to donate or loan from your local museum or gallery? Here's how!</i></p><hr/><h4>Donations</h4><p>If you have an object of historical interest, which relates 
+  to the history of the region, or to Museums or Art collections already held by <span class="gen">enter council name</span>, and would like to donate it to us, please contact 
+  us on the details above.</p><p>You should make an appointment to bring your item along, so 
+  that you can be sure that you get to speak to an Officer. Please do not bring items 
+  in without an appointment, as we will not accept them over the desk.</p><p>We will make a decision on whether to accept your offer based 
+  on existing collections, our collecting priorities, legislation and Council 
+  policy.</p><p>If we are not able to accept the item, we may be able to put 
+  you in touch with someone who can.</p><h4>Loans</h4><p>The Museums have a selection of Loan Kits available to borrow. 
+  These object-based kits can be loaned to educational establishments free of charge 
+  for a fixed period to supplement learning. Themes include Basic Geology and Bygone 
+  Kitchens, with further kits due for development. </p><p>Requests for loans of specific items will be considered.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=621"> Providing Information
+		(621)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

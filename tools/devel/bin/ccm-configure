@@ -1,0 +1,115 @@
+#!/usr/bin/perl -w
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use CCM::CommandsUtil;
+use CCM::Util;
+use CCM::Runtime;
+use Cwd;
+use File::Spec;
+use Getopt::Long;
+
+my $runtime = CCM::Runtime->new();
+my $CCM_CONFIG_HOME=CCM::Util::getRequiredEnvVariable('CCM_CONFIG_HOME');
+my $JAVA_CMD = $runtime->getJavaCommand();
+my $verbose = 0;
+
+GetOptions('verbose+' => \$verbose);
+
+if ( ! -r "project.xml" ) {
+    CCM::Util::error("No project.xml file found",2);
+}
+
+my $projectxml = &getProjectXML();
+my $version = getVersion();
+my $dir = getcwd;
+
+if ( defined $version && $version eq "6.1" ) {
+    my $sharedlibdir = exists ($ENV{'CCM_CONFIG_LIB_DIR'}) ? $ENV{'CCM_CONFIG_LIB_DIR'} : File::Spec->catdir("usr", "share", "java");
+    &checkSchema();
+    &runxsl2("combine.xsl", "project.xml", ".tmp.project.xml");
+    &runxsl2("build-template.xsl", ".tmp.project.xml", "build.xml");
+    &runxsl2("classpath-template.xsl", "project.xml", "ccm.classpath", "-PARAM shared.lib.dist.dir \"$sharedlibdir\" -PARAM base.dir $dir");
+    unlink(".tmp.project.xml");
+} else {
+    if ( ! defined $version ) {
+        print "  WARNING: Could not find ccmVersion attribute in ccm:project tag\n";
+        print "  of project.xml.  Assuming 5x version.\n";
+    }
+    &runxsl("build-template-5x.xsl", "build.xml");
+}
+
+sub checkSchema {
+    print "Validating the schema of project.xml\n";
+
+    if ( $projectxml =~ m/xsi:schemaLocation/ ) {
+        my @cp = (File::Spec->catfile($CCM_CONFIG_HOME,"lib","xercesImpl.jar"));
+        push @cp, File::Spec->catfile($CCM_CONFIG_HOME,"lib","xml-apis.jar");
+        push @cp, File::Spec->catfile($CCM_CONFIG_HOME,"lib","xercesSamples.jar");
+        my $cmd = "$JAVA_CMD -cp " . CCM::Util::catpath(@cp) . " dom.Counter -s -f -v project.xml";
+        print("$cmd\n") if ($verbose);
+        my $output = CCM::CommandsUtil::runAndExitOnError($cmd);
+        if ( $output =~ m/Error/ ) {
+            print STDERR "error: $output\n";
+            exit 5;
+        }
+    } else {
+        print "WARNING: cannot validate project.xml because it is missing the xsi:schemaLocation attribute\n";
+    }
+}
+
+sub runxsl {
+    my $xslfile = shift;
+    my $outfile = shift;
+    my $params = shift || "";
+
+    print "Writing $outfile\n";
+    my $classpath = join (":", File::Spec->catfile($CCM_CONFIG_HOME, "lib", "xalan.jar"), File::Spec->catfile($CCM_CONFIG_HOME,"lib","xerces.jar"));
+    my $xsl = File::Spec->catfile ($CCM_CONFIG_HOME,"xsl",$xslfile);
+    CCM::CommandsUtil::runAndExitOnError("$JAVA_CMD -cp $classpath org.apache.xalan.xslt.Process -IN project.xml -XSL $xsl -OUT $outfile $params");
+}
+
+sub runxsl2 {
+    my $xslfile = shift;
+    my $infile = shift;
+    my $outfile = shift;
+    my $params = shift || "";
+
+    print "Writing $outfile\n";
+    my $classpath = CCM::Util::catpath(File::Spec->catfile($CCM_CONFIG_HOME, "lib", "xalan.jar"),
+                                       File::Spec->catfile($CCM_CONFIG_HOME,"lib","xercesImpl.jar"));
+    my $xsl = File::Spec->catfile ($CCM_CONFIG_HOME,"xsl",$xslfile);
+    CCM::CommandsUtil::runAndExitOnError("$JAVA_CMD -cp $classpath org.apache.xalan.xslt.Process -IN $infile -XSL $xsl -OUT $outfile $params");
+}
+
+sub getVersion {
+    my $version;
+    if ( $projectxml =~ m/ccmVersion=\"([^\"]+)\"/ ) {
+        $version = $1;
+    }
+    return $version;
+}
+
+sub getProjectXML {
+    my $projectxml;
+    local undef $/;
+    if ( ! open (IN, "< project.xml") ) {
+        print STDERR "could not open project.xml\n";
+        exit 3;
+    }
+    $projectxml = <IN>;
+    return $projectxml;
+}

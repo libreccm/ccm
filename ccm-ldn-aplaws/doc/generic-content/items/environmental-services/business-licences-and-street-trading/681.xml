@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=681}]"><cms:name>licensing-681</cms:name><cms:language>en</cms:language><cms:title>Licence - acupuncturist</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=681}]"><cms:name>licensing-681-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, acupuncturist</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=681}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Local Government (Miscellaneous Provisions) Act 1982 Part VIII requires the following types of skin piercing need be registered with the Council. </i></p><hr/><ul>
+			<li title="*">Acupuncture </li>
+			<li title="*">Tattooing </li>
+			<li title="*">Ear-piercing </li>
+			<li title="*">Electrolysis</li>
+		</ul><p>
+The Act requires registration to cover both the person carrying on the practice and the premises used for that purpose. There are no powers to refuse registration, but the practice is controlled through compliance with byelaws in each case.</p><p>The applicant must ensure that the procedures, 
+  equipment and facilities used are safe, hygienic, prevent the spread of disease 
+  and comply fully with the general duty of care required by the Health and Safety 
+  at Work etc Act 1974.</p><p> It is illegal to conduct ear piercing, tattooing, acupuncture 
+  or electrolysis unless the registration has been formally approved.</p><p>Once an application has been made and a fee of <span class="gen">enter amount</span> has been paid, an inspector will undertake an inspection of the premises.  If the inspector considers the applicant's procedures and the premises to be suitable, then registration will be approved.</p><p>The Inspector will also check compliance with the following bye-law requirements as well as ensuring that general health and safety requirements are being met. The 
+  inspector will be pleased to offer any advice or give any help if you are unsure 
+  as to how to meet these obligations.</p><h3>Bye-laws requirements:</h3><p>
+			<strong>Premises</strong>
+		</p><ul>
+			<li title="*"> All surfaces in any part of the premises used by clients must be kept clean 
+    and in good repair</li>
+			<li title="*">All furniture and fittings in the treatment area must be kept clean and in good 
+    repair</li>
+			<li title="*">Tables, couches, seats etc used in the treatment area must have a smooth , impervious 
+    surface which is regularly wiped down with disinfectant and covered by a disposable 
+    paper sheet, changed after each client.</li>
+			<li title="*">A 'No Smoking' sign must be prominently displayed. Cleanliness of 
+    operatives</li>
+			<li title="*">Any overall worn by the operative should be clean and in good repair</li>
+			<li title="*">The operative's hands and nails must be kept clean</li>
+			<li title="*">Any open cut, wound, sore or boil must be suitably covered by an impermeable 
+    dressing</li>
+			<li title="*">The operative should not smoke nor drink in the treatment area</li>
+			<li title="*">The operative should have sole use of the washing facilities which must provide 
+    hot and cold running water, soap (or a similar cleanser) and a nail brush</li>
+		</ul><p>
+			<strong>Equipment</strong>
+		</p><ul>
+			<li title="*">Any needle, metal instrument or other item of equipment used in the treatment 
+    must be in a sterile condition and kept sterile until it is used</li>
+			<li title="*">If pre-sterilised items are not used then adequate facilities must be provided 
+    for the purpose of sterilisation.</li>
+		</ul><h3>Registration Forms</h3><ul>
+			<li title="*">
+				
+			
+				<span class="gen">link to online form</span>
+			</li>
+			<li title="*">
+				
+			
+				<span class="gen">link to online form</span>
+			</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=681"> Applications for services
+		(681)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=681}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=681}]"/></cms:links></cms:item>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=91}]"><cms:name>council-housing--tenancy-issues-91</cms:name><cms:language>en</cms:language><cms:title>Council Housing - Tenancy Issues</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=91}]"><cms:name>council-housing--tenancy-issues-91-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, housing, tenancy, issues</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=91}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We deal with a wide range of issues relating to all aspects of a Council tenancy. </i></p><hr/><p>
+				As well as officers taking repair reports, collecting rents and other payments, managing rent arrears and dealing with breaches of the tenancy agreement; local estate staff can also help and advise on a number of other issues including: 
+			</p><ul>
+				<li title="*">
+					Moving homes
+  
+				</li>
+				<li title="*">
+					Tenancy support
+  
+				</li>
+				<li title="*">
+					Alterations/Improvements to Council property (including external alterations)
+  
+				</li>
+				<li title="*">
+					Adaptations for persons with disabilities
+  
+				</li>
+				<li title="*">
+					Assigning Council tenancies to more than one person
+  
+				</li>
+				<li title="*">
+					Succeeding deceased tenants on their death
+  
+				</li>
+				<li title="*">
+					Getting involved with local tenant and resident groups 
+				</li>
+			</ul><p>
+				Contact details for all our Local Housing Offices are as follows:
+			</p><p>
+<span class="gen">enter details</span>
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=91"> Providing Information
+		(91)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

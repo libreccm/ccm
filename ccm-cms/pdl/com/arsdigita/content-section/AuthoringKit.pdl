@@ -1,0 +1,111 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: AuthoringKit.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.*;
+
+object type AuthoringKit extends ACSObject {
+  composite ContentType[1..1] contentType = join authoring_kits.type_id
+                                              to content_types.type_id;
+  String[0..1]      createComponent = authoring_kits.create_component VARCHAR(200);
+
+  reference key (authoring_kits.kit_id); 
+}
+
+
+// The ordering of the step.  Lower number goes first.
+association {
+    AuthoringKit authoringKits = 
+        join authoring_steps.step_id to authoring_kit_step_map.step_id,
+        join authoring_kit_step_map.kit_id to authoring_kits.kit_id;
+    component AuthoringStep[0..n] authoringSteps = 
+        join authoring_kits.kit_id to authoring_kit_step_map.kit_id,
+        join authoring_kit_step_map.step_id to authoring_steps.step_id;
+    Integer[1..1] ordering = authoring_kit_step_map.ordering;
+
+   retrieve authoringSteps {
+     do {
+       select
+         s.step_id, s.label, s.description, s.component, 
+         m.ordering
+       from
+         authoring_steps s, authoring_kit_step_map m
+       where
+         m.step_id = s.step_id and
+         m.kit_id = :id
+     } map {
+       authoringSteps.id           = s.step_id;
+       authoringSteps.label        = s.label;
+       authoringSteps.description  = s.description;
+       authoringSteps.\component    = s.\component;
+       ordering     = m.ordering;
+     }
+   }
+}
+
+
+//A model for storing a two way association with extra info
+// this can be rewritten as a two-way association with a link attribute
+object type AuthoringKitStepAssociation {
+  BigDecimal[1..1]     kitId = authoring_kit_step_map.kit_id INTEGER;
+  BigDecimal[1..1]     stepId = authoring_kit_step_map.step_id INTEGER;
+  BigDecimal[1..1]     ordering = authoring_kit_step_map.ordering INTEGER;
+
+  object key (kitId, stepId);
+
+  retrieve {
+    do {
+      select kit_id, step_id, ordering
+      from authoring_kit_step_map
+      where kit_id = :kitId
+        and step_id = :stepId
+    } map {
+      kitId = kit_id;
+      stepId = step_id;
+      ordering = ordering;  
+    }
+  }
+
+  insert {
+    do {
+      insert into authoring_kit_step_map
+      (kit_id, step_id, ordering)
+      values
+      (:kitId, :stepId, :ordering)
+    }
+  }
+
+  update {
+    do {
+      update authoring_kit_step_map
+      set ordering = :ordering
+      where kit_id = :kitId
+        and step_id = :stepId
+    } 
+  }
+
+  delete {
+    do {
+      delete from authoring_kit_step_map
+      where kit_id = :kitId
+        and step_id = :stepId
+    }
+  }
+}

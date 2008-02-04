@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=150}]"><cms:name>batch-17-150</cms:name><cms:language>en</cms:language><cms:title>Safety inspection - homes in multiple occupation</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=150}]"><cms:name>batch-17-150-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>safety, inspection, homes, multiple, occupation</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=150}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i> The Council has a proactive inspection programme of HMOs. If conditions in the properties inspected are not up to standard, the landlord or owner is required to improve them.</i></p><hr/><p>Our regulations state that it shall be the responsibility of the manager of the HMO to ensure that the following are maintained in repair, clean condition and good order (including, where appropriate, proper working order):</p><h2>Water Supply, Drainage and General Services</h2><p>All means of water supply and drainage in the house are to be maintained, repaired, 
+  kept clean and be protected against frost damage. Tanks and cisterns should be clean 
+  and covered. The manager shall not unreasonably cause the supply of water, gas or 
+  electricity to be interrupted.</p><h2>Parts and Installations in Common Use</h2><p>The manager shall also ensure that common areas such as staircases, passageways, 
+  corridors and entrances are kept reasonably free from obstruction. All handrails 
+  and banisters and any stair coverings should be kept repaired or replaced or be 
+  provided where necessary for the safety of the residents.</p><p>Included are installations that serve any part of the house in common use:</p><ul>
+				<li title="*">installations for the supply of gas and electricity, for lighting and for space 
+    heating or heating water;</li>
+				<li title="*">sanitary conveniences, baths, sinks, washbasins and installations for cooking 
+    or storing food;</li>
+				<li title="*">receptacles or other installations provided in connection with the delivery 
+    to the house of postal packets;</li>
+				<li title="*">other installations (if any) in a kitchen, bathroom, lavatory or washroom which 
+    are not subject to any of the foregoing provisions of these Regulations.</li>
+			</ul><h2>Living Accommodation</h2><p>The internal structure of any part of the house occupied by a resident as his living 
+  accommodation including the installations for supply of water, gas, electricity, 
+  and sanitation are in and remain in good repair.</p><h2>Lighting, Windows and Ventilation</h2><p>Includes all windows and other means of ventilation. The manager shall ensure that 
+  installations for lighting serving any part of the house in common use are readily 
+  available to residents, including lighting for staircases and entrances to the house, 
+  which are used by residents whether or not they are in common use.</p><h2>Means of Escape from Fire</h2><p>All means of escape from fire in the house and all apparatus, systems and other 
+  fire precaution equipment are to be maintained and kept free from obstruction. It 
+  shall be the responsibility of the manager to display in suitable positions in the 
+  house signs indicating all means of escape from fire in the house.</p><h2>Outbuildings in Common Use</h2><p>Includes all outbuildings, and outside areas which belong to the house and are 
+  in common use. They should be maintained in good clean condition, and any boundary 
+  walls, fences and railings should be kept in good repair so as not to constitute 
+  a danger to residents.</p><p>It is also required that the manager should ensure:</p><ul>
+				<li title="*">That refuse and litter are not allowed to accumulate in the house, except when 
+    pending disposal, and he shall provide and maintain suitable refuse and litter 
+    bins, except where they are provided by the local authority. They are also responsible 
+    for the disposal of any refuse if the local authority fails to do so.</li>
+				<li title="*">That reasonable precautions are taken to ensure the general safety of the residents 
+    of the house with regard to the structural conditions of the house and to prevent 
+    access to any areas that are unsafe, including window sills that are at or near 
+    floor level.</li>
+				<li title="*">That the name, address and telephone number of the managing agent or landlord 
+    of the house is displayed in the house.</li>
+				<li title="*">That the local housing authority is provided with particulars requested by written 
+    notice with regard to the following:<br/>
+    - the number of individuals and households accommodated within the house<br/>
+   - the numbers of individuals in each household; and<br/>
+    - the purpose for which each room in the house is used.</li>
+					</ul><h2>Duties of Residents</h2><p>It is the duty of all residents of the property to ensure that the agent can effectively 
+  carry out his duties. All residents must:</p><ul>
+				<li title="*">allow the manager access, at all reasonable times, to any occupied room, that 
+    he may carry out his duties</li>
+				<li title="*">provide the manager on request with any relevant information</li>
+				<li title="*">comply with arrangements made by the agent in respect of fire precautions or 
+    litter storage and disposal</li>
+				<li title="*">take care not to hinder in any way the agent in the performance of his duties</li>
+				<li title="*">take reasonable care to avoid damaging anything which the agent is under obligation 
+    to keep in good repair.</li>
+			</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=150"> Providing Information
+		(150)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

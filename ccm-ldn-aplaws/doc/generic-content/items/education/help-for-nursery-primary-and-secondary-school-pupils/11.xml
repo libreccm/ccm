@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=11}]"><cms:name>education-2-11</cms:name><cms:language>en</cms:language><cms:title>Special educational needs (SEN) - disabled students allowance</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=11}]"><cms:name>education-2-11-dublin-metadata</cms:name><cms:dcAudience>Student</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>special, educational, needs, disabled, students, allowance</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=11}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>These allowances are intended to assist students with disabilities to benefit as fully as possible from their course. They are designed to cover special equipment, non-medical helpers and other general expenses.</i></p><hr/><p>Assistance with travel costs can be given under certain circumstances. 
+  Some important notes on how to claim the Disabled Students' Allowance are included 
+  at the end of this section.</p><p>Remember, these allowances are not means-tested.</p><h4>Special Equipment Allowance </h4><p>This allowance covers major items of equipment, the need for 
+  which arises from a disability, and which are necessary to enable a student to benefit 
+  fully from the course. It is payable at any time during the course, by one or more 
+  instalments, provided that the aggregated total of the payments does not exceed 
+  the maximum prescribed limit of &#xA3; <span class="gen">enter amount</span>
+  for the course. If it is more economical, items of equipment should be leased rather 
+  than purchased, especially if the claim is made during the latter stages of the 
+  course. Disabled students may find <strong>
+
+		<a href="http://www.abilitynet.org.uk/content/home.htm">AbilityNet</a>	
+</strong>, <span class="gen">link to external website</span> an external site, of use and interest. 
+  It provides impartial, expert advice about computer technology for people with disabilities.</p><h4>Non-Medical Personal Helper's Allowance</h4><p>This allowance reimburses students up to a maximum of &#xA3; <span class="gen">enter amount</span> per annum for expenditure 
+  on personal helpers such as readers, lip speakers, note takers, non-medical carers, 
+  necessary for the student to benefit fully from the course. The authority must be 
+  satisfied that the expenses are in respect the student's disability, and arise as 
+  a direct consequence of attendance on the course. The provision of these allowances 
+  does not remove the duty of local Social Services to provide assistance 
+  towards personal care costs which would have been incurred irrespective of a student's 
+  attendance on a course.</p><h4>General Disability Allowance</h4><p>This allowance has a maximum of &#xA3; <span class="gen">enter amount</span> per annum and provides for supplementary payments for disability 
+  related expenditure incurred because of attendance on the course. The allowance 
+  may be used for miscellaneous expenditure not covered by the specific allowances 
+  and to supplement expenditure on non-medical helpers and/or special equipment in 
+  excess of the maxima of the specific allowances.</p><h4>Travel for Disabled Students</h4><p>Reimbursement of travel expenses may also be claimed if, by 
+  reason of your disability, you incur additional expenditure. You will be asked to 
+  show how your disability incurs additional cost, and to provide medical evidence 
+  if necessary.</p><p>Notes On Claiming A Disabled Students' Allowance:</p><li title="*">Although they form part of Student Support in Higher Education, these allowances 
+    are not means-tested.</li><li title="*">Items purchased under this provision become your own property. If you withdraw 
+    from your course prematurely, however, you may be asked to repay part of the cost.</li><li title="*">Payment can be considered only for costs arising from attendance and from the 
+    disability - not for expenditure which would have been incurred irrespective of 
+    whether you were a student.</li><li title="*">We strongly recommend that suitable insurance is obtained. In the case of theft 
+    or damage (however caused) we will not contribute towards the cost of repairs 
+    or replacement. Reasonable insurance cover may be reimbursed under the Special 
+    Equipment Allowance. For a small cost, it may be possible to add this equipment 
+    to your own or your parent's all risks/extra cover home insurance policy.</li><li title="*">You should discuss your needs with your Course Tutor/ Head of Department or 
+    College Disability Officer who must write in support of your claim. The letter 
+    must confirm the nature and extent of your disability and the cost (excluding 
+    VAT) together with the make, model and exact specification of the necessary equipment, 
+    if appropriate. If your college is unable to provide this information, they may 
+    refer you to an independent Access Centre for an assessment of your disability 
+    related needs. The cost of this assessment will be met from the disabled students' 
+    allowance.</li><li title="*">These allowances are intended to assist individual students and not to defray 
+    the running and pastoral costs of colleges. This should be explained to your college 
+    when your requirements are discussed.</li><li title="*">We will also require an assessment of the disability by a suitably qualified 
+    person or body, such as an Educational Psychologist in the case of dyslexia. NB 
+    The cost of this medical assessment cannot be met from the Disabled Students' 
+    Allowance. This is not the assessment referred to in 5 above which is related 
+    to your needs. The medical assessment will refer to the nature of your disability.</li><li title="*">It is likely that our own suppliers will be able to obtain any equipment on 
+    your behalf. If this is the case, an order will be placed and the equipment delivered 
+    to you.</li><li title="*">For security reasons, we will not deliver to a private address other than your 
+    usual permanent address. If this is not suitable, you should arrange with your 
+    college where the delivery can be made. A university/college department or faculty, 
+    or warden of a hall of residence would be appropriate.</li><li title="*">When making an application for a Disabled Students' Allowance, please state 
+    to whom and where the equipment should be delivered including a daytime contact 
+    telephone number and ensure that they will take responsibility for the equipment 
+    upon receipt. We will take no responsibility for loss after delivery.</li><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=11"> Providing Information
+		(11)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

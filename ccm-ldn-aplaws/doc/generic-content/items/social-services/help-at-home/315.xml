@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=315}]"><cms:name>batch-23-315</cms:name><cms:language>en</cms:language><cms:title>Mobile meals (meals on wheels)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=315}]"><cms:name>batch-23-315-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>mobile, meals, wheels</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=315}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We can deliver meals to older or vulnerable people in their own homes.</i></p><hr/><p>Meals can be provided on a short or long term basis according to need.</p><p>What type of meals do we deliver?</p><p>We can provide meals that meet all dietary needs, such as:</p><ul>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+		</ul><p>Meals are usually delivered chilled or frozen. This means that you can reheat the meal at a suitable time for you. We will check that you are able to reheat the meal. If you are unable to reheat it, a hot meal will be delivered.</p><p>The Meals Service operates every day of the year, except <span class="gen">enter details</span>
+		</p><h3>How much will I have to pay?</h3><p>The standard price of meals is &#xA3; <span class="gen">enter amount</span>
+		</p><p>Additional meals services (e.g. breakfast dishes) can be purchased if required.</p><h3>Our Standards</h3><p>We aim to provide good quality food, delivered at the correct temperature - either chilled, frozen or hot. If the meal is unsatisfactory in any way, the payment will be refunded.</p><h3>Our recommendation</h3><p>If the meal is supplied hot, we recommend that it should be eaten as soon as it is delivered to ensure optimum quality and safety. No part of a hot delivered or reheated meal should ever be saved for later in the day.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=315"> Providing Information
+		(315)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

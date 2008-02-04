@@ -1,0 +1,72 @@
+//
+// Copyright (C) 2005 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.atoz;
+
+import com.arsdigita.categorization.Category;
+
+object type AtoZSiteProxyProvider extends AtoZProvider {
+    Category[1..1] category = join atoz_siteproxy_provider.category_id to
+                                cat_categories.category_id;
+    reference key (atoz_siteproxy_provider.provider_id);
+}
+
+query getAtomicSiteProxyEntries {
+  BigDecimal[1..1] categoryId;
+  String[1..1] categoryTitle;
+  String[1..1] categoryDescription;
+  BigDecimal[1..1] id;
+  String[1..1] title;
+  String[1..1] url;
+
+  do {
+    select c.category_id as cat_id,
+           c.name as cat_title,
+           c.description as cat_description,
+           i.master_id as id,
+           s.title_atoz as title,
+           s.url as url
+      from ct_siteproxy s,
+           cms_items i,
+           cat_categories c,
+           cat_object_category_map m,
+           cat_cat_subcat_trans_index ci, 
+           atoz_siteproxy_provider p, 
+           cms_bundles b
+     where s.site_id = i.item_id and
+           i.parent_id = m.object_id and 
+           i.parent_id = b.bundle_id and 
+           i.language = b.default_language and 
+           m.category_id = c.category_id and
+           c.enabled_p=1 and 
+           i.version = 'live' and 
+           s.used_in_atoz='1' and
+           m.category_id = ci.subcategory_id and 
+           ci.category_id = p.category_id and 
+           p.provider_id = :providerID and 
+           lower(c.name) like lower(:letter)
+    order by 
+           lower(c.name), lower(s.title_atoz)
+     } map {
+    categoryId = cat_id;
+    categoryTitle = cat_title;
+    categoryDescription = cat_description;
+    id = id;
+    title = title;
+    url = url;
+  }
+}

@@ -1,0 +1,122 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Order.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model mdsql;
+
+object type Order {
+    BigDecimal id = t_orders.order_id DECIMAL;
+    String[1..1] buyer = t_orders.buyer VARCHAR(100);
+    String seller = t_orders.seller VARCHAR(100);
+    String shippingAddress = t_orders.shipping_address VARCHAR(200);
+    Date shippingDate = t_orders.shipping_date TIMESTAMP;
+    Boolean hasShipped = t_orders.shipped_p CHAR;
+
+    object key (id);
+
+    delete {
+        do { delete from t_line_items where order_id = :id }
+        do { delete from t_orders where order_id = :id }
+    }
+
+
+
+}
+
+
+object type OrderExt extends Order {
+    String[1..1]   text = t_orders_ext.text VARCHAR(100);
+
+    reference key (t_orders_ext.order_id);
+}
+
+
+object type LineItem {
+    BigDecimal id = t_line_items.item_id DECIMAL;
+    Float[1..1] price = t_line_items.price FLOAT;
+    String[1..1] name = t_line_items.name VARCHAR(100);
+    Boolean[0..1] inStock = t_line_items.in_stock_p CHAR;
+
+    object key (id);
+
+}
+
+association {
+    Order[1..1] order = join t_line_items.order_id to t_orders.order_id;
+    component LineItem[0..n] items = join t_orders.order_id to t_line_items.order_id;
+}
+
+object type OtherItem {
+    BigDecimal id = t_other_items.other_id DECIMAL;
+    Float[1..1] price = t_other_items.price FLOAT;
+    String[1..1] name = t_other_items.name VARCHAR(100);
+    Boolean[0..1] inStock = t_other_items.in_stock_p CHAR;
+
+    object key (id);
+
+}
+
+
+
+association {
+    Order[0..1] order = join t_other_items.other_id to t_order_other_item_map.other_item_id,
+                        join t_order_other_item_map.order_id to t_orders.order_id;
+    OtherItem[0..n] relatedOtherItems = 
+                    join t_orders.order_id to t_order_other_item_map.order_id,
+                    join t_order_other_item_map.other_item_id to t_other_items.other_id ;
+}
+
+query OrdersMaxPrices {
+    BigDecimal orderId;
+    String buyer;
+    String seller;
+    String shippingAddress;
+    Date shippingDate;
+    BigDecimal maxPrice;
+
+    do {
+        select t_orders.order_id,
+               t_orders.buyer,
+               t_orders.seller,
+               t_orders.shipping_address,
+               t_orders.shipping_date,
+               max_item_prices.price
+        from t_orders,
+             (select order_id,
+                     max(price) as price
+              from t_line_items
+              group by order_id) max_item_prices
+        where t_orders.order_id = max_item_prices.order_id
+    } map {
+        orderId = t_orders.order_id;
+        buyer = t_orders.buyer;
+        seller = t_orders.seller;
+        shippingAddress = t_orders.shipping_address;
+        shippingDate = t_orders.shipping_date;
+        maxPrice = max_item_prices.price;
+    }
+}
+
+query OrdersNumberOfLineItems {
+    BigDecimal order_id;
+    do {
+        select order_id from t_line_items
+    } map {
+        order_id = t_line_items.order_id;
+    }
+}

@@ -1,0 +1,119 @@
+ccm-docmgr (6.3.0-20) unstable; urgency=low
+
+  * Removing custom search for documents 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 20 Jan 2006 13:29:36 +0000
+
+ccm-docmgr (6.3.0-19) unstable; urgency=low
+
+  * Another try 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 20 Jan 2006 13:00:45 +0000
+
+ccm-docmgr (6.3.0-18) unstable; urgency=low
+
+  * Fixing trav adapt, again 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 20 Jan 2006 12:02:42 +0000
+
+ccm-docmgr (6.3.0-17) unstable; urgency=low
+
+  * Fixing trav adapt 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 19 Jan 2006 16:45:52 +0000
+
+ccm-docmgr (6.3.0-16) unstable; urgency=low
+
+  * Minor fixes 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 19 Jan 2006 15:27:34 +0000
+
+ccm-docmgr (6.3.0-15) unstable; urgency=low
+
+  * Minor style fix 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 18 Jan 2006 15:24:06 +0000
+
+ccm-docmgr (6.3.0-14) unstable; urgency=low
+
+  * Fix doc display 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 13 Jan 2006 08:44:41 +0000
+
+ccm-docmgr (6.3.0-13) unstable; urgency=low
+
+  * Fixing properly deps on portal and portalserver 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 12 Jan 2006 19:33:59 +0000
+
+ccm-docmgr (6.3.0-12) unstable; urgency=low
+
+  * Same 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 12 Jan 2006 17:16:42 +0000
+
+ccm-docmgr (6.3.0-11) unstable; urgency=low
+
+  * Fixing doc creation, maybe 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 12 Jan 2006 16:49:02 +0000
+
+ccm-docmgr (6.3.0-10) unstable; urgency=low
+
+  * Fixing pdl query names 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 12 Jan 2006 15:43:53 +0000
+
+ccm-docmgr (6.3.0-9) unstable; urgency=low
+
+  * Sorting out PDL mf files 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 12 Jan 2006 12:44:00 +0000
+
+ccm-docmgr (6.3.0-8) unstable; urgency=low
+
+  * Using cms initializer 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 12 Jan 2006 11:46:24 +0000
+
+ccm-docmgr (6.3.0-7) unstable; urgency=low
+
+  * Adding type initializer 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 12 Jan 2006 10:24:28 +0000
+
+ccm-docmgr (6.3.0-6) unstable; urgency=low
+
+  * Removing ddl files 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 11 Jan 2006 08:49:44 +0000
+
+ccm-docmgr (6.3.0-5) unstable; urgency=low
+
+  * Matt adding missing pdl files, #20676 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed,  4 Jan 2006 15:27:13 +0000
+
+ccm-docmgr (6.3.0-4) unstable; urgency=low
+
+  * Matt adding 3 missing loader classes, #20676 
+
+ -- My <myuser@firenze.runtime-collective.com>  Tue,  3 Jan 2006 16:11:58 +0000
+
+ccm-docmgr (6.3.0-3) unstable; urgency=low
+
+  * Now have content types succesfully loading
+
+ --  <undp@greylady.runtime-collective.com>  Fri, 30 Dec 2005 17:12:59 +0000
+
+ccm-docmgr (6.3.0-2) unstable; urgency=low
+
+  * Got the debian package to work, adding dependencies 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 30 Dec 2005 15:21:30 +0000
+
+ccm-docmgr (6.3.0-1) unstable; urgency=low
+
+  * Initial import
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:52:01 +0000

@@ -1,0 +1,4 @@
+BUNDLE_NAME=aplaws-plus-demo
+BUNDLE_PRETTY_NAME="APLAWS+ Demo Bundle"
+VERSION=1.0.5devel
+RELEASE=1

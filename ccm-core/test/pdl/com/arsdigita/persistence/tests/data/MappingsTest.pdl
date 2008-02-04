@@ -1,0 +1,125 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: MappingsTest.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.persistence.tests.data.mappings;
+
+// This is a test object model that employs various exotic forms of
+// mapping a logical object model to a physical data model that
+// persistence supports. For lack of better terminology a subclass that
+// uses the table of its superclass to store its attributes is called a
+// parasitic class. Subclasses that store some attributes in their own
+// table and other attributes in the superclasses table are referred to
+// as symbiotic classes, and subclasses that store all their attributes
+// in their own table are referred to as normalized classes.
+
+
+// The base class for other classes to extend. There isn't really
+// anything special here.
+object type Base {
+    BigInteger[1..1] id = t_bases.id INTEGER;
+    String name = t_bases.name VARCHAR(100);
+
+    object key (id);
+}
+
+
+// This class is for the interesting classes to reference.
+object type Target {
+    BigInteger[1..1] id = t_targets.id INTEGER;
+
+    object key (id);
+}
+
+
+// This class uses the table of its base class for storage.
+object type ParasiteOne extends Base {
+    String address = t_bases.address VARCHAR(200);
+    Target target = join t_bases.target_id to t_targets.id;
+    Target[0..n] targets = join t_bases.id to t_targets_map.base_id,
+                           join t_targets_map.target_id to t_targets.id;
+}
+
+
+// This class is another parasitic subtype of Base that uses the same
+// columns as ParasiteOne, but maps them to different attributes.
+object type ParasiteTwo extends Base {
+    String myAddress = t_bases.address VARCHAR(200);
+    Target myTarget = join t_bases.target_id to t_targets.id;
+    Target[0..n] myTargets = join t_bases.id to t_targets_map.base_id,
+                             join t_targets_map.target_id to t_targets.id;
+}
+
+
+// This class uses both its own table and the table of its base type.
+object type SymbioteOne extends Base {
+    Date when = t_bases.when_col TIMESTAMP;
+    String color = t_symbiotes.color VARCHAR(100);
+    Target target = join t_bases.target_id to t_targets.id;
+    Target[0..n] targets = join t_bases.id to t_targets_map.base_id,
+                           join t_targets_map.target_id to t_targets.id;
+
+    reference key (t_symbiotes.id);
+}
+
+
+// This class hijacks all of SymbioteOne's columns for its own
+// attributes.
+object type SymbioteTwo extends Base {
+    Date myWhen = t_bases.when_col TIMESTAMP;
+    String myColor = t_symbiotes.color VARCHAR(100);
+    Target myTarget = join t_bases.target_id to t_targets.id;
+    Target[0..n] myTargets = join t_bases.id to t_targets_map.base_id,
+                             join t_targets_map.target_id to t_targets.id;
+
+    reference key (t_symbiotes.id);
+}
+
+// This tests a fully normalized mapping.
+object type Normalized extends Base {
+    String normalName = t_norms.name VARCHAR(100);
+    Target target = join t_norms.target_id to t_targets.id;
+    Target[0..n] targets = join t_norms.id to t_norm_target_map.norm_id,
+                           join t_norm_target_map.target_id to t_targets.id;
+
+    reference key (t_norms.id);
+}
+
+object type ReferenceTo extends Base {
+    Target[0..1] target = join t_refs.target_id to t_targets.id;
+    reference key (t_refs.id);
+}
+
+object type ReferenceFrom extends Base {
+    Target[0..1] target = join t_reffroms.id to t_targets.reffrom_id;
+    reference key (t_reffroms.id);
+}
+
+object type ReferenceMappingTable extends Base {
+    Target[0..1] target = join t_rmaps.id to t_rmaps_map.rmap_id,
+                          join t_rmaps_map.target_id to t_targets.id;
+    reference key (t_rmaps.id);
+}
+
+object type NakedJoin extends Base{
+    String other = t_nj_other.other;
+
+    reference key (t_nj.id);
+
+    join t_nj.id to t_nj_other.id;
+}

@@ -1,0 +1,62 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ACSObject.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.kernel;
+
+object type ACSObject {
+    BigDecimal[1..1] id = acs_objects.object_id INTEGER;
+    immediate String[1..1] objectType = acs_objects.object_type VARCHAR(100);
+
+    // <font color="red">Experimental</font>
+    String[1..1] displayName = acs_objects.display_name VARCHAR(200);
+
+    // <font color="red">Experimental</font>
+    String[0..1] defaultDomainClass = acs_objects.default_domain_class VARCHAR(100);
+
+    // <font color="red">Experimental</font>
+    // The value of this property is maintained automatically by
+    // the ACSObject java class.  Derived classes define a getContainer()
+    // method, and ACSObject.save() will denormalize the result of
+    // getContainer() by storing a reference to it in this property.
+    ACSObject[0..1] container = 
+         join acs_objects.object_id to object_container_map.object_id, 
+         join object_container_map.container_id to acs_objects.object_id;
+
+    object key (id);
+
+    // aggressive load (container.id);
+}
+
+query PackageInstanceForObject {
+    PackageInstance packageInstance;
+
+    do {
+        SELECT ap.package_id, ap.pretty_name,
+               o.object_type, o.display_name, o.default_domain_class
+        FROM apm_packages ap, acs_objects o
+        WHERE ap.package_id = o.object_id
+        AND ap.package_id = package_id_for_object_id(:objectID)
+    } map {
+        packageInstance.id = ap.package_id;
+        packageInstance.prettyName = ap.pretty_name;
+        packageInstance.objectType = o.object_type;
+        packageInstance.displayName = o.display_name;
+        packageInstance.defaultDomainClass = o.default_domain_class;
+    }
+}

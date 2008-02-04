@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=816}]"><cms:name>after-care-816</cms:name><cms:language>en</cms:language><cms:title>Firefighting/Rescue - After Care</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=816}]"><cms:name>after-care-816-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>firefighting, rescue, after, care</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=816}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If you have been a victim of fire then you already know how traumatic and devastating it can be, but having the right assistance and advice there when you need it will help you through this difficult time. </i></p><hr/><p>The advice given here has
+    been broken down into logical sections for easy reference, but should you
+    need any more assistance please contact your local 
+  Fire Service. </p><p>Always remember that prevention is better than cure and should you require
+    any advice whatsoever, do not hesitate to contact your local Fire Prevention
+    Officer who will be pleased to advise how to prevent fire re-occurring in your
+  home.</p><p>If at any time after a
+    fire you feel unwell or suffer the after effects of smoke inhalation, contact
+    your
+Doctor or Hospital Accident and Emergency department.</p><h2>The Red Cross </h2><p>
+			<strong>What is Fire Victim Support?</strong>
+		</p><p>  The Fire Victim Support Service is designed to meet the needs of people
+        who have suffered damaged to their home following a fire, flood or similar
+        incident.</p><p>This free service is delivered by specially trained British Red Cross volunteers,
+    who work in co-operation with the Local Fire And Rescue Service. They use an
+    adapted vehicle to assist them in providing practical and emotional support
+    to the victims of the incident. They will arrive at the scene within 90 minutes
+  of being called by the Fire and Rescue Service.</p><p>
+			<strong>What Type Of Service Is Available?</strong>
+		</p><ul>
+			<li title="*">Immediate
+    temporary shelter in the Fire Victim Support Vehicle</li>
+			<li title="*">Assistance
+    in seeking temporary accommodation</li>
+			<li title="*">Emotional Support</li>
+			<li title="*">Sign-posting to other organisations</li>
+			<li title="*">Support
+    with the care of children and pets</li>
+			<li title="*">Use
+    of shower and toilet facilities</li>
+			<li title="*">Provision
+    of toiletries</li>
+			<li title="*">Clothing </li>
+			<li title="*">Light
+    refreshments</li>
+			<li title="*">Use
+    of a telephone</li>
+			<li title="*">Use
+    of a camera to assist with insurance claims</li>
+			<li title="*">First
+    aid</li>
+		</ul><p>  The Fire Victim Support Service relies upon the generosity of the local community.
+    If you would like to support the service by making a donation or becoming a
+    volunteer, or want more information, please contact you local British Red Cross
+Branch.</p><h2>Useful Numbers </h2><p>  Local numbers are available
+in Yellow Pages or the Telephone Directory.</p><ul>
+			<li title="*">Social
+    Service <span class="gen">enter details</span>
+			</li>
+			<li title="*">Department
+    of Social Security <span class="gen">enter details</span>
+			</li>
+			<li title="*">Your
+    Insurance Company <span class="gen">enter details</span>
+			</li>
+			<li title="*">Citizens
+    Advice Bureau <span class="gen">enter details</span>
+			</li>
+			<li title="*">The
+    Salvation Army <span class="gen">enter details</span>
+			</li>
+			<li title="*">Electricity
+    Company <span class="gen">enter details</span>
+			</li>
+			<li title="*">Gas
+    Supplier <span class="gen">enter details</span>
+			</li>
+			<li title="*">Water
+    Company <span class="gen">enter details</span>
+			</li>
+			<li title="*">Council
+    Housing Department <span class="gen">enter details</span>
+			</li>
+			<li title="*">Police <span class="gen">enter details</span>
+			</li>
+			<li title="*">Age
+    Concern <span class="gen">enter details</span>
+			</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=816"> Providing Information
+		(816)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

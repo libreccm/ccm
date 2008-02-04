@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=736}]"><cms:name>education-3-736</cms:name><cms:language>en</cms:language><cms:title>Inclusion - teenage pregnancy</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=736}]"><cms:name>education-3-736-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>inclusion, teenage, pregnancy</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=736}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Social Exclusion Report on Teenage Pregnancy (June 1999) stated that Britain had the worst record of teenage pregnancies in Europe with approximately 90,000 teenagers becoming pregnant every year. Every part of the country is affected, but the situation is worst in the poorest areas. The report highlighted two main goals:</i></p><hr/><ul>
+			<li title="*">Reducing the rate of teenage conceptions, with the specific aim of halving the 
+    rate of conceptions among under 18s by 2010</li>
+			<li title="*">Getting more teenage parents into education, training or employment, to reduce 
+    the risk of long term social exclusion</li>
+		</ul><p>The <strong>
+				
+		<a href="http://www.info.doh.gov.uk/tpu/tpu.nsf">Teenage 
+  Pregnancy Unit</a>	
+				<span class="gen">link to external website</span>
+			</strong>, 
+  a cross-Government unit located within the Department of Health, was set up to implement 
+  the Report.</p><p>A National Action Plan was developed which included:</p><ul>
+			<li title="*">A national campaign to improve understanding and change behaviour</li>
+			<li title="*">Joined Up action - through the national unit and local co-ordination</li>
+			<li title="*">Better Prevention - better education in and out of school, access to contraception, 
+    targeting at-risk groups such as youth offenders</li>
+			<li title="*">Better Support for Teenage Parents- around education, childcare and housing</li>
+		</ul><h4>
+			<span class="gen">enter council name</span> 
+  Teenage Pregnancy Strategy</h4><p>Although rates in <span class="gen">enter council name</span> have been declining steadily in recent years, the city has one 
+  of the highest rates in the UK and has therefore developed a ten year strategy and 
+  action plan, in line with government requirements.</p><p>
+			<span class="gen">enter council name</span> 
+  action plan:</p><p>
+			<span class="gen">enter details</span>
+		</p><h4>Teenage Conception Rates - <span class="gen">enter council name</span>
+		</h4><p>An analysis of 3 year rolling averages, used in order to smooth 
+  out year-on-year variations, shows that the under 18-conception rate in <span class="gen">enter council name</span> has fallen from <span class="gen">enter amount</span> in <span class="gen">enter date</span>, to <span class="gen">enter amount</span> 
+  in <span class="gen">enter date</span> (a fall of around <span class="gen">enter amount</span>.</p><p>For <span class="gen">enter council name</span> 
+  , the targets set by the Teenage Pregnancy Unit are:</p><ul>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+		</ul><h4>Resources available from the Teenage Pregnancy Team</h4><p>
+			<span class="gen">enter details</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=736"> Providing Information
+		(736)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

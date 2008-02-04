@@ -1,0 +1,37 @@
+<caucho.com>
+  <!--
+     - http-port => ::http-port::
+    -->
+  <log id='/' href='stderr:' timestamp='[%Y-%m-%d %H:%M:%S.%s]'/>
+  <java compiler="internal" compiler-args=""/>
+  <jsp precompile='true' static-encoding='true' recompile-on-error='false'/>
+
+  <http-server>
+    <root-dir>::root-dir::</root-dir>
+    <http port='::http-port::'/>
+    <class-update-interval>315360000</class-update-interval>
+    <!--
+       - If true, the classloader order follows the Servlet spec.
+       - If false, the classloader order follows the JDK spec.
+       -
+       - For CCM this is set to false because there is a bug in the Resin 2.1.x
+       - servlet-compliant classloader in which it fails to check if a class if
+       - already loaded by a parent classloader.
+      -->
+    <servlet-classloader-hack>false</servlet-classloader-hack>
+    <caucho-status>true</caucho-status>
+    <thread-max>150</thread-max>
+    <thread-keepalive id='100'/>
+    <request-timeout id='30s'/>
+    <accept-buffer-size id='256'/>
+    <thread-min id='5'/>
+    <ignore-client-disconnect>true</ignore-client-disconnect>
+    <welcome-file-list>index.xtp, index.jsp, index.html</welcome-file-list>
+    <host id=''>
+      <access-log id='::log-dir::/access.log'/>
+      <error-log id='::log-dir::/error.log'/>
+      <work-dir>::root-dir::/tmp</work-dir>
+      <war-dir>webapps</war-dir>
+    </host>
+  </http-server>
+</caucho.com>

@@ -1,0 +1,61 @@
+ccm-ldn-image-step (6.3.0-7) unstable; urgency=low
+
+  * Fixing logger class, maybe leading to classloader pb 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 24 Feb 2006 14:37:59 +0000
+
+ccm-ldn-image-step (6.3.0-6) unstable; urgency=low
+
+  * Fixing weird classloading issue for UNDP 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 23 Feb 2006 16:13:46 +0000
+
+ccm-ldn-image-step (6.3.0-5) unstable; urgency=low
+
+  * Fixing oracle upgrade script
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 22 Feb 2006 15:14:28 +0000
+
+ccm-ldn-image-step (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:52:00 +0000
+  
+ccm-ldn-image-step (6.2.1-1) unstable; urgency=low
+
+  * Adding missing sql upgrade script
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:52:00 +0000
+
+ccm-ldn-image-step (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 2.0.1 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:12 +0000
+
+ccm-ldn-image-step (2.0.1-2) unstable; urgency=low
+
+  * Added optional title and description for images 
+
+ -- James Burt <james@runtime-collective.com>  Thu,  6 Oct 2005 15:31:20 +0100
+
+ccm-ldn-image-step (2.0.1-1) unstable; urgency=low
+
+  * Automatic update of version number from 2.0.0 to 2.0.1
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Thu, 31 Mar 2005 11:59:55 +0000
+
+ccm-ldn-image-step (2.0.0-2) unstable; urgency=low
+
+  * Depend on j2sdk1.4 | java2-compiler 
+  * Update to policy 3.6.1
+  * Change maintainer to the mailing list and add uploaders
+
+ -- David Pashley <david@runtime-collective.com>  Tue, 15 Feb 2005 11:38:30 +0000
+
+ccm-ldn-image-step (2.0.0-1) unstable; urgency=low
+
+  * Initial release of 2.0.0.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri, 12 Nov 2004 09:09:56 +0100

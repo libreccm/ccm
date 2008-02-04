@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+   <title>Dispatcher and Rendering Pipeline</title>
+  </head>
+  <body bgcolor="white">
+
+    <p>Provides a set of classes that serves requests to the Content
+    Management System.</p>
+
+
+    <h3>The Rendering Pipeline</h3>
+
+    <p>The processing of the request happens in three stages:</p>
+
+    <ol>
+
+      <li><p>The incoming request is passed from the main dispatcher
+      to the {@link com.arsdigita.cms.dispatcher.CMSDispatcher}, and
+      from that to an {@link
+      com.arsdigita.cms.dispatcher.ItemResolver}, which extracts
+      information from the URL and instantiates a content item object
+      on the server.</p></li>
+
+      <li><p>The content item domain object is transformed by an
+      {@link com.arsdigita.cms.dispatcher.XMLGenerator} into an XML
+      document fragment, which becomes part of the overall XML
+      document for the page.</p></li>
+
+      <li><p>The XML document is passed off to the XSL transformation
+      engine, which applies XSLT templates to the XML document,
+      generating the final output that is sent back to the
+      user.</p></li>
+
+    </ol>
+
+    <p>Many parts of this rendering pipeline are common to all CCM
+    pages: the treatment of the incoming URL by a cascading set of
+    {@link com.arsdigita.dispatcher.Dispatcher dispatchers}, the
+    generation of an XML document as an intermediate,
+    output-independent representation of the page, and the
+    transformation of that intermediate representation by the XSL
+    engine.</p>
+
+  </body>
+</html>

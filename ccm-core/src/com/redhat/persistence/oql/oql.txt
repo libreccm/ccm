@@ -1,0 +1,128 @@
+Steps to prove multiplicity of 0..1:
+  filter(a = test.A, exists(filter(link = a.links, link == l)))
+
+    1. a.links is set-wise an injection with a because of the reverse
+       0..1 multiplicity of the links association.
+
+    2. filter(link = a.links, link == l) constrains a because of (1)
+       constrained (must have extra level of correlation in filter
+       condition)
+
+    3. exists applied to query converts existence constraints to
+       boolean
+
+    4. outer a is unique and constrained, and so entire expression
+       must be 0..1
+
+  This means constrained must be a map to correlation rather than just
+  a set.
+
+
+Set modified = initial;
+do {
+  Set toUpdate = {};
+  for node in modified:
+    for output in node.outputs:
+      toUpdate.add(output);
+  modified = {};
+  for node in toUpdate:
+    if (node.update()) {
+      modified.add(node);
+    }
+} while (!modified.isEmpty());
+
+   outputs
+   .---.
+   |   |
+ Node--'
+  |
+  |---> TypeNode
+  |
+  |---> VariableNode
+  |
+  |---> RangeNode
+  |
+  |---> KeyNode
+  |
+  '---> ConstraintNode
+
+
+Below is the AST for the new OQL. This will very likely be
+methodically transformed into a grammer and so should not be all that
+different from the parse tree. There is currently no provision for
+generic function and/or method calls.
+
+  * Singleton and/or Collection may be unnecessary, we could use naked
+    variables instead and do type checking and/or coersion based on
+    context.
+
+  Expression
+      |
+      |---> Variable
+      |
+      |---> Get
+      |
+      |---> Define
+      |
+      |---> Query
+      |       |
+      |       |---> Filter
+      |       |
+      |       |---> Join
+      |       |       |
+      |       |       |---> LeftJoin
+      |       |       |
+      |       |       |---> RightJoin
+      |       |       |
+      |       |       |---> FullJoin
+      |       |       |
+      |       |       '---> CrossJoin
+      |       |
+      |       |---> Order
+      |       |
+      |       |---> Range
+      |       |
+      |       '---> Aggregate
+      |
+      '---> Condition
+              |
+              |---> And
+              |
+              |---> Or
+              |
+              |---> Not
+              |
+              |---> Exists
+              |
+              |---> Equals
+              |
+              |---> LessThan
+              |
+              '---> GreaterThan
+
+Inheritence Tree:
+  Query.java
+  Expression.java
+    Variable.java
+    Define.java
+    Get.java
+    Condition.java
+      UnaryCondition.java
+        Not.java
+        Exists.java
+      BinaryCondition.java
+        And.java
+        Or.java
+        Equals.java
+    AbstractJoin.java
+      Join.java
+      CrossJoin.java
+      FullJoin.java
+      LeftJoin.java
+      RightJoin.java
+    Filter.java
+    Sort.java
+    Range.java
+      Offset.java
+      Limit.java
+    Size.java

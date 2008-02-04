@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=355}]"><cms:name>declaration-of-interest-355</cms:name><cms:language>en</cms:language><cms:title>Councillors Declaration of Interest</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=355}]"><cms:name>declaration-of-interest-355-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>councillor, declaration, interest</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=355}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>All members of the Council are required by law to complete a declaration of interest form to register their financial interests. </i></p><hr/><p>These include:</p><ul>
+		<li title="*">details of any employment
+    or business carried out by them;</li>
+<li title="*">the name of their employer;</li>
+<li title="*">details of any Directorships;</li>
+<li title="*">contracts between themselves/their
+    firm and the Council;</li>
+<li title="*">interests in land in the
+    area.</li>
+		</ul><p>  A full description of financial interest are
+set out in the Council Constitution <span class="gen">enter hyperlink</span>
+</p><p>The Register is maintained by the <span class="gen">enter officer name</span> and is available
+for inspection by appointment.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=355"> Providing Information
+		(355)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

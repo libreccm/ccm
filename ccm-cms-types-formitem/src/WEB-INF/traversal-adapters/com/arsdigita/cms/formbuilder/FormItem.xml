@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <xrd:adapter objectType="com.arsdigita.cms.formbuilder.FormItem" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/form/id"/>
+        <xrd:property name="/object/form/defaultDomainClass"/>
+        <xrd:property name="/object/form/displayName"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/form"/>
+        <xrd:property name="/object/form/component"/>
+        <xrd:property name="/object/form/component+"/>
+        <xrd:property name="/object/form/component/widget"/>
+        <xrd:property name="/object/form/component/formSectionItem"/>
+        <xrd:property name="/object/form/component/formSectionItem/formSection"/>
+        <xrd:property name="/object/form/component/formSectionItem/formSection/component"/>
+        <xrd:property name="/object/form/component/formSectionItem/formSection/component+"/>
+        <xrd:property name="/object/form/component/formSectionItem/formSection/component/widget"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>

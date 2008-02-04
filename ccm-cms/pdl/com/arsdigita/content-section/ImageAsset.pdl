@@ -1,0 +1,63 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ImageAsset.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.*;
+
+object type ImageAsset extends Asset {
+
+    Blob[0..1]         content = cms_images.content BLOB;
+    BigDecimal[0..1]     width = cms_images.width INTEGER;
+    BigDecimal[0..1]     height = cms_images.height INTEGER;
+    reference key (cms_images.image_id);
+}
+
+
+query StreamImageAsset {
+    ImageAsset image;
+    String mimeType;
+
+  do {
+    select
+      i.image_id, i.content, i.width, i.height,
+      a.description, a.mime_type,
+      it.name, it.version, o.object_type
+    from
+      cms_images i, cms_assets a, cms_items it, acs_objects o
+    where
+      o.object_id = it.item_id
+    and
+      it.item_id = a.asset_id
+    and
+      a.asset_id = i.image_id
+    and
+      i.image_id = :imageId
+  } map {
+    image.id          = i.image_id;
+    image.content     = i.content;
+    image.width       = i.width;
+    image.height      = i.height;
+    image.description = a.description;
+    image.name        = it.name;
+    image.version     = it.version;
+    image.objectType  = o.object_type;
+    mimeType          = a.mime_type;
+  }
+}

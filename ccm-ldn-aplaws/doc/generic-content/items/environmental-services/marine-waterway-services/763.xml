@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=763}]"><cms:name>batch-13-763</cms:name><cms:language>en</cms:language><cms:title>Personal watercraft registration</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=763}]"><cms:name>batch-13-763-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>personal, watercraft, registration</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=763}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Every Personal Watercraft user that uses/crosses Council owned/managed launching areas, will first 
+  need to register the craft with us.</i></p><hr/><p>To obtain registration, a fee will need to be paid, and the 
+  registering Officer will have to ensure proof of identity and proof of adequate 
+  insurance cover.</p><p>Access for Personal Watercrafts will not be allowed to any of 
+  the Council's beaches if the owner has not registered the craft with us, or if the registration has been withdrawn. The AA/AB 
+  identification number must be visible in <strong>bold</strong> lettering on 
+  both sides of the craft.</p><p>Minimum insurance cover will be Third Party &#xA3;1 million.</p><h2>Age Requirements</h2><ul>
+			<li title="*">Must be at least 18 years of age to operate a Personal Watercraft.</li>
+			<li title="*">Be 15 to 17, and possess a Royal Yachting Association (RYA) Certificate of Competence <strong>and</strong> operate 
+    under direct adult supervision. The definition of &quot;supervision&quot; is such 
+    that the adult is present on the craft.</li>
+			<li title="*">Under 12 - not allowed to operate a Personal Watercraft.</li>
+		</ul><h2>Speed Restrictions</h2><ul>
+			<li title="*">A wakeless speed is required within 50 metres of another Personal Watercraft, 
+    boat, dock, swimmer, skier, angler or fishing equipment.</li>
+			<li title="*">The Council's speed restrictions 
+    must be complied within in all designated areas.</li>
+			<li title="*">Where there is no specified speed limit, the maximum speed is 4 mph within 
+    100 metres of the coastline (from the low water mark).</li>
+		</ul><h2>Notes</h2><ul>
+			<li title="*">Boating under the influence of drink, or drugs is not permitted.</li>
+			<li title="*">Navigation of Personal Watercraft in a responsible manner will be encouraged.</li>
+			<li title="*">Equipment requirement will be recommended.</li>
+			<li title="*">Other safety and courtesy procedures wll be encouraged.</li>
+			<li title="*">Launching fees will be payable.</li>
+			<li title="*">An owner/users registration will be withdrawn if the operator fails to comply 
+    with the above conditions.</li>
+		</ul><p>To register your personal watercraft you will need to print 
+  out the registration form, fill it in and send it back to us at:</p><p>
+			<span class="gen">enter address</span>
+		</p><p>Download an 
+			. <span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=763"> Regulation
+		(763)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=763}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=763}]"/></cms:links></cms:item>

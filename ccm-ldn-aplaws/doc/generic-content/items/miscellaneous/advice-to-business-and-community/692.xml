@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=692}]"><cms:name>security-services-692</cms:name><cms:language>en</cms:language><cms:title>Security Services</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=692}]"><cms:name>security-services-692-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>security, services</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=692}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>There are a number of companies in the area that offer local businesses security services and advice. </i></p><hr/><p>Security services include:</p><ul>
+			<li title="*">Alarms and Detection Devices</li>
+<li title="*">Identification Systems</li>
+<li title="*">Locks and Locksmiths</li>
+<li title="*">Safes</li>
+<li title="*">Security Advice</li>
+<li title="*">Security Guards</li>
+<li title="*">Security Lighting</li>
+<li title="*">Security Shutters and Grills</li>
+<li title="*">Surveillance Equipment/CCTV</li>
+</ul><h2>List of Companies in the Area providing Security Services</h2><table width="90%" cellpadding="5" class="centre" summary="Companies providing Security Services">
+			<tr>
+				<th>Name of Company   </th>
+				<th>Contact Details</th>
+				<th>What the Company Offers</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=692"> Providing Information
+		(692)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

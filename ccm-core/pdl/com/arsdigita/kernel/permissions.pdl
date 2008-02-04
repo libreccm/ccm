@@ -1,0 +1,564 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: permissions.pdl 1586 2007-05-31 13:05:10Z chrisgilbert23 $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.kernel.permissions;
+
+import com.arsdigita.kernel.*;
+
+//
+// Permission
+// MDSQL does not correctly handle multiple keys
+//
+object type Permission {
+    BigDecimal[1..1] objectId = acs_permissions.object_id INTEGER;
+    BigDecimal[1..1] partyId = acs_permissions.grantee_id INTEGER;
+    String[1..1]     privilege = acs_permissions.privilege VARCHAR(100);
+    Date[1..1]       creationDate = acs_permissions.creation_date TIMESTAMP;
+    String[0..1]     creationIP = acs_permissions.creation_ip VARCHAR(50);
+
+    // these are 0..1 to avoid persistence 1..1 checks
+    // they are actually set with the id properties above
+    composite ACSObject[0..1]  object =
+                     join acs_permissions.object_id to acs_objects.object_id;
+    composite Party[0..1]      party =
+                     join acs_permissions.grantee_id to parties.party_id;
+    composite Privilege[0..1]  priv =
+                     join acs_permissions.privilege
+                       to acs_privileges.privilege;
+    User[0..1]       creationUser =
+                     join acs_permissions.creation_user to users.user_id;
+
+    object key (objectId, partyId, privilege);
+
+    retrieve {
+        do {
+            select acs_permissions.object_id,
+                   acs_permissions.grantee_id,
+                   acs_permissions.privilege,
+                   acs_permissions.creation_date,
+                   acs_permissions.creation_ip
+              from acs_permissions
+             where acs_permissions.object_id = :objectId
+               and acs_permissions.grantee_id = :partyId
+               and acs_permissions.privilege = :privilege
+        } map {
+            objectId = acs_permissions.object_id;
+            partyId = acs_permissions.grantee_id;
+            privilege = acs_permissions.privilege;
+            creationDate = acs_permissions.creation_date;
+            creationIP = acs_permissions.creation_ip;
+        }
+    }
+
+    retrieve all {
+        do {
+            select acs_permissions.object_id,
+                   acs_permissions.grantee_id,
+                   acs_permissions.privilege,
+                   acs_permissions.creation_date,
+                   acs_permissions.creation_ip
+            from acs_permissions
+        } map {
+            objectId = acs_permissions.object_id;
+            partyId = acs_permissions.grantee_id;
+            privilege = acs_permissions.privilege;
+            creationDate = acs_permissions.creation_date;
+            creationIP = acs_permissions.creation_ip;
+        }
+    }
+
+    insert {
+        do {
+            insert into acs_permissions
+            (object_id, grantee_id, privilege,
+             creation_user, creation_date, creation_ip)
+            values
+            (:objectId, :partyId, :privilege,
+             :creationUser.id, :creationDate, :creationIP)
+        }
+    }
+
+
+    update {}
+
+
+    delete {
+        do {
+            delete from acs_permissions
+             where object_id = :objectId
+               and grantee_id = :partyId
+               and privilege = :privilege
+        }
+    }
+
+  retrieve creationUser {
+        do {
+            select users.user_id,
+	               users.screen_name,
+	               parties.uri, acs_objects.object_type
+              from users, parties, acs_objects, acs_permissions
+             where parties.party_id = users.user_id
+	           and acs_objects.object_id = parties.party_id
+                   and acs_permissions.creation_user = users.user_id
+                   and acs_permissions.object_id = :objectId
+                   and acs_permissions.grantee_id = :partyId
+                   and acs_permissions.privilege = :privilege
+        } map {
+            creationUser.id = users.user_id;
+            creationUser.screenName = users.screen_name;
+            creationUser.uri = parties.uri;
+            creationUser.objectType = acs_objects.object_type;
+        }
+  }
+
+  add creationUser {}
+  remove creationUser {}
+
+}
+
+
+// query that is encapsulated by ObjectDirectPermissionCollection.
+// This is one nasty query that includes display information about
+// the grantee, which may be a user or group (hence the union).
+query ObjectDirectPermissionCollection {
+    String privilege;
+    Boolean isInherited;
+    BigDecimal granteeID;
+    Boolean granteeIsUser;
+    String granteeName;
+    String granteeEmail;
+    String granteeGivenName;
+    String granteeFamilyName;
+    BigDecimal granteeNameID;
+    do {
+        select acs_permissions.privilege,
+               0 as inherited_p,
+               acs_permissions.grantee_id,
+               parties.user_p,
+               parties.name,
+               parties.primary_email,
+               parties.given_name,
+               parties.family_name,
+               parties.name_id
+        from acs_permissions,
+             (select groups.group_id as party_id,
+                     0 as user_p,
+                     groups.name as name,
+                     parties.primary_email as primary_email,
+                     '' as given_name,
+                     '' as family_name,
+                     0 as name_id
+              from groups, parties
+              where groups.group_id = parties.party_id) parties
+        where acs_permissions.object_id = :objectID
+          and acs_permissions.grantee_id = parties.party_id
+        UNION ALL
+        select acs_permissions.privilege,
+               0 as inherited_p,
+               acs_permissions.grantee_id,
+               parties.user_p,
+               parties.name,
+               parties.primary_email,
+               parties.given_name,
+               parties.family_name,
+               parties.name_id
+        from acs_permissions,
+             (select users.user_id as party_id,
+                     1 as user_p,
+                     '' as name,
+                     parties.primary_email as primary_email,
+                     person_names.given_name as given_name,
+                     person_names.family_name as family_name,
+                     users.name_id
+              from users, parties, person_names
+              where users.user_id = parties.party_id
+                and users.name_id = person_names.name_id) parties
+        where acs_permissions.object_id = :objectID
+          and acs_permissions.grantee_id = parties.party_id
+    } map {
+        privilege = acs_permissions.privilege;
+        isInherited = inherited_p;
+        granteeID = acs_permissions.grantee_id;
+        granteeIsUser = parties.user_p;
+        granteeName = parties.name;
+        granteeEmail = parties.primary_email;
+        granteeGivenName = parties.given_name;
+        granteeFamilyName = parties.family_name;
+        granteeNameID = parties.name_id;
+    }
+}
+
+
+// if oracle upgrade 6.5.4-6.5.5 has been carried out, 
+// this won't work if site admin is filtering a collection
+// of objects without context or permissions eg - site nodes
+//
+// but I don't think this ever happens  - cg
+// 
+query PartyPermissionFilterQuery {
+    Boolean hasPermission;
+    do {
+	select 1 as permission_p 
+	  from dnm_object_1_granted_context dogc,
+	       dnm_granted_context dgc,
+	       dnm_permissions dp,
+	       dnm_group_membership dgm
+          where dogc.pd_context_id = dgc.pd_object_id
+	    and dgc.pd_context_id = dp.pd_object_id
+	    and dgm.pd_member_id in :partyID
+	    and dp.pd_grantee_id = dgm.pd_group_id
+    } map {
+        hasPermission = permission_p;
+    }
+}
+
+
+
+// aram@kananov.com
+// It is very strange query
+// I just changed it to use new denormalization
+//
+query ObjectPermissionFilterQuery {
+    BigDecimal granteeID;
+    do {
+	select dgm.pd_member_id
+	  from dnm_object_1_granted_context dogc,
+	       dnm_granted_context dgc,
+	       dnm_permissions dp,
+	       dnm_group_membership dgm
+          where (dogc.pd_object_id = :objectID or dogc.pd_object_id = 0)
+            and dogc.pd_context_id = dgc.pd_object_id
+	    and dgc.pd_context_id = dp.pd_object_id
+	    and dp.pd_grantee_id = dgm.pd_group_id
+    } map {
+        granteeID = dgm.pd_member_id;
+    }
+}
+
+
+query PermissionCheckPlaceholder {
+    Boolean hasPermission;
+    do {
+	select 1 as permission_p from dual
+    } map {
+        hasPermission = permission_p;
+    }
+}
+
+
+query CheckPermissionForParty {
+    Boolean hasPermission;
+    do {
+	select 1 as permission_p 
+	  from dnm_object_1_granted_context dogc,
+	       dnm_granted_context dgc,
+	       dnm_permissions dp,
+	       dnm_group_membership dgm
+          where (dogc.pd_object_id = :objectID or dogc.pd_object_id = 0)
+	    and dogc.pd_context_id = dgc.pd_object_id
+	    and dgc.pd_context_id = dp.pd_object_id
+	    and dgm.pd_member_id in :partyID
+	    and dp.pd_grantee_id = dgm.pd_group_id
+    } map {
+        hasPermission = permission_p;
+    }
+}
+
+query CheckUninheritedPermissionForParty {
+    Boolean hasPermission;
+    do {
+        select 1 as permission_p
+            from  dnm_permissions dp,
+        	  dnm_group_membership dgm
+            where dp.pd_object_id = :objectID
+              and dp.pd_grantee_id = dgm.pd_group_id 
+              and dgm.pd_member_id in :partyID
+    } map {
+        hasPermission = permission_p;
+    }
+}
+
+query CheckDirectGrantWithImpliedPrivileges {
+    Boolean hasPermission;
+    do {
+        select 1 as permission_p
+          from dnm_permissions dp
+          where dp.pd_grantee_id in :partyID
+            and dp.pd_object_id = :objectID
+    } map {
+        hasPermission = permission_p;
+    }
+}
+
+query CheckDirectGrant {
+    Boolean hasPermission;
+    do {
+        select 1 as permission_p from dual
+        where exists (
+            select 1
+            from acs_permissions
+            where acs_permissions.grantee_id in :partyID
+              and acs_permissions.object_id = :objectID
+              and acs_permissions.privilege = :privilege
+        )
+    } map {
+        hasPermission = permission_p;
+    }
+}
+
+data operation RevokePartyPermissions {
+    do {
+        delete from acs_permissions
+        where grantee_id = :partyID
+    }
+}
+
+query PrivilegesForParty {
+  String privilege;
+  do {
+    select distinct ap.privilege
+      from acs_permissions ap,
+        dnm_object_1_granted_context dogc,
+        dnm_granted_context dgc,
+        dnm_group_membership dgm
+      where (dogc.pd_object_id = :objectID or dogc.pd_object_id = 0)
+        and dogc.pd_context_id = dgc.pd_object_id
+        and dgc.pd_context_id = ap.object_id
+        and ap.grantee_id = dgm.pd_group_id
+        and dgm.pd_member_id = :partyID
+  } map {
+        privilege = ap.privilege;
+  }
+}
+
+query ImpliedPrivilegesForParty {
+  String privilege;
+  do {
+    select distinct dphm.pd_child_privilege
+      from acs_permissions ap,
+        dnm_object_1_granted_context dogc,
+        dnm_granted_context dgc,
+        dnm_group_membership dgm,
+        dnm_privilege_hierarchy_map dphm
+      where (dogc.pd_object_id  = :objectID or dogc.pd_object_id = 0)
+        and dogc.pd_context_id = dgc.pd_object_id
+        and dgc.pd_context_id = ap.object_id
+        and ap.grantee_id = dgm.pd_group_id
+        and dgm.pd_member_id = :partyID
+        and ap.privilege = dphm.pd_privilege
+  } map {
+        privilege = dphm.pd_child_privilege;
+  }
+}
+
+
+//
+// Privilege
+//
+object type Privilege {
+    String privilege = acs_privileges.privilege VARCHAR(100);
+
+    object key (privilege);
+}
+
+
+//
+// Privilege Column name map
+//
+query PrivilegeColumnNameMap {
+  String columnName;
+  do {
+    select dpcm.column_name 
+      from dnm_privilege_col_map dpcm
+      where dpcm.pd_privilege =:privilege
+  } map {
+     columnName = dpcm.column_name;
+  }
+}
+
+//
+// Privilege Column name map
+//
+query getAllPrivilegeColumnNameMap {
+  String columnName;
+  String privilegeName;
+  do {
+    select dpcm.column_name, dpcm.pd_privilege 
+      from dnm_privilege_col_map dpcm
+  } map {
+     columnName = dpcm.column_name;
+     privilegeName = dpcm.pd_privilege;
+  }
+}
+
+
+query ImpliedPrivilege {
+  String privilege;
+  do {
+    select dphm.pd_privilege
+      from dnm_privilege_hierarchy_map dphm
+      where dphm.pd_child_privilege =:childPrivilege
+  } map {
+     privilege = dpcm.pd_privilege;
+  }
+}
+
+
+//
+// Add child privilege
+//
+data operation addChildPrivilege {
+  do {
+    insert into acs_privilege_hierarchy (
+	privilege,
+	child_privilege
+    ) values (
+      :privilege, :childPrivilege
+    )
+  }
+}
+
+
+//
+// ObjectContext
+//
+object type ObjectContext {
+    BigDecimal[1..1] objectId = object_context.object_id INTEGER;
+
+    composite ACSObject[1..1] object = join object_context.object_id
+                                         to acs_objects.object_id;
+    composite ACSObject[0..1] context = join object_context.context_id
+                                          to acs_objects.object_id;
+    object key (objectId);
+
+    insert {
+        // Because the insertion occurs via trigger,
+        // acs_objects_context_in_tr.
+
+        do {
+            update object_context
+               set context_id = :context.id
+             where object_id = :objectId
+        }
+    }
+}
+
+
+
+// query that is encapsulated by ObjectPermissionCollection.
+// This is one nasty query that includes display information about
+// the grantee, which may be a user or group (hence the union).
+// cg - doesn't acount for objects without dnm_object_1_granted_context 
+// entries, as it wouldn't make sense to view object permissions
+// for an object without any security presence
+query ObjectPermissionCollection {
+    String privilege;
+    Boolean isInherited;
+    BigDecimal granteeID;
+    Boolean granteeIsUser;
+    String granteeName;
+    String granteeEmail;
+    PersonName granteePersonName;
+    do {
+        select acs_permissions.privilege,
+               CASE
+                 WHEN acs_permissions.object_id = :objectID THEN
+                    0
+                 ELSE
+                    1
+               END as inherited_p,
+               acs_permissions.grantee_id,
+               parties.user_p,
+               parties.name,
+               parties.primary_email,
+               parties.given_name,
+               parties.family_name,
+               parties.name_id
+        from
+             (select
+                    p.privilege,
+                    p.object_id,
+                    p.grantee_id
+             from
+                  acs_permissions p,
+                  dnm_object_1_granted_context dogc,
+                  dnm_granted_context dgc
+             where dogc.pd_object_id = :objectID
+               and dogc.pd_context_id = dgc.pd_object_id
+               and p.object_id = dgc.pd_context_id) acs_permissions,
+             (select groups.group_id as party_id,
+                     0 as user_p,
+                     groups.name as name,
+                     parties.primary_email as primary_email,
+                     '' as given_name,
+                     '' as family_name,
+                     0 as name_id
+              from groups, parties
+              where groups.group_id = parties.party_id) parties
+        where acs_permissions.grantee_id = parties.party_id
+        UNION ALL
+        select acs_permissions.privilege,
+               CASE
+                 WHEN acs_permissions.object_id = :objectID THEN
+                    0
+                 ELSE
+                    1
+               END as inherited_p,
+               acs_permissions.grantee_id,
+               parties.user_p,
+               parties.name,
+               parties.primary_email,
+               parties.given_name,
+               parties.family_name,
+               parties.name_id
+        from 
+             (select
+                    p.privilege,
+                    p.object_id,
+                    p.grantee_id
+             from
+                  acs_permissions p,
+                  dnm_object_1_granted_context dogc,
+                  dnm_granted_context dgc
+             where dogc.pd_object_id = :objectID
+               and dogc.pd_context_id = dgc.pd_object_id
+               and p.object_id = dgc.pd_context_id) acs_permissions,
+             (select users.user_id as party_id,
+                     1 as user_p,
+                     '' as name,
+                     parties.primary_email as primary_email,
+                     person_names.given_name as given_name,
+                     person_names.family_name as family_name,
+                     users.name_id
+              from users, parties, person_names
+              where users.user_id = parties.party_id
+                and users.name_id = person_names.name_id) parties
+        where acs_permissions.grantee_id = parties.party_id
+    } map {
+        privilege = acs_permissions.privilege;
+        isInherited = inherited_p;
+        granteeID = acs_permissions.grantee_id;
+        granteeIsUser = parties.user_p;
+        granteeName = parties.name;
+        granteeEmail = parties.primary_email;
+        granteePersonName.id = parties.name_id;
+        granteePersonName.givenName = parties.given_name;
+        granteePersonName.familyName = parties.family_name;
+    }
+}

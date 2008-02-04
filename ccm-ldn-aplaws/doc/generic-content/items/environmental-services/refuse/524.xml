@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=524}]"><cms:name>bins-524</cms:name><cms:language>en</cms:language><cms:title>Household waste-collection</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=524}]"><cms:name>bins-524-dublin-metadata</cms:name><cms:dcAudience>Householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>bins, domestic, collection, rubbish, refuse, disposal, waste, household</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=524}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>What the service provides for you</i></p><hr/><ul>
+			<li title="*">Collect household rubbish once a week, on the scheduled day.</li>
+			<li title="*">Collect any missed and/or split household rubbish left during bin collections the following working day after it has been reported. Please contact us using the details above to report a missed refuse collection</li>
+		</ul><p>Find out which day is the refuse <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/524e">collection day for your area</a>	
+			</strong>
+			<span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=524"> Providing Information
+		(524)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ca_notes"/>
+    <initializer class="com.arsdigita.london.notes.NotesInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-assets-notes"/>
+    <data class="com.arsdigita.london.notes.NotesLoader"/>
+  </scripts>
+</load>

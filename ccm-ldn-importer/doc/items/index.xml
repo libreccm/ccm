@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<import source="camden.aplaw.org.uk" xmlns="http://xmlns.redhat.com/waf/london/importer/1.0">
+<folder xmlns="http://www.arsdigita.com/cms/1.0" label="Root Folder " name="/" oid="[com.arsdigita.cms.Folder:{id=556}]">
+  <folder xmlns="http://www.arsdigita.com/cms/1.0" label="C " name="C" oid="[com.arsdigita.cms.Folder:{id=5561}]">
+   <folder label="one3" name="one2" oid="[com.arsdigita.cms.Folder:{id=4402}]">
+      <external source="one/eeek.xml"/>
+   </folder>
+   <folder label="Two Test" name="two3-test" oid="[com.arsdigita.cms.Folder:{id=4407}]"/>
+   <external source="sfsdfsdfs.xml"/>
+   <external source="mpa-test.xml"/>
+   </folder>
+</folder>
+</import>

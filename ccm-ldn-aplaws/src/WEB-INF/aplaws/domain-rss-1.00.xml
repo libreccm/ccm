@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" about="http://www.aplaws.org.uk/standards/rss/1.00/termslist.xml" key="APLAWS-RSS" title="APLAWS RSS Feed List" version="1.00" released="2003-01-21">
+  <terms:term id="1" name="Press Releases" inAtoZ="false"/>
+  <terms:term id="2" name="News" inAtoZ="false"/>
+  <terms:term id="3" name="Events" inAtoZ="false"/>
+</terms:domain>

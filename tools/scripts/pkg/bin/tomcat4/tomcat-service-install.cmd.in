@@ -1,0 +1,16 @@
+@echo off
+@if not "%ECHO%"=="" echo %ECHO%
+
+setlocal
+
+call %~dp0..\conf\tomcat-env.cmd
+
+set JAVACLASSPATH=%CLASSPATH%
+set JAVACLASSPATH=%JAVACLASSPATH%;%CATALINA_HOME%\bin\bootstrap.jar
+set JAVACLASSPATH=%JAVACLASSPATH%;%CATALINA_HOME%\common\lib\servlet.jar
+set JAVACLASSPATH=%JAVACLASSPATH%;%JAVA_HOME%\lib\tools.jar
+
+tomcat.exe -install "%SERVICENAME%" "%JAVA_HOME%\jre\bin\server\jvm.dll" -Djava.class.path="%JAVACLASSPATH%" -Dcatalina.home="%CATALINA_HOME%" ::jre-args:: -Dcatalina.base="%CATALINA_BASE%" -start org.apache.catalina.startup.Bootstrap -params start -stop org.apache.catalina.startup.Bootstrap -params stop -out "%CATALINA_BASE%\logs\stdout.log" -err "%CATALINA_BASE%\logs\stderr.log" -path %ORACLE_HOME%\bin
+
+endlocal
+

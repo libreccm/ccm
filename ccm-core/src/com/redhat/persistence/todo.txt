@@ -1,0 +1,229 @@
+Functionality:
+ * Observers
+
+     Infinite loop prevention. Reentrance.
+
+     Status: Reentrance works. Bug fixing. Preventing infinite loops.
+
+ * Link attributes
+
+     Desugar into object model that uses compound keys + containment
+     by multiple objects.
+
+     Status: Mostly works. Statically defined queries for link
+             attributes are not used.
+
+      - isModified(link) will never return true
+
+      - Cleanup Link/Role/Alias/Property mess.
+
+      - Static query support.
+
+      - extraneous join for queries only fetching ids, genPath should
+        map id props to parent join if it exists
+
+ * Data Operations
+
+     Must be loaded into metadata structures.
+     Requires API for creating an operation, setting any required
+     parameters and accessing the results. May require expanding the
+     session/engine interface or adding a new kind of event.
+     Alternatively we could do a temporary solution by exposing methods
+     on RDBMSEngine and doing the implementation in the wrapper layer.
+
+     Status: Basic functionality in place. Not all exotic forms may be
+             supported, but this is not currently blocking.
+
+ * Session.getConnection()
+
+     Passthrough code.
+
+     Status: Not started, nonblocking.
+
+      - need to flush before executing stuff on returned connection
+
+ * Size
+
+     API additions + minor implementation. API additions can be done
+     cheesily for now, but at some point we need a consistent story
+     W.R.T. aggregation, functions, etc.
+
+     Status: Not started, nonblocking.
+
+ * Query caching
+
+     Cache data structures, cache invalidation.
+
+     Single object caching can be done with minor modification to
+     Session.retrieve(PropertyMap). Grab the session key, and if the
+     object exists in the session data structures then check to see
+     that the object isn't deleted, and return it if it exists. This
+     requires the same logic that is in RecordSet.load() in order to
+     deal with specializing the object that the session stores. This
+     will result in some additional test failures due to changing
+     semantics. Do the query if the requested type is a subtype of the
+     currently cached type so we detected DataObjectNotFoundException
+     in the case where the id exists, but is not an instance of the
+     requested type.
+
+     Status: Not started, nonblocking.
+
+ * Weak refs
+
+     Do it.
+
+     Status: Not started, nonblocking.
+
+ * LOBs
+
+     Dig up Oracle specific code from perforce. Figure out how to call
+     it without hack up RDBMSEngine to be oracle specific.
+
+     Status: Done, still wrestling with moral implications.
+
+ * DynamicObjectType and DynamicAssociation
+
+Error Checking/Handling:
+ * null/"" handling
+
+     Plan A: DOI.set converts ""-> null. Session disallows "". Deal
+             with filtering.
+
+ * Auto-detect two wayness and warn
+
+     Status: Not started, nonblocking.
+
+Cleanup:
+ * Public way to access new session for calling flush()
+ * Adapters
+ * Rename everything
+ * Metadata: think about multiple clients, clean up PDL.java
+
+Testing:
+  Make metatest not abort.
+
+Review:
+ * Review everything
+ * Error recovery audit
+
+Documentation:
+ * Javadoc
+ * Design documents
+ * Release Notes
+   - "super" ignored
+ * Update developer documention
+ * Training documentation
+
+Disable all cascading deletes.
+
+
+-= D O N E =-
+
+ * better solution for bind variable and object property name
+   collisions (FilterImpl.java:85)
+
+ * Eliminate old metadata & PDL parser
+
+ * Move DDL generator
+
+ * Better connection source
+
+     Look at old connection handling code, copy/reimplement.
+
+     Status: Not started, nonblocking.
+
+ * GenericDataQuery
+
+     Requires exposing methods on RDBMSEngine and writing some wrapper
+     code.
+
+     Status: Not started, nonblocking.
+
+ * order with null
+
+     Passthrough code + some minor API additions to Query and friends.
+
+     Status: Not started, nonblocking.
+
+ * Disconnected data
+
+     On disconnect store HashMap of object data in wrapper layer. Also
+     requires some simple state management to make sure writing is not
+     allowed and to throw out objects from rolled back txns. We should
+     be able to dig most of that code out of perforce.
+
+     Status: API implemented with incorrect semantics. No longer
+             blocking.
+
+ * Oracle
+
+     Oracle implementation of SQLWriter.
+
+     Status: Not started.
+
+ * Reorder DML in relational engine
+
+     SQL Generation must be made to obey event ordering constraints.
+     Optionally optimize with dotted arrow constraints for MDSQL
+     events.
+
+     Status: Functional, currently solid arrows are set up where
+             dotted arrows should be set up since the SQL generation
+             isn't smart enough to obey the arrow constraints. This
+             simply means that instance loops may not be flushable,
+             but this isn't a blocking issue right now since instance
+             loops were previously guaranteed to cause constraint
+             violations.
+
+ * Compound keys
+
+     Mostly done in checkout. Difficult to confirm due to lack of
+     significant test coverage.
+
+     Status: Done
+
+ * sub query filtering
+
+     Simple addition to anonymous mapper in QGen.java, may require
+     some fanciness for legacy bind variable support.
+
+     Status: Done
+
+ * throwing appropriate exceptions save()
+
+     Plan A: Be fundamental. Adjust fundament as appropriate.
+
+     Status: Done
+
+ * GDflush()
+
+     Status: Done
+
+ * DataQuery.setRange
+
+     API addtions + minor implementation.
+
+     Status: Done
+
+ * DataQuery.set/getParameter
+
+     Passthrough code ???
+
+     Status: Done
+
+ * immediate properties/specialize
+
+     Plan A: New PDL keyword. Error checking for queries that don't
+     fetch immediate properties. Adapter must be modified to use
+     object type column to determine the correct type when it exists.
+
+     Plan B: Somehow support specialize by removing any direct storage
+     of the object type in new persistence and always delegate to the
+     object. Then store specific object type in wrapper layer and do
+     specialization via the wrapper layer.
+
+     Status: Plan B implemented, Plan A deferred.
+
+ * type checks for PropertyEvent
+
+     Status: Done

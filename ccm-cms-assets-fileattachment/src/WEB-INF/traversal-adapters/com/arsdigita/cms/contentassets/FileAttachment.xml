@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <!-- First off the adapters for ContentItemPanel -->
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <!-- Individual article sections -->
+    <xrd:adapter objectType="com.arsdigita.cms.contentassets.FileAttachment">
+      <xrd:attributes rule="exclude">
+<!-- XXX make cms-service accept OID -->
+<!--        <xrd:property name="/object/id"/>-->
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/language"/>
+        <xrd:property name="/object/content"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/auditing"/>
+        <xrd:property name="/object/auditing/creationUser"/>
+        <xrd:property name="/object/dublinCore"/>
+        <xrd:property name="/object/mimeType"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.cms.search.AssetExtractor">
+    <xrd:adapter objectType="com.arsdigita.cms.contentassets.FileAttachment" extends="com.arsdigita.cms.FileAsset" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter"/>
+    <!--
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/content/id"/>
+        <xrd:property name="/object/content/defaultDomainClass"/>
+        <xrd:property name="/object/content/objectType"/>
+        <xrd:property name="/object/content/displayName"/>
+        <xrd:property name="/object/content/isDeleted"/>
+        <xrd:property name="/object/content/ancestors"/>
+        <xrd:property name="/object/content/version"/>
+        <xrd:property name="/object/content/name"/>
+        <xrd:property name="/object/content/language"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/content"/>
+      </xrd:associations>
+    </xrd:adapter>
+    -->
+  </xrd:context>
+
+</xrd:adapters>

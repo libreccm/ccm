@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=299}]"><cms:name>batch-22-299</cms:name><cms:language>en</cms:language><cms:title>Employment Advice</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=299}]"><cms:name>batch-22-299-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>employment, advice</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=299}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Anyone employing people must comply with health and safety law, notify the enforcing authority (the Council or the Health and Safety Executive) and provide health and safety information to their employees.</i></p><hr/><p>For advice on workplace safety regulations, see 
+		<a href="/ccm/services/pid.jsp?pid=419">
+				<strong>Health 
+  and Safety at Work</strong>
+			</a>	
+			<span class="gen">link to pid 419</span>
+		</p><p>Advice about the Working Time Regulations is available from 
+  the <strong>
+				
+		<a href="http://www.dti.gov.uk/er/work_time_regs/wtr0.htm">Department of 
+  Trade and Industry (DTI)</a>	
+			</strong>
+			<span class="gen">link to external website</span>  
+  or the <strong>
+				
+		<a href="http://www.acas.org.uk/q_a/q_a6.html">ACAS website</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><p>Information about employing disabled people, and the Disability 
+  Discrimination Act 1995 is available from the <strong>
+				
+		<a href="http://www.equalitydirect.org.uk/chap5/c5_dis.htm">Equality 
+  Direct website</a>	
+			</strong>
+			<span class="gen">link to external website</span>  
+  or the <strong>
+				
+		<a href="http://www.drc-gb.org/businesses/employing.asp">Disability Rights 
+  Commission</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><p>Under the Disability Discrimination Act, employers of 15 or 
+  more people now have a legal duty to make their workplace accessible to people with 
+  mental health problems. For advice and information, go to the <strong>
+				
+		<a href="http://www.mindout.net/wm/w01_working_minds_home.asp">Mind 
+  Out for Mental Health</a>	
+			</strong>
+			<span class="gen">link to external website</span>  
+  website, which has a 'Working Minds' Campaign Employers' Toolkit to download. </p><p>The DTI website <strong>
+				
+		<a href="http://www.tiger.gov.uk/index.htm">TIGER</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+   - Tailored 
+  Interactive Guidance on Employment Rights - has information on maternity rights, 
+  paternity rights, adoption rights, and flexible working rights, including the changes 
+  from 6 April 2003.</p><p>The <strong>
+				
+		<a href="http://www.iosh.co.uk/index.cfm?go=publications.main">Institution 
+  of Occupational Safety and Health (IOSH)</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+  publishes a range of books for people managing workplace health &amp; safety.</p><p>The Employment Relations section of the main <strong>
+				
+		<a href="http://www.dti.gov.uk/er/index.htm">DTI 
+  website</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+  covers hours of work and part-time work, pay entitlement and the National Minimum 
+  Wage, public holidays, employment agency standards, individual employment rights, 
+  redundancy arrangements, employee consultation, trade unions and collective rights.</p><p>Advice for employers on best practice can be obtained from the 
+  <strong>
+				
+		<a href="http://www.dti.gov.uk/partnershipfund/index.html">DTI Partnership at 
+  Work Fund</a>	
+			</strong>,  <span class="gen">link to external website</span> 
+  the Involvement and Participation Association (IPA) <strong>
+				
+		<a href="http://www.partnership-at-work.com/">Partnership 
+  at Work website</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+  and the <strong>
+				
+		<a href="http://www.dti.gov.uk/greatplacetowork/">DTI Great Place to 
+  Work website</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=299"> Providing Information
+		(299)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

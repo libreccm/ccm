@@ -1,0 +1,5 @@
+select s.sub_id as c_1,
+       s.optional_id as c_2,
+       optional__r.ref_attribute as c_3
+from sub s
+     left join refs optional__r on optional__r.ref_id = s.optional_id

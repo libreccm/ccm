@@ -1,0 +1,167 @@
+# Author:  Vadim Nasardinov (vadimn@redhat.com)
+# Since:   2003-05-05
+# Version: $Revision: #7 $ $Date: 2003/10/31 $
+
+
+* Each thread gets its own session.  Each session gets its own thread.
+
+  There are basically two places where code depends on this assumption.
+
+  (a) When we tag a versioning transaction, we do something like
+
+        VersioningProcessorManager.getVersioningEventProcessor().tag(oid, tag);
+
+  (b) In unit tests, we want to be able to call fakeCommit() on the
+      VersioningEventProcessor attached to the current session.  Therefore, we do
+      something like
+        VersioningProcessorManager.getVersioningEventProcessor()
+
+  Internally, VersioningProcessorManager has a private static thread
+  local that ties each VersioningEventProcessor to a thread.
+
+  Strictly speaking, we don't really care about the 1-1 relationship
+  between threads and versioning event processors. In both cases (a
+  and b), what we really need is to have access to the versioning
+  event processor associated with the current Session.  We don't want
+  to introduce a compile-time dependency between persistence and
+  versioning by adding the following method to the Session class:
+
+     VersioningEventProcessor getVersioningEventProcessor();
+
+  Also, we only want the versioning package to be able to access the
+  versioning event processor attached to the current session.
+
+  Hence the current solution where the VersioningProcessorManager
+  class assumes the one-to-one relationship between threads and
+  session, stated above.
+
+
+* We would like to decouple persistence and versioning as much as
+  possible.  To this end, we avoid adding any versioning-specific API
+  to the persistence metadata package.  You can't query the
+  persistence metadata for whether, for instance, an object type's
+  property is marked "unversioned" or not.
+
+* Generally speaking, a robust versioning system would support two
+  flavors of versioning.
+
+  (a) if an object type (or its supertype) is specified as "versioned"
+      in the PDL, then all instances of this type must be fully
+      versioned, no questions asked.
+
+  (b) a property may be required by to versioned by marking it
+      "versioned", although the property's object type is not required
+      to be versioned in the sense of (a).  In this case, we have a
+      situation where some instances of an object type must be
+      versioned, while other instances of the same type don't have to
+      be.
+
+  We currently make the simplifying assumption that it is ok to not
+  try to do (b).  If a property is required to be versioned, even
+  though its type doesn't have to be, we will go ahead and version
+  *all* instances of this type and try to be clever about it.
+
+
+* There is code conditionalizes on the DB-specific features. Specifically,
+
+  (a) there is code that assumes we support Oracle and Postgres only.
+
+  (b) there is code that assumes that a PDL definition like this:
+
+    object type GenericOperation extends Operation {
+      String[0..1]    value = vcx_generic_operations.value VARCHAR;
+
+      reference key (vcx_generic_operations.operation_id);
+    }
+
+
+  translates to something like this:
+
+    create table vcx_generic_operations (
+        operation_id INTEGER
+            constraint vcx_gen_opera_opera_id_p_WKShr primary key,
+        value VARCHAR(4000)
+    );
+
+  for both Postgress and Oracle.  In other words, we assume that the
+  PDL datatype VARCHAR translates into the SQL data type
+  VARCHAR(4000).
+
+  We hard-code the assumption that the DB uses UTF-8 as the default
+  character encoding.
+
+
+* BigInteger object keys for all of the data objects used by
+  versioning are assumed to be monotonically increasing within the
+  same session. (These object types include "DataObjectChange",
+  "Operation", and "Txn".)  In other words, sorting a table by the
+  "id" column is assumed to be equivalent to sorting it
+  chronologically.  (This is not an entirely correct statement.  Since
+  multiple threads write to the same versioning log, keys may get out
+  of order.  However, key values written to the db within the same
+  session are assumed to be monotonically increasing.)
+
+* The versioning log is read-only.  To try to enforce this constraint,
+  there are no public methods in the versioning package that provide
+  access to the data objects and/or associations used by the package
+  internally.
+
+* The current implementation is not robust against PDL metadata
+  changes.  For example, adding or removing the "versioned" keyword
+  may make old versioning log data unusable.
+
+* The current implementation does not support runtime object model
+  changes.  See
+  https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=101658
+
+* We assume that users are never deleted from the DB.  The Txn data
+  type has an attribute "modifyingUser" of the object type
+  "com.arsdigita.kernel.User".  This leads to a foreign key constraint
+  on the vcx_txns.modifying_user column.
+
+  Additionally, the VersionHistory class the getUser() method that
+  returns a user.
+
+--== Invariants ==--
+
+* For each row in vcx_operations, there exists one and only one entry
+  in one and only of the following tables: vcx_generic_operation, or
+  vcx_blob_operations, or vcx_clob_operations.
+
+* For any row in vcx_operations whose class_id is that of
+  "com.arsdigita.persistence.OID", the extending row mandated by the
+  previous invariant must be in the vcx_generic_operations table.
+
+* Let X be the value of a vcx_generic_operations.value column where
+  the corresponding event_id is "add" or "remove" or "set".  Then
+  there must also exist at least one "create" operation in the same
+  table whose "value" column is X.  In other words, we must record the
+  "create" event for all data objects that are fully versioned or
+  recoverable.  This is done in order to insure that there is a record
+  in the versioning log that indicates the correct specialized object
+  type of each data object that we track.
+
+* If the versioning history of a data object is ordered by the Txn id,
+  then 
+
+    (a) there must be at least one "delete" event between any two
+        "create" events;
+
+    (b) there must be at least one "create" event between any two
+        "delete" events.
+
+  In other words, a sequence like this
+     create, create, delete
+     or 
+     create, delete, delete
+  is illegal.
+
+* The vcx_operations.subtype column can have three possible values: 1,
+  2, or 3.
+
+* The serialization/deserialization of OIDs is currently dependent on
+  the assumption that oid.getObjectType() returns the specialized type
+
+# Local Variables:
+# mode: text
+# End:

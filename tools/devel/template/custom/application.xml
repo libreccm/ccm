@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ccm:application name="::package::" 
+           prettyName="::package::"
+              version="1.0.0"
+              release="1"
+               webapp="::package::"
+            xmlns:ccm="http://ccm.redhat.com/ccm-project">
+
+  <ccm:dependencies>
+<!-- <ccm:requires name="ccm-core" version="6.1.0" relation="ge"/> -->
+  </ccm:dependencies>
+
+  <ccm:contacts>
+<!--
+    <ccm:contact uri="http://www.redhat.com/software/ccm" type="website"/>
+    <ccm:contact uri="mailto:cms@redhat.com" type="support"/>
+  -->
+  </ccm:contacts>
+
+  <ccm:description>
+The ::package:: package does....
+  </ccm:description>
+
+</ccm:application>

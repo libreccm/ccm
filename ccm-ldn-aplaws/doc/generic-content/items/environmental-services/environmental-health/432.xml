@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=432}]"><cms:name>-432</cms:name><cms:language>en</cms:language><cms:title>Dog Warden Service</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=432}]"><cms:name>-432-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Dog, Warden, Service, environmental, health</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=432}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Dog Warden will help you if you lose your dog, and aims to help prevent
+  stray dogs from being a danger in traffic or a nuisance to people.</i></p><hr/><p>In particular, the service aims to deal with problems caused by the four main
+  symptoms of irresponsible dog ownership:-</p><ul>
+  <li title="*">Noisy dogs </li>
+  <li title="*">Aggressive dogs </li>
+  <li title="*">Dog fouling </li>
+  <li title="*">Straying dogs </li>
+</ul><p>The first time a dog is caught straying, the dog wardens will try to trace
+  the owners and return it.</p><p>Any other stray will be kept safely for up to seven days.</p><p>Any complaint regarding dogs straying on school premises or interfering with
+  the flow of traffic will be dealt with urgently.</p><p>Any complaints about dogs will be responded to as quickly as possible, but
+  always within 2 working days. The Dog Warden will act in the strictest confidentiality
+  and keep you informed about what they are doing.</p><p>Some complaints cannot be dealt with by the Dog Warden. These will be passed
+  quickly to the appropriate agency (e.g. the Police or RSPCA).</p><p>The Dog Warden will ensure the Council's legal duties are met, so far as dogs
+  are concerned. They will also regularly patrol beaches and other areas covered
+  by dog related by-laws, and put up anti-dog fouling stickers where needed.</p><p>If you have any questions or complaints, please contact the Dog Wardens.</p><h3>School Talks</h3><p>Part of our job is educational. Primary Schools in the <span class="gen">enter location</span> can
+  arrange for a Dog Warden to visit and talk to pupils about all aspects of responsible
+  dog ownership.</p><p>If you are a teacher at a school in the <span class="gen">enter location</span>, you can e-mail us
+  for further details.</p><h3>Dogs on Beaches</h3><p>Dogs are banned from certain beaches during the summer season.</p><h3>Tag your dog!</h3><p>Your dog must wear a tag by law when out in a public place.</p><p>The first time we catch your dog straying we will return it to you, free of
+  charge. But we can only do this if it is wearing a tag, or is microchipped.</p><p>If we catch a stray dog, and we can't trace the owner, we will keep it in
+  boarding kennels at your expense. If you do not collect your dog within seven
+  days, you will lose the right to reclaim it, and we will try to re-home it.</p><h3>Fouling Legislation!</h3><p>The Dog (fouling of land) Act 1996</p><p>The Dog (fouling of land) Act 1996 came into force on 1st May 1997.</p><p>This Act means that it is illegal to fail to clear up after your dog if it
+  fouls any land which is open to the air and to which the public have access.</p><p>The penalty for contravening the Act is a <span class="gen">enter amount</span> &quot;on the spot&quot; fine
+  or prosecution in the magistrates court.</p><p>You may purchase, at cost price, biodegradable plastic &quot;Doggy Bags&quot; from
+  the public offices of the Council.</p><h3>The Dog Warden Service: </h3><ul>
+  <li title="*">Responds to all complaints as soon as possible but always within 2 working
+    days.</li>
+  <li title="*">Responds urgently to sightings of stray dogs on school premises or interfering
+    with traffic.</li>
+  <li title="*">Collects and return your stray dog free of charge the first time it is
+    collected, provided it has a collar and address tag.</li>
+  <li title="*">Collects all other strays and keeps them safely for a maximum of seven
+    days for collection by the owner (subject to the payment of a fee). We then
+    work with local Re-homing charities and have an excellent record of successful
+    home placements.</li>
+  <li title="*">Promotes responsible dog ownership through talks to Primary schools and
+    other groups.</li>
+  <li title="*">Provides (at cost price) supplies of award winning &quot;doggy bags&quot; to
+    dog owners.</li>
+  <li title="*">Enforces dog-related by-laws and the Dogs (Fouling of Land) Act 1996.</li>
+  <li title="*">Microchips dogs in promotion of responsible ownership.</li>
+</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=432"> Providing Information
+		(432)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

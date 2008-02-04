@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=515}]"><cms:name>planning-515</cms:name><cms:language>en</cms:language><cms:title>Statutory Register - Zoning</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=515}]"><cms:name>planning-515-dublin-metadata</cms:name><cms:dcAudience>Householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>statutory, register, zoning</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=515}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Zoning is an instrument of the local planning authority to guide and control permissible developments or land use for each parcel of land (or parts thereof). </i></p><hr/><p>Zoned areas can include:</p><ul>
+				<li title="*">
+					<strong>Residential </strong> - intended primarily to preserve and protect housing and related developments and activities. </li>
+				<li title="*">
+					<strong>Commercial </strong> - areas set aside mainly for retail trade, services, and business activity. </li>
+				<li title="*">
+					<strong>Industrial </strong> - reserved for manufacturing, assembly, processing, and related activities. </li>
+			</ul><p>The basic purpose of these zones is to prevent land use conflicts by allowing only compatible uses to locate in the same area. </p><p>The Office of the Deputy Prime Minister website has a <strong>
+
+		<a href="http://www.odpm.gov.uk/stellent/groups/odpm_planning/documents/page/odpm_plan_606914.pdf">Planning Policy Guidance 5 - Simplified Planning Zones</a>	
+</strong> information sheet containing more information about zoning. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=515"> Providing Information
+		(515)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

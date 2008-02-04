@@ -1,0 +1,68 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: SearchContent.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.search.intermedia;
+
+// Object SearchContent is used to allow updating the search-content table, (i.e.
+// the table that contains the content to be searched).  This object is used in
+// the SearchableObserver class to update the search-content table when objects
+// of type Searchable change.
+
+object type SearchContent {
+
+  BigDecimal id = search_content.object_id INTEGER;
+  String     object_type = search_content.object_type VARCHAR(100);
+  String     link_text = search_content.link_text VARCHAR(1000);
+  String     url_stub = search_content.url_stub VARCHAR(1000);
+  String     summary = search_content.summary VARCHAR(4000);
+  String[0..1] xml_content = search_content.xml_content CLOB;
+  Blob[0..1] raw_content = search_content.raw_content BLOB;
+  String     language = search_content.language VARCHAR(3);
+  String[0..1] content_section = search_content.content_section VARCHAR(300);
+  object key (id);
+}
+
+// Following returns the search content for an object
+query searchContentForObject {
+    BigDecimal id;
+    String object_type;
+    String link_text;
+    String url_stub;
+    String summary;
+    String xml_content;
+    Blob raw_content;
+    String language;
+    String content_section;
+   do {
+       select object_id, object_type, link_text, url_stub, summary, 
+       xml_content, raw_content, language, content_section
+       from
+       search_content
+    } map {
+        id = search_content.object_id;     
+        object_type = search_content.object_type;
+        link_text = search_content.link_text;
+        url_stub = search_content.url_stub;
+        summary = search_content.summary;
+        xml_content = search_content.xml_content;
+        raw_content = search_content.raw_content;
+	content_section = search_content.content_section;
+        language = search_content.language;
+    }
+}

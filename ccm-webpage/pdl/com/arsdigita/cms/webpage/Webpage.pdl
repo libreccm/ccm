@@ -1,0 +1,20 @@
+model com.arsdigita.cms.webpage;
+
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.kernel.User;
+
+object type Webpage extends ContentPage {
+
+   String[0..1]    description    = cms_webpages.description VARCHAR(4000);
+   // allows manual text entry for document author, if needed
+   String[0..1]    author         = cms_webpages.author VARCHAR(200);
+   String[0..1]    authorLastName = cms_webpages.author_last_name VARCHAR(200);
+   String[0..1]    body = cms_webpages.body CLOB;
+
+   // cached fields, to aid data queries
+   User[0..1]       creator = join cms_webpages.creator_id to users.user_id;  
+   Date[0..1]       lastModifiedTimeCached = cms_webpages.last_modified_cached TIMESTAMP;
+
+   reference key (cms_webpages.webpage_id);
+
+}

@@ -1,0 +1,18 @@
+# This file contains lines of the form:
+#
+# (ESD Toolkit XML, APLAWS import XML, ESD->APLAWS transform)
+http://www.esd.org.uk/standards/lgcl/1.02/lgclrelatedterms.xml,related-lgcl-1.02.xml,xslt-1.02/RelatedItems2related.xsl
+#http://www.esd.org.uk/standards/lgcl/1.02/lgclequivalents.xml,equivalents-lgcl-1.02.xml,xslt-1.02/Equivalents2equivalent.xsl
+http://www.esd.org.uk/standards/lgcl/1.02/lgclhierarchy.xml,hierarchy-lgcl-1.02.xml,xslt-1.02/ItemsHierarchy2hierarchy.xsl
+#http://www.esd.org.uk/standards/lgcl/1.02/lgclaclmapping.xml,mapping-lgcl-1.02-acl-1.00.xml,xslt-1.02/Mapping2mapping.xsl
+http://www.esd.org.uk/standards/lgcl/1.02/lgclgclmapping.xml,mapping-lgcl-1.02-gcl-1.5.xml,xslt-1.02/Mapping2mapping.xsl
+http://www.esd.org.uk/standards/lgcl/1.02/lgcllgslmapping.xml,mapping-lgcl-1.02-lgsl-2.00.xml,xslt-1.02/Mapping2mapping.xsl
+#http://www.esd.org.uk/standards/acl/1.00/acltermslist.xml,domain-acl-1.00.xml,xslt-1.02/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/termslist/1.02/termslist.xml,domain-lgcl-1.02.xml,xslt-1.02/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/lgsl/2.00/lgsltermslist.xml,domain-lgsl-1.02.xml,xslt-1.02/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdllgslmapping.xml,mapping-lgdl-2.00-lgsl-2.00.xml,xslt-1.02/Mapping2mapping.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdltermslist.xml,domain-lgdl-2.00.xml,xslt-1.02/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdlhierarchy.xml,hierarchy-lgdl-2.00.xml,xslt-1.02/ItemsHierarchy2hierarchy.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdllgslhierarchy.xml,hierarchy-lgdl-2.00-lgsl-2.00.xml,xslt-1.02/LGDLLGSLItemsHierarchy2mixedHierarchy.xsl
+http://www.esd.org.uk/standards/gcl/1.5/gcltermslist.xml,domain-gcl-1.5.xml,xslt-1.02/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/gcl/1.5/gcltermslist.xml,domain-gcl-1.5.xml,xslt-1.02/ControlledList2hierarchy.xsl

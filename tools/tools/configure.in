@@ -1,0 +1,47 @@
+dnl Process with autoconf
+dnl $Id: configure.in 1354 2006-10-31 22:57:58Z sskracic $
+
+AC_INIT(ccm-tools.spec.in)
+
+VERSION=6.5.1
+RELEASE=1
+
+AM_INIT_AUTOMAKE(ccm-tools, $VERSION)
+AC_SUBST(RELEASE)
+
+DATE=`date`
+AC_SUBST(DATE)
+
+AC_OUTPUT(Makefile
+          bin/Makefile
+          commands/Makefile
+          etc/profile.d/ccm-tools.sh
+          etc/profile.d/ccm-tools-resin.sh
+          etc/profile.d/ccm-tools-tomcat.sh
+          etc/profile.d/ccm-tools.cmd
+          etc/profile.d/ccm-tools-resin.cmd
+          etc/profile.d/ccm-tools-tomcat.cmd
+          etc/profile.d/Makefile
+          etc/init.d/Makefile
+          etc/Makefile
+          etc/ccm-tools/Makefile
+          lib/Makefile
+          lib/CCM/Makefile
+          lib/CCM/Server/Makefile
+          server/Makefile
+          server/resin/Makefile
+          server/resin/conf/Makefile
+          server/resin/bin/Makefile
+          server/tomcat/Makefile
+          server/tomcat/bin/Makefile
+          server/tomcat/conf/Makefile
+          server/tomcat/lib/Makefile
+          server/tomcat/src/Makefile
+          server/tomcat/src/com/Makefile
+          server/tomcat/src/com/arsdigita/Makefile
+          server/tomcat/src/com/arsdigita/tools/Makefile
+          server/tomcat/src/com/arsdigita/tools/catalina/Makefile
+          server/tomcat/src/com/arsdigita/tools/catalina/startup/Makefile
+          ccm-tools.spec)
+
+dnl End of file

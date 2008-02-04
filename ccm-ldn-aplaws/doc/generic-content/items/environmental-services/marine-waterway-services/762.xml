@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=762}]"><cms:name>batch-13-762</cms:name><cms:language>en</cms:language><cms:title>Launching and Recovery Facilities</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=762}]"><cms:name>batch-13-762-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>launching, recovery, facilities</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=762}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Slipways are available to the public for launch and recovery of trailed boats. </i></p><hr/><p>A fee is payable at the time of launching which includes the parking of trailers (subject to space being available) but not cars. Seasonal permits for launch and recovery are available. Launch and recovery may be restricted during low water periods on spring tides.</p><p>Typical charges are as follows:</p><h2>Daily Rate</h2><table width="90%" cellpadding="5" class="centre" summary="charges for launching and recovery">
+<tr>
+<th>Length Overall</th>
+<th>Charge (inc vat)</th>
+</tr>
+<tr>
+<td>Up to 4 metres</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+<tr>
+<td>Over 4 metres up to 5.5 metres</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+<tr>
+<td>Over 5.5 metres up to 7 metres</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+<tr>
+<td>Over 7 metres (per metre per day)</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+</table><h2>Seasonal Permits</h2><table width="90%" cellpadding="5" class="centre" summary="charges for launching and recovery">
+<tr>
+<th>Length Overall</th>
+<th>Charge (inc vat)</th>
+</tr>
+<tr>
+<td>Up to 4 metres</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+<tr>
+<td>Over 4 metres up to 5.5 metres</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+<tr>
+<td>Over 5.5 metres up to 7 metres</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+<tr>
+<td>Over 7 metres (per metre)</td>
+<td>
+<span class="gen">enter amount</span>
+</td>
+</tr>
+</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=762"> Providing Information
+		(762)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

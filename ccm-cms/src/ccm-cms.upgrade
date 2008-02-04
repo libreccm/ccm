@@ -1,0 +1,33 @@
+<upgrade>
+  <version from="6.0.0" to="6.0.1">
+    <script sql="ccm-cms/upgrade/::database::-6.0.0-6.0.1.sql"/>
+  </version>
+  <version from="6.0.1" to="6.1.0">
+    <script sql="ccm-cms/upgrade/::database::-6.0.1-6.1.0.sql"/>
+  </version>
+  <version from="6.1.0" to="6.1.1">
+    <script sql="ccm-cms/upgrade/::database::-6.1.0-6.1.1.sql"/>
+  </version>
+  <version from="6.1.1" to="6.2.0">
+    <script sql="ccm-cms/upgrade/::database::-6.1.1-6.2.0.sql"/>
+  </version>
+  <version from="6.2.0" to="6.2.1">
+    <script sql="ccm-cms/upgrade/::database::-6.2.0-6.2.1.sql"/>
+  </version>
+  <version from="6.3.0" to="6.3.1">
+    <script sql="ccm-cms/upgrade/::database::-6.3.0-6.3.1.sql"/>
+  </version>
+  <version from="6.3.1" to="6.3.2">
+    <script sql="ccm-cms/upgrade/::database::-6.3.1-6.3.2.sql"/>
+  </version>
+  <version from="6.3.3" to="6.3.4">
+    <script sql="ccm-cms/upgrade/::database::-6.3.3-6.3.4.sql"/>
+  </version>        
+  <version from="6.3.4" to="6.4.0">
+    <script sql="ccm-cms/upgrade/::database::-6.3.4-6.4.0.sql"/>
+  </version>
+  <version from="6.5.0" to="6.5.1">
+    <script sql="ccm-cms/upgrade/::database::-6.5.0-6.5.1.sql"/>
+  </version>
+
+</upgrade>

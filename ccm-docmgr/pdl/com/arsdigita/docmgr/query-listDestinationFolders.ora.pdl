@@ -1,0 +1,31 @@
+model com.arsdigita.docs;
+
+// Retrieve a list of all folders in a certain repository for Copy
+// or Move operations.
+// This query excludes subfolders of source folders. It excludes
+// all(!) children folder(s) of the selected resources (specified
+// by the bind variable srcResources).
+query listDestinationFolders {
+    String name;
+    String path;
+    BigDecimal parentID;
+    BigDecimal resourceID;
+    do {
+         select name,
+                resource_id,
+                path,
+                CASE WHEN parent_id is null then -1
+                     else parent_id END as  parent_id
+         from   docs_resources
+         where  is_folder='1'
+         and    resource_id in (select object_id from vc_objects
+                                where is_deleted = '0')
+         and    path like :rootPath || '%'
+      } map {
+         name = docs_resources.name;
+         path = docs_resources.path;
+         resourceID = docs_resources.resource_id;
+         parentID = docs_resources.parent_id;
+      }
+}
+

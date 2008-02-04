@@ -1,0 +1,6 @@
+ampersand    = &
+less-than    = <
+greater-than = >
+quote        = '
+dash         = --
+dash         = --

@@ -1,0 +1,5 @@
+Library File           Version Link to License
+------------           ------- ---------------
+jai_codec.jar          1.1.2   SUN http://java.sun.com/products/java-media/jai/
+jai_core.jar           1.1.2   SUN http://java.sun.com/products/java-media/jai/
+mlibwrapper_jai.jar    1.1.2   SUN http://java.sun.com/products/java-media/jai/

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=227}]"><cms:name>respite-care-227</cms:name><cms:language>en</cms:language><cms:title>Respite Care</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=227}]"><cms:name>respite-care-227-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>respite, care</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=227}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Studies have shown that there are increased levels of stress, ill health and mental health problems in those people who undertake a caring role. Carers and the &quot;cared for&quot; can benefit from day respite, residential respite and phased care services. </i></p><hr/><h3>What is Respite Care?</h3><p>When a care relationship is not professional and not based on shifts and normal working hours, but is continuous for 24 hours per day, seven days per week. <strong>A break is not a luxury but essential to maintain the caring role.</strong>
+</p><p>Day respite can be provided to offer short periods of respite in a range of different ways either in the home; support at home or in day centres for older people or via adult day care resources and enhanced care units. It may also be possible to access services provided by the private and voluntary sector, to access these resources you will need to use the contact list below.</p><table width="90%" cellpadding="5" class="centre" summary="Private and Voluntary Sector Facilities">
+			<tr>
+				<th>Name of Centre</th>
+				<th>Address of Centre</th>
+				<th>Contact Details</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><p>Residential respite and phased care can be provided in a residential setting to enable carers to have a break from their caring role. This Council have a number of units, which may provide this.</p><table width="90%" cellpadding="5" class="centre" summary="Respite Care Facilities">
+			<tr>
+				<th>Name of Centre</th>
+				<th>Address of Centre</th>
+				<th>Contact Details</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><h3>Who can access respite care?</h3><p>Anyone who undertakes a caring role for a friend or relative who is an older person or has a learning or physical disability or suffers a mental health problem may be able to access respite care services.</p><h3>Cost Implications</h3><p>We do have a charging policy for home care and residential care services. How much you will pay will depend on what benefits, savings, or income you have.</p><h3>Who decides if I/We are able to access these services?</h3><p>Respite needs should be identified via an assessment under the NHS and Community Care Act 1990, which includes assessments of carers' needs under the Carers Recognition and Services Act 1995. Your care manager will carry out this assessment. You should contact your allocated care manager and discuss your respite needs.</p><h3>What do I do if I don't have an allocated Care Manager? </h3><p>If you do not have an allocated care manager you should, in the first instance make a referral to us. We will record all your information and pass this to the appropriate community team who will then contact you to arrange an assessment.</p><p>If you require any further information, please use the contact details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=227"> Providing Information
+		(227)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=777}]"><cms:name>detention-and-further-action-777</cms:name><cms:language>en</cms:language><cms:title>Detention and Further Action</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=777}]"><cms:name>detention-and-further-action-777-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>detention, further, action</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=777}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Local Authorities have powers under certain Acts of Parliament to make byelaws, which are local laws that create criminal offences. </i></p><hr/><p>Before they can come into 
+  effect, byelaws must be confirmed by a Secretary of State. The 
+		<a href="http://www.mcga.gov.uk/c4mca/mcga-dops_survey_ship_survey_certification/mcga-dops_survey_byelaws.htm">
+				<strong>Maritime 
+  and Coastguard Agency</strong>
+			</a>	
+			<span class="gen">link to external website</span> 
+  deals with applications from local authorities and parish and town councils 
+  for confirmation of byelaws for which the Secretary of State for Transport is 
+  the confirming authority.</p><p>A new, comprehensive security regime for international shipping is set to enter into force in July 2004 following the adoption by a week-long Diplomatic Conference of a series of measures to strengthen maritime security and prevent and suppress acts of terrorism against shipping. Further information can be found on the 
+		<a href="http://www.imo.org/home.asp?flash=false">
+				<strong>International Maritime Organization (IMO)</strong>
+			</a>	
+			<span class="gen">link to external website</span> website.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=777"> Providing Information
+		(777)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

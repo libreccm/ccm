@@ -1,0 +1,72 @@
+##########################################
+# ::PACKAGE:: Master configuration file #
+#########################################
+
+servlet-container = resin
+servlet-webxml = servlet23
+
+# NB: all hostnames used should be
+# the fully qualified name as returned
+# by the 'hostname' command with no arguments.
+
+####################################
+# UNIX system level configuration
+
+# Installation directory for resin
+resin-home = /usr/local/resin
+
+# Installation directory for this app
+app-home = /var/www/::PACKAGE::
+
+# Directory containing the base runtime & config files
+runtime-home = /usr/share/::PACKAGE::
+
+# UNIX accounts to run as
+user = servlet
+group = servlet
+
+# Whereever you installed JDK 1.3.1
+# java-home = /usr/j2se
+# java-home = /usr/java/jdk1.3.1
+java-home = /opt/IBMJava2-131
+
+# Optionally tell java to use more memory
+#
+# For Sun's JDK, on a machine with 1GB
+#jre-args = -J-client -J-Xss128k -J-Xms512m -J-Xmx512m -J-XX:NewSize=128m -J-XX:MaxNewSize=128m
+#
+# For IBM's JDK on a machine with 256MB
+#jre-args = -J-Xms128m -J-Xmx128m
+jre-args = 
+
+# The hostname of the front end apache box
+apache = web1.example.com
+
+# The hostnames of the back end resin boxes
+resin = servlet1.example.com
+resin = servlet2.example.com
+
+# The SRUN ports for apache to talk to the resin
+# boxes. The 'hostname:port' pair designates which
+# srun port each resin instance listens on.
+# If there is a firewall, between the resin and
+# apache boxes, a second 'hostname:port' pair
+# specifies the host and port of the firewall
+#
+# eg1. no firewall
+srun = servlet1.example.com:6802
+srun = servlet2.example.com:6802
+
+# eg2. with firewall
+#srun = servlet1.example.com:6082, firewall:6802
+#srun = servlet2.example.com:6082, firewall:6803
+
+# Turn on http listening on either apache
+# or resin boxes. Only need http port on
+# the resin boxes for debugging purposes
+http = web1.example.com:80
+
+# Only for debugging
+#http = servlet1.example.com:8080
+#http = servlet2.example.com:8080
+

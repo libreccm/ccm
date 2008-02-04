@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=144}]"><cms:name>housing-2-144</cms:name><cms:language>en</cms:language><cms:title>Modernisation schemes</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=144}]"><cms:name>housing-2-144-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>modernisation, schemes</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=144}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This type of improvement is the most extensive type of improvement carried out by the authority and is carried out throughout the year.</i></p><hr/><p>These properties have usually been identified as needing modernisation works to bring them up to modern day standards. Extensive consultation is carried out with tenants before work commences.</p><p>The work carried out will generally include:</p><ul>
+				<li title="*">A rewire of the property</li>
+				<li title="*">New upvc windows</li>
+				<li title="*">New external doors</li>
+				<li title="*">New kitchen units</li>
+				<li title="*">New bathroom fittings</li>
+				<li title="*">Energy efficiency measures</li>
+			</ul><p>In addition the tenant can choose work up to a certain monetary value. This could:</p><ul>
+				<li title="*">Flooring in the kitchen or bathroom</li>
+				<li title="*">Internal doors</li>
+				<li title="*">Structural alterations to the layout of the property </li>
+			</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=144"> Providing Information
+		(144)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

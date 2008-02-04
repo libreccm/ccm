@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=526}]"><cms:name>bins-526</cms:name><cms:language>en</cms:language><cms:title>Household waste - domestic bins</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=526}]"><cms:name>bins-526-dublin-metadata</cms:name><cms:dcAudience>householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>bins, domestic, household, waste, rubbish, refuse, disposal</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=526}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is responsible for the collection and disposal of household refuse.  This is a vital service that makes the area a healthy, safe and clean place to live.</i></p><hr/><p><i>More local description here</i></p><hr/><h3>We will:</h3><ul>
+			<li title="*">Collect your refuse on the same day each week (with the exception of Christmas, New Year and Bank Holidays)</li>
+			<li title="*">Advertise well in advance any changes to the collection service within the local press.</li>
+			<li title="*">Give you a date for collection and collect large items within 7 days of a request being made at a customer service 			centre or online</li>
+			<li title="*">Provide facilities for recycling waste</li>
+			</ul><h3>You can help us by:</h3><ul>
+			<li title="*">Putting the refuse out to the edge of  your property for emptying and collecting it after emptying. Special    				arrangements can be made if you are unable to do this.</li>
+			<li title="*">Making sure refuse sacks are tied.</li>
+			<li title="*">Making sure that when you request removal of large items, these items are easily accessible on the day we have 
+   			 arranged to collect them.</li>
+			<li title="*">Using the recycling facilities and composting garden waste.
+</li>
+			</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=526"> Providing Information
+		(526)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

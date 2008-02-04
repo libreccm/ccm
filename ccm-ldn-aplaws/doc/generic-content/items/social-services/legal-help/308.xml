@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=308}]"><cms:name>batch-23-308</cms:name><cms:language>en</cms:language><cms:title>Legal aid</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=308}]"><cms:name>batch-23-308-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>legal, aid</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=308}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Free legal advice may be obtained from solicitors under the 
+  advice and assistance scheme.</i></p><hr/><p>If in doubt as to how to find legal advice services contact 
+  your local 
+		<a href="http://www.nacab.org.uk">
+					<strong>Citizens Advice Bureau</strong>
+				</a>	 <span class="gen">link to external website</span>
+			</p><p>If you are on a low income Legal Aid may pay for your solicitor; 
+  look for the Legal Aid symbol under solicitors in <strong>
+					
+		<a href="http://www.yell.co.uk">Yellow 
+  Pages</a>	
+				</strong>
+<span class="gen">link to external website</span>
+  or in the local press. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=308"> Providing Information
+		(308)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

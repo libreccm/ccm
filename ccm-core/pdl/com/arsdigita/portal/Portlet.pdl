@@ -1,0 +1,39 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Portlet.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.portal;
+
+import com.arsdigita.web.ApplicationType;
+import com.arsdigita.kernel.ResourceType;
+import com.arsdigita.kernel.Resource;
+
+
+object type PortletType extends ResourceType {
+    ApplicationType[0..1] providerApplicationType =
+        join application_types.provider_id to application_types.application_type_id;
+    String profile = application_types.profile VARCHAR(20);
+}
+
+object type Portlet extends Resource {
+    Integer cellNumber = applications.cell_number INTEGER;
+    Integer sortKey = applications.sort_key INTEGER;
+
+    reference key (portlets.portlet_id);
+
+}

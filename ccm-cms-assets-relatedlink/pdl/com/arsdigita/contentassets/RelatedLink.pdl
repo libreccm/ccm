@@ -1,0 +1,75 @@
+//
+// Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+//
+// The contents of this file are subject to the Open Software License v2.1
+// (the "License"); you may not use this file except in compliance with the
+// License. You may obtain a copy of the License at
+// http://rhea.redhat.com/licenses/osl2.1.html.
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+// $Id: RelatedLink.pdl 908 2005-09-22 10:45:33Z sskracic $
+// $DateTime: 2004/03/30 18:21:14 $
+model com.arsdigita.cms.contentassets;
+
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.contenttypes.Link;
+import com.arsdigita.cms.MimeType;
+
+object type RelatedLink extends Link {
+
+    String[0..1] resourceSize = cms_related_links.resource_size VARCHAR(50);
+    MimeType[0..1] resourceType = join cms_related_links.resource_type
+                                to cms_mime_types.mime_type;
+
+    reference key(cms_related_links.related_link_id);
+    aggressive load (linkOwner.id);
+}
+
+association {
+    composite ContentItem[0..1] linkOwner = join cms_related_links.owner_id to cms_items.item_id;
+    component RelatedLink[0..n] links = join cms_items.item_id to cms_related_links.owner_id;
+}
+
+data operation swapRelatedLinkWithNextInGroup {
+    do {
+        update cms_links
+        set link_order = CASE WHEN (link_order = :linkOrder) THEN
+                                 (:nextLinkOrder)
+                            ELSE
+                                 (:linkOrder)
+                       END
+        where (link_order = :linkOrder or link_order = :nextLinkOrder)
+        and (select owner_id from cms_related_links where related_link_id=link_id) = :ownerID
+        and 2 = (select count(*) from cms_links l, cms_related_links r
+                 where l.link_id=r.related_link_id
+                 and (link_order = :linkOrder or link_order = :nextLinkOrder)
+                 and owner_id = :ownerID)
+    }
+}
+
+query allRelatedLinkOrderForItem {
+    Integer linkOrder;
+
+    do {
+        select l.link_order from cms_links l, cms_related_links r
+        where r.owner_id = :ownerID and l.link_id = r.related_link_id
+    } map {
+        linkOrder = l.link_order;
+    }
+}
+
+query getReferringRelatedLinks {
+    BigDecimal id;
+
+    do  {
+        select l.link_id
+          from cms_links l, cms_related_links r
+         where l.target_item_id = :itemID and l.link_id=r.related_link_id
+    } map {
+        id = l.link_id;
+    }
+}

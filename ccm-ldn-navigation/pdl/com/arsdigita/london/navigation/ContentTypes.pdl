@@ -1,0 +1,18 @@
+model com.arsdigita.london.navigation;
+
+query TypesInSection {
+    BigDecimal typeID;
+    
+    do {
+        select
+            type_id
+        from
+            content_section_type_map
+        where
+            section_id = :sectionID
+    }
+
+    map {
+        typeID = type_id;
+    }
+}

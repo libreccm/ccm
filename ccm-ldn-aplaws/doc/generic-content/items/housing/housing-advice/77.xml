@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=77}]"><cms:name>housing-3-77</cms:name><cms:language>en</cms:language><cms:title>Asylum seekers support</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=77}]"><cms:name>housing-3-77-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>asylum, seekers, support</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=77}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>An asylum seeker is someone who comes to the UK, often fleeing persecution, torture or war, and applies for refugee status.&#xA0;Until refugee status is granted, such a person remains an asylum seeker.&#xA0;Asylum seekers often encounter homelessness and face difficulty in obtaining accommodation. </i></p><hr/><p>The Council has a statutory responsibility to offer assistance to asylum seekers under the National Assistance Act of 1948.  We have a duty to provide accommodation and benefits to asylum seekers whilst they await the outcome of their case with the Home Office. </p><p>However, following changes in the law due to the Immigration and Asylum Act of 1999, asylum seekers that arrive after April 2000 no longer have a right to assistance and do not have to be provided for by the Council. Instead, the Home Office provides support through the National Asylum Support Service (NASS). </p><p>We  administer the various benefits asylum seekers are entitled to and also make provisions for temporary accommodation. </p><h2>Useful Links</h2><ul>
+			<li title="*">Home Office Immigration and Nationality Directorate: <strong>
+					
+		<a href="http://www.ind.homeoffice.gov.uk">www.ind.homeoffice.gov.uk</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">Asylum Aid: <strong>
+					
+		<a href="http://www.asylumaid.org.uk">www.asylumaid.org.uk</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">Asylum Support: <strong>
+					
+		<a href="http://www.asylumsupport.info">www.asylumsupport.info</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">Refugee Council: <strong>
+					
+		<a href="http://www.refugeecouncil.org.uk">www.refugeecouncil.org.uk</a>	
+				</strong>
+<span class="gen">link to external website</span>
+			</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=77"> Providing Information
+		(77)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

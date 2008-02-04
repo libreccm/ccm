@@ -1,0 +1,196 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: PublishToFile.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.publishToFile;
+
+import com.arsdigita.web.Host;
+
+// Defines pdl for following objects:
+//   QueueEntry - an entry in the queue of items to publish (or unpublish).
+//   PublishedFile  - file published to file system.
+//   PublishedLink  - link between files published to the file system.
+//   NotifyBroken - broken link notification information. (TO DO).
+
+
+//-------------------------------------------------------------
+//-- QueueEntry 
+//-------------------------------------------------------------
+
+object type QueueEntry {
+  BigDecimal[1..1] id       = publish_to_fs_queue.id INTEGER;
+  // XXX Should itemId really allow nulls ?
+  BigDecimal[0..1] itemId   = publish_to_fs_queue.item_id INTEGER;
+  BigDecimal[0..1] parentId = publish_to_fs_queue.parent_id INTEGER;
+  String[1..1]     task     = publish_to_fs_queue.task VARCHAR(30);
+  Host[1..1]       host     = join publish_to_fs_queue.host_id
+                                to web_hosts.host_id;
+  String[1..1]     itemType = publish_to_fs_queue.item_type VARCHAR(100);
+  // XXX Should destination really allow nulls ?
+  String[0..1]     destination    = publish_to_fs_queue.destination VARCHAR(1000);
+  // XXX Should timeQueued really allow nulls ?
+  Date[0..1]       timeQueued     = publish_to_fs_queue.time_queued TIMESTAMP;
+  Date[0..1]       timeLastFailed = publish_to_fs_queue.time_last_failed TIMESTAMP;
+  Long[1..1]       failCount      = publish_to_fs_queue.fail_count INTEGER;
+  BigDecimal[1..1] sortOrder      = publish_to_fs_queue.sort_order INTEGER;
+  String[0..1]     inProcess      = publish_to_fs_queue.in_process VARCHAR(40);
+
+  object key (id);
+
+  aggressive load (host.id);
+}
+
+
+//-------------------------------------------------------------
+//-- Data operation: record publish failure
+//-------------------------------------------------------------
+//  Increments failCount and sets time_last_failed to
+// sysdate.
+
+
+data operation flagPublishFailed {
+    do {
+	update publish_to_fs_queue
+    set
+       time_last_failed = currentDate(),
+       fail_count = fail_count + 1,
+       in_process = '0'
+    where
+       id = :id
+    }
+}
+
+//-------------------------------------------------------------
+//-- PublishedFile
+//-------------------------------------------------------------
+
+object type PublishedFile {
+  BigDecimal[1..1] id = publish_to_fs_files.id INTEGER;
+  Host[1..1] host = join publish_to_fs_files.host_id
+                to web_hosts.host_id;
+  String[1..1]     itemType = publish_to_fs_files.item_type VARCHAR(100);
+  BigDecimal[1..1] draftId = publish_to_fs_files.draft_id INTEGER;
+  BigDecimal[1..1] itemId = publish_to_fs_files.item_id INTEGER;
+  String[1..1] fileName = publish_to_fs_files.file_name VARCHAR(1000);
+
+  object key (id);
+
+  aggressive load (host.id);
+}
+
+
+//-------------------------------------------------------------
+//-- PublishedLink
+//-------------------------------------------------------------
+
+object type PublishedLink {
+  BigDecimal id = publish_to_fs_links.id;
+  
+  BigDecimal source = publish_to_fs_links.source;
+  BigDecimal target = publish_to_fs_links.target;
+  Boolean    isChild = publish_to_fs_links.is_child;
+
+  object key (id);
+}
+
+
+
+//----------------------------------------------------------
+//-- Check for link already in published_to_fs_links table.
+//-- Used to prevent making duplicate entries in table.
+//-- Ignore is_child in where clause becuase new entry will
+//-- set the is_child to the proper value.
+//----------------------------------------------------------
+
+query checkIfAlreadyHaveLink {
+   PublishedLink publishedLink;
+   do {
+select 
+   id, source, target, is_child
+from
+   publish_to_fs_links
+where
+   source = :source
+   and target = :target
+} map {
+   publishedLink.id = id;
+   publishedLink.source = source;
+   publishedLink.target = target;
+   publishedLink.isChild = is_child;
+}
+}
+
+// Retrieves all related assets with specified item (article) 
+// to delete them from File System, when item is unpublished
+query getRelatedFiles {
+  String fileName;
+  do {
+    select file_name
+    from publish_to_fs_files
+    where item_id = :itemId
+      and host_id = :hostId
+  } map {
+    fileName  = file_name;
+  }
+}
+
+//----------------------------------------------------
+//-- Update files to reflect moved folder
+//-- :oldPrefix - old location of folder, e.g. /var/www/abc/
+//-- :newPrefix - new location, e.g. /var/www/def/ghi/
+//-- Both old and new prefix should start and end with "/"
+//----------------------------------------------------
+
+data operation moveFolder {
+   do {
+      update publish_to_fs_files
+      set file_name = ( :newPrefix || substr(file_name, length(:oldPrefix) + 1) )
+      where substr(file_name, 1, length(:itemPath)) = :itemPath
+        and host_id = :hostId
+   }
+}
+
+data operation moveItem {
+    do {
+      update publish_to_fs_files
+      set file_name = ( :newPrefix || substr(file_name, length(:oldPrefix) + 1) )
+      where item_id = :itemId
+        and host_id = :hostId
+    }
+}
+
+
+data operation deleteFiles {
+    do {
+      delete from publish_to_fs_files
+      where substr(file_name, 1, length(:prefix)) = :prefix
+        and host_id = :hostId
+    }
+}
+
+// FIXME: remove this query as soon as TemplateMappping is fixed
+query getAssignedTemplates {
+  String useContext;
+  do {
+    select use_context
+    from cms_item_template_map
+    where item_id = :itemId
+  } map {
+    useContext = use_context;
+  }
+}

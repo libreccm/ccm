@@ -1,0 +1,246 @@
+//
+// Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: test.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model test;
+
+object type A class com.redhat.persistence.PropertyMap
+              adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = a.a_id;
+    String name = a.name;
+    Link[0..1] first = qualias { filter(links, index == 0) };
+    Link[0..n] links = qualias { filter(all(test.Link), a == this) };
+    B[0..n] bees = qualias { links.b };
+    Link[0..n] bees\@link = qualias { links };
+
+    object key(id);
+}
+
+object type B class com.redhat.persistence.PropertyMap
+              adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = b.b_id;
+    String name = b.name;
+
+    object key(id);
+}
+
+object type C class com.redhat.persistence.PropertyMap
+              adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = c.c_id;
+    String name = c.name;
+
+    object key(id);
+}
+
+object type Link class com.redhat.persistence.PropertyMap
+                 adapter com.redhat.persistence.oql.IdentityAdapter {
+    A a = join l.a_id to a.a_id;
+    B b = join l.b_id to b.b_id;
+    String name = l.name;
+    Integer index = l.idx;
+
+    object key(a, b);
+}
+
+object type Tuple class com.redhat.persistence.PropertyMap
+                  adapter com.redhat.persistence.oql.IdentityAdapter {
+    A a = join tup.a_id to a.a_id;
+    B b = join tup.b_id to b.b_id;
+    C c = join tup.c_id to c.c_id;
+
+    C cee = join tup.cee_id to c.c_id;
+
+    object key(a, b, c);
+}
+
+object type StaticTuple class com.redhat.persistence.PropertyMap
+                        adapter com.redhat.persistence.oql.IdentityAdapter {
+    A a;
+    B b;
+    C c;
+
+    C cee;
+
+    object key(a, b, c);
+
+    retrieve all {
+        do {
+            select a_id, b_id, c_id, cee_id
+            from tup
+        } map {
+            a.id = a_id;
+            b.id = b_id;
+            c.id = c_id;
+            cee.id = cee_id;
+        }
+    }
+
+    retrieve cee {
+        do {
+            select c.c_id, c.name
+            from tup, c
+            where tup.cee_id = c.c_id
+            and tup.a_id = :a.id
+            and tup.b_id = :b.id
+            and tup.c_id = :c.id
+        } map {
+            cee.id = c_id;
+            cee.name = name;
+        }
+    }
+
+}
+
+object type Node class com.redhat.persistence.PropertyMap
+                       adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = st.st_id;
+    String name = st.name;
+    String description = st.description;
+    NodeType[1..1] type = join st.type_id to nt.type_id;
+    Node parent = join st.parent_id to st.st_id;
+    Node[0..n] children = qualias { filter(all(test.Node), parent == this) };
+
+    // XXX: this definition is actually different from the uncommented
+    // one and has the effect of added a parent is not null filter
+    // when doing a get. This is because this resolves to the row in
+    // the actual containing query. This may actually be a case where
+    // the "this" variable should actually resolve to a subquery
+    // rather than a column reference. This could be done for all such
+    // variables although this would put more stress on the optimizer,
+    // or it may make sense to it only for the special this frame.
+    //
+    // Node[0..1] meIfHasParent = qualias { filter(this, exists(parent)) };
+
+    Node[0..1] meIfHasParent = qualias {
+        filter(n = all(test.Node), this == n and exists(parent))
+    };
+
+    object key(id);
+}
+
+object type NodeType class com.redhat.persistence.PropertyMap
+                     adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = nt.type_id;
+    String name = nt.name;
+    String description = nt.description;
+
+    object key(id);
+}
+
+object type StaticNode class com.redhat.persistence.PropertyMap
+                       adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id;
+    String name;
+    StaticNode parent;
+    StaticNode[0..n] children;
+
+    object key(id);
+
+    retrieve all {
+        do {
+            select st_id, name
+            from st
+        } map {
+            id = st_id;
+            name = name;
+        }
+    }
+
+    retrieve parent {
+        do {
+            select p.st_id, p.name
+            from st ch, st p
+            where ch.parent_id = p.st_id
+            and ch.st_id = :id
+        } map {
+            parent.id = st_id;
+            parent.name = name;
+        }
+    }
+
+    retrieve children {
+        do {
+            select st_id, name
+            from st
+            where parent_id = :id
+        } map {
+            children.id = st_id;
+            children.name = name;
+        }
+    }
+
+}
+
+object type User class com.redhat.persistence.PropertyMap
+                 adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = u.u_id;
+    String name = u.name;
+    String firstName = qualias { name };
+    String lastName = u.last_name;
+    Group[0..n] groups = qualias {
+        filter(all(test.Group), exists(filter(m = members, m == this)))
+    };
+
+    object key(id);
+}
+
+object type Group class com.redhat.persistence.PropertyMap
+                  adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = g.g_id;
+    String name = g.name;
+
+    User[0..n] members = join g.g_id to members.g_id,
+                         join members.u_id to u.u_id;
+    Group[0..n] subgroups = join g.g_id to subgroups.g_id,
+                            join subgroups.sg_id to g.g_id;
+    Group[0..n] supergroups = qualias {
+        filter(all(test.Group),
+               exists(filter(g = subgroups, g == this)))
+    };
+
+    User[0..1] other = qualias { filter(all(test.User), id == this.id) };
+
+    object key(id);
+}
+
+object type Pair1 class com.redhat.persistence.PropertyMap
+                 adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = p1.id;
+    String name = p1.name;
+
+    object key(id);
+}
+
+object type Pair2 class com.redhat.persistence.PropertyMap
+                 adapter com.redhat.persistence.oql.IdentityAdapter {
+    BigInteger id = p2.id;
+    String name = p2.name;
+
+    object key(id);
+}
+
+association {
+    unique Pair1[0..1] p1 = join p2.p1_id to p1.id;
+    Pair2[0..1] p2 = join p1.id to p2.p1_id;
+}
+
+query IdsLessThanThree {
+    do {
+        a_id < 3
+    }
+}

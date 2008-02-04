@@ -1,0 +1,101 @@
+//
+// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+//
+// The contents of this file are subject to the ArsDigita Public 
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.arsdigita.com/ADPL.txt
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.kernel;
+
+import com.arsdigita.kernel.acs_object.*;
+
+object type Party {
+    BigDecimal     id               = parties.party_id;
+    String         email            = parties.email;
+
+    object key (id);
+}
+
+object type User extends Party {
+    String         firstName        = users.first_name;
+    String         lastNames        = users.last_names;
+    String[0..n]   nicknames        = user_nicknames.name
+                                      foreign key(user_nicknames.user_id);
+    String         favoriteColor    = user_prefs.favorite_color;
+
+    foreign key (users.user_id);
+    foreign key (user_prefs.user_id);
+}
+
+association {
+    User           mother           = foreign key(users.mother_id);
+    User[0..n]     children         = foreign key(users.mother_id);
+}
+
+object type Group extends Party {
+    String         name             = groups.name;
+}
+
+association {
+    Group[0..n]    groups           = foreign key(user_group_map.group_id);
+    User[0..n]     users            = foreign key(user_group_map.user_id);
+    Date           memDate          = user_group_map.membership_date;
+}
+
+object type Order {
+    BigDecimal     id               = orders.order_id;
+    User[1..1]     buyer            = foreign key(orders.buyer_id);
+    User           seller           = foreign key(orders.seller_id);
+    String         shippingAddress  = orders.shipping_address;
+
+    retrieve all {
+        select * from orders;
+
+        id = orders.order_id;
+        shippingAddress = orders.shipping_address;
+    }
+
+    retrieve buyer {
+        select ...;
+    }
+
+    retrieve attributes {
+        select ...;
+    }
+
+    retrieve seller {
+        select ...;
+    }
+}
+
+object type LineItem {
+    BigDecimal     id               = line_items.item_id;
+    BigInteger     price            = line_items.price;
+    String         name             = line_items.name;
+
+    retrieve {
+        select ...;
+    }
+}
+
+association {
+    Order[1..1]              order  = foreign key(line_items.order_id);
+    composite LineItem[0..n] items  = foreign key(line_items.order_id);
+
+    retrieve order {
+        select o.*
+        from orders o, line_items li
+        where o.order_id = li.order_id
+        and li.item_id = :id;
+
+        order.id = orders.order_id;
+        order.shippingAddress = orders.shippingAddress;
+    }
+}

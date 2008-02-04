@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<terms:related xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
+  <terms:domain resource="http://www.esd.org.uk/standards/lgcl/1.04/termslist.xml"/>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="1070"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1814"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="107"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1332"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="1193"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3451"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="1352"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1137"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="1558"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="59"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="184"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3118"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="184"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="569"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="265"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1380"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="265"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1388"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3013"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1302"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3027"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="697"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3100"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="583"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3139"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1299"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="324"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3397"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3300"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="21"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3300"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="56"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3301"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="284"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3302"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3318"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3302"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="358"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3304"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1041"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3305"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3454"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3306"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1688"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3306"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="347"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3309"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1039"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="4226"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3407"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3329"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="566"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3333"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3140"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3335"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3140"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3336"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3140"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3342"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3164"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3346"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1102"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3399"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="3116"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="3423"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1305"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="392"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="410"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="5"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="59"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="62"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1007"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="65"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1008"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="66"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1637"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="70"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="95"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="78"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1305"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="839"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="1248"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="839"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="793"/>
+    </terms:second>
+  </terms:unorderedPair>
+  <terms:unorderedPair>
+    <terms:first>
+      <terms:term id="85"/>
+    </terms:first>
+    <terms:second>
+      <terms:term id="98"/>
+    </terms:second>
+  </terms:unorderedPair>
+</terms:related>

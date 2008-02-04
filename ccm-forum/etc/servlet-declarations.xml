@@ -1,0 +1,7 @@
+ <servlet>
+   <servlet-name>ForumServlet</servlet-name>
+   <display-name>Forums Servlet</display-name>
+   <servlet-class>
+    com.arsdigita.forum.ForumServlet
+   </servlet-class>
+ </servlet>

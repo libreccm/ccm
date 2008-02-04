@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=354}]"><cms:name>elected-members-minutes-agendas-reports-354</cms:name><cms:language>en</cms:language><cms:title>Elected Members - Minutes, Agendas and Reports</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=354}]"><cms:name>elected-members-minutes-agendas-reports-354-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>elected, members, minutes, agendas, reports</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=354}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council records and publishes all minutes, agendas and reports from Committee meetings. </i></p><hr/><p>By law, the Council must produce an accurate record of all decisions taken and recommendations made by the Council and its Committees and Panels. Depending on the type of committee or panel, minutes may be done in note form. For the quasi-judicial and decision-making committees and panels, they take the more traditional form. </p><p>The following list includes Minutes and Agendas of meetings, and Reports of Elected Members. </p><p>
+				The documents are available to download. Alternatively,
+if you would like to receive a hard copy, please use the contact details above.
+			</p><table width="90%" cellpadding="5" class="centre" summary="details of minutes, agendas and reports">
+				<tr>
+					<th>Date and Time</th>
+					<th>Meeting/Venue</th>
+					<th>Document/s Available</th>
+				</tr>
+				<tr>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+					<td>
+					<ul>
+					<li title="*">Agenda Name <span class="gen">enter hyperlink</span>
+</li>
+					<li title="*">Minutes Name <span class="gen">enter hyperlink</span>
+</li>
+					<li title="*">Report Name <span class="gen">enter hyperlink</span>
+</li>
+</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+					<td>
+					<ul>
+					<li title="*">Agenda Name <span class="gen">enter hyperlink</span>
+</li>
+					<li title="*">Minutes Name <span class="gen">enter hyperlink</span>
+</li>
+					<li title="*">Report Name <span class="gen">enter hyperlink</span>
+</li>
+</ul>
+					</td>
+				</tr>
+			</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=354"> Providing Information
+		(354)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

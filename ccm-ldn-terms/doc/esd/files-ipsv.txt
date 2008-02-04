@@ -1,0 +1,4 @@
+http://www.esd.org.uk/standards/ipsv/2.00/ipsv.xml,xml-ipsv/domain-ipsv-2.00.xml,xslt-1.04/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/ipsv/2.00/ipsv.xml,xml-ipsv/hierarchy-ipsv-2.00.xml,xslt-1.04/Taxonomy2hierarchy.xsl
+http://www.esd.org.uk/standards/ipsv/2.00/ipsv.xml,xml-ipsv/synonyms-ipsv-2.00.xml,xslt-1.04/Taxonomy2synonyms.xsl
+http://www.esd.org.uk/standards/ipsv/2.00/ipsvrelatedterms.xml,related-ipsv-2.00.xml,xslt-1.04/RelatedItems2related.xsl

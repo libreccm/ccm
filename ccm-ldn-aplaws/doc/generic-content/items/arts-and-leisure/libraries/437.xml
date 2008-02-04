@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=437}]"><cms:name>arts-and-leisure-437</cms:name><cms:language>en</cms:language><cms:title>Library facilities (incl. location, opening hours)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=437}]"><cms:name>arts-and-leisure-437-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>library, facilities, location, opening, hours</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=437}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Here you will find details of what services we provide at each library and the opening times of each library.</i></p><hr/><table width="90%" cellpadding="5" class="centre" summary="Icons of Services available in Libraries">
+			<tr>
+				<td>
+					<span class="gen">enter image</span>
+				</td>
+				<td>
+					<span class="gen">enter image</span>
+				</td>
+				<td>
+					<span class="gen">enter image</span>
+				</td>
+				<td>
+					<span class="gen">enter image</span>
+				</td>
+				<td>
+					<span class="gen">enter image</span>
+				</td>
+				<td>
+					<span class="gen">enter image</span>
+				</td>
+				<td>
+					<span class="gen">enter image</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Computer Access</td>
+				<td>Talking Books</td>
+				<td>Compact Discs</td>
+				<td>Language Tapes</td>
+				<td>Videos</td>
+				<td>Disabled Access</td>
+				<td>Photocopier</td>
+			</tr>
+		</table><p>
+			<strong>1.</strong>
+			<span class="gen">enter facility</span>, Services available include; 
+			<span class="gen">enter details</span>
+		<br/>
+			
+				<span class="gen">enter address</span>
+			, 
+				<span class="gen">enter telephone number</span>
+			, 
+				<span class="gen">enter fax number</span>
+			, 
+
+				<span class="gen">enter email address</span>
+			
+		<br/>
+			<span class="gen">enter opening times</span>
+		</p><p>
+			<strong>2. </strong>
+			<span class="gen">enter facility</span>, Services available include; 
+			<span class="gen">enter details</span>
+		<br/>
+			
+				<span class="gen">enter address</span>
+			, 
+				<span class="gen">enter telephone number</span>
+			, 
+				<span class="gen">enter fax number</span>
+			, 
+
+				<span class="gen">enter email address</span>
+			
+		<br/>
+			<span class="gen">enter opening times</span>
+		</p><p>
+			<strong>3. </strong>
+			<span class="gen">enter facility</span>, Services available include; 
+			<span class="gen">enter details</span>
+		<br/>
+			
+				<span class="gen">enter address</span>
+			, 
+				<span class="gen">enter telephone number</span>
+			, 
+				<span class="gen">enter fax number</span>
+			, 
+
+				<span class="gen">enter email address</span>
+			
+	<br/>
+			<span class="gen">enter opening times</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=437"> Providing Information
+		(437)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

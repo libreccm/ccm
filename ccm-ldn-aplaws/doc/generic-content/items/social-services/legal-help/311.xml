@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=311}]"><cms:name>batch-23-311</cms:name><cms:language>en</cms:language><cms:title>Wills and Testaments</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=311}]"><cms:name>batch-23-311-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>wills, testaments</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=311}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>When a person dies without leaving a will the law dictates what is to happen to their possessions be it a few pounds, some cherished objects or jewellery or a large amount of money. </i></p><hr/><p>Whatever the amount of property no account will be given to the wishes of the deceased if there is no will. </p><p>When somebody dies without a will the law says he is &quot;intestate&quot;. The property, the persons &quot;estate&quot; is divided among members of the family under strict rules contained in the Administration of Estates Act after all bills are paid. </p><p>Wills sound like a very complicated legal process, which tends to make people shirk away from them. In truth a will is a letter of wish of how someone's assets should be distributed in the event of their death. It becomes a little more complicated with children and relatives that 
+need to be taken into consideration. </p><p>There is no necessity to have a will drawn up by a solicitor but great care needs to be taken as sorting out an unclear will can lead to long and expensive court cases. There are many books and guides and printed forms available to help you. Nowadays you can download wills from the internet or buy them in a standard format from legal stationers. There are also will writers and advice on-line:</p><ul>
+			<li title="*">
+				
+		<a href="http://www.bequest.co.uk">www.bequest.co.uk </a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.willwriters.co.uk">www.willwriters.co.uk </a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://willwrite.co.uk">www.willwrite.co.uk </a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.ewltd.com">www.ewltd.com </a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://thesocietyofwillwriters.co.uk/">The Society of Will Writers </a>	
+				<span class="gen">link to external website</span>
+			</li>
+		</ul><p>Some people believe that writing a will is morbid and somehow tempting fate, others never quite get around to it while some people make several wills during their lifetime as circumstances change. To help those who live on after and to ensure that your property is dealt with as you want it to be you need to make a will. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=311"> Providing Information
+		(311)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

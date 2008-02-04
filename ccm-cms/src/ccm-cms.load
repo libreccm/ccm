@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <package name="ccm-core"/>
+  </requires>
+  <provides>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms"/>
+    <data class="com.arsdigita.cms.Loader"/>
+  </scripts>
+</load>

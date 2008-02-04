@@ -1,0 +1,83 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: NewsItem.pdl 1594 2007-07-10 10:56:11Z p_boy $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.*;
+
+// object type to hold extended attributes of news content type
+
+object type NewsItem extends com.arsdigita.cms.Article {
+    // The tease/lead paragraph for the news item
+    String [0..1] lead        = ct_news.tease_lead VARCHAR(4000);
+    // The date for the news item
+    Date [0..1]   newsDate    = ct_news.news_date DATE;
+    Boolean[1..1] isHomepage = ct_news.is_homepage CHAR(1);
+
+    reference key (ct_news.item_id);
+}
+
+query RecentNews {
+    BigDecimal newsID;
+    do {
+        select n.item_id
+        from ct_news n, cms_items i
+            left join cms_article_image_map m
+            on i.item_id = m.article_id
+        where n.is_homepage = 1
+        and n.item_id = i.item_id
+        and i.version = 'live'
+        order by n.news_date desc
+    } map {
+        newsID = n.item_id; 
+    }
+}
+
+query NewsItemDates {
+    Date newsDate;
+    do {
+        select distinct date_trunc('month',n.news_date) as news_month
+        from ct_news n, cms_items i
+        where n.item_id = i.item_id
+        and i.version = 'live'
+        order by 1
+    } map {
+        newsDate = news_month; 
+    }
+}
+    
+ query NewsItemsInCategory {
+ 	BigDecimal newsID;
+ 	do {
+ 		select ctn.item_id as newsid
+ 		from cms_items i_newsitem,cms_items i_bundle,ct_news ctn,cms_pages cp,acs_objects o,cat_object_category_map m
+       where i_newsitem.parent_id = i_bundle.item_id
+       and i_bundle.item_id = m.object_id
+       and ctn.item_id = cp.item_id
+       and o.object_id = i_bundle.item_id
+       and cp.item_id = i_newsitem.item_id
+       and i_bundle.version = 'live'
+       and m.category_id = :category_id
+       and date_part('month',ctn.news_date) = :the_month
+       and date_part('year',ctn.news_date) = :the_year
+       order by ctn.news_date
+    } map {
+        newsID = newsid; 
+    }
+}

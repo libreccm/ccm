@@ -1,0 +1,94 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: LivePages.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+
+// Fetches the name and URL of all content sections.
+
+ query allContentSections {
+     String sectionLabel;
+     String sectionURL;
+   do {
+     select
+       cs.pretty_name, ap.primary_url
+     from
+       applications ap, content_sections cs
+     where
+       ap.application_id = cs.section_id
+   } map {
+     sectionLabel = cs.pretty_name;
+     sectionURL = ap.primary_url;
+   }
+ }
+
+// Fetches links to all top-level folders 
+
+query liveTopLevelFolders {
+    BigDecimal folderID;
+    String folderLabel;
+    String folderName;
+  do {
+    select
+      f.folder_id, f.label, i.name
+    from
+      cms_folders f,
+      cms_items i
+    where
+      i.parent_id = (
+        select item_id
+        from cms_items
+        where master_id = (
+          select root_folder_id from content_sections
+          where section_id = :section_id
+        )
+      )
+    and f.folder_id = i.item_id
+    and i.version = 'live'
+  } map {
+    folderID = f.folder_id;
+    folderLabel = f.label;
+    folderName = i.name;
+  }
+}
+
+// Fetches links to all folders under a folder
+
+query liveSubFolders {
+    BigDecimal folderID;
+    String folderLabel;
+    String folderName;
+  do {
+    select
+      f.folder_id, f.label, i.name
+    from
+      cms_folders f,
+      cms_items i
+    where
+      i.parent_id = :root_folder_id
+    and
+      f.folder_id = i.item_id
+    and
+      i.version = 'live'
+  } map {
+    folderID = f.folder_id;
+    folderLabel = f.label;
+    folderName = i.name;
+  }
+}

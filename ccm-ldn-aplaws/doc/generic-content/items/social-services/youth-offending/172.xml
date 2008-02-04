@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=172}]"><cms:name>batch-23-172</cms:name><cms:language>en</cms:language><cms:title>Action plan orders</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=172}]"><cms:name>batch-23-172-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>action, plan, orders</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=172}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Action Plan Order was created by the 1998 Crime and Disorder Act as a way of dealing with young 
+    people between the ages of 10 and 17, who have to be dealt with by the Youth Court.</i></p><hr/><p>It is a community sentence which is intended to offer an early opportunity for 
+    work and/or support to help prevent further offending.  The Action Plan Order lasts for three months from the date of the Order being made. </p><p>The Action Plan Order aims to prevent re-offending by ensuring that the young person complies with 
+    the requirements of an Action Plan, which will be designed to address the causes 
+    of such behaviour by requiring the young person to complete any of a number of 
+    specific tasks.</p><p>It aims to encourage the young person to take responsibility for their actions 
+    and to consider the wishes and feelings of victims of crime. It will also consider 
+    the need for 'reparation' (putting things right) to the victim(s).</p><p>Specific requirements of an Action Plan Order may include:</p><ul>
+			<li title="*">Participation in activities.</li>
+			<li title="*">Attendance at offence focused work groups.</li>
+			<li title="*">Attendance at an Attendance Centre.</li>
+			<li title="*">Staying away from specified places.</li>
+			<li title="*">Monitored school attendance.</li>
+			<li title="*">Reparation, either to the victim of the offence or to the community as a whole.</li>
+			<li title="*">Attendance at a review hearing at the Youth Court.</li>
+		</ul><p>The Court can use a combination of any of the above elements 
+  to create an Action Plan for any individual. It may also choose to impose a Parenting 
+  Order on the parents of a young person subject to an Action Plan Order.</p><p>A Responsible Officer will be appointed from the Youth Offending 
+  Team to supervise/co-ordinate the programme of work.</p><h2>
+What will happen if the young person fails 
+  to co-operate?</h2><p>At most, two warnings within the period of the Order may be 
+  given before Breach Proceedings are taken.  
+  Breach Proceedings will involve the young person being returned to Court. The Court 
+  may discharge the Order and re-sentence for the original offence.</p><p>Breach Proceedings can be taken at any stage of the Order (regardless 
+  of the length of time it has to run) and without prior warning if the failure to 
+  comply is serious, such as an attempt to avoid its completion or serious misconduct. 
+  </p><h2>
+			
+			What do Parents/Guardians have to do?</h2><p>Parents/Guardians should:</p><ul>
+			<li title="*">Attend Court with the young person.</li>
+			<li title="*">Encourage the young person to appreciate fully the consequences of their offending 
+    behaviour.</li>
+			<li title="*">Ensure that the young person successfully completes the activities assigned 
+    to him/her.</li>
+			<li title="*">Co-operate with any Parenting Order that may be imposed. </li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=172"> Providing Information
+		(172)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

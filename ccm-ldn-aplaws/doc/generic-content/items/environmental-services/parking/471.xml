@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=471}]"><cms:name>batch-8-471</cms:name><cms:language>en</cms:language><cms:title>On street parking enforcement - parking fines</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=471}]"><cms:name>batch-8-471-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>street, parking, enforcement, fines</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=471}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Parking Services have taken over the duties of traffic wardens where on and off street parking is concerned. </i></p><hr/><p>The Council's parking services staff always aim to enforce the Road Traffic Regulations Act 1984 fairly and equitably.</p><p>The Council believes that effective parking enforcement benefits public transport users, pedestrians, cyclists and responsible drivers.</p><p>The Parking Services team maintain ticket machines and meters as well as the signs and infrastructure of on and off-street car parking to make sure parking bays are always available and safe to use.</p><p>The team also aims to handle all enquiries in a courteous and helpful manner and respond to all written representations about excess charge notices.</p><p>Frequently Asked Questions regarding Fines</p><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">How do I pay a car park fine?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">How do I dispute my car parking fine?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">How much do I pay?</a>	
+				</strong>
+			</li>
+		</ul><h3>
+			
+			How do I pay my Car Park Fine?</h3><p>You can pay your car parking fine in any of the following ways:</p><ul>
+			<li title="*">by credit/debit card you can pay 
+		<a href="/ccm/services/pid.jsp?pid=forms/471a">
+					<strong>on-line here</strong>
+				</a>	
+				<span class="gen">link to online form</span> with a credit card</li>
+			<li title="*">in person - you should take your payment and car park fine ticket to any of our Customer Services Offices</li>
+			<li title="*">by cheque - payable to <span class="gen">enter council name</span> and posted to <span class="gen">enter address</span>, please quote the billing number on the back of the cheque</li>
+			<li title="*">postal order - you should post to <span class="gen">enter address</span> please quote the billing number on the back of the cheque</li>
+		</ul><p>Please pay promptly.</p><p>If you pay your parking fine within 7 days of receipt, we will reduce the fee from &#xA3; <span class="gen">enter amount</span> to &#xA3; <span class="gen">enter amount</span>
+		</p><h3>
+			
+			How do I dispute my Car Park Fine?</h3><p>If you wish to dispute your fine and have a valid ticket you should complete the 
+		<a href="/ccm/services/pid.jsp?pid=forms/471h">
+				<strong>on-line 			dispute form</strong>
+			</a>	
+			<span class="gen">link to online form</span>
+		</p><p>Whilst we consider your disputed fine we will freeze the deadline date to pay until such time as we respond. If your 			dispute is unsuccessful we will expect payment within 7 days from the date of our response.</p><p>If you wish to dispute your fine on the basis of extenuating circumstances or because you are a Disabled Badge 			Holder, you should complete the 
+		<a href="/ccm/services/pid.jsp?pid=forms/471h">
+				<strong>on-line dispute form</strong>
+			</a>	
+			<span class="gen">link to online form				</span>
+		</p><h3>
+			
+			How much do I pay?</h3><p>Your car park fine will cost &#xA3; <span class="gen">enter amount</span> however if you pay your fine within 7 days of issue the cost it is reduced to &#xA3; <span class="gen">enter amount.</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=471"> Applications for services
+		(471)
+		</a></h3><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=471"> Paying for goods and services
+		(471)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,77 @@
+ccm-ldn-theme (6.3.1-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.3.0 to 6.3.1
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Fri, 30 Dec 2005 08:49:33 +0000
+
+ccm-ldn-theme (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:52:02 +0000
+
+ccm-ldn-theme (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 1.0.2 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:13 +0000
+
+ccm-ldn-theme (1.0.2-1) unstable; urgency=low
+
+  * Automatic update of version number from 1.0.1 to 1.0.2
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 05 Sep 2005 15:48:22 +0000
+
+ccm-ldn-theme (1.0.1-1) unstable; urgency=low
+
+  * Automatic update of version number from 1.0.0 to 1.0.1
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Thu, 31 Mar 2005 11:59:56 +0000
+
+ccm-ldn-theme (1.0.0-5) unstable; urgency=low
+
+  * Remove the build-dependancy on ccm-ldn-aplaws as it isn't required and
+    removes circular build dependancies. 
+  * Depend on j2sdk1.4 | java2-compiler 
+  * Update to policy 3.6.1
+  * Change maintainer to the mailing list and add uploaders
+
+ -- David Pashley <david@runtime-collective.com>  Mon, 31 Jan 2005 17:41:35 +0000
+
+ccm-ldn-theme (1.0.0-4) unstable; urgency=low
+
+  * debian/postrm: disabled the purge operations [had some weird problems].
+  * updated the debian control scripts to get the package name and version from their invocation.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Mon, 10 May 2004 12:33:33 +0100
+  
+ccm-ldn-theme (1.0.0-3) unstable; urgency=low
+
+  * debian/templates: made load-at-install and setup-database-at-install the default behaviour.
+  * debian/postinst: ccm_hostinit will try to use web.xml-aplaws from ccm-ldn-aplaws.
+  * debian/ccm-settings.sh: correct checking/setting of ORACLE_JDBC_LIB [Chris].
+  * debian/templates: changed the default postgresql database and user names to "ccm01.db" and "ccm".
+  * debian/config: added detection of the hostname of the machine and possibly the user's email.
+  * major restructuring of the debian scripts: moved all utility functions to ccm-tools and made postinst, postrm, prerm and ccm-settings.sh source and use that file.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri,  7 May 2004 13:04:43 +0100
+
+ccm-ldn-theme (1.0.0-2) unstable; urgency=low
+
+  * The build process now tries to automatically detect JAVA_HOME and the location of Oracle's java library.
+  * debian/ccm-clean.sh: only calls the ant process if build.xml exists.
+  * debian/{postinst,prerm,config,templates}: added debconf support
+  * debian/postinst: accepts 'reconfigure' and treats it as 'configure'.
+  * debian/postinst: added postgresql.jar to CLASSPATH; added libpgjava to the dependencies.
+  * debian/postinst: removed some bashisms upon recommendation from lintian.
+  * debian/rules: enabled dh_installdebconf.
+  * debian/control: made the package depend on debconf.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri,  1 May 2004 15:41:43 +0100
+  
+    
+ccm-ldn-theme (1.0.0-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri, 24 Apr 2004 12:27:56 +0100

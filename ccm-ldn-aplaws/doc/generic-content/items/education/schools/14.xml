@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=14}]"><cms:name>education-3-14</cms:name><cms:language>en</cms:language><cms:title>Secondary school places</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=14}]"><cms:name>education-3-14-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>secondary, school, places</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=14}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently Asked Questions regarding admission to Secondary School</i></p><hr/><ul>
+		<li title="*">
+
+		<a href="#1">Where can I get detailed information about individual schools?</a>	
+</li>
+		<li title="*">
+
+		<a href="#2">What types of schools are there?</a>	
+</li>
+		<li title="*">
+
+		<a href="#3">When can my child start school?</a>	
+</li>
+		<li title="*">
+
+		<a href="#4">Supporting information</a>	
+</li>
+		<li title="*">
+
+		<a href="#5">Applying out of authority</a>	
+</li>
+		<li title="*">
+
+		<a href="#6">Changing schools other than at the normal transfer age</a>	
+</li>
+		<li title="*">
+
+		<a href="#7">Parental Preference</a>	
+</li>
+		<li title="*">
+
+		<a href="#8">Community schools over subscription criteria</a>	
+</li>
+		</ul><h4>
+
+			Where can I get detailed information about individual schools?</h4><p>Every school publishes its own prospectus which it will give to parents on request. In the prospectus parents will find information about the school's</p><ul>
+				<li title="*">aims and values</li>
+				<li title="*">organisation of teaching</li>
+				<li title="*">public examination results</li>
+				<li title="*">National Curriculum assessment results</li>
+				<li title="*">attendance figures</li>
+				<li title="*">admissions policy</li>
+				<li title="*">level of demand for places in the previous year (secondary schools)</li>
+			</ul><p>Information about examination results will be available from secondary schools each November. You can contact a school direct</p><h4>
+
+			What types of school are there?</h4><p>
+<strong>Community Schools</strong>
+</p><p>These are schools which are established, maintained and controlled 
+  by the Council. The majority of schools in the borough are community schools. The 
+  Council is responsible for all admissions to community schools. </p><p>
+<strong>Voluntary Schools</strong>
+</p><p>Some schools were established and are owned by a voluntary body. 
+  Usually it is a church body, either Church of England or Roman Catholic, but this 
+  does not have to be the case. The governing body of a voluntary school has a majority 
+  of its governors appointed by the church authority or foundation which provides 
+  the school. The purpose of these foundation governors is to look after the interests 
+  of the founding authority. This would, for example, seek to preserve any religious 
+  associations which the school has. Voluntary Aided Schools are responsible for all 
+  their own admissions arrangements. Admissions decisions are taken by the governing 
+  body. Voluntary Controlled Schools, like community schools, have their admissions 
+  handled by the Council.</p><h4>
+
+			When can my child start school?</h4><p>Transfer from primary to secondary education takes place in 
+  the September following a child's eleventh birthday. In October parents of children 
+  in <span class="gen">enter council name</span> schools who are 
+  due to transfer in the following September will receive a letter from the Director 
+  Education and Children's Services along with an application form and notes of guidance 
+  which explain how to fill it in.</p><h4>
+
+			Supporting Information</h4><p>The admissions authority, which is the local education authority 
+  for community schools and the governing body for voluntary aided schools, has a 
+  duty to operate its published admissions procedures fairly and equally for all applicants. 
+  So that this can happen, it is important that all the information which parents 
+  provide in support of an application is accurate and honest. This ranges from the 
+  child's normal place of residence through to information about any exceptional medical 
+  or social circumstances which the authority is being asked to take into consideration. 
+  If any of this information is shown to be false, for example if a child is not normally 
+  resident at the address given on the application form, then the offer of a place 
+  may be withdrawn at any time. Parents who get a place for their child as a result 
+  of false information are taking away from another child who is more deserving of it.</p><h4>
+				
+			Applying out of authority</h4><p>Parents of children living in the areas of other local education 
+  authorities who wish to apply for secondary places in <span class="gen">enter council name</span> schools are advised to apply in writing to the Admissions 
+  Officer, Education and Children's Services at the address given below for applications 
+  for community schools.</p><p>Parents resident in <span class="gen">enter council name</span> who wish to apply for places in schools maintained by other 
+  authorities should apply to the authority concerned (see list of all neighbouring 
+  authorities below) and, at the same time, notify the Education and Children's Services 
+  Directorate in <span class="gen">enter council name</span> that 
+  they are seeking a place elsewhere.</p><p>Parents living in the areas of other local education authorities 
+  and whose children are attending a <span class="gen">enter council name</span> primary school, are advised to also apply for places in schools 
+  maintained by their local education authority. Doing so will not reduce their chances 
+  of being offered a place in a <span class="gen">enter council name</span> 
+  school, but will ensure their child is not left without an offer of a school place.</p><h4>
+				
+			Changing schools other than at the normal transfer 
+  age</h4><p>Parents who wish their child to transfer to another school at 
+  any time other than the normal stages of 11 plus or 16 plus should first of all 
+  discuss it with the headteacher of the school concerned, before completing an application 
+  form. Parents applying for places in voluntary aided schools should write to the 
+  Headteacher direct. Parents applying for places in community and voluntary controlled 
+  schools other than in the normal intake year will be offered a place in the nearest 
+  school with a vacancy in that age group.</p><h4>
+				
+			Parental Preference</h4><p>Parents have the right to express a preference for the school 
+  they would like their child to attend. All schools must admit children up to their 
+  admission limit which is published in this brochure and in each school's own prospectus. 
+  Wherever possible places are offered in the school which the parents prefer. However, 
+  if there are more applicants for a school than there are places available, there 
+  has to be a way of deciding which children will be admitted.</p><h4>
+				
+			Community Schools over subscription criteria:</h4><p>Priority 1. Children who are normally resident in the catchment area of a school *(see note below)</p><p>Priority 1a. Children who have been unsuccessful at obtaining a catchment area place at priority 1.</p><p>Priority 2. Applications on medical grounds. Medical grounds must relate to the individual child's medical condition.</p><p>Priority 3. Applications on social grounds, or on grounds of having an older brother or sister at the school at the same time;</p><p>Priority 4. All other applications allocated on the actual distance measured in a straight line from the child's home to the school.</p><p>(*) Please note, in the event that a school is over-subscribed from within the catchment area the over subscription criteria will be applied to the catchment area children using the following principles:</p><ul>
+				<li title="*">Applications on medical grounds. Medical grounds must relate to the individual child's medical condition.</li>
+				<li title="*">Applications on social grounds, or on grounds of having an older brother or 
+    sister at the school at the same time</li>
+				<li title="*">Applications from children attending one of the school's linked primary schools</li>
+				<li title="*">All other applications allocated on the actual distance measured in a straight 
+    line from the child's home to the school.</li>
+			</ul><p>Places are offered in February. Parents will then be given four 
+  weeks in which to accept or decline the offer.</p><p>At the end of the four week period the offer of a place, including 
+  a catchment area place, will be withdrawn from any parent who has declined the offer 
+  or who has not responded. Those places will then be offered immediately to children 
+  on the waiting list.</p><p>All applications received by the closing date on the form are 
+  treated equally. Any late or amended applications will be considered after these, 
+  unless there are particular circumstances which prevented the application being 
+  made earlier.</p><p>If parents are refused the school of their preference, including 
+  if this is the catchment area school they will be entitled to stay on the waiting 
+  list of the school they have a preference for. Please note places will only be offered 
+  off the waiting list on a monthly basis following the initial offer date. Please 
+  note that a child's waiting list position can move up or down.</p><p>The places which are offered in February are provisional offers 
+  only. It is important that parents provide the local education authority with any 
+  information relating to changes in circumstances, as soon as they occur. If you 
+  have been offered a catchment area place or a place on distance and you change address 
+  this offer of a place can be withdrawn as a result.</p><p>The admissions authority does have the power under the Education 
+  Act 1998 to set aside these arrangements and refuse a place if the admission of 
+  additional children would prejudice the provision of efficient education or the 
+  efficient use of resources. These Admission Arrangements apply for one year only. 
+  The admissions policy is reviewed on an annual basis. This includes any catchment 
+  area arrangements.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=14"> Providing Information
+		(14)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

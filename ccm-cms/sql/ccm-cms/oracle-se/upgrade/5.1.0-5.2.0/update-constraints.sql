@@ -1,0 +1,91 @@
+--
+-- Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+--
+-- This library is free software; you can redistribute it and/or
+-- modify it under the terms of the GNU Lesser General Public License
+-- as published by the Free Software Foundation; either version 2.1 of
+-- the License, or (at your option) any later version.
+--
+-- This library is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+-- Lesser General Public License for more details.
+--
+-- You should have received a copy of the GNU Lesser General Public
+-- License along with this library; if not, write to the Free Software
+-- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+--
+-- $Id: update-constraints.sql 287 2005-02-22 00:29:02Z sskracic $
+-- $DateTime: 2004/08/17 23:15:09 $
+
+alter table ct_news drop constraint ct_news_ih_ck;
+
+-- The following ddl will only work on Oracle 9.2 or greater
+---- (primary key)
+--alter table acs_object_lifecycle_map rename constraint acs_object_life_cycle_map_pk to acs_obj_lif_map_obj_id_p_sa43c;
+--alter table authoring_kit_step_map rename constraint authoring_kit_step_map_pk to auth_kit_ste_map_kit_i_p_pcd9g;
+--alter table authoring_steps rename constraint authoring_steps_pk to authorin_steps_step_id_p_ey0as;
+--alter table cms_assets rename constraint cms_assets_pk to cms_assets_asset_id_p_obvpa;
+--alter table cms_files rename constraint cms_files_pk to cms_files_file_id_p_pqgn1;
+--alter table cms_images rename constraint cms_images_pk to cms_images_image_id_p_mcjck;
+--alter table cms_pages rename constraint cms_pages_pk to cms_pages_item_id_p_rnee1;
+--alter table cms_text rename constraint cms_text_pk to cms_text_text_id_p_o7aps;
+--alter table cms_user_defined_items rename constraint cms_user_defined_item_pk to cms_use_def_ite_ite_id_p_q7olx;
+--alter table cms_variant_tags rename constraint cms_variant_tags_pk to cms_variant_tags_tag_p_vocdw;
+--alter table ct_agendas rename constraint ct_agendas_item_id_pk to ct_agendas_item_id_p_0h5n7;
+--alter table ct_articles rename constraint ct_articles_pk to ct_articles_item_id_p_2be9i;
+--alter table ct_jobs rename constraint ct_jobs_item_id_pk to ct_jobs_item_id_p_dzhl5;
+--alter table ct_legal_notices rename constraint ct_legal_notices_item_id_pk to ct_lega_notice_item_id_p_g6apo;
+--alter table ct_minutes rename constraint ct_minutes_item_id_pk to ct_minutes_item_id_p_2wwcp;
+--alter table ct_mp_articles rename constraint ct_mp_articles_item_id_pk to ct_mp_articl_articl_id_p_pwnmf;
+--alter table ct_mp_sections rename constraint ct_mp_sections_section_id_pk to ct_mp_sectio_sectio_id_p_ucvcv;
+--alter table ct_news rename constraint ct_news_item_id_pk to ct_news_item_id_p_l09nd;
+--alter table ct_press_releases rename constraint ct_press_releases_item_id_pk to ct_pres_release_ite_id_p_u0jpn;
+--alter table ct_service rename constraint ct_service_item_id_pk to ct_service_item_id_p_9kbpw;
+--alter table lifecycles rename constraint lifecycles_pk to lifecycles_cycle_id_p_8jyyq;
+--alter table lifecycle_definitions rename constraint lifecycle_definitions_pk to life_definit_defini_id_p_02z4p;
+--alter table phases rename constraint phases_pk to phases_phase_id_p_oj6k5;
+--alter table phase_definitions rename constraint phase_definitions_pk to phas_defin_pha_defi_id_p_3ir6h;
+--alter table section_lifecycle_def_map rename constraint section_lifecycle_def_map_pk to sect_lif_def_map_cyc_d_p_5lrl6;
+--alter table section_workflow_template_map rename constraint section_wf_template_map_pk to sect_wor_tem_map_sec_i_p_jaofv;
+--
+---- (foreign key)
+--alter table acs_object_lifecycle_map rename constraint aolm_cycle_id_fk to acs_obj_lif_map_cyc_id_f_hme4h;
+--alter table acs_object_lifecycle_map rename constraint aolm_object_id_fk to acs_obj_lif_map_obj_id_f_8rzog;
+--alter table authoring_kit_step_map rename constraint authoring_kit_map_kit_id_fk to auth_kit_ste_map_kit_i_f_1mur9;
+--alter table authoring_kit_step_map rename constraint authoring_kit_map_step_id_fk to auth_kit_ste_map_ste_i_f_z4lxs;
+--alter table authoring_steps rename constraint authoring_steps_step_id_fk to authorin_steps_step_id_f_tm6xl;
+--alter table cms_assets rename constraint cms_assets_asset_id_fk to cms_assets_asset_id_f_mlsfs;
+--alter table cms_assets rename constraint cms_assets_mime_type_fk to cms_assets_mime_type_f_cyiog;
+--alter table cms_files rename constraint cms_files_file_id_fk to cms_files_file_id_f_oyuiz;
+--alter table cms_images rename constraint cms_images_image_id_fk to cms_images_image_id_f_70gz8;
+--alter table cms_pages rename constraint cms_pages_item_id_fk to cms_pages_item_id_f_gyfqx;
+--alter table cms_text rename constraint cms_text_text_id_fk to cms_text_text_id_f_fwojq;
+--alter table cms_text_pages rename constraint cms_text_pages_item_id_fk to cms_text_pages_item_id_f_kfox7;
+--alter table cms_text_pages rename constraint cms_text_pages_text_id_fk to cms_text_pages_text_id_f_uri55;
+--alter table cms_user_defined_items rename constraint cms_user_defined_item_id_fk to cms_use_def_ite_ite_id_f_b1yxo;
+--alter table ct_agendas rename constraint ct_agendas_item_id_fk to ct_agendas_item_id_f_410hq;
+--alter table ct_articles rename constraint ct_articles_item_id_fk to ct_articles_item_id_f_6ofn1;
+--alter table ct_jobs rename constraint ct_jobs_item_id_fk to ct_jobs_item_id_f_zru4k;
+--alter table ct_legal_notices rename constraint ct_legal_notices_item_id_fk to ct_lega_notice_item_id_f_b3kkq;
+--alter table ct_minutes rename constraint ct_minutes_item_id_fk to ct_minutes_item_id_f_8uhj5;
+--alter table ct_mp_articles rename constraint ct_mp_articles_item_id_fk to ct_mp_articl_articl_id_f_mz8ki;
+--alter table ct_mp_sections rename constraint ct_mp_sections_image_fk to ct_mp_sections_image_f_evp8x;
+--alter table ct_mp_sections rename constraint ct_mp_sections_section_id_fk to ct_mp_sectio_sectio_id_f_bx3ab;
+--alter table ct_mp_sections rename constraint ct_mp_sections_text_fk to ct_mp_sections_text_f_7mvon;
+--alter table ct_news rename constraint ct_news_item_id_fk to ct_news_item_id_f_mduh5;
+--alter table ct_press_releases rename constraint ct_press_releases_item_id_fk to ct_pres_release_ite_id_f_77vpr;
+--alter table ct_service rename constraint ct_service_item_id_fk to ct_service_item_id_f_gzgd8;
+--alter table lifecycles rename constraint lifecycles_cycle_id_fk to lifecycles_cycle_id_f_hynpn;
+--alter table lifecycles rename constraint lifecycles_definition_id_fk to lifecycle_definitio_id_f_52o2c;
+--alter table lifecycle_definitions rename constraint lifecycle_def_definition_id_fk to life_definit_defini_id_f_ohxsm;
+--alter table phases rename constraint phases_cycle_id_fk to phases_cycle_id_f_pxrxc;
+--alter table phases rename constraint phases_definition_id_fk to phases_definition_id_f_lmb4y;
+--alter table phases rename constraint phases_phase_id_fk to phases_phase_id_f_kdkqu;
+--alter table phase_definitions rename constraint pd_cycle_definition_id_fk to phas_defin_cyc_defi_id_f_z5qhs;
+--alter table phase_definitions rename constraint pd_phase_definition_id_fk to phas_defin_pha_defi_id_f_oz08y;
+--alter table publish_to_fs_queue rename constraint publish_to_fs_q_svr_fk to publ_to_fs_que_serv_id_f_d5fjh;
+--alter table section_lifecycle_def_map rename constraint sldm_cycle_def_id_fk to sect_lif_def_map_cyc_d_f_8xa1h;
+--alter table section_lifecycle_def_map rename constraint sldm_section_id_fk to sect_lif_def_map_sec_i_f_7si65;
+--alter table section_workflow_template_map rename constraint swft_map_section_id_fk to sect_wor_tem_map_sec_i_f_9dekw;
+--alter table section_workflow_template_map rename constraint swft_map_wf_template_id_fk to sect_wor_tem_map_wf_te_f_ne89i;

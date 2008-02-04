@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=156}]"><cms:name>home-ownership-service--services-and-community-repairs-156</cms:name><cms:language>en</cms:language><cms:title>Home Ownership Service - Services and Community Repairs</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=156}]"><cms:name>home-ownership-service--services-and-community-repairs-156-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>home, ownership, service, community, repairs</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=156}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Leasehold ownership is simply a long tenancy, the right to occupation and use of the flat for along period &#x2013; the 'term' of the lease. The ownership of the flat usually relates to everything within the four walls, including floorboards, and plaster to walls or ceilings, but does not usually include the external or structural walls. The structure of the building and the land it stands on belongs to the landlord (the Council). </i></p><hr/><h2>What is a Lease</h2><p>A lease is a private contract between the leaseholder and the landlord (the Council). The lease sets out the contractual obligations of the two parties, what the leaseholder has contracted to do and what the landlord (the Council) is bound to do. </p><h2>Repairs and Maintenance Obligations</h2><p>The Council is responsible for: </p><p>
+			<strong>Communal Areas </strong>
+		</p><ul>
+			<li title="*">Communal staircase or corridors</li>
+			<li title="*">Lifts</li>
+			<li title="*">Communal gardens and pathways </li>
+		</ul><p>
+<strong>Structural and Exterior Repairs
+</strong>
+</p><ul>
+			<li title="*">Foundations to the building</li>
+			<li title="*">External walls</li>
+			<li title="*">Roof</li>
+			<li title="*">Window frames</li>
+			<li title="*">External doors and frames</li>
+			<li title="*">Service pipes and ducts </li>
+		</ul><p>The leaseholder will contribute a share of the costs incurred for this work. </p><p>The Leaseholder is responsible for: </p><ul>
+			<li title="*">The floor surface including floorboards within the dwelling</li>
+			<li title="*">Wall plaster and plasterboards</li>
+			<li title="*">Ceiling plaster and plasterboards</li>
+			<li title="*">Glass to windows within the dwelling</li>
+			<li title="*">Internal non structural walls</li>
+			<li title="*">Plumbing and wiring within the dwelling </li>
+		</ul><p>If there a problem on your estate or in your block 
+		<a href="/ccm/services/pid.jsp?pid=forms/156a">
+				<strong>report it here</strong>
+			</a>	
+			<span class="gen">link to online form</span> now! </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=156"> Applications for services
+		(156)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

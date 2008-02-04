@@ -1,0 +1,70 @@
+//
+// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+//
+// The contents of this file are subject to the ArsDigita Public 
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.arsdigita.com/ADPL.txt
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.cms.docmgr;
+
+query docsInCategory {
+    //Document[1..1] document;
+    BigDecimal[1..1] docID;
+    String[1..1] name;
+    String[1..1] ancestors;
+    BigDecimal[1..1] fileSize;
+    String[0..1] author;
+    String[1..1] authorSortKey;
+    String[0..1] workspaceName;
+    BigDecimal[1..1] creatorNameID;
+    Date[0..1] lastModifiedDate;
+
+    do {
+      select distinct i.item_id,
+             i.name,
+             i.ancestors,
+             length(f.content) as file_size,
+             d.author as manual_author,
+             d.author_last_name || d.author || p.family_name as author_sort_key,
+             d.last_modified_cached as last_modified_cached,
+             p.name_id as creator_name_id,
+             a2.title as workspace_name
+        from cms_items i,
+             cms_documents d,
+             cms_bundles b,
+             cms_files f,
+             cat_object_category_map m,
+             cat_cat_subcat_trans_index t,
+             users u,
+             person_names p,
+             applications a1,
+             applications a2
+       where i.parent_id = b.bundle_id
+         and i.item_id = d.doc_id
+         and b.bundle_id = m.object_id
+         and d.asset_id = f.file_id
+         and d.creator_id = u.user_id
+         and u.name_id = p.name_id
+         and d.repository_id = a1.application_id
+         and a1.parent_application_id = a2.application_id
+         and t.subcategory_id = m.category_id
+         and i.version = :context
+         and t.category_id = :categoryID
+    } map {
+      docID = i.item_id;
+      name = i.name;
+      ancestors = i.ancestors;
+      fileSize = file_size;
+      author = manual_author;
+      authorSortKey = author_sort_key;
+      lastModifiedDate = last_modified_cached;
+      workspaceName = workspace_name;
+    }
+}

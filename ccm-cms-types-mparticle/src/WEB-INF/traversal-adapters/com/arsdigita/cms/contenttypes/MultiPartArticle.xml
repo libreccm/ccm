@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+<!-- No need to list all the content types here. Only
+       need to list a type if is adds associations that
+       were not in the parent type, or to remove attributes
+   -->
+
+  <!-- First off the adapters for ContentItemPanel -->
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <!-- Individual article sections -->
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.ArticleSection" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/text/id"/>
+        <xrd:property name="/object/text/defaultDomainClass"/>
+        <xrd:property name="/object/text/objectType"/>
+        <xrd:property name="/object/text/displayName"/>
+        <xrd:property name="/object/text/isDeleted"/>
+        <xrd:property name="/object/text/ancestors"/>
+        <xrd:property name="/object/text/version"/>
+        <xrd:property name="/object/text/name"/>
+        <xrd:property name="/object/text/language"/>
+        <!-- XXX change /cms-service to take OID -->
+        <!--<xrd:property name="/object/image/id"/>-->
+        <xrd:property name="/object/image/defaultDomainClass"/>
+        <xrd:property name="/object/image/objectType"/>
+        <xrd:property name="/object/image/displayName"/>
+        <xrd:property name="/object/image/isDeleted"/>
+        <xrd:property name="/object/image/ancestors"/>
+        <xrd:property name="/object/image/version"/>
+        <xrd:property name="/object/image/name"/>
+        <xrd:property name="/object/image/language"/>
+        <xrd:property name="/object/image/content"/>
+        <xrd:property name="/object/image/mimeType/javaClass"/>
+        <xrd:property name="/object/image/mimeType/objectType"/>
+        <xrd:property name="/object/image/content"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/text"/>
+        <xrd:property name="/object/image"/>
+        <xrd:property name="/object/image/mimeType"/>
+        <xrd:property name="/object/masterVersion"/>
+      </xrd:associations>
+    </xrd:adapter>
+
+    <!-- Article in several sections -->
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.MultiPartArticle" extends="com.arsdigita.cms.TextPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/sections/id"/>
+        <xrd:property name="/object/sections/defaultDomainClass"/>
+        <xrd:property name="/object/sections/objectType"/>
+        <xrd:property name="/object/sections/displayName"/>
+        <xrd:property name="/object/sections/isDeleted"/>
+        <xrd:property name="/object/sections/ancestors"/>
+        <xrd:property name="/object/sections/version"/>
+        <xrd:property name="/object/sections/name"/>
+        <xrd:property name="/object/sections/language"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/sections"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+
+  <!-- Next the metadata for article search -->
+  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+    <!-- Article in several sections -->
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.MultiPartArticle" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/sections/id"/>
+        <xrd:property name="/object/sections/defaultDomainClass"/>
+        <xrd:property name="/object/sections/objectType"/>
+        <xrd:property name="/object/sections/displayName"/>
+        <xrd:property name="/object/sections/isDeleted"/>
+        <xrd:property name="/object/sections/ancestors"/>
+        <xrd:property name="/object/sections/version"/>
+        <xrd:property name="/object/sections/name"/>
+        <xrd:property name="/object/sections/language"/>
+        <xrd:property name="/object/sections/text/id"/>
+        <xrd:property name="/object/sections/text/defaultDomainClass"/>
+        <xrd:property name="/object/sections/text/objectType"/>
+        <xrd:property name="/object/sections/text/displayName"/>
+        <xrd:property name="/object/sections/text/isDeleted"/>
+        <xrd:property name="/object/sections/text/ancestors"/>
+        <xrd:property name="/object/sections/text/version"/>
+        <xrd:property name="/object/sections/text/name"/>
+        <xrd:property name="/object/sections/text/language"/>
+        <!-- XXX change /cms-service to take OID -->
+        <!--<xrd:property name="/object/sections/image/id"/>-->
+        <xrd:property name="/object/sections/image/defaultDomainClass"/>
+        <xrd:property name="/object/sections/image/objectType"/>
+        <xrd:property name="/object/sections/image/displayName"/>
+        <xrd:property name="/object/sections/image/isDeleted"/>
+        <xrd:property name="/object/sections/image/ancestors"/>
+        <xrd:property name="/object/sections/image/version"/>
+        <xrd:property name="/object/sections/image/name"/>
+        <xrd:property name="/object/sections/image/language"/>
+        <xrd:property name="/object/sections/image/content"/>
+        <xrd:property name="/object/sections/image/mimeType/javaClass"/>
+        <xrd:property name="/object/sections/image/mimeType/objectType"/>
+        <xrd:property name="/object/sections/image/content"/>
+      </xrd:attributes>
+      <!--
+      <xrd:associations rule="include">
+        <xrd:property name="/object/sections"/>
+        <xrd:property name="/object/sections/text"/>
+        <xrd:property name="/object/sections/image"/>
+        <xrd:property name="/object/sections/image/mimeType"/>
+      </xrd:associations>
+      -->
+    </xrd:adapter>
+  </xrd:context>
+  
+  
+  <!-- Next the metadata for section search -->
+  <xrd:context name="com.arsdigita.cms.contenttypes.ArticleSectionMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.ArticleSection" 
+      traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/name"/>
+        <xrd:property name="/object/language"/>
+	<xrd:property name="/object/rank"/>
+	<xrd:property name="/object/pageBreak"/>
+        <xrd:property name="/object/text/id"/>
+        <xrd:property name="/object/text/defaultDomainClass"/>
+        <xrd:property name="/object/text/objectType"/>
+        <xrd:property name="/object/text/displayName"/>
+        <xrd:property name="/object/text/isDeleted"/>
+        <xrd:property name="/object/text/ancestors"/>
+        <xrd:property name="/object/text/version"/>
+        <xrd:property name="/object/text/name"/>
+        <xrd:property name="/object/text/language"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/text"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+
+  <!-- For assets, we want to pull out all HTML, or binary files -->
+  <xrd:context name="com.arsdigita.cms.search.AssetExtractor">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.ArticleSection" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:associations rule="include">
+        <xrd:property name="/object/text"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>

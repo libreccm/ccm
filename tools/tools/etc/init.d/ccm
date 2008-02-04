@@ -1,0 +1,100 @@
+#!/bin/sh
+#
+# Startup script for CCM
+#
+# chkconfig: 345 95 05
+# description: Startup script for CCM
+#
+# Daniel Berrange <berrange@redhat.com>
+# Dennis Gregorovic <dgregor@redhat.com>
+#
+
+# Source function library.
+if [ -x /etc/rc.d/init.d/functions ]; then
+    . /etc/rc.d/init.d/functions
+fi
+
+[ -f /etc/profile ] && . /etc/profile
+
+prog=ccm
+RETVAL=0
+
+LAUNCH_SCRIPT=ccm
+
+start() {
+    echo -n $"Starting $prog: "
+
+    cd $CCM_HOME
+
+    if [ -x /etc/rc.d/init.d/functions ]; then
+        daemon $LAUNCH_SCRIPT start
+    else
+        $LAUNCH_SCRIPT start
+    fi
+
+    RETVAL=$?
+    [ $RETVAL = 0 ] && touch "/var/lock/subsys/$prog"
+
+    echo
+    return $RETVAL
+
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+
+    cd $CCM_HOME
+
+    if [ -x /etc/rc.d/init.d/functions ]; then
+        daemon $LAUNCH_SCRIPT stop
+    else
+        $LAUNCH_SCRIPT stop
+    fi
+
+    RETVAL=$?
+    rm -f "/var/lock/subsys/$prog"
+
+    echo
+    return $RETVAL
+}
+
+status() {
+    if [ -f "/var/lock/subsys/$prog" ]; then
+        echo $"$prog is running..."
+        return 0
+    else
+        echo $"$prog is stopped."
+        return 3
+    fi
+}
+
+# See how we were called.
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        status
+        ;;
+  restart)
+        stop
+        # HACK: The servlet container often
+        # takes a couple extra seconds to actually stop
+        sleep 3
+        start
+        ;;
+  condrestart)
+        if [ -f "/var/lock/subsys/$prog" ] ; then
+                stop
+                start
+        fi
+        ;;
+  *)
+        echo $"Usage: $prog {start|stop|restart|condrestart|status}"
+        exit 1
+esac
+
+exit $RETVAL

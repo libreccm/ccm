@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=2}]"><cms:name>education-2-2</cms:name><cms:language>en</cms:language><cms:title>Educational awards and benefits - school clothing grants/vouchers</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=2}]"><cms:name>education-2-2-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>educational, benefits, awards, school, clothing, grants, vouchers</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=2}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>School clothing grants are payments given at the discretion of local authorities to assist with the cost of school clothing for state-maintained school pupils whose families are receiving particular state benefits or have a low income.</i></p><hr/><p>The Authority's school clothing grant policy provides for a grant to be made to the parents/guardians of any pupil who:</p><ul>
+			<li title="*">
+				<p>is entering a state-maintained secondary school at age 11; and 
+				</p>
+			</li>
+			<li title="*">
+				<p>lives in the <span class="gen">enter council name </span> area; and 
+				</p>
+			</li>
+			<li title="*">
+				<p>whose family receives one of the following benefits:  Income Support or  Jobseeker's Allowance (Income-based) or Child Tax Credit, but not Working Tax Credit and has an annual taxable income of less than &#xA3;13,231 or  financial support, in accordance with the Immigration and Asylum Act 1999, from the National Asylum Support Service (NASS) or the Council's Asylum and Resettlement Team or Working Tax Credit. </p>
+			</li>
+		</ul><h2>Payment </h2><p>Grants to the value of enter amount will be issued as cheques made out to the parents/guardians of eligible pupils.    </p><h2>How to apply </h2><p>Residents who meet the above criteria and who wish to apply for school clothing grants can download the 
+			
+			<span class="gen">link to online form</span>. Alternatively, they can use the contact details above and one can be sent in the post. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=2"> Applications for services
+		(2)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=2}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=2}]"/></cms:links></cms:item>

@@ -1,0 +1,274 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Folder-queries.ora.pdl 1317 2006-09-07 08:47:15Z sskracic $
+// $DateTime: $
+model com.arsdigita.cms;
+
+import com.arsdigita.auditing.*;
+
+query getRootFolder {
+    BigDecimal id;
+    String name;
+    BigDecimal nchild;
+    do {
+        select f.label,
+               f.folder_id,
+               count(sub.item_id) as sub_count
+        from cms_folders f,
+             (select i.item_id, i.parent_id
+                from cms_folders f,
+                     cms_items i
+               where f.folder_id = i.item_id) sub
+        where f.folder_id = :objectID
+          and sub.parent_id(+) = f.folder_id
+        group by f.label, f.folder_id
+    } map {
+        id = f.folder_id;
+        name = f.label;
+        nchild = sub_count;
+    }
+}
+
+
+query getSubFolders {
+    BigDecimal id;
+    String name;
+    BigDecimal nchild;
+    do {
+        select f.label,
+               f.folder_id,
+               count(sub.item_id) as sub_count
+        from cms_folders f,
+             cms_items i,
+             (select i.item_id, i.parent_id
+                from cms_folders f,
+                     cms_items i
+               where f.folder_id = i.item_id
+             ) sub
+        where i.parent_id = :objectID
+          and f.folder_id = i.item_id
+          and sub.parent_id(+) = i.item_id
+        group by f.label, f.folder_id
+        order by lower(f.label)
+    } map {
+        id = f.folder_id;
+        name = f.label;
+        nchild = sub_count;
+    }
+}
+
+
+
+//
+// Modified for Multilingual Content:
+//  it expects that direct children of the Folder
+//  are either (sub)FolderS or ContentBundleS
+
+// NOTE: If you are running Oracle 9.2.0.3 or higher,
+// the following query may be faster:
+//     select
+//       a.object_type, a.display_name, a.default_domain_class,
+//       i.master_id,
+//       i.item_id, i.parent_id, i.version, i.name,
+//       case when exists (select 1
+//                         from cms_items
+//                         where master_id = i.item_id)
+//         then 1 else 0 end as has_live_version,
+//       case when exists (select 1
+//                         from cms_folders f
+//                         where i.item_id = f.folder_id)
+//         then 1 else 0 end as is_folder
+//     from
+//       cms_items i,
+//       acs_objects a
+//     where
+//       i.item_id = a.object_id
+//     and
+//       i.parent_id = :parent
+//     and
+//       i.version = :version
+//     and (exists (select 1 from cms_folders f
+//                  where f.folder_id = i.item_id)
+//          or
+//          exists (select 1 from cms_bundles b
+//                  where b.bundle_id = i.item_id))
+//
+//But, it will crash versions of Oracle prior to 9.2.0.3
+query ItemsInFolder {
+
+  ContentItem   item;
+  Boolean       isFolder;
+  Boolean       hasLiveVersion;
+  Boolean       hasChildren;
+
+  do {
+    select
+      a.object_type, a.display_name, a.default_domain_class,
+      i.master_id, i.item_id, i.parent_id, i.version, i.name,
+      i.type_id, t.label,
+      case when exists (select 1
+                        from cms_items
+                        where master_id = i.item_id)
+        then 1 else 0 end as has_live_version,
+      case when 0 = nvl(f.folder_id, 0) then 0 else 1 end as is_folder,
+      case when exists (select 1
+                        from cms_items i2
+                        where i2.parent_id = i.item_id)
+        then 1 else 0 end as has_children
+    from
+      cms_items i,
+      acs_objects a,
+      cms_folders f,
+      content_types t
+    where
+      i.item_id = a.object_id
+    and
+      i.item_id = f.folder_id(+)
+    and
+      i.type_id = t.type_id(+)
+    and
+      i.parent_id = :parent
+    and
+      i.version = :version
+    and (exists (select 1 from cms_folders f
+                 where f.folder_id = i.item_id)
+         or
+         exists (select 1 from cms_bundles b
+                 where b.bundle_id = i.item_id))
+  } map {
+    item.id = i.item_id;
+    item.objectType = a.object_type;
+    item.displayName = a.display_name;
+    item.defaultDomainClass = a.default_domain_class;
+    item.master.id = i.master_id;
+    item.version = i.version;
+    item.name = i.name;
+    item.type.id = type_id;
+    item.type.label = label;
+    isFolder = is_folder;
+    hasLiveVersion = has_live_version;
+    hasChildren = has_children;
+  }
+}
+
+
+
+//
+// Multilingual Content:
+//  in folder view (cms.ui.folder.FolderBrowser)
+//  each bundle of language instances is represented by the primary instance
+//
+query PrimaryInstancesInFolder {
+
+  ContentItem   item;
+  Boolean       isFolder;
+  Boolean       hasLiveVersion;
+  Boolean       hasChildren;
+  BigDecimal    bundleID;
+
+  do {
+    select
+      a.object_type, a.display_name, a.default_domain_class,
+      i.item_id, i.parent_id, i.version, i.name, i.master_id,
+      aud.modifying_ip, aud.last_modified, aud.creation_date, aud.creation_ip,
+      1 as is_folder,
+      case when exists (select 1
+                        from cms_items
+                        where master_id = i.item_id)
+        then 1 else 0 end as has_live_version,
+      case when exists (select 1
+                        from cms_items i2
+                        where i2.parent_id = i.item_id)
+        then 1 else 0 end as has_children,
+      0 as type_id, '' as label,
+      0 as bundle_id
+    from
+      cms_items i,
+      cms_folders f,
+      acs_objects a,
+      acs_auditing aud
+    where
+      i.item_id = a.object_id
+    and
+      i.item_id = f.folder_id
+    and
+      i.item_id = aud.object_id
+    and
+      i.parent_id = :parent
+    and
+      i.version = :version
+    UNION ALL
+    select
+      a.object_type, a.display_name, a.default_domain_class,
+      i.item_id, i.parent_id, i.version, i.name, i.master_id,
+      aud.modifying_ip, aud.last_modified, aud.creation_date, aud.creation_ip,
+      0 as is_folder,
+      case when exists (select 1
+                        from cms_items
+                        where master_id = i.item_id)
+        then 1 else 0 end as has_live_version,
+      case when exists (select 1
+                        from cms_items i2
+                        where i2.parent_id = i.item_id)
+        then 1 else 0 end as has_children,
+      t.type_id as type_id, t.label as label,
+      b.bundle_id as bundle_id
+    from
+      cms_items i,
+      cms_bundles b,
+      cms_items bi,
+      acs_objects a,
+      content_types t,
+      acs_auditing aud
+    where
+      i.item_id = a.object_id
+    and
+      i.type_id = t.type_id
+    and
+      i.item_id = aud.object_id
+    and
+      i.language = b.default_language
+    and
+      i.parent_id = b.bundle_id
+    and
+      b.bundle_id = bi.item_id
+    and
+      bi.parent_id = :parent
+    and
+      i.version = :version
+  } map {
+    bundleID = bundle_id;
+    item.id = i.item_id;
+    item.objectType = a.object_type;
+    item.displayName = a.display_name;
+    item.defaultDomainClass = a.default_domain_class;
+    item.master.id = i.master_id;
+    item.version = i.version;
+    item.name = i.name;
+    item.type.id = type_id;
+    item.type.label = label;
+    item.auditing.id = i.item_id;
+    item.auditing.lastModifiedIP = aud.modifying_ip;
+    item.auditing.lastModifiedDate = aud.last_modified;
+    item.auditing.creationDate = aud.creation_date;
+    item.auditing.creationIP = aud.creation_ip;
+    isFolder = is_folder;
+    hasLiveVersion = has_live_version;
+    hasChildren = has_children;
+  }
+}

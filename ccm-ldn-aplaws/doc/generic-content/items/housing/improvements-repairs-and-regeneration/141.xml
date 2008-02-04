@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=141}]"><cms:name>housing-2-141</cms:name><cms:language>en</cms:language><cms:title>Housing repairs - council property</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=141}]"><cms:name>housing-2-141-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>housing repairs,  council, property</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=141}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We are not responsible for repairing damage caused by a tenant or members of the household or invited guests.</i></p><hr/><p>The tenant is responsible for repairs that result from damage, misuse or negligence.</p><p>Where tenants are reporting damage caused by others it is a requirement that the tenant reports this to the Police first and that the Police crime incident log number is communicated to the duty officer before the repairs are put in hand.</p><p>
+<span class="gen">enter council name</span> will respond to repair requests where damage has been caused accidentally by tenants, 
+  e.g. broken window glass, but the tenant should be advised that this work will be charged to them.</p><p>The following is a list of repairs that are the tenant's responsibility to complete:</p><ul>
+  <li title="*">All repairs to any fixtures and fittings installed by the tenant</li>
+  <li title="*">All internal decorating</li>
+  <li title="*">Sweeping chimneys and flueways to solid fuel fires</li>
+  <li title="*">All electric lamps and fluorescent tubes (unless in Sheltered Scheme)</li>
+  <li title="*">Plugs and chains to handbasins, baths and sinks</li>
+  <li title="*">Coat hooks and curtain rails</li>
+  <li title="*">Clothes posts and washing lines - except in communal areas</li>
+  <li title="*">All garden maintenance, including tree and hedge works</li>
+  <li title="*">Floor coverings</li>
+  <li title="*">Minor cracks to plaster</li>
+  <li title="*">Door bells, plug tops</li>
+  <li title="*">Lock changes following loss of keys (unless Sheltered Scheme or elderly)</li>
+  <li title="*">Cracked or broken glass, unless caused by vandalism, in which case Police incident number to be submitted</li>
+  <li title="*">Boundary fences between tenants</li>
+</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=141"> Providing Information
+		(141)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

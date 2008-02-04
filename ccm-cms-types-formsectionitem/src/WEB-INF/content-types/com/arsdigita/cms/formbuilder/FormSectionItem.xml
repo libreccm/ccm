@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+  <ctd:content-type label="Form Section" description="Dynamically constructed data entry forms" objectType="com.arsdigita.cms.formbuilder.FormSectionItem" classname="com.arsdigita.cms.formbuilder.FormSectionItem">
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+      <ctd:authoring-step
+         labelKey="cms.contenttypes.shared.basic_properties.title" 
+         labelBundle="com.arsdigita.cms.ui.CMSResources"
+         descriptionKey="cms.contenttypes.shared.basic_properties.description" 
+         descriptionBundle="com.arsdigita.cms.ui.CMSResources"
+         component="com.arsdigita.cms.ui.formbuilder.FormSectionProperties"/>
+
+      <ctd:authoring-step
+       labelKey="form_section_item.authoring.controls.title" 
+       labelBundle="com.arsdigita.cms.formbuilder.FormSectionItemResources"
+       descriptionKey="form_section_item.authoring.controls.description" 
+       descriptionBundle="com.arsdigita.cms.formbuilder.FormSectionItemResources"
+         component="com.arsdigita.cms.ui.formbuilder.FormSectionControls"/>
+
+      <ctd:authoring-step 
+       labelKey="form_section_item.authoring.actions.title" 
+       labelBundle="com.arsdigita.cms.formbuilder.FormSectionItemResources"
+       descriptionKey="form_section_item.authoring.actions.description" 
+       descriptionBundle="com.arsdigita.cms.formbuilder.FormSectionItemResources"
+         component="com.arsdigita.cms.ui.formbuilder.FormSectionActions"/>
+
+      <ctd:include href="/WEB-INF/content-types/shared.xml"/>
+    </ctd:authoring-kit>
+  </ctd:content-type>
+</ctd:content-types>

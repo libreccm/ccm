@@ -1,0 +1,130 @@
+> Ok, firstly there's no multiple pass bs. I just had a discussion with
+> Dan and we came up with something simpler.
+
+Ok, I'm going to simplify it still further, to remove some of the Kosmos
+bias. The basic idea is that the primary purpose is a CMS->CMS import / 
+export. Any import from 3rd party system must be made to fit into this
+scheme, if its not possible, then use custom code for that 3rd party
+system, rather than complicating the generic CMS->CMS import/exporter.
+
+So we can consider it to have to parts.
+
+1. The basic Item (well Object) importer.
+
+ The format for a single item will be exactly what is output by the
+ the DomainObjectXMLRenderer:
+
+<cms:item oid="[com.arsdigita.cms.contenttypes.Article:{id=21001}]">
+  <type oid="[com.arsdigita.cms.ContentType:{id=198}]">
+    <label>Article</label>
+    <description>An article type with image</description>
+  </type>
+  <name>sdf</name>
+  <language>en</language>
+  <title>sdf</title>
+  <textAsset oid="[com.arsdigita.cms.TextAsset:{id=22001}]">
+    <content>Edit text here</content>
+  </textAsset>
+  <imageCaptions oid="[com.arsdigita.cms.ArticleImageAssociation:{id=23002}]">
+    <caption>bill</caption>
+    <imageAsset oid="[com.arsdigita.cms.ReusableImageAsset:{id=23001}]">
+      <name>Random Pic.jpg</name>
+      <width>100</width>
+      <height>245</height>
+      <content/>
+      <mimeType oid="[com.arsdigita.cms.MimeType:{mimeType=image/jpeg}]"/>
+    </imageAsset>
+  </imageCaptions>
+  <lead>lkjhlkjh</lead>
+</cms:item>
+
+
+Some things to note:
+
+ * There are no elements for the PDL properties id, objectType,
+   defaultDomainClass, defaultAncestors, isDeleted, etc. These are
+   all properties that are either auto-generated or defaulted.
+   As such, the importer can simply not care about them & be
+   confident that they'll get set to sensible values
+
+ * The API for invoking an import will be something like
+
+    DomainObject importObject(String systemID,
+                              InputStream xml,
+                              File lobDir);
+
+ * The importer will maintain some kind of mapping to track
+   what items have previously been processed. The entires will
+   be a tuple:
+
+     (systemid, srcOID, destOID)
+
+   For the purposes of storage, each of these three values is
+   considered an opaque string. 'systemid' is the value passed
+   into the 'importObject' method. 'srcOID' is the 'oid'
+   attribute on each element int he XML file. 'dstOID' is the
+   oid of the new object we are creating.
+
+ * If an element has no attributes & is merely empty, then
+   the contnet for this elemnt should be loaded from an
+   external file. eg
+ 
+    <content/>
+
+   Means, the LOB fot eh image assets is stored externally.
+   The filename for loading binary LOBs from is constructed
+   according to the pattern
+
+     [lobDir]/[srcOID]-[propname].raw
+
+   eg, /lobs/1234-content.raw
+
+ * If an element has an 'oid' attribute, but no content, 
+   eg, 
+
+      <mimeType oid="[com.arsdigita.cms.MimeType:{mimeType=image/jpeg}]"/>
+
+   Then it means that 'srcOID'  and 'dstOID' are identical & thus
+   it should check the object already exists & throw an error if
+   missing.
+
+
+2. The bulk importer
+
+  The bulk importer is a wrapper around the higer level importer
+  along the lines of 
+
+  <import source="kosmos:www.coventry.gov.uk">
+    <folder name="/">
+      <cms:item>
+       ...
+      </cms:item>
+
+      <cms:item>
+       ...
+      </cms:item>
+    </folder>
+  </import>
+
+
+  The bulk importer will process the 'import' and 'folder'
+  tags. The 'source' attribute on the 'import' tags will
+  be used to supply the 'systemid' param to 
+
+     DomainObject importObject(String systemID,
+                               InputStream xml,
+                               File lobDir);
+
+
+  The object returned by this method will be put into
+  the folder designated by the current '<folder>' tag.
+
+
+Kosmos legacy OID
+
+  * When converting from Kosmos XML into our 
+    XML format, we'll create OIDs with a correct
+    type, but make up the 'id' key bit of it.
+    NB, of course the 'id' you make up should
+    still be unique - so its probably best to
+    base it on Kosmos unique ids.

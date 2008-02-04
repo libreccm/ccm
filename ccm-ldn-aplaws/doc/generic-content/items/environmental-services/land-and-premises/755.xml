@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=755}]"><cms:name>batch-8-755</cms:name><cms:language>en</cms:language><cms:title>Village Halls (advice, grants etc.)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=755}]"><cms:name>batch-8-755-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>village, halls, advice, grants</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=755}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>What will and will not be supported with regards to Village Halls. </i></p><hr/><p>New Village Halls and other works to existing village halls eg:</p><ul>
+  <li title="*">Building modification for disabled access/facilities.</li>
+  <li title="*">Replacement windows.</li>
+  <li title="*">Roof repairs.</li>
+  <li title="*">Re-wiring.</li>
+</ul><h4>Key conditions</h4><p>Submission of application form and supporting documents</p><h4>Exclusions</h4><p>Village Hall grant will not be awarded for:</p><ul>
+  <li title="*">Projects costing less than &#xA3; <span class="gen">enter amount</span>, unless the work is required to comply with statutory regulations.</li>
+  <li title="*">Provision or renewal of specialist facilities for sports, arts or other activities.</li>
+  <li title="*">Provision or renewal of car parking facilities unless these are required to meet regulations or such facilities do not already exist.</li>
+</ul><h4>Total size of grant block</h4><p>
+<span class="gen">enter amount</span>
+</p><p>The likely scale of competition for funds</p><h4>High</h4><p>Any upper or lower limits on grant size</p><ul>
+  <li title="*">With regard new village halls, grants of up to one third of eligible costs may be awarded to a maximum payment of &#xA3; <span class="gen">enter amount</span>
+</li>
+  <li title="*">For major works (i.e. costing over &#xA3; <span class="gen">enter amount</span>) grants of one third of the eligible cost may be awarded up to 
+    a maximum of &#xA3; <span class="gen">enter amount</span>
+</li>
+  <li title="*">For smaller works (i.e. &#xA3; <span class="gen">enter amount</span> - &#xA3; <span class="gen">enter amount</span>) grants of up to one third of the costs may be awarded up to a maximum of &#xA3; <span class="gen">enter amount</span>
+</li>
+</ul><h4>How to apply for a grant</h4><p>Complete and return the Village Hall Grant application form along with a copy of the Village Hall's most recent accounts and a copy of a quotation or estimate for the work. Please contact us on the details above for an application form.</p><h4>Date by which grant should be submitted</h4><p>Ongoing.</p><h4>How applications will be dealt with</h4><p>Application forms will be referred to the <span class="gen">enter service name</span>
+</p><p>If the scheme is supported it will be recommended to all councillors. If it is supported the applicant will be advised of the amount granted and conditions. (Takes  <span class="gen">enter amount</span>weeks maximum.)</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=755"> Providing Information
+		(755)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

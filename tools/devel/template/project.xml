@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<ccm:project name="::project::"
+       prettyName="::project::"
+       ccmVersion="::ccm-version::"
+             type="::type::"
+      ::versionfromattr::
+          ::extends::
+         xmlns:ccm="http://ccm.redhat.com/ccm-project"
+xsi:schemaLocation="http://ccm.redhat.com/ccm-project file://::ccm-devel-home::/xsd/project.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- List all target databases here -->
+  <ccm:databases>
+    <ccm:database name="postgres"/>
+    <ccm:database name="oracle-se"/>
+  </ccm:databases>
+
+  <!-- List all project specific applications here -->
+  <ccm:build>
+    <ccm:application name="::appname::"::buildOrder::/>
+  </ccm:build>
+
+  <!-- List all shared, pre-built applications here -->
+  <ccm:prebuilt>
+    <!--<ccm:application name="ccm-core" version="6.0.0"::buildOrder::/> -->
+  </ccm:prebuilt>
+
+</ccm:project>

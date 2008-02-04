@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>Bebop API</title>
+  </head>
+  <body bgcolor="white">
+
+    <p>A set of server-side user
+      interface components for web
+      applications. The user interface components are similar to those of
+      traditional GUIs, such as 
+      <a href="http://java.sun.com/products/jfc/tsc/index.html">Sun's
+      Swing</a>.</p>
+     <p>To learn how Bebop works, start with the documentation for the class {@link
+      com.arsdigita.bebop.Page <code>Page</code>}, the top level container
+      of all Bebop components.
+    </p>
+    
+    <h3>State management</h3>
+    <p>Bebop makes the creation and use of stateful user interface
+      components easy. It helps developers of such components manage the
+      state of one component (for example, a tabbed pane) in a transparent
+      and isolated way. 
+    </p>
+    
+    <h3>Nested Containers</h3>
+    <p>Bebop components and containers can be nested arbitrarily deep. For
+      example, it is possible to build a page that contains a {@link
+      com.arsdigita.bebop.TabbedPane} that contains a {@link
+      com.arsdigita.bebop.Form} that contains a {@link
+      com.arsdigita.bebop.Table} that contains a checkbox widget in every
+      row.
+    </p>
+    
+    <h3>Static and request-specific objects</h3> 
+    <p> Every Bebop component lets you split the underlying data structures
+      into two parts:</p>
+    <ul>
+      <li><b>Static</b> parts are those that are common to 
+	every request to the page, for example a form and the widgets it
+	contains.</li>
+      <li><b>Request-specific</b> parts are those that depend on the
+	individual request, for example the values that a user fills into
+	the form.</li>
+    </ul>
+    <p> The static part of a page can be built once and then be reused for
+      all the requests to the page. This initialization is typically
+      done in the <code>init</code> method of a servlet. Classes that
+      contain only static information implement the interface {@link
+      com.arsdigita.bebop.util.Lockable}.</P>
+     <P>Request-specific data structures
+      are built within the <code>doPost</code> or <code>doGet</code>
+      methods of a servlet. Corresponding to the static <code>Page</code>,
+      there is a {@link com.arsdigita.bebop.PageState} class that will
+      carry all the request-specific information connected to the
+      <code>Page</code>. If your application needs to modify parts of a
+      <code>Page</code> during a request, you need to build the page in the
+      servlet's <code>doPost</code> or <code>doGet</code> methods.
+    </p>
+
+    <p> As a simple example, consider a page that displays a login
+      screen. The login screen is a form that accepts a
+      <code>screen_name</code> and a <code>password</code>. The static part of
+      the page consists of building up the component hierarchy and locking
+      it. This code would typically be in the <code>init</code> method of a
+      servlet:</p>
+
+    <pre  style="background: #cccccc; padding-top: 6pt">
+    <span style="color: gray">// Create a text widget for screen_name which can not be empty.</span>
+    Text screenName = new Text("screen_name");
+    screenName.addValidationListener(new NotNullValidationListener());
+    <span style="color: gray">// Create a text widget for the password which can not be empty.</span>
+    Password password = new Password("password");
+    password.addValidationListener(new NotNullValidationListener());
+    <span style="color: gray">// Set up the form</span>
+    Form form = new Form("aForm");
+    form.add(screenName);
+    form.add(password);
+    <span style="color: gray">// Add a (hypothetical) custom password checker</span>
+    form.addValidationListener(new PasswordChecker(screenName, password));
+    <span style="color: gray">// Add a listener that forwards the user to his workspace</span>
+    form.addProcessListener(new SendUserToWorkspace());
+    <span style="color: gray">// Add the form to the page and signal that its building is finished:</span>
+    Page page = new Page();
+    page.add(f);
+    page.lock();
+</pre>
+    <p> The last line of the above example is very important: </p>
+
+    <p>The call to {@link com.arsdigita.bebop.Page#lock} locks the
+      page and guarantees that no further modification to its
+      structure is possible.</p>
+
+
+    <h3>Example</h3>
+    <p> The simplest use of this page in the <code>doPost</code> or
+      <code>doGet</code> method of the servlet consists of a single call:</p>
+  <pre  style="background: #cccccc; padding-top: 6pt">
+    page.service(request, response)
+  </pre>
+    <p> The {@link com.arsdigita.bebop.Page#process Page.process} method
+      will initiate all the steps that are necessary to process the
+      request. It notifies the form that a request has been made and prints
+      the page that results from the form that processes the request.</P>
+     <p>To process the request, the form extracts the parameter values from
+      the request, runs validation listeners, and either runs process listeners
+      (if the request was a valid submission) or displays the form together
+      with error messages (if the request was not a valid submission).</p>
+
+    <h2>Related Documentation</h2>
+    <ul>
+      <li><a href="http://ccm.redhat.com/">http://ccm.redhat.com</a></li>
+      <li>Bebop mimicks Sun's
+	<a href="http://java.sun.com/products/jfc/tsc/index.html">
+	  Swing</a>.
+      </li>
+    </ul>
+    <hr>
+    <font size="-2">Last modified: 2001-06-22</font>
+    
+  </body>
+</html>
+
+<!--
+Local variables:
+time-stamp-line-limit: -50
+time-stamp-start: "Last modified: "
+time-stamp-end: "</font>"
+time-stamp-format: "%:y-%02m-%02d"
+End:
+-->

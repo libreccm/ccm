@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=343}]"><cms:name>-343</cms:name><cms:language>en</cms:language><cms:title>Employment and training initiatives</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=343}]"><cms:name>-343-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Employment, training, initiatives</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=343}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is committed to attracting new jobs 
+  to the area through it's inward investment programme and works in partnership 
+  with other agencies to:</i></p><hr/><ul>
+			<li title="*">promote the development 
+      of learning communities</li>
+			<li title="*">ensure local people have access to lifelong 
+      learning and training opportunities</li>
+			<li title="*">provide local people with opportunities to 
+      gain skills needed for employment in growth industries</li>
+			<li title="*">ensure residents benefit from employment 
+      opportunities created within the area</li>
+		</ul><h2>New Deal
+			</h2><p>
+				New Deal is a key part of the government's Welfare 
+to Work strategy. Personalised programmes of work and skills training opportunities, 
+delivered locally, are aimed at helping unemployed people into work. There are 
+programmes for young people (18-24), 25+, lone parents, disabled people, 50+ and 
+partners of the unemployed.
+			</p><p>
+				All programmes are accessible through Employment 
+  Services and, whether you are an unemployed individual looking for a job or 
+  a company with vacancies to offer, your first point of contact should be your 
+  local Job Centre.
+			</p><p>
+				<strong>More information: 
+				
+		<a href="http://www.newdeal.gov.uk">www.newdeal.gov.uk</a>	
+			</strong>
+			<span class="gen">link to external website</span> or 
+		<a href="http://www.jobcentreplus.gov.uk/">
+				<strong>www.jobcentreplus.gov.uk</strong>
+			</a>	
+			<span class="gen">link to external website</span>
+		</p><h2>
+						Learn Direct</h2><p>Learning through work allows working people to gain university qualifications without leaving the work place. It is designed for individuals as well as work based groups. For more information visit <strong>
+				
+		<a href="http://www.learndirect.co.uk">www.learndirect.co.uk</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><h2>LGCareers</h2><p>The only website providing you with information and advice on local government careers. Whoever you are, whatever your skills and experience, there could be something for you. </p><p>Visit the <strong>
+				
+		<a href="http://www.lgcareers.com/">www.lgcareers.com</a>	
+			</strong>
+			<span class="gen">link to external website</span> website.</p><h2>Connexions</h2><p>Connexions Direct is a new service for young people age 13-19 that offers quick access to information and advice on a wide range of topics, including employment and training,  through one easy to use website. </p><p>Visit the <strong>
+				
+		<a href="http://www.connexions-direct.com">www.connexions_direct.com</a>	
+			</strong>
+			<span class="gen">link to external website</span> website.</p><h2>Other Employment and Training Opportunities</h2><p>
+			<span class="gen">enter details</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=343"> Providing Information
+		(343)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

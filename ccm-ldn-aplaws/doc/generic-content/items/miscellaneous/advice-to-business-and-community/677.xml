@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=677}]"><cms:name>property-enquiries-677</cms:name><cms:language>en</cms:language><cms:title>Property Enquiries</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=677}]"><cms:name>property-enquiries-677-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>property, enquiries</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=677}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>For companies looking at potential new investment opportunities, the Council can offer a wide range of good quality sites and premises at competitive prices. </i></p><hr/><p>
+				There are a number of industrial
+  estates in the area that provide accommodation to meet almost every need and
+    we have a wide variety of 
+				commercial premises
+    for lease, rent or sale.
+			</p><p>
+				Please use the 
+		<a href="/ccm/services/pid.jsp?pid=forms/677a">
+				<strong>online
+        form</strong>
+			</a>	
+			<span class="gen">link to online form</span> to enquire about details
+    of vacant industrial/office/retail/land
+and development opportunities in the area. 
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=677"> Applications for services
+		(677)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

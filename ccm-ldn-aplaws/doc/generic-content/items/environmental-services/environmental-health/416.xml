@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=416}]"><cms:name>batch-6-416</cms:name><cms:language>en</cms:language><cms:title>Pollution control - penalty notice</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=416}]"><cms:name>batch-6-416-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>pollution, control, penalty, notice</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=416}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Part 3 of the Environmental Protection Act 1990 requires us to take reasonable steps to investigate and, if appropriate, to take formal action to in the event of justified complaints of statutory nuisance.</i></p><hr/><p>A Statutory Nuisance in this context can include emissions of smoke, fumes or gases, 
+  dust, steam and smell. The emissions must arise from premises and must materially 
+  affect the use of enjoyment or other premises. </p><p>Typical of complaints of this type are smoke and ash from garden bonfires, smoking 
+  chimneys, dust from building and demolition activity and cooking smells from restaurants. 
+  The legislation does not allow us to deal with complaints of smells arising from 
+  domestic premises.</p><p>If satisfied that a complaint of statutory nuisance is justified, an Abatement/Penalty 
+  Notice will be served upon the person responsible, occupier or owner of the premises 
+  (as appropriate) requiring that the nuisance be abated. Failure to comply with an 
+  Abatement/Penalty Notice is an offence and legal proceedings may result. If found 
+  guilty of an offence of this type then the maximum fine is &#xA3; <span class="gen">enter amount</span> on domestic 
+  premises and &#xA3; <span class="gen">enter amount</span> o commercial premises.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=416"> Providing Information
+		(416)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

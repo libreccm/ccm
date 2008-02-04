@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=449}]"><cms:name>arts-and-leisure-449</cms:name><cms:language>en</cms:language><cms:title>Children's library service</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=449}]"><cms:name>arts-and-leisure-449-dublin-metadata</cms:name><cms:dcAudience>Child</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>children, library, service</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=449}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Libraries are for everyone! - You're never too young to join and it's free!</i></p><hr/><p>
+				You can download an application form here - your parent or guardian 
+  will need to sign it, or alternatively you can call into the library and ask for 
+  a membership form. Take the signed completed form along to your local library and 
+  you will be given your library key card.
+			</p><p>
+				There are all sorts of books in the library
+			</p><ul>
+				<li title="*">books for babies</li>
+				<li title="*">adventure stories</li>
+				<li title="*">funny stories</li>
+				<li title="*">information books</li>
+				<li title="*">books for mums and dads</li>
+				<li title="*">...and lots more.</li>
+			</ul><p>
+				You can borrow up to eight books, and keep them for up to four 
+  weeks. Bring them back on or before the date stamped in the book. You can have your 
+  books stamped again if nobody else wants them. You won't have to pay fines if the 
+  books are returned to the library late - but don't forget other people may want 
+  to read them.
+			</p><p>
+				Cassettes and CD's are also available - you have to pay to borrow 
+  these except story tapes for very young children which are free.
+			</p><p>
+				Some libraries have computers in their children's sections on 
+  which you can book time in 30 minute slots. All libraries have computer learning 
+  facilities that children can use. At most libraries there is a selection of CD ROMs 
+  such as Encarta and The Way Things Work, to help with study and homework. Children 
+  can also access the Internet subject to signed permission from a parent or guardian 
+  and other safeguards. Computer sessions can be booked by asking at the library or 
+  telephoning. You will need your Library card. Printouts cost <span class="gen">enter amount</span> per sheet.
+			</p><p>
+				Activities take place throughout the year - usually around school 
+  holiday times. Look out for storytimes, crafts, arts workshops, quizzes, competitions, 
+  etc.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=449"> Providing Information
+		(449)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

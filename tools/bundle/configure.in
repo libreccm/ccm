@@ -1,0 +1,16 @@
+dnl Process with autoconf
+dnl $Id: configure.in 1354 2006-10-31 22:57:58Z sskracic $
+
+AC_INIT(ccm-tools-bundle.spec.in)
+
+VERSION=6.5.1
+RELEASE=1
+
+AM_INIT_AUTOMAKE(ccm-tools-bundle, $VERSION)
+AC_SUBST(RELEASE)
+
+AC_OUTPUT(Makefile
+          bin/Makefile
+          ccm-tools-bundle.spec)
+
+dnl End of file

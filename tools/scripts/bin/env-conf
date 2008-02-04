@@ -1,0 +1,66 @@
+#!/usr/bin/perl -w
+#
+# Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+#
+# The contents of this file are subject to the CCM Public
+# License (the "License"); you may not use this file except in
+# compliance with the License. You may obtain a copy of
+# the License at http://www.redhat.com/licenses/ccmpl.html
+#
+# Software distributed under the License is distributed on an "AS
+# IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+# implied. See the License for the specific language governing
+# rights and limitations under the License.
+#
+# Daniel Berrange <berrange@redhat.com>
+# Dennis Gregorovic <dgregor@redhat.com>
+#
+# $Id: env-conf 288 2005-02-22 00:55:45Z sskracic $
+
+use lib "$ENV{'CCM_TOOLS_HOME'}/lib";
+use strict;
+use CCM::Runtime;
+use CCM::Util;
+use File::Spec;
+
+sub printEnvVars {
+    CCM::Util::printEnvVars(@_);
+}
+
+my $runtime = CCM::Runtime->new();
+
+if (exists $ENV{'X_CCM_RELEASE'}) {
+    &printEnvVars('CCM_RELEASE' => $ENV{'X_CCM_RELEASE'});
+}
+&printEnvVars('RPM_DIR' => exists $ENV{'CCM_RPM_DIR'} ? $ENV{'CCM_RPM_DIR'} : $ENV{'HOME'});
+&printEnvVars('CCM_ROOT_DIR' => exists $ENV{'X_CCM_ROOT_DIR'} ? $ENV{'X_CCM_ROOT_DIR'} : File::Spec->rel2abs(File::Spec->curdir()));
+&printEnvVars('CCM_BUILD_DIR' => exists $ENV{'X_CCM_BUILD_DIR'} ? $ENV{'X_CCM_BUILD_DIR'} : File::Spec->catdir($ENV{'CCM_ROOT_DIR'},'rollingbuild'));
+&printEnvVars('CCM_SRC_DIR' => exists $ENV{'X_CCM_SRC_DIR'} ? $ENV{'X_CCM_SRC_DIR'} : File::Spec->catdir($ENV{'CCM_BUILD_DIR'},'src'));
+&printEnvVars('CCM_INST_DIR' => exists $ENV{'X_CCM_INST_DIR'} ? $ENV{'X_CCM_INST_DIR'} : File::Spec->catdir($ENV{'CCM_BUILD_DIR'},'inst'));
+&printEnvVars('CCM_DIST_DIR' => exists $ENV{'X_CCM_DIST_DIR'} ? $ENV{'X_CCM_DIST_DIR'} : File::Spec->catdir($ENV{'CCM_BUILD_DIR'},'dist'));
+&printEnvVars('CCM_PKGVERSION' => exists $ENV{'CCM_BUILD_COUNTER'} ? "$ENV{'CCM_VERSION'}.AUTO.$ENV{'CCM_BUILD_COUNTER'}" : $ENV{'CCM_VERSION'});
+&printEnvVars('CCM_PACKAGE_NAME' => "$ENV{'CCM_PACKAGE'}-$ENV{'CCM_PKGVERSION'}-$ENV{'CCM_RELEASE'}");
+&printEnvVars('CCM_APP_NAME' => "$ENV{'CCM_PACKAGE'}-$ENV{'CCM_VERSION'}");
+&printEnvVars('CCM_HOME' => File::Spec->catdir($ENV{'CCM_SRC_DIR'},$ENV{'CCM_APP_NAME'}));
+&printEnvVars('CCM_INST_DEVEL_DIR' => exists $ENV{'X_CCM_DEVEL_DIR'} ?
+              File::Spec->catdir($ENV{'X_CCM_DEVEL_DIR'},$ENV{'CCM_APP_NAME'}) :
+              File::Spec->catdir($ENV{'CCM_INST_DIR'},'devel',$ENV{'CCM_APP_NAME'}));
+&printEnvVars('CCM_INST_DEVEL_BASENAME' => (File::Spec->splitpath($ENV{'CCM_INST_DEVEL_DIR'}))[2]);
+&printEnvVars('CCM_INST_DEVEL_DIRNAME' => join("",(File::Spec->splitpath($ENV{'CCM_INST_DEVEL_DIR'}))[0..1]));
+&printEnvVars('CCM_INST_WEBAPP_DIR' => exists $ENV{'X_CCM_WEBAPP_DIR'} ?
+              File::Spec->catdir($ENV{'X_CCM_WEBAPP_DIR'},$ENV{'CCM_APP_NAME'}) :
+              File::Spec->catdir($ENV{'CCM_INST_DIR'},'bin',$ENV{'CCM_APP_NAME'}));
+&printEnvVars('CCM_INST_WEBAPP_BASENAME' => (File::Spec->splitpath($ENV{'CCM_INST_WEBAPP_DIR'}))[2]);
+&printEnvVars('CCM_INST_WEBAPP_DIRNAME' => join("",(File::Spec->splitpath($ENV{'CCM_INST_WEBAPP_DIR'}))[0..1]));
+&printEnvVars('CCM_INST_API_DIR' => exists $ENV{'X_CCM_API_DIR'} ?
+              File::Spec->catdir($ENV{'X_CCM_API_DIR'},$ENV{'CCM_APP_NAME'}) :
+              File::Spec->catdir($ENV{'CCM_INST_DIR'},'api',$ENV{'CCM_APP_NAME'}));
+&printEnvVars('CCM_INST_API_BASENAME' => (File::Spec->splitpath($ENV{'CCM_INST_API_DIR'}))[2]);
+&printEnvVars('CCM_INST_API_DIRNAME' => join("",(File::Spec->splitpath($ENV{'CCM_INST_API_DIR'}))[0..1]));
+&printEnvVars('CCM_DIST_ZIP_DIR' => exists $ENV{'X_CCM_DIST_ZIP_DIR'} ? $ENV{'X_CCM_DIST_ZIP_DIR'} :
+              File::Spec->catdir($ENV{'CCM_DIST_DIR'},'zips'));
+&printEnvVars('CCM_DIST_TAR_DIR' => exists $ENV{'X_CCM_DIST_TAR_DIR'} ? $ENV{'X_CCM_DIST_TAR_DIR'} :
+              File::Spec->catdir($ENV{'CCM_DIST_DIR'},'tars'));
+&printEnvVars('CCM_DIST_SPOOL_DIR' => exists $ENV{'X_CCM_DIST_SPOOL_DIR'} ? $ENV{'X_CCM_DIST_SPOOL_DIR'} :
+              File::Spec->catdir($ENV{'CCM_DIST_DIR'},'spool'));
+&printEnvVars('CLASSPATH', CCM::Util::catpath($runtime->getClassPath(), $runtime->getServletJar("2.3")));

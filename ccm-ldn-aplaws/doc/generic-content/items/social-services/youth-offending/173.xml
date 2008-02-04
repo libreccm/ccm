@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=173}]"><cms:name>batch-23-173</cms:name><cms:language>en</cms:language><cms:title>Final warning</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=173}]"><cms:name>batch-23-173-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>final, warning</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=173}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Final Warning was created by the 1998 Crime and Disorder 
+  Act as a way of dealing with offences committed by young people aged 10 to 17, 
+  provided that the offence is not so serious that it needs to go to court.</i></p><hr/><p>It was introduced in an effort to encourage young people to 
+  take responsibility for their criminal actions and to keep them from committing 
+  further offences and it replaced the old system of police cautions for young people. 
+  </p><p>A young person arrested for a further offence within two years 
+  will virtually always go to court. </p><p>The Final Warning:</p><ul>
+  <li title="*">aims to prevent re-offending by ensuring that the young person is made aware 
+    of the consequences and impact of criminal activity.</li>
+  <li title="*">aims to take into account the wishes and feelings of victims of crime.</li>
+  <li title="*">aims to find out the reason for the offence, and do something about the things 
+    in the young person's life, which create a risk of further offending.</li>
+</ul><p>Youth Offending Teams have been set up in every local authority 
+  to work with the Police Officers on Final Warnings to ensure that these aims are 
+  met and to prevent offending by children and young people.</p><p>The Final warning is given on the understanding that the Youth 
+  Offending Team will work with the young offender and their parent/guardian to 
+  complete a short programme of intervention.</p><p>This will begin with an appointment for the young person and 
+  parent/guardian to see someone from the Youth Offending Team. This might be at 
+  the YOT office, the family home or at a central location. This appointment will 
+  either be made at the Police station immediately after the Final Warning has been 
+  given, or the Youth Offending Team will contact the family within <span class="gen">enter amount</span> working days 
+  of the Warning being given.</p><p>It is very important that this appointment is kept! If a problem 
+  should arise to prevent you from keeping the appointment, please contact the YOT 
+  to re-arrange it.</p><h2>What the programme of work might involve</h2><p>
+<strong>Work on offending:</strong> Brief sessions of Offence and Victim 
+  focused work will be carried out at the YOT office by a member of the team. This 
+  is to ensure that the young person fully understands the purpose of the Final Warning.</p><p>
+<strong>Reparation</strong>: may involve the offender meeting his/her 
+  victim in person to make a verbal apology. Alternatively, the young person may be 
+  required to write a letter of apology and/or take part in several hours of practical 
+  activity, which benefit the victims of crime, or the community as a whole.</p><h2>What do parents/guardians have to do?</h2><p>Parents/Guardians should:</p><ul>
+  <li title="*">Attend all meetings with the young person.</li>
+  <li title="*">Encourage the young person to appreciate fully the consequences 
+    of their offending behaviour.</li>
+  <li title="*">Ensure that the young person successfully completes the activities 
+    assigned to him/her.</li>
+</ul><p>For further information on the Final Warning Scheme please contact us using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=173"> Providing Information
+		(173)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

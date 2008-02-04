@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=275}]"><cms:name>batch-23-275</cms:name><cms:language>en</cms:language><cms:title>Taxi card</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=275}]"><cms:name>batch-23-275-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>taxi, card</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=275}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Taxi Card scheme allows people living in London who have a mobility 
+  impairment which prevents them from using buses or trains to travel in certain black 
+  cabs at subsidised rates.</i></p><hr/><p>If your application is approved you will be issued with a card. 
+  Once you have this you can telephone the taxi contractor operating the scheme to 
+  book a taxi or you can hail in the street or use a taxi rank.</p><p>You will be given a maximum number of trips that you can take 
+  in a month. This is currently a maximum of <span class="gen">enter amount</span> but may increase in the future.</p><p>To be eligible you must:</p><ul>
+  <li title="*">Be unable or virtually unable to use buses or trains because of either blindness 
+    or permanent long-term disability/injury, which seriously impairs your ability 
+    to walk. The scheme is not available to people who suffer temporary disabilities 
+    (such as a broken leg)</li>
+  <li title="*">Be able to use ordinary black taxis</li>
+  <li title="*">Have access to a telephone (for booking taxis)</li>
+  <li title="*">Be resident in <span class="gen">enter council name</span>
+</li>
+</ul><p>At the end of your journey you pay the driver the fixed 
+  amount plus any amount over 
+  the total subsidy paid by us. You will also have to pay any &quot;extras&quot; for 
+  weekend or night journeys and for additional passengers.</p><h2>
+
+			How do I apply for a Taxi Card?</h2><p>To aply for a Taxi Card, you should telephone us using the contact details above to request 
+  an application form. From time to time there may be restrictions on the number of 
+  people that can be funded on the scheme.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=275"> Providing Information
+		(275)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

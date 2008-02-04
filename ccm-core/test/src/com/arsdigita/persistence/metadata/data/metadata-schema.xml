@@ -1,0 +1,801 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs" version="0.1d">
+  <schema name="fullload-schema" id="acs:fullload-schema">
+    <table name="ACS_OBJECT_TYPES" id="fullload-schema:acs_object_types">
+      <column name="OBJECT_TYPE" datatype="VARCHAR(100)" id="fullload-schema:acs_object_types:object_type"/>
+      <primarykey id="fullload-schema:acs_object_types_pk">
+        <columnref idref="fullload-schema:acs_object_types:object_type"/>
+      </primarykey>
+    </table>
+    <table name="ACS_REL_TYPES" id="fullload-schema:acs_rel_types">
+      <column name="MAX_N_RELS_ONE" datatype="BIGINT" id="fullload-schema:acs_rel_types:max_n_rels_one"/>
+      <column name="MAX_N_RELS_TWO" datatype="BIGINT" id="fullload-schema:acs_rel_types:max_n_rels_two"/>
+      <column name="MIN_N_RELS_ONE" datatype="BIGINT" id="fullload-schema:acs_rel_types:min_n_rels_one"/>
+      <column name="MIN_N_RELS_TWO" datatype="BIGINT" id="fullload-schema:acs_rel_types:min_n_rels_two"/>
+      <column name="OBJECT_TYPE_ONE" datatype="VARCHAR(100)" id="fullload-schema:acs_rel_types:object_type_one"/>
+      <column name="OBJECT_TYPE_TWO" datatype="VARCHAR(100)" id="fullload-schema:acs_rel_types:object_type_two"/>
+      <column name="REL_TYPE" datatype="VARCHAR(100)" id="fullload-schema:acs_rel_types:rel_type"/>
+      <column name="ROLE_ONE" datatype="VARCHAR(100)" id="fullload-schema:acs_rel_types:role_one"/>
+      <column name="ROLE_TWO" datatype="VARCHAR(100)" id="fullload-schema:acs_rel_types:role_two"/>
+      <primarykey id="fullload-schema:acs_rel_types_pk">
+        <columnref idref="fullload-schema:acs_rel_types:rel_type"/>
+      </primarykey>
+    </table>
+    <table name="APM_PACKAGE_TYPES" id="fullload-schema:apm_package_types">
+      <column name="PACKAGE_KEY" datatype="VARCHAR(100)" id="fullload-schema:apm_package_types:package_key"/>
+      <column name="PACKAGE_TYPE" datatype="VARCHAR(300)" id="fullload-schema:apm_package_types:package_type"/>
+      <column name="PACKAGE_URI" datatype="VARCHAR(1500)" id="fullload-schema:apm_package_types:package_uri"/>
+      <column name="PRETTY_NAME" datatype="VARCHAR(100)" id="fullload-schema:apm_package_types:pretty_name"/>
+      <column name="PRETTY_PLURAL" datatype="VARCHAR(100)" id="fullload-schema:apm_package_types:pretty_plural"/>
+      <column name="SINGLETON_P" datatype="CHAR" id="fullload-schema:apm_package_types:singleton_p"/>
+      <column name="SPEC_FILE_MTIME" datatype="BIGINT" id="fullload-schema:apm_package_types:spec_file_mtime"/>
+      <column name="SPEC_FILE_PATH" datatype="VARCHAR(1500)" id="fullload-schema:apm_package_types:spec_file_path"/>
+      <uniquekey id="fullload-schema:apm_package_types_pretty_pl_un">
+        <columnref idref="fullload-schema:apm_package_types:pretty_plural"/>
+      </uniquekey>
+      <uniquekey id="fullload-schema:apm_packages_types_p_uri_un">
+        <columnref idref="fullload-schema:apm_package_types:package_uri"/>
+      </uniquekey>
+      <uniquekey id="fullload-schema:apm_package_types_pretty_n_un">
+        <columnref idref="fullload-schema:apm_package_types:pretty_name"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:apm_package_types_p_key_pk">
+        <columnref idref="fullload-schema:apm_package_types:package_key"/>
+      </primarykey>
+    </table>
+    <table name="GROUP_TYPES" id="fullload-schema:group_types">
+      <column name="APPROVAL_POLICY" datatype="VARCHAR(30)" id="fullload-schema:group_types:approval_policy"/>
+      <column name="DEFAULT_NEW_MEMBER_POLICY" datatype="VARCHAR(30)" id="fullload-schema:group_types:default_new_member_policy"/>
+      <column name="GROUP_TYPE" datatype="VARCHAR(100)" id="fullload-schema:group_types:group_type"/>
+      <primarykey id="fullload-schema:group_types_pk">
+        <columnref idref="fullload-schema:group_types:group_type"/>
+      </primarykey>
+    </table>
+    <table name="ACS_ATTRIBUTE_VALUES" id="fullload-schema:acs_attribute_values">
+      <column name="ATTR_VALUE" datatype="VARCHAR(4000)" id="fullload-schema:acs_attribute_values:attr_value"/>
+      <column name="ATTRIBUTE_NAME" datatype="VARCHAR(200)" id="fullload-schema:acs_attribute_values:attribute_name"/>
+      <column name="OBJECT_ID" datatype="BIGINT" id="fullload-schema:acs_attribute_values:object_id"/>
+      <primarykey id="fullload-schema:acs_attribute_values_pk">
+        <columnref idref="fullload-schema:acs_attribute_values:object_id"/>
+        <columnref idref="fullload-schema:acs_attribute_values:attribute_name"/>
+      </primarykey>
+    </table>
+    <table name="ACS_MESSAGES" id="fullload-schema:acs_messages">
+      <column name="MESSAGE_ID" datatype="BIGINT" id="fullload-schema:acs_messages:message_id"/>
+      <column name="REPLY_TO" datatype="BIGINT" id="fullload-schema:acs_messages:reply_to"/>
+      <column name="RFC822_ID" datatype="VARCHAR(250)" id="fullload-schema:acs_messages:rfc822_id"/>
+      <column name="SENDER" datatype="BIGINT" id="fullload-schema:acs_messages:sender"/>
+      <column name="SENT_DATE" datatype="DATE" id="fullload-schema:acs_messages:sent_date"/>
+      <uniquekey id="fullload-schema:acs_messages_rfc822_id_un">
+        <columnref idref="fullload-schema:acs_messages:rfc822_id"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:acs_messages_pk">
+        <columnref idref="fullload-schema:acs_messages:message_id"/>
+      </primarykey>
+    </table>
+    <table name="ACS_OBJECTS" id="fullload-schema:acs_objects">
+      <column name="CONTEXT_ID" datatype="BIGINT" id="fullload-schema:acs_objects:context_id"/>
+      <column name="CREATION_DATE" datatype="DATE" id="fullload-schema:acs_objects:creation_date"/>
+      <column name="CREATION_IP" datatype="VARCHAR(50)" id="fullload-schema:acs_objects:creation_ip"/>
+      <column name="CREATION_USER" datatype="BIGINT" id="fullload-schema:acs_objects:creation_user"/>
+      <column name="LAST_MODIFIED" datatype="DATE" id="fullload-schema:acs_objects:last_modified"/>
+      <column name="MODIFYING_IP" datatype="VARCHAR(50)" id="fullload-schema:acs_objects:modifying_ip"/>
+      <column name="MODIFYING_USER" datatype="BIGINT" id="fullload-schema:acs_objects:modifying_user"/>
+      <column name="OBJECT_ID" datatype="BIGINT" id="fullload-schema:acs_objects:object_id"/>
+      <column name="OBJECT_TYPE" datatype="VARCHAR(100)" id="fullload-schema:acs_objects:object_type"/>
+      <column name="SECURITY_INHERIT_P" datatype="CHAR" id="fullload-schema:acs_objects:security_inherit_p"/>
+      <uniquekey id="fullload-schema:acs_objects_context_object_un">
+        <columnref idref="fullload-schema:acs_objects:object_id"/>
+        <columnref idref="fullload-schema:acs_objects:context_id"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:acs_objects_pk">
+        <columnref idref="fullload-schema:acs_objects:object_id"/>
+      </primarykey>
+    </table>
+    <table name="ACS_RELS" id="fullload-schema:acs_rels">
+      <column name="OBJECT_ID_ONE" datatype="BIGINT" id="fullload-schema:acs_rels:object_id_one"/>
+      <column name="OBJECT_ID_TWO" datatype="BIGINT" id="fullload-schema:acs_rels:object_id_two"/>
+      <column name="REL_ID" datatype="BIGINT" id="fullload-schema:acs_rels:rel_id"/>
+      <column name="REL_TYPE" datatype="VARCHAR(100)" id="fullload-schema:acs_rels:rel_type"/>
+      <uniquekey id="fullload-schema:acs_object_rels_un">
+        <columnref idref="fullload-schema:acs_rels:rel_type"/>
+        <columnref idref="fullload-schema:acs_rels:object_id_one"/>
+        <columnref idref="fullload-schema:acs_rels:object_id_two"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:acs_rels_pk">
+        <columnref idref="fullload-schema:acs_rels:rel_id"/>
+      </primarykey>
+    </table>
+    <table name="APM_APPLICATIONS" id="fullload-schema:apm_applications">
+      <column name="APPLICATION_ID" datatype="BIGINT" id="fullload-schema:apm_applications:application_id"/>
+      <primarykey id="fullload-schema:applications_pk">
+        <columnref idref="fullload-schema:apm_applications:application_id"/>
+      </primarykey>
+    </table>
+    <table name="APM_PACKAGES" id="fullload-schema:apm_packages">
+      <column name="ENABLED_P" datatype="CHAR" id="fullload-schema:apm_packages:enabled_p"/>
+      <column name="INSTANCE_NAME" datatype="VARCHAR(300)" id="fullload-schema:apm_packages:instance_name"/>
+      <column name="PACKAGE_ID" datatype="BIGINT" id="fullload-schema:apm_packages:package_id"/>
+      <column name="PACKAGE_KEY" datatype="VARCHAR(100)" id="fullload-schema:apm_packages:package_key"/>
+      <primarykey id="fullload-schema:apm_packages_pack_id_pk">
+        <columnref idref="fullload-schema:apm_packages:package_id"/>
+      </primarykey>
+    </table>
+    <table name="APM_PACKAGE_VERSIONS" id="fullload-schema:apm_package_versions">
+      <column name="ACTIVATION_DATE" datatype="DATE" id="fullload-schema:apm_package_versions:activation_date"/>
+      <column name="CVS_IMPORT_RESULTS" datatype="CLOB" id="fullload-schema:apm_package_versions:cvs_import_results"/>
+      <column name="DATA_MODEL_LOADED_P" datatype="CHAR" id="fullload-schema:apm_package_versions:data_model_loaded_p"/>
+      <column name="DEACTIVATION_DATE" datatype="DATE" id="fullload-schema:apm_package_versions:deactivation_date"/>
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:apm_package_versions:description"/>
+      <column name="DESCRIPTION_FORMAT" datatype="VARCHAR(100)" id="fullload-schema:apm_package_versions:description_format"/>
+      <column name="DISTRIBUTION_DATE" datatype="DATE" id="fullload-schema:apm_package_versions:distribution_date"/>
+      <column name="DISTRIBUTION_TARBALL" datatype="BLOB" id="fullload-schema:apm_package_versions:distribution_tarball"/>
+      <column name="DISTRIBUTION_URI" datatype="VARCHAR(1500)" id="fullload-schema:apm_package_versions:distribution_uri"/>
+      <column name="ENABLED_P" datatype="CHAR" id="fullload-schema:apm_package_versions:enabled_p"/>
+      <column name="IMPORTED_P" datatype="CHAR" id="fullload-schema:apm_package_versions:imported_p"/>
+      <column name="INSTALLED_P" datatype="CHAR" id="fullload-schema:apm_package_versions:installed_p"/>
+      <column name="PACKAGE_KEY" datatype="VARCHAR(100)" id="fullload-schema:apm_package_versions:package_key"/>
+      <column name="RELEASE_DATE" datatype="DATE" id="fullload-schema:apm_package_versions:release_date"/>
+      <column name="SERVLET_PACKAGE" datatype="VARCHAR(100)" id="fullload-schema:apm_package_versions:servlet_package"/>
+      <column name="SUMMARY" datatype="VARCHAR(3000)" id="fullload-schema:apm_package_versions:summary"/>
+      <column name="TAGGED_P" datatype="CHAR" id="fullload-schema:apm_package_versions:tagged_p"/>
+      <column name="VENDOR" datatype="VARCHAR(500)" id="fullload-schema:apm_package_versions:vendor"/>
+      <column name="VENDOR_URI" datatype="VARCHAR(1500)" id="fullload-schema:apm_package_versions:vendor_uri"/>
+      <column name="VERSION_ID" datatype="BIGINT" id="fullload-schema:apm_package_versions:version_id"/>
+      <column name="VERSION_NAME" datatype="VARCHAR(100)" id="fullload-schema:apm_package_versions:version_name"/>
+      <column name="VERSION_URI" datatype="VARCHAR(1500)" id="fullload-schema:apm_package_versions:version_uri"/>
+      <uniquekey id="fullload-schema:apm_package_vers_ver_uri_un">
+        <columnref idref="fullload-schema:apm_package_versions:version_uri"/>
+      </uniquekey>
+      <uniquekey id="fullload-schema:apm_package_vers_id_name_un">
+        <columnref idref="fullload-schema:apm_package_versions:package_key"/>
+        <columnref idref="fullload-schema:apm_package_versions:version_name"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:apm_package_vers_id_pk">
+        <columnref idref="fullload-schema:apm_package_versions:version_id"/>
+      </primarykey>
+    </table>
+    <table name="APM_PARAMETERS" id="fullload-schema:apm_parameters">
+      <column name="DATATYPE" datatype="VARCHAR(100)" id="fullload-schema:apm_parameters:datatype"/>
+      <column name="DEFAULT_VALUE" datatype="VARCHAR(4000)" id="fullload-schema:apm_parameters:default_value"/>
+      <column name="DESCRIPTION" datatype="VARCHAR(2000)" id="fullload-schema:apm_parameters:description"/>
+      <column name="MAX_N_VALUES" datatype="BIGINT" id="fullload-schema:apm_parameters:max_n_values"/>
+      <column name="MIN_N_VALUES" datatype="BIGINT" id="fullload-schema:apm_parameters:min_n_values"/>
+      <column name="PACKAGE_KEY" datatype="VARCHAR(100)" id="fullload-schema:apm_parameters:package_key"/>
+      <column name="PARAMETER_ID" datatype="BIGINT" id="fullload-schema:apm_parameters:parameter_id"/>
+      <column name="PARAMETER_NAME" datatype="VARCHAR(100)" id="fullload-schema:apm_parameters:parameter_name"/>
+      <column name="SECTION_NAME" datatype="VARCHAR(200)" id="fullload-schema:apm_parameters:section_name"/>
+      <uniquekey id="fullload-schema:apm_paramters_attr_name_un">
+        <columnref idref="fullload-schema:apm_parameters:package_key"/>
+        <columnref idref="fullload-schema:apm_parameters:parameter_name"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:apm_parameters_pk">
+        <columnref idref="fullload-schema:apm_parameters:parameter_id"/>
+      </primarykey>
+    </table>
+    <table name="APM_PARAMETER_VALUES" id="fullload-schema:apm_parameter_values">
+      <column name="ATTR_VALUE" datatype="VARCHAR(4000)" id="fullload-schema:apm_parameter_values:attr_value"/>
+      <column name="PACKAGE_ID" datatype="BIGINT" id="fullload-schema:apm_parameter_values:package_id"/>
+      <column name="PARAMETER_ID" datatype="BIGINT" id="fullload-schema:apm_parameter_values:parameter_id"/>
+      <column name="VALUE_ID" datatype="BIGINT" id="fullload-schema:apm_parameter_values:value_id"/>
+      <uniquekey id="fullload-schema:apm_parameter_values_un">
+        <columnref idref="fullload-schema:apm_parameter_values:package_id"/>
+        <columnref idref="fullload-schema:apm_parameter_values:parameter_id"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:apm_parameter_values_pk">
+        <columnref idref="fullload-schema:apm_parameter_values:value_id"/>
+      </primarykey>
+    </table>
+    <table name="APM_SERVICES" id="fullload-schema:apm_services">
+      <column name="SERVICE_ID" datatype="BIGINT" id="fullload-schema:apm_services:service_id"/>
+      <primarykey id="fullload-schema:services_pk">
+        <columnref idref="fullload-schema:apm_services:service_id"/>
+      </primarykey>
+    </table>
+    <table name="COMPOSITION_RELS" id="fullload-schema:composition_rels">
+      <column name="REL_ID" datatype="BIGINT" id="fullload-schema:composition_rels:rel_id"/>
+      <primarykey id="fullload-schema:composition_rel_rel_id_pk">
+        <columnref idref="fullload-schema:composition_rels:rel_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_CHILD_RELS" id="fullload-schema:cr_child_rels">
+      <column name="CHILD_ID" datatype="BIGINT" id="fullload-schema:cr_child_rels:child_id"/>
+      <column name="ORDER_N" datatype="BIGINT" id="fullload-schema:cr_child_rels:order_n"/>
+      <column name="PARENT_ID" datatype="BIGINT" id="fullload-schema:cr_child_rels:parent_id"/>
+      <column name="REL_ID" datatype="BIGINT" id="fullload-schema:cr_child_rels:rel_id"/>
+      <column name="RELATION_TAG" datatype="VARCHAR(100)" id="fullload-schema:cr_child_rels:relation_tag"/>
+      <primarykey id="fullload-schema:cr_child_rels_rel_pk">
+        <columnref idref="fullload-schema:cr_child_rels:rel_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_EXTLINKS" id="fullload-schema:cr_extlinks">
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:cr_extlinks:description"/>
+      <column name="EXTLINK_ID" datatype="BIGINT" id="fullload-schema:cr_extlinks:extlink_id"/>
+      <column name="LABEL" datatype="VARCHAR(1000)" id="fullload-schema:cr_extlinks:label"/>
+      <column name="URL" datatype="VARCHAR(1000)" id="fullload-schema:cr_extlinks:url"/>
+      <primarykey id="fullload-schema:cr_extlinks_pk">
+        <columnref idref="fullload-schema:cr_extlinks:extlink_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_FOLDERS" id="fullload-schema:cr_folders">
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:cr_folders:description"/>
+      <column name="FOLDER_ID" datatype="BIGINT" id="fullload-schema:cr_folders:folder_id"/>
+      <column name="HAS_CHILD_FOLDERS" datatype="CHAR" id="fullload-schema:cr_folders:has_child_folders"/>
+      <column name="LABEL" datatype="VARCHAR(1000)" id="fullload-schema:cr_folders:label"/>
+      <primarykey id="fullload-schema:cr_folders_pk">
+        <columnref idref="fullload-schema:cr_folders:folder_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_ITEMS" id="fullload-schema:cr_items">
+      <column name="CONTENT_TYPE" datatype="VARCHAR(100)" id="fullload-schema:cr_items:content_type"/>
+      <column name="ITEM_ID" datatype="BIGINT" id="fullload-schema:cr_items:item_id"/>
+      <column name="LATEST_REVISION" datatype="BIGINT" id="fullload-schema:cr_items:latest_revision"/>
+      <column name="LIVE_REVISION" datatype="BIGINT" id="fullload-schema:cr_items:live_revision"/>
+      <column name="LOCALE" datatype="VARCHAR(4)" id="fullload-schema:cr_items:locale"/>
+      <column name="NAME" datatype="VARCHAR(400)" id="fullload-schema:cr_items:name"/>
+      <column name="PARENT_ID" datatype="BIGINT" id="fullload-schema:cr_items:parent_id"/>
+      <column name="PUBLISH_STATUS" datatype="VARCHAR(40)" id="fullload-schema:cr_items:publish_status"/>
+      <primarykey id="fullload-schema:cr_items_pk">
+        <columnref idref="fullload-schema:cr_items:item_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_ITEM_RELS" id="fullload-schema:cr_item_rels">
+      <column name="ITEM_ID" datatype="BIGINT" id="fullload-schema:cr_item_rels:item_id"/>
+      <column name="ORDER_N" datatype="BIGINT" id="fullload-schema:cr_item_rels:order_n"/>
+      <column name="REL_ID" datatype="BIGINT" id="fullload-schema:cr_item_rels:rel_id"/>
+      <column name="RELATED_OBJECT_ID" datatype="BIGINT" id="fullload-schema:cr_item_rels:related_object_id"/>
+      <column name="RELATION_TAG" datatype="VARCHAR(100)" id="fullload-schema:cr_item_rels:relation_tag"/>
+      <primarykey id="fullload-schema:cr_item_rels_pk">
+        <columnref idref="fullload-schema:cr_item_rels:rel_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_KEYWORDS" id="fullload-schema:cr_keywords">
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:cr_keywords:description"/>
+      <column name="HEADING" datatype="VARCHAR(600)" id="fullload-schema:cr_keywords:heading"/>
+      <column name="KEYWORD_ID" datatype="BIGINT" id="fullload-schema:cr_keywords:keyword_id"/>
+      <column name="PARENT_ID" datatype="BIGINT" id="fullload-schema:cr_keywords:parent_id"/>
+      <primarykey id="fullload-schema:cr_keywords_pk">
+        <columnref idref="fullload-schema:cr_keywords:keyword_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_REVISIONS" id="fullload-schema:cr_revisions">
+      <column name="CONTENT" datatype="BLOB" id="fullload-schema:cr_revisions:content"/>
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:cr_revisions:description"/>
+      <column name="ITEM_ID" datatype="BIGINT" id="fullload-schema:cr_revisions:item_id"/>
+      <column name="MIME_TYPE" datatype="VARCHAR(200)" id="fullload-schema:cr_revisions:mime_type"/>
+      <column name="NLS_LANGUAGE" datatype="VARCHAR(50)" id="fullload-schema:cr_revisions:nls_language"/>
+      <column name="PUBLISH_DATE" datatype="DATE" id="fullload-schema:cr_revisions:publish_date"/>
+      <column name="REVISION_ID" datatype="BIGINT" id="fullload-schema:cr_revisions:revision_id"/>
+      <column name="TITLE" datatype="VARCHAR(1000)" id="fullload-schema:cr_revisions:title"/>
+      <primarykey id="fullload-schema:cr_revisions_pk">
+        <columnref idref="fullload-schema:cr_revisions:revision_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_SYMLINKS" id="fullload-schema:cr_symlinks">
+      <column name="LABEL" datatype="VARCHAR(1000)" id="fullload-schema:cr_symlinks:label"/>
+      <column name="SYMLINK_ID" datatype="BIGINT" id="fullload-schema:cr_symlinks:symlink_id"/>
+      <column name="TARGET_ID" datatype="BIGINT" id="fullload-schema:cr_symlinks:target_id"/>
+      <primarykey id="fullload-schema:cr_symlinks_pk">
+        <columnref idref="fullload-schema:cr_symlinks:symlink_id"/>
+      </primarykey>
+    </table>
+    <table name="CR_TEMPLATES" id="fullload-schema:cr_templates">
+      <column name="TEMPLATE_ID" datatype="BIGINT" id="fullload-schema:cr_templates:template_id"/>
+      <primarykey id="fullload-schema:cr_templates_pk">
+        <columnref idref="fullload-schema:cr_templates:template_id"/>
+      </primarykey>
+    </table>
+    <table name="GROUPS" id="fullload-schema:groups">
+      <column name="GROUP_ID" datatype="BIGINT" id="fullload-schema:groups:group_id"/>
+      <column name="GROUP_NAME" datatype="VARCHAR(100)" id="fullload-schema:groups:group_name"/>
+      <primarykey id="fullload-schema:groups_pk">
+        <columnref idref="fullload-schema:groups:group_id"/>
+      </primarykey>
+    </table>
+    <table name="IMAGES" id="fullload-schema:images">
+      <column name="HEIGHT" datatype="BIGINT" id="fullload-schema:images:height"/>
+      <column name="IMAGE_ID" datatype="BIGINT" id="fullload-schema:images:image_id"/>
+      <column name="WIDTH" datatype="BIGINT" id="fullload-schema:images:width"/>
+      <primarykey id="fullload-schema:images_pk">
+        <columnref idref="fullload-schema:images:image_id"/>
+      </primarykey>
+    </table>
+    <table name="JOURNAL_ENTRIES" id="fullload-schema:journal_entries">
+      <column name="ACTION" datatype="VARCHAR(100)" id="fullload-schema:journal_entries:action"/>
+      <column name="ACTION_PRETTY" datatype="VARCHAR(4000)" id="fullload-schema:journal_entries:action_pretty"/>
+      <column name="JOURNAL_ID" datatype="BIGINT" id="fullload-schema:journal_entries:journal_id"/>
+      <column name="MSG" datatype="VARCHAR(4000)" id="fullload-schema:journal_entries:msg"/>
+      <column name="OBJECT_ID" datatype="BIGINT" id="fullload-schema:journal_entries:object_id"/>
+      <primarykey id="fullload-schema:journal_entries_pk">
+        <columnref idref="fullload-schema:journal_entries:journal_id"/>
+      </primarykey>
+    </table>
+    <table name="MEMBERSHIP_RELS" id="fullload-schema:membership_rels">
+      <column name="MEMBER_STATE" datatype="VARCHAR(20)" id="fullload-schema:membership_rels:member_state"/>
+      <column name="REL_ID" datatype="BIGINT" id="fullload-schema:membership_rels:rel_id"/>
+      <primarykey id="fullload-schema:membership_rel_rel_id_pk">
+        <columnref idref="fullload-schema:membership_rels:rel_id"/>
+      </primarykey>
+    </table>
+    <table name="PARTIES" id="fullload-schema:parties">
+      <column name="EMAIL" datatype="VARCHAR(100)" id="fullload-schema:parties:email"/>
+      <column name="PARTY_ID" datatype="BIGINT" id="fullload-schema:parties:party_id"/>
+      <column name="URL" datatype="VARCHAR(200)" id="fullload-schema:parties:url"/>
+      <uniquekey id="fullload-schema:parties_email_un">
+        <columnref idref="fullload-schema:parties:email"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:parties_pk">
+        <columnref idref="fullload-schema:parties:party_id"/>
+      </primarykey>
+    </table>
+    <table name="PERSONS" id="fullload-schema:persons">
+      <column name="BIO" datatype="CLOB" id="fullload-schema:persons:bio"/>
+      <column name="FIRST_NAMES" datatype="VARCHAR(100)" id="fullload-schema:persons:first_names"/>
+      <column name="LAST_NAME" datatype="VARCHAR(100)" id="fullload-schema:persons:last_name"/>
+      <column name="PERSON_ID" datatype="BIGINT" id="fullload-schema:persons:person_id"/>
+      <primarykey id="fullload-schema:persons_pk">
+        <columnref idref="fullload-schema:persons:person_id"/>
+      </primarykey>
+    </table>
+    <table name="REV_MASTERS" id="fullload-schema:rev_masters">
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:rev_masters:description"/>
+      <column name="LATEST_REVISION" datatype="BIGINT" id="fullload-schema:rev_masters:latest_revision"/>
+      <column name="LIVE_REVISION" datatype="BIGINT" id="fullload-schema:rev_masters:live_revision"/>
+      <column name="MASTER_ID" datatype="BIGINT" id="fullload-schema:rev_masters:master_id"/>
+      <column name="REVISION_TYPE" datatype="VARCHAR(200)" id="fullload-schema:rev_masters:revision_type"/>
+      <primarykey id="fullload-schema:rev_masters_pk">
+        <columnref idref="fullload-schema:rev_masters:master_id"/>
+      </primarykey>
+    </table>
+    <table name="REV_REVISIONS" id="fullload-schema:rev_revisions">
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:rev_revisions:description"/>
+      <column name="MASTER_ID" datatype="BIGINT" id="fullload-schema:rev_revisions:master_id"/>
+      <column name="REVISION_ID" datatype="BIGINT" id="fullload-schema:rev_revisions:revision_id"/>
+      <primarykey id="fullload-schema:rev_revisions_pk">
+        <columnref idref="fullload-schema:rev_revisions:revision_id"/>
+      </primarykey>
+    </table>
+    <table name="SITE_NODES" id="fullload-schema:site_nodes">
+      <column name="DIRECTORY_P" datatype="CHAR" id="fullload-schema:site_nodes:directory_p"/>
+      <column name="NAME" datatype="VARCHAR(100)" id="fullload-schema:site_nodes:name"/>
+      <column name="NODE_ID" datatype="BIGINT" id="fullload-schema:site_nodes:node_id"/>
+      <column name="OBJECT_ID" datatype="BIGINT" id="fullload-schema:site_nodes:object_id"/>
+      <column name="PARENT_ID" datatype="BIGINT" id="fullload-schema:site_nodes:parent_id"/>
+      <column name="PATTERN_P" datatype="CHAR" id="fullload-schema:site_nodes:pattern_p"/>
+      <uniquekey id="fullload-schema:site_nodes_un">
+        <columnref idref="fullload-schema:site_nodes:parent_id"/>
+        <columnref idref="fullload-schema:site_nodes:name"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:site_nodes_node_id_pk">
+        <columnref idref="fullload-schema:site_nodes:node_id"/>
+      </primarykey>
+    </table>
+    <table name="USERS" id="fullload-schema:users">
+      <column name="EMAIL_BOUNCING_P" datatype="CHAR" id="fullload-schema:users:email_bouncing_p"/>
+      <column name="EMAIL_VERIFIED_P" datatype="CHAR" id="fullload-schema:users:email_verified_p"/>
+      <column name="LAST_VISIT" datatype="DATE" id="fullload-schema:users:last_visit"/>
+      <column name="N_SESSIONS" datatype="BIGINT" id="fullload-schema:users:n_sessions"/>
+      <column name="NO_ALERTS_UNTIL" datatype="DATE" id="fullload-schema:users:no_alerts_until"/>
+      <column name="PASSWORD" datatype="CHAR" id="fullload-schema:users:password"/>
+      <column name="PASSWORD_ANSWER" datatype="VARCHAR(1000)" id="fullload-schema:users:password_answer"/>
+      <column name="PASSWORD_QUESTION" datatype="VARCHAR(1000)" id="fullload-schema:users:password_question"/>
+      <column name="PRIV_EMAIL" datatype="BIGINT" id="fullload-schema:users:priv_email"/>
+      <column name="PRIV_NAME" datatype="BIGINT" id="fullload-schema:users:priv_name"/>
+      <column name="SALT" datatype="VARCHAR(100)" id="fullload-schema:users:salt"/>
+      <column name="SCREEN_NAME" datatype="VARCHAR(100)" id="fullload-schema:users:screen_name"/>
+      <column name="SECOND_TO_LAST_VISIT" datatype="DATE" id="fullload-schema:users:second_to_last_visit"/>
+      <column name="USER_ID" datatype="BIGINT" id="fullload-schema:users:user_id"/>
+      <uniquekey id="fullload-schema:users_screen_name_un">
+        <columnref idref="fullload-schema:users:screen_name"/>
+      </uniquekey>
+      <primarykey id="fullload-schema:users_pk">
+        <columnref idref="fullload-schema:users:user_id"/>
+      </primarykey>
+    </table>
+    <table name="USER_PORTRAITS" id="fullload-schema:user_portraits">
+      <column name="USER_ID" datatype="BIGINT" id="fullload-schema:user_portraits:user_id"/>
+      <primarykey id="fullload-schema:user_portraits_pk">
+        <columnref idref="fullload-schema:user_portraits:user_id"/>
+      </primarykey>
+    </table>
+    <table name="VC_MASTERS" id="fullload-schema:vc_masters">
+      <column name="DESCRIPTION" datatype="VARCHAR(4000)" id="fullload-schema:vc_masters:description"/>
+      <column name="LATEST_VERSION" datatype="BIGINT" id="fullload-schema:vc_masters:latest_version"/>
+      <column name="LIVE_VERSION" datatype="BIGINT" id="fullload-schema:vc_masters:live_version"/>
+      <column name="MASTER_ID" datatype="BIGINT" id="fullload-schema:vc_masters:master_id"/>
+      <primarykey id="fullload-schema:vc_masters_pk">
+        <columnref idref="fullload-schema:vc_masters:master_id"/>
+      </primarykey>
+    </table>
+    <table name="WF_CASES" id="fullload-schema:wf_cases">
+      <column name="CASE_ID" datatype="BIGINT" id="fullload-schema:wf_cases:case_id"/>
+      <column name="CONTEXT_KEY" datatype="VARCHAR(100)" id="fullload-schema:wf_cases:context_key"/>
+      <column name="OBJECT_ID" datatype="BIGINT" id="fullload-schema:wf_cases:object_id"/>
+      <column name="STATE" datatype="VARCHAR(40)" id="fullload-schema:wf_cases:state"/>
+      <column name="WORKFLOW_KEY" datatype="VARCHAR(100)" id="fullload-schema:wf_cases:workflow_key"/>
+      <primarykey id="fullload-schema:wf_cases_pk">
+        <columnref idref="fullload-schema:wf_cases:case_id"/>
+      </primarykey>
+    </table>
+    <tableref idref="fullload-schema:acs_messages">
+      <foreignkey id="fullload-schema:acs_messages:message_id:foreignkey">
+        <columnref idref="fullload-schema:acs_messages:message_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_messages">
+      <foreignkey id="fullload-schema:acs_messages:reply_to:foreignkey">
+        <columnref idref="fullload-schema:acs_messages:reply_to"/>
+        <uniquekeyref idref="fullload-schema:acs_messages_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_messages">
+      <foreignkey id="fullload-schema:acs_messages:sender:foreignkey">
+        <columnref idref="fullload-schema:acs_messages:sender"/>
+        <uniquekeyref idref="fullload-schema:parties_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_objects">
+      <foreignkey id="fullload-schema:acs_objects:context_id:foreignkey">
+        <columnref idref="fullload-schema:acs_objects:context_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_objects">
+      <foreignkey id="fullload-schema:acs_objects:creation_user:foreignkey">
+        <columnref idref="fullload-schema:acs_objects:creation_user"/>
+        <uniquekeyref idref="fullload-schema:users_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_objects">
+      <foreignkey id="fullload-schema:acs_objects:modifying_user:foreignkey">
+        <columnref idref="fullload-schema:acs_objects:modifying_user"/>
+        <uniquekeyref idref="fullload-schema:users_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_objects">
+      <foreignkey id="fullload-schema:acs_objects:object_type:foreignkey">
+        <columnref idref="fullload-schema:acs_objects:object_type"/>
+        <uniquekeyref idref="fullload-schema:acs_object_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_rels">
+      <foreignkey id="fullload-schema:acs_rels:object_id_one:foreignkey">
+        <columnref idref="fullload-schema:acs_rels:object_id_one"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_rels">
+      <foreignkey id="fullload-schema:acs_rels:object_id_two:foreignkey">
+        <columnref idref="fullload-schema:acs_rels:object_id_two"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_rels">
+      <foreignkey id="fullload-schema:acs_rels:rel_id:foreignkey">
+        <columnref idref="fullload-schema:acs_rels:rel_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_rels">
+      <foreignkey id="fullload-schema:acs_rels:rel_type:foreignkey">
+        <columnref idref="fullload-schema:acs_rels:rel_type"/>
+        <uniquekeyref idref="fullload-schema:acs_rel_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_rel_types">
+      <foreignkey id="fullload-schema:acs_rel_types:object_type_one:foreignkey">
+        <columnref idref="fullload-schema:acs_rel_types:object_type_one"/>
+        <uniquekeyref idref="fullload-schema:acs_object_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_rel_types">
+      <foreignkey id="fullload-schema:acs_rel_types:object_type_two:foreignkey">
+        <columnref idref="fullload-schema:acs_rel_types:object_type_two"/>
+        <uniquekeyref idref="fullload-schema:acs_object_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:acs_rel_types">
+      <foreignkey id="fullload-schema:acs_rel_types:rel_type:foreignkey">
+        <columnref idref="fullload-schema:acs_rel_types:rel_type"/>
+        <uniquekeyref idref="fullload-schema:acs_object_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_packages">
+      <foreignkey id="fullload-schema:apm_packages:package_id:foreignkey">
+        <columnref idref="fullload-schema:apm_packages:package_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_packages">
+      <foreignkey id="fullload-schema:apm_packages:package_key:foreignkey">
+        <columnref idref="fullload-schema:apm_packages:package_key"/>
+        <uniquekeyref idref="fullload-schema:apm_package_types_p_key_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_package_versions">
+      <foreignkey id="fullload-schema:apm_package_versions:version_id:foreignkey">
+        <columnref idref="fullload-schema:apm_package_versions:version_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_package_versions">
+      <foreignkey id="fullload-schema:apm_package_versions:package_key:foreignkey">
+        <columnref idref="fullload-schema:apm_package_versions:package_key"/>
+        <uniquekeyref idref="fullload-schema:apm_package_types_p_key_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_parameters">
+      <foreignkey id="fullload-schema:apm_parameters:package_key:foreignkey">
+        <columnref idref="fullload-schema:apm_parameters:package_key"/>
+        <uniquekeyref idref="fullload-schema:apm_package_types_p_key_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_parameter_values">
+      <foreignkey id="fullload-schema:apm_parameter_values:package_id:foreignkey">
+        <columnref idref="fullload-schema:apm_parameter_values:package_id"/>
+        <uniquekeyref idref="fullload-schema:apm_packages_pack_id_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_parameter_values">
+      <foreignkey id="fullload-schema:apm_parameter_values:parameter_id:foreignkey">
+        <columnref idref="fullload-schema:apm_parameter_values:parameter_id"/>
+        <uniquekeyref idref="fullload-schema:apm_parameters_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_parameters">
+      <foreignkey id="fullload-schema:apm_parameters:parameter_id:foreignkey">
+        <columnref idref="fullload-schema:apm_parameters:parameter_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_parameter_values">
+      <foreignkey id="fullload-schema:apm_parameter_values:value_id:foreignkey">
+        <columnref idref="fullload-schema:apm_parameter_values:value_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_applications">
+      <foreignkey id="fullload-schema:apm_applications:application_id:foreignkey">
+        <columnref idref="fullload-schema:apm_applications:application_id"/>
+        <uniquekeyref idref="fullload-schema:apm_packages_pack_id_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:composition_rels">
+      <foreignkey id="fullload-schema:composition_rels:rel_id:foreignkey">
+        <columnref idref="fullload-schema:composition_rels:rel_id"/>
+        <uniquekeyref idref="fullload-schema:acs_rels_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_child_rels">
+      <foreignkey id="fullload-schema:cr_child_rels:rel_id:foreignkey">
+        <columnref idref="fullload-schema:cr_child_rels:rel_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_extlinks">
+      <foreignkey id="fullload-schema:cr_extlinks:extlink_id:foreignkey">
+        <columnref idref="fullload-schema:cr_extlinks:extlink_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_folders">
+      <foreignkey id="fullload-schema:cr_folders:folder_id:foreignkey">
+        <columnref idref="fullload-schema:cr_folders:folder_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_items">
+      <foreignkey id="fullload-schema:cr_items:item_id:foreignkey">
+        <columnref idref="fullload-schema:cr_items:item_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_items">
+      <foreignkey id="fullload-schema:cr_items:latest_revision:foreignkey">
+        <columnref idref="fullload-schema:cr_items:latest_revision"/>
+        <uniquekeyref idref="fullload-schema:cr_revisions_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_items">
+      <foreignkey id="fullload-schema:cr_items:live_revision:foreignkey">
+        <columnref idref="fullload-schema:cr_items:live_revision"/>
+        <uniquekeyref idref="fullload-schema:cr_revisions_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_items">
+      <foreignkey id="fullload-schema:cr_items:parent_id:foreignkey">
+        <columnref idref="fullload-schema:cr_items:parent_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_items">
+      <foreignkey id="fullload-schema:cr_items:content_type:foreignkey">
+        <columnref idref="fullload-schema:cr_items:content_type"/>
+        <uniquekeyref idref="fullload-schema:acs_object_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_item_rels">
+      <foreignkey id="fullload-schema:cr_item_rels:rel_id:foreignkey">
+        <columnref idref="fullload-schema:cr_item_rels:rel_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_item_rels">
+      <foreignkey id="fullload-schema:cr_item_rels:item_id:foreignkey">
+        <columnref idref="fullload-schema:cr_item_rels:item_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_item_rels">
+      <foreignkey id="fullload-schema:cr_item_rels:related_object_id:foreignkey">
+        <columnref idref="fullload-schema:cr_item_rels:related_object_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_keywords">
+      <foreignkey id="fullload-schema:cr_keywords:parent_id:foreignkey">
+        <columnref idref="fullload-schema:cr_keywords:parent_id"/>
+        <uniquekeyref idref="fullload-schema:cr_keywords_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_revisions">
+      <foreignkey id="fullload-schema:cr_revisions:item_id:foreignkey">
+        <columnref idref="fullload-schema:cr_revisions:item_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_revisions">
+      <foreignkey id="fullload-schema:cr_revisions:revision_id:foreignkey">
+        <columnref idref="fullload-schema:cr_revisions:revision_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_symlinks">
+      <foreignkey id="fullload-schema:cr_symlinks:symlink_id:foreignkey">
+        <columnref idref="fullload-schema:cr_symlinks:symlink_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_symlinks">
+      <foreignkey id="fullload-schema:cr_symlinks:target_id:foreignkey">
+        <columnref idref="fullload-schema:cr_symlinks:target_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:cr_templates">
+      <foreignkey id="fullload-schema:cr_templates:template_id:foreignkey">
+        <columnref idref="fullload-schema:cr_templates:template_id"/>
+        <uniquekeyref idref="fullload-schema:cr_items_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:groups">
+      <foreignkey id="fullload-schema:groups:group_id:foreignkey">
+        <columnref idref="fullload-schema:groups:group_id"/>
+        <uniquekeyref idref="fullload-schema:parties_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:group_types">
+      <foreignkey id="fullload-schema:group_types:group_type:foreignkey">
+        <columnref idref="fullload-schema:group_types:group_type"/>
+        <uniquekeyref idref="fullload-schema:acs_object_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:images">
+      <foreignkey id="fullload-schema:images:image_id:foreignkey">
+        <columnref idref="fullload-schema:images:image_id"/>
+        <uniquekeyref idref="fullload-schema:cr_revisions_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:journal_entries">
+      <foreignkey id="fullload-schema:journal_entries:journal_id:foreignkey">
+        <columnref idref="fullload-schema:journal_entries:journal_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:journal_entries">
+      <foreignkey id="fullload-schema:journal_entries:object_id:foreignkey">
+        <columnref idref="fullload-schema:journal_entries:object_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:membership_rels">
+      <foreignkey id="fullload-schema:membership_rels:rel_id:foreignkey">
+        <columnref idref="fullload-schema:membership_rels:rel_id"/>
+        <uniquekeyref idref="fullload-schema:acs_rels_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:parties">
+      <foreignkey id="fullload-schema:parties:party_id:foreignkey">
+        <columnref idref="fullload-schema:parties:party_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:persons">
+      <foreignkey id="fullload-schema:persons:person_id:foreignkey">
+        <columnref idref="fullload-schema:persons:person_id"/>
+        <uniquekeyref idref="fullload-schema:parties_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:rev_masters">
+      <foreignkey id="fullload-schema:rev_masters:master_id:foreignkey">
+        <columnref idref="fullload-schema:rev_masters:master_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:rev_masters">
+      <foreignkey id="fullload-schema:rev_masters:revision_type:foreignkey">
+        <columnref idref="fullload-schema:rev_masters:revision_type"/>
+        <uniquekeyref idref="fullload-schema:acs_object_types_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:rev_revisions">
+      <foreignkey id="fullload-schema:rev_revisions:master_id:foreignkey">
+        <columnref idref="fullload-schema:rev_revisions:master_id"/>
+        <uniquekeyref idref="fullload-schema:rev_masters_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:rev_revisions">
+      <foreignkey id="fullload-schema:rev_revisions:revision_id:foreignkey">
+        <columnref idref="fullload-schema:rev_revisions:revision_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:apm_services">
+      <foreignkey id="fullload-schema:apm_services:service_id:foreignkey">
+        <columnref idref="fullload-schema:apm_services:service_id"/>
+        <uniquekeyref idref="fullload-schema:apm_packages_pack_id_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:site_nodes">
+      <foreignkey id="fullload-schema:site_nodes:node_id:foreignkey">
+        <columnref idref="fullload-schema:site_nodes:node_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:site_nodes">
+      <foreignkey id="fullload-schema:site_nodes:object_id:foreignkey">
+        <columnref idref="fullload-schema:site_nodes:object_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:site_nodes">
+      <foreignkey id="fullload-schema:site_nodes:parent_id:foreignkey">
+        <columnref idref="fullload-schema:site_nodes:parent_id"/>
+        <uniquekeyref idref="fullload-schema:site_nodes_node_id_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:users">
+      <foreignkey id="fullload-schema:users:user_id:foreignkey">
+        <columnref idref="fullload-schema:users:user_id"/>
+        <uniquekeyref idref="fullload-schema:persons_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:user_portraits">
+      <foreignkey id="fullload-schema:user_portraits:user_id:foreignkey">
+        <columnref idref="fullload-schema:user_portraits:user_id"/>
+        <uniquekeyref idref="fullload-schema:users_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:vc_masters">
+      <foreignkey id="fullload-schema:vc_masters:master_id:foreignkey">
+        <columnref idref="fullload-schema:vc_masters:master_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:wf_cases">
+      <foreignkey id="fullload-schema:wf_cases:case_id:foreignkey">
+        <columnref idref="fullload-schema:wf_cases:case_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+    <tableref idref="fullload-schema:wf_cases">
+      <foreignkey id="fullload-schema:wf_cases:object_id:foreignkey">
+        <columnref idref="fullload-schema:wf_cases:object_id"/>
+        <uniquekeyref idref="fullload-schema:acs_objects_pk"/>
+      </foreignkey>
+    </tableref>
+  </schema>
+</metadataroot>

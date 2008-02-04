@@ -1,0 +1,64 @@
+Summary: Solaris -> Linux RPM compatability
+Name: solaris-linux-compat
+Version: 1.0.2
+Release: 1
+Group: Applications/Internet/CCM
+Vendor: Daniel Berrange (RedHat) <berrange@redhat.com>
+License: LGPL
+BuildArchitectures: noarch
+Provides: /bin/tar
+Provides: /bin/egrep
+Provides: /bin/sed
+Provides: /usr/bin/zip
+Provides: /usr/bin/md5sum
+Provides: /usr/bin/rpmbuild
+Provides: /usr/bin/rpm
+Provides: cvs
+Provides: rpm
+Provides: java-devel
+Provides: perl
+Provides: perl(Carp)
+Provides: perl(Exporter)
+Provides: perl(File::Copy)
+Provides: perl(File::Find)
+Provides: perl(File::Path)
+Provides: perl(File::Spec)
+Provides: perl(File::stat)
+Provides: perl(Getopt::Long)
+Provides: perl(POSIX)
+Provides: perl(strict)
+Provides: perl(vars)
+Provides: perl(vars)
+Provides: perl(IO::Socket)
+Provides: perl(File::Basename)
+
+%description
+An empty RPM providing compatability Provides: 
+Ensure that all of the Provides: xxxx statements above 
+are actually present on the sytem.Otherwise it will fail
+somewhere in runtime.
+Lines to make solaris look like linux. 
+Sets up some symlinks in /bin & /usr/bin
+NOTE: Change solaris2.x depending on solaris 8 or solaris 9
+
+%post
+test -f /usr/bin/rpm || ln -s /usr/local/bin/rpm /usr/bin/rpm
+test -f /usr/bin/rpmbuild || ln -s /usr/local/bin/rpmbuild /usr/bin/rpmbuild
+test -f /usr/bin/md5sum || ln -s /usr/local/bin/md5 /usr/bin/md5sum
+test -f /usr/bin/cvs || ln -s /usr/local/bin/cvs /usr/bin/cvs
+test -f /bin/sed || ln -s /usr/bin/sed /bin/sed
+test -f /bin/egrep || ln -s /usr/bin/egrep /bin/egrep
+
+echo "os_compat: solaris2.8: Linux" > /etc/rpmrc
+
+%preun
+test -h /usr/bin/rpm && rm /usr/bin/rpm
+test -h /usr/bin/rpmbuild && rm /usr/bin/rpmbuild
+test -h /usr/bin/md5sum && rm /usr/bin/md5sum
+test -h /usr/bin/cvs && rm /usr/bin/cvs
+test -h /bin/sed && rm /bin/sed
+test -h /bin/egrep && rm /bin/egrep
+test -f /etc/rpmrc && rm /etc/rpmrc
+
+%files
+%defattr(-,root,root)

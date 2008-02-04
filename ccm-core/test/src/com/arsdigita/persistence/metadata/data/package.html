@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head> 
+   <title>Persistence Metadata API</title>
+  </head>
+  <body bgcolor="white">
+    
+    <p>Provides a set of classes to instantiate metadata objects from
+    an XML file. The XML tags used correspond almost directly to the
+    classes in the metadata package. 
+    </p>
+
+    <h3>Sample code</h3> 
+    <p> 
+
+    Sample code can be found in the junit tests for this
+    package. There are three sample XML files defining simple object
+    types and their physical schemas. Note that these three examples
+    use the same dtd
+    (test/com/arsdigita/persistence/metadata/xml/metadata.dtd). The
+    following examples are provided:
+
+    <ul>
+
+      <p><li> XMLParserTest: Defines the <code>acs_object</code> and
+      party object types.
+
+      <p><li> XMLOrderTest: Defines an Orders object type composed of
+      1 or more line items. These two object types are used in unit
+      tests for the {@link com.arsdigita.persistence} package.
+
+      <p><li> XMLWeirdReferencingTest: Defines two identical tables
+      composed of one column each. Each table's primary key references
+      itself and the other table. This example shows how to model
+      foreign keys and also demonstrates that we support the same sort
+      of circular foreign keys as Oracle.
+
+    </ul>
+    
+    <hr>
+    <font size="-2">Last modified: $Date: 2002/12/03 $</font>
+    
+  </body>
+</html>
+
+<!--
+Local variables:
+time-stamp-line-limit: -50
+time-stamp-start: "Last modified: "
+time-stamp-end: "</font>"
+time-stamp-format: "%:y-%02m-%02d"
+End:
+-->

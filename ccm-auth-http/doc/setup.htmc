@@ -1,0 +1,375 @@
+<html>
+<!-- WARNING -->
+<head>
+<title>CCM NTLM Authentication Manual</title>
+<link rel="Stylesheet" href="main.css" type="text/css">
+</head>
+
+<body bgcolor="white" text="black">
+<h1>CCM NTLM Authentication Manual</h1>
+
+<!-- TABLE OF CONTENTS -->
+
+<!-- CHAPTER Introduction -->
+
+<p>
+This document provides an overview of the NTLM authentication process
+and provides details on installing & configuring the system.
+Although initially targetted towards NTLM, the architecture is such
+that it will likely work with no change for any other HTTP authentication
+mechanism supported by IIS/Apache and Internet Explorer/Netscape.
+</p>
+
+<!-- CHAPTER Architecture -->
+
+<p>
+The architecture for the NTLM authentication system has
+been designed such that there is no need for direct 
+communication between the public facing APLAWS servers 
+and the Intranet Domain Authentication Server. The
+means that integrity of the firewall is not impacted.
+To make this possible, authentication actually takes
+place on a third internal server running a mini Java
+Servlet. This communicates with APLAWS via browser 
+redirects &amp; encrypted URL parameters.
+</p>
+
+<p>
+Since visitors from outside the Intranet do not authenticate
+against the Domain Authentication Server, there is the
+ability to specify your local network address range and
+fallback on standard email/password authentication for
+all other visitors.
+
+<!-- SECTION Protocol summary -->
+<p>
+The complete process for authentication proceeds:
+</p>
+
+<ol>
+<li class="step">User requests a page requiring authentication
+<li class="step">If the user has a valid cookie, go straight to step 10,<br>
+    If the user is coming from an IP address on the
+    Intranet, then send a HTTP 302 redirect to the IIS authentication
+    server. CCM generates a one time key to be used by the
+    IIS server for sending the authentication reply.<br>
+    Fallback on plain CCM email address & password login.
+<li class="step">User recieves redirect & makes request to the IIS authentication
+    server
+<li class="step">If user has already logged into authentication server,
+    then go straight to 8,<br>
+    else prompt for to enter NT login & password.
+<li class="step">Make request 3 again, supplying NT login & password
+<li class="step">Authentication server verifies credential against
+    NT domain server
+<li class="step">If NT domain server rejects credentials go to step 4,<br>
+    else proceed to step 8
+<li class="step">IIS server generates an authentication response using
+    the one time key generated in step 2 & encrypts this
+    response. It sends a HTTP 302 redirect back to the 
+    CCM server contains this encrypted response
+<li class="step">The browser requests a page, providing the authentication
+    response generated in step 9.
+<li class="step">The CCM server decrypts the authentication response
+    provided in step 9 & verifies the one time key set
+    in step 1. The user is now logged in.
+</ol>
+
+<!-- SECTION Network diagram -->
+
+<img src="auth-new.gif">
+
+
+<!-- CHAPTER Installation Pre-requisites -->
+
+<p>
+Prior to starting off with these instructions, the following 
+requirements must be met:
+</p>
+
+<ul>
+<li>Server available running Win2k / WinNT and IIS
+<li>IIS server must be able to authentication with the Domain Server
+<li>Standard APLAWS installation operational with basic authentication
+</ul>
+
+
+<!-- SECTION Support Software -->
+
+<p>
+To ease the installation process, it is wise to install the following
+support software:
+</p>
+
+<ul>
+<li><a href="http://www.winzip.com/">WinZIP</a> - Decompression Utility
+<li><a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">Putty</a> - SSH (Secure Shell)
+<li><a href="http://winscp.vse.cz/eng/">WinSCP2</a> - Secure File Transfer
+<li><a href="http://www.realvnc.com/download.html">WinVNC</a> - Remote Desktop
+</ul>
+
+<p>
+When downloading these programs be sure to run them through a Virus checker
+before launching the installer. Likewise for any files downloaded throughout
+this document.
+</p>
+
+<!-- CHAPTER Authentication Server -->
+
+<p>
+The first step is to install the dedicated authentication server
+and get it communicating with the Domain Server.
+</p>
+
+<!-- SECTION Installing Java -->
+
+<p>
+Running the Resin Servlet Engine requires that the full Java SDK
+be installed. The JRE alone is not sufficient because compiling
+JSP pages uses the compiler in the SDK. Download the latest 1.3.1
+release of the J2SE SDK from 
+<a href="http://java.sun.com/j2se/1.3/download.html">Sun's Java site</a>.
+This is approximately a 30 MB download.
+</p>
+
+<p>
+The download is a self-extracting installer, so just launch the
+program when the file has finished downloading. When it askes
+you which directory you want to install in, be sure to change the
+default of <code class="url">c:\jdk1.3.1_08</code> to <code class="url">c:\java131</code>.
+This is because a number of windows programs, including the command
+shell, have trouble with directories containing more than one <code class="url">'.'</code>.
+</p>
+
+<!-- SECTION Installing Resin -->
+
+<p>
+To run the APLAWS Authentication Servlet we need a Java Servlet
+Container. Resin is by far the simplest to install & one of the
+fastest in operation (not that it matters for an authentication
+server). Download the latest 2.1.x release (currently 2.1.9) from
+www.caucho.com. <strong>NB</strong> For a production system
+you'll need to purchase a license from Caucho for a small one-time
+fee.
+</p>
+
+<p>
+The download is a ZIP file, so extract it using WinZIP (or equivalent)
+into a directory such as <code class="url">c:\</code>. <strong>NB.</strong> the
+files automatically extract into a subdirectory of the one you 
+specify, called <code class="url">resin-2.1.x</code>.
+</p>
+
+<p>
+Once you've extracted Resin, go into the <code class="url">bin</code> directory
+and run <code class="url">httpd.sh</code>. <strong>NB</strong> At this time 
+don't run the <code class="url">setup.exe</code> program. After a short delay
+you should see a message in the console window saying that the 
+server is listening on port 8080 and that 8 (or so) demos have
+been initialized. Point your web browser at port localhost:8080 
+and verify that you can see the demos.
+</p>
+
+<!-- SECTION Configuring IIS -->
+
+<p>
+Apart from (obviously) installing the beast, the main task is
+to turn on authentication. IIS currently supports 5 types of
+authentication; the one we want is currently referred to
+as <code class="url">Integrated Windows Authentication</code>.
+</p>
+
+<ol>
+<li>From the <code class="url">Start Menu</code> select <code class="url">Programes -&gt; Administrative Tools -&gt; Internet Services Manager</code>
+<li>Expand the tree for your local server and select the <code class="url">'Default WebSite'</code> node.
+<li>Right click on it to display the popup menu &amp; select <code class="url">Properties...</code>.
+<li>Select the <code class="url">Directory Security</code> tab. Under <code class="url">Anonymous Access and Authentication 
+Control</code>, click Edit.</li>
+<li>In the <code class="url">Authentication Methods</code> dialog box, <strong>un</strong>select 
+<code class="url">Anonymous Access</code> and select <code class="url">Integrated
+Windows Authentication</code> instead.</li>
+</ol>
+
+<p>
+When clicking <code class="url">Apply</code> it may pop up a dialog
+mentioning that some lower tree nodes override the security settings.
+Select all these nodes and apply the changes to them too.
+</p>
+
+<!-- SECTION Integrating with Resin -->
+
+<p>
+We now need to integrate Resin with IIS, so go into the Resin
+<code class="url">bin</code> directory and run <code class="url">setup.exe</code>. If
+its not already selected, select the <code class="url">IIS/PWS</code> box
+and then hit <code class="url">apply</code>. This should install the Resin
+connector in IIS. To verify this, try accessing the Resin demos.
+</p>
+
+<p>
+To test that it has worked correctly, load Internet Explorer and
+browse to <code class="url">http://localhost/examples/index.xtp</code>.
+Click on the <code class="url">Servlet Parameters</code> exmaple
+and look at the <code class="url">Remote User</code> field - it should
+display your NT Domain Login.
+</p>
+
+<!-- SECTION Automating Service Startup -->
+
+<p>
+Once you've verified that everything is operating correctly we need to
+automate startup of resin at server boot. So shutdown resin and launch 
+a command shell and run.
+</p>
+
+<pre class="code">
+cd c:\resin-2.1.9\bin
+httpd -install -Xrs
+</pre>
+
+<p>
+<strong>NB</strong> the -Xrs option is very important as it tells the
+JVM not to exit when the administrator logs out! Now to verify that 
+everything is operating correctly shutdown the server and boot from
+the powered off state.
+</p>
+
+<!-- SUBSECTION Reference Material -->
+
+<ul>
+<li><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vsent7/html/vxconiisauthentication.asp">Overview of Auth</a></li>
+<li><a href="http://www.microsoft.com/windows2000/en/server/iis/default.asp?url=/windows2000/en/server/iis/htm/core/iiauths.htm?id=76">Setting up Auth</a></li>
+<li><a href="http://www.caucho.com/resin/ref/cse-iis.xtp">Resin w/ IIS</a>
+</ul>
+
+<!-- SECTION Installing APLAWS Auth Servlet -->
+
+<!-- SUBSECTION Cryptographic Libraries -->
+
+<p>
+We're now ready to install the APLAWS authentication servlet.
+The first step is to install &amp; register the Bouncy Castle 
+cryptographic libraries with the JDK. Copy <code class="url">bcprov-jdk13-115.jar</code>
+and <code class="url">jce-jdk13-115.jar</code> to <code class="url">c:\java131\jre\lib\ext</code>.
+Now edit the <code class="url">java.security</code> file in <code class="url">c:\java131\jre\lib\security</code>
+adding in the line:
+</p>
+
+<code class="url">
+security.provider.3=org.bouncycastle.jce.provider.BouncyCastleProvider
+</code>
+
+<!-- SUBSECTION Populating the webapp -->
+
+<p>
+In the Resin webapp root, create a directory called 
+<code class="url">WEB-INF/classes/com/arsdigita/auth/ntlm</code> and copy the
+file <code class="url">NTLMUserAuthServlet.class</code> into it. To register this
+as a servlet under <code class="url">/auth</code> we copy the <code class="url">web.xml</code>
+file to <code class="url">WEB-INF</code>.
+</p>
+
+<!-- SUBSECTION Creating the RSA keypair -->
+
+<p>
+The final step is to create the RSA public/private keypair. This is
+done using the command line <code class="url">keytool</code> program that comes
+with java. So launch the <code class="url">command</code> shell and type:
+</p>
+
+<pre class="code">
+set JAVA_HOME=c:\java131
+cd c:\resin-2.1.9\webapps\WEB-INF
+c:\java131\bin\keytool -keystore keystore -genkey -keyalg rsa \
+      -validity 36500 -keypass 123456 -alias ccmkey
+</pre>
+
+<p>
+This generates a key that is valid for 100 years, which ought to
+be sufficient for most users. When prompted for a password be
+sure to enter <code class="url">'123456'</code>.
+</p>
+
+<p>
+It will prompt you to enter your name &amp; organization details when
+generating the key - enter anything relevant - it has no functional
+effect.
+</p>
+
+<!-- CHAPTER APLAWS Server -->
+
+<!-- SECTION Cryptographic Libraries -->
+
+<p>
+The first step is to install &amp; register the Bouncy Castle 
+cryptographic libraries with the JDK. Copy <code class="url">bcprov-jdk13-115.jar</code>
+and <code class="url">jce-jdk13-115.jar</code> to <code class="url">/opt/IBMJava2-131/jre/lib/ext</code>.
+Now edit the <code class="url">java.security</code> file in <code class="url">/opt/IBMJava2-131/jre/lib/security</code>
+adding in the line:
+</p>
+
+<pre class="code">
+security.provider.3=org.bouncycastle.jce.provider.BouncyCastleProvider
+</pre>
+
+<!-- SECTION Importing the key -->
+
+<p>
+On the IIS server, we need to export the public part of the
+keypair. This is accomplished using the <code class="url">keytool</code>
+command again:
+</p>
+
+<pre class="code">
+cd c:\resin-2.1.9\webapps\WEB-INF
+c:\java131\bin\keytool -keystore keystore -export -alias ccmkey -file c:\temp\ccm-public.key
+</pre>
+
+<p>
+Securely copy this across to the APLAWS application server
+using <code class="url">WinSCP</code> (or equivalent). Go into the APLAWS
+webapp <code class="url">WEB-INF</code> directory, which is usually
+<code class="url">/var/www/aplaws/dist/WEB-INF</code> and import the
+key:
+</p>
+
+<pre class="code">
+cd /var/www/aplaws/dist/WEB-INF
+/opt/IBMJava2-131/bin/keytool -import -keystore keystore -alias ccmkey -file /tmp/ccm-public.key
+</pre>
+
+<p>
+Again, when prompted for the keystore password, enter '123456'.
+</p>
+
+<!-- SECTION Enabling NTLM Auth -->
+
+<p>
+The final step is to enable the NTLM authentication process for
+users visiting from your Intranet. For this we need to know the
+IP address range allocated to Intranet users. This is typically
+one of the RFC 1597 private address spaces. 
+</p>
+
+<ul>
+<li>Edit the master configuration file <code class="url">/etc/aplaws.cfg</code>
+and for the <code class="url">auth-internal-ip-range</code> option specify
+your IP range in the form <code class="url">172.16.0.0/255.255.0.0</code>.
+<li>For <code class="url">admin-id</code> enter the Windows username of the
+person who will manage the APLAWS Site admin account
+<li>Finally, the <code class="url">auth-server</code> option should be the
+hostname (and possibly port number) of the IIS authentication
+server
+</ul>
+
+<p>
+If it doesn't work as expected you can set log4j logging on the
+category <code class="url">com.arsdigita.auth.ntlm</code> to
+<code class="url">debug</code>.
+</p>
+
+<!-- FOOTER Daniel Berrange (berrange at redhat dot com) -->
+
+
+</body>
+</html>

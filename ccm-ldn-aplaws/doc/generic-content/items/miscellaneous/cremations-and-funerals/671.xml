@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=671}]"><cms:name>-671</cms:name><cms:language>en</cms:language><cms:title>Ordering a municipal funeral</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=671}]"><cms:name>-671-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>ordering, municipal, funeral</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=671}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Municipal Funeral Service is a service provided, at low cost to the customer by the Council</i></p><hr/><p>The Council has appointed the long established firm of:</p><p>
+<span class="gen">enter company name</span>, <span class="gen">enter details</span>
+</p><p>To provide a dignified funeral service for the residents of the Borough.</p><h4>Financial Advice</h4><p>If you receive :-</p><ul>			<li title="*">Income Support</li>			<li title="*">Family Credit</li>			<li title="*">Disability Working Allowance</li>			<li title="*">Housing Benefit or</li>			<li title="*">Council Tax Benefit</li>			</ul><p>you may be able to get financial assistance towards the cost of the funeral.</p><p>To obtain advice contact your local Benefits Office; they can arrange an interview for you, or they can send you the claim form SF200 &quot;Assistance with funeral payments&quot;.</p><p>You can also get advice from your Welfare Rights Officer.</p><h4>The Service Provided</h4><p>The charge for a funeral is:</p><table width="90%" cellpadding="5" class="centre" summary="The Service Provided">				<tr>					<td>for funeral arrangements made on the directors premises</td>					<td>
+<span class="gen">enter fee</span>
+</td>				</tr>			</table><p>Additional services are available at extra cost, these can be discussed when making funeral arrangements.</p><p>An example of the minimum cost of a funeral is as follows:</p><table width="90%" cellpadding="5" class="centre" summary="Minimum Cost of a Funeral">  <tr>    <td>Funeral Director's Fees</td>    <td>
+<span class="gen">enter amount</span>
+</td>  </tr>  <tr>    <td>Cremation Fee</td>    <td>
+<span class="gen">enter amount</span>
+</td>  </tr>  <tr>    <td>Doctors Fees etc</td>    <td>
+<span class="gen">enter amount</span>
+</td>  </tr>  <tr>    <td>Minister Fees (if applicable)</td>    <td>
+<span class="gen">enter amount</span>
+</td>  </tr>  <tr>    <td>
+<strong>Total:</strong>
+</td>    <td>
+<span class="gen">enter amount</span>
+</td>  </tr>
+</table><p>The fees quoted above were correct as at <span class="gen">enter date</span>, however these may be subject to change.</p><h4>Telephone Numbers</h4><h4>Further Information</h4><p>If you require further information please contact us using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=671"> Providing Information
+		(671)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

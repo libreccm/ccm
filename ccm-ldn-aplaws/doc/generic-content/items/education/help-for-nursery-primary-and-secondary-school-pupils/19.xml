@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=19}]"><cms:name>education-1-19</cms:name><cms:language>en</cms:language><cms:title>Childcare arrangements - after and/or before school childcare</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=19}]"><cms:name>education-1-19-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>childcare, arrangements, after, before, school</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=19}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Out of school services are for school-age children to play and learn and have fun in groups.</i></p><hr/><p>They are usually based in or near schools and more are being 
+  set up to help families where parents work. Out of school services can be registered 
+  with the local authority and inspected each year. They are run outside school hours 
+  by a team of staff, usually called playworkers. Activities should be planned to 
+  help children learn, play and relax with their friends. Playworkers will often pick 
+  children up from local schools. There are different types of out of school services 
+  so look around to find one that suits you and your child.</p><p>
+				<strong>Positives</strong>
+			</p><ul>
+				<li title="*">children can learn, relax after school and have fun with their friends</li>
+				<li title="*">geared to the needs of children with working parents </li>
+			</ul><h4>What are the different types of out of school service?</h4><ul>
+				<li title="*">Breakfast clubs - open in the mornings before school so children can enjoy breakfast 
+    there</li>
+				<li title="*">After school clubs - open in the afternoons between <span class="gen">enter opening times</span>
+				</li>
+				<li title="*">Holiday playschemes - open during school holidays between  <span class="gen">enter opening times</span>
+</li>
+				
+				<li title="*">Out of school services are also sometimes called kids' clubs.</li>
+			</ul><h4>How do I know my child will be safe and secure?</h4><p>First of all you know your child best - look for an out of school 
+  service you feel will be suitable for your child. Out of school services registered 
+  with Ofsted Early Years are checked to make sure the staff are suitable to look 
+  after children. At least half of them must be trained and there are rules on the 
+  ratio of staff to children depending on the ages of the children catered for. A 
+  check is also done on the premises of the out of school service to ensure it is 
+  safe and suitable for children. After the out of school service is registered an 
+  annual inspection is carried out to ensure a safe and suitable service is being 
+  provided. Some out of school services do not currently need to be registered, for 
+  example, those which only cater for children aged over eight. You can ask if they 
+  are registered.</p><h4>How many children will there be?</h4><p>Most out of school services provide places for between 10 and 
+  40 children although some are smaller and others are larger.</p><h4>What age range of children will be there?</h4><p>Most children attending out of school services are aged between 
+  5 and 11. Some services provide places for three and four year olds to fit around 
+  nursery or pre-school education. Some services provide places geared for older children 
+  aged 10-14.</p><h4>When will services be open?</h4><p>Out of school services can open before school and care for children 
+  after school until about 6pm.</p><p>During the school holidays they are likely to be open between 
+<span class="gen">enter opening times</span>
+			</p><h4>What about part-time childcare?</h4><p>Many out of school services will be happy to offer you part-time 
+  childcare. You may need to book regular sessions to make sure a place is available 
+  when you need it.</p><h4>How much will it cost?</h4><p>You can expect to pay between <span class="gen">enter amount</span> per child per week for an after school childcare 
+  place and <span class="gen">enter amount</span>
+  per child per week for a place at a holiday playscheme.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=19"> Providing Information
+		(19)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

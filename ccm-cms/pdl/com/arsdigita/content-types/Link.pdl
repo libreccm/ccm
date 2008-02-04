@@ -1,0 +1,74 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Link.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.kernel.ACSObject;
+
+
+// can we make this extend ACSObject? With automated link updating, do
+// we have to explicitly store back-pointers to the direct parent
+// (which will already point to the link via an implementaton-specific
+// pointer) and to the top-level item (which is mainly needed for
+// association updating on publish, which no longer requires
+// Link-specific code
+object type Link extends ACSObject {
+    String[1..1] linkTitle = cms_links.title VARCHAR(200);
+    String[0..1] linkDescription = cms_links.description VARCHAR(4000);
+
+    // Link.EXTERNAL_LINK or Link.INTERNAL_LINK
+    String[1..1] targetType = cms_links.type VARCHAR(20);
+    String[0..1] targetURI = cms_links.target_uri VARCHAR(250);
+    ContentItem[0..1] targetItem = join cms_links.target_item_id to cms_items.item_id;
+    String[0..1] targetWindow = cms_links.target_window VARCHAR(50);
+
+    Integer[0..1] linkOrder = cms_links.link_order INTEGER;
+
+    reference key(cms_links.link_id);
+}
+
+
+// won't be necessary if we use metadata link updating, as there won't be live/draft links
+//query getLiveReferringLinks {
+//    BigDecimal id;
+//        
+//    do  {
+//        select m.version_id
+//          from cms_links l,
+//               cms_version_map m
+//         where l.target_item_id = :itemID
+//           and l.link_id = m.item_id
+//    } map {
+//        id = m.version_id;
+//    }
+//}
+
+query getReferringLinks {
+    BigDecimal id;
+        
+    do  {
+        select l.link_id
+          from cms_links l
+         where l.target_item_id = :itemID
+    } map {
+        id = l.link_id;
+    }
+}
+

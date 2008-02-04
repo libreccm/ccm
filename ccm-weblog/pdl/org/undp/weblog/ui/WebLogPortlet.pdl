@@ -1,0 +1,6 @@
+model org.undp.weblog.ui;
+
+import com.arsdigita.portal.Portlet;
+
+object type WebLogPortlet extends Portlet {
+}

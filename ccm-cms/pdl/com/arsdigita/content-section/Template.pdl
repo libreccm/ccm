@@ -1,0 +1,176 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Template.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.*;
+import com.arsdigita.categorization.*;
+import com.arsdigita.mimetypes.*;
+
+object type TemplateContext {
+  String[1..1] context = cms_template_use_contexts.use_context;
+  String[1..1] label = cms_template_use_contexts.label;
+  String[1..1] description = cms_template_use_contexts.description;
+      
+  object key (context);
+}	
+
+// Defines the Template object type
+
+object type Template extends TextAsset {
+  String label = cms_templates.label VARCHAR(400);
+  Boolean isPublishable = cms_templates.is_publishable CHAR(1);
+
+  reference key (cms_templates.template_id);
+}
+
+
+// An association from (section + content type) to a template
+object type SectionTemplateMapping extends ACSObject {
+    String      useContext = cms_section_template_map.use_context VARCHAR(200);
+    Boolean     isDefault = cms_section_template_map.is_default CHAR(1);
+    composite ContentSection[1..1] section =
+        join cms_section_template_map.section_id 
+          to content_sections.section_id;
+    composite ContentType[1..1] contentType =
+        join cms_section_template_map.type_id 
+          to content_types.type_id;
+    composite Template[1..1] template =
+        join cms_section_template_map.template_id 
+          to cms_templates.template_id;
+
+    reference key (cms_section_template_map.mapping_id);
+
+    aggressive load (contentType.id, contentType.label, template.id, 
+                     template.name, template.label, section.id, section.label,
+                     section.pageResolverClass, section.itemResolverClass,
+                     section.templateResolverClass, section.xmlGeneratorClass,
+                     template.mimeType.mimeType);
+
+    // All of these events empty are already taken care of in the 
+    // update/insert of the object type so there is not reason to
+    // execute the same sql a second time
+    add section {}
+    remove section {}
+
+    add contentType {}
+    remove contentType {}
+
+    add template {}
+    remove template {}
+}
+
+
+// A data operation to set the new default template within its use context
+data operation setDefaultTemplate {
+  do {
+    update cms_section_template_map set is_default = 
+         CASE WHEN (template_id = :newDefaultID) or 
+                   (template_id is null and :newDefaultID is null) THEN
+                 1
+              WHEN (template_id != :newDefaultID 
+                    and :mimeTypeString = (select mime_type 
+                                             from cms_assets 
+                                            where asset_id = template_id)) THEN
+                 0
+         ELSE  
+            decode(is_default, '1', 1, 0)
+         END
+    where
+      section_id = :sectionID
+    and
+      type_id = :typeID
+    and
+      use_context = :useContext
+  }
+}
+
+data operation setDefaultTemplateNullMimeType {
+  do {
+    update cms_section_template_map set is_default = 
+         CASE WHEN (template_id = :newDefaultID) or 
+                   (template_id is null and :newDefaultID is null) THEN
+                 1
+              WHEN (template_id != :newDefaultID 
+                    and (select mime_type 
+                           from cms_assets 
+                          where cms_assets.asset_id = template_id) is null) THEN
+                 0
+         ELSE  
+            decode(is_default, '1', 1, 0)
+         END
+    where
+      section_id = :sectionID
+    and
+      type_id = :typeID
+    and
+      use_context = :useContext
+  }
+}
+
+
+
+// An association from (item + context) to a template
+object type ItemTemplateMapping extends ACSObject {
+    String[1..1] useContext = cms_item_template_map.use_context VARCHAR(200);
+    composite Template[0..1] template = join cms_item_template_map.template_id 
+                                          to cms_templates.template_id;
+
+    reference key (cms_item_template_map.mapping_id);
+
+    aggressive load (item.id, template.id, template.mimeType.mimeType);
+
+    // All of these empty events are already taken care of in the 
+    // update/insert of the object type so there is not reason to
+    // execute the same sql a second time
+    add template {}
+    remove template {}
+
+    add item {}
+    remove item {}
+}
+
+association {
+    composite ContentItem[1..1] item = join cms_item_template_map.item_id
+                                         to cms_items.item_id;
+    component ItemTemplateMapping[0..n] templateMappings =
+       join cms_items.item_id to cms_item_template_map.item_id;
+}
+
+object type CategoryTemplateMapping extends ACSObject {
+  composite Category[1..1] category = 
+      join cms_category_template_map.category_id
+        to cat_categories.category_id;
+  composite ContentType[1..1] contentType = 
+      join cms_category_template_map.type_id
+        to content_types.type_id;
+  composite Template[1..1] template = 
+      join cms_category_template_map.template_id
+        to cms_templates.template_id;
+  composite ContentSection[1..1] contentSection =
+      join cms_category_template_map.section_id
+        to content_sections.section_id;
+  String[1..1] useContext = cms_category_template_map.use_context VARCHAR(200);
+  Boolean[1..1] isDefault = cms_category_template_map.is_default CHAR(1);
+
+  reference key(cms_category_template_map.mapping_id);
+
+  // Needed so we can filter & sort on roles 
+  aggressive load (category.id, contentType.label, template.name, template.label);
+}

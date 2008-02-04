@@ -1,0 +1,17 @@
+<!-- This is the DTD for specifying DomainObjectAdapters -->
+
+<!ELEMENT property EMPTY>
+<!ELEMENT associations (property+)>
+<!ELEMENT attributes (property+)>
+<!ELEMENT adapter (attributes?,associations?)>
+<!ELEMENT adapters (adapter+)>
+
+<!ATTLIST adapter objectType CDATA #REQUIRED
+                  context CDATA #REQUIRED>
+
+<!ATTLIST associations rule (include|exclude) "include">
+<!ATTLIST attributes rule (include|exclude) "exclude">
+
+<!ATTLIST property name CDATA #REQUIRED>
+
+<!-- The end of the DTD -->

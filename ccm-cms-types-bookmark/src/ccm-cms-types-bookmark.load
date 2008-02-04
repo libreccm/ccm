@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_bookmark"/>
+    <initializer class="com.arsdigita.cms.contenttypes.BookmarkInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-bookmark"/>
+    <data class="com.arsdigita.cms.contenttypes.BookmarkLoader"/>
+  </scripts>
+</load>

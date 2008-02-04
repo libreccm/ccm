@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=22}]"><cms:name>education-1-22</cms:name><cms:language>en</cms:language><cms:title>Educational awards and benefits - school maintenance grant</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=22}]"><cms:name>education-1-22-dublin-metadata</cms:name><cms:dcAudience>Student</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>educational, awards, benefits, school, maintenance, grant</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=22}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The purpose of the allowance is to assist dependent pupils aged 16 to 19 to follow full-time courses at school.</i></p><hr/><p>Applicants for the School Maintenance Allowance (SMA) must meet the following criteria:</p><ul>
+
+				<li title="*">Reside in <span class="gen">enter council name</span>
+
+				</li>
+
+				<li title="*">Attend a state maintained school</li>
+
+				<li title="*">Must be sixteen years of age before <span class="gen">enter date</span>
+
+				</li>
+
+				<li title="*">Parental Income has to be less than <span class="gen">enter amount</span> for the last financial year (<span class="gen">enter date</span> to <span class="gen">enter date</span>
+
+				</li>
+
+			</ul><h3>How to apply for a SMA</h3><p>Please contact us using the details above</p><h3>How much am I entitled to?</h3><p>This figure varies between &#xA3; <span class="gen">enter amount</span> and &#xA3; <span class="gen">enter amount</span> per annum depending upon parental income. If you qualify for the SMA you will automatically receive &#xA3; <span class="gen">enter amount</span> per annum from the Access Fund which can be used to support costs for example travel, books etc. Further information regarding the Access Fund can be found via the link below.</p><p>The overall figure will be paid on a termly basis and a cheque will be sent to the school.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=22"> Providing Information
+		(22)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

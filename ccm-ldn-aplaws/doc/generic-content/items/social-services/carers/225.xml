@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=225}]"><cms:name>adult-carers-225</cms:name><cms:language>en</cms:language><cms:title>Adult Carers</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=225}]"><cms:name>adult-carers-225-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>adult, carers</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=225}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>You are a carer if you provide regular and substantial unpaid help to someone who is frail or disabled, or mentally or physically ill, and who cannot manage without your support. You may not live in the same house, and you do not have to be related to the person you look after. </i></p><hr/><p>The Carers Act (1995) gives carers rights in law and it is important that you are aware of these rights and how they can be used. It gives carers the right to request an assessment of their own abilities and needs when an assessment of the needs of the person they care for is being carried out. The assessment applies to both adults and children who are carers. Your Social Worker or Occupational Therapist will take the results of this assessment into account when deciding what services you may be entitled to receive.</p><p>
+				Most people who look after 
+  relations or friends are happy to do so, but sometimes they need help and support 
+  to continue providing care. The information here aims to give carers an idea 
+  of the range of services available to them, and who to contact for further information; 
+  it is not a complete guide to services. Once you have made contact with any 
+  of the organisations or people listed here, they will give you a more detailed 
+  picture of the help available to suit your individual needs. 
+			</p><h2>
+				Respite Care or Short Breaks 
+			</h2><p>
+				 To give you a break from 
+  the caring role, a number of different schemes operate. Use the following details 
+  to find out more.
+			</p><p>
+<span class="gen">enter service name</span>
+<br/>
+<span class="gen">enter telephone number</span>
+<br/>
+<span class="gen">enter email address</span>				
+			</p><p>
+				Alternatively, visit the <strong>
+						
+		<a href="/ccm/services/pid.jsp?pid=227">Respite Care</a>	
+					</strong> <span class="gen">link to pid 227</span> webpage.
+			</p><h2>
+Personal Care at Home			</h2><p>
+				 Home helps/home care workers 
+  can provide the person you look after with day-to-day personal care, e.g. bathing, 
+  dressing. The service is available, according to need, during the day or evening, 
+  seven days a week. Practical help with housework and shopping may also be available. 
+  Use the following details to find out more.
+			</p><p>
+<span class="gen">enter service name</span>
+<br/>
+<span class="gen">enter telephone number</span>
+<br/>
+<span class="gen">enter email address</span>			</p><p>
+				Alternatively, visit the <strong>
+						
+		<a href="/ccm/services/pid.jsp?pid=242">Home Care</a>	
+					</strong> <span class="gen">link to pid 242</span> webpage.
+			</p><p>
+				For short-term help at home, 
+  following discharge from hospital, the British Red Cross provide the Home from 
+  Hospital scheme. In different circumstances, the British Red Cross also offer 
+  short-term practical help to people faced with an unexpected crisis if, for 
+  example, a carer is taken ill. For further information about the schemes see 
+  their website <strong>
+						
+		<a href="http://www.redcross.org.uk">www.redcross.org.uk</a>	
+					</strong> <span class="gen">link to external website</span>
+			</p><h2>
+				Meals at Home
+			</h2><p>
+				According to needs, arrangements 
+  can be made to deliver hot or frozen meals to the person you look after. Use 
+  the following details to find out more.
+			</p><p>
+<span class="gen">enter service name</span>
+<br/>
+<span class="gen">enter telephone number</span>
+<br/>
+<span class="gen">enter email address</span>				
+			</p><p>
+				Alternatively, visit the 
+  <strong>
+						
+		<a href="/ccm/services/pid.jsp?pid=315">Mobile Meals</a>	
+					</strong> <span class="gen">link to pid 315</span>
+						 webpage.
+				
+			</p><h2>
+				Equipment to Help with Daily Living 
+  and Adaptations to the Home
+			</h2><p>
+				 Social Services can advise 
+  on equipment that can make daily living tasks easier to manage. They can also 
+  advise on home adaptations to enable people to continue living independently. 
+  If you are a carer, they can advise on how to lift or transfer a person properly. 
+  Social Services also have specialist Social Workers to advise people who have 
+  a sight or hearing loss. Use the following details to find out more.
+			</p><p>
+<span class="gen">enter service name</span>
+<br/>
+<span class="gen">enter telephone number</span>
+<br/>
+<span class="gen">enter email address</span>				
+			</p><p>
+				Alternatively, visit the  
+  <strong>
+						
+		<a href="/ccm/services/pid.jsp?pid=178">Equipment and Adaptions to the Home</a>	
+					</strong> <span class="gen">link to pid 178</span>
+ webpage.
+					
+				
+			</p><h2>
+				Handyperson's Scheme
+			</h2><p>
+				 The scheme provides help 
+  with household maintenance and repairs for people on a limited income, who lack 
+  the mobility/confidence to tackle them. Use the following details to find out 
+  more.
+			</p><p>
+<span class="gen">enter service name</span>
+<br/>
+<span class="gen">enter telephone number</span>
+<br/>
+<span class="gen">enter email address</span>				
+			</p><h2>
+				Emergency Communication Systems
+			</h2><p>
+				 The system enables the 
+  person you look after to communicate with staff manning a Central Alarm System 
+  24 hours a day. The system is available for a small charge, from the Council, 
+  and in some cases, financial help may be available. The service is available 
+  to people of any age. Use the following details to find out more.
+			</p><p>
+<span class="gen">enter service name</span>
+<br/>
+<span class="gen">enter telephone number</span>
+<br/>
+<span class="gen">enter email address</span>				
+			</p><p>
+				Alternatively, visit the  
+  <strong>
+						
+		<a href="/ccm/services/pid.jsp?pid=312">Out of Hours Support</a>	
+					</strong> <span class="gen">link to pid 312</span>
+ webpage.
+					
+				
+			</p><p>
+				Age Concern also run an 
+  <strong>
+						
+		<a href="http://www.ageconcern.org.uk/AgeConcern/products_59.htm">Aid 
+  Call Scheme</a>	
+					</strong> <span class="gen">link to external website</span>
+  for older people.
+			</p><h2>
+				Disabled Person's Badge
+			</h2><p>
+				 At a small cost, Social 
+  Services can supply a 'Blue Badge'; to people who are registered 
+  blind or have limited mobility. This allows disabled people to park closer to 
+  their destinations, whether driver or passenger. Use the following details to 
+  find out more.
+			</p><p>
+<span class="gen">enter service name</span>
+<br/>
+<span class="gen">enter telephone number</span>
+<br/>
+<span class="gen">enter email address</span>				
+			</p><p>
+				Alternatively, visit the  
+  <strong>
+						
+		<a href="/ccm/services/pid.jsp?pid=279">Parking Permits</a>	
+					</strong>
+ <span class="gen">link to pid 279</span> webpage.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=225"> Providing Information
+		(225)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

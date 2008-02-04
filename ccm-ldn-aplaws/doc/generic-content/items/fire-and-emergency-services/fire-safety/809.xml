@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=809}]"><cms:name>fire-warden-commercial-training-809</cms:name><cms:language>en</cms:language><cms:title>Fire Warden/Commercial Training</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=809}]"><cms:name>fire-warden-commercial-training-809-dublin-metadata</cms:name><cms:dcAudience>Fire Warden/Commerical Training</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>fire, warden, commercial, training</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=809}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Would you or your staff know what to do if a fire broke out in the workplace? </i></p><hr/><p>Every year, people die and many more are injured in fires at work. The responsibility
+  falls on management to ensure their staff are sufficiently trained in fire
+  safety matters.</p><p>We  offer
+    a range of training courses for commerce and industry. Our instructors are
+    trained and qualified
+to provide the best in their field of expertise.</p><p>The following courses are available:</p><p>
+<span class="gen">enter details</span>
+</p><p>To find out more, use the contact details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=809"> Providing Information
+		(809)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

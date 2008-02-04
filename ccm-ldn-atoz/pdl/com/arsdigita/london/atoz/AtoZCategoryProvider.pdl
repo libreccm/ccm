@@ -1,0 +1,219 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.atoz;
+
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ContentType;
+
+object type AtoZCategoryProvider extends AtoZProvider {
+    Boolean[1..1] isCompound = atoz_cat_provider.is_compound BIT;
+
+    reference key (atoz_cat_provider.provider_id);
+}
+
+association {
+  AtoZCategoryProvider[0..n] atozProvider1 = join cat_categories.category_id
+                                               to atoz_cat_blacklist_map.category_id,
+                                             join atoz_cat_blacklist_map.provider_id
+                                               to atoz_cat_provider.provider_id;
+  Category[0..n] atozBlackList = join atoz_cat_provider.provider_id
+                                 to atoz_cat_blacklist_map.provider_id,
+                               join atoz_cat_blacklist_map.category_id
+                                 to cat_categories.category_id;
+}
+
+association {
+  AtoZCategoryProvider[0..n] atozProvider2 = join cat_categories.category_id
+                                               to atoz_cat_alias_map.category_id,
+                                             join atoz_cat_alias_map.provider_id
+                                               to atoz_cat_provider.provider_id;
+  Category[0..n] atozAliases = join atoz_cat_provider.provider_id
+                                 to atoz_cat_alias_map.provider_id,
+                               join atoz_cat_alias_map.category_id
+                                 to cat_categories.category_id;
+  String[1..1] letter = atoz_cat_alias_map.letter CHAR(1);
+  String[1..1] title = atoz_cat_alias_map.title VARCHAR(200);
+}
+
+association {
+  AtoZCategoryProvider[0..n] atozProvider3 = join content_types.type_id
+                                               to atoz_cat_ct_blacklist_map.type_id,
+                                             join  atoz_cat_ct_blacklist_map.provider_id
+                                               to atoz_cat_provider.provider_id;
+                                               
+  ContentType[0..n] atozContentTypeBlackList = join atoz_cat_provider.provider_id
+                                 to atoz_cat_ct_blacklist_map.provider_id,
+                               join atoz_cat_ct_blacklist_map.type_id
+                                 to content_types.type_id;
+}
+
+query getAtomicCategoryEntries {
+  BigDecimal[1..1] id;
+  String[1..1] objectType;
+  String[1..1] title;
+  String[1..1] description;
+  String[1..1] sortKey;
+
+  do {
+    select c.category_id as id,
+           a.object_type as object_type,
+           c.name as title,
+           c.description as description,
+           lower(c.name) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           cat_cat_subcat_trans_index i,
+           cat_root_cat_object_map m
+     where c.category_id = a.object_id
+       and c.enabled_p = '1'
+       and c.category_id = i.subcategory_id
+       and i.category_id = m.category_id
+       and m.object_id = :providerID
+       and not exists (
+           select 1
+             from cat_cat_subcat_trans_index i2
+             where i2.category_id in (
+                 select c2.category_id
+                    from cat_categories c2
+                    where c2.enabled_p = '0'
+               )
+               and i2.subcategory_id = c.category_id
+       )
+       and not exists (
+           select 1
+             from atoz_cat_blacklist_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from atoz_cat_alias_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
+                  cms_bundles cb, cms_items ci
+            where b.type_id = ci.type_id
+              and ci.parent_id = cb.bundle_id
+              and ci.language = cb.default_language
+              and cb.bundle_id = m.object_id
+              and m.category_id = c.category_id
+              and m.index_p = '1'
+              and b.provider_id = :providerID
+       )
+     union
+    select c.category_id as id,
+           a.object_type as object_type,
+           m.title as title,
+           c.description as description,
+           lower(m.letter) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           atoz_cat_alias_map m
+     where c.category_id = m.category_id
+       and c.category_id = a.object_id
+       and c.enabled_p = '1'
+       and m.provider_id = :providerID
+  } map {
+    id = id;
+    objectType = object_type;
+    title = title;
+    description = description;
+    sortKey = sort_key;
+  }
+}
+
+
+
+query getAtomicCategoryEntriesForRootCategory {
+  BigDecimal[1..1] id;
+  String[1..1] objectType;
+  String[1..1] title;
+  String[1..1] description;
+  String[1..1] sortKey;
+
+  do {
+    select c.category_id as id,
+           a.object_type as object_type,
+           c.name as title,
+           c.description as description,
+           lower(c.name) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           cat_cat_subcat_trans_index i
+     where c.category_id = a.object_id
+       and c.category_id = i.subcategory_id
+       and c.enabled_p = '1'
+       and i.category_id = :rootCategoryID
+       and not exists (
+           select 1
+             from atoz_cat_blacklist_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from cat_cat_subcat_trans_index i2
+             where i2.category_id in (
+                 select c2.category_id
+                    from cat_categories c2
+                    where c2.enabled_p = '0'
+               )
+               and i2.subcategory_id = c.category_id
+       )
+       and not exists (
+           select 1
+             from atoz_cat_alias_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
+                  cms_bundles cb, cms_items ci
+            where b.type_id = ci.type_id
+              and ci.parent_id = cb.bundle_id
+              and ci.language = cb.default_language
+              and cb.bundle_id = m.object_id
+              and m.category_id = c.category_id
+              and m.index_p = '1'
+              and b.provider_id = :providerID
+       )
+    union
+    select c.category_id as id,
+           a.object_type as object_type,
+           m.title as title,
+           c.description as description,
+           lower(m.letter) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           atoz_cat_alias_map m
+     where c.category_id = m.category_id
+       and c.category_id = a.object_id
+       and c.enabled_p = '1'
+       and m.provider_id = :providerID
+  } map {
+    id = id;
+    objectType = object_type;
+    title = title;
+    description = description;
+    sortKey = sort_key;
+  }
+}

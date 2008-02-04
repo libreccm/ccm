@@ -1,0 +1,64 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Workflow.pdl 1277 2006-07-27 09:07:46Z cgyg9330 $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.workflow.simple;
+
+import com.arsdigita.kernel.*;
+
+//TODO: instead of getting the ObjectID and Type, create an association;
+object type Workflow extends Task {
+    BigDecimal[0..1] processDefinitionID = cw_processes.process_def_id INTEGER;
+    String[0..1]     processState = cw_processes.process_state VARCHAR(16);
+    composite ACSObject[0..1]  object = join cw_processes.object_id to acs_objects.object_id;
+    
+    reference key (cw_processes.process_id);
+}
+
+association {
+    component Task[0..n] wfTasks = join cw_processes.process_id
+                                     to cw_tasks.parent_task_id;
+	composite Workflow [0..1] taskWf = join cw_tasks.parent_task_id
+									 to cw_processes.process_id;
+
+
+}
+
+
+query getProcesses {
+    BigDecimal id;
+    BigDecimal processID;
+    BigDecimal processDefID;
+    BigDecimal processObjectID;
+    String processObjectType;
+
+    do {
+        select cw_processes.process_id
+        ,      acs_objects.object_type
+        ,      cw_processes.object_id as object_id
+        ,      cw_processes.process_def_id
+        from cw_processes , acs_objects
+        where cw_processes.object_id = acs_objects.object_id
+    } map {
+        id = cw_processes.process_id;
+        processID = cw_processes.process_id;
+        processDefID = cw_processes.process_def_id;
+        processObjectType = acs_objects.object_type;
+        processObjectID = cw_processes.object_id;
+    }
+}

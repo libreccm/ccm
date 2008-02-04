@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=151}]"><cms:name>home-ownership-service--right-to-buy-151</cms:name><cms:language>en</cms:language><cms:title>Home Ownership Service - Right to Buy</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=151}]"><cms:name>home-ownership-service--right-to-buy-151-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>home, ownership, service, right, to, buy</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=151}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Right to Buy is a Government run scheme that allows some tenants to purchase the property that they rent from the Council.&#xA0;For eligible tenants the price of the property will be offered at a price lower than the full market value. </i></p><hr/><h2>
+				Who is eligible?
+			</h2><p>
+				If you are a secure tenant and have held a public sector tenancy for 2 years you may be able to purchase the property that you live in through the Right to Buy. 
+			</p><h2>
+				Who cannot buy?
+			</h2><ul>
+				<li title="*">
+					Any tenant who has a service tenancy in connection with their job.
+  
+				</li>
+				<li title="*">
+					Any sheltered housing tenant.
+  
+				</li>
+				<li title="*">
+					Any tenant whose home has been adapted or is particularly suitable for use by the disabled or elderly. 
+				</li>
+			</ul><h2>
+				What discount will I receive?
+			</h2><p>
+				You could receive up to a maximum discount of <span class="gen">enter amount</span> depending on the amount of time that you have been a tenant.
+			</p><p>
+				
+		<a href="http://www.odpm.gov.uk/stellent/groups/odpm_housing/documents/page/odpm_house_024003.hcsp">
+					<strong>A full guide to Your Right to Buy Your home</strong>
+				</a>	 <span class="gen">link to external website</span> is available on the Office of the Deputy Prime Minister's website. If the home that you are thinking of buying is a flat you will find the booklet 
+		<a href="http://www.odpm.gov.uk/stellent/groups/odpm_housing/documents/page/odpm_house_601797.hcsp">
+					<strong>Thinking of buying a Council Flat</strong>
+				</a>	
+				<span class="gen">link to external website</span> on the Office of the Deputy Prime Minister's website. 
+			</p><p>
+				If you would like an application form for the Right to Buy your Council property, please use the contact details at the top of this page. 
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=151"> Providing Information
+		(151)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

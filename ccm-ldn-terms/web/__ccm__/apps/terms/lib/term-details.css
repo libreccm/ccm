@@ -1,0 +1,24 @@
+table.termDetails {
+  width: 100%;
+}
+table.termDetails thead {
+  text-align: center;
+  background-color: rgb(72,72,72);
+  color: rgb(255,255,255);
+}
+
+table.termDetails tbody tr.even {
+  background-color: rgb(255,255,255);
+}
+table.termDetails tbody tr.odd {
+  background-color: rgb(212,212,212);
+}
+table.termDetails tbody tr th {
+  text-align: right;
+  font-weight: bold;
+}
+
+table.termDetails tfoot {
+  border-top: 1px solid rgb(28,28,28);
+  background-color: rgb(192,192,192);
+}

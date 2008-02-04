@@ -1,0 +1,4 @@
+select i.icle_id as c_1
+from icles i,
+     collection c__
+where c__.test_id = ? and c__.element_id = i.icle_id

@@ -1,0 +1,15 @@
+*~
+*.bak
+*/.#*
+*/semantic.cache
+*/afiedt.buf
+*/.xvpics/*
+*/.svn/*
+*/build/*
+build/*
+rollingbuild/*
+enterprise.init*
+junit*.properties
+config.vars*
+build.xml
+MANIFEST.SKIP

@@ -1,0 +1,85 @@
+//
+// Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+//
+// The contents of this file are subject to the Open Software License v2.1
+// (the "License"); you may not use this file except in compliance with the
+// License. You may obtain a copy of the License at
+// http://rhea.redhat.com/licenses/osl2.1.html.
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+// $Id: FileAttachment.pdl 712 2005-08-17 18:16:39Z sskracic $
+// $DateTime: 2004/03/30 18:21:14 $
+model com.arsdigita.cms.contentassets;
+
+import com.arsdigita.cms.FileAsset;
+import com.arsdigita.cms.ContentItem;
+
+object type FileAttachment extends FileAsset {
+    Integer[0..1] fileOrder = ca_file_attachments.file_order INTEGER;
+    reference key (ca_file_attachments.file_id);
+    aggressive load (fileOwner.id);
+}
+
+association {
+    composite ContentItem[0..1] fileOwner = join ca_file_attachments.owner_id to cms_items.item_id;
+    component FileAttachment[0..n] fileAttachments = join cms_items.item_id to ca_file_attachments.owner_id;
+}
+
+query maxFileAttachmentOrderForItem {
+    Integer fileOrder;
+
+    options {
+        WRAP_QUERIES = false;
+    }
+
+    do {
+        select max(cfa.file_order) as file_order from ca_file_attachments cfa
+          where cfa.owner_id = :ownerID
+    } map {
+        fileOrder = file_order;
+    }
+}
+
+data operation swapFileAttachmentOrder {
+    do {
+        update ca_file_attachments
+        set file_order = CASE WHEN (file_order = :fileOrder) THEN
+                                 (:nextFileOrder)
+                            ELSE
+                                 (:fileOrder)
+                            END
+        where file_order in (:fileOrder, :nextFileOrder)
+          and owner_id = :ownerID
+          and 2 = (select count(*) from ca_file_attachments fa
+                 where fa.file_order in (:fileOrder, :nextFileOrder)
+                 and fa.owner_id = :ownerID)
+    }
+}
+
+query getAdjacentSortKey {
+    Integer otherKey;
+
+    options {
+        WRAP_QUERIES = false;
+    }
+
+    do {
+        select CASE WHEN 'next' = :param THEN
+                        (select min(file_order) from ca_file_attachments
+                            where owner_id = :ownerID
+                            and file_order > :fileOrder)
+                    ELSE
+                        (select max(file_order) from ca_file_attachments
+                            where owner_id = :ownerID
+                            and file_order < :fileOrder)
+                    END AS other_key
+           from dual
+    } map {
+        otherKey = other_key;
+    }
+}
+

@@ -1,0 +1,127 @@
+init com.arsdigita.cms.installer.SectionInitializer {
+
+  // Name of the content section. This is used as the URL
+  // so it must contain only characters that are allowed in URLs e.g.,
+  // no spaces.
+  name = "documents";
+
+  // Email address that expiration digests will be sent from
+  expirationSender =  "article-digest@example.net";
+
+  // List of roles to create. First field is role name,
+  // second is the description, third is a list of
+  // privileges, and (optional) fourth is the workflow
+  // task to assign to
+  roles = {
+    {
+      "Author", "Creates new content",
+      { "new_item", "read_item", "preview_item", "edit_item",
+        "categorize_items" },
+      "Authoring"
+    },
+    {
+      "Editor", "Approves the author's work",
+      { "edit_item", "new_item", "delete_item",
+        "read_item", "preview_item", "categorize_items" },
+      "Approval"
+    },
+    {
+      "Publisher", "Deploys the content to the web site",
+      { "edit_item", "new_item", "delete_item",
+        "publish", "read_item", "preview_item", "categorize_items" },
+      "Publishing"
+    },
+    {
+      "Manager", "Manages the overall content section",
+      { "delete_item", "edit_item", "new_item",
+        "staff_admin", "content_type_admin", "lifecycle_admin",
+        "workflow_admin", "category_admin", "publish",
+        "read_item", "preview_item", "categorize_items" }
+      // NB, manager doesn't have any assigned task for workflow
+    }
+  };
+
+  // List of content types to register
+  types = {
+        "com.arsdigita.cms.docmgr.Document",
+        "com.arsdigita.cms.docmgr.DocFolder",
+        "com.arsdigita.cms.docmgr.DocLink"
+  };
+
+  // Category tree to load
+  categories = "/WEB-INF/resources/article-categories.xml";
+
+  // Wether to make content viewable to 'The Public', ie non-registered users
+  public = true;
+
+  // Name of the item resolver class. This class must implement com.arsdigita.cms.dispatcher.ItemResolver.
+  itemResolverClass = "com.arsdigita.cms.dispatcher.MultilingualItemResolver";
+  // Name of the item resolver class. This class must implement com.arsdigita.cms.dispatcher.TemplateResolver.
+  templateResolverClass = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
+}
+
+
+init com.arsdigita.cms.docmgr.installer.Initializer {
+  contentSection = "documents";
+  internalGroupID = "-200";
+  legacyFolderName = "legacy";
+}
+
+init com.arsdigita.cms.docmgr.installer.MimeIconInitializer {
+
+    iconURLRoot = "http://server.with.icons/assets/mime-icons/";
+
+    mimeIconMap = {
+        {"application/octet-stream", "icon_exe.gif"},
+        {"audio/x-wav", "icon_wav.gif"},
+        {"video/quicktime", "icon_mov.gif"},
+        {"application/x-msvideo", "icon_avi.gif"},
+        {"application/vnd.visio",  "icon_visio.gif"},
+        {"application/pdf", "icon_pdf.gif" },
+        {"application/msword", "icon_doc.gif"},
+        {"application/msexcel", "icon_xls.gif"},
+        {"application/ms-powerpoint", "icon_pps.gif"},
+        {"text/xml", "icon_xml.gif"},
+        {"text/html", "icon_htm.gif"},
+        {"text/css", "icon_css.gif"},
+        {"text/plain", "icon_txt.gif"},
+        {"image/bmp", "icon_bmp.gif"},
+        // ALL MIME TYPES BELOW USE GENERAL ICON
+        {"application/x-dvi", "icon_gen.gif"},
+        {"application/x-latex", "icon_gen.gif"},
+        {"application/x-tex", "icon_gen.gif"},
+        {"application/x-texinfo", "icon_gen.gif"},
+        {"application/x-troff", "icon_gen.gif"},
+        {"application/x-troff-man", "icon_gen.gif"},
+        {"application/x-troff-me", "icon_gen.gif"},
+        {"application/x-troff-ms", "icon_gen.gif"},
+        {"application/x-wais-source", "icon_gen.gif"},
+        {"application/zip", "icon_gen.gif"},
+        {"application/gzip", "icon_gen.gif"},
+        {"application/x-tar", "icon_gen.gif"},
+        {"audio/basic", "icon_gen.gif"},
+        {"audio/x-aiff", "icon_gen.gif"},
+        {"video/mpeg", "icon_gen.gif"},
+        {"video/x-sgi-movie",  "icon_gen.gif"},
+        {"application/msaccess", "icon_gen.gif"},
+        {"application/postscript", "icon_gen.gif"},
+        {"application/rtf", "icon_gen.gif"},
+        {"text/sgml", "icon_gen.gif"},
+        {"text/x-jsp", "icon_gen.gif"},
+        {"image/gif", "icon_gen.gif"},
+        {"image/ief", "icon_gen.gif"},
+        {"image/jpeg", "icon_gen.gif"},
+        {"image/tiff", "icon_gen.gif"},
+        {"image/x-cmu-rast", "icon_gen.gif"},
+        {"image/x-portable-anymap", "icon_gen.gif"},
+        {"image/x-portable-bitmap", "icon_gen.gif"},
+        {"image/x-portable-graymap", "icon_gen.gif"},
+        {"image/x-portable-pixmap", "icon_gen.gif"},
+        {"image/x-rgb", "icon_gen.gif"},
+        {"image/x-xbitmap", "icon_gen.gif"},
+        {"image/x-xwindowdump", "icon_gen.gif"},
+        {"image/png", "icon_gen.gif"}
+    };
+}
+// End of CMS Document Manager initialization
+

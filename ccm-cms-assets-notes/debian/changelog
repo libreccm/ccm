@@ -1,0 +1,25 @@
+ccm-cms-assets-notes (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:51:55 +0000
+
+ccm-cms-assets-notes (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.1.2 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:02 +0000
+
+ccm-cms-assets-notes (6.1.2-2) unstable; urgency=low
+
+  * Add a depends on ccm-devel, temporarily so they package builds under
+    cruisecontrol. This will be removed again once ccm-devel goes away. 
+  * Add dependancy on ccm-scripts too.
+
+ -- David Pashley <david@runtime-collective.com>  Mon, 25 Apr 2005 15:33:43 +0100
+
+ccm-cms-assets-notes (6.1.2-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Fri, 24 Apr 2004 12:27:56 +0100

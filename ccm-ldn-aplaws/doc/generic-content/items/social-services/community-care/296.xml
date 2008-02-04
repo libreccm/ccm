@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=296}]"><cms:name>community-day-centres-296</cms:name><cms:language>en</cms:language><cms:title>Community/Day Centres</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=296}]"><cms:name>community-day-centres-296-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>community, day, centres</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=296}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Social Services has a number of day centres for people with disabilities and for elderly people. </i></p><hr/><p>These services are only available following an assessment of need. This is a discussion with you to find out how best to support you with the problems you are having. We will look at your needs and decide whether you are eligible for services including attending one of our day centres.</p><p>There is a charge for this service.</p><p>If you would like more information and to find out whether you would be eligible for the service, please contact us. Alternatively, contact the day centre direct using the details below:</p><p>
+<span class="gen">enter facility name</span>
+<br/>
+  <span class="gen">enter details</span>
+</p><p>
+<span class="gen">enter facility name</span>
+<br/>
+  <span class="gen">enter details</span>
+</p><p>
+<span class="gen">enter facility name</span>
+<br/>
+  <span class="gen">enter details</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=296"> Providing Information
+		(296)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

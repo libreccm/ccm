@@ -1,0 +1,27 @@
+
+-*- text -*-
+
+ Search Spider TODO
+ ------------------
+
+1. Restrict downloads to a list of known MIME-types
+   This should probably depend on the search engine used;
+   when using interMedia, download HTML, Office files, PS/PDF
+   etc.; when using Lucene, only download HTML
+
+2. Reduce spider's bandwidth consumption
+   Unfortunately, the spider downloads everything first before
+   we can check the Last-Modified: header against the date we have
+   in the DB; the spider only supports a "max. age" range for documents
+   to retrieve. We could probably set this to the time since the
+   last indexer run, but there are some problems with this approach:
+   e.g. when 3. is done, there could be docs. which we *tried* to retrieve
+   recently, but which were never acually downloaded etc.
+
+3. Indexer should handle HTTP error codes
+   e.g. when receiving a 404, the entry should be deleted from the DB,  
+   when 500 the spider should try again later, etc.
+
+4. Frequency setting for the spider should be in HOURS rather than seconds
+   to keep people from screwing up their system
+   

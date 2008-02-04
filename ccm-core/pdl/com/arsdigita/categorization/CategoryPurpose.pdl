@@ -1,0 +1,48 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: CategoryPurpose.pdl 1169 2006-06-14 13:08:25Z fabrice $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.categorization;
+
+import com.arsdigita.kernel.*;
+
+object type CategoryPurpose extends ACSObject {
+
+    String[1..1]  key         = cat_purposes.key VARCHAR(40);
+    String[0..1]  description = cat_purposes.description VARCHAR(4000);
+    String[1..1]  name        = cat_purposes.name VARCHAR(200);
+    String[0..1]  language    = cat_purposes.language CHAR(2);
+
+    reference key (cat_purposes.purpose_id);
+
+}
+
+association {
+   CategoryPurpose[0..n] purposes =
+       join cat_categories.category_id to
+            cat_category_purpose_map.category_id,
+       join cat_category_purpose_map.purpose_id to
+            cat_purposes.purpose_id;
+
+   Category[0..n] purposeCategories =
+       join cat_purposes.purpose_id to
+            cat_category_purpose_map.purpose_id,
+       join cat_category_purpose_map.category_id to
+            cat_categories.category_id;
+
+}

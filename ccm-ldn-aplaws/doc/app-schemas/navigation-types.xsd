@@ -1,0 +1,104 @@
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://rhea.redhat.com/schemas/navigation" 
+  elementFormDefault="qualified" 
+  targetNamespace="http://rhea.redhat.com/schemas/navigation">
+
+  <xs:complexType name="alphabet">
+    <xs:sequence>
+      <xs:element name="letter">
+        <xs:complexType>
+          <xs:attribute name="value" type="xs:string"/>
+          <xs:attribute name="url" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="calendar">
+    <xs:sequence>
+      <xs:element name="today">
+        <xs:complexType>
+          <xs:attribute name="date" type="xs:string"/>
+          <xs:attribute name="day" type="xs:string"/>
+          <xs:attribute name="week" type="xs:string"/>
+          <xs:attribute name="month" type="xs:string"/>
+          <xs:attribute name="prettyMonth" type="xs:string"/>
+          <xs:attribute name="period" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="year">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="month">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="week">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="day">
+                          <xs:complexType>
+                            <xs:attribute name="url" type="xs:string"/>
+                            <xs:attribute name="date" type="xs:string"/>
+                            <xs:attribute name="day" type="xs:string"/>
+                            <xs:attribute name="week" type="xs:string"/>
+                            <xs:attribute name="month" type="xs:string"/>
+                            <xs:attribute name="dayOfWeek" type="xs:string"/>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                      
+                      <xs:attribute name="url" type="xs:string"/>
+                      <xs:attribute name="rank" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                
+                <xs:attribute name="url" type="xs:string"/>
+                <xs:attribute name="name" type="xs:string"/>
+                <xs:attribute name="previousURL" type="xs:string"/>
+                <xs:attribute name="nextURL" type="xs:string"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          
+          <xs:attribute name="name" type="xs:string"/>
+          <xs:attribute name="previousURL" type="xs:string"/>
+          <xs:attribute name="nextURL" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="categoryList">
+    <xs:sequence>
+      <xs:element name="category" type="object" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="objectList">
+    <xs:sequence>
+      <xs:element name="paginator" type="paginator"/>
+      <xs:element name="object" type="object" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="paginator">
+    <xs:attribute name="pageNumber" type="xs:integer"/>
+    <xs:attribute name="pageCount" type="xs:integer"/>
+    <xs:attribute name="pageSize" type="xs:integer"/>
+    <xs:attribute name="objectBegin" type="xs:integer"/>
+    <xs:attribute name="objectEnd" type="xs:integer"/>
+    <xs:attribute name="objectCount" type="xs:integer"/>
+  </xs:complexType>
+  
+  <xs:complexType name="object">
+    <xs:attribute name="oid" type="xs:string"/>
+    
+    <xs:attribute name="title" type="xs:string"/>
+    <xs:attribute name="description" type="xs:string"/>
+    
+    <xs:attribute name="url" type="xs:string"/>
+  </xs:complexType>
+
+</xs:schema>

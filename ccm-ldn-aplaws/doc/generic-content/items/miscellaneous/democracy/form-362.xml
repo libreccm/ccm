@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=362}]"><cms:name>elections--voting-form-362</cms:name><cms:language>en</cms:language><cms:title>Elections - Voting</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=362}]"><cms:name>362a.pdf</cms:name><cms:content file="362a.pdf"/></cms:file></cms:item>

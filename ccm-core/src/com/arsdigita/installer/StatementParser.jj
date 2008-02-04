@@ -1,0 +1,180 @@
+options {
+    STATIC = false;
+    IGNORE_CASE = true;
+}
+
+
+PARSER_BEGIN(StatementParser)
+
+package com.arsdigita.installer;
+
+import java.io.Reader;
+
+class StatementParser {
+
+    public static abstract class Switch {
+	public abstract void onStatement(String statement);
+	public abstract void onInclude(String include, boolean relative);
+    }
+
+    private String m_filename;
+    private Switch m_switch;
+    private StringBuffer m_image = new StringBuffer();
+
+    public StatementParser (String filename, Reader r, Switch sw) {
+	this(r);
+	m_filename = filename;
+	m_switch = sw;
+    }
+
+    private void appendSpecial(Token t) {
+        Token sp = t;
+        while (sp.specialToken != null) { sp = sp.specialToken; }
+        if (sp == t) { return; }
+        while (sp != null) {
+            m_image.append(sp.image);
+            sp = sp.next;
+        }
+    }
+
+    private void append(Token t) {
+        appendSpecial(t);
+        m_image.append(t.image);
+    }
+
+    private boolean m_plsql = false;
+
+    private String clearImage() {
+	String result = m_image.toString();
+	m_image.setLength(0);
+        if (m_plsql) {
+            result = result.substring(0, result.lastIndexOf(';') + 1);
+        } else {
+            result = result.substring(0, result.lastIndexOf(';'));
+        }
+        m_plsql = false;
+	return result;
+    }
+
+}
+
+PARSER_END(StatementParser)
+
+<DEFAULT,BEGIN> SPECIAL_TOKEN:
+{
+    " "
+  | "\t"
+  | "\n"
+  | "\r"
+  | "\f"
+}
+
+SKIP:
+{
+    <"--" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+  | <(<WHITESPACE>)? "show" <WHITESPACE> "errors" (<WHITESPACE>)?
+     (<SEMICOLON>)?>
+  | <"\\echo" (~["\n", "\r"])* ("\n"|"\r"|"\r\n")>
+  | <"PROMPT" (~["\n", "\r"])* ("\n"|"\r"|"\r\n")>
+}
+
+TOKEN:
+{
+    <INCLUDE: "@@" | "\\i" | "include" | "@" >
+  | <NAKED_BEGIN: "begin">
+  | <DECLARE: "declare">
+  | <PLSQL_BEGIN:
+	( <CREATE> <WHITESPACE>
+	  ( <OR> <WHITESPACE> <REPLACE> <WHITESPACE> )?
+	  ( <PACKAGE> | <TRIGGER> | <FUNCTION> | <PROCEDURE> ) ) >
+  | <PLSQL_END:
+	( <END> (<WHITESPACE> <ID>)? (<WHITESPACE>)? <SEMICOLON> <SLASH> ) >
+  | <SEMICOLON: ";">
+  | <SQL_TOKEN: ( <SINGLE_STRING> | <DOUBLE_STRING> |
+		  ( ~[" ", "\n", "\r", "\t", ";"] )+ ) >
+  | <#WHITESPACE: ( [" ", "\n", "\r", "\t"] )+ >
+  | <#CREATE:  "create">
+  | <#OR:      "or">
+  | <#REPLACE: "replace">
+  | <#PACKAGE: "package">
+  | <#TRIGGER: "trigger">
+  | <#FUNCTION: "function">
+  | <#PROCEDURE: "procedure">
+  | <#END: "end">
+  | <#LANGUAGE: "language">
+  | <#ID: ( ["a" - "z", "A" - "Z", "0" - "9", "_"] )+>
+  | <#SINGLE_STRING: "'" (~["'"])* ( "''" (~["'"])* )* "'" >
+  | <#DOUBLE_STRING: "\"" (~["\""])* ( "\"\"" (~["\""])* )* "\"">
+  | <#SLASH: ("\n"|"\r"|"\r\n") ( <WHITESPACE> )? "/"  ( <WHITESPACE> )?
+	     ("\n"|"\r"|"\r\n")>
+}
+
+
+
+void parse() :
+{}
+{
+    ( statement() )*
+    <EOF>
+}
+
+
+void statement() :
+{
+    Token i;
+    Token t;
+}
+{
+    (   LOOKAHEAD(<NAKED_BEGIN> <SEMICOLON>)
+	t = <NAKED_BEGIN> { append(t); }
+	t = <SEMICOLON> { append(t); }
+      | LOOKAHEAD(plsql()) plsql() { m_plsql = true; }
+      | LOOKAHEAD(<INCLUDE>) i = <INCLUDE> t = <SQL_TOKEN>
+	{
+            m_switch.onInclude(t.image, i.image.equals("@@"));
+	    return;
+	}
+      | [ t = <PLSQL_BEGIN> { append(t); } ]
+	( nosemi() )*
+	t = <SEMICOLON> { append(t); }
+    )
+    {
+	String image = clearImage();
+	m_switch.onStatement(image);
+    }
+}
+
+void plsql() :
+{
+    Token t;
+}
+{
+    (   t = <PLSQL_BEGIN> { append(t); }
+      | t = <NAKED_BEGIN> { append(t); }
+      | t = <DECLARE> { append(t); } )
+    ( element() )+
+    t = <PLSQL_END> { append(t); }
+}
+
+void nosemi() :
+{
+    Token t;
+}
+{
+    t = <SQL_TOKEN> { append(t); }
+  | t = <INCLUDE> { append(t); }
+  | t = <NAKED_BEGIN> { append(t); }
+  | t = <DECLARE> { append(t); }
+}
+
+void element() :
+{
+    Token t;
+}
+{
+    t = <SQL_TOKEN> { append(t); }
+  | t = <SEMICOLON> { append(t); }
+  | t = <INCLUDE> { append(t); }
+  | t = <NAKED_BEGIN> { append(t); }
+  | t = <DECLARE> { append(t); }
+}

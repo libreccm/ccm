@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : domain-nav-shp-1.00.xml
+    Created on : 2. Juni 2007, 10:00
+    Author     : pb
+    Description:
+        Definition of the terms (categories) in the SHP Navigation Menue.
+        In hierarchy-nav-shp the structure of the tree will be defined.
+-->
+
+<terms:domain xmlns:terms="http://xmlns.redhat.com/london/terms/1.0" 
+              about="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml" 
+              key="SHP-NAV" 
+              title="SHP Navigation List" 
+              version="1.00" released="2005-10-01">
+
+  <terms:term id="1000" name="...unterstützen" inAtoZ="false"/>
+    <terms:term id="1200" name="Akutfall - was tun?" inAtoZ="false"/>
+    <terms:term id="1400" name="Rehabilitation" inAtoZ="false"/>
+    <terms:term id="1600" name="Betreuung zu Hause" inAtoZ="false"/>
+    <terms:term id="1800" name="Leben in einer Einrichtung" inAtoZ="false"/>
+    <terms:term id="2100" name="Leben danach" inAtoZ="false"/>
+    <terms:term id="9001" name="Häufig gestellt Fragen" inAtoZ="false"/>
+  
+  <terms:term id="3000" name="...informieren" inAtoZ="false"/>
+    <terms:term id="3200" name="Das Apallische Durchgangssyndrom" inAtoZ="false"/>
+    <terms:term id="3400" name="Pflege &amp; Therapie" inAtoZ="false"/>
+    <terms:term id="3450" name="Pflege" inAtoZ="false"/>
+    <terms:term id="3500" name="Therapien" inAtoZ="false"/>
+    <terms:term id="3600" name="Hilfsmittel &amp; Verordnungen" inAtoZ="false"/>
+    <terms:term id="3800" name="Rechtliches" inAtoZ="false"/>
+      <terms:term id="3840" name="Betreuungsrecht" inAtoZ="false"/>
+      <terms:term id="3880" name="Sozialrecht" inAtoZ="false"/>
+      <terms:term id="3920" name="Schadenersatz" inAtoZ="false"/>
+    <terms:term id="4100" name="Publikationen" inAtoZ="false"/>
+    <terms:term id="4300" name="Lexikon der Fachbegriffe" inAtoZ="false"/>
+  
+  <terms:term id="5000" name="...organisieren" inAtoZ="false"/>
+    <terms:term id="5100" name="Unsere Ziele" inAtoZ="false"/>
+    <terms:term id="5350" name="Kontakt" inAtoZ="false"/>
+    <terms:term id="5600" name="Veranstaltungen" inAtoZ="false"/>
+    <terms:term id="5900" name="Regionale Verbandsgruppen" inAtoZ="false"/>
+    <terms:term id="6100" name="Informationsmaterial" inAtoZ="false"/>
+    <terms:term id="6800" name="Für Mitglieder" inAtoZ="false"/>
+    
+  <terms:term id="9002" name="Archiv" inAtoZ="false"/>
+  <terms:term id="9200" name="Informative Links" inAtoZ="false"/>
+
+</terms:domain>
+

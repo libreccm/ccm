@@ -1,0 +1,31 @@
+model com.arsdigita.workspace;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.web.Application;
+
+// @author Jim Parsons (jparsons@arsdigita.com)
+
+object type BookmarkApplication extends Application {
+
+    component Bookmark[0..n] bookmarks = 
+        join bookmarkapplications.bmrk_app_id to bookmarks.bmrk_app_id;
+
+    reference key (bookmarkapplications.bmrk_app_id);
+}
+
+object type Bookmark extends ACSObject {
+	String[1..1] bookmark_name = bookmarks.bookmark_name VARCHAR(4000);
+	String[1..1] bookmark_url = bookmarks.bookmark_url VARCHAR(4000);
+	String[0..1] bookmark_desc = bookmarks.bookmark_desc VARCHAR(4000);
+	String[1..1] create_date = bookmarks.create_date VARCHAR(150);
+	String[0..1] mod_date = bookmarks.mod_date VARCHAR(150);
+	String[1..1] author = bookmarks.author VARCHAR(150);
+	Integer[1..1] visits = bookmarks.visits INTEGER;
+	Integer[1..1] sortKey = bookmarks.sort_key INTEGER;
+
+        BookmarkApplication[1..1] bookmarkapp =
+           join bookmarks.bmrk_app_id to bookmarkapplications.bmrk_app_id;
+
+	reference key (bookmarks.bookmark_id);
+}
+

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=546}]"><cms:name>road-safety--cycling-and-walking-to-school-546</cms:name><cms:language>en</cms:language><cms:title>Road Safety - Cycling and Walking to School</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=546}]"><cms:name>road-safety--cycling-and-walking-to-school-546-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>road, safety, cycling, walking, school</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=546}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The mode of travel chosen for a child's journey to school is recognised as having an impact not only on their safety but their health and personal development and of course the environment in which they live. </i></p><hr/><p>The Government has empowered Local Authorities to assist schools in developing School Travel Plans and Safer Routes to School programmes. Together we can make a difference to the journey children make to get to and from school by making it safer, healthier, sustainable and more interesting.</p><h4>Safer Routes to School</h4><p>The Safer Routes to School initiative aims to promote safer, more environmentally sustainable and healthier ways of getting to and from school with particular emphasis on walking and cycling. To achieve this, we need to improve conditions (both in safety and the environment) on the main walking and cycling routes to school. Schemes can include physical measure such as safer crossing points and may involve work within the school grounds.</p><p>Projects involve the investigation of school travel patterns usually carried out with the commitment to a School Travel Plan. This often identifies engineering and educational measures to improve safety and reduce car use on the route between home and school. These measures can be considered as part of a Safer Routes project and may include:</p><ul>
+<li title="*">pedestrian crossings, improved pavements</li>
+<li title="*">school zones, traffic calming, parking restrictions</li>
+<li title="*">cycle routes and cycle parking</li>
+<li title="*">road safety education, training and publicity</li>
+<li title="*">health information</li>
+<li title="*">personal security advice</li>
+</ul><p>
+<strong>Walking</strong>
+</p><p>If you live close enough, encourage your children to walk to school. It will help them keep fit, be alert and become more street-wise:</p><ul>
+<li title="*">Provide bright and reflective clothing, supportive shoes and a back pack.</li>
+<li title="*">For younger children, either walk with your  children (it's a good opportunity to have a chat), or get together with other parents and take it in turns to accompany other children (a &quot;walking bus&quot;)</li>
+</ul><p>
+<strong>Walking Bus</strong>
+</p><p>A Walking Bus is an initiative to encourage more children, accompanied by adults, to walk to school and by doing so reduce traffic and congestion outside schools.</p><p>Walking as a group and using an agreed route the children are under the supervision of at least 2 responsible adults - a 'driver' and 'conductor' - who are known to the school. Any volunteers involved with a Walking Bus have to complete a police criminal background check.</p><p>Some walking buses operate every school day while others operate one or two days a week - this depends on the number of adult volunteers involved.</p><p>The Council's Road Safety staff will risk assess routes and provide necessary training for all volunteers. Children and adults involved in a Walking Bus must wear reflective tabards which are supplied free of charge by the Road Safety Office.</p><p>
+<strong>Cycling</strong>
+</p><p>Encourage your children to cycle:</p><ul>
+<li title="*">Provide bright and reflective clothing, supportive shoes and a back pack.</li>
+<li title="*">Buying a bike: It's better to buy the right size rather than get one which is too big that the child can &quot;grow into&quot;. An oversized bike could be dangerous and is likely to put your child off cycling. It's advisable to choose a bike without a crossbar so that the child can fall through the bike and not off it.</li>
+<li title="*">Provide bright, fluorescent and reflective clothing</li>
+<li title="*">Buy a well fitting cycle helmet. You should only buy a helmet if it carries a CE mark and one of the normal safety standards eg. BS683:1989, AS.2063, ANSI, IZZ 90.4 SNELL, B90 or B95.</li>
+<li title="*">Consider enrolling them on a cycling proficiency course to develop their cycling skills and help them to become more confident.</li>
+</ul><p>
+<strong>Your Car</strong>
+</p><p>If you have to drive:</p><ul>
+<li title="*">Park well away from school entrances and yellow zig zags;</li>
+<li title="*">Find a location some distance from the school so that you can &quot;park and stride&quot;. This will help your children to experience some of the benefits of walking to school and reduce school gate congestion.</li>
+<li title="*">Talk to other parents about sharing lifts to reduce congestion and pollution.</li>
+<li title="*">Make sure that you child gets out on the pavement side when you are dropping them off.</li>
+<li title="*">Don't leave your engine running when waiting to collect children - and idling engine produces 80% more pollution than when a vehicle is in motion. 1 in 7 children have asthma. Medical evidence suggests that this is related to traffic fumes.</li>
+</ul><p>
+
+		<a href="/ccm/services/pid.jsp?pid=573">
+<strong>School Crossing Patrols</strong>
+</a>	 <span class="gen">link to pid 573</span>
+</p><h4>School Travel Plans</h4><p>A school travel plan is a document which sets out a number of practical ways to reduce the number of car trips made to a school, to encourage more walking and cycling and to improve safety on the school journey.</p><p>The travel plan aims to raise awareness among pupils and parents of the harmful effects of increasing car use on children's
+    health, safety and independence. The travel plan process aims to win &quot;hearts and minds&quot; by raising awareness of the implications of travel choice and the benefits of encouraging more sustainable travel to school. The travel plan can also include proposals for physical improvements and facilities to make the journey feel safer and more pleasant for those on foot or bicycle such as 'Safer Routes to School' and 'School Zones' schemes and cycle parking facilities.</p><p>Further examples of travel initiatives include: a walking bus, &quot;park and stride&quot; (parking away from the school at designated sites and walking the remainder), cycle training and permit scheme and a voluntary car lift share scheme.</p><p>
+<strong>Why develop a school travel plan?</strong>
+</p><p>By developing a travel plan, a school is demonstrating a commitment to promoting a safer, cleaner and more attractive school environment. The travel plan process provides its pupils with excellent curriculum activities in a wide range of subjects. With their health, safety and environmental messages, school travel plans can contribute significantly to other projects such as Health for Schools, Safe Schools and Eco-Schools. The travel plan can provide eligibility for funding from the Council and possibly other sources towards the cost of some proposals.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=546"> Providing Information
+		(546)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>Rules for OQL expression analysis</title>
+</head>
+<body>
+
+<h2>Definitions:</h2>
+<table border=1 cellspacing=0 cellpadding=2>
+  <tr>
+    <td><b>set(a)</b></td>
+    <td>K(a) contains keys(T(a))</td>
+  </tr>
+  <tr>
+    <td><b>cp(a)</b></td>
+    <td>Union all I(e) for all e in C(a)</td>
+  </tr>
+  <tr>
+    <td><b>magic(a)</b></td>
+    <td>K(a) + {for k in K(a): k - cp(a)}</td>
+  </tr>
+  <tr>
+    <td><b>jk(a, b)</b></td>
+    <td>{for ka in K(a), for kb in K(b): ka + kb}</td>
+  </tr>
+  <tr>
+    <td><b>const(a)</b></td>
+    <td>there is no (v, lvl) in V(a) where lvl = 0</td>
+  </tr>
+  <tr>
+    <td><b>ext-V(a)</b></td>
+    <td>{for (v, lvl) in V(a) where lvl != 0: (v, lvl - 1)}</td>
+  </tr>
+  <tr>
+    <td><b>ext-C(a)</b></td>
+    <td>{for (e, v) in C(a) where min({for (x, lvl) in V(v): lvl}) > depth(v) - depth(a)}</td>
+  </tr>
+</table>
+
+<h2>Rules</h2>
+<table border=1 cellspacing=0 cellpadding=2>
+  <tr>
+    <th>Class</th>
+    <th>Expression</th>
+    <th>T</th>
+    <th>V</th>
+    <th>I</th>
+    <th>C</th>
+    <th>K</th>
+  </tr>
+  <tr>
+    <td>Variable</td>
+    <td><b>a</b></td>
+    <td>T(env(a).a)</td>
+    <td>{(a, level(env(a)))}</td>
+    <td>env(a).a</td>
+    <td>{}</td>
+    <td>{if collection(env(a).a): K(T) else {}}</td>
+  </tr>
+  <tr>
+    <td>Get</td>
+    <td><b>a</b>.<b>b</b></td>
+    <td>T(T(a).b)</td>
+    <td>V(a)</td>
+    <td>{if (set(a) && (unique(T(a).b) || reference(~(T(a).b)))): I(a)}</td>
+    <td>C(a)</td>
+    <td>{if (set(a) && unique(T(a).b)): K(T), if (K(a) contains {}): {}}</td>
+  </tr>
+  <tr>
+    <td>Define</td>
+    <td><b>name</b> = <b>expr</b></td>
+    <td>T(expr)[1..1] name;</td>
+    <td>V(expr)</td>
+    <td>I(expr)</td>
+    <td>C(expr)</td>
+    <td>{if (set(expr)): {name} else {}}</td>
+  </tr>
+  <tr>
+    <td>Filter</td>
+    <td>filter(<b>expr</b>, <b>cond</b>)</td>
+    <td>T(expr)</td>
+    <td>V(expr) + ext-V(cond)</td>
+    <td>I(expr)</td>
+    <td>C(expr) + ext-C(cond)</td>
+    <td>magic(expr)</td>
+  </tr>
+  <tr>
+    <td>AbstractJoin</td>
+    <td><i>join</i>(<b>left</b>, <b>right</b>, <b>cond</b>)</td>
+    <td>T(left) + T(right)</td>
+    <td>V(left) + V(right) + ext-V(cond)</td>
+    <td>I(left) + I(right)</td>
+    <td>{if inner || cross: C(left) + C(right) + ext-C(cond),
+         if left outer: C(left),
+         if right outer: C(right)}</td>
+    <td>magic(jk(left, right))</td>
+  </tr>
+  <tr>
+    <td>And</td>
+    <td><b>a</b> and <b>b</b></td>
+    <td>Boolean</td>
+    <td>V(a) + V(b)</td>
+    <td>N/A</td>
+    <td>C(a) + C(b)</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Or</td>
+    <td><b>a</b> or <b>b</b></td>
+    <td>Boolean</td>
+    <td>V(a) + V(b)</td>
+    <td>N/A</td>
+    <td>C(a) * C(b)</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Equals</td>
+    <td><b>a</b> == <b>b</b></td>
+    <td>Boolean</td>
+    <td>V(a) + V(b)</td>
+    <td>N/A</td>
+    <td>{if const(a): b, if const(b): a}</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Not</td>
+    <td>not <b>a</b></td>
+    <td>Boolean</td>
+    <td>V(a)</td>
+    <td>N/A</td>
+    <td>{}</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Exists</td>
+    <td>exists(<b>expr</b>)</td>
+    <td>Boolean</td>
+    <td>V(expr)</td>
+    <td>N/A</td>
+    <td>C(expr)</td>
+    <td>N/A</td>
+  </tr>
+</table>
+</body>
+</html>

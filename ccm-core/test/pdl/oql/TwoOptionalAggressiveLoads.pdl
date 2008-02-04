@@ -1,0 +1,161 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: TwoOptionalAggressiveLoads.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model oql;
+
+import com.arsdigita.kernel.User;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.versioning.VersionedACSObject;
+
+object type TwoOptionalAggressiveLoads extends ACSObject {
+    component File[0..1] portrait = join t_up_profiles.portrait_id 
+			   to t_docs_resources.resource_id;
+    component File[0..1] thumbnail = join t_up_profiles.thumbnail_id 
+			   to t_docs_resources.resource_id;
+    String bio = t_up_profiles.bio VARCHAR(4000);
+    String skills = t_up_profiles.skills VARCHAR(4000);
+
+    component User[1..1] user = join t_up_profiles.user_id to users.user_id;
+
+    reference key (t_up_profiles.profile_id);
+
+    aggressive load (user.id, portrait.id, portrait.objectType, portrait.description);
+
+    retrieve portrait {
+        do {
+	    select r.resource_id, r.parent_id, r.name, r.description,
+	    r.mime_type, r.is_folder, r.path, nvl(dbms_lob.getlength(r.content),0) sizeBytes,
+	    a.object_type
+	    from t_docs_resources r, t_up_profiles p, acs_objects a
+	    where p.portrait_id = r.resource_id
+	    and r.resource_id = a.object_id
+	    and p.profile_id = :id
+        } map {
+	    portrait.objectType = object_type;
+	    portrait.id = resource_id;
+	    portrait.mimeType = mime_type;
+	    portrait.size = sizeBytes;
+	    portrait.parentID    = parent_id;
+	    portrait.name        = name;
+	    portrait.description = description;
+	    portrait.isFolder    = is_folder;
+	    portrait.path        = path;
+	}
+    }
+
+    add portrait {
+        do {
+	    update t_up_profiles 
+	    set portrait_id = :portrait.id
+	    where profile_id = :id
+        }
+    }
+
+    remove portrait {
+        do { update t_up_profiles 
+	     set portrait_id = null,
+	     thumbnail_id = null
+	     where profile_id = :id
+	}
+    }
+
+    retrieve thumbnail {
+        do {
+	    select r.resource_id, r.parent_id, r.name, r.description,
+	    r.mime_type, r.is_folder, r.path, nvl(dbms_lob.getlength(r.content),0) sizeBytes,
+	    a.object_type
+	    from t_docs_resources r, t_up_profiles p, acs_objects a
+	    where p.thumbnail_id = r.resource_id
+	    and r.resource_id = a.object_id
+	    and p.profile_id = :id
+        } map {
+	    thumbnail.objectType = object_type;
+	    thumbnail.id = resource_id;
+	    thumbnail.mimeType = mime_type;
+	    thumbnail.size = sizeBytes;
+	    thumbnail.parentID    = parent_id;
+	    thumbnail.name        = name;
+	    thumbnail.description = description;
+	    thumbnail.isFolder    = is_folder;
+	    thumbnail.path        = path;
+	}
+    }
+
+    add thumbnail {
+        do {
+	    update t_up_profiles 
+	    set thumbnail_id = :thumbnail.id
+	    where profile_id = :id
+
+        }
+    }
+
+    remove thumbnail {
+        do { update t_up_profiles 
+	     set thumbnail_id = null,
+	     portrait_id = null
+	     where profile_id = :id
+	}
+    }
+}
+
+object type ResourceImpl extends VersionedACSObject { 
+    BigDecimal[0..1] parentID    = t_docs_resources.parent_id INTEGER;
+    String[1..1]     name        = t_docs_resources.name VARCHAR(200);
+    String[0..1]     description = t_docs_resources.description VARCHAR(4000);
+    Boolean[1..1]    isFolder    = t_docs_resources.is_folder CHAR(1);
+    String[1..1]     path        = t_docs_resources.path VARCHAR(4000);
+  
+    reference key (t_docs_resources.resource_id);
+}
+
+object type File extends ResourceImpl {
+    String mimeType = t_docs_resources.mime_type VARCHAR(200);
+    Blob content = t_docs_resources.content BLOB;
+    BigDecimal size = t_docs_files.length INTEGER;
+
+    reference key (t_docs_files.file_id);
+
+    insert {
+        super;
+
+        do {
+            update t_docs_resources
+            set mime_type = :mimeType,
+                content = :content
+            where resource_id = :id
+        } map {
+            content: BLOB;
+        }
+    }
+
+    update {
+        super;
+
+        do {
+            update t_docs_resources
+            set mime_type = :mimeType,
+                content = :content
+            where resource_id = :id
+        } map {
+            content: BLOB;
+        }
+    }
+
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=694}]"><cms:name>licensing-694</cms:name><cms:language>en</cms:language><cms:title>Licence - hairdresser</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=694}]"><cms:name>licensing-694-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, hairdresser</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=694}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Deregulation and Contracting Out Act 1994 has eliminated the need for hairdressers to be registered, however activities such as Ear Piercing, Electrolysis, Tattooing and Acupuncture, and the employment of employees still require to be registered. </i></p><hr/><h2>Health and Safety at Work Etc Act</h2><p>The Health and Safety at Work Etc. Act 1974 is the key act which will affect all commercial concerns, whether self-employed or an employee, and whether mobile or based at a Salon. Under this Act a number of Regulations have been made. The more relevant of these include: </p><ul>
+<li title="*">The Health and Safety (First-Aid) Regulations 1981;</li>
+<li title="*">The Electricity at Work Regulations 1989;</li>
+<li title="*">The Health and Safety (Information for Employees) Regulations 1989;</li>
+<li title="*">Health and Safety (Training for Employment) Regulations 1990;</li>
+<li title="*">The Workplace (Health, Safety and Welfare) Regulations 1992;</li>
+<li title="*">Health and Safety (Display Screen Equipment) Regulations 1992</li>
+<li title="*">Personal Protective Equipment at Work Regulations 1992;</li>
+<li title="*">Manual Handling Operations Regulations 1992;</li>
+<li title="*">The Reporting of Injuries Diseases and Dangerous Occurrences Regulations 1995;</li>
+<li title="*">The Health and Safety (Consultation with Employees) Regulations 1996;</li>
+<li title="*">The Health and Safety (Young Persons) Regulations 1997;</li>
+<li title="*">Provision and Use of Work Equipment Regulations 1998;</li>
+<li title="*">The Working Time Regulations 1998;</li>
+<li title="*">The Control of Substances Hazardous to Health Regulations 2002;</li>
+</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=694"> Providing Information
+		(694)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

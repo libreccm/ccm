@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=392}]"><cms:name>licensing-392</cms:name><cms:language>en</cms:language><cms:title>Licence - deal in game</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=392}]"><cms:name>licensing-392-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, deal, game</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=392}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A licence is required to take or kill game and to deal in game. </i></p><hr/><p>Game licence legislation dates back to the nineteenth century. Both the Game Act 1831, which applies to England and Wales only, and the Game Licences Act 1860, which applies also to Scotland, deal with similar offences concerning the taking and trading in game without the appropriate licence. </p><p>This page provides only a brief overview of licensing requirements and we recommend that you consult the legislation (which can be obtained from from 
+		<a href="http://www.hmso.gov.uk/">Her Majesty's Stationary Office</a>	
+			<span class="gen">link to external website</span>) or seek advice if you need to know the law in more detail. </p><h2>Licences to kill or take game </h2><p>There are four types of game licence, each catering for different periods of the year, taking into account the open seasons for various game birds. They are colour coded and can be purchased from <strong>Post Offices</strong>. The date and time of issue will be shown on the licence, which will only be valid from that particular time. The licence will, however, expire at midnight of the day on which it is stated to expire. The holder's full name and address and the amount of duty paid must also be shown on the licence. </p><p>Not all licences are readily available from stock and there may be a delay in issue, particularly in respect of the occasional licence. </p><table width="90%" cellpadding="5" class="centre" summary="different licences available">
+			<tr>
+				<th>Duration </th>
+				<th>Colour </th>
+				<th>Purpose </th>
+				<th>Cost &#xA3; </th>
+			</tr>
+			<tr>
+				<td>Taken out after 31 July and expiry 31 July following year </td>
+				<td>Red </td>
+				<td>Covers all open seasons for game birds and shooting of hares where not exempt </td>
+				<td>6.00 </td>
+			</tr>
+			<tr>
+				<td>Taken out after 31 July and expiry 31 October same year </td>
+				<td>Green </td>
+				<td>Popular for grouse shooters </td>
+				<td>4.00 </td>
+			</tr>
+			<tr>
+				<td>Taken out after 31 October and expiry 31 July following year </td>
+				<td>Blue </td>
+				<td>Popular for pheasant shooters </td>
+				<td>4.00 </td>
+			</tr>
+			<tr>
+				<td>Occasional licence for any continuous period of 14 days </td>
+				<td>Black </td>
+				<td>Popular where game is perhaps shot only once during the year </td>
+				<td>2.00 </td>
+			</tr>
+		</table><h3>Gamekeeper's Licence </h3><p>A gamekeeper's employer may obtain an annual gamekeepers licence (at a lower cost (&#xA3;4.00) than the normal twelve month licence). This permits the gamekeeper to take or kill game on land where his employer has the right to game. The licence is transferable should a new gamekeeper be employed while it is still valid, and only covers a person while they are employed as a gamekeeper. </p><p>If a gamekeeper wishes to shoot game on land where his/her employer does not have right to game, then he/she must obtain a licence in their own name. </p><h2>Licences to deal in game </h2><p>The Game Act 1831 requires dealers to be licensed in England; the Game Licences Act 1860 extends the provisions relating to the sale of game to Wales and Scotland. The sale of venison is covered by separate legislation under the Deer Act 1991 (England and Wales) and the Deer (Scotland) Act 1959. </p><p>Two licences required to trade in certain game species. A council licence and an excise licence. </p><p>
+			<strong>Council licences </strong> are obtained from the local authority and may not be charged for, as local authorities are often content to register dealers for public health purposes. </p><p>
+			<strong>Excise licences </strong> are obtained from the post office at a cost of &#xA3;4.00; it is a condition of issue that a council licence be produced at the time of application. </p><p>The council licence will specify the business premises: an excise licence is required for each one. Both licences expire on 31 July each year. The excise licence must be renewed; the council may not require renewal of their licence, but this should be checked on initial application. </p><p>Copies of the Game Act 1831 and Game Licences Act 1860 can be purchased from Her Majesty's Stationery Office.
+</p><p>A copy of the legislation can be viewed at the Council Offices where you can also obtain an application form and a copy of our standard conditions. </p><p>Alternatively, <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/392a">download an application form</a>	. </strong>
+			<span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=392"> Applications for services
+		(392)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

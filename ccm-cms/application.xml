@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  name="ccm-cms"
+  prettyName="Red Hat CCM Content Management System"
+  version="6.5.2"
+  release="4"
+  webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.5.2" relation="ge"/>
+  </ccm:dependencies>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/ccm" type="website"/>
+    <ccm:contact uri="mailto:ccm@redhat.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    The CMS applications provides a flexible Content Management
+System for the CCM platform.
+  </ccm:description>
+</ccm:application>

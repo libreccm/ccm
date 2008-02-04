@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+  <ctd:content-type label="DocumentLink"
+		    description="A Link to another Document"
+		    objectType="com.arsdigita.cms.docmgr.DocLink"
+		    classname="com.arsdigita.cms.docmgr.DocLink">
+   
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate"/>
+
+       <ctd:authoring-step label="Document Link Properties"
+                          description="Edit the basic document properties"
+                          component="com.arsdigita.cms.docmgr.ui.authoring.DocLinkStep"
+        ordering="1"/>
+
+  </ctd:content-type>
+</ctd:content-types>

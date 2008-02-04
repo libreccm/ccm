@@ -1,0 +1,80 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Document.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.search.lucene;
+
+object type Document {
+    BigDecimal[1..1] id            = lucene_docs.document_id INTEGER;
+    String[1..1] type              = lucene_docs.type VARCHAR(200);
+    String[0..1] typeSpecificInfo  = lucene_docs.type_info VARCHAR;
+    Date[1..1] timestamp           = lucene_docs.timestamp TIMESTAMP;
+    Integer[1..1] dirty            = lucene_docs.dirty INTEGER;
+    Boolean[1..1] isDeleted        = lucene_docs.is_deleted BIT;
+    String[0..1] language          = lucene_docs.language CHAR(2);
+    String[0..1] country           = lucene_docs.country CHAR(2);
+    String[1..1] title             = lucene_docs.title VARCHAR(4000);
+    String[0..1] summary           = lucene_docs.summary VARCHAR(4000);
+    String[0..1] content           = lucene_docs.content CLOB;
+    Date[0..1] creationDate        = lucene_docs.creation_date TIMESTAMP;
+    BigDecimal[0..1] creationParty = lucene_docs.creation_party INTEGER;
+    Date[0..1] lastModifiedDate    = lucene_docs.last_modified_date TIMESTAMP;
+    BigDecimal[0..1] lastModifiedParty =
+        lucene_docs.last_modified_party INTEGER;
+    String[0..1] contentSection = lucene_docs.content_section VARCHAR(300); 
+    object key(id);
+
+
+    // To avoid race conditions between indexers, we
+    // never 'set' the dirty flag - we just toggle
+    // our bit.
+    update {
+      do {
+        update lucene_docs set
+           type = :type,
+           type_info = :typeSpecificInfo,
+           timestamp = :timestamp,
+           is_deleted = :isDeleted,
+           language = :language,
+           country = :country,
+           title = :title,
+           summary = :summary,
+           content = :content,
+           creation_date = :creationDate,
+           creation_party = :creationParty,
+           last_modified_date = :lastModifiedDate,
+           last_modified_party = :lastModifiedParty,
+           dirty = lucene_update_dirty(timestamp, :timestamp, dirty, :dirty),
+	   content_section = :contentSection
+        where document_id = :id
+      }
+    }
+}
+
+query dirtyDocuments {
+  BigDecimal id;
+
+  do {
+    select document_id 
+      from lucene_docs
+     where bitand(dirty, :dirty) > 0
+  } map {
+    id = document_id;
+  }
+}
+

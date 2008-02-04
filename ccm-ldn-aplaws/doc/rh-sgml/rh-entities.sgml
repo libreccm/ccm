@@ -1,0 +1,258 @@
+<!-- $Id: rh-entities.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+
+<!-- *************** Shorthand entities *************** -->
+<!-- *************** Stuff likely to need changing from time to time *************** -->
+
+<!-- RHL versions -->
+<!ENTITY RHLVER "9.0.91" -- its version -->
+
+<!-- RHN versions -->
+<!ENTITY RHNVER "3.2"-- the Red Hat Network Basic User Reference Guide version -->
+<!ENTITY RHNEVER "3.2"-- the Red Hat Network Workgroup User Reference
+Guide version -->
+
+<!-- RHEL versions -->
+<!ENTITY RHELVER "3"-- the Red Hat Enterprise Linux version -->
+
+<!ENTITY RHLIA64ASVER "2.1"-- the Red Hat Linux Advanced Server for the Itanium
+Processor Installation and Configuration Guide version -->
+
+<!ENTITY RHLIA64AWVER "2.1"-- the Red Hat Linux Advanced Workstation for the
+Itanium Processor Installation and Configuration Guide version -->
+
+<!ENTITY ORG "&RHIS;" -- The organization responsible for this manual -->
+<!ENTITY LANG "EN" -- ISO Language abbreviation representing manual's language -->
+
+<!-- *************** Setting up print/HTML procesing parameter entities *************** -->
+
+<!ENTITY HTML "HTML" -- Document in HTML -->
+<!ENTITY PRINT "Print" -- Document in print -->
+
+<!-- Settings for print... -->
+
+<![ %SET-FOR-PRINT [<!ENTITY % PRINTONLY "INCLUDE">]]>
+<![ %SET-FOR-PRINT [<!ENTITY % HTMLONLY "IGNORE">]]>
+<![ %SET-FOR-PRINT [<!ENTITY MEDIA "&PRINT;">]]>
+
+<!-- Settings for HTML (or more accurately, not for print)... -->
+
+<!ENTITY % PRINTONLY "IGNORE">
+<!ENTITY % HTMLONLY "INCLUDE">
+<!ENTITY MEDIA "&HTML;">
+
+<!-- *************** Basic company/product names *************** -->
+
+<!-- Company Names -->
+
+<!ENTITY RH "Red Hat" -- The generic term "Red Hat" -->
+<!ENTITY RHI "&RH;" -- The name of the company -->
+<!ENTITY FORMAL-RHI "&RH;, Inc." -- Formal version -->
+<!ENTITY RHIS "RHI" -- Shorthand version -->
+
+<!-- Products -->
+
+<!ENTITY RHL "&RH; Linux" -- The basic operating system -->
+<!ENTITY RHEL "&RH; Enterprise Linux" -- The enterprise operating system -->
+<!ENTITY RHLAS "&RHELAS" -- Advanced Server was renamed -->
+<!ENTITY RHLAW "&RHELWS" -- Advanced Workstation was renamed -->
+<!ENTITY RHCM "&RH; Cluster Manager" -- The Cluster Manager product -->
+<!ENTITY RHCS "&RH; Cluster Suite" -- The layered cluster product -->
+<!ENTITY RHGFS "&RH; GFS" -- The layered Sistina product -->
+
+<!-- generic without arch -->
+<!ENTITY RHELAS "&RHEL; AS" -- The RHEL AS product -->
+<!ENTITY RHELWS "&RHEL; WS" -- The RHEL WS product -->
+<!ENTITY RHELES "&RHEL; ES" -- The RHEL ES product -->
+
+<!-- *************** Documentation-related entities *************** -->
+
+<!ENTITY KERNVER "2.4.<replaceable>x</replaceable>" -- Referring to the kernel version, semi-generically -->
+<!ENTITY RHELKERNVER "2.4.21-1.1931.2.399.ent" -- Used in buildkernel.sgml in CG; could change at
+any time; use KERNVER unless you HAVE TO refer to the exact kernel version in RHL -->
+
+<!-- *************** Installation Guides *************** -->
+
+<!ENTITY IG "Installation Guide" -- Generic IG -->
+<!ENTITY QIG "Quick &IG;" -- Generic Quick IG for media kits -->
+
+<!-- RHL -->
+<!ENTITY RHLIG "&RHL; &IG;" -- Generic RHL IG Reference -->
+<!ENTITY RHLIGS "rhl-ig" -- Generic IG: shorthand version -->
+
+<!ENTITY RHLIGX "&RHL; x86 &IG;" -- RHL x86 IG -->
+<!ENTITY RHLIGXS "rhl-ig-x86" -- RHL x86 IG: shorthand version -->
+
+<!ENTITY RHLIGA "&RHL; Alpha &IG;" -- Alpha IG -->
+<!ENTITY RHLIGAS "rhl-ig-alpha" -- Alpha IG: shorthand version -->
+
+<!ENTITY RHLIGIA64 "&RHL; Itanium &IG;" -- The Itanium IG -->
+<!ENTITY RHLIA64S "rhl-ig-itanium" -- Itanium IG: shorthand version -->
+
+<!ENTITY RHLIA64ASS "rhl-ig-as-itanium" -- IG: shorthand version -->
+<!ENTITY RHLAWIG "&RHLAW; &IG;" -- The Itanium IG -->
+<!ENTITY RHLIA64AWS "rhl-ig-aw-itanium" -- IG: shorthand version -->
+
+<!ENTITY RHLIGS390 "&RHL; for S/390 &IG;" -- The S/390 IG -->
+<!ENTITY RHLS390S "rhl-ig-s390" -- for S/390 IG: shorthand version -->
+
+<!-- RHEL -->
+
+<!ENTITY RHELIG "&RHEL; &IG;" -- Generic Ent IG -->
+<!ENTITY RHELQIG "&RHEL; &QIG;" -- Generic Ent Quick IG for media kits -->
+
+<!ENTITY X8664 "x86, <trademark>Itanium</trademark>, and AMD64" -- x8664 arch -->
+<!ENTITY IGX8664 "&IG; for the &X8664; Architectures" -- X8664 Manual-->
+<!ENTITY RHELIGX8664S "rhel-ig-x8664-multi" -- X8664 manual: shorthand version
+-->
+<!ENTITY QIGX8664 "&QIG; for the &X8664; Architectures" -- X8664 Manual-->
+<!ENTITY RHELQIGX8664S "rhel-qig-x8664-multi" -- X8664 manual: shorthand version -->
+
+<!ENTITY PPC "<trademark class='registered'>IBM</trademark> <trademark>eServer</trademark> <trademark>iSeries</trademark> and <trademark class='registered'>IBM</trademark> <trademark>eServer</trademark> <trademark>pSeries</trademark>" -- PPC multi arch -->
+<!ENTITY IGPPC "&IG; for the &PPC; Architectures" -- PPC Manual-->
+<!ENTITY RHELIGPPCS "rhel-ig-ppc-multi" -- PPC manual: shorthand version -->
+<!ENTITY QIGPPC "&QIG; for the &PPC; Architectures" -- PPC Manual-->
+<!ENTITY RHELQIGPPCS "rhel-qig-ppc-multi" -- PPC manual: shorthand version -->
+
+<!ENTITY S390 "<trademark class='registered'>IBM</trademark> <trademark class='registered'>S/390</trademark> and <trademark class='registered'>IBM</trademark> <trademark>eServer</trademark> <trademark class='registered'>zSeries</trademark>" -- S390 multi arch -->
+<!ENTITY IGS390 "&IG; for the &S390; Architectures" -- S390 Manual-->
+<!ENTITY RHELIGS390S "rhel-ig-s390-multi" -- S390 manual: shorthand version -->
+<!ENTITY QIGS390 "&QIG; for the &S390; Architectures" -- S390 Manual-->
+<!ENTITY RHELQIGS390S "rhel-qig-s390-multi" -- S390 manual: shorthand version -->
+
+<!-- *************** End of Installation Guides *************** -->
+
+
+<!ENTITY SBS "Step By Step Guide" -- only use in title of manual -->
+<!ENTITY RHELSBS "&RHEL; &SBS;" -- use when referencing it in other manuals -->
+<!ENTITY RHELSBSS "rhl-sbs" -- Shorthand version, must match bugzilla component name -->
+
+<!ENTITY RG "Reference Guide" -- only use in title of manual -->
+<!ENTITY RHELRG "&RHEL; &RG;" -- use when referencing it in other manuals -->
+<!ENTITY RHELRGS "rhel-rg" -- shorthand version, must match bugzilla component name -->
+
+
+<!ENTITY SAG "System Administration Guide" -- only use in title of manual, formerly the Customization Guide -->
+<!ENTITY RHELSAG "&RHEL; &SAG;" -- use when referencing it in other manuals -->
+<!ENTITY RHELSAGS "rhel-sag" -- shorthand version, must match bugzilla component name -->
+
+<!ENTITY SG "Security Guide" -- only use in title of manual -->
+<!ENTITY RHELSG "&RHEL; &SG;" -- use when referencing it in other manuals -->
+<!ENTITY RHELSGS "rhel-sg" -- shorthand version, must match bugzilla component name -->
+
+<!ENTITY ISA "Introduction to System Administration" -- only use in title of manual, formerly the SA Primer -->
+<!ENTITY RHELISA "&RHEL; &ISA;" -- use when referencing it in other manuals -->
+<!ENTITY RHELISAS "rhel-isa" -- shorthand version, must match bugzilla component name -->
+
+<!ENTITY DG "Developer Guide" -- only use in title of manual -->
+<!ENTITY RHELDG "&RHEL; &DG; " -- use when referencing it in other manuals -->
+<!ENTITY RHELDGS "rhel-dg" -- shorthand version, must match bugzilla component name -->
+
+<!ENTITY NG "Networking Guide" -- only use in title of manual -->
+<!ENTITY RHELNG "&RHEL; &NG;" -- use when referencing it in other manuals -->
+<!ENTITY RHELNGS "rhel-ng" -- shorthand version, must match bugzilla component name -->
+
+<!ENTITY CMIAG "Configuring and Managing a Cluster" -- only use in title of manual --> 
+<!ENTITY RHCSG "&RHCS; &CMIAG;" -- use when referencing it in other manuals --> 
+<!ENTITY RHCSGS "rh-cs" -- shorthand version, must match bugzilla component name -->
+
+<!ENTITY GFSIAG "Administrator's Guide" -- only use in the title of manual -->
+<!ENTITY RHGFSG "&RHGFS; &GFSIAG" -- use when referencing it in other manuals -->
+<!ENTITY RHGFSGS "rh-gfsg" -- shorthand version, must match bugzilla component name -->
+
+<!ENTITY GFSICO "Installing and Configuring Oracle9i RAC with GFS" -- only use in the title of manual -->
+<!ENTITY RHGFSOG "&RHGFS; &GFSICO" -- use when referencing it in other manuals --> 
+<!ENTITY RHGFSOGS "rh-gfsog" -- shorthand version, must match bugzilla component name -->
+
+<!-- Install class names -->
+<!-- FIXME: What have these been renamed to? -->
+
+<!ENTITY RHLASIC "Advanced Server" -- Advanced Server install class-->
+<!ENTITY RHLAWIC "Advanced Workstation" -- Advanced Workstation install class-->
+
+<!ENTITY RHELASIC "Server" -- AS install class-->
+<!ENTITY RHELWSIC "Workstation" -- WS install class-->
+<!ENTITY RHELESIC "Server" -- ES install class-->
+
+<!-- Changeable Terms Used in RHEL manual -->
+
+<!ENTITY PIRANHA "Piranha Configuration Tool">
+<!ENTITY PIRANHA-VER "piranha-0.7.0-1">
+<!ENTITY PIRANHA-386-RPM "piranha-0.7.0-1.i386.rpm">
+<!ENTITY SHARED-SCSI-386-RPM "scsi_reserve-0.7-6.i386.rpm">
+<!ENTITY IPVS-386-RPM "ipvsadm-1.18-8.i386.rpm">
+<!ENTITY CLUMANAGER-386-RPM "clumanager-1.0.4-1.i386.rpm">
+
+<!-- Red Hat Network -->
+
+<!ENTITY RHN "Red Hat Network" -- RHN documentation -->
+<!ENTITY RHNRC "Red Hat Network Registration Client" -- RHN documentation -->
+<!ENTITY RHNCC "Red Hat Network Configuration Client" -- RHN documentation -->
+<!ENTITY RHNCM "Red Hat Network Configuration Manager" -- RHN documentation -->
+<!ENTITY RHUA "Red Hat Update Agent" -- RHN documentation -->
+<!ENTITY RHNAPPLET "&RHN; Alert Notification Tool" -- RHN documentation -->
+<!ENTITY RHND "Red Hat Network Daemon" -- RHN documentation -->
+<!ENTITY DEMO "Demo" -- RHN documentation -->
+<!ENTITY BC "Update" -- RHN documentation -->
+<!ENTITY ENT "Management" -- RHN documentation -->
+<!ENTITY ENONLY "Management RHN" -- To be used on exclusive screenshots -->
+<!ENTITY PRO "Provisioning" -- RHN documentation -->
+<!ENTITY PROXY "RHN Proxy Server" -- use this to be consistent -->
+<!ENTITY SAT "RHN Satellite Server" -- use this to be consistent -->
+<!ENTITY OA "Organization Administrator" -- RHN Enterprise documentation -->
+<!ENTITY SSM "System Set Manager" -- RHN Enterprise documentation -->
+
+<!-- *************** Generic housekeeping stuff  *************** -->
+
+<!ENTITY BOOKID "&SHORT-TITLE;(&LANG)-&PRODVER;-&MEDIA;-&ORG; (&BOOKDATE;)" -- The book ID -->
+
+<!-- *************** Frontmatter boilerplate  *************** -->
+
+<!ENTITY BOILERPLATE SYSTEM "boilerplate.sgml">
+<!ENTITY BOILERPLATE-CM SYSTEM "boilerplate-cm.sgml">
+<!ENTITY BOILERPLATE-TRADEMARKS SYSTEM "boilerplate-trademarks.sgml">
+
+<!-- *************** Common introduction sections  *************** -->
+
+<!ENTITY CONVENTIONS SYSTEM "doc-conventions.sgml">
+<!ENTITY WEBSITE-REFERENCES SYSTEM "website-references.sgml">
+<!ENTITY CUTPASTE SYSTEM "cut-paste.sgml">
+<!ENTITY SUPPORT SYSTEM "support.sgml">
+<!ENTITY USINGMOUSE SYSTEM "using-mouse.sgml">
+
+<!-- *************** Application Names  *************** -->
+
+<!ENTITY RHSETUPAGENT "Setup Agent" -- redhat-setup-agent -->
+<!ENTITY RHUSERTOOL "User Manager" -- redhat-config-users -->
+<!ENTITY RHKBDTOOL "Keyboard Configuration Tool" -- redhat-config-keyboard -->
+<!ENTITY RHXFREE86TOOL "X Configuration Tool" -- redhat-config-xfree86 -->
+<!ENTITY RHLANGTOOL "Language Configuration Tool" -- redhat-config-language -->
+<!ENTITY RHMOUSETOOL "Mouse Configuration Tool" -- redhat-config-mouse -->
+<!ENTITY RHLOGTOOL "Log Viewer" -- redhat-logviewer -->
+<!ENTITY RHNETWORKTOOL "Network Administration Tool" -- redhat-config-network -->
+<!ENTITY RHNFSTOOL "NFS Server Configuration Tool" -- redhat-config-nfs -->
+<!ENTITY RHPRINTERTOOL "Printer Configuration Tool" -- redhat-config-printer -->
+<!ENTITY RHROOTPASSTOOL "Root Password Tool" -- redhat-config-rootpassword -->
+<!ENTITY RHSAMBATOOL "Samba Server Configuration Tool" -- redhat-config-samba -->
+<!ENTITY RHSWITCHMAIL "Mail Transport Agent Switcher" -- redhat-switchmail -->
+<!ENTITY RHSECLEVELTOOL "Security Level Configuration Tool" -- redhat-config-securitylevel -->
+<!ENTITY RHSWITCHPRINTER "Printer System Switcher" -- redhat-switch-printer -->
+<!ENTITY RHSOUNDTOOL "Sound Card Configuration Tool" -- redhat-config-soundcard -->
+<!ENTITY RHDATETOOL "Time and Date Properties Tool" -- redhat-config-date -->
+<!ENTITY RHKSTOOL "Kickstart Configurator" --redhat-config-kickstart -->
+<!ENTITY RHSERVICESTOOL "Services Configuration Tool" -- redhat-config-services -->
+<!ENTITY RHHTTPDTOOL "HTTP Configuration Tool" -- redhat-config-httpd -->
+<!ENTITY HTTPD "Apache HTTP Server" -- Apache HTTP Server -->
+<!ENTITY RHBINDTOOL "Domain Name Service Configuration Tool" --  redhat-config-bind -->
+<!ENTITY RHHWTOOL "Hardware Browser" -- hwbrowser -->
+<!ENTITY RHRPMTOOL "Package Management Tool" -- redhat-config-packages -->
+<!ENTITY RHAUTHTOOL "Authentication Configuration Tool" -- authconfig GTK
+application -->
+<!ENTITY RHCLUSTERTOOL "Cluster Configuration Tool" -- redhat-config-cluster -->
+<!ENTITY RHCLUSTERSTATTOOL "Cluster Status Tool" -- redhat-config-cluster -->
+<!ENTITY RHAUTHTOOL-CMD "authconfig-gtk" -- authconfig GUI command --> 
+<!ENTITY RHAUTHTOOL-CMD-TUI "authconfig" -- authconfig TUI command -->
+<!ENTITY RHNETBOOTTOOL "Network Booting Tool" -- redhat-config-netboot -->
+
+
+
+

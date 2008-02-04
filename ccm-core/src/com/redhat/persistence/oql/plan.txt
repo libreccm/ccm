@@ -1,0 +1,67 @@
+
+ * Write prototype data structures and analyzer code in order to
+   demonstrate the feasability of deriving the necessary information
+   to optimize the given queries.
+
+ * Enumerate test queries for prototype code based at a minimum on all
+   the different situations in which persistence uses the query
+   interface for navigating data structures.
+
+ * Qualias support.
+
+ * Final oql data structures and analyzer. (Prototype + Current
+   Analyzer = 1.5KLOC)
+
+ * Write dumb sql generation, i.e. sql generation that does not take
+   advantage of the analyzer. (Current QGen + Analyzer = 1KLOC)
+
+ * Modify persistence to use new query data structures. At this point
+   we should have a fully running end to end system.
+   (Session.getQuery() + QuerySource impls = 0.5KLOC)
+
+ * Modify sql generation code to produce more optimized sql based on
+   the analyzed query.
+
+--
+
+ * Metadata support for qualias
+   - Qualis is added as a new "logical" type of mapping, i.e. a
+     logical query fragment that goes in ObjectMap. (250 LOC)
+
+ * Qualias support in analyzer/SQLG (500 LOC)
+
+ * Use analyzer during SQLG
+
+ * Expand OQL to support necessary primitives
+   - retrieve all (done)
+   - order (100 LOC) (done)
+   - range (100 LOC) (done)
+   - size (100 LOC) (done)
+   - simple ------------------. (250) (done)
+                              |----> (Opaque expression with optional metadata)
+ * Static SQL in OQL -> SQL --' (done)
+
+ * Fetchedness (done)
+
+ * Bind variables
+
+ * Better literal support than toString()
+
+ * Metadata simplification:
+   - subtypes of Property can go away.
+
+ * Legacy changes:
+   - DataQueryImpl (250 LOC)
+     + addPath
+     + add/setFilter
+     + add/setOrder
+     + setRange
+   - QuerySource/Session.getQuery (500 LOC) (this or next, not both)
+   - Query/Condition/Expression (500 LOC)
+   - Session -> Engine interface changes
+     + RBMSEngine
+     + RecordSet
+     + Profiler
+     + MemoryEngine
+     + Cursor/DataSet
+   - Link attributes code in PDL.java

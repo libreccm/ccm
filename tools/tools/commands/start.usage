@@ -1,0 +1,6 @@
+usage: start [OPTIONS]
+
+Options:
+  --help      Display help
+  --usage     Print this message
+  --container Start the servlet container configured for CCM

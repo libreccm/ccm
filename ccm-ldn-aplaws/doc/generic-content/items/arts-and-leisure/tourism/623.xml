@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=623}]"><cms:name>art-and-leisure-623</cms:name><cms:language>en</cms:language><cms:title>Tourist information centres</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=623}]"><cms:name>art-and-leisure-623-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>tourist, information, centres</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=623}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Tourist Information Centre is here to serve residents as well as visitors to the area. We can offer friendly expert advice on a wide range of topics.</i></p><hr/><h4>
+
+				What's On
+
+			</h4><p>
+
+				Up-to-date information about what's on at local theatres, cinemas, 
+
+  concert halls, and other places of entertainment, plus what special events are coming 
+
+  soon.
+
+			</p><h4>
+
+				Where to eat and drink.
+
+			</h4><p>
+
+				Information about local restaurants. Where to find that special 
+
+  place for an important occasion. Details of small cafes and tea rooms and where 
+
+  to go for a quiet drink or lively night out.
+
+			</p><h4>
+
+				Local walks and tours
+
+			</h4><p>
+
+				Information on local walks and organized events by the Country 
+
+  Park Wardens, local coach tours and sightseeing excursions.
+
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=623"> Providing Information
+		(623)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

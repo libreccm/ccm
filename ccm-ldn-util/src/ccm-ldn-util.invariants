@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<ccm:invariants 
+    xmlns:ccm="http://xmlns.redhat.com/waf/london/invariants/1.0">
+
+  <ccm:invariant description="All bundles have a type_id">
+    <ccm:query expected="0">
+select count(*) as result 
+  from cms_items i, cms_bundles b 
+ where i.item_id = b.bundle_id 
+   and i.type_id is null
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="All top level language instances have a type_id">
+    <ccm:query expected="0">
+select count(*) as result 
+  from cms_items i, cms_pages p 
+ where i.item_id = p.item_id 
+   and i.type_id is null 
+   and i.parent_id is not null
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="All bundles have a section_id">
+    <ccm:query expected="0">
+select count(*) as result 
+  from cms_items i, cms_bundles b 
+ where i.item_id = b.bundle_id 
+   and i.section_id is null
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="All top level language instances have a section_id">
+    <ccm:query expected="0">
+select count(*) as result 
+  from cms_items i, cms_pages p 
+ where i.item_id = p.item_id 
+   and i.section_id is null 
+   and (i.parent_id is not null or i.type_id is not null)
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="Parent of all language intances is a bundle">
+    <ccm:query expected="0">
+select count(*) as result
+  from cms_items i, cms_pages p 
+ where i.item_id = p.item_id 
+   and i.parent_id is not null 
+   and i.type_id is not null
+   and not exists (select 1 from cms_bundles where bundle_id = parent_id)
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="Parent of all bundles is a folder">
+    <ccm:query expected="0">
+select count(*) as result
+  from cms_items i, cms_bundles b
+ where i.item_id = b.bundle_id 
+   and not exists (select 1 from cms_folders where folder_id = parent_id)
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="Bundle names are unique within a folder">
+    <ccm:query expected="0">
+select count(*) as result 
+  from (
+    select count(*) as count, parent_id, name
+      from cms_items i, cms_bundles b
+     where i.item_id = b.bundle_id
+       and version in ('live', 'draft')
+     group by parent_id, name
+  ) sub where count != 1
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="Language instances are unique within a bundle">
+    <ccm:query expected="0">
+select count(*) as result 
+  from (
+    select count(*) as count, parent_id, language
+      from cms_items i, cms_bundles b
+     where i.parent_id = b.bundle_id
+       and version in ('live', 'draft')
+     group by parent_id, language
+  ) sub where count != 1
+    </ccm:query>
+  </ccm:invariant>
+
+  <ccm:invariant description="All portlets have a permission context">
+    <ccm:query expected="0">
+select count(*) as result 
+  from portlets 
+  where not exists (select 1 from object_context where object_id = portlet_id)
+    </ccm:query>
+  </ccm:invariant>
+</ccm:invariants>

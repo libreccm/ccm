@@ -1,0 +1,11 @@
+<load>
+  <provides>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-core"/>
+    <data class="com.arsdigita.core.Loader"/>
+  </scripts>
+</load>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bebop:page xmlns:bebop="http://www.arsdigita.com/bebop/1.0"><bebop:title> </bebop:title><bebop:boxPanel axis="2" center="false" width="100%"><bebop:cell><bebop:link href="/someservlet/?g11n.enc=UTF-8&amp;bbp.i=d0.1" href_no_javascript="/someservlet/?g11n.enc=UTF-8&amp;bbp.i=d0.1" type="control"><bebop:label escape="no">TestControlLink</bebop:label></bebop:link></bebop:cell></bebop:boxPanel></bebop:page>

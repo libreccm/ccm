@@ -1,0 +1,95 @@
+/*
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.util.csv;
+
+import com.arsdigita.util.parameter.EmailParameter;
+import com.arsdigita.util.parameter.IntegerParameter;
+import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.ParameterValue;
+import com.arsdigita.util.parameter.StringParameter;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import javax.mail.internet.InternetAddress;
+
+/**
+ * Subject to change.
+ *
+ * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @version $Id: CSV.java 287 2005-02-22 00:29:02Z sskracic $
+ */
+public final class CSV {
+    public final static String versionId =
+        "$Id: CSV.java 287 2005-02-22 00:29:02Z sskracic $" +
+        "$Author: sskracic $" +
+        "$DateTime: 2004/08/16 18:10:38 $";
+
+    public static final Object[][] load(final Reader reader,
+                                        final Parameter[] params) {
+        final CSVParameterLoader loader = new CSVParameterLoader
+            (reader, params);
+
+        final ArrayList rows = new ArrayList();
+        Object[] row;
+        ParameterValue value;
+
+        while (loader.next()) {
+            row = new Object[params.length];
+
+            for (int i = 0; i < params.length; i++) {
+                value = loader.load(params[i]);
+
+                value.getErrors().check();
+
+                row[i] = value.getObject();
+            }
+
+            rows.add(row);
+        }
+
+        return (Object[][]) rows.toArray(new Object[rows.size()][]);
+    }
+
+    private void example() {
+        final String csv =
+            "\"Justin Ross\",8,jross@redhat.com\n" +
+            "Rafi,999,\"rafaels@redhat.com\"\n" +
+            "Archit,-80,ashah@redhat.com";
+
+        final Parameter[] params = new Parameter[] {
+            new StringParameter("name"),
+            new IntegerParameter("number"),
+            new EmailParameter("email")
+        };
+
+        final Object[][] rows = CSV.load(new StringReader(csv), params);
+        Object[] row;
+
+        for (int i = 0; i < rows.length; i++) {
+            row = rows[i];
+
+            System.out.print((String) row[0]);
+            System.out.print(" ");
+            System.out.print((Integer) row[1]);
+            System.out.print(" ");
+            System.out.print((InternetAddress) row[2]);
+            System.out.print("\n");
+        }
+    }
+}

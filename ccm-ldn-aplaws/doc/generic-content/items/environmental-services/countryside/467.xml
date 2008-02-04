@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=467}]"><cms:name>batch-4-467</cms:name><cms:language>en</cms:language><cms:title>Countryside - Educational Packs</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=467}]"><cms:name>batch-4-467-dublin-metadata</cms:name><cms:dcAudience>Headteacher</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>countryside, educational, packs</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=467}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This pack has been produced to help teachers plan a class activity in the local countryside, and, with the help of practical guides, have the confidence to run their own teacher-led school visit if they choose.</i></p><hr/><p>The pack includes:</p><ul>
+			<li title="*">How to contact us and book a visit.</li>
+			<li title="*">Details of the range of services offered</li>
+			<li title="*">Information on the visitor centres, their facilities, and other sites suitable for a huge range of class activities.</li>
+			<li title="*">
+				<strong>Practical guides</strong> - designed to help you plan and organise your own class activities in the countryside with helpful advice, suggestions for suitable sites, and equipment loan.</li>
+			<li title="*">
+				<strong>Work / activity sheets</strong> - covering a range of environment related topics including: 
+    <ul>
+					<li title="*">Pond and river studies</li>
+					<li title="*">Woodland studies and minibeasts</li>
+					<li title="*">Wayfaring studies and map reading</li>
+					<li title="*">Industrial archaeology</li>
+				</ul>
+			</li>
+		</ul><p>The pack costs &#xA3; <span class="gen">enter amount</span> per copy. 
+		<a href="/ccm/services/pid.jsp?pid=forms/467h">Pay online.</a>	
+			<span class="gen">link to online form).</span>
+		</p><p>The pack will be added to from time to time as new worksheets and news become available and you will automatically be sent these.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=467"> Paying for goods and services
+		(467)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

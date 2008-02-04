@@ -1,0 +1,12 @@
+Include ::app-home::/conf/mod_jk.conf
+
+<VirtualHost _default_:80>
+DocumentRoot ::webapp-dir::
+
+AliasMatch ^/assets(.*) ::webapp-dir::/assets$1
+AliasMatch ^/css(.*) ::webapp-dir::/css$1
+AliasMatch ^/STATIC(.*) ::webapp-dir::/STATIC$1
+
+JkMount / tomcat
+JkMount /* tomcat
+</VirtualHost>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=728}]"><cms:name>batch-22-728</cms:name><cms:language>en</cms:language><cms:title>Advocacy for social services clients</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=728}]"><cms:name>batch-22-728-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>advocacy, social, services, clients</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=728}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Advocacy is a way of protecting and asserting our rights. </i></p><hr/><p>We are entitled to the following rights </p><ul>
+  <li title="*">To make choices about our lives. </li>
+  <li title="*">To receive the social and health services we need. </li>
+  <li title="*">To be informed of our rights. </li>
+  <li title="*">To enjoy opportunities in leisure, education, training and employment. To be different and not to suffer discrimination. </li>
+  <li title="*">To make a complaint when something goes wrong. </li>
+</ul><p>Advocacy is founded on the belief that people are of equal value regardless of ability, wealth or status and are therefore entitled to equal rights. </p><p>An Advocate Can: </p><ul>
+  <li title="*">Listen to you. </li>
+  <li title="*">Help you to plan any action you may need or wish to take. </li>
+  <li title="*">Write letters and make telephone calls with you, or for you. </li>
+  <li title="*">Ensure your views are heard by attending meetings/reviews with you. </li>
+  <li title="*">Obtain information for you, or put you in touch with someone who can. </li>
+  <li title="*">Spend time with you preparing for meetings. </li>
+  <li title="*">Investigate alternative sources of support. </li>
+  <li title="*">Increase communication levels between yourself and others. </li>
+  <li title="*">Find out what your rights are. </li>
+  <li title="*">Liaise with relevant agencies. </li>
+</ul><p>If you feel the Advocacy Service would be able to provide you with assistance, please use the contact details above to arrange a private and confidential appointment. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=728"> Providing Information
+		(728)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+::disable-apache:: echo "Please use /etc/init.d/httpd to start apache"
+::disable-resin:: su - ::user:: ::app-home::/bin/run-resin.sh $@
+
+exit 0;

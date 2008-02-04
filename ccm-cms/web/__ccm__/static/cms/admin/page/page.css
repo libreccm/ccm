@@ -1,0 +1,64 @@
+body {
+  background-color: white;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+form {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+body, a, div, td, th {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: small;
+}
+
+/* Global header */
+
+table#global-header {
+  width: 100%;
+  margin: 0;
+  border-bottom: 1px solid rgb(135,129,117);
+  padding: 6px;
+  border-spacing: 0;
+  empty-cells: show;
+  background-color: rgb(222,222,222);
+}
+
+table#global-header td {
+  vertical-align: middle;
+}
+
+table#global-header td#logo {
+  width: 35px;
+}
+
+table#global-links {
+  float: right;
+}
+
+table#global-links td.global-link-icon {
+  padding: 0 4px 0 10px;
+}
+
+table#global-links td.global-link-icon img {
+  border: 0;
+}
+
+table#global-links td.global-link a {
+  color: blue;
+  text-decoration: none;
+}
+
+/* Title */
+
+div#page-title {
+  font-size: larger;
+  font-weight: bold;
+  margin: 0;
+  padding: 4px 6px 4px 6px;
+}
+

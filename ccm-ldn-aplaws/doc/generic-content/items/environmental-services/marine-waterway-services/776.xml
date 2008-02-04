@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=776}]"><cms:name>ph-control-exercised-776</cms:name><cms:language>en</cms:language><cms:title>PH Control Exercised</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=776}]"><cms:name>ph-control-exercised-776-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>ph, control, exercised</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=776}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The criminal offence of water pollution is defined as the entry of poisonous, noxious or polluting matter. This covers most inland and coastal waters (including groundwaters). The law has therefore clearly established the principle that such entry should be the exception and, where it is necessary, must be controlled. </i></p><hr/><p>The Department for Environment, Food 
+  and Rural Affairs DEFRA have included a copy of the 
+		<a href="http://www.defra.gov.uk/environment/water/quality/econinst1/eiwp02.htm">
+<strong>Economic 
+  Instruments for Water Pollution</strong>
+</a>	 <span class="gen">link to external website</span>
+  on their website.</p><p>Their website also has a Section 
+  on 
+		<a href="http://www.defra.gov.uk/environment/water/quality/index.htm">
+<strong>Water 
+  Quality</strong>
+</a>	 <span class="gen">link to external website</span>. 
+  This section provides links 
+  to material on quality of the water environment - rivers, lakes, estuaries, 
+  coastal waters and groundwater. This includes issues such as sewage treatment 
+  and disposal, bathing waters, dangerous substances, nitrates from agricultural 
+  sources, and economic instruments for water pollution.  </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=776"> Providing Information
+		(776)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

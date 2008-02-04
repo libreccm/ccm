@@ -1,0 +1,255 @@
+Summary: ::PACKAGE:: provides an application based on the Red Hat Web Application Framework.
+Name: ::PACKAGE::
+Version: ::PKGVERSION::
+Release: ::RELEASE::
+Epoch: 0
+Group: Applications/Internet/CCM
+License: CCMPL http://www.redhat.com/licenses/ccmpl.html
+Source0: %{name}-%{version}-%{release}.zip
+BuildRoot: %{_tmppath}/%{name}-%{version}
+BuildArchitectures: noarch
+Requires: %{name}-servlet
+BuildRequires: ant >= 1.5
+BuildRequires: ccm-config
+BuildRequires: ccm-scripts
+BuildRequires: perl
+
+%define appversion ::VERSION::
+
+%package doc
+Summary: ::PACKAGE:: API documentation
+Group: Applications/Internet/CCM
+
+%package servlet-resin
+Summary: ::PACKAGE:: configuration for Resin 2.1.x servlet
+Provides: %{name}-servlet
+Group: Applications/Internet/CCM
+Requires: %{name} = %{version}
+
+%package servlet-tomcat4
+Summary: ::PACKAGE:: configuration for Tomcat 4.0.x servlet
+Provides: %{name}-servlet
+Group: Applications/Internet/CCM
+Requires: %{name} = %{version}
+Requires: tomcat4 >= 4.0.4
+
+
+%package devel
+Summary: ::PACKAGE:: devel environment template
+Group: Applications/Internet/CCM
+Requires: ccm-config
+
+
+%description
+::PACKAGE:: servlet. Provides the complete webapp root for
+running the application. Installation will require one of
+the ::PACKAGE::-servlet-XXX packages to provide the tools
+for configuration with a servlet engine.
+
+%description doc
+::PACKAGE:: documentation. Provides the JavaDoc API documentation.
+
+%description devel
+::PACKAGE:: development project. This package provides a complete
+development project suitable for styling or custom extensions
+
+%description servlet-tomcat4
+::PACKAGE:: config for tomcat 4.0.x servlet engine
+
+%description servlet-resin
+::PACKAGE:: config for resin 2.0.5 servlet engine
+NB, the license agreement for resin prevents us
+distributing an RPM for resin. Until such time as
+Caucho change this, or provide RPMs directly, you
+will have to download our sample resin.spec file
+and an official resin binary distribution and build
+the RPM on your local system.
+
+%prep
+%setup -q -n %{name}-%{appversion}
+
+%pre
+OS=`uname -s`
+case $OS in
+  Linux*)
+    id servlet > /dev/null 2>&1 || useradd -r -d /var/www servlet
+    ;;
+
+  *)
+    id servlet > /dev/null 2>&1 || (groupadd servlet && useradd -g servlet -d /var/www servlet)
+    ;;
+esac
+
+%pre servlet-resin
+OS=`uname -s`
+case $OS in
+  Linux*)
+    id servlet > /dev/null 2>&1 || useradd -r -d /var/www servlet
+    ;;
+
+  *)
+    id servlet > /dev/null 2>&1 || (groupadd servlet && useradd -g servlet -d /var/www servlet)
+    ;;
+esac
+
+%pre servlet-tomcat4
+OS=`uname -s`
+case $OS in
+  Linux*)
+    id servlet > /dev/null 2>&1 || useradd -r -d /var/www servlet
+    ;;
+
+  *)
+    id servlet > /dev/null 2>&1 || (groupadd servlet && useradd -g servlet -d /var/www servlet)
+    ;;
+esac
+
+%build
+. $CCM_SCRIPTS_HOME/bin/env-conf.sh
+
+ccm-configure.sh
+
+ant build
+ant build-tests
+ant javadoc
+ant -Dproject.name=%{name} make-config
+ant make-init
+ant make-init-local
+
+%install
+. $CCM_SCRIPTS_HOME/bin/env-conf.sh
+
+rm -rf $RPM_BUILD_ROOT
+%{__mkdir_p} $RPM_BUILD_ROOT
+%{__mkdir_p} $RPM_BUILD_ROOT/usr
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/sbin
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/ccm-devel
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/ccm-devel/applications
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/ccm-devel/projects
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/%{name}
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/%{name}/bin
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/%{name}/bin/resin
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/%{name}/bin/tomcat4
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/%{name}/conf
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/%{name}/conf/resin
+%{__mkdir_p} $RPM_BUILD_ROOT/usr/share/%{name}/conf/tomcat4
+%{__mkdir_p} $RPM_BUILD_ROOT/etc
+%{__mkdir_p} $RPM_BUILD_ROOT/etc/rc.d
+%{__mkdir_p} $RPM_BUILD_ROOT/etc/rc.d/init.d
+%{__mkdir_p} $RPM_BUILD_ROOT/var
+%{__mkdir_p} $RPM_BUILD_ROOT/var/log
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www
+%{__mkdir_p} $RPM_BUILD_ROOT/var/log/%{name}
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/bin
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/conf
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/lib
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist
+
+# Deploy only the local applications & config
+if [ $CCM_TYPE = 'application' ]; then
+  ant -Ddeploy.init.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/applications/%{name}-%{appversion}/etc deploy-config-init-local
+  ant -Ddeploy.web.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/applications/%{name}-%{appversion}/etc deploy-config-webxml-local
+  ant -Ddeploy.web.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/applications/%{name}-%{appversion}/dist/WEB-INF deploy-config-web-orig
+  ant -Ddeploy.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/applications/%{name}-%{appversion}/dist deploy-local
+  ant -Ddeploy.src.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/applications/%{name}-%{appversion}/src deploy-src
+  ant -Ddeploy.test.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/applications/%{name}-%{appversion}/test deploy-test
+fi
+
+# Deploy full project to dev area
+if [ $CCM_TYPE != 'application' ]; then
+  ant -Ddeploy.init.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/projects/%{name}-%{appversion}/etc deploy-config-init
+  ant -Ddeploy.web.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/projects/%{name}-%{appversion}/etc deploy-config-webxml
+  ant -Ddeploy.web.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/projects/%{name}-%{appversion}/dist/WEB-INF deploy-config-web-orig
+  ant -Ddeploy.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/projects/%{name}-%{appversion}/dist deploy-local
+  ant -Ddeploy.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/projects/%{name}-%{appversion}/dist deploy-global
+  ant -Ddeploy.src.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/projects/%{name}-%{appversion}/src deploy-src
+  ant -Ddeploy.test.dir=$RPM_BUILD_ROOT/usr/share/ccm-devel/projects/%{name}-%{appversion}/test deploy-test
+fi
+
+# These files will be generated after RPM installation
+rm -f $RPM_BUILD_ROOT/var/www/%{name}/dist/WEB-INF/resources/enterprise.init
+rm -f $RPM_BUILD_ROOT/var/www/%{name}/dist/WEB-INF/web.xml
+
+# Deploy full project to web root
+ant -Ddeploy.dir=$RPM_BUILD_ROOT/var/www/%{name}/dist deploy
+
+# Deploy api docs to web root
+ant -Ddeploy.api.dir=$RPM_BUILD_ROOT/var/www/html/%{name}-%{appversion}/api deploy-api-nodeps
+
+
+# Now all the runtime support & configuration stuff
+cp $CCM_SCRIPTS_HOME/pkg/bin/configure.pl $RPM_BUILD_ROOT/usr/sbin/%{name}-configure.pl
+cat $CCM_SCRIPTS_HOME/pkg/bin/init.sh.in | $CCM_SCRIPTS_HOME/bin/interpolate.sh > $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}
+
+cp $CCM_SCRIPTS_HOME/pkg/bin/resin/* $RPM_BUILD_ROOT/usr/share/%{name}/bin/resin/
+cp $CCM_SCRIPTS_HOME/pkg/bin/tomcat4/* $RPM_BUILD_ROOT/usr/share/%{name}/bin/tomcat4/
+
+cp $CCM_SCRIPTS_HOME/pkg/conf/resin/* $RPM_BUILD_ROOT/usr/share/%{name}/conf/resin/
+cp $CCM_SCRIPTS_HOME/pkg/conf/tomcat4/* $RPM_BUILD_ROOT/usr/share/%{name}/conf/tomcat4/
+
+cat $CCM_SCRIPTS_HOME/pkg/conf/system.conf-resin.in | $CCM_SCRIPTS_HOME/bin/interpolate.sh > $RPM_BUILD_ROOT/etc/%{name}.cfg-resin
+cat config.vars >> $RPM_BUILD_ROOT/etc/%{name}.cfg-resin
+
+cat $CCM_SCRIPTS_HOME/pkg/conf/system.conf-tomcat4.in | $CCM_SCRIPTS_HOME/bin/interpolate.sh > $RPM_BUILD_ROOT/etc/%{name}.cfg-tomcat4
+cat config.vars >> $RPM_BUILD_ROOT/etc/%{name}.cfg-tomcat4
+
+# For publish to file system of jsp templates
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist/templates
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist/packages/content-section/templates
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist/packages/content-section/templates/xsl
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist/packages/content-section/templates/xml
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist/packages/content-section/templates/debug
+
+# XXX For resin cruft
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist/WEB-INF/tmp
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/%{name}/dist/WEB-INF/work
+
+# Change the default system.conf vars
+%{__perl} -i -p -e 's|/usr/local/resin|/opt/resin/2.1.4|' $RPM_BUILD_ROOT/etc/%{name}.cfg-resin
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+rm -rf %{_topdir}/BUILD/%{name}-%{appversion}-%{release}
+
+%files
+%defattr(-,root,root)
+%attr(0755,root,root) /usr/sbin/%{name}-configure.pl
+%attr(0755,root,root) /etc/rc.d/init.d/%{name}
+
+/var/www/%{name}/dist/*
+
+%dir /var/www/%{name}/bin
+%dir /var/www/%{name}/conf
+%dir %attr(-,servlet,servlet) /var/www/%{name}/lib
+%dir %attr(-,servlet,servlet) /var/www/%{name}/dist/WEB-INF/tmp
+%dir %attr(-,servlet,servlet) /var/www/%{name}/dist/WEB-INF/work
+%dir %attr(-,servlet,servlet) /var/www/%{name}/dist/templates
+%dir %attr(-,servlet,servlet) /var/log/%{name}
+
+# Yes this will cause 'file listed twice warnings' but it does
+# the right thing, and sets specific perms for this directory.
+# NB. need rpm >= 4.0.4-7x to build it
+%attr(-,servlet,servlet) /var/www/%{name}/dist/packages/content-section/templates
+
+%files doc
+%defattr(-,root,root)
+/var/www/html/%{name}-%{appversion}
+
+%files servlet-resin
+%defattr(-,root,root)
+%config /etc/%{name}.cfg-resin
+/usr/share/%{name}/bin/resin
+%config(noreplace) /usr/share/%{name}/conf/resin
+
+%files servlet-tomcat4
+%defattr(-,root,root)
+%config /etc/%{name}.cfg-tomcat4
+/usr/share/%{name}/bin/tomcat4
+%config(noreplace) /usr/share/%{name}/conf/tomcat4
+
+%files devel
+%defattr(-,root,root)
+/usr/share/ccm-devel/applications
+/usr/share/ccm-devel/projects

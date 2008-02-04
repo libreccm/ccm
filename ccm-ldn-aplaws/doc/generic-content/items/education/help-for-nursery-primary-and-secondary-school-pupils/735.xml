@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=735}]"><cms:name>education-2-735</cms:name><cms:language>en</cms:language><cms:title>Educational Visits</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=735}]"><cms:name>education-2-735-dublin-metadata</cms:name><cms:dcAudience>Headteacher</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>educational, visits</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=735}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>School visits provide a valuable opportunity for pupils to encounter 
+  experiences which are not available to them in the classroom. They can enable pupils 
+  to develop initiative, resourcefulness and independence. However, it is essential 
+  that all such visits are carried out with the highest regard for the safety and 
+  welfare of the pupils taking part in them.</i></p><hr/><p>Guidelines have been developed to provide helpful and 
+  practical advice to Governing Bodies, Headteachers and Teachers in the organisation 
+  of school visits. </p><p>The 
+		<a href="http://www.dfes.gov.uk/h_s_ev/">
+<strong>
+Health and Safety of Pupils on Educational Visits Guidelines</strong>
+</a>	 can be viewed on the DfES website.
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=735"> Providing Information
+		(735)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

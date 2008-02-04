@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=582}]"><cms:name>street-cleaning-programme-582</cms:name><cms:language>en</cms:language><cms:title>Street Cleaning Programme</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=582}]"><cms:name>street-cleaning-programme-582-dublin-metadata</cms:name><cms:dcAudience>General Publice</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>street, cleaning, programme</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=582}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is responsible for keeping the area clean and free of litter. </i></p><hr/><h4>
+				We will:
+			</h4><ul>
+			<li title="*">Continuously clean town centres</li>
+			<li title="*">Clean main roads once a week</li>
+			<li title="*">Clean other roads once a month</li>
+			<li title="*">Remove accumulations of rubbish from Council
+land</li>
+			<li title="*">Empty litter bins before they are full</li>
+			<li title="*">Help with your locally organised clean-ups</li>
+		</ul><h4>
+					You can help us by:
+			</h4><ul>
+			<li title="*">Being
+tidy with your litter and chewing gum</li>
+			<li title="*">Using the free refuse tips</li>
+			<li title="*">Having waste collection contracts for
+your business</li>
+			<li title="*">Not leaving your dog's mess for others</li>
+			<li title="*">Not &quot;Fly Posting&quot; - it's untidy and illegal</li>
+			<li title="*">Not parking where you want us to clean</li>
+			<li title="*">Reporting your concerns to us - use the <strong>
+					
+		<a href="/ccm/services/pid.jsp?pid=forms/582a"> 
+      online reporting system</a>	
+				</strong>
+				<span class="gen">link to online form</span>
+			</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=582"> Applications for services
+		(582)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

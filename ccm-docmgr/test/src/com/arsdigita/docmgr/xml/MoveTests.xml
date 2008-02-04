@@ -1,0 +1,12 @@
+<test:test_set xmlns:test="http://redhat.com/xml/test"
+    xmlns:docs="http://redhat.com/xml/docs">
+    <test:test_def>
+        <test:dependent_tests>
+            <test file="com/arsdigita/docmgr/xml/CreateTests.xml" />
+        </test:dependent_tests>
+        <test:actions>
+            <docs:move_folder user="swa@redhat.com" folder_id="1" dest_folder_id="2"/>
+            <docs:move_folder user="swa@redhat.com" folder_id="1" dest_folder_id="root"/>
+        </test:actions>
+    </test:test_def>
+</test:test_set>

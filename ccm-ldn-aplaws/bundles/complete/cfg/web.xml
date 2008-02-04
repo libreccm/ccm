@@ -1,0 +1,328 @@
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
+
+<web-app>
+
+  <filter>
+    <filter-name>secured</filter-name>
+    <filter-class>com.arsdigita.web.SecureFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>profiler</filter-name>
+    <filter-class>com.arsdigita.profiler.ProfilerFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>shortcuts</filter-name>
+    <filter-class>com.arsdigita.london.shortcuts.ShortcutFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>subsite</filter-name>
+    <filter-class>com.arsdigita.london.subsite.SubsiteFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>secured</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>profiler</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>subsite</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>shortcuts</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>reg</servlet-name>
+    <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
+    <init-param>
+      <param-name>uri</param-name>
+      <param-value>/</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>legacy-dispatcher</servlet-name>
+    <servlet-class>com.arsdigita.sitenode.SiteNodeDispatcher</servlet-class>
+    <load-on-startup>3</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ccm-dispatcher</servlet-name>
+    <servlet-class>com.arsdigita.web.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>fallback-servlet</param-name>
+      <param-value>legacy-dispatcher</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>legacy-adapter</servlet-name>
+    <servlet-class>com.arsdigita.web.LegacyAdapterServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>cache-manager</servlet-name>
+    <servlet-class>com.arsdigita.caching.CacheServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>db-test</servlet-name>
+    <servlet-class>com.arsdigita.web.monitoring.DBTestServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>versioning-log</servlet-name>
+    <servlet-class>com.arsdigita.versioning.VersioningServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>oid-redirect</servlet-name>
+    <servlet-class>com.arsdigita.web.OIDRedirectServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>resource-resolver</servlet-name>
+    <servlet-class>com.arsdigita.web.ResourceServlet</servlet-class>
+  </servlet>
+
+  <!-- ADDITIONAL SERVLET DECLARATIONS -->
+
+  <servlet>
+    <servlet-name>content-section</servlet-name>
+    <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>content-type-xsl</servlet-name>
+    <servlet-class>com.arsdigita.cms.dispatcher.ContentTypeXSLServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>content-item-xsl</servlet-name>
+    <servlet-class>com.arsdigita.cms.dispatcher.ContentItemXSLServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>template-xsl</servlet-name>
+    <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
+  </servlet>
+
+ <servlet>
+   <servlet-name>TextOnlyServlet</servlet-name>
+   <display-name>Text Only Servlet</display-name>
+   <servlet-class>
+    com.arsdigita.web.InternalPrefixerServlet
+   </servlet-class>
+   <init-param>
+     <param-name>prefix</param-name>
+     <param-value>/text</param-value>
+   </init-param>
+ </servlet>
+
+ <servlet>
+   <servlet-name>PrintFriendlyServlet</servlet-name>
+   <display-name>Printer Friendly Output Servlet</display-name>
+   <servlet-class>
+    com.arsdigita.web.InternalPrefixerServlet
+   </servlet-class>
+   <init-param>
+     <param-name>prefix</param-name>
+     <param-value>/print</param-value>
+   </init-param>
+ </servlet>
+
+ <servlet>
+   <servlet-name>ThemePreviewServlet</servlet-name>
+   <display-name>Servlet to allow admins to preview look/feel</display-name>
+   <servlet-class>
+    com.arsdigita.london.theme.dispatcher.InternalThemePrefixerServlet
+   </servlet-class>
+   <init-param>
+     <param-name>prefix</param-name>
+     <param-value>/theme</param-value>
+   </init-param>
+ </servlet>
+
+<!-- XXX hack -->
+
+  <servlet>
+    <servlet-name>portal-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-portal</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>navigation-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-navigation</param-value>
+    </init-param>
+    <init-param>
+      <param-name>file-resolver</param-name>
+      <param-value>com.arsdigita.london.navigation.NavigationFileResolver</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>portlet-type-xsl</servlet-name>
+    <servlet-class>com.arsdigita.dispatcher.PortletTypeXSLServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>portlet-type-xsl</servlet-name>
+    <url-pattern>/__ccm__/servlet/portlet-type/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>reg</servlet-name>
+    <url-pattern>/__ccm__/null/reg/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>portal-files</servlet-name>
+    <url-pattern>/ccm-ldn-portal/files/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>navigation-files</servlet-name>
+    <url-pattern>/ccm-ldn-navigation/files/*</url-pattern>
+  </servlet-mapping>
+
+ <servlet-mapping>
+     <servlet-name>ThemePreviewServlet</servlet-name>
+     <url-pattern>/theme/*</url-pattern>
+ </servlet-mapping>
+
+  <!-- /ADDITIONAL SERVLET DECLARATIONS -->
+
+  <servlet-mapping>
+    <servlet-name>ccm-dispatcher</servlet-name>
+    <url-pattern>/ccm/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>legacy-adapter</servlet-name>
+    <url-pattern>/__ccm__/servlet/legacy-adapter/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>cache-manager</servlet-name>
+    <url-pattern>/expireCache/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>db-test</servlet-name>
+    <url-pattern>/dbtest</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>versioning-log</servlet-name>
+    <url-pattern>/versioning/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>oid-redirect</servlet-name>
+    <url-pattern>/redirect/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>resource-resolver</servlet-name>
+    <url-pattern>/resource/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- ADDITIONAL SERVLET MAPPINGS -->
+
+  <servlet-mapping>
+    <servlet-name>content-section</servlet-name>
+    <url-pattern>/__ccm__/servlet/content-section/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>content-type-xsl</servlet-name>
+    <url-pattern>/__ccm__/servlet/content-type/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>content-item-xsl</servlet-name>
+    <url-pattern>/__ccm__/servlet/content-item/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>template-xsl</servlet-name>
+    <url-pattern>/__ccm__/servlet/template/*</url-pattern>
+  </servlet-mapping>
+
+ <servlet-mapping>
+     <servlet-name>TextOnlyServlet</servlet-name>
+     <url-pattern>/text/*</url-pattern>
+ </servlet-mapping>
+
+ <servlet-mapping>
+     <servlet-name>PrintFriendlyServlet</servlet-name>
+     <url-pattern>/print/*</url-pattern>
+ </servlet-mapping>
+
+  <!-- /ADDITIONAL SERVLET MAPPINGS -->
+
+  <error-page>
+    <exception-type>com.arsdigita.dispatcher.AccessDeniedException</exception-type>
+    <location>/error/access-denied.jsp</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>com.arsdigita.dispatcher.ObjectNotFoundException</exception-type>
+    <location>/error/object-not-found.jsp</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>com.arsdigita.kernel.permissions.PermissionException</exception-type>
+    <location>/error/permission-denied.jsp</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>com.arsdigita.persistence.DbNotAvailableException</exception-type>
+    <location>/error/db-not-available.jsp</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>com.arsdigita.db.DbNotAvailableException</exception-type>
+    <location>/error/db-not-available.jsp</location>
+  </error-page>
+
+
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/error/general.jsp</location>
+  </error-page>
+
+  <!-- TAGLIBS -->
+  <taglib>
+    <taglib-uri>/WEB-INF/bebop-show.tld</taglib-uri>
+    <taglib-location>/WEB-INF/bebop-show.tld</taglib-location>
+  </taglib>
+
+  <taglib>
+    <taglib-uri>/WEB-INF/bebop-define.tld</taglib-uri>
+    <taglib-location>/WEB-INF/bebop-define.tld</taglib-location>
+  </taglib>
+
+</web-app>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=716}]"><cms:name>housing-3-716</cms:name><cms:language>en</cms:language><cms:title>Homes in multiple occupancy - register</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=716}]"><cms:name>housing-3-716-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>homes, multiple, occupancy, register</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=716}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council operates a Houses in Multiple Occupation (HMO) Controlled Registration Scheme. This means a HMO will have to meet standards as a condition of registration. </i></p><hr/><p>The Council is responsible for checking Houses in Multiple Occupation (HMOs) to make sure they are in a satisfactory condition, are safe, have satisfactory means of escape from fire, have sufficient bathrooms and kitchens, have adequate space and proper management. </p><p>The  scheme will allow us to require minimum standards and properly monitor HMOs. </p><h2>What is an HMO? </h2><p>A House in Multiple Occupation is a house, which is occupied be people who do not form a single household. Examples include: </p><ul>
+  <li title="*">A house let as individual bedsitting rooms </li>
+  <li title="*">A group of rooms on each floor let to single occupants </li>
+  <li title="*">Hostels, some hotels, guesthouses </li>
+  <li title="*">Lodgings, and shared houses </li>
+  <li title="*">Houses converted into self-contained flats </li>
+</ul><h2>Exemptions </h2><p>The following HMOs will not have to apply: </p><ul>
+  <li title="*">House or flat with only two persons </li>
+  <li title="*">Resident landlord plus two separate tenants </li>
+  <li title="*">Houses converted entirely into self contained flats with Building Regulations Approval, where at least one third are owner occupied </li>
+  <li title="*">Houses subject to control orders </li>
+  <li title="*">Registered social landlords (such as housing associations) </li>
+  <li title="*">Houses registered under the Children Act 1989, Registered Homes Act 1984. </li>
+  <li title="*">Educational establishments </li>
+  <li title="*">Health Service accommodation </li>
+  <li title="*">Local authority owned property </li>
+</ul><h2>What are the Standards? </h2><p>A HMO will have to meet the Council's standards. These standards include: </p><ul>
+  <li title="*">means of escape in case of fire and other fire precautions </li>
+  <li title="*">amenities such as kitchens, bathrooms toilets and wash hand basins </li>
+  <li title="*">overcrowding with regards to the number and size of rooms </li>
+  <li title="*">general fitness for occupation </li>
+  <li title="*">management standards </li>
+  <li title="*">gas safety </li>
+  <li title="*">furniture fire safety </li>
+</ul><h2>Who needs to register? </h2><p>&#x2018;The responsible person - i.e. the landlord or person having control or managing a HMO must apply to register the premises with the Council and pay the appropriate fee. </p><p>It is an offence under the provisions of the Housing Act 1996 not to register a HMO. </p><h2>Fees payable to the Council </h2><p>The cost of registration is &#xA3;<span class="gen">enter amount</span>
+</p><p>The registration lasts for <span class="gen">enter amount</span> years  and is renewable at the end of the term. </p><p>To obtain further information and an application form, please use the contact details above. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=716"> Providing Information
+		(716)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=326}]"><cms:name>-326</cms:name><cms:language>en</cms:language><cms:title>Repatriation of a deceased body from abroad to England or Wales</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=326}]"><cms:name>-326-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Repatriation, deceased, body, abroad, england, wales</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=326}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If a death occurs abroad, the death should be registered according to the local regulations of that country and a Death Certificate should be obtained. To bring a body back to England or Wales you will need either the Death Certificate or an authorisation for the removal of the body from the country of death by someone authorised to do so.</i></p><hr/><p>To arrange a funeral in England or Wales you will need: </p><ul>  <li title="*">An authenticated translation of a Death Certificate showing the cause of death and</li>  <li title="*">A Certificate of No Liability to Register from the registrar in England and Wales. This certificate must be obtained from the registrar in whose area it is intended to bury or cremate the deceased. </li>
+</ul><p>To arrange a cremation, a cremation order from the Home Office or a form E from the coroner will be required. If the death was from natural causes, the Home Office will require the following documentation;</p><ul>  <li title="*">Application for cremation (form A)</li>  <li title="*">All original documentation from the country where death occurred</li>  <li title="*">Translation of documents if necessary</li>
+</ul><p>If the death was not natural it will be referred to the coroner who will open an inquest to investigate the cause and circumstances of <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=321">death</a>	
+</strong> <span class="gen">link to pid 321.</span> In this case the coroner will issue form E for 
+		<a href="/ccm/services/pid.jsp?pid=330">
+<strong>cremation</strong>
+</a>	 <span class="gen">link to pid 330</span>
+</p><p>More information is available regarding <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=329">burials</a>	
+</strong> <span class="gen">link to pid 329</span> and <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=328">bereavement</a>	
+</strong> <span class="gen">link to pid 328</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=326"> Providing Information
+		(326)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

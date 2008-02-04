@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title>Bebop Tables</title>
+  </head>
+  <body bgcolor="white">
+    
+    <p>Contains the supporting classes for the {@link
+      com.arsdigita.bebop.Table} component. The <code>Table</code> component
+      itself is part of the {@link com.arsdigita.bebop} package, but all its
+      parts are contained in this package.
+    </p>
+
+    <h3>A gentle introduction to tables</h3>
+    <p> The simplest way to construct a table is from static data contained
+      in two arrays, one for the data and one for the header of the table:
+    </p>
+    <pre  style="background: #cccccc; padding-top: 6pt">
+      String[] headers = { "Fruit", "Color" };
+      String[][] data = {
+        { "banana", "yellow" },
+        { "orange", "orange" },
+        { "strawberry", "red" }
+      };
+      Table table = new Table(data, headers);
+    </pre>
+    <p> This <code>table</code> can now be added to a {@link
+      com.arsdigita.bebop.Page} and will produce output similar to this
+      table every time the page is rendered:
+    </p>
+    <center>
+      <table border="0" cellpadding="2" style="background: #bbbb66; padding: 1em 1em 1em 1em">
+	<thead>
+	  <tr>
+	    <th>Fruit</th>
+	    <th>Color</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+	    <td>banana</td><td>yellow</td>
+	  </tr>
+	  <tr>
+	    <td>orange</td><td>orange</td>
+	  </tr>
+	  <tr>
+	    <td>strawberry</td><td>red</td>
+	  </tr>
+	</tbody>
+      </table>
+    </center>
+    
+    <p> Of course, the table component wouldn't be very useful if it could
+      only display static data in this manner. A table can also be used to
+      display data that is dynamically generated from database query. For
+      this, a {@link com.arsdigita.bebop.table.TableModelBuilder} needs to
+      be implemented. The <code>TableModelBuilder</code>'s
+      <code>getModel</code> method is called by the table every time it
+      needs to render itself. For database-backed tables, the table model
+      builder will usually run a query and wrap the result of the query in
+      a <code>TableModel</code>. The table then uses this table model as
+      the source for its data during rendering. It is very important to
+      note that the table does not cache the table model in any way - this
+      automatically ensures that the table always displays the latest data
+      available. If caching is needed for performance reasons, the table
+      model builder is responsible for implementing its own caching
+      strategy.
+    </p>
+
+    <p> Another important feature of tables is that they make it easy to
+      react with the user's interaction with the table data. By default, a
+      table displays all its data by wrapping it in a {@link
+      com.arsdigita.bebop.Label}, leading to the data being displayed as a
+      string on the resulting HTML page. But many tables contain links in
+      each row, as the following table shows (the links are
+      non-functional):
+    </p>
+    <center>
+      <table border="0" cellpadding="2" style="background: #bbbb66; padding: 1em 1em 1em 1em">
+	<thead>
+	  <tr>
+	    <th>Fruit</th>
+	    <th>Color</th>
+	    <th>Action</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+	    <td>banana</td><td>yellow</td>
+	    <td>( <a href="#">peel</a> )</td>
+	  </tr>
+	  <tr>
+	    <td>orange</td><td>orange</td>
+	    <td>( <a href="#">peel</a> )</td>
+	  </tr>
+	  <tr>
+	    <td>strawberry</td><td>red</td>
+	    <td>( <a href="#">eat</a> )</td>
+	  </tr>
+	</tbody>
+      </table>
+    </center>
+    <p> The code to set this table up from static data is not much more
+      complicated than for the first table:
+    </p>
+    <pre  style="background: #cccccc; padding-top: 6pt">
+      String[] headers = { "Fruit", "Color", "Action" };
+      String[][] data = {
+        { "banana", "yellow", "peel" },
+        { "orange", "orange", "peel" },
+        { "strawberry", "red", "eat" }
+      };
+      Table table = new Table(data, headers);
+      table.getColumn(2).setCellRenderer(new DefaultTableCellRenderer(true));
+    </pre>
+    <p> All that has changed is that we added more entries to
+      <code>headers</code> and <code>data</code> and that we changed the
+      renderer for the last column (column number 2) of the table. We can
+      now add a {@link com.arsdigita.bebop.event.TableActionListener} to
+      the table and perform the necessary actions whenever the user clicks
+      on <code>peel</code> or <code>eat</code>:
+    </p>
+    <pre  style="background: #cccccc; padding-top: 6pt">
+      table.addTableActionListener(
+        new TableActionAdapter() {
+          public void cellSelected(TableActionEvent e) {
+            Object row = e.getRowKey();
+            if ( "2".equals(row) ) {
+              System.out.println("User wants to eat a strawberry.");
+            } else {
+              System.out.print("User wants to peel");
+              if ( "0".equals(row) ) {
+                System.out.println(" a banana.");
+              } else {
+                System.out.println(" a banana.");
+              }
+            }
+          }
+        }); 
+    </pre>
+
+    <h3>Anatomy of a table</h3>
+    <p> A table consists of many parts. By default they are set to
+      "reasonable" values that make the table behave in very simple
+      ways. As the last example shows, small modifications to those
+      defaults makes it possible to give a table more complex layout and/or
+      behavior.
+    </p>
+    
+    <p> At a high level, a table consists of a header and some
+    columns. Each {@link com.arsdigita.bebop.Table} maintains a list of its
+      columns in a {@link com.arsdigita.bebop.table.TableColumnModel} and
+    uses an implicit {@link com.arsdigita.bebop.table.TableHeader} object
+    for rendering and receiving header-related events.
+    </p>
+    
+    <p> The columns are represented by a list of {@link
+      com.arsdigita.bebop.table.TableColumn} 
+      objects. This list of columns is stored in the table's {@link
+      com.arsdigita.bebop.table.TableColumnModel}. Each
+      <code>TableColumn</code> object stores 
+      important display-related information about a table column, such as
+      the column header, the renderers for the column header and ordinary
+      cells in this column and from which column in the table model values
+      should be taken when rendering table cells.
+    </p>
+    
+    <p> FIXME: ... to be continued ... </p>
+    <hr>
+    <font size="-2">Last modified: 2001-06-22</font>
+    
+  </body>
+</html>
+
+<!--
+Local variables:
+time-stamp-line-limit: -50
+time-stamp-start: "Last modified: "
+time-stamp-end: "</font>"
+time-stamp-format: "%:y-%02m-%02d"
+End:
+-->

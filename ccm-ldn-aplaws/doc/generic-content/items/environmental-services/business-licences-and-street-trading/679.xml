@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=679}]"><cms:name>licensing-679</cms:name><cms:language>en</cms:language><cms:title>Licence - car boot sales</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=679}]"><cms:name>licensing-679-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, car, boot, sales</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=679}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A Licence to hold a Car Boot Sale will only be granted subject to the following conditions 
+being observed: </i></p><hr/><li title="*">A minimum of one months notice of intent must be given to the Council of all such events. The holding of a car boot sale (a market) 
+    without having given the requisite notice may render both the organiser and owner 
+    of the land liable to a maximum fine of &#xA3;1,000 (Section 37, Local Government 
+    Miscellaneous Provisions Act 1982).			<br/>
+			<br/>
+</li><li title="*">Applications will only be approved from charitable, sporting or community based 
+    organisations and the whole of the proceeds from holding the sale must be applied 
+    to the organisation who are given consent. Only reasonable direct expenses incurred 
+    in holding the sale may be deducted.			<br/>
+			<br/>
+</li><li title="*">The site of the sale and all roads must be left in a clean and tidy condition 
+    and free from litter immediately after the close of the sale.			<br/>
+			<br/>
+</li><li title="*">Each approved car boot sale will be limited to a maximum of <span class="gen">enter amount</span> cars (pitches 
+    or spaces) and each and every trader shall sell or display only articles surplus 
+    to their own domestic requirements usually described as jumble or bric-a-brac 
+    including books, records, small second hand domestic furniture and equipment, 
+    etc. Traders selling new items and good bought in for re-sale including any of 
+    the above similar items will not be permitted.			<br/>
+			<br/>
+</li><li title="*">The minimum fee for each sale is <span class="gen">enter amount</span> (irrespective of the number of 
+    cars attending). If more than the number of anticipated cars attend, the charge will be <span class="gen">enter amount</span>
+    plus <span class="gen">enter amount</span> for each additional car.			<br/>
+			<br/>
+</li><li title="*">The Council reserves the right to refuse permission to hold a car boot sale 
+    on the grounds that it is likely to detrimentally affect the legitimate markets 
+    and fairs of the area or is unnecessary or undesirable for any reason.			<br/>
+			<br/>
+</li><li title="*">The Council will limit an organisation to a maximum of <span class="gen">enter amount</span> events per year.			<br/>
+			<br/>
+</li><li title="*">The Council will limit the use of any site to a maximum of <span class="gen">enter amount</span> events per year.			<br/>
+			<br/>
+</li><li title="*">No goods may be sold at the sale other than second hand goods owned by the trader.			<br/>
+			<br/>
+</li><li title="*">All goods must be displayed for sale in and sold from the boot of the traders 
+    car.			<br/>
+			<br/>
+</li><li title="*">No stalls or tables must be erected at the sale.			<br/>
+			<br/>
+</li><li title="*">The number of pitches or spaces at the sales must not exceed the number determined 
+    by the Council in the form of consent.			<br/>
+			<br/>
+</li><li title="*">Pitches or spaces must not be given to commercial traders and no vans exceeding 
+    10cwt carrying capacity or commercial vehicles are permitted.			<br/>
+			<br/>
+</li><li title="*">The organiser of the sale must ensure that all vehicles of visitors to the sale 
+    are parked in the parking area within the site. Each parking space must be clearly 
+    marked and adequate provisions made for the entry and exit of vehicles.			<br/>
+			<br/>
+</li><li title="*">The organiser must ensure that no vehicles of visitors to the sale are parked 
+    on adjoining roads to the site of the sale and must arrange for an adequate number 
+    of responsible persons to be present at the entrance during the sale to ensure 
+    that this condition is complied with.			<br/>
+			<br/>
+</li><li title="*">The organiser shall not cause or permit any noise or nuisance to the residents 
+    in the neighbourhood of the sale.			<br/>
+			<br/>
+</li><li title="*">The organiser shall not cause or permit notices or posters advertising the car 
+    boot sale to be displayed on lamp-posts, buildings etc., without the permission 
+    of the owners of these premises or in contravention of the Planning Legislation.			<br/>
+			<br/>
+</li><li title="*">The organiser must have written permission for the use of the site and a copy 
+    of this permission must be forwarded with the application. Failure to do so will 
+    result in the application being refused.			<br/>
+			<br/>
+</li><li title="*">All advertising relating to the sale must include &quot;<span class="gen">enter council name</span> Approved&quot;.			<br/>
+			<br/>
+</li><li title="*">Consent will not be granted for future sales to any person or organisation who 
+    breaches any of these conditions.</li><p>
+			
+			. <span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=679"> Applications for services
+		(679)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=679}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=679}]"/></cms:links></cms:item>

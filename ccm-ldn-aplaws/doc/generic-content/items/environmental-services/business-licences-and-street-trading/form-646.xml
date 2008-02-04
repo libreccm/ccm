@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=646}]"><cms:name>licensing-form-646</cms:name><cms:language>en</cms:language><cms:title>Licence - private club - late hours</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=646}]"><cms:name>646a.pdf</cms:name><cms:content file="646a.pdf"/></cms:file></cms:item>

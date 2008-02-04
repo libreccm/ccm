@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=263}]"><cms:name>residential-care-for-children-263</cms:name><cms:language>en</cms:language><cms:title>Residential Care for Children</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=263}]"><cms:name>residential-care-for-children-263-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>residential, care, children</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=263}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Residential Care for Children/Children's Homes are 
+  there to ensure that the needs of children are met when they cannot live with 
+  their own family. They are a place for children to develop and grow, as well 
+  as providing food, shelter, and space for play and leisure in a caring environment. 
+  Children's Homes look after children with many different needs.</i></p><hr/><p/><p>When children and young 
+  people come to live in a Children's Home they will have a Care Plan. Their Care 
+  Plan says why a child is living in a home, what is supposed to happen while 
+  they are living there and what is supposed to happen at the end of their stay. 
+  Most children will go home, but a few go to live with other families and a few 
+  go to live in other homes. Older children who are not planning to return home, 
+  are given help to prepare them for living on their own - this is called Aftercare.</p><p>Education is important. 
+  Children go to their own school if they have a school place, or we help to get 
+  them back into school. Although some young people may still attend different 
+  resources in the community, for example school, college, etc.</p><p>It is very important that 
+  children and young people stay in touch with their family and friends. It is 
+  only when they might be hurt, or a Court Order says that contact is not allowed, 
+  that some children will not be able to have visits from their family or will 
+  not be able to visit them.</p><p>Children and young people 
+  are respected as individuals. By providing for their religious and cultural 
+  needs children are encouraged to keep their sense of personal identity and community. 
+  </p><h2>Eligibility For The Service</h2><p> Children and young people 
+  have to live away from their own families for all sorts of reasons. These include: 
+  </p><ul>
+  <li title="*">Their parents are unwell</li>
+  <li title="*">They have problems with their family and need to spend some time away from 
+      home, eg: behaviour problems or educational difficulties</li>
+  <li title="*">They may have a disability and need a break from living with their families</li>
+  <li title="*">They 
+      are in the care of local authority subject on a Court Order or an Interim 
+      Care Order, and,</li>
+  <li title="*">Generally, when children 
+        and young people need to live away from their families, they will stay 
+        with foster carers. It is only when Foster care is either not possible 
+        or not desirable accommodation or may not be what the young person would 
+        choose</li>
+  </ul><p> In all cases, we make sure 
+  that all the alternatives are fully considered before recommending residential 
+  care.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=263"> Providing Information
+		(263)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=27}]"><cms:name>education-1-27</cms:name><cms:language>en</cms:language><cms:title>Adult education - courses</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=27}]"><cms:name>education-1-27-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>adult, education, courses</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=27}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is committed to promoting lifelong learning opportunities to its residents. We want to encourage as many people as possible to continue to learn throughout their lives. </i></p><hr/><p>We provide a range of high quality day and evening courses.</p><p>Our courses provide great opportunities to pick up new skills or develop existing interests, at a time, place and pace that suits you.</p><p>Our teaching and support staff are committed to helping every one of you to achieve your goals.</p><p>There are a number of adult education courses available, including: </p><p>
+			<span class="gen">enter details here</span>
+		</p><p>The local Colleges also have courses available for adults.  Each college has it's own contact details, the ones 
+  in <span class="gen">enter council name</span>  that offer adult learning courses can be contacted through 
+  the following links:
+			</p><table width="90%" cellpadding="5" class="centre" summary="colleges that offer adult learning courses">
+			<tr>
+				<td>
+					<strong>
+						<span class="gen">enter facility name</span>
+					</strong>
+				</td>
+				<td>
+					<strong>
+						<span class="gen">enter website address</span> <span class="gen">link to external website</span>
+					</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>
+						<span class="gen">enter facility name</span>
+					</strong>
+				</td>
+				<td>
+					<strong>
+						<span class="gen">enter website address</span>  <span class="gen">link to external website</span>
+					</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>
+						<span class="gen">enter facility name</span>
+					</strong>
+				</td>
+				<td>
+					<strong>
+						<span class="gen">enter website address</span> <span class="gen">link to external website</span>
+					</strong>
+				</td>
+			</tr>
+		</table><p>
+				You can also contact Learndirect for information on courses. 
+They can be contacted on 0800 100 900 or their website is 
+		<a href="http://www.learndirect.co.uk">www.learndirect.co.uk
+  </a>	   <span class="gen">link to external website</span>
+		</p><p>
+				Learndirect offer courses for everyone from beginners to advanced 
+  and everyone in-between. You can learn about computers, the Internet and presentation 
+  skills or just come to improve your reading and writing.
+			</p><p>
+				Learndirect is a flexible way of learning. Once you have enrolled 
+  on a Learndirect course you can learn wherever you've got Internet access, at home, 
+  at work, or at a Learndirect Centre.
+			</p><p>
+				Learndirect is a self-managed programme, offering interactive 
+  discovery and learning to support development both in identifying personal strengths 
+  and work-related skills. It can also help with career progression.
+			</p><h4>Fees</h4><p>
+				If the course you want to study has fees attached, you may get 
+  help towards the cost if you fall into one of the following categories.
+			</p><ul>
+			<li title="*">You are in receipt of a means tested state benefit</li>
+			<li title="*">You are an unwaged dependent of someone who is in receipt of a means tested 
+    state benefit</li>
+			<li title="*">You are an asylum seeker in receipt of an equivalent means tested state benefit</li>
+			<li title="*">You are in receipt of jobseeker's allowance (JSA)</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=27"> Providing Information
+		(27)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

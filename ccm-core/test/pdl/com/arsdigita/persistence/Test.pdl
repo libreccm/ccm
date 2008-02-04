@@ -1,0 +1,65 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Test.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model test;
+
+object type Test {
+    BigInteger[1..1] id = tests.test_id INTEGER;
+    String[0..1] name = tests.name VARCHAR(200);
+    Test[0..1] optionalSelf = join tests.optional_self_id to tests.test_id;
+    Test[0..n] collectionSelf = join tests.test_id to collection_self.test_id,
+                            join collection_self.element_id to tests.test_id;
+    Icle[0..1] optional = join tests.optional_id to icles.icle_id;
+    Icle[1..1] required = join tests.required_id to icles.icle_id;
+    Icle[0..n] collection = join tests.test_id to collection.test_id,
+                            join collection.element_id to icles.icle_id;
+
+    object key (id);
+}
+
+association {
+    composite Test[0..1] parent = join tests.parent_id to tests.test_id;
+    Test[0..n] children = join tests.test_id to tests.parent_id;
+}
+
+object type Icle {
+    BigInteger[1..1] id = icles.icle_id INTEGER;
+    String[0..1] name = icles.name VARCHAR(200);
+
+    object key (id);
+}
+
+object type Component {
+    BigInteger[1..1] id = components.component_id INTEGER;
+    String[0..1] name = components.name VARCHAR(200);
+
+    object key (id);
+}
+
+association {
+    Test[1..1] test = join components.test_id to tests.test_id;
+    component Component[0..n] components = join tests.test_id to components.test_id;
+}
+
+association {
+    Test[0..1] opt2manyBack = join icles.icle_id to opt2many.icle_id,
+                              join opt2many.test_id to tests.test_id;
+    Icle[0..n] opt2many = join tests.test_id to opt2many.test_id,
+                          join opt2many.icle_id to icles.icle_id;
+}

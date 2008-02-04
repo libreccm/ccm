@@ -1,0 +1,73 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: QueryPlan.pdl 557 2005-06-09 15:49:23Z apevec $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.webdevsupport;
+
+query planTableExists {
+    do {
+        select 1 from dual
+        where exists (select 1
+                      from user_tables
+                      where table_name = 'PLAN_TABLE')
+    }
+}
+
+data operation deleteQueryPlan {
+    do {
+       delete from plan_table where statement_id = :planID
+    }
+}
+
+query queryPlan {
+    BigDecimal id;
+    BigDecimal parentID;
+    String lvl;
+    String operation;
+    String execOptions;
+    String objectName;
+    String cardinality;
+    String bytes;
+    String cost;
+
+    do { 
+        select id, 
+               parent_id,
+               level lvl,
+	       lpad(operation,length(operation)+ (level-1)* 2,'--') operation,
+	       options exec_options,
+	       object_name,
+	       cardinality, 
+               bytes,
+               cost
+        from plan_table
+	start with id = 0 and statement_id = :plan_id
+        connect by prior id = parent_id 
+        and prior statement_id = statement_id
+    } map {
+        id = id;
+        parentID = parent_id;
+        lvl = lvl;
+        operation = operation;
+        execOptions = exec_options;
+        objectName = object_name;
+        cardinality = cardinality;
+        bytes = bytes;
+        cost = cost;
+    }
+}

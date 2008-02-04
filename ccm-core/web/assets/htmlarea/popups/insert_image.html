@@ -1,0 +1,204 @@
+<html>
+
+<head>
+	<title>Insert Image</title>
+
+	<script type="text/javascript" src="popup.js"></script>
+
+	<script type="text/javascript">
+
+		window.resizeTo(400, 400);
+
+		function init() {
+			__dlg_init();
+			var param = window.dialogArguments;
+			if (param) {
+				document.getElementById("f_alt").value = param["f_alt"];
+				document.getElementById("f_border").value = param["f_border"];
+				document.getElementById("f_align").value = param["f_align"];
+				document.getElementById("f_vert").value = param["f_vert"];
+				document.getElementById("f_horiz").value = param["f_horiz"];
+				document.getElementById("imageFormDiv").style.display="none";
+				document.getElementById("preview").style.display="block";
+				document.getElementById("previewImage").src=param.f_url;
+			}
+			else {
+				window.imageFrame.document.uploadForm.myfile.focus();
+				window.imageFrame.document.uploadForm.onsubmit = onUpload;
+			}
+			document.imageForm.ok.onclick = onOK;
+			document.imageForm.cancel.onclick = onCancel;
+		};
+
+		function onOK() {
+			var url = "";
+			try {
+				if (window.imageFrame.location.toString().indexOf("insert_image_form.html") > 0 && 
+						!(document.getElementById("preview").style.display == "block")) {
+					alert("please select and image and upload it before continuing");
+					return false;
+				}
+				else if (window.imageFrame.location.toString().indexOf("upload.jsp") > 0) {
+					if (frames[0].document.images[0].src) {
+						url = frames[0].document.images[0].src;
+					}
+					else {
+						alert("A problem has occurred, please back up your browser and try again");
+					}
+				}
+				else if (window.dialogArguments["f_url"]) {
+					url = window.dialogArguments["f_url"];
+				}
+				else {
+					alert("A problem has occurred, please back up your browser and try again");
+				}
+			}
+			catch (e) {
+				alert(e);
+				if (window.dialogArguments) {
+					url = window.dialogArguments["f_url"] 
+				}
+				else {
+					alert("A problem has occurred, please back up your browser and try again");
+				}
+									
+			}
+			if (url != "") {
+				// pass data back to the calling window
+				var fields = ["f_alt", "f_align", "f_border", "f_horiz", "f_vert"];
+				var param = new Object();
+				for (var i in fields) {
+					var id = fields[i];
+					var el = document.getElementById(id);
+					param[id] = el.value;
+				}
+				param["f_url"] = url; 
+				param["f_title"] = param["f_alt"];
+				__dlg_close(param);	
+				return false;
+			}
+			return false;
+		};
+
+		function onCancel() {
+			__dlg_close(null);
+			return false;
+		};
+
+		/* function onPreview() {
+			var f_url = document.getElementById("f_url");
+			var url = f_url.value;
+			if (!url) {
+				alert("You have to enter an URL first");
+				f_url.focus();
+				return false;
+			}
+			window.ipreview.location.replace(url);
+			return false;
+		}; */
+		
+		function onUpload() {
+			if(window.imageFrame.document.getElementById('f_url').value == "") {
+				alert("please provide a document to upload. Click browse to find one.");
+				return false;
+			}
+		}
+		
+	</script>
+
+
+	<style type="text/css">
+		html, body { background: ButtonFace; color: ButtonText; font: 11px Tahoma,Verdana,sans-serif; margin: 0px; padding: 0px;}
+		body { padding: 5px; }
+		table { font: 11px Tahoma,Verdana,sans-serif; }
+		form p { margin-top: 5px; margin-bottom: 5px; }
+		.fl { width: 9em; float: left; padding: 2px 5px; text-align: right; }
+		.fr { width: 6em; float: left; padding: 2px 5px; text-align: right; }
+		fieldset { padding: 4px 10px 9px 5px; }
+		select, input, button { font: 11px Tahoma,Verdana,sans-serif; }
+		button { width: 70px; }
+		.title { background: #ddf; color: #000; font-weight: bold; font-size: 120%; padding: 3px 10px; margin-bottom: 10px; border-bottom: 1px solid black; letter-spacing: 2px; }
+		form { padding: 0px; margin: 0px; }
+		#preview { width:100%; height:150px; overflow:auto; display:none;}
+	</style>
+</head>
+
+<body onload="init()">
+
+	<div class="title">Insert Image</div>
+	<!--- new stuff --->
+	<div id="imageFormDiv">
+	<iframe src="insert_image_form.html" style="width:99%" id="imageFrame" name="imageFrame">
+		You need a frames compatible browser to use this function.
+	</iframe>
+	</div>
+	<div id="preview">
+		<img src="blank" id="previewImage" />
+	</div>
+
+	<form action="" method="get" name="imageForm"> <!--post" enctype="multipart/form-data"-->
+		<table border="0" width="100%" style="padding: 0px; margin: 0px">
+			<tbody>
+				<tr>
+					<td style="width: 7em; text-align: right">Alternate text:</td>
+					<td><input type="text" name="alt" id="f_alt" style="width:100%"
+					title="For browsers that don't support images" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br />
+		<div style="display:none;">
+		<fieldset style="float: left; margin-left: 5px;">
+			<legend>Layout</legend>
+
+			<div class="fl">Alignment:</div>
+			<select size="1" name="align" id="f_align"
+			  title="Positioning of this image">
+				<option value=""                             >Not set</option>
+				<option value="left"                         >Left</option>
+				<option value="right"                        >Right</option>
+				<option value="texttop"                      >Texttop</option>
+				<option value="absmiddle"                    >Absmiddle</option>
+				<option value="baseline" selected="1"        >Baseline</option>
+				<option value="absbottom"                    >Absbottom</option>
+				<option value="bottom"                       >Bottom</option>
+				<option value="middle"                       >Middle</option>
+				<option value="top"                          >Top</option>
+			</select>
+
+			<br />
+
+			<div class="fl">Border thickness:</div>
+			<input type="text" name="border" id="f_border" size="5"
+			title="Leave empty for no border" />
+
+		</fieldset>
+
+		<fieldset style="float:right; margin-right: 5px; ">
+			<legend>Spacing</legend>
+
+			<div class="fr">Horizontal:</div>
+			<input type="text" name="horiz" id="f_horiz" size="5" title="Horizontal padding" />
+
+			<br />
+
+			<div class="fr">Vertical:</div>
+			<input type="text" name="vert" id="f_vert" size="5"
+			title="Vertical padding" />
+
+		</fieldset>
+		</div>
+		<br clear="all" />
+		<table width="100%" style="margin-bottom: 0.2em">
+			<tr>
+				<td valign="bottom">&nbsp;</td>
+				<td valign="bottom" style="text-align: right">
+					<button type="submit" name="ok">OK</button><br>
+					<button type="button" name="cancel">Cancel</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

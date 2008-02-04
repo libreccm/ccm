@@ -1,0 +1,73 @@
+#!/usr/bin/perl -w
+#
+# Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+#
+# The contents of this file are subject to the CCM Public
+# License (the "License"); you may not use this file except in
+# compliance with the License. You may obtain a copy of
+# the License at http://www.redhat.com/licenses/ccmpl.html
+#
+# Software distributed under the License is distributed on an "AS
+# IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+# implied. See the License for the specific language governing
+# rights and limitations under the License.
+#
+# Daniel Berrange <berrange@redhat.com>
+# Dennis Gregorovic <dgregor@redhat.com>
+
+use lib "$ENV{'CCM_TOOLS_HOME'}/lib";
+use strict;
+use CCM::CommandsUtil;
+use CCM::Interpolate qw(interpolate_file);
+use CCM::Util;
+use File::Copy;
+use File::Find;
+use File::Path;
+use File::Spec;
+use Getopt::Long;
+
+my $OS = $^O;
+my $ccm_dist_zip_dir = CCM::Util::getRequiredEnvVariable("CCM_DIST_ZIP_DIR");
+my $ccm_package = CCM::Util::getRequiredEnvVariable("CCM_PACKAGE");
+my $ccm_package_name = CCM::Util::getRequiredEnvVariable("CCM_PACKAGE_NAME");
+my $ccm_root_dir = CCM::Util::getRequiredEnvVariable("CCM_ROOT_DIR");
+my $ccm_rpmbuild_flags = $ENV{'CCM_RPMBUILD_FLAGS'} || "";
+my $ccm_rpm_dir = CCM::Util::getRequiredEnvVariable("RPM_DIR");
+my $ccm_rpm_spec = $ENV{'CCM_RPM_SPEC'};
+my $ccm_rpm_template = $ENV{'CCM_RPM_TEMPLATE'};
+my $ccm_scripts_compat = $ENV{'CCM_SCRIPTS_COMPAT'};
+my $ccm_scripts_home = CCM::Util::getRequiredEnvVariable("CCM_SCRIPTS_HOME");
+
+my $verbose = defined $ENV{'CCM_SCRIPTS_VERBOSE'} && $ENV{'CCM_SCRIPTS_VERBOSE'} eq '1';
+
+GetOptions(
+           'verbose+' => \$verbose,
+           );
+
+if (! defined $ccm_rpm_template) {
+    if (defined $ccm_scripts_compat) {
+        $ccm_rpm_template = File::Spec->catfile($ccm_scripts_home, 'pkg','dist',"rpm.spec.${ccm_scripts_compat}.in");
+    } else {
+        $ccm_rpm_template = File::Spec->catfile($ccm_scripts_home, 'pkg','dist','rpm.spec.in');
+    }
+}
+
+$ccm_rpm_spec = File::Spec->catfile($ccm_rpm_dir, 'SPECS', "$ccm_package.spec") unless defined $ccm_rpm_spec;
+
+print "Creating RPMs\n";
+chdir $ccm_root_dir;
+print "  Interpolating spec file ($ccm_rpm_template -> $ccm_rpm_spec)\n";
+&interpolate_file('source' => $ccm_rpm_template,
+                  'destination' => $ccm_rpm_spec,
+                  'vars' => \%ENV,
+                  'method' => sub {die "@_ not defined"},
+                  'expand_vars' => 1);
+print "  Copying source " . File::Spec->catfile($ccm_rpm_dir, 'SOURCES', "$ccm_package_name.zip") . "\n";
+copy(File::Spec->catfile($ccm_dist_zip_dir, "$ccm_package_name.zip"), File::Spec->catdir($ccm_rpm_dir, 'SOURCES'))
+    or die "$!";
+print "  Building RPM\n";
+my $result = system("rpmbuild --define \"_topdir $ccm_rpm_dir\" $ccm_rpmbuild_flags -ba \"$ccm_rpm_spec\"");
+unlink File::Spec->catfile(File::Spec->catdir($ccm_rpm_dir, 'SOURCES'), "$ccm_package_name.zip");
+die "$?" unless ($result == 0);
+
+

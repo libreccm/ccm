@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=239}]"><cms:name>employment-training-239</cms:name><cms:language>en</cms:language><cms:title>Employment/Training</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=239}]"><cms:name>employment-training-239-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>employment, training</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=239}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The information below gives you details on how to contact organisations that offer advice and support on employment and training issues for disabled people.</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#t1">Disability Employment and Training Services</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#t2">Mental Health Employment and Training Services</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#t3">General Employment and Training Organisations</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#t4">Help with Access to Work</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#t5">Caring and Employment</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#t6">Education for People with Special Needs</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#t7">Other useful contacts</a>	
+				</strong>
+			</li>
+		</ul><h3>
+
+			Disability Employment and Training Services</h3><ul>
+			<li title="*">
+				
+		<a href="http://www.disability.gov.uk/index.html">
+					<strong>Disability Unit - Department for Work and Pensions</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+				<p>Level 6, Adelphi, 1-11 John Adam Street, London, WC2N 6HT | <strong>
+						
+			
+					</strong>
+					<br/>
+      Benefit enquiry line for people with disabilities: 0800 882 200</p>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.dh.gov.uk/Home/fs/en">
+					<strong>Department of Health</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+				<p>
+					<span class="gen">enter address</span> | <span class="gen">enter telephone number</span> | <span class="gen">enter fax number</span> | <span class="gen">enter email address</span>
+				</p>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.learningdisabilities.org.uk">
+					<strong>The Foundation for People with Learning Disabilities</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+				<p>83 Victoria Street, London , SW1H 0HW, Phone: 020 7802 0300, Fax: 020 7802 0301, Email: <strong>
+						
+			
+					</strong>
+				</p>
+			</li>
+		</ul><h3>
+
+			Mental Health Employment and Training Services</h3><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.mentalhealth.org.uk">The Mental Health Foundation</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+				<p>83 Victoria Street, London , SW1H 0HW, Phone: 020 7802 0300, Fax: 020 7802 0301, Email: <strong>
+						
+			
+					</strong>
+				</p>
+			</li>
+		</ul><h3>
+
+			General Employment and Training Organisations</h3><ul>
+			<li title="*">
+				
+		<a href="http://www.connexions-direct.com/">
+					<strong>Connexions</strong>
+				</a>	
+				<span class="gen">link to external website</span>, Phone: 080 800 13219, Fax: 07766 413219.
+    <p>Connexions is a new service for all 13 to 19 year olds. It aims to help young people make the most of their potential, whatever their ability or background. They offer information and advice on a variety of issues that affect young people 
+      and have personal advisors who are professionally qualified to offer the best advice and support on employment and training opportunities.</p>
+				<p>Connexions also work closely with local employers and offer a job placing service for 16 - 19 year olds. You'll find Connexions Personal Advisers in your school or college or you can visit the centre at the above address.</p>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.jobcentreplus.gov.uk">
+					<strong>Jobcentre Plus</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.learndirect-advice.co.uk">
+					<strong>Learndirect</strong>
+				</a>	
+				<span class="gen">link to external website</span> - 0800 
+      100 900</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.lsc.gov.uk">Learning and Skills Council</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+			</li>
+		</ul><h3>
+
+			Help with Access to Work</h3><ul>
+			<li title="*">
+				
+		<a href="http://www.newdeal.gov.uk/newdeal.asp?DealID=NDDIS">
+					<strong>New Deal for Disabled People (NDDP)</strong>
+				</a>	
+				<span class="gen">link to external website</span> , Phone: 0800 137 177, Fax: 0800 435 550.
+<p>New Deal for Disabled People is for those getting a disability or health-related benefit who want to work but need some help and support along the way.</p>
+			</li>
+		</ul><h3>
+
+			Caring and Employment</h3><p>Almost two thirds of working age Carers are in some sort of paid employment. A third of those work full-time and provide care for more than 20 hours per week. Combining work and caring can be difficult. The Carer on occasion may have to take time off work to look after the person in need when an emergency occurs. The Government has acknowledged the importance of the Carer being able to do this and at the same time have their rights to employment protected.</p><h3>The Right to Have Time Off</h3><p>The Employment Relations Act of 15/12/1999 gave Carers in paid work the right to have time off to deal with a family emergency. Carers cannot now by law be penalised by their employer for taking time off so long as that time off is fully justified. 
+  Further information on 'time off' can be found at: <strong>
+				
+		<a href="http://www.dti.gov.uk/er/timeoff.htm">www.dti.gov.uk/er/timeoff.htm</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><h3>Work-Life Balance Campaign</h3><p>In March 2000 the Prime Minister launched the government's Work-Life Balance campaign. This was to encourage employers to recognise the benefits to their organisation of flexible working arrangements and the responsibility that Carers have out of work.</p><p>The campaign is for everyone, whether you are an employer, Carer, parent or jobseeker. It is about changing working patterns so that everyone can find a way to help them combine work with 'out of work' responsibilities. More information can be found 
+  at <strong>
+				
+		<a href="http://www.dti.gov.uk/work-lifebalance">http://www.dti.gov.uk/work-lifebalance</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><h3>Promoting the Inclusion of Carers into Employment</h3><p>Carers Online report on an 'Action for Carers and Employment' National UK project whose aim is to promote Carers inclusion into the labour market?</p><p>Nearly three million Carers juggle paid work and care - that is one in seven people in the workforce - and many have to reduce the hours they work or give up work altogether. Keeping a job, or returning to a job when caring has ended can mean facing significant barriers such as:</p><ul>
+			<li title="*">Loss of confidence and work skills</li>
+			<li title="*">Invisibility to mainstream services such as JobCentre Plus</li>
+			<li title="*">Finding good quality, flexible and affordable alternative care</li>
+			<li title="*">Finding an understanding and flexible employer</li>
+			<li title="*">Bridging the gap between benefits and work</li>
+		</ul><p>More information about the <strong>
+				
+		<a href="http://www.carersonline.org.uk/ace/">project and its aims</a>	
+			</strong>
+			<span class="gen">link to external website</span> are available.</p><p>The main <strong>
+				
+		<a href="http://www.carersonline.org.uk/">Carers Online site</a>	
+			</strong>
+			<span class="gen">link to external website</span> 
+  is available by using the link</p><h3>
+			
+		<a href="http://www.carers.org/how-we-can-help/">The Princess Royal Trust for Carers</a>	
+			<span class="gen">link to external website</span>
+		</h3><p>This site offers information and ideas to help with the balance between being employed and caring?</p><ul>
+			<li title="*">Issues faced by Carers in employment</li>
+			<li title="*">How employers can help</li>
+			<li title="*">How do you find out about Carer friendly policies</li>
+			<li title="*">What can Carers do?</li>
+			<li title="*">Helpful organisations</li>
+			<li title="*">Employment opportunities </li>
+		</ul><h3>
+
+			Education for people with Special Needs</h3><p>
+			<strong>What are Special Needs?</strong>
+		</p><p>A person has special needs when they have:</p><ul>
+			<li title="*">A physical disability</li>
+			<li title="*">A problem with sight, hearing or speech</li>
+			<li title="*">A mental disability</li>
+			<li title="*">Emotional or behavioural problems</li>
+			<li title="*">A medical or health problem</li>
+			<li title="*">Difficulties with reading, writing, speaking or mathematics work</li>
+		</ul><p>
+			<strong>Special Needs and Education</strong>
+		</p><p>In September 2002 the Disability Discrimination Act Part IV came into effect making it illegal for disabled children and students in education to be less favourably treated. Providers of education have to make sure where reasonably possible that disabled learners are no longer disadvantaged. The law covers all areas of education such as schools, colleges, universities, adult education and youth services.</p><p>Literature and advice for disabled people, parents and others is available free from the <strong>
+				
+		<a href="http://www.drc-gb.org/whatwedo/publications.asp">Disability Rights Commission</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><p>Phone: 08457 622 633 | Fax: 08457 622 644 | <strong>
+				
+			
+			</strong>
+		</p><p>Or you can download the information from their <strong>
+				
+		<a href="http://www.drc-gb.org/whatwedo/publications.asp">website 
+  </a>	
+			</strong>
+			<span class="gen">link to external website.</span>
+		</p><p>
+			<strong>Children and Young People</strong>
+		</p><p>If you are caring for a child or young person with Special Educational Needs, you can get help from your Local Education Authority.</p><p>
+			<strong>Adults</strong>
+		</p><p>There are a number of places where adults with special needs can get education:</p><p>
+			
+		<a href="http://www.ageconcern.org.uk">
+				<strong>Age Concern</strong>
+			</a>	
+			<span class="gen">link to external website</span>
+		</p><p>Age Concern offer recreation and educational courses for the Carer and person being cared for subject to the Carer being aged 55 or over. The range of activities includes:</p><ul>
+			<li title="*">Computer classes</li>
+			<li title="*">Gentle keep fit</li>
+			<li title="*">Relaxation</li>
+			<li title="*">Art and crafts</li>
+			<li title="*">Debating group</li>
+			<li title="*">Gardening</li>
+		</ul><h3>
+
+			Other useful contacts</h3><p>Here is a brief list of sites you might find of interest:</p><ul>
+			<li title="*">
+				
+		<a href="http://www.acas.org.uk">
+					<strong>ACAS</strong>
+				</a>	
+				<span class="gen">link to external website</span> (Advisory, Conciliation and Arbitration Service), Tel: 08457 474747
+<p>A free, confidential advice service to employers and employees</p>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.carersinformation.org.uk">
+					<strong>Carers Information</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+				<p>Click on Carers Profiles to find a list of links that may be of use to you.</p>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.dfes.gov.uk">
+					<strong>Department for Education and Skills</strong>
+				</a>	
+				<span class="gen">link to external website</span> - This is a government education site providing information on any area of learning for both young people and adults.</li>
+			<li title="*">The Department of Trade and Industry, Tel: 0870 150 2500
+  <p>Can supply information on a range of employment issues including flexible working and parental leave for both employee and employer.</p>
+				<p>
+					
+		<a href="http://www.dti.gov.uk/workingparents%20">
+						<strong>www.dti.gov.uk/workingparents </strong>
+					</a>	
+					<span class="gen">link to external website</span>
+					<br/>
+					<strong>
+						
+		<a href="http://www.dti.gov.uk/publications">www.dti.gov.uk/publications</a>	
+					</strong>
+					<span class="gen">link to external website</span>
+				</p>
+			</li>
+		</ul><p>
+			
+		<a href="http://www.manchester2002-uk.com/industry.html">
+				<strong>Education and Training in Manchester and the Surrounding Regions</strong>
+			</a>	
+			<span class="gen">link to external website</span> - for a list of learning places to do with Higher Education, Further Education, Secondary Education, Primary, Infant and Junior Schools click on the link above.</p><p>
+			
+		<a href="http://www.passporttolearning.org">
+				<strong>Passport to learning</strong>
+			</a>	
+			<span class="gen">link to external website</span> - for 
+  a range of courses including basic skills, induction training, certificate in community volunteering</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=239"> Providing Information
+		(239)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,27 @@
+<ccm:content-types>
+  <ccm:content-type label="Free form item"
+		    description="A free form content type"
+		    objectType="com.arsdigita.london.cms.freeform.FreeformContentItem"
+		    classname="com.arsdigita.london.cms.freeform.FreeformContentItem">
+   
+     <ccm:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+     
+       <ccm:authoring-step label="Basic Properties"
+                          description="Edit the title and name"
+			  component="com.arsdigita.cms.ui.authoring.PageEdit" 
+        ordering="1"/>
+			  
+       <ccm:authoring-step label="Assets"
+                          description="Edit text and image assets"
+			  component="com.arsdigita.london.cms.freeform.ui.ViewAssets"
+        ordering="2" />
+			  
+       <ccm:authoring-step label="Assign categories"
+                          description="Assign categories"
+			  component="com.arsdigita.cms.ui.ItemCategoryStep" 
+        ordering="3"/>
+
+     </ccm:authoring-kit>
+  </ccm:content-type>
+</ccm:content-types>
+

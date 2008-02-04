@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=359}]"><cms:name>news-press-releases-359</cms:name><cms:language>en</cms:language><cms:title>News/Press Releases</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=359}]"><cms:name>news-press-releases-359-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>news, press, release</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=359}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Click on a Headline to view the associated Press Release: </i></p><hr/><p>If you have a press enquiry, please use the 
+		<a href="/ccm/services/pid.jsp?pid=forms/359a">
+				<strong>online
+form</strong>
+			</a>	.</p><table width="90%" cellpadding="5" class="centre" summary="list of press releases and dates">
+			<tr>
+				<th>Date Released</th>
+				<th>Headline</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter date</span>
+				</td>
+				<td>Name of Headline <span class="gen">enter hyperlink</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter date</span>
+				</td>
+				<td>Name of Headline <span class="gen">enter hyperlink</span>
+				</td>
+			</tr>
+		</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=359"> Applications for services
+		(359)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

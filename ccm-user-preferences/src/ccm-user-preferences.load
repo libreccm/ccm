@@ -1,0 +1,18 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </requires>
+  <provides>
+    <table name="user_prefs"/>
+    <table name="user_pref"/>
+    <initializer class="com.arsdigita.london.userprefs.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-user-preferences"/>
+    <!--
+    <data class="com.arsdigita.london.userprefs.Loader"/>
+    -->
+  </scripts>
+</load>

@@ -1,0 +1,139 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Forum.pdl 542 2005-06-03 15:17:05Z sskracic $
+// $DateTime: 2004/08/17 23:26:27 $
+model com.arsdigita.forum;
+
+import com.arsdigita.categorization.Category;
+import com.arsdigita.messaging.ThreadedMessage;
+import com.arsdigita.cms.LifecycleDefinition;
+import com.arsdigita.web.Application;
+import com.arsdigita.kernel.Group;
+
+object type Forum extends Application {
+
+    component Post[0..n] posts =
+        join forum_forums.forum_id to messages.object_id;
+
+    Boolean [1..1] isModerated  = forum_forums.is_moderated;
+    Boolean [1..1] isNoticeboard  = forum_forums.is_noticeboard;
+    component Group [0..1] moderationGroup =
+        join forum_forums.mod_group_id to groups.group_id;
+
+    component ForumSubscription[0..n] subscriptions =
+        join forum_forums.forum_id to forum_subscriptions.forum_id;
+    component Category[1..1] category =
+        join forum_forums.category_id to cat_categories.category_id;
+
+    component LifecycleDefinition[0..1] lifecycleDefinition =
+        join forum_forums.lifecycle_definition_id to lifecycle_definitions.definition_id;
+
+    BigDecimal [0..1] expireAfter = forum_forums.expire_after;
+
+    reference key (forum_forums.forum_id);
+}
+
+//
+// this should probably move to the categorization service
+//
+query categoryObject {
+    BigDecimal id;
+    do {
+        select object_id
+        from cat_object_category_map
+        where category_id = :categoryID
+    } map {
+        id = object_id;
+    }
+}
+
+query uncategoryObject {
+    BigDecimal id;
+    do {
+        select object_id
+          from cat_object_category_map
+    } map {
+        id = object_id;
+    }
+}
+
+data operation clearCategories {
+    do {
+        delete from cat_object_category_map
+        where object_id = :postID
+    }
+}
+
+query filledCategories {
+    BigDecimal id;
+    do {
+        select distinct(category_id) as categoryID
+        from cat_object_category_map
+    } map {
+        id = categoryID;
+    }
+
+}
+
+query getUnusedCategories {
+    BigDecimal id;
+    String name;
+    do {
+        select cc.category_id,
+               cc.name
+        from   cat_categories cc
+        where  cc.category_id in (select related_category_id
+                                  from   cat_category_category_map c,
+                                         forum_forums b
+                                  where  b.forum_id    = :forumID
+                                  and    b.category_id = c.category_id)
+        and    cc.category_id not in (select oc.category_id
+                                      from   cat_object_category_map oc
+                                      where  oc.category_id in (select related_category_id
+                                                                from   cat_category_category_map c,
+                                                                       forum_forums b
+                                                                where  b.forum_id    = :forumID
+                                                                and    b.category_id = c.category_id))
+    } map {
+        id   = cc.category_id;
+        name = cc.name;
+    }
+}
+
+// Retrieve summary information about uncategorized postings in a
+// forum
+
+query getUncategorizedSummary {
+    BigDecimal numThreads;
+    Date latestPost;
+    do {
+        select count(*) as num_threads,
+               max(mt.last_update) as latest_post
+        from   message_threads mt,
+               messages m
+        where  m.object_id = :forumID
+        and    m.root_id is null
+        and    m.message_id = mt.root_id
+        and    not exists (select 1 from cat_object_category_map cocm
+                           where cocm.object_id = m.message_id)
+    } map {
+        numThreads = num_threads;
+        latestPost = latest_post;
+    }
+}
+

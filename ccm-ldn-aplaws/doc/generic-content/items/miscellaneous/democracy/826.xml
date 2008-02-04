@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=826}]"><cms:name>data-protection-act-826</cms:name><cms:language>en</cms:language><cms:title>Data Protection Act</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=826}]"><cms:name>data-protection-act-826-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>data, protection, act</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=826}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Data Protection Act 1998 which replaced the 1984 Act received Royal assent on 16th July 1998 and came fully into force in 1999. </i></p><hr/><p>As with the 1984 Act, the Act gives legal rights to individuals (data subjects) in respect of personal data held about them. The Act gives effect in UK law to EC Directive 95/46/EC (the 'Directive). </p><p>
+<strong>The Council's Data Protection Policy </strong> <span class="gen">enter hyperlink</span>
+			</p><h2>Purpose of the Act</h2><p>The Data Protection Act 1998 is designed to cover the collecting, storing, processing and distribution of personal data. It gives rights to individuals about whom information is recorded. </p><p> This applies to all individuals whether they are an employee, elected member or a member of the public. Each individual has the right to access personal data, prevent processing likely to cause damage or distress and prevent processing for the purposes of direct marketing.</p><p>They also have rights in relation to automated decision taking, to take action for compensation if they suffer damage by any contravention of the Act by the data controller, to rectify, block, erase or destroy inaccurate data and to make a request to the Data Protection Commissioner for an assessment to be made of the data controller if they feel that the Act has been contravened. </p><p>The Act places obligations on those who record and use personal data (data controllers). They must be open about the use of such personal data through 
+		<a href="http://www.informationcommissioner.gov.uk/eventual.aspx?id=316">
+					<strong>Notification</strong>
+				</a>	
+				 <span class="gen">link to external website</span>  to the 
+		<a href="http://www.informationcommissioner.gov.uk/">
+					<strong>Information Commissioner</strong>
+				</a>	
+				 <span class="gen">link to external website</span> and they must follow sound and proper practices by applying the 
+		<a href="http://www.informationcommissioner.gov.uk/eventual.aspx?id=302">
+					<strong>Data Protection Principles</strong>
+				</a>	. <span class="gen">link to external website</span>
+			</p><p>A 
+		<a href="http://www.legislation.hmso.gov.uk/acts/acts1998/19980029.htm">
+					<strong>copy of the Act</strong>
+</a>	 <span class="gen">link to external website</span> can be viewed at Her Majesty's Stationery Office website.
+						</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=826"> Providing Information
+		(826)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

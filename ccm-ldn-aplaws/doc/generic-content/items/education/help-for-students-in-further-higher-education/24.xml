@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=24}]"><cms:name>education-1-24</cms:name><cms:language>en</cms:language><cms:title>Higher education - students awards</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=24}]"><cms:name>education-1-24-dublin-metadata</cms:name><cms:dcAudience>Student</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>higher, education, student, awards</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=24}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We realise that making the decision to study a full-time higher education course is a big step, and that the offer of financial help can be crucial. We work in partnership with the Government's Department for Education and Skills and the Student Loans Company to help provide that help. We will try to ensure that you have all the facts you need.</i></p><hr/><p>You can apply online by accessing the DFES website from the link below. Alternatively, we can provide an application pack if you prefer. Contact us if you require a copy. Our aim is to provide you with a quality service to take you through the whole application process. At each stage, we will provide notes to help you.</p><h4>How the Application Process will work</h4><p>The new system of student support will be dealt with by a partnership of your 'home' Local Education Authority (LEA), the Student Loans Company, UCAS and the Higher Education Institution where you will be studying. The application process will be in three stages:</p><ul>
+
+			<li title="*">Stage 1 - where <span class="gen">enter council name</span> LEA will see if you are personally eligible for financial support 
+
+    in line with the Government's rules and the information given in your application.</li>
+
+			<li title="*">Stage 2 - for those who are personally eligible, Tameside LEA will send a further form (HE2) to obtain details of family income to assess the maximum amount of grant and loan you are entitled to receive.</li>
+
+			<li title="*">Stage 3 - where you decide how much of the loan element you wish to take up and arrange this with the Student Loans Company. The Student Loans Company will work with UCAS and your chosen Higher Education Institution to arrange    payment of your grant and loan.</li>
+
+		</ul><p>By completing the HE1 form online at <strong>
+
+				
+		<a href="http://www.dfes.gov.uk/studentsupport/formsandguides.cfm">www.dfes.gov.uk/studentsupport/formsandguides.cfm</a>	
+
+			</strong>
+
+			<span class="gen">link to external website</span> you will begin Stage 1 of the process for applying for the range of grants and loans available. Alternatively, ask for an application pack from the Student Awards Section. Application packs are also available from local schools and colleges.</p><p>As it is now a combined application for grants and loans, all students are encouraged to make an application. If you do not make an application, your University may charge you higher tuition fees.</p><h4>Students/Courses covered by this application process</h4><p>The application process is designed for students who intend to study a higher education course leading to a:-</p><ul>
+
+			<li title="*">First Degree</li>
+
+			<li title="*">BTEC Higher Diploma or HND</li>
+
+			<li title="*">Diploma of Higher Education</li>
+
+			<li title="*">Teacher Training Qualification (including certain part-time 
+
+    certificate in education courses which provide qualified teacher status).</li>
+
+		</ul><p>Students who are planning to take a nursing degree or other courses designed for health service professionals (e.g. Physiotherapy), should contact the NHS Grants Unit, you can find more information at <strong>
+
+				
+		<a href="http://www.doh.gov.uk/hcsmain.htm">www.doh.gov.uk/hcsmain.htm</a>	
+
+			</strong> <span class="gen">link to external website</span>, to apply for the NHS Bursary available for these courses. Students can also apply on the application form HE1 for a reduced level of Student Loan to 'top up' the Bursary.</p><h4>Independent Student Status</h4><p>The Government's rules mean we have to decide whether you are a Dependent or Independent student. You are Independent if you will be aged 25 or over on <span class="gen">enter date</span>. If you will be under 25 on that date you can still be 
+
+  independent if: -</p><ul>
+
+			<li title="*">You will be married by <span class="gen">enter date</span>. Please provide your marriage certificate with your application if this applies to you;</li>
+
+			<li title="*">You will have supported yourself for at least three years prior to the start of your course. Please provide evidence with your application (e.g. letters from employers, P60's) if this applies to you. </li>
+
+		</ul><h4>Details from your Birth Certificate/Passport</h4><p>For applicants born in the UK: It is a requirement of the Government's student support system that you provide us with your original Birth Certificate, Adoption Certificate (photocopies are not acceptable), or your original passport.</p><p>For applicants born outside the UK: We need to see your passport and your original Birth Certificate or you need to provide your passport and a letter signed by a responsible person stating the details of your date of birth, place and country of birth and names at birth. In this context, the government says a responsible person is a minister of religion, doctor, lawyer, teacher, established civil servant, police officer or consular official. </p><h4>Returning your Application</h4><p>If you attend one of the local <span class="gen">enter council name</span> schools/colleges, you may be able to bring your application form and your Birth Certificate or passport and other documentation to school/college. We intend to come out to some of the local schools/colleges during February and March 2003 and check the HE 1 application forms there, all Birth Certificates and 
+
+  passports will be left for the school/college to return.</p><p>
+
+			<strong>Please ask at your school/college for more information.</strong>
+
+		</p><p>You can post your application form and original documentation to the Student Awards Section at the address shown below, the original documents will be returned as soon as possible. Or you can bring the application form and original documentation to <span class="gen">enter address</span>, for the details to be checked.</p><p>Check that you have answered all the relevant questions and have signed and dated the form and enclosed all the relevant documents. Return the completed form as soon as possible, but no later than <span class="gen">enter date</span>.</p><p>Thank you for taking the time to read these notes, we hope they have helped you to understand the process of applying for student support for your higher education studies.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=24"> Providing Information
+		(24)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

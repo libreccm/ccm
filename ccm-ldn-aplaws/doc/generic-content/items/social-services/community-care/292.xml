@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=292}]"><cms:name>residential-care-292</cms:name><cms:language>en</cms:language><cms:title>Residential Care</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=292}]"><cms:name>residential-care-292-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>residential, care</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=292}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A residential care home provides accommodation, meals and personal care for older people, people with disabilities, or people who are unable to manage at home, for whatever reason. </i></p><hr/><p>The level of care varies from home to home, but the Government defines it as the kind of care you would receive from a competent and caring relative. This includes: help with eating, washing, bathing, dressing and toilet needs; and caring for you if you become ill. However, residential care does not include nursing care.</p><p>The decision to recommend a residential or nursing home will only be made after a full assessment. If nursing home care is recommended, then the local health authority also has to agree to this. You can also consider homes in other local authority areas if 
+  your needs will be better met there.</p><p>When choosing a home, it is important to make sure that you choose one that will be right for you both now and in the future. You can get advice and information to help you make this important decision from:</p><ul>
+			<li title="*">your social worker or care manager</li>
+			<li title="*">a district nurse</li>
+			<li title="*">a health visitor</li>
+			<li title="*">your family doctor</li>
+		</ul><p>Here is a list of the residential homes in this area:</p><table width="90%" cellpadding="5" class="centre" summary="List of Residential Areas in the area">
+			<tr>
+				<th>Name of Establishment</th>
+				<th>Address and Contact Details</th>
+				<th>Number of Beds</th>
+				<th>Documentation Available</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><h3>Checking standards in residential care</h3><p> All residential homes, whether council-run or private, are regularly inspected by the National Care Standards Commission:</p><p>
+			<strong>
+				
+		<a href="http://www.carestandards.org.uk/">National Care Standards Commission</a>	
+			</strong>
+			<span class="gen">link to external website.</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=292"> Providing Information
+		(292)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

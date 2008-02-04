@@ -1,0 +1,23 @@
+init com.arsdigita.formbuilder.installer.Initializer {
+    widgetTypes = {
+        { "Survey", "One line Answer", "One line Answers", 
+          "com.arsdigita.formbuilder.PersistentTextField",
+          "com.arsdigita.simplesurvey.ui.widgets.OneLineWidgetForm" },
+        { "Survey", "Essay Answer", "Essay Answers", 
+          "com.arsdigita.formbuilder.PersistentTextArea",
+          "com.arsdigita.simplesurvey.ui.widgets.EssayWidgetForm" },
+        { "Survey", "Date Answer", "Date Answers", 
+          "com.arsdigita.formbuilder.PersistentDate",
+          "com.arsdigita.simplesurvey.ui.widgets.DateWidgetForm" },
+        { "Survey", "Multiple Choice (one or more answers)", "Multiple Choices", 
+          "com.arsdigita.formbuilder.PersistentCheckboxGroup",
+          "com.arsdigita.simplesurvey.ui.widgets.CheckboxEditor" },
+        { "Survey", "Multiple Choice (only one answer)", "Single Choices", 
+          "com.arsdigita.formbuilder.PersistentRadioGroup",
+          "com.arsdigita.simplesurvey.ui.widgets.RadioEditor" },
+        { "Poll", "Multiple Choice (only one answer)", "Single Choices", 
+          "com.arsdigita.formbuilder.PersistentRadioGroup",
+          "com.arsdigita.simplesurvey.ui.widgets.RadioEditor" }
+   };
+}
+

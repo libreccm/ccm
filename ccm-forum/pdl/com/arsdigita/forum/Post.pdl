@@ -1,0 +1,55 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Post.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:26:27 $
+model com.arsdigita.forum;
+
+import com.arsdigita.messaging.ThreadedMessage; 
+import com.arsdigita.kernel.Party;
+
+object type Post extends com.arsdigita.messaging.ThreadedMessage {
+    
+    String [1..1] status = forum_posts.status VARCHAR(20);
+    reference key(forum_posts.post_id);
+    aggressive load(moderator.id);
+}
+
+association {
+   Party [0..1] moderator = join forum_posts.moderator to parties.party_id;
+   Post [0..1] moderatedMessage = join parties.party_id to forum_posts.moderator;
+}
+
+
+// Subquery for filtering for approved threads
+
+query threadModerationStatus {
+    BigDecimal id;
+
+    do {
+        select m.thread_id 
+          from forum_posts f, 
+               message_threads m
+         where m.root_id = f.post_id
+            and (f.status = :status
+                 or
+                 m.sender = :partyID
+                )
+    } map {
+        id = message_threads.thread_id;
+    }
+}

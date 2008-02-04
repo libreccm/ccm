@@ -1,0 +1,20 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_contact_types"/>
+    <table name="ct_contact_address"/>
+    <table name="ct_contact_phones"/>
+    <table name="ct_contacts"/>
+
+    <initializer class="com.arsdigita.cms.contenttypes.ContactInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-contact"/>
+    <data class="com.arsdigita.cms.contenttypes.ContactLoader"/>
+  </scripts>
+</load>

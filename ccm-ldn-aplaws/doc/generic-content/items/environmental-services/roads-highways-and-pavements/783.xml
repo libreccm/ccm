@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=783}]"><cms:name>batch-11-783</cms:name><cms:language>en</cms:language><cms:title>Road safety - driver training</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=783}]"><cms:name>batch-11-783-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>road, safety, driver, training</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=783}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We aim to promote the benefits of a proactive approach to injury and crash reduction through the availability of driver education programmes that suit both recreational and professional drivers.</i></p><hr/><p>We support the work of advanced driving groups such as the <strong>
+
+		<a href="http://www.iam.org.uk/">Institute 
+  of Advanced Motorists</a>	
+</strong> <span class="gen">link to external website</span> and <strong>
+
+		<a href="http://www.rospa.com/CMS/index.asp">RoSPA</a>	
+</strong> <span class="gen">link to external website</span> Advice on driver training is available to all local organisations who wish to improve the driving standards of their employees.</p><h3>Benefits for Employers</h3><p>Benefits of driver training for the employer include both tangible and non-tangible elements such as:</p><ul>
+  <li title="*">Reduced crash and injury rates for employees</li>
+  <li title="*">Potential reduction in insurance premiums</li>
+  <li title="*">Reduced down time</li>
+  <li title="*">Savings in fleet running costs including maintenance and fuel</li>
+  <li title="*">Reduced environmental impact upon the local and wider community leading to improved quality of life for all</li>
+  <li title="*">Enhanced environmental profile</li>
+  <li title="*">Reduced health and safety problems</li>
+  <li title="*">Fulfilling health and safety obligations</li>
+  <li title="*">Dissemination of information beyond the immediate client base</li>
+</ul><h3>Benefits for Employees</h3><p>Benefits to the employee are as follows:</p><ul>
+  <li title="*">Reduced risk</li>
+  <li title="*">Increased confidence</li>
+  <li title="*">Reduced stress levels</li>
+  <li title="*">Reduced conflict</li>
+  <li title="*">Dissemination of information to family and friends</li>
+  <li title="*">Greater awareness of the individual's responsibility with regard to other road users and health and safety issues</li>
+  <li title="*">Raised awareness concerning the issue of responsibility rather than the current blame culture</li>
+  <li title="*">Improved personal fuel economy</li>
+  <li title="*">Reduced insurance claims </li>
+</ul><h3>Links to local driver training groups</h3><p>
+<span class="gen">enter details</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=783"> Providing Information
+		(783)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

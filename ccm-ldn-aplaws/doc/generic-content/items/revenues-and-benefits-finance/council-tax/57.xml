@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=57}]"><cms:name>batch-20-57</cms:name><cms:language>en</cms:language><cms:title>Council tax - general information</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=57}]"><cms:name>batch-20-57-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, tax, general, information</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=57}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is responsible for collecting the Council Tax from all households in the area.</i></p><hr/><h3>How you can pay your Council Tax</h3><ul>
+			<li title="*">Direct Debit- this is the easiest way to pay-simply ring the Council Tax section for a direct debit form using the details above.</li>
+			<li title="*">Post Office- You can use your payment swipe card at any Post Office. There is no charge for this service. Cheques should be made payable to 'Post Office Counters Ltd'</li>
+			<li title="*">Cash or Cheque- you can pay at any of the Council's cash offices (see paying your bills web page for details of cash office addresses and opening times)</li>
+			<li title="*">Debit/Credit card payment- you can pay by this method at all Council cash offices-by telephone and by post- see paying your bills for details of cash office addresses and telephone numbers</li>
+		</ul><h3>Banding</h3><p>Each dwelling is billed for Council Tax, whether it is a house, bungalow, flat, maisonette, mobile home or house boat, and whether it is owned or rented. Each property allocated to one of eight bands according to it's market value on 1st April 1991. 
+  Properties in band D will pay the basic charge and properties in other bands will be charged proportionately.</p><table width="90%" cellpadding="5" class="centre" summary="Council Tax Valuation Bands">
+			<tr>
+				<th>Valuation Band</th>
+				<th>Value of Property</th>
+				<th>
+					<span class="gen">enter council name</span>Tax</th>
+			</tr>
+			<tr>
+				<td/>
+				<td/>
+				<td>
+					<strong>2002-2003</strong>
+				</td>
+				<td>
+					<strong>2003-2004</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>A</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>B</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>C</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>D</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>E</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>F</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>G</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>H</strong>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+		</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=57"> Providing Information
+		(57)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

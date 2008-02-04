@@ -1,0 +1,19 @@
+model com.arsdigita.london.search;
+
+// Retrieve all live items. For use in a subquery.
+query LiveItems {
+    BigDecimal itemId;
+
+    do {
+	select
+	    item_id
+	from
+	    cms_items
+	where
+	    version = 'live'
+    }
+
+    map {
+	itemId = item_id;
+    }
+}

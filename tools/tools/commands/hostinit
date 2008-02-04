@@ -1,0 +1,137 @@
+#!/usr/bin/perl -w
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use CCM::CommandsUtil;
+use CCM::Server;
+use CCM::Util;
+use File::Copy;
+use File::Find;
+use File::Spec;
+use Getopt::Long;
+
+my $OS = $^O;
+my $CCM_HOME = CCM::Util::getRequiredEnvVariable("CCM_HOME");
+my $CCM_DEV_HOME = $ENV{'CCM_DEV_HOME'};
+my $ROOT =File::Spec-> rootdir();
+my $help = 0;
+my $usage = 0;
+my $sc;
+my $verbose = 0;
+my $clean = 0;
+
+Getopt::Long::Configure("pass_through");
+if ( ! GetOptions(
+                  'container=s' => \$sc,
+                  'help' => \$help,
+                  'usage' => \$usage,
+                  'verbose+' => \$verbose,
+                  'clean' => \$clean
+                  )
+     ) {
+    CCM::CommandsUtil::printUsageAndExit();
+}
+
+CCM::CommandsUtil::printHelpAndExit() if $help;
+CCM::CommandsUtil::printUsageAndExit() if $usage;
+# hostinit doesn't actually do anything useful without --clean,
+# but we cannot make it default since it is destructive
+CCM::CommandsUtil::printUsageAndExit() if not $clean;
+
+my $conf = CCM::CommandsUtil::getServletContainerCommand($sc, 'conf');
+
+CCM::CommandsUtil::runSafe($conf, @ARGV);
+
+if ($OS eq 'MSWin32') {
+    $ROOT = defined $ENV{'CCM_ZIP_ROOT'} ? $ENV{'CCM_ZIP_ROOT'} : 'c:\ccm\\';
+    my $server = CCM::Server::getServer($sc);
+    $server->windowsReinstall();
+}
+
+my $destination = File::Spec->catdir("$CCM_HOME", "webapps");
+
+my @classpath_files;
+push @classpath_files, File::Spec->catfile($CCM_HOME, "ccm.classpath");
+push @classpath_files, File::Spec->catfile($CCM_DEV_HOME, "ccm.classpath") if defined $CCM_DEV_HOME;
+push @classpath_files, File::Spec->catfile("$ROOT", "etc", "ccm", "ccm.classpath");
+my $classpath = (grep { -f } @classpath_files)[0];
+CCM::Util::error("could not find ccm.classpath", 4) if (!defined $classpath);
+
+my @webapps_files;
+push @webapps_files, File::Spec->catfile($CCM_HOME, "ccm.webapps");
+push @webapps_files, File::Spec->catfile($CCM_DEV_HOME, "ccm.webapps") if defined $CCM_DEV_HOME;
+push @webapps_files, File::Spec->catfile("$ROOT", "etc", "ccm", "ccm.webapps");
+my $webapps = (grep { -f } @webapps_files)[0];
+CCM::Util::error("could not find ccm.webapps", 5) if (!defined $webapps);
+
+my $verbose_args = "";
+for (1..$verbose) {
+    $verbose_args .= " --verbose";
+}
+
+my $command = "ccm-run $verbose_args com.arsdigita.packaging.HostInit --classpath $classpath --destination $destination --webapps $webapps";
+$command .= " --clean" if ($clean);
+print "$command\n" if ($verbose);
+
+CCM::CommandsUtil::runAndExitOnError($command);
+
+# The following is a HACK to make certain webapp directories writable by the
+# servlet container as needed.
+if ($OS ne 'MSWin32' && $< == 0) {
+    my $ccm_user = defined $ENV{'CCM_USER'} ? $ENV{'CCM_USER'} : "servlet";
+    my $ccm_user_id = getpwnam($ccm_user);
+    if (defined $ccm_user_id) {
+        foreach ("$CCM_HOME/webapps/ROOT/packages/content-section/templates",
+                 "$CCM_HOME/webapps/ccm-ldn-theme/__ccm__/themes-prod",
+                 "$CCM_HOME/webapps/ccm-ldn-theme/__ccm__/themes-dev") {
+            if (-d) {
+                find( sub { chown ($ccm_user_id, -1, $File::Find::name); },
+                      $_);
+            }
+        }
+    }
+}
+
+my $root_webxml = File::Spec->catfile("$destination", "ROOT", "WEB-INF", "web.xml");
+my $default_webxml = File::Spec->catfile("$destination", "ROOT", "WEB-INF", "web.xml-default");
+my $source_webxml = $ENV{'CCM_WEBXML'};
+
+if ( ! defined $source_webxml &&
+     -f $default_webxml &&
+     -r $default_webxml ) {
+    $source_webxml = $default_webxml;
+}
+
+if ( $verbose ) {
+    if ( defined $source_webxml ) {
+        print "CCM_WEBXML: $source_webxml\n";
+        print "destination: $root_webxml\n";
+    } else {
+        print "CCM_WEBXML: <not defined>\n";
+    }
+}
+
+if ( defined $source_webxml ) {
+    if ( ! -f $source_webxml ) {
+        CCM::Util::error("CCM_WEBXML value '$source_webxml' is not a valid file", 6);
+    }
+    if ( ! -r $source_webxml ) {
+        CCM::Util::error("CCM_WEBXML file '$source_webxml' cannot be read", 6);
+    }
+    if ( ! copy ($source_webxml, $root_webxml) ) {
+        CCM::Util::error("error copying '$source_webxml' to '$root_webxml'", 6);
+    }
+}

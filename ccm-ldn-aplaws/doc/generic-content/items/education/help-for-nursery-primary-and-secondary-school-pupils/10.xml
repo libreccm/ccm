@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=10}]"><cms:name>education-2-10</cms:name><cms:language>en</cms:language><cms:title>Special educational needs - (SEN) - placement in mainstream schools</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=10}]"><cms:name>education-2-10-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>special, educational, needs, placement, mainstream, schools</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=10}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>It is estimated that approximately 20% of pupils will have some kind of Special Educational Need at some time during their school life. It is expected that the majority of these Special Needs are such that they will be met in local mainstream schools without the additional involvement of the Council. </i></p><hr/><p>
+				However, some pupils' Special Educational Needs may be such 
+  that the Council may consider that some additional or special provision is needed. 
+  This will be done in consultation with parents and professionals, and following 
+  a full formal assessment.
+			</p><p>
+				This provision would be made at the local mainstream school, 
+  or at a school or unit which has additional resourcing to meet particular needs. 
+  As far as possible, the Council seeks to meet pupils' Special Educational Needs 
+  in a mainstream setting.
+			</p><p>
+				In some exceptional cases it may be necessary for placement 
+  to be determined at one of the schools listed below, or at specialist schools outside 
+  this Council's catchment area.
+  </p><p>				<span class="gen">enter details</span>
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=10"> Providing Information
+		(10)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

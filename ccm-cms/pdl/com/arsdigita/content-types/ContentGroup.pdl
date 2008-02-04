@@ -1,0 +1,141 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ContentGroup.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.*;
+
+
+//
+//  This content type is used to create index pages within the system.
+//  Specifically, the index of a given section will be rendered by 
+//  rendering this index page.
+//
+//  It consists of several ContentGroups.  These groups are simply groups
+//  of content that dictate how each different page looks.  Each index
+//  page can have its own style sheet (this has not yet been added)
+//
+//
+//  This special type is needed so that each group can have custom attributes 
+//  such as a name and potentially a stylesheet.  This is one of the problems 
+//  with versioning as it currently stands
+//
+object type ContentGroup extends ContentItem {
+
+    reference key (ct_content_groups.group_id);
+}
+
+association {
+    composite ContentGroup[1..1] contentGroup =
+                            join ct_content_group_item_map.group_id
+                              to ct_content_groups.group_id;
+
+    component ContentGroupAssociation[0..n] itemAssociations =
+                              join ct_content_groups.group_id
+                                to ct_content_group_item_map.group_id;
+}
+
+
+//
+//  This type is needed because we need to version and publish
+//  the sort key as well as the item.  
+//
+object type ContentGroupAssociation extends ContentItem {
+
+    // The sort key is the order of the items for any given group.  So, it
+    // should be used for sorting the items when the group is known. 
+    Integer[1..1] sortKey = ct_content_group_item_map.sort_key INTEGER;
+
+    ContentItem[0..1] contentItem =
+                            join ct_content_group_item_map.related_item_id
+                              to cms_items.item_id;
+    
+    reference key (ct_content_group_item_map.item_id);
+
+    aggressive load (contentGroup.id, contentItem.id, contentItem.isDeleted);
+
+}
+
+data operation swapItemWithNextInGroup {
+    do {
+        update ct_content_group_item_map
+        set sort_key = CASE WHEN (sort_key = :sortKey) THEN
+                                 (:nextSortKey)
+                            ELSE
+                                 (:sortKey)
+                       END
+        where (sort_key = :sortKey or sort_key = :nextSortKey)
+        and group_id = :groupID
+        and 2 = (select count(*) from ct_content_group_item_map
+                 where (sort_key = :sortKey or sort_key = :nextSortKey)
+                 and group_id = :groupID)
+    }
+}
+
+query minItemSortKeyInGroup {
+    Integer sortKey;
+
+    options {
+        WRAP_QUERIES = false;
+    }
+
+    do {
+         select min(sort_key) as sort_key 
+           from ct_content_group_item_map m
+          where m.group_id = :groupID
+    } map {
+        sortKey = sort_key;
+    }
+}
+
+query maxItemSortKeyInGroup {
+    Integer sortKey;
+
+    options {
+        WRAP_QUERIES = false;
+    }
+
+    do {
+         select max(sort_key) as sort_key 
+           from ct_content_group_item_map m
+          where m.group_id = :groupID
+    } map {
+        sortKey = sort_key;
+    }
+}
+
+// Get the max sortKey, including deleted 
+// ContentGroupAssociations.  Used to ensure
+// we don't create duplicate sortKeys when 
+// adding new associations.
+query maxItemSortKeyInGroupWithDeleted {
+    Integer sortKey;
+
+    options {
+        WRAP_QUERIES = false;
+    }
+
+    do {
+        select max(sort_key) as sort_key 
+          from ct_content_group_item_map m
+         where m.group_id = :groupID
+    } map {
+        sortKey = sort_key;
+    }
+}

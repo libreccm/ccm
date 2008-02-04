@@ -1,0 +1,82 @@
+//
+// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+//
+// The contents of this file are subject to the ArsDigita Public 
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.arsdigita.com/ADPL.txt
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.cms.docmgr;
+
+import com.arsdigita.kernel.*;
+import com.arsdigita.web.Application;
+
+object type Repository extends Application { 
+
+    // rootID corresponds to ID of CMS Folder
+    BigDecimal rootID       =  cms_docs_repositories.root_id INTEGER;
+    BigDecimal ownerID      =  cms_docs_repositories.owner_id INTEGER;
+
+    reference key (cms_docs_repositories.repository_id);
+}
+
+data operation addUserRepositoriesMapping {
+     do {
+           insert into cms_docs_mounted 
+                (party_id, repository_id)
+           select :userID, repository_id from cms_docs_repositories
+           where repository_id in :repositoryIDs
+           and not exists (select 1 from cms_docs_mounted 
+                           where cms_docs_mounted.repository_id = cms_docs_repositories.repository_id
+                           and   cms_docs_mounted.party_id = :userID)
+     }
+}
+
+data operation removeUserRepositoriesMapping {
+     do {
+           delete from cms_docs_mounted 
+           where party_id = :userID
+           and repository_id in :repositoryIDs
+     }
+}
+ 
+
+// get the root file folder of a party
+query getPartyRepository {
+    BigDecimal repositoryID;
+    BigDecimal ownerID;
+    BigDecimal rootID;
+    do {
+        select repository_id,
+               owner_id,
+               root_id,
+        from   cms_docs_repositories
+    } map {
+        repositoryID = repository_id;
+        ownerID      = owner_id;
+        rootID       = root_id;
+    }   
+}
+
+
+query getRepositoryRoots {      
+    BigDecimal id;
+    do { 
+            select 
+                d.resource_id,
+                from cms_docs_resources d
+                where resource_id in (select cms_docs_repositories.root_id 
+                                from cms_docs_repositories, cms_docs_mounted
+                                where cms_docs_mounted.repository_id = cms_docs_repositories.repository_id
+                                and   cms_docs_mounted.party_id =  :userID)
+    } map {
+        id           = d.resource_id;
+    }
+}
+

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=641}]"><cms:name>arts-and-leisure-641</cms:name><cms:language>en</cms:language><cms:title>Sports clubs</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=641}]"><cms:name>arts-and-leisure-641-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>sports, clubs</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=641}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This page details a list of local community clubs and organisations</i></p><hr/><p>The directory of sports clubs and associations is collated by  the sports development team and recognises the diversity of sporting activity in <span class="gen">enter council name</span> and the opportunities available to all.</p><p>
+				These opportunities would not exist were it not for the dedicated 
+  group of people who run the variety of clubs that <span class="gen">enter council name</span> has to offer. The contacts given for these clubs and 
+  organisations are mainly volunteers who give up free time for their club and their 
+  sport. If you are contacting any of the clubs within this directory can you therefore 
+  be considerate regarding the time of day and nature of communication.
+			</p><p>
+				Sports Clubs and facilities available are;
+			</p><p>
+			<span class="gen">enter facility</span>
+<br/>
+			<span class="gen">enter address</span>
+<br/>
+			<span class="gen">enter details</span>
+		</p><p>
+			<span class="gen">enter facility</span>
+<br/>
+			<span class="gen">enter address</span>
+<br/>
+			<span class="gen">enter details</span>
+		</p><p>
+			<span class="gen">enter facility</span>
+<br/>
+			<span class="gen">enter address</span>
+<br/>
+			<span class="gen">enter details</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=641"> Providing Information
+		(641)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

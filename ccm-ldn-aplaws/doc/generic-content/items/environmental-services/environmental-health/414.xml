@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=414}]"><cms:name>batch-6-414</cms:name><cms:language>en</cms:language><cms:title>Pollution Control - hazardous substances</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=414}]"><cms:name>batch-6-414-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Pollution, Control, hazardous, substances</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=414}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Every year exposure to hazardous substances at work effects the health of many thousands of people. Common examples include lung disease (e.g. dusty conditions), skin irritation, dermatitis or skin cancer (e.g. frequent contact with oils, contact with corrosive liquids), occupational asthma (e.g. sensitisation to isocyanates in paints or adhesives), toxic fumes, occupational cancer etc. The high costs of ill-health arise from loss of earnings, loss of productivity, prosecution and civil action amongst others.</i></p><hr/><h3>Introduction</h3><p>The COSHH Regulations 1999</p><p>These provide a framework to help protect people in the workplace against health risks from hazardous substances. The substances may be used directly in the work (e.g. cleaning chemicals, chemical reagents) or may arise from the work (e.g. dusts, 
+  fumes and waste products).</p><p>COSHH lays down a sensible step-by-step approach to the necessary precautions and is therefore a useful tool of good management. The potential for identifiable cost benefits (e.g. tighter control over the use and storage of materials), improved 
+  morale and industrial relations have been widely realised.</p><p>COSHH applies to virtually all substances hazardous to health. Exceptions include asbestos and lead (which have their own regulations) and substances which are hazardous only because they are radioactive, asphyxiants, at high pressure/temperature or have explosive/flammable properties.</p><h3>Definitions</h3><ul>
+			<li title="*">Hazard - is the potential to cause harm</li>
+			<li title="*">Risk - is the likelihood that it will harm you in the actual circumstances of use</li>
+		</ul><p>The risk will depend on a number of factors, such as the hazard presented by the substance, how it is used, how exposure is controlled, the degree and extent of exposure etc.</p><p>COSHH requires the following:-</p><ul>
+			<li title="*">Assessment of the risks</li>
+			<li title="*">Deciding what precautions are needed</li>
+			<li title="*">Prevention or control of the risks</li>
+			<li title="*">Ensuring that control measures are used and maintained</li>
+			<li title="*">Monitoring exposure and health surveillance, where necessary</li>
+			<li title="*">Informing, instructing and training employees about the risks and precautions needed.</li>
+		</ul><p>Assessment - is a step-by-step approach:-</p><ul>
+			<li title="*">Identify what hazards there are</li>
+			<li title="*">Evaluate the risks to people</li>
+			<li title="*">For significant risks, decide on the action needed to remove or reduce them to insignificant levels.</li>
+		</ul><p>Assessment is the responsibility of the employer. Persons preparing the assessment will need to:-</p><ul>
+			<li title="*">have access to, and understand, COSHH, related legislation, codes of practice and published guidance</li>
+			<li title="*">be competent to carry through the work of assessment</li>
+			<li title="*">consult widely within the workforce and inform them of results accordingly</li>
+			<li title="*">consider peripatetic workers (who work for you on other premises)</li>
+		</ul><p>Hazards - Substances hazardous to health include:-</p><ul>
+			<li title="*">substances classified as dangerous to health under the Chemicals Hazard Information and Packing for Supply) (CHIP3) Regulations 2002. Many are listed in &quot;The Approved Supply List&quot; which is part of the &quot;CHIP 3&quot; regulations.</li>
+			<li title="*">substances with occupational exposure limits (these are specified in Guidance Note EH40 which is revised annually)</li>
+			<li title="*">biological agents</li>
+			<li title="*">dusts of any kind in substantial concentrations</li>
+		</ul><p>Identification of hazardous substances can be sought from:</p><ul>
+			<li title="*">hazard data sheets, labels etc. from suppliers (required by law) from which you must draw conclusions relevant to the way the substance is used in the workplace</li>
+			<li title="*">knowledge from within your business or industry; trade literature</li>
+			<li title="*">published guidance/documents</li>
+			<li title="*">Part V of the Approved Supply List (HSE)</li>
+		</ul><p>Risks - Risk assessment involves looking at:-</p><ul>
+			<li title="*">Use, handling, generation, release etc. of hazardous substances</li>
+			<li title="*">Who might be affected and likely exposure level/extent</li>
+			<li title="*">Nature of exposure (breathing in, swallowing, skin absorption etc.)</li>
+			<li title="*">Current measures to prevent or control exposure - effectiveness and use?</li>
+			<li title="*">Accidental leakage, spillage or release</li>
+			<li title="*">Cleaning and maintenance operations.</li>
+		</ul><h3>Further Action</h3><li title="*">No likelihood or insignificant risk - no further action until review of assessment.</li><li title="*">Risks identified - ensure appropriate control measures, in the following order of priority:- 
+    
+					<li title="*">Prevention 
+        <ul>
+							<li title="*">change process/activity so that the hazardous substance is not required or generated</li>
+							<li title="*">replace with safer alternative (see HS(G)110 in Ref/Further Details section) substitution</li>
+							<li title="*">use it in safer form</li>
+						</ul>
+					</li>
+					<li title="*">Control may include any of the following:- 
+        <ul>
+							<li title="*">total enclosure of the process</li>
+							<li title="*">partial enclosure and extraction equipment</li>
+							<li title="*">general ventilation</li>
+							<li title="*">using systems of work and handling procedures which minimise chances of spills, leaks etc. or exposure to the substance(s)</li>
+						</ul>
+					</li>
+					<li title="*">Personal protective equipment (eg respirators, protective clothing) only as a last resort when you cannot adequately control exposure by any combination of the measures above.
+<p>Employees are required to make proper use of control measures and to report defects.</p>
+<p> Employers are required to keep controls in efficient working order and good repair. Engineering controls and respiratory protective equipment have to be examined and, where appropriate, tested at suitable intervals. Suitable records of all such actions taken must be kept.</p>
+					</li>
+				
+			</li><li title="*">Monitoring exposure is required in certain circumstances, e.g. where there could be serious risks to health if control measures were to fail or deteriorate or where you cannot be sure that exposure limits are not being exceeded. Records of monitoring should be kept.</li><li title="*">Health surveillance is required
+    <p>- where an employee is engaged in one of the processes listed in Schedule 5 of COSHH and is likely to receive significant exposure to the substance involved.</p>
+<p>- where employees are exposed to a substance linked to a particular disease or adverse health effect and there is reasonable likelihood under the conditions of the work of that disease or adverse health effect occurring and it is possible to detect the disease or adverse health effect. Suitable records must be kept for 40 years.</p>
+			</li><h3>Recording and Reviewing the Assessment</h3><p>Unless the assessment is so simple that it can be easily recalled and its conclusions explained, it should be put in writing. Reviews should take place regularly, at not less than five-yearly intervals, and in any case where it is no longer valid or there have been significant changes in the work.</p><h3>Informing, Instructing and Training Employees</h3><p>Must be carried out by employers regarding the substances and their associated risks and precautions. Sufficient information and instruction should be given on control measures, personal protective equipment, results of any exposure monitoring 
+  or health surveillance and emergency procedures.</p><h3>The Steps in Making an Assessment</h3><h4>Checklist - COSHH</h4><table width="90%" cellpadding="5" class="centre" summary="Checklist - COSHH">
+			<tr>
+				<td>1</td>
+				<td>Have you a complete inventory of substances used/generated in the workplace?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Have you identified any substances hazardous to health?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>Have you gathered information about the substances, the work and working processes?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- i.e. what hazards are involved?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- i.e. what hazards are involved?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>Have you evaluated the risks to health (either on an individual or group basis)?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- i.e. the chance of exposure occurring?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- what level of exposure could happen?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- the duration of the exposure</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- the frequency of the exposure?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>Have you decided what needs to be done in terms of: </td>
+				<td/>
+			</tr>
+			<tr>
+				<td/>
+				<td>- preventing or controlling exposure?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- maintaining control measures?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- using control measures?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- any monitoring/surveillance?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td/>
+				<td>- information, instruction and training?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>Have you decided to record the assessment?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>If &quot;yes&quot; to (6), have you decided on the extent, presentation and format of record?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>8</td>
+				<td>Have you decided when each assessment should be reviewed?</td>
+				<td>Yes/No</td>
+			</tr>
+			<tr>
+				<td>9</td>
+				<td>Have you established a system or procedure to manage and record the above elements?</td>
+				<td>Yes/No</td>
+			</tr>
+		</table><h3>References/Further Details</h3><li title="*">Booklet L5-General COSSH ACOP, Carcinogens ACOP and Biological Agents ACOP(HSE) ISBN 0 7176 1670 3</li><li title="*">A step by step guide to COSHH assessment - HS(G) 97 (HSE) ISBN 0 7176 1446 8.</li><li title="*">COSHH - a brief guide for employers IND(G) 136L (HSE). <strong>
+
+			
+</strong> <span class="gen">link to external website</span>
+</li><li title="*">7 steps to successful substitution of hazardous substances HS(G) 110 (HSE) ISBN 0 7176 0695 3.</li><li title="*">Health surveillance under COSHH (HSE) ISBN 9 780118 854474</li><li title="*">Booklet HS(G)54: Maintenance, examination and testing of local exhaust ventilation (HSE). ISBN 0-7176-1485-9 </li><li title="*">Booklet HSG187: Control of Diesel Engine Exhaust Emissions in the Workplace. (HSE) ISBN 0-7176 1662 2 </li><p>For further information on any of the above please contact us on the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=414"> Providing Information
+		(414)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

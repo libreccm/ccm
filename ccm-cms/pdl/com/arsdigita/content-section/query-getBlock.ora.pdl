@@ -1,0 +1,56 @@
+//
+// Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: query-getBlock.ora.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.publishToFile;
+
+//----------------------------------------------------------
+//-- Get selected items to process
+//----------------------------------------------------------
+
+// Should use DataQuery.addOrder to specify the order
+// But did not seem to work.  For now use different queries.
+
+query getBlock {
+   QueueEntry queueEntry;
+   do {
+       select
+           id, item_id, parent_id, task, destination,
+           time_queued, time_last_failed, fail_count,
+           sort_order, in_process
+       from
+           publish_to_fs_queue
+       where
+           host_id = :hostId
+       and ( fail_count = 0
+             or time_last_failed < currentDate() - :queueEntryRetryDelay / (60 * 60 *24) )
+       and ( :maximumFailCount < 0
+             or fail_count < :maximumFailCount )
+       } map {
+           queueEntry.id = id;
+           queueEntry.itemId = item_id;
+           queueEntry.parentId = parent_id;
+           queueEntry.task = task;
+           queueEntry.destination = destination;
+           queueEntry.timeQueued = time_queued;
+           queueEntry.timeLastFailed = time_last_failed;
+           queueEntry.failCount = fail_count;
+           queueEntry.sortOrder = sort_order;
+           queueEntry.inProcess = in_process;
+       }
+}

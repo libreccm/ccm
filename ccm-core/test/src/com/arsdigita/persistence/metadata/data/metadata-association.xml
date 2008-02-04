@@ -1,0 +1,1003 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs">
+  <model name="fullload-model" id="acs:fullload-model">
+    <association name="Relationship Type REL_TYPE" id="fullload-model:relationship_type_rel_type">
+      <associationrole name="REL_TYPE" multiplicity="0.." id="fullload-model:relationship_type_rel_type:rel_type">
+        <objecttyperef idref="fullload-model:object_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:relationship_type_rel_type:object">
+        <objecttyperef idref="fullload-model:relationship_type"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_rel_types:rel_type:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:relationship_type">
+      <rolereference id="fullload-model:relationship_type:rel_type">
+        <associationroleref idref="fullload-model:relationship_type_rel_type:rel_type"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Relationship Type OBJECT_TYPE_ONE" id="fullload-model:relationship_type_object_type_one">
+      <associationrole name="OBJECT_TYPE_ONE" multiplicity="0.." id="fullload-model:relationship_type_object_type_one:object_type_one">
+        <objecttyperef idref="fullload-model:object_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:relationship_type_object_type_one:object">
+        <objecttyperef idref="fullload-model:relationship_type"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_rel_types:object_type_one:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:relationship_type">
+      <rolereference id="fullload-model:relationship_type:object_type_one">
+        <associationroleref idref="fullload-model:relationship_type_object_type_one:object_type_one"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Relationship Type OBJECT_TYPE_TWO" id="fullload-model:relationship_type_object_type_two">
+      <associationrole name="OBJECT_TYPE_TWO" multiplicity="0.." id="fullload-model:relationship_type_object_type_two:object_type_two">
+        <objecttyperef idref="fullload-model:object_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:relationship_type_object_type_two:object">
+        <objecttyperef idref="fullload-model:relationship_type"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_rel_types:object_type_two:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:relationship_type">
+      <rolereference id="fullload-model:relationship_type:object_type_two">
+        <associationroleref idref="fullload-model:relationship_type_object_type_two:object_type_two"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Group Type GROUP_TYPE" id="fullload-model:group_type_group_type">
+      <associationrole name="GROUP_TYPE" multiplicity="0.." id="fullload-model:group_type_group_type:group_type">
+        <objecttyperef idref="fullload-model:object_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:group_type_group_type:object">
+        <objecttyperef idref="fullload-model:group_type"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:group_types:group_type:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:group_type">
+      <rolereference id="fullload-model:group_type:group_type">
+        <associationroleref idref="fullload-model:group_type_group_type:group_type"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Object object_type" id="fullload-model:object_object_type">
+      <associationrole name="object_type" multiplicity="0.." id="fullload-model:object_object_type:object_type">
+        <objecttyperef idref="fullload-model:object_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:object_object_type:object">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_objects:object_type:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_object">
+      <rolereference id="fullload-model:acs_object:object_type">
+        <associationroleref idref="fullload-model:object_object_type:object_type"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Object CONTEXT_ID" id="fullload-model:object_context_id">
+      <associationrole name="CONTEXT_ID" multiplicity="0.." id="fullload-model:object_context_id:context_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:object_context_id:object">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_objects:context_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_object">
+      <rolereference id="fullload-model:acs_object:context_id">
+        <associationroleref idref="fullload-model:object_context_id:context_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Object CREATION_USER" id="fullload-model:object_creation_user">
+      <associationrole name="CREATION_USER" multiplicity="0.." id="fullload-model:object_creation_user:creation_user">
+        <objecttyperef idref="fullload-model:user"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:object_creation_user:object">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_objects:creation_user:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_object">
+      <rolereference id="fullload-model:acs_object:creation_user">
+        <associationroleref idref="fullload-model:object_creation_user:creation_user"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Object MODIFYING_USER" id="fullload-model:object_modifying_user">
+      <associationrole name="MODIFYING_USER" multiplicity="0.." id="fullload-model:object_modifying_user:modifying_user">
+        <objecttyperef idref="fullload-model:user"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:object_modifying_user:object">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_objects:modifying_user:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_object">
+      <rolereference id="fullload-model:acs_object:modifying_user">
+        <associationroleref idref="fullload-model:object_modifying_user:modifying_user"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Party PARTY_ID" id="fullload-model:party_party_id">
+      <associationrole name="PARTY_ID" multiplicity="0.." id="fullload-model:party_party_id:party_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:party_party_id:object">
+        <objecttyperef idref="fullload-model:party"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:parties:party_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:party">
+      <rolereference id="fullload-model:party:party_id">
+        <associationroleref idref="fullload-model:party_party_id:party_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Person PERSON_ID" id="fullload-model:person_person_id">
+      <associationrole name="PERSON_ID" multiplicity="0.." id="fullload-model:person_person_id:person_id">
+        <objecttyperef idref="fullload-model:party"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:person_person_id:object">
+        <objecttyperef idref="fullload-model:person"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:persons:person_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:person">
+      <rolereference id="fullload-model:person:person_id">
+        <associationroleref idref="fullload-model:person_person_id:person_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="User USER_ID" id="fullload-model:user_user_id">
+      <associationrole name="USER_ID" multiplicity="0.." id="fullload-model:user_user_id:user_id">
+        <objecttyperef idref="fullload-model:person"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:user_user_id:object">
+        <objecttyperef idref="fullload-model:user"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:users:user_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:user">
+      <rolereference id="fullload-model:user:user_id">
+        <associationroleref idref="fullload-model:user_user_id:user_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Group GROUP_ID" id="fullload-model:group_group_id">
+      <associationrole name="GROUP_ID" multiplicity="0.." id="fullload-model:group_group_id:group_id">
+        <objecttyperef idref="fullload-model:party"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:group_group_id:object">
+        <objecttyperef idref="fullload-model:group"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:groups:group_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:group">
+      <rolereference id="fullload-model:group:group_id">
+        <associationroleref idref="fullload-model:group_group_id:group_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Journal Entry JOURNAL_ID" id="fullload-model:journal_entry_journal_id">
+      <associationrole name="JOURNAL_ID" multiplicity="0.." id="fullload-model:journal_entry_journal_id:journal_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:journal_entry_journal_id:object">
+        <objecttyperef idref="fullload-model:journal_entry"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:journal_entries:journal_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:journal_entry">
+      <rolereference id="fullload-model:journal_entry:journal_id">
+        <associationroleref idref="fullload-model:journal_entry_journal_id:journal_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Journal Entry OBJECT_ID" id="fullload-model:journal_entry_object_id">
+      <associationrole name="OBJECT_ID" multiplicity="0.." id="fullload-model:journal_entry_object_id:object_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:journal_entry_object_id:object">
+        <objecttyperef idref="fullload-model:journal_entry"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:journal_entries:object_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <association name="Site Node NODE_ID" id="fullload-model:site_node_node_id">
+      <associationrole name="NODE_ID" multiplicity="0.." id="fullload-model:site_node_node_id:node_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:site_node_node_id:object">
+        <objecttyperef idref="fullload-model:site_node"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:site_nodes:node_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:site_node">
+      <rolereference id="fullload-model:site_node:node_id">
+        <associationroleref idref="fullload-model:site_node_node_id:node_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Site Node PARENT_ID" id="fullload-model:site_node_parent_id">
+      <associationrole name="PARENT_ID" multiplicity="0.." id="fullload-model:site_node_parent_id:parent_id">
+        <objecttyperef idref="fullload-model:site_node"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:site_node_parent_id:object">
+        <objecttyperef idref="fullload-model:site_node"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:site_nodes:parent_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:site_node">
+      <rolereference id="fullload-model:site_node:parent_id">
+        <associationroleref idref="fullload-model:site_node_parent_id:parent_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Site Node OBJECT_ID" id="fullload-model:site_node_object_id">
+      <associationrole name="OBJECT_ID" multiplicity="0.." id="fullload-model:site_node_object_id:object_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:site_node_object_id:object">
+        <objecttyperef idref="fullload-model:site_node"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:site_nodes:object_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <association name="Package package_key" id="fullload-model:package_package_key">
+      <associationrole name="package_key" multiplicity="0.." id="fullload-model:package_package_key:package_key">
+        <objecttyperef idref="fullload-model:apm_package_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:package_package_key:object">
+        <objecttyperef idref="fullload-model:apm_package"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_packages:package_key:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_package">
+      <rolereference id="fullload-model:apm_package:package_key">
+        <associationroleref idref="fullload-model:package_package_key:package_key"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Package PACKAGE_ID" id="fullload-model:package_package_id">
+      <associationrole name="PACKAGE_ID" multiplicity="0.." id="fullload-model:package_package_id:package_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:package_package_id:object">
+        <objecttyperef idref="fullload-model:apm_package"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_packages:package_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_package">
+      <rolereference id="fullload-model:apm_package:package_id">
+        <associationroleref idref="fullload-model:package_package_id:package_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Application APPLICATION_ID" id="fullload-model:application_application_id">
+      <associationrole name="APPLICATION_ID" multiplicity="0.." id="fullload-model:application_application_id:application_id">
+        <objecttyperef idref="fullload-model:apm_package"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:application_application_id:object">
+        <objecttyperef idref="fullload-model:apm_application"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_applications:application_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_application">
+      <rolereference id="fullload-model:apm_application:application_id">
+        <associationroleref idref="fullload-model:application_application_id:application_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Service SERVICE_ID" id="fullload-model:service_service_id">
+      <associationrole name="SERVICE_ID" multiplicity="0.." id="fullload-model:service_service_id:service_id">
+        <objecttyperef idref="fullload-model:apm_package"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:service_service_id:object">
+        <objecttyperef idref="fullload-model:apm_service"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_services:service_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_service">
+      <rolereference id="fullload-model:apm_service:service_id">
+        <associationroleref idref="fullload-model:service_service_id:service_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Package Version package_key" id="fullload-model:package_version_package_key">
+      <associationrole name="package_key" multiplicity="0.." id="fullload-model:package_version_package_key:package_key">
+        <objecttyperef idref="fullload-model:apm_package_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:package_version_package_key:object">
+        <objecttyperef idref="fullload-model:apm_package_version"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_package_versions:package_key:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_package_version">
+      <rolereference id="fullload-model:apm_package_version:package_key">
+        <associationroleref idref="fullload-model:package_version_package_key:package_key"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Package Version VERSION_ID" id="fullload-model:package_version_version_id">
+      <associationrole name="VERSION_ID" multiplicity="0.." id="fullload-model:package_version_version_id:version_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:package_version_version_id:object">
+        <objecttyperef idref="fullload-model:apm_package_version"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_package_versions:version_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_package_version">
+      <rolereference id="fullload-model:apm_package_version:version_id">
+        <associationroleref idref="fullload-model:package_version_version_id:version_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Package Parameter package_key" id="fullload-model:package_parameter_package_key">
+      <associationrole name="package_key" multiplicity="0.." id="fullload-model:package_parameter_package_key:package_key">
+        <objecttyperef idref="fullload-model:apm_package_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:package_parameter_package_key:object">
+        <objecttyperef idref="fullload-model:apm_parameter"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_parameters:package_key:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_parameter">
+      <rolereference id="fullload-model:apm_parameter:package_key">
+        <associationroleref idref="fullload-model:package_parameter_package_key:package_key"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Package Parameter PARAMETER_ID" id="fullload-model:package_parameter_parameter_id">
+      <associationrole name="PARAMETER_ID" multiplicity="0.." id="fullload-model:package_parameter_parameter_id:parameter_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:package_parameter_parameter_id:object">
+        <objecttyperef idref="fullload-model:apm_parameter"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_parameters:parameter_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_parameter">
+      <rolereference id="fullload-model:apm_parameter:parameter_id">
+        <associationroleref idref="fullload-model:package_parameter_parameter_id:parameter_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="APM Package Parameter Value package_id" id="fullload-model:apm_package_parameter_value_package_id">
+      <associationrole name="package_id" multiplicity="0.." id="fullload-model:apm_package_parameter_value_package_id:package_id">
+        <objecttyperef idref="fullload-model:apm_package"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:apm_package_parameter_value_package_id:object">
+        <objecttyperef idref="fullload-model:apm_parameter_value"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_parameter_values:package_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_parameter_value">
+      <rolereference id="fullload-model:apm_parameter_value:package_id">
+        <associationroleref idref="fullload-model:apm_package_parameter_value_package_id:package_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="APM Package Parameter Value parameter_id" id="fullload-model:apm_package_parameter_value_parameter_id">
+      <associationrole name="parameter_id" multiplicity="0.." id="fullload-model:apm_package_parameter_value_parameter_id:parameter_id">
+        <objecttyperef idref="fullload-model:apm_parameter"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:apm_package_parameter_value_parameter_id:object">
+        <objecttyperef idref="fullload-model:apm_parameter_value"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_parameter_values:parameter_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_parameter_value">
+      <rolereference id="fullload-model:apm_parameter_value:parameter_id">
+        <associationroleref idref="fullload-model:apm_package_parameter_value_parameter_id:parameter_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="APM Package Parameter Value VALUE_ID" id="fullload-model:apm_package_parameter_value_value_id">
+      <associationrole name="VALUE_ID" multiplicity="0.." id="fullload-model:apm_package_parameter_value_value_id:value_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:apm_package_parameter_value_value_id:object">
+        <objecttyperef idref="fullload-model:apm_parameter_value"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:apm_parameter_values:value_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:apm_parameter_value">
+      <rolereference id="fullload-model:apm_parameter_value:value_id">
+        <associationroleref idref="fullload-model:apm_package_parameter_value_value_id:value_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Workflow CASE_ID" id="fullload-model:workflow_case_id">
+      <associationrole name="CASE_ID" multiplicity="0.." id="fullload-model:workflow_case_id:case_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:workflow_case_id:object">
+        <objecttyperef idref="fullload-model:workflow"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:wf_cases:case_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:workflow">
+      <rolereference id="fullload-model:workflow:case_id">
+        <associationroleref idref="fullload-model:workflow_case_id:case_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Workflow OBJECT_ID" id="fullload-model:workflow_object_id">
+      <associationrole name="OBJECT_ID" multiplicity="0.." id="fullload-model:workflow_object_id:object_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:workflow_object_id:object">
+        <objecttyperef idref="fullload-model:workflow"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:wf_cases:object_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <association name="Content Item live_revision" id="fullload-model:content_item_live_revision">
+      <associationrole name="live_revision" multiplicity="0.." id="fullload-model:content_item_live_revision:live_revision">
+        <objecttyperef idref="fullload-model:acs_message_revision"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_item_live_revision:object">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_items:live_revision:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_item">
+      <rolereference id="fullload-model:content_item:live_revision">
+        <associationroleref idref="fullload-model:content_item_live_revision:live_revision"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Item ITEM_ID" id="fullload-model:content_item_item_id">
+      <associationrole name="ITEM_ID" multiplicity="0.." id="fullload-model:content_item_item_id:item_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_item_item_id:object">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_items:item_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_item">
+      <rolereference id="fullload-model:content_item:item_id">
+        <associationroleref idref="fullload-model:content_item_item_id:item_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Item PARENT_ID" id="fullload-model:content_item_parent_id">
+      <associationrole name="PARENT_ID" multiplicity="0.." id="fullload-model:content_item_parent_id:parent_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_item_parent_id:object">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_items:parent_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_item">
+      <rolereference id="fullload-model:content_item:parent_id">
+        <associationroleref idref="fullload-model:content_item_parent_id:parent_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Item LATEST_REVISION" id="fullload-model:content_item_latest_revision">
+      <associationrole name="LATEST_REVISION" multiplicity="0.." id="fullload-model:content_item_latest_revision:latest_revision">
+        <objecttyperef idref="fullload-model:acs_message_revision"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_item_latest_revision:object">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_items:latest_revision:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_item">
+      <rolereference id="fullload-model:content_item:latest_revision">
+        <associationroleref idref="fullload-model:content_item_latest_revision:latest_revision"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Item CONTENT_TYPE" id="fullload-model:content_item_content_type">
+      <associationrole name="CONTENT_TYPE" multiplicity="0.." id="fullload-model:content_item_content_type:content_type">
+        <objecttyperef idref="fullload-model:object_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_item_content_type:object">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_items:content_type:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_item">
+      <rolereference id="fullload-model:content_item:content_type">
+        <associationroleref idref="fullload-model:content_item_content_type:content_type"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Folder FOLDER_ID" id="fullload-model:content_folder_folder_id">
+      <associationrole name="FOLDER_ID" multiplicity="0.." id="fullload-model:content_folder_folder_id:folder_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_folder_folder_id:object">
+        <objecttyperef idref="fullload-model:content_folder"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_folders:folder_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_folder">
+      <rolereference id="fullload-model:content_folder:folder_id">
+        <associationroleref idref="fullload-model:content_folder_folder_id:folder_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Symlink target_id" id="fullload-model:content_symlink_target_id">
+      <associationrole name="target_id" multiplicity="0.." id="fullload-model:content_symlink_target_id:target_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_symlink_target_id:object">
+        <objecttyperef idref="fullload-model:content_symlink"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_symlinks:target_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_symlink">
+      <rolereference id="fullload-model:content_symlink:target_id">
+        <associationroleref idref="fullload-model:content_symlink_target_id:target_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Symlink SYMLINK_ID" id="fullload-model:content_symlink_symlink_id">
+      <associationrole name="SYMLINK_ID" multiplicity="0.." id="fullload-model:content_symlink_symlink_id:symlink_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_symlink_symlink_id:object">
+        <objecttyperef idref="fullload-model:content_symlink"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_symlinks:symlink_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_symlink">
+      <rolereference id="fullload-model:content_symlink:symlink_id">
+        <associationroleref idref="fullload-model:content_symlink_symlink_id:symlink_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="External Link EXTLINK_ID" id="fullload-model:external_link_extlink_id">
+      <associationrole name="EXTLINK_ID" multiplicity="0.." id="fullload-model:external_link_extlink_id:extlink_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:external_link_extlink_id:object">
+        <objecttyperef idref="fullload-model:content_extlink"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_extlinks:extlink_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_extlink">
+      <rolereference id="fullload-model:content_extlink:extlink_id">
+        <associationroleref idref="fullload-model:external_link_extlink_id:extlink_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Template TEMPLATE_ID" id="fullload-model:content_template_template_id">
+      <associationrole name="TEMPLATE_ID" multiplicity="0.." id="fullload-model:content_template_template_id:template_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_template_template_id:object">
+        <objecttyperef idref="fullload-model:content_template"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_templates:template_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_template">
+      <rolereference id="fullload-model:content_template:template_id">
+        <associationroleref idref="fullload-model:content_template_template_id:template_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Message MESSAGE_ID" id="fullload-model:message_message_id">
+      <associationrole name="MESSAGE_ID" multiplicity="0.." id="fullload-model:message_message_id:message_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:message_message_id:object">
+        <objecttyperef idref="fullload-model:acs_message"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_messages:message_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_message">
+      <rolereference id="fullload-model:acs_message:message_id">
+        <associationroleref idref="fullload-model:message_message_id:message_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Message REPLY_TO" id="fullload-model:message_reply_to">
+      <associationrole name="REPLY_TO" multiplicity="0.." id="fullload-model:message_reply_to:reply_to">
+        <objecttyperef idref="fullload-model:acs_message"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:message_reply_to:object">
+        <objecttyperef idref="fullload-model:acs_message"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_messages:reply_to:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_message">
+      <rolereference id="fullload-model:acs_message:reply_to">
+        <associationroleref idref="fullload-model:message_reply_to:reply_to"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Message SENDER" id="fullload-model:message_sender">
+      <associationrole name="SENDER" multiplicity="0.." id="fullload-model:message_sender:sender">
+        <objecttyperef idref="fullload-model:party"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:message_sender:object">
+        <objecttyperef idref="fullload-model:acs_message"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_messages:sender:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_message">
+      <rolereference id="fullload-model:acs_message:sender">
+        <associationroleref idref="fullload-model:message_sender:sender"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Content Keyword PARENT_ID" id="fullload-model:content_keyword_parent_id">
+      <associationrole name="PARENT_ID" multiplicity="0.." id="fullload-model:content_keyword_parent_id:parent_id">
+        <objecttyperef idref="fullload-model:content_keyword"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:content_keyword_parent_id:object">
+        <objecttyperef idref="fullload-model:content_keyword"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_keywords:parent_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_keyword">
+      <rolereference id="fullload-model:content_keyword:parent_id">
+        <associationroleref idref="fullload-model:content_keyword_parent_id:parent_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Basic Item REVISION_ID" id="fullload-model:basic_item_revision_id">
+      <associationrole name="REVISION_ID" multiplicity="0.." id="fullload-model:basic_item_revision_id:revision_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:basic_item_revision_id:object">
+        <objecttyperef idref="fullload-model:content_revision"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_revisions:revision_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_revision">
+      <rolereference id="fullload-model:content_revision:revision_id">
+        <associationroleref idref="fullload-model:basic_item_revision_id:revision_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Basic Item ITEM_ID" id="fullload-model:basic_item_item_id">
+      <associationrole name="ITEM_ID" multiplicity="0.." id="fullload-model:basic_item_item_id:item_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:basic_item_item_id:object">
+        <objecttyperef idref="fullload-model:content_revision"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_revisions:item_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:content_revision">
+      <rolereference id="fullload-model:content_revision:item_id">
+        <associationroleref idref="fullload-model:basic_item_item_id:item_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Image IMAGE_ID" id="fullload-model:image_image_id">
+      <associationrole name="IMAGE_ID" multiplicity="0.." id="fullload-model:image_image_id:image_id">
+        <objecttyperef idref="fullload-model:acs_message_revision"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:image_image_id:object">
+        <objecttyperef idref="fullload-model:image"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:images:image_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:image">
+      <rolereference id="fullload-model:image:image_id">
+        <associationroleref idref="fullload-model:image_image_id:image_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Message Revision REVISION_ID" id="fullload-model:message_revision_revision_id">
+      <associationrole name="REVISION_ID" multiplicity="0.." id="fullload-model:message_revision_revision_id:revision_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:message_revision_revision_id:object">
+        <objecttyperef idref="fullload-model:acs_message_revision"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_revisions:revision_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <association name="Message Revision ITEM_ID" id="fullload-model:message_revision_item_id">
+      <associationrole name="ITEM_ID" multiplicity="0.." id="fullload-model:message_revision_item_id:item_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:message_revision_item_id:object">
+        <objecttyperef idref="fullload-model:acs_message_revision"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_revisions:item_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <association name="Child Item REL_ID" id="fullload-model:child_item_rel_id">
+      <associationrole name="REL_ID" multiplicity="0.." id="fullload-model:child_item_rel_id:rel_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:child_item_rel_id:object">
+        <objecttyperef idref="fullload-model:cr_item_child_rel"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_child_rels:rel_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:cr_item_child_rel">
+      <rolereference id="fullload-model:cr_item_child_rel:rel_id">
+        <associationroleref idref="fullload-model:child_item_rel_id:rel_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Item Relationship item_id" id="fullload-model:item_relationship_item_id">
+      <associationrole name="item_id" multiplicity="0.." id="fullload-model:item_relationship_item_id:item_id">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:item_relationship_item_id:object">
+        <objecttyperef idref="fullload-model:cr_item_rel"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_item_rels:item_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:cr_item_rel">
+      <rolereference id="fullload-model:cr_item_rel:item_id">
+        <associationroleref idref="fullload-model:item_relationship_item_id:item_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Item Relationship related_object_id" id="fullload-model:item_relationship_related_object_id">
+      <associationrole name="related_object_id" multiplicity="0.." id="fullload-model:item_relationship_related_object_id:related_object_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:item_relationship_related_object_id:object">
+        <objecttyperef idref="fullload-model:cr_item_rel"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_item_rels:related_object_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:cr_item_rel">
+      <rolereference id="fullload-model:cr_item_rel:related_object_id">
+        <associationroleref idref="fullload-model:item_relationship_related_object_id:related_object_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Item Relationship REL_ID" id="fullload-model:item_relationship_rel_id">
+      <associationrole name="REL_ID" multiplicity="0.." id="fullload-model:item_relationship_rel_id:rel_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:item_relationship_rel_id:object">
+        <objecttyperef idref="fullload-model:cr_item_rel"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:cr_item_rels:rel_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:cr_item_rel">
+      <rolereference id="fullload-model:cr_item_rel:rel_id">
+        <associationroleref idref="fullload-model:item_relationship_rel_id:rel_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Master MASTER_ID" id="fullload-model:master_master_id">
+      <associationrole name="MASTER_ID" multiplicity="0.." id="fullload-model:master_master_id:master_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:master_master_id:object">
+        <objecttyperef idref="fullload-model:vc_master"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:vc_masters:master_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:vc_master">
+      <rolereference id="fullload-model:vc_master:master_id">
+        <associationroleref idref="fullload-model:master_master_id:master_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Revision Master revision_type" id="fullload-model:revision_master_revision_type">
+      <associationrole name="revision_type" multiplicity="0.." id="fullload-model:revision_master_revision_type:revision_type">
+        <objecttyperef idref="fullload-model:object_type"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:revision_master_revision_type:object">
+        <objecttyperef idref="fullload-model:rev_master"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:rev_masters:revision_type:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:rev_master">
+      <rolereference id="fullload-model:rev_master:revision_type">
+        <associationroleref idref="fullload-model:revision_master_revision_type:revision_type"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Revision Master MASTER_ID" id="fullload-model:revision_master_master_id">
+      <associationrole name="MASTER_ID" multiplicity="0.." id="fullload-model:revision_master_master_id:master_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:revision_master_master_id:object">
+        <objecttyperef idref="fullload-model:rev_master"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:rev_masters:master_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:rev_master">
+      <rolereference id="fullload-model:rev_master:master_id">
+        <associationroleref idref="fullload-model:revision_master_master_id:master_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Revision master_id" id="fullload-model:revision_master_id">
+      <associationrole name="master_id" multiplicity="0.." id="fullload-model:revision_master_id:master_id">
+        <objecttyperef idref="fullload-model:rev_master"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:revision_master_id:object">
+        <objecttyperef idref="fullload-model:rev_revision"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:rev_revisions:master_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:rev_revision">
+      <rolereference id="fullload-model:rev_revision:master_id">
+        <associationroleref idref="fullload-model:revision_master_id:master_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Revision REVISION_ID" id="fullload-model:revision_revision_id">
+      <associationrole name="REVISION_ID" multiplicity="0.." id="fullload-model:revision_revision_id:revision_id">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="object" multiplicity="0..1" id="fullload-model:revision_revision_id:object">
+        <objecttyperef idref="fullload-model:rev_revision"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:rev_revisions:revision_id:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:rev_revision">
+      <rolereference id="fullload-model:rev_revision:revision_id">
+        <associationroleref idref="fullload-model:revision_revision_id:revision_id"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Relationship" id="fullload-model:relationship">
+      <associationrole name="acs_object" multiplicity=".." id="fullload-model:relationship:acs_object">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationrole name="acs_object2" multiplicity=".." id="fullload-model:relationship:acs_object2">
+        <objecttyperef idref="fullload-model:acs_object"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_one:foreignkey"/>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_two:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:acs_object">
+      <rolereference id="fullload-model:acs_object:acs_object2">
+        <associationroleref idref="fullload-model:relationship:acs_object2"/>
+      </rolereference>
+    </objecttyperef>
+    <objecttyperef idref="fullload-model:acs_object">
+      <rolereference id="fullload-model:acs_object:acs_object">
+        <associationroleref idref="fullload-model:relationship:acs_object"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Composition Relation" id="fullload-model:composition_relation">
+      <associationrole name="group" multiplicity=".." id="fullload-model:composition_relation:group">
+        <objecttyperef idref="fullload-model:group"/>
+      </associationrole>
+      <associationrole name="composite" multiplicity=".." id="fullload-model:composition_relation:composite">
+        <objecttyperef idref="fullload-model:group"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_one:foreignkey"/>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_two:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:group">
+      <rolereference id="fullload-model:group:composite">
+        <associationroleref idref="fullload-model:composition_relation:composite"/>
+      </rolereference>
+    </objecttyperef>
+    <objecttyperef idref="fullload-model:group">
+      <rolereference id="fullload-model:group:group">
+        <associationroleref idref="fullload-model:composition_relation:group"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="Membership Relation" id="fullload-model:membership_relation">
+      <linkattribute name="member_state" datatype="String" id="membership_relation:member_state"/>
+      <associationrole name="group" multiplicity=".." id="fullload-model:membership_relation:group">
+        <objecttyperef idref="fullload-model:group"/>
+      </associationrole>
+      <associationrole name="person" multiplicity=".." id="fullload-model:membership_relation:person">
+        <objecttyperef idref="fullload-model:person"/>
+      </associationrole>
+      <associationmap>
+        <associationmapentry>
+          <linkattributeref idref="membership_relation:member_state"/>
+          <columnref idref="fullload-schema:membership_rels:member_state"/>
+        </associationmapentry>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_one:foreignkey"/>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_two:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:group">
+      <rolereference id="fullload-model:group:person">
+        <associationroleref idref="fullload-model:membership_relation:person"/>
+      </rolereference>
+    </objecttyperef>
+    <objecttyperef idref="fullload-model:person">
+      <rolereference id="fullload-model:person:group">
+        <associationroleref idref="fullload-model:membership_relation:group"/>
+      </rolereference>
+    </objecttyperef>
+    <association name="User Portrait" id="fullload-model:user_portrait">
+      <associationrole name="user" multiplicity=".." id="fullload-model:user_portrait:user">
+        <objecttyperef idref="fullload-model:user"/>
+      </associationrole>
+      <associationrole name="user2" multiplicity=".." id="fullload-model:user_portrait:user2">
+        <objecttyperef idref="fullload-model:content_item"/>
+      </associationrole>
+      <associationmap>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_one:foreignkey"/>
+        <foreignkeyref idref="fullload-schema:acs_rels:object_id_two:foreignkey"/>
+      </associationmap>
+    </association>
+    <objecttyperef idref="fullload-model:user">
+      <rolereference id="fullload-model:user:user2">
+        <associationroleref idref="fullload-model:user_portrait:user2"/>
+      </rolereference>
+    </objecttyperef>
+    <objecttyperef idref="fullload-model:content_item">
+      <rolereference id="fullload-model:content_item:user">
+        <associationroleref idref="fullload-model:user_portrait:user"/>
+      </rolereference>
+    </objecttyperef>
+  </model>
+</metadataroot>

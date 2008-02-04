@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=353}]"><cms:name>complaints--procedure-353</cms:name><cms:language>en</cms:language><cms:title>Complaints - Procedure</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=353}]"><cms:name>complaints--procedure-353-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>complaints, procedure</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=353}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council recognises the importance of customer complaints and welcomes complaints as a valuable form of feedback about its services. The Council is committed to using the information it receives to help drive forward improvements. 
+</i></p><hr/><p>This procedure outlines the aims of the Council in dealing with complaints and sets out what you as the customer can expect when making a complaint regarding a Council service.
+</p><p>A complaint is a way of letting the Council know that you are not happy with a particular service. We welcome your feedback. A complaint may be about delay, lack of response, discourtesy, failure to consult or about the standard of service you have received. </p><p>
+So please let us know if:</p><ul>
+			<li title="*">you think we have done something wrong</li>
+			<li title="*">we have not done something that we said we would do</li>
+			<li title="*">you are not satisfied with a particular service or set of services that we provide</li>
+		</ul><p>You can complain in person at any Council Office. You can telephone, fax or email your complaint using the details at the top of this page.  Alternatively, you may also use our 
+		<a href="/ccm/services/pid.jsp?pid=forms/353a">
+				<strong>online complaints form</strong>
+			</a>	. <span class="gen">link to online form</span>
+		</p><h2>Anonymous Complaints</h2><p>We understand that it might be difficult for you to complain because you are worried that your complaint could result in a poorer service to your household. Please be assured that we treat all complaints against the Council in the strictest confidence, and that it is your right to complain.</p><p>If you do not provide us with a contact name or address, it will not be possible for us to get back to you with the outcome of the investigation.</p><h2>Advocates</h2><p>You may wish to ask someone to help you in making a complaint against a Council service. This person is called an advocate. It is up to you who you appoint to be your advocate. It could be a friend, relative, someone you trust or a voluntary agency. </p><p>Once you have appointed an advocate, we will be dealing directly with them until the investigation into your complaint is completed. It is your right to inform the Council that you no longer wish to complain to us via your 'advocate' at any stage during the investigation.</p><p>More information is contained on the 
+		<a href="/ccm/services/pid.jsp?pid=645">
+				<strong>Advocacy</strong>
+			</a>	 page. <span class="gen">link to pid 645</span>
+		</p><h2>How We Will Deal With Your Complaint</h2><p>We want to give you as our service users a fair, consistent and structured process to secure a remedy for failures in the delivery of our services.</p><p>We want to learn from all complaints made to us. Therefore, we will use the outcome of your complaint and any remedial action as a positive method of monitoring performance and improving our services.</p><p>We will be monitoring all complaints received and will classify complaints under certain categories such as inadequate service, delay in providing service or poor officer behaviour. By analysing complaints we aim to highlight specific areas of the Council service provision where improvement is needed.
+</p><h2>Principles of the Complaints Procedure
+</h2><p>The Complaints Policy is based on the principle of a two-stage process.
+</p><h3>Stage 1 - Service Area Review</h3><p>The Head of Service, Group Manager or the equivalent Senior Manager based within the Service area relating to your complaint will investigate your complaint and reply to you within <span class="gen">enter amount</span> days from the receipt of your complaint. </p><p>The remit of these Senior Officers having the responsibility for the investigation of complaints, is that it is hoped that early resolution of complaints will occur.
+</p><p>Your complaint will also be acknowledged within <span class="gen">enter amount</span> calendar days of receipt. This acknowledgement will provide contact details of the officer dealing with your complaint and the timescale for replying to your complaint. If the officer is unable to reply within the agreed amount of days, i.e. for very complex matters, you will be informed, and the timescales for reply set out.  </p><h3>Stage 2 - Chief Executive review
+</h3><p>If you are unhappy with the response that you have been provided with under Stage 1 of the Procedure, you may ask the Council's Chief Executive, via the Corporate Complaints Team, to review the action taken in respect of your complaint. </p><p>On receipt of your request for a review, the Corporate Complaints Team will acknowledge your complaint within <span class="gen">enter amount</span> calendar days and provide you with the contact details for the Complaints Investigation Officer dealing with your complaint.  Again you can expect a full response within <span class="gen">enter amount</span> calendar days, although if the matter is complex and interviews/ site visits need to be undertaken, this may be extended after consultation with you.</p><p>The Chief Executive will inform you of the result of his review and any further action that you might be able to take in respect of your complaint.    
+</p><p>The Complaints Procedure will apply both to services that we provide directly and indirectly, for example where the service is provided through an outside contractor.
+</p><h2>Local Government Ombudsman
+</h2><p>If you are unhappy with the outcome or way in which the Council has investigated your complaint, you may ask the 
+		<a href="http://www.lgo.org.uk">
+				<strong>Local Government Ombudsman</strong>
+			</a>	
+			<span class="gen">link to external website</span> to investigate the matter on your behalf. </p><p>We welcome helpful criticism by the Local Government Ombudsman. In addition our objective must be to identify our own failures and resolve them reasonably and quickly.
+</p><h2>Special Cases
+</h2><p>We intend, where possible, to allow a complaint to be dealt with under this procedure. Sometimes we cannot or are not allowed to do so. The only exceptions relate to some statutory and legal limitations such as:</p><ul>
+			<li title="*">a Town and Country Planning appeal against refusal of planning permission
+</li>
+			<li title="*">a complaint where the customer or the Council has commenced legal proceedings or has taken court action but not cases where a customer has simply threatened to start legal proceedings against the council
+</li>
+			<li title="*">a complaint that has already been heard by a court or tribunal, including the Revenue Services Review Board appeal mechanism
+</li>
+			<li title="*">a complaint about Social Services provision covered by statutory procedures (i.e. Section 7B of the Local Authority Social Services Act, 1970 as amended by Section 50 of the National Health Service and Community Care Act, 1990)
+</li>
+			<li title="*">a school admission or exclusion appeal
+</li>
+			<li title="*">a staff complaint about a personnel matter, including appointments, dismissals, pay, pensions and discipline (but not from staff as service users)
+</li>
+			<li title="*">a complaint about Council policy
+</li>
+			<li title="*">a complaint about the issue of a penalty charge notice by the parking control service (except administrative issues) and the recovery process thereafter
+</li>
+			<li title="*">a complaint against the refusal of disabled badges for parking exemption
+</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=353"> Applications for services
+		(353)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=66}]"><cms:name>batch-20-66</cms:name><cms:language>en</cms:language><cms:title>Council tax benefit - overpayments</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=66}]"><cms:name>batch-20-66-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, tax, benefits, overpayments</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=66}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>When we give you too much benefit, we call it an 'overpayment'. If we give you too much benefit, we will send you a letter.</i></p><hr/><p>
+				The letter we send you will tell you:-
+			</p><ul>
+				<li title="*"> why we gave you too much benefit</li>
+				<li title="*">how much the overpayment is</li>
+				<li title="*">if you have to pay back the amount</li>
+				<li title="*">how you can appeal if you think this is wrong </li>
+			</ul><p>In most cases we will send you a revised Council Tax bill, and you will usually have to pay more Council Tax.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=66"> Providing Information
+		(66)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

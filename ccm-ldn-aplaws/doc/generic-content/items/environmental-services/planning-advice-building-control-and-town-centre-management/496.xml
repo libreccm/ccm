@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=496}]"><cms:name>planning-496</cms:name><cms:language>en</cms:language><cms:title>Town centre management - shop front grant</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=496}]"><cms:name>planning-496-dublin-metadata</cms:name><cms:dcAudience>Householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>town, centre, management, shop, front, grant</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=496}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>One of the major reasons for the shop front grants 
+  is to improve the perception of our town centres.</i></p><hr/><p>To qualify for a shop front grant, the following must apply to you:</p><li title="*">You are an independent trader with no more than 6 properties in total.</li><li title="*">The property itself is within the defined area called <span class="gen">enter name</span>.
+				</li><li title="*">You are prepared to return your property to its former glory by using natural 
+    products of the period and to jointly agree a scheme with the Council.</li><li title="*">You are either the Landlord or you have the Landlord's permission in writing 
+    to carry out work.</li><p>
+				The grant you receive varies depending on the size of the project and 
+  the costs involved, but as a general guide grants are based on  <span class="gen">enter amount</span>per shop front, up to a maximum of 50% of the cost.
+			</p><p>
+				Projects vary enormously from a simple re-paint and 
+  signage package to a complete renovation.
+			</p><p>Use the contact details at the top of this page to apply for a grant.  
+  We will arrange for sketch/final drawings to be produced, arrange for planning consent 
+  which you must pay for and we will put the project out to tender.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=496"> Providing Information
+		(496)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

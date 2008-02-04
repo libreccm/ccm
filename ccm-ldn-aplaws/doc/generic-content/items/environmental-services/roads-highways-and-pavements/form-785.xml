@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=785}]"><cms:name>batch-11-form-785</cms:name><cms:language>en</cms:language><cms:title>Abnormal loads</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=785}]"><cms:name>785e.pdf</cms:name><cms:content file="785e.pdf"/></cms:file></cms:item>

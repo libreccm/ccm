@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=37}]"><cms:name>education-3-37</cms:name><cms:language>en</cms:language><cms:title>School catering</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=37}]"><cms:name>education-3-37-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>school, catering</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=37}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Information regarding School Catering and the nutritional guidelines</i></p><hr/><p>We will:</p><ul>
+			<li title="*">Provide a fully inclusive two course meal for a set price each day, in line 
+    with National Nutritional Standards.</li>
+			<li title="*">Provide a choice of menu items to select from.</li>
+			<li title="*">Provide dishes which are both nutritious and excellent value for money.</li>
+			<li title="*">Provide dishes which are prepared by qualified catering staff using high quality products.</li>
+			<li title="*">Provide a safe working environment in which to dine.</li>
+		</ul><p>You can help us by:</p><ul>
+			<li title="*">Speaking to us, the Headteacher or any of the School Governors about any of the problems you have, or any suggestions you have for the improvement of our 
+    service.</li>
+			<li title="*">Coming into school on a pre-arranged appointment to see for yourself the service being provided.</li>
+			<li title="*">Letting us know if you have any special dietary needs.</li>
+		</ul><p>You can get in touch with us using the details above.</p><p>Details of 
+		<a href="/ccm/services/pid.jsp?pid=4">Free School Meals</a>	
+			<span class="gen">link to pid 4</span> are available.</p><p>The standards say that lunches for primary school pupils must contain at least one item from each of the following food groups</p><table width="90%" cellpadding="5" class="centre" summary="Food Group Allocations">
+			<tr>
+				<td>
+					<h4>Standard No</h4>
+				</td>
+				<td>
+					<h4>Standard</h4>
+				</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>Starchy foods such as bread, potatoes, rice 
+      and pasta. Starchy foods cooked in oil or fat should not be served more than 
+      three times a week</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Fruit and a vegetable must be available every 
+      day. Fruit based desserts must be available twice a week
+					</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>Milk and dairy foods.</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>
+						Meat, fish and alternative sources of protein including cheese. Red meat must be served twice a week. Fish must be served at least once per week.</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>Plus</h4>
+				</td>
+				<td>
+					<h4>Additional Recommendations</h4>
+				</td>
+			</tr>
+			<tr>
+				<td>a</td>
+				<td>Drinking water should be available to all pupils every day, free of charge</td>
+			</tr>
+			<tr>
+				<td>b</td>
+				<td>Schools should offer some hot food, particularly in the winter</td>
+			</tr>
+			<tr>
+				<td>c</td>
+				<td>Drinking Milk should be available as an option every day</td>
+			</tr>
+		</table><p>For more information regarding this subject, please contact us using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=37"> Providing Information
+		(37)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

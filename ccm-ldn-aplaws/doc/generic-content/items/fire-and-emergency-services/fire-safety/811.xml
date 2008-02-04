@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=811}]"><cms:name>health-and-safety--construction-regulations-811</cms:name><cms:language>en</cms:language><cms:title>Health and Safety - Construction Regulations</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=811}]"><cms:name>health-and-safety--construction-regulations-811-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>health, safety, construction, regulations</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=811}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Building Regulations are legal requirements aimed at achieving adequate standards for the construction of domestic, commercial and industrial buildings. They are laid down by Parliament and are supported by separate documents containing practical and technical guidance on compliance, which are known as 'Approved Documents'. These are produced in different parts.</i></p><hr/><p>Building Regulations have three purposes:</p><ul>
+			<li title="*">To ensure the health
+    and safety of people in and around buildings.</li>
+			<li title="*">The conservation of
+    energy.</li>
+			<li title="*">Access and facilities
+    for disabled people.</li>
+		</ul><h2>  What are the Building Regulations? A summary of the 'Approved Documents'</h2><p>The
+    Approved Documents that run from Part A to Part N reproduce the legal requirements
+    and give practical and technical guidance on how to meet them.</p><ul>
+			<li title="*">
+				<strong>Part A - </strong>
+				
+		<a href="#part-a">Structural Safety</a>	
+			</li>
+			<li title="*">
+				<strong>Part B - </strong>
+				
+		<a href="#part-b">Fire Safety</a>	
+			</li>
+			<li title="*">
+				<strong>Part C - </strong>
+				
+		<a href="#part-c">Site Preparation and Damp	Proofing</a>	
+			</li>
+			<li title="*">
+				<strong>Part D - </strong>
+				
+		<a href="#part-d">Toxic Substances</a>	
+			</li>
+			<li title="*">
+				<strong>Part E - </strong>
+				
+		<a href="#part-e">Soundproofing</a>	
+			</li>
+			<li title="*">
+				<strong>Part F - </strong>
+				
+		<a href="#part-f">Ventilation</a>	
+			</li>
+			<li title="*">
+				<strong>Part G - </strong>
+				
+		<a href="#part-g">Hygiene</a>	
+			</li>
+			<li title="*">
+				<strong>Part H - </strong>
+				
+		<a href="#part-h">Drainage and Waste Disposal</a>	
+			</li>
+			<li title="*">
+				<strong>Part J - </strong>
+				
+		<a href="#part-j">Heating Appliances</a>	
+			</li>
+			<li title="*">
+				<strong>Part K - </strong>
+				
+		<a href="#part-k">Stairs, Ramps and Guards</a>	
+			</li>
+			<li title="*">
+				<strong>Part L - </strong>
+				
+		<a href="#part-l">Conservation of Fuel and Power</a>	
+			</li>
+			<li title="*">
+				<strong>Part M - </strong>
+				
+		<a href="#part-m">Access and Facilities for People with Disabilities</a>	
+			</li>
+			<li title="*">
+				<strong>Part N - </strong>
+				
+		<a href="#part-n">Glazing Materials and Protection</a>	
+			</li>
+		</ul><h2>
+			
+			Part
+      A - Structural Safety</h2><ul>
+			<li title="*">The
+                weight of the building from the walls, furniture and people in
+                the building will be transmitted to the ground, so as not to
+          cause instability to the building or other buildings.</li>
+			<li title="*">Requires buildings
+              to be built in a way ensuring no collapse will occur disproportionate
+          to its cause.</li>
+			<li title="*">Ground movement
+                such as freezing of subsoil will not impair the stability of
+          the building.</li>
+		</ul><h2>
+			
+			Part B
+	      - Fire Safety </h2><ul>
+			<li title="*">Requires
+          safe means of escape from the building.</li>
+			<li title="*">Requires
+                the stability of a building to be maintained in a fire, both
+          internally and externally.</li>
+			<li title="*">Internally
+                - The wall lining i.e. plaster, plasterboard or wooden boards
+                on the walls and ceiling will resist the spread of flames and
+          give off reasonable levels of heat, if on fire.</li>
+			<li title="*">Internal
+                stability will be maintained during fire and fire spread will
+          be prohibited.</li>
+			<li title="*">Fire and smoke
+              will be prohibited from spreading to concealed spaces in a buildings
+          structure.</li>
+			<li title="*">Externally -
+              The external walls and roof will resist spread of fire to walls
+          and roofs of other buildings.</li>
+			<li title="*">The building
+          will be easily accessible for fire fighters and their equipment.</li>
+		</ul><h2>
+			
+			Part
+	      C - Site Preparation and Damp Proofing</h2><ul>
+			<li title="*">Nothing
+          should be growing on the ground covered by the building.</li>
+			<li title="*">Precautions
+              must be taken to stop gases and dangerous substances from previous
+              land use from entering the building and endangering the health
+          and safety of occupants.</li>
+			<li title="*">Subsoil drainage
+                will be in place, if needed, to stop the passage of ground moisture
+                to the interior of the building and to prevent damage to the
+          fabric of the building.</li>
+			<li title="*">The walls,
+                floors and roof of the building shall prevent moisture passing
+          to the inside of the building.</li>
+		</ul><h2>
+			
+			Part D
+	      - Toxic Substances</h2><ul>
+			<li title="*">Insulating
+                materials inserted into cavity walls can give off fumes. Prevention
+          must be taken to stop these fumes reaching occupants of the building. </li>
+		</ul><h2>
+			
+			Part E
+	      - Soundproofing</h2><ul>
+			<li title="*">Floors and
+                    walls between domestic buildings should have a certain resistance
+          to the passage of sound. </li>
+			<li title="*">Sound insulation requirements also apply to floors and certain walls within individual
+    dwellings and new schools.</li>
+		</ul><h2>
+			
+			Part F
+	        - Ventilation
+      </h2><ul>
+			<li title="*">The
+              building must have adequate ventilation and provision to prevent
+          condensation occurring in the roof structure.</li>
+		</ul><h2>
+			
+			Part G
+	      - Hygiene</h2><ul>
+			<li title="*">Adequate
+          sanitation facilities ie. toilet.</li>
+			<li title="*">A house must
+          have either a bath or shower with ability to heat hot water.</li>
+			<li title="*">Unvented
+                hot water storage systems - Restrictions apply to who can install
+          the system.</li>
+		</ul><h2>
+			
+			Part
+          H - Drainage and Waste Disposal</h2><ul>
+			<li title="*">An
+                adequate system to carry water used for cooking, washing, toilet,
+                bath or shower to a sewer cesspool or settlement tank must be
+          in place.</li>
+			<li title="*">A cesspool
+                or settlement tank must be impermeable to liquids and have adequate
+                ventilation. It must also have means of access for emptying,
+                not harm the health of any person and not contaminate water or
+          water supply.</li>
+			<li title="*">An adequate
+                system to carry rainwater away from the roof of a building eg.
+          guttering carrying water to a sewer.</li>
+			<li title="*">A place to put
+              a wheelie bin or dustbin. The place must not harm anyone's
+          health.</li>
+		</ul><h2>
+			
+			Part J
+	      - Heating Appliances</h2><ul>
+			<li title="*">Must
+                have an adequate air supply for combustion and for efficient
+          working of a fluepipe or chimney.</li>
+			<li title="*">Appliances shall
+          discharge the products of combustion to the outside.</li>
+			<li title="*">The appliance,
+                      fireplace and chimney shall reduce the risk of the building
+          catching fire.</li>
+		</ul><h2>
+			
+			Part K
+	      - Stairs, Ramps and Guards</h2><ul>
+			<li title="*">Stairs,
+                ramps and ladders shall provide safety for people, when moving
+          between different levels of a building.</li>
+			<li title="*">Stairs, ramps,
+          floors and balconies shall be adequately guarded.</li>
+			<li title="*">Safety shall
+          be provided for people using vehicle ramps and loading bays.</li>
+		</ul><h2>
+			
+			Part
+	          L - Conservation of Fuel and Power </h2><ul>
+			<li title="*">Provision
+          must be made for the conservation of fuel and power in a building.</li>
+			<li title="*">The fabric of
+          the building must limit heat loss.</li>
+			<li title="*">Controls
+          to operate the heating of the building and heating of water.</li>
+			<li title="*">By limiting
+          heat loss from hot water tanks and hot water pipes.</li>
+			<li title="*">Lighting
+                      systems in buildings should use no more energy than needed
+          and have adequate controls.</li>
+			<li title="*"/>
+		</ul><h2>
+			
+			Part
+	              M - Access and Facilities for People with Disabilities </h2><p>In Part M, &quot;people
+	            with disabilities&quot; means people who have an impairment which
+	            limits their ability to walk or which requires them to use a
+	            wheelchair for mobility or have impaired hearing or sight.</p><ul>
+			<li title="*">Reasonable
+                    provision shall be made for people with disabilities at entrances
+          to and within new dwellings and buildings.</li>
+		</ul><p>An existing building should have reasonable provision:</p><ul>
+			<li title="*">For people
+          with disabilities to gain access and use the building.</li>
+			<li title="*">If toilets
+                are provided, reasonable provision shall be made available for
+          people with disabilities.</li>
+			<li title="*">If a building
+              has seating such as audience or spectator seating, reasonable provision
+          should be made for people with disabilities.</li>
+		</ul><h2>
+			
+			Part N
+	      - Glazing Materials and Protection</h2><ul>
+			<li title="*">Glazing
+                that people come into contact with whilst in a building, should,
+                if broken, break in a way unlikely to cause injury, resist impact
+          without breaking or be shielded or protected from impact.</li>
+			<li title="*">Buildings,
+                other than dwellings that have transparent glazing which people
+                come into contact with while moving around a building, must have
+                features to make it apparent. Windows that can be opened must
+          be operated safely and provision made for safe accessible cleaning.</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=811"> Providing Information
+		(811)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

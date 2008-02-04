@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+<!-- No need to list all the content types here. Only
+       need to list a type if is adds associations that
+       were not in the parent type, or to remove attributes
+   -->
+
+  <!-- First off the adapters for ContentItemPanel -->
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    		
+    <!-- Content item is the simplest type -->
+    <xrd:adapter objectType="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/type/id"/>
+        <xrd:property name="/object/type/defaultDomainClass"/>
+        <xrd:property name="/object/type/objectType"/>
+        <xrd:property name="/object/type/displayName"/>
+        <xrd:property name="/object/type/associatedObjectType"/>
+        <xrd:property name="/object/type/className"/>
+        <xrd:property name="/object/type/isInternal"/>
+        <xrd:property name="/object/type/itemFormID"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/locale"/>
+        <xrd:property name="/object/type"/>
+      </xrd:associations>
+    </xrd:adapter>
+
+    <xrd:adapter objectType="com.arsdigita.cms.ContentPage" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+   		
+   	
+      <xrd:attributes rule="exclude">
+   			
+      </xrd:attributes>
+      <xrd:associations rule="include">
+	   		<xrd:property name="/object/masterVersion"/>
+	        <xrd:property name="/object/masterVersion/auditing"/>
+	        <xrd:property name="/object/masterVersion/auditing/creationUser"/>
+	        <xrd:property name="/object/masterVersion/auditing/lastModifiedUser"/>
+	      
+      </xrd:associations>
+   
+    </xrd:adapter>
+
+    <!-- Adds a text asset -->
+    <xrd:adapter objectType="com.arsdigita.cms.TextPage" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/textAsset/id"/>
+        <xrd:property name="/object/textAsset/defaultDomainClass"/>
+        <xrd:property name="/object/textAsset/objectType"/>
+        <xrd:property name="/object/textAsset/displayName"/>
+        <xrd:property name="/object/textAsset/ancestors"/>
+        <xrd:property name="/object/textAsset/version"/>
+        <xrd:property name="/object/textAsset/name"/>
+        <xrd:property name="/object/textAsset/language"/>
+        <xrd:property name="/object/textAsset/isDeleted"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/textAsset"/>
+      </xrd:associations>
+    </xrd:adapter>
+
+    <!-- Adds several image assets -->
+    <xrd:adapter objectType="com.arsdigita.cms.Article" extends="com.arsdigita.cms.TextPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/imageCaptions/id"/>
+        <xrd:property name="/object/imageCaptions/defaultDomainClass"/>
+        <xrd:property name="/object/imageCaptions/objectType"/>
+        <xrd:property name="/object/imageCaptions/displayName"/>
+        <xrd:property name="/object/imageCaptions/isDeleted"/>
+        <xrd:property name="/object/imageCaptions/ancestors"/>
+        <xrd:property name="/object/imageCaptions/version"/>
+        <xrd:property name="/object/imageCaptions/name"/>
+        <xrd:property name="/object/imageCaptions/language"/>
+        <xrd:property name="/object/imageCaptions/imageId"/>
+        <xrd:property name="/object/imageCaptions/articleId"/>
+        <!-- XXX change /cms-service to take OID -->
+        <!--<xrd:property name="/object/imageCaptions/imageAsset/id"/>-->
+        <xrd:property name="/object/imageCaptions/imageAsset/defaultDomainClass"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/objectType"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/displayName"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/isDeleted"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/ancestors"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/version"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/name"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/language"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/content"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/mimeType/javaClass"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/mimeType/objectType"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/imageCaptions"/>
+        <xrd:property name="/object/imageCaptions/imageAsset"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/mimeType"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+
+  <!-- Next the metadata for search -->
+  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+    <!-- Content item is the simplest type -->
+    <xrd:adapter objectType="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/type/id"/>
+        <xrd:property name="/object/type/defaultDomainClass"/>
+        <xrd:property name="/object/type/objectType"/>
+        <xrd:property name="/object/type/displayName"/>
+        <xrd:property name="/object/type/associatedObjectType"/>
+        <xrd:property name="/object/type/className"/>
+        <xrd:property name="/object/type/isInternal"/>
+        <xrd:property name="/object/type/itemFormID"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/locale"/>
+        <xrd:property name="/object/type"/>
+      </xrd:associations>
+    </xrd:adapter>
+
+    <!-- Adds a text asset -->
+    <xrd:adapter objectType="com.arsdigita.cms.TextPage" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/textAsset/id"/>
+        <xrd:property name="/object/textAsset/defaultDomainClass"/>
+        <xrd:property name="/object/textAsset/objectType"/>
+        <xrd:property name="/object/textAsset/displayName"/>
+        <xrd:property name="/object/textAsset/ancestors"/>
+        <xrd:property name="/object/textAsset/version"/>
+        <xrd:property name="/object/textAsset/name"/>
+        <xrd:property name="/object/textAsset/language"/>
+        <xrd:property name="/object/textAsset/isDeleted"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/textAsset"/>
+      </xrd:associations>
+    </xrd:adapter>
+
+    <!-- Adds several image assets -->
+    <xrd:adapter objectType="com.arsdigita.cms.Article" extends="com.arsdigita.cms.TextPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/imageCaptions/id"/>
+        <xrd:property name="/object/imageCaptions/defaultDomainClass"/>
+        <xrd:property name="/object/imageCaptions/objectType"/>
+        <xrd:property name="/object/imageCaptions/displayName"/>
+        <xrd:property name="/object/imageCaptions/isDeleted"/>
+        <xrd:property name="/object/imageCaptions/ancestors"/>
+        <xrd:property name="/object/imageCaptions/version"/>
+        <xrd:property name="/object/imageCaptions/name"/>
+        <xrd:property name="/object/imageCaptions/language"/>
+        <xrd:property name="/object/imageCaptions/imageId"/>
+        <xrd:property name="/object/imageCaptions/articleId"/>
+        <!-- XXX change /cms-service to take OID -->
+        <!--<xrd:property name="/object/imageCaptions/imageAsset/id"/>-->
+        <xrd:property name="/object/imageCaptions/imageAsset/defaultDomainClass"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/objectType"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/displayName"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/isDeleted"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/ancestors"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/version"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/name"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/language"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/content"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/mimeType/javaClass"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/mimeType/objectType"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/imageCaptions"/>
+        <xrd:property name="/object/imageCaptions/imageAsset"/>
+        <xrd:property name="/object/imageCaptions/imageAsset/mimeType"/>
+      </xrd:associations>
+    </xrd:adapter>
+
+    <!-- Article in several sections -->
+  </xrd:context>
+
+  <!-- Search metadata for file assets -->
+  <xrd:context name="com.arsdigita.cms.search.AssetMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.cms.FileAsset" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/content"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/isDeleted"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+   
+  <!-- For assets, we want to pull out all HTML, or binary files -->
+  <xrd:context name="com.arsdigita.cms.search.AssetExtractor">
+    <!-- Content item is the simplest type -->
+    <xrd:adapter objectType="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:associations rule="include"/>
+    </xrd:adapter>
+
+    <!-- Adds a text asset -->
+    <xrd:adapter objectType="com.arsdigita.cms.TextPage" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:associations rule="include">
+        <xrd:property name="/object/textAsset"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>

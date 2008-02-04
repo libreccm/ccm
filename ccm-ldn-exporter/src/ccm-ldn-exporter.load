@@ -1,0 +1,15 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <initializer class="com.arsdigita.london.util.Initializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.FileStorageItemInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.MultiPartArticleInitializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.london.exporter.Initializer"/>
+  </provides>
+  <scripts>
+  </scripts>
+</load>

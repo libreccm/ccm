@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=652}]"><cms:name>housing-3-652</cms:name><cms:language>en</cms:language><cms:title>General housing information and advice</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=652}]"><cms:name>housing-3-652-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>general, housing, information, advice</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=652}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We provide advice and assistance on a wide range of housing related problems. </i></p><hr/><p>Many people living in accommodation in the private sector, are 
+  unsure of their rights and are unsure where they can go for help. Also, many landlords 
+  renting out accommodation are not aware that we can offer 
+  impartial advice regarding problems they may experience with their tenants.</p><p>We provide advice on:</p><p>
+			<strong>Notices to Quit Accommodation</strong> - this includes notices 
+  given to tenants because a tenancy is coming to an end, tenancy agreements that 
+  have expired or are expiring, and issues where tenants may have breached the terms 
+  of their tenancy agreement (for example, by non payment of rent).</p><p>
+			<strong>Rent Increases</strong> - in most situations, a landlord 
+  must follow a set procedure if he wants a tenant to pay more rent. </p><p>
+			<strong>Disrepair</strong> - people living in private rented accommodation 
+  can often have problems with disrepair and many landlords and tenants are not aware 
+  of their obligations. There are also some schemes available to people that own their 
+  homes.</p><p>
+			<strong>Deposits</strong> - at the end of a tenancy, deposit money 
+  may be withheld for different reasons. Advice can be given to landlords and tenants 
+  in relation to this.</p><p>
+			<strong>Relationship Breakdown</strong> - many people are not aware 
+  of their rights when they separate from a partner. Advice can be given regarding 
+  their housing situation and any benefits they may be entitled to.</p><p>
+			<strong>Mortgages</strong> - people fall into mortgage arrears for 
+  many different reasons, such as unemployment or health problems. There are various 
+  options available which can prevent someone from losing their home, even if court 
+  proceedings have already begun.</p><p>
+			<strong>Long Leaseholders with a private Freeholder</strong> - problems 
+  can be experienced with the Freeholder, for example, in relation to Service Charges.</p><p>
+			<strong>Welfare Benefits</strong> - many people are not aware of 
+  the wide range of benefits they may be entitled to. For example, checks can be carried 
+  out for people wanting to return to work if they are unsure how their benefits will 
+  be affected.</p><p>
+			<strong>Homelessness</strong> - advice can be given at any time if 
+  people think they may be homeless in the future, or where they are already homeless.</p><p>
+			<strong>Housing Options</strong> - there are a range of options which 
+  are available to people who are looking for alternative housing.</p><p>
+			<strong>Landlords</strong> - if you have a property to rent within 
+  the <span class="gen">enter council name here</span>, there are a variety 
+  of schemes available to assist you.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=652"> Providing Information
+		(652)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

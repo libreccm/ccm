@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=163}]"><cms:name>batch-22-163</cms:name><cms:language>en</cms:language><cms:title>Counselling</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=163}]"><cms:name>batch-22-163-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>counselling</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=163}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>At present there are no national standards for counselling and psychotherapy.</i></p><hr/><p>Under current regulations anyone can set themselves up as a 
+  psychotherapist or counsellor and charge patients for consultations. This leads 
+  to a wide variation in the level of competence and expertise available.</p><p>Until such time as statutory regulation is introduced, those 
+  employing counsellors should ensure that their recruitment arrangements are stringent 
+  and that therapists meet the training and supervision standards identified by the 
+  relevant professional organisations.</p><p>Those individuals using counselling services should be aware 
+  of what to expect from a counsellor and should be encouraged to work with counsellors 
+  who subscribe to professional bodies recognised codes of ethics and practice.</p><p>We have found it helpful to explain what counselling is at the 
+  beginning so that you may get most benefit from it.</p><p>Counselling is different from other forms of help; the focus 
+  is to enable you to clarify the issues about which you are troubled. This will involve 
+  you in exploring those issues in private with someone who is trained to listen and 
+  has no other role in your life. Through this confidential process, your counsellor 
+  will be seeking to enable you to clarify your thoughts and feelings. Counselling 
+  is a positive process, which is often associated with times of personal crisis. 
+  It may involve talking about painful parts of your life and therefore, you may feel 
+  worse before you feel better! It is also a very effective way of developing personal 
+  potential. If we are not the best people to help we will refer you elsewhere or 
+  suggest alternatives which may be more appropriate.</p><p>Counselling and Psychotherapy can be helpful for a wide range of difficulties such as: </p><ul>
+  <li title="*">Depression </li>
+  <li title="*">Relationship Problems </li>
+  <li title="*">Stress </li>
+  <li title="*">Anxiety/Panic Attacks </li>
+  <li title="*">Low Self-Esteem </li>
+  <li title="*">Eating Problems </li>
+  <li title="*">Sexual Problems </li>
+  <li title="*">Bereavement and Loss </li>
+  <li title="*">Trauma Resulting from Accident, Assault or Abuse </li>
+</ul><p>The Counsellors in this service work within the British Association 
+  for Counselling and Psychotherapy's (BACP) 'Ethical Framework for Good 
+  Practice', which ensures that what you speak about in your session, remains 
+  confidential. The details of the confidentiality contract will be explained to you 
+  in your first session. All counsellors within the service have supervision, which 
+  involves presenting their work anonymously, to ensure that quality is maintained.</p><p>Counsellors keep written records of their sessions with clients. 
+  These are kept according to data protection guidelines and service record keeping 
+  procedures. Each session lasts for <span class="gen">enter amount</span> minutes. To get the most from the session 
+  please ensure you arrive on time, as your counsellor will need to finish promptly. 
+</p><p>If you are unable to keep the appointment please let us know, 
+  giving at least <span class="gen">enter amount</span> hours notice.</p><p>We hope you find counselling a positive and helpful experience.</p><p>Please contact us for more details using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=163"> Providing Information
+		(163)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,5 @@
+
+
+db-host : oracle
+db-sid : ora8
+db-service : ora8.london.redhat.com

@@ -1,0 +1,18 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.cms.docmgr.installer.Initializer"/>
+    <initializer class="com.arsdigita.cms.docmgr.installer.DocumentInitializer"/>
+    <initializer class="com.arsdigita.cms.docmgr.installer.DocLinkInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-docmgr"/>
+    <data class="com.arsdigita.cms.docmgr.DocumentLoader"/>
+    <data class="com.arsdigita.cms.docmgr.DocLinkLoader"/>
+    <data class="com.arsdigita.cms.docmgr.DocFolderLoader"/>
+  </scripts>
+</load>

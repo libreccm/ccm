@@ -1,0 +1,36 @@
+<bebop:page>
+<bebop:title> </bebop:title>
+<bebop:boxPanel axis="2" center="false" width="100%">
+<bebop:cell>
+<bebop:date>
+<bebop:select name="birth.month">
+<bebop:option label="January" value="0"/>
+<bebop:option label="February" value="1"/>
+<bebop:option label="March" value="2"/>
+<bebop:option label="April" value="3"/>
+<bebop:option label="May" value="4"/>
+<bebop:option label="June" value="5"/>
+<bebop:option label="July" value="6"/>
+<bebop:option label="August" value="7"/>
+<bebop:option label="September" value="8"/>
+<bebop:option label="October" value="9"/>
+<bebop:option label="November" value="10"/>
+<bebop:option label="December" value="11"/>
+<bebop:option label="" value="12"/>
+</bebop:select>
+<bebop:formWidget maxlength="2" name="birth.day" size="2" type="text" value=""/>
+<bebop:select name="birth.year">
+<bebop:option label="2000" value="2000"/>
+<bebop:option label="2001" value="2001"/>
+<bebop:option label="2002" value="2002"/>
+<bebop:option label="2003" value="2003"/>
+<bebop:option label="2004" value="2004"/>
+</bebop:select>
+</bebop:date>
+</bebop:cell>
+</bebop:boxPanel>
+<bebop:structure escape="yes">&lt;table&gt;&lt;th colspan=3&gt;Page parameters&lt;/th&gt;&lt;tr&gt;&lt;th align=left&gt;Variable&lt;/th&gt;&lt;th align=left&gt;Parameter&lt;/th&gt;&lt;th align=left&gt;Value&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Selected&lt;/td&gt;&lt;td&gt;bbp.s&lt;/td&gt;&lt;td&gt; --- &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Control event name&lt;/td&gt;&lt;td&gt;bbp.e&lt;/td&gt;&lt;td&gt;&lt;i&gt;null&lt;/i&gt;&lt;td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Control event value&lt;/td&gt;&lt;td&gt;bbp.v&lt;/td&gt;&lt;td&gt;&lt;i&gt;null&lt;/i&gt;&lt;td&gt;&lt;/tr&gt;&lt;th colspan=3&gt;Global state parameters&lt;/th&gt;&lt;/table&gt;&lt;p&gt;&lt;b&gt;Visibility&lt;/b&gt; is indicated by the letters &lt;b&gt;v&lt;/b&gt;isible and &lt;b&gt;h&lt;/b&gt;idden. Uppercase letters are used if a component's visibility deviates from that of the branch it is on.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Component state parameters&lt;/b&gt; are listed with their components. The value is the one from the request, if the value has changed during processing, the new one is listed after the word &lt;tt&gt;now&lt;/tt&gt;.&lt;/p&gt;&lt;table&gt;&lt;tr&gt;&lt;th align='left'&gt;Component&lt;/th&gt;&lt;th align='left'&gt;stateIndex&lt;/th&gt;&lt;th align='left'&gt;visible&lt;/th&gt;&lt;th align='left'&gt;&amp;nbsp;&amp;nbsp;Class&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align='left'&gt;1.&amp;nbsp;&lt;i&gt;Page&lt;/i&gt;&lt;/td&gt;&lt;td align='center'&gt;&amp;nbsp;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;v&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[com.arsdigita.bebop.Page]&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align='left'&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1.&amp;nbsp;&lt;i&gt;BoxPanel&lt;/i&gt;&lt;/td&gt;&lt;td align='center'&gt;0&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;v&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[com.arsdigita.bebop.BoxPanel]&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td align='left'&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1.&amp;nbsp;&lt;i&gt;Date&lt;/i&gt;&lt;/td&gt;&lt;td align='center'&gt;1&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;v&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;[com.arsdigita.bebop.form.Date]&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</bebop:structure>
+</bebop:page>

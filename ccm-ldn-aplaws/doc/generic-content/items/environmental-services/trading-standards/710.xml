@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=710}]"><cms:name>food-and-agriculture-710</cms:name><cms:language>en</cms:language><cms:title>Food and Agriculture</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=710}]"><cms:name>food-and-agriculture-710-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>food, agriculture</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=710}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This Council has the following standards in relation to Food and Animal Health and Agriculture:</i></p><hr/><h2>
+			Food
+		</h2><p>
+				We aim to ensure that: 
+			</p><ul>
+<li title="*">Food Businesses are 
+      Registered.</li>
+      <li title="*">Butchers are licensed.</li>
+      <li title="*">Food is correctly labelled 
+      and described and meets quality standards.</li>
+      <li title="*">Manufacturers and retailers 
+      of food are regularly inspected.</li>
+      <li title="*">Restaurants and other 
+      food premises meet strict hygiene standards.</li>
+      <li title="*">Food is safe to eat.</li>
+</ul><h2>
+				Animal Health and Agriculture
+			</h2><p>
+				We aim to ensure that: 
+			</p><ul>
+<li title="*">Disease controls are 
+      complied with.</li>
+      <li title="*">Farm animal welfare 
+      standards are met.</li>
+      <li title="*">Animal feed and fertilisers 
+      are of a satisfactory quality and safe for use.</li>
+      <li title="*">Contingency plans for 
+      Foot and Mouth, rabies, anthrax and other diseases are in place.</li>
+</ul><p>
+				Further information can 
+  be obtained from the following websites. Alternatively, use the contact details 
+  above to contact our Trading Standards Officers.
+			</p><ul>
+			<li title="*">
+				
+		<a href="http://www.hmso.gov.uk/">
+					<strong>Her Majesty's Stationery Office (HMSO)</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+				<br/>
+      Provides full text of Acts of Parliament from 1988, plus access to Inforoute, 
+      the Government's Information Asset Register.</li>
+			<li title="*">
+				
+		<a href="http://www.defra.gov.uk/">
+					<strong>Department 
+        for Environment, Food and Rural Affairs (Defra)</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+				<br/>
+        Defra works for the essentials of life - water, food, air, land, people, 
+        animals and plants</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.tradingstandards.gov.uk/">Trading 
+      Standards Central</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+				<br/>
+      A one stop shop for consumer protection information in the UK. Provides 
+      information for businesses and consumers. </li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.hmce.gov.uk/">HM 
+      Customs and Excise</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+				<br/>
+      Provides information and advice for the public and for businesses.</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.oft.gov.uk/">Office 
+      of Fair Trading (OFT)</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+				<br/>
+      The OFT is designed with two purposes: to protect consumers and explain 
+      their rights; and to ensure that businesses compete and operate fairly.</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.dti.gov.uk/">Department 
+      of Trade and Industry (DTI)</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+				<br/>
+      Working with businesses, employees and consumers to drive up UK productivity 
+      and competitiveness to deliver prosperity for all.</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.fsa.gov.uk/">Food 
+      Standards Agency (FSA)</a>	
+				</strong>
+				<span class="gen">link to external website</span>
+				<br/>
+      An independent food safety watchdog set up by an Act of Parliament in 2000 
+      to protect the public's health and consumer interests in relation to food.</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=710"> Providing Information
+		(710)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

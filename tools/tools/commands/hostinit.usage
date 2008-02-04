@@ -1,0 +1,16 @@
+usage: hostinit [OPTIONS]
+
+Options:
+  --help                    Display help
+  --usage                   Print this message
+  --container               Specify the servlet container to initialize
+  --clean                   REQUIRED: Delete the existing webapp directories
+                            before performing file copy.
+
+    NOTE: you might want to *BACKUP* THEMES and TEMPLATES first:
+    $CCM_HOME/webapps/ROOT/packages/content-section/templates/
+    $CCM_HOME/webapps/ccm-ldn-theme/__ccm__/themes-prod/
+    $CCM_HOME/webapps/ccm-ldn-theme/__ccm__/themes-dev/
+
+  --parameter <key>=<value> Specify a parameter value (e.g. http-port) to be
+                            used in servlet configuration

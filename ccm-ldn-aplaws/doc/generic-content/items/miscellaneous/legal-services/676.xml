@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=676}]"><cms:name>legal-advice-676</cms:name><cms:language>en</cms:language><cms:title>Legal Advice</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=676}]"><cms:name>legal-advice-676-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>legal, advice</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=676}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The idea behind the Community Legal Service (CLS) was for people to find help easily and feel confident in the quality of service they get from legal service and advice providers. The CLS aims to ensure that people can get help and information about their legal rights and understand how to enforce them in the right place and at the right time.</i></p><hr/><p> To
+      make it easier for the public to get advice and legal help, the CLS brings
+      together organisations offering advice and legal services into local networks.
+      These networks include solicitors, Citizens' Advice Bureau, Law Centres,
+      local authority services (including libraries), community centres, and
+      a host of other organisations. The networks are organised and supported
+      by Community Legal Service Partnerships, which are made up of representatives
+      of the Legal Services Commission, local authorities, funders and providers
+      of advice. </p><p> The
+      job of Partnerships is to assess the need for legal and advice services
+      in their area. They must also work together to ensure that the right kinds
+      of services are available to meet priority needs.</p><p> Details
+      of the CLS Partnerships are available on the  
+		<a href="http://www.justask.org.uk/">
+				<strong>Community
+  Legal Service</strong>
+			</a>	
+			<span class="gen">link to external website</span> website.</p><h2>Consumer
+      Support Network</h2><p>Consumer
+          advice agencies are working together as a group to develop a network plan
+          to ensure that good quality consumer advice is accessible by the whole community.
+          The Consumer Support Networks (CSNs) initiative, encourages consumer advice
+          providers to join-up their services and provide consumers, wherever they
+        live, with reliable, timely and quality assured advice. </p><p> Consumer
+      advice needs to reflect today's complex and fast-changing marketplace.
+      It must take account of developments such as the growth of internet shopping
+      and the often complicated ways that goods and services are sold. We would
+    expect advice available to cover:</p><ul>
+			<li title="*">what to look out for when buying goods and services</li>
+			<li title="*">consumers' rights and obligations
+      when buying goods and services</li>
+			<li title="*">how to obtain redress when things
+      go wrong</li>
+		</ul><p>     Consumer
+      Support Networks and the Community Legal Service are complementary initiatives.
+      </p><p> For
+      more general information see the  
+		<a href="http://www.csnconnect.org.uk/">
+				<strong>Consumer
+  Support Networks</strong>
+			</a>	
+			<span class="gen">link to external website</span> website. </p><h2>Community
+      Legal Service Quality Mark</h2><p>An
+        important principle of the Community Legal Service is that of simple referral
+        to the right part of the network. If the first organisation you contact
+        cannot help, they should be able to refer to another organisation that
+        can. Community Legal Service Partnerships will ensure that advice providers
+        in their area take part in a referral network and strongly encourage providers
+        to apply for the Quality Mark.</p><p> One
+      of the ways to improve access to, and delivery of legal and advice services
+      in the community is by setting up and running referral networks. Effective
+      referral is also one of the requirements of the CLS Quality Mark. We want
+      people to recognise a certain standard of legal information and help. </p><p> When
+      you see an organisation that displays the CLS logo, you know that organisation
+      meets certain quality standards. If a Community Legal Service provider
+      is unable to deal with all aspects of your problem, it can refer clients
+      to another Quality Marked organisation.</p><p> For
+      more information on the Community Legal Service Quality Mark see the  
+		<a href="http://www.legalservices.gov.uk/">
+				<strong>Legal
+  Services Commission</strong>
+			</a>	
+			<span class="gen">link to external website</span> website.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=676"> Providing Information
+		(676)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

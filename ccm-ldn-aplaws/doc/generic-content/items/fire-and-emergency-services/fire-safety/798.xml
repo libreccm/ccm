@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=798}]"><cms:name>hazchem-information-798</cms:name><cms:language>en</cms:language><cms:title>HAZCHEM Information</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=798}]"><cms:name>hazchem-information-798-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>hazchem, information</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=798}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here </span><span class="gen">sms phone number here </span><span class="gen">fax number here 		</span><span class="gen">minicom number here 	</span><p><i>The Council provides general information, advice and links on hazardous chemicals and emergency procedures for incidents involving hazardous chemicals.</i></p><hr/><p>
+			
+		<a href="http://www.ukresilience.info/chemical.htm">
+				<strong>The Civil Contingencies Secretariat</strong>
+			</a>	
+			<span class="gen">link to external website</span> provides links to government and non-government sources on a wide variety of emergencies and crises that can affect the UK, plus emergency planning guidance and government information. </p><p>
+			
+		<a href="http://www.the-ncec.com/index.html">
+				<strong>The National Chemical Emergency Centre</strong>
+			</a>	
+			<span class="gen">link to external website</span> (NCEC) plays a key role in national arrangements for responding to chemical incidents. It provides a 24-hour national advice service to the public emergency services on dealing with chemical incidents and is a central part of the Chemical Industries Associations 
+		<a href="http://www.the-ncec.com/chemsafe/index.html">
+				<strong>CHEMSAFE</strong>
+			</a>	
+			<span class="gen">link to external website</span> scheme. </p><p>Emergency Action Codes (commonly called Hazchem Codes) are designed to assist the emergency services in the first few minutes of dealing with a hazardous goods distribution incident. Further information on 
+		<a href="http://www.the-ncec.com/hazchem/index.html">
+				<strong>Emergency Action Codes</strong>
+			</a>	 <span class="gen">link to external website</span> is available from The National Chemical Emergency Centre. 
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=798"> Providing Information
+		(798)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

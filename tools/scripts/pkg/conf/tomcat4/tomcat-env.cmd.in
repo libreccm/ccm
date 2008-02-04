@@ -1,0 +1,26 @@
+
+set WEBAPP_HOME=::app-home::\dist
+set ORACLE_HOME=::oracle-home::
+
+REM Assume tomcat4 config has set java home correctly; if not set it
+REM here and export it separately
+set JAVA_HOME=::java-home::
+
+REM javacmd depends on JAVA_HOME being set correctly
+set JAVACMD=%JAVA_HOME%\bin\java ::jre-args::
+
+set CATALINA_HOME=::tomcat-home::
+set CATALINA_BASE=::app-home::
+set CLASSPATH=%JAVA_HOME%\lib\tools.jar
+set CLASSPATH=%CLASSPATH%;%CATALINA_HOME%\lib\jasper-runtime.jar
+set CLASSPATH=%CLASSPATH%;%WEBAPP_HOME%\WEB-INF\lib\jaas.jar
+set CLASSPATH=%CLASSPATH%;%WEBAPP_HOME%\WEB-INF\lib\jce.jar
+set CLASSPATH=%CLASSPATH%;%WEBAPP_HOME%\WEB-INF\lib\sunjce_provider.jar
+set CLASSPATH=%CLASSPATH%;%WEBAPP_HOME%\WEB-INF\lib\xerces.jar
+set CLASSPATH=%CLASSPATH%;%WEBAPP_HOME%\WEB-INF\lib\xalan.jar
+set CLASSPATH=%CLASSPATH%;%ORACLE_HOME%\jdbc\lib\classes12.zip
+
+set PATH=%JAVA_HOME%\bin;%CATALINA_HOME%\bin;%PATH%
+set SERVICENAME=::app-name::
+
+set TOMCAT_USER=servlet

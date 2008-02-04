@@ -1,0 +1,9 @@
+
+model com.arsdigita.london.cms.freeform.asset;
+
+import com.arsdigita.cms.*;
+
+object type FreeformTextAsset extends TextAsset {
+
+  reference key (ff_freeform_text_assets.asset_id);
+}

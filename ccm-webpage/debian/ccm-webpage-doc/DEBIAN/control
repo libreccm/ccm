@@ -1,0 +1,11 @@
+Package: ccm-webpage-doc
+Version: 6.3.0-9
+Section: contrib/web
+Priority: optional
+Architecture: all
+Depends: ccm-tools
+Installed-Size: 976
+Maintainer: Runtime Packaging <runtime-packaging@runtime-collective.com>
+Source: ccm-webpage
+Description: Documentation for ccm-webpage
+ Documentation for ccm-webpage. Provides the JavaDoc API documentation.

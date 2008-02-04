@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=743}]"><cms:name>licensing-743</cms:name><cms:language>en</cms:language><cms:title>Licence - caravan site</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=743}]"><cms:name>licensing-743-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, caravan, site</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=743}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Caravan and Control of Development Act 1960 prohibits the use of land as a caravan site unless the occupier holds a site licence issued by the local authority.</i></p><hr/><p>There are some exceptions: </p><ul>
+			<li title="*">A caravan sited with the curtilage of a dwelling and its use is incidental to the dwelling. This means it cannot be occupied separately.</li>
+			<li title="*">A single caravan sited for not more than two consecutive nights for a maximum of 28 days in any 12 months.</li>
+			<li title="*">Up to three caravans on a site of not less than five acres for a maximum of 28 days in any 12 months.</li>
+			<li title="*">Sites occupied by exempted organisations such as the Caravan Club.</li>
+			<li title="*">Sites of up to 5 caravans certified by an exempt organisation and which are for members only.</li>
+			<li title="*">Sites occupied by the local authority. These are usually gypsy sites.</li>
+			<li title="*">Sites for temporary and special purposes such as caravan rallies, agricultural and forestry workers, building and engineering sites and travelling salesmen.</li>
+			<li title="*">A site for tents only can be used for a maximum of 28 days in any 12 months. </li>
+		</ul><h2>Licence Conditions</h2><p>Licences have conditions which include: </p><ul>
+			<li title="*">The type of caravan, e.g. residential, static holiday or touring.</li>
+			<li title="*">The permitted density (the number per acre/hectare) and the spacing between caravans.</li>
+			<li title="*">Water supply and drainage; lavatory and washing facilities.</li>
+			<li title="*">Fire precautions and electrical installations. </li>
+		</ul><p>
+			<strong>If you are a caravan site occupier </strong> - you should have a licence already but you should check that your name, the site name and address is correct and up to date. Also check that the licence corresponds with your planning permission. If not, you should send us the licence for re-issue. </p><p>
+			<strong>If you have recently become a caravan site occupier </strong> - licences are transferable to a new occupier but the law requires us to give consent for the transfer. You should send us the licence with a request for transfer and we will either endorse or re-issue it. </p><p>
+			<strong>If you are a potential site occupier </strong> - you or your legal advisor should check that all the land used for siting caravans has planning permission and that the details correspond with the site licence. If you wish to change the use of the land to a permanent caravan site use you must have planning permission before a licence can be issued. </p><p>
+			<strong>Applying for a licence </strong> - an application must be in completed accompanied by a site plan at 1:500 scale showing the layout of roads, caravans and facilities. </p><p>
+			<strong>
+				
+			
+			</strong>. <span class="gen">link to online form</span>
+		</p><p>If you require further information, please use the contact details above. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=743"> Applications for services
+		(743)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=743}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=743}]"/></cms:links></cms:item>

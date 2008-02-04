@@ -1,0 +1,7 @@
+<html>
+<head>
+  <title><%= (String) request.getAttribute("title") %></title>
+  <link href="/packages/versioning/vlog.css" rel="stylesheet" type="text/css"/>
+<style
+</head>
+<body>

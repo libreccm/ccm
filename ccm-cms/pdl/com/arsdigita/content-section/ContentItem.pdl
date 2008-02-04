@@ -1,0 +1,159 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ContentItem.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.globalization.*;
+import com.arsdigita.kernel.*;
+import com.arsdigita.versioning.*;
+import com.arsdigita.auditing.*;
+
+object type ContentItem extends VersionedACSObject {
+    ContentType[0..1] type =
+        join cms_items.type_id to content_types.type_id;
+    String[1..1] version = cms_items.version VARCHAR(200);
+    String[1..1] name = cms_items.name VARCHAR(200);
+    ContentSection[0..1] section =
+        join cms_items.section_id to content_sections.section_id;
+    String[0..1] language = cms_items.language;
+
+    // The 'ancestors' column contains a list of item ids of the parents
+    // and denormalizes the tree thus eliminating the need for
+    // a 'connect by' statement.
+    String[0..1] ancestors = cms_items.ancestors VARCHAR(3209);
+
+    reference key (cms_items.item_id);
+
+    // Basic auditing info for content items
+    unversioned BasicAuditTrail[0..1] auditing =
+        qualias { filter(all(com.arsdigita.auditing.BasicAuditTrail),
+                         id == this.id) };
+    aggressive load(auditing.id,
+                    auditing.creationDate,
+                    auditing.creationIP,
+                    auditing.lastModifiedDate,
+                    auditing.lastModifiedIP);
+}
+
+association {
+    ACSObject[0..1] parent =
+        join cms_items.parent_id to acs_objects.object_id;
+    ContentItem[0..n] contentChildren =
+        join acs_objects.object_id to cms_items.parent_id;
+}
+
+association {
+    ContentItem[0..1] masterVersion =
+        join cms_items.master_id to cms_items.item_id;
+    ContentItem[0..n] slaveVersions =
+        join cms_items.item_id to cms_items.master_id;
+}
+
+// TODO: This can be replaced with a "retrieveAll"  and then
+// an query.addFilter("upper(name) = :name");
+// filter.setParameter("name", name.toUpperCase());
+query validateUniqueItemName {
+    BigDecimal itemID;
+  do {
+    select cms_items.item_id
+    from 
+      cms_items
+    where
+      parent_id = :parentId
+      and upper(name) = upper(:name)
+  } map {
+    itemID = item_id;
+  }
+}
+
+// This can be replaced with a "retrieve all" and a filter
+query topLevelItems {
+  ContentItem item;
+  do {
+    select
+      a.object_id, a.object_type, a.default_domain_class, a.display_name,
+      i.ancestors
+    from
+      acs_objects a, cms_items i, cms_folders f
+    where
+      a.object_id = i.item_id
+    and
+      i.parent_id = f.folder_id
+  } map {
+    item.id                 = a.object_id;
+    item.objectType         = a.object_type;
+    item.defaultDomainClass = a.default_domain_class;
+    item.displayName        = a.display_name;
+    item.ancestors          = i.ancestors;
+  }
+}
+
+query getLiveItemsWithSameParent {
+    BigDecimal id;
+    do {
+        select item_id
+        from cms_items
+        where parent_id = (select parent_id
+                             from cms_items
+                            where item_id = :itemId)
+	    and (version = 'live' or version = 'pending')
+    } map {
+        id = item_id;
+    }
+}
+
+
+data operation updateContetItemAncestors {
+    do {
+        update cms_items
+        set ancestors = :newPrefix || substr(ancestors,
+                                             :oldPrefixLength + 1)
+        where ancestors like :oldPrefix || '%'
+        and not item_id = :id
+    }
+}
+
+query getPendingSortedByLifecycle {
+    ContentItem item;
+
+    do {
+        select
+          a.object_id, a.object_type, a.default_domain_class, a.display_name,
+          i.ancestors
+        from
+          acs_objects a,
+          cms_items i,
+          acs_object_lifecycle_map aolm,
+          lifecycles lc
+        where
+          a.object_id = i.item_id
+          and a.object_id = aolm.item_id
+          and lc.cycle_id = aolm.cycle_id
+          and i.master_id = :itemID
+          and i.version   = 'pending'
+        order by
+          lc.start_date_time asc
+    } map {
+        item.id                 = a.object_id;
+        item.objectType         = a.object_type;
+        item.defaultDomainClass = a.default_domain_class;
+        item.displayName        = a.display_name;
+        item.ancestors          = i.ancestors;
+    }
+}

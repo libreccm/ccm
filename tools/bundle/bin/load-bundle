@@ -1,0 +1,63 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my $verbose = 0;
+
+if ($ENV{'CCM_TOOLS_DEBUG'}) {
+    $verbose += 2;
+}
+
+if ($ENV{'CCM_TOOLS_VERBOSE'}) {
+    $verbose += 1;
+}
+
+my $bundledir = $ENV{'CCM_TOOLS_HOME'} . "/bundles";
+
+my $params = undef;
+my $hasParams = 0;
+for (my $i = 0; $i < @ARGV; $i++) {
+    if ($ARGV[$i] eq '--name') {
+        my $bundle = $ARGV[$i+1];
+        if (!($bundle =~ m,^/, ||
+              $bundle =~ m,^\.\.?/,)) {
+            $bundle = $bundledir . "/" . $bundle;
+        }
+        if (!-d $bundle) {
+            die "Cannot find bundle $bundle\n";
+        }
+        $params = $bundle . "/integration.properties";
+        splice (@ARGV, $i, 2, &read($bundle));
+    } elsif ($ARGV[$i] eq '--parameter-file') {
+        $hasParams = 1;
+    }
+}
+if (!$hasParams && $params) {
+  push @ARGV, "--parameter-file", $params;
+}
+
+#if ($verbose > 0) {
+    print "ccm load @ARGV \n"; 
+#}
+system "ccm", "load", @ARGV;
+exit $?;
+
+sub read {
+    my $bundle = shift;
+    my $path = $bundle . "/applications.cfg";
+    my @lines;
+
+    if ($verbose > 1) {
+        print "reading $path\n";
+    }
+    open (IN, "<$path") or die "could not open $path: $!";
+    while (<IN>) {
+        next if /^\s*\#/;
+	next if /^\s*$/;
+        chomp;
+        push (@lines, $_);
+    }
+    close IN;
+
+    return @lines;
+}

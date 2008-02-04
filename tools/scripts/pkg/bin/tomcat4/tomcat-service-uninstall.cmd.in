@@ -1,0 +1,8 @@
+@echo off
+@if not "%ECHO%"=="" echo %ECHO%
+
+setlocal
+call %~dp0..\conf\tomcat-env.cmd
+
+tomcat.exe -uninstall "%SERVICENAME%" 
+endlocal

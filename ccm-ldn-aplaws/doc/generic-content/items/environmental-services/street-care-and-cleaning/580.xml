@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=580}]"><cms:name>street-litter-and-sweeping-580</cms:name><cms:language>en</cms:language><cms:title>Street Litter (incl Street Sweeping)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=580}]"><cms:name>street-litter-and-sweeping-580-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>street, litter, sweeping</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=580}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is responsible for the sweeping of streets and removal of litter.</i></p><hr/><p>The Council's streets are divided into zones, depending on the 
+  volume of traffic using the streets each day. The more frequently the road is 
+  used, the more often it will be swept.
+			</p><p>
+				However, if the visual appearance 
+  of an area should deteriorate to an unacceptable level between cleans, it will 
+  be cleaned up within a certain time, as laid down in a Litter Code of Practice 
+  under the Environmental Protection Act 1990.
+			</p><p>
+				If you feel your road is 
+  not swept satisfactorily, or you have any other comments or questions, please 
+  use the details above or the  
+		<a href="/ccm/services/pid.jsp?pid=forms/580a">online form</a>	
+			<span class="gen">link to online form</span>
+					.
+			</p><p>
+				If you want to report someone 
+  dropping litter use the online reporting system on the 
+		<a href="/ccm/services/pid.jsp?pid=582">
+				<strong>Street 
+  Cleaning Programme</strong>
+			</a>	 page <span class="gen">link to pid 582</span>	.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=580"> Applications for services
+		(580)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,15 @@
+
+model com.arsdigita.london.exporter;
+
+
+query itemIDsInSection {
+  BigDecimal[1..1] id;
+
+  do {
+    select i.item_id
+      from cms_items i
+     where i.section_id = :sectionID
+  } map {
+    id = i.item_id;
+  }
+}

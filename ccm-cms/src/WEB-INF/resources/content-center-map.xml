@@ -1,0 +1,18 @@
+<dispatcher-configuration>
+  <url-mapping>
+    <url></url>
+    <page-class>com.arsdigita.cms.ui.WorkspacePage</page-class>
+  </url-mapping>
+  <url-mapping>
+    <url>index/</url>
+    <page-class>com.arsdigita.cms.ui.WorkspacePage</page-class>
+  </url-mapping>
+  <url-mapping>
+    <url>searchredirect/</url>
+    <page-class>com.arsdigita.cms.ui.SearchResultRedirector</page-class>
+  </url-mapping>
+  <url-mapping>
+    <url>item-search/</url>
+    <page-class>com.arsdigita.cms.ui.ItemSearchPage</page-class>
+  </url-mapping>
+</dispatcher-configuration>

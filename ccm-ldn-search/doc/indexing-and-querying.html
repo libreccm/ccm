@@ -1,0 +1,150 @@
+<html>
+  <head>
+    <title>Content Indexing and Querying using interMedia and Lucene</title>
+  </head>
+  <body>
+    <h2>Content Indexing and Querying using interMedia and Lucene</h2>
+    <hr/>
+    This document will outline how CMS content is indexed, and how a
+    search string is translated into a set of results with both Lucene
+    and Oracle interMedia (also known as Oracle Text).
+
+    <h3>Indexing</h3>
+
+    <h4>Basic Attributes</h4>
+      Both interMedia and Lucene store the same set of basic attributes
+      about a piece of content that are used for filtering a search
+      query or displaying search results.  These attributes are also
+      used to match search query terms when using Lucene, but not when
+      using interMedia.  Attributes include:
+      <ul>
+        <li>Object ID</li>
+        <li>Object type</li>
+        <li>Title</li>
+        <li>Summary</li>
+        <li>Language</li>
+        <li>Content creator</li>
+        <li>Creation date</li>
+        <li>Last user to modify content</li>
+        <li>Last modification date</li>
+      </ul>
+
+    <h4>Full Text</h4>
+      The content that is full-text indexed is created by traversing the
+      object graph and generating a representation that is
+      usable by the indexer.  This
+      is handled by an implementation of <a
+      href="http://ccm.redhat.com/documentation/api/ccm-core-6.0.0/com/arsdigita/domain/DomainObjectTraversal.html">
+      DomainObjectTraversal</a>.  The set of objects to be visited by
+      the traversal is configurable by editing the file indicated by
+      the <code>com.arsdigita.cms.item_adapters</code> configuration
+      parameter (it defaults to:
+      <code>WEB-INF/resources/cms-item-adapters.xml</code>).
+
+      <p/>
+      This file contains a set of <code>contexts</code>, which are
+      used to group adapter directives for different purposes.  The
+      <code>context</context> used for indexing is
+      <code>com.arsdigita.cms.search.ContentPageMetadataProvider</code>.
+      Within this <code>context</code> there a number of
+      <code>adapters</code>.  Each <code>adapter</code> specifies a
+      list of attributes and associations that should be handled by
+      the DomainObjectTraversal for the given <code>object
+      type</code>.  Each of these lists also has an adapter
+      <code>rule</code>.  If the <code>rule</code> equals
+      <code>include</code>, then the list is an inclusion list, and
+      only attributes (or associations) listed will be processed by
+      the DomainObjectTraversal.  If the rule equals
+      <code>exclude</code>, then it is an exclusion list, and all
+      attributes (or associations) will be processed except for those
+      listed.
+      
+      <p/>
+      When indexing an object for Lucene, the
+      <code>DomainObjectTraversal</code> converts all processed
+      attributes into their string values, concatenates them into
+      one long space-separated string, and passes that string to
+      Lucene for indexing.  The details of how Lucene handles this
+      data is beyond the scope of this document, but you can read the
+      documentation available from the official <a
+      href="http://jakarta.apache.org/lucene/docs/index.html">Lucene</a>
+      project page for more information.
+
+      <p/>
+      When indexing an object for interMedia, the set of traversed
+      objects is converted to an XML document.  The object being
+      indexed is processed recursively, with the root object
+      creating the first element, and all attributes and associated objects
+      creating new child elements.  This XML document is then inserted
+      into a database table that has been indexed to allow for
+      efficient searching of XML data.
+
+      <p/>
+      interMedia also allows for indexing of raw content - plain text and binary
+      data (Word, PDF, etc).  When using interMedia an additional
+      traversal is performed, collecting any associated text or binary
+      assets.  The rules for which attributes and associations are
+      visited during this traversal are contained in
+      <code>com.arsdigita.cms.search.AssetExtractor</code>
+      <code>context</code>.  The content of the first asset found is
+      inserted into another column that is indexed using interMedia.
+      If that content is plain text or one of the interMedia-supported
+      binary file types, it will also be used when performing
+      searches.  Oracle provides a <a
+      href="http://download-west.oracle.com/docs/cd/B10501_01/text.920/a96518/afilsupt.htm#CCREF1300">list</a>
+      of supported document formats.
+
+      <h3>Querying</h3>
+
+      <h4>Lucene</h4>
+      Human-entered search terms are passed directly to the Lucene
+      APIs to be parsed and matched against the search index.  The
+      Lucene documentation explains the <a
+      href="http://jakarta.apache.org/lucene/docs/queryparsersyntax.html">query
+      syntax</a> and matching rules in detail.
+
+      <h4>interMedia</h4>
+      interMedia is more restrictive about the queries it will accept,
+      and an incorrectly formatted query can cause an error.  To avoid
+      this, the human-entered search terms are first "cleaned" by
+      removing illegal words and characters and separating the
+      remaining words and phrases (words surrounded by quotes, which
+      will be search for as a group) with "and".  Illegal characters
+      are: <code>|&amp;,-*;{}%_$?!()\:@.&lt;&gt;#^+=[]~`</code> and
+      illegal words are: <code>the, of, to, with, and, or, for,
+      this</code>.  This set of cleaned search terms is then used to
+      query the columns containing the XML and raw content we
+      generated earlier.  The query is performed using the interMedia
+      <code>contains()</code> operator.  This operator uses the
+      interMedia indexes on these columns to perform efficient
+      full-text searching.  The rank for each search result is
+      obtained by multiplying the value of the <code>score()</code>
+      operator for the XML and raw content columns by the weights
+      specified in the
+      <code>waf.search.intermedia.xml_content_weight</code> and
+      <code>waf.search.intermedia.raw_content_weight</code> config
+      paratemers respectively, and summing the resulting values. Both
+      config parameters default to <code>1</code>.  Detailed
+      information on the use of the <code>contains()</code> and
+      <code>score()</code> operators is <a
+      href="http://download-west.oracle.com/docs/cd/B10501_01/text.920/a96518/csql.htm#21732">provided</a>
+      by Oracle.  Note that, as a result of the "cleaning" of the
+      search terms, advanced interMedia search features are not
+      supported.  Only simple matching of all specified words and
+      phrases is currently supported.
+
+      <p/>
+      Because full-text searching with interMedia is done against a
+      table in the same schema as the rest of the CMS data (as opposed
+      to the external files used by Lucene), it enables filtering
+      based on permissions and categories, which is not available to
+      Lucene.  When filtering based on permissions, the search query
+      is modified to join with the permissions-denormalization tables
+      and filter out any objects for which the specified user
+      (generally the currently logged-in user) does not have the
+      specified privilege.  For category-based filtering, the search
+      query joins with the categorization tables to filter out any
+      objects not in the specified categories.
+
+  </body>
+</html>

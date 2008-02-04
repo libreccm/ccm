@@ -1,0 +1,64 @@
+//
+// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+//
+// The contents of this file are subject to the ArsDigita Public 
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.arsdigita.com/ADPL.txt
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.docs;
+
+// retrieve listing of resources that have a given parent
+
+query getChildren {
+    BigDecimal parentID;
+    String name;
+    String description;
+    Boolean isFolder;
+    String mimeType;
+    String mimeTypeDescription;
+    BigDecimal modifyingUser;
+    String modifyingIP;
+    Date lastModified;
+    BigDecimal id;
+    String objectType;
+    do {
+        select CASE WHEN d.parent_id is null then -1 
+                    else d.parent_id end as parent_id,      
+               d.name,
+               d.description,
+               d.is_folder,
+               d.mime_type,
+               m.label, 
+               d.last_user,
+               d.modifying_ip,
+               d.last_modified,
+               a.object_id,
+               a.object_type
+        from   docs_resources d
+               left join cms_mime_types m on (d.mime_type = m.mime_type),
+               acs_objects a 
+        where d.resource_id = a.object_id
+        and parent_id = :folderID
+        order by d.is_folder, d.name
+    } map {
+        parentID    =  parent_id;
+        name        = d.name;
+        description = d.description;
+        isFolder    = d.is_folder;
+        mimeType    = d.mime_type;
+        mimeTypeDescription = m.label;
+        modifyingUser = d.last_user;
+        modifyingIP  = d.modifying_ip;
+        lastModified = d.last_modified;
+        id          = a.object_id;
+        objectType  = a.object_type; 
+    }
+}     
+

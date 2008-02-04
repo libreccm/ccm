@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+  <ctd:content-type label="Webpage"
+                    description="A webpage"
+                    objectType="com.arsdigita.cms.webpage.Webpage"
+                    classname="com.arsdigita.cms.webpage.Webpage">
+    
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+      <ctd:authoring-step label="Webpage Properties"
+                          description="Edit the basic webpage properties"
+                          component="com.arsdigita.cms.webpage.ui.authoring.WebpagePropertiesStep" 
+                          ordering="1"/>
+     </ctd:authoring-kit>
+  </ctd:content-type>
+</ctd:content-types>

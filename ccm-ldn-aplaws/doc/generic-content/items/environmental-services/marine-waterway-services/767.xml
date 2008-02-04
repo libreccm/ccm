@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=767}]"><cms:name>batch-13-767</cms:name><cms:language>en</cms:language><cms:title>Towing</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=767}]"><cms:name>batch-13-767-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>towing</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=767}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>There is a legal requirement on you to ensure as far as possible, that your trailer (and accessories) have been built, maintained, and are loaded and towed, in such a way as to ensure that no possible danger is caused to any person (driver, passenger, other road user or anyone else). </i></p><hr/><p>This goes well beyond just requiring you to comply with the letter of the law. Failure to comply with this 'duty of care' can not only result in a fine, but also leaves you wide open to a civil claim made by any injured parties. </p><p>Part of your responsibility in loading a boat, is to get the correct weight on the hitch. There should be about 50 to 100kgs of download on the hitch when it is attached to the vehicle. On a single axle trailer this is achieved by moving the load back and forward. But it is much more complicated on tandem wheeled trailers where the tow bar height is also critical. The trailer must be towed level so the weight is carried evenly on both axles. More seriously, where the tow hitch on the vehicle is too low (often the case when the car is loaded with gear and passengers), the hitch can actually exert an upward lift and thereby so reduce the down force on the rear wheels of the vehicle that they will have only marginal grip to resist jack knifing. </p><h2>Driving Licence</h2><p>For those of people who had licences before 1st July 1996, there is no change to the regulations. The situation is totally different for new drivers, and they're best to phone the DVLA on 01792 772151 for help.</p><h2>Legal Requirements</h2><h3>Weight</h3><p>There are only two legal requirements for weights and loads:
+                  One is that you must not exceed the Gross Train Weight (GTW)
+                  that is shown on the manufacturer's ID plate under the bonnet,
+                  and the other is that you mustn't exceed the trailer's 'Maximum
+                  Gross Weight'.</p><h3>Overhangs</h3><p>Technically, all the boat aft of the rear hull support on
+                  the trailer is an 'overhang', and not just the mast that sticks
+                  out beyond the transom. A red flag or streamer should be attached
+                  to the end of the mast. If this total overhang is more than
+                  2 metres, an 'end marker board' should be substituted for the
+                  flag.</p><h3>Lighting</h3><p>These regulations vary slightly depending on the age of the
+                  trailer and the width of the towing vehicle, but this is what
+                  is normally required. The trailer board needs; 2 red rear lamps,
+                  2 stop lamps, number plate and light, 2 red reflectors, 2 amber
+                  indicators, 1 rear red fog lamp, 2 white forward facing reflectors.
+                  In addition, if the trailers are more than 2.1 meters
+                  wide, they also need white forward facing lamps on the trailer
+                  board or mudguards. The lighting board must be wide enough
+                  so the outer edge of the rear lights is within 150mm of the
+                  outer edge of the boat. This lighting board should be positioned
+                  within 1 metre of the end of the total overhang (which is often
+                  the mast), or otherwise the end of the overhang would have
+                  to be lit with an addition reflector and red lamp. The lighting
+                  board should not be more than 1.5 metres off the ground. The trailer also
+                  requires at least two amber reflectors down each side.</p><h3>Tyres</h3><p>The same regulations as car tyres now apply to trailers, viz
+                  tread depth, etc. In addition, you cannot mix radial and crossplys
+                  at all on a tandem wheeled trailer.</p><h3>Brakes</h3><p>Trailers built since 1983 must have overrun brakes on every
+                  wheel, worked from a coupling that is damped and matched with
+                  the brake linkage. The brake efficiency must be 45%. In addition,
+                  there must always be a working parking brake capable of holding
+                  the laden trailer on an 18% gradient. (nearly 1 in 5 ) All
+                  trailers must have a break-away cable that will stop the trailer
+                  automatically if it becomes uncoupled.</p><h3>Speeds</h3><p>Speed limits are 60mph on motorways and dual carriageways,
+                  and 50mph on other roads. You cannot use the outside lane on
+                  a three (or four) lane motorway.</p><h3>Insurance</h3><p>Insurance cover for your boat when trailing is provided by
+                  a combination of your vehicle and boat policy. Liability for
+                  damage caused by the boat / trailer combination when attached
+                  to the towing vehicle (or after it has become accidentally
+                  detached), should be covered under the third party liability
+                  section of the vehicle policy. </p><h3>Tow Hitch Strength</h3><p>Check that the tow hitch and mounting on your vehicle is rated
+                  high enough for your intended load.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=767"> Providing Information
+		(767)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

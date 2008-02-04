@@ -1,0 +1,153 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: metadata.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model versioning.metadata;
+
+versioned object type VT1 {
+    BigInteger[1..1] id = t_vt1.id INTEGER;
+    String[0..1] name = t_vt1.name VARCHAR;
+
+    object key(id);
+}
+
+object type VT2 extends VT1 {
+    String[0..1] extraAttr    = t_vt2.extra_attr VARCHAR;
+    component UT3[0..n] ut3s = join t_vt2.id to t_ut3.vt2_id;
+
+    reference key(t_vt2.id);
+}
+
+object type C1 {
+    BigInteger[1..1] id = t_c1.id INTEGER;
+
+    A1[1..1] a1s = join t_c1.a1_id to t_a1.id;
+    component UT4[0..1] ut4 = join t_c1.ut4_id to t_ut4.id;
+
+    object key(id);
+}
+
+association {
+    VT2[0..1] vt2 = join t_c1.vt2_id to t_vt2.id;
+    component C1[0..n] c1s = join t_vt2.id to t_c1.vt2_id;
+}
+
+object type A1 {
+    BigInteger [1..1] id = t_a1.id INTEGER;
+
+    String[0..1] someAttr = t_a1.some_attr VARCHAR;
+    UT4[1..1] ut4 = join t_a1.ut4_id to t_ut4.id;
+
+    object key(id);
+}
+
+object type UT1 {
+    BigInteger[1..1] id = t_ut1.id INTEGER;
+    String[0..1] someAttr     = t_ut1.some_attr VARCHAR;
+    UT3[1..1] ut3attr = join t_ut1.ut3_id to t_ut3.id;
+
+    object key(id);
+}
+
+object type UT2 {
+    BigInteger[1..1] id = t_ut2.id INTEGER;
+    String[1..1] ut2Attr = t_ut2.attr VARCHAR;
+
+    object key(id);
+}
+
+versioned object type VUT2 extends UT2 {
+  String[0..1] vut2Attr = t_vut2.attr VARCHAR;
+  UT1[1..1] ut1 = join t_vut2.ut1id to t_ut1.id;
+  unversioned String[1..1] unverAttr = t_vut2.unver_attr VARCHAR;
+  unversioned component UT5[0..n] ut5 = join t_vut2.ut5id to t_ut5.id;
+  versioned UT6[0..n] ut6s = join t_vut2.ut6id to t_ut6.id;
+
+  reference key(t_vut2.id);
+}
+
+object type UT3 {
+    BigInteger[1..1] id = t_ut3.id INTEGER;
+    String[0..1] ut3attr = t_ut3.attr VARCHAR;
+    composite VT2[1..1] vt2 = join t_ut3.vt2_id to t_vt2.id;
+
+    object key(id);
+}
+
+object type UT4 {
+    BigInteger[1..1] id = t_ut4.id INTEGER;
+    String[0..1] ut4attr = t_ut4.attr VARCHAR;
+
+    object key(id);
+}
+
+
+versioned object type VTC3 {
+    BigInteger[1..1] id = t_vtc3.id INTEGER;
+    String[0..1] name = t_vtc3.name VARCHAR;
+
+    object key(id);
+}
+
+object type C2 {
+    BigInteger[1..1] id = t_c2.id INTEGER;
+    String[0..1] name = t_c2.name VARCHAR;
+    composite VTC3[1..1] vtc3 = join t_c2.composite_id to t_vtc3.id;
+
+    object key(id);
+}
+
+object type UT5 {
+    BigInteger[1..1] id = t_ut5.id INTEGER;
+    String[0..1] ut5attr = t_ut5.attr VARCHAR;
+
+    object key(id);
+}
+
+object type UT6 {
+    BigInteger[1..1] id = t_ut6.id INTEGER;
+    String[0..1] ut6attr = t_ut6.attr VARCHAR;
+
+    object key(id);
+}
+
+
+object type ROLE1 {
+    BigInteger[1..1] id = t_role1.id INTEGER;
+    String[0..1] name   = t_role1.name VARCHAR;
+
+    object key(id);
+}
+
+object type ROLE2 {
+    BigInteger[1..1] id = t_role2.id INTEGER;
+    String[0..1] name = t_role2.name VARCHAR;
+
+    object key(id);
+}
+
+association {
+    versioned ROLE1[0..n] role1s = join t_role2.id to t_role1_role2.role2_id,
+                                   join t_role1_role2.role1_id to t_role1.id;
+
+    versioned ROLE2[0..n] role2s = join t_role1.id to t_role1_role2.role1_id,
+                                   join t_role1_role2.role2_id to t_role2.id;
+
+    // commented out fow now, because it causes VersioningMetadata to error out
+    // String[0..1] linkAttr = t_role1_role2.link_attr VARCHAR;
+}

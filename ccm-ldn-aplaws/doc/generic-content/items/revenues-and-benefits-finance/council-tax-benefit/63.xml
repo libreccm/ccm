@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=63}]"><cms:name>batch-20-63</cms:name><cms:language>en</cms:language><cms:title>Council tax benefit - new claim</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=63}]"><cms:name>batch-20-63-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, tax, benefit, new, claim</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=63}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>You can claim Council Tax Benefit if:- </i></p><hr/><ul>
+			<li title="*">you are on Income Support or Job Seekers Allowance</li>
+			<li title="*">you are on a low income (this includes people who are self employed) </li>
+		</ul><p>You cannot get Council Tax Benefit if:-</p><ul>
+			<li title="*">you, or your partner between you, have more than &#xA3;16,000 in savings </li>
+		</ul><p>A partner is someone you are married to, or someone you live 
+  with as if you are married to them.</p><h3>Second Adult Rebate</h3><p>You can claim Second Adult Rebate if there are other people living in your home who are on a low income.</p><p>You cannot claim Second Adult Rebate if you are married or have a partner, click here for more details.</p><h3>How do I claim?</h3><p>If you claim Income Support or Job Seekers Allowance the DWP will give you a form for you to claim Council Tax Benefit. (The DWP are part of the Department of Works and Pensions). Fill in the form and send it back to the DWP straight away. They will send the form to us with proof of your Income Support/Job Seeker Allowance (income based) claim.</p><p>If you have not claimed income support or job seekers allowance (income based)</p><p>You can claim Council Tax Benefit if you are on a low income. You need to fill in the claim form marked 'Council Tax Benefit'.</p><p>You can get the claim form by contacting us using the details above</p><ul>
+			<li title="*">Application for Council Tax Benefit <strong>
+					
+		<a href="/ccm/services/pid.jsp?pid=forms/63a">Form A</a>	
+				</strong>
+				<span class="gen">link to online form.</span>
+			</li>
+			<li title="*">Application for Housing Benefit and/or Council Tax Benefit <strong>
+					
+		<a href="/ccm/services/pid.jsp?pid=forms/63a">Form B</a>	
+				</strong>
+				<span class="gen">link to online form.</span>
+			</li>
+		</ul><p>If you are in receipt of Income Support or Job Seekers Allowance (Income Based) and are not charged rent, complete Form A. Otherwise complete Form B.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=63"> Applications for services
+		(63)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

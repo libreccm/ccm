@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=612}]"><cms:name>batch-6-612</cms:name><cms:language>en</cms:language><cms:title>Dogs - registration</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=612}]"><cms:name>batch-6-612-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>environmental, health, dogs, dog, registration</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=612}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This service deals with the registration of dogs, the tag system and what to do if your dog is missing.</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">What is the Scheme about?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">How much does it cost?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">What happens if my dog is lost?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#4">How do I register my dog?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#5">How can I pay?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#6">How do I notify you of changes to my record?</a>	
+				</strong>
+			</li>
+		</ul><h3>
+			
+			What is the Scheme about?</h3><p>
+			<span class="gen">enter council name</span> has operated a Local Voluntary Dog Registration scheme since enter date.</p><p>A computerised recording system of tag numbers will give instant information as to the dog's name as well as the address and telephone number of owners.</p><h3>
+			
+			How much does it cost?</h3><p>For an annual fee of &#xA3; <span class="gen">enter amount</span>, a personal number ID tag will be issued and will remain valid for a period of 12 months from the date of registration.</p><h3>
+			
+			What happens if my dog is lost?</h3><p>Lost or stray dogs will be returned to the owner if picked up by one of the Dog Wardens in the area. This will apply during normal working hours, Monday to Friday, providing the dog has a valid collar and disc.</p><p>All reasonable steps will be taken to contact the owner should they not be at home when calling. If contact is not made, the dog will be taken to the nearest available kennelling facility for safe keeping for a period of 24 hours.</p><p>The dog will not be impounded (unless picked up more than 2 times in any one year) thereby saving the owner the cost of the pound fee, currently <span class="gen">enter amount.</span>
+		</p><h3>
+			
+			How do I register my dog?</h3><p>You can complete an 
+		<a href="/ccm/services/pid.jsp?pid=forms/612a">
+				<strong>application form</strong>
+			</a>	
+			<span class="gen">link to online form</span>
+		</p><h3>
+			
+			How can I pay?</h3><p>You can complete the 
+		<a href="/ccm/services/pid.jsp?pid=forms/612a">
+				<strong>application form</strong>
+			</a>	
+			<span class="gen">link to online form</span> and make a credit card/debit card payment by submitting the form.</p><p>You can print the application form out and post back to us with a cheque for the full amount. Cheques are to be posted to enter address</p><h3>
+			
+			How do I notify you of changes to my record?</h3><p>Change of dog ownership details must be notified to <span class="gen">enter council name.</span> The authority cannot be held responsible for returning dogs where ownership has changed and details have not been notified.</p><p>Registered owners will be notified by <span class="gen">enter council name</span>, <span class="gen">enter amount</span> days before 
+  renewal of the registration.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=612"> Applications for services
+		(612)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

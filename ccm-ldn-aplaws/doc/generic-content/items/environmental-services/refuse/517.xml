@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=517}]"><cms:name>bins-517</cms:name><cms:language>en</cms:language><cms:title>Commercial Waste - collection</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=517}]"><cms:name>bins-517-dublin-metadata</cms:name><cms:dcAudience>Businesses</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>commercial, waste, bins, trade, business, disposal, rubbish</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=517}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council offers a commercial waste collection service.</i></p><hr/><ul>
+		<li title="*">
+<strong>
+
+		<a href="#t1">What is Duty of Care?</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#t2">Does the Council provide a Commercial Waste collection Service?</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#t3">What is the cost for this service?</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#t4">What about recycling?</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#t5">What will you collect?</a>	
+</strong>
+</li>
+		</ul><h3>
+
+			What is Duty of Care?</h3><p>The Duty of Care is a law which says that businesses must take all reasonable steps to keep waste safe. Waste must be stored safely and securely and must not cause pollution to people or the environment. The waste must be packaged in suitable containers so that it cannot fall out, blow away or escape from the receptacle. It must be secured against unauthorised removal as far as is reasonably practical. Security should be sufficient to prevent the breaking open of containers and removal of wasted by vandals, thieves, animals, accident or weather.</p><p>Businesses must ensure that the person removing the waste is either from a local authority or a licensed waste collection company. They will be authorised to remove waste and transport and dispose of it safely. The business must provide a written description of the waste to the person who removes it. This is known as a waste transfer note and must be completed by both persons involved in the transfer.</p><p>For further information on the Environmental Protection Act 1990 and the legal observations of businesses under the Duty of Care regulations, go to <strong>
+
+		<a href="http://www.hmso.gov.uk">www.hmso.gov.uk</a>	
+</strong> <span class="gen">Link to External Website.</span>
+</p><h3>
+
+			Does the Council provide a Commercial Waste collection Service?</h3><p>The Council can provide a full range of waste collection and disposal services including:</p><p>Refuse collection and using a range of containers to suit every businesses need. We can issue sacks where bin storage may be a problem.</p><ul>
+				<li title="*">A <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=523">clinical waste collection</a>	
+</strong> <span class="gen">link to pid 523</span> and disposal.</li>
+				<li title="*">Compactors for those companies with large amounts of waste.</li>
+				<li title="*">
+<strong>
+
+		<a href="/ccm/services/pid.jsp?pid=522">Removal of one off loads or items</a>	
+</strong> <span class="gen">link to pid 522.</span>
+</li>
+			</ul><h3>
+
+			What is the cost for this service?</h3><p>Business Rates do not cover the removal of waste from business premises. A commercial waste collection service can be from as little as <strong>(add minimum cost here).</strong> Contact us for a competitive price.</p><h3>
+
+			What about recycling?</h3><p>The Commercial Waste staff work very closely with the Recycling officer. We can look at your waste stream and advise on recycling opportunities. We may be able to offer a recycling service that reduces your waste and collection costs whilst helping your company to stay green. For further details contact the commercial waste department.</p><h3>
+
+			What will you collect?</h3><p>We will collect almost anything. However, you can contact us for information of hazardous waste, for example, asbestos. This is a specialised field but we can put you in touch with the right people.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=517"> Providing Information
+		(517)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

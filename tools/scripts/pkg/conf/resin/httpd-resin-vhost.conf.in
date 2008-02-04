@@ -1,0 +1,9 @@
+
+<VirtualHost *:::port::>
+  DocumentRoot ::webapp-dir::
+
+  <IfModule mod_caucho.c>
+      CauchoConfigFile ::resin-conf::
+  </IfModule>
+
+</VirtualHost>

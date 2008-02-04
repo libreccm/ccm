@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=266}]"><cms:name>child-protection-266</cms:name><cms:language>en</cms:language><cms:title>Child Protection</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=266}]"><cms:name>child-protection-266-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>child, protection</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=266}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This information provides simple guidance about children who may need protection from harm. Contact Social Services if you are worried about any child's welfare.</i></p><hr/><ul>
+			<li title="*">
+				
+		<a href="#abuse">Signs of Abuse </a>	
+			</li>
+			<li title="*">
+				
+		<a href="#protect">Positive ways of protecting children </a>	
+			</li>
+			<li title="*">
+				
+		<a href="#acpc">Area Children Protection Committee (ACPC) </a>	
+			</li>
+			<li title="*">
+				
+		<a href="#worried">What to do if you are worried </a>	
+			</li>
+		</ul><h2>
+			
+			Signs of Abuse</h2><p>The following may help you decide whether a child's welfare is at risk of abuse, harm or neglect. </p><p>
+			<strong>Signs which may suggest physical abuse </strong>
+		</p><ul>
+			<li title="*"> Any bruising to a baby - pre-walking stage </li>
+			<li title="*">      Multiple bruising to different parts of the body </li>
+			<li title="*">      Bruising of different colours indicating repeated injuries </li>
+			<li title="*">      Fingertip bruising to the chest, back, arms or legs </li>
+			<li title="*">      Burns of any shape or size </li>
+			<li title="*">    An injury for which there is no adequate explanation </li>
+		</ul><h3>
+			<strong>Signs of possible sexual abuse </strong>
+		</h3><ul>
+			<li title="*"> Something a child has told you </li>
+			<li title="*">      Something a child has told someone else </li>
+			<li title="*">      A child who shows worrying sexualised behaviour in their play or with other children </li>
+			<li title="*">      A child who seems to have inappropriate sexual knowledge for their age </li>
+			<li title="*">      A child who may be visiting or being looked after by a known or suspected sexual offender </li>
+		</ul><h3>
+			<strong>Signs which may suggest emotional harm </strong>
+		</h3><p>The following signs may be present in children whose parents are over-critical and emotionally distant, or who are unable to meet their child's emotional needs: </p><ul>
+			<li title="*"> Children whose behaviour is excessive. For example, excessive bedwetting, overeating, rocking, headbanging. </li>
+			<li title="*">      Children who self harm. For example, they may cut or scratch themselves or overdose. </li>
+			<li title="*">      Children who attempt suicide </li>
+			<li title="*">      Children who persistently run away from home </li>
+			<li title="*">      Children who show high levels of anxiety, unhappiness or withdrawal </li>
+			<li title="*">      Children who usually seek out or avoid affection. </li>
+		</ul><h3>
+			<strong>Signs which may suggest neglect </strong>
+		</h3><ul>
+			<li title="*"> Squalid, unhygienic or dangerous home conditions </li>
+			<li title="*">      Parents who fail to attend to their children's health or development needs </li>
+			<li title="*">      Children who appear persistently undersized or underweight </li>
+			<li title="*">      Children who continually appear tired or lacking in energy </li>
+			<li title="*">      Children who suffer frequent injuries due to lack of supervision. </li>
+		</ul><h2>
+			
+			Positive ways of protecting children </h2><p>
+			<strong>What do children need? </strong>
+		</p><ul>
+			<li title="*"> To feel safe and secure </li>
+			<li title="*">      Health and happiness </li>
+			<li title="*">      Appropriate affection </li>
+			<li title="*">      Lots of smiles </li>
+			<li title="*">      Praise and encouragement </li>
+			<li title="*">      To be able to talk to someone </li>
+			<li title="*">      To be listened to </li>
+			<li title="*">      New experiences </li>
+			<li title="*">      Respect for their feelings </li>
+			<li title="*">      Rewards and treats </li>
+		</ul><h2>
+			
+			Area Child Protection Committee </h2><p>Everyone is responsible for safeguarding and promoting the welfare of children. </p><p>Sharing information and practice across agencies helps protect children. The Area Child Protection Committee is the designated multi-agency group with the authority to carry out this responsibility. </p><p>It works by: </p><ul>
+			<li title="*"> Leading collaboration across the agencies. </li>
+			<li title="*">      Developing and setting policies and procedures. </li>
+			<li title="*">      Monitoring and auditing their implementation. </li>
+			<li title="*">      Providing training. </li>
+			<li title="*"> Promoting awareness in the wider community. </li>
+		</ul><p>The ACPC meets regularly throughout the year, and is made up of representatives from: </p><ul>
+			<li title="*"> Social Services </li>
+			<li title="*">      Education Services </li>
+			<li title="*">      Health Services </li>
+			<li title="*">      Probation Services </li>
+			<li title="*">      Police </li>
+			<li title="*">      NSPCC </li>
+			<li title="*">      Children and Family Court Advisory and Support Service </li>
+		</ul><p>
+			<strong>What is the ACPC responsible for? </strong>
+		</p><ul>
+			<li title="*"> Agreeing local policies and procedures to guide inter-agency child protection work. </li>
+			<li title="*">      Improving local ways of working to achieve better outcomes for children. </li>
+			<li title="*">      Undertaking reviews of cases where there is a concern about the effectiveness of services. </li>
+			<li title="*">      Providing training and development programmes to help improve the quality of working together. </li>
+			<li title="*">      Raising awareness of the need to safeguard children in the wider community. </li>
+			<li title="*">      To undertake work as outlined in the Business Plan </li>
+		</ul><p>
+			<strong>How do you find out more about the ACPC? </strong>
+		</p><p>If you would like to find out more about the ACPC, how it works, or to make a comment, please contact <span class="gen">enter details</span>
+		</p><h2>
+			<strong>
+				
+			What to do if you are worried </strong>
+		</h2><p> If you are unsure that a child may be suffering but are worried, or if you are concerned that a child has suffered harm, neglect or abuse, please use the contact details at the top of the page. </p><p> In an emergency outside normal office hours, please contact our Emergency Services on telephone  or the police. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=266"> Providing Information
+		(266)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

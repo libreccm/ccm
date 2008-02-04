@@ -1,0 +1,11 @@
+<upgrade>
+  <version from="1.4.1" to="1.4.2">
+    <script sql="ccm-ldn-portal/upgrade/::database::-1.4.1-1.4.2.sql"/>
+  </version>
+  <version from="6.3.0" to="6.3.1">
+    <script sql="ccm-ldn-portal/upgrade/::database::-6.3.0-6.3.1.sql"/>
+  </version>
+  <version from="6.3.1" to="6.3.2">
+    <script sql="ccm-ldn-portal/upgrade/::database::-6.3.1-6.3.2.sql"/>
+  </version>
+</upgrade>

@@ -1,0 +1,198 @@
+This is a general todo list for the remaining items for the Theme application
+-----------------------------------------------------------------------------
+
+
+1. Make sure everything in the README is taking care of
+2. Use manifest files
+   a. when validating files in ThemeValidationPanel
+   b. when creating the zip file for all styles
+   c. when copying the default styles in to a new theme
+   d. anywhere else I may have forgotten
+3. clean up all of the TODO comments in the code
+4. check in the "correct" stylesheet-paths file
+5. figure out how to make the xsl stylesheets be able to properly import
+   sheets that are not available...for instance, right now, the 
+   stylesheet-paths contains ccm-ldn-theme and ROOT but that means we get an 
+   error when we try to use ccm-ldn-atoz which is not present in the paths file
+
+Documentation:
+--------------
+Summary:
+The Themes application provides an easy way for designers to be able to 
+upload and apply xsl stylesheets to a running web server without having
+to recompile anything.  The application works by allowing users to place
+files in a designated directory that is recognized by the server.  The
+user is then able to preview what these files will look like on a live running
+server before allowing other users to see the changes.  This provides
+designers with the ability to test out different styles without changing
+the look and feel of the entire site.  Once a designer is happy with
+the changes, they can publish the themes and make them live which will
+then change attributes anywhere the new stylesheets are used.
+
+The Themes application is integrated with the Subsite application and
+allows administrators to select a different theme for each subsite when
+desired.
+
+
+Configuration:
+The Themes application has 5 configuration parameters.
+
+The first one, com.arsdigita.london.theme.ThemeConfig.file_extensions,
+allows the user to provide a list of file extensions that are consided
+"styling" files.  Specifically, when the user requests to download all
+styling files in the system, the provided zip will only contain files with
+extensions in the list.  By default, the value of this is
+
+jpeg jpg gif xsl css js png
+
+
+The other 4 parameters deal with background threads that sync files when
+in a multi-JVM configuration.  They are
+com.arsdigita.london.theme.ThemeConfig.theme_dev_file_watch_startup_delay
+com.arsdigita.london.theme.ThemeConfig.theme_dev_file_watch_poll_delay
+com.arsdigita.london.theme.ThemeConfig.theme_pub_file_watch_startup_delay
+com.arsdigita.london.theme.ThemeConfig.theme_pub_file_watch_poll_delay
+
+The *theme_dev_file_* parameters manage the background thread that is
+responsible for syncing development files used by designers while
+the *theme_pub_file_* parameters manage the backgroud thread that is
+responsible for syncing published theme files so that all of the servers
+are able to use the same look and feel.
+
+The *_startup_delay parameters indicate how long the thread should wait
+after the server starts until it runs for the first time.  If you are
+running on a single JVM or do not want the threads to run at all, you
+can set these parameters to 0.  The *_poll_delay parameters indicate how
+long the thread should sleep before running again.
+
+All parameters are expressed in seconds.
+
+
+--Installation:
+Installation for this application is similar to other applications 
+built on top of the WAF.  When built, it typically deploys itself to 
+the /webapps/ccm-ldn-theme/ directory.  It is important that the code
+is deployed in a directory rather than a JAR file.  If it is not deployed
+as a directory then it will know know which directory to scan for
+updates by designers.
+
+When the application is first installed, the loader runs and mounts
+itself at the <server-prefix>/theme/ and is only accessible to site 
+wide administrators.
+
+One of the main pieces of the application is to allow designers to
+be able to directly upload files to the application through a 
+mechanism that they choose.  So, systems administrators should open
+up the below directory for write by their favorite program (e.g. FTP
+or SCP).
+<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/
+
+In addition, since the threads that synchronize the directories between
+multiple servers use their own timestamps to determine the age of files
+it is important to try to keep the various machines running with similar
+times on their system clocks.
+
+
+Using the "Themes" Application:
+The themes application has one main page that can be accessed by any
+site wide administrator at <server-prefix>/theme/.
+
+When first viewing the page, the two options available are to
+create a new theme or to "Download default base styles".
+The link to download the base styles provides the user with zip file that
+contains all files used by the system that have an extension that appears
+in the list set during the configuration process.  
+
+Creating a Theme:
+The link "Create New Theme" provides a form allow the user to
+specify a Title, Description, and URL.  The Title is used when
+listing the themes in the user interface and is an easy way to
+identify them.  The Description currently is not used.  
+The URL is the name of the folder that is created in the
+file system and must obviously be unique.  Also, the URL is restricted
+to [0-9,a-z,A-Z,-,_]
+
+When a new "theme" is created, the application creates the directory
+corresponding to the url under the directory
+<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/<new theme url>.  It copies the contents of
+the default themes directory (<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes/default/) to this newly created directory directory.  
+
+Once the theme is created, designers and upload and download the theme files,
+changing them to meet their goals.  When they are ready to test the new
+stylesheets, they can select the theme from the panel on the left to
+manage the existing theme.
+
+
+Managing an Existing Theme:
+After a theme is created, administrators are able to view properties
+about them theme by selecting it from the list on the left.
+The "details" page for the theme lists the basic properties, including
+the date the themes were last published and the user that last
+published the theme.  If the theme has never been published, those
+values will indicate that state.  The page also lists all of the files
+that are in the theme as well as links to operate on the theme.
+
++ The "Edit Theme" link allows the user to edit the basic property.
+Changing the URL will cause the system to move the directory on the
+file system.
+
++ The "Download Development Theme Files" is a tar of the development
+directory (<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/<theme url here>) rooted at the theme url.
+
++ If the item has been published, the "Download Published Theme Files"
+will give you a zip of the published files (<root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-prod/<theme url here>) rooted at the theme url.
+
++ The "Validate Theme" allows the system to check all of the xsl stylesheets
+that have been uploaded to ensure that they compile and are able to import
+all referenced files.  If the validation fails, the user is shown the
+error message so that they can easily fix the problem.
+
++ Clicking on the "validate and preview theme" link allows designers
+to see what the new look feels like without applying the theme to the
+entire site.  Rather, it validates the theme, and assuming everything
+checks out, will take you to <server-prefix>/theme/<theme url
+here>/ccm/register/.  If you follow the links, you can see what the
+system will look like using your theme.  This pulls the files from the
+/themes-dev/<theme url here> directory.  If there is a particular page
+that a user wants to see in preview mode, the user can just add
+"/theme/<theme url here>/ as a prefix to the actual url.  So, to see
+"/ccm/content-center/" with the new look, they can use "/theme/<theme
+url here>/ccm/content-center".  If the files do not pass validation
+then the user is shown the validation results and must fix any errors
+before the preview link will work.  If the user does try to preview
+a page that runs in to an XSL error that was not caught by the validation,
+the page still displays the user friendly error message so that the
+designer can easily fix the error.
+
++ The "publish theme" link copies the <root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-dev/<theme url here>
+directory to <root to servlet context>/webapps/ccm-ldn-theme/__ccm__/themes-prod/<theme url here>,
+inserts all of the files in the database, and places the themes in the
+"Subsite" list (mentioned below).  Placing the files in the database allows
+for simple system backup because no critical files are stored on the
+file system.  The database also allows for multiple JVMs to share the
+same file even though it was only uploaded to a single server. As with 
+"preview", the theme cannot be published until all of the files pass the 
+validation step.  If the files do not pass validation then the errors are 
+displayed and must be fixed before the theme can be published.
+
+
+If a designer is somehow able to publish a file that does not compile
+and thus makes it impossible to view any page because of xsl errors,
+there is a jsp page that will allow you to revert back to the default
+theme.  Any site administrator can access the page by going to
+<server-prefix>/theme/undoTheme.jsp.
+
+Using Themes with Subsites: 
+One of the main reasons for allowing themes is to be able to allow
+different subsites to have completely different feels.  When an
+administrator creates a subsite they have an option to select an "XSLT
+Directory" from a select box or by typing it in to a text box.  The
+select box contains "Site Wide Default", "Other (type in box below)"
+as well as a list of all published themes.  If anything other than the
+"Other" is selected, the "XSLT Directory (other)" box must be left
+empty.  If "Other" is selected then it must have a value.  To select a
+"theme", simply select the theme title from the drop down and use the
+rest of the subsite application like before.  If you select a theme,
+the application looks in the "themes-prod" directory for the
+stylesheets before falling back on the default.  
+

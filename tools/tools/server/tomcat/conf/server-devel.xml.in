@@ -1,0 +1,28 @@
+<Server port="::shutdown-port::" shutdown="SHUTDOWN" debug="9">
+  <!--
+     - http-port => ::http-port::
+     - shutdown-port => ::shutdown-port::
+    -->
+  <Service name="Tomcat-Standalone">
+
+    <Connector className="org.apache.catalina.connector.http.HttpConnector"
+      port="::http-port::" minProcessors="5" maxProcessors="20"
+      enableLookups="true" redirectPort="8443"
+      acceptCount="10" debug="9" connectionTimeout="60000"/>
+
+    <Engine name="Standalone::http-port::" defaultHost="localhost" debug="9">
+      <Logger className="org.apache.catalina.logger.FileLogger"
+        prefix="catalina." suffix=".log" directory="::log-dir::"
+        timestamp="true"/>
+      <Realm className="org.apache.catalina.realm.MemoryRealm" />
+      <Host name="localhost" debug="9" autoDeploy="true"
+        workDir="::work-dir::"
+        appBase="::webapp-root::">
+        <Valve className="org.apache.catalina.valves.AccessLogValve"
+          directory="::log-dir::"  prefix="catalina_access" suffix=".log"
+          pattern="common"/>
+        <DefaultContext crossContext="true" reloadable="true"/>
+      </Host>
+    </Engine>
+  </Service>
+</Server>

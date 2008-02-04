@@ -1,0 +1,98 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Link.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model linkTest;
+
+object type Article {
+    BigInteger id = t_articles.article_id INTEGER;
+    String text = t_articles.text CLOB;
+    component ArticleImageLink[0..n] images;
+
+    object key (id);
+    delete {
+        do { delete from t_article_image_map where article_id = :id }
+        do { delete from t_articles where article_id = :id }
+    }
+
+    retrieve images {
+        do {
+            select m.article_id, i.image_id, m.caption, i.bytes
+            from t_article_image_map m, t_images i
+            where m.image_id = i.image_id
+            and m.article_id = :id
+        } map {
+            images.article.id = m.article_id;
+            images.image.id = i.image_id;
+            images.image.bytes = i.bytes;
+            images.caption = m.caption;
+        }
+    }
+
+    add images {
+        do {
+            insert into t_article_image_map
+            (article_id, image_id, caption)
+            values
+            (:images.article.id, :images.image.id, :images.caption)
+        }
+    }
+}
+
+object type ArticleImageLink {
+    Article[1..1] article;
+    Image[1..1] image;
+    String caption = t_article_image_map.caption VARCHAR(4000);
+
+    object key (article, image);
+
+    insert { }
+    add image { }
+    add article { }
+
+    update {}
+    delete {}
+    retrieve all {
+        do {
+            select a.article_id, a.text, m.caption, i.image_id, i.bytes
+            from t_articles a, t_article_image_map m, t_images i
+            where a.article_id = m.article_id
+            and m.image_id = i.image_id
+        } map {
+            article.id = a.article_id;
+            article.text = a.text;
+            image.id = i.image_id;
+            image.bytes = i.bytes;
+            caption = m.caption;
+        }
+    }
+}
+
+object type Image {
+    BigInteger id = t_images.image_id INTEGER;
+    Blob bytes = t_images.bytes BLOB;
+
+    object key (id);
+
+
+    delete {
+        do { delete from t_article_image_map where image_id = :id }
+        do { delete from t_images where image_id = :id }
+    }
+
+}

@@ -1,0 +1,122 @@
+[security_jars]
+Users of Java 1.3.x must place the following jars from the CCM tools
+RPM in the system classpath:
+
+    $CCM_TOOLS_HOME/lib/security/local_policy.jar
+    $CCM_TOOLS_HOME/lib/security/jce.jar
+    $CCM_TOOLS_HOME/lib/security/US_export_policy.jar
+    $CCM_TOOLS_HOME/lib/security/jaas.jar
+    $CCM_TOOLS_HOME/lib/security/sunjce_provider.jar
+
+Add symbolic links to these files to the /usr/local/share/java
+directory or add them directly to the CLASSPATH environment variable.
+
+[jaas_found]
+CHECK: JAAS is available
+
+[jaas_not_found]
+WARNING: JAAS not found
+
+JAAS is the Java Authentication and Authorization Service and is
+required for CCM authentication.  Check your classpath.
+
+[jce_found]
+CHECK: JCE is available
+
+[jce_not_found]
+WARNING: JCE not found
+
+JCE is the Java Cryptography Extension and is required for CCM
+authentication.  Check your classpath.
+
+[classpath]
+The classpath of the CCM runtime includes
+
+  * jar files in JAVA_HOME/jre/lib/ext
+
+  * jars, zips, or class files under one of the paths listed in
+    CCM_HOME/ccm.classpath if it exists or /etc/ccm/ccm.classpath
+    otherwise
+
+  * the CLASSPATH environment variable.
+
+[supported_database]
+CHECK: The database type is recognized
+
+[unsupported_database]
+WARNING: The database type is not recognized
+
+The database that you are trying to use in not recognized.  Make sure
+you spelled the JDBC URL correctly.  The driver name should be
+"oracle" or "postgresql".
+
+[oracle_jdbc_found]
+CHECK: The Oracle JDBC driver is available
+
+[oracle_jdbc_not_found]
+WARNING: Oracle JDBC driver not found
+
+The CCM persistence layer requires the Oracle JDBC driver in order to
+function.  The Oracle JDBC driver is typically in a file called
+"classes12.zip" or "classes12.jar".  Check your classpath.
+
+[duplicate_classes]
+WARNING: Multiple implementations of the same API found
+
+The CCM runtime classpath contains two or more implementations of the
+same API.  Only one, from the first location listed below, will be
+used.
+
+[db_up]
+CHECK: The database is accepting connections
+
+[db_down]
+WARNING: The database is not accepting connections
+
+Possible explanations:
+
+  * The network connection to the database is down or the network is
+    not configured to permit connections.  Try to reach the database
+    host and connect to the database's port to verify.
+
+    For instance, to test a connection to a running PostgreSQL
+    instance on a remote host:
+
+      $ host www.example.com
+      www.example.com has address 192.0.34.166
+
+      $ ping -c 1 192.0.34.166
+      1 packets transmitted, 1 received, 0% loss, time 0ms
+
+      $ telnet 192.0.34.166 5432 # 5432 is the port postgres uses
+      Trying 192.0.34.166...
+      telnet: connect to address 192.0.34.166: Connection refused
+
+  * The database is not yet started or is down.  Verify that its
+    process is running.  Check that it will accept local connections.
+
+    For example, to test a PostgreSQL instance:
+
+      $ su - postgres
+      $ pg_ctl status
+      pg_ctl: postmaster is running (pid: 20925)
+      $ psql -l
+      psql: could not connect to server: No such file or directory
+
+  * The database did not accept your user and password.  Make sure
+    they appear correctly in your JDBC URL.
+
+  * The JDBC URL is malformed.  Check the documentation for your
+    database.  Use the ccm tool to find out what your JDBC URL is set
+    to:
+
+      $ ccm get waf.runtime.jdbc_url
+      jdbc:postgresql:justin-ccm-trunk?user=justin
+[runtime_configured]
+CHECK: The ccm-core package is configured.
+[runtime_unconfigured]
+ERROR: The ccm-core package has not been configured.
+[jdbc_set]
+CHECK: The JDBC URL parameter is set.
+[jdbc_unset]
+ERROR: The JDBC URL parameter has not been set.

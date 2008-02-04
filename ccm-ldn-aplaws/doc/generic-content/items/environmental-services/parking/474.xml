@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=474}]"><cms:name>batch-8-474</cms:name><cms:language>en</cms:language><cms:title>Parking Permits</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=474}]"><cms:name>batch-8-474-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>parking, permits</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=474}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently Asked Questions regarding parking permits</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">Who qualifies for a residents permit?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">Who qualifies for a visitors permit?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">Note for orange/blue badge holders</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#4">How to use your permit</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#5">What the permit allows you to do</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#6">How to apply</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#7">Your duties as a permit holder</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#8">Renewing your permit</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#9">Withdrawal of your permit</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#10">Contract Car Parking passes</a>	
+				</strong>
+			</li>
+		</ul><h4>
+			
+			Who qualifies for a residents permit?</h4><p>Residents who keep and use a car, a van with an unladen weight not exceeding 35cwt (1,778kg) or motorcycle on a full-time basis will normally qualify for a permit. Businesses operating within a controlled zone area may also qualify for one permit.</p><h4>
+			
+			Who qualifies for a visitors permit</h4><p>Only one transferable visitors permit can be issued to each household. Businesses operating within a controlled zone may also qualify for one visitors permit.</p><p>The visitors permit is issued in addition to the residents parking permit.</p><h4>
+			
+			Note for orange/blue badge holders</h4><p>If you have a disabled persons blue badge you can park in 2 hour spaces for as as long as you wish. In accordance with the orange/blue badge scheme you may park for up to three hours on single or double yellow lines</p><p>
+			<strong>You cannot park in resident permit holders spaces unless you also have a valid permit for the area.</strong>
+		</p><h4>
+			
+			How to use your permit</h4><p>Visitors permits may only be given to those calling at the permit holders address. It is the householders responsibility to ensure that their permit is retrieved from a visitors vehicle at the end of their stay. All permits must be displayed clearly in the windscreen of the vehicle.</p><h4>
+			
+			What The Permit Allows You To Do</h4><p>The permit will let you park in any parking spaces which are reserved for permit holders. These spaces will be signed with this or a similar plate:</p><p>Visitors to the area without permits can park in spaces provided for this purpose. These spaces will be signed</p><h4>
+			
+			How to apply</h4><p>Application forms are available from: <span class="gen">enter address</span>
+		</p><h4>
+			
+			Your duties as a permit holder</h4><p>It is your duty to ensure: </p><ul>
+			<li title="*">Your permit is valid</li>
+			<li title="*">Your permit has not expired</li>
+			<li title="*">That the registration number is correct</li>
+			<li title="*">Your permit is used in accordance with the conditions of issue</li>
+		</ul><h4>
+			
+			Renewing Your Permit</h4><p>You will be responsible for renewing your permit if: </p><ul>
+			<li title="*">Your permit expires - visitors permits are valid for one year and residents permits valid for two years. You change your vehicle - send in the old permit with your new vehicle details to the address listed under where to apply.</li>
+		</ul><h4>
+			
+			Withdrawal Of A Permit</h4><p>A permit may be withdrawn or invalidated if:</p><ul>
+			<li title="*">It is found that a permit is not being used in accordance with these guidelines</li>
+			<li title="*">It is found that a person is no longer eligible to hold a permit</li>
+			<li title="*">The permit is altered or defaced in anyway or passed to unauthorised users</li>
+		</ul><p>Information regarding 
+		<a href="/ccm/services/pid.jsp?pid=473">
+				<strong>Parking Zones that require a permit</strong>
+			</a>	
+			<span class="gen">link to pid 473</span> is now available.</p><h4>
+			
+			Contract Car Parking Passes</h4><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#11">What is a contract car park pass?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#12">Which car parks can I have a contract pass for?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#13">How much does it cost?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#14">How do I purchase one?</a>	
+				</strong>
+			</li>
+		</ul><h4>
+			
+			What is a contract car park pass?</h4><p>Contract car park passes are available for pay and display car parks within the Borough. A pass can be purchased and a disc will be issued to display in your vehicle, which allows parking in a designated car park for a duration of 6 or 12 months.</p><h4>
+			
+			Which car parks can I have a contract pass for?</h4><p>You can have a contract pass for any pay and display car park in the borough.</p><h4>
+			
+			How much does it cost?</h4><p>Current rates for car parks are as follows</p><table width="90%" cellpadding="5" class="centre" summary="Contact Car Park Prices">
+			<tr>
+				<th/>
+				<th>6 month</th>
+				<th>12 month</th>
+				<th>Discount rate</th>
+			</tr>
+			<tr>
+				<td>5 day (Mon to Fri)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+			<tr>
+				<td>6 day (Mon to Sat)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><h4>
+			
+			How do I purchase one?</h4><p>You can purchase online and pay with your credit or debit card using the 
+		<a href="/ccm/services/pid.jsp?pid=forms/474a">
+				<strong>online form</strong>
+			</a>	
+			<span class="gen">link to online form.</span> Alternatively you can print out the 
+		<a href="/ccm/services/pid.jsp?pid=forms/474a">
+				<strong>form</strong>
+			</a>	
+			<span class="gen">link to online form</span> and send it to us with a cheque or postal order.</p><p>Please send all cheques to:<span class="gen">enter details</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=474"> Applications for services
+		(474)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

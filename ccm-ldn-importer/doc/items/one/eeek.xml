@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" oid="[com.arsdigita.cms.contenttypes.Article:{id=4412}]">
+   <fileAttachments oid="[com.arsdigita.cms.contentassets.FileAttachment:{id=4448}]">
+      <name>Address.xsd</name>
+      <content file="content-4448-Address.xsd"/>
+   </fileAttachments>
+   <name>eeek</name>
+   <type oid="[com.arsdigita.cms.ContentType:{id=144}]"/>
+   <launchDate>Tue Dec 02 00:00:00 GMT 2003</launchDate>
+   <title>Eeek</title>
+   <textAsset oid="[com.arsdigita.cms.TextAsset:{id=4429}]">
+      <content>Edit text here</content>
+   </textAsset>
+   <imageCaptions oid="[com.arsdigita.cms.ArticleImageAssociation:{id=4439}]">
+      <caption>sdfdsfs</caption>
+      <imageAsset oid="[com.arsdigita.cms.ReusableImageAsset:{id=1734}]">
+         <name>5.jpg</name>
+         <mimeType oid="[com.arsdigita.cms.MimeType:{mimeType=image/jpeg}]">
+            <label>JPG image</label>
+            <mimeType>image/jpeg</mimeType>
+            <fileExtension>jpg</fileExtension>
+         </mimeType>
+         <height>768</height>
+         <width>512</width>
+         <content file="content-1734-5.jpg"/>
+      </imageAsset>
+   </imageCaptions>
+   <lead>sadfsd</lead>
+   <dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=4413}]">
+      <name>eeek-dublin-metadata</name>
+      <dcLanguage>en</dcLanguage>
+   </dublinCore>
+</cms:item>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=832}]"><cms:name>batch-23-832</cms:name><cms:language>en</cms:language><cms:title>Benefits and bills</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=832}]"><cms:name>batch-23-832-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>benefits, bills</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=832}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If you are going in to hospital you should immediately notify the Department for Work and Pensions and the Council office that deals with your claims for Housing and Council Tax Benefit.</i></p><hr/><p>This is important as in most cases your benefit entitlement 
+  will have to be reassessed to take account of your new circumstances. Most benefits 
+  are reduced during a stay in hospital usually after either four or six weeks.</p><p>If you were not claiming any form of benefit prior to entering 
+  hospital you may now be entitled to claim.</p><p>When you come out of hospital you should notify both the 
+		<a href="http://www.dwp.gov.uk/">
+<strong>Department 
+  for Work and Pensions</strong>
+</a>	 <span class="gen">link to external website</span> and the Council Office that deals with your claims for Housing 
+  and Council tax Benefit.</p><p>This is important as you will need to have your benefit reassessed 
+  when you return home. You may also be entitled to other benefits if you have become 
+  disabled as a result of your illness.</p><p>To find out if the benefit you are claiming is affected by a 
+  stay in hospital or if there are any benefits that you may be entitled to please 
+  contact us using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=832"> Providing Information
+		(832)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

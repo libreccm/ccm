@@ -1,0 +1,164 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ContentType.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.*;
+import com.arsdigita.formbuilder.FormSection;
+
+object type ContentType extends ACSObject {
+  String[1..1]        associatedObjectType = content_types.object_type VARCHAR(100);
+  String[1..1]        label = content_types.label VARCHAR(1000);
+  String[0..1]        description = content_types.description VARCHAR(4000);
+  String[0..1]        className = content_types.classname VARCHAR(200);
+  Boolean[1..1]       isInternal = content_types.is_internal CHAR(1);
+  BigDecimal[0..1]    itemFormID = content_types.item_form_id INTEGER;
+  AuthoringKit[0..1]  authoringKit = join content_types.type_id
+                                       to authoring_kits.type_id;
+  FormSection[0..1]   itemForm = join content_types.item_form_id
+                                   to bebop_form_sections.form_section_id;
+
+  reference key (content_types.type_id);
+}
+
+
+//associates a content type to a content section
+association {
+  ContentSection[0..n]      associatedContentSectionsForType =
+       join content_types.type_id to content_section_type_map.type_id,
+       join content_section_type_map.section_id to content_sections.section_id;
+  ContentType[0..n]         associatedContentTypes =
+       join content_sections.section_id to content_section_type_map.section_id,
+       join content_section_type_map.type_id to content_types.type_id;
+}
+
+
+// List all content types which have non-empty authoring kits
+// with non-empty creation components
+association {
+  ContentSection[0..n]      associatedContentSectionsForType3;
+  ContentType[0..n]         creatableContentTypes;
+
+  retrieve creatableContentTypes {
+    do {
+      select
+        t.type_id, t.object_type, t.label, t.description, t.classname,
+        t.is_internal, t.item_form_id
+      from
+        content_types t, content_section_type_map m, authoring_kits a
+      where
+        m.type_id = t.type_id and
+        m.section_id = :id and
+        a.type_id = t.type_id and
+        a.create_component is not null
+    } map {
+      creatableContentTypes.id                    = t.type_id;
+      creatableContentTypes.associatedObjectType  = t.object_type;
+      creatableContentTypes.label                 = t.label;
+      creatableContentTypes.description           = t.description;
+      creatableContentTypes.className             = t.classname;
+      creatableContentTypes.isInternal            = t.is_internal;
+      creatableContentTypes.itemFormID            = t.item_form_id;
+    }
+  }
+
+  retrieve associatedContentSectionsForType3 {
+    do {
+      select
+        s.section_id
+      from
+        content_sections s, content_section_type_map m, authoring_kits a
+      where
+        m.section_id = s.section_id and
+        m.type_id = :id and
+        a.type_id = m.type_id and
+        a.create_component is not null
+    } map {
+      associatedContentSectionsForType3.id = s.section_id;
+    }
+  }
+}
+
+
+//retrive the content types that are not associated
+association {
+  ContentSection[0..n]      associatedContentSectionsForType2;
+  ContentType[0..n]         notAssociatedContentTypes;
+
+  retrieve notAssociatedContentTypes {
+    do {
+      select
+        t.type_id, t.object_type, t.label, t.description, t.classname,
+        t.is_internal, t.item_form_id
+      from
+        content_types t
+      where
+        not exists (select 1
+                    from content_section_type_map m
+                    where m.section_id = :id
+		    and t.type_id = m.type_id)
+    } map {
+      notAssociatedContentTypes.id                    = t.type_id;
+      notAssociatedContentTypes.associatedObjectType  = t.object_type;
+      notAssociatedContentTypes.label                 = t.label;
+      notAssociatedContentTypes.description           = t.description;
+      notAssociatedContentTypes.className             = t.classname;
+      notAssociatedContentTypes.isInternal            = t.is_internal;
+      notAssociatedContentTypes.itemFormID            = t.item_form_id;
+    }
+  }
+
+  retrieve associatedContentSectionsForType2 {
+    do {
+      select
+        s.section_id
+      from
+        content_sections s
+      where
+        not exists (select 1
+                    from content_section_type_map m
+                    where m.type_id = :id
+		    and s.section_id = m.section_id)
+    } map {
+      associatedContentSectionsForType2.id = s.section_id;
+    }
+  }
+}
+
+
+query registeredContentTypes {
+    ContentType type;
+    do {
+        select
+        t.type_id, t.object_type, t.label,
+        t.description, t.classname, t.is_internal, t.item_form_id
+        from content_types t
+        where t.is_internal = '0'
+        and exists (select 1 from content_section_type_map
+        where type_id = t.type_id)
+    } map {
+        type.id                   = t.type_id;
+        type.associatedObjectType = t.object_type;
+        type.label                = t.label;
+        type.description          = t.description;
+        type.className            = t.classname;
+        type.isInternal           = t.is_internal;
+        type.itemFormID           = t.item_form_id;
+    }
+}

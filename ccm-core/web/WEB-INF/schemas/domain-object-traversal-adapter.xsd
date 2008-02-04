@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding='utf-8'?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+              xmlns="http://xmlns.redhat.com/schemas/cms/content-types" 
+ elementFormDefault="qualified" 
+    targetNamespace="http://xmlns.redhat.com/schemas/cms/content-types">
+
+  <xs:element name="adapters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="adapter" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="attributes">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="property" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="path"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="rule" type="rule"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="associations">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="property" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="path"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="rule" type="rule"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="objectType" type="objectType"/>
+            <xs:attribute name="context" type="javaClass"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="javaClass">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="200"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="objectType">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="path">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(/\w+)+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="rule">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="include"/>
+      <xs:enumeration value="exclude"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

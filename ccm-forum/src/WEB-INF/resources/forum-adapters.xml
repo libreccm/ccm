@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <xrd:context name="com.arsdigita.forum.ui.ThreadList">
+    <xrd:adapter objectType="com.arsdigita.messaging.Thread">
+
+      <xrd:formatter property="/object/id" 
+                        class="com.arsdigita.xml.formatters.DateFormatter"/>
+
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+
+        <xrd:property name="/object/root/id"/>
+        <xrd:property name="/object/root/objectType"/>
+        <xrd:property name="/object/root/defaultDomainClass"/>
+        <xrd:property name="/object/root/displayName"/>
+        <xrd:property name="/object/root/root"/>
+        <!-- <xrd:property name="/object/root/body"/> -->
+        <xrd:property name="/object/root/type"/>
+        <xrd:property name="/object/root/replyTo"/>
+        <xrd:property name="/object/root/inReplyTo"/>
+        <xrd:property name="/object/root/objectID"/>
+        <xrd:property name="/object/root/messageID"/>
+
+        <xrd:property name="/object/root/categories/objectType"/>
+        <xrd:property name="/object/root/categories/defaultDomainClass"/>
+        <xrd:property name="/object/root/categories/displayName"/>
+        <xrd:property name="/object/root/categories/isAbstract"/>
+        <xrd:property name="/object/root/categories/isEnabled"/>
+        <xrd:property name="/object/root/categories/defaultAncestors"/>
+
+        <xrd:property name="/object/author/id"/>
+        <xrd:property name="/object/author/objectType"/>
+        <xrd:property name="/object/author/defaultDomainClass"/>
+      </xrd:attributes>
+
+      <xrd:associations rule="include">
+        <xrd:property name="/object/root"/>
+        <xrd:property name="/object/root/categories"/>
+        <xrd:property name="/object/author"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.forum.ui.ThreadDisplay">
+    <xrd:adapter objectType="com.arsdigita.messaging.Message"
+      formatter="com.arsdigita.forum.ui.MessageXMLFormatter">
+
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/replyTo"/>
+        <xrd:property name="/object/objectID"/>
+        <xrd:property name="/object/messageID"/>
+        <xrd:property name="/object/root"/>
+        <xrd:property name="/object/inReplyTo"/>
+
+        <xrd:property name="/object/categories/objectType"/>
+        <xrd:property name="/object/categories/defaultDomainClass"/>
+        <xrd:property name="/object/categories/displayName"/>
+        <xrd:property name="/object/categories/isAbstract"/>
+        <xrd:property name="/object/categories/isEnabled"/>
+        <xrd:property name="/object/categories/defaultAncestors"/>
+
+        <xrd:property name="/object/sender/id"/>
+        <xrd:property name="/object/sender/objectType"/>
+        <xrd:property name="/object/sender/defaultDomainClass"/>
+      </xrd:attributes>
+
+      <xrd:associations rule="include">
+        <xrd:property name="/object/root"/>
+        <xrd:property name="/object/categories"/>
+        <xrd:property name="/object/sender"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.forum.ui.TopicSelector">
+    <xrd:adapter objectType="com.arsdigita.categorization.Category">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/isAbstract"/>
+        <xrd:property name="/object/isEnabled"/>
+        <xrd:property name="/object/defaultAncestors"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.forum.ui.ThreadAlertsList">
+    <xrd:adapter objectType="com.arsdigita.forum.ThreadSubscription">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+
+        <xrd:property name="/object/thread/id"/>
+        <xrd:property name="/object/thread/objectType"/>
+        <xrd:property name="/object/thread/defaultDomainClass"/>
+        <xrd:property name="/object/thread/displayName"/>
+
+        <xrd:property name="/object/thread/root/id"/>
+        <xrd:property name="/object/thread/root/objectType"/>
+        <xrd:property name="/object/thread/root/defaultDomainClass"/>
+        <xrd:property name="/object/thread/root/displayName"/>
+        <xrd:property name="/object/thread/root/root"/>
+        <xrd:property name="/object/thread/root/body"/>
+        <xrd:property name="/object/thread/root/type"/>
+        <xrd:property name="/object/thread/root/replyTo"/>
+        <xrd:property name="/object/thread/root/inReplyTo"/>
+        <xrd:property name="/object/thread/root/objectID"/>
+        <xrd:property name="/object/thread/root/messageID"/>
+
+        <xrd:property name="/object/thread/author/id"/>
+        <xrd:property name="/object/thread/author/objectType"/>
+        <xrd:property name="/object/thread/author/defaultDomainClass"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/thread"/>
+        <xrd:property name="/object/thread/root"/>
+        <xrd:property name="/object/thread/author"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+</xrd:adapters>

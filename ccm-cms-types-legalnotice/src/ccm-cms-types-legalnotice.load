@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_legal_notices"/>
+    <initializer class="com.arsdigita.cms.contenttypes.LegalNoticeInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-legalnotice"/>
+    <data class="com.arsdigita.cms.contenttypes.LegalNoticeLoader"/>
+  </scripts>
+</load>

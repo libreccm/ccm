@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=769}]"><cms:name>waste-reception-disposal-769</cms:name><cms:language>en</cms:language><cms:title>Waste Reception/Disposal (Marine)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=769}]"><cms:name>waste-reception-disposal-769-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>waste, reception, disposal, marine</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=769}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Fishing debris not only originates from local sources, but from different areas in UK waters such as North Wales, Isle of Man, and also from Irish waters. </i></p><hr/><p>Pinpointing the specific 
+  origins of litter is extremely difficult and research is underway by various 
+  organisations to tackle the issue of dumping at sea. </p><p>It is illegal to dispose 
+  of garbage, plastic, waste oil, sewage or any toxic substance at sea.</p><p>The following 
+  guidelines can help avoid many problems:</p><h2>Don't...</h2><ul>
+<li title="*">Dump garbage 
+      or plastics at sea</li>
+<li title="*">Dump damaged fishing 
+      gear at sea</li>
+<li title="*">Dump oil at sea</li>
+<li title="*">Dump sewage at sea</li>
+<li title="*">Dump toxic substances 
+      at sea</li>
+<li title="*">Use detergents or hoses 
+      to deal with spill</li>
+</ul><h2>Do...</h2><p>
+<strong>Garbage 
+  and Plastics</strong>
+</p><ul>
+  <li title="*">Remove 
+      excess packaging before leaving home</li>
+<li title="*">Arrange sufficient 
+      and secure storage on board for wastes</li>
+<li title="*">Rinse tins and plastic 
+      containers to avoid them becoming smelly</li>
+<li title="*">Separate wastes for 
+      recycling ashore</li>
+</ul><p>
+<strong>Sewage</strong>
+</p><ul>
+<li title="*">&gt;Fit a sewage 
+      holding tank in your boat</li>
+<li title="*">Use shore side facilities 
+      whenever possible</li>
+</ul><p>
+<strong>Antifouling</strong> 
+</p><ul>
+<li title="*">When cleaning 
+      down hulls, use a scrub-off facility that collects run-off residues thus 
+      presenting toxic dust or scrapings entering the sea</li>
+</ul><p>
+<strong>Oils 
+  and Oily Wastes</strong>
+</p><ul>
+  <li title="*">Use absorbent 
+      pads to soak up oil in bilges and place a drip tray under the engine</li>
+<li title="*">Take waste oil ashore 
+      in secure containers for safe disposal into shore side facilities</li>
+<li title="*">Avoid spillage into 
+      the sea when refuelling, do not overfill your tank</li>
+<li title="*">When servicing the 
+      engine, ensure that used oil is collected and taken to an oil recycling 
+      bank</li>
+<li title="*">Remember used oil is 
+      very difficult to recycle when mixed with other materials, such as paints 
+      and solvents</li>
+</ul><p>The benefits of appropriate 
+  facilities on land far outweigh the negative impact to marine life, the environment 
+  and human health from dumping at sea - together with incurred costs from damage 
+  to boats and equipment from marine debris.</p><p>The MARPOL Convention is the main international convention covering prevention of pollution of the marine environment by ships from operational or accidental causes. It is a combination of two treaties adopted in 1973 and 1978 respectively and updated by amendments through the years.  Further information can be obtained from the 
+		<a href="http://www.imo.org/">
+<strong>International Maritime Organization (IMO)</strong>
+</a>	 <span class="gen">link to external website</span> website.</p><p>If you have any enquiries 
+  about Marine waste disposal, please use the contact details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=769"> Providing Information
+		(769)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

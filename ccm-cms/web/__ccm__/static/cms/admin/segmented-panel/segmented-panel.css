@@ -1,0 +1,21 @@
+div.segmented-panel, div.segmented-panel div {
+  clear: left;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+div.segmented-panel div.segment {
+  width: 100%;
+}
+
+div.segmented-panel div.segment div.header {
+  font-weight: bold;
+  color: gray;
+  width: 100%;
+  border-bottom: 3px solid rgb(202,202,202);
+}
+
+div.segmented-panel div.segment div.body {
+  margin: 0.5em 0 1em 0;
+}

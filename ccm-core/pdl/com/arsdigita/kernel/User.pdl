@@ -1,0 +1,137 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: User.pdl 1169 2006-06-14 13:08:25Z fabrice $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.kernel;
+
+object type User extends Party {
+    component PersonName[1..1] name = join users.name_id to person_names.name_id;
+        
+    unique String screenName = users.screen_name VARCHAR(100);
+    Boolean[1..1] banned = users.banned CHAR(1);
+
+    reference key (users.user_id);
+}
+
+data operation ClearUserFromGroups {
+    do {
+        delete from group_member_map
+        where member_id = :memberID
+    }
+}
+
+query UserPrimaryEmail {
+    BigDecimal userID;
+    String primaryEmailAddress;
+    String lowerScreenName;
+    String screenName;
+    String lowerPrimaryEmailAddress;
+    Boolean banned;
+    do {
+	select users.user_id,
+	       users.screen_name,
+	       lower(users.screen_name) as lower_screen_name,
+	       lower(parties.primary_email) as lower_primary_email,
+	       parties.primary_email,
+	       users.banned
+	  from users, 
+	       parties
+	 where users.user_id = parties.party_id
+    } map {
+	  userID = users.user_id;
+	  screenName = users.screen_name;
+	  lowerScreenName = lower_screen_name;
+	  primaryEmailAddress = parties.primary_email;
+	  lowerPrimaryEmailAddress = lower_primary_email;
+	  banned = users.banned;
+    }
+}
+
+query RetrieveUsers {
+    // This should be changed to just return a User object.
+    BigDecimal userID;
+    String screenName;
+    String firstName;
+    String lastName;
+    String searchName;
+    String primaryEmail;
+    String objectType;
+    Boolean banned;
+    do {
+        select users.user_id,
+               users.screen_name,
+               person_names.given_name,
+               person_names.family_name,
+               parties.primary_email,
+               lower(nvl(users.screen_name,'') || ' ' || person_names.given_name || ' ' || person_names.family_name) as search_name,
+               o.object_type,
+               users.banned
+          from users, person_names, parties, acs_objects o
+         where users.name_id = person_names.name_id
+           and o.object_id = users.user_id
+           and users.user_id = parties.party_id and
+               not exists (
+                   select 1 from group_member_map g
+                   where g.member_id = users.user_id
+                     and g.group_id  = :excludeGroupId)
+    } map {
+        userID = user_id;
+        screenName = screen_name;
+        firstName = given_name;
+        lastName = family_name;
+        searchName = search_name;
+        primaryEmail = primary_email;
+        objectType = o.object_type;
+	     banned = users.banned;
+    }
+}
+
+query RetrieveAllUsers {
+    // This should be changed to just return a User object.
+    BigDecimal userID;
+    String screenName;
+    String firstName;
+    String lastName;
+    String searchName;
+    String primaryEmail;
+    String objectType;
+    Boolean banned;
+    do {
+        select users.user_id,
+               users.screen_name,
+               person_names.given_name,
+               person_names.family_name,
+               parties.primary_email,
+               lower(nvl(users.screen_name,'') || ' ' || person_names.given_name || ' ' || person_names.family_name) as search_name,
+               o.object_type,
+               users.banned
+          from users, person_names, parties, acs_objects o
+         where users.name_id = person_names.name_id
+           and o.object_id = users.user_id
+           and users.user_id = parties.party_id
+    } map {
+        userID = user_id;
+        screenName = screen_name;
+        firstName = given_name;
+        lastName = family_name;
+        searchName = search_name;
+        primaryEmail = primary_email;
+        objectType = o.object_type;
+	    banned = users.banned;
+    }
+}

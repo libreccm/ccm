@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=319}]"><cms:name>births-319</cms:name><cms:language>en</cms:language><cms:title>Birth - registering</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=319}]"><cms:name>births-319-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>birth, registering</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=319}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>These pages give you information about how to register a birth that occurred in England or Wales. The registration systems in Scotland and Northern Ireland are different from that in England and Wales and each has its own General Register Office.</i></p><hr/><p>You can obtain information about how to register a birth in Scotland or Northern Ireland by linking in to their websites.</p><ul>
+			<li title="*">
+				
+		<a href="http://www.gro-scotland.gov.uk/">
+					<strong>General Register Office in Scotland</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.groni.gov.uk/">
+					<strong>General Register Office in Northern Ireland</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+			</li>
+		</ul><p>Births in England or Wales must be registered in the district in which they take place although this may be arranged through any register office within these countries. Births in Wales may be registered bilingually in English and Welsh.</p><p>The main Act and regulations governing the registration of births and death are:</p><ul>
+			<li title="*">Births and Deaths Registration Act 1953 (as amended)</li>
+			<li title="*">The Registration of Births and Deaths Regulations 1987 (as amended)</li>
+			<li title="*">The Registration of Births and Deaths (Welsh Language) Regulations 1987 (as amended)</li>
+		</ul><h3>Where and when to register a birth</h3><p>Every birth in England or Wales must be registered in the district in which it takes place within 42 days of the date of birth. Information for the registration is given to the registrar by the person registering the birth. The information, which is usually recorded on computer, is also recorded in the birth register and the person registering the birth signs the record.</p><p>If it is inconvenient to go to the district where the birth took place, the information for the registration may be given to a registrar in another district. The registrar will record the registration particulars on a form of declaration and send it to the registrar for the district where the birth occurred. The registrar who receives the declaration will enter the information in the birth register. Certificates of the birth, which may be ordered and paid for at the time of making the declaration, will be posted by the registrar for the district where the birth took place.</p><p>The registration of a birth in Wales may be made bilingually in English and Welsh if the person who registers the birth gives the information in Welsh and the registrar is able to understand and write Welsh. If the registrar cannot understand and write Welsh, the information may be given in a different district where there are welsh-speaking registrars, using the declaration procedure as described above. A birth which takes place in England may be registered in English only.</p><p>The baby does not need to be taken to the registrar's office to show that the birth has taken place. The local health authority or the hospital where the birth occurred will notify the registrar of the birth.</p><p>Registration can often be carried out at the hospital before the mother leaves, as well as at registrars' offices. The opening hours when a registrar will be available vary from one district to another and most of them operate an appointments system. You should contact the relevant district by telephone to obtain further information or to arrange an appointment.</p><h3>
+			
+			Who can register a birth</h3><p>This explains who can register a birth, and when information about the father may be included in the register:</p><h4>Parents married to each other</h4><p>If the parents of the child were married to each other at the time of the birth (or conception), either the mother or the father may register.</p><h4>Parents not married to each other</h4><p>If the parents were not married to each other at the time of the child's birth (or conception), the father's particulars may be entered in the register only in the following circumstances:</p><ul>
+			<li title="*">the mother and father go to the register office and sign the birth register together, or</li>
+			<li title="*">where the father is unable to go to the register office with the mother -
+  	<ul>
+					<li title="*">the father may make a statutory declaration acknowledging his paternity which the mother must produce to the registrar (this form may be obtained from any registrar in England or Wales), or</li>
+				</ul>
+			</li>
+			<li title="*">where the mother is unable to go to the register office with the father - 
+    <ul>
+					<li title="*">the mother may make a statutory declaration acknowledging the father's paternity which the father must produce to the registrar (this form may be obtained from any registrar in England or Wales), or</li>
+				</ul>
+			</li>
+			<li title="*">where the mother and father have made a parental responsibility agreement or either has obtained an appropriate court order- 
+    <ul>
+					<li title="*">the agreement or order should be produced to the registrar by either parent</li>
+				</ul>
+			</li>
+		</ul><p>If the father's particulars are not recorded in the birth register, it may be possible for the birth to be re-registered to include his details at a later date. You can obtain further information about how to apply for the re-registration of a birth.</p><h4>Other people who may register births</h4><p>Although the majority of births are registered by the parents, sometimes neither the mother or the father are able to do this. In these circumstances, the registrar will arrange for the registration to be completed by whichever of the following people is best able to do so:</p><ul>
+			<li title="*">the occupier of the house or hospital where the child was born</li>
+			<li title="*">a person who was present at the birth</li>
+			<li title="*">a person who is responsible for the child</li>
+		</ul><h3>Registering the birth of a child conceived after fertility treatment</h3><p>The woman who gives birth, including a surrogate mother, will be shown as the child's mother in the birth registration. The man who is to be regarded as the father of the child will generally be the husband or partner who received treatment with the mother.</p><p>In the case of a surrogacy arrangement, the couple who arranged for the surrogate mother to carry a child for them may apply to the courts for a parental order that will enable the birth to be re-registered to show them as the parents. Legal advice should be obtained if further information about this is required. When a court issues a parental order, a copy is sent to Corrections and Re-registration Section at the General Register Office in Southport who will complete the re-registration of the birth.</p><h3>Registration where the father dies before a child is conceived</h3><p>Where a child is conceived as a result of fertility treatment after the death of the man receiving treatment with the mother, the man can be registered as the child's father on production of the following documentary evidence:-</p><ul>
+			<li title="*">his written consent to the fertility treatment and to being named as the father in the child's birth registration (not required where the man died before 18 September 2003)</li>
+			<li title="*">written confirmation from the clinic that the man's consent had not been withdrawn (not required where the man died before 18 September 2003)</li>
+			<li title="*">the woman's written request for the man to be named as the father in the birth registration</li>
+			<li title="*">written confirmation of the fertility treatment from a medical source, for example, the treatment clinic, mother's own doctor or hospital doctor</li>
+			<li title="*">the man's death certificate (original required - photocopy not acceptable). If he died in England or Wales, details of where and when will be sufficient</li>
+			<li title="*">a marriage certificate where applicable (original required - photocopy not acceptable). If the marriage took place in England or Wales, details of where and when will be sufficient.</li>
+		</ul><p>Recording the man as a child's father in these circumstances does not mean he will be treated in law as the child's father for any purpose other than registration. Nor does it give the child any legal status or rights concerning, for example, inheritance or nationality. If you would like further information, you should seek legal advice.</p><h3>Parental responsibility</h3><p>The mother of a child, and the father if he is married to the mother, automatically have parental responsibility. Where the parents are not married to each other, the father will acquire parental responsibility if he acts with the mother to have his name recorded in the child's birth registration on or after 1 December 2003. An unmarried father can also obtain parental responsibility by later marrying the child's mother, by making a parental responsibility agreement with her or by getting a court order. You may wish to think about this if you have other children. If you need further information or advice, you should call Parentline Plus on 0808 800 2222 or textphone them on 0800 783 6783, or obtain legal advice.</p><p>For further information on treatment services and deceased fathers, see <strong>
+				
+		<a href="http://www.hfea.gov.uk">www.hfea.gov.uk</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><h3>Information to be supplied for the registration of a birth</h3><h4>Child</h4><ul>
+			<li title="*">date and place of birth; if the birth is one of twins, triplets, etc the time of each child's birth will also be needed</li>
+			<li title="*">sex of the child</li>
+			<li title="*">the forename(s) and surname in which it is intended that the child will be brought up</li>
+		</ul><h4>Father (where this information is to be entered in the register)</h4><ul>
+			<li title="*">forename(s) and surname</li>
+			<li title="*">date and place of birth</li>
+			<li title="*">occupation at the time of the child's birth or, if not employed at that time, the last occupation</li>
+		</ul><h4>Mother</h4><ul>
+			<li title="*">forename(s) and surname</li>
+			<li title="*">maiden surname if the mother is, or has been, married</li>
+			<li title="*">date and place of birth</li>
+			<li title="*">occupation at the time of the child's birth or, if not employed at that time, the last occupation</li>
+			<li title="*">usual address at the date of the birth</li>
+			<li title="*">date of marriage, if married to the child's father at the time of the birth</li>
+			<li title="*">number of previous children by the present husband and by any former husband</li>
+		</ul><p>It is most important that the information recorded in the birth register is correct. If any mistake is made, for example in the spelling of a name or surname or in the description of the father's or mother's occupation, it will give the parents or other person who registered the birth some trouble to have it put right. The person registering the birth should check the information to be recorded in the register very carefully before the entry is signed.</p><p>If English is not the mother's or father's first language and help is needed with registering the birth, it would be helpful for a relative or friend to accompany them to the registrar's office and act as interpreter. However, the parents must register the birth personally as a relative or friend cannot register instead of them.</p><h3>What certificates will be issued?</h3><p>After a birth has been registered, a short birth certificate showing the name, sex, date and district of birth is issued free of charge. The short certificate meets most ordinary needs but a full birth certificate, which is a complete copy of the register entry, is also available. Further short certificates and full certificates may be bought at the time of registration or at any time afterwards. You can obtain further information about obtaining certificates.</p><h3>Further advice about registering a birth in England or Wales</h3><p>Further advice about registering a birth in England or Wales may be obtained from your local registrar</p><p>General Register Office, Room D209, Smedley Hydro, Trafalgar Road, Southport, Merseyside, PR8 2HH</p><h4>Registering a birth after 12 months</h4><p>If a birth occurs in England and Wales and has not been registered within 12 months of its occurrence it is possible for the late registration of the birth to be authorised by the Registrar General provided certain requirements can be met.</p><p>Before the Registrar General can authorise a late registration of a birth he must be satisfied, by documentary evidence, of the child's exact date and place of birth. There must also be a person available who can attend any Register Office in England and Wales to give the information for the registration. More information about registering a birth and who can do this is available in <strong>
+				
+		<a href="#who">Who can register a birth?</a>	
+			</strong>
+		</p><h3>How to apply</h3><p>To apply for the late registration of an unregistered birth in England <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/319a">Application for Late Registration (Form C45)</a>	
+			</strong>
+			<span class="gen">link to online form</span> should be completed. For an unregistered birth in Wales <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/319a">Application for Late Registration (Form C45W)</a>	
+			</strong>
+			<span class="gen">link to online form</span> should be completed.</p><p>The application form explains in more detail the information you will need to provide and any documents you may need to send, with the completed application form, to enable a late registration of your birth to be considered.</p><p>Copies of the application forms can be printed from this site. Alternatively forms can be sent by contacting us using the details above</p><p>The completed application form and the documents requested should be sent to Corrections and Re-registration Section.</p><p>No fee is charged for authorising a late registration however, if you want to buy certificates, in addition to the short certificate issued free on registration, then please contact us for details of prices. You can also obtain certificates locally from the Register Office where the birth was registered.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=319"> Applications for services
+		(319)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

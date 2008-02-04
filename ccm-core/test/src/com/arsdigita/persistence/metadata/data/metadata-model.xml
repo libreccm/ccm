@@ -1,0 +1,407 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs">
+  <model name="fullload-model" id="acs:fullload-model">
+    <objecttype name="object_type" id="fullload-model:object_type">
+      <attribute name="object_type" datatype="Integer" multiplicity="1..1" id="fullload-model:object_type:object_type"/>
+      <objectmap>
+        <objectkey>
+          <attributeref idref="fullload-model:object_type:object_type"/>
+        </objectkey>
+      </objectmap>
+    </objecttype>
+    <objecttype name="relationship_type" id="fullload-model:relationship_type">
+      <supertyperef idref="fullload-model:object_type"/>
+      <!-- <rolereference id="fullload-model:relationship_type:rel_type"> -->
+      <!-- <rolereference id="fullload-model:relationship_type:object_type_one"> -->
+      <!-- <rolereference id="fullload-model:relationship_type:role_one"> -->
+      <attribute name="min_n_rels_one" datatype="Integer" multiplicity="1..1" id="fullload-model:relationship_type:min_n_rels_one"/>
+      <attribute name="max_n_rels_one" datatype="Integer" multiplicity="1..1" id="fullload-model:relationship_type:max_n_rels_one"/>
+      <!-- <rolereference id="fullload-model:relationship_type:object_type_two"> -->
+      <!-- <rolereference id="fullload-model:relationship_type:role_two"> -->
+      <attribute name="min_n_rels_two" datatype="Integer" multiplicity="1..1" id="fullload-model:relationship_type:min_n_rels_two"/>
+      <attribute name="max_n_rels_two" datatype="Integer" multiplicity="1..1" id="fullload-model:relationship_type:max_n_rels_two"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:acs_rel_types:rel_type:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="apm_package_type" id="fullload-model:apm_package_type">
+      <supertyperef idref="fullload-model:object_type"/>
+      <attribute name="package_key" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_type:package_key"/>
+      <attribute name="pretty_name" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_type:pretty_name"/>
+      <attribute name="pretty_plural" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_type:pretty_plural"/>
+      <attribute name="package_uri" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_type:package_uri"/>
+      <attribute name="package_type" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_type:package_type"/>
+      <attribute name="spec_file_path" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_type:spec_file_path"/>
+      <attribute name="spec_file_mtime" datatype="Integer" multiplicity="1..1" id="fullload-model:apm_package_type:spec_file_mtime"/>
+      <attribute name="singleton_p" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_type:singleton_p"/>
+      <objectmap>
+      </objectmap>
+    </objecttype>
+    <objecttype name="group_type" id="fullload-model:group_type">
+      <supertyperef idref="fullload-model:object_type"/>
+      <!-- <rolereference id="fullload-model:group_type:group_type"> -->
+      <attribute name="approval_policy" datatype="String" multiplicity="1..1" id="fullload-model:group_type:approval_policy"/>
+      <attribute name="default_new_member_policy" datatype="String" multiplicity="1..1" id="fullload-model:group_type:default_new_member_policy"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:group_types:group_type:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="acs_object" id="fullload-model:acs_object">
+      <!-- <rolereference id="fullload-model:acs_object:object_type"> -->
+      <attribute name="creation_date" datatype="Date" multiplicity="1..1" id="fullload-model:acs_object:creation_date"/>
+      <attribute name="creation_ip" datatype="String" multiplicity="1..1" id="fullload-model:acs_object:creation_ip"/>
+      <attribute name="last_modified" datatype="Date" multiplicity="1..1" id="fullload-model:acs_object:last_modified"/>
+      <attribute name="modifying_ip" datatype="String" multiplicity="1..1" id="fullload-model:acs_object:modifying_ip"/>
+      <attribute name="object_id" datatype="Integer" multiplicity="1..1" id="fullload-model:acs_object:object_id"/>
+      <!-- <rolereference id="fullload-model:acs_object:context_id"> -->
+      <attribute name="security_inherit_p" datatype="String" multiplicity="1..1" id="fullload-model:acs_object:security_inherit_p"/>
+      <!-- <rolereference id="fullload-model:acs_object:creation_user"> -->
+      <!-- <rolereference id="fullload-model:acs_object:modifying_user"> -->
+      <objectmap>
+        <objectkey>
+          <attributeref idref="fullload-model:acs_object:object_id"/>
+        </objectkey>
+      </objectmap>
+    </objecttype>
+    <objecttype name="party" id="fullload-model:party">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <attribute name="email" datatype="String" multiplicity="0..1" id="fullload-model:party:email"/>
+      <attribute name="url" datatype="String" multiplicity="0..1" id="fullload-model:party:url"/>
+      <!-- <rolereference id="fullload-model:party:party_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:parties:party_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="person" id="fullload-model:person">
+      <supertyperef idref="fullload-model:party"/>
+      <attribute name="first_names" datatype="String" multiplicity="0..1" id="fullload-model:person:first_names"/>
+      <attribute name="last_name" datatype="String" multiplicity="0..1" id="fullload-model:person:last_name"/>
+      <!-- <rolereference id="fullload-model:person:person_id"> -->
+      <attribute name="bio" datatype="String" multiplicity="1..1" id="fullload-model:person:bio"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:persons:person_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="user" id="fullload-model:user">
+      <supertyperef idref="fullload-model:person"/>
+      <attribute name="bio" datatype="String" multiplicity="1..1" id="fullload-model:user:bio"/>
+      <!-- <rolereference id="fullload-model:user:user_id"> -->
+      <attribute name="password" datatype="String" multiplicity="1..1" id="fullload-model:user:password"/>
+      <attribute name="salt" datatype="String" multiplicity="1..1" id="fullload-model:user:salt"/>
+      <attribute name="screen_name" datatype="String" multiplicity="1..1" id="fullload-model:user:screen_name"/>
+      <attribute name="priv_name" datatype="Integer" multiplicity="1..1" id="fullload-model:user:priv_name"/>
+      <attribute name="priv_email" datatype="Integer" multiplicity="1..1" id="fullload-model:user:priv_email"/>
+      <attribute name="email_verified_p" datatype="String" multiplicity="1..1" id="fullload-model:user:email_verified_p"/>
+      <attribute name="email_bouncing_p" datatype="String" multiplicity="1..1" id="fullload-model:user:email_bouncing_p"/>
+      <attribute name="no_alerts_until" datatype="Date" multiplicity="1..1" id="fullload-model:user:no_alerts_until"/>
+      <attribute name="last_visit" datatype="Date" multiplicity="1..1" id="fullload-model:user:last_visit"/>
+      <attribute name="second_to_last_visit" datatype="Date" multiplicity="1..1" id="fullload-model:user:second_to_last_visit"/>
+      <attribute name="n_sessions" datatype="Integer" multiplicity="1..1" id="fullload-model:user:n_sessions"/>
+      <attribute name="password_question" datatype="String" multiplicity="1..1" id="fullload-model:user:password_question"/>
+      <attribute name="password_answer" datatype="String" multiplicity="1..1" id="fullload-model:user:password_answer"/>
+      <objectmap>
+        <extendedmapentry>
+          <attributeref idref="fullload-model:user:bio"/>
+          <extensiontable>
+            <foreignkeyref idref="fullload-schema:journal_entries:object_id:foreignkey"/>
+            <attributecolumnref idref="fullload-schema:acs_attribute_values:attribute_name"/>
+            <valuecolumnref idref="fullload-schema:acs_attribute_values:attr_value"/>
+          </extensiontable>
+        </extendedmapentry>
+        <foreignkeyref idref="fullload-schema:users:user_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="group" id="fullload-model:group">
+      <supertyperef idref="fullload-model:party"/>
+      <attribute name="group_name" datatype="String" multiplicity="1..1" id="fullload-model:group:group_name"/>
+      <!-- <rolereference id="fullload-model:group:group_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:groups:group_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="journal_entry" id="fullload-model:journal_entry">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:journal_entry:journal_id"> -->
+      <!-- <rolereference id="fullload-model:journal_entry:object_id"> -->
+      <attribute name="action" datatype="String" multiplicity="1..1" id="fullload-model:journal_entry:action"/>
+      <attribute name="action_pretty" datatype="String" multiplicity="1..1" id="fullload-model:journal_entry:action_pretty"/>
+      <attribute name="msg" datatype="String" multiplicity="1..1" id="fullload-model:journal_entry:msg"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:journal_entries:journal_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="site_node" id="fullload-model:site_node">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:site_node:node_id"> -->
+      <!-- <rolereference id="fullload-model:site_node:parent_id"> -->
+      <attribute name="name" datatype="String" multiplicity="1..1" id="fullload-model:site_node:name"/>
+      <attribute name="directory_p" datatype="String" multiplicity="1..1" id="fullload-model:site_node:directory_p"/>
+      <attribute name="pattern_p" datatype="String" multiplicity="1..1" id="fullload-model:site_node:pattern_p"/>
+      <!-- <rolereference id="fullload-model:site_node:object_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:site_nodes:node_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="apm_package" id="fullload-model:apm_package">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:apm_package:package_key"> -->
+      <attribute name="package_uri" datatype="String" multiplicity="1..1" id="fullload-model:apm_package:package_uri"/>
+      <attribute name="spec_file_path" datatype="String" multiplicity="1..1" id="fullload-model:apm_package:spec_file_path"/>
+      <attribute name="spec_file_mtime" datatype="Integer" multiplicity="1..1" id="fullload-model:apm_package:spec_file_mtime"/>
+      <attribute name="singleton_p" datatype="Boolean" multiplicity="1..1" id="fullload-model:apm_package:singleton_p"/>
+      <!-- <rolereference id="fullload-model:apm_package:package_id"> -->
+      <attribute name="instance_name" datatype="String" multiplicity="1..1" id="fullload-model:apm_package:instance_name"/>
+      <attribute name="enabled_p" datatype="String" multiplicity="1..1" id="fullload-model:apm_package:enabled_p"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:apm_packages:package_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="apm_application" id="fullload-model:apm_application">
+      <supertyperef idref="fullload-model:apm_package"/>
+      <!-- <rolereference id="fullload-model:apm_application:application_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:apm_applications:application_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="apm_service" id="fullload-model:apm_service">
+      <supertyperef idref="fullload-model:apm_package"/>
+      <!-- <rolereference id="fullload-model:apm_service:service_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:apm_services:service_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="apm_package_version" id="fullload-model:apm_package_version">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:apm_package_version:package_key"> -->
+      <attribute name="version_name" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:version_name"/>
+      <attribute name="version_uri" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:version_uri"/>
+      <attribute name="summary" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:summary"/>
+      <attribute name="description_format" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:description_format"/>
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:description"/>
+      <attribute name="vendor" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:vendor"/>
+      <attribute name="vendor_uri" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:vendor_uri"/>
+      <attribute name="enabled_p" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:enabled_p"/>
+      <attribute name="activation_date" datatype="Date" multiplicity="1..1" id="fullload-model:apm_package_version:activation_date"/>
+      <attribute name="deactivation_date" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:deactivation_date"/>
+      <attribute name="distribution_uri" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:distribution_uri"/>
+      <attribute name="distribution_date" datatype="Date" multiplicity="1..1" id="fullload-model:apm_package_version:distribution_date"/>
+      <!-- <rolereference id="fullload-model:apm_package_version:version_id"> -->
+      <attribute name="release_date" datatype="Date" multiplicity="1..1" id="fullload-model:apm_package_version:release_date"/>
+      <attribute name="installed_p" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:installed_p"/>
+      <attribute name="tagged_p" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:tagged_p"/>
+      <attribute name="imported_p" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:imported_p"/>
+      <attribute name="data_fullload-model_loaded_p" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:data_fullload-model_loaded_p"/>
+      <attribute name="cvs_import_results" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:cvs_import_results"/>
+      <attribute name="distribution_tarball" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:distribution_tarball"/>
+      <attribute name="servlet_package" datatype="String" multiplicity="1..1" id="fullload-model:apm_package_version:servlet_package"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:apm_package_versions:version_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="apm_parameter" id="fullload-model:apm_parameter">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:apm_parameter:package_key"> -->
+      <attribute name="parameter_name" datatype="String" multiplicity="1..1" id="fullload-model:apm_parameter:parameter_name"/>
+      <attribute name="datatype" datatype="String" multiplicity="1..1" id="fullload-model:apm_parameter:datatype"/>
+      <attribute name="default_value" datatype="String" multiplicity="1..1" id="fullload-model:apm_parameter:default_value"/>
+      <attribute name="min_n_values" datatype="Integer" multiplicity="1..1" id="fullload-model:apm_parameter:min_n_values"/>
+      <attribute name="max_n_values" datatype="String" multiplicity="1..1" id="fullload-model:apm_parameter:max_n_values"/>
+      <!-- <rolereference id="fullload-model:apm_parameter:parameter_id"> -->
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:apm_parameter:description"/>
+      <attribute name="section_name" datatype="String" multiplicity="1..1" id="fullload-model:apm_parameter:section_name"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:apm_parameters:parameter_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="apm_parameter_value" id="fullload-model:apm_parameter_value">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:apm_parameter_value:package_id"> -->
+      <!-- <rolereference id="fullload-model:apm_parameter_value:parameter_id"> -->
+      <attribute name="attr_value" datatype="String" multiplicity="1..1" id="fullload-model:apm_parameter_value:attr_value"/>
+      <!-- <rolereference id="fullload-model:apm_parameter_value:value_id"> -->
+      <objectmap>
+        <extendedmapentry>
+          <attributeref idref="fullload-model:apm_parameter_value:attr_value"/>
+          <extensiontable>
+            <foreignkeyref idref="fullload-schema:journal_entries:object_id:foreignkey"/>
+            <attributecolumnref idref="fullload-schema:acs_attribute_values:attribute_name"/>
+            <valuecolumnref idref="fullload-schema:apm_parameter_values:attr_value"/>
+          </extensiontable>
+        </extendedmapentry>
+        <foreignkeyref idref="fullload-schema:apm_parameter_values:value_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="workflow" id="fullload-model:workflow">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:workflow:case_id"> -->
+      <!-- <rolereference id="fullload-model:workflow:workflow_key"> -->
+      <!-- <rolereference id="fullload-model:workflow:context_key"> -->
+      <!-- <rolereference id="fullload-model:workflow:object_id"> -->
+      <attribute name="state" datatype="String" multiplicity="1..1" id="fullload-model:workflow:state"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:wf_cases:case_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="content_item" id="fullload-model:content_item">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <attribute name="name" datatype="String" multiplicity="1..1" id="fullload-model:content_item:name"/>
+      <!-- <rolereference id="fullload-model:content_item:locale"> -->
+      <!-- <rolereference id="fullload-model:content_item:live_revision"> -->
+      <!-- <rolereference id="fullload-model:content_item:item_id"> -->
+      <!-- <rolereference id="fullload-model:content_item:parent_id"> -->
+      <!-- <rolereference id="fullload-model:content_item:latest_revision"> -->
+      <attribute name="publish_status" datatype="String" multiplicity="1..1" id="fullload-model:content_item:publish_status"/>
+      <!-- <rolereference id="fullload-model:content_item:content_type"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_items:item_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="content_folder" id="fullload-model:content_folder">
+      <supertyperef idref="fullload-model:content_item"/>
+      <attribute name="label" datatype="String" multiplicity="1..1" id="fullload-model:content_folder:label"/>
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:content_folder:description"/>
+      <!-- <rolereference id="fullload-model:content_folder:folder_id"> -->
+      <attribute name="has_child_folders" datatype="String" multiplicity="1..1" id="fullload-model:content_folder:has_child_folders"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_folders:folder_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="content_symlink" id="fullload-model:content_symlink">
+      <supertyperef idref="fullload-model:content_item"/>
+      <!-- <rolereference id="fullload-model:content_symlink:target_id"> -->
+      <!-- <rolereference id="fullload-model:content_symlink:symlink_id"> -->
+      <attribute name="label" datatype="String" multiplicity="1..1" id="fullload-model:content_symlink:label"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_symlinks:symlink_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="content_extlink" id="fullload-model:content_extlink">
+      <supertyperef idref="fullload-model:content_item"/>
+      <attribute name="url" datatype="String" multiplicity="1..1" id="fullload-model:content_extlink:url"/>
+      <attribute name="label" datatype="String" multiplicity="1..1" id="fullload-model:content_extlink:label"/>
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:content_extlink:description"/>
+      <!-- <rolereference id="fullload-model:content_extlink:extlink_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_extlinks:extlink_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="content_template" id="fullload-model:content_template">
+      <supertyperef idref="fullload-model:content_item"/>
+      <!-- <rolereference id="fullload-model:content_template:template_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_templates:template_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="acs_message" id="fullload-model:acs_message">
+      <supertyperef idref="fullload-model:content_item"/>
+      <!-- <rolereference id="fullload-model:acs_message:message_id"> -->
+      <!-- <rolereference id="fullload-model:acs_message:reply_to"> -->
+      <attribute name="sent_date" datatype="Date" multiplicity="1..1" id="fullload-model:acs_message:sent_date"/>
+      <!-- <rolereference id="fullload-model:acs_message:sender"> -->
+      <attribute name="rfc822_id" datatype="String" multiplicity="1..1" id="fullload-model:acs_message:rfc822_id"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:acs_messages:message_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="content_keyword" id="fullload-model:content_keyword">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <attribute name="heading" datatype="String" multiplicity="1..1" id="fullload-model:content_keyword:heading"/>
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:content_keyword:description"/>
+      <attribute name="keyword_id" datatype="Integer" multiplicity="1..1" id="fullload-model:content_keyword:keyword_id"/>
+      <!-- <rolereference id="fullload-model:content_keyword:parent_id"> -->
+      <objectmap>
+      </objectmap>
+    </objecttype>
+    <objecttype name="content_revision" id="fullload-model:content_revision">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <attribute name="title" datatype="String" multiplicity="1..1" id="fullload-model:content_revision:title"/>
+      <attribute name="nls_language" datatype="String" multiplicity="1..1" id="fullload-model:content_revision:nls_language"/>
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:content_revision:description"/>
+      <attribute name="publish_date" datatype="Date" multiplicity="1..1" id="fullload-model:content_revision:publish_date"/>
+      <!-- <rolereference id="fullload-model:content_revision:mime_type"> -->
+      <!-- <rolereference id="fullload-model:content_revision:revision_id"> -->
+      <!-- <rolereference id="fullload-model:content_revision:item_id"> -->
+      <attribute name="content" datatype="String" multiplicity="1..1" id="fullload-model:content_revision:content"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_revisions:revision_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="image" id="fullload-model:image">
+      <supertyperef idref="fullload-model:content_revision"/>
+      <attribute name="width" datatype="Integer" multiplicity="1..1" id="fullload-model:image:width"/>
+      <attribute name="height" datatype="Integer" multiplicity="1..1" id="fullload-model:image:height"/>
+      <!-- <rolereference id="fullload-model:image:image_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:images:image_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="acs_message_revision" id="fullload-model:acs_message_revision">
+      <supertyperef idref="fullload-model:content_revision"/>
+      <!-- <rolereference id="fullload-model:acs_message_revision:revision_id"> -->
+      <!-- <rolereference id="fullload-model:acs_message_revision:item_id"> -->
+      <attribute name="title" datatype="String" multiplicity="1..1" id="fullload-model:acs_message_revision:title"/>
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:acs_message_revision:description"/>
+      <attribute name="publish_date" datatype="Date" multiplicity="1..1" id="fullload-model:acs_message_revision:publish_date"/>
+      <!-- <rolereference id="fullload-model:acs_message_revision:mime_type"> -->
+      <attribute name="nls_language" datatype="String" multiplicity="1..1" id="fullload-model:acs_message_revision:nls_language"/>
+      <attribute name="content" datatype="String" multiplicity="1..1" id="fullload-model:acs_message_revision:content"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_revisions:revision_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="cr_item_child_rel" id="fullload-model:cr_item_child_rel">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <attribute name="parent_id" datatype="String" multiplicity="1..1" id="fullload-model:cr_item_child_rel:parent_id"/>
+      <attribute name="child_id" datatype="String" multiplicity="1..1" id="fullload-model:cr_item_child_rel:child_id"/>
+      <attribute name="relation_tag" datatype="String" multiplicity="1..1" id="fullload-model:cr_item_child_rel:relation_tag"/>
+      <attribute name="order_n" datatype="String" multiplicity="1..1" id="fullload-model:cr_item_child_rel:order_n"/>
+      <!-- <rolereference id="fullload-model:cr_item_child_rel:rel_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_child_rels:rel_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="cr_item_rel" id="fullload-model:cr_item_rel">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:cr_item_rel:item_id"> -->
+      <!-- <rolereference id="fullload-model:cr_item_rel:related_object_id"> -->
+      <attribute name="relation_tag" datatype="String" multiplicity="1..1" id="fullload-model:cr_item_rel:relation_tag"/>
+      <attribute name="order_n" datatype="String" multiplicity="1..1" id="fullload-model:cr_item_rel:order_n"/>
+      <!-- <rolereference id="fullload-model:cr_item_rel:rel_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:cr_item_rels:rel_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="vc_master" id="fullload-model:vc_master">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:vc_master:latest_version"> -->
+      <!-- <rolereference id="fullload-model:vc_master:live_version"> -->
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:vc_master:description"/>
+      <!-- <rolereference id="fullload-model:vc_master:master_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:vc_masters:master_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="rev_master" id="fullload-model:rev_master">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <attribute name="latest_revision" datatype="Integer" multiplicity="1..1" id="fullload-model:rev_master:latest_revision"/>
+      <attribute name="live_revision" datatype="Integer" multiplicity="1..1" id="fullload-model:rev_master:live_revision"/>
+      <!-- <rolereference id="fullload-model:rev_master:revision_type"> -->
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:rev_master:description"/>
+      <!-- <rolereference id="fullload-model:rev_master:master_id"> -->
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:rev_masters:master_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+    <objecttype name="rev_revision" id="fullload-model:rev_revision">
+      <supertyperef idref="fullload-model:acs_object"/>
+      <!-- <rolereference id="fullload-model:rev_revision:master_id"> -->
+      <!-- <rolereference id="fullload-model:rev_revision:revision_id"> -->
+      <attribute name="description" datatype="String" multiplicity="1..1" id="fullload-model:rev_revision:description"/>
+      <objectmap>
+        <foreignkeyref idref="fullload-schema:rev_revisions:revision_id:foreignkey"/>
+      </objectmap>
+    </objecttype>
+  </model>
+</metadataroot>

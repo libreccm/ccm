@@ -1,0 +1,20 @@
+model com.arsdigita.london.search;
+
+query UnindexedItems {
+    BigDecimal id;
+
+    do {
+        select
+            item_id
+        from
+            cms_pages
+        where
+            item_id not in (
+                select object_id from search_content
+            )
+    }
+
+    map {
+        id = item_id;
+    }
+}

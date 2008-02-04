@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=558}]"><cms:name>personal-injury-558</cms:name><cms:language>en</cms:language><cms:title>Personal Injury</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=558}]"><cms:name>personal-injury-558-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>personal, injury</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=558}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Any hazard in the highway (road or pavement) caused as a result of an accident, damage or vandalism may be considered a risk to the public and could result in personal injury to pedestrians, road users or possible damage to property. The following types of damage are considered to be a risk: </i></p><hr/><ul>
+			<li title="*">Gully or drain cover missing.</li>
+			<li title="*">Wall exposing a large drop to the rear on either the pavement or road.</li>
+			<li title="*">Pedestrian guard railing protruding into the pavement or road.</li>
+			<li title="*">Fencing protruding into the pavement or road.</li>
+			<li title="*">Concrete bollard knocked over onto the pavement or road.</li>
+			<li title="*">Inspection cover missing or damaged.</li>
+			<li title="*">Bridge parapets damaged.</li>
+			<li title="*">Oil spillages on the road.</li>
+			<li title="*">Lamp columns knocked down, wires exposed or lanterns hanging loose.</li>
+			<li title="*">Road traffic bollards knocked down or broken.</li>
+			<li title="*">Sign poles knocked down or sign plates hanging loose.</li>
+			<li title="*">Traffic signals lights not working or traffic light head broken or hanging loose.</li>
+		</ul><p>You can report damage to the highway by either telephoning us, using the contact details above (out of office hours a message gives a telephone number for emergencies) or by completing the 
+		<a href="/ccm/services/pid.jsp?pid=forms/558a">
+<strong>online form</strong>
+</a>	
+			<span class="gen">link to online form.</span>
+</p><p>The report will then be classed as either an emergency or routine work based on the type of damage. </p><p>We require as much of the following information as possible to respond to your report:</p><ul>
+			<li title="*">Street name and area.</li>
+			<li title="*">Location on street, ie; is it near a house number or road junction?</li>
+			<li title="*">Description and detail of the damage.</li>
+			<li title="*">Your name and a contact number.</li>
+			<li title="*">Date and approximate time of damage.</li>
+			<li title="*">Persons or vehicle registration responsible for damage (if known).</li>
+			<li title="*">Were the police in attendance?</li>
+		</ul><p>For emergency work we aim to make a hazard safe within two hours. The damage is then assessed by a technician and an order issued for repairs as either reactive work within 8 weeks or planned work within six months, depending on the extent and location of the damage.</p><p>When a report of a hazard or damage is received the person taking the report will attempt to identify ownership and establish who is responsible for the property or street furniture from the details provided.</p><p>If the damage is clearly not the responsibility of the Council, then ownership details can be established and we will contact the respective statutory undertaker or owner who is responsible. A request will be made that they attend and make the hazard safe within a set timescale. If they are unable to meet this timescale then the Council will make the hazard safe and will then recover the costs.</p><p>If the responsibility cannot be established and the damage or hazard requires making safe, the Council will carry out the work within 2 hours and attempt to recover the costs from the property owner.</p><p>The following are some examples of street furniture and property that is not the responsibility of the Council:</p><ul>
+			<li title="*">Inspection covers in the pavement or road for example; stop taps, fire hydrants, manholes and valve boxes.</li>
+			<li title="*">Walls built for non-highway purposes.</li>
+			<li title="*">Cellar covers.</li>
+			<li title="*">British Telecom or Cable cabinets.</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=558"> Applications for services
+		(558)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

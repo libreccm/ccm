@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=738}]"><cms:name>licensing-738</cms:name><cms:language>en</cms:language><cms:title>Licence - water sports</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=738}]"><cms:name>licensing-738-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, water, sports</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=738}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>In 1996 it became a legal requirement under The Activity Centres (Young Persons' Safety) Act 1995 for providers of certain adventure activities to undergo inspection of their safety management systems and become licensed.
+</i></p><hr/><p>This licensing scheme only applies to those who offer activities to young people under the age of 18 years and who operate these activities in a commercial manner.</p><p>
+Generally, licensing only applies to these activities when they are done in remote or isolated environments. For example, climbing on natural terrain requires a licence, climbing on a purpose built climbing wall does not.</p><p>The Adventure Activities Licensing Authority inspects activity centres and other activity providers on behalf of the Department of Education and Skills (DfES).
+</p><p>If the Licensing Authority is satisfied that the provider complies with nationally accepted standards of good practice they issue a licence. </p><p>Activities covered include:</p><ul>
+			<li title="*">Climbing</li>
+			<li title="*">Watersports</li>
+			<li title="*">Trekking</li>
+			<li title="*">Caving</li>
+		</ul><p>Please visit their website for more information: <strong>
+				
+		<a href="http://www.aala.org/index.php">www.aala.org/index.php</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=738"> Providing Information
+		(738)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

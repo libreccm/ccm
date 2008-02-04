@@ -1,0 +1,114 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Category.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.categorization;
+
+import com.arsdigita.cms.*;
+
+// This is used to enforce URL uniqueness within a collection of categories
+// and is used only because we are browsing by category
+query getAllItemURLsForCategory {
+    String url;
+    BigDecimal itemID;
+    do {
+        select url, cat_categories.category_id as item_id
+        from cat_categories,
+             cat_category_category_map
+       where cat_categories.category_id = 
+                                cat_category_category_map.related_category_id
+         and cat_category_category_map.category_id = :categoryID
+         and relation_type = 'child'
+      union 
+       select name as url, cms_items.item_id
+       from cms_items,
+            cat_object_category_map
+       where cms_items.item_id = cat_object_category_map.object_id
+         and cat_object_category_map.category_id = :categoryID
+    } map {
+        url = url;
+        itemID = item_id;
+    }
+}
+
+// This is very similar to the query getAllItemURLsForCategory except that
+// this assumes that you have an item and need the URL and the category
+// name where as getAllItemURLsForCategory assumes you have the actual
+// category.  Both queries could be used for the same purpose but that
+// would require an extra db hit on this one to get the list of possible
+// categorie IDs
+query getAllItemURLsForCategoryFromItem {
+    String url;
+    String categoryName;
+    String itemName;
+    BigDecimal itemID;
+    do {
+        select cat_categories.url, cat_categories.name as item_name,
+               parents.name as category_name, 
+               cat_categories.category_id as item_id
+        from cat_categories,
+             cat_category_category_map,
+             cat_categories parents
+       where cat_categories.category_id = 
+                                cat_category_category_map.related_category_id
+         and cat_category_category_map.category_id in
+                          (select category_id 
+                             from cat_object_category_map 
+                            where object_id = :itemID)
+         and parents.category_id = cat_category_category_map.category_id
+         and relation_type = 'child'
+      union 
+       select cms_items.name as url, cms_pages.title as item_name, 
+              cat_categories.name as category_name, cms_items.item_id
+       from cms_items, cms_pages,
+            cat_object_category_map,
+            cat_categories
+       where cms_items.item_id = cat_object_category_map.object_id
+         and cat_object_category_map.category_id in (select category_id 
+                             from cat_object_category_map 
+                            where object_id = :itemID)
+         and cms_pages.item_id = cms_items.item_id
+         and cat_categories.category_id =  cat_object_category_map.category_id
+    } map {
+        url = url;
+        categoryName = category_name;
+        itemName = item_name;
+        itemID = item_id;
+    }
+}
+
+
+query getAllCategoryChildren {
+    BigDecimal id;
+    String name;
+    BigDecimal parentID;
+    
+    do {
+        select c.category_id, c.name, m.category_id as parent_id
+          from cat_categories c,
+               cat_cat_subcat_trans_index t,
+               cat_category_category_map m
+         where t.category_id = :id
+           and t.subcategory_id = c.category_id
+           and c.category_id = m.related_category_id
+    } map {
+        id = c.category_id;
+        name = c.name;
+        parentID = parent_id;
+    }
+}

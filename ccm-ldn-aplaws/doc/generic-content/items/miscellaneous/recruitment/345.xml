@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=345}]"><cms:name>-345</cms:name><cms:language>en</cms:language><cms:title>New deal trainee ships</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=345}]"><cms:name>-345-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>New, deal, traineeships, trainee, ships</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=345}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>New Deal is a key part of the government's Welfare 
+to Work strategy. Personalised programmes of work and skills training opportunities, 
+delivered locally, are aimed at helping unemployed people into work.</i></p><hr/><p>	There are 
+programmes for young people (18-24), 25+, lone parents, disabled people, 50+ and 
+partners of the unemployed.
+			</p><p>
+				All programmes are accessible through Employment 
+  Services and, whether you are an unemployed individual looking for a job or 
+  a company with vacancies to offer, your first point of contact should be your 
+  local Job Centre.
+			</p><p>
+				<strong>More information: 
+				
+		<a href="http://www.newdeal.gov.uk">www.newdeal.gov.uk</a>	
+			</strong>
+			<span class="gen">link to external website</span> or 
+		<a href="http://www.jobcentreplus.gov.uk/">
+				<strong>www.jobcentreplus.gov.uk</strong>
+			</a>	
+			<span class="gen">link to external website</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=345"> Providing Information
+		(345)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

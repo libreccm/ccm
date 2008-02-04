@@ -1,0 +1,56 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: query-templatesInUseContexts.ora.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+query templatesInUseContexts {
+  ItemTemplateMapping[0..1] mapping;
+  String[1..1] useContext;
+
+  do {
+    select 
+      c.use_context, 
+      x.mapping_id, x.template_id, x.name, x.label, x.item_id
+    from
+      cms_template_use_contexts c, 
+      (select
+         m.mapping_id, m.template_id, m.use_context, 
+         ti.name, ti.item_id, tt.label
+       from
+         cms_item_template_map m, cms_items ti, cms_templates tt
+       where
+         m.item_id = :itemID
+       and
+         ti.item_id = m.template_id
+       and
+         tt.template_id = m.template_id
+      ) x
+    where
+      c.use_context = x.use_context(+)
+    order by
+      c.use_context
+  } map {
+    mapping.id              = x.mapping_id;
+    useContext              = c.use_context;
+    mapping.item.id         = x.item_id;
+    mapping.template.id     = x.template_id;
+    mapping.template.name   = x.name;
+    mapping.template.label  = x.label;
+  }
+}

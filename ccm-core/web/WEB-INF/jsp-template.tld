@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+        PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN"
+        "http://java.sun.com/j2ee/dtds/web-jsptaglib_1_1.dtd">
+
+<taglib>
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.1</jspversion>
+  <shortname>template</shortname>
+  <uri>http://www.arsdigita.com</uri>
+  <info>
+    A tag library for as simple templating system.
+  </info>
+
+  <tag>
+    <name>query</name>
+    <tagclass>com.arsdigita.templating.jsp.QueryTag</tagclass>
+    <teiclass>com.arsdigita.templating.jsp.QueryTagInfo</teiclass>
+    <bodycontent>jsp</bodycontent>
+    <info>
+      Specifies and optionally initializes a data query.
+    </info>
+
+    <attribute>
+      <name>name</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>include</name>
+    <tagclass>com.arsdigita.templating.jsp.IncludeTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      Includes a JSP component.
+    </info>
+
+    <attribute>
+      <name>path</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>master</name>
+    <tagclass>com.arsdigita.templating.jsp.MasterTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      Embeds a JSP within the body of another JSP.
+    </info>
+
+    <attribute>
+      <name>path</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>slave</name>
+    <tagclass>com.arsdigita.templating.jsp.SlaveTag</tagclass>
+    <bodycontent>empty</bodycontent>
+    <info>
+      Specifies the placement of an embedded JSP within the master JSP.
+    </info>
+  </tag>
+
+</taglib>
+
+

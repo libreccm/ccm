@@ -1,0 +1,25 @@
+// Forum initialization file
+//
+// ::replyHostName:: -> example.com
+// ::digestUserEmail:: -> digests
+// ::adminCanEditPosts:: -> true
+// ::authorCanEditPosts:: -> true
+// ::forums:: -> {}
+
+init com.arsdigita.forum.LegacyInitializer {
+   // All outbound bboard message will have return address as the
+   // following format:  forumID.bboard@hostname
+   replyHostName = "::replyHostName::";
+   // The email address that daily digests come from
+   digestUserEmail = "::digests::";
+   // whether administrators can edit posts
+   adminCanEditPosts = ::adminCanEditPosts::;
+   // whether the author of a post can edit it later
+   authorCanEditPosts = ::authorCanEditPosts::;
+
+   forums = ::forums::;
+}
+
+init com.arsdigita.domain.installer.DomainObjectTraversalInitializer {
+  adapters = { "/WEB-INF/resources/forum-adapters.xml" };
+}

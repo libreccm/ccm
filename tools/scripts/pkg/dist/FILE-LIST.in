@@ -1,0 +1,24 @@
+# First two lines are the default
+file 0644 root root
+dir 0755 root root
+
+# Now explicitly own the top level dirs
+dir 0755 - - ::PACKAGE::-::VERSION::/api
+dir 0755 - - ::PACKAGE::-::VERSION::/src
+dir 0755 nobody nobody ::PACKAGE::-::VERSION::/dist
+dir 0755 - - ::PACKAGE::-::VERSION::/bin
+dir 0755 - - ::PACKAGE::-::VERSION::/runtime
+dir 0755 - - ::PACKAGE::-::VERSION::/etc
+dir 0755 - - ::PACKAGE::-::VERSION::/conf
+dir 0755 nobody nobody ::PACKAGE::-::VERSION::/logs
+
+# Turn on execute on scripts
+file 0755 - - ::PACKAGE::-::VERSION::/bin/configure.pl
+file 0444 - - ::PACKAGE::-::VERSION::/bin/*.sh.in
+
+# Mark config files
+conf 0444 - - ::PACKAGE::-::VERSION::/conf/*.conf.in
+conf 0644 - - ::PACKAGE::-::VERSION::/dist/WEB-INF/resources/web.xml
+skip - - - ::PACKAGE::-::VERSION::/dist/WEB-INF/resources/enterprise.init$
+
+file 0444 - - ::PACKAGE::-::VERSION::/VERSION

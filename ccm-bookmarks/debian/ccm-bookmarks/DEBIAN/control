@@ -1,0 +1,11 @@
+Package: ccm-bookmarks
+Version: 6.3.0-4
+Section: contrib/web
+Priority: optional
+Architecture: all
+Depends: java-virtual-machine-dummy | j2sdk1.4 | java-virtual-machine, ccm-tools, ccm-servlet-container, libservlet2.3-java, libpgjava, liblog4j1.2-java, ccm-core
+Installed-Size: 200
+Maintainer: Runtime Packaging <runtime-packaging@runtime-collective.com>
+Description: APLAWS: Bookmarks application.
+ .
+ FIXME: We need a longer and more meaningful description here.

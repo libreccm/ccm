@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=636}]"><cms:name>licensing-636</cms:name><cms:language>en</cms:language><cms:title>Licence - private hire operator's licence</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=636}]"><cms:name>licensing-636-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, private, hire, operator</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=636}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A private hire operator's licence is required to enable a person to accept or invite bookings for private hire vehicles. 
+</i></p><hr/><p>One person can be licensed and employ/sub-contract an unlimited number of licensed vehicles. However, a licensed private hire driver cannot accept any bookings unless he either holds or works for a licensed private hire operator. An operator may pass a booking to another licensed private hire vehicle operator provided that the operator is also licensed by the Council. </p><p>
+Members of the public have initial contact with the operator and make the contract with them even if the operator does not provide the vehicle and/or the driver. </p><p>Before an operator&#x2019;s licence is granted the applicant must satisfy the Council that the address from which they intend to operate is suitable and, where applicable, satisfy any conditions that maybe attached to the licence in order not to disturb the ambience of the area.</p><p>If you are a vehicle proprietor you may work for any existing Operator. However, 
+  if you wish to apply for your own licence to operate from premises which will be 
+  used as a booking office, you need to obtain Planning Permission from the Council allowing use of the building.</p><p>A Certificate of Public Liability Insurance is required where the public have access 
+  to the premises i.e. waiting room etc. However, where no public access or 
+  waiting facilities are provided or if you wish to operate your own vehicle from 
+  home, this insurance is not necessary.</p><p>Anyone applying for an Operators Licence who is not currently a vehicle proprietor 
+  or licensed Private Hire Driver needs to have a Statutory Declaration form completed 
+  by a Solicitor.</p><p>Once the 
+			
+			<span class="gen">link to online form</span> has been completed, you need to make an appointment to visit our Offices, bringing with you the following documentation:</p><ul>
+			<li title="*">Statutory Declaration (if applicable) </li>
+			<li title="*">Certificate of Public Liability Insurance (if applicable) </li>
+			<li title="*">Copy of Planning Permission </li>
+			<li title="*">fee - currently <span class="gen">enter amount</span>
+			</li>
+		</ul><p>Applications will not be accepted without production of the above.</p><p>Once your application has been accepted and the fee has been paid, a licence will be issued.</p><p>We look forward to receiving your application and if you have any difficulty with 
+  any of the forms or have any questions, please contact us on the above contact details.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=636"> Applications for services
+		(636)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=636}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=636}]"/></cms:links></cms:item>

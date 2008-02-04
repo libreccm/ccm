@@ -1,0 +1,87 @@
+#!/usr/bin/perl -w
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use CCM::Interpolate('interpolate_string', 'interpolate_file');
+use CCM::Util;
+use File::Spec;
+use Getopt::Long;
+use IO::Socket;
+
+my $help = 0;
+my $verbose = 0;
+my $target = undef;
+my $source = File::Spec->catfile($ENV{'CCM_TOOLS_HOME'}, "server", "resin", "conf", "resin-default.conf.in");
+my $globalvars = {
+    'log-dir' => File::Spec->catdir("$ENV{'CCM_HOME'}", "logs"),
+    'root-dir' => File::Spec->catdir("$ENV{'CCM_HOME'}"),
+    'webapp-root' => File::Spec->catdir("$ENV{'CCM_HOME'}", "webapps"),
+    'srun-port' => "6802"
+};
+
+GetOptions('verbose' => \$verbose,
+           'help' => \$help,
+           'source=s' => \$source,
+           'target=s' => \$target,
+           'parameter=s' => $globalvars);
+
+if ($help) {
+    &show_help();
+}
+
+foreach (@ARGV) {
+    if (/^([^=]+)=(.*)$/) {
+        $globalvars->{$1} = $2;
+    }
+}
+
+&validate($globalvars);
+
+if ( defined $target ) {
+    if ( ! defined $ENV{'CCM_HOME'} ) {
+        &CCM::Util::warn("CCM_HOME is not set");
+    }
+} else {
+    if ( ! defined $ENV{'CCM_HOME'} ) {
+        &CCM::Util::error("CCM_HOME must be set first");
+    }
+    $target = File::Spec->catfile("$ENV{'CCM_HOME'}", "conf", "resin.conf");
+}
+
+&CCM::Interpolate::appendVars($target, $globalvars);
+interpolate_file('source' => $source,
+                 'destination' => $target,
+                 'vars' => $globalvars);
+
+exit 0;
+
+sub show_help {
+    my $progname = CCM::Util::filename($0);
+    &CCM::Util::error("\nsyntax: $progname [--verbose] [--source=<file>] [--target=<file>] [--parameter <key>=<value>]...\n", 2);
+}
+
+sub validate {
+    my $vars = shift;
+
+    exists $vars->{'http-port'} && &CCM::Util::validatePort($vars->{'http-port'}, 'http-port');
+    exists $vars->{'srun-port'} && &CCM::Util::validatePort($vars->{'srun-port'}, 'srun-port');
+    if ( exists $vars->{'http-port'} &&
+         exists $vars->{'srun-port'} &&
+         $vars->{'http-port'} == $vars->{'srun-port'} ) {
+        &CCM::Util::error ("http-port and srun-port must have different values");
+    }
+}
+

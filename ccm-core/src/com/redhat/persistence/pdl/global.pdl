@@ -1,0 +1,80 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: global.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model global;
+
+object type Boolean
+    class java.lang.Boolean
+    adapter com.redhat.persistence.pdl.adapters.BooleanAd {}
+
+object type Byte
+    class java.lang.Byte
+    adapter com.redhat.persistence.pdl.adapters.ByteAd {}
+
+object type Character
+    class java.lang.Character
+    adapter com.redhat.persistence.pdl.adapters.CharacterAd {}
+
+object type String
+    class java.lang.String
+    adapter com.redhat.persistence.pdl.adapters.StringAd {}
+
+object type Short
+    class java.lang.Short
+    adapter com.redhat.persistence.pdl.adapters.ShortAd {}
+
+object type Integer
+    class java.lang.Integer
+    adapter com.redhat.persistence.pdl.adapters.IntegerAd {}
+
+object type Long
+    class java.lang.Long
+    adapter com.redhat.persistence.pdl.adapters.LongAd {}
+
+object type Float
+    class java.lang.Float
+    adapter com.redhat.persistence.pdl.adapters.FloatAd {}
+
+object type Double
+    class java.lang.Double
+    adapter com.redhat.persistence.pdl.adapters.DoubleAd {}
+
+object type BigInteger
+    class java.math.BigInteger
+    adapter com.redhat.persistence.pdl.adapters.BigIntegerAd {}
+
+object type BigDecimal
+    class java.math.BigDecimal
+    adapter com.redhat.persistence.pdl.adapters.BigDecimalAd {}
+
+object type Date
+    class java.util.Date
+    adapter com.redhat.persistence.pdl.adapters.DateAd {}
+
+object type byte[]
+    class \[B
+    adapter com.redhat.persistence.pdl.adapters.BlobAd {}
+
+object type Blob
+    class \[B
+    adapter com.redhat.persistence.pdl.adapters.BlobAd {}
+
+object type Object
+    class java.lang.Object
+    adapter com.redhat.persistence.pdl.adapters.ObjectAd {}

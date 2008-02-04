@@ -1,0 +1,18 @@
+<dispatcher-configuration>
+  <url-mapping>
+    <url>logout/</url>
+    <page-class>com.arsdigita.cms.ui.Logout</page-class>
+  </url-mapping>
+  <url-mapping>
+    <url>stream/image/</url>
+    <page-class>com.arsdigita.cms.dispatcher.StreamImage</page-class>
+  </url-mapping>
+  <url-mapping>
+    <url>stream/asset/</url>
+    <page-class>com.arsdigita.cms.dispatcher.StreamAsset</page-class>
+  </url-mapping>
+  <url-mapping>
+    <url>download/asset/</url>
+    <page-class>com.arsdigita.cms.dispatcher.DownloadAsset</page-class>
+  </url-mapping>
+</dispatcher-configuration>

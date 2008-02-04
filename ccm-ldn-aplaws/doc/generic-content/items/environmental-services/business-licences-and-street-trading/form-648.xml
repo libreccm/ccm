@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=648}]"><cms:name>licensing-form-648</cms:name><cms:language>en</cms:language><cms:title>Licence - house to house collection</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=648}]"><cms:name>648a.pdf</cms:name><cms:content file="648a.pdf"/></cms:file></cms:item>

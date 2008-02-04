@@ -1,0 +1,41 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Message.pdl 1501 2007-03-20 10:33:28Z chrisgilbert23 $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.messaging;
+
+import com.arsdigita.kernel.*;
+
+object type Message extends ACSObject {
+
+    String[0..1]     replyTo = messages.reply_to VARCHAR(250);
+    String[1..1]     subject = messages.subject VARCHAR(250);
+    String[1..1]     body = messages.body CLOB;
+    String[1..1]     type = messages.type VARCHAR(50);
+    Date[1..1]       sent = messages.sent_date TIMESTAMP;
+    BigDecimal[0..1] inReplyTo = messages.in_reply_to INTEGER;
+    BigDecimal objectID = messages.object_id INTEGER;
+    String[0..1]     messageID = messages.rfc_message_id VARCHAR(1000);
+
+    Party[1..1] sender = join messages.sender to parties.party_id;
+
+    component MessagePart[0..n] messagePart = 
+        join messages.message_id to message_parts.message_id;
+
+    reference key (messages.message_id);
+}

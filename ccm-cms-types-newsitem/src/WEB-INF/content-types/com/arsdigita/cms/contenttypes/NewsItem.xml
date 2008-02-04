@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+  <ctd:content-type 
+              label="NewsItem" 
+        description="A news item type" 
+         objectType="com.arsdigita.cms.contenttypes.NewsItem" 
+          classname="com.arsdigita.cms.contenttypes.NewsItem">
+
+    <ctd:authoring-kit 
+       createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+      <ctd:authoring-step  
+                 labelKey="cms.contenttypes.shared.basic_properties.title" 
+              labelBundle="com.arsdigita.cms.ui.CMSResources"
+           descriptionKey="newsitem.authoring.body_text.description" 
+        descriptionBundle="com.arsdigita.cms.contenttypes.NewsItemResources"
+                component="com.arsdigita.cms.contenttypes.ui.NewsItemPropertiesStep"/>
+
+        <ctd:include href="/WEB-INF/content-types/edit-body-text-step.xml"/>
+        <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
+      <ctd:authoring-step
+                 labelKey="newsitem.authoring.image.title" 
+              labelBundle="com.arsdigita.cms.contenttypes.NewsItemResources"
+           descriptionKey="newsitem.authoring.image.description" 
+        descriptionBundle="com.arsdigita.cms.contenttypes.NewsItemResources"
+                component="com.arsdigita.cms.ui.authoring.ArticleImage"/>
+
+    </ctd:authoring-kit>
+
+  </ctd:content-type>
+</ctd:content-types>

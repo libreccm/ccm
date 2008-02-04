@@ -1,0 +1,387 @@
+// CMS initialization file
+//
+// $Id: enterprise.init 1357 2006-11-06 13:02:24Z sskracic $
+//
+
+init com.arsdigita.cms.installer.Initializer {
+    updateMasterObject = false;
+    workspace = "content-center";
+    contentCenterMap = "/WEB-INF/resources/content-center-map.xml";
+}
+
+init com.arsdigita.cms.installer.xml.ContentTypeInitializer {
+    contentTypes = {
+        "/WEB-INF/content-types/Template.xml"
+    };
+}
+
+init com.arsdigita.cms.publishToFile.Initializer {
+    // List of publish destinations for content types 
+    // Each element is a four-element list in the format 
+    // '{ "content type", "root directory", "shared storage",  
+    // "url stub" }'. 
+    // "Content type" is the object type of the content type. 
+    // "Root directory" must be a path to a writable directory, relative 
+    // to the file-system root. "Shared storage" must be _true_ if the root 
+    // directory is shared NFS storage, _false_ otherwise. "URL stub"
+    // must be the path component of the URL from which the live server 
+    // will serve from this directory.
+    destination = { 
+      { "com.arsdigita.cms.ContentItem", 
+        "data/p2fs", 
+        false, 
+        "/p2fs" },
+      { "com.arsdigita.cms.Template", 
+	"webapps/ROOT/packages/content-section/templates",
+        false, 
+        "/templates" }
+    };
+
+    // Class which implements PublishToFileListener used to perform
+    // additional actions when publishing or unpublishing to the file system.
+    publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
+
+    // Queue management parameters.
+
+    // Set startupDelay to 0 to disable the processing of the queue
+    // Time (seconds) before starting to monitor the
+    // queue after a server start
+    startupDelay = 30;
+
+    // Time (in seconds) between checking if there are entries in the
+    // publishToFile queue.
+    // A value <= 0 disables processing the queue on this server.
+    pollDelay = 5;
+
+    // Time to wait (seconds) before retrying
+    // to process a failed entry
+    retryDelay = 120;
+
+    // Number of queue entries to process at once.
+    blockSize = 40;
+    // Number of times a failed queue entry will be
+    // reprocessed. If processing has failed more than
+    // that number of times, the entry will be
+    // ignored.
+    maximumFailCount = 10;
+
+    // Method used to select entries for processing.
+    // 'QueuedOrder'-in  queued order.
+    // 'GroupByParent'-group entries according to parent when selecting items
+    //  (allows optimizations if a listener task required for all elements in a folder
+    //   can be done only once for the folder).
+    blockSelectMethod = "GroupByParent";
+}
+
+
+init com.arsdigita.cms.installer.SectionInitializer {
+
+  // Name of the content section. This is used as the URL
+  // so it must contain only characters that are allowed in URLs e.g.,
+  // no spaces.
+  name = "content";
+
+  // List of roles to create. First field is role name,
+  // second is the description, third is a list of
+  // privileges, and (optional) fourth is the workflow
+  // task to assign to
+  roles = {
+    {
+      "Author", "Creates new content",
+      { "new_item", "read_item", "preview_item", "edit_item",
+        "categorize_items" },
+      "Authoring"
+    },
+    {
+      "Editor", "Approves the author's work",
+      { "edit_item", "new_item", "delete_item", "approve_item",
+        "read_item", "preview_item", "categorize_items" },
+      "Approval"
+    },
+    {
+      "Publisher", "Deploys the content to the web site",
+      { "edit_item", "new_item", "delete_item",
+        "publish", "read_item", "preview_item", "categorize_items" },
+      "Publishing"
+    },
+    {
+      "Manager", "Manages the overall content section",
+      { "delete_item", "edit_item", "new_item", 
+        "staff_admin", "content_type_admin", "lifecycle_admin", 
+        "workflow_admin", "category_admin", "publish", 
+        "read_item", "preview_item", "categorize_items" }
+      // NB, manager doesn't have any assigned task for workflow
+    }
+  };
+
+  // List of content types to register
+  types = {
+  };
+
+  // Category tree to load
+  categories = { "/WEB-INF/resources/article-categories.xml", "/WEB-INF/resources/navigation-categories.xml" };
+
+  // Wether to make content viewable to 'The Public', ie non-registered users
+  public = true;
+
+  // When to generate email alerts: by default, generate email alerts
+  // on enable, finish, and rollback (happens on rejection)
+  // changes. There are four action types for each task type: enable,
+  // disable, finish, and rollback. Note that the values below are
+  // based on the task labels, and as such are not globalized.
+  //
+  // Default value (site-wide) is handled via the parameter
+  // com.arsdigita.cms.default_task_alerts.
+  // taskAlerts = {
+  //      { "Authoring",
+  //        { "enable", "finish", "rollback" }
+  //      },
+  //      { "Approval",
+  //        { "enable", "finish", "rollback" }
+  //      },
+  //      { "Deploy",
+  //        { "enable", "finish", "rollback" }
+  //      }
+  //  };
+
+  // Parameters controlling Overdue Task alerts:
+
+  // sendOverdueAlerts: Should we send alerts about overdue tasks at
+  //                    all?
+  // taskDuration:   The time between when a task is enabled (it is made
+  //                 available for completion) and when it is
+  //                 considered overdue (in HOURS)
+  // alertInterval:  The time to wait between sending successive alerts on the same
+  //                 overdue task (in HOURS)
+  // maxAlerts:      The maximum number of alerts to send about any one
+  //                 overdue task
+  sendOverdueAlerts = false;
+  taskDuration = 96;
+  alertInterval = 24;
+  maxAlerts = 5;
+
+  // default value (site-wide) is handled via the parameter
+  // com.arsdigita.cms.default_item_resolver_class.
+  // section-specific override can be added here. only uncomment if
+  // you are changing from the default for a specific content section
+  // Name of the item resolver class. This class must implement com.arsdigita.cms.dispatcher.ItemResolver.
+  //itemResolverClass = "com.arsdigita.cms.dispatcher.MultilingualItemResolver";
+
+  // default value (site-wide) is handled via the parameter
+  // com.arsdigita.cms.default_template_resolver_class.
+  // section-specific override can be added here. only uncomment if
+  // you are changing from the default for a specific content section
+  // Name of the template resolver class. This class must implement com.arsdigita.cms.dispatcher.TemplateResolver.
+  //templateResolverClass = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
+}
+
+
+init com.arsdigita.formbuilder.installer.Initializer {
+    widgetTypes = {
+        { "forms-cms", "Checkbox group", "Checkbox groups",
+          "com.arsdigita.formbuilder.PersistentCheckboxGroup",
+          "com.arsdigita.formbuilder.ui.editors.CheckboxGroupEditor" },
+        { "forms-cms", "Date field", "Date fields",
+          "com.arsdigita.formbuilder.PersistentDate",
+          "com.arsdigita.formbuilder.ui.editors.DateForm" },
+        { "forms-cms", "Hidden field", "Hidden fields",
+          "com.arsdigita.formbuilder.PersistentHidden",
+          "com.arsdigita.formbuilder.ui.editors.HiddenForm" },
+        { "forms-cms", "Hidden ID Generator field", "Hidden ID Generator fields",
+          "com.arsdigita.formbuilder.HiddenIDGenerator",
+          "com.arsdigita.formbuilder.ui.editors.HiddenIDGeneratorForm" },
+        { "forms-cms", "Multiple select box", "Multiple select boxes",
+          "com.arsdigita.formbuilder.PersistentMultipleSelect",
+          "com.arsdigita.formbuilder.ui.editors.MultipleSelectEditor" },
+        { "forms-cms", "Password field", "Password fields",
+          "com.arsdigita.formbuilder.PersistentPassword",
+          "com.arsdigita.formbuilder.ui.editors.PasswordForm" },
+        { "forms-cms", "Radio group", "Radio groups",
+          "com.arsdigita.formbuilder.PersistentRadioGroup",
+          "com.arsdigita.formbuilder.ui.editors.RadioGroupEditor" },
+        { "forms-cms", "Single select box", "Single select boxes",
+          "com.arsdigita.formbuilder.PersistentSingleSelect",
+          "com.arsdigita.formbuilder.ui.editors.SingleSelectEditor" },
+        { "forms-cms", "Submit button", "Submit buttons",
+          "com.arsdigita.formbuilder.PersistentSubmit",
+          "com.arsdigita.formbuilder.ui.editors.SubmitForm" },
+        { "forms-cms", "Text area", "Text areas",
+          "com.arsdigita.formbuilder.PersistentTextArea",
+          "com.arsdigita.formbuilder.ui.editors.TextAreaForm" },
+        { "forms-cms", "Text field", "Text fields",
+          "com.arsdigita.formbuilder.PersistentTextField",
+          "com.arsdigita.formbuilder.ui.editors.TextFieldForm" },
+        { "forms-cms", "Data Driven Select Box", "Data Driven Select Boxes",
+          "com.arsdigita.formbuilder.DataDrivenSelect",
+          "com.arsdigita.formbuilder.ui.editors.DataDrivenSelectForm" },
+        { "forms-cms", "Text Description", "Text Descriptions",
+          "com.arsdigita.formbuilder.PersistentText",
+          "com.arsdigita.formbuilder.ui.editors.TextForm" },
+        { "forms-cms", "Text Heading", "Text Headings",
+          "com.arsdigita.formbuilder.PersistentHeading",
+          "com.arsdigita.formbuilder.ui.editors.HeadingForm" },
+        { "forms-cms", "Section Break", "Section Break",
+          "com.arsdigita.formbuilder.PersistentHorizontalRule",
+          "com.arsdigita.formbuilder.ui.editors.HorizontalRuleForm" },
+        { "forms-cms", "User Email Fields", "User Email Fields",
+           "com.arsdigita.formbuilder.PersistentEmailField",
+          "com.arsdigita.formbuilder.ui.editors.EmailFieldForm" }
+   };
+    processListenerTypes = {
+        { "forms-cms", "Confirmation email", "Confirmation emails",
+          "com.arsdigita.formbuilder.actions.ConfirmEmailListener",
+          "com.arsdigita.formbuilder.ui.editors.ConfirmEmailForm" },
+        { "forms-cms", "URL redirect", "URL redirects",
+          "com.arsdigita.formbuilder.actions.ConfirmRedirectListener",
+          "com.arsdigita.formbuilder.ui.editors.ConfirmRedirectForm" },
+        { "forms-cms", "Simple email", "Simple emails",
+          "com.arsdigita.formbuilder.actions.SimpleEmailListener",
+          "com.arsdigita.formbuilder.ui.editors.SimpleEmailForm" },
+        { "forms-cms", "Templated email", "Templated emails",
+          "com.arsdigita.formbuilder.actions.TemplateEmailListener",
+          "com.arsdigita.formbuilder.ui.editors.TemplateEmailForm" },
+        { "forms-cms", "Remote Server POST", "Remote Server POSTs",
+          "com.arsdigita.formbuilder.actions.RemoteServerPostListener",
+          "com.arsdigita.formbuilder.ui.editors.RemoteServerPostForm" },
+        { "forms-cms", "XML email", "XML emails",
+          "com.arsdigita.formbuilder.actions.XMLEmailListener",
+          "com.arsdigita.formbuilder.ui.editors.XMLEmailForm" }
+    };
+    dataQueries = {
+        { "forms-cms", "com.arsdigita.formbuilder.DataQueryUsers",
+          "List of all registered users" },
+        { "forms-cms", "com.arsdigita.formbuilder.DataQueryPackages",
+          "List of all installed packages" }
+    };
+}
+
+
+//init com.arsdigita.cms.installer.SectionInitializer {
+//  // Name of the content section (used to form URL)
+//  name = "forms";
+//
+//  // List of roles to create. First field is role name,
+//  // second is the description, third is a list of
+//  // privileges, and (optional) fourth is the workflow
+//  // task to assign to
+//  roles = {
+//    {
+//      "Author", "Creates new content",
+//      { "new_item", "read_item", "preview_item" },
+//      "Authoring"
+//    },
+//    {
+//      "Editor", "Approves the author's work",
+//      { "edit_item", "new_item", "delete_item",
+//        "read_item", "preview_item" },
+//      "Approval"
+//    },
+//    {
+//      "Publisher", "Deploys the content to the web site",
+//      { "edit_item", "new_item", "delete_item",
+//        "publish", "read_item", "preview_item" },
+//      "Publishing"
+//    },
+//    {
+//      "Manager", "Manages the overall content section",
+//      { "delete_item", "edit_item", "new_item",
+//        "staff_admin", "content_type_admin", "lifecycle_admin",
+//        "workflow_admin", "category_admin", "publish",
+//        "read_item", "preview_item" }
+//      // NB, manager doesn't have any assigned task for workflow
+//    }
+//  };
+//
+//  // List of content types to register
+//  types = {
+//  };
+//
+//  // Category tree to load
+//  categories = { "/WEB-INF/resources/form-categories.xml" };
+//
+//  // Whether to make content viewable to 'The Public', ie non-registered users
+//  public = true;
+//
+//
+//  // When to generate email alerts: by default, generate email alerts
+//  // on enable, finish, and rollback (happens on rejection)
+//  // changes. There are four action types for each task type: enable,
+//  // disable, finish, and rollback. Note that the values below are
+//  // based on the task labels, and as such are not globalized.
+// taskAlerts = {
+//      { "Authoring",
+//        { "enable", "finish", "rollback" }
+//      },
+//      { "Approval",
+//        { "enable", "finish", "rollback" }
+//      },
+//      { "Deploy",
+//        { "enable", "finish", "rollback" }
+//      }
+//  };
+//
+//  // Parameters controlling Overdue Task alerts:
+//
+//  // sendOverdueAlerts: Should we send alerts about overdue tasks at
+//  //                    all?
+//  // taskDuration:   The time between when a task is enabled (it is made
+//  //                 available for completion) and when it is
+//  //                 considered overdue (in HOURS)
+//  // alertInterval:  The time to wait between sending successive alerts on the same
+//  //                 overdue task (in HOURS)
+//  // maxAlerts:      The maximum number of alerts to send about any one
+//  //                 overdue task
+//  sendOverdueAlerts = false;
+//  taskDuration = 96;
+//  alertInterval = 24;
+//  maxAlerts = 5;
+//
+//}
+
+init com.arsdigita.cms.lifecycle.Initializer {
+  // How long do we wait (in seconds) after system startup
+  // before we start processing lifecycles?
+  delay     = 60;
+  // How often (in seconds) does the system look for pending
+  // items to make live and live items to expire
+  frequency = 600;
+}
+
+// This is no longer needed. Item adapters are now set via standard
+// initializers. Legacy initializer is still available if you need
+// to register multiple adapter files.
+//init com.arsdigita.domain.installer.DomainObjectTraversalInitializer {
+//  adapters = {
+//    "/WEB-INF/resources/cms-item-adapters.xml"
+//  };
+//
+//}
+
+//Used when running CMS in conjunction with a Portal
+init com.arsdigita.cms.installer.portlet.Initializer {}
+
+//populates the database with CMS Content Items and
+//other, CMS-related data
+//<NOTE>
+//You should disable the PublishToFile initializers
+//while running this population initializer or set its delay
+//long enough so that it won't run until this initializer
+//has finished.  Also, the content items created by this
+//initializer won't be live until the lifeCycle initializers
+//have completed running on them.
+//</NOTE>
+// init com.arsdigita.cms.populate.Initializer {
+//     contentSection = "content";
+//     //total folders created = numTopLevelFolders * folderDepth
+//     numTopLevelFolders = 3;
+//     folderDepth = 2;
+//     numContentItems = 5;
+//     createContentTypes =
+// 	{"com.arsdigita.cms.populate.CreateArticle",
+// 	 "com.arsdigita.cms.populate.CreateTextArticle",
+// 	 "com.arsdigita.cms.populate.CreateMultiPartArticle",
+// 	 "com.arsdigita.cms.populate.CreateTextMultiPartArticle"
+// 	};
+//     numUsers = 10;
+// }
+

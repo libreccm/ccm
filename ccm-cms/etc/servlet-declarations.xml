@@ -1,0 +1,5 @@
+
+  <servlet>
+    <servlet-name>content-section</servlet-name>
+    <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
+  </servlet>

@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head> 
+   <title>Demo Package</title>
+  </head>
+  <body bgcolor="white">
+    
+    <p>The demo package provides an example implementation of the
+    {@link com.arsdigita.templating.html.ContentHandler} interface.
+    </p>
+
+    <p>To test {@link
+     com.arsdigita.templating.html.demo.DemoTagHandler}, you may use
+     the following JSP. Call it <code>demo-test.jsp</code>.
+    </p>
+
+    <blockquote><pre style="border: 1px solid black; padding-left: 1ex; padding-right: 1ex;">
+&lt;%@page import="com.arsdigita.templating.html.HTMLParserException" %>
+&lt;%@page import="com.arsdigita.templating.html.demo.DemoTagHandler" %>
+&lt;%@page import="com.arsdigita.util.StringUtils" %>
+&lt;html>
+&lt;head>
+  &lt;title>DemoTagHandler&lt;/title>
+&lt;/head>
+&lt;body>
+&lt;h1>DemoTagHandler&lt;/h1>
+
+&lt;%
+ String text = request.getParameter("text");
+ String renderedText = "";
+ String error = null;
+ if ( text == null ) {
+     text = "";
+ } else {
+    try {
+        renderedText = DemoTagHandler.getExtrapolatedDocument(text);
+    } catch (HTMLParserException ex) {
+        error = ex.hasRootCause() ? ex.getRootCause().getMessage() :
+                                    ex.getMessage();
+        if ( error != null ) {
+            error = StringUtils.quoteHtml(error);
+        }
+    }
+ }
+%>
+
+&lt;form action="demo-test.jsp" method="POST">
+&lt;textarea name="text" cols="60" rows="20">&lt;%= text %>&lt;/textarea>
+&lt;br/>
+&lt;input type="submit" name="submit" value=" Post ">
+&lt;/form>
+
+&lt;hr size="1" width="67%" align="center">
+
+&lt;%
+  if ( error == null ) {
+      out.println(renderedText);
+  } else {
+%>
+&lt;p>An error has occurred:&lt;/p>
+
+&lt;blockquote style="color: FireBrick;">
+&lt;%= error %>
+&lt;/blockquote>
+
+&lt;%
+  }
+%>
+
+&lt;/body>
+&lt;/html>
+    </pre></blockquote>
+
+    <p>To test the tag handler, copy and paste the following text into
+    the submission form, and post it.</p>
+
+    <blockquote><pre style="border: 1px solid black; padding-left: 1ex; padding-right: 1ex;">
+&lt;toc/>
+
+&lt;h1>Introduction&lt;/h1>
+
+&lt;h2>What is Truth?&lt;/h2>
+
+&lt;p>We've bandied about the term truth,&lt;footnote>Strictly speaking,
+this is not true.&lt;/footnote> and we've mentioned that certain
+operators return a true or false value. Before we go any further, we
+really ought to explain exactly what we mean by that.  &lt;/p>
+
+&lt;h1>Conclusion&lt;/h1>
+
+&lt;h2>More Footnotes&lt;/h2>
+
+&lt;p>Here's another footnote&lt;footnote>The last one.&lt;/footnote>.  This
+pretty much wraps it up.&lt;/p>
+    </pre></blockquote>
+
+    <p>The result of the processed submission should look like so:</p>
+
+    <blockquote style="border: 1px solid black; padding-left: 1ex; padding-right: 1ex;">
+      <ol type="I">
+              <li><a href="#h1">Introduction</a>
+      <ol type="A">
+              <li><a href="#h2">What is Truth?</a></li>
+      </ol>
+              </li><li><a href="#h3">Conclusion</a>
+      <ol type="A">
+              <li><a href="#h4">More Footnotes</a></li>
+      </ol>
+      </li>
+      </ol>
+
+
+      <h1 id="h1">Introduction</h1>
+
+      <h2 id="h2">What is Truth?</h2>
+
+      <p>We've bandied about the term truth,<a href="#fn1"><sup
+      id="bfn1">1</sup></a> and we've mentioned that certain operators
+      return a true or false value. Before we go any further, we really
+      ought to explain exactly what we mean by that.  </p>
+
+      <h1 id="h3">Conclusion</h1>
+
+      <h2 id="h4">More Footnotes</h2>
+
+      <p>Here's another footnote<a href="#fn2"><sup id="bfn2">2</sup></a>.  This
+      pretty much wraps it up.</p>
+      <hr size="1" noshade="">
+      <ol>
+              <li><p id="fn1">Strictly speaking,
+      this is not true.<a href="#bfn1"><sup>back</sup></a></p></li>
+              <li><p id="fn2">The last one.<a href="#bfn2"><sup>back</sup></a></p></li>
+      </ol>
+    </blockquote>
+    
+  </body>
+</html>

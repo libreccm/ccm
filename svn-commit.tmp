@@ -1,0 +1,14 @@
+Initiale Version:
+
+SVN-Version 1.0.5 + alle meine Änderungen
+
+- Navigation (Adaptive Mode)
+- Paginator alle auf die gleiche Version gebracht
+- Paginator (<NoContent> -Tag eingeführt)
+- manipulate-input.js
+
+und vielleicht noch ein paar andere Dinge...
+
+-- Diese und die folgenden Zeilen werden ignoriert --
+
+A    .

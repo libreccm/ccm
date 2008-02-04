@@ -1,0 +1,155 @@
+        Query
+          |
+          |
+          |---> Signature
+          |       |
+          |       |---> Path <-----.
+          |       |                |
+          |       |---> Parameter--|
+          |       |                |
+          |       '---> Source-----'
+          |
+          |
+          |---> Filter
+          |       |
+          |       |---> And
+          |       |
+          |       |---> Or
+          |       |
+          |       |---> Equals ---> Path
+          |       |
+          |       .
+          |       .
+          |
+          |
+          '---> Order
+                  |
+                  |
+                  '---> Path
+
+Problems:
+
+  * Parameters stored solely in signature is awkward for ad-hoc
+    filtering.
+  * Everything is done in terms of paths, but whereever paths appear
+    it is usually also valid to specify an arbitrary expression, e.g.
+    upper(path). To do this we need to represent expressions somehow.
+
+Issues:
+
+  * Eventually need to support aggregation.
+  * Flat vs nested structures.
+  * What is the type of the query? It seems to be awkward to try to
+    massage the environment of the query and the output type into one
+    thing.
+  * Is output type distinct from output selection?
+
+
+P O S S I B I L I T I E S
+
+Nested queries with environment attached to query:
+
+  Query
+   /_\
+    |
+    |---SourceQuery
+    |
+    |---JoinQuery
+    |
+    |---FilterQuery---> Filter
+    |
+    |---AggregatorQuery
+    |
+    '---OrderingQuery---> Order
+                           /_\
+                            |
+                            |---OrdinalOrder
+                            |
+                            '---ExpressionOrder
+
+
+      this       __start__
+    SQ(Nodes)    SQ(Nodes)
+        |            |
+        |            |
+        '---JQ(?1)---'
+              |
+              |
+            FQ(?1)
+              |
+              |
+            FQ(?1)
+              |
+              |
+            AQ(?2)
+              |
+              |
+            FQ(?2)
+
+
+Everthing is an expression:
+
+  Expression
+    /_\
+     |
+     |
+     |---Query
+     |    /_\
+     |     |
+     |     |---SourceQuery
+     |     |     |
+     |     |     |
+     |     |     '--->Declaration (Source)
+     |     |           /_\
+     |     |            |
+     |     |            |---Source (???)
+     |     |            |
+     |     |            |---Parameter
+     |     |            |
+     |     |            '---ComputedThing
+     |     |
+     |     |---FilterQuery
+     |     |
+     |     |---LimitQuery
+     |     |
+     |     |---OrderedQuery
+     |     |
+     |     |---AggregationQuery
+     |     |
+     |     '---SelectionQuery ???
+     |
+     |---Condition
+     |     /_\
+     |      |
+     |      |---And
+     |      |
+     |      |---Or
+     |      |
+     |      |---Not
+     |      |
+     |      |---Equals
+     |      |
+     |      |---Contains
+     |      |
+     |      '---In
+     |
+     |---Aggregate
+     |     /_\
+     |      |
+     |      |---Count
+     |      |
+     |      |---Sum
+     |      |
+     |      |---Average
+     |      |
+     |      |---Variance
+     |      |
+     |      |---Max
+     |      |
+     |      '---Min
+     |
+     |---Variable
+     |
+     |---Value
+     |
+     '---Passthrough

@@ -1,0 +1,145 @@
+%define ccmdevelroot /var/%{name}
+
+Summary:   CCM development environment
+Name:      @PACKAGE@
+Version:   @VERSION@
+Release:   @RELEASE@
+Source0:   %{name}-%{version}.tar.gz
+License: LGPL
+Group:     Applications/Internet/CCM
+BuildRoot: /var/tmp/%{name}-%{version}-root
+Requires: ccm-tools >= 6.5.1
+Requires: ant >= 1.6.2
+Requires: ant-nodeps >= 1.6.2
+Requires: ant-contrib >= 0.6
+Requires: /usr/bin/perl
+Obsoletes: ccm-config
+Provides: ccm-config 1.1.0 
+BuildArchitectures: noarch
+Prefix: /usr
+Prefix: /etc
+Prefix: /var
+
+%package cvs
+Summary: CVS Repository for the CCM development environment
+Group: Applications/Internet/CCM
+Requires: %{name} = %{version}
+Requires: cvs
+
+%package perforce
+Summary: Perforce project profile for CCM development environment
+Group: Applications/Internet/CCM
+Requires: %{name} = %{version}
+
+%description
+Generic CCM project development environment
+
+%description cvs
+Generic CCM project development environment
+Adds a CVS repository for shared development
+
+%description perforce
+Generic CCM project development environment
+Sets the P4CONFIG environment variable when switching
+projects with the ccm-profile alias.
+
+%prep
+%setup -q -n %{name}-%{version}
+
+%build
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+mkdir $RPM_BUILD_ROOT%{ccmdevelroot}
+mkdir $RPM_BUILD_ROOT%{ccmdevelroot}/{web,dev,cvsroot,rpm}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%pre
+grep "^ccm-devel" /etc/group > /dev/null || groupadd ccm-devel
+
+%post 
+USR_DIR=$RPM_INSTALL_PREFIX0
+ETC_DIR=$RPM_INSTALL_PREFIX1
+VAR_DIR=$RPM_INSTALL_PREFIX2
+# RPM bug workaround
+if [ "x$ETC_DIR" = "x" ]; then ETC_DIR=/etc ; fi
+if [ "x$USR_DIR" = "x" ]; then USR_DIR=/usr ; fi
+if [ "x$VAR_DIR" = "x" ]; then VAR_DIR=/var ; fi
+
+if [ "x${VAR_DIR}" != "x/var" ]; then
+    perl -i -p -e "s,%{ccmdevelroot},${VAR_DIR}/%{name}," $ETC_DIR/profile.d/%{name}.sh
+fi
+if [ "x${ETC_DIR}" != "x/etc" ]; then
+    perl -i -p -e "s,/etc,${ETC_DIR}," $ETC_DIR/profile.d/%{name}.sh
+fi
+if [ "x${USR_DIR}" != "x/usr" ]; then
+    perl -i -p -e "s,/usr,${USR_DIR}," $ETC_DIR/profile.d/%{name}.sh
+fi
+
+JAVA_DIR=`echo /usr/share/%{name}/lib | sed -e "s,/usr,$USR_DIR,"`
+cd $JAVA_DIR
+ln -sf jakarta-oro-2.0.4.jar jakarta-oro.jar
+
+%post cvs 
+ETC_DIR=$RPM_INSTALL_PREFIX1
+VAR_DIR=$RPM_INSTALL_PREFIX2
+# RPM bug workaround
+if [ "x$ETC_DIR" = "x" ]; then ETC_DIR=/etc ; fi
+if [ "x$VAR_DIR" = "x" ]; then VAR_DIR=/var ; fi
+
+if [ "x${VAR_DIR}" != "x/var" ]; then
+    cvs -d "${VAR_DIR}/%{name}/cvsroot" init
+    perl -i -p -e "s,%{ccmdevelroot},${VAR_DIR}/%{name}," $ETC_DIR/profile.d/%{name}-cvs.sh
+else 
+    cvs -d "%{ccmdevelroot}/cvsroot" init
+fi
+
+%files
+%defattr(-,root,root)
+%attr(0755,root,root)/usr/sbin/*
+%attr(0755,root,root)/usr/bin/*
+%doc README ChangeLog TODO NEWS AUTHORS INSTALL
+%config /etc/%{name}/*.pl
+%config /etc/%{name}/*.sh
+%config /etc/%{name}/*.in
+%dir /etc/%{name}/project.d
+/etc/profile.d/%{name}.sh
+%config %attr(0666,root,root) /var/lib/ccm-devel/portalloc.txt
+%attr(2755,root,ccm-devel) %{ccmdevelroot}/dev/
+%attr(2755,root,ccm-devel) %{ccmdevelroot}/web/
+%attr(2775,root,ccm-devel) %{ccmdevelroot}/rpm/
+/usr/share/%{name}/bin
+/usr/share/%{name}/classes
+/usr/share/%{name}/lib/
+/usr/share/%{name}/template/
+/usr/share/%{name}/xsd/
+/usr/share/%{name}/xsl/
+
+%files cvs
+%defattr(-,root,root)
+%attr(2775,root,ccm-devel) %{ccmdevelroot}/cvsroot/
+/etc/profile.d/%{name}-cvs.sh
+/etc/%{name}/project.d/%{name}-cvs.sh
+
+%files perforce
+%defattr(-,root,root)
+/etc/%{name}/project.d/%{name}-perforce.sh
+
+%changelog
+* Thu Jun 23 2005 Sebastian Skracic <sskracic@redhat.com>
+- Removed ant*.jar from the package
+
+* Thu Nov 13 2003 Daniel Berrange <berrange@redhat.com>
+- Completed support for relocatable installation
+
+* Sun Apr 20 2003 Dennis Gregorovic <dgregor@redhat.com>
+- Added command completion for the ccm-profile alias.
+
+* Wed Apr 16 2003 Dennis Gregorovic <dgregor@redhat.com>
+- Set the servlet engine to 'servlet23' instead of 'resin' in ant.properties of new projects.
+

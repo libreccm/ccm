@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=808}]"><cms:name>fire-certificates--hotels-boarding-houses-form-808</cms:name><cms:language>en</cms:language><cms:title>Fire Certificates - Hotels/Boarding Houses</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=808}]"><cms:name>808a.pdf</cms:name><cms:content file="808a.pdf"/></cms:file></cms:item>

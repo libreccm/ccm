@@ -1,0 +1,4 @@
+select s.sub_id as c_1,
+       s1.sup_attribute as c_2
+from sub s
+     join sup s1 on s1.sup_id = s.sub_id

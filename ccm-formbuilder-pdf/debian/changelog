@@ -1,0 +1,30 @@
+ccm-formbuilder-pdf (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:51:58 +0000
+
+ccm-formbuilder-pdf (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 0.6.0 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:10 +0000
+
+ccm-formbuilder-pdf (0.6.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 0.5.0 to 0.6.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 05 Sep 2005 15:48:12 +0000
+
+ccm-formbuilder-pdf (0.5.0-2) unstable; urgency=low
+
+  * Add ccm-devel to the build-dependancies
+  * Add ccm-scripts to the build-dependances
+
+ -- David Pashley <david@runtime-collective.com>  Thu, 28 Apr 2005 11:42:28 +0100
+
+ccm-formbuilder-pdf (0.5.0-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Fri, 24 Apr 2004 12:27:56 +0100

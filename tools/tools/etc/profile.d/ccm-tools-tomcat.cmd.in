@@ -1,0 +1,10 @@
+if "%CCM_ZIP_ROOT%" == "" (
+    set CCM_ZIP_ROOT=C:\ccm
+)
+
+set prefix=%CCM_ZIP_ROOT%\usr
+
+set CCM_SERVLET_TOMCAT_CONF=%prefix%\share\ccm-tools\server\tomcat\bin\tomcat-conf-gen
+
+set prefix=
+

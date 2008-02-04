@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE categories>
+<categories context="subject" name="Keywords" description="Subject keywords">
+    <category name="Arts">
+        <category name="Movies" />
+        <category name="Television" />
+        <category name="Music" />
+    </category>
+    <category name="Business">
+        <category name="Jobs" />
+        <category name="Industries" />
+        <category name="Investing" />
+    </category>
+    <category name="Computers">
+        <category name="Internet" />
+        <category name="Software" />
+        <category name="Hardware" />
+    </category>
+    <category name="Health">
+        <category name="Fitness" />
+        <category name="Medicine" />
+        <category name="Alternative" />
+    </category>
+    <category name="Kids">
+        <category name="Arts" />
+        <category name="School Time" />
+        <category name="Teen Life" />
+    </category>
+</categories>
+

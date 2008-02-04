@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=720}]"><cms:name>community-strategy-720</cms:name><cms:language>en</cms:language><cms:title>Community Strategy</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=720}]"><cms:name>community-strategy-720-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>community, strategy</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=720}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Local Government Act introduces a duty for local authorities to develop comprehensive community strategies to promote or improve the social, economic and environmental well-being of their areas and contribute to the achievement of sustainable development in the UK. </i></p><hr/><p>The duty to prepare a community strategy is part of the Government's wider programme of democratic renewal and reform which aims to ensure that Councils are accountable, open and responsive to the needs of local communities and that there is continuous improvement in the efficiency and quality of services.
+</p><p>Whilst the guidance is not prescriptive about the timescale or process it does set out the following as given objectives and principles:
+</p><h2>Objectives: </h2><ul>
+			<li title="*">Allow local communities (based on geography and/or interest) to articulate their aspirations, needs and priorities  </li>
+			<li title="*">Co-ordinate the actions of the council, and of the public, private, voluntary and community sector organisations that operate locally.  </li>
+			<li title="*">Focus and shape existing and future activity of those organisations so that they effectively meet community needs and aspirations  </li>
+			<li title="*">Contribute to the achievement of sustainable development both locally and more widely.   </li>
+		</ul><h2>A Community strategy must have four key components:  </h2><ul>
+			<li title="*">A long term vision for the area focusing on the outcomes that are to be achieved.  </li>
+			<li title="*">An action plan identifying shorter-term priorities and activities that will contribute to the achievement of long term outcomes.  </li>
+			<li title="*">A shared commitment to implement the action plan and proposals for doing so.  </li>
+			<li title="*">Arrangements for monitoring and review and for reporting progress to local communities.   </li>
+		</ul><h2>The guidance includes the following underpinning principles: </h2><ul>
+			<li title="*">Engage and involve local communities  </li>
+			<li title="*">Involve active participation of councillors within and outside the executive  </li>
+			<li title="*">Be prepared and implemented by a broad 'local strategic partnership' ie. in partnership with stakeholders.  </li>
+			<li title="*">Be based on a proper assessment of needs and the availability of resources.  </li>
+		</ul><p>The guidance also emphasises the promotion of equality of opportunity. The guidance states that the Community Strategy should provide a vision for 10-15 years hence. The guidance recommends that the Strategy should be updated every three to five years. </p><p>
+			<strong>The Council's Community Strategy</strong>
+			<span class="gen">enter hyperlink</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=720"> Providing Information
+		(720)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

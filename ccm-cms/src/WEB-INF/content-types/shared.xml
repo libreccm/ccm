@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ctd:authoring-kit xmlns:ctd="http://xmlns.redhat.com/cms/content-types">
+  <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+</ctd:authoring-kit>

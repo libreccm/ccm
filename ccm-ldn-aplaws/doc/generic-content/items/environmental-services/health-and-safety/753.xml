@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=753}]"><cms:name>batch-7-753</cms:name><cms:language>en</cms:language><cms:title>Health and safety at work - investigation</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=753}]"><cms:name>batch-7-753-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>health, safety, work, investigation</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=753}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Inspections on Work Related Accidents are dealt with in the following way</i></p><hr/><ul>
+				<li title="*">Inspections of business premises such as offices, shops and warehouses to ensure conditions are satisfactory and safe.</li>
+				<li title="*">Investigation of accidents at work which involve either staff or the general public.</li>
+				<li title="*">Investigation of complaints relating to health and safety.</li>
+				<li title="*">We provide information to businesses and members of the public to increase general awareness of health and safety.</li>
+				<li title="*">We do not deal with Council buildings and employees, manufacturing, construction or food industries.</li>
+				<li title="*">Health and safety in food premises industry is dealt with by our food team except in food manufacturing which is dealt with by the Health and Safety Executive.</li>
+				<li title="*">Council buildings, manufacturing and construction industries are also dealt with by the Health and Safety Executive.</li>
+				<li title="*">More information: you can find more information on the 
+		<a href="http://www.hse.gov.uk/index.htm">
+<strong>Health 
+    and Safety Executive web site</strong>
+</a>	 <span class="gen">link to external website</span>
+</li>
+			</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=753"> Providing Information
+		(753)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

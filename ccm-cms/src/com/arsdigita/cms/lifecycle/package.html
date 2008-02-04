@@ -1,0 +1,42 @@
+!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+   <title>Lifecycles</title>
+  </head>
+  <body bgcolor="white">
+
+    <p>Provides a set of classes to manage and apply lifecycles to
+    {@link com.arsdigita.cms.ContentItem content items}.</p>
+
+    <p>The lifecycle engine is used to control the post-production
+    processing of a content item.  It is flexible enough to handle
+    automatic scheduling of multiple deployment stages.</p>
+
+    <p>CMS uses the concept of lifecycles and phases to model the
+    deployment of content items. A {@link
+    com.arsdigita.cms.lifecycle.Lifecycle} is a period of time in
+    which a content item is deployed. Each lifecycle is associated
+    with a start time and, optionally, a stop time.  {@link
+    com.arsdigita.cms.lifecycle.Phase Phases} are relevant time
+    periods within a particular lifeycle. Like a lifecycle, each phase
+    is associated with a start time and, optionally, an end time. The
+    start time of the earliest phase within a lifecycle is the start
+    time of that life cycle; the end time of the latest phase within a
+    lifecycle is the end time of that lifecycle. The phases in a
+    lifecycle need not be contiguous and can overlap with other
+    phases.</p>
+
+    <p>Templates are used to generalize a class of lifecycles and
+    phases.  The relation between {@link
+    com.arsdigita.cms.lifecycle.LifecycleDefinition lifecycle
+    templates} and {@link com.arsdigita.cms.lifecycle.PhaseDefinition
+    phase templates} is analogous to that of lifecycles and
+    phases. Phase templates differ only slightly from the actual
+    phases.  Instead of having a start and end time, phase templates
+    are associated with a delay and duration. The delay is the length
+    of time of from the start of the lifecycle up to the time that the
+    phase becomes active. The duration is the length of time that the
+    phase remains active.</p>
+
+  </body>
+</html>

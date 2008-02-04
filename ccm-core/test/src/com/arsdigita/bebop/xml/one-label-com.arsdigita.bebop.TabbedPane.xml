@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bebop:page xmlns:bebop="http://www.arsdigita.com/bebop/1.0"><bebop:title> </bebop:title><bebop:boxPanel axis="2" center="false" width="100%"><bebop:cell><bebop:tabbedPane><bebop:tabStrip><bebop:tab current="t"><bebop:label escape="no">Tab A</bebop:label></bebop:tab></bebop:tabStrip><bebop:currentPane><bebop:label escape="no">This is a Label</bebop:label></bebop:currentPane></bebop:tabbedPane></bebop:cell></bebop:boxPanel></bebop:page>

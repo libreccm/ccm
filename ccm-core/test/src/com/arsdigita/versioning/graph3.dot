@@ -1,0 +1,50 @@
+digraph dependence_graph {
+    node[shape=box,fontsize=8,fontname=verdana,height=0.2,width=0.2,style=filled];
+    ranksep=0.05;
+    edge[style=invis];
+    versioned -> coversioned;
+    coversioned -> recoverable;
+    recoverable -> unreachable;
+    unreachable -> qualifiers;
+
+    subgraph cluster_legend {
+      label="Legend";
+      fontsize=11;
+
+      versioned[label=versioned,fillcolor=Tomato];
+      coversioned[label=coversioned,fillcolor=Pink];
+      recoverable[fillcolor=LemonChiffon];
+      unreachable;
+      qualifiers[label="rqd: required\ncnt: component\nvnd: versioned\nunv: unversioned",shape=plaintext];
+    }
+
+    node[fontsize=10];
+    edge[fontsize=9,fontname=verdana,style=solid,minlen=2];
+
+
+    "VUT1"[fillcolor=Tomato,comment="versioned type"];
+    "C2"[fillcolor=Pink,comment="coversioned type"];
+    "C1"[fillcolor=Pink,comment="coversioned type"];
+    "VT1E"[fillcolor=Tomato,comment="versioned type"];
+    "UT2"[comment=unreachable];
+    "UT1"[comment=unreachable];
+    "UT1" -> "VUT1";
+    "VT5"[fillcolor=Tomato,comment="versioned type"];
+    "VT5" -> "UT2"[label="0..n:ut2s"];
+    "VT4"[fillcolor=Tomato,comment="versioned type"];
+    "VT3"[fillcolor=Tomato,comment="versioned type"];
+    "VT3" -> "RET1"[label="vnd0..n:ret1s"];
+    "VT3" -> "RT1"[label="rqd:rt1"];
+    "VT2"[fillcolor=Tomato,comment="versioned type"];
+    "VT2" -> "C2"[label="cnt:c2"];
+    "VT2" -> "UVCT1"[label="unv,cnt:uvct1s"];
+    "VT2" -> "UVCT2"[label="unv,cnt:uvct2s"];
+    "VT2" -> "C1"[label="cnt:c1s"];
+    "VT1"[fillcolor=Tomato,comment="versioned type"];
+    "VT1" -> "VT1E";
+    "RT1"[fillcolor=LemonChiffon,comment=recoverable];
+    "RET1"[fillcolor=LemonChiffon,comment=recoverable];
+    "RET1" -> "VT3"[label="0..1:vt3"];
+    "UVCT2"[comment=unreachable];
+    "UVCT1"[comment=unreachable];
+}

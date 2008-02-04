@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=375}]"><cms:name>licensing-375</cms:name><cms:language>en</cms:language><cms:title>Licence - pet shop</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=375}]"><cms:name>licensing-375-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, pet, shop, application</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=375}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The keeping and running of a pet shop is controlled by the Pet Animals Act 1951. </i></p><hr/><p>
+No person may keep a pet shop unless they have first obtained a licence from their Local Authority. </p><h2>
+			<strong>Licensing of Pet Shops</strong>
+		</h2><p>
+Pet shops are licensed by the Local Authoirty. </p><p>
+Licenses for pet shops may be issued provided the applicant is not disqualified under any of the following Acts:- </p><p>a) The Pet Animals Act 1951. <br/>
+  b) The Animal Boarding Establishments Act 1963. <br/>
+  c) The Protection of Animals (Amendment ) Act 1954. <br/>
+  d) The Protection of Animals (Cruelty to Dogs) (Scotland) Act 1934. </p><p>
+There is an application fee which must be paid at the time the application is made. Currently the fee is <span class="gen">enter amount</span>
+		</p><p>
+Where a licence is granted that licence and any subsequent licence will expire on the 31st December of the year to which it relates and must be renewed before that date if the premises are to continue as a pet shop. </p><h2>
+			<strong>Council Duties</strong>
+		</h2><p>
+Before being granted a licence the applicant must be able to demonstrate to the Council's Licensing Inspector: </p><li title="*">
+     That they are suitably qualified to keep animals with regard to the type and number proposed to be kept. </li><li title="*"> That the animals will be kept in accommodation that is suitable in respect of construction, size, temperature lighting, ventilation and cleanliness. </li><li title="*">That animals will be adequately supplied with suitable food, drink and bedding materials and (so far as is necessary) visited at suitable intervals. </li><li title="*"> That mammals will not be sold at too early an age. </li><li title="*"> That all reasonable precautions will be taken to prevent the spread of infectious disease amongst the animals. </li><li title="*"> That appropriate steps will be taken to protect the animals in the case of fire or other emergency, including the provision of suitable fire fighting equipment. </li><li title="*"> That a register containing a description of any animal received on the premises, the animals age and sex, the date of acquisition and departure and the source from which the animals are received, and that the register will be available for inspection at all times by a Licensing Inspector or by a veterinary Surgeon or Veterinary Practitioner authorised by the Council. </li><li title="*"> No animal will be sold to a child under the age of 12 years. </li><p>
+A licence may be refused or withheld on other grounds if those grounds are such that conditions are not suitable for the keeping of animals. </p><p>
+Each Licence is subject to standard conditions that are imposed on all pet shops licensed by the Council. </p><p>
+In addition to the standard conditions a licence may also contain special conditions that are only applicable to your premises. </p><h2>
+			<strong>Your Right of Appeal</strong>
+		</h2><p>
+Any person aggrieved by a refusal to be granted a licence or by any conditions to which a licence is subject may appeal to the Magistrates Court and they may give such directions regarding the licence or its conditions as they think proper. </p><h2>
+			<strong>Offences and Penalties</strong>
+		</h2><p>
+The following offences and penalties apply to the pet shops. </p><li title="*">  Any person found guilty of keeping a pet shop without a licence may be subject to a fine not exceeding &#xA3;500 or to three months imprisonment or both. </li><li title="*"> Any person found guilty of failing to comply with their licence conditions may be subject to a fine not exceeding &#xA3;500 or to three months imprisonment or both. </li><li title="*"> Any person found guilty of obstructing or delaying an Inspector, or authorised Veterinary Surgeon or Veterinary Practitioner in the exercising of their powers of entry may be fined up to a maximum of &#xA3;500. </li><p>
+If found guilty under this Act, the defendant's licence may be cancelled and they may be disqualified from keeping a pet shop for such length of time as the Court thinks fit. </p><h2>
+			<strong>Further Information</strong>
+		</h2><p>
+Copies of the Pet Animals Act 1951 and other legislation mentioned in this leaflet can be purchased from Her Majesty's Stationery Office. </p><p>
+A copy of the Pet Animals Act 1951 can be inspected at the Council offices where you may also obtain a copy of the Council's standard licensing conditions, an application form and further help or advice. </p><p>Alternatively, 
+			.<span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=375"> Applications for services
+		(375)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=375}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=375}]"/></cms:links></cms:item>

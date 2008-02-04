@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=630}]"><cms:name>education-1-630</cms:name><cms:language>en</cms:language><cms:title>Complaints Procedures - something that has happened at school</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=630}]"><cms:name>education-1-630-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>complaints, procedure, something, happened, school</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=630}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Complaints about a school</i></p><hr/><p>All the schools in <span class="gen">enter council name</span> want their children to do well and be happy. They recognise that 
+  you as a parent/guardian play an important part in making this happen. Therefore, 
+  schools aim to provide as many opportunities to keep you informed and involved in 
+  your child's progress as they possibly can. Regular reports, open days and visits 
+  all helping the process. Questions and concerns are usually dealt with quickly and 
+  helpfully.</p><p>However, we recognise there are time when things go wrong, when 
+  concerns continue and differences of opinion develop. These can usually be resolved 
+  by speaking to the right person. Most concerns can be settled without too much trouble, 
+  but whatever the issue, even where you are seriously concerned about your child's 
+  future at the school, it's always important to try to find an answer. Disruption 
+  to a child's education would be the most damaging result of all.</p><h4>What to do first</h4><p>Take a few minutes to read this page. Then think the complaint 
+  through</p><p>
+				<strong>What actually happened?</strong>
+			</p><p>Remember there is often more than one view about an incident 
+  or situation. For example, your child may well be telling the truth but it may not 
+  be the whole story.</p><p>
+				<strong>What do you want to complain about?</strong>
+			</p><p>What do you hope will happen as a result of your complaint? 
+  It might help to talk this through with a friend or relative.</p><p>When you make a complaint, remember that although you want to 
+  change a situation, you want it to end on a positive note with no bad feelings. 
+  In order to do this you should try to follow the procedures carefully and always 
+  try not to put yourself or anyone else into a corner.</p><p>
+				<strong>What to do next</strong>
+			</p><p>When you are clear in your own mind as to what you believe has 
+  happened, you then need to speak to someone at the school. Contact the Headteacher 
+  to arrange such a meeting.</p><p>Although some schools, particularly for younger children, can 
+  arrange to see parents who just 'pop in', this is not generally possible. 
+  It is always best to try to make an appointment where you can sit and talk things 
+  through calmly and without interruption. Investigating complaints does take time 
+  and the answers aren't always readily available, but you will at least be able to 
+  decide whether the action taken (or not taken) was reasonable and whether any further 
+  steps taken by the teacher would solve the problem.</p><p>
+				<strong>If you are still unhappy</strong>
+			</p><p>In most cases, the problem will have been solved by this stage. 
+  However, if you are still unhappy, then you should contact the Chair of Governors. 
+  The school will tell you how to make contact with this person who may help to resolve 
+  the problem informally, possibly by arranging a meeting between those involved. 
+  Once again you'll have the opportunity to talk through your concerns with an independent 
+  party who is there to listen and to discuss what is being said. If, after this, 
+  you are still not satisfied with the answer, then you should ask to make a formal 
+  complaint to the Governing Body.</p><p>
+				<strong>Complaints to the Governing Body</strong>
+			</p><p>As this is a serious step to take, it is important that you 
+  have thought things through carefully and that every possible attempt has been made 
+  to solve your concerns by other means.</p><p>Normally, a panel of governors will be called to hear your case 
+  and all sides will be asked to submit a written statement. You will also be invited 
+  to attend any hearing that is held, to present your side of the story.</p><p>The decision of the governors' panel will then be sent in writing 
+  to all parties. </p><p>
+				<strong>If you are still unhappy...</strong>
+			</p><p>If after the Governors have dealt with your complaints, you 
+  are still unhappy with the decision that was taken, you can contact us for advice 
+  on what to do next. For example, if you feel that the Governing Body has acted unreasonably, 
+  you can consider complaining to the Secretary of State for Education.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=630"> Providing Information
+		(630)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

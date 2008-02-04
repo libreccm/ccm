@@ -1,0 +1,44 @@
+dnl Process with autoconf
+dnl $Id: configure.in 1382 2006-11-22 10:21:50Z sskracic $
+
+AC_INIT(ccm-devel.spec.in)
+
+VERSION=6.5.1
+RELEASE=2
+
+AM_INIT_AUTOMAKE(ccm-devel, $VERSION)
+AC_SUBST(RELEASE)
+
+DATE=`date`
+AC_SUBST(DATE)
+
+AC_OUTPUT(Makefile
+          template/Makefile
+          template/custom/Makefile
+          template/custom/etc/Makefile
+          template/custom/pdl/Makefile
+          template/custom/sql/Makefile
+          template/custom/sql/oracle-se/Makefile
+          template/custom/sql/oracle-se/upgrade/Makefile
+          template/custom/src/Makefile
+          template/custom/web/Makefile
+          etc/Makefile
+          etc/ccm-devel.sh
+          etc/ccm-devel-cvs.sh
+          etc/bin/Makefile
+          etc/project/Makefile
+          bin/Makefile
+          lib/Makefile
+          src/Makefile
+          src/com/Makefile
+          src/com/redhat/Makefile
+          src/com/redhat/ccm/Makefile
+          src/com/redhat/ccm/config/Makefile
+          src/com/redhat/ccm/tools/Makefile
+          src/com/redhat/ccm/tools/ant/Makefile
+          src/com/redhat/ccm/tools/ant/taskdefs/Makefile
+          xsd/Makefile
+          xsl/Makefile
+          ccm-devel.spec)
+
+dnl End of file

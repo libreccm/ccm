@@ -1,0 +1,175 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Response.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:26:27 $
+model com.arsdigita.simplesurvey;
+
+import com.arsdigita.kernel.ACSObject;
+
+import com.arsdigita.kernel.User;
+
+object type Response extends ACSObject {
+
+    Survey[1..1] survey = join ss_responses.survey_id 
+                            to ss_surveys.survey_id;
+    User[1..1] user = join ss_responses.user_id
+                              to users.user_id;
+    Date[1..1] entryDate = ss_responses.entry_date DATE;
+
+    BigDecimal[1..1] score = ss_responses.score INTEGER;
+    component Answer[1..n] answers = join ss_responses.response_id 
+                                       to ss_answers.response_id;
+
+    // XXX hack to allow us to filter a data query
+    BigDecimal[1..1] surveyID = ss_responses.survey_id INTEGER;
+    BigDecimal[1..1] userID = ss_responses.user_id INTEGER;
+
+    reference key (ss_responses.response_id);
+}
+
+data operation saveScore {
+ // Saves the score of the completed survey (only relevant for knowledge test surveys)
+	do {
+	   update ss_responses set score =(
+	      select count(*) from 
+		ss_answers a, 
+		ss_correct_answers ca
+	       where a.widget_id = ca.widget_id
+	    	and a.value = ca.value
+	    	and a.response_id = :responseID
+            ) where response_id = :responseID
+        }
+}
+
+data operation saveAssessmentScore {
+// Saves the score of the completed survey (only relevant for personal assessment surveys)
+	do {
+	update ss_responses set score = 
+	     (select s.sum_points/t.total
+	        from (select count(*) as total from ss_answers where response_id=:responseID) t,
+                (select sum(a.value) as sum_points
+		   from bebop_options bo,
+		   ss_surveys s,	
+	           ss_answers a,
+		   bebop_component_hierarchy h1,
+		  bebop_component_hierarchy h2
+		  where s.form_id = h1.container_id
+		  and  h2.container_id = h1.component_id
+		  and h2.component_id = bo.option_id
+		  and bo.label = a.value
+		  and a.response_id = :responseID) s)
+	  where response_id = :responseID
+	}
+}
+query getResponseResults{
+// Returns  the user's answer vs the correct answer for a survey response of a knowledge test survey
+    BigDecimal questionNumber;
+    BigDecimal answerID;
+    String userAnswer;
+    String correctAnswer;
+    do {
+	select rownum as question_number,
+	       a.answer_id, 
+		a.value as user_answer, 
+		ca.value as correct_answer
+	     from ss_answers a, 
+	     ss_correct_answers ca
+	 where a.widget_id(+) = ca.widget_id
+	and a.response_id = :responseID
+	order by a.widget_id
+    } map {
+	questionNumber = question_number;
+	answerID = a.answer_id;
+	userAnswer = a.user_answer;
+	correctAnswer = ca.correct_answer;
+    }
+}		
+
+query getAssessmentResults {
+	// Returns the score of a user based on a personal assessment kind of survey (i.e. average answer option value)
+	BigDecimal answerCount;  // The number of answers for which the user received this  point value
+	BigDecimal answerValue; // THe point value for this answer
+	do { select count(*) as answer_count, 
+		bo.answer_value
+	     from bebop_options bo,
+		  ss_surveys s,	
+	          ss_answers a,
+		  bebop_component_hierarchy h1,
+		  bebop_component_hierarchy h2
+	      where s.form_id = h1.container_id
+	      and  h2.container_id = h1.component_id
+	      and h2.component_id = bo.option_id
+	      and bo.label = a.value
+	      and a.response_id = :responseID
+	      group by bo.answer_value
+	} map {
+	     answerCount = answer_count;
+	     answerValue = answer_value;
+	}
+}
+
+query getUserScore {
+// Returns the user's score given a responseID for a knowledge test kind of survey
+    BigDecimal userScore;
+    BigDecimal maxScore;
+    do { select max(r.score) as user_score, 
+	count(value) as max_score 
+	from ss_responses r, 
+	  ss_correct_answers sca,
+	  bebop_component_hierarchy bch, 
+	  bebop_components bc, 
+	  bebop_widgets bw,
+	  ss_surveys s
+	where bch.container_id = s.form_id
+          and sca.widget_id = bch.component_id
+          and bc.component_id = bch.component_id
+	  and bc.component_id = bw.widget_id
+	and s.survey_id = r.survey_id
+	and r.response_id = :responseID
+    } map {
+	userScore = user_score;
+	maxScore = max_score;
+   }
+}
+
+query questionsAnswered {
+   Boolean questionsAnswered;
+  
+   do {
+	select decode(count(*),0,0,1) as questions_answered_p
+	from ss_answers a
+	where a.response_id = :responseID 
+   } map {
+	questionsAnswered = questions_answered_p;
+  }
+}
+
+query getAllUsersScore {
+// Returns the number of users that achieved each score for this 
+// particular survey
+   BigDecimal userCount;
+   BigDecimal surveyScore;
+   do {  select count(response_id) as user_count, r.score 
+	from ss_responses r
+	where r.survey_id = :surveyID
+	group by score
+  } map {
+	userCount = user_count;
+	surveyScore = r.score;
+ }
+}

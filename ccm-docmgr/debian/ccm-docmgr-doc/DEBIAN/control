@@ -1,0 +1,11 @@
+Package: ccm-docmgr-doc
+Version: 6.3.0-20
+Section: contrib/web
+Priority: optional
+Architecture: all
+Depends: ccm-tools
+Installed-Size: 5168
+Maintainer: Runtime Packaging <runtime-packaging@runtime-collective.com>
+Source: ccm-docmgr
+Description: Documentation for ccm-docmgr
+ Documentation for ccm-docmgr. Provides the JavaDoc API documentation.

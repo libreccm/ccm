@@ -1,0 +1,47 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "syntax: run-aplaws.sh {start|stop}"
+    exit 1
+fi
+
+COMMAND=$1
+
+# Just to be sure
+. /etc/profile
+
+RESIN_HOME="::resin-home::"
+RESIN_CONF="::resin-conf::"
+WEBAPP_HOME="::app-home::/dist"
+LOG_DIR="::log-dir::"
+JAVA_HOME="::java-home::"
+JRE_ARGS="::jre-args::"
+
+export RESIN_HOME RESIN_CONF WEBAPP_HOME LOG_DIR JAVA_HOME JRE_ARGS
+
+CLASSPATH=${WEBAPP_HOME}/WEB-INF/lib/jaas.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/jce.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/sunjce_provider.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/xerces.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/xalan.jar
+if [ ! -z "$ORACLE_HOME" ]; then
+  CLASSPATH=${CLASSPATH}:${ORACLE_HOME}/jdbc/lib/classes12.zip
+fi
+
+PATH=$JAVA_HOME/bin:$PATH
+
+export PATH CLASSPATH
+
+# Make sure LANG doesn't specify UTF-8
+unset LANG
+
+$RESIN_HOME/bin/httpd.sh \
+    -verbose -conf $RESIN_CONF \
+    -pid $LOG_DIR/resin.pid \
+    -stdout $LOG_DIR/resin-stdout.log \
+    -stderr $LOG_DIR/resin-stderr.log \
+    $COMMAND \
+    $JRE_ARGS
+    
+
+exit 0

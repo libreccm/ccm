@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=743}]"><cms:name>licensing-form-743</cms:name><cms:language>en</cms:language><cms:title>Licence - caravan site</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=743}]"><cms:name>743a.pdf</cms:name><cms:content file="743a.pdf"/></cms:file></cms:item>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=407}]"><cms:name>environmental-health-407</cms:name><cms:language>en</cms:language><cms:title>Food business - food safety regulations</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=407}]"><cms:name>environmental-health-407-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>business, food, safety, regulations, business</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=407}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Food Safety Act 1990 and regulations made under it make it an offence 
+    for anyone to sell or process food for sale which is harmful to health. They 
+    also place an obligation on businesses to ensure that their activities are 
+    carried out in a hygienic way.</i></p><hr/><p>An estimated five million people suffer from 
+  food poisoning in England and Wales each year. Running a food business means 
+  that you have a particular responsibility in protecting the health of your customers.</p><p>For more detailed information please go to the following site: 
+		<a href="http://www.foodstandards.gov.uk">
+					<strong>Food Standards Agency</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+			</p><p>Staff in the Environmental Health Service are always willing to give guidance 
+    on how the law relates to your business. If you need advice, please ask.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=407"> Providing Information
+		(407)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

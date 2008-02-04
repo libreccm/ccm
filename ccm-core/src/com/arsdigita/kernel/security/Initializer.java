@@ -1,0 +1,361 @@
+/*
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.kernel.security;
+
+import com.arsdigita.util.URLRewriter;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.SiteNode;
+import com.arsdigita.initializer.Configuration;
+import com.arsdigita.initializer.InitializationException;
+
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+
+/**
+ * <p>Initializes security properties.</p>
+ *
+ * <p><b><font color="red">Deprecated feature: </font></b> Provides access
+ * to URLs for standard pages.</p>
+ *
+ * @author Sameer Ajmani
+ * @since ACS 4.5
+ **/
+public class Initializer
+    implements com.arsdigita.initializer.Initializer {
+
+    public static final String versionId = "$Id: Initializer.java 1225 2006-06-19 09:27:21Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+
+    private static final Logger s_log =
+        Logger.getLogger(Initializer.class);
+
+    /** Obsolete parameter name for session tracking method. **/
+    public static String SESSION_TRACKING_PARAM = "sessionTrackingMethod";
+    /** Parameter name for security helper class name. **/
+    public static String SECURITY_HELPER_PARAM = "securityHelperClass";
+    /** Parameter name for excluded URI extensions. **/
+    public static String EXCLUDED_EXTENSIONS_PARAM = "excludedExtensions";
+    /** Size of secret key in bytes. **/
+    public static int SECRET_KEY_BYTES = 16;
+
+    private Configuration m_conf = new Configuration();
+
+    public Configuration getConfiguration() {
+        return m_conf;
+    }
+
+    public Initializer() throws InitializationException {
+        m_conf.initParameter
+            (SECURITY_HELPER_PARAM,
+             "The class name of the SecurityHelper implementation",
+             String.class,
+             DefaultSecurityHelper.class.getName());
+        m_conf.initParameter
+            (SESSION_TRACKING_PARAM,
+             "This parameter is obsolete.",
+             String.class);
+        m_conf.initParameter
+            (EXCLUDED_EXTENSIONS_PARAM,
+             "List of extensions excluded from authentication cookies. "
+             +"Authentication is checked for all requests, but requests "
+             +"with one of these extensions will never cause a new cookie "
+             +"to be set.  Include a leading dot for each extension.",
+             List.class,
+             Arrays.asList(new String[] { ".jpg", ".gif", ".png", ".pdf" }));
+
+
+    }
+
+    public void startup() throws InitializationException {
+        URLRewriter.addParameterProvider
+            (new SecurityParameterProvider());
+        loadExcludedExtensions();
+        loadSecurityHelper();
+        loadPageMap();
+        loadLoginConfig();
+    }
+
+    /**
+     * Returns an iterator over the list of excluded extensions.
+     *
+     * @return an iterator over the list of excluded extensions.
+     *
+     * @deprecated To be moved into a utility class.
+     **/
+    public static Iterator getExcludedExtensions() {
+        if (s_exts == null) {
+            return java.util.Collections.EMPTY_LIST.iterator();
+        } else {
+            return s_exts.iterator();
+        }
+    }
+    private static List s_exts = null;
+
+    private void loadExcludedExtensions() {
+        s_exts = (List)m_conf.getParameter(EXCLUDED_EXTENSIONS_PARAM);
+        Iterator exts = getExcludedExtensions();
+        while (exts.hasNext()) {
+            Object o = exts.next();
+            if (!(o instanceof String)) {
+                throw new InitializationException
+                    ("Extension must be a string: "+o);
+            }
+        }
+    }
+
+    /**
+     * Returns the security helper instance.
+     *
+     * @return the security helper instance.
+     *
+     * @deprecated Moved into {@link Util}
+     **/
+    public static SecurityHelper getSecurityHelper() {
+        return Util.getSecurityHelper();
+    }
+
+    private void loadSecurityHelper() {
+        String name = (String)m_conf.getParameter(SECURITY_HELPER_PARAM);
+        if (name == null) {
+            throw new InitializationException
+                (SECURITY_HELPER_PARAM+" not defined");
+        }
+        try {
+            Class theClass = Class.forName(name);
+            if (!SecurityHelper.class.isAssignableFrom(theClass)) {
+                throw new InitializationException
+                    (SECURITY_HELPER_PARAM+": "+name
+                     +" does not implement interface "
+                     +SecurityHelper.class.getName());
+            }
+            Util.setSecurityHelper(theClass.newInstance());
+        } catch (ClassNotFoundException e) {
+            throw new InitializationException
+                (SECURITY_HELPER_PARAM+": "+name+" not found: ", e);
+        } catch (InstantiationException e) {
+            throw new InitializationException
+                (SECURITY_HELPER_PARAM+": "+name
+                 +" is not concrete or lacks no-arg constructor: ", e);
+        } catch (IllegalAccessException e) {
+            throw new InitializationException
+                (SECURITY_HELPER_PARAM+": "+name
+                 +" is not public or lacks public constructor: ", e);
+        }
+    }
+
+    /** Key for the root page of the site. **/
+    public static String ROOT_PAGE_KEY =
+        "com.arsdigita.page.kernel.root";
+    /** Key for the user edit page. **/
+    public static String EDIT_PAGE_KEY =
+        "com.arsdigita.page.kernel.edit";
+    /** Key for the login page. **/
+    public static String LOGIN_PAGE_KEY =
+        "com.arsdigita.page.kernel.login";
+    /** Key for the new user page. **/
+    public static String NEWUSER_PAGE_KEY =
+        "com.arsdigita.page.kernel.newuser";
+    /** Key for the logout page. **/
+    public static String LOGOUT_PAGE_KEY =
+        "com.arsdigita.page.kernel.logout";
+    /** Key for the explain-cookies page. **/
+    public static String COOKIES_PAGE_KEY =
+        "com.arsdigita.page.kernel.cookies";
+    /** Key for the login-expired page. **/
+    public static String EXPIRED_PAGE_KEY =
+        "com.arsdigita.page.kernel.expired";
+    /** Key for the change-password page. **/
+    public static String CHANGE_PAGE_KEY =
+        "com.arsdigita.page.kernel.change";
+    /** Key for the recover-password page. **/
+    public static String RECOVER_PAGE_KEY =
+        "com.arsdigita.page.kernel.recover";
+    /** Key for the workspace page. **/
+    public static String WORKSPACE_PAGE_KEY =
+        "com.arsdigita.page.kernel.workspace";
+    /** Key for the login redirect url. **/
+    public static String LOGIN_REDIRECT_PAGE_KEY =
+        "com.arsdigita.page.kernel.login.redirect";
+    /** Key for the admin-permission page. **/
+    public static String PERMISSION_PAGE_KEY =
+        "com.arsdigita.page.kernel.permission";
+    /** Key for the single-permission page. **/
+    public static String PERM_SINGLE_PAGE_KEY =
+        "com.arsdigita.page.kernel.perm-single";
+
+    private static List s_defaultPageMap = new ArrayList() {
+            {
+                put(ROOT_PAGE_KEY, "register/");
+                put(EDIT_PAGE_KEY, "register/edit-profile/");
+                put(LOGIN_PAGE_KEY, "register/");
+                put(NEWUSER_PAGE_KEY, "register/new-user/");
+                put(LOGOUT_PAGE_KEY, "register/logout/");
+                put(COOKIES_PAGE_KEY, "register/explain-persistent-cookies/");
+                put(CHANGE_PAGE_KEY, "register/change-password/");
+                put(RECOVER_PAGE_KEY, "register/recover-password/");
+                put(EXPIRED_PAGE_KEY, "register/login-expired/");
+                put(WORKSPACE_PAGE_KEY, "pvt/");
+                put(LOGIN_REDIRECT_PAGE_KEY, "pvt/");
+                put(PERMISSION_PAGE_KEY, "permissions/");
+                put(PERM_SINGLE_PAGE_KEY, "permissions/one/");
+            }
+            private void put(String key, String value) {
+                add(Arrays.asList(new Object[] { key, value }));
+            }
+        };
+
+    private static Map s_pageMap = new HashMap();
+
+
+
+    private void loadPageMap() throws InitializationException {
+        // load default page map
+        loadPageMap(s_defaultPageMap);
+        // load user page map
+        
+        List list = new ArrayList() {
+                {
+                    SecurityConfig conf = Kernel.getSecurityConfig();
+                    put(ROOT_PAGE_KEY, conf.getRootPage());
+                    put(LOGIN_PAGE_KEY, conf.getLoginPage());
+                    put(NEWUSER_PAGE_KEY, conf.getNewUserPage());
+                    put(LOGOUT_PAGE_KEY, conf.getLogoutPage());
+                    put(COOKIES_PAGE_KEY, conf.getCookiesPage());
+                    put(CHANGE_PAGE_KEY, conf.getChangePage());
+                    put(RECOVER_PAGE_KEY, conf.getRecoverPage());
+                    put(EXPIRED_PAGE_KEY, conf.getExpiredPage());
+                    put(WORKSPACE_PAGE_KEY, conf.getWorkspacePage());
+                    put(LOGIN_REDIRECT_PAGE_KEY, conf.getLoginRedirectPage());
+                    put(PERMISSION_PAGE_KEY, conf.getPermissionPage());
+                    put(PERM_SINGLE_PAGE_KEY, conf.getPermSinglePage());
+                }
+                private void put(String key, String value) {
+                    add(Arrays.asList(new Object[] { key, value }));
+                }
+            };
+        if (list != null) {
+            s_log.info("Security Initializer: mapping "
+                       +list.size()+" pages");
+            loadPageMap(list);
+        }
+    }
+
+    private void loadPageMap(List list) {
+        Iterator pairs = list.iterator();
+        while (pairs.hasNext()) {
+            List pair = (List)pairs.next();
+            String key = (String)pair.get(0);
+            String url = (String)pair.get(1);
+            s_pageMap.put(key, url);
+        }
+    }
+
+    /**
+     * Returns the relative URL associated with the given key.  This is the
+     * value of the URL in the page map for the given key.
+     *
+     * @return the relative URL associated with the given key, or null if it
+     * does not exist.
+     *
+     * @deprecated To be replaced by package parameters.
+     *
+     * @see #getFullURL(String, HttpServletRequest)
+     **/
+    public static String getURL(String key) {
+        return (String)s_pageMap.get(key);
+    }
+
+    /**
+     * Returns the absolute URL associated with the given key.  This is the
+     * root URL for the system (the mount point) prepended to the result of
+     * getURL(key).
+     *
+     * @return the absolute URL associated with the given key, or null
+     * if it does not exist.
+     *
+     * @see #getURL(String)
+     **/
+    public static String getFullURL(String key, HttpServletRequest req) {
+        String root = getRootURL(req);
+        String url = getURL(key);
+        
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Root is " + root + ", url is " + url);
+        }
+
+        if ((root == null) || (key == null)) {
+            return null;
+        }
+        return root + url;
+    }
+
+    private static String getRootURL(HttpServletRequest req) {
+        // XXX this isn't safe since you aren't neccessarily
+        // calling it from the root webapp - so we can't
+        // blindly prepend the context path from the current
+        // request.
+        //return SiteNode.getRootSiteNode().getURL(req);
+        
+        return SiteNode.getRootSiteNode().getURL();
+    }
+
+    private void loadLoginConfig() throws InitializationException {
+        javax.security.auth.login.Configuration.setConfiguration
+            (getLoginConfig());
+
+        checkLoginConfig();
+    }
+
+    private javax.security.auth.login.Configuration getLoginConfig()
+        throws InitializationException {
+        SecurityConfig conf = Kernel.getSecurityConfig();
+        List loginConfig = Arrays.asList(conf.getLoginConfig());
+        return new LoginConfig(loginConfig);
+    }
+
+    private void checkLoginConfig() throws InitializationException {
+        // check the login configurations
+        String[] contexts = new String[] {
+            UserContext.REQUEST_LOGIN_CONTEXT,
+            UserContext.REGISTER_LOGIN_CONTEXT
+        };
+        for (int i = 0; i < contexts.length; i++) {
+            try {
+                new LoginContext(contexts[i]);
+            } catch (LoginException e) {
+                throw new InitializationException
+                    ("Could not instantiate login context '"
+                     +contexts[i]+"'.  "
+                     +"Check that it is defined in your login "
+                     +"configuration.", e);
+            }
+        }
+    }
+
+    public void shutdown() throws InitializationException {
+        // do nothing
+    }
+}

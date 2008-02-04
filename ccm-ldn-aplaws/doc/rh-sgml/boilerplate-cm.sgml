@@ -1,0 +1,37 @@
+<!-- $Id: boilerplate-cm.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+
+<legalnotice id="legalnotice">
+
+  <para>
+    &BOOKID;
+  </para>
+  
+  <para>
+    For <xref linkend="pt-clumanager"> and <xref linkend="pt-appendixes">,
+    permission is granted to copy, distribute and/or modify this document under
+    the terms of the GNU Free Documentation License, Version 1.1 or any later
+    version published by the Free Software Foundation. A copy of the license is
+    available at <ulink
+    url="http://www.gnu.org/licenses/fdl.html">http://www.gnu.org/licenses/fdl.html</ulink>.
+    The content described in this paragraph is copyrighted by <trademark
+    class="copyright"></trademark> Mission Critical Linux, Inc. (2000),
+    K.M. Sorenson (2000), and &FORMAL-RHI; (2000-2003).
+  </para>
+
+  <para>
+    This material in <xref linkend="pt-lvs"> may be distributed only subject to
+    the terms and conditions set forth in the Open Publication License, V1.0 or
+    later (the latest version is presently available at <ulink
+    url="http://www.opencontent.org/openpub/">http://www.opencontent.org/openpub/</ulink>).
+    Distribution of substantively modified versions of this material is
+    prohibited without the explicit permission of the copyright holder.
+    Distribution of the work or derivative of the work in any standard (paper)
+    book form for commercial purposes is prohibited unless prior permission is
+    obtained from the copyright holder.  The content described in this paragraph
+    is copyrighted by <trademark class="copyright"></trademark> &FORMAL-RHI;
+    (2000-2003).
+  </para>
+
+  &BOILERPLATE-TRADEMARKS;
+
+</legalnotice>

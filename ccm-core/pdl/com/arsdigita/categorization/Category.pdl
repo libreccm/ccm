@@ -1,0 +1,442 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id$
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.categorization;
+
+import com.arsdigita.kernel.*;
+
+object type Category extends ACSObject {
+    String[0..1] description = cat_categories.description VARCHAR(4000);
+    String[1..1] name = cat_categories.name VARCHAR(200);
+    String[0..1] url = cat_categories.url VARCHAR(200);
+    Boolean[1..1] isEnabled = cat_categories.enabled_p CHAR(1);
+    Boolean[1..1] isAbstract = cat_categories.abstract_p CHAR(1);
+    String[1..1] defaultAncestors = cat_categories.default_ancestors VARCHAR(3209);
+    Boolean[1..1] ignoreParentIndexItem = cat_categories.ignore_parent_index_p CHAR(1);
+
+    reference key (cat_categories.category_id);
+}
+
+object type UseContext {
+    BigDecimal[1..1] id = cat_root_cat_object_map.id;
+
+    String[0..1] useContext = cat_root_cat_object_map.use_context;
+
+    unique (categoryOwner, useContext);
+    object key (id);
+}
+
+association {
+    UseContext[0..n] ownerUseContext = join cat_categories.category_id
+                                         to cat_root_cat_object_map.category_id;
+
+    Category[1..1] rootCategory = join cat_root_cat_object_map.category_id
+                                    to cat_categories.category_id;
+}
+
+association {
+    UseContext[0..n] rootUseContext = join acs_objects.object_id
+                                        to cat_root_cat_object_map.object_id;
+
+    ACSObject[1..1] categoryOwner = join cat_root_cat_object_map.object_id
+                                      to acs_objects.object_id;
+}
+
+association {
+    Category[0..n] categories = join acs_objects.object_id
+                                  to cat_object_category_map.object_id,
+                                join cat_object_category_map.category_id
+                                  to cat_categories.category_id;
+    ACSObject[0..n] childObjects = join cat_categories.category_id
+                                    to cat_object_category_map.category_id,
+                                  join cat_object_category_map.object_id
+                                     to acs_objects.object_id;
+    Boolean[0..1] isAuto = cat_object_category_map.auto_p CHAR(1);
+    Boolean[0..1] isDefault = cat_object_category_map.default_p CHAR(1);
+    Boolean[0..1] isIndex = cat_object_category_map.index_p CHAR(1);
+    BigDecimal[0..1] sortKey = cat_object_category_map.sort_key;
+
+    add {
+        do {
+            insert into cat_object_category_map (
+                category_id,
+                object_id,
+                default_p,
+                index_p,
+                sort_key
+            ) values (
+                :categories.id,
+                :childObjects.id,
+                :isDefault,
+                :isIndex,
+                (select CASE WHEN (:sortKey is null) THEN
+                            (select CASE WHEN (max(sort_key) is null)
+                                               THEN
+                                                0
+                                               ELSE
+                                                max(sort_key)
+                                          END + 1
+                                     from cat_object_category_map)
+                             ELSE
+                                 (:sortKey)
+                             END
+                   from dual)
+            )
+        }
+    }
+
+}
+
+// NOTE: this is meant as a *read-only* association!!!
+association {
+    Category[0..n] roTransParents = join cat_categories.category_id
+                                      to cat_cat_subcat_trans_index.subcategory_id,
+                                    join cat_cat_subcat_trans_index.category_id
+                                      to cat_categories.category_id;
+
+    Category[0..n] roTransSubcats = join cat_categories.category_id
+                                          to cat_cat_subcat_trans_index.category_id,
+                                        join cat_cat_subcat_trans_index.subcategory_id
+                                          to cat_categories.category_id;
+
+    // Since this is a read-only association, neither "add", nor
+    // "remove" should do anything.
+    add { }
+
+    remove { }
+}
+
+// this returns all related categories (both ways)
+// To get the children, do 'get("related")' and then filter on
+// the relationType link attribute to be "child"
+// To get the related, do 'get("related")' and then filter on
+// the relationType link attribute to be "related"
+
+association {
+    Category[0..n] parents = join cat_categories.category_id
+                              to cat_category_category_map.related_category_id,
+                             join cat_category_category_map.category_id
+                               to cat_categories.category_id;
+
+    Category[0..n] related = join cat_categories.category_id
+                              to cat_category_category_map.category_id,
+                             join cat_category_category_map.related_category_id
+                              to cat_categories.category_id;
+    BigDecimal[0..1] sortKey = cat_category_category_map.sort_key;
+    Boolean[1..1] isDefault = cat_category_category_map.default_p CHAR(1);
+    String[0..1] relationType = cat_category_category_map.relation_type;
+
+
+    add {
+        do {
+            insert into cat_category_category_map (
+                category_id,
+                related_category_id,
+                default_p,
+                sort_key,
+                relation_type
+            ) values (
+                :parents.id,
+                :related.id,
+                :isDefault,
+                (select CASE WHEN (:sortKey is null) THEN
+                             (select CASE WHEN (max(sort_key) is null) THEN
+                                               0
+                                               ELSE
+                                               max(sort_key)
+                                          END + 1
+                                     from cat_category_category_map)
+                             ELSE
+                                 (:sortKey)
+                             END
+                   from dual),
+                :relationType
+            )
+        }
+    }
+}
+
+// This returns all of the ACSObjects within the subtree for
+// a given category
+// no depth on this one, because the
+// same category might appear multiple times
+// at different levels.
+query objectsInSubtree {
+    ACSObject object;
+
+    do {
+        select acs_objects.object_id,
+               object_type,
+               display_name,
+               default_domain_class
+          from acs_objects,
+               (select subcategory_id from cat_cat_subcat_trans_index
+                where category_id = :categoryID) categories,
+               cat_object_category_map map
+         where acs_objects.object_id = map.object_id
+               and categories.subcategory_id = map.category_id
+    } map {
+        object.id = acs_objects.object_id;
+        object.objectType = acs_objects.object_type;
+        object.displayName = acs_objects.display_name;
+        object.defaultDomainClass = acs_objects.default_domain_class;
+    }
+}
+
+
+// This walks down the categorization tree and
+// returns child categories, including the current
+// category.
+query categorySubtree {
+    Category categorySubtree;
+    do {
+        select cat_categories.category_id, name, description, enabled_p,
+               abstract_p, object_type, default_domain_class,
+               default_ancestors
+          from acs_objects,
+               cat_categories,
+               cat_cat_subcat_trans_index trans
+         where acs_objects.object_id = cat_categories.category_id
+           and trans.category_id = :id
+           and trans.subcategory_id = cat_categories.category_id
+    } map {
+        categorySubtree.id = category_id;
+        categorySubtree.name = name;
+        categorySubtree.description = description;
+        categorySubtree.isEnabled = enabled_p;
+        categorySubtree.isAbstract = abstract_p;
+        categorySubtree.objectType = object_type;
+        categorySubtree.defaultDomainClass = default_domain_class;
+        categorySubtree.defaultAncestors = default_ancestors;
+    }
+}
+
+
+// This gets the subtree from the specifid root, except for the
+// subtree of the current category (elements in the current
+// category's subtree would lead to a loop in the DAG, so they
+// aren't valid parents).
+query validParents {
+    Category validParent;
+    do {
+        select cat_categories.category_id, name, description, enabled_p,
+               abstract_p, object_type, default_domain_class,
+               default_ancestors
+          from cat_cat_subcat_trans_index trans,
+               cat_categories,
+               acs_objects
+         where trans.category_id = :rootID
+           and cat_categories.category_id = trans.subcategory_id
+           and cat_categories.category_id = acs_objects.object_id
+           and not exists (select 1
+                           from cat_cat_subcat_trans_index
+                           where category_id = :id
+                           and cat_categories.category_id = subcategory_id)
+    } map {
+        validParent.id = cat_categories.category_id;
+        validParent.name = cat_categories.name;
+        validParent.description = cat_categories.description;
+        validParent.isEnabled = cat_categories.enabled_p;
+        validParent.isAbstract = cat_categories.abstract_p;
+        validParent.objectType = acs_objects.object_type;
+        validParent.defaultDomainClass = acs_objects.default_domain_class;
+        validParent.defaultAncestors = cat_categories.default_ancestors;
+    }
+}
+
+
+
+query topLevelCategories {
+    Category category;
+    do {
+        select category_id, description, name, enabled_p, abstract_p,
+               default_ancestors
+        from cat_categories
+        where not exists (
+            select 1
+            from cat_category_category_map
+            where relation_type = 'child'
+            and category_id = related_category_id
+        )
+    } map {
+        category.id = category.category_id;
+        category.description = cat_categories.description;
+        category.name = cat_categories.name;
+        category.isEnabled = cat_categories.enabled_p;
+        category.isAbstract = cat_categories.abstract_p;
+        category.defaultAncestors = cat_categories.default_ancestors;
+    }
+}
+
+
+data operation swapCategoryWithNextCategory {
+    do {
+        update cat_category_category_map
+        set sort_key = CASE WHEN (sort_key = :sortKey) THEN
+                                 (:nextSortKey)
+                            ELSE
+                                 (:sortKey)
+                       END
+        where (sort_key = :sortKey or sort_key = :nextSortKey)
+        and category_id = :parentID
+        and 2 = (select count(*) from cat_category_category_map
+                 where (sort_key = :sortKey or sort_key = :nextSortKey)
+                 and category_id = :parentID)
+    }
+}
+
+data operation swapObjectWithNextObject {
+    do {
+        update cat_object_category_map
+        set sort_key = CASE WHEN (sort_key = :sortKey) THEN
+                                 (:nextSortKey)
+                            ELSE
+                                 (:sortKey)
+                       END
+        where (sort_key = :sortKey or sort_key = :nextSortKey)
+        and category_id = :parentID
+        and 2 = (select count(*) from cat_object_category_map
+                 where (sort_key = :sortKey or sort_key = :nextSortKey)
+                 and category_id = :parentID)
+    }
+}
+
+
+query minObjectCategorySortKey {
+    BigDecimal sortKey;
+
+    do {
+        select min(sort_key) as sort_key from cat_object_category_map
+        where category_id = :categoryID
+        and sort_key > :currentSortKey
+    } map {
+        sortKey = sort_key;
+    }
+}
+
+query maxObjectCategorySortKey {
+    BigDecimal sortKey;
+
+    do {
+        select max(sort_key) as sort_key from cat_object_category_map
+        where category_id = :categoryID
+        and sort_key < :currentSortKey
+    } map {
+        sortKey = sort_key;
+    }
+}
+
+query minCategoryCategorySortKey {
+    BigDecimal sortKey;
+
+    do {
+        select min(sort_key) as sort_key from cat_category_category_map
+        where category_id = :categoryID
+        and sort_key > :currentSortKey
+    } map {
+        sortKey = sort_key;
+    }
+}
+
+query maxCategoryCategorySortKey {
+    BigDecimal sortKey;
+
+    do {
+        select max(sort_key) as sort_key from cat_category_category_map
+        where category_id = :categoryID
+        and sort_key < :currentSortKey
+    } map {
+        sortKey = sort_key;
+    }
+}
+
+// Fetches all ancestors of a category, including itself.
+//
+// @param categoryID the specified category
+//
+query getAllCategoryAncestors {
+    Category category;
+    do {
+        select c.category_id, c.name, c.description, c.enabled_p,
+               default_ancestors
+        from cat_categories c,
+             cat_cat_subcat_trans_index trans
+        where trans.subcategory_id = :categoryID
+          and trans.category_id = c.category_id
+  } map {
+      category.id          = c.category_id;
+      category.name        = c.name;
+      category.description = c.description;
+      category.isEnabled   = c.enabled_p;
+      category.defaultAncestors = c.default_ancestors;
+  }
+}
+
+
+
+data operation updateCategoryDescendants {
+    do {
+        update cat_categories
+        set default_ancestors = :newPrefix || substr(default_ancestors,
+                                                     :oldPrefixLength + 1)
+        where default_ancestors like :oldPrefix || '%'
+        and not category_id = :id
+    }
+}
+
+query immediateChildObjectIDs {
+    BigDecimal id;
+
+    do {
+        select
+            object_id
+        from
+            cat_object_category_map
+        where
+            category_id = :categoryID
+    } map {
+        id = object_id;
+    }
+}
+
+query childCategoryIDs {
+    BigDecimal id;
+
+    do {
+         select m.related_category_id
+           from cat_category_category_map m
+          where m.category_id = :parentID
+            and m.relation_type = 'child'
+    } map {
+         id = m.related_category_id;
+    }
+}
+
+query parentCategoryIDs {
+    BigDecimal id;
+
+    do {
+         SELECT category_id
+                        FROM cat_category_category_map
+                        START WITH related_category_id = :parentID
+                CONNECT BY PRIOR category_id = related_category_id
+    } map {
+         id = category_id;
+    }
+}

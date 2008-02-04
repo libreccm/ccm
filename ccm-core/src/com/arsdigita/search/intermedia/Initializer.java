@@ -1,0 +1,173 @@
+/*
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.search.intermedia;
+
+import com.arsdigita.db.DbHelper;
+import com.arsdigita.initializer.Configuration;
+import com.arsdigita.initializer.InitializationException;
+import com.arsdigita.search.FilterType;
+import com.arsdigita.search.IndexerType;
+import com.arsdigita.search.QueryEngineRegistry;
+import com.arsdigita.search.Search;
+import com.arsdigita.search.filters.CategoryFilterType;
+import com.arsdigita.search.filters.ObjectTypeFilterType;
+import com.arsdigita.search.filters.PermissionFilterType;
+
+/**
+ * Initializer
+ *
+ * Initializes the BuildIndex object for search.  This includes
+ * a timer that runs periodically and checks if the index needs
+ * to be resynced.
+ *
+ * @author Jeff Teeters
+ * @version $Revision: #5 $ $Date: 2004/08/16 $ */
+
+// Support for Logging.
+import org.apache.log4j.Logger;
+
+public class Initializer
+    implements com.arsdigita.initializer.Initializer {
+
+    private Configuration m_conf = new Configuration();
+
+    private static final Logger s_log =
+        Logger.getLogger(Initializer.class);
+
+    public final static String versionId = "$Id";
+
+    private static final String TIMER_DELAY = "timerDelay";
+    private static final String TIMER_DELAY_DESCRIPTION =
+        "Delay between triggering " +
+        "of search indexing Timer, in seconds.";
+
+    private static final String SYNC_DELAY = "syncDelay";
+    private static final String SYNC_DELAY_DESCRIPTION = "Time (in seconds) " +
+        "after which if a content change is made the index should be resynced " +
+        "if there are no other changes during that time.";
+
+    private static final String MAX_SYNC_DELAY = "maxSyncDelay";
+    private static final String MAX_SYNC_DELAY_DESCRIPTION =
+        "Time (in seconds) after which a change is made, " +
+        "the index will be resynced, regardless of " +
+        "whether or not any changes have subsequently been made.";
+
+    private static final String MAX_INDEXING_TIME = "maxIndexingTime";
+    private static final String MAX_INDEXING_TIME_DESCRIPTION =
+        "Time (in seconds) after which a indexing operation " +
+        "that has not finished is considered to have failed.";
+
+    private static final String INDEXING_RETRY_DELAY = "indexingRetryDelay";
+    private static final String INDEXING_RETRY_DELAY_DESCRIPTION =
+        "Time (in seconds) after which an indexing " +
+        "operation that failed will be retried.";
+
+
+    public Initializer() throws InitializationException {
+        m_conf.initParameter(TIMER_DELAY,
+                             TIMER_DELAY_DESCRIPTION,
+                             Integer.class,
+                             new Integer(60));
+
+        m_conf.initParameter(SYNC_DELAY,
+                             SYNC_DELAY_DESCRIPTION,
+                             Integer.class,
+                             new Integer(60));
+
+        m_conf.initParameter(MAX_SYNC_DELAY,
+                             MAX_SYNC_DELAY_DESCRIPTION,
+                             Integer.class,
+                             new Integer(7200));
+
+        m_conf.initParameter(MAX_INDEXING_TIME,
+                             MAX_INDEXING_TIME_DESCRIPTION,
+                             Integer.class,
+                             new Integer(7200));
+
+        m_conf.initParameter(INDEXING_RETRY_DELAY,
+                             INDEXING_RETRY_DELAY_DESCRIPTION,
+                             Integer.class,
+                             new Integer(60));
+    }
+
+    /**
+     * Returns the configuration object used by this initializer.
+     **/
+    public Configuration getConfiguration() {
+        return m_conf;
+    }
+
+
+    /**
+     * Called on startup.
+     **/
+
+    //    void startup() throws InitializationException;
+    public void startup() {
+        if (Search.getConfig().isIntermediaEnabled()) {
+            if (DbHelper.getDatabase() != DbHelper.DB_ORACLE) {
+                throw new InitializationException(
+                    "Intermedia searching only works on Oracle, not " + 
+                    DbHelper.getDatabaseName(DbHelper.getDatabase()));
+            }
+
+            // Multiply by 1000 to convert from seconds to milliseconds
+            int timerDelay = ((Integer) m_conf.getParameter(
+                                  TIMER_DELAY
+                              )).intValue() * 1000;
+            int syncDelay = ((Integer) m_conf.getParameter(
+                                 TIMER_DELAY
+                             )).intValue() * 1000;
+            int maxSyncDelay = ((Integer) m_conf.getParameter(
+                                    MAX_SYNC_DELAY
+                                )).intValue() * 1000;
+            int maxIndexingTime = ((Integer) m_conf.getParameter(
+                                       MAX_INDEXING_TIME
+                                   )).intValue() * 1000;
+            int indexingRetryDelay = ((Integer) m_conf.getParameter(
+                                          INDEXING_RETRY_DELAY
+                                      )).intValue() * 1000;
+
+            BuildIndex.setParameterValues(timerDelay,
+                                          syncDelay,
+                                          maxSyncDelay,
+                                          maxIndexingTime,
+                                          indexingRetryDelay);
+
+            BuildIndex.startTimer();
+            s_log.debug("Registering query engines");
+            QueryEngineRegistry.registerEngine(IndexerType.INTERMEDIA,
+                                               new FilterType[] {
+                                                   new PermissionFilterType(),
+                                                   new ObjectTypeFilterType(),
+                                                   new CategoryFilterType()
+                                               },
+                                               new BaseQueryEngine());
+        }
+    }
+
+    /**
+     * Stops the search indexing timer.
+     **/
+    public void shutdown() {
+        if (Search.getConfig().isIntermediaEnabled()) {
+            BuildIndex.stopTimer();
+        }
+    }
+}

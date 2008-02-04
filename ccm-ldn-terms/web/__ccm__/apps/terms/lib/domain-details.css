@@ -1,0 +1,28 @@
+table.domainDetails {
+  width: 100%;
+}
+table.domainDetails thead {
+  text-align: center;
+  background-color: rgb(72,72,72);
+  color: rgb(255,255,255);
+}
+
+table.domainDetails tbody tr.even {
+  background-color: rgb(255,255,255);
+}
+table.domainDetails tbody tr.odd {
+  background-color: rgb(212,212,212);
+}
+table.domainDetails tbody tr th {
+  text-align: right;
+  font-weight: bold;
+}
+
+table.domainDetails tfoot {
+  border-top: 1px solid rgb(28,28,28);
+  background-color: rgb(192,192,192);
+}
+
+table.domainDetails div.domainActionErrorMessage {
+    color: red;
+}

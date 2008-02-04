@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=561}]"><cms:name>batch-11-561</cms:name><cms:language>en</cms:language><cms:title>Gritting</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=561}]"><cms:name>batch-11-561-dublin-metadata</cms:name><cms:dcAudience>Householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>gritting</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=561}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently Asked Questions regarding Gritting</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">Where to grit?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">When to grit?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">Do you provide grit bins?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#4">Can a Grit bin be removed?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#5">Are pedestrians routes gritted?</a>	
+				</strong>
+			</li>
+		</ul><h4>
+			
+			Where to grit?</h4><p>Gritting priority is given to three types of roads/routes and based upon the recommendations contained in a National Code 		of Practice.</p><ul>
+			<li title="*">
+				<strong>Priority A</strong> - Strategic routes and principal roads, important classified roads and bus routes.</li>
+			<li title="*">
+				<strong>Priority B</strong> - All other classified roads, important unclassified roads and bus routes.</li>
+			<li title="*">Priority C - In prolonged periods of lying snow/ice, estate and minor access roads in hilly or exposed locations will be 			treated, and consideration given to important footway routes (e.g. shopping precincts etc).
+			<p>Treatment of Priority C locations would only be considered when conditions dictate and when all other priorities had 			been fully and adequately treated and resources become available.</p>
+			</li>
+		</ul><h4>
+			
+			When to grit?</h4><p>The Council are recipients of a specialised winter weather forecasting service provided by the Met Office. The forecast, 		received on a daily basis, gives predictions of the possibility of freezing road temperatures, snow etc, and the time those 		conditions may occur.</p><p>Click here to visit <strong>
+				
+		<a href="http://www.metoffice.com">www.metoffice.com</a>	
+			</strong>
+			<span class="gen">link to external website</span>
+		</p><p>In addition, throughout the winter season, an inspector is employed to check the accuracy of the forecast by measuring 		road surface temperatures. This enables decisions to be made if, or when gritting is necessary. The aim is to treat Priority A 		roads before road surface temperatures fall to 0 degrees C and all Priority B roads by 7.30 am.</p><h4>
+			
+			Do you provide grit bins?</h4><p>There are currently <span class="gen">enter amount</span> grit bins throughout <span class="gen">enter council name</span> in areas not normally subject to mechanical treatment, at hilly, exposed locations and potentially dangerous road junctions. They are normally placed on site in <span class="gen">enter date</span> and removed in <span class="gen">enter date</span> after the winter. They are restocked with salt when needed.</p><p>Requests for the provision of a grit bin are assessed and judged against a criteria. They are only provided if full justification can be shown. Use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/561a">on-line system</a>	
+			</strong>
+			<span class="gen">link to online form</span> to make your request.</p><h4>
+			
+			Can a Grit bin be removed?</h4><p>Often grit bins become the focus of vandalism or the meeting place for youths. If this becomes an unbearable nuisance, a request for the bin to be removed can be made. The agreement of other residents in the area would be needed before the facility is withdrawn. Use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/561a">on-line system</a>	
+			</strong>
+			<span class="gen">link to online form</span> to record your request.</p><h4>
+			
+			Are pedestrians routes gritted?</h4><p>In very severe weather conditions, especially when snow or ice may remain for some days, consideration is given, in priority order, to the treatment of pedestrian routes - footways and pavements in the following order :-</p><ul>
+			<li title="*">Town centre streets/main pedestrian routes</li>
+			<li title="*">Shopping frontages</li>
+			<li title="*">Busy pedestrian routes</li>
+			<li title="*">Hospitals and doctors surgery frontages/routes</li>
+			<li title="*">School frontages/routes</li>
+			<li title="*">Community centre frontages/routes</li>
+			<li title="*">Steep sections of footway/footpaths</li>
+			<li title="*">Predominately elderly residents areas</li>
+			<li title="*">Other residential areas</li>
+			<li title="*">Industrial estates. </li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=561"> Applications for services
+		(561)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

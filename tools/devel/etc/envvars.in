@@ -1,0 +1,37 @@
+## Environment variables to be set at ccm invocation
+
+## Jave Runtime Environment parameters
+# JAVA_OPTS=-Xms512m -Xmx512m
+
+## Document Builder
+# Xerces
+DOCUMENT_BUILDER_FACTORY="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl"
+
+# Resin
+# DOCUMENT_BUILDER_FACTORY="com.caucho.xml.parsers.XmlDocumentBuilderFactory"
+##
+
+## Sax Parser
+# Xerces
+SAX_PARSER_FACTORY="org.apache.xerces.jaxp.SAXParserFactoryImpl"
+
+# Resin
+# SAX_PARSER_FACTORY="com.caucho.xml.parsers.XmlSAXParserFactory"
+##
+
+## XSL Transformer
+# Saxon
+JAVA_TRANSFORMER_FACTORY="com.icl.saxon.TransformerFactoryImpl"
+
+# Resin
+# JAVA_TRANSFORMER_FACTORY="com.caucho.xsl.Xsl"
+
+# jd.xslt
+# JAVA_TRANSFORMER_FACTORY="jd.xml.xslt.trax.TransformerFactoryImpl"
+
+# XSLTC
+# JAVA_TRANSFORMER_FACTORY="org.apache.xalan.xsltc.trax.TransformerFactoryImpl"
+
+# Xalan
+# JAVA_TRANSFORMER_FACTORY="org.apache.xalan.processor.TransformerFactoryImpl"
+##

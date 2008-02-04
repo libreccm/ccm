@@ -1,0 +1,107 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ContentPage.pdl 1263 2006-07-17 08:18:47Z cgyg9330 $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.*;
+
+//  Additional metadata required of every content item.
+object type ContentPage extends ContentItem {
+
+  String[0..1]      title = cms_pages.title VARCHAR(1000);
+  Date[0..1]        launchDate = cms_pages.launch_date DATE;
+  // would have used description as attribute name, but existing subtypes 
+  // use that name
+  String[0..1]      pageDescription = cms_pages.description VARCHAR(4000);
+
+  reference key (cms_pages.item_id);
+}
+
+
+query pagesInFolder {
+  ContentPage[1..1] page;
+  ContentType[1..1] type;
+
+  do {
+    select
+      i.item_id, i.parent_id, i.type_id, i.version,  
+      i.name, p.title, t.label
+    from 
+      cms_pages p, content_types t,
+      (select 
+         ix.item_id, ix.name, ix.type_id, ix.parent_id, ix.version
+       from 
+         cms_items ix
+       where ancestors like (select ancestors from cms_items 
+                             where item_id = :rootFolderID) || '%'
+         and ix.item_id != :rootFolderID) i
+    where
+      i.item_id = p.item_id 
+    and
+      i.version = :version
+    and 
+      t.type_id = i.type_id
+  } map {
+    page.id        = i.item_id;
+    page.title     = p.title;
+    page.name      = i.name;
+    page.version   = i.version;
+    type.id        = i.type_id;
+    type.label     = t.label;
+  }
+}
+
+query pagesInFolderByCategory {
+  ContentPage[1..1] page;
+  ContentType[1..1] type;
+
+  do {
+    select
+      i.item_id, i.parent_id, i.type_id, i.version,  
+      i.name, p.title, t.label, c.category_id
+    from 
+      cms_pages p, content_types t,
+      (select 
+         ix.item_id, ix.name, ix.type_id, ix.parent_id, ix.version
+       from 
+         cms_items ix
+       where ancestors like (select ancestors from cms_items 
+                             where item_id = :rootFolderID) || '%'
+         and ix.item_id != :rootFolderID
+      ) i, 
+      cat_object_category_map c
+    where
+      i.item_id = p.item_id 
+    and
+      i.version = :version
+    and 
+      t.type_id = i.type_id
+    and 
+      c.object_id = i.item_id
+    and
+      c.category_id = :categoryID
+  } map {
+    page.id        = i.item_id;
+    page.title     = p.title;
+    page.name      = i.name;
+    page.version   = i.version;
+    type.id        = i.type_id;
+    type.label     = t.label;
+  }
+}

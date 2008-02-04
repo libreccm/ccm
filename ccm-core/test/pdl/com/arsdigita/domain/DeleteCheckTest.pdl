@@ -1,0 +1,113 @@
+//
+// Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: DeleteCheckTest.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.domain;
+
+import com.arsdigita.kernel.ACSObject;
+
+// SingleComponent
+// SingleComponent1 can contain a SingleComponent2. Deleting a SingleComponent1
+// with a component SingleComponent2 should not cause an error.
+
+object type SingleComponent1 extends ACSObject {
+    reference key( domain_delete_check_sc1.id );
+}
+
+object type SingleComponent2 extends ACSObject {
+    reference key( domain_delete_check_sc2.id );
+}
+
+association {
+    composite SingleComponent1[1..1] compObject1 =
+        join domain_delete_check_sc2.id to
+             domain_delete_check_sc1.sc2_id;
+
+    component SingleComponent2[0..1] compObject2 =
+        join domain_delete_check_sc1.sc2_id to
+             domain_delete_check_sc2.id;
+}
+
+// MultipleComponent
+// MultipeComponent1 can contain any number of MultipleComponent2 objects.
+// Deleting a MultipleComponent1 object containing MultipleComponent2 objects
+// should not cause an error.
+
+object type MultipleComponent1 extends ACSObject {
+    reference key( domain_delete_check_mc1.id );
+}
+
+object type MultipleComponent2 extends ACSObject {
+    reference key( domain_delete_check_mc2.id );
+}
+
+association {
+    composite MultipleComponent1[1..1] compObject1 =
+        join domain_delete_check_mc2.mc1_id to
+             domain_delete_check_mc1.id;
+
+    component MultipleComponent2[0..n] compObjects2 =
+        join domain_delete_check_mc1.id to
+             domain_delete_check_mc2.mc1_id;
+}
+
+// SingleAssociation
+// SingleAssociation1 can be associated with a
+// SingleAssociation2. Deleting a SingleAssociation1 with an
+// associated SingleAssociation2 should cause an error.
+
+object type SingleAssociation1 extends ACSObject {
+    reference key( domain_delete_check_sa1.id );
+}
+
+object type SingleAssociation2 extends ACSObject {
+    reference key( domain_delete_check_sa2.id );
+}
+
+association {
+    SingleAssociation1[1..1] assocObject1 =
+        join domain_delete_check_sa2.id to
+             domain_delete_check_sa1.sa2_id;
+
+    SingleAssociation2[0..1] assocObject2 =
+        join domain_delete_check_sa1.sa2_id to
+             domain_delete_check_sa2.id;
+}
+
+// MultipleAssociation
+// MultipleAssociation1 can be associated with may MultipleAssociation2s.
+// Deleting a MultipleAssociation1 with associated MultipleAssociation2s should
+// cause an error.
+
+object type MultipleAssociation1 extends ACSObject {
+    reference key( domain_delete_check_ma1.id );
+}
+
+object type MultipleAssociation2 extends ACSObject {
+    reference key( domain_delete_check_ma2.id );
+}
+
+association {
+    MultipleAssociation1[1..1] assocObjects1 =
+        join domain_delete_check_ma2.ma1_id to
+             domain_delete_check_ma1.id;
+
+    MultipleAssociation2[0..n] assocObjects2 =
+        join domain_delete_check_ma1.id to
+             domain_delete_check_ma2.ma1_id;
+}

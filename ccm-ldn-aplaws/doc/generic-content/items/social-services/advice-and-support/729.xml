@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=729}]"><cms:name>batch-22-729</cms:name><cms:language>en</cms:language><cms:title>Civil emergencies - Trauma Support Service</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=729}]"><cms:name>batch-22-729-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>civil, emergencies, trauma, support, service</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=729}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>In the aftermath of a major incident many people will be affected. They may be survivors of the incident, relatives of these survivors or relatives of those who die as a result of the incident. They may be affected simply by being involved in the response. </i></p><hr/><p>Some of these 
+    people will need trauma support in the immediate aftermath of such an incident but in a 
+    short time they will have recovered sufficiently to readjust to some sort of normality. 
+    Some, however, will need a higher level of trauma support for some time after the incident 
+    and a few will continue to need this support over many years. </p><p>We provide a range of social and 
+psychological support services in the aftermath of a major incident affecting residents 
+or visitors.</p><p>We work closely with voluntary and statutory agencies, 
+  so that the services they provide are complementary to those already available.</p><p>They offer:</p><ul>
+			<li title="*">immediate practical support</li>
+			<li title="*">emotional support</li>
+			<li title="*">telephone support and incident helpline</li>
+			<li title="*">friends and relative reception centre support</li>
+			<li title="*">support to Police Casualty Bureau</li>
+			<li title="*">Temporary mortuary duty</li>
+			<li title="*">Media Interest support</li>
+			<li title="*">other post-incident support to victims and relatives</li>
+			<li title="*">planning, tracking and reporting</li>
+			<li title="*">support to social care staff</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=729"> Providing Information
+		(729)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

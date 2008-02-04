@@ -1,0 +1,164 @@
+init com.arsdigita.versioning.Initializer { }
+
+init com.arsdigita.globalization.Initializer {
+    // See http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc
+    charsets = {
+        "ISO-8859-1",
+        "UTF-8"
+    };
+
+    // Each entry in the "locales" list is a 4-tuple of the form
+    //   {language, country, variant, charset}
+    // The charset must be one of the values specified in the "charsets"
+    // parameter above.
+    locales = {
+        {"en", "",   "", "UTF-8"},
+        {"en", "GB", "", "UTF-8"},
+        {"en", "US", "", "UTF-8"},
+        {"es", "",   "", "UTF-8"},
+        {"es", "ES", "", "UTF-8"},
+        {"da", "",   "", "UTF-8"},
+        {"da", "DK", "", "UTF-8"},
+        {"de", "",   "", "UTF-8"},
+        {"de", "DE", "", "UTF-8"},
+        {"fr", "",   "", "UTF-8"},
+        {"fr", "FR", "", "UTF-8"},
+        {"ru", "",   "", "UTF-8"}
+    };
+
+    // Default character set for locales not explicitly listed above.
+    defaultCharset = "UTF-8";
+}
+
+init com.arsdigita.kernel.Initializer {}
+
+init com.arsdigita.kernel.security.Initializer {
+    securityHelperClass = "com.arsdigita.kernel.security.DefaultSecurityHelper";
+    sessionTrackingMethod = "cookie";
+
+    excludedExtensions = { ".jpg", ".gif", ".png", ".pdf" };
+
+}
+
+init com.arsdigita.search.Initializer {}
+
+init com.arsdigita.search.intermedia.Initializer {
+    timerDelay         = 60;    // Parameters for search timer/indexing
+    syncDelay          = 60;    // All units are time in seconds
+    maxSyncDelay       = 7200;  // see com.arsdigita.search.BuildIndex.java
+    maxIndexingTime    = 7200;  // for definitions
+    indexingRetryDelay = 60;
+}
+
+init com.arsdigita.search.lucene.Initializer {}
+
+init com.arsdigita.notification.Initializer {
+    RequestManagerDelay  = 900; // in seconds
+    RequestManagerPeriod = 900; // in seconds
+    SimpleQueueDelay     = 900; // in seconds
+    SimpleQueuePeriod    = 900; // in seconds
+    DigestQueueDelay     = 900; // in seconds
+    DigestQueuePeriod    = 900; // in seconds
+}
+
+// init com.arsdigita.categorization.dispatch.Initializer { }
+
+// The formbuilder application is now deprecated and will
+// be removed in the next release. Use the FormItem content
+// type instead
+// init com.arsdigita.formbuilder.Initializer { }
+
+// This is an example initializer for populating
+// the BebopObjectType & MetaObject stores
+//init com.arsdigita.formbuilder.installer.Initializer {
+//    widgetTypes = {
+//        { "forms", "Checkbox group", "Checkbox groups", 
+//          "com.arsdigita.formbuilder.PersistentCheckboxGroup",
+//          "com.arsdigita.formbuilder.ui.editors.CheckboxGroupEditor" },
+//        { "forms", "Date field", "Date fields", 
+//          "com.arsdigita.formbuilder.PersistentDate",
+//          "com.arsdigita.formbuilder.ui.editors.DateForm" }
+//    };
+//    processListenerTypes = {
+//        { "forms", "Confirmation email", "Confirmation emails",
+//          "com.arsdigita.formbuilder.actions.ConfirmEmailListener",
+//          "com.arsdigita.formbuilder.ui.editors.ConfirmEmailForm" },
+//        { "forms", "URL redirect", "URL redirects",
+//          "com.arsdigita.formbuilder.actions.ConfirmRedirectListener",
+//          "com.arsdigita.formbuilder.ui.editors.ConfirmRedirectForm" }
+//    };
+//    dataQueries = {
+//        { "forms", "com.arsdigita.formbuilder.DataQueryUsers", 
+//          "List of all registered users" },
+//        { "forms", "com.arsdigita.formbuilder.DataQueryPackages", 
+//          "List of all installed packages" }
+//    };
+//}
+
+
+init com.arsdigita.webdevsupport.Initializer { 
+  active = false;
+}
+
+init com.arsdigita.toolbox.CharsetEncodingProviderInitializer { }
+
+init com.arsdigita.ui.Initializer {
+//  If using the default SimplePage class, the following
+//  two parameters specify the class names of the bebop
+//  components to (optionally) add to margins of pages
+
+//  The is default set of page components
+  defaultLayout = {
+    { "top", "com.arsdigita.ui.UserBanner" },
+    { "bottom", "com.arsdigita.ui.SiteBanner" },
+    { "bottom", "com.arsdigita.ui.DebugPanel" }
+
+//    { "left", "com.arsdigita.x.y.z" },
+//    { "right", "com.arsdigita.x.y.z" }
+  };
+
+//  Application specific page components
+//  applicationLayouts = {
+//    { "forums",
+//      {
+//        { "top", "com.arsdigita.x.y.z" },
+//        { "left", "com.arsdigita.x.y.z" },
+//        { "bottom", "com.arsdigita.x.y.z" },
+//        { "right", "com.arsdigita.x.y.z" }
+//      }
+//    },
+//    { "search",
+//      {
+//        { "top", "com.arsdigita.x.y.z" },
+//        { "left", "com.arsdigita.x.y.z" },
+//        { "bottom", "com.arsdigita.x.y.z" },
+//        { "right", "com.arsdigita.x.y.z" }
+//      }
+//    }
+//  };
+}
+
+init com.arsdigita.portal.Initializer { }
+
+// init com.arsdigita.localization.demo.Initializer { }
+// init com.arsdigita.bebop.jsp.Initializer { }
+
+init com.arsdigita.mimetypes.MimeTypeInitializer {
+    INSOFilterEnabled = true;
+}
+
+// init com.arsdigita.populate.apps.Initializer {
+//     numApps=3;
+//     PopulateAppPair = {
+// 	//populateForum args: numPosts, numMsgs per post
+// 	{ "com.arsdigita.forum.PopulateForum", {3, 5}},
+// 	//populateDocmgr args: numFolderLevels, numFolders, numFiles
+// 	{ "com.arsdigita.docmgr.PopulateDocmgr", {3, 2, 2}},
+//  	//populateFaq args: numQuestions
+//  	{ "com.arsdigita.faq.PopulateFaq", {5}},
+//  	//populateGlossary args: numWords
+//  	{ "com.arsdigita.glossary.PopulateGlossary", {5}},
+//  	//populateBookmarks args: numBookmarks
+//  	{ "com.arsdigita.bookmarks.PopulateBookmarks", {5}}
+//     };
+// }

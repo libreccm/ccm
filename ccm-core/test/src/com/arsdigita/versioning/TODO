@@ -1,0 +1,104 @@
+# Author: Vadim Nasardinov (vadimn@redhat.com)
+# Since: 2003-02-20
+# Version: $Revision: #7 $ $Date: 2003/09/26 $
+
+Versioning Log
+
+    Subtasks:
+
+    *  normalize the object_type denormalization.
+
+       Create an object_types table mapping type names like
+       "com.arsdigita.foo.Greble" to integer primary keys. Use the
+       integer primary keys to store OIDs in the versioning log,
+       e.g. instead of storing an OID as
+       "{com.arsdigita.foo.Greble:123}", store it as "17:123", where
+       17 is the hypothetical primary key identifying the "Greble" row
+       in the object_types table.
+
+   *  link attributes
+
+   *  If a data object cannot be rolled back due to db constraints,
+      throw an informative exception and/or provide an API for
+      recovering from this situation.
+
+Issues
+
+  *  Now that versioning can be suspended, some of the invariants that
+     the rollback code relies on and tries to enforce are no longer
+     valid.  Specifically, (1) it is now possible to have a sequence
+     of consecutive CREATE-CREATE or DELETE-DELETE events for the same
+     object; (2) it is not possible to have a sequence of consecutive
+     ADD-ADD or REMOVE-REMOVE events.  The rollback code must relax
+     its current sanity checking and deal with this correcly.
+ 
+  *  Must be tolerant of not being able to reify the value of a
+     non-component 0..n or 0..1 compound attribute of a versioned
+     object, even if such values happen to be versionable data
+     objects.  (This is sort of the heart of the matter in BZ 100484.)
+
+  *  Must not resurrect non-existing non-component 0..n attributes.  By
+     the same token, must not delete existing non-component 0..n
+     attributes.
+
+  *  The method Rollback.computeDifferences should not enqueue
+     non-component compound attributes of "recoverable" data objects.
+     For example, if RT1 in
+     //core-platform/dev/test/src/com/arsdigita/versioning/graph3.png#6
+     had a non-component collection attribute, this attribute's values
+     should not be enqueued.
+
+  *  Same for unreachable data objects.  If we enqueue an unreachable
+     data object, we should not try to traverse its compound
+     attributes.
+
+  *  Implement the suspendVersioning/resumeVersioning methods as an
+     excursion per Justin's suggestion.
+
+  *  Performance optimizations:
+
+     * ObjectChangeCollection should be made to join against
+       vcx_operations, so that specializing an operation only incurs
+       one extra db hit. It currently incurs two hits per operation.
+       First, we load the "Operation" data object.  Second, we load
+       the "(Generic|Clob|Blob)Operation" object based on the value of
+       the "subtype" attibute.
+
+     * Don't record set events, if the value has not changed.  (This
+       one can be argued both ways.  If set events resetting an
+       attribute to its previous value are rare, then this
+       optimization will increase rather reduce the overall cost -- we
+       will incur the overhead of running the equals() method on a
+       great number of objects, some with rather expensive equals()
+       method implementations.)
+
+     * See Lutterkort's post in
+         http://post-office.corp.redhat.com/archives/ccm-engineering-list/2003-September/msg00053.html
+         Message-Id: <1064578919.3308.31.camel@lemon.watzmann.net>
+
+  *  Should the Txn data type be denormalized wrt the join against the
+     users table?  Instead of (or in addition to) storing a reference
+     to the users table, it may be better (or not) to store the actual
+     user data, such as name and email address on the assumption that we
+     if the user is ever deleted,
+
+      (a) we don't want the versioning data to be deleted via cascaded
+          referential integrity constraints;
+
+      (b) we want to know the email address that the user had
+          _at_the_time_ they made the change
+
+  *  Finish cleanup of the old versioning classes.
+
+  *  Add missing copyright headers.  Expand rafi's wildcard imports.
+
+  *  Implement checks for invariants described in ASSUMPTIONS.
+
+  *  Develop systematic unit tests that exercise all possible
+     permutations that we want to support.  The current test coverage
+     is very ad-hoc.  (Check how the Session test suite is implemented
+     in persistence.)
+
+# Local Variables:
+# mode: text
+# End:

@@ -1,0 +1,156 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: eventproc.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model versioning.events;
+
+versioned object type VT1 {
+    BigInteger[1..1] id = te_vt1.id INTEGER;
+    String[0..1] name = te_vt1.name VARCHAR;
+    String[0..1] content = te_vt1.content CLOB;
+    BigInteger[0..1] intAttr = te_vt1.int_attr INTEGER;
+
+    object key(id);
+}
+
+object type VT1E extends VT1 {
+    String[0..1] vt1eAttr = te_vt1e.vt1e_attr VARCHAR;
+
+    reference key(te_vt1e.id);
+}
+
+versioned object type VT2 {
+    BigInteger[1..1] id = te_vt2.id INTEGER;
+    String[0..1] name = te_vt2.name VARCHAR;
+    component C1[0..n] c1s = join te_vt2.id to te_c1.composite_id;
+    component C2[0..1] c2 =  join te_vt2.id to te_c2.composite_id;
+    unversioned component UVCT1[0..n] uvct1s = join te_vt2.id to te_uvct1.composite_id;
+    unversioned String[1..1] unverAttr = te_vt2.unver_attr VARCHAR;
+
+    object key(id);
+}
+
+object type C1 {
+    BigInteger[1..1] id = te_c1.id INTEGER;
+    String[0..1] name = te_c1.name VARCHAR;
+
+    object key(id);
+}
+
+object type C2 {
+    BigInteger[1..1] id = te_c2.id INTEGER;
+    String[0..1] name = te_c2.name VARCHAR;
+
+    object key(id);
+}
+
+
+versioned object type VT3 {
+    BigInteger[1..1] id = te_vt3.id INTEGER;
+    String[0..1] name = te_vt3.name VARCHAR;
+    RT1[1..1] rt1 = join te_vt3.rt1_id to te_rt1.id;
+    versioned RET1[0..n] ret1s = join te_vt3.id to te_ret1.vt3_id;
+
+    object key(id);
+}
+
+object type RT1 {
+    BigInteger[1..1] id = te_rt1.id INTEGER;
+    String[1..1] name = te_rt1.name VARCHAR;
+    BigInteger[0..1] intAttr = te_rt1.int_attr INTEGER;
+
+    object key(id);
+}
+
+object type RET1 {
+    BigInteger[1..1] id = te_ret1.id INTEGER;
+    String[0..1] name = te_ret1.name VARCHAR;
+    VT3[0..1] vt3 = join te_ret1.vt3_id to te_vt3.id;
+
+    object key(id);
+}
+
+object type UVCT1 {
+    BigInteger[1..1] id = te_uvct1.id INTEGER;
+    String[0..1] name = te_uvct1.name VARCHAR;
+
+    object key(id);
+}
+
+object type UVCT2 {
+    BigInteger[1..1] id = te_uvct2.id INTEGER;
+    String[0..1] name = te_uvct2.name VARCHAR;
+
+    object key(id);
+}
+
+association {
+    unversioned component UVCT2[0..n] uvct2s = join te_vt2.id to te_uvct2.composite_id;
+    VT2[0..1] vt2 = join te_uvct2.composite_id to te_vt2.id;
+}
+
+versioned object type VT4 {
+    BigInteger[1..1] id         = te_vt4.id INTEGER;
+
+    BigDecimal[0..1] bigDecimal = te_vt4.j_big_decimal INTEGER;
+    BigInteger[0..1] bigInteger = te_vt4.j_big_integer INTEGER;
+    Blob[0..1] blob             = te_vt4.j_blob BLOB;
+    Boolean[0..1] boolean       = te_vt4.j_boolean CHAR(1);
+    Byte[0..1] byte             = te_vt4.j_byte INTEGER;
+    Character[0..1] character   = te_vt4.j_character CHAR(1);
+    Date[0..1] date             = te_vt4.j_date TIMESTAMP;
+    Double[0..1] double         = te_vt4.j_double NUMERIC;
+    Float[0..1] float           = te_vt4.j_float FLOAT;
+    Integer[0..1] integer       = te_vt4.j_integer INTEGER;
+    Long[0..1] long             = te_vt4.j_long INTEGER;
+    Short[0..1] short           = te_vt4.j_short INTEGER;
+    String[0..1] clob           = te_vt4.j_clob CLOB;
+    String[0..1] string         = te_vt4.j_string VARCHAR;
+
+    object key(id);
+}
+
+
+versioned object type VT5 {
+    BigInteger[1..1] id = te_vt5.id INTEGER;
+    String[0..1] name = te_vt5.name VARCHAR;
+    UT2[0..n] ut2s = join te_vt5.id to te_ut2.vt5_id;
+
+    object key(id);
+}
+
+object type UT1 {
+    BigInteger[1..1] id = te_ut1.id;
+
+    String[0..1] name   = te_ut1.name VARCHAR;
+
+    object key(id);
+}
+
+object type UT2 {
+    BigInteger[1..1] id = te_ut2.id INTEGER;
+    String[0..1] name = te_ut2.name VARCHAR;
+
+    object key(id);
+}
+
+versioned object type VUT1 extends UT1 {
+    String[0..1] vut1Attr = te_vut1.vut1_attr VARCHAR;
+
+    reference key(te_vut1.id);
+}

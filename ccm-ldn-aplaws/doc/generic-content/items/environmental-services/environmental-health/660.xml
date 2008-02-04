@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=660}]"><cms:name>batch-6-660</cms:name><cms:language>en</cms:language><cms:title>Pollution Control - water</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=660}]"><cms:name>batch-6-660-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>pollution, control, water, environmental, health</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=660}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>What areas of water quality do Environmental Health Officers look at?</i></p><hr/><p>
+<strong>Private Water Supplies:</strong> For those who extract their private water supply 
+  from boreholes.</p><p>
+<strong>Bathing waters:</strong> to include swimming pools at leisure centres, Jacuzzi's, 
+  hydrotherapy pools.</p><p>
+<strong>Mains Water: </strong>To include Manufacturers of foods and drinks as well as occasionally 
+  looking at domestic supply.</p><h3>Details</h3><h4>Private Water Supplies</h4><p>We have a number of domestic and commercial private water supplies where we are the responsible authority for monitoring their quality both microbiologically 
+  (bacteria) and chemically (e.g. pesticides).</p><p>The legislation we use is made under the Water Industry Act 1991 and is called 
+  the Private Water Supplies Regulations 1991.</p><p>This tells us what the standards of the water should be and how often we have to 
+  test the water depending upon its use.</p><h4>Bathing Waters</h4><p>We are responsible for checking the quality of all our swimming pools to include leisure centres, private health clubs, hotels and out door pools, hospital hydrotherapy pools, Jacuzzi's and paddling pools.</p><p>We check these on a monthly basis for chemical levels as well as yearly for microbiological 
+  quality (bacteria) unless there is a complaint or a problem with the chemical tests, 
+  in which case the frequency will be increased.</p><h4>Mains Water Supply</h4><p>We also examine the quality of the mains water in our food manufacturers to include 
+  breweries and other food industries. We may occasionally become involved in the 
+  testing of domestic mains water in addition to the statutory water undertaker.</p><p>In addition, the <strong>
+
+		<a href="http://www.dwi.gov.uk/">Drinking Water Inspectorate</a>	
+</strong> 
+  <span class="gen">link to external website</span>, who are the national body for ensuring the quality of 
+  water, provide an annual publication titled 'How Good is Your Drinking Water'</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=660"> Providing Information
+		(660)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

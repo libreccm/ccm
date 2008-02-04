@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=781}]"><cms:name>reservoir-management-781</cms:name><cms:language>en</cms:language><cms:title>Reservoir Management</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=781}]"><cms:name>reservoir-management-781-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>reservoir, management</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=781}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This Council is responsible for the management of the following reservoirs:</i></p><hr/><table width="90%" cellpadding="5" class="centre" summary="list of reservoirs">
+  <tr> 
+    <th>Name of Reservoir</th>
+    <th>Address</th>
+  </tr>
+  <tr> 
+    <td>
+<span class="gen">enter facility name</span>
+</td>
+    <td>
+<span class="gen">enter address</span>
+</td>
+  </tr>
+  <tr> 
+    <td>
+<span class="gen">enter facility name</span>
+</td>
+    <td>
+<span class="gen">enter address</span>
+</td>
+  </tr>
+</table><p>If you have any queries 
+  regarding the reservoirs that we manage, please use the contact details above. 
+  </p><p>Further information on Reservoir 
+  Safety can be found on the <strong>
+
+		<a href="http://www.defra.gov.uk/environment/water/rs/index.htm">Department 
+  for Environment, Food and Rural Affairs DEFRA</a>	
+</strong> <span class="gen">link to external website</span> 
+  website.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=781"> Providing Information
+		(781)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

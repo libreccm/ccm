@@ -1,0 +1,17 @@
+div.action-group {
+  border: 1px solid rgb(202,202,202);
+  padding: 4px;
+}
+
+div.action-group table.actions {
+  margin-top: 4px;
+  border-spacing: 2px;
+}
+
+div.action-group tr.action td {
+  vertical-align: middle;
+}
+
+div.action-group td.action-icon img {
+  margin-right: 1px;
+}

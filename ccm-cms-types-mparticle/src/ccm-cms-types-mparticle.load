@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_mp_articles"/>
+    <initializer class="com.arsdigita.cms.contenttypes.MultiPartArticleInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-mparticle"/>
+    <data class="com.arsdigita.cms.contenttypes.MultiPartArticleLoader"/>
+  </scripts>
+</load>

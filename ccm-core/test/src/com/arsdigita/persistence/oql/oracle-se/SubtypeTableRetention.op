@@ -1,0 +1,5 @@
+select s.sub_id as c_1,
+       s1.sup_attribute as c_2
+from sub s,
+     sup s1
+where s1.sup_id = s.sub_id

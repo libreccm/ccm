@@ -1,0 +1,19 @@
+<load>
+  <requires>
+  <!--
+    <table name="bebop_meta_object"/>
+    <table name="bebop_object_type"/>
+  -->
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="pdf_listeners"/>
+    <initializer class="com.arsdigita.formbuilder.pdf.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-formbuilder-pdf"/>
+    <data class="com.arsdigita.formbuilder.pdf.Loader"/>
+  </scripts>
+</load>
+

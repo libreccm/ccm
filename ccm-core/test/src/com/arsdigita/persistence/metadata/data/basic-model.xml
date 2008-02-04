@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs" version="4.0">
+  <model name="model" id="acs:model">
+    <objecttype name="acs_object" id="model:acs_object">
+      <attribute name="object_type" datatype="String" multiplicity="1" id="model:acs_object:object_type"/>
+      <attribute name="OBJECT_ID" datatype="Integer" multiplicity="1" id="model:acs_object:object_id"/>
+      <attribute name="CONTEXT_ID" datatype="Integer" multiplicity="1" id="model:acs_object:context_id"/>
+      <objectmap>
+        <objectmapentry>
+          <attributeref idref="model:acs_object:context_id"/>
+          <columnref idref="acs:oracle:acs_objects:context_id"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="model:acs_object:object_id"/>
+          <columnref idref="acs:oracle:acs_objects:object_id"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="model:acs_object:object_type"/>
+          <columnref idref="acs:oracle:acs_objects:object_type"/>
+        </objectmapentry>
+        <objectkey>
+          <attributeref idref="model:acs_object:object_id"/>
+        </objectkey>
+      </objectmap>
+    </objecttype>
+    <objecttype name="party" id="model:party">
+      <supertyperef idref="model:acs_object"/>
+      <attribute name="email" datatype="String" multiplicity="0..1" id="model:party:email"/>
+      <attribute name="url" datatype="String" multiplicity="0..1" id="model:party:url"/>
+      <attribute name="PARTY_ID" datatype="Integer" multiplicity="1" id="model:party:party_id"/>
+      <objectmap>
+        <objectmapentry>
+          <attributeref idref="model:party:party_id"/>
+          <columnref idref="acs:oracle:parties:party_id"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="model:party:email"/>
+          <columnref idref="acs:oracle:parties:email"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="model:party:url"/>
+          <columnref idref="acs:oracle:parties:url"/>
+        </objectmapentry>
+        <foreignkeyref idref="acs:oracle:parties_party_id:acs_object_pk"/>
+      </objectmap>
+    </objecttype>
+  </model>
+</metadataroot>

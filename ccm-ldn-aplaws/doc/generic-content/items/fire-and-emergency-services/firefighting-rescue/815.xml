@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=815}]"><cms:name>attending-fires-815</cms:name><cms:language>en</cms:language><cms:title>Firefighting/Rescue - Attending Fires</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=815}]"><cms:name>attending-fires-815-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>firefighting, rescue, attending, fires</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=815}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>When you dial 999 and ask for the Fire Service, your call is sent to the emergency call handling centre which routes all calls for your area to Fire Control - calls are normally answered within 1 to 5 seconds. Control will confirm with you the address of the incident and help will be despatched to you immediately. </i></p><hr/><h2>
+				How does Fire Control make this happen?
+			</h2><p>
+					  When your call is received, Control staff enter details in the Command
+          and Control system. This system automatically finds the closest appliances
+          and
+      officers to respond, and activates the turnout system at the nearest fire
+      station - turning on the audible alarms, part-time firefighters' personal
+      alerters, lights at night and any other facilities connected to it. The
+          address of the call is sent to the fire station teleprinter, the officers'
+          pagers
+  and, on selected vehicles, to mobile data terminals in the cabs of the appliances. 
+				</p><p>
+					Control initially mobilise to each incident with a specific response which
+  is called a Pre-Determined Attendance (PDA). The PDA to an incident will vary
+  considerably dependent on many considerations, such as:
+				</p><ul>
+				<li title="*">Location</li>
+<li title="*">Type
+    of Incident</li>
+<li title="*">Type
+    of Property (eg High Rise/Hospital)</li>
+<li title="*">Crewing
+    (personnel) required</li>
+<li title="*">Equipment
+    required</li>
+</ul><h2>
+				Communicating with the Firefighters
+			</h2><p>
+					  Fire and Rescue operate
+    2 radio channels within their vehicles and all officers and appliances attending
+    incidents can keep Control
+          informed
+      of where they are and what they are doing.
+				</p><p>
+					When they arrive at the
+    incident, they may require more assistance and this is requested over the
+    radio scheme. All requests for further assistance are
+  monitored by Fire Control as they have a complete overview of all the resources
+  which are available in the area and the neighbouring counties and can quickly
+  mobilise additional fire engines to support those in attendance.
+				</p><p>
+					To ensure that all details, such as road and place names, are communicated
+  accurately, Control use the nationally recognised phonetic alphabet.
+				</p><h2>
+				Maintaining cover at other fire stations
+			</h2><p>
+					  One of the important jobs that Fire Control staff have to do is to make
+          sure that cover is maintained at fire stations so that, when further
+          calls are
+      received, Control staff will make standby moves, mobilising fire engines
+  to fire stations to ensure that they are available for subsequent incidents.
+				</p><h2>
+				False Alarms
+			</h2><p>
+				  Every call and radio message is automatically recorded at the time. This
+          recorded information can be used as evidence and people making malicious
+          false alarm
+      calls can be prosecuted. False calls can mean that fire engines mobilised
+      to such occurrences can reduce availability and response times for real
+          emergency situations.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=815"> Providing Information
+		(815)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

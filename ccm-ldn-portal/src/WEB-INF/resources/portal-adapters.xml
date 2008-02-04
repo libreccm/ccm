@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <xrd:context name="com.arsdigita.london.portal.ui.PortalList">
+    <xrd:adapter objectType="com.arsdigita.london.portal.WorkspacePage">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/layout"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.portal.ui.WorkspaceDetails">
+    <xrd:adapter objectType="com.arsdigita.london.portal.Workspace">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.portal.ui.admin.ApplicationList">
+    <xrd:adapter objectType="com.arsdigita.web.Application">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/primaryURL"/>
+        <xrd:property name="/object/title"/>
+        <xrd:property name="/object/description"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.portal.ui.admin.ApplicationDetails">
+    <xrd:adapter objectType="com.arsdigita.web.Application">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+</xrd:adapters>

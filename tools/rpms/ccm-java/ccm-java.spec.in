@@ -1,0 +1,74 @@
+Summary: Java related environment variables for CCM
+Name:    ccm-java
+Version: 6.5.1
+Release: 1
+Group:   Applications/Internet/CCM
+License: LGPL
+Source0: ccm-java.sh
+URL: http://aplaws.redhat.com/
+Requires: /usr/bin/locate
+Prefix: /usr
+Prefix: /etc
+
+BuildArchitectures: noarch
+BuildRoot: %{_tmppath}/%{name}-root
+
+%description
+A convenience profile script for setting JAVA_HOME and adding jdbc drivers for
+oracle and postgres if they are present.
+
+%install
+rm -rf $RPM_BUILD_ROOT
+
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
+
+install -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
+touch $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/ccm-java
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post
+[ -f /etc/sysconfig/ccm-java ] && . /etc/sysconfig/ccm-java
+
+if [ -z "$JAVA_HOME" ]; then
+    [ -d /usr/lib/jvm/java ] && JAVA_HOME=/usr/lib/jvm/java
+fi
+
+if [ -z "$ORACLE" ]; then
+    if [ ! -z "$ORACLE_HOME" ]; then
+        ORACLE=$ORACLE_HOME/jdbc/lib/classes12.jar
+    elif rpm -q oracle-instantclient-basic > /dev/null; then
+        ORACLE=`rpm -ql oracle-instantclient-basic | \
+                grep classes12.jar | sort | tail -n 1`
+    else
+        ORACLE=`/usr/bin/locate classes12.jar | head -n 1`
+    fi
+fi
+
+if [ -z "$POSTGRES" ]; then
+    if rpm -q postgresql-jdbc > /dev/null; then
+        POSTGRES=`rpm -ql postgresql-jdbc | \
+                  grep "jdbc3.jar$" | sort | tail -n 1`
+    elif rpm -q rh-postgresql-jdbc > /dev/null; then
+        POSTGRES=`rpm -ql rh-postgresql-jdbc | sort | tail -n 1`
+    fi
+fi
+
+if [ -w /etc/sysconfig/ccm-java ]; then
+    cat > /etc/sysconfig/ccm-java <<EOF
+JAVA_HOME=$JAVA_HOME
+ORACLE=$ORACLE
+POSTGRES=$POSTGRES
+EOF
+fi
+
+%files
+%defattr(-,root,root)
+%{_sysconfdir}/profile.d/ccm-java.sh
+%config(noreplace) /etc/sysconfig/ccm-java
+
+%changelog
+* Wed Mar 16 2005 Matthew Booth <mbooth@redhat.com> 1.0-1
+- initial build

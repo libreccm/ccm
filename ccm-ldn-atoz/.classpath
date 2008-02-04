@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-cms"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-navigation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-subsite"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-terms"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-util"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-cms-types-siteproxy"/>
+	<classpathentry kind="output" path="build/Eclipse"/>
+</classpath>

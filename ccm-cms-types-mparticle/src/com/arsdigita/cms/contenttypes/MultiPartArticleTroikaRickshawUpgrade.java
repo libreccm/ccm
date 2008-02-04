@@ -1,0 +1,122 @@
+/*
+ * Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionCollection;
+import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.Template;
+import com.arsdigita.cms.TemplateManager;
+import com.arsdigita.cms.TemplateManagerFactory;
+import com.arsdigita.cms.lifecycle.LifecycleDefinition;
+import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.runtime.Startup;
+import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.Date;
+import org.apache.log4j.Logger;
+
+/**
+ * Subject to change.
+ *
+ * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @version $Id: MultiPartArticleTroikaRickshawUpgrade.java 1561 2007-04-16 15:37:21Z apevec $
+ */
+public class MultiPartArticleTroikaRickshawUpgrade {
+    private static final Logger s_log = Logger.getLogger
+        (MultiPartArticleTroikaRickshawUpgrade.class);
+
+    public static final void main(final String[] args) throws IOException {
+        new Startup().run();
+
+        final Session session = SessionManager.getSession();
+
+        final TransactionContext tc = session.getTransactionContext();
+        tc.beginTxn();
+
+        final ContentType type = ContentType.findByAssociatedObjectType
+            (MultiPartArticle.BASE_DATA_OBJECT_TYPE);
+        final URL templateURL = new URL
+            (null, "resource:WEB-INF/content-types/com/arsdigita/cms" +
+             "/contenttypes/mparticle-item.jsp");
+
+        final ContentSectionCollection coll = ContentSection.getAllSections();
+
+        while (coll.next()) {
+            final ContentSection section = coll.getContentSection();
+
+            final Template template = new Template();
+            template.setName("MultiPartArticle-mparticle-item");
+            template.setLabel("mparticle-item");
+            template.setContentSection(section);
+            template.setParent(section.getTemplatesFolder());
+
+            final InputStream stream;
+            try {
+                stream = templateURL.openStream();
+            } catch (IOException ex) {
+                throw new UncheckedWrapperException("Cannot read stream", ex);
+            }
+
+            Assert.truth(stream != null, "Template not found");
+
+            final BufferedReader input = new BufferedReader
+                (new InputStreamReader(stream));
+
+            final StringBuffer body = new StringBuffer();
+
+            try {
+                String line;
+
+                while ((line = input.readLine()) != null) {
+                    body.append(line);
+                    body.append("\n");
+                }
+            } catch (IOException ioe) {
+                throw new UncheckedWrapperException
+                    ("Template cannot be read", ioe);
+            }
+
+            template.setText(body.toString());
+
+            TemplateManagerFactory.getInstance().addTemplate
+                (section, type, template, TemplateManager.PUBLIC_CONTEXT);
+
+            final LifecycleDefinitionCollection ldc =
+                section.getLifecycleDefinitions();
+            LifecycleDefinition ld = null;
+            if (ldc.next()) {
+                ld = ldc.getLifecycleDefinition();
+                ldc.close();
+            }
+
+            template.publish(ld, new Date());
+        }
+
+        tc.commitTxn();
+    }
+}

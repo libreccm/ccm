@@ -1,0 +1,233 @@
+#!/usr/bin/perl -w
+#
+# Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+#
+# The contents of this file are subject to the CCM Public
+# License (the "License"); you may not use this file except in
+# compliance with the License. You may obtain a copy of
+# the License at http://www.redhat.com/licenses/ccmpl.html
+#
+# Software distributed under the License is distributed on an "AS
+# IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+# implied. See the License for the specific language governing
+# rights and limitations under the License.
+#
+# Daniel Berrange <berrange@redhat.com>
+# Dennis Gregorovic <dgregor@redhat.com>
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use Cwd;
+use CCM::CommandsUtil;
+use CCM::Util;
+use File::Find;
+use File::Path;
+use File::Spec;
+use Getopt::Long;
+
+my $OS = $^O;
+my $ccm_apps = CCM::Util::getRequiredEnvVariable("CCM_APPS");
+my $ccm_app_name = CCM::Util::getRequiredEnvVariable("CCM_APP_NAME");
+my $ccm_dist_tar_dir = CCM::Util::getRequiredEnvVariable("CCM_DIST_TAR_DIR");
+my $ccm_dist_zip_dir = CCM::Util::getRequiredEnvVariable("CCM_DIST_ZIP_DIR");
+my $ccm_package = CCM::Util::getRequiredEnvVariable("CCM_PACKAGE");
+my $ccm_package_name = CCM::Util::getRequiredEnvVariable("CCM_PACKAGE_NAME");
+my $ccm_prettyname = CCM::Util::getRequiredEnvVariable("CCM_PRETTYNAME");
+my $ccm_release = CCM::Util::getRequiredEnvVariable("CCM_RELEASE");
+my $ccm_root_dir = CCM::Util::getRequiredEnvVariable("CCM_ROOT_DIR");
+my $ccm_scripts_home = CCM::Util::getRequiredEnvVariable("CCM_SCRIPTS_HOME");
+my $ccm_version = CCM::Util::getRequiredEnvVariable("CCM_VERSION");
+my $command = undef;
+
+my $verbose = defined $ENV{'CCM_SCRIPTS_VERBOSE'} && $ENV{'CCM_SCRIPTS_VERBOSE'} eq '1';
+my $just_tar = 0;
+my $just_zip = 0;
+my $no_tar = defined $ENV{'CCM_SOURCE_NOTARS'} && $ENV{'CCM_SOURCE_NOTARS'} eq "1";
+my $no_zip = defined $ENV{'CCM_SOURCE_NOZIPS'} && $ENV{'CCM_SOURCE_NOZIPS'} eq "1";
+my $zip_file = undef;
+
+GetOptions(
+           'verbose+' => \$verbose,
+           'just-tar' => \$just_tar,
+           'just-zip' => \$just_zip,
+           'no-tar' => \$no_tar,
+           'no-zip' => \$no_zip,
+           'zip-file=s' => \$zip_file
+           );
+
+if (($just_tar && $no_tar) ||
+    ($just_zip && $no_zip) ||
+    ($just_tar && $just_zip)) {
+    die "conficting options.\n" . &display_options();
+}
+
+sub display_options {
+    return "
+verbose => $verbose
+just-tar => $just_tar
+just-zip => $just_zip
+no-tar => $no_tar
+no-zip => $no_zip";
+}
+
+chdir $ccm_root_dir;
+
+print "Creating source distribution\n";
+print "  generating manifest list\n";
+
+# generate the manifest file
+unlink (glob "MANIFEST*");
+
+my $manifest_skip_in = File::Spec->catfile($ccm_scripts_home,"pkg","dist","MANIFEST.SKIP.in");
+open (IN, $manifest_skip_in)
+    or &CCM::Util::error("can't open $manifest_skip_in: $!");
+my $manifest_skip;
+{
+    local $/ = undef;
+    $manifest_skip = <IN>;
+}
+&interpolate(\$manifest_skip);
+close IN;
+
+my $manifest = "";
+my @files;
+foreach my $dir (split ' +', $ccm_apps) {
+    my %options;
+    $options{'wanted'} = sub { -f $_ && push @files, $File::Find::name };
+    if ($^O ne 'MSWin32') {
+        $options{'follow_fast'} = 1;
+    }
+    find( \%options, $dir);
+}
+
+opendir(DIR, cwd) or &CCM::Util::error("can't opendir " . cwd . ": $!");
+push @files, grep { -f $_ } readdir(DIR);
+closedir DIR;
+
+&filter($ccm_app_name, $manifest_skip, \@files);
+
+rmtree($ccm_app_name);
+
+if ($OS eq 'MSWin32') {
+    foreach my $dir (split ' +', $ccm_apps) {
+        CCM::CommandsUtil::runAndExitOnError("xcopy /e /i /o /y $dir ..\\$ccm_app_name\\$dir");
+    }
+    CCM::CommandsUtil::runAndExitOnError("xcopy /q /i /o /y * ..\\$ccm_app_name");
+    CCM::CommandsUtil::runAndExitOnError("move ..\\$ccm_app_name .");
+} else {
+    symlink(".", $ccm_app_name);
+}
+
+&make_zip() if ( !$just_tar && !$no_zip );
+&make_tar() if ( !$just_zip && !$no_tar );
+
+sub make_zip {
+    mkpath($ccm_dist_zip_dir);
+    # make the source distribution (zip and maybe tar.gz)
+    print "  creating zip file distribution\n";
+    my $filename;
+    if ( defined $zip_file ) {
+        $filename = $zip_file;
+    } else {
+        $filename = File::Spec->catfile($ccm_dist_zip_dir,"$ccm_package_name.zip");
+    }
+    unlink $filename;
+    print "creating $filename\n" if $verbose;
+    open (ZIP, "| zip -q $filename -@");
+    print ZIP (join "\n", @files) or die "$!";
+    close ZIP;
+}
+
+sub make_tar {
+    mkpath($ccm_dist_tar_dir);
+    print "  creating tar.gz file distribution\n";
+    my $filename = File::Spec->catfile($ccm_dist_tar_dir,"$ccm_package_name.tar");
+    unlink $filename;
+    unlink "$filename.gz";
+    print "creating $filename.gz\n" if $verbose;
+    open (MANIFEST, "> MANIFEST");
+    print MANIFEST join "\n", @files;
+    close MANIFEST;
+    if ($^O eq 'MSWin32') {
+        # cygwin tar does not work well with Windows-style paths.  So, let's convert it.
+        $filename =~ s,\\,/,g;
+        $filename =~ s,^([a-zA-Z]):,/cygdrive/$1,;
+    }
+    if ($^O eq 'solaris') {
+        CCM::CommandsUtil::runAndExitOnError("tar -cf $filename -I MANIFEST");
+    } else {
+        CCM::CommandsUtil::runAndExitOnError("tar -cf $filename -T MANIFEST");
+    }
+    CCM::CommandsUtil::runAndExitOnError("gzip -f $filename");
+}
+
+rmtree($ccm_app_name);
+
+sub interpolate {
+    my $text = shift;
+    my %keys = ( 'PACKAGE' => $ccm_package,
+                 'PRETTYNAME' => $ccm_prettyname,
+                 'VERSION' => $ccm_version,
+                 'RELEASE' => $ccm_release );
+    foreach (@_) {
+        if (/^(\w+)=(.*)$/) {
+            $keys{$1} = eval "qq{$2}";
+        } else {
+            &CCM::Util::error("cannot parse key=val pair $_", -1);
+        }
+    }
+    $$text =~ s/::(\w+)::/exists $keys{$1} ? $keys{$1} : die "no value supplied for variable $1"/gex;
+    return $text;
+}
+
+sub filter {
+    my $prefix = shift;
+    my $manifest = shift;
+    my $files = shift;
+    my @skip;
+
+    if ($OS eq 'MSWin32') {
+        $prefix =~ s/\\/\\\\/g;
+    }
+
+    foreach (split "\n", $manifest) {
+        chomp;
+        s/\./\\\./g;
+        s/\*/\.\*/g;
+        s/\?/\.\?/g;
+        push @skip, $_;
+    }
+
+    @{$files} = map {
+        chomp;
+        s/^\.\///;
+        my $skipped = 0;
+        foreach my $skip (@skip) {
+            if (/^$skip$/) {
+                $skipped = 1;
+                last;
+            }
+        }
+        if (!$skipped) {
+            if ($OS eq 'MSWin32') {
+                s/\\/\//g;
+            }
+            "$prefix/$_";
+        } else {
+        }
+    } @{$files};
+
+}

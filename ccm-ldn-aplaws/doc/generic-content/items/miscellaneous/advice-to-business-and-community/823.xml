@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=823}]"><cms:name>regeneration-projects-823</cms:name><cms:language>en</cms:language><cms:title>Regeneration Projects</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=823}]"><cms:name>regeneration-projects-823-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>regeneration, projects</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=823}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>There are areas and sections of the community that experience significant disadvantages typically in terms of high unemployment, low incomes, high benefit dependency, high crime and low educational attainment. </i></p><hr/><p>If these areas are to
+          continue to prosper the Council needs to remove barriers to business
+      growth, enable disadvantaged
+        communities to share the benefits of sustainable economic growth and
+      offer a pleasant and safe place to live and work. These are the Council's
+  regeneration challenges.</p><p>  The Council has been successful in bidding for central government regeneration
+  money in the form of yearly grants under the Single Regeneration Budget. </p><p>The following Regeneration Projects are being funded:</p><p>
+			<span class="gen">enter details</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=823"> Providing Information
+		(823)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

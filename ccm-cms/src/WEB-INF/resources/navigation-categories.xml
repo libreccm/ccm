@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE categories>
+<categories name="Navigation" description="Content Navigation">
+    <category name="Entertainment">
+        <category name="Music" />
+        <category name="Movies" />
+        <category name="Television" />
+    </category>
+    <category name="Economy">
+        <category name="Jobs" />
+        <category name="Industries" />
+        <category name="Investing" />
+    </category>
+    <category name="Education">
+        <category name="Arts" />
+        <category name="School Time" />
+        <category name="Literacy" />
+    </category>
+</categories>
+

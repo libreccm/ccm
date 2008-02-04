@@ -1,0 +1,291 @@
+ccm-cms (6.3.0-13) unstable; urgency=low
+
+  * Fixed NPE
+
+ -- James Burt <james@runtime-collective.com>  Thu,  2 Mar 2006 13:09:54 +0000
+
+ccm-cms (6.3.0-12) unstable; urgency=low
+
+  * Fixing CurrentFolderAllContent 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 24 Feb 2006 14:07:39 +0000
+
+ccm-cms (6.3.0-11) unstable; urgency=low
+
+  * Adding CurrentFolderAllContent class 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 24 Feb 2006 10:48:55 +0000
+
+ccm-cms (6.3.0-10) unstable; urgency=low
+
+  * Fixed link to lock.png 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 22 Feb 2006 12:44:35 +0000
+
+ccm-cms (6.3.0-8) unstable; urgency=low
+
+  * Added com.arsdigita.cms.ui.CurrentFolderContent
+
+ -- Erik Erskine <erik@runtime-collective.com>  Thu,  2 Feb 2006 12:14:30 +0000
+
+ccm-cms (6.3.0-7) unstable; urgency=low
+
+  * Folder based navigation for undp 
+
+ -- Erik Erskine <erik@runtime-collective.com>  Wed,  1 Feb 2006 10:08:35 +0000
+
+ccm-cms (6.3.0-6) unstable; urgency=low
+
+  * Adding missing entry to upgrades 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 25 Jan 2006 14:46:29 +0000
+
+ccm-cms (6.3.0-5) unstable; urgency=low
+
+  * Speeding up one upgrade step (6.0.1 to 6.1.0) from 2+ days to 13s, for UNDP 
+
+ -- My <myuser@firenze.runtime-collective.com>  Tue, 24 Jan 2006 17:45:09 +0000
+
+ccm-cms (6.3.0-4) unstable; urgency=low
+
+  * Change the dependency on ccm-core to >= 6.3.0 as we need the new SqlFilter
+    class.
+
+ -- David Pashley <david@runtime-collective.com>  Tue, 10 Jan 2006 10:22:53 +0000
+
+ccm-cms (6.3.0-3) unstable; urgency=low
+
+  * RedHat patches 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 30 Dec 2005 08:52:41 +0000
+
+ccm-cms (6.3.0-2) unstable; urgency=low
+
+  * Including patch from official aplaws:
+  https://sourceforge.net/tracker/index.php?func=detail&aid=1324690&group_id=71505&atid=531527%C2%A0%3Cbr
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Wed, 14 Dec 2005 11:40:16 +0000
+
+ccm-cms (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:51:54 +0000
+
+ccm-cms (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.1.2 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:29:57 +0000
+
+ccm-cms (6.1.2-23) unstable; urgency=low
+
+  * 18963 - notification emails should have a valid link to admin interface 
+
+ -- My <myuser@firenze.runtime-collective.com>  Tue, 16 Aug 2005 07:54:51 +0000
+
+ccm-cms (6.1.2-22) unstable; urgency=low
+
+  * Refactoring MPA/SiteProxy as index item patch, adding 404s for invalid
+    category hits 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 28 Jul 2005 12:25:48 +0000
+
+ccm-cms (6.1.2-21) unstable; urgency=low
+
+  * Removing constraint on CMSContext.getContentItem to be non-null 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 20 Jul 2005 09:56:06 +0000
+
+ccm-cms (6.1.2-20) unstable; urgency=low
+
+  * 18686 - added a break statement to improve performance 
+
+ -- Matt Roberts <matt@runtime-collective.com>  Fri, 15 Jul 2005 10:25:03 +0100
+
+ccm-cms (6.1.2-19) unstable; urgency=low
+
+  * 18686 - Made the Soon Expired pane aware of permissions 
+
+ -- Matt Roberts <matt@runtime-collective.com>  Thu, 14 Jul 2005 18:02:25 +0100
+
+ccm-cms (6.1.2-18) unstable; urgency=low
+
+  * 18769 - option not to delete workflow after publication 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 13 Jul 2005 16:33:25 +0000
+
+ccm-cms (6.1.2-17) unstable; urgency=low
+
+  * Added two new parameters to adjust the period that the Soon Expired page
+    looks ahead
+
+ -- Matt Roberts <matt@runtime-collective.com>  Tue, 12 Jul 2005 13:16:26 +0100
+
+ccm-cms (6.1.2-16) unstable; urgency=low
+
+  * 18728: Redirect to login screen when access denied and user isn't logged
+
+ -- My <myuser@firenze.runtime-collective.com>  Mon, 11 Jul 2005 13:38:19 +0000
+
+ccm-cms (6.1.2-15) unstable; urgency=low
+
+  * 15977: Rename live version of folders too 
+
+ -- My <myuser@firenze.runtime-collective.com>  Mon, 11 Jul 2005 12:29:32 +0000
+
+ccm-cms (6.1.2-14) unstable; urgency=low
+
+  * 18465: option to disable fileasset indexing 
+
+ -- My <myuser@firenze.runtime-collective.com>  Tue,  5 Jul 2005 13:48:36 +0000
+
+ccm-cms (6.1.2-13) unstable; urgency=low
+
+  * SiteProxy as index items 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 24 Jun 2005 09:20:55 +0000
+
+ccm-cms (6.1.2-12) unstable; urgency=low
+
+  * MPAs as index items 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 23 Jun 2005 15:37:18 +0000
+
+ccm-cms (6.1.2-11) unstable; urgency=low
+
+  * Preventing exceptions when disable_p2ds_item is set to true 
+
+ -- My <myuser@firenze.runtime-collective.com>  Tue, 21 Jun 2005 16:36:15 +0000
+
+ccm-cms (6.1.2-10) unstable; urgency=low
+
+  * Final (?) fix for dublincore dates, #17509
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 18 May 2005 08:28:16 +0000
+
+ccm-cms (6.1.2-9) unstable; urgency=low
+
+  * Another attempt at fixing 17509
+
+ -- My <myuser@firenze.runtime-collective.com>  Mon, 16 May 2005 10:31:09 +0000
+
+ccm-cms (6.1.2-8) unstable; urgency=low
+
+  * 17509 fix for dublin core dates
+
+ -- My <myuser@firenze.runtime-collective.com>  Mon,  9 May 2005 09:48:40 +0000
+
+ccm-cms (6.1.2-7) unstable; urgency=low
+
+  * fixed a bug in related items (null pointer exception when content item chosen) 
+
+ --  <criss@firenze.runtime-collective.com>  Wed,  4 May 2005 11:55:03 +0000
+
+ccm-cms (6.1.2-6) unstable; urgency=low
+
+  * 17509 fix for dubli core dates
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 29 Apr 2005 13:19:17 +0000
+
+
+ccm-cms (6.1.2-5) unstable; urgency=low
+
+  * It is now possible to set the related links to open in a new window 
+
+ -- root <root@firenze.runtime-collective.com>  Mon, 25 Apr 2005 16:00:40 +0000
+
+ccm-cms (6.1.2-4) unstable; urgency=low
+
+  * added option to select NO index item for a given category 
+
+ --  <criss@firenze.runtime-collective.com>  Mon, 25 Apr 2005 12:44:56 +0000
+
+ccm-cms (6.1.2-3) unstable; urgency=low
+
+  * 17616: CMSPermissionsPane now resets when you switch folders
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 15 Apr 2005 12:52:11 +0000
+
+ccm-cms (6.1.2-2) unstable; urgency=low
+
+  * use fulldateformatter for beg/end date of dublin core metadata
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 13 Apr 2005 15:44:11 +0000
+
+ccm-cms (6.1.2-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.1.1 to 6.1.2
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Thu, 31 Mar 2005 11:59:49 +0000
+
+ccm-cms (6.1.1-1) unstable; urgency=low
+
+  * for qa
+  
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Tue,  1 Mar 2005 15:30:01 +0000
+   
+ccm-cms (6.1.0-8) unstable; urgency=low
+
+  * ContentBundle not to duplicate AtoZ item aliases when being published 
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Tue,  1 Mar 2005 15:30:01 +0000
+
+ccm-cms (6.1.0-7) unstable; urgency=low
+
+  * TextAssetEditForm now has option to clean up MS tags when saved 
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Tue, 22 Feb 2005 09:48:24 +0000
+
+ccm-cms (6.1.0-6) unstable; urgency=low
+
+  * Remove the build-dependency on ccm-ldn-navigation as it isn't required.
+
+ -- David Pashley <david@runtime-collective.com>  Mon, 31 Jan 2005 16:37:10 +0000
+
+ccm-cms (6.1.0-5) unstable; urgency=low
+
+  * Depend on j2sdk1.4 | java2-compiler 
+  * Update to policy 3.6.1
+  * Depend on debconf
+  * Change maintainer to the mailing list and add uploaders
+
+ -- David Pashley <david@runtime-collective.com>  Wed, 19 Jan 2005 09:57:58 +0000
+
+ccm-cms (6.1.0-4) unstable; urgency=low
+
+  * debian/postrm: disabled the purge operations [had some weird problems].
+  * updated the debian control scripts to get the package name and version from their invocation.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Mon, 10 May 2004 12:33:33 +0100
+  
+ccm-cms (6.1.0-3) unstable; urgency=low
+
+  * debian/templates: made load-at-install and setup-database-at-install the default behaviour.
+  * debian/postinst: ccm_hostinit will try to use web.xml-aplaws from ccm-ldn-aplaws.
+  * debian/ccm-settings.sh: correct checking/setting of ORACLE_JDBC_LIB [Chris].
+  * debian/templates: changed the default postgresql database and user names to "ccm01.db" and "ccm".
+  * debian/config: added detection of the hostname of the machine and possibly the user's email.
+  * major restructuring of the debian scripts: moved all utility functions to ccm-tools and made postinst, postrm, prerm and ccm-settings.sh source and use that file.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri,  7 May 2004 13:04:43 +0100
+
+ccm-cms (6.1.0-2) unstable; urgency=low
+
+  * The build process now tries to automatically detect JAVA_HOME and the location of Oracle's java library.
+  * debian/ccm-clean.sh: only calls the ant process if build.xml exists.
+  * debian/{postinst,prerm,config,templates}: added debconf support
+  * debian/postinst: accepts 'reconfigure' and treats it as 'configure'.
+  * debian/postinst: added postgresql.jar to CLASSPATH; added libpgjava to the dependencies.
+  * debian/postinst: removed some bashisms upon recommendation from lintian.
+  * debian/rules: enabled dh_installdebconf.
+  * debian/control: made the package depend on debconf.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri,  1 May 2004 15:41:43 +0100
+  
+    
+ccm-cms (6.1.0-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri, 24 Apr 2004 12:27:56 +0100

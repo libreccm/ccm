@@ -1,0 +1,73 @@
+Summary:   CCM build scripts
+Name:      @PACKAGE@
+Version:   @VERSION@
+Release:   @RELEASE@
+
+Group:     Applications/Internet/CCM
+License: LGPL
+
+Source0:   %{name}-%{version}.tar.gz
+BuildArchitectures: noarch
+BuildRoot: /var/tmp/%{name}-%{version}-root
+
+Requires: /bin/tar
+Requires: /usr/bin/md5sum
+Requires: /usr/bin/rpmbuild
+Requires: /usr/bin/unzip
+Requires: /usr/bin/zip
+Requires: ccm-devel >= 6.5.1
+Provides: acs-scripts
+Obsoletes: acs-scripts
+
+Prefix: /usr
+Prefix: /etc
+
+%description
+The CCM build scripts package provides support for building
+ZIP and RPM packages for distribution.
+
+%prep
+%setup -q -n %{name}-%{version}
+
+%build
+./configure --prefix=/usr --sysconfdir=/etc
+make
+make check
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+
+%post 
+USR_DIR=$RPM_INSTALL_PREFIX0
+ETC_DIR=$RPM_INSTALL_PREFIX1
+# RPM bug workaround
+if [ "x$ETC_DIR" = "x" ]; then ETC_DIR=/etc ; fi
+if [ "x$USR_DIR" = "x" ]; then USR_DIR=/usr ; fi
+
+if [ "x${USR_DIR}" != "x/usr" ]; then
+    perl -i -p -e "s,/usr,${USR_DIR}," $ETC_DIR/profile.d/%{name}.sh
+fi
+
+%changelog
+* Tue Apr 29 2003 Dennis Gregorovic <dgregor@redhat.com>
+- Call ant deploy-config-webxml or ant deploy-config-webxml-local so that the servlet mappings and declarations get deployed.
+
+* Sun Apr 27 2003  <builder@park-street.boston.redhat.com>
+- extract-versions.pl now recognizes versions that match [a-zA-Z0-9\._]+
+
+
+* Fri Apr 25 2003 Dennis Gregorovic <dgregor@redhat.com>
+- Added mime-type mapping for .htc files to resin-back.conf.in
+
+%files
+%defattr(-,root,root)
+%doc README ChangeLog COPYING INSTALL AUTHORS TODO
+%doc doc/*.sh
+/etc/profile.d/%{name}.sh
+/usr/share/%{name}
+/usr/share/ccm-devel/template/rollingbuild.sh

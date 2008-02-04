@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=456}]"><cms:name>leisure-456</cms:name><cms:language>en</cms:language><cms:title>Leisure Passes</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=456}]"><cms:name>leisure-456-dublin-metadata</cms:name><cms:dcAudience>citizens</cms:dcAudience><cms:dcCoverage></cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>leisure, passes, pass, scheme, discounts, sports, courses</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=456}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Leisure Pass, also known as the leisure pass scheme offers reduced prices for use of activities at Swimming Pools, Sports Centres and Libraries.</i></p><hr/><h1>Leisure Pass</h1><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#whatis">What is a Leisure Pass Scheme?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#qualify">Do I Qualify?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#passcard">What will the Card cost me?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#facilities">What Facilities are available under the Scheme?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#centpools">Participating Centres and Pools</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#save">Will the scheme save me money?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#obtain">How do I obtain a Leisure Pass Card?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#issue">Issuing Offices</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#over60">60 or over?  - New arrangements for Senior Citizens</a>	
+				</strong>
+			</li>
+		</ul><h2>
+			
+			What is a Leisure Pass Scheme?</h2><p>The Leisure Pass, also known 
+  as the leisure pass scheme offers reduced prices for use of activities at Swimming 
+  Pools, Sports Centres and Libraries.</p><p>Residents can benefit both 
+  financially and improve their health and fitness, by joining the scheme.</p><h2>
+			
+			Do I Qualify?</h2><p>If you are between the age of <span class="gen">enter amount</span> and <span class="gen">enter amount</span> and live 
+  in <span class="gen">enter council name</span>, then you are eligible for a Leisure Pass Card for use at all participating 
+  centres and swimming pools.</p><h2>
+			
+			What will the Pass Card cost me?</h2><p>Two types of Leisure pass Cards are available 
+  to residents, according to personal status.</p><table width="90%" cellpadding="5" class="centre" summary="Categories for Leisure Pass Card">
+			<tr>
+				<td>
+					<strong>Ordinary Type 
+      Category</strong>
+				</td>
+				<td>for just <span class="gen">enter amount</span> 
+      you will receive a Leisure pass Card (valid for 12 months). This card will 
+      entitle you to use many popular facilities at greatly reduced prices*</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>&quot;A&quot; Type Category</strong>
+				</td>
+				<td>if you 
+      fall into any of the following categories, and can show proof of status, 
+      your Leisure Pass Card will be issued <strong>Free of Charge</strong> and the lower off-peak 
+      charges for many popular facilities will apply at all public opening times:</td>
+			</tr>
+		</table><p>
+			<strong>Status</strong>
+		</p><ul>
+			<li title="*">Housing Benefit Resident***</li>
+			<li title="*">Unemployed receiving Income Support***</li>
+			<li title="*">Registered Disabled</li>
+			<li title="*">Medical Condition</li>
+			<li title="*">Family Credit Resident</li>
+			<li title="*">Receiving Incapacity Benefit</li>
+		</ul><p>
+			<strong>Examples of Proof of Status</strong>
+		</p><ul>
+			<li title="*">Confirmation letter</li>
+			<li title="*">Proof of Unemployment Benefit ie. Giro/letter</li>
+			<li title="*">Income Support Book/Giro Payment</li>
+			<li title="*">RDP Green Card/G.P. Recommendation</li>
+			<li title="*">GP/Hospital recommendation</li>
+			<li title="*">Payment Book/Giro Payment</li>
+			<li title="*">Incapacity Book/Giro Payment</li>
+		</ul><h2>
+			
+			What Facilities are available under the Scheme?</h2><ul>
+			<li title="*">Swimming</li>
+			<li title="*">Squash</li>
+			<li title="*">Sauna</li>
+			<li title="*">Badminton</li>
+			<li title="*">Table Tennis</li>
+			<li title="*">plus discounts on sports courses**</li>
+		</ul><p>In addition, the Leisure pass Card can also be used to save money on</p><ul>
+			<li title="*">library fines**</li>
+			<li title="*">and use of the Internet.</li>
+		</ul><h2>
+			
+			Participating Centres and Pools</h2><ul>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+		</ul><h2>
+			
+			Will the scheme save me money?</h2><p>Savings can be enormous and immediate.  Take for instance the sauna facilities (off peak).</p><table width="90%" cellpadding="5" class="centre" summary="example of savings">
+			<tr>
+				<td>Current non resident charge:****</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Current resident Leisure pass</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Saving</strong>
+				</td>
+				<td>
+					<strong>
+						<span class="gen">enter amount</span>
+					</strong>
+				</td>
+			</tr>
+		</table><p>In this example, the cost of your Leisure 
+  pass Card has been paid for on your first visit (with change to spare!). All 
+  of the other facilities offer similar savings.</p><h2>
+			
+			How do I obtain a Leisure Pass Card?</h2><p>To take advantage of the Leisure Pass 
+  Scheme, you will need to either contact us on the details above or  <strong>
+				
+			
+			</strong>
+			<span class="gen"> link to online form</span>.
+  If you cannot complete this form or print it out you can email <span class="gen">enter email address</span>
+  and we will post a leaflet to you.</p><p>You will also need to bring with you;</p><ul>
+			<li title="*">Proof of identification, showing name, address and signature (driving licence, membership card etc.)</li>
+			<li title="*">A passport size photograph of yourself, (this can be a current photograph cut to size)</li>
+			<li title="*">Status verification (refers to &quot;A&quot; type category)</li>
+			<li title="*">Fee of <span class="gen">enter amount</span> (does not apply to &quot;A&quot; type category)</li>
+		</ul><p>
+			<strong>Remember, without a Leisure Pass Card, 
+  you will have to pay the much higher non-resident rate for the same facilities!</strong>
+		</p><h2>
+			
+			Issuing Offices</h2><ul>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+		</ul><h2>
+			
+			60 or over? - New arrangements for Senior Citizens</h2><p>If you are a male, 60 years of age or 
+  over and resident in <span class="gen">enter council name</span> you are entitled to benefit from a number of facilities 
+  free or at reduced prices at our centres.</p><p>Men who have not reached the age of 
+  65 years and consequently not in possession of a pension book (as proof of status), 
+  will need to get a Senior Citizen Pass (free of charge).</p><p>Either contact us on the details above or <strong>
+				
+			
+			</strong>. 
+  <span class="gen">link to online form</span> 
+  and present it at any of the Centres shown above and on the form, with evidence 
+  of your age (birth certificate) and proof of residency in <span class="gen">enter council name</span>. You will 
+  also need a passport size photograph (this can be a current photograph cut to 
+  size) of yourself.</p><p>A Senior Citizen's Pass will then be 
+  processed and issues to you while you wait (free of charge).</p><p>* Prices vary for peak <span class="gen">enter time</span> periods 
+  and off-peak <span class="gen">enter time</span> periods. These times may vary on which 
+  facility you are using. Please contact the participating 
+  centres and pools for more details.</p><ul>
+		<li title="*">** Reduction for &quot;A&quot; pass holders only</li>
+		<li title="*">*** All residents in Household aged <span class="gen">enter amount</span> qualify</li>
+		<li title="*">****Prices current at time of printing</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=456"> Applications for services
+		(456)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=456}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=456}]"/></cms:links></cms:item>

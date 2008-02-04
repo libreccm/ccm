@@ -1,0 +1,37 @@
+/* chrome.css
+
+   Stylesheet mit Styles auf der Basis von CSS 2.1
+   zur weiteren (chrom glänzenden) Gestaltung der Seiten.#
+   
+   
+*/
+
+
+.leftbox p {
+	margin:5px 5px 5px 5px;
+	padding:5px 5px 5px 5px;
+	text-align: left ; vertical-align:  middle;
+	}
+
+.rightbox p {
+	margin:5px 5px 5px 5px;
+	padding:5px 5px 5px 5px;
+	text-align: left ; vertical-align:  middle;
+	}
+
+#subheader dl {
+	margin:5px 5px 5px 5px;
+	padding:1px; 
+	text-align:center;
+	}
+#subheader dt {
+	margin:0px 0px 0px 0px;
+	padding:1px; 
+	text-align:center;
+	}
+#subheader dd {
+	margin:0px 0px 0px 0px;
+	padding:1px; 
+	text-align:center;
+	}
+   

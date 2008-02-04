@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=322}]"><cms:name>stillbirth-322</cms:name><cms:language>en</cms:language><cms:title>Stillbirth - registering</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=322}]"><cms:name>stillbirth-322-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>stillbirth, still, birth, registering</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=322}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This page gives you information about how to register a death that occurred in England or Wales. The registration systems in Scotland and Northern Ireland are different from that in England and Wales and each has its own General Register Office.</i></p><hr/><p>You can obtain information about how to register a death in Scotland or Northern Ireland by linking in to their websites.</p><ul>
+
+  <li title="*">
+
+		<a href="http://www.gro-scotland.gov.uk/"> <strong>General Register Office in Scotland</strong>
+</a>	 <span class="gen">link to external website</span>
+</li>
+
+  <li title="*">
+
+		<a href="http://www.groni.gov.uk/"> <strong>General Register Office in Northern Ireland</strong>
+</a>	 <span class="gen">link to external website</span>
+</li>
+
+</ul><p>Deaths in England or Wales must be registered in the district in which they take place although this may be arranged through any register office within these countries. Deaths in Wales may be registered bilingually in English and Welsh. </p><p>The main Act and regulations governing the registration of births and death are:</p><ul>
+
+  <li title="*">Births and Deaths Registration Act 1953 (as amended)</li>
+
+  <li title="*">The Registration of Births and Deaths Regulations 1987 (as amended)</li>
+
+  <li title="*">The Registration of Births and Deaths (Welsh Language) Regulations 1987 (as amended)</li>
+
+</ul><h3>Where and when to register a still-birth </h3><p>A still-born child is legally defined as a child born after the 24th week of pregnancy who did not at any time after being born breathe or show any other signs of life.</p><p>
+<strong>Note. - A child who breathed or showed other signs of life is considered live-born for registration purposes irrespective of the number of weeks duration of the pregnancy.</strong>
+</p><p>When a child is still-born, the doctor or midwife who was present at the birth or examined the body will issue a medical certificate of still-birth. The person who registers the still-birth must take this certificate to the registrar's office.</p><p>Every still-birth in England or Wales must be registered in the district in which it takes place, normally within 42 days. A still-birth may not be registered more than 3 months after it occurred. Information for the registration is given to the registrar by the person registering the still-birth. The information, is recorded in the still-birth register and the person registering the still-birth signs the 
+
+  record.</p><p>Registration can sometimes be carried out at the hospital before the mother leaves, instead of at a registrar's office. The opening hours when a registrar will be available vary from one district to another and most of them operate an appointments system. You should contact the relevant district by telephone to obtain further information or to arrange an appointment.</p><p>If it is inconvenient to go to the district where the still-birth took place, the information for the registration may be given to a registrar in another district. The registrar will record the details on a form of declaration and send it to the registrar for the district where the still-birth occurred. The registrar who receives the declaration will enter the information in the still-birth register. Certificates of the still-birth, which may be ordered and paid for at the time of making the declaration, as well as the document for the burial or cremation, will be posted by the registrar for the district where the still-birth took place. If a declaration is made, it may take a day or two longer for the document for burial or cremation to be issued. The family should discuss the arrangements with their funeral director and the registrar so as to avoid any delay to the funeral.</p><h4>Welsh language</h4><p>The registration of a still-birth in Wales may be made bilingually in English and Welsh if the person who registers the still-birth gives the information in Welsh and the registrar is able to understand and write Welsh. If the registrar cannot understand and write Welsh, the information may be given in a different district where there are welsh-speaking registrars, using the declaration procedure as described above. A still-birth which takes place in England may be registered in English only.</p><h3>Who can register a still-birth</h3><p>This explains who can register a still-birth, and when information about the father may be included in the register:</p><h4>Parents married to each other</h4><p>If the parents of the child were married to each other at the time of the still-birth (or conception), either the mother or the father may register.</p><h4>Parents not married to each other</h4><p>If the parents were not married to each other at the time of the still-birth (or conception), information about the father may be entered in the register only in the following circumstances:</p><ul>
+
+  <li title="*">the mother and father go to the register office and sign the still-birth register together, or</li>
+
+  <li title="*">where the father is unable to go to the register office with the mother - 
+
+    <ul>
+
+      <li title="*">the father may make a statutory declaration acknowledging his paternity which the mother must produce to the registrar (this form may be obtained from any registrar in England or Wales), or</li>
+
+    </ul>
+
+  </li>
+
+  <li title="*">where the mother is unable to go to the register office with the father - 
+
+    <ul>
+
+      <li title="*">the mother may make a statutory declaration acknowledging the father's paternity which the father must produce to the registrar (this form may be obtained from any registrar in England or Wales).</li>
+
+    </ul>
+
+  </li>
+
+</ul><p>If information about the father is not recorded, it may be possible for the birth to be re-registered to include his details at a later date. You can obtain further information about how to apply for the re-registration of a still-birth.</p><h4>Other people who may register still-births</h4><p>Although the majority of still-births are registered by the parents, sometimes neither the mother or the father are able to do this. In these circumstances, the registrar will arrange for the registration to be completed by whichever of the following people is best able to do so:</p><ul>
+
+  <li title="*">the occupier of the house or hospital where the child was still-born</li>
+
+  <li title="*">a person who was present at the still-birth</li>
+
+  <li title="*">a person who is responsible for the still-born child</li>
+
+  <li title="*">the person who found the still-born child (where the date and place of the still-birth are unknown).</li>
+
+</ul><p>Information to be supplied for the registration of a still-birth</p><p>
+<strong>Child</strong>
+</p><ul>
+
+  <li title="*">date and place of still-birth</li>
+
+  <li title="*">the forename(s) and surname, if the parents wish to name the still-born child</li>
+
+  <li title="*">sex of the child</li>
+
+</ul><p>
+<strong>Father (where this information is to be entered in the register)</strong>
+</p><ul>
+
+  <li title="*">forename(s) and surname</li>
+
+  <li title="*">date and place of birth</li>
+
+  <li title="*">occupation at the time of the still-birth or, if not employed at that time, the last occupation</li>
+
+</ul><p>
+<strong>Mother</strong>
+</p><ul>
+
+  <li title="*">forename(s) and surname</li>
+
+  <li title="*">maiden surname if the mother is, or has been, married</li>
+
+  <li title="*">date and place of birth</li>
+
+  <li title="*">occupation at the time of the still-birth or, if not employed at that time, the last occupation</li>
+
+  <li title="*">usual address at the date of the still-birth</li>
+
+  <li title="*">date of marriage, if married to the still-born child's father at the time of the still-birth</li>
+
+  <li title="*">number of previous children by the present husband and by any former husband</li>
+
+</ul><p>It is most important that the information recorded in the still-birth register is correct. If any mistake is made, for example in the spelling of a name or surname or in the description of the father's or mother's occupation, it will give the parents or other person who registered the still-birth some trouble to have it put right. The person registering the still-birth should check the information to be recorded in the register very carefully before the entry is signed.</p><p>If English is not the mother's or father's first language and help is needed with registering the still-birth, it would be helpful for a relative or friend to accompany them to the registrar's office and act as interpreter. However, the parents must register the still-birth personally as a relative or friend cannot register instead of them.</p><p>You can obtain further information about correcting particulars in a still-birth registration.</p><h3>What certificates will be issued?</h3><h4>Certificate of registration</h4><p>A certificate of registration will be issued, free of charge, to the person who registers the still-birth. This certificate provides proof that the still-birth has been registered. Any names given to the still-born child and entered in the register will be recorded on the certificate of registration.</p><h4>Still-birth certificate</h4><p>After a still-birth has been registered, one or more certificates may be bought at the time of registration or at any time afterwards by the mother or the father. (The father's details would need to be recorded in the register entry for him to be able to obtain a certificate). Any application for a certificate from someone who is not the mother or father should be sent to the General Register Office, Anniversary Section, PO Box 2, Southport, PR8 2JD, giving full details of the purpose for which the certificate is required.</p><h4>Certificate for burial or cremation</h4><p>The registrar will issue a certificate for the burial (in a burial ground) or cremation (in a crematorium) of the still-born child. The certificate is normally passed to the funeral director who is making the arrangements. A funeral cannot take place until this certificate is given to the burial authority or the crematorium. If there is a delay to the registration, it is possible for a certificate for the burial (in a burial ground) to be issued before registration provided the still-birth does not need to be reported to the coroner. A certificate for cremation cannot be issued before the registration.</p><p>Further advice about registering a still-birth in England or Wales may be obtained from your local registrar or from:</p><p>General Register Office, Room D209, Smedley Hydro, Trafalgar Road, Southport, Merseyside, PR8 2HH</p><p>Telephone: 0151 471 4805 | Email: <strong>
+
+			
+</strong>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=322"> Providing Information
+		(322)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

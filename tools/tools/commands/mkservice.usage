@@ -1,0 +1,5 @@
+usage: mkservice [OPTIONS] instance_root_directory service_name
+
+Options:
+  --help                    Display help
+  --usage                   Print this message

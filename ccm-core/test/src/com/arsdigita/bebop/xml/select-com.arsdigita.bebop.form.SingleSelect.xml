@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bebop:page xmlns:bebop="http://www.arsdigita.com/bebop/1.0"><bebop:title> </bebop:title><bebop:boxPanel axis="2" center="false" width="100%"><bebop:cell><bebop:select name="select"><bebop:option value="foovalue"><bebop:label escape="no">foo</bebop:label></bebop:option><bebop:option value="barvalue"><bebop:label escape="no">bar</bebop:label></bebop:option><bebop:option value="bazvalue"><bebop:label escape="no">baz</bebop:label></bebop:option></bebop:select></bebop:cell></bebop:boxPanel></bebop:page>

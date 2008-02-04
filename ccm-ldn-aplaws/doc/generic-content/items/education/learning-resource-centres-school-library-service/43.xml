@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=43}]"><cms:name>education-3-43</cms:name><cms:language>en</cms:language><cms:title>School library service - exhibitions</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=43}]"><cms:name>education-3-43-dublin-metadata</cms:name><cms:dcAudience>Headteacher</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>school, library, service, exhibitions</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=43}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We offer an Exhibition of the best currently available children's fiction, non fiction and picture books.</i></p><hr/><p>Book Exhibitions - available through Comprehensive Service and Library Support Service only</p><ul>
+				<li title="*">Special exhibitions targeted at particular curriculum areas.</li>
+				<li title="*">Books selected in liaison with Literacy Consultants and Advisers.</li>
+				<li title="*">Exhibitions held in all Centres and on the Exhibitions mobile library.</li>
+				<li title="*">Discounts negotiated with suppliers.</li>
+				<li title="*">Easy-to-use booklists to place orders.</li>
+				<li title="*">Books and invoices sent direct to schools.</li>
+				<li title="*">All books come ready to use, fully serviced with SLS stationery and protective 
+    book jackets.</li>
+				<li title="*">Books can be exchanged through the Exchange service.</li>
+			</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=43"> Providing Information
+		(43)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

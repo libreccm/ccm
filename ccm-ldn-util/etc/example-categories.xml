@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE categories>
+<categories>
+    <category name="Site Wide Root">
+        <category name="Navigation"/>
+        <category name="News" />
+    </category>
+</categories>
+

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=793}]"><cms:name>flooding-793</cms:name><cms:language>en</cms:language><cms:title>Flooding</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=793}]"><cms:name>flooding-793-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>flooding</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=793}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Environment Agency operates a flood warning system, giving information to the public, media, emergency services and local Authorities.&#xA0;&#xA0;&#xA0;</i></p><hr/><p>
+				Using the latest
+    available technology,&#xA0;staff monitor rainfall, river levels and sea conditions
+    24 hours a day and use this information to forecast the possibility of flooding.
+    If flooding is forecast, warnings are issued using a set of four easily recognisable
+    codes. The following codes are used:
+			</p><p>
+			<strong>
+				
+Flood
+    Watch </strong>- Flooding possible. Be aware! Be prepared! Watch out!
+
+			</p><p>
+			<strong>
+				
+					Flood
+    Warning </strong>- Flooding expected affecting homes, businesses and main roads.
+    Act now!	</p><p>
+			<strong>Severe
+    Flood Warning</strong> - Severe flooding expected. Imminent danger to life and
+    property. 
+			</p><p>
+			<strong>
+All
+    Clear </strong>- An all clear will be issued when flood watches or warnings are
+    no longer in force.
+			</p><p>
+				  For more information on the current flooding situation, visit the 
+		<a href="http://www.environment-agency.gov.uk/subjects/flood/floodwarning/">
+				<strong>Environment Agency</strong>
+			</a>	
+			<span class="gen">link to external website</span> website.
+			</p><p>
+				 When there is a risk of flooding the Agency issues warnings through
+  the media; they are broadcast on TV weather bulletins and on radio weather
+  and travel reports. Make sure you know which is your local radio station. </p><p>Flood
+  warnings are also displayed on ITV Teletext regional weather pages (page 154)
+  and on BBC Ceefax (page 419).
+			</p><p>
+				The Environment Agency
+      provides the <strong>Floodline Service - Telephone Number 0845
+      988 1188 </strong>.
+    You can listen to recorded flood warning information or speak to an operator
+    for general information and advice 24 hours a day.
+			</p><h2>
+				What this Council Will
+    Do
+			</h2><p>
+				The Council's
+      approach to providing emergency assistance during times of flooding is as
+      follows:
+			</p><ul>
+			<li title="*">The Council has no
+        legal responsibility to provide assistance to residents during times
+        of flood, however the Council has provided emergency assistance on an
+        ad hoc basis dependent upon local knowledge and experience of the
+    situation.</li>
+			<li title="*">The Council will provide
+        sandbags or other such equipment as it feels appropriate, if they are
+        available, to assist with the defence from flooding to persons or property
+    within the area.</li>
+			<li title="*">The Council will keep
+        a stock of filled sandbags during times of potential flooding to aid
+        the speed of response. The Council will deliver the sandbags or other
+        equipment where the owner/occupier is unable to collect them from Council's
+        depot. It will be the responsibility of the property
+        owner/occupier to dispose of the sandbags once they are satisfied the
+    risk of flooding has subsided.</li>
+			<li title="*">The Council will provide
+        engineering advice on ways residents can alleviate the risk of flooding
+        to their properties if requested and issue general guidance to all properties
+        in the area of their roles and responsibilities under the Land Drainage
+        Act 1991. The Council will provide, if possible, during times of severe
+        flooding, engineering advice on site to assist with the use of resources
+    and control the situation where appropriate.</li>
+			<li title="*">The Council will assist
+        with the dissemination of Environment Agency flood warnings where appropriate.
+        The Council will keep the necessary equipment at their depot to carry
+        out the above functions, or have facilities to get access to the appropriate
+    equipment rapidly.</li>
+			<li title="*">Very serious flooding
+        resulting in the need for evacuation of houses, provision of temporary
+        accommodation and the like is covered by the Council's Emergency
+    Plan.</li>
+		</ul><p>
+					    If you live near the coast, there is always a possibility that a combination
+    of high tides and bad weather will threaten your property with flooding, even
+    though engineers will have done as much as possible to reduce the risk of this
+    happening.</p><p>    However, even if you live inland, events over the past few winters have demonstrated
+    that exceptional storms can cause flooding even on hill slopes, when the
+    drainage system is simply overwhelmed by the amount of water it is expected
+    to carry.</p><p> In addition, when the ground is saturated even small additional amounts of
+    rainfall will find it difficult to drain away from gardens and enclosed spaces.</p><p>The  Council, at times of
+    emergency, will be endeavouring to protect the public at large
+    and will not be able to assist a large number of individual homeowners who
+    may
+    find their properties threatened.
+				</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=793"> Providing Information
+		(793)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

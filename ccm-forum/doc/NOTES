@@ -1,0 +1,212 @@
+# Author:  Vadim Nasardinov (vadimn@redhat.com)
+# Since:   2002-10-31
+# Version: $Id: NOTES 287 2005-02-22 00:29:02Z sskracic $ $DateTime: 2002/11/18 16:29:30 $
+
+
+              EXCISING XSLT AND STATIC HTML DEPENDENCIES
+
+forum.xsl has imports the following stylesheets:
+
+  <xsl:import href="../../bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../content-section/xsl/cms-admin.xsl"/>
+  <xsl:import href="../../jigsaw/xsl/workspace.xsl"/>
+
+We need to factor out the Forum's dependency on CMS and ECM. To figure
+out which templates from cms-admin.xsl and workspace.xsl are really
+used, I wrote an XSLT stylesheet for instrumenting our deployed .xsl
+files with some additional xsl:comment elements that would help us
+keep track of which templates the Forum application really uses.
+
+See
+  //tools/etc/xslt/debug/mark-templates.sh
+  //tools/etc/xslt/debug/mark-templates.xsl
+  //tools/etc/xslt/debug/extract-matches.pl
+  //tools/etc/xslt/debug/restore-backups.sh
+
+mark-templates.xsl is a quick-and-dirty version of the debugging
+support discussed in
+http://post-office.corp.redhat.com/pipermail/ccm-engineering-list/2002-August/000144.html
+
+It works in conjunction with the following patch:
+
+  $ p4 diff -du //core-platform/dev/src/com/arsdigita/sitenode/BasePresentationManager.java#14
+  ==== //core-platform/dev/src/com/arsdigita/sitenode/BasePresentationManager.java#14 - /var/vadim/p4checkout/core-platform/dev/src/com/arsdigita/sitenode/BasePresentationManager.java ====
+  @@ -469,8 +469,21 @@
+                   // document.
+                   xf.setOutputProperty("encoding", defaultCharset);
+
+  +                java.io.StringWriter swriter = new java.io.StringWriter(20000);
+                   xf.transform(new DOMSource(doc.getInternalDocument()),
+  -                             new StreamResult(writer));
+  +                             new StreamResult(swriter));
+  +
+  +                swriter.close();
+  +                String basename = "/var/vadim/tmp/html-dumps/" + System.currentTimeMillis();
+  +                String htmlFile = basename + ".html";
+  +                String xmlFile = basename + ".xml";
+  +                String xslPath = basename + ".path";
+  +
+  +                com.arsdigita.util.Debug.dumpToFile(htmlFile,swriter.toString());
+  +                com.arsdigita.util.Debug.dumpToFile(xmlFile, doc.toString(true));
+  +                com.arsdigita.util.Debug.dumpToFile(xslPath, ss.getPath() + "\n");
+  +
+  +                writer.write(swriter.toString());
+
+                   DeveloperSupport.endStage("PresMgr transform");
+               }
+  $
+
+Running the ECM Bboard application with instrumented stylesheets shows that the following
+templates are used by the Bboard app:
+
+  webapps/acs/packages/bboard/xsl/bboard.xsl;       match=bboard:category-nav;
+  webapps/acs/packages/bboard/xsl/bboard.xsl;       match=bboard:confirm-post;
+  webapps/acs/packages/bboard/xsl/bboard.xsl;       match=bboard:message;
+  webapps/acs/packages/bboard/xsl/bboard.xsl;       match=bebop:list[@class='messageList'];
+
+  webapps/acs/packages/bebop/xsl/BoxPanel.xsl;       match=bebop:boxPanel[@axis='1'];
+  webapps/acs/packages/bebop/xsl/BoxPanel.xsl;       name=make-attribute;
+  webapps/acs/packages/bebop/xsl/CheckBoxGroup.xsl;       match=bebop:checkbox;
+  webapps/acs/packages/bebop/xsl/CheckBoxGroup.xsl;       match=bebop:checkboxGroup;
+  webapps/acs/packages/bebop/xsl/ColumnPanel.xsl;       match=bebop:columnPanel;
+  webapps/acs/packages/bebop/xsl/ColumnPanel.xsl;       match=bebop:pad;
+  webapps/acs/packages/bebop/xsl/ColumnPanel.xsl;       match=bebop:padFrame|bebop:border;
+  webapps/acs/packages/bebop/xsl/ColumnPanel.xsl;       match=bebop:panelRow;
+  webapps/acs/packages/bebop/xsl/DimensionalNavbar.xsl;       match=bebop:dimensionalNavbar;
+  webapps/acs/packages/bebop/xsl/Form.xsl;       match=bebop:form;
+  webapps/acs/packages/bebop/xsl/GridPanel.xsl;       match=bebop:gridPanel;
+  webapps/acs/packages/bebop/xsl/PageState.xsl;       match=bebop:pageState;
+  webapps/acs/packages/bebop/xsl/RadioGroup.xsl;       match=bebop:radio;
+  webapps/acs/packages/bebop/xsl/RadioGroup.xsl;       match=bebop:radioGroup;
+  webapps/acs/packages/bebop/xsl/SegmentedPanel.xsl;       match=bebop:segmentHeader|bebop:segmentBody;
+  webapps/acs/packages/bebop/xsl/SegmentedPanel.xsl;       match=bebop:segmentedPanel;
+  webapps/acs/packages/bebop/xsl/SegmentedPanel.xsl;       name=segment;
+  webapps/acs/packages/bebop/xsl/Select.xsl;       match=bebop:option;
+  webapps/acs/packages/bebop/xsl/Select.xsl;       match=bebop:select;
+  webapps/acs/packages/bebop/xsl/Table.xsl;       match=bebop:tbody;
+  webapps/acs/packages/bebop/xsl/Table.xsl;       match=bebop:thead;
+  webapps/acs/packages/bebop/xsl/TextArea.xsl;       match=bebop:textarea;
+  webapps/acs/packages/bebop/xsl/Widget.xsl;       match=bebop:formWidget;
+  webapps/acs/packages/bebop/xsl/plain.xsl;       match=*|@*|text();
+
+  webapps/acs/packages/jigsaw/xsl/workspace.xsl;       match=bebop:page[@class='workspace'];
+  webapps/acs/packages/jigsaw/xsl/workspace.xsl;       match=bebop:tabbedPane;
+  webapps/acs/packages/jigsaw/xsl/workspace.xsl;       match=bebop:table;
+  webapps/acs/packages/jigsaw/xsl/workspace.xsl;       match=workspace:body;
+  webapps/acs/packages/jigsaw/xsl/workspace.xsl;       match=workspace:header;
+
+  webapps/acs/packages/toolbox/xsl/ControlBar.xsl;       match=bebop:controlBar;
+
+There seems to be no dependency on any of CMS stylesheets, unless I
+missed a page when I was clicking around. Based on this superficial
+testing, the import of content-section/xsl/cms-admin.xsl in bboard.xsl
+seems unnecessary.
+
+
+
+
+                          BRANCHING HISTORY
+
+The branch spec name for this branch is "forum". It maps the bboard
+files like so:
+
+        //cw/dev/.../bboard/... //apps/forum/dev/.../forum/...
+        -//cw/dev/.../ui/... //apps/forum/dev/.../ui/...
+
+The files were branched at 22590 in change 22600.
+
+Note that some files fell through the cracks in 22600. The "forum"
+branch spec did not pick up SQL scripts that create
+indices. Therefore, these files:
+
+ //cw/dev/sql/default/indexes/index-bboard_forums_cat_id_idx.sql
+ //cw/dev/sql/default/indexes/index-bboard_subs_digest_id_idx.sql
+ //cw/dev/sql/default/indexes/index-bboard_subs_group_id_idx.sql
+ //cw/dev/sql/default/indexes/index-bboard_thd_subs_grp_id_idx.sql
+ //cw/dev/sql/default/indexes/index-bboard_thd_subs_thrd_id_idx.sql
+
+have been manually branched into these files:
+
+ //apps/forum/dev/sql/default/indexes/index-forum_forums_cat_id_idx.sql
+ //apps/forum/dev/sql/default/indexes/index-forum_subs_digest_id_idx.sql
+ //apps/forum/dev/sql/default/indexes/index-forum_subs_group_id_idx.sql
+ //apps/forum/dev/sql/default/indexes/index-forum_thd_subs_grp_id_idx.sql
+ //apps/forum/dev/sql/default/indexes/index-forum_thd_subs_thrd_id_idx.sql
+
+For more background info, see the AIM chat between Justin and Rafi in
+//apps/forum/dev/doc/NOTES#3.
+
+
+                         TRANSITIVE REDUCTION
+
+http://mathworld.wolfram.com/TransitiveReduction.html
+
+To make the dependency graph readable, removed 11 transitively
+redundant edges from stylesheets in //cw/dev and //apps/forum/dev.
+
+The following edges have been removed:
+
+  $ diff-dot-files.py before-tredding.dot after-tredding.dot 
+  before-tredding.dot has 31 nodes and 38 edges
+  after-tredding.dot has 31 nodes and 27 edges
+
+  The following edges are present in /tmp/all-before.dot but not in /tmp/tredded.dot:
+          bboard -> bebop, cms_admin
+          chat_en -> bebop, cms_admin
+          docs -> cms_admin
+          faq -> bebop, cms_admin
+          forum -> bebop, cms_admin
+          glossary -> bebop
+          workspace -> bebop
+  (Total of 11 edges.)
+
+
+To make sure this does not break anything, clicked around ECM,
+recording matching files and templates. The comparison of the list of
+matching templates before and after the removal of the transitively
+redundant edges shows that all of the same templates continue to
+match. (I've only made 25 clicks before and after, so this is not very
+comprehensive.) For the list of matching templates, refer to
+
+  //apps/forum/dev/doc/graphs/matches-before.txt
+  //apps/forum/dev/doc/graphs/matches-after.txt
+
+To see the difference in the dependency graphs before and after,
+compare
+
+  //apps/forum/dev/doc/graphs/aggregate-before.dot
+  //apps/forum/dev/doc/graphs/aggregate-before.png
+  //apps/forum/dev/doc/graphs/aggregate-after.dot
+  //apps/forum/dev/doc/graphs/aggregate-after.png
+
+
+                   DECOUPLING FORUM'S XSLT FROM ECM
+
+Looks like about the only thing that the Forum app depends on in ECM
+is two templates in jigsaw/workspace.xsl.  Copied these templates into
+//apps/forum/dev/web/packages/forum/xsl/workspace-hack.xsl.
+
+After this change, //apps/forum/dev/web/packages/forum/xsl/forum.xsl
+no longer depends on //cw/dev/web/packages/jigsaw/xsl/workspace.xsl,
+although there still remain asset dependencies on
+  /packages/jigsaw/www/assets
+  /packages/jigsaw/www/css
+
+
+Copied the following template from jigsaw/xsl/workspace.xsl that
+matched
+  <xsl:template match="bebop:page[@class='workspace']">
+and moved it into
+//apps/forum/dev/web/packages/forum/xsl/workspace-hack.xsl, renaming
+it to
+  <xsl:template match="bebop:page[@class='forum']">
+
+Branched //cw/dev/web/packages/jigsaw/www/css/workspace.css into
+//apps/forum/dev/web/packages/forum/www/css/basic.css, 'cause I don't
+feel like reconciling it with
+//apps/forum/dev/web/packages/forum/www/css/forum.css.
+
+
+# Local Variables:
+# mode: text
+# End:

@@ -1,0 +1,20 @@
+   
+body {
+	margin:0px;
+	padding:0px;
+	font-family:verdana, arial, helvetica, sans-serif;
+	color:#333;
+	background-color:white;
+	 
+	overflow-y: hidden ;
+	}
+
+#hintergrund { 
+	 z-index : 0;
+	 width:100%; 
+	 height:100% ;
+	 background : #FFFFFF ;
+	 overflow:auto;
+	}
+	
+   

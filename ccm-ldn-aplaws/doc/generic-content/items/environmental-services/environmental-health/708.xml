@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=708}]"><cms:name>batch-6-708</cms:name><cms:language>en</cms:language><cms:title>Pollution Control - Part B authorisation</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=708}]"><cms:name>batch-6-708-dublin-metadata</cms:name><cms:dcAudience>Businesses</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Pollution, Control, Part, B, authorisation</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=708}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Some industrial techniques have potential to cause pollution. Since 1990 many of these processes have required an 'authorisation' from the Environment Agency to operate and they are also inspected annually. Some processes have the potential to cause only air pollution and for these operations the local authority is responsible for their inspection and regulation.</i></p><hr/><p>Authorised or 'Prescribed' processes are those industrial technologies 
+  that have a potential to cause pollution. The Environmental Protection Act 1990 
+  requires that processes identified in the act, or by regulations made under the 
+  act, must have an Authorisation to operate.</p><p>There are currently two types of process classification. Part A processes were 
+  regulated by the Environment Agency while Part B processes are controlled by local 
+  authorities.</p><p>
+<span class="gen">enter council name</span> is responsible for authorising and inspecting all Part B processes 
+  within the district. Part B processes are those that have the potential to cause 
+  air pollution and include activities such as vehicle re-spraying, furniture manufacture 
+  and unloading of petrol.</p><p>Any person operating a process that requires an authorisation must submit an application, 
+  with a fee, to the local authority. The authority must then issue an authorisation 
+  in accordance with government guidance. The operator of the prescribed process must 
+  comply with the conditions of the authorisation and they will be subject to inspection 
+  to ensure this is the case.</p><p>Following the introduction of the Pollution Prevention and Control Act 1999 the 
+  system of authorisation is changing to meet the requirements of the European Directive 
+  on Integrated Pollution Prevention and Control. The new Act covers a wider range 
+  of industrial processes using A1 and A2 classifications. Local authorities will 
+  control A2 processes. Those processes not covered by the European Directive but 
+  regulated as 'part B' processes will continue to be controlled under Local 
+  Air Pollution Prevention Control by local authorities.</p><p>Guidance is currently being issued by the government to help both local authorities 
+  and industry move to the new system.</p><ul>
+  <li title="*">Guidance Notes</li>
+  <li title="*">Standard Licence Conditions</li>
+  <li title="*">Application Forms</li>
+  <li title="*">How to apply</li>
+  <li title="*">Fees</li>
+  <li title="*">Registers</li>
+</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=708"> Providing Information
+		(708)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

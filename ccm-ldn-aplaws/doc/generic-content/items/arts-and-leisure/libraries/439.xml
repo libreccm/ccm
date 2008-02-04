@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=439}]"><cms:name>arts-and-leisure-439</cms:name><cms:language>en</cms:language><cms:title>Catalogue - searches, availability and reservations</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=439}]"><cms:name>arts-and-leisure-439-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>catalogue, searches, availability, reservations</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=439}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>This section is all about the Library catalogue - how to search the catalogue, check availability and reserve an item</i></p><hr/><p>Please choose from one of the following:</p><ul>
+			<li title="*">
+				
+		<a href="#1">Search the catalogue</a>	
+			</li>
+			<li title="*">
+				
+		<a href="#2">Check availability</a>	
+			</li>
+			<li title="*">
+				
+		<a href="#3">Reserve an item</a>	
+			</li>
+		</ul><h4>
+			
+			Search the catalogue</h4><p>This will allow you to search through a wide range of items 
+  that can be reserved.</p><p>You can do this by 
+		<a href="/ccm/services/pid.jsp?pid=forms/439e">
+				<strong>accessing the catalogue</strong>
+			</a>	
+			<span class="gen">link 
+  to online form</span>.</p><h4>
+			
+			Check availability</h4><p>Please contact your 
+		<a href="/ccm/services/pid.jsp?pid=437">local library</a>	
+			<span class="gen">link to pid 437</span> to check availability of an 
+  item.</p><h4>
+			
+			Reserve an item</h4><p>You can do this via the 
+					
+		<a href="/ccm/services/pid.jsp?pid=forms/439e">catalogue</a>	
+			<span class="gen">link to online form</span>.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=439"> Providing Information
+		(439)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,66 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Search.pdl 1044 2005-12-09 13:21:16Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.search;
+
+
+
+query categoryObjects {
+   BigDecimal id;
+
+   do {
+     select m.object_id
+       from cat_object_category_map m,
+            cat_cat_subcat_trans_index cc
+      where m.category_id = cc.subcategory_id
+          and cc.category_id in :ids
+          and cc.n_paths <= :pathLimit
+   } map {
+     id = m.object_id;
+   }
+}
+
+query getLuceneDocIDs {
+   BigDecimal id;
+
+   do {
+     select ld.document_id
+       from lucene_docs ld
+       where ld.is_deleted = '0'
+   } map {
+     id = ld.document_id;
+   }
+}
+
+query partyPermissionFilterStub {
+    BigDecimal id;
+    do {
+        select dogc.pd_object_id
+          from dnm_object_1_granted_context dogc,
+               dnm_granted_context dgc,
+               dnm_permissions dp,
+               dnm_group_membership dgm
+          where dogc.pd_context_id = dgc.pd_object_id
+            and dgc.pd_context_id = dp.pd_object_id
+            and dgm.pd_member_id in :partyID
+            and dp.pd_grantee_id = dgm.pd_group_id
+    } map {
+        id = dogc.pd_object_id;
+    }
+}

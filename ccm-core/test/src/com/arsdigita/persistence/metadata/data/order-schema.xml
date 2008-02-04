@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs" version="4.0">
+  <schema name="oracle">
+    <!--
+		   create table orders (
+		       order_id    integer primary key,
+		       buyer       varchar(100) not null,
+		       seller      varchar(100),
+		       shipping_address varchar(200)
+		   )
+    -->
+    <table name="orders">
+      <column name="order_id" datatype="bigint"/>
+      <column name="buyer" datatype="VARCHAR(100)"/>
+      <column name="seller" datatype="VARCHAR(100)"/>
+      <column name="shipping_address" datatype="VARCHAR(200)"/>
+      <primarykey id="acs:oracle:orders_pk">
+         <columnref idref="acs:oracle:orders:order_id"/>
+      </primarykey>
+    </table>
+    <!--
+            create table line_items (
+                item_id    integer primary key,
+                order_id   not null references orders(order_id),
+                price      number not null,
+                name       varchar(100) not null
+            )
+    -->
+    <table name="line_items">
+      <column name="item_id" datatype="bigint"/>
+      <column name="order_id" datatype="bigint"/>
+      <column name="price" datatype="double"/>
+      <column name="name" datatype="varchar(100)"/>
+      <primarykey id="acs:oracle:line_items_pk">
+         <columnref idref="acs:oracle:line_items:item_id"/>
+      </primarykey>
+    </table>
+    <foreignkey id="acs:oracle:foreignkey:line_items_order_id:orders_pk">
+      <columnref idref="acs:oracle:line_items:order_id"/>
+      <uniquekeyref idref="acs:oracle:orders_pk"/>
+    </foreignkey>
+  </schema>
+
+</metadataroot>

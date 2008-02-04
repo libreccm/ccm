@@ -1,0 +1,65 @@
+table.data {
+//  width: 100%;
+  border: 1px solid rgb(153,153,153);
+}
+
+table.data th {
+  background-color: rgb(238,238,238);
+  text-align: left;
+  border-bottom: 1px solid rgb(204,204,204);
+  padding: 2px;
+  color: rgb(153,153,153);
+}
+
+table.data tr.even {
+  background-color: rgb(245,245,245);
+}
+
+table.data td {
+  padding: 2px;
+}
+
+
+table.property {
+//  width: 100%;
+  border: 1px solid rgb(153,153,153);
+}
+
+table.property thead th {
+  background-color: rgb(238,238,238);
+  text-align: left;
+  border-bottom: 1px solid rgb(204,204,204);
+  padding: 2px;
+  color: rgb(153,153,153);
+}
+
+table.property tfoot td {
+  background-color: rgb(238,238,238);
+  text-align: left;
+  padding: 2px;
+  color: rgb(153,153,153);
+}
+
+table.property tr.even {
+  background-color: rgb(245,245,245);
+  vertical-align: top;
+}
+
+table.property tr {
+  vertical-align: top;
+}
+
+table.property tbody th {
+  text-align: right;
+  padding: 2px;
+  white-space: nowrap;
+}
+
+table.property tbody td {
+  padding: 2px;
+  width: 100%;
+}
+
+.formErrors {
+  color: rgb(120,0,0);
+}

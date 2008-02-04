@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=699}]"><cms:name>licensing-699</cms:name><cms:language>en</cms:language><cms:title>Licence - zoo</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=699}]"><cms:name>licensing-699-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, zoo</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=699}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Zoos are regulated by the Council under the Zoo Licensing Act 1981.</i></p><hr/><p>The Council works in close parnership with the 
+		<a href="http://www.defra.gov.uk">
+				<strong>Department 
+  for the Environment, Food and Rural Affairs</strong>
+			</a>	 (DEFRA) <span class="gen">link to external website</span>   on all aspects of zoo licensing.</p><p>The licensing of zoos is a specialist field and the regulations are complex. If 
+  you are thinking of setting up a zoo, it is recommended that you contact a specialist 
+  officer first for advice and guidance on the details above.</p><p>The local authority cannot consider an application unless at least two months notice 
+  of the application has been given, plus publication of details in a local and national 
+  newspaper, and a notice placed at the site. </p><p> The authority must consult 
+  the police, fire authority, governing body of any national institute concerned with 
+  zoos, adjoining authority if the zoo overlaps the area of that authority and any 
+  person wishing to object on grounds of alleged injurious effect on the health or 
+  safety of persons living in the area. </p><p>The authority must arrange an inspection by a consultant inspector from the list 
+  of suitable inspectors nominated by the Secretary of State.</p><p>You can <strong>
+				
+			
+			</strong>
+			<span class="gen">link to online form</span> giving notice of intention to apply for a Zoo Licence</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=699"> Applications for services
+		(699)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=699}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=699}]"/></cms:links></cms:item>

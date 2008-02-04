@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <xrd:context name="com.arsdigita.london.terms.ui.AbstractTermDetails">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/objectType"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/domain"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.DomainListing">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Domain">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/key"/>
+        <xrd:property name="/object/url"/>
+        <xrd:property name="/object/title"/>
+        <xrd:property name="/object/description"/>
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/released"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.DomainDetails">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Domain">
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.TermListing">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.AllTermListing">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.RootTermListing">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.OrphanedTermListing">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.NarrowerTermListing">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.TermPicker$2">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.RelatedTermListing">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+        <xrd:property name="/object/domain/key"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+        <xrd:property name="/object/domain"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.TermDetails">
+    <xrd:adapter objectType="com.arsdigita.london.terms.Term">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/uniqueID"/>
+        <xrd:property name="/object/inAtoZ"/>
+        <xrd:property name="/object/shortcut"/>
+        <xrd:property name="/object/model/name"/>
+        <xrd:property name="/object/model/description"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/model"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.london.terms.ui.admin.DomainUsage">
+    <xrd:adapter objectType="com.arsdigita.categorization.UseContext">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/useContext"/>
+        <xrd:property name="/object/categoryOwner/primaryURL"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/categoryOwner"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+</xrd:adapters>

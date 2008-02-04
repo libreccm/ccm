@@ -1,0 +1,14 @@
+<load>
+  <requires>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.london.util.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.london.importer.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-ldn-importer"/>
+    <data class="com.arsdigita.london.importer.Loader"/>
+  </scripts>
+</load>
+

@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=534}]"><cms:name>recycling-534</cms:name><cms:language>en</cms:language><cms:title>Recycling - collection sites</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=534}]"><cms:name>recycling-534-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>recycling, refuse, rubbish, collection, sites</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=534}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A list of the council's recycling sites</i></p><hr/><p>
+
+		<a href="#t1">Plastic</a>	 | 
+		<a href="#t2">Paper</a>	 | 
+		<a href="#t3">Garden Waste</a>	 | 
+		<a href="#t4">Oil</a>	 | 
+		<a href="#t5">Battery</a>	 | 
+		<a href="#t6">Glass</a>	 | 
+		<a href="#t7">Furniture</a>	 | 
+		<a href="#t8">Books</a>	 | 
+		<a href="#t9">Textiles</a>	 | 
+		<a href="#t10">Carrier Bags</a>	 | 
+		<a href="#t11">Aluminium</a>	 | 
+		<a href="#t12">Mobile Phones</a>	 | 
+		<a href="#t13">Shoes</a>	
+</p><h3>
+
+			Plastic</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Paper</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Garden Waste</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Oil</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Battery</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Glass</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Furniture</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Books</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Textiles</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Carrier Bags</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Aluminium</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Mobile Phones</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><h3>
+
+			Shoes</h3><ul>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				<li title="*">
+<span class="gen">enter address</span>
+</li>
+				</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=534"> Providing Information
+		(534)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,33 @@
+####################################
+# ::PACKAGE:: Master configuration file #
+####################################
+
+servlet-container = tomcat4
+servlet-webxml = servlet23
+
+# app-home is the directory containing the bin/, conf/, and dist/ directories
+app-home = C:\path\to\::PACKAGE::
+app-name = ::PACKAGE::
+
+# Directory containing the base runtime & config files
+runtime-home = C:\path\to\::PACKAGE::
+
+oracle-home = C:\oracle\ora817
+
+tomcat-home = C:\Program Files\Apache Tomcat 4.0
+tomcat-conf-home = C:\Program Files\Apache Tomcat 4.0\conf
+
+# Whereever you installed JDK 1.3.1
+java-home = C:\jdk1.3.1_04
+# java-home = /usr/java/jdk1.3.1
+# java-home = /opt/IBMJava2-13
+
+# Optionally tell java to use more memory
+#
+# For Sun's JDK, on a machine with 1GB
+#jre-args = -client -Xss128k -Xms512m -Xmx512m -XX:NewSize=128m -XX:MaxNewSize=128m
+#
+# For IBM's JDK on a machine with 256MB
+#jre-args = -Xms128m -Xmx128m
+jre-args = 
+

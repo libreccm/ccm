@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs" version="4.0">
+  <schema name="oracle">
+    <table name="acs_objects">
+      <column name="context_id" datatype="bigint"/>
+      <column id="acs:oracle:acs_objects:object_id" name="object_id" datatype="bigint">
+         <primarykey id="acs:oracle:acs_objects:object_id_pk"/>
+      </column>
+      <column name="object_type" datatype="varchar(200)"/>
+      <uniquekey>
+        <columnref idref="acs:oracle:acs_objects:object_id"/>
+        <columnref idref="acs:oracle:acs_objects:context_id"/>
+      </uniquekey>
+    </table>
+    <table name="parties">
+      <column id="acs:oracle:parties:email" name="email" datatype="varchar(200)">
+         <uniquekey/>
+      </column>
+      <column id="acs:oracle:parties:party_id" name="party_id" datatype="bigint">
+         <primarykey id="acs:oracle:parties_party_id_pk"/>
+         <references uniquekeyref="acs:oracle:acs_objects:object_id_pk" id="acs:oracle:parties_party_id:acs_object_pk"/>
+      </column>
+      <column name="url" datatype="varchar(200)"/>
+    </table>
+  </schema>
+</metadataroot>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=415}]"><cms:name>-415</cms:name><cms:language>en</cms:language><cms:title>Pollution control - asbestos</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=415}]"><cms:name>-415-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>pollution, control, asbestos, environmental, health</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=415}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Section dealing with Asbestos removal and what to do if you think that your home may possibly contain asbestos.</i></p><hr/><ul>
+				<li title="*">
+<strong>
+
+		<a href="#1"> Why worry about asbestos?</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#2">What to do if you have asbestos in your home?</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#3">Safe asbestos cement removal</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#4">Disposal of asbestos waste</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#5">Asbestos Do's and Don'ts</a>	
+</strong>
+</li>
+		</ul><h3>
+
+			Why worry about Asbestos in the home?</h3><p>If your property is more than 15 years old, it's possible that it contains materials made from asbestos.</p><p>Common locations are listed below but there may be others in your home - so if in doubt leave well alone and seek expert help. Phone the Environmental Protection Section on the Telephone number above.</p><p>This advice is aimed at house holders. The HSE have produced a number of leaflets which are more appropriate for businesses.</p><p>Common Locations of asbestos:</p><ul>
+			<li title="*">Asbestos cement on garage or shed roofs.</li>
+			<li title="*">Asbestos cement shed and garage wall panels.</li>
+			<li title="*">Asbestos cement drain pipes.</li>
+			<li title="*">Asbestos cement or Insulation board soffit, infill panels and partitions.</li>
+			<li title="*">Asbestos cement on the side of bath panels. </li>
+		</ul><p>If your home is rented, your landlord may have relevant information.</p><h3>
+
+			What to do if you have Asbestos in your home</h3><ul>
+			<li title="*">The general rule is to always leave asbestos alone, it's usually safe unless it's damaged or disturbed.</li>
+			<li title="*">Paint indoor materials with an alkali resistant paint such as PVA emulsion, and never sand, drill or saw asbestos materials.</li>
+			<li title="*">Always seek advice before thinking of removing asbestos and follow the basic rules below if carrying out asbestos cement removal work. Do not attempt to remove asbestos lagging, spray coatings or large areas of Insulation Board by yourself as these materials can only be safely removed by a licensed contractor.</li>
+			<li title="*">Sometimes it will be necessary to take a sample, for example to identify the type of asbestos. This will cost <span class="gen">enter amount</span>
+</li>
+		</ul><h3>
+
+			Safe Asbestos Cement Removal</h3><p>Asbestos cement can be safely removed by remembering these basic rules:-</p><ul>
+			<li title="*">Prepare the work area - remove any unnecessary items, cover the floor and surfaces with disposable polythene sheeting.</li>
+			<li title="*">Wear protective clothing- disposable overall with hood, disposable paper face mask (for use with asbestos) and rubber or disposable gloves.</li>
+			<li title="*">Damp down - use a plant sprayer or hosepipe but don't soak the area as this will make cleaning up more difficult.</li>
+			<li title="*">Remove the asbestos without breaking it up, wrap in polythene sheeting or bags and seal with tape.</li>
+			<li title="*">Visually inspect the area and clear up any debris by hand - wipe down with disposable damp clothes. Never use a vacuum cleaner as this will just spread dust around.</li>
+			<li title="*">Pick up polythene sheeting and remove protective clothing and dispose of both as asbestos waste.</li>
+			<li title="*">Wash hands and face after the job is completed.</li>
+		</ul><h3>
+
+			Disposal of Asbestos waste</h3><p>Asbestos cement can be disposed of free of charge by householders at the civic amenity site in <span class="gen">enter location</span>
+</p><p>If as a house holder, you intend to transport asbestos cement waste in your own vehicle, you do not need to be a registered carrier provided that it is your own waste.</p><p>However, you should take the following steps to ensure that asbestos does not contaminate your car:</p><ul>
+			<li title="*">Spray sheets of asbestos cement with water.</li>
+			<li title="*">Double wrap or double bag the asbestos cement with heavy duty polythene.</li>
+			<li title="*">Ensure the wrapping is secured with tape.</li>
+			<li title="*">Make sure vehicle occupants do not have access to the asbestos waste.</li>
+		</ul><h3>
+
+			Asbestos Do's and Don'ts</h3><ul>
+			<li title="*">Don't panic if you think you have asbestos in your home - it's usually only a problem if it's disturbed.</li>
+			<li title="*">Do treat asbestos with respect.</li>
+			<li title="*">Don't drill, saw or disturb materials that contain asbestos.</li>
+			<li title="*">Do seek advice if you think you've got a problem with asbestos in your home.</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=415"> Providing Information
+		(415)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

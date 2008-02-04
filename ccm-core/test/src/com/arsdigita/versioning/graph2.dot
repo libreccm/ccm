@@ -1,0 +1,37 @@
+digraph pdl_model {
+    node[shape=box,fontsize=8,fontname=verdana,height=0.2,width=0.2,style=filled];
+    ranksep=0.05;
+    edge[style=invis];
+    marked -> unmarked;
+    unmarked -> qualifiers;
+    subgraph cluster_legend {
+      label="Legend";
+      fontsize=11;
+
+      marked[label="marked\nversioned",fillcolor=Wheat];
+      unmarked[label=unmarked];
+      qualifiers[label="rqd: required\ncnt: component",shape=plaintext];
+    }
+
+    node[fontsize=10];
+    edge[fontsize=9,fontname=verdana,style=solid,minlen=2];
+
+
+    VUT1[fillcolor=Wheat];
+    RET1 -> VT3[label="0..1:vt3"];
+    VT1[fillcolor=Wheat];
+    VT1 -> VT1E[label="extends"];
+    VT5[fillcolor=Wheat];
+    VT5 -> UT2[label="0..n:ut2s"];
+    VT2[fillcolor=Wheat];
+    VT2 -> C2[label="cnt:c2"];
+    VT2 -> UVCT1[label="cnt:uvct1s"];
+    VT2 -> UVCT2[label="cnt:uvct2s"];
+    VT2 -> C1[label="cnt:c1s"];
+    VT3[fillcolor=Wheat];
+    VT3 -> RET1[label="0..n:ret1s"];
+    VT3 -> RT1[label="rqd:rt1"];
+    VT4[fillcolor=Wheat];
+    UVCT2 -> VT2[label="0..1:vt2"];
+    UT1 -> VUT1[label="extends"];
+}

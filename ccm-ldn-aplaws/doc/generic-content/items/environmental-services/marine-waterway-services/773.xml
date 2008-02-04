@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=773}]"><cms:name>notification-of-vessel-aircraft-eta-773</cms:name><cms:language>en</cms:language><cms:title>Notification of Vessel/Aircraft ETA</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=773}]"><cms:name>notification-of-vessel-aircraft-eta-773-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>notification, vessel, aircraft, estimated, time, arrival, ETA</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=773}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>There are a number of different websites that provide information relating to vessel and aircraft estimated times of arrival. </i></p><hr/><p>The 
+		<a href="http://www.pti.org.uk/">
+<strong>UK 
+    Public Transport Information</strong>
+</a>	 <span class="gen">link to external website</span> 
+  website provides you with links covering all travel by rail, air, coach, bus, 
+  ferry, metro and tram within the UK, (including the Channel Islands, Isle of 
+  Man and Northern Ireland) and between the UK and Ireland. Plus all rail, ferry 
+  and coach travel between the UK and mainland Europe. This is <strong>the</strong> definitive 
+  index to timetables, fares, ticket-types, passenger facilities and lots more. 
+  If it's not here, it's probably not on the web. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=773"> Providing Information
+		(773)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=827}]"><cms:name>sale-of-sundry-items-and-publications-827</cms:name><cms:language>en</cms:language><cms:title>Sale of Sundry Items and Publications</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=827}]"><cms:name>sale-of-sundry-items-and-publications-827-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>sale, sundry, items, publications</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=827}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>There are a number of publications and sundry items available to buy from the Council.</i></p><hr/><p>Should you wish to purchase any of the items listed
+
+    below, you should:</p><ul>
+
+			<li title="*">print out the 
+			
+
+				<span class="gen">link to online form</span> and fill in your
+
+        details</li>
+
+			<li title="*">make your selection from the list and
+
+          include them on the order form</li>
+
+			<li title="*">add up the total amount and add <span class="gen">enter amount</span> for postage
+
+    and packaging</li>
+
+		</ul><p> Then
+
+      send a cheque in Pounds
+
+    Sterling for the total amount including postage and packaging, made payable to &quot;<span class="gen">enter council name</span>&quot;
+
+  to:</p><p>
+
+			<span class="gen">enter address</span>
+
+		</p><p>If the
+
+      item(s) you require are in stock your order will be despatched to you
+
+    within <span class="gen">enter amount</span> working days. </p><h2>Items available for sale:</h2><p>
+
+			<span class="gen">enter details</span>
+
+			<br/>
+
+			<span class="gen">enter amount</span>
+
+		</p><p>
+
+			<span class="gen">enter details</span>
+
+			<br/>
+
+			<span class="gen">enter amount</span>
+
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=827"> Applications for services
+		(827)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=827}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=827}]"/></cms:links></cms:item>

@@ -1,0 +1,18 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+    <table name="cms_form_section_item"/>
+    <initializer class="com.arsdigita.cms.formbuilder.FormSectionItemInitializer"/>
+  </requires>
+  <provides>
+    <table name="cms_form_item"/>
+    <initializer class="com.arsdigita.cms.formbuilder.FormItemInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-formitem"/>
+    <data class="com.arsdigita.cms.formbuilder.FormItemLoader"/>
+  </scripts>
+</load>

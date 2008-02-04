@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=261}]"><cms:name>shared-care-for-children-261</cms:name><cms:language>en</cms:language><cms:title>Shared Care for Children</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=261}]"><cms:name>shared-care-for-children-261-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>shared, care, children</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=261}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Shared Care Scheme aims to provide regular short term breaks for children and young people with disabilities, by linking them with approved carers who look after them for short periods of time. This can be from a few hours to a weekend a month. </i></p><hr/><p>The children who use the 
+  service may have a physical disability, a learning difficulty or sensory impairment. 
+  The Shared Care Scheme gives them a chance to make new friends and to widen 
+  their experiences by spending time away from home with supportive carers.</p><p>The service is provided 
+  to families following an assessment of the young persons needs. The Shared Carers 
+  receive full training and a small allowance to cover expenses. </p><p>If you want further information 
+  on the Shared Care Scheme, or you are interested in becoming a carer, please 
+  use the contact details above. Alternatively, information is available on the 
+  
+		<a href="http://www.sharedcarenetwork.org.uk/">
+					<strong>Shared Care Network</strong>
+				</a>	 <span class="gen">link to external website</span>
+  website.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=261"> Providing Information
+		(261)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,23 @@
+ccm-ldn-freeform (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:52:00 +0000
+
+ccm-ldn-freeform (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 1.4.2 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:12 +0000
+
+ccm-ldn-freeform (1.4.2-2) unstable; urgency=low
+
+  * Add ccm-devel and ccm-scripts to the build-dependancies. 
+
+ -- David Pashley <david@runtime-collective.com>  Thu, 28 Apr 2005 11:51:32 +0100
+
+ccm-ldn-freeform (1.4.2-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Fri, 24 Apr 2004 12:27:56 +0100

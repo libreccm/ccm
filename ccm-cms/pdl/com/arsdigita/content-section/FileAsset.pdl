@@ -1,0 +1,58 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: FileAsset.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.*;
+
+object type FileAsset extends Asset {
+  Long               length = cms_files.length;
+  Blob[0..1]         content = cms_files.content BLOB;
+  reference key (cms_files.file_id);
+}
+
+query StreamFileAsset {
+    FileAsset file;
+    String mimeType;
+
+  do {
+    select
+      i.file_id, i.content,
+      a.description, a.mime_type,
+      it.name, it.version, o.object_type
+    from
+      cms_files i, cms_assets a, cms_items it, acs_objects o
+    where
+      o.object_id = it.item_id
+    and
+      it.item_id = a.asset_id
+    and
+      a.asset_id = i.file_id
+    and
+      i.file_id = :fileId
+  } map {
+    file.id          = i.file_id;
+    file.content     = i.content;
+    file.description = a.description;
+    file.name        = it.name;
+    file.version     = it.version;
+    file.objectType  = o.object_type;
+    mimeType          = a.mime_type;
+  }
+}

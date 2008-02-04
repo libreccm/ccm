@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=589}]"><cms:name>grass-cutting-589</cms:name><cms:language>en</cms:language><cms:title>Grass Cutting</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=589}]"><cms:name>grass-cutting-589-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>grass, cutting</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=589}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council cuts grass to ensure that people can use roads and pavements safely. Although environmental issues are of paramount concern, grass cutting is actually carried out for highway safety reasons rather than environmental purposes.</i></p><hr/><h2>What 
+  grass won't the Council cut?</h2><p>We do not cut the grass that is: </p><ul>
+<li title="*">privately 
+      owned</li>
+      <li title="*">on properties/estates 
+      owned by bodies other than the Council</li>
+</ul><h2>What 
+  will the Council Cut?</h2><p>We will cut the grass on 
+  all council owned land, ie: </p><ul>
+<li title="*">highways</li>
+  <li title="*">verges</li>
+  <li title="*">public open space</li>
+  <li title="*">schools</li>
+  <li title="*">parks</li>
+  <li title="*">town centres</li>
+  <li title="*">memorial gardens</li>
+</ul><p>To report problems with 
+  grass in any of the areas above please use the contact details above.</p><h2>How 
+  often do we cut the grass?</h2><p>The Council cuts the grass 
+  it owns <span class="gen">enter amount</span> times throughout the summer months.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=589"> Providing Information
+		(589)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

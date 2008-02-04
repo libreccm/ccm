@@ -1,0 +1,57 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Address.pdl 1597 2007-07-10 16:27:26Z p_boy $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentPage;
+
+// mapping table for mapping iso country code to country name
+object type IsoCountry {
+    // The country iso code
+    String[1..1] isoCode = iso_countries.iso_code CHAR(2);
+    // The country name
+    String[1..1] countryName = iso_countries.country_name VARCHAR(100);
+
+    object key (isoCode);
+}
+
+// a simple content type to hold generic address information
+object type Address extends ContentPage {
+    // The street address, flexible enough to handle different formats
+    String[0..1] address = ct_addresses.address VARCHAR(1000);
+    // The country iso code
+    IsoCountry[0..1] isoCountryCode = join ct_addresses.iso_country_code 
+                                        to iso_countries.iso_code;
+    // The postal code
+    String[0..1] postalCode = ct_addresses.postal_code VARCHAR(20);
+    // The phone number
+    String[0..1] phone = ct_addresses.phone VARCHAR(20);
+    // The mobile phone number
+    String[0..1] mobile = ct_addresses.mobile VARCHAR(20);
+    // The fax phone number
+    String[0..1] fax = ct_addresses.fax VARCHAR(20);
+    // The email address
+    String[0..1] email = ct_addresses.email VARCHAR(75);
+    // Notes about the address and address owner
+    String[0..1] notes = ct_addresses.notes CLOB;
+    // URI for the address
+    String[0..1] uri = ct_addresses.uri VARCHAR(250);
+
+    reference key (ct_addresses.address_id);
+}

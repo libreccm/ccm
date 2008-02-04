@@ -1,0 +1,98 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: UserAuthentication.pdl 1230 2006-06-22 11:50:59Z apevec $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.kernel;
+
+object type UserAuthentication {
+    BigDecimal[1..1] id = user_authentication.auth_id INTEGER;
+    String[1..1] primaryEmail = parties.primary_email VARCHAR(100);
+    String[0..1] screenName = users.screen_name VARCHAR(100);
+    String[0..1] ssoLogin = user_authentication.sso_login VARCHAR;
+    String[1..1] password = user_authentication.password VARCHAR(100);
+    String[0..1] salt = user_authentication.salt VARCHAR(100);
+    String[0..1] passwordQuestion = user_authentication.password_question VARCHAR(1000);
+    String[0..1] passwordAnswer = user_authentication.password_answer VARCHAR(1000);
+    User[1..1] user = join user_authentication.user_id to users.user_id;
+
+    object key(id);
+    Party[1..1] party =
+        join user_authentication.auth_id to parties.party_id;
+
+    // MDSQL also deletes from parties
+    delete {
+        do {
+            delete from user_authentication where auth_id = :id
+        }
+    }
+
+    // MDSQL also inserts into parties
+    insert {
+        do {
+            insert into user_authentication
+            (auth_id, password, salt,
+            password_question, password_answer, user_id, sso_login)
+            values
+            (:id, :password, :salt,
+            :passwordQuestion, :passwordAnswer, :user.id, :ssoLogin)
+        }
+    }
+
+    // MDSQL also updates parties
+    update {
+        do {
+            update user_authentication
+            set password = :password,
+                salt = :salt,
+                password_answer = :passwordAnswer,
+                password_question = :passwordQuestion,
+                user_id = :user.id,
+                sso_login = :ssoLogin
+            where auth_id = :id
+        }
+    }
+
+    add user {}
+    remove user {}
+}
+
+query UserAuthenticationForLogin {
+    BigDecimal id;
+    String primaryEmail;
+    String screenName;
+    String lowerScreenName;
+    String ssoLogin;
+    do {
+        select user_authentication.auth_id,
+               users.screen_name,
+               lower(users.screen_name) as lower_screen_name,
+               parties.primary_email,
+               user_authentication.sso_login
+          from user_authentication,
+               parties,
+               users
+         where user_authentication.user_id = parties.party_id
+           and user_authentication.user_id = users.user_id
+    } map {
+        id = user_authentication.auth_id;
+        primaryEmail = parties.primary_email;
+        screenName = users.screen_name;
+        lowerScreenName = lower_screen_name;
+        ssoLogin = user_authentication.sso_login;
+    }
+}

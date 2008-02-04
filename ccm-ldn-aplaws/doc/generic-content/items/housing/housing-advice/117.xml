@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=117}]"><cms:name>housing-3-117</cms:name><cms:language>en</cms:language><cms:title>Council housing - evictions</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=117}]"><cms:name>housing-3-117-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, housing, evictions</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=117}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council has a duty to collect all rent due for it's dwellings as the income is vital to fund other housing services. The Council will always take all reasonable steps to try to resolve tenancy or rent arrears problems. However, if all else fails, the Council will apply to the Courts to repossess a property. </i></p><hr/><p>The most common ground for eviction is non-payment of rent, although it is possible for tenants breaching any other aspect of their tenancy agreement to be evicted. </p><p>Once a Possession Order is obtained from the Courts any application to vary the terms of the order or to obtain a stay of execution must be made to the Court itself rather than the Council. </p><p>If tenants are facing a Possession Order, it is advisable to seek independent legal advice. Tenants can contact a solicitor directly or the local 
+		<a href="http://www.nacab.org.uk/">
+<strong>Citizens Advice Bureau </strong>
+</a>	 <span class="gen">link to external website</span> can offer free advice. </p><p>There is no guarantee that the Courts will not evict households with children. </p><p>The Council or other Registered Social Landlords generally have no obligation to re-house those who are evicted for non-payment of rent.</p><h2>What happens if I am evicted?</h2><p>If you are evicted you will have to find alternative accommodation 
+  for yourself and anyone else who is living with you.</p><p>The court will tell you the date and time that the bailiff will 
+  arrive. A representative from Housing will also be there. The locks of 
+  the house will be changed and any of your belongings that are still there will be 
+  cleared.</p><h2>Can I stop the eviction?</h2><p>The earlier you take action or get advice the better. It is 
+  more difficult to make agreements at a late stage. You may apply for the Warrant 
+  of Possession to be suspended. The court will then reconsider your case but may 
+  not agree to alter the decision Please remember, if you are having difficulties 
+  paying your rent:</p><ul>
+   
+  <li title="*">speak to a member of our staff, using the contact details above</li>
+  <li title="*">get advice, for example, from a Citizens' Advice Bureau; and</li>
+  <li title="*">make regular payments, no matter how small they are.</li>
+  
+</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=117"> Providing Information
+		(117)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

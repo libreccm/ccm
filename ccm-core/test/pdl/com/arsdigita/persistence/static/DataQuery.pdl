@@ -1,0 +1,226 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: DataQuery.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model examples;
+
+query DataQuery {
+    BigDecimal id;
+    String action;
+    String description;
+    BigDecimal priority;
+    Date actionTime;
+    
+    do {
+        select entry_id, action, description, priority, action_time
+        from t_data_query t
+    } map {
+        id = t.entry_id;
+        action = t.action;
+        description = t.description;
+        priority = t.priority;
+        actionTime = t.action_time;
+    }
+}
+
+
+query DataQueryMaxID {
+    BigDecimal id;
+
+    do {
+        select max(entry_id) as entry_id
+        from t_data_query t
+    } map {
+        id = t.entry_id;
+    }
+}
+
+
+query DataQueryWithBindVariables {
+    BigDecimal id;
+    String action;
+    BigDecimal priority;
+
+    do {
+        select *
+        from (select * from t_data_query 
+                   where lower(substr(description, 0, 5)) = :description) t
+        where priority > :priority
+    } map {
+        id = t.entry_id;
+        action = t.action;
+        priority = t.priority;
+    }
+}
+
+query DataQueryWithMoreBinds {
+    BigDecimal id;
+
+    do {
+        select * from t_data_query
+        where description = :description
+    } map {
+        id = t.entry_id;
+    }
+}
+
+
+
+query DataQueryWithDateBindVariable {
+    BigDecimal id;
+    String action;
+    BigDecimal priority;
+
+    do {
+        select *
+        from t_data_query 
+        where action_time < :actionTime
+    } map {
+        id = t.entry_id;
+        action = t.action;
+        priority = t.priority;
+    }
+}
+
+query DataQueryWithMax {
+    BigDecimal priority;
+
+    do {
+        select max(priority) as priority 
+        from t_data_query
+    } map {
+        priority = t_data_query.priority;
+    }
+}
+
+
+query DataQueryWithMaxAndSubSelect {
+    BigDecimal priority;
+
+    do {
+        select max(priority) as priority 
+        from t_data_query
+        where entry_id in (select entry_id from t_data_query where action = :action)
+    } map {
+        priority = t_data_query.priority;
+    }
+}
+
+
+query DataQueryNoView {
+    BigDecimal id;
+    String action;
+    String description;
+    BigDecimal priority;
+    Date actionTime;
+    
+    options {
+	WRAP_QUERIES = false;
+    }
+
+    do {
+        select * 
+        from t_data_query
+    } map {
+        id = t.entry_id;
+        action = t.action;
+        description = t.description;
+        priority = t.priority;
+        actionTime = t.action_time;
+    }
+}
+
+query DataQueryUnion {
+    BigDecimal id;
+    String action;
+    String description;
+    BigDecimal priority;
+    Date actionTime;
+    
+    do {
+        select * 
+        from t_data_query 
+        where priority < :priority
+        union 
+        select * 
+        from t_data_query
+        where action = :action
+    } map {
+        id = t.entry_id;
+        action = t.action;
+        description = t.description;
+        priority = t.priority;
+        actionTime = t.action_time;
+    }
+}
+
+query DataQueryWithIn {
+    BigDecimal id;
+    String action;
+    String description;
+    BigDecimal priority;
+    Date actionTime;
+    
+    do {
+        select *
+        from t_data_query t
+        where action in :actions
+    } map {
+        id = t.entry_id;
+        action = t.action;
+        description = t.description;
+        priority = t.priority;
+        actionTime = t.action_time;
+    }
+}
+
+
+query DataQueryZeroOrOneRow {
+    BigDecimal id;
+    
+    do {
+        select max(entry_id) as entry_id
+        from t_data_query
+    } map {
+        id = t_data_query.entry_id;
+    }
+}
+
+
+query multipleIDs {
+    BigDecimal id;
+    BigDecimal id2;
+
+    do {
+        select t1.entry_id, t2.entry_id
+        from t_data_query t1, t_data_query t2
+        where t1.entry_id != t2.entry_id
+    } map {
+        id = t1.entry_id;
+        id2 = t2.entry_id;
+    }
+}
+
+query GetOrdersOnlyID {
+    mdsql.Order order;
+    do {
+        select order_id from t_orders
+    } map {
+        order.id = order_id;
+    }
+}

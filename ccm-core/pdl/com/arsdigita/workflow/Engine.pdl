@@ -1,0 +1,147 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Engine.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.workflow.simple;
+
+
+query getUserTasks {
+    BigDecimal taskID;
+    BigDecimal taskParentId;
+    String taskLabel;
+    String taskDescription;
+    Date taskDueDate;
+    Date taskStartDate;
+    String isLocked;
+    String isActive;
+
+    do {
+	select cw_tasks.task_id ,
+               acs_objects.object_type ,
+               cw_tasks.task_id ,
+               cw_user_tasks.due_date,
+               cw_user_tasks.start_date ,
+               cw_user_tasks.is_locked ,
+               cw_tasks.is_active
+        from   cw_tasks ,
+	       cw_user_tasks ,
+               acs_objects 
+        where  acs_objects.object_id = cw_tasks.task_id
+        and    cw_user_tasks.task_id = cw_tasks.task_id
+    } map {
+        taskID          = cw_tasks.task_id;
+        taskParentId    = cw_tasks.parent_task_id;
+        taskLabel       = cw_tasks.label;
+	taskDescription = cw_tasks.description;
+        taskDueDate     = cw_user_tasks.due_date;
+        taskStartDate   = cw_user_tasks.start_date;
+        isLocked        = cw_user_tasks.is_locked;
+	isActive        = cw_user_tasks.is_active;
+    }
+}
+
+query getTaskAssignedUsers {
+    BigDecimal userID;
+    BigDecimal taskID;
+    Date taskDueDate;
+    Date taskStartDate;
+    String isLocked;
+    String isActive;
+    String taskState;
+    BigDecimal parentID;
+
+    do {
+        select cw_task_user_assignees.user_id ,
+               cw_user_tasks.task_id ,
+               cw_user_tasks.due_date ,
+               cw_user_tasks.start_date ,
+               cw_user_tasks.is_locked  ,
+               cw_tasks.task_state      ,
+               cw_tasks.is_active       ,
+	       cw_tasks.parent_task_id
+        from   cw_task_user_assignees ,
+               cw_user_tasks ,
+               cw_tasks 
+	where  cw_user_tasks.task_id = cw_task_user_assignees.task_id
+        and    cw_tasks.task_id = cw_user_tasks.task_id
+    } map {
+        userID = cw_task_user_assignees.user_id;
+        taskID = cw_task_user_assignees.task_id;
+        taskDueDate     = cw_user_tasks.due_date;
+        taskStartDate   = cw_user_tasks.start_date;
+        isLocked        = cw_user_tasks.is_locked;
+        taskState       = cw_tasks.task_state;
+        isActive        = cw_tasks.is_active;
+        parentID 	= cw_tasks.parent_task_id;
+    }  
+}
+
+
+query getTaskAssignedGroups {
+    BigDecimal groupID;
+    BigDecimal taskID;
+    String isActive;
+    String taskState;
+    Date taskDueDate;
+    Date taskStartdate;
+    BigDecimal parentID;
+
+    do {
+        select cw_task_group_assignees.group_id , 
+               cw_tasks.task_id    ,
+               cw_tasks.is_active  ,
+               cw_tasks.task_state ,
+               cw_user_tasks.due_date   ,
+               cw_user_tasks.start_date ,
+	       cw_tasks.parent_task_id 
+        from cw_task_group_assignees
+        ,    cw_tasks
+        ,    cw_user_tasks
+        where cw_task_group_assignees.task_id = cw_tasks.task_id
+        and   cw_user_tasks.task_id = cw_tasks.task_id
+    } map {
+        taskID   = cw_tasks.task_id;
+        groupID    = cw_task_group_assignees.group_id;  
+        isActive  = cw_tasks.is_active;
+	taskState = cw_tasks.task_state;
+	taskDueDate = cw_user_tasks.due_date;
+        taskStartdate = cw_user_tasks.start_date;
+	parentID 	= cw_tasks.parent_task_id;
+    }
+}
+
+
+
+query getActiveProcesses {
+    BigDecimal processID;
+    do {
+        select cw_processes.process_id 
+        from cw_processes 
+        where exists (
+           select  1
+           from   cw_tasks ,
+                  cw_user_tasks
+           where  cw_tasks.task_id = cw_user_tasks.task_id
+           and    cw_tasks.task_state = 'enabled'
+           and    cw_tasks.is_active = '1'
+           and    cw_processes.process_id = cw_tasks.parent_task_id 
+       )
+   } map {
+       processID = cw_proceses.process_id;
+   } 
+}

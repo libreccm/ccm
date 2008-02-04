@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=385}]"><cms:name>licensing-385</cms:name><cms:language>en</cms:language><cms:title>Licence - butchers shop</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=385}]"><cms:name>licensing-385-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, butchers, shop</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=385}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Food Safety (General Food Hygiene) (Butchers' Shops) Amendment Regulation
+  2000 introduced the need for certain retail premises to obtain an annual licence
+  from their local authority. From 1 November 2000, it is a criminal offence
+  to operate a butcher's shop without a licence.</i></p><hr/><p>Premises that wish to sell unwrapped raw meat together with ready-to-eat food must have a licence from the Council. </p><p>Typically this means most retail butchers' shops, mobile shops, market stalls grocers or supermarkets containing a butchery counter. </p><p>  In order to obtain a licence the premises themself and the systems and practices that the trader utilises must meet minimum hygiene and safety standards. </p><h2>
+			<strong>Licence conditions</strong>
+		</h2><p>There are three main conditions required for the licence: </p><li title="*"> Compliance with food law. </li><li title="*"> Formal training of all staff. Minimum qualification of the Foundation Certificate in Food Hygiene  (or equivalent) for all staff and at least one member of staff who will normally be the on-site supervisor, with at least Intermediate or level 2 Food Hygiene training or the Meat and Livestock Commission 's Meat Manager's Hygiene and HACCP course. </li><li title="*"> Operation of fully documented Hazard Analysis Critical Control Point food safety management system. </li><h2>
+			<strong>When and how to apply for a licence </strong>
+		</h2><p>A completed 
+			
+			<span class="gen">link to online form</span> must be submitted at least 28 days before the licence is required e.g. 28 days before an existing licence expires or before you wish to start trading. </p><p>
+  Once we received your completed application form, we may contact you to clarify the details given and to arrange an inspection. 
+</p><p>
+A fee is payable. Currently the fee is <span class="gen">enter amount</span>
+		</p><h2>
+			<strong>Trading without a licence </strong>
+		</h2><p>
+			<strong>It is illegal to trade without a licence</strong>. The Council has the power to prosecute anyone trading unlawfully without a licence or in breach of their licence. Upon conviction, the Court may impose a fine of up to &#xA3;5,000 plus legal costs. </p><h2>
+			<strong>The Law </strong>
+		</h2><ul>
+			<li title="*">
+				
+		<a href="http://www.legislation.hmso.gov.uk/si/si2000/20000930.htm">Food Safety (General Food Hygiene)(Butcher's Shops) Amendment Regulations 2000</a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.foodstandards.gov.uk/news/pressreleases/butcherslicensing">Food Standards Agency launch Butchers Licensing law</a>	
+				<span class="gen">link to external website</span>
+			</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=385"> Applications for services
+		(385)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=385}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=385}]"/></cms:links></cms:item>

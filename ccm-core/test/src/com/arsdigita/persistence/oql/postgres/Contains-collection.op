@@ -1,0 +1,4 @@
+select i.icle_id as c_1
+from icles i
+     join collection c__ on c__.test_id = ?
+where c__.element_id = i.icle_id

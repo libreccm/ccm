@@ -1,0 +1,83 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Package.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.kernel;
+
+import com.arsdigita.globalization.*;
+
+object type PackageType {
+    BigDecimal id = apm_package_types.package_type_id INTEGER;
+    unique String[1..1] packageKey = apm_package_types.package_key VARCHAR(100);
+    unique String[1..1] prettyName = apm_package_types.pretty_name VARCHAR(100);
+    unique String prettyPlural = apm_package_types.pretty_plural VARCHAR(100);
+    unique String[1..1] packageURI = apm_package_types.package_uri VARCHAR(1500);
+    String dispatcherClass = apm_package_types.dispatcher_class VARCHAR(100);
+    // XXX: Deprecated.
+    String servletPackage = apm_package_types.servlet_package VARCHAR(100);
+
+    Stylesheet[0..n] defaultStyle = join apm_package_types.package_type_id
+                                      to acs_stylesheet_type_map.package_type_id,
+                                    join acs_stylesheet_type_map.stylesheet_id
+                                      to acs_stylesheets.stylesheet_id;
+    PackageListener[0..n] listener = 
+                           join apm_package_types.package_type_id 
+                             to apm_package_type_listener_map.package_type_id, 
+                           join apm_package_type_listener_map.listener_id 
+                             to apm_listeners.listener_id;
+    component PackageInstance[0..n] packageInstance =
+                    join apm_package_types.package_type_id 
+                      to apm_packages.package_type_id;
+
+    object key(id);
+}
+
+object type PackageListener {
+    unique String[1..1] listenerClass = apm_listeners.listener_class VARCHAR(100);
+    BigDecimal id = apm_listeners.listener_id INTEGER;
+    PackageType[0..n] packageType;
+    
+    object key (id);
+
+}
+
+object type PackageInstance extends ACSObject {
+    String prettyName = apm_packages.pretty_name VARCHAR(300);
+    SiteNode[0..n] mountPoint 
+        = join apm_packages.package_id to site_nodes.object_id;
+    composite PackageType[1..1] packageType 
+        = join apm_packages.package_type_id 
+            to apm_package_types.package_type_id;
+    Locale[0..1] locale 
+        = join apm_packages.locale_id to g11n_locales.locale_id;
+
+    reference key (apm_packages.package_id);
+
+    delete {
+        do {
+            UPDATE site_nodes
+            SET object_id = null
+            WHERE object_Id = :id
+        }
+        do {
+            DELETE from apm_packages
+            WHERE package_id = :id
+        }
+
+    }
+}

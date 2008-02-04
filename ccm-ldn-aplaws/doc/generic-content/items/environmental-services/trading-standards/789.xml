@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=789}]"><cms:name>fair-trading-789</cms:name><cms:language>en</cms:language><cms:title>Fair Trading</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=789}]"><cms:name>fair-trading-789-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>fair, trading</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=789}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Fair trading covers a wide area of consumer protection law such as the Trade Descriptions Act, Property Misdescriptions Act, Consumer Credit Act and many more Acts of Parliament besides. The primary purpose of this type of legislation is to ensure 'truthfulness of trade' thus preventing consumers being misled during contractual negotiations for goods and services.</i></p><hr/><h2>Trade Descriptions Act 1968</h2><p>The Act ensures that descriptions applied to goods and services are accurate and has been used successfully to combat common problems such as car 'clocking' and product counterfeiting. Its scope is very wide and also covers descriptions applied in all areas of trade.</p><h2>Property Misdescriptions Act 1991</h2><p>This Act is designed to regulate those persons in the course of estate agency or property development business who falsely describe or make misleading statements in relation to land. This includes amongst other things descriptions in relation the address and location of a property, room sizes, easements and maintenance charges.</p><h2>Consumer Credit Act 1974</h2><p>This Act is designed to regulate those businesses or individuals who offer credit facilities to consumers so that there is 'truth in lending' and covers areas such as advertising, loans, mortgages and other credit transactions.</p><p>We aim to ensure that:</p><ul>
+<li title="*">Credit is fairly provided</li>
+<li title="*">Goods, services and 
+      property are not misdescribed</li>
+<li title="*">Holidays and timeshare 
+      accommodation are not misrepresented</li>
+<li title="*">Prices are correctly 
+      displayed and do not mislead</li>
+<li title="*">Traders do not sell 
+      counterfeit goods</li>
+<li title="*">Steps are taken to 
+      end unfair trading practices</li>
+<li title="*">Terms in consumer contracts 
+      are fair </li>
+</ul><p> Further information is 
+  available from the 
+		<a href="http://www.oft.gov.uk/default.htm">
+<strong>Office 
+  of Fair Trading's website</strong>
+</a>	. <span class="gen">link to external website</span> 
+  It is designed with two purposes:</p><ul>
+<li title="*">to protect consumers 
+      and explain their rights</li>
+  <li title="*">to ensure that businesses 
+      compete and operate fairly.</li>
+</ul><p> You can find essential 
+  information for businesses on how to comply with legislation enforced by the 
+  Office of Fair Trading, check advice on consumer issues, follow the progress 
+  of investigations and action taken, or simply download the leaflets and reports.</p><p>Alternatively, you can contact 
+  our Trading Standards Officers using the details at the top of this page.  </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=789"> Providing Information
+		(789)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,81 @@
+#!/bin/sh
+#
+# Set some env vars to represent various dirs that
+# we're planning on using.
+
+
+echo "Setting up build environment variables"
+
+#######################################################################
+#
+#  Grab the package specific info
+
+INFO=`$CCM_SCRIPTS_HOME/bin/extract-version.pl`
+if [ $? = 0 ]; then
+    eval $INFO
+else
+    echo $INFO
+    exit 1
+fi
+
+INFO=`$CCM_SCRIPTS_HOME/bin/env-conf`
+if [ $? = 0 ]; then
+    eval $INFO
+else
+    echo $INFO
+    exit 1
+fi
+
+if [ -n "$SVN_TAGGED" ]; then
+    CCM_RELEASE="${CCM_RELEASE}${SVN_REVISION}"
+    CCM_PACKAGE_NAME="${CCM_PACKAGE_NAME}${SVN_REVISION}"
+fi
+
+#######################################################################
+#
+#  Compatibility vars for 5.x and 6.0 RPMs
+#
+PKGVERSION="$CCM_PKGVERSION"
+CCMTYPE="$CCM_TYPE"
+PROJECT="$CCM_PROJECT"
+REQUIRES="$CCM_REQUIRES"
+RPM_DEPENDENCIES="$CCM_RPM_DEPENDENCIES"
+NAME="$CCM_APP"
+PACKAGE="$CCM_PACKAGE"
+PRETTYNAME="$CCM_PRETTYNAME"
+VERSION="$CCM_VERSION"
+RELEASE="$CCM_RELEASE"
+export PKGVERSION CCMTYPE PROJECT REQUIRES RPM_DEPENDENCIES NAME PACKAGE PRETTYNAME VERSION RELEASE
+
+echo "CCM_PACKAGE:    $CCM_PACKAGE"
+echo "CCM_VERSION:    $CCM_VERSION"
+echo "CCM_RELEASE:    $CCM_RELEASE"
+echo "CCM_PRETTYNAME: $CCM_PRETTYNAME"
+echo "CCM_APPS:       $CCM_APPS"
+echo "CCM_REQUIRES:   $CCM_REQUIRES"
+echo "CCM_RPM_DEPENDENCIES:   $CCM_RPM_DEPENDENCIES"
+echo "RPM_DIR: $RPM_DIR"
+echo "  CCM_APP_NAME: $CCM_APP_NAME"
+echo "  CCM_BUILD_DIR: $CCM_BUILD_DIR"
+echo "  CCM_DIST_DIR: $CCM_DIST_DIR"
+echo "  CCM_DIST_SPOOL_DIR: $CCM_DIST_SPOOL_DIR"
+echo "  CCM_DIST_TAR_DIR: $CCM_DIST_TAR_DIR"
+echo "  CCM_DIST_ZIP_DIR: $CCM_DIST_ZIP_DIR"
+echo "  CCM_HOME: $CCM_HOME"
+echo "  CCM_INST_API_BASENAME: $CCM_INST_API_BASENAME"
+echo "  CCM_INST_API_DIR: $CCM_INST_API_DIR"
+echo "  CCM_INST_API_DIRNAME: $CCM_INST_API_DIRNAME"
+echo "  CCM_INST_DEVEL_BASENAME: $CCM_INST_DEVEL_BASENAME"
+echo "  CCM_INST_DEVEL_DIR: $CCM_INST_DEVEL_DIR"
+echo "  CCM_INST_DEVEL_DIRNAME: $CCM_INST_DEVEL_DIRNAME"
+echo "  CCM_INST_DIR: $CCM_INST_DIR"
+echo "  CCM_INST_WEBAPP_BASENAME: $CCM_INST_WEBAPP_BASENAME"
+echo "  CCM_INST_WEBAPP_DIR: $CCM_INST_WEBAPP_DIR"
+echo "  CCM_INST_WEBAPP_DIRNAME: $CCM_INST_WEBAPP_DIRNAME"
+echo "  CCM_PACKAGE_NAME: $CCM_PACKAGE_NAME"
+echo "  CCM_ROOT_DIR: $CCM_ROOT_DIR"
+echo "  CCM_SCRIPTS_COMPAT: $CCM_SCRIPTS_COMPAT"
+echo "  CCM_SRC_DIR: $CCM_SRC_DIR"
+echo "  CLASSPATH: $CLASSPATH"
+
+# End

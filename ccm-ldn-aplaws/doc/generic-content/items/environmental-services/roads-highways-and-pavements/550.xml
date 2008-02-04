@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=550}]"><cms:name>roads-and-highways--obstructions-550</cms:name><cms:language>en</cms:language><cms:title>Roads and Highways - Obstructions</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=550}]"><cms:name>roads-and-highways--obstructions-550-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>roads, highways, obstructions</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=550}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>It is an offence to obstruct the free passage of the highway.</i></p><hr/><p>Obstructions are objects which have been unlawfully placed on or which overhang the highway. Such obstructions are 		given by examples below:</p><ul>
+			<li title="*">Builders' skips</li>
+			<li title="*">Scaffolding/hoardings</li>
+			<li title="*">Builders materials</li>
+			<li title="*">Temporary works including traffic lights</li>
+			<li title="*">Overhanging tree branches, hedges</li>
+			<li title="*">Mud/Debris on the road</li>
+			<li title="*">Mixing concrete/mortar on the highway</li>
+			<li title="*">Unauthorised vendors/traders</li>
+			<li title="*">Encroachment of highway boundaries</li>
+			<li title="*">Discharge of water onto the highway</li>
+			<li title="*">Blocking &quot;Rights of Way&quot;</li>
+			<li title="*">Plants and Bushes</li>
+			<li title="*">Illegal Signs</li>
+		</ul><p>Encroachments are where ownership of areas of the highway has been unlawfully assumed.</p><p>If a person without lawful authority or excuse in any way wilfully obstructs the free passage along a highway, they are guilty of an offence. In such cases the Highway Authority has legal powers to enforce their removal.</p><p>To report any obstructions, please use the <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=forms/550a">online form</a>	
+</strong> <span class="gen">link to online form.</span> Alternatively, use the contact details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=550"> Applications for services
+		(550)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

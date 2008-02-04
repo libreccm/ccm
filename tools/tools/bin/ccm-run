@@ -1,0 +1,122 @@
+#!/usr/bin/perl -w
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use CCM::CommandsUtil;
+use CCM::Runtime;
+use CCM::Util;
+use File::Spec;
+use Getopt::Long;
+
+my $verbose = 0;
+my $runtime = new CCM::Runtime;
+
+Getopt::Long::Configure("require_order", "pass_through");
+GetOptions('verbose+' => \$verbose);
+
+my $ROOT = File::Spec->rootdir();
+if ($^O eq 'MSWin32') {
+    $ROOT = defined $ENV{'CCM_ZIP_ROOT'} ? $ENV{'CCM_ZIP_ROOT'} : "c:\\ccm\\";
+}
+
+if ($ENV{'CCM_TOOLS_DEBUG'})   { $verbose += 2; }
+if ($ENV{'CCM_TOOLS_VERBOSE'}) { $verbose += 1; }
+
+#### Classpath ##################################################
+my $classpath = CCM::Util::catpath($runtime->getClassPath(), $runtime->getServletJar("2.3"));
+my @files = File::Spec->catfile($runtime->getCCMHome(), "ccm.classpath");
+push @files, File::Spec->catfile($runtime->getCCMDevHome(), "ccm.classpath") if defined $runtime->getCCMDevHome();
+push @files, File::Spec->catfile($ROOT, "etc", "ccm", "ccm.classpath");
+foreach (readFirstFile(@files)) {
+    if ( -f ) {
+        $classpath = CCM::Util::catpath ($classpath, $_);
+    } elsif ( -d ) {
+        my $dir = $_;
+        # remove a trailing slash if it exists
+        $dir =~ s,[\\/]$,,;
+        opendir(DIR, $dir) || die "can't opendir $dir: $!";
+        $classpath = CCM::Util::catpath ($classpath, $_);
+        $classpath = CCM::Util::catpath ($classpath, map { File::Spec->catfile ($dir, $_) } (grep { /^.*(jar|zip)\z/s } (sort readdir(DIR))));
+        closedir DIR;
+    } else {
+        if ($verbose > 1) {
+            print "not a jar/zip file or directory: $_\n";
+        }
+    }
+}
+
+#### System Properties ##################################################
+
+my $sysproperties = $runtime->getSystemProperties();
+
+#### Java Opts ##################################################
+
+my $java_opts = defined $ENV{'JAVA_OPTS'} ? $ENV{'JAVA_OPTS'} : "";
+
+while (@ARGV > 0) {
+    if ( $ARGV[0] =~ m/^(-X|-D)/ ) {
+        $java_opts .= " " . shift(@ARGV);
+    } elsif ( $ARGV[0] =~ m/^(-J)/ ) {
+        $java_opts .= " " . substr(@ARGV, 2);
+    } else {
+        last;
+    }
+}
+
+#### Run ##################################################
+
+if (@ARGV == 0) {
+    CCM::Util::error("syntax: ccm-run [--verbose] <class>");
+}
+
+my $command = $runtime->getJavaCommand() . " -cp $classpath $java_opts $sysproperties";
+foreach $a (@ARGV) {
+  $command .= " \"$a\"";
+}
+if ($verbose) {
+    print ((join "\n", (CCM::Util::splitpath($classpath))) . "\n");
+    print "$command\n";
+}
+CCM::CommandsUtil::runAndExitOnError($command);
+
+#### Functions ##################################################
+
+sub read {
+    my $file = shift;
+    my @lines;
+
+    if ($verbose > 1) {
+        print "reading $file\n";
+    }
+    open (IN, "<$file") or die "could not open $file: $!";
+    while (<IN>) {
+        next if /^\s*\#/;
+        chomp;
+        push (@lines, $_);
+    }
+    close IN;
+
+    return @lines;
+}
+
+sub readFirstFile {
+    foreach (@_) {
+        if (-f $_) {
+            return &read($_);
+        }
+    }
+}
+

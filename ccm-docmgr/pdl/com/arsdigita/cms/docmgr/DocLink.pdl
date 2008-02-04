@@ -1,0 +1,26 @@
+model com.arsdigita.cms.docmgr;
+
+import com.arsdigita.cms.ContentPage;
+
+object type DocLink extends ContentPage {
+
+   String[0..1]    description    = cms_doc_links.description VARCHAR(4000);
+   //Column to store Target Document of this Link Object.
+   Document[0..1] target = join cms_doc_links.target_doc_id to cms_documents.doc_id;
+   Repository[0..1] repository = join cms_doc_links.repository_id to cms_docs_repositories.repository_id;
+   String[0..1] externalURL = cms_doc_links.url VARCHAR(4000);
+   Date[0..1]       lastModifiedTimeCached = cms_documents.last_modified_cached TIMESTAMP;
+
+   reference key (cms_doc_links.link_id);
+}
+
+//Get all the links that have :docID as the target.
+query getReferringLinks {
+   DocLink docLink;
+   do {
+        select link_id from cms_doc_links
+        where target_doc_id = :docID
+   } map {
+       docLink.id = link_id;
+   }
+}

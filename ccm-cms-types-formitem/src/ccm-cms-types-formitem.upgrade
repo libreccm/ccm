@@ -1,0 +1,6 @@
+<upgrade>
+  <version from="6.1.1" to="6.1.2">
+    <script sql="ccm-cms-types-formitem/upgrade/::database::-6.1.1-6.1.2.sql"/>
+  </version>
+</upgrade>
+

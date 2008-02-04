@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=365}]"><cms:name>elections--electoral-nominations-365</cms:name><cms:language>en</cms:language><cms:title>Elections - Electoral Nominations</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=365}]"><cms:name>elections--electoral-nominations-365-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>election, electoral, nomination</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=365}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council provides information on the process of electoral nominations, and publishes a list of nominations for the upcoming local election. </i></p><hr/><h2>How do I become a Councillor? </h2><p>Full elections are held in all wards every four years in May. You can be a candidate if you are over 21, on the electoral register, and have lived, worked or owned property in the area for at least the past 12 months. </p><p>You may be disqualified as a candidate if you work for The Council or hold a politically restricted post with another local authority. Bankruptcy or a previous criminal conviction with a three-month or more prison sentence would also disqualify you as a candidate. </p><p>Most candidates are nominated through a political party. However, individuals are welcome to stand in their own right. Before you can be accepted as a candidate you must get one person to agree to propose your nomination, another person to agree to second the proposal. Both of these people must be on the electoral register. </p><p>The nominations for the Elections are as follows:</p><table width="90%" cellpadding="5" class="centre" summary="list of nominations">
+				<tr>
+					<th>Party Represented			</th>
+					<th>Name and Address of Candidate
+							</th>
+				</tr>
+				<tr>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+					<td>
+<span class="gen">enter details</span>
+					</td>
+				</tr>
+			</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=365"> Providing Information
+		(365)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

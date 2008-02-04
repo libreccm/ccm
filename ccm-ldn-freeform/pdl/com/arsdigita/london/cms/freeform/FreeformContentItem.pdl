@@ -1,0 +1,72 @@
+
+model com.arsdigita.london.cms.freeform;
+
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.Asset;
+
+
+object type FreeformContentItem extends ContentPage {
+    component FreeformContentItemAsset[0..n] assets = join ff_freeform_content_items.item_id
+                                                        to ff_content_item_asset_map.item_id;
+
+    reference key (ff_freeform_content_items.item_id);
+}
+
+object type FreeformContentItemAsset {
+    BigDecimal itemID = ff_content_item_asset_map.item_id;
+    BigDecimal assetID = ff_content_item_asset_map.asset_id;
+    component Asset[1..1] asset = join ff_content_item_asset_map.asset_id
+                                    to cms_assets.asset_id;
+
+    Integer[1..1] rank = ff_content_item_asset_map.rank;
+ object key(itemID, assetID);
+}
+
+query GetAssetsOfMimeType {
+    BigDecimal id;
+    
+    do {
+        select
+            asset_id
+        from
+            cms_assets
+        where
+            mime_type = :mimeType
+    }
+
+    map {
+        id = asset_id;
+    }
+}
+
+query FreeformGetAssetAttributes {
+    BigDecimal id;
+    String description;
+    String mimeType;
+    String name;
+    BigDecimal rank;
+
+    do {
+        select m.asset_id, m.rank, a.mime_type, a.description, i.name
+          from cms_items i, ff_content_item_asset_map m, cms_assets a               
+         where m.item_id = :itemId
+           and a.asset_id = m.asset_id
+           and i.item_id = a.asset_id
+    } map {
+        id = m.asset_id;
+        description = a.description;
+        mimeType = a.mime_type;
+        name = i.name;
+        rank = m.rank;
+    }
+}
+
+
+data operation updateAssetRank {
+    do {
+        update ff_content_item_asset_map
+           set rank = :rank
+         where item_id = :itemId
+           and asset_id = :assetId
+    }
+}

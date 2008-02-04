@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=537}]"><cms:name>pavements-(including-dangerous-paving)-537</cms:name><cms:language>en</cms:language><cms:title>Pavements (Including Dangerous Paving)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=537}]"><cms:name>pavements-(including-dangerous-paving)-537-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>pavements, including, dangerous, paving</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=537}]"><cms:content><![CDATA[<h2>Environmental Services</h2><p><i>This Council, as Highway Authority, has responsibility for the maintenance of the highway, including pavements and footways.</i></p><hr/><p>Trip hazards on pavements are a key concern at all times whilst the problems of weeds, standing water and ice tend to be more seasonal. Trip hazards and other defects on pavements are addressed in the following priority order. </p><table width="90%" cellpadding="5" class="centre" summary="">
+			<tr>
+				<th>Priority Area</th>
+				<th>Defect Description</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>
+					<p>Slab movement, uneven ironwork, and potholes with a trip exceeding 20mm in busy urban area.</p>
+					<p>Depression greater than 25mm deep and less than 600mm in plan.</p>
+					<p>Cracking with a gap wider and deeper than 15mm.</p>
+				</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>
+					<p>Slab movement, uneven ironwork, and potholes with a trip exceeding 20mm in a lightly pedestrianised area.</p>
+					<p> Major cracking on busy footway (but with gap width/depth less than 15mm).</p>
+					<p>Overhanging vegetation.</p>
+					<p>Weed contamination of footway surface on busy footway.</p>
+				</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>
+					<p>Major cracking on less busy footway (but with gap width/depth less than 15mm).</p>
+					<p>Defective trenching with level difference exceeding 10mm.</p>
+					<p>Standing water (could be Priority 1 if on a busy urban footway and freezing conditions are anticipated). </p>
+					<p>Tarmac disintegration (fretting) with less than 20mm difference in level on urban footways.</p>
+					<p>Weed contamination of footway surface.</p>
+				</td>
+			</tr>
+		</table><p>Pavements, particularly those constructed of paving slabs, can suffer very badly from overriding vehicles.<strong>Please note:</strong> In the case of damage, it is important, if possible, to report the vehicle details/findings so that the Council can recover the full cost of repairs to the pavement.</p><p>When works are being undertaken on the highway (including the pavement/footway), the organisation, which may include utility companies, carrying out those works is responsible for ensuring there is a safe diversionary route for pedestrians and other traffic and a satisfactory reinstatement.</p><p>To report any problems, please use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/537a">online form</a>	
+			</strong>
+			<span class="gen">link to online form.</span> Alternatively, use the contact details above.</p><h4>Private Streets</h4><p>A private street is a street that is not maintainable by the Council. Streets that are unadopted are generally in a condition not meeting the standard of adopted streets. These are usually unmade (no bituminous surface) or setts (cobbles).</p><p>  The responsibility for private streets lies with the street owners. These are usually the people who live on the street.</p><p>
+			<strong>How do I report a private street that is unsafe?</strong>
+		</p><p>  This is usually the responsibility of the owner (usually the frontager). If the problem is thought to be a 'danger' (for example a deep hole in the road suddenly appearing) the Council can arrange to make safe by placing barriers or road closures around the hazard. However, the permanent remedials are then to be carried out by the owner/s. </p><p>
+			<strong>How do I report a problem with gullies and drains on a private street?</strong>
+		</p><p>  If thought to be dangerous (for example missing gully lid) the Council will arrange to make the problem safe and then the owner will need to make permanent remedials.</p><p>
+			<strong>How do I get a private street adopted?</strong>
+		</p><p>To get a street adopted the street must be constructed to adoptable standards. The costs of constructing a street to adoptable standards must be met by the street owners/residents.</p><p>The Council does not have a budget for this and cannot be of any financial help.</p><p>If you have any query regarding a footpath or pavement, please use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/537a">online form</a>	
+			</strong>
+			<span class="gen">link to online form.</span> Alternatively, use the contact details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=537"> Applications for services
+		(537)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

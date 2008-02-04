@@ -1,0 +1,66 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Event.pdl 1595 2007-07-10 16:14:44Z p_boy $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.*;
+
+// object type to hold extended attributes of event content type
+
+object type Event extends TextPage {
+    // The starting date and time of the event, so the events content type 
+    // can be used by calendar
+    Date [0..1] startDate         = ct_events.start_date DATE;
+    // The ending date time of the event, so the events content type can be 
+    // used by calendar
+    Date [0..1] endDate           = ct_events.end_date DATE;
+    Date [0..1] startTime         = ct_events.start_time TIMESTAMP;
+    Date [0..1] endTime           = ct_events.end_time TIMESTAMP;
+    // The date and time of the event, stored as varchar for now so 
+    // you can enter other information
+    String [0..1] eventDate       = ct_events.event_date VARCHAR(1000);
+    // The location of the event
+    String [0..1] location        = ct_events.location VARCHAR(1000);
+    // The tease/lead information for the event
+    String [0..1] lead            = ct_events.tease_lead VARCHAR(4000);
+    // The main contributor for the event
+    String [0..1] mainContributor = ct_events.main_contributor VARCHAR(1000);
+    // The type of the event
+    String [0..1] eventType       = ct_events.event_type VARCHAR(1000);
+    // The link to a map for the event
+    String [0..1] mapLink         = ct_events.map_link VARCHAR(1000);
+    // The cost of the event
+    String [0..1] cost            = ct_events.cost VARCHAR(1000);
+
+
+    reference key (ct_events.item_id);
+}
+
+query RecentEvent {
+    BigDecimal eventID;
+    do {
+        select e.item_id
+        from ct_events e, cms_items i
+        where start_date > currentDate()
+        and e.item_id = i.item_id
+        and i.version = 'live'
+    } map {
+        eventID = e.item_id; 
+    }
+}

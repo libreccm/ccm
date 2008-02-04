@@ -1,0 +1,202 @@
+/* Dieses CSS ist für IE < 6.0 gedacht, der diverse Probleme, insbesondere mit dem Box-Model hat.
+   Hier werden die Positionsangaben überschieben, damit der Berechnungsfehler ausgeglichen wird. */
+
+/* Hier werden einige Dinge whle sehr oft verwendet werden:
+
+   - width, heigt      (um Box-Model-Bug zu beheben)
+   - position:absolute (statt position:fixed)
+   - (Scrollbars nur bei Bedarf anzeigen)
+
+*/
+
+/* Ich benutze hier den Star-HTML-Hack bis die Conditional Coomments in CCM funktionieren. */
+
+/* Standard-Einstellungen für HTML-Tags */
+* html dd {
+        text-indent: -40px;
+}
+
+/* Für fixierte Elemente werden diese Einstellungen evt. benötigt
+* html body {
+	position: absolute;
+	height:  100%;
+	width:   100%;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+
+}
+*/
+
+/* Spezielle styles für die barrierefreie Anzeige, werden von grafischen Browsern ausgeblendet*/
+
+/* Header */
+* html #header {
+	position: absolute !important;
+}
+
+/* Subheader */
+* html #subheader {
+	position: absolute !important;
+	right:    8px;
+}
+
+* html .breadcrumbs {
+	margin-left: 5px;
+}
+
+* html #quicksearch {
+	margin-right: 0px;
+}
+
+/* Navigation */
+* html #menu {
+	position: absolute !important;
+}
+
+* html #menu #formalia {
+	position: relative;
+	left: -76px;
+        overflow:hidden;
+}
+
+* html #menu #menulevel_1.selected {
+        border:           none;
+        background-color: transparent;
+}
+
+* html #menu #menulevel_1.ContentLink {
+        border:           none;
+        background-color: transparent;
+}
+
+* html #menu #menulevel_1.selected div {
+        border:     1px solid #ff3333;
+
+        color:            #ffffff;
+        background-color: #ff3333;
+}
+
+* html #menu #menulevel_1.contentLink div {
+        border:     1px solid #ff3333;
+
+        color:            #ffffff;
+        background-color: #dc0000;
+}
+
+* html #menu #menulevel_2.selected {
+        border:           none;
+        background-color: transparent;
+}
+
+* html #menu #menulevel_2.contentLink {
+        border:           none;
+        background-color: transparent;
+}
+
+* html #menu #menulevel_2.selected div{
+        border:     1px solid #faddba;
+
+        color:            #000000;
+        background-color: #faddba;
+}
+
+* html #menu #menulevel_2.contentLink div {
+        border:     1px solid #faddba;
+
+        color:            #000000;
+        background-color: #ff9966;
+}
+
+* html #menu #menulevel_3.selected {
+        border:           none;
+        background-color: transparent;
+}
+
+* html #menu #menulevel_3.contentLink {
+        border:           none;
+        background-color: transparent;
+}
+
+* html #menu #menulevel_3.selected div{
+        border:     1px solid #fdffed;
+
+        color:            #000000;
+        background-color: #fdffed;
+}
+
+* html #menu #menulevel_3.contentLink div {
+        border:     1px solid #fdffed;
+
+        color:            #000000;
+	background-color: #ffcc99;
+}
+
+
+
+/* Footer */
+* html #footer {
+	position: relative !important;
+	left:     0px;
+	bottom:   0px;
+	height:   15px;
+	width:    100%;
+}
+
+/* Info */
+* html #info {
+	width: 180px !important;
+}
+	
+* html #info li {
+	margin-left: 10px;
+	margin-right: 10px;
+
+	font-size: 0.7em;
+}
+
+/* Content */
+* html #content {
+/* Hier muß gearbeitet werden, wenn Elemente fest auf der Seite verankert sein sollen
+	position: absolute;
+	top: 130px;
+	bottom: 50px;
+	left: 180px;
+	right: 210px;	
+
+
+	margin: 0px 50px;
+	padding: 0px;
+*/
+}
+
+*html #image {
+	width: 15% !important;
+}
+
+/* Sitemap */
+* html #sitemapList ul li {
+	display: block;
+	margin:  0px;
+	padding: 0px;
+
+	background-color: #dddddd;
+
+	list-style-type: none;
+}
+
+* html #sitemapList ul li ul li{
+	color:            #dddddd;
+	background-color: #eeeeee;
+
+	list-style-type: square;
+}
+
+/* Formulare */
+* html form #title {
+        background-color: #f6f6f6;
+}
+
+* html form #option input {
+        border: none;
+}

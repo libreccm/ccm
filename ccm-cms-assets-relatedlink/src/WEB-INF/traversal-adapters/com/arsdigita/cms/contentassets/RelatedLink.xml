@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  <!-- First off the adapters for ContentItemPanel -->
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <!-- Individual article sections -->
+    <xrd:adapter objectType="com.arsdigita.cms.contentassets.RelatedLink">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/displayName"/>
+
+        <xrd:property name="/object/targetItem/id"/>
+        <xrd:property name="/object/targetItem/defaultDomainClass"/>
+        <xrd:property name="/object/targetItem/displayName"/>
+        <xrd:property name="/object/targetItem/isDeleted"/>
+        <xrd:property name="/object/targetItem/ancestors"/>
+        <xrd:property name="/object/targetItem/version"/>
+        <xrd:property name="/object/targetItem/name"/>
+        <xrd:property name="/object/targetItem/language"/>
+        <xrd:property name="/object/targetItem/content"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/targetItem"/>
+        <xrd:property name="/object/targetItem/imageAttachments"/>
+        <xrd:property name="/object/targetItem/imageAttachments/image"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>

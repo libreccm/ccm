@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=444}]"><cms:name>arts-and-leisure-444</cms:name><cms:language>en</cms:language><cms:title>Mobile Library</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=444}]"><cms:name>arts-and-leisure-444-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>mobile, library</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=444}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently asked questions regarding the Mobile Library Service</i></p><hr/><ul>
+				<li title="*">
+
+		<a href="#1">What is the mobile library?</a>	
+				</li>
+				<li title="*">
+
+		<a href="#2">Are there any age restrictions?</a>	
+				</li>
+				<li title="*">
+
+		<a href="#3">How do I join?</a>	
+				</li>
+				<li title="*">
+
+		<a href="#4">How much choice is there?</a>	
+				</li>
+				<li title="*">
+
+		<a href="#5">Where do they stop?</a>	
+				</li>
+						</ul><h2>
+				
+			What is the mobile library?</h2><p>There are<span class="gen">enter amount</span> mobile libraries serving <span class="gen">enter location</span> visiting <span class="gen">enter amount</span> 
+  stops weekly.</p><p>
+				Disabled Access; <span class="gen">enter details</span>
+			</p><h2>
+				
+			Are there age restrictions?</h2><p>No - we welcome visitors of all ages.</p><h2>
+				
+			How do I join?</h2><p>If you are already a member of <span class="gen">enter council name</span> Library service you need do nothing. </p><p>If you are not yet a member you can 
+		<a href="/ccm/services/pid.jsp?pid=438">download an application 
+  form here</a>	 <span class="gen">link to pid 438</span> 
+  or collect one on your first visit to the mobile Library.</p><h2>
+				
+			How much choice is there?</h2><p>We carry a wide range of materials. If the book you require 
+  is not currently on the mobile library you can request it and we will try to get 
+  it for you.</p><h2>
+				
+			Where do they stop?</h2><p>See below for details of the route.</p><p>
+				<span class="gen">enter details</span>
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=444"> Providing Information
+		(444)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

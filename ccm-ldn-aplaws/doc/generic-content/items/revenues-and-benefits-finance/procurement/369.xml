@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=369}]"><cms:name>approved-suppliers-369</cms:name><cms:language>en</cms:language><cms:title>Approved Suppliers</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=369}]"><cms:name>approved-suppliers-369-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>approved, suppliers</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=369}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>An approved list of suppliers and/or contractors is maintained, compiled after a public notice inviting applications for inclusion has appeared in one or more newspapers and journals. The approved list of suppliers and/or contractors is amended as required from time to time and is reviewed at intervals not exceeding three years.</i></p><hr/><h3>Current Contracts</h3><p>The following information is in relation to currently awarded contracts.</p><table width="90%" cellpadding="5" class="centre" summary="Services">
+			<tr>
+				<td>Services</td>
+			</tr>
+			<tr>
+				<th>Title of Contract</th>
+				<th>Supplier</th>
+				<th>Date of</th>
+				<th>Lead Service</th>
+			</tr>
+			<tr>
+				<th>Award</th>
+				<th>Renewal?</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+			</tr>
+		</table><table width="90%" cellpadding="5" class="centre" summary="Goods and Supplies">
+			<tr>
+				<td>Goods and Supplies</td>
+			</tr>
+			<tr>
+				<th>Title of Contract</th>
+				<th>Supplier</th>
+				<th>Date of</th>
+				<th>Lead Service</th>
+			</tr>
+			<tr>
+				<th>Award</th>
+				<th>Renewal?</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+			</tr>
+		</table><table width="90%" cellpadding="5" class="centre" summary="Works">
+			<tr>
+				<td>Works</td>
+			</tr>
+			<tr>
+				<th>Title of Contract</th>
+				<th>Supplier</th>
+				<th>Date of</th>
+				<th>Lead Service</th>
+			</tr>
+			<tr>
+				<th>Award</th>
+				<th>Renewal?</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+				<td>
+					<span class="gen">enter details here</span>
+				</td>
+			</tr>
+		</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=369"> Providing Information
+		(369)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

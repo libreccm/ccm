@@ -1,0 +1,13 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="org.undp.weblog.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-weblog"/>
+  </scripts>
+</load>

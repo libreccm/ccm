@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=765}]"><cms:name>batch-13-765</cms:name><cms:language>en</cms:language><cms:title>Port Information</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=765}]"><cms:name>batch-13-765-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>port, information</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=765}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Associated British Ports (ABP) is the UK's leading ports business, providing innovative and high-quality port facilities and services to shippers and cargo owners</i></p><hr/><p>
+			
+		<a href="http://www.abports.co.uk/">
+				<strong>ABP</strong>
+			</a>	
+			<span class="gen">link to external website</span>  owns and operates 21 ports all around the UK and handles approximately a quarter of the country's seaborne trade. Its ports are: Ayr, Barrow, Barry, Cardiff, Fleetwood, Garston, Goole, Grimsby, Hull, Immingham, Ipswich, King's Lynn, Lowestoft, Newport, Plymouth, Port Talbot, Silloth, Southampton, Swansea, Teignmouth and Troon.</p><p>Information on Ports in the United Kingdom, including those not owned and operated by ABP can be found via 
+		<a href="http://www.ports.com/">
+				<strong>www.ports.com</strong>
+			</a>	
+			<span class="gen">link to external website</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=765"> Providing Information
+		(765)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

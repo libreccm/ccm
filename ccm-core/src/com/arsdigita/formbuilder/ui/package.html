@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<title>com.arsdigita.formbuilder.ui</title>
+</head>
+
+<body>
+<p>
+The Form Builder UI provides a number of embeddable bebop components
+to facilitate integration of the form builder service with applications.
+The main components for applications to use are:
+</p>
+
+<ul>
+<li>ControlEditor - a component for editing the controls on a
+persistent form section. The form section to be editted is passed
+in through a selection model.
+<li>ProcessListenerEditor - a component for controlling the process
+listeners added to a form section. The form section to be altered
+is passed in through a selection model.
+</ul>
+
+<p>
+Both these components are very configurable, allowing the forms
+used for adding / editing widets to be totally customized on a per
+application basis. The default implementations of these forms 
+for all the bebop widgets can found inthe com.arsdigita.formbuilder.ui.editors
+package. New controls can be registered using the widgetTypes and
+processListenerTypes parameters in the enterprise.init.in (see the
+standard file for example entries).
+</p>
+
+<p>
+For an example use of the form builder UI components take a look
+at the FormItem content type and its authoring kit in the CMS
+application.
+</p>
+
+</body>
+</html>

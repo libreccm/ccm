@@ -1,0 +1,42 @@
+prefix=@prefix@
+sysconfdir=@sysconfdir@
+
+CCM_DEVEL_CONF_DIR=${sysconfdir}/ccm-devel
+CCM_DEVEL_ROOT=/var/ccm-devel
+CCM_RPM_DIR="${CCM_DEVEL_ROOT}/rpm/$USER"
+
+export CCM_DEVEL_CONF_DIR
+export CCM_DEVEL_ROOT
+export CCM_RPM_DIR
+
+alias ccm-profile='. ccm-devel-profile.sh'
+
+# Set up ccm-profile completion
+# In order for this to work, we must be on a GNU/Linux OS running Bash >= 2.04
+if [ "x${BASH_VERSINFO}" != "x" ] && [ "$OSTYPE" = "linux-gnu" ]; then
+  if [ ${BASH_VERSINFO[0]} '>' 2 ] ||
+     ( [ ${BASH_VERSINFO[0]} '=' 2 ] && [ ${BASH_VERSINFO[1]} '>' 03 ] ); then
+
+        complete_ccm_dev_profiles() {
+          for dir in `ls --color=never -d ${CCM_DEVEL_ROOT}/dev/${USER}/$2* 2>/dev/null`; do
+            COMPREPLY[${#COMPREPLY[*]}]=`basename $dir`
+          done
+        }
+
+        complete -F complete_ccm_dev_profiles ccm-profile
+  fi
+fi;
+
+CCM_CONFIG_HOME="@datadir@/@PACKAGE@"
+CCM_DEVEL_HOME="@datadir@/@PACKAGE@"
+CCM_CONFIG_LIB_DIR="@datadir@/java"
+CCM_DIST_HOME="@datadir@/@PACKAGE@"
+CCM_SHARED_LIB_DIST_DIR="@datadir@/java"
+CCM_WEBAPP_DIST_DIR="@datadir@/java/webapps"
+
+export CCM_CONFIG_HOME
+export CCM_CONFIG_LIB_DIR
+export CCM_DEVEL_HOME
+export CCM_DIST_HOME
+export CCM_SHARED_LIB_DIST_DIR
+export CCM_WEBAPP_DIST_DIR

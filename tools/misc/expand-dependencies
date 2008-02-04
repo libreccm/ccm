@@ -1,0 +1,76 @@
+#! /usr/bin/perl -w
+
+use strict;
+
+sub traverse_deps ($$$);
+sub get_direct_deps ($);
+
+if ($#ARGV != 1) {
+    print "syntax: expand-dependencies BUILD_DIR ccm-app-name\n:";
+    exit -1;
+}
+
+my ($build_dir, $app_name) = (shift, shift);
+my %alldeps;
+traverse_deps($build_dir, $app_name, \%alldeps);
+foreach (keys %alldeps) {
+    print "$_ -> $alldeps{$_}\n";
+}
+exit;
+
+
+# Given the app name, finds all direct dependencies this
+# app has (calling get_direct_deps), and then recursively
+# calls itself to expand the dependency list.
+# The final list is automagically freed from duplicates,
+# thanks to hashes.
+#
+#   Arguments:
+#     1. BUILD_DIR
+#     2. app name
+#     3. reference to expanded dependency hash (processed so far).
+#
+sub traverse_deps ($$$) {
+    my ($build_dir, $app_name, $expanded_deps_ref) = (shift, shift, shift);
+    my $xml_file = "$build_dir/$app_name/$app_name/application.xml";
+    my %deps = get_direct_deps($xml_file);
+    foreach (keys %deps) {
+        $expanded_deps_ref->{$_} = $deps{$_};
+        traverse_deps($build_dir, $_, $expanded_deps_ref);
+    }
+}
+
+
+# Parses the application.xml for the given app
+# and returns the hash with required app names as keys,
+# and version number and relation as value.
+#  Arguments:
+#    1. path to application.xml
+#  Returns:
+#    - hash of the form:
+#       ccm-ldn-util -> version="1.4.1"
+#       ccm-core -> version="6.1.0" relation="ge"
+#       ccm-ldn-terms -> version="1.0.1"
+#       ccm-cms -> version="6.1.0"
+#
+sub get_direct_deps ($) {
+    my $app_filepath = shift;
+    my %deps;
+    open FILE, "<$app_filepath"  or die "Could not open app file: $app_filepath";
+    my @app_xml = <FILE>;
+    my $app_name;
+    #  First get the app name out of XML
+    if ("@app_xml" =~ m{<ccm:application\b[^>]*\bname="([^"]+)"[^>]*>}s) {
+        $app_name = $1;
+    } else {
+        die "Could not find application name in $app_filepath";
+    }
+
+    #  Extract the <ccm:dependencies> block
+    if ("@app_xml" =~ m{<ccm:dependencies>(.*)</ccm:dependencies>}s) {
+        $_ = $1;
+        %deps = m{<ccm:requires name="([^"]*)"([^/>]*)/>}sg;
+    }
+    return %deps;
+}
+

@@ -1,0 +1,210 @@
+/*
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.cms.ui.category;
+
+
+import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.Grid;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.RequestLocal;
+import com.arsdigita.bebop.Table;
+import com.arsdigita.bebop.table.TableCellRenderer;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.dispatcher.ItemResolver;
+import com.arsdigita.cms.ui.CMSContainer;
+import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.KernelHelper;
+import com.arsdigita.kernel.User;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.toolbox.ui.DataQueryListModelBuilder;
+import com.arsdigita.util.Assert;
+
+/**
+ * Displays a list of items for the given category
+ *
+ * WARNING: The code to actually list the items is currently a travesty.
+ * It needs to be re-written from scratch, by using custom data queries.
+ */
+public class CategoryItemsBrowser extends Grid {
+
+    public static final String versionId = "$Id: CategoryItemsBrowser.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
+
+    private static final org.apache.log4j.Logger s_log =
+        org.apache.log4j.Logger.getLogger(CategoryItemsBrowser.class);
+
+    private RequestLocal m_resolver;
+
+    private String m_context;
+
+    /**
+     * Construct a new CategoryItemsBrowser
+     * <p>
+     * The {@link SingleSelectionModel} which will provide the
+     * current category
+     *
+     * @param sel the {@link ACSObjectSelectionModel} which will maintain
+     *   the current category
+     *
+     * @param numCols the number of columns in the browser
+     *
+     * @param context the context for the retrieved items. Should be
+     *   {@link com.arsdigita.cms.ContentItem#DRAFT} or {@link com.arsdigita.cms.ContentItem#LIVE}
+     */
+    public CategoryItemsBrowser(ACSObjectSelectionModel sel, int numCols,
+                                String context) {
+        super(null, numCols);
+        super.setModelBuilder(new CategoryItemModelBuilder(sel));
+        m_context = context;
+
+        setRowSelectionModel(sel);
+        setEmptyView(new Label(GlobalizationUtil.globalize
+                               ("cms.ui.category.item.none")));
+
+        // Cache the item resolver
+        m_resolver = new RequestLocal() {
+                public Object initialValue(PageState s) {
+                    ContentSection section =
+                        CMS.getContext().getContentSection();
+                    final ItemResolver itemResolver = section.getItemResolver();
+                    s_log.warn("Item resolver is" + itemResolver.getClass());
+                    return itemResolver;
+                }
+            };
+
+        setDefaultCellRenderer(new ItemSummaryCellRenderer());
+    }
+
+    /**
+     * @return the current context
+     */
+    public String getContext() {
+        return m_context;
+    }
+
+    /**
+     * @param context the new context for the items. Should be
+     *   {@link com.arsdigita.cms.ContentItem#DRAFT} or {@link com.arsdigita.cms.ContentItem#LIVE}
+     */
+    public void setContext(String context) {
+        Assert.assertNotLocked(this);
+        m_context = context;
+    }
+
+    /**
+     * Iterates through all the children of the given Category
+     */
+    private class CategoryItemModelBuilder
+        extends DataQueryListModelBuilder {
+
+        private ACSObjectSelectionModel m_sel;
+
+        public CategoryItemModelBuilder(ACSObjectSelectionModel sel) {
+            super(ContentPage.QUERY_PAGE + "." + ACSObject.ID,
+                  ContentPage.QUERY_PAGE);
+            m_sel = sel;
+        }
+
+        public DataQuery getDataQuery(PageState s) {
+            Category cat = (Category)m_sel.getSelectedObject(s);
+
+            ContentSection section = CMS.getContext().getContentSection();
+            User user = KernelHelper.getCurrentUser( s.getRequest() );
+            OID oid = null;
+            if (user != null) {
+                oid = user.getOID();
+            }
+            // If the category is the root, list all items
+            if(cat == null || (cat.equals(section.getRootCategory()))) {
+                return ContentPage.getPagesInSectionQuery
+                    (section, getContext(), oid);
+            } else {
+                return ContentPage.getPagesInSectionQuery
+                    (section, getContext(), cat, oid);
+            }
+        }
+    }
+
+    /**
+     * Renders a ContentItem in preview mode
+     */
+    private class ItemSummaryCellRenderer
+        implements TableCellRenderer {
+
+        public Component getComponent(Table table, PageState state, Object value,
+                                      boolean isSelected, Object key,
+                                      int row, int column) {
+
+            if(value == null)
+                return new Label("&nbsp;", false);
+
+            DomainObject d = DomainObjectFactory.newInstance((DataObject)value);
+
+            Assert.assertTrue(d instanceof ContentPage);
+            ContentPage p = (ContentPage)d;
+
+            CMSContainer box = new CMSContainer();
+            Component c;
+
+            ContentSection section =
+                CMS.getContext().getContentSection();
+
+            ItemResolver resolver = (ItemResolver)m_resolver.get(state);
+
+            final String url = resolver.generateItemURL
+                                     (state, p.getID(), p.getName(), section,
+                                      resolver.getCurrentContext(state));
+            c = new Link(p.getTitle(), url);
+
+            c.setClassAttr("title");
+            box.add(c);
+
+            String summary = p.getSearchSummary();
+            if(summary != null && summary.length() > 0) {
+                c = new Label(summary);
+                c.setClassAttr("summary");
+                box.add(c);
+            }
+
+            ContentType t = p.getContentType();
+            if(t != null) {
+                c = new Label(t.getLabel());
+            } else {
+                c = new Label(GlobalizationUtil.globalize("cms.ui.category.item"));
+            }
+            c.setClassAttr("type");
+            box.add(c);
+
+            box.setClassAttr("itemSummary");
+
+            return box;
+        }
+    }
+}

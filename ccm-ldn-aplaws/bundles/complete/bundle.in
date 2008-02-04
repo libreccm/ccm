@@ -1,0 +1,4 @@
+BUNDLE_NAME=aplaws-plus-complete
+BUNDLE_PRETTY_NAME="APLAWS+ Complete Bundle"
+VERSION=1.0.5devel
+RELEASE=1

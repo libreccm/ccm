@@ -1,0 +1,43 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Agenda.pdl 1596 2007-07-10 16:25:57Z p_boy $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.*;
+
+// object type to hold extended attributes of agenda content type
+
+object type Agenda extends TextPage {
+    // The date and time for the agenda
+    Date [0..1]   agendaDate   = ct_agendas.agenda_date TIMESTAMP;
+    // The location for the agenda
+    String [0..1] location     = ct_agendas.location VARCHAR(1000);
+    // The attendees for the agenda
+    String [0..1] attendees    = ct_agendas.attendees VARCHAR(1000);
+    // The subject items for the agenda
+    String [0..1] subjectItems = ct_agendas.subject_items VARCHAR(1000);
+    // Contact information for the agenda
+    String [0..1] contactInfo  = ct_agendas.contact_info VARCHAR(1000);
+    // The summary of the agenda
+    String [0..1] summary      = ct_agendas.summary VARCHAR(4000);
+    // The date the agenda was created
+    Date [0..1]   creationDate = ct_agendas.creation_date DATE;
+
+    reference key (ct_agendas.item_id);
+}

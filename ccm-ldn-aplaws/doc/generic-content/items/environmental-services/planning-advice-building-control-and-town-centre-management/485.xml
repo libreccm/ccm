@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=485}]"><cms:name>planning-485</cms:name><cms:language>en</cms:language><cms:title>Planning - residential</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=485}]"><cms:name>planning-485-dublin-metadata</cms:name><cms:dcAudience>Householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>planning, residential</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=485}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>
+The Planning system plays an important role in modern society by helping to protect the environment in our towns and cities and in the countryside. Planning regulations have to cover many different situations and even the provisions which affect the average householder are quite detailed.
+	</i></p><hr/><p>The general planning principles and the procedures for
+    making a planning application are described in the Office of the Deputy Prime Minister (ODPM) booklet 
+		<a href="http://www.odpm.gov.uk/stellent/groups/odpm_planning/documents/page/odpm_plan_606151.hcsp">Planning - A Guide to
+    Households</a>	.<span class="gen">link to external website</span> 
+
+
+ The 
+		<a href="http://www.planningportal.gov.uk/wps/portal">Planning Portal</a>	
+			<span class="gen">link to external website</span> also offers a wide range of services and guidance on the planning system. </p><p>The rules that say when you need to apply for planning permission will differ according to
+      whether you own a house or a flat/maisonette. </p><p>
+			
+		<a href="http://www.onlineplanningoffices.co.uk/frames.htm">OnlinePlanningOffices.com</a>	
+			<span class="gen">link to external website</span> provides planning application forms, 
+      weekly application lists, tree preservation orders, unitary development 
+      plans and emergency planning.</p><p>Parliament has given the main responsibility for planning
+    to the Local Planning Authorities. If you do have any queries about a particular case, the
+    first thing to do is to contact us using the details at the top of the page.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=485"> Providing Information
+		(485)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

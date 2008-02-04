@@ -1,0 +1,346 @@
+options {
+    STATIC = false;
+    DEBUG_PARSER = false;
+}
+
+PARSER_BEGIN(OQLParser)
+
+package com.redhat.persistence.oql;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * OQLParser
+ *
+ * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
+ * @version $Revision: #11 $ $Date: 2004/02/09 $
+ */
+
+class OQLParser {
+
+    private static Map EXPRESSIONS = new HashMap();
+
+    static {
+        EXPRESSIONS.put("join", Join.class);
+        EXPRESSIONS.put("left", LeftJoin.class);
+        EXPRESSIONS.put("right", RightJoin.class);
+        EXPRESSIONS.put("cross", CrossJoin.class);
+        EXPRESSIONS.put("full", FullJoin.class);
+        EXPRESSIONS.put("filter", Filter.class);
+        EXPRESSIONS.put("sort", Sort.class);
+        EXPRESSIONS.put("offset", Offset.class);
+        EXPRESSIONS.put("limit", Limit.class);
+        EXPRESSIONS.put("exists", Exists.class);
+        EXPRESSIONS.put("size", Size.class);
+    }
+
+    static Expression construct(Token t, List args) {
+        Class klass = (Class) EXPRESSIONS.get(t.image);
+        if (klass == null) {
+            throw new IllegalArgumentException
+                ("no such expression: " + t.image);
+        }
+        Class[] params = new Class[args.size()];
+        for (int i = 0; i < params.length; i++) {
+            params[i] = Expression.class;
+        }
+        try {
+            Constructor cons = klass.getDeclaredConstructor(params);
+            return (Expression) cons.newInstance(args.toArray());
+        } catch (NoSuchMethodException e) {
+            throw new IllegalStateException
+                ("no such method: " + t.image + Arrays.asList(params));
+        } catch (InstantiationException e) {
+            throw new IllegalStateException(e.getMessage());
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e.getMessage());
+        } catch (InvocationTargetException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+
+    static String parseString(String image) {
+        StringBuffer result = new StringBuffer(image.length());
+        for (int i = 1; i < image.length() - 1; i++) {
+            char c = image.charAt(i);
+            if (c == '\\') { c = image.charAt(++i); }
+            result.append(c);
+        }
+        return result.toString();
+    }
+
+    static final String unescape(String str) {
+        StringBuffer result = new StringBuffer(str.length());
+
+        boolean escaped = false;
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (escaped) {
+                result.append(c);
+                escaped = false;
+            } else if (c == '\\') {
+                escaped = true;
+            } else {
+                result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+
+}
+
+PARSER_END(OQLParser)
+
+<DEFAULT,BEGINSQL> SKIP:
+{
+    " "
+  | "\t"
+  | "\n"
+  | "\r"
+  | "\f"
+}
+
+TOKEN:
+{
+    <LPAREN: "(">
+  | <RPAREN: ")">
+  | <COMMA: ",">
+  | <EQ: "=">
+  | <EQUALS: "==">
+  | <DOT: ".">
+  | <AND: "and">
+  | <OR: "or">
+  | <NOT: "not">
+  | <SQL: "sql"> : BEGINSQL
+  | <ALL: "all">
+  | <QUERY: "query">
+  | <#CH: <ESC>|<CHARS>>
+  | <#CHARS: ["a" - "z", "A" - "Z", "_", "$"]>
+  | <#ESC: "\\" ~[]>
+  | <#DIGIT: ["0" - "9"]>
+  | <STRING: "\"" ( ~["\""] | "\\\"" )* "\"">
+  | <INTEGER: ( "+" | "-" )? (<DIGIT>)+>
+  | <DECIMAL: ( "+" | "-" )? (<DIGIT>)* ( "." (<DIGIT>)+ )?
+              ( "E" | "e" ) ( "+" | "-" ) (<DIGIT>)+>
+  | <BOOLEAN: ( "true" | "false" )>
+  | <NULL: "null">
+  | <ID: (<CH>) (<CH>|<DIGIT>)* ( "[]" )?>
+        { matchedToken.image = OQLParser.unescape(image.toString()); }
+}
+
+<BEGINSQL> MORE:
+{
+  <"{"> { image.deleteCharAt(image.length() - 1); } : INSQL
+}
+
+<INSQL> TOKEN:
+{
+    <SQL_EXPRESSION: "}">
+    {
+        image.deleteCharAt(image.length() - 1);
+        matchedToken.image = image.toString();
+    } : DEFAULT
+}
+
+<INSQL> MORE:
+{
+    <~[]>
+}
+
+SPECIAL_TOKEN:
+{
+    <COMMENT: "//" (~["\n", "\r"])* ("\n"|"\r"|"\r\n")>
+}
+
+<DEFAULT> MORE:
+{
+    <"/*"> : INMULTILINE
+}
+
+<INMULTILINE> MORE:
+{
+    <~[]>
+}
+
+<INMULTILINE> SPECIAL_TOKEN:
+{
+    <MULTILINE_COMMENT: "*/"> : DEFAULT
+}
+
+/**
+ * Top level constructs.
+ **/
+
+Query query() :
+{
+    Expression e;
+    Query q;
+    Token t;
+}
+{
+    <QUERY> <LPAREN> e = expression() { q = new Query(e); }
+    ( <COMMA> t = <ID> <EQ> e = expression() { q.fetch(t.image, e); } )*
+    <RPAREN> { return q; }
+  | <EOF> { return null; }
+}
+
+Expression expression() :
+{
+    Expression e;
+}
+{
+    e = define() { return e; }
+}
+
+Expression define() :
+{
+    Expression e;
+    Token t = null;
+}
+{
+    [ LOOKAHEAD(2) t = <ID> <EQ> ] e = binary()
+        { return  t == null ? e : new Define(e, t.image); }
+}
+
+Expression binary() :
+{
+    Expression e;
+}
+{
+    e = or() { return e; }
+}
+
+Expression or() :
+{
+    Expression l, r;
+}
+{
+    l = and() [ <OR> r = or() { return new Or(l, r); } ] { return l; }
+}
+
+Expression and() :
+{
+    Expression l, r;
+}
+{
+    l = equals() [ <AND> r = and() { return new And(l, r); } ] { return l; }
+}
+
+Expression equals() :
+{
+    Expression l, r;
+}
+{
+    l = unary() [ <EQUALS> r = equals() { return new Equals(l, r); } ]
+        { return l; }
+}
+
+Expression unary() :
+{
+    Expression e;
+}
+{
+    e = not() { return e; }
+}
+
+Expression not() :
+{
+    Expression e;
+    boolean not = false;
+}
+{
+    [ <NOT> { not = true; } ] e = get() { return not ? new Not(e) : e; }
+}
+
+Expression get() :
+{
+    Expression e;
+    Token t;
+}
+{
+    e = primitive() ( <DOT> t = <ID> { e = new Get(e, t.image); } )*
+        { return e; }
+}
+
+Expression primitive() :
+{
+    Expression e;
+}
+{
+  ( e = generic() | e = parens() )
+      { return e; }
+}
+
+Expression generic() :
+{
+    Token t;
+    List l;
+    Expression e;
+    String s = null;
+}
+{
+    t = <ID> [ l = exprl() { return construct(t, l); } ]
+      { return new Variable(t.image); }
+  | <SQL> t = <SQL_EXPRESSION>
+      { return new Static(t.image); }
+  | t = <STRING>
+      { return new Literal(parseString(t.image)); }
+  | t = <INTEGER>
+      { return new Literal(new BigInteger(t.image)); }
+  | t = <DECIMAL>
+      { return new Literal(new BigDecimal(t.image)); }
+  | t = <BOOLEAN>
+      { return new Literal(Boolean.valueOf(t.image)); }
+  | t = <NULL>
+      { return new Literal(null); }
+  | e = all()
+      { return e; }
+}
+
+Expression all() :
+{
+    String t;
+}
+{
+    <ALL> <LPAREN> t = type() <RPAREN> { return new All(t); }
+}
+
+String type() :
+{
+    Token t;
+    StringBuffer buf = new StringBuffer();
+}
+{
+    t = <ID> { buf.append(t.image); }
+    ( <DOT> t = <ID> { buf.append('.'); buf.append(t.image); } )*
+        { return buf.toString(); }
+}
+
+List exprl() :
+{
+    Expression e;
+    List l = new ArrayList();
+}
+{
+    <LPAREN> [ e = expression() { l.add(e); }
+               (<COMMA> e = expression() { l.add(e); })* ]<RPAREN>
+        { return l; }
+}
+
+Expression parens() :
+{
+    Expression e;
+}
+{
+    <LPAREN> e = expression() <RPAREN> { return e; }
+}

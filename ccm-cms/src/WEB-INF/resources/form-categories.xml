@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE categories>
+<categories name="Navigation" description="Content navigation">
+    <category name="Feedback">
+        <category name="General"/>
+        <category name="Bugs"/>
+        <category name="Suggestions"/>
+    </category>
+    <category name="Registration">
+        <category name="Events" />
+        <category name="Profile" />
+        <category name="Other" />
+    </category>
+</categories>
+

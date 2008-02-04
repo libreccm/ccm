@@ -1,0 +1,54 @@
+digraph dependence_graph {
+    node[shape=box,fontsize=8,fontname=verdana,height=0.2,width=0.2,style=filled];
+    ranksep=0.05;
+    edge[style=invis];
+    versioned -> coversioned;
+    coversioned -> recoverable;
+    recoverable -> unreachable;
+
+    unreachable -> qualifiers;
+
+    subgraph cluster_legend {
+      label="Legend";
+      fontsize=11;
+
+      versioned[label="versioned",fillcolor=Tomato];
+      coversioned[label="coversioned",fillcolor=Pink];
+      recoverable[fillcolor=LemonChiffon];
+      unreachable;
+      qualifiers[label="rqd: required\ncnt: component\ncst: composite\nvnd: versioned\nunv: unversioned",shape=plaintext];
+    }
+
+    node[fontsize=10];
+    edge[fontsize=9,fontname=verdana,style=solid,minlen=2];
+    "VT2"[fillcolor=Tomato,comment="versioned type"];
+    "VT2" -> "C1"[label="cnt:c1s"];
+    "VT2" -> "UT3"[label="cnt:ut3s"];
+    "VT1"[fillcolor=Tomato,comment="versioned type"];
+    "VT1" -> "VT2";
+    "VTC3"[fillcolor=Tomato,comment="versioned type"];
+    "A1"[fillcolor=LemonChiffon,comment=recoverable];
+    "A1" -> "UT4"[label="rqd:ut4"];
+    "VUT2"[fillcolor=Tomato,comment="versioned type"];
+    "VUT2" -> "UT5"[label="unv,cnt:ut5"];
+    "VUT2" -> "UT6"[label="vnd:ut6s"];
+    "VUT2" -> "UT1"[label="rqd:ut1"];
+    "UT6"[fillcolor=LemonChiffon,comment=recoverable];
+    "UT5"[comment=unreachable];
+    "ROLE2"[fillcolor=Pink,comment="coversioned type"];
+    "ROLE2" -> "ROLE1"[label="vnd:role1s"];
+    "UT4"[fillcolor=Pink,comment="coversioned type"];
+    "C2"[comment=unreachable];
+    "C2" -> "VTC3"[label="rqd,cst:vtc3"];
+    "ROLE1"[fillcolor=Pink,comment="coversioned type"];
+    "ROLE1" -> "ROLE2"[label="vnd:role2s"];
+    "UT3"[fillcolor=Pink,comment="coversioned type"];
+    "UT3" -> "VT2"[label="rqd,cst:vt2"];
+    "C1"[fillcolor=Pink,comment="coversioned type"];
+    "C1" -> "UT4"[label="cnt:ut4"];
+    "C1" -> "A1"[label="rqd:a1s"];
+    "UT2"[comment=unreachable];
+    "UT2" -> "VUT2";
+    "UT1"[fillcolor=LemonChiffon,comment=recoverable];
+    "UT1" -> "UT3"[label="rqd:ut3attr"];
+}

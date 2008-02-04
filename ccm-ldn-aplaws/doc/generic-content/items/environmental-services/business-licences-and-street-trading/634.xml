@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=634}]"><cms:name>licensing-634</cms:name><cms:language>en</cms:language><cms:title>Licence - private hire driver's licences</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=634}]"><cms:name>licensing-634-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, private, hire, driver, licences</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=634}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A licence is required before any person can drive a licensed private hire vehicle. </i></p><hr/><p>Before a licence is granted the applicant must satisfy the Council that:</p><ul>
+			<li title="*">He/she is a fit and proper person to hold a licence;</li>
+			<li title="*">He/she is medically fit;</li>
+			<li title="*">He/she has attained the age of 21 years; </li>
+			<li title="*">He/she has held a full driver's licence (not a provisional licence) granted to the applicant under Part III of the Road Traffic Act 1972 authorising him/her to drive a motor car for at least twelve months prior to the date of the application; </li>
+			<li title="*">He/she must pass a police criminality check carried out by the Criminal Records Bureau (CRB) to ensure safety to the public</li>
+		</ul><p>Once the 
+			
+			<span class="gen">link to online form</span> has been completed, you need to make an appointment to visit our Offices, bringing with you the following documentation:</p><ul>
+			<li title="*">the completed application form</li>
+			<li title="*">your DVLA Driving Licence (original - not a photocopy) showing your current 
+    address</li>
+			<li title="*">your passport or birth certificate</li>
+			<li title="*">2 colour passport type photographs taken within 
+    the last month.</li>
+			<li title="*">fee - currently <span class="gen">enter amount</span>
+			</li>
+		</ul><p>Applications will not be accepted without production of the above.</p><p>The medical form needn't be completed at this stage. You may wait until the necessary 
+  checks have been returned to us and you have passed your topographical test. It 
+  is worth noting that, should you decide to withdraw your application for whatever 
+  reason, the fee paid by you to your GP is non-refundable. Therefore, it 
+  is entirely up to you to decide at which point during the application process that 
+  you have the medical.</p><p>Upon production of the forms at the licensing office, you will be asked to complete 
+  a form to enable us to check with the Criminal Records Bureau for any records held 
+  against you. Please be aware that we normally allow approximately up to 8 weeks 
+  from receipt of your application for return of these checks as this is the average 
+  time that they take.</p><p>Once your application has been accepted and the fee has been paid, an appointment 
+  will be made for you to sit the topographical test.</p><p>We look forward to receiving your application and if you have any difficulty with 
+  any of the forms or have any questions, please contact us on the above contact details.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=634"> Applications for services
+		(634)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=634}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=634}]"/></cms:links></cms:item>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="cms-hook" basedir="." default="compile-hook">
+
+  <target name="compile-hook"/>
+  <target name="clean-build-hook"/>
+  <target name="clean-tests-hook"/>
+  <target name="deploy-hook"/>
+
+</project>
+

@@ -1,0 +1,13 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.bookmarks.installer.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-bookmarks"/>
+  </scripts>
+</load>

@@ -1,0 +1,37 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: AgentPortlet.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.portal;
+
+//This PDL file defines a Portlet that stores a reference to another
+//Portlet, and then uses that Portlet for rendering.
+//
+//This pattern is used with SubPortal customization, because Portlets
+//can not be deep copied at the domain level. The associated Portlet
+//is a Portlet in a SuperPortal, that is NOT in a locked region.
+
+
+object type AgentPortlet extends Portlet {
+
+    composite Portlet[1..1] superportlet = join agentportlets.superportlet_id to portlets.portlet_id; 
+
+    reference key (agentportlets.portlet_id);
+
+}
+

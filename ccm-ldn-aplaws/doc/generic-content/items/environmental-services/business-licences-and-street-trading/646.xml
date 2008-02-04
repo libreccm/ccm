@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=646}]"><cms:name>licensing-646</cms:name><cms:language>en</cms:language><cms:title>Licence - private club - late hours</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=646}]"><cms:name>licensing-646-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, private, club, late, hours</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=646}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Private Members' clubs do not need to have public entertainments licences unless on occasions through the year they are open to the public. </i></p><hr/><p>An example would be a club hiring its function room to another group to have a dinner dance. This is entertainment which requires a 
+		<a href="/ccm/services/pid.jsp?pid=393">
+			<strong>public entertainment licence</strong>
+		</a>	.<span class="gen">link to pid 393</span>
+</p><p> But if a private members club wishes to extend its permitted hours it can apply 
+  to the Licensing Justices for a special hours certificate under Section 78 of the 
+  Licensing Act 1964. This is expressed in identical terms to section 77 but instead 
+  of a public entertainments licence having to be in force in respect of the premises 
+  a 'Certificate of Suitability' has to have been granted under Section 
+  79. </p><p>This certificate of suitability says that the premises would be suitable for 
+  public entertainment and the conditions are identical to those for public entertainments 
+  licences. </p><p>These certificates are granted by the local authority and applications 
+  are treated in a very similar way to Public Entertainment Licence applications. </p><p>
+			
+			
+			<span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=646"> Applications for services
+		(646)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=646}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=646}]"/></cms:links></cms:item>

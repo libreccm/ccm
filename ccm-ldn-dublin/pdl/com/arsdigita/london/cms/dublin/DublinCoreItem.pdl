@@ -1,0 +1,148 @@
+//
+// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+//
+// The contents of this file are subject to the ArsDigita Public 
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.arsdigita.com/ADPL.txt
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.london.cms.dublin;
+
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
+
+
+object type DublinCoreItem extends ContentItem {
+  String dcAudience = ldn_dublin_core_items.audience VARCHAR(4000);
+  String dcContributor = ldn_dublin_core_items.contributor VARCHAR(4000);
+
+  String dcCoverage = ldn_dublin_core_items.coverage VARCHAR(300);
+  String dcCoveragePostcode = ldn_dublin_core_items.coverage_postcode VARCHAR(20);
+  String dcCoverageSpatialRef = ldn_dublin_core_items.coverage_spatial_ref VARCHAR(20);
+  String dcCoverageUnit = ldn_dublin_core_items.coverage_unit VARCHAR(20);
+
+  String dcDateValid = ldn_dublin_core_items.date_valid VARCHAR(100);
+  String dcDisposalReview = ldn_dublin_core_items.disposal_review VARCHAR(100);
+  String dcLanguage = ldn_dublin_core_items.language VARCHAR(3);
+
+  Date   dcTemporalBegin = ldn_dublin_core_items.temporal_begin TIMESTAMP;
+  Date   dcTemporalEnd = ldn_dublin_core_items.temporal_end TIMESTAMP;
+
+  String dcCreatorOwner = ldn_dublin_core_items.creator_owner VARCHAR(300);
+  String dcCreatorContact = ldn_dublin_core_items.creator_contact VARCHAR(120);
+  String dcDescription = ldn_dublin_core_items.description VARCHAR(4000);
+  String dcIdentifier = ldn_dublin_core_items.identifier VARCHAR(4000);
+  String dcPreservation = ldn_dublin_core_items.preservation VARCHAR(4000);
+  String dcPublisher = ldn_dublin_core_items.publisher VARCHAR(4000);
+  String dcRelation = ldn_dublin_core_items.relation VARCHAR(4000);
+  String dcRights = ldn_dublin_core_items.rights VARCHAR(4000);
+  String dcSource = ldn_dublin_core_items.source VARCHAR(4000);
+  String dcCcnPortalInstance = ldn_dublin_core_items.ccn_portal_instance VARCHAR(200);
+
+  String dcKeywords = ldn_dublin_core_items.keywords VARCHAR(4000);
+
+  reference key(ldn_dublin_core_items.dublin_id);
+
+}
+
+association {
+  composite ContentItem[1..1] dcOwner = join ldn_dublin_core_items.item_id
+                                          to cms_items.item_id;
+  component DublinCoreItem[0..1] dublinCore = join cms_items.item_id
+                                                to ldn_dublin_core_items.item_id;
+}
+
+
+// This query returns related items with an exact, or subcategory match.
+query AllRelatedItems {
+   BigDecimal itemID;
+   String title;
+   String type;
+   String objectType;
+
+   do {
+       select distinct i.item_id, 
+              p.title, 
+              t.label,
+	      o.object_type
+         from cms_items i, 
+	      acs_objects o,
+              cms_pages p, 
+              content_types t,
+              cat_object_category_map ocm1,
+              cat_object_category_map ocm2,
+              cat_cat_subcat_trans_index ccs1,
+              cat_cat_subcat_trans_index ccs2,
+              cat_category_purpose_map m
+        where i.version = 'live'
+          and i.item_id <> :itemID
+          and p.item_id = i.item_id
+	  and i.item_id = o.object_id
+          and t.type_id = i.type_id
+          and ocm1.object_id = i.item_id
+          and ocm1.category_id = ccs2.subcategory_id
+          and ocm2.object_id = :itemID
+          and ocm2.category_id = ccs1.subcategory_id
+          and m.purpose_id = :purposeID
+          and ccs1.category_id = m.category_id
+          and ccs2.category_id = ocm2.category_id
+   } map {
+       itemID = i.item_id;
+       title = p.title;
+       type = t.label;
+       objectType = o.object_type;
+   }
+}
+
+// The above query is not entirely clear since I've
+// removed the nested queries in favour of joins
+//
+// The basic plan is:
+//  Get all live content items
+//     with a 'Subject' category matching
+//     a subject category assigned to item foo
+// 
+// The complication is that it needs to treat
+// subject categories heirarchically.
+
+// To do this we pull out all 'subject' categories,
+// then restrict it by those that are assigned to the
+// current item.
+
+// This query should be equivalent to the one above
+// select i.item_id, 
+//         p.title, 
+//         t.label
+//    from cms_items i, 
+//         cms_pages p, 
+//         content_types t,
+//         cat_object_category_map ocm1
+//   where i.version = 'live'
+//     and i.item_id <> 734036
+//     and p.item_id = i.item_id
+//     and t.type_id = i.type_id
+//     and ocm1.object_id = i.item_id
+//     and ocm1.category_id in (
+//         -- Get all categories with the specified
+//         -- category purpose
+//         select ccs1.subcategory_id
+//           from cat_cat_subcat_trans_index ccs1,
+//                cat_category_purpose_map m
+//          where m.purpose_id = 9909
+//            and ccs1.category_id = m.category_id
+//            and ccs.subcategory_id in (
+//                -- Get all categories & children for item
+//                select ccs2.subcategory_id
+//                  from cat_object_category_map ocm2,
+//                       cat_cat_subcat_trans_index ccs2
+//                 where ocm2.object_id = 734036
+//                   and ocm2.category_id = ccs2.category_id
+//                )
+//         );
+//

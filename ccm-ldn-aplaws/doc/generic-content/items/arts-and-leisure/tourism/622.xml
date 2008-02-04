@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=622}]"><cms:name>art-and-leisure-622</cms:name><cms:language>en</cms:language><cms:title>Publicity Grants</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=622}]"><cms:name>art-and-leisure-622-dublin-metadata</cms:name><cms:dcAudience>Businesses</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>publicity, grants</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=622}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A tourism publicity grant is a 'last resort' pot of limited funding available to groups and organisations to help them fill a gap in current tourism provision. </i></p><hr/><p>Examples of this include publicity leaflets or events designed 
+
+  to attract staying visitors to <span class="gen">enter council name</span> 
+
+  The grant is for a maximum of <span class="gen">enter amount</span> 
+
+  per organisation and the amount granted must equate to less than 50% of the total 
+
+  cost of the project.</p><p>For more information contact us using the details above with 
+
+  details of your organisation and an outline of your project.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=622"> Providing Information
+		(622)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

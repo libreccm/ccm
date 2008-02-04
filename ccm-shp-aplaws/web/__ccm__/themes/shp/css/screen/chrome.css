@@ -1,0 +1,51 @@
+/* Dieses CSS ist fr alle Standard-konformen Browser (Gecko, Safari) */
+
+/* Erlaubte Techniken / Befehle:
+
+   - Alle Techniken / Befehle aus basic.css
+     und zus�zlich:
+
+   - HTML-Formate (CSS 2.0 - Standard, Wildcards erlaubt, aber IE hat Probleme mit +, > )
+   - Attributbedingte Formate ([attr]) (nicht fr IE)
+   - Pseudoformate fr alle Elemente (:active...) (nicht fr IE)
+   - Positionsangebe fixed (nicht fr IE)
+   - Gr�enangaben min-/max-width, min-/max-height (nicht fr IE)
+   -
+
+*/
+
+/* Standard-Einstellungen fr HTML-Tags */
+
+/* Spezielle styles fr die barrierefreie Anzeige, werden von grafischen Browsern ausgeblendet*/
+
+/* Header */
+#header {
+	position: fixed !important;
+}
+
+/* Subheader fr Breadcrumbs und Quicksearch */
+#subheader {
+	position: fixed !important;
+}
+
+/* Navigation */
+#menu {
+	position: fixed !important;
+}
+
+/* Footer */
+#footer {
+	position: fixed !important;
+}
+
+/* Info */
+#info {
+	min-width: 10px !important;
+	width:     auto !important;
+	max-width: 180px !important;
+}
+
+/* Content */
+#image {
+	max-width: 300px !important;
+}

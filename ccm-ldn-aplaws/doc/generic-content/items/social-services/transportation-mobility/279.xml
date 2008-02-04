@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=279}]"><cms:name>batch-23-279</cms:name><cms:language>en</cms:language><cms:title>Parking permits (blue badge)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=279}]"><cms:name>batch-23-279-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>parking, permits, blue, badge</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=279}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Blue parking badges allow cars carrying people who are registered blind or people who have severe walking difficulties to be parked near shops, stations and other facilities. </i></p><hr/><p>It replaces the Orange Badge Scheme. Blue Badges are issued as existing badges come up for renewal, or as new applications are processed. Orange Badges will therefore continue to be recognised until they expire. </p><p>The Blue Badge is recognised throughout Europe. </p><h2>Who can get a Blue Badge? </h2><p>You are eligible if: </p><ul>
+			<li title="*">you receive the higher rate of the mobility component of the 
+		<a href="http://www.dwp.gov.uk/lifeevent/benefits/disability_liv_allowance.asp">Disability Living Allowance </a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">you receive a War Pensioners' Mobility Supplement </li>
+			<li title="*">you use a motor vehicle supplied for disabled people by a Government health department </li>
+			<li title="*">you are registered blind </li>
+			<li title="*">you have a severe disability in both upper limbs, regularly drive a motor vehicle but cannot turn the steering wheel of a motor vehicle by hand even if that wheel is fitted with a turning knob </li>
+			<li title="*">you have a permanent and substantial disability which means you are unable to walk or have very considerable difficulty in walking. In this case we may ask you more questions to help us determine whether you are eligible for a badge. </li>
+		</ul><p>Children <strong>under two </strong> years of age <strong>do not qualify </strong> for a badge because they would not normally be expected to be able to walk independently. </p><p>
+			<strong>Organisations </strong> caring for disabled people meeting the above criteria may be able to <strong>get a badge</strong>, but this is entirely <strong>at our discretion. </strong>
+		</p><h2>Where can I find out more? </h2><p>For more information about the Blue Badge you should contact the 
+		<a href="http://www.mobility-unit.dft.gov.uk/#concessions">Department for Transport</a>	. <span class="gen">link to external website</span>
+		</p><p>You could also contact the 
+		<a href="http://www.bluebadge.org">National Association of Blue Badge Holders</a>	. <span class="gen">link to external website</span>
+		</p><h2>How can I apply? </h2><p>Download an 
+			
+			<span class="gen">link to online form</span>or use the contact details above to request one through the post.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=279"> Applications for services
+		(279)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=279}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=279}]"/></cms:links></cms:item>

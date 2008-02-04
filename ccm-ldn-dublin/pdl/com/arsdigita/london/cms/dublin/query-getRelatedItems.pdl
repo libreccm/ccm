@@ -1,0 +1,78 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.dublin;
+
+
+// Pull out all items which have:
+//  * Matching LGCL category ID
+//  * Not in a subcat of the current Nav cat
+//  * Matching first Dublin keywords
+query getRelatedItems {
+    BigDecimal[1..1] itemID;
+    BigDecimal[1..1] workingID;
+    String[1..1] title;
+    String[1..1] type;
+    String[1..1] objectType;
+
+    do {
+       select ci.item_id,
+              ci.master_id,
+              cp.title,
+              ct.label,
+              ao.object_type
+       from
+           (
+           select distinct bdm.object_id as unique_bundle_id
+           from
+               cat_object_category_map bsm,
+               cat_object_category_map bdm,
+               trm_terms tsd,
+               cms_bundles cb
+           where bsm.object_id = :bundleID
+             and bsm.category_id = bdm.category_id
+             and bdm.category_id = tsd.model_category_id
+             and tsd.domain = :subjectDomain
+             and cb.bundle_id = bdm.object_id
+             and bdm.object_id not in (
+                 select bnm.object_id
+                 from cat_object_category_map bnm,
+                      cat_cat_subcat_trans_index sti
+                 where bnm.category_id = sti.subcategory_id
+                 and sti.category_id = :navCategoryID
+           )) unique_bundles,
+           cms_items ci,
+           cms_pages cp,
+           acs_objects ao,
+           content_types ct,
+           ldn_dublin_core_items dci
+       where ci.parent_id = unique_bundles.unique_bundle_id
+         and ci.item_id = cp.item_id
+         and ci.item_id = ao.object_id
+         and ci.item_id != :itemID
+         and ci.type_id = ct.type_id
+         and ci.item_id = dci.item_id
+         and dci.keywords like :keyword || '%'
+         and ci.version = 'live'
+    } map {
+      itemID = ci.item_id;
+      workingID = ci.master_id;
+      title = cp.title;
+      type = ct.label;
+      objectType = ao.object_type;
+    }
+}

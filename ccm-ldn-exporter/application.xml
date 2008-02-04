@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  name="ccm-ldn-exporter"
+  prettyName="exporter"
+  version="6.5.0"
+  release="1">
+  <ccm:directories>
+    <ccm:directory name="src"/>
+    <ccm:directory name="pdl"/>
+    <ccm:directory name="web"/>
+  </ccm:directories>
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-util" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-cms-types-filestorageitem" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-cms-types-mparticle" version="6.2.0" relation="ge"/>
+  </ccm:dependencies>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    Exporter uses a special DomainObjectXMLRenderer to output
+    objects in XML, suitable for later procesing with the
+    importer application.
+  </ccm:description>
+</ccm:application>

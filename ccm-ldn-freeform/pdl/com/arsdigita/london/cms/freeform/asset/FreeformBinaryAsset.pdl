@@ -1,0 +1,12 @@
+
+model com.arsdigita.london.cms.freeform.asset;
+
+import com.arsdigita.cms.*;
+
+object type FreeformBinaryAsset extends Asset {
+
+
+    Blob[0..1] content = ff_freeform_binary_assets.content BLOB;
+    reference key (ff_freeform_binary_assets.asset_id);
+
+}

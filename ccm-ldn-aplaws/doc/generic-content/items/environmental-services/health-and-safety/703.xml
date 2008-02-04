@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=703}]"><cms:name>batch-7-703</cms:name><cms:language>en</cms:language><cms:title>Major emergency incident</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=703}]"><cms:name>batch-7-703-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>major, emergency, incident</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=703}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>As a local authority it is our role to support the emergency services in the case of a major incident. We are on call 24 hours and will coordinate the Councils response during a major incident.</i></p><hr/><h4>What is a major incident/emergency?</h4><ul>
+				<li title="*">Natural disasters such as floods and storms</li>
+				<li title="*">Pollution i.e. spillages, radioactive substances, toxic gases</li>
+				<li title="*">War or terrorism</li>
+				<li title="*">Any incident which is a threat to the welfare of the community</li>
+			</ul><h4>The Emergency Plan</h4><p>The Council has an Emergency Plan in order to deliver services 
+  during a major incident. The plan contains details of actions to be taken following 
+  a request for assistance by the emergency services or the Council. 
+  The following are contained in the plan:</p><ul>
+				<li title="*">Emergency call out list</li>
+				<li title="*">Flood Plan</li>
+				<li title="*">Severe Weather Warnings</li>
+				<li title="*">District Snow Plan</li>
+				<li title="*">Chemical/Biological Incident Plan</li>
+				<li title="*">Rest Centre Plan</li>
+				<li title="*">Media Plan</li>
+			</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=703"> Providing Information
+		(703)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

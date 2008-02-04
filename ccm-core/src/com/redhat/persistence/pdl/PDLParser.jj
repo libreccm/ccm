@@ -1,0 +1,648 @@
+options {
+    STATIC = false;
+    DEBUG_PARSER = false;
+}
+
+PARSER_BEGIN(PDLParser)
+
+package com.redhat.persistence.pdl;
+
+import com.redhat.persistence.pdl.nodes.AggressiveLoadNd;
+import com.redhat.persistence.pdl.nodes.AssociationNd;
+import com.redhat.persistence.pdl.nodes.BindingNd;
+import com.redhat.persistence.pdl.nodes.ColumnNd;
+import com.redhat.persistence.pdl.nodes.DataOperationNd;
+import com.redhat.persistence.pdl.nodes.DbTypeNd;
+import com.redhat.persistence.pdl.nodes.EventNd;
+import com.redhat.persistence.pdl.nodes.FileNd;
+import com.redhat.persistence.pdl.nodes.IdentifierNd;
+import com.redhat.persistence.pdl.nodes.ImportNd;
+import com.redhat.persistence.pdl.nodes.JavaClassNd;
+import com.redhat.persistence.pdl.nodes.JoinNd;
+import com.redhat.persistence.pdl.nodes.JoinPathNd;
+import com.redhat.persistence.pdl.nodes.MappingNd;
+import com.redhat.persistence.pdl.nodes.ModelNd;
+import com.redhat.persistence.pdl.nodes.Node;
+import com.redhat.persistence.pdl.nodes.ObjectKeyNd;
+import com.redhat.persistence.pdl.nodes.ObjectTypeNd;
+import com.redhat.persistence.pdl.nodes.PathNd;
+import com.redhat.persistence.pdl.nodes.PropertyNd;
+import com.redhat.persistence.pdl.nodes.QualiasNd;
+import com.redhat.persistence.pdl.nodes.ReferenceKeyNd;
+import com.redhat.persistence.pdl.nodes.SQLBlockNd;
+import com.redhat.persistence.pdl.nodes.SuperNd;
+import com.redhat.persistence.pdl.nodes.TypeNd;
+import com.redhat.persistence.pdl.nodes.UniqueKeyNd;
+
+/**
+ * PDLParser
+ *
+ * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
+ * @version $Revision: #2 $ $Date: 2004/02/06 $
+ */
+
+class PDLParser {
+
+    public final static String versionId = "$Id: PDLParser.jj 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/02/06 15:43:04 $";
+
+    private static final void ln(Node node, Token t) {
+        node.setLine(t.beginLine);
+        node.setColumn(t.beginColumn);
+    }
+
+    private static final void ln(Node node, Node from) {
+        node.setLine(from.getLine());
+        node.setColumn(from.getColumn());
+    }
+
+    private static final String unescape(String str) {
+        StringBuffer result = new StringBuffer(str.length());
+
+        boolean escaped = false;
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (escaped) {
+                result.append(c);
+                escaped = false;
+            } else if (c == '\\') {
+                escaped = true;
+            } else {
+                result.append(c);
+            }
+        }
+
+        return result.toString();
+    }
+
+}
+
+PARSER_END(PDLParser)
+
+<DEFAULT,BEGIN> SKIP:
+{
+    " "
+  | "\t"
+  | "\n"
+  | "\r"
+  | "\f"
+}
+
+TOKEN:
+{
+    <SEMI: ";">
+  | <EQ: "=">
+  | <DOT: ".">
+  | <COMMA: ",">
+  | <STAR: "*">
+  | <LBRACE: "{">
+  | <RBRACE: "}">
+  | <LBRACKET: "[">
+  | <RBRACKET: "]">
+  | <LPAREN: "(">
+  | <RPAREN: ")">
+  | <COLON: ":">
+}
+
+TOKEN:
+{
+    <OBJECTTYPE: "object" <WS> "type">
+  | <VERSIONED: "versioned">
+  | <UNVERSIONED: "unversioned">
+  | <RETRIEVE: "retrieve">
+  | <INSERT: "insert">
+  | <UPDATE: "update">
+  | <DELETE: "delete">
+  | <ADD: "add">
+  | <REMOVE: "remove">
+  | <CLEAR: "clear">
+  | <ATTRIBUTES: "attributes">
+  | <MODEL: "model">
+  | <IMPORT: "import">
+  | <FOREIGNKEY: "foreign" <WS> "key">
+  | <OBJECTKEY: "object" <WS> "key">
+  | <ALL: "all">
+  | <ASSOCIATION: "association">
+  | <UNIQUE: "unique">
+  | <COMPOSITE: "composite">
+  | <COMPONENT: "component">
+  | <EXTENDS: "extends">
+  | <QUERY: "query">
+  | <RETURNS: "returns">
+  | <DATA_OPERATION: "data" <WS> "operation">
+  | <QUALIAS: "qualias"> : BEGIN
+  | <CALL: "do" <WS> "call"> : BEGIN
+  | <DO: "do"> : BEGIN
+  | <MAP: "map">
+  | <SUPER: "super">
+  | <JOIN: "join">
+  | <TO: "to">
+  | <REFERENCEKEY: "reference" <WS> "key">
+  | <OPTION: "option">
+  | <OPTIONS: "options">
+  | <TRUE: "true">
+  | <FALSE: "false">
+  | <AGGRESSIVE: "aggressive" <WS> "load">
+  | <CLASS: "class">
+  | <ADAPTER: "adapter">
+  | <IMMEDIATE: "immediate">
+  | <#WS: ([" ", "\t", "\n", "\r", "\f"])+>
+}
+
+<BEGIN> MORE:
+{
+  <"{"> { image.deleteCharAt(image.length() - 1); } : INSQL
+}
+
+<INSQL> TOKEN:
+{
+    <SQL: "}">
+    {
+        image.deleteCharAt(image.length() - 1);
+        matchedToken.image = image.toString();
+    } : DEFAULT
+}
+
+<INSQL> MORE:
+{
+    <~[]>
+}
+
+TOKEN:
+{
+    <ID: (<ESC>|<CH>) (<ESC>|<CH>|<DIGIT>)* ( "[]" )?>
+  | <#CH: ["a" - "z", "A" - "Z", "_", "$"]>
+  | <#ESC: "\\" ~[]>
+  | <INT: (<DIGIT>)+>
+  | <#DIGIT: ["0" - "9"]>
+  | <STRINGLIT: "\"" ( ~["\""] | "\\\"" )* "\"">
+}
+
+SPECIAL_TOKEN:
+{
+    <COMMENT: "//" (~["\n", "\r"])* ("\n"|"\r"|"\r\n")>
+}
+
+/**
+ * Top level constructs.
+ **/
+
+FileNd file(String filename) :
+{
+    FileNd f = new FileNd(filename);
+    Node n;
+    f.setLine(0);
+    f.setColumn(0);
+}
+{
+    n = model() <SEMI> { f.add(FileNd.MODEL, n); }
+    ( n = pdl_import() <SEMI> { f.add(FileNd.IMPORTS, n); } )*
+    (   n = object_type() { f.add(FileNd.OBJECT_TYPES, n); }
+      | n = association() { f.add(FileNd.ASSOCIATIONS, n); }
+      | n = data_operation() { f.add(FileNd.DATA_OPERATIONS, n); } )*
+    <EOF>
+    { return f; }
+}
+
+ModelNd model() :
+{
+    ModelNd m = new ModelNd();
+    Node n;
+    Token t;
+}
+{
+    t = <MODEL> idpath(m, ModelNd.PATH) { ln(m, t); return m; }
+}
+
+ImportNd pdl_import() :
+{
+    ImportNd i = new ImportNd();
+    Node n;
+    Token t;
+}
+{
+    t = <IMPORT> idpath(i, ImportNd.PATH)
+    [ <DOT> <STAR> { i.setWildcard(true); } ]
+    { ln(i, t); return i; }
+}
+
+ObjectTypeNd object_type() :
+{
+    Token t;
+    ObjectTypeNd ot = new ObjectTypeNd();
+    Node n;
+}
+{
+    [ <VERSIONED> { ot.setVersioned();} ]
+    ( t = <QUERY> | t = <OBJECTTYPE> )
+        n = id() { ot.add(ObjectTypeNd.NAME, n); }
+    [ ( <EXTENDS> n = type() { ot.add(ObjectTypeNd.EXTENDS, n); }
+       |
+        <CLASS> n = javaClass() { ot.add(ObjectTypeNd.CLASS, n); }
+        <ADAPTER> n = javaClass() { ot.add(ObjectTypeNd.ADAPTER, n); }
+       |
+        <RETURNS> <INT> <DOT> <DOT> ( id() | <INT> )
+        { ot.setReturns(true); } ) ]
+    <LBRACE>
+        ( statement(ot) )*
+    <RBRACE>
+    { ln(ot, t); return ot; }
+}
+
+AssociationNd association() :
+{
+    Token t;
+    AssociationNd a = new AssociationNd();
+    Node n;
+}
+{
+    t = <ASSOCIATION>
+    <LBRACE>
+        n = property() <SEMI> { a.add(AssociationNd.ROLE_ONE, n); }
+        n = property() <SEMI> { a.add(AssociationNd.ROLE_TWO, n); }
+        ( n = property() <SEMI> { a.add(AssociationNd.PROPERTIES, n); } )*
+      [ option_block() ]
+      ( n = event() { a.add(AssociationNd.EVENTS, n); } )*
+    <RBRACE>
+    { ln(a, t); return a; }
+}
+
+DataOperationNd data_operation() :
+{
+    DataOperationNd don = new DataOperationNd();
+    Node nd;
+    Token t;
+}
+{
+    t = <DATA_OPERATION> nd = id() { don.add(DataOperationNd.NAME, nd); }
+    <LBRACE>
+         [ option_block() ]
+         nd = sql_block() { don.add(DataOperationNd.SQL, nd); }
+    <RBRACE>
+    { ln(don, t); return don; }
+}
+
+/**
+ * First level constructs.
+ **/
+
+void statement(ObjectTypeNd ot) :
+{}
+{
+    (   simple_statement(ot) <SEMI>
+      | compound_statement(ot) )
+}
+
+void simple_statement(ObjectTypeNd ot) :
+{}
+{
+    (  LOOKAHEAD(property_stmt()) property_stmt(ot)
+     | object_key(ot)
+     | reference_key(ot)
+     | unique_key(ot)
+     | aggressive_load(ot)
+     | join_stmt(ot) )
+}
+
+void compound_statement(ObjectTypeNd ot) :
+{
+    Node n;
+}
+{
+    (  n = event() { ot.add(ObjectTypeNd.EVENTS, n); }
+     | option_block() )
+}
+
+/**
+ * Simple statements
+ **/
+
+void property_stmt(ObjectTypeNd ot) :
+{
+    PropertyNd p;
+}
+{
+    p = property() { ot.add(ObjectTypeNd.PROPERTIES, p); }
+}
+
+PropertyNd property() :
+{
+    PropertyNd p = new PropertyNd();
+    Node n;
+}
+{
+    [ <IMMEDIATE> { p.setImmediate(); } ]
+    [ ( <VERSIONED> { p.setVersioned(); } |
+        <UNVERSIONED> { p.setUnversioned(); }  ) ]
+
+    [ <UNIQUE> { p.setUnique(); } ]
+    [ ( <COMPONENT> { p.setComponent(); } |
+        <COMPOSITE> { p.setComposite(); } ) ]
+    n = type() { p.add(PropertyNd.TYPE, n); }
+    [ multiplicity(p) ]
+    n = id() { p.add(PropertyNd.NAME, n); ln(p, n); }
+    [ <EQ> ( n = column() | n = join_path() | n = qualias() )
+           { p.add(PropertyNd.MAPPING, n); } ]
+    { return p; }
+}
+
+void multiplicity(PropertyNd p) :
+{
+    boolean isCollection = false;
+    int lower = -1, upper = -1;
+}
+{
+    <LBRACKET> lower = integer()
+         <DOT> <DOT> ( id() { isCollection = true; }
+                       | upper = integer() ) <RBRACKET>
+    {
+        if (lower >= 0) {
+            p.setLower(new Integer(lower));
+        }
+        if (upper >= 0) {
+            p.setUpper(new Integer(upper));
+        }
+        if (isCollection) {
+            p.setUpper(null);
+        }
+    }
+}
+
+QualiasNd qualias() :
+{
+    Token t, q;
+    QualiasNd n;
+}
+{
+    t = <QUALIAS> q = <SQL>
+    { n = new QualiasNd(q.image); ln(n, t); return n; }
+}
+
+void object_key(ObjectTypeNd ot) :
+{
+    Token t;
+    ObjectKeyNd k = new ObjectKeyNd();
+    Node n;
+}
+{
+    t = <OBJECTKEY>
+    <LPAREN>
+        n = id() { k.add(ObjectKeyNd.PROPERTIES, n); }
+        ( <COMMA> n = id() { k.add(ObjectKeyNd.PROPERTIES, n); } )*
+    <RPAREN>
+    { ln(k, t); ot.add(ObjectTypeNd.OBJECT_KEY, k); }
+}
+
+void reference_key(ObjectTypeNd ot) :
+{
+    Token t;
+    ReferenceKeyNd k = new ReferenceKeyNd();
+    Node n;
+}
+{
+    t = <REFERENCEKEY>
+    <LPAREN>
+        n = column() { k.add(ReferenceKeyNd.COLUMN, n); }
+    <RPAREN>
+    { ln(k, t); ot.add(ObjectTypeNd.REFERENCE_KEY, k); }
+}
+
+void unique_key(ObjectTypeNd ot) :
+{
+    Token t;
+    UniqueKeyNd k = new UniqueKeyNd();
+    Node n;
+}
+{
+    t = <UNIQUE>
+    <LPAREN>
+        n = id() { k.add(UniqueKeyNd.PROPERTIES, n); }
+        ( <COMMA> n = id() { k.add(UniqueKeyNd.PROPERTIES, n); } )*
+    <RPAREN>
+    { ln(k, t); ot.add(ObjectTypeNd.UNIQUE_KEYS, k); }
+}
+
+void aggressive_load(ObjectTypeNd ot) :
+{
+    Token t;
+    AggressiveLoadNd l = new AggressiveLoadNd();
+    Node n;
+}
+{
+    t = <AGGRESSIVE>
+    <LPAREN>
+        n = path() { l.add(AggressiveLoadNd.PATHS, n); }
+        ( <COMMA> n = path() { l.add(AggressiveLoadNd.PATHS, n); } )*
+    <RPAREN>
+    { ln(l, t); ot.add(ObjectTypeNd.AGGRESSIVE_LOAD, l); }
+}
+
+void join_stmt(ObjectTypeNd ot) :
+{
+    JoinPathNd j;
+}
+{
+    j = join_path() { ot.add(ObjectTypeNd.JOIN_PATHS, j); }
+}
+
+/**
+ * Compound statements
+ **/
+
+EventNd event() :
+{
+    EventNd ev = new EventNd();
+    Token t, s;
+    Node n;
+}
+{
+    ( ( ( t = <INSERT> | t = <UPDATE> | t = <DELETE> )
+       |
+        ( ( t = <ADD> | t = <REMOVE> | t = <CLEAR> )
+          [ n = id() { ev.add(EventNd.NAME, n); } ] )
+       |
+        ( t = <RETRIEVE> [ t = <ALL> | t = <ATTRIBUTES> |
+                           n = id() { ev.add(EventNd.NAME, n); } ] ) )
+      <LBRACE>
+          ( n = sql_block() { ev.add(EventNd.SQL, n); }
+            | s = <SUPER> <SEMI>
+              { n = new SuperNd(); ln(n, s); ev.add(EventNd.SUPERS, n); } )*
+      <RBRACE>
+      { ev.setType(EventNd.getType(t.image)); ln(ev, t); }
+     |
+      n = sql_block() { ev.add(EventNd.SQL, n);
+                        ev.setType(EventNd.getType("all"));
+                        ln(ev, n); } )
+    { return ev; }
+}
+
+SQLBlockNd sql_block() :
+{
+    SQLBlockNd sql;
+    Node n;
+    Token l, t;
+}
+{
+    ( l = <CALL> | l = <DO> ) t = <SQL> { sql = new SQLBlockNd(t.image); }
+    [ <MAP> <LBRACE> ( mapStatement(sql) <SEMI> )+ <RBRACE> ]
+    { ln(sql, l); return sql; }
+}
+
+void mapStatement(SQLBlockNd sql) :
+{}
+{
+    ( LOOKAHEAD(binding()) binding(sql) | mapping(sql) )
+}
+
+void binding(SQLBlockNd sql) :
+{
+    BindingNd b = new BindingNd();
+    Node n;
+}
+{
+    n = path() { ln(b, n); b.add(BindingNd.PATH, n); } <COLON>
+    n = db_type() { b.add(BindingNd.TYPE, n); }
+    { sql.add(SQLBlockNd.BINDINGS, b); }
+}
+
+void mapping(SQLBlockNd sql) :
+{
+    MappingNd m = new MappingNd();
+    Node n;
+}
+{
+    n = path() { ln(m, n); m.add(MappingNd.PATH, n); } <EQ>
+    n = path() { m.add(MappingNd.COLUMN, n); }
+    { sql.add(SQLBlockNd.MAPPINGS, m); }
+}
+
+void option_block() :
+{}
+{
+    <OPTIONS> <LBRACE> ( option() <SEMI> )+ <RBRACE>
+}
+
+void option() :
+{}
+{
+    id() <EQ> optionValue()
+}
+
+void optionValue() :
+{}
+{
+    <TRUE>
+  | <FALSE>
+  | <STRINGLIT>
+}
+
+/**
+ * Shared definitions
+ **/
+
+JoinPathNd join_path() :
+{
+    JoinPathNd p = new JoinPathNd();
+    Node n;
+}
+{
+    n = join() { ln(p, n); p.add(JoinPathNd.JOINS, n); }
+    ( <COMMA> n = join() { p.add(JoinPathNd.JOINS, n); } )*
+    { return p; }
+}
+
+JoinNd join() :
+{
+    Token t;
+    JoinNd j = new JoinNd();
+    Node n;
+}
+{
+    t = <JOIN> n = column() { j.add(JoinNd.FROM, n); }
+    <TO> n = column() { j.add(JoinNd.TO, n); }
+    { ln(j, t); return j; }
+}
+
+ColumnNd column() :
+{
+    ColumnNd c = new ColumnNd();
+    Node n;
+}
+{
+    n = id() { ln(c, n); c.add(ColumnNd.TABLE, n); }
+    <DOT> n = id() { c.add(ColumnNd.NAME, n); }
+    [ n = db_type() { c.add(ColumnNd.TYPE, n); } ]
+    { return c; }
+}
+
+DbTypeNd db_type() :
+{
+    DbTypeNd d = new DbTypeNd();
+    Node n;
+    int i;
+}
+{
+    n = id() { d.add(DbTypeNd.NAME, n); }
+    [ <LPAREN>
+          i = integer() { d.setSize(i); }
+          [ <COMMA> i = integer() { d.setScale(i); } ]
+    <RPAREN> ]
+    { ln(d, n); return d; }
+}
+
+TypeNd type() :
+{
+    TypeNd t = new TypeNd();
+}
+{
+    idpath(t, TypeNd.IDENTIFIERS)
+    { return t; }
+}
+
+PathNd path() :
+{
+    PathNd p = new PathNd();
+}
+{
+    idpath(p, PathNd.PATH)
+    { return p; }
+}
+
+JavaClassNd javaClass() :
+{
+    JavaClassNd j = new JavaClassNd();
+}
+{
+    idpath(j, JavaClassNd.IDENTIFIERS)
+    { return j; }
+}
+
+void idpath(Node n, Node.Field f) :
+{
+    IdentifierNd i;
+}
+{
+    i = id() { ln(n, i); n.add(f, i); }
+    ( LOOKAHEAD(2) <DOT> i = id() { n.add(f, i); } )*
+}
+
+IdentifierNd id() :
+{
+    IdentifierNd i;
+    Token t;
+}
+{
+    t = <ID> {
+        i = new IdentifierNd(unescape(t.image));
+        ln(i, t);
+        return i;
+    }
+}
+
+int integer() :
+{
+    Token t;
+}
+{
+    t = <INT> { return Integer.parseInt(t.image); }
+}

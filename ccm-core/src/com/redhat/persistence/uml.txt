@@ -1,0 +1,447 @@
+The persistence implementation consists of a Session layer and a
+persistence engine. The Session provides an interface to client code
+and is responsible for caching persisted data in memory and recording
+what changes are made during a transaction. It uses the Engine
+implementation to retrieve data from and write data to the storage
+mechanism. All I/O is performed through the Query interface and the
+Event interface. The Query interface describes a request for the data
+contained in some subset of the object graph. The Query interface is
+powerful enough to describe complex queries against the object graph
+and flexible enough to fetch a single attribute of a single object.
+Because of this it is the only interface necessary to accomplish all
+input from the storage mechanism that the Session requires.
+
+The Session stores modifications made to the object graph in the form
+of an Event stream. It expands any compound events and then passes on
+the expanded event stream to the PersistenceEngine for writing to the
+storage mechanism. Typically this storage mechanism will be an RDBMS,
+but this is not required. Storage to an XML file (for export/import)
+or to an in memory data structure (for unit testing) are just some
+cases where other storage mechanisms may be desirable.
+
+Client Interface of the Session Layer:
+
+  .----------------------------------------------.
+  |                   Session                    |
+  |----------------------------------------------|
+  | retrieve(Query): PersistentCollection        |
+  | create(OID): PersistentObject                |
+  | delete(OID): PersistentObject                |
+  | set(OID, Property, Object)                   |
+  | add(OID, Property, Object): PersistentObject |
+  | remove(OID, Property, Object)                |
+  | commit()                                     |
+  | rollback()                                   |
+  '----------------------------------------------'
+      /|\1    /|\1
+       |       |
+       |       | n
+       |     .-----------------------.       .--------------------------------.
+       |     |   PersistentObject    |       |              OID               |
+       |     |-----------------------|      1|--------------------------------|
+       |     | getSession(): Session |------>| getObjectType(): ObjectType    |
+       |     | getOID(): OID         |       |                                |
+       |     '-----------------------'       '--------------------------------'
+       |
+       |     .---------------------.        .-----------.
+       |     |       DataSet       |        |   Query   |
+       |     |---------------------|       1|-----------|
+       '-----|                     |------->|           |
+             | getCursor(): Cursor |        |           |
+             |                     |        |           |
+              ---------------------'        '-----------'
+
+
+The following diagram describes the form of a query made against the
+object model. A query consists of a Signature, a Filter, and an Order.
+The Signature of the Query identifies what ObjectType the query will
+return and what portions of the object graph starting from that object
+will be retrieved. The Filter is typically a compound filter such as
+an And or an Or that is made up from the primitive filters such as EQ,
+LT, LTE, etc. These primitive filters filter a value. This value must
+appear in the Signature of the query. The In and Contains filter are
+an example of yet another kind of filter because they operate on a
+property and another Query. The Order specifies the order in which the
+results are to be returned based on the values in the Signature.
+
+
+  Query
+    |    1
+    |-----> Signature
+    |          |  |     1
+    |          |  '------> ObjectType
+    |          |n
+    |       1 \|/       1
+    |     .-->Path ------> Property
+    |     |___| /|\
+    |           1|__________
+    |    1                  |
+    |-----> Filter          |
+    |        /_\            |
+    |         |             |
+    |         |--And        |
+    |         |--Or         |
+    |         |--Not        |
+    |         |--EQ         |
+    |         |--LT         |
+    |         |--LTE        |
+    |         |--Like       |
+    |         |--In         |
+    |          --Contains   |
+    |    n                  |
+    '-----> Order           |
+              |             |
+              |_____________|
+                     |
+                isAscending
+
+
+
+The session does all of its IO through the PersistenceEngine
+interface. The PersistenceEngine is responsible for accepting queries
+of the form described above and producing a result Cursor, and
+additionally responsible for performing transactional writes through
+use of the begin, commit, rollback and execute(EventStream) methods.
+
+  Session
+    /|\ 1
+     |         .----------------------------------------------.
+     |      1  |                   Engine                     |
+     '-------->|----------------------------------------------|
+               | commit()                                     |
+               | rollback()                                   |
+               | execute(Query): RecordSet                    |
+               | write(Event)                                 |
+               | flush()                                      |
+               | ...                                          |
+               | getAnd                                       |
+               | getOr                                        |
+               | ...                                          |
+               | getCreate(ObjectData): CreateEvent           |
+               | getDelete(ObjectData): CreateEvent           |
+               | getSet(PropertyData, Object): SetEvent       |
+               | getAdd(PropertyData, Object): AddEvent       |
+               | getRemove(PropertyData, Object): RemoveEvent |
+               '----------------------------------------------'
+
+
+  PersistentCollection---->DataSet<-----Cursor
+      n|                  1       1    n
+       |
+       |----------PersistentObject-----> OID
+       |         n      /|\1           1
+       |                 |
+      1|                 |
+      \|/    1     n     | 1     1     n
+    Session <*>----> ObjectData <*>----> PropertyData
+      <*> 1             /|\ 1                /|\ 1
+       |                 |                    |
+       |                 |                    |
+       |                 |                    |
+      \|/ n              |                    |
+     Event               |                    |
+    /_\ /_\              |                    |
+     |   |               |                    |
+     |   |              \|/ n                 |
+     |   '---------- ObjectEvent              |
+     |                                       \|/ n
+     '---------------------------------- PropertyEvent
+
+
+ Unexpanded Logical Event Stream ----> Expanded Logical Event Stream
+(corresponds to direct API calls)      (deletes cascaded, etc.)
+
+ ---->      Reordered/Optimized         ----> Physical Event Stream
+       (Set(1) Set(2) Set(3) -> Set(3))      (Vendor Independent, but
+                                              in terms of tables,
+                                              updates, inserts, so forth)
+
+ ---->      Reordered/Optimized           ----> Issue Vendor Specific SQL
+       (Reorder and group to take maximal
+        advantage of batch statements)
+
+Note that the existence of foreign key constraints in the database
+constrains the ordering of the physical event stream and also
+constrains how the physical event stream is generated from the
+expanded logical event stream. For example a composite association
+made through a mapping table would present a problem when generating
+deletes since with the foreign key present the rows from the mapping
+table must be deleted before all the rows in the referenced table
+which means the mapping table can't be used in a bulk delete statement
+for the referenced table. This problem can be mitigated by using
+deferrable constraints.
+
+1. Expansion phase:
+   The simple way to look at things is that the session stores a
+   sequence of single row events. The rules that constrain reordering
+   are then quite simple (see below). For efficiency sake we may want
+   to introduce the concept of bulk events. This is where a single
+   event could be introduced into the event stream that has as it's
+   argument a query that expands into a set of OIDs.
+
+   Each event when initially entered into the event stream is in the
+   unexpanded state. Begin processing the event stream by sequentially
+   expanding events in place and marking them as expanded. Do this
+   until the entire stream is expanded or until the maximum number of
+   unprocessed events is reached. The events generated by expansion
+   from other events are also candidates for expansion. Events are
+   expanded like so.
+
+   CREATE:
+     Generates a final CREATE.
+     (Maybe also does default value initialization.)
+
+   DELETE:
+     Generates a final DELETE.
+     Generates a REMOVE for each associated object.
+
+   SET:
+     Generates a final SET.
+     If this is a component property then generate a DELETE for the
+     formerly associated object.
+
+   ADD:
+     Generates a final ADD.
+
+   REMOVE:
+     Generates a final REMOVE.
+     If this is a component property then generate a DELETE for the
+     formerly associatied object.
+
+   Semantically the above events should be arbitrarily reorderable
+   without effecting the resulting state of the database as long as
+   the following conditions are observed:
+
+   1. No event that depends on an OID may be moved before a CREATE or
+      after a DELETE of that OID.
+
+   2. The relative ordering of all SET events for a given OID,
+      property pair is preserved.
+
+   3. The relative order of any two ADD or REMOVE events with the same
+      source OID, property, and target OID is preserved.
+
+   4. If bulk events are present all the above rules must hold for any
+      OID in the data set on which the bulk event operates.
+
+   One additional constraint not covered by the cases mentioned above
+   is ensuring that any query on which the set depends is unaffected
+   by reordering. This could be done by inferring additional
+   constraints, or also by reading any rows into memory before
+   operating on them.
+
+2. Translation Phase:
+
+   Each of the events in the expanded event stream corresponds to one
+   or more physical operations (either an insert, update, or delete).
+   The ordering of these operations is constrained by the ordering of
+   the corresponding logical events along with these additional
+   constraints:
+
+   1. If constraints are not deferred then a delete of a foreign key
+      value must preceed the delete (if any) of the corresponding
+      primary key value.
+
+   In order to facilitate batching of operations (either by use of
+   JDBC batch operations or by generating compound SQL statements).
+   Events operating on the same table should be grouped near each
+   other whenever the previously mentioned constraints allow this.
+
+3. SQL Generation:
+
+   Vendor specific SQL is generated and issued.
+
+
+Issues:
+
+  * All associations being virtually two way to handle case of delete
+    automagically removing from containing associations.
+  * How should event stream expand for two way associations?
+  * Dealing with properties that make up the OID.
+  * type resolution
+  * Filter API, bind vs passed in values, passed in values vs other Path's.
+  * Link Attributes
+  * Arbitrary SQL in filters.
+
+
+fetch(Order o, Item i)
+filter(o.items.contains(i) and o = :oid)
+
+Metadata UML:
+
+
+             1
+  ObjectType<----.
+     <*> 1       |
+      |          |
+      |          |
+      |          |
+     \|/ n       |
+   Property------'
+     /_\
+      |
+      |--- Attribute
+      |
+      |        1
+      |--- Role<--.
+      |    1|     |
+      |      -----'
+      |
+      |            1
+      |--- Link ---> Path
+      |
+      |
+      '--- Alias
+
+
+               1      n           1        n
+          Root<*>----->ObjectType<*>------->Property
+          <*>1            /|\ 1
+           |               |
+           |               |
+          \|/n             |
+         ObjectMap---------'
+          <*> 1
+           |
+           |
+          \|/ n   1
+        Mapping--->Path
+          /_\
+           |
+           |                  1      1
+           |---ValueMapping--->Column<---.
+           |                             |
+           |                      1      |
+           '---ReferenceMapping--->Join--|
+                                    /|\  |
+                                   1 '---'
+
+                              n
+          .--Table<*>--------->Column
+          |   <*>               /|\ n
+          |    |                 |
+          |    |                 |
+          |   \|/n               |
+          |  Constraint          |
+          |   /_\                |
+          |    |                 |
+          |    |---ForeignKey    |
+          |    |      |          |
+          |    |      |          |
+          |    |     \|/1        |
+          |    '---UniqueKey-----'
+          |        /|\
+          '---------' 1
+
+
+
+ * stored by value in a column
+ * fk to shared table
+ * fk to dedicated table (nix)
+ * fk from shared table
+ * fk from dedicated table
+ * mapping to shared
+ * mapping to dedicated (nix)
+
+hasProps vs Opaque
+hasKey vs Keyless
+
+Something that hasProps but is Keyless (e.g. links, compound
+attributes, etc) screws up the session's handling of two way
+associations since to be consistent we should have a reverse property
+pointing back from the keyless object, but we can't expand events
+properly since the keyless object would have no OID. Alternatively we
+could say that things that point to keyless objects are attributes,
+not roles and so there is no back pointer, but this could be odd for
+link attributes because the pointers on the link to each end of the
+association wouldn't actually be the opposite ends of the association
+to the links themselves. This could be made to work, but it might be
+better just to say that they have OIDs. Without a link having an OID,
+updating the values of link attributes may be difficult.
+
+Should link OIDs be OIDs of other OIDs, OIDs of other
+PersistentObjects, or OIDs of Paths. Logically they should probably
+just be OIDs of Properties. Internally Paths maybe.
+
+Types that don't have keys or don't have identity don't make sense
+with dedicated storage. Unless of course the key depends on the
+mapping, not the type. Oy.
+
+Also link types can be viewed as being contained by value by each side
+of the association and not having a key at all, but that may screw up
+Session's two way handling, of course opaque types may do that
+anyways.
+
+Given a purely logical description of the object model as shown above,
+we need some way to map it to the database. Because we are not
+distinguishing in the logical model between types stored in columns
+(previously referred to as primitive or simple types) and types stored
+as rows in tables (previously referred to as compound types) it is
+possible for a single type to be mapped in multiple ways depending on
+the context. This stems from the fact that each time a String is
+stored somewhere it is mapped to a different column. The following
+table lists the different ways a type can be mapped:
+
+Single Value:
+  The entire type is stored directly in a single column. Examples of
+  this are all the "primitive" types; String, Integer, etc.
+
+Multi Value/Inline Association/True Composition
+  The type is stored in multiple columns. Examples of this might be
+  Content, a type made up of a LOB column storing content and a
+  VARCHAR column storing a mime type. This is basically a mapping that
+  applies to a special case of a composite association.
+
+Map to a table.
+
+Map to a supertypes table (this has some overlap with multi value above.
+
+
+A property of a given type can be stored in the following ways:
+
+0..1/1..1
+  * in a column
+  * a fk to a shared table
+  * a pk/fk in a dedicated table pointing back to containing object
+  * a shared table with a unique fk pointing back to containing object
+
+0..n
+  * a mapping table between the containing table and a dedicated table
+  * a mapping table between the containing table and a shared table
+  * a shared table with a non unique fk pointing back to containing
+    object
+  * a dedicated table with a non unique fk pointing back to containing
+    object
+
+Conclusions:
+
+Links probably should have OIDs so that they can be updated properly
+and fetched independently, etc. Session should probably be made to not
+depend on every property being two way. This means enhancing the query
+interface to allow queries for one way associations, and for the case
+of order line item style association with only one end named, that
+should probably just be checked for and flagged as an error.
+
+
+    object type Item {
+        BigDecimal id = items.item_id INTEGER;
+        Content body = join bodies.item_id to items.item_id;
+        body.mimeType = bodies.mime_type VARCHAR(200);
+        body.bytes = bodies.bytes CLOB;
+        body.bytes = bodies.search CLOB;
+        content is body.bytes;
+
+        ImageLinks[0..n] imageLinks =
+            join item_image_map.item_id to items.item_id;
+        images is imageLinks.image;
+    }
+
+    object type ImageLinks {
+        composite Item[1..1] item =
+            join item_image_map.item_id to items.item_id;
+        composite Image[1..1] image =
+            join item_image_map.image_id to images.image_id;
+        String caption = item_image_map.caption VARCHAR(4000);
+
+        object key(item, image);
+    }

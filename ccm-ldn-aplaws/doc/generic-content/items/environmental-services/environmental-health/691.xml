@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=691}]"><cms:name>batch-6-691</cms:name><cms:language>en</cms:language><cms:title>Pollution Control - Clean Air Act Approval</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=691}]"><cms:name>batch-6-691-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Pollution, Control, Clean, Air, Act, Approval</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=691}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Clean Air Act, 1993, introduced a wide range of new regulations such as those
+	          which control smoke emissions and the height of chimneys and those relating
+        to the content and composition of motor fuels.</i></p><hr/><p>The control of chimney heights enables local authorities to take into account
+    a number of relevant factors in determining the height of a chimney.</p><p>Under section 14 of the Act, unless the height of the chimney has been
+	    approved by the local authority and any conditions attached to approval
+	    adhered to, it is an offence to cause to cause or knowingly permit a furnace
+	    to be used to:</p><ul>
+			<li title="*">burn pulverised fuel</li>
+			<li title="*">burn at a rate of 45.4 kg or more an hour any other solid matter or</li>
+			<li title="*"> burn at a rate equivalent to 366.4 kW or more any liquid or gaseous matter</li>
+			</ul><p>An application for chimney height approval must contain adequate information
+	    to enable the necessary calculations to be carried out.</p><p>The local authority must consider an application for approval for chimney
+	    height for a furnace and give a written decision within 28 days of receipt,
+	    unless it is agreed in writing between us and the applicant that a longer
+	    period is allowed. If we fail to deal with the application within this time
+	    period, then approval without qualification is given.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=691"> Providing Information
+		(691)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

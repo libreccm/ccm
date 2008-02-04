@@ -1,0 +1,25 @@
+table.domainForm  {
+  width: 100%;
+}
+
+table.domainForm thead tr {
+  background-color: rgb(68,68,68);
+  color: rgb(255,255,255);
+  border-bottom: 2px solid black;
+}
+
+table.domainForm tbody th {
+  text-align: right;
+}
+
+table.domainForm tfoot tr {
+  background-color: rgb(192,192,192);
+  color: rgb(0,0,0);
+  border-top: 1px solid black;
+}
+
+
+table.domainForm tbody tr.even {
+  background-color: rgb(212,212,212);
+  color: rgb(0,0,0);
+}

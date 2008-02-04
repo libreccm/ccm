@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+<!-- No need to list all the content types here. Only
+       need to list a type if is adds associations that
+       were not in the parent type, or to remove attributes
+   -->
+
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.FileStorageItem" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+<!--        <xrd:property name="/object/file/id"/>-->
+        <xrd:property name="/object/file/defaultDomainClass"/>
+        <xrd:property name="/object/file/objectType"/>
+        <xrd:property name="/object/file/displayName"/>
+        <xrd:property name="/object/file/isDeleted"/>
+        <xrd:property name="/object/file/ancestors"/>
+        <xrd:property name="/object/file/version"/>
+        <xrd:property name="/object/file/language"/>
+        <xrd:property name="/object/file/content"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/file"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+
+  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.FileStorageItem" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+<!--        <xrd:property name="/object/file/id"/> -->
+        <xrd:property name="/object/file/defaultDomainClass"/>
+        <xrd:property name="/object/file/objectType"/>
+        <xrd:property name="/object/file/displayName"/>
+        <xrd:property name="/object/file/isDeleted"/>
+        <xrd:property name="/object/file/ancestors"/>
+        <xrd:property name="/object/file/version"/>
+        <xrd:property name="/object/file/language"/>
+        <xrd:property name="/object/file/content"/>
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/file"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+
+  <!-- For assets, we want to pull out all HTML, or binary files -->
+  <xrd:context name="com.arsdigita.cms.search.AssetExtractor">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.FileStorageItem" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:associations rule="include">
+        <xrd:property name="/object/file"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+</xrd:adapters>

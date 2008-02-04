@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=312}]"><cms:name>batch-23-312</cms:name><cms:language>en</cms:language><cms:title>Out of hours support</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=312}]"><cms:name>batch-23-312-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>out, hours, support</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=312}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>How to contact Social Services if you have an urgent problem 
+  outside normal office hours</i></p><hr/><h3>What if you need to contact Social Services during the evening, at night or the weekend?</h3><p>We know that not all unexpected major problems happen during normal office hours or can wait until the next day. Social Services provides an Out of Hours team that is there to help with these emergencies.</p><p>To contact the Out of Hours Team phone <span class="gen">enter telephone number</span>
+		</p><h3>Who will answer the phone?</h3><p>An operator will answer the phone and take details of the problem and your contact details. They will then pass this information over to the duty Social Worker.</p><h3>What happens next?</h3><p>The duty Social Worker will contact you and give you advice and guidance over the phone on how to deal with the problem, or they will either:</p><ul>
+			<li title="*">Recommend that you contact another more appropriate agency. They will give you the contact details.</li>
+			<li title="*">Refer the matter on to another Social Services team the next working day.</li>
+			<li title="*">Visit you or the person with the problem.</li>
+		</ul><h3>When does the service operate?</h3><p>Normal office hours are <span class="gen">enter opening hours</span> If you have an unexpected problem outside these office 
+  hours, you should ring <span class="gen">enter telephone number</span>
+		</p><h3>Who is part of the Out of Hours Team?</h3><p>The team is made up of experienced and qualified Social Workers.</p><h3>What sort of problems can the Out of Hours Team deal with?</h3><p>If you have any problem which cannot wait until normal office hours then do contact the Out of Hours Team.</p><p>Here are a few examples of the sort of problems we can deal with:</p><ul>
+			<li title="*">Difficulties with children and young people</li>
+			<li title="*">Child protection issues</li>
+			<li title="*">Older people who are at risk or who need immediate help</li>
+			<li title="*">Concerns about a person with a physical or a sensory disability</li>
+			<li title="*">Support in coping with someone who has severe learning difficulties or mental health problems</li>
+			<li title="*">Mental Health Act assessments</li>
+			<li title="*">Act as an Appropriate Adult for juveniles and vulnerable adults</li>
+			<li title="*">Homelessness</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=312"> Providing Information
+		(312)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

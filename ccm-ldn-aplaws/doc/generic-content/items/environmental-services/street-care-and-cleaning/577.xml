@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=577}]"><cms:name>animal-fouling-577</cms:name><cms:language>en</cms:language><cms:title>Animal - Fouling</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=577}]"><cms:name>animal-fouling-577-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>animal, fouling</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=577}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Each day dogs produce vast amounts of excrement. Much of this is left on footpaths and playing fields and at best can cover shoes and clothes and at worst can lead to blindness due to an infection called 'Toxocara canis'.</i></p><hr/><p>Council's can now designate 
+  land under The Dogs (Fouling of Land) Act 1996. The designated land includes 
+  roads, footpaths, school playing fields, sports fields and parks. It is an offence 
+  for a dog owner not to clean up after their dog in these areas. Failure to comply 
+  can result in a prosecution and fine up to &#xA3;1000. It is no defence to 
+  claim ignorance of the dog's actions.</p><h2>Solutions:</h2><ul>
+			<li title="*">If you 
+      have a garden encourage the dog to 'go' there. You can then bury the mess 
+      or alternatively clean it up and bin it.</li>
+			<li title="*">If you 
+      walk your dog always carry the means to clear up after your dog. A simple 
+      plastic bag will do the trick or obtain poop scoops from a local pet shop. 
+      Remember to take a bag or poop scoop like you'd remember a lead.</li>
+			<li title="*">Every time 
+      your dog fouls &quot;bag it and bin it&quot;. Take the poop scoop home and dispose 
+      of it there. Remember Rain does not wash the problem away.</li>
+			<li title="*">Never let 
+      your dog out alone to &quot;go to the loo&quot;.</li>
+		</ul><p>It is every 
+      dog owners duty to clean up after their dog. </p><p>
+			<strong>There are no excuses, fouling is unacceptable!</strong>
+		</p><p>
+			<strong>Contact 
+        with canine excrement can lead to blindness due to an infection called 
+        'Toxocara canis'.</strong>
+		</p><p>Use the contact details 
+  above or use the online reporting system on the 
+		<a href="/ccm/services/pid.jsp?pid=582">
+				<strong>Street 
+  Cleaning Programme</strong>
+			</a>	 page. <span class="gen">link to pid 582</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=577"> Providing Information
+		(577)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

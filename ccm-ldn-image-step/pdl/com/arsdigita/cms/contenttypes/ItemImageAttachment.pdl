@@ -1,0 +1,25 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.kernel.ACSObject;
+
+object type ItemImageAttachment extends ACSObject {
+    String[0..1] useContext = cms_item_image_attachment.use_context VARCHAR( 100 );
+    String[0..1] caption    = cms_item_image_attachment.caption VARCHAR( 100 );
+    String[0..1] title       = cms_item_image_attachment.title VARCHAR( 200 );
+    String[0..1] description = cms_item_image_attachment.description VARCHAR( 4000 );
+
+    composite ReusableImageAsset[0..1] image
+        = join cms_item_image_attachment.image_id to cms_images.image_id;
+
+    reference key (cms_item_image_attachment.attachment_id);
+}
+
+association {
+    component ItemImageAttachment[0..n] imageAttachments
+        = join cms_items.item_id to cms_item_image_attachment.item_id;
+
+    composite ContentItem[0..1] item
+        = join cms_item_image_attachment.item_id to cms_items.item_id;
+}

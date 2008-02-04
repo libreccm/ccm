@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=731}]"><cms:name>batch-22-731</cms:name><cms:language>en</cms:language><cms:title>Protection of Vulnerable Adults</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=731}]"><cms:name>batch-22-731-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>protection, vulnerable, adults</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=731}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We are committed to preventing the abuse of adults and responding promptly when abuse is suspected. </i></p><hr/><h2>  Who is a vulnerable adult? </h2><p>  A vulnerable adult is a person aged 18 years or over who may be unable to take care of themselves, or protect themselves from harm or from being exploited. This may be because they have a mental health problem, a disability, a sensory impairment, are old and frail, or have some form of illness.</p><h2>  What is adult abuse? </h2><p>  Abuse is mistreatment by any other person or persons that violates a person's human and civil rights. The abuse can vary from treating someone with disrespect in a way which significantly affects the person's quality of life, to causing actual physical suffering.  </p><p>Abuse can happen anywhere - in a residential or nursing home, a hospital, in the workplace, at a day centre or educational establishment, in supported housing or in the street. 
+  </p><p> Forms of abuse include: </p><ul>
+			<li title="*">Physical Abuse such as hitting, pushing, pinching, shaking, misusing medication, scalding, restraint, hair pulling.</li>
+			<li title="*">Sexual Abuse such as rape, sexual assault, or sexual acts to which the vulnerable adult has not or could not have consented, or to which they were pressurised into consenting.</li>
+			<li title="*">Psychological or Emotional Abuse such as threats of harm or abandonment, being deprived of social or any other form of contact, humiliation, blaming, controlling, intimidation, coercion, harassment, verbal abuse, being prevented from receiving services or support.</li>
+			<li title="*">Financial or Material Abuse such as theft, fraud or exploitation, pressure in connection with wills, property, or inheritance, misuse of property, possessions or benefits.</li>
+			<li title="*">Neglect such as ignoring medical or physical care needs and preventing access to health, social care or educational services or withholding the necessities of life such as food, drink and heating.</li>
+			<li title="*">Discriminatory Abuse such as that based on race or sexuality or a person's disability and other forms of harassment or slurs.</li>
+			<li title="*">Institutional abuse can sometimes happen in residential homes, nursing homes or hospitals when people are mistreated because of poor or inadequate care, neglect and poor practice that affects the whole of that service. </li>
+		</ul><p>Any of these forms of abuse can be either deliberate or be the result of ignorance, or lack of training, knowledge or understanding. Often if a person is being abused in one way they are also being abused in other ways. </p><h2>  Who might be causing the abuse? </h2><p>  The person who is responsible for the abuse is very often well known to the person abused and could be: </p><ul>
+			<li title="*">A paid carer or volunteer</li>
+			<li title="*">A health worker, social care or other worker</li>
+			<li title="*">A relative, friend or neighbour</li>
+			<li title="*">Another resident or service user</li>
+			<li title="*">An occasional visitor or someone who is providing a service</li>
+			<li title="*">People who deliberately exploit vulnerable people </li>
+		</ul><h2>What do you do if you are being abused or you suspect that someone you know may be the victim of abuse? </h2><p>You should contact the number at the top of this page as soon as possible Your concerns will be taken seriously and will receive prompt attention. </p><h2>  What if the abuse is also a crime? </h2><p>  If the abuse is also a crime such as assault, racial harassment, rape or theft you should involve the police to prevent someone else from being abused. If the police are involved we will work with them and with you to support you. </p><p>  If you are worried about contacting the police you can always contact Social Services to talk things over first. </p><p>  If immediate action is needed the Emergency Services should be contacted by dialling 999. </p><h2>  What will happen if abuse is reported? </h2><p>  If abuse is reported to Social Services, a member of staff will come and talk to the person as quickly as possible. </p><p>  If there is immediate danger we will aim to visit you or the person about whom you are concerned straight away.</p><p>  If there is a significant risk of harm we will aim to visit within 24 hours.</p><p>  For other reports of abuse we will normally visit within 5 working days.</p><p>  The person dealing with the report will work with the person who is being abused to help them make any decisions. They will provide help and support in taking action to try to end the abuse and enable them to ensure it does not happen again. </p><p>  You may want someone to contact us on your behalf and to nominate someone to speak and act for you. </p><p>  We will not normally do anything or share information with other people without the permission of the person who is being abused. The only exception to this is in situations where others may be at risk of abuse or the person is not able to make decisions for themselves because of mental disability. </p><h2>  Other Useful Contact Numbers </h2><p>
+			<strong>Police </strong>
+		</p><ul>
+			<li title="*">Your local Police Station - <span class="gen">enter telephone number</span>
+			</li>
+			<li title="*">Community Safety Unit - <span class="gen">enter telephone number</span>
+			</li>
+			<li title="*">In an Emergency 999 </li>
+		</ul><p>
+			<strong>If your concern is about someone who is in a residential or nursing home: </strong>
+		</p><ul>
+			<li title="*">
+				
+		<a href="http://www.carestandards.org.uk/contacting+us/default.htm">National Care Standards Commission</a>	
+				<span class="gen">link to external website</span>
+			</li>
+		</ul><p>
+			<strong>Health agencies </strong>
+		</p><p>
+			<span class="gen">enter details</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=731"> Providing Information
+		(731)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

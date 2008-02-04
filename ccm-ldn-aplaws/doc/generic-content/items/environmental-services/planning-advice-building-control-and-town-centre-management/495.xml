@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=495}]"><cms:name>planning-495</cms:name><cms:language>en</cms:language><cms:title>Planning policies - environmental issues (agenda 21)</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=495}]"><cms:name>planning-495-dublin-metadata</cms:name><cms:dcAudience>Householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>planning, policies, environmenetal, issues, agenda, 21</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=495}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is committed to sustainable development through its Local Agenda 21 process in which the Council continuously improves its services, policies and practices to contribute to a better quality of life for everyone now, and for future generations. </i></p><hr/><p>Agenda 21 is an Agenda for the 21st Century, which was a plan drawn up and agreed in 1992 at the Earth Summit in Rio de Janeiro.  Over 120 nations signed up to Agenda 21, an agenda for sustainable development. Sustainable development considers the impact on our future, of the balance between environmental, economic and social issues of today's activities, policies and new developments. The Agenda 21 agreement covers a wide range of issues and gives responsibilities to different groups. This includes an obligation for local councils all over the world to draw up and implement Local Agenda 21 plans. Part of this Local Agenda 21 process is concerned with engaging the local community and raising awareness of issues relating to sustainability such as energy efficiency, recycling, transport and water and environmental conservation. </p><h2>What Agenda 21 covers </h2><p>Internationally, the Agenda 21 plan included a very wide range of subjects. The list below gives the main headings of the 
+		<a href="http://www.un.org/esa/sustdev/documents/agenda21/english/agenda21toc.htm">International Agenda 21 document</a>	, <span class="gen">link to external website</span> illustrating the topics and themes that it covers. </p><h3>Social and Economic Dimensions </h3><ul>
+  <li title="*">International Co-operation</li>
+  <li title="*">Combating Poverty</li>
+  <li title="*">Changing Consumption Patterns </li>
+  <li title="*">Population and Sustainability </li>
+  <li title="*">Protecting and Promoting Human Health </li>
+  <li title="*">Sustainable Human Settlements, Making Decisions for Sustainability </li>
+</ul><h3>Conserving/Managing Resources </h3><ul>
+  <li title="*">Protecting the Atmosphere</li>
+  <li title="*">Managing Land Sustainability</li>
+  <li title="*">Combating Deforestation</li>
+  <li title="*">Combating Desertification and Drought</li>
+  <li title="*">Sustainable Mountain Development</li>
+  <li title="*">Sustainable Agriculture</li>
+  <li title="*">Sustainable Rural Development</li>
+  <li title="*">Conservation of Biological Diversity</li>
+  <li title="*">Management of Biotechnology</li>
+  <li title="*">Protecting and Managing the Oceans</li>
+  <li title="*">Protecting and managing Fresh Water</li>
+  <li title="*">Safer Use of Toxic Chemicals</li>
+  <li title="*">Managing Hazardous Waste and Sewage</li>
+  <li title="*">Managing Radioactive Waste </li>
+</ul><h3>Strengthening Major Groups </h3><ul>
+  <li title="*">Women</li>
+  <li title="*">Children and Youth</li>
+  <li title="*">Indigenous People</li>
+  <li title="*">Partnerships with Non Government Organisations</li>
+  <li title="*">Local Authorities</li>
+  <li title="*">Workers and Trade Unions</li>
+  <li title="*">Business and Industry</li>
+  <li title="*">Scientists and Technologists</li>
+  <li title="*">Strengthening the Role of Farmers </li>
+</ul><h3>Means of Implementation </h3><ul>
+  <li title="*">Financing Sustainable Development</li>
+  <li title="*">Technology Transfer</li>
+  <li title="*">Science for Sustainable Development</li>
+  <li title="*">Education, Training, Public Awareness</li>
+  <li title="*">Creating Capacity</li>
+  <li title="*">Organising for Sustainability</li>
+  <li title="*">International Law</li>
+  <li title="*">Information for Decision-making </li>
+</ul><p>The UK plan sets out four main issues that need to be addressed, these are: </p><ul>
+  <li title="*">Social progress which recognises the needs of everyone, by strengthening major groups such as women, children, local authorities and trade unions.</li>
+  <li title="*">Effective protection of the environment - such as protecting the atmosphere, tackling deforestation, conserving biodiversity and managing radioactive waste.</li>
+  <li title="*">Prudent use of natural resources, for example consumption of fossil fuels (such as oil coal and gas) in energy production and transport.</li>
+  <li title="*">Maintenance of high and stable levels of economic growth and employment by increasing education, technology and law. </li>
+</ul><h2>The Council's Local Agenda 21</h2><p>
+<span class="gen">enter details</span> or <span class="gen">enter hyperlink</span> </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=495"> Providing Information
+		(495)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

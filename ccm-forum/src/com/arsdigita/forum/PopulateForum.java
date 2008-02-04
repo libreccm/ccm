@@ -1,0 +1,144 @@
+/*
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.forum;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import com.arsdigita.forum.portlet.RecentPostingsPortlet;
+import com.arsdigita.kernel.User;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.populate.Utilities;
+import com.arsdigita.populate.apps.AbstractPopulateApp;
+import com.arsdigita.populate.apps.PopulateApp;
+import com.arsdigita.util.Assert;
+import com.arsdigita.web.ApplicationType;
+
+/**
+ * @author bche
+ */
+public class PopulateForum extends AbstractPopulateApp implements PopulateApp {
+
+    private static final String ARGS_DESC = 
+        "2 PopulateForum args: numThreads, numMsgs";        
+
+    /* (non-Javadoc)
+     * @see com.arsdigita.populate.apps.PopulateApp#populateApp(int[])
+     */
+    public void populateApp(List args) {
+        Session ses = SessionManager.getSession();
+        TransactionContext txn = ses.getTransactionContext();
+
+        Forum forum = (Forum) getApp();
+
+        //validate the arguments
+        this.validateArgs(args, 2, ARGS_DESC);
+
+        int iThreads = ((Integer)args.get(0)).intValue();
+        int iMsgs = ((Integer)args.get(1)).intValue();
+
+        Assert.truth(iThreads >= 0, "iThreads must be >= 0");
+        Assert.truth(iMsgs > 0, "iMsgs must be > 0");
+
+        //get users to make posts
+        List users = Utilities.getUsersIDs(10);
+        int iUsers = users.size();
+
+        String sBaseTitle = Utilities.getBaseString(getBaseStringSeed());
+        String sPostText = Utilities.makeTextBody();
+        int iUserIndex = 0;
+
+        for (int i = 0; i < iThreads; i++) {
+            txn.beginTxn();
+
+            //get the user for the post
+            User u = User.retrieve((BigDecimal) users.get(iUserIndex));
+            iUserIndex = (iUserIndex + 1) % iUsers;
+
+            //create the initial post
+            Post rootPost = Post.create(forum);
+            String sSubject = "Test Post" + sBaseTitle + i;
+            rootPost.setSubject(sSubject);
+            rootPost.setText(sPostText);
+            rootPost.setFrom(u);
+            rootPost.save();
+            rootPost.createThreadSubscription();
+
+            s_log.info("Inserted Post " + sSubject);
+
+            Post tmpPost = null;
+            for (int j = 0; j < iMsgs - 1; j++) {
+                u = User.retrieve((BigDecimal) users.get(iUserIndex));
+                iUserIndex = (iUserIndex + 1) % iUsers;
+
+                Post p = null;
+
+                //we'll stagger replying to the previous post or to the root post
+                if (j % 2 == 0) {
+                    p = (Post)rootPost.replyTo();
+                } else {
+                    p = (Post)tmpPost.replyTo();
+                }
+                sSubject = "Reply Test Post" + sBaseTitle + i;
+                p.setForum(forum);
+                p.setSubject(sSubject);
+                p.setText(sPostText);
+                p.setFrom(u);
+                p.save();
+
+                s_log.info("Inserted Post " + sSubject);
+
+                tmpPost = p;
+            }
+
+            txn.commitTxn();
+        }
+
+    }
+    
+    /* (non-Javadoc)
+     * @see com.arsdigita.populate.apps.PopulateApp#getArgsDescription()
+     */
+    public String getArgsDescription() {
+        return ARGS_DESC;
+    }
+
+    /* (non-Javadoc)
+     * @see com.arsdigita.populate.apps.PopulateApp#getAppType()
+     */
+    public ApplicationType getAppType() {
+        ApplicationType appType =
+            ApplicationType.retrieveApplicationTypeForApplication(
+                Forum.BASE_DATA_OBJECT_TYPE);
+        if (s_log.isDebugEnabled()) {
+            s_log.debug(
+                "returning app type " + appType.getApplicationObjectType());
+        }
+        return appType;
+    }
+
+    /* (non-Javadoc)
+     * @see com.arsdigita.populate.apps.AbstractPopulateApp#getPortletType()
+     */
+    protected String getPortletType() {
+        return RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE;
+    }
+}

@@ -1,0 +1,3 @@
+select c__.component_id as c_1
+from components c__
+where c__.test_id = ? and c__.component_id = c__.component_id

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=801}]"><cms:name>automatic-fire-alarms-801</cms:name><cms:language>en</cms:language><cms:title>Automatic Fire Alarms</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=801}]"><cms:name>automatic-fire-alarms-801-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>automatic, fire, alarms</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=801}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The safety of your building and its occupants can be greatly enhanced by the installation of an Automatic Fire Detection and Alarm System. </i></p><hr/><p>Properly used and
+    maintained, the automatic system with its fast response to incipient fire
+    can be a significant factor in reducing the risk to life and the limiting
+    of damage
+    to your property in the event of a fire. </p><p>Unfortunately, the very features
+that provide this fast response can also produce unwanted signals arising from
+activities other than a real fire. These
+  can prove both costly to the Fire Service, by initiating unnecessary turnouts
+  of fire appliances and to the building operator where evacuation of a building
+  as a result of a false alarm signal can result in loss of production and general
+  disruption of normal business activities.</p><h2>General Rules</h2><p>Many unwanted fire signals are the result of ignorance on the part of
+  employees or contractors who may not be aware that an automatic fire system
+is in operation.</p><p>A few simple rules coupled with normal good house-keeping practices can
+help to keep these unwanted nuisance signals to a minimum.</p><p>
+<strong>Rule 1 - Staff
+      or contractors to be made aware that the building is protected by an automatic
+      detection
+      system.</strong>
+</p><ul>
+      <li title="*">Display
+          permanent notices at the entrances to all areas equipped with automatic
+          fire detection, notice to read: <br/>
+<br/>
+         &quot;This area is
+          protected by automatic fire detectors. Before undertaking any work
+          involving heat, smoke, flame or sparks, please obtain clearance to
+          proceed from the Plant Manager or Security Officer&quot;<br/>
+<br/>
+     Location .......................................................................................................................... </li>
+      </ul><p>
+<strong>Rule 2 - Staff
+      or visiting contractors to be instructed that no activity, generating heat,
+      smoke,
+      flame or sparks
+    is to be carried without prior authorisation from the Fire Safety Officer
+or other responsible member of the managerial staff.</strong> </p><ul>
+<li title="*">Incorporate
+          instruction in staff contracts and operating manuals.</li>
+          <li title="*">Contracts for subcontractors
+        to include clause requiring them to acknowledge in writing, their responsibility
+    for ensuring that their on-site staff follow the rules.</li>
+</ul><p>
+<strong>Rule 3 - No renovation
+      work involving the generation of dust or paint spray to be carried out
+      in any area protected
+    by automatic smoke detectors, unless proper precautions have been taken to
+protect the automatic fire detectors against the entry of dust.</strong>
+</p><ul>
+<li title="*">Transfer
+          contractual liability to subcontractor as for Rule 2. Establish a named
+          person in your own organisation to be responsible for engaging qualified
+          persons to remove smoke detectors and replace with heat detectors when
+          necessary. If removal is not possible arrange for detectors to be covered
+          whilst dust raising work is carried out.</li>
+          <li title="*">
+<strong>Warning:</strong> 
+      The operation of detectors covered with plastic or paper covers will be impaired, if not disabled, by this action.  Alternative manual surveillance must be instituted whilst the system is so disabled.</li>
+<li title="*">A named, senior member
+        of the occupiers staff should be made responsible for ensuring that the
+        covers are removed and the system reinstated, as soon as all residual
+    dust has been removed.</li>
+    <li title="*">An operational test
+        of the system by a qualified person is bly recommended, following
+    any redecorating or building work in a protected area.</li>
+</ul><h2>General  </h2><p>Compliance with these simple
+    rules will help to release the Fire Service for more essential duties, they
+    may also help to save you from the permanent
+  loss of business so frequently associated with a major fire.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=801"> Providing Information
+		(801)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

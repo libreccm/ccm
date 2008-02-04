@@ -1,0 +1,82 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Datatype.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model examples;
+
+object type Datatype {
+    BigInteger[1..1] id = t_datatypes.id INTEGER;
+    BigInteger       bigInteger = t_datatypes.j_big_integer INTEGER;
+    BigDecimal       bigDecimal = t_datatypes.j_big_decimal DECIMAL;
+    Boolean          boolean = t_datatypes.j_boolean CHAR;
+    Byte             byte = t_datatypes.j_byte INTEGER;
+    Character        character = t_datatypes.j_character CHAR;
+    Date             date = t_datatypes.j_date TIMESTAMP;
+    Double           double = t_datatypes.j_double FLOAT;
+    Float            float = t_datatypes.j_float FLOAT;
+    Integer          integer = t_datatypes.j_integer INTEGER;
+    Long             long = t_datatypes.j_long BIGINT;
+    Short            short = t_datatypes.j_short INTEGER;
+    String           string = t_datatypes.j_string VARCHAR(4000);
+    // XXX: Should be byte[], but that isn't supported yet.
+    Blob             blob = t_datatypes.j_blob BLOB;
+    String           clob = t_datatypes.j_clob CLOB;
+
+    object key(id);
+
+}
+
+query TypedQuery {
+    BigInteger[1..1] id;
+    BigInteger       bigInteger;
+    BigDecimal       bigDecimal;
+    Boolean          boolean;
+    Byte             byte;
+    Character        character;
+    Date             date;
+    Double           double;
+    Float            float;
+    Integer          integer;
+    Long             long;
+    Short            short;
+    String           string;
+    // XXX: Should be byte[], but that isn't supported yet.
+    Blob             blob;
+    String           clob;
+
+    do {
+        select *
+	from t_datatypes
+    } map {
+	id = t_datatypes.id;
+	bigInteger = t_datatypes.j_big_integer;
+	bigDecimal = t_datatypes.j_big_decimal;
+	boolean = t_datatypes.j_boolean;
+	byte = t_datatypes.j_byte;
+	character = t_datatypes.j_character;
+	date = t_datatypes.j_date;
+	double = t_datatypes.j_double;
+	float = t_datatypes.j_float;
+	integer = t_datatypes.j_integer;
+	long = t_datatypes.j_long;
+	short = t_datatypes.j_short;
+	string = t_datatypes.j_string;
+	blob = t_datatypes.j_blob;
+	clob = t_datatypes.j_clob;
+    }
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" oid="[com.arsdigita.cms.contenttypes.MultiPartArticle:{id=2102}]">
+   <name>mpa-test</name>
+   <type oid="[com.arsdigita.cms.ContentType:{id=97}]"/>
+   <launchDate>Wed Nov 05 00:00:00 GMT 2003</launchDate>
+   <title>mpa-test</title>
+   <summary>asdf</summary>
+   <dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=2103}]">
+      <name>mpa-test-dublin-metadata</name>
+      <dcLanguage>en</dcLanguage>
+   </dublinCore>
+</cms:item>

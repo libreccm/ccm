@@ -1,0 +1,21 @@
+#
+# workers.properties 
+#
+
+# On Windows, we use backslashes:
+ps=\
+
+# list the workers by name
+
+worker.list=tomcat
+
+# ------------------------
+# First tomcat server
+# ------------------------
+worker.tomcat.port=8009
+worker.tomcat.host=localhost
+worker.tomcat.type=ajp13
+
+#
+# END workers.properties
+#

@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=48}]"><cms:name>performance-stage-licences-for-school-age-children-48</cms:name><cms:language>en</cms:language><cms:title>Performance/stage licences for school age children</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=48}]"><cms:name>performance-stage-licences-for-school-age-children-48-dublin-metadata</cms:name><cms:dcAudience>Child</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>performance, stage, licences, school, age, children</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=48}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The rules governing Children in Entertainment covers children who take part in 'performances', including all broadcast performances, child photography or modelling. Any child engaged in these occupations must have a licence issued by the Local Authority.</i></p><hr/><p>Application for a licence must be signed by the parents and accompanied by a photograph. The Local Authority must be satisfied that arrangements for the supervision and protection of the child are adequate, and that the disruption to the child's education is kept to a minimum.</p><p>The legislation which demands this licensing is as follows: The Children and Young Persons Acts 1933 and 1963 The Children (performances) Regulations 1968.</p><p>Key issues covered by the regulations are:</p><ul>
+			<li title="*">Is the child/young person below minimum school leaving age?</li>
+			<li title="*">Do they reside in <span class="gen">enter council name</span>
+</li>
+			<li title="*">Is there a charge made for admission?</li>
+			<li title="*">Is it within licensed premises?</li>
+			<li title="*">Is it broadcast on T.V ?</li>
+			<li title="*">Is it intended for filming?</li>
+			<li title="*">Is the child/young person fit to take part?</li>
+			<li title="*">Education; consultation with Headteacher if in school time</li>
+			<li title="*">Is the activity safe?</li>
+		</ul><p>No licence is required under the following circumstances:</p><ul>
+			<li title="*">No payment made to child and they have not taken part in performances in the previous 6 months on more than 3 days </li>
+			<li title="*">No payment made to child and performance arranged by school</li>
+			<li title="*">No payment made to child and performance exempted by Secretary of State e.g. Scout Gang Shows.</li>
+		</ul><p>Whether your child will need a licence is explained below</p><table width="90%" cellpadding="5" class="centre" summary="whether your child will need a licence">
+			<tr>
+				<th>Paid/Unpaid Work</th>
+				<th>Type of Work</th>
+				<th>Absence from school?</th>
+				<th>Length of Performance</th>
+				<th>Medical Required?</th>
+				<th>Licence Required?</th>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#paid">Paid</a>	
+</td>
+				<td>TV or Filming</td>
+				<td>
+
+		<a href="#absence">Yes</a>	
+</td>
+				<td>Any period of time</td>
+				<td>Yes - unless one provided within previous 6 months</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#paid">Paid</a>	
+</td>
+				<td>TV or Filming</td>
+				<td>No</td>
+				<td>Any period of time</td>
+				<td>Yes - unless one provided within previous 6 months</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#paid">Paid</a>	
+</td>
+				<td>Theatre, Sporting Activity or Modelling</td>
+				<td>
+
+		<a href="#absence">Yes</a>	
+</td>
+				<td>Any period of time</td>
+				<td>
+
+		<a href="#medical">No</a>	
+
+</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#paid">Paid</a>	
+</td>
+				<td>Theatre, Sporting Activity or Modelling</td>
+				<td>No</td>
+				<td>Any period of time</td>
+				<td>
+
+		<a href="#medical">No</a>	
+
+</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>TV or Filming</td>
+				<td>
+
+		<a href="#absence">Yes</a>	
+</td>
+				<td>Any period of time</td>
+				<td>Yes - unless one provided within previous 6 months</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>TV or Filming</td>
+				<td>No</td>
+				<td>Any period of time up to and including 4 days (and not performed within the previous 6 months)</td>
+				<td>No</td>
+				<td>No</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>Theatre, Sporting Activity or Modelling</td>
+				<td>
+
+		<a href="#absence">Yes</a>	
+</td>
+				<td>Any period of time up to and including 4 days (and not performed within the previous 6 months)</td>
+				<td>
+
+		<a href="#medical">No</a>	
+
+</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>Theatre, Sporting Activity or Modelling</td>
+				<td>No</td>
+				<td>Any period of time up to and including 4 days (and not performed within the previous 6 months)</td>
+				<td>
+
+		<a href="#medical">No</a>		</td>
+				<td>No</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>TV or Filming</td>
+				<td>
+
+		<a href="#absence">Yes</a>	
+</td>
+				<td>5 days or more</td>
+				<td>Yes unless one provided within previous 6 months</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>TV or Filming</td>
+				<td>No</td>
+				<td>5 days or more</td>
+				<td>Yes unless one provided within previous 6 months</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>Theatre, Sporting Activity or Modelling</td>
+				<td>
+
+		<a href="#absence">Yes</a>	
+</td>
+				<td>5 days or more</td>
+				<td>
+
+		<a href="#medical">Possibly</a>	
+
+</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+			<tr>
+				<td>
+
+		<a href="#unpaid">Unpaid</a>	
+</td>
+				<td>Theatre, Sporting Activity or Modelling</td>
+				<td>No</td>
+				<td>5 days or more</td>
+				<td>
+
+		<a href="#medical">Possibly</a>	
+
+</td>
+				<td>
+
+		<a href="#licence">Licence Required</a>	
+</td>
+			</tr>
+		</table><ul>
+			<li title="*">
+
+			
+<strong>Paid Performance - </strong>Payment to the child in respect of the child's taking part in the performance whether to him/her or to any other person.</li>
+			<li title="*">
+
+			
+<strong>Unpaid Performance</strong> - &quot;... no payment in respect of the child's taking part in the performance is made, whether to him/her or to any other person except for defraying expenses means that there is no question of any payment or consideration to procure the services of any child taking part in the performance&quot; - A Guide To The Children 
+      (Performances) Regulations 1968.</li>
+			<li title="*">
+
+			
+<strong>Absence from School</strong>- &quot;;...Leave of absence may not be given to enable a pupil to undertake employment except in accordance with the licence. The Act and Regulations contain no provision under which absence from school may be authorised for an unlicensed performance.&quot; - A Guide to The Children (Performances) Regulations 1968. Also see the Education (Pupil Registration) Regulations 1995, Regulation 8(2)(b)</li>
+			<li title="*">
+
+			
+<strong>Medical Certificates</strong> - are required with applications for children wishing to take part in licenced performances in any television or film work, regardless of any number of days or half days under the conditions of the licence.
+<p>For broadcast performances, such as radio productions, a child can perform on up to and including 6 days in a six month period without the need for a medical.</p>
+<p>For other performances such as theatre work, if the child takes part on the maximum number of days in the week allowed, i.e. 6 days, and the performances are required for more than one week, a medical certificate will be required.</p>
+<p>For sporting activities and modelling, where the application is for a licence for an activity, a statement by the child's parent that the child is medically fit for the proposed activity must be provided with the original application.</p>
+<p>Any costs incurred with obtaining medical certificates are generally accepted as being met by the body responsible for the production.</p>
+</li>
+<li title="*">
+
+			
+<strong>When a licence is required</strong> - a child shall not take part in a performance or activity except under the authority of a licence. Backdated licences should not be issued, they undermine the licensing process which is, after all, a safeguard for the children.
+<p>When licenses are requested at short notice, Local Authorities will invariably 
+        try to accommodate requests. However there must be enough time to deal with 
+        the application detail beforehand. Productions should not be mindful that 
+        the Local Authority can insist upon '21 days' notice - The Children (Performances) 
+        Regulations 1968, Regulation 1(3).</p>
+<p>When sending details from one Local Authority to another - &quot;the licensing authority must send to those authorities copies of the application form and the licence, together with any information they think should be brought to the notice of the other authorities&quot; - Children (Performances) Regulations 1968, Regulation 4.</p>
+</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=48"> Providing Information
+		(48)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

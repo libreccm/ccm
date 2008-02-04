@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=791}]"><cms:name>food-labelling-and-composition-791</cms:name><cms:language>en</cms:language><cms:title>Food Labelling and Composition</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=791}]"><cms:name>food-labelling-and-composition-791-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>food, labelling, composition</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=791}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Food labels are there to give us information on what we are eating -  this gives us, as the consumers, more of a choice. There are regulations that prevent manufacturers misleading food labels.</i></p><hr/><h2>What is required on packaging?</h2><ul>
+			<li title="*">Name of the Food</li>
+			<li title="*">List of Ingredients</li>
+			<li title="*">Storage Instructions</li>
+			<li title="*">Best Before/Use By</li>
+			<li title="*">Name and Address</li>
+			<li title="*">Nutritional information</li>
+			<li title="*">Quantity</li>
+			<li title="*">Quantitative Ingredients Declarations (QUID)</li>
+			<li title="*">Special Claims</li>
+		</ul><h2>The Name of the Food</h2><p>This must take one of three forms:</p><li title="*">Name of a product required by law, eg. milk chocolate</li><li title="*">The customary name of a product, eg. doughnut</li><li title="*">Name or short description that suitably describes the product and ensures that consumers do not to confuse it with other similar products.</li><p>Certain 'common' names for foods cannot be used if the percentage composition of the product does not meet the requirements. For example, a burger cannot be labelled 'Beef Burger' if the beef content is less than 65% lean beef.</p><p>The name has to describe what <strong>type</strong> of food it is, and what <strong>processes</strong> it has undergone, if any, eg. smoked salmon.</p><h2>List of Ingredients</h2><p>If the product contains more than two individual ingredients, a full list of all the ingredients must be given. These must be given in descending weight order as at the time of preparation. Most 'additives' must be stated in order of function and serial or specific name e.g. preservative: E220 or preservative sulphur dioxide.</p><p>Flavouring may simply be labelled as 'flavours' omitting specific names. Modified starch may simply be referred to as 'Modified Starch'</p><h2>Storage Instructions</h2><p>On most pre-packed, perishable goods, there will be a set of storage instructions which will guide the consumer on how to keep the product as fresh as possible and for as long as possible. These can be important for maintaining food safety eg. 'refrigerate after opening'</p><h2>Use By/Best Before Dates<br/>
+</h2><h3>Use By Dates</h3><p>'Use By' labels are placed on fresh produce that can deteriorate and even become unsafe to eat over short time periods eg. fish, fresh meat, meat products and milk.</p><p>
+<strong>Advice for consumers on use by dates:</strong>
+</p><ul>
+			<li title="*">Even if the food or drink looks and smells fine, don't use it</li>
+			<li title="*">The 'Use By' date can only be a valid guide if you follow the storage instructions on the packaging. For example, milk will go off a lot quicker if you do not keeps it refrigerated.</li>
+			<li title="*">The term 'Use By' does not necessarily mean 'Eat By', if the food is suitable, it's life can often be extended by freezing it.</li>
+			<li title="*">Make sure you always follow relevant cooking/preparing/storage instructions as stated on the packaging.
+</li>
+			<li title="*">Beware, some products may have a specific 'Use By' date but if it is opened, must be consumed within a certain time. However, if the 'Use By' date is tomorrow, you must consume the product by the end of tomorrow.</li>
+		</ul><h3>Best Before Dates</h3><p>Best Before' dates tend to appear more on more stable or non-perishable goods, such as canned, frozen and dried produce.</p><p>
+<strong>Advice for consumers on best before dates:</strong>
+</p><ul>
+			<li title="*">'Best Before' dates refer more to the quality rather than the safety of the product and indicate a date up until which a food will stay at a reasonable eating quality.</li>
+			<li title="*">The 'Best Before date can only be a valid guide if you follow the storage instructions on the packaging. To enjoy the food at it's best, be sure to adhere to these instructions.</li>
+		</ul><h3>Other Dates</h3><p>Other dates that may be marked next to the 'Use By' or 'Best Before' dates may be the 'Display until' dates which are merely there to help shops with stock control and are of no relevance to shoppers.</p><h2>Name and Address</h2><p>The product must be labelled with the name and address of the manufacturer, packer, importer or seller of the product. This can usually be used if the consumer wishes to make a comment about the product, directly to the company.</p><h2>Origin</h2><p>A product must always state its country of origin if its absence could be misleading to a consumer, eg. an Italian pizza made in the UK.</p><h2>Nutritional information</h2><p>A manufacturer is only required to provide nutritional Information if a consumer asks for it or if the product makes a claim such as 'low fat' or 'high in fibre'. However, if a company voluntarily decides to provide this information then it must comply with certain regulations.</p><p>The following components are featured on Nutritional Information:</p><p>
+<strong>Energy</strong>	<br/>
+  Energy is measured in calories (kcal) or joules (kj).</p><p>
+<strong>Protein</strong>
+<br/>
+  Foods such as meat, fish and soy products are full of protein. It is important for growth and body repair.</p><p>
+<strong>Carbohydrate</strong>
+<br/>
+  Carbohydrates can be derived from food such as potatoes, bread, rice and pasta. They predominantly made up of sugars and starch. Nutritional information labels will tell you how much of the carbohydrates are sugars (the rest will be starch.)</p><p>
+<strong>Starch</strong>
+<br/>
+  Most of our energy comes from starch, rather than from fats and sugars.</p><p>
+<strong>Sugars</strong>
+<br/>
+  Sugars refer to both natural sugars, eg. fructose in fruit, and added, more refined sugars eg. sucrose and glucose, which are more harmful, especially to teeth.</p><p>
+<strong>Saturated fat</strong>
+<br/>
+  This is the most harmful type of fats and they can raise cholesterol levels significantly, which in turn can lead to heart disease. Saturated fats are common in foods such as cheese, sausages, pies and butter.</p><p>
+<strong>Monounsaturated and polyunsaturated fat </strong>
+<br/>
+  Monounsaturates do not effect cholesterol, and polyunsaturates reduce cholesterol levels. Although monounsaturates (found in olive and rapeseed oil) and polyunsaturates (found in sunflower and soya oil) are a healthier option, they are still fats and can lead to weight gain.</p><p>
+<strong>Dietary fibre</strong>
+<br/>
+  Fibre can be found in foods such as wholemeal bread, baked beans, fruit and vegetables and can help reduce constipation and piles.</p><p>
+<strong>Sodium</strong>
+<br/>
+  Most of the sodium found in food comes from salt and can cause high blood pressure so should be avoided.</p><p>
+<strong>Recommended average daily energy allowances</strong>
+</p><table width="90%" cellpadding="5" class="centre" summary="Recommended average daily energy allowances">
+			<tr>
+				<th>Age</th>
+				<th>Children</th>
+				<th>Men</th>
+				<th>Women</th>
+			</tr>
+			<tr>
+				<td>Age 1 to 3 years</td>
+				<td>102 kcal/kg (1300 kcal/day) </td>
+				<td>-</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<td>Age 4 to 6 years: </td>
+				<td>90 kcal/kg (1800 kcal/day)</td>
+				<td>-</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<td>Age 7 to 10 years:</td>
+				<td>70 kcal/kg (2000 kcal/day)</td>
+				<td>-</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<td>Age 11 to 14 years</td>
+				<td>-</td>
+				<td>55 kcal/kg (2500 kcal/day) </td>
+				<td>47 kcal/kg (2200 kcal/day)</td>
+			</tr>
+			<tr>
+				<td>Age 15 to 18 years:</td>
+				<td>-</td>
+				<td>45 kcal/kg (3000 kcal/day)</td>
+				<td>40 kcal/kg (2200 kcal/day)</td>
+			</tr>
+			<tr>
+				<td>Age 19 to 24 years:</td>
+				<td>-</td>
+				<td>40 kcal/kg (2900 kcal/day)</td>
+				<td>38 kcal/kg (2200 kcal/day)</td>
+			</tr>
+			<tr>
+				<td>Age 25 to 50 years:</td>
+				<td>-</td>
+				<td>37 kcal/kg (2900 kcal/day)</td>
+				<td>36 kcal/kg (2200 kcal/day)</td>
+			</tr>
+			<tr>
+				<td>Age over 51 years:</td>
+				<td>-</td>
+				<td>30 kcal/kg (2300 kcal/day)</td>
+				<td>30 kcal/kg (1900 kcal/day)</td>
+			</tr>
+		</table><h2>Quantity</h2><p>Some foods are sold in so-called 'prescribed quantities' eg. all pre-packed bread is sold in multiples of 400g. Virtually all food must display a quantity. All the information on quantities refers to 'Net Weight' ie. the weight without the packaging.</p><h2>Quantitative Ingredient Declarations (QUID)</h2><p>QUID declarations are made as a percentage of the ingredient or of the entire product when the ingredient or category of ingredient is:</p><ul>
+			<li title="*">highlighted by labelling or picture eg. 'extra cheese'</li>
+			<li title="*">mentioned in the name of the product eg. 'Cheese and onion pasty'</li>
+			<li title="*">normally connected with the name by the consumer eg. fruit in a summer pudding</li>
+		</ul><h2>Special Claims</h2><p>Labels such as &quot;Low Calorie&quot;, &quot;Diet&quot;, &quot;High in Polyunsaturates&quot;, &quot;Rich in Vitamins&quot;, must be clearly justified on the nutrition information. There are also specific regulations on claims, which must be adhered to.</p><p>When the item is sold to the ultimate consumer, the packaging must be completely sealed.</p><h2>Labelling of Alcoholic Drinks</h2><p>Alcoholic drinks, which contain more that 1.2% alcohol must be labelled as such. In fact, the specific alcohol content must be stated on the packaging in the form of &quot;Alcohol X%&quot; or &quot;Alc X%&quot;. This must also be given to drinks sold in pubs and restaurants.</p><h2>Labelling of Genetically Modified Foods</h2><p>Genetic modification is where genes in an organism are allowed to carry information and instructions for a particular feature using biotechnology.</p><p>This technology has been used in a number of different ways to aid food manufactures and suppliers. Some of these features include an extended storage life or nutritional value of food.</p><p>The Food Standards Agency recognises that not everyone will want to buy GM foods, however carefully they have been assessed for safety. All foods that contain GM food must be labelled accordingly.</p><p>For more information on the sales, testing and safety of GM foods, visit the 
+		<a href="http://www.fsa.gov.uk">
+<strong>Food 
+    Standards Agency</strong>
+</a>	 <span class="gen">link to external website</span> website</p><h2>Labelling of Organic Foods</h2><p>All organic produce must <strong>only</strong> contain food, which has been farmed organically. This means not using fertilisers or pesticides, which have not been approved to be organic. It also means that the land, on which the food has been grown, has been farmed organically during the conversion period (normally two years). Only then can a product be sold as organic.</p><p>Manufacturers of organic food are permitted to use some approved non-organic products, so long as 95% of the ingredients are, in fact organic.</p><p>  If the organic ingredients make up only 70-95% of a particular product, it may NOT be labelled an organic product. However, the organic ingredients may be specified on the packaging.</p><p>Labels on food sold, as 'organic' must indicate the organic certification body that the processor or packer is registered with. The labels must include a code number, and the name or trademark of the certification body may also be shown.</p><p>It is not always possible to make products entirely from organic ingredients, since not all ingredients are available in organic form.</p><h2>Food Allergies</h2><p>The government has now made it a compulsory feature of all food packaging, including that of alcoholic drinks, to ensure that all consumers are provided with a comprehensive list of ingredients. This allows the consumer to check for any of the following 
+food components that they want to avoid, in particular, in the event of specific allergies:</p><ul>
+			<li title="*">Cereals containing gluten</li>
+			<li title="*">Crustaceans</li>
+			<li title="*">Eggs</li>
+			<li title="*">Fish</li>
+			<li title="*">Peanuts</li>
+			<li title="*">Soybeans</li>
+			<li title="*">Milk and dairy products (including lactose)</li>
+			<li title="*">Nuts and nut products</li>
+			<li title="*">Sesame seeds</li>
+			<li title="*">Sulphite at concentration of at least 10mg/kg and products thereof</li>
+		</ul><p>Components of compounds that make up less that 25% of a particular final product must also be listed.</p><p>However, the European Commission suggests that in the following cases, full lists of ingredients need not be listed:</p><ul>
+			<li title="*">Compound ingredients making up less than 5% of the finished product</li>
+			<li title="*">Sauces and Mustards making up less than 5% of the finished product</li>
+			<li title="*">Herbs and Spices in mixtures of Herbs and Spices which make up less than 2% of the finished product</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=791"> Providing Information
+		(791)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=298}]"><cms:name>support-groups-and-organisations-298</cms:name><cms:language>en</cms:language><cms:title>Support Groups and Organisations</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=298}]"><cms:name>support-groups-and-organisations-298-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>support, groups, organisations</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=298}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Caring for someone can be very isolating. </i></p><hr/><p>Carers Support Groups can 
+  help Carers: </p><ul>
+  <li title="*">Cope with caring responsibilities.</li>
+  <li title="*">Meet other Carers in similar situations.</li>
+  <li title="*">Alleviate some of the isolation felt by Carers. </li>
+  </ul><p> The Groups allow Carers 
+  to seek practical and emotional support and up-to-date information from a member 
+  of our Team.</p><p>Carers are welcome to pop 
+  along to any of the Group meetings, where refreshments are available in comfortable 
+  surroundings.</p><p>Details of local Support 
+  Group venues are as follows:</p><table width="90%" cellpadding="5" class="centre" summary="local support groups and venues">
+  <tr> 
+    <th>Name of Group</th>
+     <th>Address and Contact Details</th>
+     <th>Date/Time/Venue of Meetings</th>
+  </tr>
+  <tr> 
+    <td>
+<span class="gen">enter details</span>
+</td>
+    <td>
+<span class="gen">enter details</span>
+</td>
+    <td>
+<span class="gen">enter details</span>
+</td>
+  </tr>
+  <tr> 
+    <td>
+<span class="gen">enter details</span>
+</td>
+    <td>
+<span class="gen">enter details</span>
+</td>
+    <td>
+<span class="gen">enter details</span>
+</td>
+  </tr>
+</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=298"> Providing Information
+		(298)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

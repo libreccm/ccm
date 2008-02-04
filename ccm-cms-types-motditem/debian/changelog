@@ -1,0 +1,24 @@
+ccm-cms-types-motditem (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:51:57 +0000
+
+ccm-cms-types-motditem (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.1.1 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:08 +0000
+
+ccm-cms-types-motditem (6.1.1-2) unstable; urgency=low
+
+  * Add ccm-devel to the build-dependancies.
+  * Add ccm-scripts to the build-dependancies too 
+
+ -- David Pashley <david@runtime-collective.com>  Tue, 26 Apr 2005 15:21:46 +0100
+
+ccm-cms-types-motditem (6.1.1-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Fri, 24 Apr 2004 12:27:56 +0100

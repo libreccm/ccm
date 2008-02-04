@@ -1,0 +1,40 @@
+//
+// Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: IndexId.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.search.lucene;
+
+import com.arsdigita.web.*;
+
+// Ideally, lucene_ids should extend web_hosts.  What prevents us from
+// doing so is the fact that an IndexId object is created *after* its
+// corresponding Host object has been initialized and saved.  Therefore,
+// if IndexId were to extend Host, we would run into a
+// DuplicateObjectException, because creating an IndexId would involve
+// (re)creating an instance of its base type Host first.  Therefore,
+// IndexId does not extend Host. (Which would also please Barbara Liskov
+// to no end.)
+
+object type IndexId {
+    BigDecimal[1..1] id           = lucene_ids.id INTEGER;
+
+    unique Host[1..1] host        = join lucene_ids.host_id to web_hosts.host_id;
+    unique Integer[1..1] indexID  = lucene_ids.index_id INTEGER;
+
+    object key(id);
+}

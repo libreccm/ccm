@@ -1,0 +1,4 @@
+<servlet-mapping>
+     <servlet-name>ForumServlet</servlet-name>
+     <url-pattern>/__ccm__/servlet/forum/*</url-pattern>
+</servlet-mapping>

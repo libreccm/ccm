@@ -1,0 +1,11 @@
+# -*- text -*-
+# This file locates stylesheets, if you are using the
+# "PatternStylesheetResolver". Please read the Javadoc for that file for
+# the full story.
+
+/packages/aplaws/xsl/::vhost::/::application::_::locale::.xsl
+/packages/aplaws/xsl/::vhost::/::application::.xsl
+/packages/aplaws/xsl/::application::_::locale::.xsl
+/packages/aplaws/xsl/::application::.xsl
+/packages/::application::/xsl/::application::_::locale::.xsl
+/packages/::application::/xsl/::application::.xsl

@@ -1,0 +1,215 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: CMSPermissions.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.Party;
+
+// The following queries can be narrowed by scope with the following 
+// filters:
+//
+// section: (no filter)
+// folder:  where scope ^= 'section'
+// item:    where scope = 'item';
+//
+
+
+// Used to query all CMS privileges.
+query getPrivileges {
+    Integer sortOrder;
+    String privilege;
+    String prettyName;
+    String scope;
+    Boolean viewerAppropriate;
+    do {
+        select
+        c.privilege, c.pretty_name, c.sort_order, c.scope, c.viewer_appropriate
+        from
+        cms_privileges c
+    } map {
+        privilege   = c.privilege;
+        prettyName  = c.pretty_name;
+        sortOrder   = c.sort_order;
+        scope       = c.scope;
+        viewerAppropriate = c.viewer_appropriate;
+    }
+}
+
+// Used to query the privileges associateed with a role.
+query getRolePrivileges {
+    String privilege;
+    String prettyName;
+    Integer sortOrder;
+    String scope;
+    Boolean viewerAppropriate;
+    BigDecimal granteeId;
+    BigDecimal objectId;
+    do {
+        select
+            c.privilege, c.pretty_name, c.sort_order, c.scope, 
+            c.viewer_appropriate, p.grantee_id, p.object_id
+        from
+            cms_privileges c, acs_privileges a, acs_permissions p
+        where
+            c.privilege = a.privilege
+        and
+            a.privilege = p.privilege
+    } map {
+        privilege      = c.privilege;
+        prettyName     = c.pretty_name;
+        sortOrder      = c.sort_order;
+        scope          = c.scope;
+        viewerAppropriate = c.viewer_appropriate;
+        granteeId      = p.grantee_id;
+        objectId       = p.object_id;
+    }
+}
+
+
+
+
+query roleAdminListing {
+  Party party;
+
+  do {
+    select a.object_type, a.default_domain_class, a.display_name, a.object_id,
+       p.primary_email, p.uri
+    from
+      acs_objects a,
+      parties p,
+      acs_permissions m,
+      roles r
+    where
+      a.object_id = p.party_id
+      and p.party_id = m.grantee_id
+      and m.privilege = 'admin'
+      and m.object_id = r.implicit_group_id
+      and r.role_id = :roleID
+  } map {
+     party.id = a.object_id;
+     party.objectType = a.object_type;
+     party.defaultDomainClass = a.default_domain_class;
+     party.displayName = a.display_name;
+     party.primaryEmail = p.primary_email;
+     party.uri = p.uri;
+  }
+}
+
+
+query roleAdminUserSearch {
+  BigDecimal userId;
+  String name;
+  String screenName;
+  String email;
+  String lastName;
+  String firstName;
+
+  do {
+    select
+      u.user_id, (n.family_name || ', ' || n.given_name) as person_name, 
+      u.screen_name, p.primary_email, n.given_name, n.family_name
+    from 
+      users u , person_names n , parties p
+    where 
+      p.party_id = u.user_id 
+    and 
+      u.name_id = n.name_id 
+    and 
+      not exists (
+        select 1 from
+          acs_permissions p, roles r
+        where
+          p.grantee_id = user_id
+        and
+          r.implicit_group_id = p.object_id
+        and
+          r.role_id = :excludedRoleId )
+  } map {
+    userId         = u.user_id;
+    name           = person_name;
+    screenName     = u.screen_name;
+    email          = p.primary_email;
+    lastName       = n.family_name;
+    firstName      = n.given_name;
+  }
+
+}
+
+query objectAdminListing {
+  Party party;
+
+  do {
+    select a.object_type, a.default_domain_class, a.display_name, a.object_id,
+       p.primary_email, p.uri
+    from
+      acs_objects a,
+      parties p,
+      acs_permissions m
+    where
+      a.object_id = p.party_id
+      and p.party_id = m.grantee_id
+      and m.privilege = 'admin'
+      and m.object_id = :objectID
+  } map {
+     party.id = a.object_id;
+     party.objectType = a.object_type;
+     party.defaultDomainClass = a.default_domain_class;
+     party.displayName = a.display_name;
+     party.primaryEmail = p.primary_email;
+     party.uri = p.uri;
+  }
+}
+
+
+query objectAdminUserSearch {
+  BigDecimal userId;
+  String name;
+  String screenName;
+  String email;
+  String lastName;
+  String firstName;
+
+  do {
+    select
+      u.user_id, (n.family_name || ', ' || n.given_name) as person_name, 
+      u.screen_name, p.primary_email, n.given_name, n.family_name
+    from 
+      users u , person_names n , parties p
+    where 
+      p.party_id = u.user_id 
+    and 
+      u.name_id = n.name_id 
+    and 
+      not exists (
+        select 1 from
+          acs_permissions p
+        where
+          p.grantee_id = user_id
+        and
+          p.object_id = :excludedObjectId)
+  } map {
+    userId         = u.user_id;
+    name           = person_name;
+    screenName     = u.screen_name;
+    email          = p.primary_email;
+    lastName       = n.family_name;
+    firstName      = n.given_name;
+  }
+
+}

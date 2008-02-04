@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+
+  
+  <!-- this xml file is parsed by the standard TraversalHandler, enabling FileAttachmentMetadataProvider to 
+  override the standard AssetMetadataProvider to give some more useful information -->
+  
+ <xrd:context name="com.arsdigita.cms.contentassets.FileAttachmentMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.cms.contentassets.FileAttachment">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/name"/>
+        <xrd:property name="/object/description"/>
+        
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context> 
+</xrd:adapters>

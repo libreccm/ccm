@@ -1,0 +1,27 @@
+The files in this directory contain the data model and
+procedures for search.
+
+To load everything do: 
+
+sqlplus < search-create.sql
+
+To drop everything do:
+
+sqlplus < search-drop.sql
+
+
+WARNING:  Dropping everything will also drop the table that stores
+content that is indexed (table search_content, see SearchContent-create.sql).
+There is currently no easy way to recreate the contents of that table. 
+So in general, never run the search-drop script if you have content that
+is currently searchable and you want to keep searchable.
+
+Instead, If there are problems with a search index (hopefully that
+will not happen) the index can be dropped and rebuilt using:
+
+sqlplus
+@search-index-drop.sql
+@search-index-create.sql
+
+But this should only be done when the server is not running, otherwise
+there could be conflicts with automatic rebuilds.

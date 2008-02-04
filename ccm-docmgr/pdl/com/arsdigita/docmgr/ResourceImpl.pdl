@@ -1,0 +1,109 @@
+//
+// Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+//
+// The contents of this file are subject to the ArsDigita Public 
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of
+// the License at http://www.arsdigita.com/ADPL.txt
+//
+// Software distributed under the License is distributed on an "AS
+// IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+// implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+
+model com.arsdigita.docs;
+
+import com.arsdigita.versioning.*;
+import com.arsdigita.kernel.*;
+
+object type ResourceImpl extends VersionedACSObject { 
+    String[1..1]     name        = docs_resources.name VARCHAR(200);
+    String[0..1]     description = docs_resources.description VARCHAR(4000);
+    Boolean[1..1]    isFolder    = docs_resources.is_folder CHAR(1);
+    String[1..1]     path        = docs_resources.path VARCHAR(3000);
+    String           mimeType    = docs_resources.mime_type VARCHAR(200);
+    BigDecimal       size        = docs_resources.length INTEGER;
+    Date[1..1]       creationDate = docs_resources.creation_date TIMESTAMP;
+    String[0..1]     creationIP  = docs_resources.creation_ip VARCHAR(50);
+    Date[1..1]       lastModifiedDate = docs_resources.last_modified TIMESTAMP;
+    String[0..1]     lastModifiedIP  = docs_resources.modifying_ip VARCHAR(50);
+
+    reference key (docs_resources.resource_id);
+}
+
+association {
+  ResourceImpl[1..1] contentResource = 
+      join docs_blobjects.resource_id to docs_resources.resource_id;
+  component DocBlobject[0..1] content = 
+      join docs_resources.resource_id to docs_blobjects.resource_id;
+}
+
+association {
+  ResourceImpl[0..n] createdResources =
+      join users.user_id to docs_resources.creation_user;
+  User[0..1] creationUser = join docs_resources.creation_user to users.user_id;
+}
+
+association {
+  ResourceImpl[0..n] modifiedResources =
+      join users.user_id to docs_resources.last_user;
+  User[0..1] lastModifiedUser = join docs_resources.last_user to users.user_id;
+}
+
+association {
+   ResourceImpl[0..1] parent = join docs_resources.parent_id 
+                                 to docs_resources.resource_id;
+   component ResourceImpl[0..n] immediateChildren = 
+                 join docs_resources.resource_id to docs_resources.parent_id;
+}
+
+// Returns the direct children of a given resource
+
+query getDirectChildren {
+    BigDecimal id;
+    Boolean isFolder;
+    do {
+        select  resource_id,
+                is_folder
+        from    docs_resources
+        where   parent_id = :parentID
+    } map {
+        id       = resource_id;
+        isFolder = is_folder;
+    }        
+}
+
+// Returns a set of resources by path
+
+query getResourceByPath {
+    BigDecimal id;
+    Boolean isFolder;
+    String name;
+    String path;
+    do {
+        select resource_id,
+               name,
+               is_folder,
+               path            
+        from   docs_resources
+        where  path = :targetPath
+    } map {
+        id   = resource_id;
+        isFolder = is_folder;
+        name = name;
+        path = path;
+    }
+}
+
+
+// Update the denormalized path for every child of a given resource 
+data operation updateChildren {
+    do {
+        update docs_resources
+        set    path = :rootPath || substr(path, :oldRootPathLength)
+        where  path like :oldPath || '%'
+        and not resource_id = :parentResource
+    }
+}
+

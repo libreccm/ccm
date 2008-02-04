@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=4}]"><cms:name>education-2-4</cms:name><cms:language>en</cms:language><cms:title>Educational awards and benefits - free school meals</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=4}]"><cms:name>education-2-4-dublin-metadata</cms:name><cms:dcAudience>Child</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>educational, awards, benefits, free, school, meals</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=4}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Free school meals are offered to children of families who are in receipt of Income Support or Income based Job Seekers Allowance, support under part V1 of the Immigration and Asylum Act 1999 or Child Tax Credits (if. you are in receipt of Working Tax Credit or with a total yearly income in excess of &#xA3;13,230 you are not entitled to free school meals). </i></p><hr/><p>If you are not sure, please use the  details above to contact us. The Government does not allow us to recognise any other benefit other than those mentioned above. </p><h2>How do I apply for free school meals? </h2><p>To apply, you need to complete an application form. These are available from your child's school or by using the contact details above.</p><p>You need to take the application form to your child's school or to a Council Customer Service point, together with proof of benefit. Proof of benefit can be demonstrated by:</p><h3>Income Support</h3><p>Proof required is sight of or copy of Benefit book showing:</p><ul>
+			<li title="*">Front cover of book</li>
+			<li title="*">Page showing words <strong>Income Support</strong>
+</li>
+			<li title="*">Page showing next order and counterfoil <strong>or</strong>
+</li>
+			<li title="*">All pages of the letter from DWP/Jobcentreplus dated within 1 month of application showing breakdown of income support payment.</li>
+		</ul><h3>Income Based Jobseekers Allowance</h3><p>Proof required is sight of or copy of:</p><ul>
+			<li title="*">All pages of letter showing breakdown of jobseekers allowance dated within 1 month of application. </li>
+		</ul><h3>Child Tax Credit</h3><p>Proof required is sight or copy of:</p><ul>
+			<li title="*">complete TC602 Inland Revenue tax credit award notice, for current tax year.</li>
+		</ul><h3>Child Benefit
+</h3><p>Proof required is sight of or copy of benefit book showing:</p><ul>
+			<li title="*">Front cover</li>
+			<li title="*">Page showing child's details</li>
+			<li title="*">Page showing next order and counterfoil. <strong>or</strong>
+</li>
+			<li title="*">Child benefit letter for current year.</li>
+		</ul><h3>Asylum Seekers</h3><p>Proof required is sight of or copy of NASS support notice or IS96 document including details of authority providing support under part IV of the Immigration and Asylum act 1999. You will be required to supply:</p><ul>
+			<li title="*">NASS reference number</li>
+			<li title="*">Port reference number</li>
+			<li title="*">Name of authority</li>
+		</ul><p>Please note: We do not accept statements or books from your Bank or Building Society, and would request that you <strong>do not send any original books through the post.</strong>
+</p><h2>How often do I have to apply?</h2><p>You should apply when you first start to receive benefit. Your eligibility will be reviewed every 6 months and a review form will be sent to you automatically.</p><h2>How will the school know my child does not have to pay for school meals?</h2><p>The schools concerned will be notified directly by the LEA that your child/children can have a school meal free of charge. Each school makes its own arrangements for notifying the dinner service staff who is to receive a school meal free of charge.</p><h2>What if my circumstances change?</h2><p>You should notify the school and contact us direct of any changes:</p><ul>
+			<li title="*">if you start work and come off benefit</li>
+			<li title="*">if you change address</li>
+			<li title="*">if your child changes school</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=4"> Providing Information
+		(4)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

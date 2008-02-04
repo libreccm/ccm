@@ -1,0 +1,3 @@
+Recent items,List of items ordered with most recent first,/packages/navigation/templates/recent.jsp
+A-Z items,List of items paginated as A-Z,/packages/navigation/templates/atoz.jsp
+Calendar items,List of items browsable through Calendar,/packages/navigation/templates/calendar.jsp

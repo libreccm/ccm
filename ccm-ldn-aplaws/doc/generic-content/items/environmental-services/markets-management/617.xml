@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=617}]"><cms:name>batch-8-617</cms:name><cms:language>en</cms:language><cms:title>Farmers' Markets</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=617}]"><cms:name>batch-8-617-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>farmer, market</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=617}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>You can be sure that the markets will deliver the aim of helping both rural communities and town centres during the coming year.</i></p><hr/><p>More than ever, Farmers' Markets are good for farmers, rural communities, market towns, the environment, your health and your taste buds.</p><p>As usual, there are three golden rules that should apply to a genuine Farmers' Market. They are:</p><ul>
+			<li title="*">Producers must be local, defined as within a specified radius of the market (normally 30 miles)</li>
+			<li title="*">Producers must sell their own produce. Bakers etc must use a minimum of one local ingredient</li>
+			<li title="*">The person behind the stall must be the producers, a close family member or an employee directly involved with production, allowing you to ask questions about how it was produced.</li>
+		</ul><h4>Up and Coming Farmers Markets</h4><p>
+			<span class="gen">enter details</span>
+		</p><p>Book a stall by using the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/617b">online form</a>	
+			</strong>
+			<span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=617"> Booking Venues
+		(617)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

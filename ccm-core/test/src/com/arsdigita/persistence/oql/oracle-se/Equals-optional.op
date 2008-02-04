@@ -1,0 +1,4 @@
+select i.icle_id as c_1
+from icles i,
+     tests start__t
+where start__t.test_id = ? and start__t.optional_id = i.icle_id

@@ -1,0 +1,42 @@
+Select:
+  selectList
+  join
+  filter
+
+Insert:
+  table
+  bindings
+  0..1 select
+
+Update:
+  table
+  bindings
+  filter
+
+Delete:
+  table
+  filter
+
+     2
+Join<----.
+ /_\     |
+  |      | 
+  |      | 
+  |---Compound-------------.
+  |                        |
+  |             1          |
+  '---Simple----->Table    |
+                           |
+                 1         |
+Filter/Condition<----------'
+ /_\
+  |
+  |---And
+  |
+  |---Or
+  |
+  |---Equals
+  |
+  |---In
+  |
+  '---Not

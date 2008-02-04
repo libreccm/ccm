@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=190}]"><cms:name>financial-assessment-190</cms:name><cms:language>en</cms:language><cms:title>Financial Assessment</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=190}]"><cms:name>financial-assessment-190-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>financial, assessment</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=190}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council employs benefits advisors who can maximise your income by helping you to claim all the benefits which you are entitled to. </i></p><hr/><p>Our benefit advisors will talk to you to find out about your personal circumstances to find out what benefits you could be claiming. They can also help you to fill in any forms, and can support and represent you at appeals and tribunals.</p><p>If you would like to make an appointment to see a benefit advisor, you should use the contact details above.</p><h2>How much benefit can I receive before I have to pay for home care?</h2><h3>Personal Living Allowance for Single Adults and Couples</h3><p>Please note that you qualify for the 'disabled rate of Personal Living Allowance' if you receive one of the following benefits...</p><ul>
+  <li title="*">Attendance Allowance</li>
+  <li title="*">Disability Living Allowance</li>
+  <li title="*">Long-term Incapacity Benefit</li>
+  <li title="*">Severe Disablement Premium</li>
+</ul><p>or if you...</p><ul>
+  <li title="*">Are Registered Blind</li>
+  <li title="*">Have an Invalid Trike</li>
+  <li title="*">Have been incapable of work for 28 weeks or more</li>
+</ul><h3>
+
+			Weekly Personal Living Allowance for Single People with no Dependant Children</h3><table width="90%" cellpadding="5" class="centre" summary="Weekly Personal Living Allowance for Single People with no Dependant Children">
+  <tr> 
+    <th>Circumstances</th>
+    <th>18-24 years</th>
+    <th>25 years +</th>
+    <th>60 years +</th>
+  </tr>
+  <tr> 
+    <td>Not Disabled</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Disabled</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Disabled Enhances *</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><p>* Receiving Disability Living Allowance High Care or High Attendance Allowance</p><h3>
+
+			Weekly Personal Living Allowance for Couples with no Dependant Children</h3><table width="90%" cellpadding="5" class="centre" summary="Weekly Personal Living Allowance for Couples with no Dependant Children">
+  <tr> 
+    <th>Circumstances</th>
+    <th>18-24 years</th>
+    <th>25 years +</th>
+    <th>60 years +</th>
+  </tr>
+  <tr> 
+    <td>Not Disabled</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Disabled</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Disabled Enhances *</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><p>* Receiving Disability Living Allowance High Care or High Attendance Allowance</p><p>If you or your partner are entitled to Invalid Care Allowance</p><table width="90%" cellpadding="5" class="centre" summary="Invalid Care Allowance">
+  <tr>
+    <td>Add Carers Premium </td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><p>Personal Living Allowance is related to basic Income Support Rates - if you have a child or children who depend on you financially please see below</p><h3>Personal Living Allowance for Families</h3><p>If you have dependant children living with you, for whom you receive child benefit, please use the appropriate Personal Living Allowance for either a 
+		<a href="#single">
+<strong>Single Person</strong>
+</a>	 or a <strong>
+
+		<a href="#couple">Couple</a>	
+</strong> and then add...</p><table width="90%" cellpadding="5" class="centre" summary="Personal Living Allowance">
+  <tr> 
+    <td>Each child (age as at last September)</td>
+    <td/>
+  </tr>
+  <tr> 
+    <td>0 - 15</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>16 - 19</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Add Family Premium or *Lone Parent Premium</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Add Carers Premium (if entitled to Invalid Care Allowance)</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Add **Disabled Child Premium and Disabled Child Enhanced Premium (if Child 
+      is in receipt of Disability Living Allowance High Care Component)</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><p>* Lone Parent Premium - If parent is disabled add Family Premium, not Lone Parent Premium<br/>
+  ** Disabled Child Premium - Add this for each child who is in receipt of Disability Living Allowance AND/OR Registered Blind</p><p>Personal Living Allowance is related to basic Income Support Rates</p><h3>How can I find out if some of my income is disregarded?</h3><p>We disregard the following benefits and incomes when assessing your disposable income...</p><table width="90%" cellpadding="5" class="centre" summary="Disposable Income">
+  <tr> 
+    <th>Benefit or income</th>
+    <th>Amount disregarded each week</th>
+  </tr>
+  <tr> 
+    <td>Disability Living Allowance (Mobility Components)</td>
+    <td>Full</td>
+  </tr>
+  <tr> 
+    <td>Earnings</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>War/War Widows Pensions</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>War/War Widows Special Payments</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Charitable Payments</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Student Loan</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><p>We deduct the following outgoings from your income when assessing your disposable income...</p><table width="90%" cellpadding="5" class="centre" summary="Disposable Income">
+
+
+  <tr> 
+    <th>Outgoings</th>
+    <th>Amount disregarded each week</th>
+  </tr>
+  <tr> 
+    <td>Child Support</td>
+    <td>Full</td>
+  </tr>
+</table><p>You must provide proof of payment or a receipt for the above benefits, incomes and outgoings.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=190"> Providing Information
+		(190)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

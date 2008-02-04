@@ -1,0 +1,54 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: QueryTest.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model oql;
+
+object type Sup {
+    BigInteger[1..1] id = sup.sup_id INTEGER;
+    String supAttribute = sup.sup_attribute VARCHAR(200);
+
+    object key (id);
+}
+
+object type Sub extends Sup {
+    String subAttribute = sub.sub_attribute VARCHAR(200);
+    Ref[1..1] required = join sub.required_id to refs.ref_id;
+    Ref[0..1] optional = join sub.optional_id to refs.ref_id;
+
+    reference key (sub.sub_id);
+}
+
+association {
+    Sub[1..1] sub = join comps.sub_id to sub.sub_id;
+    Comp[0..n] comps = join sub.sub_id to comps.sub_id;
+}
+
+object type Comp {
+    BigInteger[1..1] id = comps.comp_id INTEGER;
+    String compAttribute = comps.comp_attribute VARCHAR(200);
+
+    object key (id);
+}
+
+object type Ref {
+    BigInteger[1..1] id = refs.ref_id INTEGER;
+    String refAttribute = refs.ref_attribute VARCHAR(200);
+
+    object key (id);
+}

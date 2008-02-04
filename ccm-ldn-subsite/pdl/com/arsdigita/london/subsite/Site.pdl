@@ -1,0 +1,39 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.subsite;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.web.Application;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.TemplateContext;
+
+
+object type Site extends ACSObject {
+  String[1..1] title = subsite_site.title VARCHAR(100);
+  String[0..1] description = subsite_site.description VARCHAR(4000);
+  unique String[1..1] hostname = subsite_site.hostname VARCHAR(250);
+  String[0..1] styleDirectory = subsite_site.style_dir VARCHAR(50);
+
+  Application[1..1] frontPage = join subsite_site.front_page_id
+                                  to applications.application_id;
+  component TemplateContext[1..1] templateContext = join subsite_site.template_context
+                                            to cms_template_use_contexts.use_context;
+
+
+  reference key (subsite_site.site_id);
+}

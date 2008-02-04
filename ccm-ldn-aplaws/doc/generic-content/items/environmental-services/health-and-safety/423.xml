@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=423}]"><cms:name>batch-7-423</cms:name><cms:language>en</cms:language><cms:title>Home Safety</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=423}]"><cms:name>batch-7-423-dublin-metadata</cms:name><cms:dcAudience>Householder</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>home, safety</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=423}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The cost to the National Health Service of treating home accident injuries is estimated at &#xA3;450 million per year, with an additional &#xA3;1,740 million for the cost of lost output, pain, grief and suffering.</i></p><hr/><p>Some facts and figures</p><ul>
+				<li title="*">The biggest single cause of accidents is human error</li>
+				<li title="*">With forethought most accidents could be prevented</li>
+				<li title="*">Most people are injured in their own homes than anywhere else</li>
+				<li title="*">In 1995 home accidents accounted for 37% of all accidents requiring hospital 
+    treatment</li>
+				<li title="*">Falls of one kind or another account for over 38% of all home accidents</li>
+				<li title="*">Fire is one of the most serious hazards in any home. It is fast spreading, lethal 
+    and devastating, yet very often preventable</li>
+				<li title="*">Accidents involving children often occur in the presence of an adult</li>
+				<li title="*">Many accidents occur in the home from everyday activities such as children playing, 
+    preparing food, simply moving about the house, carrying out DIY and other household 
+    repairs</li>
+			</ul><p>Further information can be obtained by visiting: 
+		<a href="http://www.dti.gov.uk/homesafetynetwork">www.dti.gov.uk/homesafetynetwork</a>	 <span class="gen">link to external website</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=423"> Providing Information
+		(423)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

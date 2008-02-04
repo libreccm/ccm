@@ -1,0 +1,11 @@
+
+  NTLM Auth TODO
+  --------------
+
+ 1. Add documentation about using Apache/mod_ntlm instead of IIS
+ 2. Let user import create a pluggable user profile object
+ 3. Move CCM<->NTLM user mapping data from public CCM server to
+    internal CCM authentication server to avoid username compromise
+ 4. Conduct all communication redirects over SSL
+ 5. Allow multiple IP address range checks & allow/deny config precedence
+ 

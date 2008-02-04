@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head> 
+   <title>Persistence API</title>
+  </head>
+  <body bgcolor="white">
+    
+<p>
+
+The classes in this package provide an API for creating and
+manipulating Data Objects. These classes fall into two categories. The
+<b>External Interfaces</b> which are used by code outside the
+persistence layer to create, retrieve, and manipulate data objects and
+queries.
+
+</p>
+    
+    <h3>External Interface</h3>
+
+
+    <ul>
+      <li><b>DataObject</b>
+
+          <p>The DataObject interface is how a DataObject
+          presents itself for use to code outside the persistence
+          layer. This interface represents a single data object. It
+          may be used to modify the properties of the data object
+          and retrieve any DataAssociations the data object
+          may have.</p>
+
+      <li><b>DataAssociation</b>
+
+          <p>The DataAssociation interface is what a
+          DataObject returns when its getProperty() method is
+          called with the name of a role. The DataAssociation
+          interface may be used to add and remove items from the association.
+          It also has a method, <code>cursor</code>, that returns
+          a <code>DataAssociationCursor</code> object that allows
+          the programmer to iterate through the objects (and associated
+          LinkAttributes) associated with the parent DataObject.
+          </p>
+
+      <li><b>DataCollection</b>
+
+          <p>This interface is similar to DataAssociationCursor, in
+          that it allows you to iterate through a collection of
+          objects, but the collection need not represent an
+          association between two objects.</p>
+
+      <li><b>DataQuery</b>
+
+          <p>This interface is used to access the results of a free
+          form query against the object model, such as might be
+          necessary in order to generate a complicated report.  It also
+          allows the developer to write free-form queries that return
+          data objects.  This is useful for situations where the standard
+          persistence events do not do exactly what is desired or do not
+          provide the needed performance optimizations.</p></li>
+
+      <li><b>Filter</b>
+          <p>
+          This is the interface used to allow user's to filter the results
+          returned by DataQueries, DataCollections, and DataAssociationCursors.
+          It allows user's to set a condition and set values for bind variables
+          used within those conditions.
+          </p>
+      </li>
+
+      <li><b>FilterFactory</b>
+          <p>
+          This creates various types of filters, including filters that
+          can be combined together.  While Filter's can only contain
+          a specific condition, the FitlerFactory has the ability to return
+          CompoundFilters that an combine fitlers with each other.  It also
+          has many convenience methods that allow users to create filters
+          without worrying about which database is being used (using
+          them eliminates oracle's problem with "null" values).
+          </p>
+      </li>
+
+      <li><b>OID</b>
+          <p>
+          An OID describes a given DataObject.  Specifically, it holds the
+          type of the data object so that the persistence system knows which
+          object type to use when persistening the object and it also holds
+          values for key properties so that the system knows which values
+          to use to identify the specific row represented by the object.
+          </p>
+      </li>
+
+      <li><b>Link</b>
+          <p>
+          The Link class is used to represent the relationship between
+          two object types.  This is the same terminology that is used within
+          UML.  Links may contain properties (e.g. the property isDefault could
+          be used to indicate whether this is the defaut link for the object).
+          </p>
+      </li>
+
+      <li><b>Session</b>
+          <p>
+          All persistence operations take place within the context of
+          a session.  The operational persistence methods operate on
+          the object types and associations defined in the Persistence
+          Definition Langauge (PDL) files.  The Session object has the
+          operational methods for creating and retrieving data objects.  The
+          APIs that operate on the PDL-defined metadata are in the <a
+          href="metadata/package-frame.html">metadata</a> package.
+          The Session object can
+          be retrieved from the static <a
+          href="SessionManager.html#getSession()"|>SessionManager.getSession()</a>
+          method.
+
+          </p>
+      </li>
+
+      <li><b>TransactionContext</b>
+          <p>
+          This is the context of a given transaction.  More concretely,
+          this provides user's with the ability to begin, commite, abort,
+          and rollback transactions.  Most developer's will not need to
+          deal with this class as the ACS handles transaction management
+          within its dispatcher.
+          </p>
+      </li>
+</ul>
+    
+
+    <h3>Sample code</h3> 
+          
+    <p>Sample code can be found in the junit tests for the persistence
+    system under the examples directory.</p>
+
+    <hr>
+    <font size="-2">Last modified: $Date: 2002/12/03 $</font>
+    
+  </body>
+</html>
+
+<!--
+Local variables:
+time-stamp-line-limit: -50
+time-stamp-start: "Last modified: "
+time-stamp-end: "</font>"
+time-stamp-format: "%:y-%02m-%02d"
+End:
+-->

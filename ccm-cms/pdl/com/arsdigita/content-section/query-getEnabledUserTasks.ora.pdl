@@ -1,0 +1,109 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: query-getEnabledUserTasks.ora.pdl 1280 2006-07-27 09:12:09Z cgyg9330 $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms.workflow;
+
+// Note that we have to stick the order by in the actual pdl file to
+// support adding filters on rownum
+query getEnabledUserTasks {
+    BigDecimal taskID;
+    BigDecimal processID;
+    String taskLabel;
+    String taskDescription;
+    String isLocked;
+    Date dueDate;
+    BigDecimal itemID;
+    BigDecimal sectionID;
+    String pageName;
+    String pageTitle;
+    BigDecimal lockingUserID;
+    String taskType;
+    String taskTypeClass;
+    Integer status;
+    String processLabel;
+    do {
+        select cw_tasks.task_id,
+               cw_tasks.parent_task_id,
+               cw_tasks.label,
+               cw_tasks.description,
+               cms_task_types.classname,
+               cms_tasks.task_type_id as typeID,
+               cms_task_types.name as taskname,
+               CASE WHEN (cw_user_tasks.is_locked is not null) THEN
+                   ( cw_user_tasks.is_locked )
+                ELSE
+                   ( 'f' )
+               END as is_locked,
+               cw_user_tasks.due_date,
+               cms_items.section_id,
+               cms_items.item_id,
+               cms_items.name,
+               cms_pages.title,
+               CASE WHEN (cw_user_tasks.locking_user_id = :userId) then
+                     1
+                WHEN (cw_user_tasks.locking_user_id is null) then
+                     2
+                ELSE
+                     3
+                END as status,
+                cw_user_tasks.locking_user_id,
+                cw_tasks_proc.label as processLabel
+        from cw_tasks,
+             cw_user_tasks,
+             cms_tasks,
+             cms_task_types,
+             cw_processes,
+             cms_items,
+             cms_pages,
+             cw_tasks cw_tasks_proc
+        where cw_tasks.task_id = cw_user_tasks.task_id
+        and cw_user_tasks.task_id = cms_tasks.task_id
+        and cms_tasks.task_type_id = cms_task_types.task_type_id
+        and cw_tasks.task_state = 'enabled'
+        and cw_tasks.parent_task_id = cw_processes.process_id
+        and cms_items.item_id = cw_processes.object_id
+        and cms_items.item_id = cms_pages.item_id
+        and cw_tasks_proc.task_id = cw_processes.process_id
+        and  (   :userId in (select cw_task_user_assignees.user_id
+                             from cw_task_user_assignees
+                             where cw_task_user_assignees.task_id = cw_tasks.task_id)
+              or
+                 :userId in (select member_id from group_member_trans_map
+                              where group_member_trans_map.group_id
+                                    in (select cw_task_group_assignees.group_id
+                                        from cw_task_group_assignees
+                                        where cw_task_group_assignees.task_id = cw_tasks.task_id)))
+    } map {
+        taskID = cw_tasks.task_id;
+        processID = cw_tasks.parent_task_id;
+        taskLabel = cw_tasks.label;
+        taskDescription = cw_tasks.description;
+        isLocked = is_locked;
+        dueDate = cw_user_tasks.due_date;
+        itemID = cms_items.item_id;
+        sectionID = cms_items.section_id;
+        pageName = cms_pages.name;
+        pageTitle = cms_pages.title;
+        lockingUserID = cw_user_tasks.locking_user_id;
+        taskType = typeID;
+        taskTypeClass = cms_task_types.classname;
+        status = status;
+        processLabel = processLabel;
+    }
+}

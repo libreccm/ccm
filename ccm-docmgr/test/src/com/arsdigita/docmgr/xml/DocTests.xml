@@ -1,0 +1,93 @@
+<test:test_set xmlns:test="http://redhat.com/xml/test"
+    xmlns:docs="http://redhat.com/xml/docs">
+    <test:test_def>
+    <!--
+        This test definition has each user create a folder thread.
+    -->
+        <test:actions>
+            <docs:new_folder user="swa@redhat.com">
+                <docs:folder folder_id="1">
+                    <docs:name>SWA</docs:name>
+                    <docs:description>This is a folder created by SWA</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joeuser@redhat.com">
+                <docs:folder folder_id="2">
+                    <docs:name>User</docs:name>
+                    <docs:description>This is a folder created by Joe User</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joeeditor@redhat.com">
+                <docs:folder folder_id="3">
+                    <docs:name>Editor</docs:name>
+                    <docs:description>This is a folder created by Joe Editor</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joemanager@redhat.com">
+                <docs:folder folder_id="4">
+                    <docs:name>Manager</docs:name>
+                    <docs:description>This is a folder created by Joe Manager</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+        </test:actions>
+    </test:test_def>
+    <test:test_def>
+        <test:actions>
+            <docs:new_folder user="swa@redhat.com">
+                <docs:folder folder_id="5">
+                    <docs:name>SWA2</docs:name>
+                    <docs:description>This is a folder created by SWA</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joeuser@redhat.com">
+                <docs:folder folder_id="6">
+                    <docs:name>User2</docs:name>
+                    <docs:description>This is a folder created by Joe User</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joeeditor@redhat.com">
+                <docs:folder folder_id="7">
+                    <docs:name>Editor2</docs:name>
+                    <docs:description>This is a folder created by Joe Editor</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joeuser@redhat.com">
+                <docs:folder folder_id="9">
+                    <docs:name>User3</docs:name>
+                    <docs:description>This is a folder created by Joe User</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joeeditor@redhat.com">
+                <docs:folder folder_id="10">
+                    <docs:name>Editor3</docs:name>
+                    <docs:description>This is a folder created by Joe Editor</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:new_folder user="joemanager@redhat.com">
+                <docs:folder folder_id="8">
+                    <docs:name>Manager2</docs:name>
+                    <docs:description>This is a folder created by Joe Manager</docs:description>
+                </docs:folder>
+            </docs:new_folder>
+            <docs:delete_folder user="joeuser@redhat.com" folder_id="2" />
+            <docs:delete_folder user="joeuser@redhat.com" folder_id="1" should_fail="true" />
+            <docs:delete_folder user="joeuser@redhat.com" folder_id="3" should_fail="true" />
+            <docs:delete_folder user="joeuser@redhat.com" folder_id="4" should_fail="true" />
+            <docs:delete_folder user="joeeditor@redhat.com" folder_id="3"/>
+            <docs:delete_folder user="joeeditor@redhat.com" folder_id="1" should_fail="true" />
+            <docs:delete_folder user="joeeditor@redhat.com" folder_id="4" should_fail="true" />
+            <docs:delete_folder user="joemanager@redhat.com" folder_id="1"/>
+            <docs:delete_folder user="joemanager@redhat.com" folder_id="4"/>
+            <docs:delete_folder user="joemanager@redhat.com" folder_id="6"/>
+            <docs:delete_folder user="joemanager@redhat.com" folder_id="7"/>
+            <docs:delete_folder user="swa@redhat.com" folder_id="8"/>
+            <docs:delete_folder user="swa@redhat.com" folder_id="5"/>
+            <docs:delete_folder user="swa@redhat.com" folder_id="9"/>
+            <docs:delete_folder user="swa@redhat.com" folder_id="10"/>
+        </test:actions>
+    </test:test_def>
+    <test:test_def>
+
+    </test:test_def>
+
+</test:test_set>

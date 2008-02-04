@@ -1,0 +1,43 @@
+
+model com.arsdigita.categorization;
+
+query categorizedItemsInSubtree {
+    BigDecimal id;
+    String objectType;
+    String title;
+    BigDecimal categoryID;
+    String ancestors;
+
+    do {
+        select
+            item.item_id id,
+            obj.object_type object_type,
+            page.title title,
+            cat.category_id category_id,
+            cat.default_ancestors ancestors
+        from
+            cms_items item,
+            cms_pages page,
+            acs_objects obj,
+            cat_cat_subcat_trans_index ti,
+            cat_object_category_map map,
+            cat_categories cat
+        where
+            page.item_id = item.item_id and
+            item.parent_id = map.object_id and
+            ti.subcategory_id = map.category_id and
+            item.item_id = obj.object_id and
+            cat.category_id = ti.subcategory_id and
+            ti.category_id = :id and
+            item.version = 'live'
+    }
+
+    map {
+        id = id;
+        objectType = object_type;
+        title = title;
+        categoryID = category_id;
+        ancestors = ancestors;
+    }
+}
+

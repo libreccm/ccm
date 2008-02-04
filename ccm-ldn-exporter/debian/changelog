@@ -1,0 +1,31 @@
+ccm-ldn-exporter (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:52:00 +0000
+
+ccm-ldn-exporter (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 1.0.1 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:12 +0000
+
+ccm-ldn-exporter (1.0.1-1) unstable; urgency=low
+
+  * Automatic update of version number from 1.0.0 to 1.0.1
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Thu, 31 Mar 2005 11:59:55 +0000
+
+ccm-ldn-exporter (1.0.0-2) unstable; urgency=low
+
+  * Depend on j2sdk1.4 | java2-compiler 
+  * Update to policy 3.6.1
+  * Change maintainer to the mailing list and add uploaders
+
+ -- David Pashley <david@runtime-collective.com>  Tue, 15 Feb 2005 11:37:08 +0000
+
+ccm-ldn-exporter (1.0.0-1) unstable; urgency=low
+
+  * Initial release of 1.0.0.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri, 12 Nov 2004 09:09:56 +0100

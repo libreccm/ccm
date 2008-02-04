@@ -1,0 +1,14 @@
+*~
+*.bak
+*\\.#*
+*\\semantic.cache
+*\\afiedt.buf
+*\\.xvpics\\*
+*\\.svn\\*
+*\\build\\*
+*\\::PACKAGE::-::VERSION::-::RELEASE::\\build\\*
+*\\::PACKAGE::-::VERSION::-::RELEASE::\\rollingbuild\\*
+*\\::PACKAGE::-::VERSION::-::RELEASE::\\enterprise.init*
+*\\::PACKAGE::-::VERSION::-::RELEASE::\\config.vars*
+*\\::PACKAGE::-::VERSION::-::RELEASE::\\build.xml
+*\\::PACKAGE::-::VERSION::-::RELEASE::\\MANIFEST.SKIP

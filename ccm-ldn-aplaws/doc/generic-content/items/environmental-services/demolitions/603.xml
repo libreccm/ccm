@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=603}]"><cms:name>batch-4-603</cms:name><cms:language>en</cms:language><cms:title>Demolitions - enforcement's</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=603}]"><cms:name>batch-4-603-dublin-metadata</cms:name><cms:dcAudience>Businesses</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>demolitions, enforcement</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=603}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Building or demolition works can cause problems for neighbours of the site. You can reduce or avoid causing any nuisance to the neighbours, or action being taken by the council, if you follow this advice.</i></p><hr/><h4>Tell the council and the neighbours</h4><ul>
+				<li title="*">Give the Local Authority 6 weeks notice of demolition 
+    work. The council may impose some conditions about how the work should be done.</li>
+				<li title="*">Send a letter to the neighbours before work starts, telling them about the work 
+    and what to expect. Give the neighbours a contact name and telephone number and 
+    keep them informed.</li>
+				<li title="*">Deal promptly with any complaints received on site.</li>
+			</ul><h4>Keep dust, noise and smoke to a minimum</h4><p>
+				<strong>Dust:</strong> Keep dust down by spraying with water when and 
+  where you can.</p><p>
+				<strong>Noise:</strong> There should be no noise heard from the site outside 
+  these hours:</p><p>
+				<span class="gen">enter details</span>
+			</p><p>Particularly noisy operations (eg Pile Driving) may need more 
+  stringent controls. Pumps and generators should not be left running overnight if 
+  they can be heard outside the site.</p><p>If you are a householder doing some or all the work yourself, 
+  try to avoid causing any noise or dust in the evenings or on Sundays.</p><p>If noise problems occur, the Council and the neighbours can 
+  take legal action. If you think your work may cause a significant nuisance to the 
+  neighbours from noise or vibration, apply for &quot;prior consent&quot; from the 
+  Council who will allow a certain level of noise to occur.</p><h4>Smoke:</h4><ul>
+				<li title="*">Bonfires that release &quot;dark smoke&quot; are illegal and the council will 
+    prosecute any offenders.</li>
+				<li title="*">Advice about bonfires is available from the Local Authority</li>
+				<li title="*">Stop the bonfire at the end of the working day.</li>
+			</ul><h4>Obstruction and damage to pavements</h4><ul>
+				<li title="*">Do not let vehicles or materials block or damage the pavements.</li>
+				<li title="*">Do not leave obstacles, holes or trenches where they are a danger, especially 
+    to disabled people (eg the blind).</li>
+				<li title="*">The Council may charge you for any damage caused to pavements, kerbs or verges 
+    by lorries or heavy plant.</li>
+			</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=603"> Providing Information
+		(603)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,164 @@
+#!/bin/sh
+
+## javaconfig.sh, v1.0
+## Copyright (C) 2003 Red Hat, Inc.
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2 of the License, or
+## (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+
+# Script to manage symbolic links for JARs and binaries.
+
+if [ $# = 0 ]; then
+    cat 1>&2 <<EOF
+usage: $0 FILE...
+
+where each FILE is the name of a JAR, shared object or binary whose
+symbolic links you want to manage.  For example, if you invoke:
+
+  $0 /usr/share/java/servlet.jar
+
+and /usr/share/java contains, amongst other things:
+
+  servlet-3.3.1.jar
+  servlet-4.0.3.jar
+  servlet-4.1.7.jar
+
+then any existing symbolic links will be deleted and the following
+will be created:
+
+  servlet-3.jar -> servlet-3.3.1.jar
+  servlet-4.jar -> servlet-4.1.7.jar
+  servlet.jar -> servlet-4.jar
+
+If the environment variable DRYRUN is set then a report of what would
+have been done will be printed.
+EOF
+    exit 1
+fi
+[ "$debug" ] && [ "$debug" -gt 1 ] && set -x
+for file in $@; do
+    if [ -e $file -a ! -L $file ]; then
+	echo 1>&2 "$file exists and is not a symbolic link"
+	exit 1
+    fi
+
+    # Dissect the filename
+    dir=`dirname $file`
+    if [ "$dir" = . ]; then dir=; elif [ "$dir" != / ]; then dir="$dir/"; fi
+    ext=`echo $file | sed 's:^.*\.:.:'`
+    case "$ext" in
+    .jar|.so)
+        base=`basename $file $ext`
+	;;
+    *)
+	base=`basename $file`
+	unset ext
+    esac
+    [ "$debug" ] && echo "'$file' => ('$dir', '$base', '$ext')"
+
+    # Build normal and regular expression format strings 
+    format="$dir$base-%s$ext"
+    re_format=`echo "$format" | sed -e 's:^:^:' -e 's:$:$:' -e 's:\\.:\\\\.:g'`
+    [ "$debug" ] && echo "format = '$format', re_format = '$re_format'"
+    
+    # Build a list of existing files that we manage
+    glob=`printf "$format" "*"`
+    match_re=`printf "$re_format" '[0-9]\{1,\}\(\.[0-9]\{1,\}\)*'`
+    unset files oldlinks
+    for i in $file `echo $glob`; do
+	[ -f "$i" -o -L "$i" ] || continue
+	if [ "$i" != "$file" ]; then
+	    if ! echo "$i" | grep "$match_re" > /dev/null; then
+	        [ "$debug" ] && echo "skipping '$i', it's not one of ours"
+		continue
+	    fi
+	fi
+	if [ -L "$i" ]; then
+	    oldlinks="$oldlinks${oldlinks:+ }$i"
+	elif [ -f "$i" ]; then
+	    files="$files${files:+ }$i"
+        else
+	    echo 1>&2 "$file: $i is neither a regular file or a symlink"
+	    exit 1
+	fi
+    done
+    [ "$debug" ] && echo "files = '$files', oldlinks = '$oldlinks'"
+
+    # Sort $files in version number order, using a tagged sort (tag
+    # each file with its expanded version number, sort the list, then
+    # remove the tag)
+    ver_re=`printf "$re_format" '\(.*\)'`
+    for pass in count tag; do
+	[ $pass = count ] && maxdots=-1
+	[ $pass = tag ] && unset taggedfiles
+        for i in $files; do
+	    ver=`echo $i | sed -e "s:$ver_re:\1:"`
+	    numdots=`echo $ver | sed -e 's:[^.]::g' | wc -c`
+	    numdots=`expr $numdots - 1` # remove the CR
+	    case $pass in
+	    count)
+	        [ $numdots -gt $maxdots ] && maxdots=$numdots
+		;;
+	    tag)
+		unset tag
+		j=0
+		while [ $j -le $maxdots ]; do
+		    if [ $j -lt $numdots ]; then
+			this=`echo $ver | sed -e 's:\..*$::'`
+			ver=`echo $ver | sed -e 's:^[^.]*\.::'`
+		    elif [ $j = $numdots ]; then
+			this=$ver
+		    else
+		        this=0
+		    fi
+		    this=`printf "%05d" $this`
+	    	tag="$tag${tag:+.}$this"
+	    	j=`expr $j + 1`
+        	done
+		taggedfiles="$taggedfiles${taggedfiles:+ }$tag,$i"
+		;;
+	    esac
+    	done
+    done
+    [ "$debug" ] && echo "taggedfiles = '$taggedfiles'"
+    unset files
+    for i in `for i in $taggedfiles; do echo $i; done \
+                  | sort -r | sed -e 's:^[^,]*,::'`; do
+	files="$files${files:+ }$i"
+    done
+    [ "$debug" ] && echo "files = '$files'"
+
+    # XXX Any user-defined classpath ordering should probably go here,
+    # and involve tweaking the order of $files.
+
+    # Go through $files and build a list of links we have to make
+    unset links
+    for i in $files; do
+	links="$dir$base$ext,`basename $i`"
+	break
+    done
+    [ "$debug" ] && echo "links = '$links'"
+
+    # Finally, everything is ok and we can do our stuff
+    if [ "$DRYRUN" ]; then
+	[ "$oldlinks" ] && echo "rm -f $oldlinks"
+    else
+        [ "$oldlinks" ] && rm -f $oldlinks
+    fi
+    for i in $links; do
+        target=`echo $i | sed 's:^.*,::'`
+        link=`echo $i | sed 's:,.*$::'`
+	if [ "$DRYRUN" ]; then
+	    echo "ln -s $target $link"
+	else
+	    ln -s $target $link
+	fi
+    done
+done

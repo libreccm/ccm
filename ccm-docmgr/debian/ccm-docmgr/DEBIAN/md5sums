@@ -1,0 +1,13 @@
+87bedac17af1190a5659be8361630b35  usr/share/java/ccm-docmgr-6.3.0.jar
+baa71c5941872e5d9367f0e8c3235e12  usr/share/java/ccm-docmgr-6.3.0-pdl.jar
+62741ddaea711fe0ad95478f789280bd  usr/share/java/ccm-docmgr-6.3.0-sql.jar
+b908536c7471c3265c663169b3a981f3  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/packages/docmgr/xsl/docmgr-portlet.xsl
+1561b9979eaaa215b618462e1fb63d3e  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/packages/docmgr/xsl/docs_en.xsl
+733115783c332898bcfa3d231b04af54  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/packages/docmgr/xsl/docs.xsl
+ecea9cdedcb1da0cd6f0e7507bfc6bc1  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/assets/cw/applications/document-16.gif
+19a1c21303242eb70ef204e8787336f0  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/assets/cw/applications/document-32.gif
+e899859517f1c6e1dc561d7f4122dc11  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/static/content-types/com/arsdigita/cms/docmgr/DocLink.xsl
+e899859517f1c6e1dc561d7f4122dc11  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/static/content-types/com/arsdigita/cms/docmgr/Document.xsl
+6a68c27993b245f2e812c7577a5860a6  usr/share/java/webapps/ccm-docmgr-6.3.0/ROOT/__ccm__/apps/cmsdocs/xsl/index.xsl
+ce1fc6838ba677ba09ccda962e3f2f99  usr/share/doc/ccm-docmgr/copyright
+340c7e25bd0ba854bab58733251d572c  usr/share/doc/ccm-docmgr/changelog.Debian.gz

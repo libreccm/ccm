@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=362}]"><cms:name>elections--voting-362</cms:name><cms:language>en</cms:language><cms:title>Elections - Voting</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=362}]"><cms:name>elections--voting-362-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>election, voting</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=362}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>You can only vote in elections if your name is on the Register of Electors.</i></p><hr/><p>The following
+people are allowed to vote:</p><ul>
+			<li title="*">If you are eighteen years or over.</li>
+			<li title="*">All British, Commonwealth, Irish and other
+    European Union citizens.</li>
+			<li title="*">Overseas electors</li>
+			<li title="*">Members of HM Forces and their spouses</li>
+			<li title="*">Crown servants employed outside the United Kingdom</li>
+			<li title="*">European citizens are allowed to vote in
+    European and Local Elections only.</li>
+			<li title="*">Overseas Electors are allowed to vote in
+    Parliamentary and European Elections only.</li>
+		</ul><p>Poll cards are delivered shortly before an Election. Each member of the household
+      who is eligible to vote should receive a poll card which informs them of the
+      date of the election, where their polling station is and the hours of poll. You
+      do not need to take the poll card with you to be able to vote.
+</p><ul>
+			<li title="*">For Local Elections the hours of poll are 8.00am
+    to 9.00pm</li>
+			<li title="*">For Parliamentary and European Elections the hours
+    of poll are 7.00am to 10.00pm</li>
+			<li title="*">For General Elections the hours of poll are 7.00am
+    to 10.00pm</li>
+			<li title="*">On arrival at your designated polling station, the Presiding Officer will
+  ask you to confirm your name and address and will issue you with a ballot paper.</li>
+			<li title="*">The ballot paper will be marked with an official stamp.</li>
+			<li title="*">You should take the ballot paper to the voting booth and mark with a &quot;X&quot; the
+  candidate you wish to vote for. </li>
+			<li title="*">Fold the ballot paper and deposit it in the ballot box. </li>
+		</ul><h2>What if I am unable to get to the Polling Station
+on Election Day?</h2><p> If you are unable to go to your Polling Station
+    on Election Day, you can apply to vote by 
+		<a href="#post">
+				<strong>post</strong>
+			</a>	 or 
+		<a href="/ccm/services/pid.jsp?pid=361">
+				<strong>proxy</strong>
+			</a>	
+			<span class="gen">link to pid 361</span> (a proxy is someone
+    who votes on your behalf). </p><ul>
+			<li title="*">If you have a permanent physical incapacity, are
+    registered blind or receive the higher rate of mobility component of the
+    disability living allowance for a physical disability you are eligible for
+    a permanent postal or proxy vote. The form requires the declaration that
+    the information is correct from a doctor, nurse or warden of a home.</li>
+			<li title="*">If your work frequently takes you overseas</li>
+			<li title="*">If you will be on holiday when the election
+    is taking place</li>
+			<li title="*">If you have moved house since you registered
+    and are unable to go to your old polling station.</li>
+			<li title="*">If you are working during all hours of voting,
+    for example as a member of the election staff.</li>
+		</ul><p>Please contact the Electoral Registration
+    Officer who will advise which form you need to complete.</p><h2>
+			
+			Postal Vote</h2><p>You are welcome to apply for a postal vote if you are unable to
+    go to your
+  Polling Station on election day. </p><p>Complete the 
+			
+			<span class="gen">link to online form</span> if
+        you wish to apply for a postal vote. </p><p>The deadline for receipt of postal vote applications is <span class="gen">enter amount</span> working days before
+  the day of an election. </p><p>Alternatively you can pick up an application form
+    at any of our Customer Service Points or use the contact details above
+    to request a form. <br/>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=362"> Applications for services
+		(362)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=362}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=362}]"/></cms:links></cms:item>

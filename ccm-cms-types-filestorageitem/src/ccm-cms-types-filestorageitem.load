@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_file_storage"/>
+    <initializer class="com.arsdigita.cms.contenttypes.FileStorageItemInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-filestorageitem"/>
+    <data class="com.arsdigita.cms.contenttypes.FileStorageItemLoader"/>
+  </scripts>
+</load>

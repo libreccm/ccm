@@ -1,0 +1,68 @@
+Manual Test Script for ccm-webblog
+==================================
+[ v1.0 | 30/01/2006 | Matt Roberts ]
+
+
+
+I. Configuring the weblog portlet.
+1. Log in as an administrator.
+2. Become a new user;
+ i) goto /ccm/admin
+ ii) click 'create new user'
+ iii) submit form data
+ iv) click 'become this user'
+3. Goto the users portal page. You should see one 'customise' link
+4. Click this and select weblog portlet.
+
+  NB. When you create a weblog application you may be given the option to use an existing app.
+  This will happen in a system where other uses have created weblog applications and if you have
+  already created an app. 
+  
+5. Create a new weblog application and save.
+6. Create a new weblog portlet and save.
+
+
+II. Creating a weblog
+1. Return to the users view.
+2. Click the link to 'view all weblogs'.
+3. Click the link to 'Add topic'.
+4. You should see a form with title (text), lead (textarea) and body (WYSIWYG) fields.
+5. Save a new weblog.
+6. Return to the portal page. Your weblog portlet should be listed.
+
+
+III. Editing the weblog
+1. Follow the link to see details of the weblog.
+2. Click the 'edit' link. You should see title (text), lead (textarea) and body (WYSIWYG) fields
+prefilled with your original values. Make a change to these and save. Check that the changes
+took effect.
+
+
+IV. Commenting the weblog
+1. From the portal page follow to see details of the weblog.
+2. Click the comment link. You should get a WYSIWYG editor.
+3. Add a comment and save.
+4. Check that your comment is listed with the weblog details.
+5. Return to the portal page and check that the number of comments has increased.
+6. Go back to the weblog details page and edit your comment, checking that the WYSIWYG is prefilled
+and that your edit takes effect.
+7. Test deleting your comment making sure that it is removed and that the comment counter on the portal 
+page has decreased. 
+
+
+V. Shared weblog applications
+1. Log in as an administrator.
+2. Goto the portal page and click any of the three customise links.
+3. Create a new weblog application and save.
+4. Create a new weblog portlet and save.
+5. Repeat steps II-IV.
+6. From the portal page create a another weblog portlet, this time choosing existing weblog 
+app, ideally one that you created as a normal user in steps II-IV.
+7. You should be able to add the users' weblog app to your page and from there control it in the 
+same way as the user.
+8. Become the user and confirm that the administrators changes (edits & comments) have taken effect.
+9. Now try to add another weblog portlet and choose one of the administrators weblog applications. 
+You should get a permission denied message.
+
+
+

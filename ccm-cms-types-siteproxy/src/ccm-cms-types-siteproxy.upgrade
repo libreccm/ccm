@@ -1,0 +1,6 @@
+<upgrade>
+  <version from="6.3.0" to="6.3.1">
+    <script sql="ccm-cms-types-siteproxy/upgrade/::database::-6.3.0-6.3.1.sql"/>
+    <script class="com.arsdigita.cms.contenttypes.SiteProxyUpgrade630to631"/>
+  </version>
+</upgrade>

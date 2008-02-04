@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  name="ccm-webpage"
+  prettyName="Webpage"
+  version="6.5.0"
+  release="1"
+  webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.3.0" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.3.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-util" version="6.3.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-portal" version="6.3.0" relation="ge"/>
+  </ccm:dependencies>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.runtime-collective.com" type="website"/>
+    <ccm:contact uri="mailto:info@runtime-collective.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    Webpage application for Aplaws.
+  </ccm:description>
+</ccm:application>

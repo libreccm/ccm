@@ -1,0 +1,202 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: URLServiceExample.pdl 741 2005-09-02 10:21:19Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model examples;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.PackageInstance;
+
+object type Forum extends ACSObject {
+    String[1..1] name = t_forums.name;
+    PackageInstance[1..1] packageInstance;
+    reference key (t_forums.forum_id);
+
+    retrieve {
+        do {
+            SELECT t_forums.forum_id, t_forums.name, t_forums.package_id,
+            acs_objects.display_name, acs_objects.object_type, 
+            acs_objects.default_domain_class
+            FROM t_forums, acs_objects
+            WHERE t_forums.forum_id = acs_objects.object_id
+            and t_forums.forum_id = :id
+        } map {
+            id = t_forums.forum_id;
+            packageInstance.id = t_forums.package_id;
+            name = t_forums.name;
+            displayName = acs_objects.display_name;
+            objectType = acs_objects.object_type;
+            defaultDomainClass = acs_objects.default_domain_class;
+        }
+    }
+
+    retrieve packageInstance {
+        do {
+            SELECT ap.package_id, ap.pretty_name, o.object_type, o.display_name
+            FROM apm_packages ap, acs_objects o, t_forums
+            WHERE ap.package_id = t_forums.package_id
+            AND ap.package_id = o.object_id
+            AND t_forums.forum_id = :id
+        } map {
+            packageInstance.id = ap.package_id;
+            packageInstance.prettyName = ap.pretty_name;
+            packageInstance.objectType = o.object_type;
+            packageInstance.displayName = o.display_name;
+        }
+    }
+
+    insert {
+        super;
+        do {
+            insert into t_forums (forum_id, name, package_id) 
+            values (:id, :name, :packageInstance.id)
+        }
+    }
+
+    update {
+        super;
+        do {
+            update t_forums 
+            set name = :name, 
+            package_id=:packageInstance.id
+            where forum_id = :id
+        }
+    }
+    delete {
+        do {
+            delete from t_forums where forum_id = :id
+        }
+        super;
+    }
+
+    add packageInstance {}
+    remove packageInstance {}
+}
+
+object type Message extends ACSObject {
+    String[1..1] subject;
+    String[0..1] message;
+
+    retrieve {
+        do {
+            SELECT t_messages.message_id, 
+            t_messages.subject, t_messages.message, t_messages.forum_id,
+            acs_objects.display_name, acs_objects.object_type, 
+            acs_objects.default_domain_class
+            FROM t_messages, acs_objects
+            WHERE t_messages.message_id = acs_objects.object_id
+            and t_messages.message_id = :id
+        } map {
+            id = t_messages.message_id;
+            subject = t_messages.subject;
+            message = t_messages.message;
+            forum.id = t_messages.forum_id;
+            displayName = acs_objects.display_name;
+            objectType = acs_objects.object_type;
+            defaultDomainClass = acs_objects.default_domain_class;
+        }
+    }
+
+    insert {
+        super;
+        do {
+            insert into t_messages (message_id, subject, message, forum_id) 
+            values (:id, :subject, :message, :forum.id)
+        }
+    }
+
+
+    update {
+        super;
+        do {
+            update t_messages 
+            set subject = :subject, 
+            message=:message,
+            forum_id=:forum.id
+            where forum_id = :id
+        }
+    }
+
+    delete {
+        do {
+            delete from t_messages where message_id = :id
+        }
+        super;
+    }
+}
+
+association {
+
+    Forum[1..1] forum;
+
+    // NOTE: component means component in PDL
+    component Message[0..n] messages;
+
+    retrieve forum {
+        do {
+            select t_forums.forum_id,
+                   t_forums.name,
+                   acs_objects.object_type,
+                   acs_objects.display_name,
+                   acs_objects.default_domain_class
+            from t_messages, t_forums, acs_objects
+            where t_forums.forum_id = acs_objects.object_id
+              and t_forums.forum_id = t_messages.forum_id
+              and t_messages.message_id = :id
+        } map {
+            forum.id = t_forums.forum_id;
+            forum.name = t_forums.name;
+            forum.objectType = acs_objects.object_type;
+            forum.displayName = t_forums.display_name;
+            forum.defaultDomainClass = acs_objects.default_domain_class;
+        }
+    }
+
+    retrieve messages {
+        do {
+            select t_messages.message_id,
+                   t_messages.subject,
+                   t_messages.message,
+                   acs_objects.object_type,
+                   acs_objects.display_name,
+                   acs_objects.default_domain_class
+            from t_messages, acs_objects
+            where t_messages.message_id = acs_objects.object_id
+              and t_messages.forum_id = :id
+        } map {
+            messages.id = t_messages.message_id;
+            messages.subject = t_messages.subject;
+            messages.message = t_messages.message;
+            messages.objectType = acs_objects.object_type;
+            messages.displayName = t_forums.display_name;
+            messages.defaultDomainClass = acs_objects.default_domain_class;
+        }
+    }
+
+    // Message "insert/delete" events take care of the links to the forum,
+    // so no need for "add/remove messages" events
+    add messages {}
+    remove messages {}
+
+    add forum {
+        do {
+            update t_messages set forum_id=:forum.id where message_id = :id
+        }
+    }
+    remove forum {}
+}

@@ -1,0 +1,287 @@
+ccm-core (6.3.2-3) unstable; urgency=low
+
+  * Added a new parameter: waf.xml.formatters.locale. If this is set then
+    given locale will be used instead of getting the locale from the
+    KernelContext. Currently this is only used by date formatters.  
+
+ -- Matt Roberts <matt@runtime-collective.com>  Tue, 18 Apr 2006 11:48:36 +0100
+
+ccm-core (6.3.2-2) unstable; urgency=low
+
+  *  Increment the version in debian/ccm-settings.sh. This should be done
+     automatically. 
+
+ -- David Pashley <david@runtime-collective.com>  Tue, 18 Apr 2006 11:09:57 +0100
+
+ccm-core (6.3.2-1) unstable; urgency=low
+
+  * Added a default value (en) for cat_purposes.language
+
+ -- Matt Roberts <matt@runtime-collective.com>  Wed,  5 Apr 2006 17:25:19 +0100
+
+ccm-core (6.3.1-6) unstable; urgency=low
+
+  * Updating static table definition for cat_purposes. Made language not null
+    and added a compound unique constraint on language and key
+
+ -- Matt Roberts <matt@runtime-collective.com>  Thu, 30 Mar 2006 10:46:53 +0100
+
+ccm-core (6.3.1-5) unstable; urgency=low
+
+  * Updating static table definition for cat_purposes. Added the language
+    column. 
+
+ -- Matt Roberts <matt@runtime-collective.com>  Thu, 30 Mar 2006 10:35:05 +0100
+
+ccm-core (6.3.1-4) unstable; urgency=low
+
+  * Added waf.dispatcher.default_page_class. By default it is set to
+    com.arsdigita.bebop.Page but you can change that now.
+
+ -- Matt Roberts <matt@runtime-collective.com>  Mon,  6 Mar 2006 15:58:26 +0000
+
+ccm-core (6.3.1-3) unstable; urgency=low
+
+  * Adding language to category purpose, from UNDP 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri,  3 Mar 2006 10:55:29 +0000
+
+ccm-core (6.3.1-2) unstable; urgency=low
+
+  * Suggest rather than depend on postgresql 
+
+ -- David Pashley <david@runtime-collective.com>  Fri, 10 Feb 2006 12:29:25 +0000
+
+ccm-core (6.3.1-1) unstable; urgency=low
+
+  * Upgrade script for users.banned
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri,  3 Feb 2006 11:22:09 +0000
+
+ccm-core (6.3.0-8) unstable; urgency=low
+
+  * Removed hardcoded server names from file upload
+
+ -- James Burt <james@runtime-collective.com>  Tue, 24 Jan 2006 14:12:35 +0000
+
+ccm-core (6.3.0-7) unstable; urgency=low
+
+  * Changes to complete HTMLArea change
+
+ -- James Burt <james@runtime-collective.com>  Tue, 24 Jan 2006 10:23:44 +0000
+
+ccm-core (6.3.0-6) unstable; urgency=low
+
+  * Fixing RedHat breaking the build, it seems 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 20 Jan 2006 08:41:59 +0000
+
+ccm-core (6.3.0-5) unstable; urgency=low
+
+  * Tree enhancement (show isSelected) 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu, 19 Jan 2006 15:30:28 +0000
+
+ccm-core (6.3.0-4) unstable; urgency=low
+
+  * RedHat patches 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 30 Dec 2005 08:52:59 +0000
+
+ccm-core (6.3.0-3) unstable; urgency=low
+
+  * New changes to add banned status for users
+
+ -- James Burt <james@runtime-collective.com>  Mon,  7 Nov 2005 09:51:34 +0000
+
+ccm-core (6.3.0-2) unstable; urgency=low
+
+  * Adding missing description of form config param 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 19 Oct 2005 11:14:24 +0000
+
+ccm-core (6.3.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.2.0 to 6.3.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 13:51:58 +0000
+
+ccm-core (6.2.0-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.1.2 to 6.2.0
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Mon, 10 Oct 2005 12:30:10 +0000
+
+ccm-core (6.1.2-17) unstable; urgency=low
+
+  * fix encoding messup 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 21 Sep 2005 08:26:13 +0000
+
+ccm-core (6.1.2-16) unstable; urgency=low
+
+  * Catch more POI exceptions when indexing content 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu,  1 Sep 2005 07:23:11 +0000
+
+ccm-core (6.1.2-15) unstable; urgency=low
+
+  * replacing spaces with spaces in htmlarea.js, yeah. Ticket 19036 
+
+ -- My <myuser@firenze.runtime-collective.com>  Thu,  4 Aug 2005 12:46:58 +0000
+
+ccm-core (6.1.2-14) unstable; urgency=low
+
+  * 17170 - DefaultAncestorsFixer tools 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 29 Jul 2005 13:34:15 +0000
+
+ccm-core (6.1.2-13) unstable; urgency=low
+
+  * Patches from Phil Collins 
+
+ -- My <myuser@firenze.runtime-collective.com>  Wed, 27 Jul 2005 08:14:21 +0000
+
+ccm-core (6.1.2-12) unstable; urgency=low
+
+  * Upgrade patch from RedHat
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri,  8 Jul 2005 08:53:05 +0000
+
+ccm-core (6.1.2-11) unstable; urgency=low
+
+  * Attempt to fix permissions fix 
+
+ -- David Pashley <david@runtime-collective.com>  Tue, 28 Jun 2005 14:46:04 +0100
+
+ccm-core (6.1.2-10) unstable; urgency=low
+
+  * Permissions fix 
+
+ -- My <myuser@firenze.runtime-collective.com>  Fri, 24 Jun 2005 12:39:40 +0000
+
+ccm-core (6.1.2-9) unstable; urgency=low
+
+  * Log output for 17509
+
+ -- My <myuser@firenze.runtime-collective.com>  Tue, 17 May 2005 09:17:25 +0000
+
+ccm-core (6.1.2-8) unstable; urgency=low
+
+  * Upgrading PDFBox version
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Thu, 12 May 2005 12:34:36 +0000
+
+ccm-core (6.1.2-7) unstable; urgency=low
+
+  * Let the build know where the oracle jar file is. 
+
+ -- David Pashley <david@runtime-collective.com>  Thu, 12 May 2005 10:14:48 +0100
+
+ccm-core (6.1.2-6) unstable; urgency=low
+
+  * Parameter to prevent notifications
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Tue, 10 May 2005 13:53:04 +0000
+
+ccm-core (6.1.2-5) unstable; urgency=low
+
+  * #17876 dynamichostprovider used to specify servername in email reminder
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Fri, 29 Apr 2005 07:50:39 +0000
+
+ccm-core (6.1.2-4) unstable; urgency=low
+
+  * Added new member to Category class to enable categories to ignore the 
+    default parent index item.   
+
+ --  <criss@runtime-collective.com>  Mon, 25 Apr 2005 12:17:27 +0000
+
+ccm-core (6.1.2-3) unstable; urgency=low
+
+  * New parameter waf.formbuilder.interpolate_email_actions_to_address to send simple/xml/templated emails to an interpolated email address, ticket 17328
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Fri, 22 Apr 2005 08:29:47 +0000
+
+ccm-core (6.1.2-2) unstable; urgency=low
+
+  * parameter to de-activate fulldateformatter 
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Wed, 13 Apr 2005 15:43:30 +0000
+
+ccm-core (6.1.2-1) unstable; urgency=low
+
+  * Automatic update of version number from 6.1.1 to 6.1.2
+
+ -- Runtime Collective Ltd. <info@runtime-collective.com>  Thu, 31 Mar 2005 11:59:54 +0000
+
+ccm-core (6.1.1-1) unstable; urgency=low
+
+  * for qa 
+    
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Mon, 28 Feb 2005 11:12:56 +0000
+     
+ccm-core (6.1.0-8) unstable; urgency=low
+
+  * fixed for null string for content-section
+  * added build-all-rpms.sh
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Mon, 28 Feb 2005 11:12:56 +0000
+
+ccm-core (6.1.0-7) unstable; urgency=low
+
+  * modified DHTMLEditor.xsl to remove a hard-coded variable (config_text_entry), replacing with the dynamic version used elsewhere in the file.
+
+ -- Steve Hunt <steveh@runtime-collective.com>  Tue, 22 Feb 2005 17:27:56 +0000
+
+ccm-core (6.1.0-6) unstable; urgency=low
+
+  * bebop.form.Submit has methods to set onclick attribute  
+
+ -- Fabrice Retkowsky <fabrice@runtime-collective.com>  Tue, 22 Feb 2005 09:36:31 +0000
+
+ccm-core (6.1.0-5) unstable; urgency=low
+
+  * Depend on j2sdk1.4 | java2-compiler 
+  * Update to policy 3.6.1
+  * Change maintainer to the mailing list and add uploaders
+
+ -- David Pashley <david@runtime-collective.com>  Mon, 31 Jan 2005 11:39:40 +0000
+
+ccm-core (6.1.0-4) unstable; urgency=low
+
+  * debian/postrm: disabled the purge operations [had some weird problems].
+  * updated the debian control scripts to get the package name and version from their invocation.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Mon, 10 May 2004 12:33:33 +0100
+  
+ccm-core (6.1.0-3) unstable; urgency=low
+
+  * debian/templates: made load-at-install and setup-database-at-install the default behaviour.
+  * debian/postinst: ccm_hostinit will try to use web.xml-aplaws from ccm-ldn-aplaws.
+  * debian/ccm-settings.sh: correct checking/setting of ORACLE_JDBC_LIB [Chris].
+  * debian/templates: changed the default postgresql database and user names to "ccm01.db" and "ccm".
+  * debian/config: added detection of the hostname of the machine and possibly the user's email.
+  * major restructuring of the debian scripts: moved all utility functions to ccm-tools and made postinst, postrm, prerm and ccm-settings.sh source and use that file.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri,  7 May 2004 13:04:43 +0100
+
+ccm-core (6.1.0-2) unstable; urgency=low
+
+  * The build process now tries to automatically detect JAVA_HOME and the location of Oracle's java library.
+  * debian/ccm-clean.sh: only calls the ant process if build.xml exists.
+  * debian/{postinst,prerm,config,templates}: added debconf support
+  * debian/postinst: accepts 'reconfigure' and treats it as 'configure'.
+  * debian/postinst: added postgresql.jar to CLASSPATH; added libpgjava to the dependencies.
+  * debian/postinst: removed some bashisms upon recommendation from lintian.
+  * debian/rules: enabled dh_installdebconf.
+  * debian/control: made the package depend on debconf.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri,  1 May 2004 15:41:43 +0100
+  
+    
+ccm-core (6.1.0-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Berkan Eskikaya <berkan@runtime-collective.com>  Fri, 24 Apr 2004 12:27:56 +0100

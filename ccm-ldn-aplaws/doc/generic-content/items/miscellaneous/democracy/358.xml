@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=358}]"><cms:name>councillors-general-information-358</cms:name><cms:language>en</cms:language><cms:title>Councillors - General Information </cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=358}]"><cms:name>councillors-general-information-358-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>councillor, general, information</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=358}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council provides general information on local councillors, including details of who they are and what they do. </i></p><hr/><p>As a result of the Local Government Act 2000, the role of councillors has changed with the introduction of an executive/scrutiny system. The council is run on a system similar to that at central government, with an executive to make major policies and councillors to scrutinise or examine these decisions in detail. </p><h2>What do Councillors do?</h2><p>Your councillor is the person elected every 4 years to represent your area. </p><p>They can help if you are dissatisfied with a council service by advising or directing you to someone who can help sort out your problem and can sometimes progress the case on your behalf. This is often done in advice surgeries where you can meet with the councillor for your ward and discuss your problem. </p><p>As community leaders they put forward proposals to improve their ward, which may include bringing together different community groups to develop a case for change. </p><h2>Who is my Councillor? </h2><p>The following list gives you the names and photographs of your Councillors, together with a brief profile, details of their roles and responsibilities, their annual reports and contact details. </p><table width="90%" cellpadding="5" class="centre" summary="councillor details">
+				<tr>
+					<td>
+<strong>Name of Councillor: </strong> <span class="gen">enter details</span>
+<br/>
+Insert Picture of Councillor<br/>
+<strong>Year of Retirement</strong>: <span class="gen">enter details</span>
+					</td>
+					<td>
+							
+								<strong>Contact Details</strong> <span class="gen">enter details</span>
+<br/>
+        <strong>Brief Profile of Councillor</strong> <span class="gen">enter details</span>
+<br/>
+        <strong>Roles and Responsibilities</strong> <span class="gen">enter details</span>
+<br/>
+								<strong>Annual Report</strong> <span class="gen">enter hyperlink</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+<strong>Name of Councillor: </strong> <span class="gen">enter details</span>
+<br/>
+Insert Picture of Councillor<br/>
+<strong>Year of Retirement</strong>: <span class="gen">enter details</span>
+					</td>
+					<td>
+							
+								<strong>Contact Details</strong> <span class="gen">enter details</span>
+<br/>
+        <strong>Brief Profile of Councillor</strong> <span class="gen">enter details</span>
+<br/>
+        <strong>Roles and Responsibilities</strong> <span class="gen">enter details</span>
+<br/>
+								<strong>Annual Report</strong> <span class="gen">enter hyperlink</span>
+					</td>
+				</tr>
+			</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=358"> Providing Information
+		(358)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

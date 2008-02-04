@@ -1,0 +1,140 @@
+Summary: ::CCM_SUMMARY::
+Name: ::CCM_PACKAGE::
+Version: ::CCM_PKGVERSION::
+Release: ::CCM_RELEASE::
+Epoch: 0
+Group: Applications/Internet/CCM
+License: CCMPL http://www.redhat.com/licenses/ccmpl.html
+Source0: %{name}-%{version}-%{release}.zip
+BuildRoot: %{_tmppath}/%{name}-%{version}
+BuildArchitectures: noarch
+BuildRequires: ant >= 1.5
+BuildRequires: ccm-config
+BuildRequires: ccm-scripts
+BuildRequires: perl
+Requires: ccm-tools
+Prefix: /usr
+Prefix: /etc
+
+::CCM_RPM_DEPENDENCIES::
+
+%define appname ::CCM_APP::
+%define appversion ::CCM_VERSION::
+%define sharedjardir /usr/share/java
+%define webappdir /usr/share/java/webapps
+%define javadocdir /usr/share/javadoc
+
+%package doc
+Summary: ::CCM_PACKAGE:: API documentation
+Group: Applications/Internet/CCM
+
+%description
+::CCM_DESCRIPTION::
+
+%description doc
+::CCM_PACKAGE:: documentation. Provides the JavaDoc API documentation.
+
+%prep
+%setup -q -n %{name}-%{appversion}
+
+%pre
+
+%build
+. $CCM_SCRIPTS_HOME/bin/env-conf.sh ::CCM_APP::
+CCM_HOME=`pwd`
+ccm-configure
+
+if [ -z "$ANT" ]; then
+  if which classic-ant > /dev/null 2>&1; then
+    ANT=classic-ant
+  else
+    ANT=ant
+  fi
+fi
+
+$ANT build-%{appname}
+
+%install
+. $CCM_SCRIPTS_HOME/bin/env-conf.sh ::CCM_APP::
+CCM_HOME=`pwd`
+
+if [ -z "$ANT" ]; then
+  if which classic-ant > /dev/null 2>&1; then
+    ANT=classic-ant
+  else
+    ANT=ant
+  fi
+fi
+
+rm -rf %{buildroot}
+%{__mkdir_p} %{buildroot}
+%{__mkdir_p} %{buildroot}%{_bindir}
+%{__mkdir_p} %{buildroot}%{javadocdir}/%{name}-%{version}
+
+ANT_OPTS="-Dapps.%{appname}.version=%{version}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.api.dir.%{appname}=%{buildroot}%{javadocdir}/%{name}-%{version}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.bin.dir.%{appname}=%{buildroot}%{_bindir}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.private.lib.dir=%{buildroot}%{sharedjardir}/%{name}-%{version}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.shared.classes.dir=%{buildroot}/tmp/%{name}-%{version}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.shared.lib.dir=%{buildroot}%{sharedjardir}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.system.jars.dir=%{buildroot}%{sharedjardir}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.webapp.dir=%{buildroot}%{webappdir}/%{name}-%{version}"
+
+export ANT_OPTS
+
+$ANT $ANT_OPTS deploy-%{appname}
+$ANT $ANT_OPTS deploy-jar-classes-%{appname}
+$ANT $ANT_OPTS deploy-javadoc-%{appname}
+
+rm -rf "%{buildroot}/tmp/%{name}-%{version}"
+
+cd "%{buildroot}%{javadocdir}"
+ln -sf %{name}-%{version} %{name}
+
+cd "%{buildroot}%{sharedjardir}"
+ln -sf %{name}-%{version} %{name}
+
+if [ "%{version}" != "%{appversion}" ]; then
+    for extension in .jar -sql.jar -pdl.jar -system.jar ""; do
+      if [ -e "%{name}-%{version}$extension" ]; then
+        ln -sf "%{name}-%{version}$extension" "%{name}-%{appversion}$extension"
+      fi
+    done
+fi
+
+if [ -n "$AUTO_BUILD_ROOT" ]; then
+  mkdir -p $AUTO_BUILD_ROOT/usr/share/java
+  cp -rf --preserve %{buildroot}/* $AUTO_BUILD_ROOT
+fi
+
+rm -f "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+find "%{buildroot}%{sharedjardir}" -mindepth 1 -print -prune 2>/dev/null | \
+  sed "s!%{buildroot}!!" >> "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+find "%{buildroot}%{webappdir}" -mindepth 1 -print -prune 2>/dev/null | \
+  sed "s!%{buildroot}!!" >> "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+find "%{buildroot}%{_bindir}" -mindepth 1 -print -prune 2>/dev/null | \
+  sed "s!%{buildroot}!!" >> "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+
+%post
+
+%postun
+
+%clean
+# get out of the way of the rm -rf commands
+cd /
+
+rm -rf %{buildroot}
+rm -rf %{_topdir}/BUILD/%{name}-%{appversion}
+
+%files -f filelist.rpm
+%defattr(-,root,root)
+
+%define docdirexists() %(if unzip -l %{SOURCE0} | grep "%{name}-%{appversion}/%{appname}/doc/" > /dev/null; then echo 1; else echo 0; fi)
+%if %docdirexists
+  %doc %{appname}/doc/*
+%endif
+
+%files doc
+%defattr(-,root,root)
+%{javadocdir}/%{name}-%{version}
+%{javadocdir}/%{name}

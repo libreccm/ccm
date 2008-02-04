@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=23}]"><cms:name>education-1-23</cms:name><cms:language>en</cms:language><cms:title>Educational awards and benefits - education maintenance award</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=23}]"><cms:name>education-1-23-dublin-metadata</cms:name><cms:dcAudience>Students</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>educational, awards, benefits, maintenance</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=23}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Notes for Students and Parents</i></p><hr/><p>All students wishing to receive the EMA during the <span class="gen">enter date</span> academic year should complete the application form. This applies even if you received the EMA during the <span class="gen">enter date</span> academic year and you are returning to complete the second year of your course in September.</p><p>These notes are intended to help students and their parents to complete the application form and understand a little more about the EMA.</p><p>Please note: you cannot receive the EMA if you will also be receiving other Government funding (e.g. Dance and Drama Award, or Training Allowance)</p><h4>Completing the 
+			 <span class="gen">link to online form</span>
+</h4><p>It may look a bit complicated, but we have to ask all the questions to make sure we:</p><ul>
+
+			<li title="*">Have all the information we need so we can deal with your application in line with the Government's rules.</li>
+
+			<li title="*">Treat all applicants in a fair and equal manner and make our assessment of the EMA as accurate as possible.</li>
+
+		</ul><p>The application form is divided into two main parts:</p><ul>
+
+			<li title="*">Part A (on pages 1 to 5): which the student completes.</li>
+
+			<li title="*">Part B (on pages 6 to 11): which the student's natural or legally adoptive parent(s) complete, including details of their income for the 2002-2003 Income Tax year.</li>
+
+		</ul><p>Each part is divided into a number of questions. Most of the questions are straightforward (name, address, date of birth etc.). There are also notes on the form to help students and their parent(s) understand what is meant by some of the more complicated questions.</p><p>A definite statement is needed against each question. If a question does not apply to you, or if your parents do not have income from a particular source, say so. Put 'Not applicable','N/A' or 'None', do not leave it blank.</p><p>Download the 
+			 <span class="gen">link to online form</span>
+</p><h4>Providing Evidence</h4><p>For audit purposes, we are required to obtain evidence to back up the answers to some of the questions on the form. You MUST provide:</p><ul>
+
+			<li title="*">A <strong>Photocopy	</strong> of the front cover and first two pages of the current child benefit book or the latest letter 
+
+    of notification from the Child Benefit Agency. This evidence must include the name of the child applying for the EMA.</li>
+
+		</ul><p>(All parents need to reapply to the Child Benefit Agency to confirm the child is continuing in full-time education for child benefit to continue. Contact the Child Benefit Centre on <span class="gen">enter telephone number</span> if you have not already reapplied.)			</p><ul>
+
+			<li title="*">A <strong>Photocopy	</strong> of your Council Tax Bill for <span class="gen">enter date</span> or a recent gas, electricity or water bill. This is to prove your residence in Tameside.</li>
+
+		</ul><p>Evidence of parental income received between <span class="gen">enter date</span> and <span class="gen">enter date</span> is also needed to back up the answers given by parents in questions 14 and 15:</p><ul>
+
+			<li title="*">Question 14 (Taxable Earnings/Interest): the types of evidence required are listed in the final column of this question. Parents should declare all Bank and Building Society interest received during the <span class="gen">enter date</span> tax year, but evidence is only needed if the total interest was over &#xA3; <span class="gen">enter amount</span>
+</li>
+
+			<li title="*">Question 15 (Taxable State Benefits): evidence should be provided using documents that parents have already or using the Benefits Information Request Form that is included with the application form. Parents fill in the first part of the Benefits Information Request form and ask their Social Security Office to fill in the rest.</li>
+
+		</ul><h4>How is the Weekly EMA Payment worked out?</h4><p>The weekly amount depends on the natural or adoptive parents' gross taxable income in the last tax year.</p><p>Where annual parental income is more than &#xA3; <span class="gen">enter amount</span>, and the student has brothers or sisters aged 16 or over who are also studying in further education and still qualify for Child Benefit, a reduction of &#xA3; <span class="gen">enter amount</span> is made for each other eligible child. The following table shows examples of how we work out the amounts, based on annual income. The actual payment is worked out exactly using the government's formula, so the table below is only a guide:</p><table width="90%" cellpadding="5" class="centre" summary="Example of working out EMA">
+
+			<tr>
+
+				<th>Income</th>
+
+				<th>Weekly Amount	</th>
+
+				<th>Income</th>
+
+				<th>Weekly Amount</th>
+
+			</tr>
+
+			<tr>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+			</tr>
+
+			<tr>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+			</tr>
+
+			<tr>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+				<td>
+<span class="gen">enter amount</span>
+</td>
+
+			</tr>
+
+		</table><p>Please note: Where parents' income is over &#xA3; <span class="gen">enter amount</span> , a special allowance can be made for all children in the family eligible for Child Benefit.</p><p>Parents click here to use the 
+		<a href="/ccm/services/pid.jsp?pid=23e">EMA calculator.</a>	
+</p><h3>Other frequently asked questions</h3><h4>Do I have to go to a <span class="gen">enter council name</span> school, sixth form or further education college?</h4><p>No - you can attend any school or college that offers appropriate, recognised, full-time courses.</p><h4>I haven't had a payment this week - why?</h4><ul>
+
+			<li title="*">The weekly allowance is only paid if the student is attending 100% of their lessons and meeting the terms and conditions of their Learning Agreement. The school/college will tell us if the student has had any unauthorised absences and we will not pay the allowance for that week.</li>
+
+			<li title="*">A number of colleges operate a time sheet system to record attendance and payment can be stopped if the student has failed to hand in their time sheet. It is important that students check the arrangements in their school/college.</li>
+
+			<li title="*">You may not have returned your EMA Learning Agreement. We will send you a blank EMA Learning Agreement with the letter to tell you how much you will receive. It is crucial that you, your parent(s) and the school/college you attend complete the EMA Learning Agreement and return it to us to allow payments to begin.</li>
+
+		</ul><h4>What does 'weekly in arrears' mean?</h4><p>The weekly amount is paid in such a way that we can take account of any unauthorised absences. For example, this means that:</p><ul>
+
+			<li title="*">The school/college will tell us if we can pay students for the week of <span class="gen">enter date</span> to <span class="gen">enter date</span> by <span class="gen">enter date.</span>
+</li>
+
+			<li title="*">If full attendance is confirmed, we will then release a payment to the parent's bank account that day. It should be in their account by <span class="gen">enter date</span>, but it may take a little longer to get through the bank or building society's 'clearing' system.</li>
+
+		</ul><h4>What happens during vacations/half term holidays?</h4><ul>
+
+			<li title="*">Students are not entitled to receive weekly payments for the Christmas, Easter and half term holidays.</li>
+
+			<li title="*">Students are also not paid for family holidays taken during term time, as this is classed as an unauthorised absence for EMA purposes.</li>
+
+		</ul><h4>What is the Attendance bonus?</h4><ul>
+
+			<li title="*">Students may be eligible for a bonus of &#xA3; <span class="gen">enter amount</span> at the end of each term.</li>
+
+			<li title="*">A bonus is payable if the student has attended for at least 95% of the term and put in the necessary effort during the term. The school/college will tell us who qualifies.</li>
+
+			<li title="*">Payments will normally be made in the second week of the following term and will be paid into the student's bank account. It is essential students have a bank account for this purpose.</li>
+
+		</ul><h4>What is the Achievement Bonus?</h4><ul>
+
+			<li title="*">The student may be eligible for a bonus of &#xA3;50 at the end of the 2003/04 academic year when they successfully complete their course objectives.</li>
+
+			<li title="*">Once the results are available, the school/college will tell us who qualifies. This payment will be paid into the student's bank account.</li>
+
+		</ul><h4>Where to send the completed Application Form</h4><p>Before returning the application form, please use the checklist on the application form to make sure you have done everything that is required.</p><p>Send the completed application form to: <span class="gen">enter address</span>
+</p><p>Please make sure your return envelope is weighed and that you attach sufficient stamps to cover postage costs.</p><p>If you prefer, you can visit the Council's Customer Service Centre in <span class="gen">enter location</span> and a member of the Student Awards Section will check through the form with you. We are available between the following hours:</p><p>
+<span class="gen">enter opening times</span>
+</p><h4>What will happen next year?</h4><p>The EMA pilot scheme will finish with the introduction of the national EMA scheme in<span class="gen">enter date</span>. The way EMA applications are assessed will change for the national scheme.</p><p>This is likely to effect how you will re-apply for the EMA for the <span class="gen">enter date</span> academic year (if you will be continuing your studies) and the amount you will receive. Watch out for further information that will be made available later this year.</p><p>Thank you for taking the time to read these notes, we hope they have helped.</p><p>The information in these notes is accurate at the time of publication. Up to date information, including any changes to the Government's rules, will be included with the EMA Learning Agreement that will be sent to all successful applicants.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=23"> Applications for services
+		(23)
+		</a></h3><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=23"> Providing benefits and grants
+		(23)
+		</a></h3><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=23"> Providing Information
+		(23)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=23}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=23}]"/></cms:links></cms:item>

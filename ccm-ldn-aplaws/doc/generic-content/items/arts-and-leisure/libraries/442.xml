@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=442}]"><cms:name>arts-and-leisure-442</cms:name><cms:language>en</cms:language><cms:title>Internet Computers</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=442}]"><cms:name>arts-and-leisure-442-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>internet, computers, library, libraries</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=442}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Library members can use the internet free of charge for up to half an hour per day. </i></p><hr/><p>
+				Every half hour following will be charged at a cost of 
+						<span class="gen">enter amount</span>. Non members can use the internet at a cost of  
+						<span class="gen">enter amount</span>  per half hour. 
+			</p><p>
+				Booking is easy, call in, ring us or you can now 
+		<a href="/ccm/services/pid.jsp?pid=forms/442b">book an appointment/check 
+  availability of PCs on-line.
+					</a>	
+			<span class="gen">link to online form</span>.
+			</p><h4>
+				Why do we provide access to the Internet?
+			</h4><p>
+				We provide access to the Internet in keeping with our role as 
+  a provider of informational, educational, recreational and cultural enrichment opportunities 
+  for our users.
+			</p><p>
+				We consider that it is in the interests of library users and 
+  the free flow of information that we manage web provision with the minimum of filtering 
+  software. However, users should be aware that <span class="gen">enter council name</span> monitors Internet use and some sites will be blocked.
+			</p><h4>
+				Who can use the internet?
+			</h4><ul>
+			<li title="*">Any library member can use the Internet.</li>
+			<li title="*">All Internet users must sign a declaration form agreeing with our Acceptable 
+    Use Policy.</li>
+			<li title="*">A parent or guardian of children aged 15 or under must read this Acceptable 
+    Use Policy and sign the declaration form.</li>
+			<li title="*">The responsibility for overseeing the material accessed by a child, as with 
+    all other library material, remains with the parent or guardian.</li>
+			<li title="*">An adult must be with children under the age of 9.</li>
+		</ul><h4>
+				What Internet services do we provide?
+			</h4><ul>
+			<li title="*">We provide access to the World Wide Web but do not allow 
+    access to Usenet newsgroups.</li>
+			<li title="*">Users can set up their own web based e-mail account but we 
+    do not provide server based e-mail facilities.</li>
+		</ul><h4>
+				How much does it cost?
+			</h4><ul>
+			<li title="*">Use of the Internet is free. Users can book on for up to one hour and may have 
+    a further hour subject to the availability of the PC.</li>
+			<li title="*">Floppy disks cost <span class="gen">enter amount here</span>
+			</li>
+			<li title="*">Printouts cost <span class="gen">enter amount here</span> for A4 
+    black and white and  <span class="gen">enter amount here</span> for colour.</li>
+		</ul><h4>
+				Downloading Information
+			</h4><ul>
+			<li title="*">Users can download information on to a floppy disk, which is stored securely 
+    in the library. Only paper and disks provided by the library staff can be used. 
+    To prevent the downloading of viruses on to the network, users cannot re-use disks 
+    once they have been taken out of the library.</li>
+		</ul><p>
+			
+		<a href="http://www.chatdanger.com/">
+					Click here for a Parent's 
+  guide to the Internet and chat rooms
+				</a>	
+			<span class="gen">link to an external site</span> 
+  produced by the charity Childnet International.
+			</p><p>
+				You have to be a member of the Library to use the computers but that's no problem. 
+  Just call into the library, complete an application form and show two proofs of your 
+  address or alternatively,
+					
+		<a href="/ccm/services/pid.jsp?pid=438"> join online here</a>	
+			<span class="gen">link to pid 438</span>.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=442"> Booking Venues
+		(442)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

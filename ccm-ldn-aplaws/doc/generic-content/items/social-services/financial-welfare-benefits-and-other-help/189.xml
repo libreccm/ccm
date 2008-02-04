@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=189}]"><cms:name>welfare-rights-189</cms:name><cms:language>en</cms:language><cms:title>Welfare Rights</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=189}]"><cms:name>welfare-rights-189-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>welfare, rights</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=189}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We provide advice, information and representation on all aspects of Welfare Benefits and debt problems to residents. </i></p><hr/><p>Our aim is to:</p><ul>
+		<li title="*">Actively promote the take-up of benefits to ensure that residents are aware of their rights with regard to welfare benefits.</li>
+		<li title="*">Ensure that every assistance is given to residents to claim their benefit entitlement and thereby maximise their income.</li>
+		<li title="*">To provide debt counselling and advice to residents who are experiencing financial difficulties.</li>
+		<li title="*">To fully contribute to reducing poverty and deprivation within the area.</li>
+		</ul><p>The service is confidential, impartial and free.</p><p>We offer representation at Social Security Appeal Tribunals and represent clients in County Court Proceedings involving debt.</p><p>The service is based at <span class="gen">enter address.</span>
+</p><p>Our opening times are <span class="gen">enter opening hours</span>
+</p><p>The <strong>
+
+		<a href="http://www.lissongrovebenefits.co.uk/lghx.htm">Lisson Grove Benefits Program</a>	
+</strong> <span class="gen">link to external website</span> provides an A-Z of benefits available to you.</p><p>If you require any assistance from us, please use the contact details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=189"> Providing Information
+		(189)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

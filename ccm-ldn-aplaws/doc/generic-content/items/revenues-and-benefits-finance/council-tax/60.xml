@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=60}]"><cms:name>batch-20-60</cms:name><cms:language>en</cms:language><cms:title>Council tax - exemptions</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=60}]"><cms:name>batch-20-60-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, tax, exemptions</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=60}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Some properties are exempt from Council Tax. If you own or occupy a property which is described below and your bill does not show that an exemption has been granted, please contact the Council for advice.</i></p><hr/><h2>Unoccupied property exemptions</h2><ul>
+			<li title="*">A - Require or are undergoing major repair or undergoing structural alteration (exemption allowed for up to one year only or 6 months from completion of the works, whichever the sooner)</li>
+			<li title="*">B - Are owned by a charity (exemption allowed for up to six months only)</li>
+			<li title="*">C - Are unfurnished (exemption allowed for up to six months only)</li>
+			<li title="*">D - Are left empty by someone who has gone to prison</li>
+			<li title="*">E/I - Are left empty by someone who has moved to receive personal care in a hospital or a home, or elsewhere</li>
+			<li title="*">F - Are waiting for probate or letters of administration to be granted (exemption continues for up to six months after being granted).</li>
+			<li title="*">G - Are empty because occupation is forbidden by law</li>
+			<li title="*">H - Are waiting to be occupied by a minister of religion</li>
+			<li title="*">J - Are left empty by someone who has moved out to provide personal care to another person</li>
+			<li title="*">K - Are owned by a student and were last occupied by that student</li>
+			<li title="*">L - Have been repossessed</li>
+			<li title="*">Q - Are the responsibility of a bankrupt's trustee</li>
+			<li title="*">R - Are sites for an individual caravan or mobile home, or a mooring</li>
+			<li title="*">T - Are difficult to let because they are linked to, or in the grounds of, another property and may not be let separately from that other property without breaching, planning permission. The liable person must, however, live in the other property to qualify.</li>
+		</ul><h2>Occupied property exemptions</h2><ul>
+			<li title="*">M/N - Occupied entirely by students</li>
+			<li title="*">O - That are forces barracks and married quarters. Their occupants will contribute to the cost of local services through a special arrangement.</li>
+			<li title="*">P - Where at least one liable person is a member of a visiting force</li>
+			<li title="*">S - Where all the residents are less than 18 years of age</li>
+			<li title="*">U - Where all the residents are severely mentally impaired</li>
+			<li title="*">V - Where at least one liable person is a foreign diplomat</li>
+			<li title="*">W - Which are annexed to a family home and occupied by that family's elderly or disabled relatives.</li>
+		</ul><p>These categories are only broad descriptions of the available exemptions. If you believe an exemption should apply to your bill, please contact the Council for advice using the details above.</p><p>Please remember, while you are waiting for the outcome of an application, you must continue to pay your current bill. If this causes any problem, please contact us immediately.</p><p>Exemptions are reviewed at least once each year. We may ask you to provide information that helps us to do this. Failing to supply this information could mean any entitlement is cancelled.</p><p>Please remember, if your circumstances change you must tell the Council within 21 days.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=60"> Providing Information
+		(60)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

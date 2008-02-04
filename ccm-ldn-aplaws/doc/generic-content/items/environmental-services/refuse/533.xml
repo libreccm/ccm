@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=533}]"><cms:name>bins-533</cms:name><cms:language>en</cms:language><cms:title>Recycling-Household collection</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=533}]"><cms:name>bins-533-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>recycling, household, waste, collection </cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=533}]"><cms:content><![CDATA[<h2>Environmental Services</h2><p><i>The Council has a number of recycling schemes.</i></p><hr/><h3>What can be put in your paper recycling bin?</h3><ul>
+			<li title="*">Newspapers</li>
+			<li title="*">Magazines</li>
+			<li title="*">Junk mail</li>
+			<li title="*">Blue telephone directories</li>
+			<li title="*">Envelopes (except windowed envelopes)</li>
+			<li title="*">Catalogues</li>
+			<li title="*">Letters and general paper</li>
+		</ul><h3>What can't be put in your paper recycling bin?</h3><ul>
+			<li title="*">Cardboard</li>
+			<li title="*">Yellow pages</li>
+			<li title="*">Plastic wrappers</li>
+			<li title="*">General household rubbish</li>
+		</ul><h3>What can be put in my recycling bin?</h3><p>
+			<strong>Plastic Bottles</strong> - (please remove lids and squash the bottles)</p><p>
+			<strong>Clean Plastic Film e.g toilet roll wrapping and carrier bags</strong> - (No film that has come into contact with food)</p><p>
+			<strong>Food and Drinks Cans</strong> - (please rinse)</p><p>
+			<strong>Glass Bottles and Jars</strong> - (please rinse)</p><p>
+			<strong>Any Textiles</strong>
+		</p><h3>Recycling collection dates</h3><p>To find out when your recycling will be collected us the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/533e">online form</a>	
+			</strong>
+			<span class="gen">link to online form.</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=533"> Providing Information
+		(533)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

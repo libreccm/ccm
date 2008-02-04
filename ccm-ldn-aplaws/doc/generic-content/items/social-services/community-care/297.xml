@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=297}]"><cms:name>support-groups-and-organisations-297</cms:name><cms:language>en</cms:language><cms:title>Support Groups and Organisations</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=297}]"><cms:name>support-groups-and-organisations-297-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>support, groups, organisations</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=297}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>There are a number of groups and organisations, both local and national, that provide advice and support to different sections of the community. Below are just some of the organisations set up to assist:</i></p><hr/><p>
+<span class="gen">links to external websites</span>
+</p><h3>Elderly People:</h3><ul>
+  <li title="*">
+<strong>
+
+		<a href="http://www.ageconcern.org.uk/">Age Concern</a>	 -</strong> The UK's leading charities concerned with the needs and aspirations of older people.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.agepositive.gov.uk/index.cfm">Age Positive</a>	 -</strong> Age positive is a government initiative which tackles age discrimination and promotes age diversity in the workplace</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.alzheimers.org.uk/">Alzheimer's Society</a>	 -</strong> The Alzheimer's Society provides advice and support to people with dementia and their carers.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.arp050.org.uk/">Association of Retired and Persons over 50</a>	 -</strong> A social organisation for people aged 50 and up.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.carers.gov.uk/">Carers</a>	 -</strong> For carers, voluntary organisations and others, related to the national strategy for Caring about Carers, and providing useful links.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.contact-the-elderly.org/">Contact the Elderly</a>	 -</strong> Seeks to reduce the isolation for older people who live alone, by providing social occasions such as monthly tea parties.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://dementia.ion.ucl.ac.uk/">Dementia Research Group</a>	 -</strong> One of the UK's leading centres for clinical research into dementia.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.helptheaged.org.uk/default.htm">Help the Aged</a>	 -</strong> A leading national charity for older people.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.rukba.org.uk/">RUKBA</a>	 -</strong> A philanthropic organisation providing financial support and friendship for older people.</li>
+</ul><h3>Disabled People:</h3><ul>
+  <li title="*">
+<strong>
+
+		<a href="http://www.abilitynet.co.uk/content/home.htm">AbilityNet</a>	 -</strong> are a charity that offers advice to people with disabilities on all aspects of computer usage for employment, communication, education, or just for fun.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.afbp.org/">Action for Blind People</a>	 -</strong> is a national charity which aims to enable blind and partially sighted people to enjoy equal opportunities in every aspect of their lives through work, leisure, housing and support.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.bcodp.org.uk/">British Council for Disabled People (BCODP)</a>	 -</strong> was set up by disabled people in 1981 to promote full equality and participation within society. They are an umbrella organisation that represents some 130 organisations run and controlled by disabled people.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.dialuk.org.uk/">Disabled Information Advice Line (DIAL) UK</a>	 -</strong> DIAL provides a link to information for people with disabilities, and to advice providers.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.disabilitysport.org.uk/">Disability Sport England</a>	 -</strong> creates opportunities for participation in sport for people with all disabilities.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.epilepsy.org.uk/">Epilepsy Action (British Epilepsy Association)</a>	 -</strong> The Epilepsy Action helpline provides advice and information on all aspects of living with epilepsy. They aim to reply to helpline queries by email within 
+    48 hours.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.ndcs.org.uk/index.html">The National Deaf Children's Society (NDCS)</a>	 -</strong> is an organisation of parents, families and carers which exists to support parents in enabling their child to maximise their skills and abilities.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.headway.org.uk/">Headway</a>	 -</strong> Promotes understanding of all aspects of brain injury; and provides information, support and services to people with a brain injury, their family and carers.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.keepable.co.uk/">Keep Able</a>	 -</strong> Provides mobility and lifestyle ideas.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.mencap.org.uk/">MENCAP</a>	 -</strong> Working with people with a learning disability, and their families and carers.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.rethink.org/">Rethink</a>	 -</strong> Helping everyone affected by severe mental illness, including schizophrenia, to recover a better quality of life.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.epilepsynse.org.uk/pages/index/home/">National Society for Epilepsy (NSE)</a>	 -</strong> is the largest UK medical charity for epilepsy. The website offers information about epilepsy and about the NSE, frequently asked 
+    questions, personal accounts of living with epilepsy, a message board and more.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.royaldeaf.org.uk/">Royal Association in Aid of Deaf people (RAD)</a>	 -</strong> strives to meet the individual needs of deaf children and adults and deafblind people through the provision of services and the use of RAD Centres 
+    for Deaf People.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.rnib.org.uk/xpedio/groups/public/documents/code/InternetHome.hcsp">Royal National Institute of the Blind (RNIB)</a>	 -</strong> If you need to register as blind, contact the RNIB.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.scope.org.uk/">Scope</a>	 - </strong>helps people with cerebral palsy to achieve equality in society.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.seeability.org/">SeeAbility (Royal School for the Blind)</a>	 -</strong> works with adults who are blind or partially sighted, and have a range of additional disabilities. The charity works to encourage people's independence and to enhance their quality of life. They are also involved in research projects and training courses for professionals who work with people who are blind or partially sighted.</li>
+  <li title="*">
+<strong>
+
+		<a href="http://www.wft.org.uk/">Winged Fellowship</a>	 -</strong> provides respite for carers, and holidays for people with severe physical disabilities.</li>
+</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=297"> Providing Information
+		(297)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

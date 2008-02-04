@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=116}]"><cms:name>batch-17-116</cms:name><cms:language>en</cms:language><cms:title>Council housing - current tenant arrears</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=116}]"><cms:name>batch-17-116-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, housing, current, tenant, arrears</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=116}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>How the Council deals with tenants who fall behind with their rent and what you can do to avoid this.  </i></p><hr/><p>The Council is reliant upon rental income to pay for the services that it delivers 
+  to its Council tenants. If rent arrears increase it does have a definite effect 
+  on the services that the Council tenants receive. For that reason it is critical 
+  that rent arrears levels are kept to the minimum. </p><p>If a tenant falls into arrears the Council is sympathetic and will permit repayment 
+  of those arrears by instalments. However, the most important thing is that a person 
+  falling into arrears should make contact with the Housing Management Section. </p><p>The Council can only assist in solving the problem if the tenant contacts us to 
+  let us know what the problem is. If arrears continue to rise, and the Council can 
+  see no prospect of that changing, then the Council does have to take its tenants 
+  to Court. </p><p>At the Court the Council will normally ask for what is termed a 'Suspended Possession 
+  Order'. That is where the Court orders that the tenant must start paying the rent 
+  and a small amount per week, fortnight, or month off of the arrears. Tenants are 
+  encouraged to attend Court, should they be summoned. Even at this stage the Council 
+  would much prefer to have the problem of the arrears resolved rather than have the 
+  tenant evicted. </p><p>If a person has a Suspended Court Order against them the Council would still wish 
+  to know if the tenant encounters any difficulty in making payments. We will exercise 
+  some discretion, rather than just seeking to evict.</p><p>Regrettably, there does come a time when the Council appears to be faced with no 
+  alternative but to evict a tenant. This is very much a last resort and it is not 
+  an action taken lightly by the Council. If a person is evicted they do have a right 
+  to make an appeal to the Council as being homeless. Whilst every case has to be 
+  dealt on its merits the Council may well argue that if a person had the ability 
+  to pay the rent, but did not do so, then they may be considered to be 'intentionally 
+  homeless' and the Council would have no obligation to rehouse them. That would apply 
+  even where there are children in the household. For this reason it is very important 
+  that tenants deal with arrears issues at an early stage and the Housing Management 
+  Section are always happy to give help and advice at an stage in an arrears problem.</p><p>When a person leaves a Council tenancy they become known as a 'former tenant'. 
+  If there are arrears at the end of the tenancy the Council will continue to pursue 
+  these. In practice, this may mean summonsing the former tenant to Court to get an 
+  Order for payment. However, the addition of court costs against the former tenant 
+  makes this an expensive option for the former tenant. In practice, we would much 
+  rather negotiate repayment by instalments if clearing the debt in a single payment 
+  is not possible. As always, it is important that people contact our Housing Management 
+  Section to discuss these issues so that a mutually convenient solution can be negotiated.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=116"> Providing Information
+		(116)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

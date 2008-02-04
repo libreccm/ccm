@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=833}]"><cms:name>batch-23-833</cms:name><cms:language>en</cms:language><cms:title>Help leaving hospital</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=833}]"><cms:name>batch-23-833-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>help, leaving, hospital</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=833}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If you are going into hospital you may need help when you leave to continue to live in your home. If requested, a social worker from Social Services will look into what help you need and decide with you what services can be provided. </i></p><hr/><p>You can either contact Social Services before you go into hospital, the contact details are above, or you can ask to see a social worker during your stay in hospital. The nurse looking after you will arrange this if you ask. </p><p>If you were receiving help before you went into hospital the nurse looking after you will arrange for this to be started again for your return home. If you were not receiving help or need more help than before, the nurse will contact the Social Work Department at the hospital to arrange for an assessment. </p><p>Help that may be available to you, from the Council, could include:</p><ul>
+  <li title="*">
+<strong>
+
+		<a href="/ccm/services/pid.jsp?pid=315">Meals at Home </a>	 </strong> <span class="gen">link to pid 315</span>
+</li>
+  <li title="*">
+<strong>
+
+		<a href="/ccm/services/pid.jsp?pid=242">Home Care  </a>	
+</strong> <span class="gen">link to pid 242</span>  </li>
+  <li title="*">
+<strong>
+
+		<a href="/ccm/services/pid.jsp?pid=296">Day Care </a>	 </strong>
+<span class="gen">link to pid 296</span>
+</li>
+    <li title="*">support for family members who are caring for you. </li>
+</ul><p>It may be that when you leave hospital, you will need to go into a residential or nursing home. This could be temporary, to give you time to recover more fully, or to get services started for you at home, or it might be permanent. Our  staff can help arrange this, or give you advice if you are able to make your own arrangements. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=833"> Providing Information
+		(833)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

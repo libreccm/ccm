@@ -1,0 +1,19 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+  <!--
+    <table name=""/>
+  -->
+    <initializer class="com.arsdigita.simplesurvey.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-simplesurvey"/>
+    <data class="com.arsdigita.simplesurvey.Loader"/>
+  </scripts>
+</load>

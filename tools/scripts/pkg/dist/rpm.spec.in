@@ -1,0 +1,227 @@
+
+%define builddoc() %(if env | grep -q CCM_BUILD_NO_DOCS ; then echo 0; else echo 1; fi)
+
+Summary: ::CCM_PACKAGE:: provides an application based on the Red Hat Web Application Framework.
+Name: ::CCM_PACKAGE::
+Version: ::CCM_PKGVERSION::
+Release: ::CCM_RELEASE::
+Epoch: 0
+Group: Applications/Internet/CCM
+License: LGPL
+Source0: %{name}-%{version}-%{release}.zip
+BuildRoot: %{_tmppath}/%{name}-%{version}
+BuildArchitectures: noarch
+BuildRequires: ant >= 1.5
+BuildRequires: ccm-config
+BuildRequires: ccm-scripts
+BuildRequires: perl
+Requires: ccm-tools
+Prefix: /usr
+Prefix: /etc
+
+::CCM_RPM_DEPENDENCIES::
+
+%define appname ::CCM_APP::
+%define appversion ::CCM_VERSION::
+%define confdir /etc/ccm/conf
+%define sharedjardir /usr/share/java
+%define webappdir /usr/share/java/webapps
+%define ccmclasspathfile ccm/ccm.classpath
+%define ccmwebappfile ccm/ccm.webapps
+
+%description
+::CCM_PACKAGE:: provides an application based on the Red Hat Web Application Framework.
+
+%if %builddoc
+%package doc
+Summary: ::CCM_PACKAGE:: API documentation
+Group: Applications/Internet/CCM
+
+%description doc
+::CCM_PACKAGE:: documentation. Provides the JavaDoc API documentation.
+%endif
+
+%prep
+%setup -q -n %{name}-%{appversion}
+
+%pre
+
+%build
+. $CCM_SCRIPTS_HOME/bin/env-conf.sh ::CCM_APP::
+CCM_HOME=`pwd`
+
+ccm-configure.sh
+
+if which classic-ant > /dev/null 2>&1; then
+  ANT=classic-ant
+else
+  ANT=ant
+fi
+
+$ANT build-%{appname}
+
+%install
+. $CCM_SCRIPTS_HOME/bin/env-conf.sh ::CCM_APP::
+CCM_HOME=`pwd`
+
+if which classic-ant > /dev/null 2>&1; then
+  ANT=classic-ant
+else
+  ANT=ant
+fi
+
+rm -rf $RPM_BUILD_ROOT
+%{__mkdir_p} $RPM_BUILD_ROOT
+%{__mkdir_p} $RPM_BUILD_ROOT%{confdir}
+%{__mkdir_p} $RPM_BUILD_ROOT/var/www/html/%{name}-%{version}
+
+ANT_OPTS="-Dapps.%{appname}.version=%{version}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.conf.dir=$RPM_BUILD_ROOT%{confdir}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.shared.lib.dir=$RPM_BUILD_ROOT%{sharedjardir}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.private.lib.dir=$RPM_BUILD_ROOT%{sharedjardir}/%{name}-%{version}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.webapp.dir=$RPM_BUILD_ROOT%{webappdir}/%{name}-%{version}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.system.jars.dir=$RPM_BUILD_ROOT%{sharedjardir}"
+ANT_OPTS="$ANT_OPTS -Ddeploy.api.dir.%{appname}=$RPM_BUILD_ROOT/var/www/html/%{name}-%{version}/api"
+ANT_OPTS="$ANT_OPTS -Ddeploy.shared.classes.dir=$RPM_BUILD_ROOT/tmp/%{name}-%{version}"
+export ANT_OPTS
+
+$ANT deploy-%{appname}
+
+rm -rf "$RPM_BUILD_ROOT/tmp/%{name}-%{version}"
+
+if [ -d %{_builddir}/%{name}-%{appversion}/%{appname}/src ]; then
+  $ANT deploy-jar-classes-%{appname}
+%if %builddoc
+  $ANT deploy-javadoc-%{appname}
+%endif
+fi
+
+if [ -n "$AUTO_BUILD_ROOT" ]; then
+  cp -r --preserve $RPM_BUILD_ROOT/* $AUTO_BUILD_ROOT
+  if [ "%{version}" != "%{appversion}" ] && [ -d $AUTO_BUILD_ROOT/usr/share/java ]; then
+    cd $AUTO_BUILD_ROOT/usr/share/java
+    for extension in .jar -sql.jar -pdl.jar -system.jar ""; do
+      if [ -e "%{name}-%{version}$extension" ]; then
+        if [ ! -e "%{name}-%{appversion}$extension" ] || [ -h "%{name}-%{appversion}$extension" ]; then
+          ln -sf "%{name}-%{version}$extension" "%{name}-%{appversion}$extension"
+        fi
+      fi
+    done
+  fi
+fi
+
+rm -f "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+find "${RPM_BUILD_ROOT}%{sharedjardir}"/*.jar -print -prune 2>/dev/null | \
+  sed "s!$RPM_BUILD_ROOT!!" >> "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+find "${RPM_BUILD_ROOT}%{sharedjardir}/%{name}-%{version}" -print -prune 2>/dev/null | \
+  sed "s!$RPM_BUILD_ROOT!!" >> "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+find "${RPM_BUILD_ROOT}%{webappdir}"/* -print -prune 2>/dev/null | \
+  sed "s!$RPM_BUILD_ROOT!!" >> "$RPM_BUILD_DIR/%{name}-%{appversion}/filelist.rpm"
+
+%post
+if [ -z "$RPM_INSTALL_PREFIX0" ]; then RPM_INSTALL_PREFIX0=/usr; fi
+if [ -z "$RPM_INSTALL_PREFIX1" ]; then RPM_INSTALL_PREFIX1=/etc; fi
+
+mkdir -p "${RPM_INSTALL_PREFIX1}/ccm"
+
+CCM_WEBAPP_FILE="${RPM_INSTALL_PREFIX1}/%{ccmwebappfile}"
+CCM_CLASSPATH_FILE="${RPM_INSTALL_PREFIX1}/%{ccmclasspathfile}"
+CCM_APP_JAR="${RPM_INSTALL_PREFIX0}/share/java/%{name}-%{version}.jar"
+CCM_APP_LIBDIR="${RPM_INSTALL_PREFIX0}/share/java/%{name}-%{version}/"
+CCM_APP_WEBDIR="${RPM_INSTALL_PREFIX0}/share/java/webapps/%{name}-%{version}/"
+export CCM_WEBAPP_FILE
+export CCM_CLASSPATH_FILE
+export CCM_APP_JAR
+export CCM_APP_LIBDIR
+export CCM_APP_WEBDIR
+
+if [ -f "$CCM_CLASSPATH_FILE" ] && grep "/%{name}-[0-9]" "$CCM_CLASSPATH_FILE" > /dev/null; then
+  perl -i -n -e 'BEGIN { undef $/; }
+   @lines = split;
+   $appSeen = 0;
+   foreach (@lines) {
+     if (m,/%{name}-[0-9],) {
+       if (!$appSeen) {
+         -f "$ENV{'CCM_APP_JAR'}" && print "$ENV{'CCM_APP_JAR'}\n";
+         -d "$ENV{'CCM_APP_LIBDIR'}" && print "$ENV{'CCM_APP_LIBDIR'}\n";
+         $appSeen = 1
+       }
+     } else {
+       print "$_\n"
+     }
+   }' "$CCM_CLASSPATH_FILE"
+else
+  [ -f "$CCM_APP_JAR" ] && echo "$CCM_APP_JAR" >> "$CCM_CLASSPATH_FILE"
+  [ -d "$CCM_APP_LIBDIR" ] && echo "$CCM_APP_LIBDIR" >> "$CCM_CLASSPATH_FILE"
+fi
+
+if [ -f "$CCM_WEBAPP_FILE" ]; then
+  grep -v "/%{name}-[0-9]" "$CCM_WEBAPP_FILE" > "$CCM_WEBAPP_FILE".tmp
+  mv "$CCM_WEBAPP_FILE".tmp "$CCM_WEBAPP_FILE"
+fi
+
+[ -d "$CCM_APP_WEBDIR" ] && echo "$CCM_APP_WEBDIR" >> "$CCM_WEBAPP_FILE"
+
+if [ "%{version}" != "%{appversion}" ]; then
+    cd "${RPM_INSTALL_PREFIX0}/share/java"
+    for extension in .jar -sql.jar -pdl.jar -system.jar ""; do
+      if [ -e "%{name}-%{version}$extension" ]; then
+        if [ ! -e "%{name}-%{appversion}$extension" ] || [ -h "%{name}-%{appversion}$extension" ]; then
+          ln -sf "%{name}-%{version}$extension" "%{name}-%{appversion}$extension"
+        fi
+      fi
+    done
+fi
+
+exit 0
+
+%postun
+if [ -z "$RPM_INSTALL_PREFIX0" ]; then RPM_INSTALL_PREFIX0=/usr; fi
+if [ -z "$RPM_INSTALL_PREFIX1" ]; then RPM_INSTALL_PREFIX1=/etc; fi
+
+CCM_WEBAPP_FILE="${RPM_INSTALL_PREFIX1}/%{ccmwebappfile}"
+CCM_CLASSPATH_FILE="${RPM_INSTALL_PREFIX1}/%{ccmclasspathfile}"
+CCM_APP_JAR="${RPM_INSTALL_PREFIX0}/share/java/%{name}-%{version}.jar"
+CCM_APP_LIBDIR="${RPM_INSTALL_PREFIX0}/share/java/%{name}-%{version}/"
+CCM_APP_WEBDIR="${RPM_INSTALL_PREFIX0}/share/java/webapps/%{name}-%{version}/"
+export CCM_WEBAPP_FILE
+export CCM_CLASSPATH_FILE
+export CCM_APP_JAR
+export CCM_APP_LIBDIR
+export CCM_APP_WEBDIR
+
+if [ "$1" = 0 ]; then
+  if [ -f "$CCM_CLASSPATH_FILE" ]; then
+    rm -f "$CCM_CLASSPATH_FILE".tmp
+    grep -v "/%{name}-[0-9]" "$CCM_CLASSPATH_FILE" > "$CCM_CLASSPATH_FILE".tmp
+    mv "$CCM_CLASSPATH_FILE".tmp "$CCM_CLASSPATH_FILE"
+  fi
+  if [ -f "$CCM_WEBAPP_FILE" ]; then
+    rm -f "$CCM_WEBAPP_FILE".tmp
+    grep -v "/%{name}-[0-9]" "$CCM_WEBAPP_FILE" > "$CCM_WEBAPP_FILE".tmp
+    mv "$CCM_WEBAPP_FILE".tmp "$CCM_WEBAPP_FILE"
+  fi
+fi
+
+%clean
+# get out of the way of the rm -rf commands
+cd /
+
+rm -rf $RPM_BUILD_ROOT
+rm -rf %{_topdir}/BUILD/%{name}-%{appversion}
+
+%files -f filelist.rpm
+%defattr(-,root,root)
+
+%attr(-,ccmadmin,ccmadmin) %config(missingok) %{confdir}
+
+%define docdirexists() %(if unzip -l %{SOURCE0} | grep "%{name}-%{appversion}/%{appname}/doc/" > /dev/null; then echo 1; else echo 0; fi)
+%if %docdirexists
+  %doc %{appname}/doc/*
+%endif
+
+%if %builddoc
+%files doc
+%defattr(-,root,root)
+/var/www/html/%{name}-%{version}
+%endif

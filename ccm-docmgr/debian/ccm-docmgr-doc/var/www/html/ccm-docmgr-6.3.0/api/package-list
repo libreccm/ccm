@@ -1,0 +1,13 @@
+com.arsdigita.cms.docmgr
+com.arsdigita.cms.docmgr.dispatcher
+com.arsdigita.cms.docmgr.installer
+com.arsdigita.cms.docmgr.search
+com.arsdigita.cms.docmgr.ui
+com.arsdigita.cms.docmgr.ui.authoring
+com.arsdigita.cms.docmgr.ui.content
+com.arsdigita.cms.docmgr.ui.tree
+com.arsdigita.cms.docmgr.util
+com.arsdigita.docmgr
+com.arsdigita.docmgr.installer
+com.arsdigita.docmgr.ui
+com.arsdigita.docmgr.util

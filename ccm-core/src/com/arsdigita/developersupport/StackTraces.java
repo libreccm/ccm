@@ -1,0 +1,144 @@
+/*
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.developersupport;
+
+import com.arsdigita.util.Assert;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
+
+/**
+ * This class facilitates debugging by allowing you to capture a stack trace for
+ * an object for later retrieval.
+ *
+ * <p>Example usage:</p>
+ *
+ * <blockquote><pre>
+ * public abstract class Completable implements Component {
+ *     public Completable() {
+ *         if ( s_log.isDebugEnabled() ) {
+ *             StackTraces.captureStackTrace(this);
+ *         }
+ *     }
+ *     
+ *    ...
+ * }
+ * </pre></blockquote>
+ *
+ * <p>Once the <code>Completable</code> class has been instrumented in this way,
+ * we can generate better warning and error reports. For example,</p>
+ *
+ * <blockquote><pre>
+ * public class ModalPanel extends ComponentMap {
+ *     ...
+ *
+ *     public CancelListener(final FormSection form) {
+ *         Assert.assertNotNull(form, "FormSection form");
+ *
+ *         if (form instanceof Cancellable) {
+ *             m_cancellable = (Cancellable) form;
+ *         } else {
+ *             m_cancellable = null;
+ *
+ *             s_log.warn("Form " + form + " does not " +
+ *                        "implement Cancellable.");
+ *             StackTraces.log("The form was created at", form, s_log, "warn");
+ *         }
+ *     }
+ * }
+ * </pre></blockquote>
+ *
+ * <p>If the form does not implement the <code>Cancellable</code> interface, we
+ * should be able to see where the form was created.  Without
+ * the call to {@link #log(String msg, Object, Logger, String)}, the above piece
+ * would have only logged something like this:
+ * </p>
+ *
+ * <pre>
+ * Form com.arsdigita.bebop.Form@2d72d [AddTemplate,null,null,false] does not implement Cancellable
+ * </pre>
+ *
+ * <p>This wouldn't be very informative, because it would not tell us what kind
+ * of form this is and where it was created. If you do use the {@link #log(String
+ * msg, Object, Logger, String)} method provided by this class, then the output
+ * is more enlightening:</p>
+ *
+ * <pre>
+ * 2003-07-08 17:41:37,704 [800-2] WARN  ui.ModalPanel -
+ *   Form com.arsdigita.bebop.Form@c624a [AddTemplate,null,null,false]
+ *   does not implement Cancellable.
+ * 2003-07-08 17:41:37,718 [800-2] WARN  ui.ModalPanel -
+ * The form was created at
+ * java.lang.Throwable
+ *      at ..developersupport.StackTraces.captureStackTrace(StackTraces.java:114)
+ *      at ..bebop.Completable.<init>(Completable.java:43)
+ *      at ..bebop.SimpleComponent.<init>(SimpleComponent.java:36)
+ *      at ..bebop.FormSection.<init>(FormSection.java:127)
+ *      at ..bebop.Form.<init>(Form.java:165)
+ *      at ..bebop.Form.<init>(Form.java:151)
+ *      at ..cms.ui.type.ContentTypeItemPane.<init>(ContentTypeItemPane.java:82)
+ *      at ..cms.ui.type.ContentTypeAdminPane.<init>(ContentTypeAdminPane.java:68)
+ * </pre>
+ *
+ * <p>Note note for the above example to work as advertised, you must set the
+ * logging level to "debug" for the "com.arsdigita.bebop.Completable" logger.
+ * Otherwise, the stack trace will not be captured.</p>
+ * 
+ * @author  Vadim Nasardinov (vadimn@redhat.com)
+ * @since   2003-07-08
+ * @version $Revision: #7 $ $Date: 2004/08/16 $
+ **/
+public final class StackTraces {
+    private static final Map s_stackTraces = new HashMap();
+
+    private StackTraces() {}
+
+    synchronized public static void captureStackTrace(Object obj) {
+        s_stackTraces.put(obj, new Throwable());
+    }
+
+    /**
+     * Returns the stack trace previously captured for this <code>obj</code> via
+     * {@link #captureStackTrace(Object)}, or <code>null</code> if no such stack
+     * trace exists.
+     **/
+    synchronized public static Throwable getStackTrace(Object obj) {
+        return (Throwable) s_stackTraces.get(obj);
+    }
+
+    /**
+     * <p>If {@link #getStackTrace(Object) looking up} the stack trace for
+     * <code>obj</code> fails, does nothing. Otherwise, logs the specified
+     * message to <code>logger</code> at the specified logging level. The looked
+     * up stack trace is also logged. </p>
+     *
+     * @pre logger != null
+     **/
+    public static void log(String msg, Object obj, Logger logger, String level) {
+        Throwable stack = getStackTrace(obj);
+        if ( stack == null ) { return; }
+
+        Assert.exists(logger, Logger.class);
+        logger.log(Level.toLevel(level), msg, stack);
+    }
+}

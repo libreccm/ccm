@@ -1,0 +1,19 @@
+model com.arsdigita.london.portal;
+
+query MaxPortletInstances {
+    Integer maxCount;
+    do {
+       	select nvl(max(count (*)), 0) count
+		from   applications a,
+	 		   portlets b
+		where  a.application_type_id = :portletType
+	  	and    b.portlet_id = a.application_id
+		group by b.portal_id
+
+    } map {
+        maxCount = count; 
+    }
+}
+
+
+

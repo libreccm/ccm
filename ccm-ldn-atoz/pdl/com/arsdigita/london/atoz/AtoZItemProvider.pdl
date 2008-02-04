@@ -1,0 +1,72 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.atoz;
+
+import com.arsdigita.categorization.Category;
+
+object type AtoZItemProvider extends AtoZProvider {
+    Category[1..1] category = join atoz_item_provider.category_id to
+                                cat_categories.category_id;
+    String[0..1] loadPaths = atoz_item_provider.load_paths      VARCHAR(200);
+
+    reference key (atoz_item_provider.provider_id);
+}
+
+query getAtomicItemEntries {
+  BigDecimal[1..1] id;
+  String[1..1] objectType;
+  String[1..1] aliasTitle;
+  String[1..1] sortKey;
+
+  do {
+    select i.item_id as id,
+           o.object_type as object_type,
+           '' as alias_title,
+           lower(cp.title) as sort_key
+      from cms_items i,
+           acs_objects o,
+           cat_object_category_map m,
+           cms_pages cp,
+	       atoz_item_provider p,
+           cms_items i2
+     where i.version = 'live'
+       and i.item_id = o.object_id
+       and o.object_id = m.object_id
+       and m.category_id = p.category_id
+       and p.provider_id = :providerID
+       and i2.parent_id = i.item_id
+       and i2.version = 'live'
+       and cp.item_id = i2.item_id
+     union
+    select i.item_id as id,
+           o.object_type as object_type,
+           a.title as alias_title,
+           lower(a.letter) as sort_key
+      from cms_items i,
+           acs_objects o,
+           atoz_item_aliases a
+     where i.item_id = a.item_id
+       and i.item_id = o.object_id
+       and a.provider_id = :providerID
+  } map {
+    id = id;
+    objectType = object_type;
+    aliasTitle = alias_title;
+    sortKey = sort_key;
+  }
+}

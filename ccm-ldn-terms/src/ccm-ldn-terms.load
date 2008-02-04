@@ -1,0 +1,18 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <initializer class="com.arsdigita.london.util.Initializer"/>
+  </requires>
+  <provides>
+    <table name="trm_app"/>
+    <table name="trm_domains"/>
+    <table name="trm_terms"/>
+    <initializer class="com.arsdigita.london.terms.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-ldn-terms"/>
+    <data class="com.arsdigita.london.terms.Loader"/>
+  </scripts>
+</load>

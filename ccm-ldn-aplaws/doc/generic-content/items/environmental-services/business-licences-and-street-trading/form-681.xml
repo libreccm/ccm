@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=681}]"><cms:name>licensing-form-681</cms:name><cms:language>en</cms:language><cms:title>Licence - acupuncturist</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=681}]"><cms:name>681a.pdf</cms:name><cms:content file="681a.pdf"/></cms:file></cms:item>

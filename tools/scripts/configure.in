@@ -1,0 +1,31 @@
+dnl Process with autoconf
+dnl $Id: configure.in 1354 2006-10-31 22:57:58Z sskracic $
+
+AC_INIT(ccm-scripts.spec.in)
+
+VERSION=6.5.1
+RELEASE=1
+
+AM_INIT_AUTOMAKE(ccm-scripts, $VERSION)
+AC_SUBST(RELEASE)
+
+DATE=`date`
+AC_SUBST(DATE)
+
+AC_OUTPUT(Makefile
+          bin/Makefile
+          doc/Makefile
+          etc/Makefile
+          etc/ccm-scripts.sh
+          pkg/Makefile
+          pkg/bin/Makefile
+          pkg/bin/resin/Makefile
+          pkg/bin/tomcat4/Makefile
+          pkg/conf/Makefile
+          pkg/conf/resin/Makefile
+          pkg/conf/tomcat4/Makefile
+          pkg/dist/Makefile
+          template/Makefile
+          ccm-scripts.spec)
+
+dnl End of file

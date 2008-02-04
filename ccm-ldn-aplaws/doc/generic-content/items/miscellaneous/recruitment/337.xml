@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=337}]"><cms:name>vacancies-337</cms:name><cms:language>en</cms:language><cms:title>Vacancies</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=337}]"><cms:name>vacancies-337-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>vacancies</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=337}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>On this page you will find links to the latest Council Job vacancies. Each advertisement tells people where they should apply for further details and the closing date for that particular vacancy. The information sent to applicants will normally include an application form, a job description setting out the details of the post and a person specification which outlines the skills and experience that is required for that post. </i></p><hr/><p>Some of the vacancies shown
+    will have copies of the job description and person specification available
+  to view on line. </p><p> Always remember to make sure that your
+    application is returned by the date specified and to the correct 
+    address. </p><h2>Latest Council Vacancies</h2><p>These are all the current vacancies:</p><p>
+<strong>Job Title:</strong> <span class="gen">enter details</span> <br/>
+<strong>(Link to a separate page for Job Description and Person Specification for the post)</strong> <span class="gen">enter hyperlink</span> <br/>
+<strong>Where and How to Apply:</strong> <span class="gen">enter details</span>
+</p><p>
+<strong>Job Title:</strong> <span class="gen">enter details</span> <br/>
+<strong>(Link to a separate page for Job Description and Person Specification for the post)</strong> <span class="gen">enter hyperlink</span> <br/>
+<strong>Where and How to Apply:</strong> <span class="gen">enter details</span>
+</p><p>
+<strong>Job Title:</strong> <span class="gen">enter details</span> <br/>
+<strong>(Link to a separate page for Job Description and Person Specification for the post)</strong> <span class="gen">enter hyperlink</span> <br/>
+<strong>Where and How to Apply:</strong> <span class="gen">enter details</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=337"> Providing Information
+		(337)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

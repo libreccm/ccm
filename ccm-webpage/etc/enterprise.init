@@ -1,0 +1,8 @@
+// Start of initialization entries for CMS Webpage
+
+// use com.arsdigita.cms.webpage.content_section
+//init com.arsdigita.cms.webpage.installer.Initializer {
+//  contentSection = "pages";
+//}
+
+// End of CMS Webpage initialization

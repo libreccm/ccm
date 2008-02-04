@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=98}]"><cms:name>council-housing--nuisance-threatening-behaviour-98</cms:name><cms:language>en</cms:language><cms:title>Council Housing - Nuisance/Threatening Behaviour</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=98}]"><cms:name>council-housing--nuisance-threatening-behaviour-98-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, housing, nuisance, threatening, behaviour</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=98}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We have listed below some of the different types of problems tenants may encounter.</i></p><hr/><ul>
+			<li title="*">
+				
+		<a href="#noise">
+					<strong>Noise and Nuisances</strong>
+				</a>	
+			</li>
+			<li title="*">
+				
+		<a href="#harass">
+					<strong>Harassment</strong>
+				</a>	
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#anti">Anti-social Behaviour</a>	
+				</strong>
+			</li>
+		</ul><h2>
+			
+			Noise and Nuisances 
+			</h2><p>
+				Nuisance can be defined as behaviour or actions, which cause disruption, distress and/or interference to neighbours. In these cases the person(s) causing the problem may have no intention of causing harm. 
+			</p><p>
+				Examples could be: 
+			</p><ul>
+			<li title="*">
+					A 'one off' party.
+				</li>
+			<li title="*">
+					Barking dogs/failure to control dogs.
+  
+				</li>
+			<li title="*">
+					Persistent playing of loud music.
+				</li>
+			<li title="*">
+					Repeated disturbances at night.
+				</li>
+			<li title="*">
+					Children causing disturbance or damage in communal areas. 
+				</li>
+		</ul><p>
+			<strong>What should you do? </strong>
+		</p><li title="*">
+					Try talking to the person causing the nuisance -  they may not be aware they are causing a problem. 
+				</li><li title="*">
+					If this action is not successful - contact the Council. 
+				</li><li title="*">
+					Give clear details of the complaint with names and addresses of the people causing the problem. 
+				</li><p>
+			<strong>What the Council will do
+</strong>
+		</p><li title="*">
+					We will write to the tenant causing the problem within <span class="gen">enter amount</span> working days. We will not reveal your identity.
+  
+				</li><li title="*">
+					If the problems continue we will issue diary sheets for incidents to be recorded over a period of <span class="gen">enter amount</span> weeks.
+  
+				</li><li title="*">
+					On receipt of the completed diary sheets an Officer from the Council will visit the tenant causing the problem and/or yourself depending on the evidence supplied on the diary sheets.
+  
+				</li><li title="*">
+					If the nuisance continues and sufficient evidence is available the Council will decide an appropriate course of action.
+  
+				</li><li title="*">
+					In some instances we may involve other agencies such as Social Services or the Mediation Service. In extreme cases we will take legal action.
+  
+				</li><li title="*">
+					If there is no breach of tenancy conditions and we are unable to resolve the situation we will give advice on alternative courses of action available to you. 
+				</li><h2>
+			
+			Harassment
+			</h2><p>
+				Harassment can be defined as someone deliberately inflicting fear, violence or aggression on another person or group because of their race, gender, sexual orientation or disability. The problem must fall under these categories as harassment of this type is a criminal offense. 
+			</p><p>
+			<strong>What should you do? </strong>
+		</p><li title="*">
+					Contact the Police and get a crime <strong>log number</strong>.  
+				</li><li title="*">
+					Contact the Council giving full details of harassment. 
+				</li><p>
+			<strong>What the council will do </strong>
+		</p><li title="*">
+					We will endeavour to visit you within one working week to complete a confidential report and provide you with diary sheets.
+  
+				</li><li title="*">
+					After the report has been completed we will visit the tenant who is harassing you.
+  
+				</li><li title="*">
+					If the problem continues and there is sufficient evidence available the Council will take action under the Protection from Harassment Act 1997.
+				</li><h2>
+			
+			Anti-Social Behaviour
+			</h2><p>
+				The definition of 'Anti-Social behaviour' is rarely straightforward; what constitutes a nuisance or annoyance to one person may be of little concern to another. The Council therefore feels it is more appropriate to define anti-social behaviour as events on estates such as those involving criminal behaviour, drug dealing and unprovoked assault. this is not a comprehensive list but gives an indication of the type of behaviour within this category. 
+			</p><p>
+			<strong>What should you do ? </strong>
+		</p><li title="*">
+					Contact the Council giving details of the events.
+  
+				</li><li title="*">
+					If you have suffered physical assault or damage to your property you should contact the Police immediately.
+  
+				</li><li title="*">
+					If the Police have been involved make a note of the <strong>log number </strong> as this may be needed to provide evidence.
+  
+				</li><li title="*">
+					Keep diary sheets and make an accurate record of events.
+  
+				</li><li title="*">
+					You may be required to attend Court and give evidence. 
+				</li><p>
+			<strong>What the Council will do </strong>
+		</p><li title="*">
+					We will write to the tenant causing the problem within <span class="gen">enter amount</span> working days. We will not reveal your identity.
+  
+				</li><li title="*">
+					Liaise with the Police if appropriate.
+  
+				</li><li title="*">
+					Issue diary sheets and monitor the situation.
+  
+				</li><li title="*">
+					In extreme cases of intimidation we may employ professional witnesses.
+  
+				</li><li title="*">
+					If there is sufficient evidence the Council will take action either under Housing Legislation or the Crime and Disorder Act 1998 
+				</li><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=98"> Providing Information
+		(98)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

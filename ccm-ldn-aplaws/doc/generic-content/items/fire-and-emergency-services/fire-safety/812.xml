@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=812}]"><cms:name>schools-812</cms:name><cms:language>en</cms:language><cms:title>Fire Safety - Schools</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=812}]"><cms:name>schools-812-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>fire, safety, schools</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=812}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>It is the responsibility of the Headteacher and Governing Body of the premises to ensure that fire evacuation drills are carried out. </i></p><hr/><p>The dangers which may threaten persons if a fire breaks out depends on many
+    different factors, consequently, it is not possible to construct a model procedure
+    for action in the event of fire which would be suitable for use in all premises.
+    </p><p>    Each fire routine must be based upon a simple, efficient procedure which is
+specifically designed for the premises in which it has to operate.</p><p>It is therefore important
+that the following points must be given prime consideration:</p><ul>
+			<li title="*">
+				
+		<a href="#purpose">
+					<strong>The Purpose of the
+        Fire
+Drill</strong>
+				</a>	
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#occupancy">The Occupancy of
+    the Premises</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#details">The Details of the
+        Fire
+Drill Routine</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#instruction">Instruction, Training
+        and
+Recording</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#frequency">The Frequency of the
+        Fire
+Evacuation Drills</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#notes">Supplementary
+Notes</a>	
+				</strong>
+			</li>
+		</ul><h2>
+			
+			The Purpose of the Fire
+    Drill</h2><p>Fire drills are intended
+  to ensure, by means of Training and Rehearsal that in the event of fire:</p><ul>
+			<li title="*">The people
+    who may be in danger act in a calm and orderly manner.</li>
+			<li title="*">Those people who may
+        have designated responsibilities carry out their tasks to ensure the
+    safety of all concerned.</li>
+			<li title="*">The escape routes
+    are used in accordance with a Predetermined and Practised Plan.</li>
+			<li title="*">Evacuation of the
+    building is achieved in a Speedily and Orderly manner.</li>
+			<li title="*">To promote an attitude
+        of mind where-by persons will react rationally when confronted with a
+    fire or other emergency at school or elsewhere.</li>
+		</ul><h2>
+			
+			The Occupancy of the Premises</h2><p>Consideration must be given
+    to the age of the pupils attending the school and as to whether there are
+  any children with special needs.</p><h2>
+			
+			Fire Drill Routine</h2><p>A fire routine it based
+on a critical sequence of events, these being:</p><p>
+			<strong>Alarm Operation</strong>
+		</p><ul>
+			<li title="*">Anyone discovering an outbreak of fire must, without hesitation, sound the
+  alarm by operating the nearest fire alarm call point.</li>
+		</ul><p>
+			<strong>Calling the Fire Brigade</strong>
+		</p><ul>
+			<li title="*">All outbreaks of fire or any suspected fire, however small, should be reported
+  immediately to the Fire Brigade by the quickest means available. This task
+  could well be designated as the responsibility of the school secretary as a
+  telephone will be readily available at that location.</li>
+		</ul><p>
+			<strong>Evacuation</strong>
+		</p><ul>
+			<li title="*">On hearing the fire alarm,
+    pupils must be instructed to leave the building in single file and in a calm,
+  orderly manner.</li>
+			<li title="*">The person in charge of each class must indicate the exit route to be
+used and everyone must be directed to a Predetermined Assembly Point.</li>
+			<li title="*">Specific arrangements must be made for pupils with physical or mental
+disabilities to ensure that they are assisted during evacuation.</li>
+			<li title="*">No running is to be permitted to avoid panic.</li>
+			<li title="*">On staircases everyone must descend in single file. Overtaking of classes
+or individuals must not be permitted.</li>
+			<li title="*">Lifts must not be used.</li>
+			<li title="*">Anyone who is not in class when the fire alarm sounds must go immediately
+to the assembly point.</li>
+			<li title="*">No one must be allowed
+    to re-enter the building until told to do so
+by the Fire Service in attendance, <strong>or</strong>, in the case of a fire evacuation drill the senior person in charge.</li>
+		</ul><p>
+			<strong>Assembly</strong>
+		</p><ul>
+			<li title="*">An area outside the school
+  premises must be designated as an assembly point.</li>
+			<li title="*">It must be clearly marked and easily identified by any person who must
+be expected to be in the school premises.</li>
+			<li title="*">The assembly point must be far enough away from the school premises
+to afford protection from the heat and smoke in a fire situation.</li>
+			<li title="*">The assembly point must be in a position that does not put pupils and
+staff at risk by emergency vehicles responding to the incident.</li>
+		</ul><p>
+			<strong>Roll Call</strong>
+		</p><ul>
+			<li title="*">One person should be nominated to have overall responsibility to ensure
+that a roll call is conducted in the event of evacuation of the premises.</li>
+			<li title="*">Immediately that classes have assembled at the assembly point, a roll
+or count must be made to ascertain that no one remains in the premises.</li>
+			<li title="*">Any visitors or contractors in the premises at that time must be included.</li>
+			<li title="*">The count at the assembly point must be checked with the attendance
+registers and visitors book to verify that everyone is out of the building.</li>
+			<li title="*">Attendance registers and visitors book should be held at a central point
+and must be brought to the assembly point when the alarm sounds.</li>
+			<li title="*">Each teacher must report to the nominated person in charge of the evacuation
+  procedure to verify that everyone in their charge is accounted
+for or to inform him/her of the number of persons missing.</li>
+		</ul><p>
+			<strong>Meeting the Brigade</strong>
+		</p><ul>
+			<li title="*">During Industrial Action Fire Brigade or Fire Officer will mean the Fire Service
+  in attendance.</li>
+			<li title="*">The person in charge of the roll call must identify him/herself to the
+  Fire Brigade on their arrival. In doing so vital information can be relayed
+  to the Fire Officer which will dictate the necessary actions to be carried
+out by the Fire Brigade.</li>
+		</ul><p>Typical information the
+Fire Brigade will want to know:</p><ul>
+			<li title="*">Is everyone
+    accounted for?</li>
+			<li title="*">If anyone is missing:
+        How many? What is their usual
+    location? Where were they last
+    seen?</li>
+			<li title="*">Where is the fire?
+    What is on fire? (It may not be apparent).</li>
+			<li title="*">Are there any hazardous
+    substances involved in the fire or stored in the building? (ie. Chemicals,
+    Solvents, Liquified Petroleum Gas or Acetylene Cylinders etc).</li>
+		</ul><h2>
+			
+			Instruction, Training and
+    Recording</h2><p>During the first week of
+    term or as soon as practically possible thereafter, all new entrants being
+    pupils, staff or support staff, should be conducted
+  around the primary escape routes of the school. They should also receive instruction
+  on the school fire evacuation routine.</p><p>All members of the staff shall receive instruction and training appropriate
+to their responsibilities in the event of any emergency.</p><p>All members of staff shall each receive a personal copy of prepared written
+  instructions. They shall receive two periods of verbal instructions given by
+  a competent person in each 12 month period. Such instruction shall include
+  details of how to call the Fire Brigade. In the case of newly engaged staff,
+instruction shall be given as soon as possible after appointment.</p><p>A record of the training
+    and instructions given and fire drills held, shall be entered in the log
+book and will include the following:</p><ul>
+			<li title="*">Date of
+    the instruction or fire drill;</li>
+			<li title="*">Duration;</li>
+			<li title="*">Name of person giving
+    the instruction;</li>
+			<li title="*">Names of persons receiving
+    instruction;</li>
+			<li title="*">Nature of instruction
+    or fire drill.</li>
+		</ul><p>Fire drills, which may
+    be combined with the instruction given above, shall be carried out
+    at least once per term. The fire drill should a simulate
+  that one escape route is not available. Each fire drill should be started by
+  a pre-determined signal and the whole premises checked as if any evacuation
+  was in progress.</p><p>In large premises a specific person shall be made responsible for organising
+  staff training and the name of one other nominated person to co-ordinate the
+  actions of the staff in the event of fire. Effective arrangements shall be
+  made for a deputy or deputies to carry out the above duties in the absence
+of the nominated persons.</p><p> In smaller premises one specific person shall be made responsible for
+  organising staff training and for co-ordinating the actions of the staff in
+  the event of fire. Effective arrangements shall be made for a nominated deputy
+to be available to carry out the above duties.</p><h2>
+			
+			Frequency of Fire Evacuation
+    Drills</h2><p>Fire evacuation drills should
+    be held at least once per term, preferably at
+the commencement of each term.</p><h2>
+			
+			Supplementary Notes</h2><p>
+			<strong>Notices</strong>
+		</p><p>Each fire alarm point
+    shall, where necessary, be clearly indicated <strong>&quot;Fire Alarm&quot;</strong> in accordance with the Health and Safety (Safety Signs and Signals)
+  Regulations followed by the appropriate operating instructions. (
+		<a href="#notice1">
+				<strong>See
+  Notice 1</strong>
+			</a>	).</p><p>A notice should be displayed
+    adjacent to the telephone or switchboard giving clear instructions for calling
+    the Fire Brigade in case of fire. (<strong>
+				
+		<a href="#notice2">See Notice 2</a>	
+			</strong>).</p><p>Notices should be displayed
+    for staff detailing their actions in an emergency in conspicuous positions
+    ie. staff room. (
+		<a href="#notice3">
+				<strong>See Notice 3</strong>
+			</a>	).</p><p>
+			<strong>Firefighting</strong>
+		</p><p>Any attempt to fight the fire must always be secondary to life safety.</p><p>Circumstances will clearly dictate whether firefighting should be attempted.</p><p>Any attempt to fight the fire must be based upon the type and degree
+of training received in the use of firefighting equipment employed in the premises.</p><p>Regular fire drills will ensure that the evacuation procedure applying
+  to a premises fulfils its aim satisfactorily and will highlight any area of
+the procedure which may need to be reviewed.</p><p>
+			<strong>Multi Building Sites</strong>
+		</p><p>Many schools have more
+    than one building on site. It is not necessary for the fire alarm systems
+  within these buildings to be linked together.</p><p>In the event of an alarm actuation, a procedure should be established
+  whereby contact is made to the other buildings on site either by telephone
+or designated person.</p><p>Once contact has been made, it will be usual procedure to evacuate all
+  buildings (by operating the fire alarm, tannoy message or personally with each
+class).</p><p>The aim of evacuating
+    all buildings is to attempt to carry out a roll call. Operating procedures
+    within
+    some schools (mainly middle and high schools)
+  may make it virtually impossible to say with any degree of certainty that &quot;all
+  persons are accounted for&quot;. In these cases, management may decide to
+  operate a &quot;Floor Warden&quot; scheme. This delegates responsibility
+  to members of staff to quickly search each floor (all rooms including toilets)
+  and to report to the designated responsible persons that their floor is &quot;clear&quot;. 
+Where this procedures is in operation it is not necessary to evacuate all buildings.</p><p>
+			<strong>
+				
+			Notice 1</strong>
+		</p><h2>Fire Instruction For Day Schools </h2><h2>Fire Notice </h2><p>
+			<strong>Any Person Discovering A Fire Must: </strong>
+		</p><ul>
+			<li title="*">Operate The Nearest Fire Alarm. </li>
+			<li title="*">(The Fire Brigade Will Be Called Immediately By Dialling &quot;999&quot; Using The Nearest Telephone). </li>
+		</ul><p>
+			<strong>On Hearing The Fire Signal: </strong>
+		</p><ul>
+			<li title="*">When In Class The Order To Evacuate Will Be Given By Your Teacher, Who Will Indicate The Route To Be Followed. </li>
+			<li title="*">When Not In Class Form Single File And More By The Most Direct Route To The Place Of Assembly. </li>
+			<li title="*">At All Times Act Quietly And Calmly. </li>
+			<li title="*">Do Not Stop To Collect Your Personal Belongings. </li>
+			<li title="*">Do Not Attempt To Pass Others On Your Way To The Place Of Assembly </li>
+		</ul><p>The Place Of Assembly Is: .....................................................................................(<strong>Note:</strong> Complete As To The Place Of Assembly) </p><p>
+			<strong>
+				
+			Notice 2</strong>
+		</p><h2>Specimen Instructions For Person Responsible For Calling The Fire Brigade </h2><h2>(Also To Be Posted Adjacent To The Telephone Or Switchboard) </h2><p>
+			<strong>On Hearing The Fire Alarm </strong>
+		</p><p>Call The Fire Brigade By Exchange Telephone </p><p>Dial &quot;999&quot; </p><p>Give The Operator Your Telephone Number And Ask For </p><p>&quot;<strong>Fire Brigade</strong>&quot;, When The Fire Brigade Replies </p><p>Give The Call Distinctly: </p><p>Fire At................................................... </p><p>............................................................... </p><p>(Give Exact Address) </p><p>Do Not Assume That The Call Has Been Received Unitil </p><p>It Has Been Acknowledged By The Fire Brigade </p><p>
+			<strong>Note:</strong> If Informed Of Any Outbreak Of Fire By Word Of Mouth, First Operate The Fire Alarm </p><p>And Then Call The Fire Brigade As Above. </p><p>
+			<strong>
+				
+			Notice 3</strong>
+		</p><h2>Specimen Instructions To Staff In Case Of Fire </h2><h2>(General Instructions To Be Observed By Staff) </h2><p>In The Event Of Fire It Is The First Duty Of All Concerned To Prevent Injury Or Loss Of Life. For This Purpose You Should Make Certain That You Are Familiar With All Means Of Escape In Case Of Fire. </p><p>Since There May Be An Opportunity In The Event Of Fire, For You To Attack It With The Nearest Fire Extinguisher Or Hose Reel, You Should Also Be Familiar With How To Use Them. </p><p>Immediately You Discover A Fire Or One Is Reported To You, You Should. </p><p>
+			<strong>Sound The Alarm </strong>
+		</p><p>The (...............................................................) Is Responsible For Ensuring That The Fire Brigade Is Called Immediately On The Sounding Of The Fire Alarm. Immediately The Fire Alarm Sounds You Should Assist All Pupils To Leave The Building. </p><p>On Arrival At The Assembly Point Which Is At ................................................................................................................. </p><p>A Roll Call Should Be Taken By ............................................................... Who Will Be Responsible For Informing The Fire Brigade Of Persons Not Accounted For. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=812"> Providing Information
+		(812)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<webapps>
+   <Context path=""
+            docBase="::app-home::/dist"
+            debug="0"
+	    reloadable="true" >
+              <LogSetter name="ccm_core_cms_tc_log" path="::log-dir::/tomcat.log" />
+              <LogSetter name="ccm_core_cms_servlet_log"
+                         path="::log-dir::/servlet.log"
+			 servletLogger="true"/>
+  </Context>
+
+</webapps>

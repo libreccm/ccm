@@ -1,0 +1,17 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+  </requires>
+  <provides>
+  <!--
+    <table name=""/>
+  -->
+    <initializer class="com.arsdigita.auth.http.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-auth-http"/>
+    <data class="com.arsdigita.auth.http.Loader"/>
+  </scripts>
+</load>

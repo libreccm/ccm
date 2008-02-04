@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=695}]"><cms:name>licensing-form-695</cms:name><cms:language>en</cms:language><cms:title>Licence - skip operators</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=695}]"><cms:name>695a.pdf</cms:name><cms:content file="695a.pdf"/></cms:file></cms:item>

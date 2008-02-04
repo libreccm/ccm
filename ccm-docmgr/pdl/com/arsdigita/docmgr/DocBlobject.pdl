@@ -1,0 +1,10 @@
+model com.arsdigita.docs;
+
+
+object type DocBlobject {
+    BigDecimal    id = docs_blobjects.content_id;
+    Blob          content     = docs_blobjects.content BLOB;
+
+    object key (id);
+}
+

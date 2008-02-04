@@ -1,0 +1,17 @@
+div.context-bar {
+  color: rgb(63,63,63);
+}
+
+div.context-bar div {
+  float: left;
+}
+
+div.context-bar a {
+  text-decoration: none;
+  color: blue;
+}
+
+div.context-bar div.separator {
+  font-weight: bold;
+  margin: 0 4px 0 4px;
+}

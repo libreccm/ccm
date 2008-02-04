@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=26}]"><cms:name>education-2-26</cms:name><cms:language>en</cms:language><cms:title>Educational and related European opportunities</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=26}]"><cms:name>education-2-26-dublin-metadata</cms:name><cms:dcAudience>Student</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>educational, related, european, opportunities</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=26}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Useful Links regarding studying and working in Europe.</i></p><hr/><p>You may find these sites useful: <span class="gen">links to external website</span>
+		</p><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.acu.ac.uk">Association of Commonwealth Universities</a>	
+				</strong> 
+    - including information on grants, scholarships and fellowships</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.britishcouncil.org/education/index.htm">British Council 
+    Education Pages</a>	
+				</strong> - UK courses and examinations inside and outside the 
+    UK, educational exchanges and links, international opportunities for education 
+    and training</li>
+			<li title="*">
+				
+		<a href="http://www.butex.ac.uk">
+					<strong>BUTEX (British Universities Transatlantic 
+    Exchange Association)</strong>
+				</a>	 - information regarding studying outside the UK 
+    and exchange schemes</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://citizens.eu.int/">Citizens First</a>	
+				</strong> - key information 
+    on European countries including living, working, studying, training and doing 
+    research, buying goods and services, travelling, equal opportunities and looking 
+    for work</li>
+			<li title="*">
+				
+		<a href="http://europa.eu.int/comm/education/index_en.html">
+					<strong>ECTS (European 
+    Credit Transfer System)</strong>
+				</a>	 - academic recognition of studies abroad</li>
+			<li title="*">
+				
+		<a href="http://www.trainingvillage.gr/etv/">
+					<strong>Electronic Training Village</strong>
+				</a>	 
+    - includes European study visits for vocational training, transparency of qualifications 
+    and implications for CVs ( information on the European Forum on Transparency 
+    of Vocational Qualifications), also other resources and reports on vocational 
+    education</li>
+			<li title="*">
+				
+		<a href="http://www.esn.org/">
+					<strong>Erasmus Student Network International</strong>
+				</a>	 
+    - students working for exchange students, includes guides to studying in other 
+    countries, European policy issues, European student organisations</li>
+			<li title="*">
+				<strong>
+					
+		<a href="http://www.dfes.gov.uk/echoice">The European Choice - a guide to 
+    opportunities for Higher Education in Europe</a>	
+				</strong> - general guide to opportunities 
+    in Higher Education in Europe, including HE systems in Europe, grants and loans 
+    for UK students, EU programmes, recommended addresses and books, UK government 
+    (DfES) site</li>
+			<li title="*">
+				
+		<a href="http://www.europe.hobsons.com/careers_advice.html">
+					<strong>Careers Europe</strong>
+				</a>	 
+    - 6 steps to a job in Europe, useful guidelines for finding work, also other useful 
+    background information, in the careers advice section of Hobsons website</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=26"> Providing Information
+		(26)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

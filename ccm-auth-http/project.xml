@@ -1,0 +1,3 @@
+  <path id="dependencies.class.path">
+    <pathelement path="../util/build/classes"/>
+  </path>

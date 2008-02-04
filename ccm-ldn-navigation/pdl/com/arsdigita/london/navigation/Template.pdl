@@ -1,0 +1,36 @@
+model com.arsdigita.london.navigation;
+
+import com.arsdigita.categorization.Category;
+
+object type Template {
+  BigDecimal[1..1] id = nav_templates.template_id INTEGER;
+  String[1..1] title = nav_templates.title VARCHAR(50);
+  String[0..1] description = nav_templates.description VARCHAR(400);
+  unique String[1..1] url = nav_templates.url VARCHAR(100);
+
+  object key (id);
+}
+
+association {
+    TemplateMapping[0..n] templateMappings = join nav_templates.template_id
+                                               to nav_template_cat_map.template_id;
+    Template[1..1] template = join nav_template_cat_map.template_id
+                                to nav_templates.template_id;
+}
+
+association {
+    TemplateMapping[0..n] templateMappings = join cat_categories.category_id
+                                               to nav_template_cat_map.category_id;
+    Category[1..1] category = join nav_template_cat_map.category_id
+                                to cat_categories.category_id;
+}
+
+object type TemplateMapping {
+  BigDecimal[1..1] id = nav_template_cat_map.map_id INTEGER;
+  String[1..1] dispatcherContext = nav_template_cat_map.dispatcher_context VARCHAR(100);
+  String[1..1] useContext = nav_template_cat_map.use_context VARCHAR(100);
+
+  unique ( category, dispatcherContext, useContext );
+  
+  object key (id);
+}

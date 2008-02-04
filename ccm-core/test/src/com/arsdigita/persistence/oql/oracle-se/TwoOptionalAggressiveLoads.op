@@ -1,0 +1,15 @@
+select tup.profile_id as c_1,
+       ao.object_type as c_2,
+       ao.display_name as c_3,
+       ao.default_domain_class as c_4,
+       tup.bio as c_5,
+       tup.skills as c_6,
+       tup.user_id as c_7,
+       tup.portrait_id as c_8,
+       portrait__ao.object_type as c_9,
+       portrait__tdr.description as c_10
+from t_up_profiles tup,
+     acs_objects ao,
+     acs_objects portrait__ao,
+     t_docs_resources portrait__tdr
+where ao.object_id = tup.profile_id and portrait__ao.object_id(+) = tup.portrait_id and portrait__tdr.resource_id(+) = tup.portrait_id

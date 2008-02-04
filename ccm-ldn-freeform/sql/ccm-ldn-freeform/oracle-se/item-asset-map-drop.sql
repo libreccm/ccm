@@ -1,0 +1,1 @@
+drop table ff_content_item_asset_map;

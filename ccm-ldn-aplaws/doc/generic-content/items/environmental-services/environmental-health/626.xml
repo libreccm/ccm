@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=626}]"><cms:name>batch-6-626</cms:name><cms:language>en</cms:language><cms:title>Coroners</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=626}]"><cms:name>batch-6-626-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>coroners, environmental, health</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=626}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The office of H M Coroner is an ancient one, dating back at least to 1194.
+  Their duties and responsibilities are now governed in the main by the Coroners
+  Act 1988. It is important that a Coroner, either himself or through a Deputy,
+  should be ready to undertake his duties at all times. A Coroner is assisted
+  by his Officers, who may be civilians or police officers.</i></p><hr/><p> The main duty of a Coroner is to enquire into sudden or unexplained deaths
+  usually by having a post-mortem examination made, followed by an inquest if
+  the cause of death is not natural. In addition to this there are specific requirements
+  to investigate deaths in certain circumstances, for example, the death of a
+  person in custody, or a death resulting from a person's occupation. </p><p> Coroners are appointed by the Council on a part-time basis. Their
+  work involves the holding of inquests, arranging for post mortems to be carried
+  out and employing any other services, such as Funeral Directors, as may be
+  necessary. Coroners are required by law to be qualified as a Barrister, Solicitor
+  or legally qualified Medical Practitioner of not less than five years standing.
+  The Coroners are appointed by the Director of Property, Business and Regulatory
+  Services.</p><p>Please visit 
+		<a href="http://www.homeoffice.gov.uk/justice/legalprocess/coroners/index.html">www.homeoffice.gov.uk/justice/legalprocess/coroners/index.html</a>	 <span class="gen">link to external website</span>for more details</p><p>If you would like to know more about the Coroners Service please use the details
+  above to contact us.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=626"> Providing Information
+		(626)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

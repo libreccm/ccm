@@ -1,0 +1,67 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.atoz;
+
+import com.arsdigita.kernel.ACSObject;
+
+object type AtoZProvider extends ACSObject {
+    String[1..1] title = atoz_provider.title VARCHAR(200);
+    String[1..1] description = atoz_provider.description VARCHAR(4000);
+
+    reference key (atoz_provider.provider_id);
+}
+
+
+association {
+    // should be 1..1 but we can't. bz 105378
+    composite AtoZ[0..1] atoz = join atoz_provider.provider_id
+                                  to atoz_provider_map.provider_id,
+                                join atoz_provider_map.application_id
+                                  to atoz_app.application_id;
+    component AtoZProvider[0..n] atozProviders = join atoz_app.application_id 
+                                                   to atoz_provider_map.application_id,
+                                                 join atoz_provider_map.provider_id
+                                                   to atoz_provider.provider_id;
+    // should really be 1..1, but then the add hack won't work.
+    Integer[0..1] sortKey = atoz_provider_map.sort_key INTEGER;
+
+
+    // Not yet we can't. bz 105373
+    //unique (atoz, sortKey);
+
+    add {
+      do {
+        insert into atoz_provider_map (provider_id, application_id, sort_key)
+             values (:atozProviders.id, :atoz.id,
+                          (select CASE WHEN (:sortKey is null) THEN
+                           (select CASE WHEN (max(sort_key) is null)
+                                              THEN
+                                               0
+                                              ELSE
+                                               max(sort_key)
+                                         END + 1
+                                    from atoz_provider_map m
+                                    where m.application_id = :atoz.id)
+                            ELSE
+                                (:sortKey)
+                            END
+                  from dual))
+
+     }
+   } 
+}

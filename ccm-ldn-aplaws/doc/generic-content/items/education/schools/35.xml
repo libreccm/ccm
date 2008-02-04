@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=35}]"><cms:name>education-3-35</cms:name><cms:language>en</cms:language><cms:title>School truancy - getting help when your child does not want to attend school</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=35}]"><cms:name>education-3-35-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>school, truancy, getting, help, child, attend, school</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=35}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Research shows that children who attend school regularly are likely to be more successful. A pupil who misses a day of school a week misses an equivalent of two whole years in their school life. This obviously leads to gaps in their knowledge that become difficult to fill. A recent survey has indicated that more than 70% of children who did not attend school regularly admitted to committing at least one criminal offence.</i></p><hr/><p>
+<span class="gen">enter council name</span> Education Department - is trying to improve overall school attendance by working on initiatives with the police and other agencies. It is hoped to raise awareness of the problem to parents and carers, pupils, schools and communities/local businesses.</p><h4>Unacceptable reasons for absence</h4><ul>
+				<li title="*">shopping</li>
+				<li title="*">birthday treats and trips</li>
+				<li title="*">looking after others at home</li>
+				<li title="*">non-urgent medical or dental appointments</li>
+			</ul><h4>Expected attendance level</h4><p>The Department for Education and Skills expects all students 
+  to achieve an attendance level of at least 90 percent in every school year and individual 
+  schools generally expect a much higher level.</p><h4>Authorised absence</h4><p>If your child is ill or unable to attend school for some reason, 
+  you need to contact the school by telephone and/or letter to inform them. The school 
+  will then &quot;authorise&quot; this absence.</p><h4>Unauthorised absence</h4><p>If your child has been away from school for three days (in some 
+  schools even sooner) without any parental contact, the school will send you a letter 
+  or make some other contact in order to check on the attendance. Such a letter could 
+  draw your attention to the fact that your child has been missing school without 
+  a reason. Such absence will be &quot;unauthorised&quot; absence from school and 
+  it is unauthorised absence from school which carries with it the risk of prosecution.</p><p>All Local Education Authorities run Education Welfare Services 
+  whose main task is to monitor absence and work with families and young people where 
+  the level of absence is giving cause for concern. An Education Welfare Officer will 
+  have a &quot;patch&quot; which in <span class="gen">enter council name</span> 
+  includes one or two secondary schools and their contributory primary schools.</p><p>The Education Welfare Service will work with the school who will identify causes   for concern where they need the specialist help of the Education Welfare Officer.   The Education Welfare Officer will often visit the home and talk with students and 
+  parents about the problem and seek to resolve it amicably and achieve a return to 
+  school. However, should there be no genuine reason for absence, the Education Welfare 
+  Officer has the power to prosecute the parents for not sending their children to 
+  school.</p><p>You can find out who your school's Education Welfare Officer is by (1) asking the school, (2) ringing the main Education Welfare Service office in <span class="gen">enter council name</span> using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=35"> Providing Information
+		(35)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

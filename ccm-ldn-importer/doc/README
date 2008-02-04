@@ -1,0 +1,4 @@
+Example files to be run like:
+
+ccm-run com.arsdigita.london.importer.cms.ItemImportTool \
+  `pwd`/items/index.xml `pwd`/assets `pwd`/items

@@ -1,0 +1,13 @@
+<!ENTITY % bebop.dtd SYSTEM "bebop.dtd">
+
+%bebop.dtd;
+
+<!ELEMENT demo:user EMPTY>
+<!ATTLIST demo:user
+      email CDATA #REQUIRED
+      first-name CDATA #REQUIRED
+      last-name CDATA #REQUIRED
+>
+
+
+ 

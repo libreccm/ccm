@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs" version="4.0">
+  <model name="model">
+    <!--   create table orders (
+	       order_id    integer primary key,
+	       buyer       varchar(100) not null,
+	       seller      varchar(100),
+	       shipping_address varchar(200)
+	   )
+    -->
+    <objecttype name="order">
+      <attribute name="order_id" datatype="Integer" multiplicity="1"/>
+      <attribute name="buyer" datatype="String" multiplicity="1"/>
+      <attribute name="seller" datatype="String" multiplicity="0..1"/>
+      <attribute name="shipping_address" datatype="String" multiplicity="0..1"/>
+      <rolereference name="items">
+        <associationroleref idref="acs:model:line_items_in_an_order:line_item"/>
+      </rolereference>
+
+      <objectmap>
+        <objectkey>
+          <attributeref idref="acs:model:order:order_id"/>
+        </objectkey>
+        <objectmapentry>
+          <attributeref idref="acs:model:order:order_id"/>
+          <columnref idref="acs:oracle:orders:order_id"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="acs:model:order:buyer"/>
+          <columnref idref="acs:oracle:orders:buyer"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="acs:model:order:seller"/>
+          <columnref idref="acs:oracle:orders:seller"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="acs:model:order:shipping_address"/>
+          <columnref idref="acs:oracle:orders:shipping_address"/>
+        </objectmapentry>
+        <objectevent type="retrieve" static="true">
+	  <sqlblock type="select">
+	    <text>
+    select *
+    from orders
+    where order_id = :id
+            </text>
+	    <mapping attribute="buyer" column="buyer" table="orders"></mapping>
+	    <mapping attribute="seller" column="seller" table="orders"></mapping>
+	    <mapping attribute="shippingAddress" 
+	             column="shipping_address" 
+		     table="orders"></mapping>
+          </sqlblock>
+        </objectevent>
+	<objectevent type="insert" static="true">
+	  <sqlblock type="insert">
+	    <text>
+    insert into orders
+    (order_id, buyer, seller, shipping_address)
+    values
+    (:id, :buyer, :seller, :shippingAddress)
+            </text>
+	  </sqlblock>
+	</objectevent>
+	<objectevent type="update" static="true">
+	  <sqlblock type="update">
+	    <text>
+    update orders
+    set buyer = :buyer,
+        seller = :seller,
+        shipping_address = :shippingAddress
+    where order_id = :id
+            </text>
+	  </sqlblock>
+	</objectevent>
+	<objectevent type="delete" static="true">
+	  <sqlblock type="delete">
+	    <text>
+	        delete from line_items where order_id = :id
+            </text>
+	  </sqlblock>
+	  <sqlblock type="delete">
+	    <text>
+		delete from orders where order_id = :id
+            </text>
+	  </sqlblock>
+	</objectevent>
+	<propertyevent type="retrieve" static="true">
+	  <rolereferenceref idref="acs:model:order:items"></rolereferenceref>
+	  <sqlblock type="select">
+	    <text>
+    select li.*
+    from line_items li
+    where order_id = :id
+            </text>
+	    <mapping attribute="items.id" column="id" table="line_items"></mapping>
+	    <mapping attribute="items.price" 
+	             column="price" 
+		     table="line_items"></mapping>
+	    <mapping attribute="items.name" 
+	             column="name" 
+		     table="line_items"></mapping>
+	  </sqlblock>
+	</propertyevent>
+	<propertyevent type="add" static="true">
+	  <rolereferenceref idref="acs:model:order:items"></rolereferenceref>
+	   <sqlblock type="insert">
+	     <text>
+    insert into line_items
+    (item_id, order_id, price, name)
+    values
+    (:items.id, :id, :items.price, :items.name)
+             </text>
+           </sqlblock>
+        </propertyevent>
+	<propertyevent type="remove" static="true">
+	  <rolereferenceref idref="acs:model:order:items"></rolereferenceref>
+	   <sqlblock type="delete">
+	     <text>
+    delete from line_items
+    where item_id = :items.id
+             </text>
+	   </sqlblock>
+	</propertyevent>
+      </objectmap>
+    </objecttype>
+
+    <!-- create table line_items (
+                item_id    integer primary key,
+                order_id   not null references orders(order_id),
+                price      number not null,
+                name       varchar(100) not null
+            )
+    -->
+    <objecttype name="line_item">
+      <attribute name="item_id" datatype="Integer" multiplicity="1"/>
+      <attribute name="price" datatype="Double" multiplicity="1"/>
+      <attribute name="name" datatype="String" multiplicity="1"/>
+      <rolereference name="order">
+        <associationroleref idref="acs:model:line_items_in_an_order:order_id"/>
+      </rolereference>
+      <objectmap>
+        <objectkey>
+          <attributeref idref="acs:model:line_item:item_id"/>
+        </objectkey>
+        <objectmapentry>
+          <attributeref idref="acs:model:line_item:item_id"/>
+          <columnref idref="acs:oracle:line_items:item_id"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="acs:model:line_item:price"/>
+          <columnref idref="acs:oracle:line_items:price"/>
+        </objectmapentry>
+        <objectmapentry>
+          <attributeref idref="acs:model:line_item:name"/>
+          <columnref idref="acs:oracle:line_items:name"/>
+        </objectmapentry>
+	<objectevent type="retrieve" static="true">
+	  <sqlblock type="select">
+	    <text>
+    select *
+    from line_items
+    where item_id = :id
+            </text>
+	    <mapping attribute="price" column="price" table="line_items">
+	    </mapping>
+	    <mapping attribute="name" column="name" table="line_items">
+	    </mapping>
+	  </sqlblock>
+        </objectevent>
+	<objectevent type="update" static="true">
+	  <sqlblock type="update">
+	    <text>
+    update line_items
+    set price = :price,
+        name = :name
+    where item_id = :id
+            </text>
+	  </sqlblock>
+        </objectevent>
+	<objectevent type="delete" static="true">
+	  <sqlblock type="delete">
+	    <text>
+    delete from line_items
+    where item_id = :id
+            </text>
+	  </sqlblock>
+        </objectevent>
+	<propertyevent type="retrieve" static="true">
+	  <rolereferenceref idref="acs:model:line_item:order">
+	  </rolereferenceref>
+	  <sqlblock type="delete">
+	    <text>
+    select o.*
+    from orders o, line_items li
+    where o.order_id = li.order_id
+    and li.item_id = :id
+            </text>
+            <mapping property="order.id" column="order_id" table="orders">
+	    </mapping>
+            <mapping property="order.buyer" column="buyer" table="orders">
+	    </mapping>
+            <mapping property="order.seller" column="seller" table="orders">
+	    </mapping>
+            <mapping property="order.shippingAddress" 
+	             column="shipping_address" table="orders">
+	    </mapping>
+	  </sqlblock>
+        </propertyevent>
+
+      </objectmap>
+    </objecttype>
+
+    <!-- Set up the association between line_items.order_id and orders.order_id -->
+    <!-- Each order consists of 1 or more line items -->
+    <association name="Line Items in an Order" id="acs:model:line_items_in_an_order">
+
+      <!-- The order_id points to the order object type. -->
+      <!-- There is exactly one order_id per line_item -->
+      <associationrole name="order_id" multiplicity="1..1" id="acs:model:line_items_in_an_order:order_id">
+        <objecttyperef idref="acs:model:order"/>
+      </associationrole>
+
+      <!-- The line_item points to the order line_item object type. -->
+      <!-- There are 1 or more line items per order -->
+      <associationrole name="line_item" multiplicity="1..n" id="acs:model:line_items_in_an_order:line_item">
+        <objecttyperef idref="acs:model:line_item"/>
+      </associationrole>
+
+
+    </association>
+
+    <queryevent name="OrdersMaxPrices">
+        <sqlblock type="select">
+	    <text>
+	        select orders.order_id, 
+		       orders.buyer, 
+		       orders.seller, 
+		       orders.shipping_address,
+		       max_item_prices.price
+		from orders, 
+		     (select order_id, 
+		             max(price) as price
+		      from line_items
+		      group by order_id) max_item_prices
+		where orders.order_id = max_item_prices.order_id
+	    </text>
+	    <mapping attribute="orderId" column="order_id" table="orders"/>
+	    <mapping attribute="buyer" column="buyer" table="orders"/>
+	    <mapping attribute="seller" column="seller" table="orders"/>
+	    <mapping attribute="shippingAddress" 
+	             column="shipping_address" table="orders"/>
+	    <mapping attribute="maxPrice" 
+	             column="price" table="max_item_prices"/>
+	</sqlblock>
+    </queryevent>
+
+  </model>
+</metadataroot>

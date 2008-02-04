@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=279}]"><cms:name>batch-23-form-279</cms:name><cms:language>en</cms:language><cms:title>Parking permits (blue badge)</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=279}]"><cms:name>279a.pdf</cms:name><cms:content file="279a.pdf"/></cms:file></cms:item>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=372}]"><cms:name>batch-11-372</cms:name><cms:language>en</cms:language><cms:title>Abandoned vehicles</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=372}]"><cms:name>batch-11-372-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>abandoned, vehciles</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=372}]"><cms:content><![CDATA[<h2>Environmental Services</h2><p><i>Frequently Asked Questions regarding an Abandoned Vehicle</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">Reporting an abandoned vehicle</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">Reporting an untaxed vehicle</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">Retrieving an abandoned vehicle</a>	
+				</strong>
+			</li>
+		</ul><h4>
+			
+			Reporting an abandoned vehicle</h4><p>If you would like to report a vehicle, please complete the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/372a">online form</a>	
+				<span class="gen">link to online form.</span>
+			</strong>
+		</p><h4>
+			
+			Reporting an untaxed vehicle</h4><p>If you wish to report an untaxed vehicle please contact us using the details above.</p><h4>
+			
+			Retrieving an abandoned vehicle</h4><p>If your vehicle has been removed by <span class="gen">enter council name</span> you can arrange to retrieve it by completing the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/372a">on-line form</a>	
+			</strong>
+			<span class="gen">link to online form.</span> On receipt of the form we will advise you of the costs involved and issue a release note.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=372"> Applications for services
+		(372)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

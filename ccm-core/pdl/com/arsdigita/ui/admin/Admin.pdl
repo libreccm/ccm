@@ -1,0 +1,84 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Admin.pdl 1230 2006-06-22 11:50:59Z apevec $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.ui.admin;
+
+import com.arsdigita.web.Application;
+
+object type Admin extends Application {
+    reference key (admin_app.application_id);
+}
+
+
+query AllNoParentGroups {
+    BigDecimal groupID;
+    do {
+        select g.group_id
+          from groups g
+         where not exists (
+	           select 1
+                 from group_subgroup_map m
+			    where g.group_id = m.subgroup_id)
+    } map {
+        groupID = g.group_id;
+    }
+}
+
+// Retrieve subgroup count for giving group id
+// without first retrieve information about group.
+query SubGroupCount {
+   BigDecimal count;
+
+   do {
+      select count(subgroup_id) as count 
+      from group_subgroup_map
+      where group_id = :groupID
+   } map {
+      count = count;
+   }
+}
+// This is used to retrieve all registers in one SQL query instead
+// of three separate queries, one to retrieve person name, one to 
+// retrieve user email, and one to retrieve user information.
+query RetrieveAllUsersInfo {
+    BigDecimal userID;
+    String userDisplayName;
+    String userScreenName;
+    String userPrimaryEmail;
+    String userSSOlogin;
+  do {
+    select acs_objects.object_id,
+           acs_objects.display_name,
+           users.screen_name,
+           parties.primary_email,
+           user_authentication.sso_login
+    from acs_objects,
+         parties,
+         users
+    left outer join user_authentication on auth_id = users.user_id
+    where acs_objects.object_id = users.user_id and
+          parties.party_id = users.user_id 
+  } map {
+    userID = acs_objects.object_id;
+    userDisplayName = acs_objects.display_name;
+    userScreenName = users.screen_name;
+    userPrimaryEmail = parties.primary_email;
+    userSSOlogin = user_authentication.sso_login;
+  }
+}

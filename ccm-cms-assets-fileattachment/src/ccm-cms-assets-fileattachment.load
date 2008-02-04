@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ca_file_attachments"/>
+    <initializer class="com.arsdigita.cms.contentassets.FileAttachmentInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-assets-fileattachment"/>
+    <data class="com.arsdigita.cms.contentassets.FileAttachmentLoader"/>
+  </scripts>
+</load>

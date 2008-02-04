@@ -1,0 +1,292 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Group.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.kernel;
+
+//
+// GROUP
+//
+
+object type Group extends Party {
+    String[1..1]      name = groups.name VARCHAR(200);
+    Role[0..n]  roles = join groups.group_id to roles.group_id;
+
+    reference key (groups.group_id);
+
+    add roles { }
+
+    delete {
+        do {
+            delete from group_subgroup_map
+            where subgroup_id = :id
+        }
+        do {
+            delete from groups
+            where group_id = :id
+        }
+
+    }
+}
+
+
+//
+// MEMBERSHIP ASSOCIATION
+//
+
+association {
+    Group[0..n] groups = join users.user_id to group_member_map.member_id,
+                         join group_member_map.group_id to groups.group_id;
+    User[0..n] members = join groups.group_id to group_member_map.group_id,
+                         join group_member_map.member_id to users.user_id;
+
+    add members {
+        do {
+            insert into group_member_map
+            (group_id, member_id)
+            select
+            :id, :members.id
+            from dual
+            where not exists (select 1 from group_member_map
+                              where group_id = :id
+                              and   member_id = :members.id)
+        }
+    }
+}
+
+//
+// SUBGROUP ASSOCIATION
+//
+
+association {
+    Group[0..n] supergroups = join groups.group_id 
+                                to group_subgroup_map.subgroup_id,
+                              join group_subgroup_map.group_id
+                                to groups.group_id;
+    Group[0..n] subgroups = join groups.group_id 
+                              to group_subgroup_map.group_id, 
+                            join group_subgroup_map.subgroup_id 
+                              to groups.group_id;
+
+    add supergroups { }
+
+    add subgroups {
+        do {
+            insert into group_subgroup_map
+            (group_id, subgroup_id)
+            select
+            :id, :subgroups.id
+            from dual
+            where not exists (select 1 from group_subgroup_map
+                              where group_id = :id
+                              and subgroup_id = :members.id)
+        }
+    }
+}
+
+//
+// ALL MEMBERS ASSOCIATION
+//
+// This is a read only association used to implement the 
+// Group.getAllMembers() and User.getAllGroups() methods.
+//
+association {
+    Group[0..n] allGroups = join users.user_id 
+                              to group_member_trans_map.member_id,
+                            join group_member_trans_map.group_id
+                              to groups.group_id;
+    User[0..n] allMembers = join groups.group_id 
+                              to group_member_trans_map.group_id,
+                            join group_member_trans_map.member_id
+                              to users.user_id;
+                            
+    add allMembers {}
+    remove allMembers {}
+    clear allMembers {}
+    add allGroups {}
+    remove allGroups {}
+    clear allGroups {}
+}
+
+
+//
+// ALL SUBGROUPS ASSOCIATION
+//
+// This is a read only association used to implement the 
+// Group.getAllSubgroups() and Group.getAllSupergroups() methods.
+//
+association {
+    Group[0..n] allSupergroups;
+    Group[0..n] allSubgroups;
+
+    retrieve allSubgroups {
+        do {
+            select groups.group_id, groups.name,
+	               parties.uri, 
+                   acs_objects.object_type, acs_objects.display_name
+	          from group_subgroup_trans_map, 
+	               groups, 
+	               parties, 
+	               acs_objects
+	         where group_subgroup_trans_map.group_id = :id
+	           and groups.group_id = group_subgroup_trans_map.subgroup_id
+	           and parties.party_id = groups.group_id
+               and acs_objects.object_id = parties.party_id
+               and group_subgroup_trans_map.subgroup_id != :id
+        } map {
+            allSubgroups.id = groups.group_id;
+            allSubgroups.name = groups.name;
+            allSubgroups.uri = parties.uri;
+            allSubgroups.objectType = acs_objects.object_type;
+            allSubgroups.displayName = acs_objects.display_name;
+        }
+    }
+
+    retrieve allSupergroups {
+        do {
+            select groups.name, groups.group_id, 
+                   parties.uri, 
+                   acs_objects.object_type, acs_objects.display_name
+	          from group_subgroup_trans_map, 
+	               groups, 
+	               parties, 
+	               acs_objects
+	         where group_subgroup_trans_map.subgroup_id = :id
+	           and groups.group_id = group_subgroup_trans_map.group_id
+	           and parties.party_id = groups.group_id
+               and acs_objects.object_id = parties.party_id
+               and group_subgroup_trans_map.group_id != :id
+        } map {
+            allSupergroups.id = groups.group_id;
+            allSupergroups.name = groups.name;
+            allSupergroups.uri = parties.uri;
+            allSupergroups.objectType = acs_objects.object_type;
+            allSupergroups.displayName = acs_objects.display_name;
+        }
+    }
+
+}
+
+// Queries and operations to support Group API -- these are subject to change.
+
+query ContainedParties {
+    BigDecimal id;
+
+    do {
+        select member_id as party_id
+        from group_member_map
+        where group_id = :groupID
+        UNION ALL
+        select subgroup_id as party_id
+        from group_subgroup_map
+        where group_id = :groupID
+    } map {
+        id = party_id;
+    }
+}
+
+query AllContainedParties {
+    BigDecimal id;
+
+    do {
+        select member_id as party_id
+        from group_member_trans_map
+        where group_id = :groupID
+        UNION ALL
+        select subgroup_id as party_id
+        from group_subgroup_trans_map
+        where group_id = :groupID and subgroup_id != :groupID
+    } map {
+        id = party_id;
+    }
+}
+
+query RetrieveGroups {
+    BigDecimal groupID;
+    String name;
+    String searchName;
+    do {
+        select group_id,
+               name, 
+               lower(name) as search_name
+        from groups
+    } map {
+       groupID = group_id;
+       name = name;
+       searchName = search_name;
+    }
+} 
+
+data operation ClearMembers {
+    do {
+        delete from group_member_map
+        where group_id = :groupID
+    }
+}
+data operation ClearSubgroups {
+    do {
+        delete from group_subgroup_map
+        where group_id = :groupID
+    }
+}
+data operation ClearSupergroups {
+    do {
+        delete from group_subgroup_map
+        where subgroup_id = :groupID
+    }
+}
+query GroupDirectMembers {
+    BigDecimal memberID;
+    do {
+        select member_id
+        from group_member_map
+        where group_id = :groupID
+    } map {
+        memberID = group_member_map.member_id;
+    }
+}
+query GroupDirectSubgroups {
+    BigDecimal subgroupID;
+    do {
+        select subgroup_id
+        from group_subgroup_map
+        where group_id = :groupID
+    } map {
+        subgroupID = group_subgroup_map.subgroup_id;
+    }
+}
+query GroupMembers {
+    BigDecimal memberID;
+    do {
+        select member_id
+        from group_member_trans_map
+        where group_id = :groupID
+    } map {
+        memberID = group_member_map.member_id;
+    }
+}
+query GroupSubgroups {
+    BigDecimal subgroupID;
+    do {
+        select subgroup_id
+        from group_subgroup_trans_map
+        where group_id = :groupID and subgroup_id!=:groupID
+    } map {
+        subgroupID = group_subgroup_trans_map.subgroup_id;
+    }
+}

@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=17}]"><cms:name>education-3-17</cms:name><cms:language>en</cms:language><cms:title>School - general information location/contacts
+	</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=17}]"><cms:name>education-3-17-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>school, general, information, location, contacts</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=17}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Follow the links below to access information about every school in the area - includes school contact details, school websites etc.</i></p><hr/><table width="90%" cellpadding="5" class="centre" summary="Educational Establishments">
+			<tr>
+				<td>
+					<strong>
+						
+		<a href="#1">Nursery Schools/Units</a>	
+					</strong>
+				</td>
+				<td>List of all <span class="gen">enter council name</span> Nursery Schools and Units.</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>
+						
+		<a href="#2">Primary Schools</a>	
+					</strong>
+				</td>
+				<td>List of all <span class="gen">enter council name</span> Primary Schools.</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>
+						
+		<a href="#3">Secondary Schools</a>	
+					</strong>
+				</td>
+				<td>List of all <span class="gen">enter council name</span> High Schools.</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>
+						
+		<a href="#4">Special Schools/Units</a>	
+					</strong>
+				</td>
+				<td>List of all <span class="gen">enter council name</span> Nursery Schools and Units.</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>
+						
+		<a href="#5">Sixth Form and Further Education Establishments</a>	
+					</strong>
+				</td>
+				<td>List all <span class="gen">enter council name</span> Sixth Form and Further Education establishments</td>
+			</tr>
+		</table><h4>
+			
+			Nursery Schools</h4><table width="90%" cellpadding="5" class="centre" summary="Nursery Schools">
+			<tr>
+				<th>School</th>
+				<th>Address</th>
+				<th>Tel/Fax/Email</th>
+				<th>Headteacher</th>
+				<th>Website</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><h4>
+			
+			Primary Schools</h4><table width="90%" cellpadding="5" class="centre" summary="Primary Schools">
+			<tr>
+				<th>School</th>
+				<th>Address</th>
+				<th>Tel/Fax/Email</th>
+				<th>Headteacher</th>
+				<th>Website</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><h4>
+			
+			Secondary Schools</h4><table width="90%" cellpadding="5" class="centre" summary="Secondary Schools">
+			<tr>
+				<th>School</th>
+				<th>Address</th>
+				<th>Tel/Fax/Email</th>
+				<th>Headteacher</th>
+				<th>Website</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><h4>
+			
+			Special Schools/Units</h4><table width="90%" cellpadding="5" class="centre" summary="Special Schools/Units">
+			<tr>
+				<th>School</th>
+				<th>Address</th>
+				<th>Tel/Fax/Email</th>
+				<th>Headteacher</th>
+				<th>Website</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><h4>
+			
+			Sixth Form and Further Education Establishments</h4><table width="90%" cellpadding="5" class="centre" summary="Sixth Form and Further Education Establishments">
+			<tr>
+				<th>School</th>
+				<th>Address</th>
+				<th>Tel/Fax/Email</th>
+				<th>Headteacher</th>
+				<th>Website</th>
+			</tr>
+			<tr>
+				<td>
+					<span class="gen">enter facility name</span>
+				</td>
+				<td>
+					<span class="gen">enter address</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+				<td>
+					<span class="gen">enter details</span>
+				</td>
+			</tr>
+		</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=17"> Providing Information
+		(17)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,211 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: LifecycleService.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.kernel.ACSObject;
+
+//A model for a lifecycle to an ACSObject
+//  The table stores the lifecycle of an acs_object.  Multiple acs_objects can 
+//  share the same lifecycle.
+object type LifecycleService {
+    BigDecimal[1..1]     serviceID   = acs_object_lifecycle_map.object_id INTEGER;
+    composite ACSObject[1..1]    item        = join acs_object_lifecycle_map.item_id
+                                                 to acs_objects.object_id;
+    object key (serviceID);
+
+    aggressive load (item.id, lifecycle.id);
+}
+
+association {
+    composite Lifecycle[1..1] lifecycle = join acs_object_lifecycle_map.cycle_id
+                                            to lifecycles.cycle_id;
+    component LifecycleService[0..n]  lifecycleServices = join lifecycles.cycle_id
+                                                            to acs_object_lifecycle_map.cycle_id;
+}
+
+query getLifecycleStart {
+    BigDecimal objectId;
+    String objectType;
+    BigDecimal cycleId;
+    Date startDateTime;
+    Date endDateTime;
+    String listener;
+    
+  do {
+    select
+      o.object_id, o.object_type,
+      l.cycle_id, l.start_date_time, l.end_date_time, l.listener
+    from
+      lifecycles l, acs_objects o, acs_object_lifecycle_map m
+    where
+      m.item_id = o.object_id and
+      m.cycle_id = l.cycle_id and
+      l.has_begun = 0 and
+      :startDateTime >= l.start_date_time
+  } map {
+    objectId          = o.object_id;
+    objectType        = o.object_type;
+    cycleId           = l.cycle_id;
+    startDateTime     = l.start_date_time;
+    endDateTime       = l.end_date_time;
+    listener          = l.listener;
+  }
+}
+
+
+query getLifecycleEnd {
+    BigDecimal objectId;
+    String objectType;
+    BigDecimal cycleId;
+    Date startDateTime;
+    Date endDateTime;
+    String listener;
+
+  do {
+    select
+      o.object_id, o.object_type,
+      l.cycle_id, l.start_date_time, l.end_date_time, l.listener
+    from
+      lifecycles l, acs_objects o, acs_object_lifecycle_map m
+    where
+      m.item_id = o.object_id and
+      m.cycle_id = l.cycle_id and
+      l.has_ended = 0 and
+      :endDateTime >= l.end_date_time
+  } map {
+    objectId          = o.object_id;
+    objectType        = o.object_type;
+    cycleId           = l.cycle_id;
+    startDateTime     = l.start_date_time;
+    endDateTime       = l.end_date_time;
+    listener          = l.listener;
+  }
+}
+
+query getPhaseStart {
+    BigDecimal objectId;
+    String objectType;
+    BigDecimal cycleId;
+    Date startDateTime;
+    Date endDateTime;
+    String listener;
+    BigDecimal phaseId;
+
+  do {
+    select
+      o.object_id, o.object_type, p.phase_id,
+      p.cycle_id, p.start_date_time, p.end_date_time, p.listener 
+    from
+      phases p, acs_objects o, acs_object_lifecycle_map m
+    where
+      m.item_id = o.object_id and
+      m.cycle_id = p.cycle_id and
+      p.has_begun = 0 and
+      :startDateTime >= p.start_date_time
+  } map {
+    objectId          = o.object_id;
+    objectType        = o.object_type;
+    cycleId           = p.cycle_id;
+    phaseId           = p.phase_id;
+    startDateTime     = p.start_date_time;
+    endDateTime       = p.end_date_time;
+    listener          = p.listener;
+  }
+}
+
+
+query getPhaseEnd {
+    BigDecimal objectId;
+    String objectType;
+    BigDecimal cycleId;
+    Date startDateTime;
+    Date endDateTime;
+    String listener;
+    BigDecimal phaseId;
+
+  do {
+    select
+      o.object_id, o.object_type, p.phase_id,
+      p.cycle_id, p.start_date_time, p.end_date_time, p.listener 
+    from
+      phases p, acs_objects o, acs_object_lifecycle_map m
+    where
+      m.item_id = o.object_id and
+      m.cycle_id = p.cycle_id and
+      p.has_ended = 0 and
+      :endDateTime >= p.end_date_time
+  } map {
+    objectId          = o.object_id;
+    objectType        = o.object_type;
+    cycleId           = p.cycle_id;
+    phaseId           = p.phase_id;
+    startDateTime     = p.start_date_time;
+    endDateTime       = p.end_date_time;
+    listener          = p.listener;
+  }
+}
+
+
+// Get object lifecycle mappings.
+query getObjectLifecycleMappings {
+    BigDecimal objectId;
+    String objectType;
+    BigDecimal cycleId;
+
+  do {
+    select
+      o.object_id, o.object_type, l.cycle_id
+    from
+      lifecycles l, acs_objects o, acs_object_lifecycle_map m
+    where
+      m.item_id = o.object_id 
+    and
+      m.cycle_id = l.cycle_id
+  } map {
+    objectId          = o.object_id;
+    objectType        = o.object_type;
+    cycleId           = l.cycle_id;
+  }
+}
+
+
+// Get object phase mappings.
+query getObjectPhaseMappings {
+    BigDecimal objectId;
+    String objectType;
+    BigDecimal cycleId;
+    BigDecimal phaseId;
+
+  do {
+    select
+      o.object_id, o.object_type, p.phase_id, p.cycle_id
+    from
+      phases p, acs_objects o, acs_object_lifecycle_map m
+    where
+      m.item_id = o.object_id 
+    and
+      m.cycle_id = p.cycle_id 
+  } map {
+    objectId          = o.object_id;
+    objectType        = o.object_type;
+    cycleId           = p.cycle_id;
+    phaseId           = p.phase_id;
+  }
+}

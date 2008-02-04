@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=2}]"><cms:name>education-2-form-2</cms:name><cms:language>en</cms:language><cms:title>Educational awards and benefits - school clothing grants/vouchers</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=2}]"><cms:name>2a.pdf</cms:name><cms:content file="2a.pdf"/></cms:file></cms:item>

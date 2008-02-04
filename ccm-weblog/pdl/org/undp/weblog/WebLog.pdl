@@ -1,0 +1,30 @@
+model org.undp.weblog;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.User; 
+import com.arsdigita.web.Application;
+
+object type WebLogApplication extends Application {
+}
+
+object type WebLog extends ACSObject {
+	String[1..1] title = weblogs.title VARCHAR(200);
+	String[1..1] lead = weblogs.lead VARCHAR(4000);
+	String[1..1] body = weblogs.body CLOB;
+	Date[1..1] modified = weblogs.modified TIMESTAMP;
+	
+	WebLogApplication[1..1] webLogApp = join weblogs.application_id to applications.application_id;
+	User[1..1] owner = join weblogs.owner_id to users.user_id;
+	
+	reference key (weblogs.object_id);
+}
+
+object type WebLogComment extends ACSObject {
+	String[1..1] comment = weblog_comments.content VARCHAR(4000);
+	Date[1..1] modified = weblog_comments.modified TIMESTAMP;
+	
+	WebLog[1..1] webLog = join weblog_comments.weblog_id to weblogs.object_id;
+	User[1..1] owner = join weblog_comments.owner_id to users.user_id;
+	
+	reference key (weblog_comments.object_id);
+}

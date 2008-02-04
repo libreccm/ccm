@@ -1,0 +1,18 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+    <initializer class="com.arsdigita.london.util.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.cms.webpage.installer.Initializer"/>
+    <initializer class="com.arsdigita.cms.webpage.installer.WebpageInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-webpage"/>
+    <data class="com.arsdigita.cms.webpage.WebpageLoader"/>
+  </scripts>
+</load>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=383}]"><cms:name>licensing-383</cms:name><cms:language>en</cms:language><cms:title>Licence - building materials</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=383}]"><cms:name>licensing-383-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>licence, building, materials</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=383}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If you wish to place building materials on any part of the highway a licence
+    is required from this Authority. A licence is not normally necessary if materials
+    are placed on private land. All materials must be placed on private land
+    whenever possible.</i></p><hr/><p>In order to apply for a building materials licence, you must complete an 
+					
+			
+			<span class="gen">link to online form</span>
+		</p><p>A licence can be valid for any period between 1 day and 1 month. For longer periods, 
+  additional applications must be made prior to the expiry of the current licence.</p><p>Permission is granted with the issuing of a licence number. The application form 
+  will be returned to you with the number, or, it can be obtained by telephone, normally 
+  within 2 working days of receipt of the application.</p><p>If it is not possible to avoid using the public highway, materials should be placed 
+  in the carriageway, rather than the footway. If permission is granted to place materials 
+  on a footway or grass verge, an amount of <span class="gen">enter amount</span>  deposit is payable to cover any damage which may be caused.</p><p>A single licence allows for the storage of materials, not exceeding 3 metres in 
+  length, 1.5 metres in width and 1.0 metre in height. Please consult this office 
+  if larger quantities are involved.</p><p>Materials placed in, or partly on, the carriageway require at least four traffic 
+  cones on the approach side to guide traffic past the storage area.</p><p>During the hours of darkness, in poor daytime visibility and bad weather, road 
+  danger lamps (flashing amber) must be placed to indicate the area of the site. If 
+  sited in the carriageway, a lamp should be placed between each cone. More information 
+  about the regulations for skips on the highway.</p><p>If this authority's contractors are called out to lamp the site or make it safe, 
+  a charge will follow.</p><p>Building materials placed on the highway shall <strong>not</strong> obstruct or interfere with the 
+  drainage of the street or with any apparatus of the public utility companies.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=383"> Applications for services
+		(383)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=383}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=383}]"/></cms:links></cms:item>

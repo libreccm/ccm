@@ -1,0 +1,427 @@
+options {
+    STATIC = false;
+    DEBUG_PARSER = false;
+    DEBUG_TOKEN_MANAGER = false;
+}
+
+PARSER_BEGIN(SQLParser)
+
+package com.redhat.persistence.common;
+
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * SQLParser
+ *
+ * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
+ * @version $Revision: #9 $ $Date: 2004/03/24 $
+ */
+
+public class SQLParser {
+
+    public final static String versionId = "$Id: SQLParser.jj 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/03/24 13:21:25 $";
+
+    public static interface Mapper {
+        Path map(Path path);
+    }
+
+    public static class IdentityMapper implements Mapper {
+        public Path map(Path path) {
+            return path;
+        }
+    }
+
+    private SQL m_sql = new SQL();
+    private StringBuffer m_image = new StringBuffer();
+    private ArrayList m_assigns = new ArrayList();
+    private Mapper m_mapper = new IdentityMapper();
+
+    public SQLParser(Reader r, Mapper mapper) {
+        this(r);
+        m_mapper = mapper;
+    }
+
+    public void initialize(Reader reader) {
+        initialize(reader, m_mapper);
+    }
+
+    public void initialize(Reader reader, Mapper mapper) {
+        m_assigns.clear();
+        m_mapper = mapper;
+        m_sql = new SQL();
+        ReInit(reader);
+    }
+
+    public class Assign {
+
+        private SQLToken m_begin;
+        private SQLToken m_end;
+
+        public Assign(SQLToken begin, SQLToken end) {
+            m_begin = begin;
+            m_end = end;
+        }
+
+        public SQLToken getBegin() {
+            return m_begin;
+        }
+
+        public SQLToken getEnd() {
+            return m_end;
+        }
+
+    }
+
+    public SQL getSQL() {
+        return m_sql;
+    }
+
+    public Collection getAssigns() {
+        return m_assigns;
+    }
+
+    private void appendSpecial(Token t) {
+        Token sp = t;
+        while (sp.specialToken != null) { sp = sp.specialToken; }
+        if (sp == t) { return; }
+        while (sp != null) {
+            m_image.append(sp.image);
+            sp = sp.next;
+        }
+    }
+
+    private void append(Token t) {
+        m_image.append(t.image);
+    }
+
+    private void token(Token t) {
+        token(t, null);
+    }
+
+    private void token(Token t, SQLToken.Type type) {
+        appendSpecial(t);
+        token(SQLToken.SPACE);
+        append(t);
+        token(type);
+    }
+
+    private void token() {
+        token((SQLToken.Type) null);
+    }
+
+    private void token(SQLToken.Type type) {
+        if (m_image.length() > 0) {
+            m_sql.append(new SQLToken(m_image.toString(), type));
+            m_image.setLength(0);
+        }
+    }
+
+}
+
+PARSER_END(SQLParser)
+
+<DEFAULT,BEGIN> SPECIAL_TOKEN:
+{
+    " "
+  | "\t"
+  | "\n"
+  | "\r"
+  | "\f"
+}
+
+TOKEN:
+{
+    <STRING_LITERAL: "'" ( ~["'"] | "''" )* "'">
+  | <#DIGIT: ["0" - "9"]>
+  | <INTEGER_LITERAL: ( "+" | "-" )? (<DIGIT>)+>
+  | <NUMBER_LITERAL: ( "+" | "-" )? (<DIGIT>)* ( "." (<DIGIT>)+ )?
+                     ( "E" | "e" ) ( "+" | "-" ) (<DIGIT>)+>
+}
+
+TOKEN:
+{
+    <BINDVAR: ":" ( <ID> | <INTEGER_LITERAL> )>
+}
+
+TOKEN:
+{
+    <LPAREN: "(">
+  | <RPAREN: ")">
+  | <COMMA: ",">
+  | <QUESTION_MARK: "?">
+  | <PERIOD: ".">
+  | <SEMI: ";">
+  | <MUL: "*">
+  | <POS: "+">
+  | <NEG: "-">
+  | <DIV: "/">
+  | <CONCAT: "||">
+  | <EQ: "=">
+  | <NE: ( "!=" | "^=" | "<>" )>
+  | <GT: ">">
+  | <LT: "<">
+  | <LE: "<=">
+  | <PUT: "=>">
+  | <GE: ">=">
+  | <BEGIN_HINT: "/*+">
+  | <END_HINT: "*/">
+  | <CAST: "::">
+}
+
+TOKEN [IGNORE_CASE]:
+{
+    <#WS: ([" ", "\t", "\n", "\r", "\f"])+>
+  | <NULL: "null">
+  | <IS_NULL: "is" <WS> "null">
+  | <IS_NOT_NULL: "is" <WS> "not" <WS> "null">
+  | <LIKE: "like">
+  | <BETWEEN: "between">
+  | <IN: "in">
+  | <NOT: "not">
+  | <AND: "and">
+  | <OR: "or">
+  | <ANY: "any">
+  | <SOME: "some">
+  | <EXISTS: "exists">
+  | <UNION: "union">
+  | <UNION_ALL: "union" <WS> "all">
+  | <INTERSECT: "intersect">
+  | <MINUS: "minus">
+  | <PRIOR: "prior">
+  | <LIMIT: "limit">
+  | <OFFSET: "offset">
+  | <ASC: "asc">
+  | <DESC: "desc">
+  | <CASE: "case">
+  | <WHEN: "when">
+  | <THEN: "then">
+  | <ELSE: "else">
+  | <END: "end">
+  | <AS: "as">
+  | <FROM: "from"> // we don't treat this as a clause because of ANSI date syntax e.g., extract(epoch from ...)
+// Clause beginnings
+  | <SELECT: "select">
+  | <INSERT_INTO: "insert" <WS> "into">
+  | <UPDATE: "update">
+  | <DELETE_FROM: "delete" <WS> "from">
+  | <WHERE: "where">
+  | <WITH: "with">
+  | <START_WITH: "start" <WS> "with">
+  | <CONNECT_BY: "connect" <WS> "by">
+  | <GROUP_BY: "group" <WS> "by">
+  | <ORDER_BY: "order" <WS> "by">
+  | <FOR_UPDATE: "for" <WS> "update">
+  | <VALUES: "values">
+  | <SET: "set">
+}
+
+TOKEN: {
+    <ID: <CH>(<CH>|<DIGIT>)*>
+  // @ is used by link attribute implementation
+  | <#CH: ["a" - "z", "A" - "Z", "_", "@"]>
+  | <RAW: "RAW[" (~["]"] | "\\]")* "]">
+  | <QUOTED_ID: "\"" ( ~["\""] | "\"\"" )* "\"">
+}
+
+// TODO: Add support for multi-line comments.
+
+SPECIAL_TOKEN:
+{
+    <COMMENT: "--" (~["\n", "\r"])* ("\n"|"\r"|"\r\n")>
+}
+
+void sql() :
+{}
+{
+ [ ( statement() | unstructuredElement()
+     ( ( unstructuredElement() | clauseStart() ) )* ) ] <EOF>
+}
+
+void statement() :
+{}
+{
+    ( clause() )+
+}
+
+void literal() :
+{
+    Token t;
+}
+{
+ (  t = <STRING_LITERAL>
+  | t = <INTEGER_LITERAL>
+  | t = <NUMBER_LITERAL> )
+    { token(t); }
+}
+
+void symbol() :
+{
+    Token t;
+}
+{
+ (
+    t = <FROM> // see comment above
+  | t = <PERIOD>
+  | t = <SEMI>
+  | t = <CAST>
+  | t = <QUESTION_MARK>
+  | t = <MUL>
+  | t = <POS>
+  | t = <NEG>
+  | t = <DIV>
+  | t = <CONCAT>
+  | t = <EQ>
+  | t = <NE>
+  | t = <GT>
+  | t = <LT>
+  | t = <LE>
+  | t = <PUT>
+  | t = <GE>
+  | t = <BEGIN_HINT>
+  | t = <END_HINT>
+  | t = <NULL>
+  | t = <IS_NULL>
+  | t = <IS_NOT_NULL>
+  | t = <LIKE>
+  | t = <BETWEEN>
+  | t = <IN>
+  | t = <NOT>
+  | t = <AND>
+  | t = <OR>
+  | t = <ANY>
+  | t = <SOME>
+  | t = <EXISTS>
+  | t = <UNION>
+  | t = <UNION_ALL>
+  | t = <INTERSECT>
+  | t = <LIMIT>
+  | t = <OFFSET>
+  | t = <ASC>
+  | t = <DESC>
+  | t = <CASE>
+  | t = <WHEN>
+  | t = <THEN>
+  | t = <ELSE>
+  | t = <END>
+  | t = <AS>
+  | t = <MINUS>
+  | t = <PRIOR>
+  | t = <QUOTED_ID>
+  | t = <RAW> {
+      token(t, SQLToken.RAW);
+  } )
+     { if (t.kind != RAW) { token(t); } }
+}
+
+void clauseStart() :
+{
+    Token t;
+}
+{
+ (
+    t = <SELECT>
+  | t = <INSERT_INTO>
+  | t = <UPDATE>
+  | t = <DELETE_FROM>
+  | t = <WHERE>
+  | t = <WITH>
+  | t = <START_WITH>
+  | t = <CONNECT_BY>
+  | t = <GROUP_BY>
+  | t = <ORDER_BY>
+  | t = <FOR_UPDATE>
+  | t = <VALUES>
+  | t = <SET> )
+    { token(t); }
+}
+
+void parens() :
+{
+    Token t;
+}
+{
+ ( LOOKAHEAD(2) t = <LPAREN> { token(t); } statement() t = <RPAREN>
+     { token(t); }
+  | t = <LPAREN> { token(t); } ( unstructuredElement() )* t = <RPAREN>
+     { token(t); } )
+}
+
+void identifier() :
+{
+    Token t;
+    boolean bind = false;
+    StringBuffer buf = new StringBuffer();
+}
+{
+    ( t = <BINDVAR> { bind = true; } | t = <ID>  )
+        { buf.append(t.image); appendSpecial(t); token(SQLToken.SPACE); }
+        ( LOOKAHEAD(2) <PERIOD> t = <ID>
+            { buf.append('.'); buf.append(t.image);
+        } )*
+    {
+        if (bind) {
+            m_image.append(buf.toString());
+            token(SQLToken.BIND);
+        } else {
+            m_image.append(m_mapper.map(Path.get(buf.toString())).getPath());
+            token(SQLToken.PATH);
+        }
+    }
+}
+
+void unstructuredElementNoComma() :
+{}
+{
+  (   literal()
+    | symbol()
+    | parens()
+    | identifier()
+     )
+}
+
+void unstructuredElement() :
+{
+    Token t;
+}
+{
+  (  t = <COMMA> { token(t); }
+   | unstructuredElementNoComma()
+    )
+}
+
+void unstructuredSQL() :
+{}
+{
+    ( unstructuredElement() )*
+}
+
+void clause() :
+{}
+{
+ ( LOOKAHEAD(1) setClause() | clauseStart() unstructuredSQL() )
+}
+
+void setClause() :
+{
+    Token t;
+}
+{
+    t = <SET> { token(t); } assign() ( t = <COMMA> { token(t); } assign() )*
+}
+
+void assign() :
+{
+    Token t;
+    SQLToken begin;
+}
+{
+
+    { token(); begin = m_sql.getLast(); }
+    identifier() t = <EQ> { token(t); } ( unstructuredElementNoComma() )+
+    {
+        token();
+        m_assigns.add(new Assign(begin.getNext(), m_sql.getLast()));
+    }
+}

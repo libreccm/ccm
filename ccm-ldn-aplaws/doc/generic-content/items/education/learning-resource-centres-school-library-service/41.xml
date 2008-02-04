@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=41}]"><cms:name>education-3-41</cms:name><cms:language>en</cms:language><cms:title>School library service - information and advice</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=41}]"><cms:name>education-3-41-dublin-metadata</cms:name><cms:dcAudience>Headteacher</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>school, library, service, information, advice</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=41}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Information and advice regarding the School Library Service.</i></p><hr/><h4>Why use us?</h4><p>By using the School Library Service you can</p><ul>
+				<li title="*">save time and money</li>
+				<li title="*">respond quickly to curriculum demands</li>
+				<li title="*">develop your pupils learning experience</li>
+				<li title="*">improve the quality of your school's resources</li>
+			</ul><h4>What do we offer?</h4><ul>
+				<li title="*">advice</li>
+				<li title="*">project loans</li>
+				<li title="*">book purchase scheme</li>
+				<li title="*">support for literacy and numeracy strategies</li>
+				<li title="*">talks and exhibitions</li>
+				<li title="*">in service training for teachers</li>
+				<li title="*">teachers' library - professional development resources for teachers</li>
+			</ul><h4>When are we open?</h4><p>
+<span class="gen">enter opening times</span>
+</p><p>Sessions outside these hours are available by prior arrangement.</p><p>The School Library Service is open during school holidays, Please 
+  telephone for details.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=41"> Providing Information
+		(41)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=370}]"><cms:name>-370</cms:name><cms:language>en</cms:language><cms:title>Generic change of circumstances form</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=370}]"><cms:name>-370-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Generic, change, circumstances, form</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=370}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>You must tell us straight away about any changes in circumstances for you, your partner, any dependant children or any non-dependant who lives with you.</i></p><hr/><h2>Changes you must tell us about include: </h2><ul>
+			<li title="*">If you or your partner stop or start getting 
+		<a href="http://www.dwp.gov.uk/">Income Support, Job Seekers Allowance</a>	
+				<span class="gen">link to external website</span> or any other state benefits  </li>
+			<li title="*">If you or your partner's state benefits or any other income increase or decrease   </li>
+			<li title="*">If your or your partner's wages increase or decrease   </li>
+			<li title="*">If your or your partner's savings or investments increase or decrease   </li>
+			<li title="*">If the number of people living with you alters   </li>
+			<li title="*">If any of your children leave school   </li>
+			<li title="*">If you move   </li>
+			<li title="*">If you have a child   </li>
+			<li title="*">If your rent changes </li>
+		</ul><p>This is not a full list and you should tell us about any other changes that you think may affect your entitlement. </p><p>
+			<strong>If in doubt - let us know. </strong>
+		</p><p>You must notify us within one calendar month of a change of circumstances otherwise you might lose out on benefit. </p><p>Please tell us about any changes in circumstances - even if you have already told staff working in other offices such as the 
+		<a href="http://www.dwp.gov.uk/">Department for Work and Pensions</a>	, <span class="gen">link to external website</span> Job Centre Plus or other Council Services. </p><p>
+			<strong>Remember, even if you are on a low income, you will have to pay back any money incorrectly paid. Forgetfulness and innocent oversights are no excuse. You will be breaking the law if you don't tell us about changes and corrections. We could treat this as fraud and that could lead to you being prosecuted. </strong>
+		</p><p>You can use the contact details above, or use the 
+		<a href="/ccm/services/pid.jsp?pid=forms/370a">
+				<strong>online form</strong>
+			</a>	
+			<span class="gen">link to online form</span> to notify us of your change of circumstances. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=370"> Applications for services
+		(370)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

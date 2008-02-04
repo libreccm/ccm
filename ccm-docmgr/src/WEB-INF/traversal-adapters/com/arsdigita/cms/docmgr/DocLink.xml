@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters
+    xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+  
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <xrd:adapter objectType="com.arsdigita.cms.docmgr.DocLink" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/description"/>
+        <xrd:property name="/object/target"/>
+        <xrd:property name="/object/repository"/>
+        <xrd:property name="/object/externalURL"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+
+<!--
+  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.cms.docmgr.DocLink" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/description"/>
+        <xrd:property name="/object/target"/>
+        <xrd:property name="/object/repository"/>
+        <xrd:property name="/object/externalURL"/>
+      </xrd:attributes>
+    </xrd:adapter>
+  </xrd:context>
+-->
+
+</xrd:adapters>
+

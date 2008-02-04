@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    echo "syntax: run-::hostname::.sh {start|stop}"
+    exit 1
+fi
+
+COMMAND=$1
+
+APACHE_HOME=::apache-home::
+APACHE_CONF=::apache-conf::
+LOG_DIR=::log-dir::
+export APACHE_HOME APACHE_CONF LOG_DIR
+
+
+PIDFILE="$LOG_DIR/httpd.pid" HTTPD="$APACHE_HOME/bin/httpd -f $APACHE_CONF" $APACHE_HOME/bin/apachectl $COMMAND
+
+exit 0

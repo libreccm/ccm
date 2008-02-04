@@ -1,0 +1,23 @@
+# This file contains lines of the form:
+#
+# (ESD Toolkit XML, APLAWS import XML, ESD->APLAWS transform)
+http://www.esd.org.uk/standards/lgcl/1.03/lgclrelatedterms.xml,related-lgcl-1.03.xml,xslt-1.03/RelatedItems2related.xsl
+#http://www.esd.org.uk/standards/lgcl/1.03/lgclequivalents.xml,equivalents-lgcl-1.03.xml,xslt-1.03/Equivalents2equivalent.xsl
+http://www.esd.org.uk/standards/lgcl/1.03/lgclhierarchy.xml,hierarchy-lgcl-1.03.xml,xslt-1.03/ItemsHierarchy2hierarchy.xsl
+http://www.esd.org.uk/standards/lgcl/1.03/lgclhierarchy.xml,domain-lgcl-lite-1.03.xml,xslt-1.03/ItemsHierarchy2domainLite.xsl
+http://www.esd.org.uk/standards/lgcl/1.03/lgclhierarchy.xml,hierarchy-lgcl-lite-1.03.xml,xslt-1.03/ItemsHierarchy2hierarchyLite.xsl
+http://www.esd.org.uk/standards/lgcl/1.03/lgclaclmapping.xml,mapping-lgcl-1.03-acl-1.00.xml,xslt-1.03/Mapping2mapping.xsl
+http://www.esd.org.uk/standards/lgcl/1.03/lgclgclmapping.xml,mapping-lgcl-1.03-gcl-2.0.xml,xslt-1.03/Mapping2mapping.xsl
+http://www.esd.org.uk/standards/lgcl/1.03/lgcllgslmapping.xml,mapping-lgcl-1.03-lgsl-2.00.xml,xslt-1.03/Mapping2mapping.xsl
+http://www.esd.org.uk/standards/acl/1.00/acltermslist.xml,domain-acl-1.00.xml,xslt-1.03/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/termslist/1.03/termslist.xml,domain-lgcl-1.03.xml,xslt-1.03/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/lgsl/2.00/lgsltermslist.xml,domain-lgsl-2.00.xml,xslt-1.03/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdllgslmapping.xml,mapping-lgdl-2.00-lgsl-2.00.xml,xslt-1.03/Mapping2mapping.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdltermslist.xml,domain-lgdl-2.00.xml,xslt-1.03/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdlhierarchy.xml,hierarchy-lgdl-2.00.xml,xslt-1.02/ItemsHierarchy2hierarchy.xsl
+#http://www.esd.org.uk/standards/lgdl/2.00/lgdlhierarchy.xml,hierarchy-lgdl-2.00.xml,xslt-1.03/ItemsHierarchy2hierarchy.xsl
+http://www.esd.org.uk/standards/lgdl/2.00/lgdllgslhierarchy.xml,hierarchy-lgdl-2.00-lgsl-2.00.xml,xslt-1.02/LGDLLGSLItemsHierarchy2mixedHierarchy.xsl
+#http://www.esd.org.uk/standards/lgdl/2.00/lgdllgslhierarchy.xml,hierarchy-lgdl-2.00-lgsl-2.00.xml,xslt-1.03/LGDLLGSLItemsHierarchy2mixedHierarchy.xsl
+http://www.esd.org.uk/standards/gcl/2.00/gcltermslist.xml,domain-gcl-2.0.xml,xslt-1.03/ControlledList2domain.xsl
+http://www.esd.org.uk/standards/gcl/2.00/gclhierarchy.xml,hierarchy-gcl-2.0.xml,xslt-1.03/ItemsHierarchy2hierarchy.xsl
+http://www.esd.org.uk/standards/lgal/0.01/lgal.xml,domain-lgal-0.01.xml,xslt-1.03/ControlledList2domain.xsl

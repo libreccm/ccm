@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=373}]"><cms:name>hall-venue-bookings-373</cms:name><cms:language>en</cms:language><cms:title>Hall/Venue Bookings</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=373}]"><cms:name>hall-venue-bookings-373-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>hall, venue, bookings</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=373}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Are you looking for a low cost, local venue for a special occasion? We can offer you a diverse range of venues for meetings, parties and conferences. </i></p><hr/><p>Whether you are looking for a venue for business
+
+    or pleasure, we have a number of suitable locations. All venues offer a good location, ease of booking, and are competitively priced.  Please contact the sites individually for booking
+
+    details.
+
+</p><p>Provisional dates can be held under an 'enquiry'
+
+    status for up to three weeks. But if another enquiry is made for the same
+
+    date you will be asked to confirm
+
+  your booking.</p><p>Once you make a booking you will be invoiced for the deposit. You must pay the full amount at least one month
+
+    before the hiring period starts or immediately if the event takes place within
+
+    two months of your booking.</p><p>We will send full details of our terms and conditions, including cancellation
+
+  fees with your deposit invoice or whenever you request them.</p><p>Hirers do not have sole rights for any type of event or sole occupancy rights.</p><p>The Council has the following venues available
+
+  for public  hire:</p><p>
+<strong>Name of Building:</strong> <span class="gen">enter facility name</span> (Link to separate page about the building, including facilities on offer, size of room/s available, prices, etc) <span class="gen">enter hyperlink</span>
+<br/>
+
+  <strong>Address:</strong> <span class="gen">enter address</span> <br/>
+
+  <strong>Contact Details:</strong> <span class="gen">enter details</span>
+</p><p>
+<strong>Name of Building:</strong> <span class="gen">enter facility name</span> (Link to separate page about the building, including facilities on offer, size of room/s available, prices, etc) <span class="gen">enter hyperlink</span>
+<br/>
+
+  <strong>Address:</strong> <span class="gen">enter address</span> <br/>
+
+  <strong>Contact Details:</strong> <span class="gen">enter details</span>
+</p><p>
+<strong>Name of Building:</strong> <span class="gen">enter facility name</span> (Link to separate page about the building, including facilities on offer, size of room/s available, prices, etc) <span class="gen">enter hyperlink</span>
+<br/>
+
+  <strong>Address:</strong> <span class="gen">enter address</span> <br/>
+
+  <strong>Contact Details:</strong> <span class="gen">enter details</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=373"> Providing Information
+		(373)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

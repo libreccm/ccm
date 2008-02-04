@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=462}]"><cms:name>batch-7-462</cms:name><cms:language>en</cms:language><cms:title>Sports pitches/courts</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=462}]"><cms:name>batch-7-462-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>sports, pitches, courts</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=462}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently Asked Questions regarding Sports Pitches</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">Where can I find information on Sports Pitches? </a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">How can I hire a football/rugby/cricket/hockey pitch? </a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">Are sports pitches available for competitions?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#4">How can I pay for the hire of a sports pitch?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#5">How can I obtain a weather forecast for a booked game?</a>	
+				</strong>
+			</li>
+		</ul><h3>Where can I find information on Sports Pitches?</h3><p>There are a large number of sports pitches available for hire to play football, rugby, cricket and hockey at locations throughout the area. For advice on locations closest to you and their suitability for your needs please contact us using the details above.</p><h3>How can I hire a football/rugby/cricket/hockey/tennis pitch?</h3><p>Firstly you should check the availability of the sports pitch you wish to hire. Please contact us on the details above to check availability. You can also request a booking form and we will post it to you.</p><h3>Are sports pitches available for competitions?</h3><p>Yes, sports pitches are available for competitions. However, availability does depend on other commitments for the pitch in question. For advice on locations closest to you, their availability and their suitability for your needs please contact us using the details above.</p><h3>How can I pay for the hire of a sports pitch?</h3><p>Once you have chosen and booked the pitch you wish to play on, you will be invoiced for the pitch hire after the event. You will then be able to pay by cheque or postal order. You are advised not to send cash through the postal system. You can also use the <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=forms/462h">online form</a>	
+</strong> <span class="gen">link to online form</span> to pay for your pitch hire. For more information on the charges for pitch hire and payment please contact us using the details above.</p><h3>How can I obtain a weather forecast for a booked game?</h3><p>If you have any concerns about the status of the pitch you have booked due to inclement, you can make contact in order to check that the pitch is still in a playable condition. Please contact us the day before your game is to be played using the contact details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=462"> Paying for goods and services
+		(462)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

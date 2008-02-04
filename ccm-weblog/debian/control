@@ -1,0 +1,20 @@
+Source: ccm-weblog
+Section: contrib/web
+Priority: optional
+Maintainer: Runtime Packaging <runtime-packaging@runtime-collective.com>
+Uploaders: David Pashley <david@runtime-collective.com>
+Build-Depends-Indep: debhelper (>= 4.0.0), j2re1.4 | java2-runtime, j2sdk1.4 | java2-compiler, ant, libservlet2.3-java, libpgjava, debconf, po-debconf, ccm-tools, ccm-devel, ccm-scripts, ccm-core
+Standards-Version: 3.6.1
+
+Package: ccm-weblog
+Architecture: all
+Depends: java-virtual-machine-dummy | j2sdk1.4 | java-virtual-machine, ccm-tools, ccm-servlet-container, libservlet2.3-java, libpgjava, liblog4j1.2-java , ccm-core
+Description: APLAWS: Weblog application. 
+ .
+ FIXME: We need a longer and more meaningful description here.
+
+Package: ccm-weblog-doc
+Architecture: all
+Depends: ccm-tools
+Description: Documentation for ccm-weblog
+ Documentation for ccm-weblog. Provides the JavaDoc API documentation.

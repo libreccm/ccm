@@ -1,0 +1,81 @@
+#!/bin/sh
+#
+# Daniel Berrange <berrange@redhat.com>
+# Dennis Gregorovic <dgregor@redhat.com>
+
+prog=run-tomcat.sh
+RETVAL=0
+
+# Just to be sure
+. /etc/profile
+
+# javacmd depends on JAVA_HOME being set correctly
+JAVA_HOME="::java-home::"
+JAVA_OPTS="::jre-args::"
+
+LOG_DIR="::log-dir::"
+
+WEBAPP_HOME=::app-home::/dist
+CLASSPATH=${JAVA_HOME}/lib/tools.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/jaas.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/jce.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/sunjce_provider.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/xerces.jar
+CLASSPATH=${CLASSPATH}:${WEBAPP_HOME}/WEB-INF/lib/xalan.jar
+CLASSPATH=${CLASSPATH}:${ORACLE_HOME}/jdbc/lib/classes12.zip
+
+PATH=$JAVA_HOME/bin:$PATH
+
+TOMCAT_HOME="::tomcat-home::"
+TOMCAT_ARGS="$TOMCAT_ARGS_CUSTOM -config ::app-home::/conf/server.xml"
+
+# Look in the usual places to try and locate a JDK
+verify_java_home() {
+
+    if [ -z "$JAVA_HOME" ]; then
+        echo " you must set JAVA_HOME in $CONFIGURATION_FILE"
+    else
+        if [ -x "$JAVA_HOME/bin/java" ] && [ -x "$JAVA_HOME/bin/javac" ]; then
+            return 0
+        fi
+        echo " JAVA_HOME ($JAVA_HOME) does not appear to be a work JDK"
+    fi
+    RETVAL=1
+    return 1
+}
+
+catalina() {
+    verify_java_home || return 1
+
+    unset LANG;
+    "$JAVA_HOME/bin/java" $JAVA_OPTS $CATALINA_OPTS \
+    -classpath "$CLASSPATH:$TOMCAT_HOME/bin/bootstrap.jar:$JAVA_HOME/lib/tools.jar" \
+    -Djava.endorsed.dirs="$TOMCAT_HOME/bin:$TOMCAT_HOME/common/lib" \
+    -Dcatalina.base="$TOMCAT_HOME" \
+    -Dcatalina.home="$TOMCAT_HOME" \
+    org.apache.catalina.startup.Bootstrap $TOMCAT_ARGS "$@" \
+    >> "$LOG_DIR/catalina.out" 2>&1 &
+}
+
+start() {
+    catalina start
+}
+
+stop() {
+    catalina stop
+}
+
+# See how we were called.
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  *)
+        echo $"Usage: $prog {start|stop}"
+        exit 1
+esac
+
+exit $RETVAL

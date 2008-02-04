@@ -1,0 +1,139 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Node.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model examples;
+
+object type Node {
+    BigDecimal[1..1] id;
+    String name;
+    Node[0..1] parent;
+    Node[0..n] children;
+
+    object key(id);
+
+    retrieve all {
+        do {
+            select * from t_nodes
+        } map {
+            id = t_nodes.node_id;
+            name = t_nodes.name;
+        }
+    }
+
+    retrieve {
+        do {
+            select *
+            from t_nodes
+            where node_id = :id
+        } map {
+            name = t_nodes.name;
+        }
+    }
+
+    insert {
+        do {
+            insert into t_nodes
+            (node_id, name, parent_id)
+            values
+            (:id, :name, :parent.id)
+        }
+    }
+
+    update {
+        do {
+            update t_nodes
+            set name = :name,
+                parent_id = :parent.id
+            where node_id = :id
+        }
+    }
+
+    delete {
+        do {
+            delete from t_nodes where node_id = :id
+        }
+    }
+
+    retrieve parent {
+        do {
+            select *
+            from t_nodes
+            where node_id = (select parent_id from t_nodes where node_id = :id)
+        } map {
+            parent.id = t_nodes.node_id;
+            parent.name = t_nodes.name;
+        }
+    }
+
+    add parent {}
+    remove parent {}
+
+    retrieve children {
+        do {
+            select *
+            from t_nodes
+            where parent_id = :id
+        } map {
+            children.id = t_nodes.node_id;
+            children.name = t_nodes.name;
+        }
+    }
+    add children {
+    }
+
+}
+
+query nodesQuery {
+    BigDecimal id;
+    String name;
+
+    do {
+        select * from t_nodes
+    } map {
+        id = t_nodes.node_id;
+        name = t_nodes.name;
+    }
+}
+
+object type LazyNode extends Node {
+    // a lazy property with no retrieve
+    Node[0..1] lazyProperty;
+
+    retrieve {
+        do {
+            select *
+            from t_nodes
+            where node_id = :id
+        }
+        // We do nothing here in order to trigger lazy loading.
+    }
+
+    insert { super; }
+    update { super; }
+    delete { super; }
+}
+
+query lazyNodesQuery {
+    LazyNode[1..1] node;
+    do {
+        select * from t_nodes
+    } map {
+        node.id = t_nodes.node_id;
+    }
+}

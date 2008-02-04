@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=200}]"><cms:name>batch-23-200</cms:name><cms:language>en</cms:language><cms:title>Pet Care</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=200}]"><cms:name>batch-23-200-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>pet, care</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=200}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If you go into hospital you will need someone to look after your pet.</i></p><hr/><p> 				 The most    common option is to ask a family member, good neighbour or friend to help. If not,    for cats and dogs, you may need to contact a local kennel or cattery. You should    be able to find details of these in your local telephone directory. 			</p><p> 				You could ask your 
+		<a href="http://www.any-uk-vet.co.uk/index.htm">
+					<strong>local    veterinary surgeon</strong>
+				</a>	 <span class="gen">link to external website</span>
+				    or the local Dog Warden to suggest some options.  			</p><p> 				You could also contact the following organisations who may be    able to assist:  			</p><p>
+				
+		<a href="http://www.petsplacement.com/">
+					<strong>Petsplacement</strong>
+				</a>	 <span class="gen">link to external website</span>
+				 - a    charitable organisation - if you register your pet with them in advance, they will    arrange pet care if you have to go into hospital.  			</p><p>
+				
+		<a href="http://www.cinnamon.org.uk/">
+					<strong>The Cinnamon Trust</strong>
+				</a>	 <span class="gen">link to external website</span>
+				 which    is also a charitable organisation (based in Cornwall) who have 4,500 registered    volunteers across the UK. They may be able to help you find pet care if you have    to go into hospital.  			</p><p> 				If you are worried about the cost of boarding your pet, please    contact us on the details above. 			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=200"> Providing Information
+		(200)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

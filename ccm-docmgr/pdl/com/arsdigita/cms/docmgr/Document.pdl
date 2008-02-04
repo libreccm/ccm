@@ -1,0 +1,107 @@
+model com.arsdigita.cms.docmgr;
+
+import com.arsdigita.cms.FileAsset;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.kernel.User;
+
+object type Document extends ContentPage {
+
+   String[0..1]    description    = cms_documents.description VARCHAR(4000);
+   // allows manual text entry for document author, if needed
+   String[0..1]    author         = cms_documents.author VARCHAR(200);
+   String[0..1]    authorLastName = cms_documents.author_last_name VARCHAR(200);
+
+   component FileAsset[0..1] file = join cms_documents.asset_id to cms_files.file_id;
+
+   // cached fields, to aid data queries
+   User[0..1]       creator = join cms_documents.creator_id to users.user_id;  
+   Date[0..1]       lastModifiedTimeCached = cms_documents.last_modified_cached TIMESTAMP;
+   Repository[0..1] repository = join cms_documents.repository_id to cms_docs_repositories.repository_id;
+
+   // (only comment in if needed to display in tables)
+   // this can be inferred from permissions, so this is only here to aid performance
+   // String[0..1]    targetAudience = cms_documents.targetAudience VARCHAR(100);
+   reference key (cms_documents.doc_id);
+
+}
+
+//
+// Modified for Multilingual Content:
+//  it expects that direct children of the Folder
+//  are either (sub)FolderS or ContentBundleS
+//
+// query ItemsInFolder {
+// 
+//   ContentItem   item;
+//   Boolean       isFolder;
+//   Boolean       hasLiveVersion;
+//   String        title;
+// 
+//   do {
+//     select 
+//       a.object_type, a.display_name, a.default_domain_class,
+//       v.master_id, v.is_deleted,
+//       i.item_id, i.parent_id, i.version, i.name,
+//       f.label as title,
+//       1 as is_folder,
+//       case when exists (select 1
+//                         from cms_items
+//                         where master_id = i.item_id)
+//         then 1 else 0 end as has_live_version
+//     from 
+//       cms_items i, 
+//       cms_folders f, 
+//       acs_objects a, 
+//       vc_objects v
+//     where 
+//       i.item_id = a.object_id
+//     and 
+//       i.item_id = v.object_id
+//     and 
+//       i.item_id = f.folder_id
+//     and 
+//       i.parent_id = :parent
+//     and
+//       i.version = :version
+//     and
+//       v.is_deleted = '0'
+//     UNION ALL
+//     select 
+//       a.object_type, a.display_name, a.default_domain_class,
+//       v.master_id, v.is_deleted,
+//       i.item_id, i.parent_id, i.version, i.name,
+//       0 as is_folder,
+//       case when exists (select 1
+//                         from cms_items
+//                         where master_id = i.item_id)
+//         then 1 else 0 end as has_live_version
+//     from 
+//       cms_items i, 
+//       cms_bundles b,
+//       acs_objects a, 
+//       vc_objects v
+//     where 
+//       i.item_id = a.object_id
+//     and 
+//       i.item_id = v.object_id
+//     and 
+//       i.item_id = b.bundle_id
+//     and 
+//       i.parent_id = :parent
+//     and
+//       i.version = :version
+//     and
+//       v.is_deleted = '0'
+//   } map {
+//     item.id = i.item_id;
+//     item.objectType = a.object_type;
+//     item.displayName = a.display_name;
+//     item.defaultDomainClass = a.default_domain_class;
+//     item.master.id = v.master_id;
+//     item.isDeleted = v.is_deleted;
+//     item.version = i.version;
+//     item.name = i.name;
+//     isFolder = is_folder;
+//     hasLiveVersion = has_live_version;
+//   }
+// }

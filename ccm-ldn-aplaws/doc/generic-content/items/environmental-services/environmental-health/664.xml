@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=664}]"><cms:name>-664</cms:name><cms:language>en</cms:language><cms:title>Public Health - drainage</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=664}]"><cms:name>-664-dublin-metadata</cms:name><cms:dcAudience></cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>public, health, drainage, environmental, health</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=664}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Drains are pipes, which carry waste and surface 
+  water from one or more houses. When one drain meets another, it becomes a sewer. 
+  These are not the gullies or grids that can be found in the road to take water 
+  off the highway.</i></p><hr/><ul>
+				<li title="*">
+<strong>
+
+		<a href="#1">How do I know if it is my drain that is blocked?</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#2">How do I report a blocked drain?</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#3">How much does it cost to have my private drain emptied?</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#4">Who is responsible?</a>	
+</strong>
+</li>
+		</ul><h3>
+
+			How do I know if it is my drain that is blocked?</h3><p>If your drain is blocked you will usually know because your waste will stop going away when you flush the toilet, or gullies outside will overflow. There will also probably be a smell. Private drains/sewers are the responsibility of the owner-occupier and any other properties connected to it. The Council can arrange for clearance of a blocked drain.</p><h3>
+
+			How do I report a blocked drain?</h3><p>
+<span class="gen">enter company name</span> looks after the network of public sewers in the surrounding areas.</p><p>If you have a sewer problem, please contact <span class="gen">enter company name</span> on <span class="gen">enter telephone number.</span> Or access them at <span class="gen">enter website address</span> for further information.</p><p>For help and advice on highway drainage, land drainage or private drainage, continue to contact the Council during office hours at the above contact details.</p><p>Please contact us to confirm whether it is a public or private drain.</p><h3>
+
+			How much does it cost to have my private drain emptied?</h3><p>
+<span class="gen">enter council name</span> provides a service of emptying private drains at enter amount per hour (minimum charge).</p><h3>
+
+			Who is responsible?</h3><p>It is the responsibility of the owner-occupier to maintain and clear a private drain/sewer. If the property is rented then it is their responsibility. If you live in a row of houses then the problem could be a shared one.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=664"> Providing Information
+		(664)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

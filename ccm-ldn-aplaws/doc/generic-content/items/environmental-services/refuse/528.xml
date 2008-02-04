@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=528}]"><cms:name>bins-528</cms:name><cms:language>en</cms:language><cms:title>Household Waste-special collections for large items</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=528}]"><cms:name>bins-528-dublin-metadata</cms:name><cms:dcAudience>Householders</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>refuse, rubbish, waste, bulky, household, bins, large, collections</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=528}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If you have a large item such as an piece of furniture or a fridge etc you wish to dispose of, we offer the Special Collection for Large Items Service at a small charge.</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#dispose">How can  I dispose of large household items?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#request">How can I request this service?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#whencollect">When will you collect?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#whatcollect">What will you collect?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#notbulky">What won't you collect?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#cost">What will it  cost me?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#otheritems">How can I dispose of other items?</a>	
+				</strong>
+			</li>
+		</ul><h3>
+			
+			How can I dispose of large household items?</h3><p>If you have a large item such as an piece of furniture or a fridge etc you wish to dispose of, we offer the Special Collection for Large Items Service at a small charge. We will take any Bulky Household waste that you might have taken with you if you moved house.</p><h3>
+			
+			How can I request this service?</h3><p>Request for this service can be made by using this <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=528a">form</a>	
+			</strong>
+			<span class="gen">link to online form.</span> Alternatively, call us using the details above.</p><h3>
+			
+			When will you collect?</h3><p>Items will be collected on a weekly collection day see the table below for the collection day for your area</p><ul>
+			<li title="*">Monday - <span class="gen">enter details</span>
+			</li>
+			<li title="*">Tuesday - <span class="gen">enter details</span>
+			</li>
+			<li title="*">Wednesday - <span class="gen">enter details</span>
+			</li>
+			<li title="*">Thursday - <span class="gen">enter details</span>
+			</li>
+			<li title="*">Friday - <span class="gen">enter details</span>
+			</li>
+		</ul><p>
+			<strong>Requests have to be made by 3.00 p.m. the day before the collection day.</strong>
+		</p><p>e.g. :-</p><ul>
+			<li title="*">before 3pm on Friday for a Monday collection</li>
+			<li title="*">before 3pm on Monday for a Tuesday collection</li>
+		</ul><p>Please note that items should be available for collection from <strong>7.00AM.</strong> The items will be collected between the hours of 7.00AM and 5.00PM.</p><h3>
+			
+			What will you collect?</h3><p>We will collect maximum of 5 household items such as 3-piece suite (which is classed as three items), carpets, chairs, bed, mattress etc. The general rule is, if you would take it with you when you move house, it is likely to be suitable for this service.</p><p>Still unsure? See <strong>
+				
+		<a href="#general">General Points</a>	
+			</strong>
+		</p><h3>
+			
+			What won't you collect?</h3><ul>
+			<li title="*">Domestic Waste either loose or bagged</li>
+			<li title="*">Gas Bottles</li>
+			<li title="*">Sheds</li>
+			<li title="*">Greenhouses</li>
+			<li title="*">Bags of rubble</li>
+			<li title="*">Fence Panels</li>
+			<li title="*">Concrete Posts</li>
+			<li title="*">Car/Motorbike Parts</li>
+			<li title="*">Garage Doors/Window Frames</li>
+			<li title="*">Xmas Trees</li>
+			<li title="*">Garden Waste e.g. Trees</li>
+			<li title="*">Asbestos</li>
+			<li title="*">Fluid Containers e.g. Drums</li>
+			<li title="*">Large Gates</li>
+			<li title="*">Wire Fencing and Large Fire Surrounds</li>
+			<li title="*">General Builders Waste</li>
+			<li title="*">Doors - Internal and External</li>
+		</ul><p>The council provides a service items such as tese at a chargeable cost. To request this service please contact us using the details above</p><h3>
+			
+			What will it cost me?	</h3><p>There is a <span class="gen">enter amount</span> charge for this service which is 
+		<a href="/ccm/services/pid.jsp?pid=528a">payable in advance</a>	
+			<span class="gen">link to online form</span>
+		</p><h3>
+			
+			How can I dispose of other items?</h3><p>You can take your household rubbish or items to a civic amenity site. 
+		<a href="/ccm/services/pid.jsp?pid=531">Details of local sites</a>	
+			<span class="gen">link to pid 531.</span>
+		</p><p>Smaller items can be taken to our <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=532">recycling points</a>	
+			</strong>
+			<span class="gen">link to pid 532.</span>
+		</p><h4>
+			
+			General points to follow:-</h4><ul>
+			<li title="*">One Carpet must be manageable by 2 people, otherwise cut into pieces, rolled and tied.</li>
+			<li title="*">Carpet does not include underlay. This is a separate item.</li>
+			<li title="*">One wardrobe does not mean a full bedroom suite.</li>
+			<li title="*">Items should not be filled with other rubbish.</li>
+			<li title="*">Items must be easily accessible and at one point, not all over the property.</li>
+			<li title="*">If 2 identical items on site but only one on request, NONE of the items in question will be taken.</li>
+			<li title="*">Only items listed will be removed, any additions must be done on a separate request.</li>
+		</ul><p>All items must be listed as follows:-</p><li title="*">1 Settee</li><li title="*">1 Chair</li><li title="*">1 Chair</li><p>Not</p><li title="*">1 3 piece suite</li><li title="*">1 Complete Bed</li><li title="*">etc</li><p>Not</p><li title="*">1 Settee</li><li title="*">2 Chair</li><li title="*">3 Bed Base</li><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=528"> Applications for services
+		(528)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

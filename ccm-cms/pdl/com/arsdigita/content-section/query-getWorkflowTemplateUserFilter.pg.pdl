@@ -1,0 +1,46 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: query-getWorkflowTemplateUserFilter.pg.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+query getWorkflowTemplateUserFilter {
+    BigDecimal id;
+    do {
+        select cw_process_definitions.process_def_id
+          from cw_tasks
+                left join cw_task_user_assignees on 
+                  (cw_tasks.task_id = cw_task_user_assignees.task_id),
+               cw_user_tasks, cw_process_definitions
+         where cw_tasks.task_id=cw_user_tasks.task_id
+           and cw_tasks.parent_task_id=cw_process_definitions.process_def_id
+           and not exists (select 1 from cw_task_dependencies d where d.task_id=cw_tasks.task_id)
+           and (cw_task_user_assignees.user_id = :userId 
+                or 
+                exists (select 1
+                          from group_member_trans_map 
+                         where :userId = member_id
+                           and exists
+                               (select 1
+                                  from cw_task_group_assignees
+                                 where task_id = cw_tasks.task_id
+                                   and group_member_trans_map.group_id = cw_task_group_assignees.group_id)))
+    } map {
+        id = cw_process_definitions.process_def_id;
+    }
+}

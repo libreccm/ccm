@@ -1,0 +1,30 @@
+model com.arsdigita.london.search.spider;
+
+import com.arsdigita.kernel.*;
+
+object type SpideredContent extends ACSObject {
+    unique String URL = search_spidered_content.url VARCHAR(1000);
+    Blob   content = search_spidered_content.content BLOB;
+    Date   lastModified = search_spidered_content.last_modified TIMESTAMP;
+    Date   lastAccessed = search_spidered_content.last_accessed TIMESTAMP;
+    String mimeType = search_spidered_content.mime_type VARCHAR(200);
+    BigDecimal content_size = search_spidered_content.content_size INTEGER;
+    String status = search_spidered_content.status VARCHAR(3);
+
+    reference key (search_spidered_content.id);
+}
+
+// To be used as a subquery when constructing a search query
+query IncludeSpideredContent {
+    BigDecimal itemId;
+
+    do {
+    select
+        id
+     from search_spidered_content
+    }
+
+    map {
+        itemId = id;
+    }
+}

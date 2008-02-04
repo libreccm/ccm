@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head> 
+  <title>Persistence Metadata API</title>
+</head>
+<body bgcolor="white">
+    
+<p>Provides a set of classes to store metadata about data object types
+and the database schema used to persist data objects. </p>
+
+<p> When the system starts up, the persistence layer reads the PDL
+files into an Abstract Syntax Tree using the files within {@link
+com.redhat.persistence.pdl.nodes}.  The Abstract Syntax Tree then
+populates the classes within this package.  These classes are then
+used by the operational persistence layer (the classes within the
+{@link com.arsdigita.persistence} package) to perform the standard
+operations.  </p>
+
+<p> The resulting structure is a hierarchy as every item that can be
+represented in PDL extends the {@link
+com.arsdigita.persistence.metadata.Element} class.  This class stores
+general information about object models and is able to output itself
+in the form of a PDL file.  </p>
+
+<p> The metadata is divided into {@link
+com.arsdigita.persistence.metadata.Model}s.  These models act as the
+namespace for all of the metadata information (such as object types,
+data queries, and data operations).  The model itself is composed of
+{@link com.arsdigita.persistence.metadata.ModelElement}s. </p>
+
+<p> There are two types of ModelElements: {@link
+com.arsdigita.persistence.metadata.Association} and {@link
+com.arsdigita.persistence.metadata.DataType}.  The Association model
+type holds information for associations between object types.  The
+DataType model contains both CompoundTypes and SimpleTypes.  </p>
+
+<p>
+{@link com.arsdigita.persistence.metadata.SimpleType}s are used to
+represent the primitive DataTypes that the persistence layer knows
+how to store.  For instance, there are SimpleTypes for BigDecimal,
+Integer, Date, and String as well as many others.  These are used
+for describing Properties as well as Attributes defined
+within MAP blocks.
+</p>
+
+<p> A {@link com.arsdigita.persistence.metadata.CompoundType} can
+either be a {@link com.arsdigita.persistence.metadata.ObjectType}
+ObjectTypes provide specific access special events that act on rows
+within the tables.  Each {@link com.arsdigita.persistence.DataObject}
+contains a single ObjectType and that ObjectType is what contains
+references to the events allowing the user to easily manipulate data
+within the database.  An ObjectType is made up of Attributes (columns
+in the database), Associations (mappings between database tables), and
+Events (A collection of Operations that dictate how information is
+stored and retrieved within the database).  </p>
+
+<hr>
+<font size="-2">Last modified: $Date: 2003/07/08 $</font>
+    
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=639}]"><cms:name>arts-and-leisure-639</cms:name><cms:language>en</cms:language><cms:title>Sports grants</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=639}]"><cms:name>arts-and-leisure-639-dublin-metadata</cms:name><cms:dcAudience>Headteachers</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>sports, grants</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=639}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Money to pay for coach education courses, assist with expenses, e.g. travel expenses to obtain better coaching, sports equipment.</i></p><hr/><p>Grants are not given for maintenance work (repairs to fence at sports 
+  grounds, etc.).</p><ul>
+				<li title="*">
+				
+		<a href="#1">Education Charities and Grants 
+      to Sporting Individuals</a>	
+						</li>
+					<li title="*">
+							
+		<a href="#2">Education Charities and Grants 
+      to Voluntary Bodies</a>	
+					</li>
+				<li title="*">
+					
+		<a href="#3">Lottery Fund - Sport England</a>	
+						</li>
+					<li title="*">
+							
+		<a href="#4">Sports Club Development Fund</a>	
+						</li>
+				</ul><h4>
+				
+			Education Charities and Grants to Sporting 
+  Individuals</h4><p>A maximum grant of <span class="gen">enter amount</span> for any individual and applications are sought prior to 
+  attendance at an event/competition.</p><h4>
+				
+			Education Charities and Grants to Voluntary 
+  Bodies</h4><p>Grants available for newly established clubs, established clubs 
+  and any association serving a large number of schools or clubs.</p><h4>
+				
+			Lottery Fund - Sport England</h4><p>Supporting projects aimed at encouraging participation in sport 
+  and recreation, particularly by disadvantaged groups.</p><h4>
+				
+			Sports Club Development Fund</h4><p>Available to clubs who can demonstrate a commitment to developing 
+  sporting opportunities for young people.</p><p>To apply for these sports grants please contact us using the 
+  details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=639"> Providing Information
+		(639)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

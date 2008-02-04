@@ -1,0 +1,113 @@
+model com.arsdigita.categorization;
+
+
+query liveIndexItemsInSubtree {
+  BigDecimal id;
+
+  do {
+    select i.item_id
+      from cms_items i,
+           cat_cat_subcat_trans_index t,
+           cat_object_category_map m
+     where i.master_id = m.object_id
+       and m.category_id = t.subcategory_id
+       and t.category_id = :categoryID
+       and m.index_p = '1'
+  } map {
+    id = i.item_id;
+  }
+}
+
+query liveIndexItemsInCategory {
+  BigDecimal id;
+
+  do {
+    select i.item_id
+      from cms_items i,
+           cat_object_category_map m
+     where i.master_id = m.object_id
+       and m.category_id = :categoryID
+       and m.index_p = '1'
+  } map {
+    id = i.item_id;
+  }
+}
+
+
+query objectIDsInChild {
+    BigDecimal id;
+
+    do {
+        select i.item_id
+          from cat_object_category_map m,
+               cms_bundles b,
+               cms_items i
+         where m.category_id = :categoryID
+           and m.object_id = b.bundle_id
+           and b.bundle_id = i.parent_id
+           and b.default_language = i.language
+    } map {
+        id = i.item_id;
+    }
+}
+
+query objectIDsInSubtree {
+    BigDecimal id;
+
+    do {
+        select i.item_id
+          from cat_cat_subcat_trans_index t,
+               cat_object_category_map m,
+               cms_items i
+         where t.category_id = :categoryID
+           and t.subcategory_id = m.category_id
+           and m.object_id = i.item_id
+    } map {
+        id = i.item_id;
+    }
+}
+
+query objectIDsInMultipleSubtrees {
+    BigDecimal id;
+
+    do {
+        select m.object_id
+          from cat_cat_subcat_trans_index t,
+               cat_object_category_map m
+         where t.category_id in :categoryIDs
+           and t.subcategory_id = m.category_id
+    } map {
+        id = acs_objects.object_id;
+    }
+}
+
+
+query categoryIDsInSubtree {
+    BigDecimal categoryID;
+
+    do {
+        select
+            subcategory_id
+        from
+            cat_cat_subcat_trans_index
+        where
+            category_id = :categoryID
+    }
+
+    map {
+        categoryID = subcategory_id;
+    }
+}
+
+query multipleChildCategoryIDs {
+    BigDecimal id;
+
+    do {
+         select m.related_category_id
+           from cat_category_category_map m
+          where m.category_id in :parentIDs
+            and m.relation_type = 'child'
+    } map {
+         id = m.related_category_id;
+    }
+}

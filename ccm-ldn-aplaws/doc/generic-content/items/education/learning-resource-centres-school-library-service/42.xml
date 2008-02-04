@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=42}]"><cms:name>education-3-42</cms:name><cms:language>en</cms:language><cms:title>School library service - book purchase scheme</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=42}]"><cms:name>education-3-42-dublin-metadata</cms:name><cms:dcAudience>Headteacher</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>school, library, service, book, purchase, scheme</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=42}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We can help you to buy top quality books for your library. We provide an easy and cost effective way to buy books: </i></p><hr/><ul>
+  <li title="*">9,000 titles to choose from including fiction, non fiction, big books and novelty 
+    books to promote reading for pleasure and support the curriculum.</li>
+  <li title="*">A good selection of new titles, selected and assessed by a team of librarians.</li>
+  <li title="*">Booklists to support the literacy and numeracy strategies, raising the achievement 
+    of boys and teenage reading.</li>
+  <li title="*">Professional help and advice.</li>
+  <li title="*">Preferential discount.</li>
+  <li title="*">Free servicing (includes plastic wallets, classification number, etc)</li>
+  <li title="*">Direct delivery to school</li>
+</ul><p>For more information please contact us using the details above</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=42"> Providing Information
+		(42)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

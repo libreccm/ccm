@@ -1,0 +1,194 @@
+Summary:   CCM base tools
+Name:      @PACKAGE@
+Version:   @VERSION@
+Release:   @RELEASE@
+Source0:   %{name}-%{version}.tar.gz
+License: LGPL
+Group:     Applications/Internet/CCM
+BuildRoot: /var/tmp/%{name}-%{version}-root
+BuildArchitectures: noarch
+Prefix: /usr
+Prefix: /etc
+Prefix: /var
+Requires: ccm-servlet23
+
+%define ccmhome    /usr/share/ccm
+
+%define ccmconfdir    /etc/ccm/conf
+%define ccmtmpdir     /var/cache/ccm
+%define ccmlogdir     /var/log/ccm
+%define ccmdatadir    /var/opt/ccm/data
+%define ccmwebappsdir /var/lib/ccm/webapps
+
+%package servlet-resin
+Summary: CCM base tools config for Resin 2.1.x servlet container
+Provides: %{name}-servlet
+Requires: %{name} = @VERSION@
+Requires: /usr/sbin/update-alternatives
+# Disabled since we're not allowed to re-distribute resin in RPM format
+#Requires: resin >= 2.1.0
+Group: Applications/Internet/CCM
+
+%package servlet-tomcat
+Summary: CCM base tools config for Tomcat 4.x servlet container
+Provides: %{name}-servlet
+Requires: %{name} = @VERSION@
+Requires: /usr/sbin/update-alternatives
+# Disabling for now as users are likely to have Tomcat installed from
+# a non-RPM source.
+#Requires: tomcat4 >= 4.0.6
+Group: Applications/Internet/CCM
+
+%description
+Base CCM tools to be used in deployment and development environments.
+
+%description servlet-resin
+Base CCM tools to be used in deployment and development environments.
+
+This sub-package provides support for the Resin 2.x servlet
+container.
+
+%description servlet-tomcat
+Base CCM tools to be used in deployment and development environments.
+
+This sub-package provides support for the Tomcat 4.x servlet
+container.
+
+%prep
+%setup -q -n %{name}-%{version}
+
+%build
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+make
+make check
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
+rm -rf $RPM_BUILD_ROOT/usr/share/%{name}/server/tomcat/lib
+
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmhome}
+
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmconfdir}
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmconfdir}/registry
+ln -s ../../..%{ccmconfdir} $RPM_BUILD_ROOT%{ccmhome}/conf
+
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmlogdir}
+ln -s ../../..%{ccmlogdir} $RPM_BUILD_ROOT%{ccmhome}/logs
+
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmdatadir}
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmdatadir}/p2fs
+ln -s ../../..%{ccmdatadir} $RPM_BUILD_ROOT%{ccmhome}/data
+
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmtmpdir}
+ln -s ../../..%{ccmtmpdir} $RPM_BUILD_ROOT%{ccmhome}/tmp
+
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmwebappsdir}
+%{__mkdir_p} $RPM_BUILD_ROOT%{ccmwebappsdir}/ROOT/packages/content-section/templates
+ln -s ../../..%{ccmwebappsdir} $RPM_BUILD_ROOT%{ccmhome}/webapps
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%pre
+
+OS=`uname -s`
+case $OS in
+  Linux*)
+    id servlet 2> /dev/null 1>&2 || useradd -r -d /var/www servlet
+    id ccmadmin 2> /dev/null 1>&2 || (useradd -r -d /var/www ccmadmin)
+    ;;
+  *)
+    id servlet 2> /dev/null 1>&2 || (groupadd servlet && useradd -g servlet -d /var/www servlet)
+    id ccmadmin 2> /dev/null 1>&2 || (groupadd ccmadmin && useradd -g ccmadmin -d /var/www ccmadmin)
+    ;;
+esac
+
+%post
+USR_DIR=$RPM_INSTALL_PREFIX0
+ETC_DIR=$RPM_INSTALL_PREFIX1
+# RPM bug workaround
+if [ "x$ETC_DIR" = "x" ]; then ETC_DIR=/etc ; fi
+if [ "x$USR_DIR" = "x" ]; then USR_DIR=/usr ; fi
+
+if [ "x${USR_DIR}" != "x/usr" ]; then
+    perl -i -p -e "s,/usr,${USR_DIR}," $ETC_DIR/profile.d/%{name}.sh
+fi
+
+%post servlet-resin
+if [ -z "$RPM_INSTALL_PREFIX1" ]; then
+  RPM_INSTALL_PREFIX1=/etc
+fi
+
+update-alternatives --install "${RPM_INSTALL_PREFIX1}/profile.d/ccm-tools-servlet.sh" ccm-servlet "${RPM_INSTALL_PREFIX1}/ccm-tools/resin.sh" 5
+
+%postun servlet-resin
+if [ -z "$RPM_INSTALL_PREFIX1" ]; then
+  RPM_INSTALL_PREFIX1=/etc
+fi
+
+if [ "$1" = 0 ]; then
+  update-alternatives --remove ccm-servlet "${RPM_INSTALL_PREFIX1}/ccm-tools/resin.sh"
+fi
+
+%post servlet-tomcat
+if [ -z "$RPM_INSTALL_PREFIX1" ]; then
+  RPM_INSTALL_PREFIX1=/etc
+fi
+
+update-alternatives --install "${RPM_INSTALL_PREFIX1}/profile.d/ccm-tools-servlet.sh" ccm-servlet "${RPM_INSTALL_PREFIX1}/ccm-tools/tomcat.sh" 10
+
+%postun servlet-tomcat
+if [ -z "$RPM_INSTALL_PREFIX1" ]; then
+  RPM_INSTALL_PREFIX1=/etc
+fi
+
+if [ "$1" = 0 ]; then
+  update-alternatives --remove ccm-servlet "${RPM_INSTALL_PREFIX1}/ccm-tools/tomcat.sh"
+fi
+
+%files
+%defattr(-,root,root)
+/etc/init.d/ccm
+/etc/profile.d/%{name}.sh
+/usr/share/%{name}/bin
+/usr/share/%{name}/commands
+%dir /usr/share/%{name}/lib
+%dir /usr/share/%{name}/lib/CCM
+/usr/share/%{name}/lib/CCM/*.pm
+%dir /usr/share/%{name}/lib/CCM/Server
+%{ccmhome}
+
+%attr(0755,root,root) /usr/bin/*
+
+%attr(0775,servlet,servlet) %{ccmlogdir}
+%attr(0775,servlet,servlet) %{ccmdatadir}
+%attr(0775,servlet,servlet) %{ccmtmpdir}
+
+
+%attr(-,ccmadmin,ccmadmin)  %dir %{ccmwebappsdir}
+%attr(-,ccmadmin,ccmadmin)  %dir %{ccmwebappsdir}/ROOT
+%attr(-,ccmadmin,ccmadmin)  %dir %{ccmwebappsdir}/ROOT/packages
+%attr(-,ccmadmin,ccmadmin)  %dir %{ccmwebappsdir}/ROOT/packages/content-section
+%attr(0775,servlet,servlet) %{ccmwebappsdir}/ROOT/packages/content-section/templates
+
+%dir %{ccmconfdir}
+%attr(-,ccmadmin,ccmadmin) %dir %{ccmconfdir}/registry
+%config %{ccmconfdir}/envvars
+
+%doc README ChangeLog TODO NEWS AUTHORS INSTALL
+
+%files servlet-resin
+%defattr(-,root,root)
+/etc/profile.d/%{name}-resin.sh
+/etc/%{name}/resin.sh
+/usr/share/%{name}/server/resin
+/usr/share/%{name}/lib/CCM/Server/Resin.pm
+
+%files servlet-tomcat
+%defattr(-,root,root)
+/etc/profile.d/%{name}-tomcat.sh
+/etc/%{name}/tomcat.sh
+/usr/share/%{name}/server/tomcat
+/usr/share/%{name}/lib/CCM/Server/Tomcat.pm

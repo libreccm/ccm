@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=51}]"><cms:name>education-2-51</cms:name><cms:language>en</cms:language><cms:title>Instrumental Tuition</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=51}]"><cms:name>education-2-51-dublin-metadata</cms:name><cms:dcAudience>Child</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>instrumental, tuition</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=51}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Instrumental Service seeks to enhance the musical experiences available to pupils through instrumental tuition.</i></p><hr/><p>As well as focusing on the individual, instrumental tuition  provides the opportunity of a wider musical experience through participation ensembles, bands, orchestras and choirs. </p><p>The Instrumental Service offers tuition in: </p><ul>
+  <li title="*">Brass</li>
+  <li title="*">Guitar</li>
+  <li title="*">Keyboard</li>
+    <li title="*">Percussion</li>
+  <li title="*">Piano</li>
+  <li title="*">Singing</li>
+  <li title="*">Strings</li>
+  <li title="*">Woodwind </li>
+</ul><p>The service offers individual or group tuition to both primary and secondary schools. </p><h2>What the service does </h2><ul>
+  <li title="*">Raise the musical attainment of pupils. </li>
+  <li title="*">Support pupils in acquiring skills which will allow them to enjoy and become actively involved in a wide range of musical experiences contributing to the musical life of the school or community. </li>
+  <li title="*">Promote pupil's understanding of music in the everyday life of their own and other cultures. </li>
+  <li title="*">Enable pupils realise their musical potential through the playing of a musical instrument. </li>
+  <li title="*">Encourage self confidence and develop a sense of personal achievement and self expression in pupils. </li>
+</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=51"> Providing Information
+		(51)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

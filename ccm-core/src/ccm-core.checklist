@@ -1,0 +1,5 @@
+<checklist>
+  <checks type="schema">
+    <check class="com.arsdigita.core.LibCheck"/>
+  </checks>
+</checklist>

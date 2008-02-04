@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_jobs"/>
+    <initializer class="com.arsdigita.cms.contenttypes.JobInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-job"/>
+    <data class="com.arsdigita.cms.contenttypes.JobLoader"/>
+  </scripts>
+</load>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=321}]"><cms:name>death-321</cms:name><cms:language>en</cms:language><cms:title>Death - registering</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=321}]"><cms:name>death-321-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>death, registering</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=321}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>These pages give you information about how to register a death that occurred in England or Wales. The registration systems in Scotland and Northern Ireland are different from that in England and Wales and each has its own General Register Office.</i></p><hr/><p>You can obtain information about how to register a death in Scotland or Northern 
+  Ireland by linking in to their websites.</p><ul>
+			<li title="*">
+				
+		<a href="http://www.gro-scotland.gov.uk/">
+					<strong>General Register Office in Scotland</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+			</li>
+			<li title="*">
+				
+		<a href="http://www.groni.gov.uk/">
+					<strong>General Register Office in Northern Ireland</strong>
+				</a>	
+				<span class="gen">link to external website</span>
+			</li>
+		</ul><p>Deaths in England or Wales must be registered in the district in which they take place although this may be arranged through any register office within these countries. Deaths in Wales may be registered bilingually in English and Welsh. </p><p>The main Act and regulations governing the registration of births and death are:</p><ul>
+			<li title="*">Births and Deaths Registration Act 1953 (as amended)</li>
+			<li title="*">The Registration of Births and Deaths Regulations 1987 (as amended)</li>
+			<li title="*">The Registration of Births and Deaths (Welsh Language) Regulations 1987 (as amended)</li>
+		</ul><h3>Where and when to register a death</h3><p>When someone dies, the doctor who was treating the deceased will issue a medical certificate of cause of death to the relatives. The person who will be registering the death must take this certificate to the registrar's office. Occasionally, if the death was sudden or the doctor treating the deceased is unavailable, it may not be possible for a medical certificate of cause of death to be issued. If this happens, the death will have to be reported to the coroner which may lead to a delay in registering the death.</p><p>Every death in England or Wales must be registered in the district in which it takes place within 5 days of the date of death. Information for the registration is given to the registrar by the person registering the death. The information, which is usually recorded on computer, is also recorded in the death register and the person registering the death signs the record. </p><p>If it is inconvenient for the person registering the death to go to the district where it took place, the information for the registration may be given to a registrar in another district. The registrar will record the registration particulars on a form of declaration and send it to the registrar for the district where the death occurred. The registrar who receives the declaration will enter the information in the death register. Certificates of the death, which may be ordered and paid for at the time of making the declaration, as well as the document allowing the funeral to proceed, will be posted to the person registering the death by the registrar for the district where it took place. If the declaration procedure is used, it may take a day or two longer for the document allowing the funeral to proceed to be issued. Relatives should discuss the arrangements with their funeral director and the registrar so as to avoid any delay to the funeral.</p><p>The registration of a death in Wales may be made bilingually in English and Welsh if the person who registers the death gives the information in Welsh and the registrar is able to understand and write Welsh. If the registrar cannot understand and write Welsh, the registration may be carried out in a different district where there are welsh-speaking registrars, using the declaration procedure as described above. A death that takes place in England may be registered in English only.</p><p>The opening hours of registrars' offices vary from one district to another and most of them operate an appointments system. You should contact the relevant district by telephone to obtain further information or to arrange an appointment.</p><h3>Who can register a death</h3><p>The people who can register a death fall into two slightly different categories depending on whether the death occurred in a house or hospital etc, or elsewhere:</p><p>
+			<strong>Deaths in a house or hospital etc. -</strong>
+		</p><ul>
+			<li title="*">a relative of the deceased</li>
+			<li title="*">someone present at the death</li>
+			<li title="*">the occupier of the house or hospital if he or she knew of the death</li>
+			<li title="*">another person living at the house if he or she knew of the death</li>
+			<li title="*">the person making the arrangements with the funeral directors</li>
+		</ul><p>
+			<strong>Deaths elsewhere -</strong>
+		</p><ul>
+			<li title="*">a relative of the deceased</li>
+			<li title="*">someone present at the death</li>
+			<li title="*">someone who found the body</li>
+			<li title="*">a person in charge of the body</li>
+			<li title="*">the person making the arrangements with the funeral directors</li>
+		</ul><p>The majority of deaths are registered by a relative of the deceased. The registrar would normally allow one of the other listed persons to register the death only if there were no relatives available.</p><h3>Which deaths need to be reported to the coroner?</h3><p>A small number of deaths have to be reported to the coroner before they can be registered and before the document allowing the funeral to go ahead can be issued. The following are the deaths that, if not already reported to the coroner by someone else, will be reported by the registrar:</p><ul>
+			<li title="*">where there is no doctor who can issue a medical certificate of cause of death, or</li>
+			<li title="*">where the deceased was not seen by the doctor issuing the medical certificate after death nor within 14 days before death, or</li>
+			<li title="*">where the cause of death is unknown, or</li>
+			<li title="*">where the cause of death is believed to be unnatural or suspicious, or</li>
+			<li title="*">where the death occurred during an operation or before recovery from an anaesthetic, or</li>
+			<li title="*">where the death is due to industrial disease or industrial poisoning</li>
+		</ul><p>Once a death has been reported to the coroner, the registrar cannot go ahead with the registration until the coroner has decided whether any further investigation into the death is necessary. In the vast majority of cases no further investigation is necessary and the registration can be completed straightaway.</p><h3>Information to be supplied for the registration of a death</h3><ul>
+			<li title="*">date and place of death</li>
+			<li title="*">name and surname of the deceased</li>
+			<li title="*">maiden surname, if the deceased was a woman who had married</li>
+			<li title="*">date and place of birth</li>
+			<li title="*">occupation</li>
+			<li title="*">name and occupation of husband, where the deceased was a married woman or widow</li>
+			<li title="*">usual address</li>
+			<li title="*">whether the deceased was in receipt of a pension or allowance from public funds</li>
+			<li title="*">if the deceased was married, the date of birth of the surviving widow or widower</li>
+		</ul><p>The deceased's medical card, if available, should also be given to the registrar.</p><p>It is most important that the information recorded in the death register is correct. If any mistake is made, for example in the spelling of a name or surname or in the description of the occupation, it will give the relative or other person who registered the death some trouble to have it put right. The person registering the death should check the information in the register very carefully before the entry is signed.</p><p>If English is not the first language of the relative or other person registering the death and help is needed, it would be helpful for someone else to accompany him or her to the registrar's office and act as interpreter. However, the relative or other person must register the death personally as a helper cannot register instead of them.</p><p>You can obtain further information about correcting particulars in a death registration.</p><h3>What certificates will be issued?</h3><h4>Death certificate</h4><p>After a death has been registered, one or more certificates may be bought at the time of registration or at any time afterwards. You can obtain further information about obtaining certificates.</p><h4>Certificate for burial or cremation</h4><p>The registrar will issue a certificate for the burial or cremation of the body which is normally passed to the funeral director by the relative who is making the arrangements. A funeral cannot proceed until this certificate is given to the burial authority or the crematorium. If there is a delay to the registration of the death, it is possible for a certificate for the burial of the deceased's body to be issued before registration provided the death does not need to be reported to the coroner. A certificate for cremation cannot be issued before the registration of the death.</p><p>If a death has been reported to the coroner, he or she may issue a certificate for burial or cremation where possible. </p><h4>Certificate for applicable Social Security benefits</h4><p>A certificate for sending to the Department of Social Security will also be issued by the registrar to the person registering the death or other applicant. The form serves a dual purpose; details of the death are given on one side and the other side is the application for applicable claim forms.</p><h3>When a body is to be taken out of England and Wales</h3><p>If a body is to be taken out of England and Wales, notice must be given to the coroner for the area where the body is lying. There is no restriction on the removal of bodies within England and Wales, but notice is necessary where the removal is to Scotland, Northern Ireland, the Isle of Man and the Channel Islands, as well as abroad.</p><p>A Form of Notice (form 104) may be obtained from a registrar or a coroner. Any certificate for burial or cremation already issued by the registrar or the coroner must be given to the coroner with the notice.</p><p>The coroner will acknowledge receipt of the notice and say when the removal of the body may take place. This will normally be after four clear days from when the coroner received the notice. If it is urgent, the person giving notice to the coroner should speak to him or her personally since it may be possible to allow the removal sooner than the four days.</p><p>Further advice about registering a death in England or Wales may be obtained from your local registrar or from:</p><p>General Register Office, Room D209, Smedley Hydro, Trafalgar Road, Southport, Merseyside, PR8 2HH</p><p>Telephone: 0151 471 4805 | Email: <strong>
+				
+			
+			</strong>
+		</p><h3>British Consul and High Commission registration of deaths</h3><p>There are certain countries where death registrations may be made for British subjects overseas. The British Consul or High Commission may register the deaths and issue certificates.</p><p>During the year following the registration, a copy of the entry is sent to the General Register Office, when certificates would be obtainable from here also.</p><p>If you wish to apply for this form of registration, or would like further information, please contact;</p><p>Foreign and Commonwealth Office, Consular and Passport Section, 1 Palace Street, London SW1E 5HE</p><p>Telephone: 020 7238 4567 (am only 09:30 - 12:30) </p><p>There are certain countries where a death cannot be registered with the British authorities. There is a high standard of civil registration in these countries, some of which are listed below;</p><ul>
+			<li title="*">Ascension Is.</li>
+			<li title="*">Australia</li>
+			<li title="*">Nevis</li>
+			<li title="*">St.Helena</li>
+			<li title="*">South Africa</li>
+			<li title="*">Turks and Cacos Is.</li>
+			<li title="*">Virgin Is (UK)</li>
+			<li title="*">Zimbabwe</li>
+			<li title="*">Bermuda</li>
+			<li title="*">Canada</li>
+			<li title="*">Caymen Is.</li>
+			<li title="*">Christmas Is.</li>
+			<li title="*">Falkland Is.</li>
+			<li title="*">Gibraltar</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=321"> Providing Information
+		(321)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

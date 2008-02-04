@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="cms_related_links"/>
+    <initializer class="com.arsdigita.cms.contentassets.RelatedLinkInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-assets-relatedlink"/>
+    <data class="com.arsdigita.cms.contentassets.RelatedLinkLoader"/>
+  </scripts>
+</load>

@@ -1,0 +1,154 @@
+#!/usr/bin/perl -w
+#
+# Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+#
+# The contents of this file are subject to the CCM Public
+# License (the "License"); you may not use this file except in
+# compliance with the License. You may obtain a copy of
+# the License at http://www.redhat.com/licenses/ccmpl.html
+#
+# Software distributed under the License is distributed on an "AS
+# IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+# implied. See the License for the specific language governing
+# rights and limitations under the License.
+#
+# Daniel Berrange <berrange@redhat.com>
+# Dennis Gregorovic <dgregor@redhat.com>
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use CCM::CommandsUtil;
+use CCM::Util;
+use File::Path;
+use File::Spec;
+use Getopt::Long;
+
+my $OS = $^O;
+my $ccm_app = CCM::Util::getRequiredEnvVariable("CCM_APP");
+my $ccm_app_name = CCM::Util::getRequiredEnvVariable("CCM_APP_NAME");
+my $ccm_dist_tar_dir = CCM::Util::getRequiredEnvVariable("CCM_DIST_TAR_DIR");
+my $ccm_dist_zip_dir = CCM::Util::getRequiredEnvVariable("CCM_DIST_ZIP_DIR");
+my $ccm_inst_webapp_dir = CCM::Util::getRequiredEnvVariable("CCM_INST_WEBAPP_DIR");
+my $ccm_package = CCM::Util::getRequiredEnvVariable("CCM_PACKAGE");
+my $ccm_package_name = CCM::Util::getRequiredEnvVariable("CCM_PACKAGE_NAME");
+my $ccm_scripts_home = CCM::Util::getRequiredEnvVariable("CCM_SCRIPTS_HOME");
+my $ccm_src_dir = CCM::Util::getRequiredEnvVariable("CCM_SRC_DIR");
+my $ccm_version = CCM::Util::getRequiredEnvVariable("CCM_VERSION");
+my $ccm_pkgversion = CCM::Util::getRequiredEnvVariable("CCM_PKGVERSION");
+my $verbose = 0;
+my $command = undef;
+GetOptions('verbose+' => \$verbose);
+
+exists $ENV{'CCM_SCRIPTS_VERBOSE'} && $ENV{'CCM_SCRIPTS_VERBOSE'} eq '1' && $verbose++;
+
+print "  Extracting application sources\n";
+
+mkpath($ccm_src_dir);
+chdir $ccm_src_dir;
+rmtree $ccm_app_name;
+$command = "unzip " . File::Spec->catfile($ccm_dist_zip_dir, "$ccm_package_name.zip");
+`$command`;
+exit($?>>8) if ($?);
+chdir $ccm_app_name;
+
+print "  Removing old install directory\n";
+rmtree($ccm_inst_webapp_dir);
+mkpath($ccm_inst_webapp_dir);
+
+# Build the beast
+CCM::CommandsUtil::runAndExitOnError("ccm-configure");
+
+#########################################################################
+print "  Creating webapp distribution\n";
+
+&build($ccm_inst_webapp_dir);
+
+unlink File::Spec->catfile($ccm_dist_zip_dir, "$ccm_package_name-bin.zip");
+chdir $ccm_inst_webapp_dir;
+$command = "zip -r ";
+$command .= "-y " if ($^O ne 'MSWin32');
+$command .= File::Spec->catfile($ccm_dist_zip_dir, "$ccm_package_name-bin.zip") . " *";
+`$command`;
+print File::Spec->catfile($ccm_dist_zip_dir, "$ccm_package_name-bin.zip") . "\n";
+if ( !defined $ENV{'CCM_DIST_NOTARS'} || $ENV{'CCM_DIST_NOTARS'} ne '1' ) {
+    my $file = File::Spec->catfile($ccm_dist_tar_dir,"$ccm_package_name-bin.tar");
+    unlink $file;
+    unlink "$file.gz";
+    if ($^O eq 'MSWin32') {
+        # cygwin tar does not work well with Windows-style paths.  So, let's convert it.
+        $file =~ s,\\,/,g;
+        $file =~ s,^([a-zA-Z]):,/cygdrive/$1,;
+    }
+    CCM::CommandsUtil::runAndExitOnError("tar -cf $file *");
+    CCM::CommandsUtil::runAndExitOnError("gzip -f $file");
+    print "$file\n";
+}
+
+#########################################################################
+print "  installing webapp distribution\n";
+
+chdir $ccm_src_dir;
+chdir $ccm_app_name;
+&build($ENV{'CCM_BUILD_ROOT'});
+
+sub build {
+    my $build_root = shift;
+    if (defined $build_root) {
+        my $tmp_exists = -d File::Spec->catdir($build_root,'tmp');
+        my $ant_opts="$ENV{'ANT_OPTS'} -Dapps.$ccm_app.version=$ccm_pkgversion";
+        $ant_opts="$ant_opts -Ddeploy.conf.dir=" . File::Spec->catdir($build_root,'usr','share','ccm','conf');
+        $ant_opts="$ant_opts -Ddeploy.shared.lib.dir=" . File::Spec->catdir($build_root,'usr','share','java');
+        $ant_opts="$ant_opts -Ddeploy.private.lib.dir=" . File::Spec->catdir($build_root,'usr','share','java',"$ccm_package-$ccm_pkgversion");
+        $ant_opts="$ant_opts -Ddeploy.webapp.dir=" . File::Spec->catdir($build_root,'usr','share','java','webapps',"$ccm_package-$ccm_pkgversion");
+        $ant_opts="$ant_opts -Ddeploy.system.jars.dir=" . File::Spec->catdir($build_root,'usr','share','java');
+        $ant_opts="$ant_opts -Ddeploy.api.dir.%{appname}=" . File::Spec->catdir($build_root,'var','www','html',"$ccm_package-$ccm_pkgversion",'api');
+        $ant_opts="$ant_opts -Ddeploy.shared.classes.dir=" . File::Spec->catdir($build_root,'tmp',"$ccm_package-$ccm_pkgversion");
+#        $ant_opts="$ant_opts -verbose";
+
+        $ENV{'ANT_OPTS'} = $ant_opts;
+
+        print "ANT_OPTS: $ant_opts\n";
+
+        CCM::CommandsUtil::runAndExitOnError("ant deploy-$ccm_app");
+        CCM::CommandsUtil::runAndExitOnError("ant deploy-jar-classes-$ccm_app");
+
+        if ($tmp_exists) {
+            rmtree(File::Spec->catdir($build_root, 'tmp', "$ccm_package-$ccm_pkgversion"));
+        } else {
+            rmtree(File::Spec->catdir($build_root, 'tmp'));
+        }
+
+        if ($ccm_version ne $ccm_pkgversion) {
+            chdir File::Spec->catdir($build_root,'usr','share','java');
+            &_symlink("$ccm_package-$ccm_pkgversion.jar", "$ccm_package-$ccm_version.jar");
+            &_symlink("$ccm_package-$ccm_pkgversion-pdl.jar", "$ccm_package-$ccm_version-pdl.jar");
+            &_symlink("$ccm_package-$ccm_pkgversion-sql.jar", "$ccm_package-$ccm_version-sql.jar");
+            &_symlink("$ccm_package-$ccm_pkgversion-system.jar", "$ccm_package-$ccm_version-system.jar");
+            &_symlink("$ccm_package-$ccm_pkgversion", "$ccm_package-$ccm_version");
+
+            chdir File::Spec->catdir($build_root,'usr','share','java','webapps');
+            &_symlink("$ccm_package-$ccm_pkgversion", "$ccm_package-$ccm_version");
+        }
+    }
+}
+
+sub _symlink {
+    my $source = shift;
+    my $target = shift;
+    if ($^O ne 'MSWin32' && -e $source && (! -e $target || -l $target)) {
+        symlink ($source,$target);
+    }
+}

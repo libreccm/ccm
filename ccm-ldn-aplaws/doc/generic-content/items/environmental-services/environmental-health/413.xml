@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=413}]"><cms:name>-413</cms:name><cms:language>en</cms:language><cms:title>Pollution - air</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=413}]"><cms:name>-413-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>pollution, air, environment</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=413}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Environmental Protection Unit operates several monitoring programmes for a range of pollutants, some of which have been running for over 30 years. Currently the section monitors for benzene, nitrogen dioxide, lead, smoke and sulphur dioxide at various sites across the borough.</i></p><hr/><p>As well as recording meteorological data, the stations are equipped to monitor for;</p><ul>
+				<li title="*">
+<strong>
+
+		<a href="#1">Fine Particles (PM10)</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#2">Oxides of Nitrogen (NOx)</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#3">Ozone (O3)</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#4">Sulphur Dioxide (SO2)</a>	
+</strong>
+</li>
+				<li title="*">
+<strong>
+
+		<a href="#5">Carbon Monoxide (CO)</a>	
+</strong>
+</li>
+		</ul><p>In May 1997 the Government produced the National Air Quality Strategy (NAQS). The strategy represents a comprehensive approach to maintaining and improving the quality of ambient air in the United Kingdom.</p><p>Outlined in the strategy are the air quality objectives for the 8 pollutants the Government feels are of most concern at present and the dates it feels these targets should be met. These objectives are shown in the table below.</p><h3>
+
+			PM10 Particulates</h3><p>PM10 describes the fraction of airborne particulate matter that is less than 10 microns in size. Fine particles are of the greatest concern since they are capable of being easily transported over long distances on currents of air. Also, fine particles may be drawn into the respiratory airways where they may adversely affect health. Recently, the attention of scientists has been drawn towards studying the PM2.5 fraction and even smaller particles, which can penetrate the very deepest parts of the lung.</p><p>PM10 and other particulate matter may vary considerably in chemical and physical composition. The principal sources of these particles are combustion processes, including traffic and industry.</p><h3>
+
+			Nitrogen Dioxide (NO2)</h3><p>Nitrogen dioxide is one of a number of nitrogen oxides, which are formed during high temperature combustion processes. Road traffic is the main source, accounting for approximately 50% of all European emissions. Therefore, concentrations tend to be highest in urban environments with high traffic levels. Large industrial sources can also have a significant impact.</p><p>Nitrogen dioxide is a respiratory irritant and also plays a part in the production of another atmospheric pollutant, Ozone. Nitrogen oxides remain in the atmosphere for approximately one day before they are oxidised to nitric acid. Nitrogen oxides are therefore a contributory factor in the production of acid rain.</p><h3>
+
+			Ozone (O3)</h3><p>Ozone is a very reactive chemical, which is potentially toxic to both plants and animals. In the Stratosphere, ozone helps to protect the earth from the harmful effects of ultra-violet rays from the sun. However at ground level it is a pollutant. Unlike the other pollutants mentioned above, ozone is not emitted directly. Rather, it is formed as a result of a complex series of reactions involving hydrocarbons, sunlight and nitrogen dioxide (NO2). The involvement of sunlight in this process means that ozone levels tend to be highest in summer. The reactions take time to generate ozone and the highest concentrations are frequently experienced many miles away from the source of the pollution, perhaps in rural areas. In fact, a significant proportion of ozone incidents experienced in the UK are due to pollution imported from abroad. The problem of ozone pollution can therefore only be adequately dealt with as a result of international agreements.</p><h3>
+
+			Sulphur Dioxide (SO2)</h3><p>Sulphur dioxide is a corrosive acid gas which combines with water vapour in the atmosphere to produce acid rain. SO2 in ambient air is capable of causing harm to human health and the environment. It is associated with aggravation of asthma and chronic bronchitis, and has been known to damage vegetation, soils, watercourses and building materials.</p><p>Sulphur dioxide is mainly formed as a result of the combustion of fossil fuels in power stations. Some areas, which rely heavily upon the use of coal for domestic heating, may also suffer localised pollution as a consequence.</p><h3>
+
+			Carbon monoxide (CO)</h3><p>Carbon monoxide is a colourless, odourless and tasteless gas that is produced in the process of combustion, such as the burning of fossil fuels or in a car engine. It is the most dangerous of all the pollutant gases and can cause death in very high concentrations. Once emitted into the atmosphere CO is slowly oxidised to CO2.</p><p>Vehicle emissions are again a major contributor. CO is produced by the incomplete combustion of fossil fuel. The main source of outdoor exposure (aside from smoking) is general pollution from vehicle exhausts, although indoor sources can account 
+  for a larger proportion than traffic.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=413"> Providing Information
+		(413)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

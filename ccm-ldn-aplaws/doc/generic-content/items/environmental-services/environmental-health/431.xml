@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=431}]"><cms:name>batch-6-431</cms:name><cms:language>en</cms:language><cms:title>Pest Control</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=431}]"><cms:name>batch-6-431-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>environmental, health, pest, control</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=431}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Council Pest Control Officers will deal with pests that are harmful to public health 
+and well being at homes and businesses. Rodents, that is Rats and Mice, can be particularly 
+unsettling due to their possible transmission of diseases. The Council will deal with 
+these pests within 5 working days at no charge to households and for a fee at non 
+residential locations.</i></p><hr/><p>Other pests causing concern are Wasps, Ants and various insects. These are dealt with for a fee. Costs are specified below.</p><p>Pest Control services can be arranged by telephoning during normal working hours, where our staff will provide advice and make an appointment for treatment if you wish. Alternatively you can contact us by email.</p><p>Officers call by prior appointment and apply safe and effective treatments. If for any reason the problem persists they will return and make every effort to ensure the pest is eradicated.</p><p>Charges from <span class="gen">enter date</span> for 12 months</p><table width="90%" cellpadding="5" class="centre" summary="Charges for Pest Control Service">
+			<tr>
+				<th>Service</th>
+				<th>Charges</th>
+				<th>Notes</th>
+			</tr>
+			<tr>
+				<td>Public Health Pests</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>Rats, mice, bedbugs, cockroaches, demestes and spider beetles, plaster beetle and food infestation insects</td>
+			</tr>
+			<tr>
+				<td>Standard Charge Non Public Health Pests</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>Ants, fleas, clovermites, silverfish, woodlice, garden beetles, earwigs, spiders, flies and non-identified insects</td>
+			</tr>
+			<tr>
+				<td>Wasps and Bees</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td/>
+			</tr>
+			<tr>
+				<td>Wasps and Bees Pensioners Rate</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>Head of household on production of pension book</td>
+			</tr>
+			<tr>
+				<td>Trap Hire (Squirrels)</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td/>
+			</tr>
+			<tr>
+				<td>Feral Pigeon Treatments (Internal)</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>These are minimum rates and may be subject to a quotation</td>
+			</tr>
+			<tr>
+				<td>Treatments where keys picked up</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>Charges where keys are picked up from another site of office</td>
+			</tr>
+			<tr>
+				<td>Investigation of roofspace noise</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td/>
+			</tr>
+			<tr>
+				<td>
+<strong>Commercial Premises</strong>
+</td>
+			</tr>
+			<tr>
+				<td>Rodent Control Treatments</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>Inclusive of 3 visits. Minimum and maximum costs. Average costs <span class="gen">enter amount</span>
+</td>
+			</tr>
+			<tr>
+				<td>Rodent Control Contracts</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>8 visits per year plus 2 free insect treatments (non food pests)</td>
+			</tr>
+			<tr>
+				<td>Insect Treatments</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>Includes wasp/bee treatments</td>
+			</tr>
+			<tr>
+				<td>Feral Pigeon Treatments</td>
+				<td>
+<span class="gen">enter amount</span>
+</td>
+				<td>These are minimum rates and may be subject to quotation</td>
+			</tr>
+		</table><ul>
+			<li title="*">Flea treatments include insecticide and Insect Growth Regulator treatment plus crawling insect spray for after treatment.</li>
+			<li title="*"> If the service required is not covered above contact us using the details above</li>
+			<li title="*">Where a private tenant (including Housing Associations) is requesting a chargeable service they must first obtain a written confirmation and order from their landlord or pay for the service in advance.</li>
+			<li title="*">Housing Associations and landlords requesting wasp and bee treatments are charged at full domestic rate.</li>
+			<li title="*">Churches are dealt with under Commercial Rates.</li>
+			<li title="*">Second and subsequent wasps nests on same site treated at time of first nest at half rate.</li>
+			<li title="*">Revisit to original wasp nest not destroyed - no charge. Wasp nest treatments do not include removal of nest.</li>
+			<li title="*">Void Properties in management of Estate Agents - Fleas are charged at Standard Charge Domestic Rates.</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=431"> Providing Information
+		(431)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

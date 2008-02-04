@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<metadataroot name="acs" version="4.0">
+  <schema name="oracle" id="acs:oracle">
+    <table name="ACS_OBJECTS" id="acs:oracle:acs_objects">
+      <column name="CONTEXT_ID" datatype="BIGINT" id="acs:oracle:acs_objects:context_id"/>
+      <column name="OBJECT_ID" datatype="BIGINT" id="acs:oracle:acs_objects:object_id"/>
+      <column name="OBJECT_TYPE" datatype="VARCHAR(100)" id="acs:oracle:acs_objects:object_type"/>
+      <uniquekey id="acs:oracle:acs_objects_context_object_un">
+        <columnref idref="acs:oracle:acs_objects:object_id"/>
+        <columnref idref="acs:oracle:acs_objects:context_id"/>
+      </uniquekey>
+      <primarykey id="acs:oracle:acs_objects_pk">
+        <columnref idref="acs:oracle:acs_objects:object_id"/>
+      </primarykey>
+    </table>
+    <table name="PARTIES" id="acs:oracle:parties">
+      <column name="EMAIL" datatype="VARCHAR(100)" id="acs:oracle:parties:email"/>
+      <column name="PARTY_ID" datatype="BIGINT" id="acs:oracle:parties:party_id"/>
+      <column name="URL" datatype="VARCHAR(200)" id="acs:oracle:parties:url"/>
+      <uniquekey id="acs:oracle:parties_email_un">
+        <columnref idref="acs:oracle:parties:email"/>
+      </uniquekey>
+      <primarykey id="acs:oracle:parties_party_id_pk">
+        <columnref idref="acs:oracle:parties:party_id"/>
+      </primarykey>
+    </table>
+    <foreignkey id="acs:oracle:parties_party_id:acs_object_pk">
+      <columnref idref="acs:oracle:parties:party_id"/>
+      <uniquekeyref idref="acs:oracle:acs_objects_pk"/>
+    </foreignkey>
+  </schema>
+</metadataroot>

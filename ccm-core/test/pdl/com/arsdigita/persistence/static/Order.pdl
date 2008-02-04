@@ -1,0 +1,446 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: Order.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model examples;
+
+object type Order {
+    BigDecimal id;
+    String[1..1] buyer;
+    String seller;
+    String shippingAddress;
+    Date shippingDate;
+    Boolean hasShipped;
+
+    object key (id);
+
+    retrieve all {
+        do {
+            select *
+            from t_orders
+        } map {
+            id = t_orders.order_id;
+            buyer = t_orders.buyer;
+            seller = t_orders.seller;
+            shippingAddress = t_orders.shipping_address;
+            shippingDate = t_orders.shipping_date;
+            hasShipped = t_orders.shipped_p;
+        }
+    }
+
+
+    retrieve {
+        do {
+            select *
+            from t_orders
+            where order_id = :id
+        } map {
+            buyer = t_orders.buyer;
+            seller = t_orders.seller;
+            shippingAddress = t_orders.shipping_address;
+            shippingDate = t_orders.shipping_date;
+            hasShipped = t_orders.shipped_p;
+        }
+    }
+
+    insert {
+        do {
+            insert into t_orders
+            (order_id, buyer, seller, shipping_address, shipping_date,
+             shipped_p)
+            values
+            (:id, :buyer, :seller, :shippingAddress, :shippingDate,
+             :hasShipped)
+        }
+    }
+
+    update {
+        do {
+            update t_orders
+            set buyer = :buyer,
+                seller = :seller,
+                shipping_address = :shippingAddress,
+                shipping_date = :shippingDate,
+                shipped_p = :hasShipped
+            where order_id = :id
+        }
+    }
+
+    delete {
+        do { delete from t_line_items where order_id = :id }
+        do { delete from t_orders where order_id = :id }
+    }
+}
+
+association {
+    Order[1..1] order;
+    component LineItem[0..n] items;
+
+    add order {}
+
+    retrieve order {
+        do {
+            select o.*
+            from t_orders o, t_line_items li
+            where o.order_id = li.order_id
+            and li.item_id = :id
+        } map {
+            order.id = order_id;
+            order.buyer = buyer;
+            order.seller = seller;
+            order.shippingAddress = shipping_address;
+            order.shippingDate = shipping_date;
+        }
+    }
+
+    retrieve items {
+        do {
+            select li.*
+            from t_line_items li
+            where order_id = :id
+        } map {
+            items.id = item_id;
+            items.price = price;
+            items.name = name;
+            items.inStock = in_stock_p;
+        }
+    }
+
+    add items {
+        do {
+            insert into t_line_items
+            (item_id, order_id, price, name, in_stock_p)
+            values
+            (:items.id, :id, :items.price, :items.name, :items.inStock)
+        }
+    }
+
+    remove items {
+        do {
+            delete from t_line_items
+            where order_id = :id
+            and item_id = :items.id
+        }
+    }
+
+    clear items {
+        do {
+            delete from t_line_items
+            where order_id = :id
+        }
+    }
+}
+
+object type OrderExt extends Order {
+    String[1..1]   text;
+
+    retrieve {
+        super;
+
+        do {
+            select *
+            from t_orders_ext
+            where order_id = :id
+        } map {
+            text = t_orders_ext.text;
+        }
+    }
+
+    insert {
+        super;
+
+        do {
+            insert into t_orders_ext
+            (order_id, text)
+            values
+            (:id, :text)
+        }
+    }
+
+    update {
+        super;
+
+        do {
+            update t_orders_ext
+            set text = :text
+            where order_id = :id
+        }
+    }
+
+    delete {
+        do { delete from t_orders_ext where order_id = :id }
+        super;
+    }
+
+}
+
+object type LineItem {
+    BigDecimal id;
+    Float[1..1] price;
+    String[1..1] name;
+    Boolean[0..1] inStock;
+    // no add/remove defined for this order
+    Order[0..1] unsettableOrder;
+
+    object key (id);
+
+    retrieve all {
+        do {
+            select * from t_line_items
+        } map {
+            id = item_id;
+            price = price;
+            name = name;
+            inStock = in_stock_p;
+        }
+    }
+
+    retrieve {
+        do {
+            select *
+            from t_line_items
+            where item_id = :id
+        } map {
+            price = price;
+            name = name;
+            inStock = in_stock_p;
+        }
+    }
+
+    insert {}
+
+    update {
+        do {
+            update t_line_items
+            set price = :price,
+                name = :name,
+                in_stock_p = :inStock
+            where item_id = :id
+        }
+    }
+    
+    delete {
+        do { delete from t_line_items where item_id = :id }
+    }
+
+    retrieve unsettableOrder {
+        do {
+            select null as id from dual
+        } map {
+            unsettableOrder.id = id;
+        }
+    }
+}
+
+query OrdersMaxPrices {
+    BigDecimal orderId;
+    String buyer;
+    String seller;
+    String shippingAddress;
+    Date shippingDate;
+    Boolean hasShipped;
+    BigDecimal maxPrice;
+
+    do {
+        select t_orders.order_id,
+               t_orders.buyer,
+               t_orders.seller,
+               t_orders.shipping_address,
+               t_orders.shipping_date,
+               max_item_prices.price
+        from t_orders,
+             (select order_id,
+                     max(price) as price
+              from t_line_items
+              group by order_id) max_item_prices
+        where t_orders.order_id = max_item_prices.order_id
+    } map {
+        orderId = t_orders.order_id;
+        buyer = t_orders.buyer;
+        seller = t_orders.seller;
+        shippingAddress = t_orders.shipping_address;
+        shippingDate = t_orders.shipping_date;
+        maxPrice = max_item_prices.price;
+    }
+}
+
+query OrdersNumberOfLineItems {
+    BigDecimal order_id;
+    do {
+        select order_id from t_line_items
+    } map {
+        order_id = t_line_items.order_id;
+    }
+}
+
+
+////////////////////////////////////////////////////////////
+
+
+object type OtherItem {
+    BigDecimal id;
+    Float[1..1] price;
+    String[1..1] name;
+    Boolean[0..1] inStock;
+
+    object key (id);
+
+    retrieve all {
+        do {
+            select * from t_other_items
+        } map {
+            id = other_id;
+            price = price;
+            name = name;
+            inStock = in_stock_p;
+        }
+    }
+
+    retrieve {
+        do {
+            select *
+            from t_other_items
+            where other_id = :id
+        } map {
+            price = price;
+            name = name;
+            inStock = in_stock_p;
+        }
+    }
+
+    insert {
+        do {
+            insert into t_other_items (other_id, price, name, in_stock_p)
+            values 
+            (:id, :price, :name, :inStock)
+        }
+    }
+
+    update {
+        do {
+            update t_other_items
+            set price = :price,
+                name = :name,
+                in_stock_p = :inStock
+            where other_id = :id
+        }
+    }
+    
+    delete {
+        do { delete from t_other_items where other_id = :id }
+    }
+}
+
+
+
+association {
+    Order[0..1] order;
+    OtherItem[0..n] relatedOtherItems;
+
+    retrieve order {
+        do {
+            select o.* 
+            from t_orders o, t_order_other_item_map m
+            where m.other_item_id = :id
+            and o.order_id = m.order_id
+        } map {
+            order.id = order_id;
+            order.buyer = buyer;
+            order.seller = seller;
+            order.shippingAddress = shipping_address;
+        }
+    }
+
+    retrieve relatedOtherItems {
+        do {
+            select * 
+            from t_other_items o, t_order_other_item_map m
+            where m.order_id = :id
+            and o.other_id = m.other_item_id
+        } map {
+            relatedOtherItems.id = o.other_id;
+            relatedOtherItems.price = o.price;
+            relatedOtherItems.name = o.name;
+            relatedOtherItems.inStock = o.in_stock_p;
+        }
+    }
+    
+
+    add order {
+        do {
+            insert into t_order_other_item_map (order_id, other_item_id)
+            values
+            (:order.id, :id)
+        }
+    }
+
+    add relatedOtherItems {
+        do {
+            insert into t_order_other_item_map (order_id, other_item_id)
+            values
+            (:id, :relatedOtherItems.id)
+        }
+    }
+
+    remove order {
+        do {
+            delete from t_order_other_item_map 
+            where order_id = :order.id and other_item_id = :id
+        }
+    }
+
+    remove relatedOtherItems {
+        do {
+            delete from t_order_other_item_map 
+            where order_id = :id and other_item_id = :relatedOtherItems.id
+        }
+    }
+}
+
+
+object type OrderExtWithFailingRetrieve extends Order {
+    String[0..1]   text;
+
+    // this is supposed to fail per SDM ticket 147567
+    retrieve {
+        super;
+
+        do {
+            select *
+            from t_orders_ext
+            where order_id = :id
+            and order_id = 1 
+            and order_id = 2
+        } map {
+            text = t_orders_ext.text;
+        }
+    }
+
+    insert {
+        super;
+    }
+
+    update {
+        super;
+    }
+
+    delete {
+        super;
+    }
+
+}

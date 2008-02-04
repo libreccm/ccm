@@ -1,0 +1,51 @@
+<!--
+   - The Resin configuration file.
+   -
+   - This example file is more complicated than is needs to be because
+   - it makes several configurations explicit that can be simplified and
+   - because it needs to configure the examples.
+   -
+   - Look in conf/samples for more realistic sample configurations.
+   -   conf/samples/simple.conf - a simple, basic configuration
+   -   conf/samples/deploy.conf - a simple configuration for deployment
+   -
+   - The configuration is based on a purely element-based XML.  To make
+   - it easier to read, attributes can be used as syntactic sugar.
+   -
+   - The following are equivalent:
+   - <foo><bar>13</bar></foo>  - canonical representation, but verbose
+   - <foo bar=13/>             - typical configuration
+   - <foo><bar id=13/></foo>   - sometimes useful
+  -->
+<caucho.com>
+
+<http-server>
+  <!--
+     - The srun port, read by both JVM and plugin
+     - 127.0.0.1 is the localhost
+    -->
+  ::srun-begin1::<srun host='::srun-host1::' port='::srun-port1::'/>::srun-end1::
+  ::srun-begin2::<srun host='::srun-host2::' port='::srun-port2::'/>::srun-end2::
+  ::srun-begin3::<srun host='::srun-host3::' port='::srun-port3::'/>::srun-end3::
+  ::srun-begin4::<srun host='::srun-host4::' port='::srun-port4::'/>::srun-end4::
+  ::srun-begin5::<srun host='::srun-host5::' port='::srun-port5::'/>::srun-end5::
+
+
+  <!--
+     - servlet configuration outside the <host> is a default for all hosts.
+    -->
+  <servlet-mapping url-pattern='/*'
+      servlet-name='plugin_match'/>
+  <servlet-mapping url-pattern='*.html'
+      servlet-name='plugin_ignore'/>
+  <servlet-mapping url-pattern='/assets/*'
+      servlet-name='plugin_ignore'/>
+  <servlet-mapping url-pattern='/STATIC/*'
+      servlet-name='plugin_ignore'/>
+  <servlet-mapping url-pattern='/big-sister/*'
+      servlet-name='plugin_ignore'/>
+  <servlet-mapping url-pattern='/css/*'
+      servlet-name='plugin_ignore'/>
+
+</http-server>
+</caucho.com>

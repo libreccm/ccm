@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  name="ccm-core"
+  prettyName="Core"
+  version="6.5.5"
+  release="1"
+  webapp="ROOT"
+  buildHooks="build-hooks.xml">
+  <ccm:dependencies>
+    <ccm:buildRequires name="httpunit" version="1.5.4" relation="ge"/>
+    <ccm:buildRequires name="junit" version="3.8" relation="ge"/>
+    <ccm:buildRequires name="junitperf" version="1.8" relation="ge"/>
+    <ccm:buildRequires name="ccm-servlet23"/>
+    <ccm:runRequires name="ccm-servlet23"/>
+  </ccm:dependencies>
+  <ccm:systemPackages>
+    <ccm:package path="com/arsdigita/util/protocol/"/>
+  </ccm:systemPackages>
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    The Red Hat Web Application Framework is a platform for writing
+    database-backed web applications in Java.
+  </ccm:description>
+</ccm:application>

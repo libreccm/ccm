@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=383}]"><cms:name>licensing-form-383</cms:name><cms:language>en</cms:language><cms:title>Licence - building materials</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=383}]"><cms:name>383a.pdf</cms:name><cms:content file="383a.pdf"/></cms:file></cms:item>

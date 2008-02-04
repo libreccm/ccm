@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=808}]"><cms:name>fire-certificates--hotels-boarding-houses-808</cms:name><cms:language>en</cms:language><cms:title>Fire Certificates - Hotels/Boarding Houses</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=808}]"><cms:name>fire-certificates--hotels-boarding-houses-808-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>fire, certificates, hotels, boarding, houses</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=808}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Virtually all places of work will fall within the scope of Fire Safety Legislation. Namely, these are The Fire Precautions (Workplace Regulations) 1997 (as Amended) or The Fire Precautions Act 1971. </i></p><hr/><p>Basically, larger premises
+    will be covered by the Fire Precautions Act and the 'Workplace Regulations'. In the case of smaller premises, they
+  have to comply with the requirements of the 'Workplace Regulations'</p><p>The Criteria is detailed
+  below.</p><h2>  Who should apply?</h2><p>An
+            Application for a fire certificate is required under the Fire Precautions
+            Act 1971 as amended by the Fire Safety and Safety at Places of Sport
+            Act 1987 in respect of any premises which are put to a use designated
+            by Order made by the Secretary of State under section 1 of the Act.
+            Orders have so far been made relating to hotels and boarding houses,
+      factories, offices, shops and railway premises.</p><h2>Hotels and Boarding Houses 
+
+</h2><p> A fire certificate is required for any premises used as a hotel or boarding house if sleeping accommodation is provided for more than 6 persons (whether guests or staff) or there is some sleeping accommodation above the first floor or below the ground floor.   </p><h2>Where do I send the application for a Fire Certificate to?                </h2><p>If
+            your premises need a fire certificate, the application form should
+      be completed and sent to:</p><p>
+			<span class="gen">enter address</span>
+		</p><h2>Who should complete the Application Form  </h2><p>The
+            occupier of premises should complete the application form and send
+            it to the fire authority (or in the case of Crown owned or occupied
+            premises, to HM Inspector of Fire Services). If, however, the premises
+            are factory, office, shop or railway premises and are held under
+            a lease and consist of part of a building, all parts of which are
+            in the same ownership, or consist of part of a building in which
+            different parts are owned by different people, the Fire Precautions
+            Act 1971, as modified, makes the owner(s) of the building responsible
+            if the premises are used without a fire certificate being in force.
+            Thus in such cases application should be made on behalf of the owner(s)
+            of the building and the occupier(s) must supply information as appropriate
+            to the owner(s). The occupiers of such premises are advised to check
+            that a fire certificate is in force or that an application has been
+      made for one.</p><p>
+			
+			
+			<span class="gen">link to online form</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=808"> Applications for services
+		(808)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=808}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=808}]"/></cms:links></cms:item>

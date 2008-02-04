@@ -1,0 +1,386 @@
+/*
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
+package com.arsdigita.bebop;
+
+import com.arsdigita.xml.Element;
+import java.util.TooManyListenersException;
+
+import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
+
+/**
+ * The parent of all Bebop Link classes, this class represents a URL
+ * on a page. It may contain a label, an image, or any other component.
+ *
+ * <p> The following table lists all Bebop Link classes and suggests
+ * when they might be used.
+ * <p>
+ * <table BORDER=3>
+ * <tr>
+ *  <th>Link Class</th>
+ *  <th>Usage</th>
+ * </tr>
+ * <tr>
+ *   <td>{@link BaseLink}</td>
+ *   <td>Parent class of Bebop Link classes. Extend this class to
+ * build your own Link class.</td>
+ * </tr>
+ * <tr>
+ *   <td>{@link Link}</td>
+ *   <td>Link class that manages its own URL variables. Session information
+ * is added to the target URL for this type.</td>
+ * </tr>
+ * <tr>
+ *   <td>{@link ExternalLink}</td>
+ *   <td>Link that does not encode the URL with any session information.
+ * Used for a link to a page outside the site.</td>
+ * </tr>
+ * <tr>
+ *   <td>{@link ControlLink}</td>
+ *   <td> Used for references within its own page (often
+ *  as fields in a table header for sorting a column).</td>
+ * </tr>
+ * <tr>
+ *    <td>{@link ActionLink}</td>
+ *    <td>Sets its own control event and runs its own {@link com.arsdigita.bebop.event.ActionListener}s. When the link is clicked, the code in the Listener's <tt>actionPerformed</tt> method runs.</td>
+ * </tr>
+ * <tr>
+ *    <td>{@link ToggleLink}</td>
+ *    <td>A link that turns into label when it is selected and
+ * turns back into a link when it is unselected.</td>
+ * </tr>
+ * </table>
+ *
+ */
+public abstract class BaseLink extends TextStylable
+        implements Cloneable {
+
+    public static final String versionId = "$Id: BaseLink.java 998 2005-11-15 22:27:13Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
+    /**
+     * The name of the attribute used in XML to indicate which type of link
+     * this link represents.
+     */
+    private final String TYPE_ATTR = "type";
+    private final String HREF_NO_JAVASCRIPT = "href_no_javascript";
+    private final String HREF = "href";
+
+    protected String m_url;
+    protected String m_noJavascriptURL = null;
+    protected Component m_child;
+
+    private PrintListener m_printListener;
+
+    private String m_sConfirmMsg = "";
+
+    public BaseLink(Component child, String url) {
+        super();
+        m_url = url;
+        m_child = child;
+    }
+
+    public BaseLink(String label, String url) {
+        this(new Label(label), url);
+    }
+
+    public BaseLink(Component child, PrintListener l) {
+        this(child, "");
+        try {
+            addPrintListener(l);
+        } catch (TooManyListenersException e) {
+            // Can't happen
+            throw new UncheckedWrapperException("Too many listeners: " + e.getMessage(), e);
+        }
+    }
+
+    public BaseLink(String label, PrintListener l) {
+        this(new Label(label), l);
+    }
+
+    public BaseLink(PrintListener l) {
+        this("", l);
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        BaseLink result = (BaseLink) super.clone();
+        result.m_printListener = null;
+        return result;
+    }
+
+    /**
+     * Adds a print listener.
+     * Since the <code>PrintListener</code> is expected to modify the
+     * target of the <code>PrintEvent</code>, only one print listener can be
+     * set for a link.
+     * @param listener the print listener
+     * @throws IllegalArgumentException if <code>listener</code> is null.
+     * @throws TooManyListenersException if a print listener has previously been
+     *         added.
+     * @pre listener != null */
+    public void addPrintListener(PrintListener listener)
+            throws IllegalStateException, TooManyListenersException
+    {
+        if ( listener == null ) {
+            throw new IllegalArgumentException
+                    ("Argument listener can not be null");
+        }
+        if ( m_printListener != null ) {
+            throw new TooManyListenersException
+                    ("Too many listeners. Can only have one");
+        }
+        m_printListener = listener;
+    }
+
+    /**
+     * Removes a previously added print listener. If the passed in
+     * <code>listener</code> is
+     * not the listener that was added with {@link #addPrintListener
+     * addPrintListener}, an IllegalArgumentException will be thrown.
+     * @param listener the listener that was previously added with
+     *      <code>addPrintListener</code>
+     * @throws IllegalArgumentException if <code>listener</code> is not the
+     *      currently registered print listener or is <code>null</code>.
+     * @pre listener != null
+     */
+    public void removePrintListener(PrintListener listener)
+            throws IllegalArgumentException
+    {
+        if ( listener == null ) {
+            throw new IllegalArgumentException("listener can not be null");
+        }
+        if ( listener != m_printListener ) {
+            throw new IllegalArgumentException
+                    ("listener is not registered with this widget");
+        }
+        m_printListener = null;
+    }
+
+    protected BaseLink firePrintEvent(PageState state) {
+        BaseLink l = this;
+        if ( m_printListener != null ) {
+            try {
+                l = (BaseLink) this.clone();
+                m_printListener.prepare(new PrintEvent(this, state, l));
+            } catch ( CloneNotSupportedException e ) {
+                l = this;
+                throw new UncheckedWrapperException(e);
+            }
+        }
+        return l;
+    }
+
+
+    public final Component getChild() {
+        return m_child;
+    }
+
+    public void setChild(Component child) {
+        Assert.assertNotLocked(this);
+        m_child = child;
+    }
+
+    public final String getTarget(){
+        return m_url;
+    }
+
+    public final void setTarget(String url) {
+        Assert.assertNotLocked(this);
+
+        m_url = url;
+    }
+
+    /**
+     * Sets the type of link this link represents.
+     *
+     * @param t the type of link
+     */
+    protected void setTypeAttr(String t) {
+        Assert.assertNotLocked(this);
+        setAttribute(TYPE_ATTR, t);
+    }
+
+
+    protected abstract void generateURL(PageState state, Element parent);
+
+    /**
+     * <p>Generates a DOM fragment:
+     * <p><pre>
+     * &lt;bebop:link href="..." type="..." %bebopAttr;/>
+     * </pre>
+     * The <code>href</code> attribute contains the target the link
+     * should point to. The <code>type</code> attribute is used to
+     * give more finegrained control over which kind of link this element
+     * represents. The types are <code>link</code> for a
+     * <code>Link</code>, <code>control</code> for a {@link ControlLink},
+     * and <code>toggle</code> for a {@link ToggleLink}. There may be
+     * additional attributes depending on what type of link this link
+     * represents.
+     * @see ControlLink#generateXML
+     * @see ToggleLink#generateXML
+     */
+    public void generateXML(PageState state, Element parent) {
+        if ( isVisible(state) ) {
+            BaseLink target = firePrintEvent(state);
+            Element link = parent.newChildElement ("bebop:link", BEBOP_XML_NS);
+            target.generateURL(state, link);
+            target.exportAttributes(link);
+            //setup the link without javascript
+            target.setupNoJavascriptURL(state, link);
+            target.exportAttributes(link);
+            target.generateExtraXMLAttributes(state, link);
+            target.getChild().generateXML(state, link);
+        }
+    }
+
+    private String getAbsoluteUrl(PageState ps, String sUrl) {
+        String sReturn = "";
+
+        if ((sUrl.indexOf(":") != -1) || sUrl.indexOf("/") == 0) {
+            //if sUrl contains a ":" or begins with a "/", then it is an absolute URL
+            sReturn = sUrl;
+        } else {
+            //otherwise, it is a relative URL, so we need to make it an absolute URL
+
+            //get the current URL
+            String sThisURL = "";
+            try {
+                sThisURL = ps.stateAsURL();
+            } catch (java.io.IOException ioe) {
+                //ignore
+            }
+            //trim the current URL back to the last "/" character
+            int iIndex = sThisURL.lastIndexOf("/");
+
+            //if there is no "/" character, then assume we are at server root
+            if (iIndex == -1) {
+                sReturn = "/" + sUrl;
+            } else {
+                sReturn = sThisURL.substring(0, iIndex) + "/" + sUrl;
+            }
+        }
+
+        return sReturn;
+    }
+
+    //sets up no-JavaScript fallback HTML
+    protected void setupNoJavascriptURL(PageState ps, Element link) {
+        String sURL = null;
+
+        if (m_sConfirmMsg.length() > 0) {
+            //if we want the confirm link, create the link
+            String sOkUrl = getAbsoluteUrl(ps, link.getAttribute(HREF));
+            String sCancelUrl = null;
+            try {
+                sCancelUrl = ps.stateAsURL();
+            } catch (java.io.IOException e) {
+                Assert.fail("Could not get current page state as URL");
+            }
+
+            sURL = ConfirmPage.getConfirmUrl(m_sConfirmMsg, sOkUrl, sCancelUrl);
+
+        } else {
+            //don't want confirm link--just no javascript link
+            if (m_noJavascriptURL == null) {
+                //get the generatedURL and make it the default noJavaScript link
+                sURL = link.getAttribute(HREF);
+            } else {
+                sURL = m_noJavascriptURL;
+            }
+        }
+        link.addAttribute(HREF_NO_JAVASCRIPT, sURL);
+        exportAttributes(link);
+    }
+
+    /**
+     * Adds type-specific XML attributes to the XML element representing
+     * this link. Subclasses should override this method if they introduce
+     * more attributes than the ones {@link #generateXML generateXML}
+     * produces by default.
+     *
+     * @param state the current request
+     * @param link the XML element representing this link
+     */
+    protected void generateExtraXMLAttributes(PageState state, Element link) {}
+
+    /**
+     * Sets onClick event and <em>disables the javascript-based double-click protection for this link</em>.
+     * Not for confirmation messages; Should call setConfirmation for that.
+     *
+     * @param value
+     * @pre value.toLowerCase().startsWith("return confirm(") == false
+     *
+     * @see #setConfirmation
+     */
+    public void setOnClick(String value) {
+        //should not use this method to set confirmation messages--should
+        //use setConfirmation() instead, or else the javascript will break
+        if (value != null) {
+            Assert.assertTrue(!value.toLowerCase().startsWith("return confirm("),
+                    "Do not use setOnClick() to set confirmation messages. " +
+                    "Use setCofirmation() instead.");
+        }
+
+        setAttribute(ON_CLICK, value);
+    }
+
+    /**
+     * Forces the user to click through a confirmation dialog before this link
+     * is followed. The user is prompted with the specified message. If the
+     * user does not does not confirm, the link is not followed. The current
+     * implementation uses the JavaScript confirm function and the onClick
+     * attribute.
+     * If JavaScript is not enabled in the client browser, this method will
+     * redirect the browser to a Bebop confirmation page rather than use
+     * a JavaScript confirmation.
+     * Subsequent calls to setOnClick will undo the effect of this method.
+     *
+     * @param message the confirmation message presented to the user.  This
+     * message cannot have an apostrophe or back slash
+     *
+     * @pre message.indexOf("'") == -1 && message.indexOf("\\") == -1
+     **/
+    public void setConfirmation(String message) {
+        //make sure that the message doesn't have any apostrophe's
+        //or back slashes
+
+        if (Assert.isAssertEnabled()) {
+            final boolean isGoodMessage = message.indexOf("'") == -1 && message.indexOf("\\") == -1;
+            Assert.assertTrue(isGoodMessage,
+                              "confirmation message cannot contain apostrophe or back slash");
+        }
+
+        setAttribute("confirm", "confirm");
+
+        //set the onclick attribute for the link
+        setAttribute(ON_CLICK, "return confirm(\\'" + message + "\\');");
+
+        m_sConfirmMsg = message;
+    }
+
+    public final void setNoJavascriptTarget(String sURL) {
+        Assert.assertNotLocked(this);
+        m_noJavascriptURL = sURL;
+    }
+
+    public final String getNoJavascriptTarget() {
+        return m_noJavascriptURL;
+    }
+}

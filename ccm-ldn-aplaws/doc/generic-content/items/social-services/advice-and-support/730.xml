@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=730}]"><cms:name>batch-22-730</cms:name><cms:language>en</cms:language><cms:title>Drugs advisory service</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=730}]"><cms:name>batch-22-730-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>drugs, advisory, service</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=730}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We provide a service for people affected by illegal drugs and/or prescribed drugs. We offer a friendly confidential service that offers help and support to those who feel they can't be drug free and also those who choose abstinence as an aim. </i></p><hr/><p>Our staff are drawn from a variety of professional backgrounds and who are all trained to help people with drug related problems. </p><p>We provide the following help: </p><ul>
+  <li title="*">counselling, advice and support for people affected by prescribed or illicit drugs </li>
+  <li title="*">support and counselling for families, friends and colleagues of people who have a drug related problem </li>
+  <li title="*">needle and syringe exchange </li>
+  <li title="*">support for you through your GP if prescribing is going to be helpful in dealing with your drug problem </li>
+  <li title="*">community detoxification programmes and in-patient detox if appropriate </li>
+  <li title="*">support from other agencies who advise people with drug related problems </li>
+  <li title="*">education and training about drugs issues </li>
+  <li title="*">alternative therapies </li>
+</ul><p>For further information about the service we offer, please use the contact details above. </p><p>The following organisations help those who have a problem related 
+to illegal drugs or volatile substances.</p><p>
+
+		<a href="http://www.trashed.co.uk/">
+<strong>Talk to FRANK</strong>
+</a>	 <span class="gen">link to external website</span> <br/>
+  For free confidential drugs information and advice 24 hours a day</p><p>
+
+		<a href="http://www.drugs.gov.uk/Home">
+<strong>Tackling Drugs</strong>
+</a>	 <span class="gen">link to external website</span> <br/>
+  A cross-government national drug strategy website for drug prevention and treatment professionals and others interested in the drug strategy.</p><p>
+
+		<a href="http://www.dh.gov.uk/PolicyAndGuidance/HealthAndSocialCareTopics/SubstanceMisuse/SubstanceMisuseGeneralInformation/fs/en">
+<strong>Department of Health - Substance Misuse</strong>
+</a>	 <span class="gen">link to external website</span> <br/>
+  Information about preventing, treating and identifying cases of substance misuse, for health professionals, parents and young people.</p><p>
+<strong>UK National Drugs Helpline: 0800 77 66 00</strong>
+<br/>
+The National Drugs Helpline is a 24-hour, seven-days a week, free and confidential telephone service that offers advice and information for those who are concerned, or have questions, about drugs. The service is available to anyone.</p><p>
+<strong>Re-Solv Helpline (volatile substance misuse): 0808 800 2345</strong>
+<br/>
+Telephone enquiry service for anyone concerned about solvents or volatile substance abuse problems.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=730"> Providing Information
+		(730)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

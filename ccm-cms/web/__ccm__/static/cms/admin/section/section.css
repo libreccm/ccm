@@ -1,0 +1,17 @@
+div.section, div.section div.heading, div.section div.body {
+  clear: left;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  width: 100%;
+}
+
+div.section div.heading {
+  font-weight: bold;
+  color: gray;
+  border-bottom: 3px solid rgb(202,202,202);
+}
+
+div.section div.body {
+  margin: 0.5em 0 1em 0;
+}

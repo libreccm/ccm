@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=429}]"><cms:name>batch-7-429</cms:name><cms:language>en</cms:language><cms:title>Accidents</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=429}]"><cms:name>batch-7-429-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>accidents</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=429}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Accidents are a major cause of injury, disability and death, particularly among young children and older people. In England, accidents are responsible for 10,000 deaths a year. Accidents have a significant impact on society both emotionally and financially. The following factors have been proven to have an affect on accident rates:</i></p><hr/><h3>Age</h3><ul>
+			<li title="*">Gender - statistically males have more accidents than females.</li>
+			<li title="*">Environmental hazards - such as poorly maintained housing</li>
+			<li title="*">Social deprivation - such as homelessness and poor health</li>
+			<li title="*">Physical and mental health - depression and stress can increase the risk of accidents</li>
+			<li title="*">Alcohol and Drugs - is a factor in 20% - 30% of all accidents</li>
+			<li title="*">Seasonal variations</li>
+			<li title="*">Human behaviour - an individual's attitude toward risk and safety is a major contributor of accident rates.</li>
+		</ul><h3>Accidents and Older People</h3><p>Older people are at particular risk of death and disability from falls on stairs or steps. Over 3,000 people over the age of 65 years are killed annually in falls.</p><p>As a part of their 'Avoiding slips, trips and broken hips' campaign, the Department of Trade and Industry issued the following guidelines to reduce the risks of falls.</p><p>These simple steps can prevent pain and injury caused by falls.</p><ul>
+			<li title="*">Keep physically active.</li>
+			<li title="*">Weak muscles and poor balance can cause someone to fall. Regular exercise such as brisk walking or light gardening can improve these conditions.</li>
+			<li title="*">Take fewer risks in your routine.</li>
+			<li title="*">When getting out of bed or up from a chair, take your time. It is a good idea to do it in slow stages, so as not to become light-headed.</li>
+			<li title="*">Be aware of changes in your health.</li>
+			<li title="*">Have regular eye tests and foot care. If you are taking more than four medications, ask your GP to review them on a regular basis. Let a friend or neighbour know if you are feeling unwell.</li>
+			<li title="*">Eat a balanced and healthy diet.</li>
+			<li title="*">Ensure that you get enough calcium and vitamin D to keep your bones strong and reduce the risk of fracture. Choose low-fat versions of calcium rich foods, such as milk, cheese and yoghurt.</li>
+			<li title="*">Avoid wearing loose-fitting or open-backed shoes and shoes with heels that may cause you to slip or trip.</li>
+			<li title="*">Take precautions in the home</li>
+			<li title="*">Simple modifications in your home can help reduce accidents.</li>
+		</ul><h3>Ten Top Tips for Safety on the Stairs</h3><ul>
+			<li title="*">Light up your stairs</li>
+			<li title="*">Take care when carrying things up and down stairs</li>
+			<li title="*">Take care when cleaning</li>
+			<li title="*">Keep stairs and landings free of clutter</li>
+			<li title="*">See your stairs, wear glasses if necessary.</li>
+			<li title="*">Consider your carpet</li>
+			<li title="*">More haste - less speed</li>
+			<li title="*">Stay steady</li>
+			<li title="*">Hold the handrail</li>
+			<li title="*">Keep using the stairs. Exercise helps to maintain muscle strength, balance and co-ordination.</li>
+		</ul><h3>If you do fall</h3><ul>
+			<li title="*">Try not to panic!</li>
+			<li title="*">If you feel pain, try to attract attention before moving.</li>
+			<li title="*">If you can not get help, try getting to a chair and sit on it before standing.</li>
+			<li title="*">If you can not get up, try to keep warm by covering yourself with something nearby. Tense your leg regularly to produce heat.</li>
+			<li title="*">Try to contact a neighbour or relative by banging on a wall or by phoning if possible.</li>
+			<li title="*">Inform your GP after a fall.</li>
+		</ul><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=429"> Applications for services
+		(429)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

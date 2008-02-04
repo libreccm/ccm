@@ -1,0 +1,165 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: package.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.domain;
+
+object type Package {
+    BigDecimal id = t_package.package_id;
+    String[1..1] name = t_package.name;
+    component Class[0..n] classes = join t_package.package_id to t_class.package_id;
+
+	object key (id);
+
+    delete {
+        do { delete from t_package_depends_on where depends_on_package_id = :id }
+        do { delete from t_package_depends_on where package_id = :id }
+        do { delete from t_package_used_by where used_by_package_id = :id }
+        do { delete from t_package_used_by where package_id = :id }
+		do { delete from t_class where package_id = :id }
+    }
+}
+
+
+object type Class {
+    BigDecimal id = t_class.class_id;
+    String[1..1] name = t_class.name;
+    Package[1..1] package = join t_class.package_id to t_package.package_id;
+    Boolean[0..1] isAbstract = t_class.is_abstract;
+
+    object key (id);
+}
+
+
+association {  
+
+   Package[0..n] used_by_set;
+   Package[0..n] depends_on_set;
+
+   retrieve used_by_set {
+	   do {
+            select p.package_id, p.name
+            from t_package p, t_package_used_by u
+			where u.package_id = :id 
+			and u.used_by_package_id = p.package_id
+        } map {
+            used_by_set.id = p.package_id;
+			used_by_set.name = p.name;
+        }
+    }
+
+	add used_by_set {
+		do {
+			insert into t_package_used_by ( package_id, used_by_package_id )
+			values (:id, :used_by_set.id)
+		}
+
+	}
+
+	remove used_by_set {
+		do {
+		  delete from t_package_used_by 
+		  where package_id = :id 
+		    and used_by_package_id = :used_by_set.id
+		}
+	}
+
+	clear used_by_set {
+		do {
+		  delete from t_package_used_by 
+		  where package_id = :id 
+		}
+	}
+
+
+   retrieve depends_on_set {
+	   do {
+            select p.package_id, p.name
+            from t_package p, t_package_depends_on d
+			where d.package_id = :id 
+			and d.depends_on_package_id = p.package_id
+        } map {
+            depends_on_set.id = p.package_id;
+			depends_on_set.name = p.name;
+        }
+    }
+
+	add depends_on_set {
+		do {
+			insert into t_package_depends_on ( package_id, depends_on_package_id )
+			values (:id, :depends_on_set.id)
+		}
+
+	}
+
+	remove depends_on_set {
+		do {
+		  delete from t_package_depends_on 
+		  where package_id = :id 
+		    and depends_on_package_id = :depends_on_set.id
+		}
+	}
+
+	clear depends_on_set {
+		do {
+		  delete from t_package_depends_on 
+		  where package_id = :id 
+		}
+	}
+
+}
+
+
+query AfferentCoupling
+{
+
+	Integer count;
+	do
+	{
+		select count(*) as c from t_package_used_by
+		where package_id = :id
+	} map {
+		count = c;
+	}
+
+}
+
+query EfferentCoupling
+{
+	Integer count;
+	do
+	{
+		select count(*) as c from t_package_depends_on
+		where package_id = :id
+	} map {
+		count = c;
+	}
+
+}
+
+query Abstractness
+{
+        Float abstractness;
+	do
+	{
+		select package_abstractness(:id) as a from dual
+	} map
+	{
+		abstractness = dual.a;
+	}
+}

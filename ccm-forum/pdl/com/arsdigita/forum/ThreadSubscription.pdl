@@ -1,0 +1,60 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ThreadSubscription.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:26:27 $
+model com.arsdigita.forum;
+
+import com.arsdigita.messaging.Thread;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Group;
+import com.arsdigita.kernel.User;
+
+object type ThreadSubscription extends ACSObject {
+
+    Thread[1..1] thread = 
+        join forum_thread_subscriptions.thread_id 
+        to message_threads.thread_id;
+    component Group[1..1] group =
+        join forum_thread_subscriptions.group_id to groups.group_id;
+
+    reference key (forum_thread_subscriptions.subscription_id);
+
+    aggressive load (thread.id);
+}
+
+query getUserThreadSubscriptions {
+    ThreadSubscription subscription;
+
+    do {
+        select bts.subscription_id, bts.thread_id,
+               bts.group_id,
+               o.object_type, o.display_name
+        from   forum_thread_subscriptions bts,
+               acs_objects o
+        where  bts.subscription_id = o.object_id
+          and  exists (select 1 from group_member_trans_map m
+                       where m.group_id = bts.group_id
+                         and m.member_id = :userID)
+    } map {
+        subscription.id = subscription_id;
+        subscription.thread.id = thread_id;
+        subscription.group.id = group_id;
+        subscription.objectType = object_type;
+        subscription.displayName = display_name;
+    }
+}

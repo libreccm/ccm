@@ -1,0 +1,227 @@
+#!/usr/bin/perl -w
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use CCM::Runtime;
+use CCM::Util;
+use File::Find;
+use File::Spec;
+use Getopt::Long;
+use POSIX qw(setuid);
+use strict;
+
+my $verbose = 0;
+my $help = 0;
+my $usage = 0;
+
+my $OS = $^O;
+
+Getopt::Long::Configure("require_order", "pass_through");
+GetOptions('help' => \$help,
+           'usage' => \$usage,
+           'verbose+' => \$verbose);
+
+if ($ENV{'CCM_TOOLS_DEBUG'})   { $verbose += 2; }
+if ($ENV{'CCM_TOOLS_VERBOSE'}) { $verbose += 1; }
+
+my $CCM_HOME = CCM::Util::getRequiredEnvVariable("CCM_HOME");
+my $CCM_TOOLS_HOME = CCM::Util::getRequiredEnvVariable("CCM_TOOLS_HOME");
+my $CCM_TOOLS_COMMANDS_DIR = $ENV{'CCM_TOOLS_COMMANDS_DIR'};
+
+if ( ! -d $CCM_HOME ) {
+    CCM::Util::error ("CCM_HOME value '$CCM_HOME' is not a valid directory");
+}
+
+if ( ! -d $CCM_TOOLS_HOME ) {
+    CCM::Util::error ("CCM_TOOLS_HOME value '$CCM_TOOLS_HOME' is not a valid directory");
+}
+
+if (!defined $CCM_TOOLS_COMMANDS_DIR) {
+    $CCM_TOOLS_COMMANDS_DIR = File::Spec->catfile($CCM_TOOLS_HOME, "commands");
+}
+
+if ($verbose) {
+    print "CCM_HOME: $CCM_HOME\n";
+    print "CCM_TOOLS_HOME: $CCM_TOOLS_HOME\n";
+    print "CCM_TOOLS_COMMANDS_DIR: $CCM_TOOLS_COMMANDS_DIR\n";
+}
+
+if ($usage) {
+    &usagehelp('usage');
+} elsif ($help) {
+    &usagehelp('help');
+} else {
+    &getEnvironmentVariables();
+    my @other_args = ();
+    for (1..$verbose) {
+        push @other_args, "--verbose";
+    }
+    while (@ARGV) {
+        if ($ARGV[0] =~ /(-D|-X|-J)/) {
+            push @other_args, shift @ARGV;
+        } else {
+            last;
+        }
+    }
+    if (@ARGV == 0) {
+        &usagehelp('usage');
+        exit;
+    }
+    my $arg = $ARGV[0];
+    my $command = &lookup($ARGV[0]);
+    if ($command) {
+        unless ($ARGV[0] eq "hostinit" ||
+                $ARGV[0] eq "hostinit-bundle" ||
+                $ARGV[0] eq "mkservice" ||
+                $ARGV[0] eq "load-bundle") {
+            CCM::Util::setuser('servlet');
+        }
+        shift @ARGV;
+        &run("$command", @other_args, @ARGV);
+    } else {
+        if ($ARGV[0] eq 'load' && $OS ne 'MSWin32' && $< == 0) {
+            my $config = grep { $_ eq '--config' } @ARGV;
+            my $data = grep { $_ eq '--data' } @ARGV;
+            my $schema = grep { $_ eq '--schema' } @ARGV;
+            my $init = grep { $_ eq '--init' } @ARGV;
+            my $all = (!$config && !$data && !$schema);
+
+            if ($all || $config) {
+                shift @ARGV;
+                @ARGV = grep { $_ ne '--config' && $_ ne '--data' && $_ ne '--schema' && $_ ne '--init' } @ARGV;
+                my $pid = fork();
+                unless (defined $pid) {
+                    die "cannot fork: $!";
+                }
+                if ($pid) { # parent
+                    waitpid($pid,0);
+                    if ($?) { exit $? >> 8; }
+                } else { # child
+                    CCM::Util::setuser('ccmadmin');
+                    &run('ccm-run', @other_args, "com.arsdigita.packaging.MasterTool", "load", "--config", @ARGV);
+                }
+                if ($all || $schema || $data || $init) {
+                    if ($all || $schema) {
+                        unshift @ARGV, '--schema';
+                    }
+                    if ($all || $data) {
+                        unshift @ARGV, '--data';
+                    }
+                    if ($all || $init) {
+                        unshift @ARGV, '--init';
+                    }
+                    unshift @ARGV, 'load';
+                    CCM::Util::setuser('servlet');
+                    &run('ccm-run', @other_args, "com.arsdigita.packaging.MasterTool", @ARGV);
+                }
+            }
+        } elsif ($ARGV[0] eq 'upgrade' && $OS ne 'MSWin32' && $< == 0) {
+            my $ccm_user_id = getpwnam('servlet');
+            my $runtime = new CCM::Runtime;
+            find( sub { chown ($ccm_user_id, -1, $File::Find::name); },
+                  $runtime->getCCMConf());
+            my $pid = fork();
+            unless (defined $pid) {
+                die "cannot fork: $!";
+            }
+            if ($pid) { # parent
+                waitpid($pid,0);
+                my $exit_code = $?;
+                my $ccm_user_id = getpwnam('ccmadmin');
+                find( sub { chown ($ccm_user_id, -1, $File::Find::name); },
+                      $runtime->getCCMConf());
+                exit $exit_code >> 8;
+            } else { # child
+                CCM::Util::setuser('servlet');
+                &run('ccm-run', @other_args, "com.arsdigita.packaging.MasterTool", @ARGV);
+            }
+        } elsif ($ARGV[0] eq 'set') {
+            CCM::Util::setuser('ccmadmin');
+        } else {
+            CCM::Util::setuser('servlet');
+        }
+        &run('ccm-run', @other_args, "com.arsdigita.packaging.MasterTool", @ARGV);
+    }
+}
+
+sub run {
+    if ($verbose) {
+        print (join " ", @_);
+    }
+    system @_;
+    exit $? >> 8;
+}
+
+sub usagehelp {
+    my $type = shift;
+    my $text = `ccm-run com.arsdigita.packaging.MasterTool --$type`;
+    if ($?) {
+        exit $? >> 8;
+    } elsif (opendir(DIR, $CCM_TOOLS_COMMANDS_DIR)) {
+        local $/ = undef;
+        foreach (grep { /\.$type\z/s } (sort readdir(DIR))) {
+            if (open IN, "< " . File::Spec->catfile($CCM_TOOLS_COMMANDS_DIR,$_)) {
+                my $contents = <IN>;
+                $contents =~ s/\n(?!(?:\n|\Z))/\n             /xg;
+                close IN;
+                my $command = $_;
+                $command =~ s/.$type$//;
+                $text .= sprintf "  %-11s$contents\n", $command;
+            }
+        }
+        closedir DIR;
+    }
+    print $text;
+}
+
+sub lookup {
+    my $origcommand = shift;
+    my $command = File::Spec->catfile($CCM_TOOLS_COMMANDS_DIR,$origcommand);
+    if ($verbose > 1) {
+        print "looking up $command\n";
+    }
+    $command =~ /^([:\/\\\w\s\d\.-]+)$/ or return;
+    $command = $1;
+
+    if ( -x "$command" ) {
+        return $command;
+    }
+
+    if ($OS eq 'MSWin32') {
+        if (opendir(DIR, "$CCM_TOOLS_COMMANDS_DIR")) {
+            if (grep { /^$origcommand.cmd$/s && -x File::Spec->catfile($CCM_TOOLS_COMMANDS_DIR,$_) } (readdir(DIR))) {
+                closedir DIR;
+                return $command;
+            }
+            closedir DIR;
+        }
+    }
+
+    return;
+}
+
+sub getEnvironmentVariables {
+    my $file = File::Spec->catfile($CCM_HOME,"conf","envvars");
+    if ( -f $file && -r $file ) {
+        open (IN, $file) or CCM::Util::error ("could not open $file");
+        while ($_ = <IN>) {
+            next if m/^\s*\#/;
+            next if m/^\s*$/;
+            if ( m/^\s*([\w]+)=\s*"?(.+?)"?\s*$/ ) {
+                $ENV{$1} = $2;
+            }
+        }
+    }
+}

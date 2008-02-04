@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+  <ctd:content-type label="Bookmark"
+		    description="A Bookmark type"
+		    objectType="com.arsdigita.cms.contenttypes.Bookmark"
+		    classname="com.arsdigita.cms.contenttypes.Bookmark">
+
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+       <ctd:authoring-step label="Edit Basic Properties"
+        description="Edit basic properties"
+        component="com.arsdigita.cms.contenttypes.ui.BookmarkPropertiesStep" 
+        ordering="1"/>
+		
+      <ctd:authoring-step label="Assign categories"
+        description="Assign categories"
+        component="com.arsdigita.cms.ui.authoring.ItemCategoryStep" 
+        ordering="2"/>
+ 
+      </ctd:authoring-kit>
+  </ctd:content-type>
+</ctd:content-types>
+

@@ -1,0 +1,48 @@
+#!/usr/bin/perl -w
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use CCM::CommandsUtil;
+use CCM::Server;
+use Getopt::Long;
+
+my $help = 0;
+my $usage = 0;
+my $sc;
+my $verbose = 0;
+
+Getopt::Long::Configure("pass_through");
+if ( ! GetOptions(
+                  'container=s' => \$sc,
+                  'help' => \$help,
+                  'usage' => \$usage,
+                  'verbose+' => \$verbose
+                  )
+     ) {
+    CCM::CommandsUtil::printUsageAndExit();
+}
+
+CCM::CommandsUtil::printHelpAndExit() if $help;
+CCM::CommandsUtil::printUsageAndExit() if $usage;
+
+my $server = CCM::Server::getServer($sc);
+$server->verbose($verbose);
+if ($^O eq 'MSWin32') {
+    $server->windowsStop(@ARGV);
+} else {
+    $server->stop(@ARGV);
+}
+

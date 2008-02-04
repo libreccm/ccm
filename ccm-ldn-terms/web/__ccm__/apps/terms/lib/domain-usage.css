@@ -1,0 +1,28 @@
+table.domainUsage  {
+  width: 100%;
+  border-right: 1px solid black;
+}
+
+table.domainUsage thead {
+  text-align: center;
+  background-color: rgb(72,72,72);
+  color: rgb(255,255,255);
+}
+
+table.domainUsage tbody tr th {
+  background-color: rgb(128,128,128);
+}
+
+table.domainUsage tbody tr.even {
+  background-color: rgb(212,212,212);
+  color: rgb(0,0,0);
+}
+
+table.domainUsage tbody tr.odd {
+  background-color: rgb(255,255,255);
+  color: rgb(0,0,0);
+}
+
+table.domainUsage tbody tr td.icon {
+  width: 10%;
+}

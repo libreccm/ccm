@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=177}]"><cms:name>batch-23-177</cms:name><cms:language>en</cms:language><cms:title>Reparation orders</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=177}]"><cms:name>batch-23-177-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>reparation, orders</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=177}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The aims of a Reparation Order are to prevent you from further offending, by helping you to understand the effects of crime on the victim and to make amends. </i></p><hr/><p>It will involve work not exceeding a total of 24 hours, within a three months period from the making of the Order.</p><p>A member of the Youth Offending Team will arrange to meet you in order to explain the details of the programme. </p><h2>You may be asked to: </h2><ul>
+			<li title="*">Attend some group sessions to hear the effect that crime can have on victims and the community. </li>
+			<li title="*">Write a letter to apologise. </li>
+			<li title="*">Meet the victim, if he or she wishes, so that you can apologise in person. </li>
+			<li title="*">Carry out some practical work for the victim or the community. </li>
+		</ul><h2>What are the rules? </h2><ul>
+			<li title="*">You must keep all the appointments given to you by the Youth Offending Team Officer. </li>
+			<li title="*">Tell your Officer if you change address. </li>
+			<li title="*">Allow your Officer to see you at home when required. </li>
+			<li title="*">Do the things that are set for you in your Reparation Plan Programme. </li>
+		</ul><h2>What happens if I do not keep to the rules? </h2><ul>
+			<li title="*">Your Officer will ask you for an explanation, they will decide if your reason is acceptable or not. </li>
+			<li title="*">If you fail to keep more than two appointments without an acceptable reason, you will be taken back to Court. </li>
+		</ul><h2>But what if I have problems with the Programme? </h2><p>We want your Reparation Plan Order to succeed. If you have any problems with attendance or other problems in completing the Order let your Officer know as soon as possible. </p><h2>What happens if I do not co-operate? </h2><p>If you do not co-operate with the Reparation Order, you will be returned to the Court.</p><p>The Court may: </p><ul>
+			<li title="*">Tell you to complete the Order.
+  </li>
+			<li title="*">Fine you up to &#xA3;1,000. </li>
+			<li title="*">Impose an Attendance Centre Order. </li>
+			<li title="*">Discharge the Order and sentence you in a different way for the original Offence. </li>
+			<li title="*">If your Reparation Order was made in the Crown Court, you may be committed back to the Crown Court for re-sentence. </li>
+		</ul><p>A Reparation Order is a sentence of the Court, which will be supervised by a member of the  Youth Offending Team. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=177"> Providing Information
+		(177)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

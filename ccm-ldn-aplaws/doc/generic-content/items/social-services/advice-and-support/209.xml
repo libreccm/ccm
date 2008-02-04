@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=209}]"><cms:name>batch-22-209</cms:name><cms:language>en</cms:language><cms:title>Needs Assessment</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=209}]"><cms:name>batch-22-209-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>needs, assessment</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=209}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Before we can arrange services for you, you need to have an assessment. An assessment involves you (the user) and a trained member of our staff. You may also want to involve someone who looks after you (your carer) or someone to speak for you. The assessment can also include other people, such as your GP. </i></p><hr/><p>In your assessment, we will ask you: </p><ul>
+  <li title="*">What you think your needs are? </li>
+  <li title="*">What problems you are facing? </li>
+  <li title="*">What help you have now? </li>
+  <li title="*">What help you think you may need? </li>
+</ul><p>We will use this information to decide which services to arrange for you. If your needs are straightforward, the assessment will be straightforward too. If your needs are more complicated, your assessment will be more detailed. If necessary, we can arrange services to meet your needs while your assessment is completed. </p><p>We want to help as many people as possible, but we have to make sure that our services go to those who need them most. Whether you qualify for a particular service will depend on your level of need.</p><h2>Standards </h2><p>During your assessment: </p><ul>
+  <li title="*">We will consider your views and wishes. </li>
+  <li title="*">You can have a friend, relative or someone else to help you or speak for you, if you want. </li>
+  <li title="*">We will arrange for an interpreter if you do not speak English or if you use sign language. </li>
+  <li title="*">We will consider your carer's views. </li>
+  <li title="*">The people involved in your assessment will work together effectively. </li>
+  <li title="*">We will give you information about the services that are available and any charges involved. </li>
+</ul><p>After your assessment, we will tell you: </p><ul>
+  <li title="*">Which services you will get, who will provide them and where and when they will be provided. </li>
+  <li title="*">The name of the person who is your social worker or is responsible for managing your care. </li>
+</ul><p>If you want to apply for an assessment please use the contact details above. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=209"> Providing Information
+		(209)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

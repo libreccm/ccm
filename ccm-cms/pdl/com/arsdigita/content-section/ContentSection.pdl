@@ -1,0 +1,301 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: ContentSection.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+import com.arsdigita.categorization.*;
+import com.arsdigita.globalization.*;
+import com.arsdigita.kernel.*;
+import com.arsdigita.workflow.simple.*;
+import com.arsdigita.notification.*;
+import com.arsdigita.web.Application;
+
+object type ContentSection extends Application {
+  String[1..1]           label = content_sections.pretty_name VARCHAR(300);
+  String[1..1]           pageResolverClass = content_sections.page_resolver_class VARCHAR(1000);
+  String[1..1]           itemResolverClass = content_sections.item_resolver_class VARCHAR(1000);
+  String[1..1]           templateResolverClass = content_sections.template_resolver_class VARCHAR(1000);
+  String[1..1]           xmlGeneratorClass = content_sections.xml_generator_class VARCHAR(1000);
+  Folder[1..1]           rootFolder = join content_sections.root_folder_id 
+                                        to cms_folders.folder_id;
+  Folder[1..1]     templatesFolder = join content_sections.templates_folder_id
+                                       to cms_folders.folder_id;
+  Group[1..1]            staffGroup = join content_sections.staff_group_id
+                                        to groups.group_id;
+  Group[1..1]            viewersGroup = join content_sections.viewers_group_id
+                                          to groups.group_id;
+  Locale[0..1]       defaultLocale = join content_sections.section_id 
+                                       to cms_section_locales_map.section_id, 
+                                     join cms_section_locales_map.locale_id 
+                                       to g11n_locales.locale_id;
+
+  reference key (content_sections.section_id);
+
+  retrieve defaultLocale {
+    do {
+      select 
+        l.locale_id, l.language, l.country, l.variant
+      from 
+        g11n_locales l, cms_section_locales_map m
+      where
+        l.locale_id = m.locale_id
+      and
+        m.is_default = '1'
+      and
+        m.section_id = :id
+    } map {
+      defaultLocale.id        = l.locale_id;
+      defaultLocale.language  = l.language;
+      defaultLocale.country   = l.country;
+      defaultLocale.variant   = l.variant;
+    }
+  }
+
+  // The add defaultLocale event must be called on a locale
+  // that is already registered to the content section, otherwise
+  // nothing will happen.
+  add defaultLocale {
+    do {
+      update cms_section_locales_map
+      set
+        is_default = '0'
+      where
+        is_default = '1'
+      and
+        locale_id = :defaultLocale.id
+      and
+        section_id = :id
+    }
+    do {
+      update cms_section_locales_map
+      set
+        is_default = '1'
+      where
+        locale_id = :defaultLocale.id
+      and
+        section_id = :id
+    }
+  }
+
+  // Removes the default locale for the section.
+  remove defaultLocale {
+    do {
+      update cms_section_locales_map
+      set
+        is_default = '0'
+      where
+        is_default = '1'
+      and
+        section_id = :id
+    }
+  }
+}
+
+////////////////////////////////
+//
+//      Globalization
+//
+
+
+association {
+  ContentSection[0..n]   sections = join g11n_locales.locale_id 
+                                      to cms_section_locales_map.locale_id,
+                                    join cms_section_locales_map.section_id
+                                      to content_sections.section_id;
+  Locale[0..n]           locales = join content_sections.section_id
+                                      to cms_section_locales_map.section_id,
+                                    join cms_section_locales_map.locale_id
+                                      to g11n_locales.locale_id;
+
+    retrieve sections {}
+    add sections {}
+    remove sections {}
+    
+    add locales {
+        do {
+            insert into cms_section_locales_map (
+            section_id, locale_id, is_default
+            ) values ( 
+            :id, :locales.id, '0'
+            )
+        }
+    }
+}
+
+
+
+
+////////////////////////////////
+//
+//      CMS Lifecycle stuff
+//
+
+// Mapping between a lifecycle definition and a content section
+association {
+  ContentSection[0..n]        associatedContentSections = 
+      join lifecycle_definitions.definition_id
+        to section_lifecycle_def_map.cycle_definition_id,
+      join section_lifecycle_def_map.section_id to content_sections.section_id;
+
+  component LifecycleDefinition[0..n]   associatedLifecycleDefinitions =
+      join content_sections.section_id to section_lifecycle_def_map.section_id,
+      join section_lifecycle_def_map.cycle_definition_id 
+        to lifecycle_definitions.definition_id;    
+}
+
+
+
+// 3-way association used to model the default lifecycle definition for a 
+// content type in a content section.
+// TODO: make this a standard association using link attributes
+object type ContentTypeLifecycleDefinition{
+  BigDecimal[1..1]     sectionId = content_type_lifecycle_map.section_id INTEGER;
+  BigDecimal[1..1]     contentTypeId = content_type_lifecycle_map.content_type_id INTEGER;
+  BigDecimal[1..1]     lifecycleDefinitionId = content_type_lifecycle_map.cycle_definition_id INTEGER;
+
+  object key (sectionId, contentTypeId);
+
+  retrieve {
+    do {
+      select 
+        content_type_id, section_id, cycle_definition_id
+      from 
+        content_type_lifecycle_map
+      where 
+        content_type_id = :contentTypeId
+      and 
+        section_id = :sectionId
+    } map {
+      sectionId             = section_id;
+      contentTypeId         = content_type_id;
+      lifecycleDefinitionId = cycle_definition_id;  
+    }
+  }
+
+  insert {
+    do {
+      insert into content_type_lifecycle_map (
+        section_id, content_type_id, cycle_definition_id
+      ) values (
+        :sectionId, :contentTypeId, :lifecycleDefinitionId
+      )
+    }
+  }
+
+  update {
+    do {
+      update content_type_lifecycle_map
+      set 
+        cycle_definition_id = :lifecycleDefinitionId
+      where 
+        section_id = :sectionId
+      and 
+        content_type_id = :contentTypeId
+    } 
+  }
+
+  delete {
+    do {
+      delete from content_type_lifecycle_map
+      where section_id = :sectionId
+        and content_type_id = :contentTypeId
+    }
+  }
+}
+
+
+
+////////////////////////////////
+//
+//      CMS Workflow stuff
+//
+////////////////////////////////
+
+// Mapping between a worklfow template and a content section
+association {
+  ContentSection[0..n]        associatedContentSections =
+     join cw_process_definitions.process_def_id
+       to section_workflow_template_map.wf_template_id,
+     join section_workflow_template_map.section_id 
+       to content_sections.section_id;
+  component WorkflowTemplate[0..n]   associatedWorkflowTemplates =
+     join content_sections.section_id 
+       to section_workflow_template_map.section_id,
+     join section_workflow_template_map.wf_template_id
+       to cw_process_definitions.process_def_id;
+}
+
+
+// 3-way association used to model the default workflow template for a 
+// content type in a content section.
+// TODO: Replace this with a standard association with link attributes
+object type ContentTypeWorkflowTemplate {
+  BigDecimal[1..1]     sectionId = content_type_workflow_map.section_id INTEGER;
+  BigDecimal[1..1]     contentTypeId = content_type_workflow_map.content_type_id INTEGER;
+  BigDecimal[1..1]     workflowTemplateId = content_type_workflow_map.wf_template_id INTEGER;
+
+  object key (sectionId, contentTypeId);
+
+  retrieve {
+    do {
+      select 
+        content_type_id, section_id, wf_template_id
+      from 
+        content_type_workflow_map
+      where 
+        content_type_id = :contentTypeId
+      and 
+        section_id = :sectionId
+    } map {
+      sectionId          = section_id;
+      contentTypeId      = content_type_id;
+      workflowTemplateId = wf_template_id;  
+    }
+  }
+
+  insert {
+    do {
+      insert into content_type_workflow_map (
+        section_id, content_type_id, wf_template_id
+      ) values (
+        :sectionId, :contentTypeId, :workflowTemplateId
+      )
+    }
+  }
+
+  update {
+    do {
+      update content_type_workflow_map
+      set 
+        wf_template_id = :workflowTemplateId
+      where 
+        section_id = :sectionId
+      and 
+        content_type_id = :contentTypeId
+    } 
+  }
+
+  delete {
+    do {
+      delete from content_type_workflow_map
+        where section_id = :sectionId
+        and content_type_id = :contentTypeId
+    }
+  }
+}

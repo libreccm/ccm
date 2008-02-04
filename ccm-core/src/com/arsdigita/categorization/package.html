@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head> 
+   <title>com.arsdigita.categorization</title>
+  </head>
+  <body>
+    
+    <p>The Categorization service provides an infrastructure for developers to
+      categorize arbitrary content within the system.
+    </p>
+
+    <p>Categories are organized hierarchically.  A (parent) category may have
+      <em>related</em> subcategories. A subcategory may have more than one
+      parent.  One of these parents may be designated as the <em>default</em>
+      parent (see {@link
+      com.arsdigita.categorization.Category#setDefaultParentCategory(Category)}).
+      Categories are usually organized as a tree where each category except one
+      has a default parent.  The single category with no parents is called the
+      <em>root category</em>.
+    </p>
+
+    <div align="center" id="taxonomy"><img src="doc-files/package-1.png" alt="Sample taxonomy"></div>
+
+    <p>In the above example, the "Televised events" is the only one that has two
+      parents.  Its default parent is "TV Shows", and the other parent "Sports".
+      Whether or not a category is the default parent of another category
+      influences operation of many methods.  See, for example, {@link
+      com.arsdigita.categorization.Category#deleteCategorySubtree()}.
+    </p>
+
+    <p>You can categorize an object by adding it to a category via the {@link
+      com.arsdigita.categorization.Category#addChild(ACSObject)} method.  An
+      object can belong to more than one category.
+    </p>
+
+    <div align="center"><img id="sample_cat" src="doc-files/package-2.png" alt="Sample categorization"></div>
+
+    <p>The above example shows three categorized objects. The movie
+     <em>Jaws</em> and the show <em>Iron Chef</em> are categorized under a
+     single category each, whereas <em>The Natural</em> is categorized under
+     two.
+    </p>
+
+    <p>An application may have more than one category tree. These separate
+      category trees are distinguished by tying their roots to selected anchor
+      objects.  Say, you have a content section.  Within the content section,
+      you want to make use of three different category trees: one for your Human
+      Resources department, another one for Legal, and the third one for
+      Marketing.  This can be achieved via {@link
+      com.arsdigita.categorization.Category#setRootForObject(ACSObject,
+      Category, String)}, by using your <em>content section</em> object as the
+      anchor and by mapping each of the respective category roots to it, with
+      diffrent use contexts.
+    </p>
+    
+    <p>The {@link com.arsdigita.categorization.Category} class is the central
+      class in this package and an entry point to most of the functionality
+      provided by the categorization service.  The {@link
+      com.arsdigita.categorization.Categorization} class provides a number of
+      (static) utility methods.
+    </p>
+  </body>
+</html>

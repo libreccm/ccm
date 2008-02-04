@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=774}]"><cms:name>application-for-new-beds-774</cms:name><cms:language>en</cms:language><cms:title>Application for New Beds</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=774}]"><cms:name>application-for-new-beds-774-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>application, new, beds</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=774}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Applications must be made to the Marine Consents and Environment Unit (MCEU) for any works at sea.</i></p><hr/><p>
+<strong>
+
+		<a href="http://www.mceu.gov.uk/">The 
+  Marine Consents and Environment Unit (MCEU)</a>	
+</strong> <span class="gen">link to external website</span> 
+  is an alliance of the Marine Environment Branch of the Department for Environment, 
+  Food and Rural Affairs (DEFRA) and Ports Division (Casework Branch) of the Department 
+  for Transport.</p><p>The job of the MCEU is to 
+  provide a central facility for receipt and administration on behalf of both 
+  Departments of applications to undertake works in tidal waters and at sea, including 
+  marine developments, offshore energy, coast defences, dredging and waste disposal. 
+  The Unit also administers certain applications on behalf of the Welsh Assembly 
+  Government which is the licensing authority in Welsh waters.</p><p>This website aims to provide 
+  information about the consents regimes for which the MCEU has responsibility, 
+  the arrangements for 
+		<a href="http://www.mceu.gov.uk/MCEU_LOCAL/fepa/applic-make.htm">
+<strong>making 
+  an application</strong>
+</a>	 <span class="gen">link to external website</span> 
+  to undertake marine works and the procedures for determining such applications. 
+  It also serves as a 'portal' for the access of more general information about 
+  other marine controls as well as marine environmental and navigational safety 
+  matters.   </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=774"> Providing Information
+		(774)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

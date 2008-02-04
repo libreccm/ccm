@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=13}]"><cms:name>education-3-13</cms:name><cms:language>en</cms:language><cms:title>Primary school places</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=13}]"><cms:name>education-3-13-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>primary, school, places</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=13}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Basic information regarding primary school places</i></p><hr/><p>In September <span class="gen">enter date</span>, 
+  there will be over <span class="gen">enter amount</span> children 
+  starting primary school in <span class="gen">enter council name</span>
+		</p><p>If the number of places at each school in <span class="gen">enter council name</span> were unlimited, then every child would be able to 
+  attend their preferred primary school, but unfortunately this is not the case. The 
+  number of children each school can accept is limited, and the Council cannot guarantee 
+  that a place will be available at your preferred school.</p><p>The Government has introduced a class size initiative. No 5, 
+  6 or 7 year old at Key Stage 1 should be in a class of over 30 pupils for a normal 
+  teaching session.</p><p>If you cannot be allocated a place at your preferred school, 
+  consideration will be given to your named alternative on the application form.</p><h4>Application Procedures</h4><p>The normal procedure is that you tell the school of your choice 
+  that you would like a place there for your child.</p><p>Admission arrangements for Community schools and Voluntary Controlled 
+  church schools are different from arrangements for Voluntary Aided church schools.</p><p>Details of how to apply and how places are allocated are given 
+  on this page.</p><h4>Applying for a place at a community/voluntary controlled school</h4><p>The Council is responsible for allocating places at all Community 
+  schools and Voluntary Controlled schools and all requests for places are dealt with 
+  by officers of the Council.</p><p>You should make sure that your child's name is known to your 
+  preferred primary school. In most cases this will be your local primary school. 
+  </p><p>An 
+			 is available <span class="gen">link to online form</span>, and ALL copies should be completed 
+  and returned to your preferred school by <span class="gen">enter date</span>
+		</p><p>Should a preferred school not be named on the form, a place 
+  will be allocated to the school nearest to your home that has places available. 
+  </p><p>The form will be signed upon receipt, on behalf of the school. 
+  The schools will then pass one copy of all forms to the School Organisation Section 
+  at the Council Offices. One copy will be retained by the school for their records. 
+  The remaining copy will be made available to the parent to acknowledge receipt of 
+  the application. </p><p>All requests for schools are considered at the same time. Late 
+  applications will be dealt with after all places have been allocated to pupils whose 
+  Admission Forms were submitted on time, if the available class has been filled to 
+  the maximum of 30 it will not be possible (in normal circumstances) to offer a place 
+  at that school.  </p><h4>Special Circumstances</h4><p>On the Admission Form there is a box marked Special Circumstances. 
+  You should tick this box if you have special reasons for wanting a place at a particular 
+  school. These could be medical or exceptional family circumstances. </p><p>Please give as much information as you can which might help 
+  us when allocating places, by filling in the Special Circumstances sheet. If your 
+  child has particular needs relating to accommodation, please include these details 
+  as part of your 'Special Circumstances'. The sheet should be attached to the Admission 
+  Form . All information will be treated in the strictest confidence. </p><h4>How places are allocated to community and voluntary controlled 
+  schools</h4><p>Each school has an admission limit, which has been agreed by 
+  the Council following discussion with the Governing Body of the school.</p><p>If there are fewer requests for places at a particular school 
+  than the admission limit, the Council will ask the headteacher to offer a place 
+  to each child. </p><p>If the school is oversubscribed, ie. there are more requests 
+  for places at a school than places available, the Council apply criteria to decide 
+  which children should gain places </p><p>Please note: All applications submitted by the closing date 
+  will be dealt with at the same time. This means that your child will not get greater 
+  priority if his/her name has been known to the school longer than other children. 
+  </p><p>It is also important to remember that attendance at a nursery 
+  school which is attached to, or near to, a particular primary school does not guarantee 
+  your child a place at the school. </p><h4>Applying for a place at a voluntary aided church school</h4><p>The Governing Body of each Voluntary Aided (Church) school deals 
+  with admissions to that particular school. </p><p>You should make sure that your child's name is known to your 
+  preferred primary school. Closing dates vary and you should contact your preferred 
+  school as soon as possible. If you are not offered a place at a Voluntary Aided 
+  school before the closing date for admission to Community schools, you should apply 
+  for a place at a Community school. </p><p>Each Voluntary Aided school has its own criteria for deciding 
+  admission if the school is over subscribed (ie. if more pupils want places at the 
+  school than there are places available). </p><p>The headteacher of the school concerned can inform you of the 
+  criteria that he or she is required to apply. In general the following guidance 
+  may be of help. </p><h4>
+			<strong>Church of England Voluntary Aided Schools</strong>
+		</h4><p>These schools wish to preserve the denominational character 
+  and ethos of the spiritual tradition on which they are founded. </p><p>Criteria for allocations may include factors such as membership 
+  of a church. Both length of time and frequency of attendance, are taken into consideration, 
+  and often written confirmation of attendance from a clergyman is requested. </p><p>A sibling connection is important in all cases, but not necessarily 
+  a priority. </p><p>In the case of oversubscription, (too many requests for the 
+  places available) a practicing Christian family is the first criterion in over 50% 
+  of the schools, while a sibling connection is the first criterion in the remaining 
+  schools. </p><p>These are general features, common to all these schools. To 
+  obtain more detailed information about an individual school, parents are advised 
+  to consult each school's own prospectus. </p><p>
+			<strong>Roman Catholic Voluntary Aided Primary Schools</strong>
+		</p><p>These schools wish to preserve the denominational character 
+  and ethos of the spiritual tradition on which they are founded. In many cases, when 
+  considering admissions, the Governing Body insists that the child should be a baptised 
+  Catholic, and should attend the church regularly. Proof of baptism may be requested. 
+  </p><p>Baptised Catholic children from neighbouring churches will also 
+  be considered. </p><p>These are general features, common to all these schools. To 
+  obtain more detailed information about an individual school, parents are advised 
+  to consult each school's own prospectus. </p><p>A number of Voluntary Aided Roman Catholic schools have an agreement 
+  with the Local Education Authority under Section 91 of the School Standards and 
+  Framework Act 1998. This means that the school can limit the number of children 
+  admitted to the school who are not of the school's particular faith. These agreements will cease to operate, 
+  as a result of changes in legislation, for admissions from <span class="gen">enter date</span> onwards. 
+  If you have any queries about this, please speak to the headteacher of the school. 
+  </p><p>If you are seeking a place from a Roman Catholic Voluntary aided primary school and you are unsuccessful, you have the right of appeal to the Governing Body. The headteacher 
+  will inform you, on request, about the appeal arrangements at the school. In normal 
+  circumstances the Appeal Panel cannot admit pupils if there are already 30 in the 
+  class. </p><h4>Criteria for allocating places at oversubscribed community 
+  and voluntary controlled schools </h4><p>You should be aware that a number of schools are oversubscribed 
+  each year. Where a school is oversubscribed, places will be offered on the basis 
+  of the four criteria indicated below, in order of priority, and will take into account 
+  the availability of accommodation at other schools in the area. </p><li title="*">
+				<strong>Brothers/Sisters</strong> - If there are any brothers/sisters living at the same 
+    address, attending the school or its associated junior school, provided that the 
+    school is chosen as first preference, and the application is received on time.</li><li title="*">
+				<strong>Exceptional Medical Reasons</strong> - If a medical reason is claimed, evidence 
+    from the child's own doctor that the child has an ongoing medical condition which 
+    means that admission to a particular school is essential, must be provided at 
+    the same time as the admission form. This information will be passed on in confidence 
+    to the Community Health Physician and/or the Educational Psychology Service for 
+    further discussion and an appointment would usually be made to consider the condition.</li><li title="*">
+				<strong>Exceptional Family Reasons</strong> - Where admission to a particular school is 
+    essential for the wellbeing of the family, written evidence should clearly demonstrate 
+    this need. Many families have complex childcare arrangements, for example, and 
+    factors such as these are not considered as exceptional.</li><li title="*">
+				<strong>Distance</strong> - Preference will be given to pupils living nearest the school 
+    taking into account ease of access to and distance from alternative schools. 
+    <p>The 'statutory walking distance', measured over the 'nearest available 
+    route' is two miles, for children under the age of eight. (Section 199 Education 
+    Act 1993).</p>
+				<p>Ease of access will be considered when no other school is within a reasonable travelling 
+  distance and the school in question is the nearest school. </p>
+				<p>Places are allocated on the basis of the parent's principal home address. The only 
+  address that the Authority can consider is the address of the parent/guardian with 
+  whom the child is permanently resident. Where the proposed admission is to coincide 
+  with a change of address, the Authority will require evidence such as a solicitor's 
+  confirmation of exchange of contracts.</p>
+				<p>If the child is cared for on a daily basis at another address, for example, 
+      by a childminder, grandparents or another member of the family, this address 
+      cannot be considered by the authority for the purpose of its admission process.</p>
+				<p>Where schools are likely to be oversubscribed, parents will be asked to provide 
+  proof of the principal address, by way of official documents displaying the name 
+  and address of the parents. </p>
+				<p>Please note that strong action will be taken by the Council if a false address 
+  is given, including withdrawal of the offer of a place at the named school(s). </p>
+			</li><p>What happens if you do not gain a place at your preferred school?</p><p>If you are not offered your preferred school, a place in another 
+  school will be offered. If you have stated a second preference, the Council will 
+  offer a place at this school if the places have not been filled with parents who 
+  made it their first preference. More information regarding 
+		<a href="/ccm/services/pid.jsp?pid=705">
+				<strong>appeals</strong>
+			</a>	
+			<span class="gen">link to pid 705.</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=13"> Applications for services
+		(13)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=13}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=13}]"/></cms:links></cms:item>

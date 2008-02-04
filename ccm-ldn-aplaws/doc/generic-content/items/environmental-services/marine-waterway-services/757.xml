@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=757}]"><cms:name>batch-13-757</cms:name><cms:language>en</cms:language><cms:title>Boat and trailer parking</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=757}]"><cms:name>batch-13-757-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>boat, trailer, parking</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=757}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Here you will find the cost of parking your boat of trailer at various harbours/ports in the area.</i></p><hr/><h2>Name of Harbour/Port: <span class="gen">enter facility name</span>
+</h2><p>
+<strong>Boat/Trailer Daily Parking: </strong>
+<span class="gen">enter amount</span>
+<br/>
+		<strong>Boat/Trailer Overnight Parking: </strong>
+<span class="gen">enter amount</span>
+<br/>
+		<strong>Overnight Boat/Trailer Parking (Weekly): </strong>
+<span class="gen">enter amount</span>
+</p><h2>Name of Harbour/Port: <span class="gen">enter facility name</span>
+</h2><p>
+<strong>Boat/Trailer Daily Parking: </strong>
+<span class="gen">enter amount</span>
+<br/>
+		<strong>Boat/Trailer Overnight Parking: </strong>
+<span class="gen">enter amount</span>
+<br/>
+		<strong>Overnight Boat/Trailer Parking (Weekly): </strong>
+<span class="gen">enter amount</span>
+</p><p>See also information regarding <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=762">Launching</a>	.</strong> <span class="gen">link to pid 762</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=757"> Providing Information
+		(757)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

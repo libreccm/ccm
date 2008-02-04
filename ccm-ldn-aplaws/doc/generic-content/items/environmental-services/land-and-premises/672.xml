@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=672}]"><cms:name>batch-8-672</cms:name><cms:language>en</cms:language><cms:title>Local land charges search</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=672}]"><cms:name>batch-8-672-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>local, land, charges, search</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=672}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently Asked Questions regarding Local land charges</i></p><hr/><ul>
+		<li title="*">
+<strong>
+
+		<a href="#1">What's it all about? </a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#2">Official Local Land Charge 
+      Searches</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#3">Water Searches</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#4">Fees</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#6">What about CON 29 Questions?</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#6">How to request a search</a>	
+</strong>
+</li>
+		<li title="*">
+<strong>
+
+		<a href="#7">Our Commitment to you</a>	
+</strong>
+</li>		
+		</ul><h4>
+
+			What's it all about?</h4><p>When you buy a house, your solicitor will make a search of the Council's records to ensure there are no hidden surprises, such as motorways at the bottom of your garden or outstanding Notices requiring you to take action to remedy an earlier wrong doing.</p><h4>
+
+			Official Local Land Charge Searches</h4><p>The Local Land Charge Section carries out all official searches covered by the Local Land charges Act 1975, guaranteeing comprehensive replies to the official LLC1 and CON29 enquiries.</p><p>The Law Society, which regulates solicitors, encourages the use of official searches and considers that alternative personal searches of the statutory register, disclosing only limited information, should only be undertaken with the approval of the client when time does not permit official searches. You are advised to confirm with your solicitor that an official search has been undertaken 
+  and to inspect the Certificate of Official Search.</p><p>The search will be in two parts:-</p><p>
+<strong>LLC1</strong> - this first part, the Official Certificate of Search Form , deals with all the registerable charges, for example financial charges (registered against the property by the local authority), improvement grants, tree preservation orders, conditional planning consents and agreements.</p><p>
+<strong>CON29</strong> - the second part called Enquiries of Local Authorities Form deals with issues such as road schemes, the planning history of the property and various notices which affect the property.</p><p>Please note that searches must include the following when submitted to be accepted for processing:- </p><p>If a search is submitted by a solicitor, cheques drawn on the solicitor's client account are requested, made out with the correct amount to <span class="gen">enter details</span> Clients own cheques are not accepted as a method of payment. Please contact us regarding the fee using the contact details above.</p><p>The correct address quoted together with an up to date scale plan in duplicate showing the extent and location of the land subject of search, clearly edged in red.</p><h4>
+
+			Water Searches</h4><p>
+<span class="gen">enter facility name</span> looks after the network of public sewers in <span class="gen">enter council name</span>
+</p><p>If you are asking for a search to be undertaken or you are waiting to undertake a personal search, please contact your water company on <span class="gen">enter telephone number</span>.</p><p>
+<strong>
+
+		<a href="/ccm/services/pid.jsp?pid=664">Help and advice on highway drainage, land drainage or private drainage.</a>	
+</strong> <span class="gen">link to pid 664</span>
+</p><h4>
+
+			Fees</h4><table width="90%" cellpadding="5" class="centre" summary="">
+  <tr> 
+    <td>LLC1 and CON 29 (standard search forms)</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>LLC1 (search of Land Charges register only)</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Additional Part II enquiries (optional)</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Additional Solicitors questions</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>Extra parcels of land</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>CR21 (Common Search)</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><h4>
+
+			What about CON 29 questions?</h4><p>The CON 29 enquiries questionnaire, which forms part of the official search, contains many 'Warning' questions, the answers to which you will not find on any of the statutory registers.</p><p>Examples of the information only to be found by submitting a CON 29 are given below:-</p><ul>
+     <li title="*">Compulsory Purchase Orders</li>
+  <li title="*">Proposed <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=508">Tree Preservation Orders</a>	
+</strong> <span class="gen">link to pid 508</span>
+</li>
+  <li title="*">Many informal notices under planning and highways laws not found on any register</li>
+  <li title="*">Road proposals or schemes (including road widening)</li>
+  <li title="*">Proposed enforcement action or breach of conditions notices</li>
+  </ul><p>If you rely on a personal search from a solicitor or personal search company may we remind you that they are not given, or entitled to receive, answers to the questions on the CON 29, and any information they do obtain is not covered by Section 10(3) of the Local Land Charges Act 1975 which relates to compensation for loss. The only way to receive this information is to submit the official LLC1 and CON 29 forms.</p><h4>
+
+			How to request a search</h4><p>There are full instructions on the Local Land Charge Search forms. Your solicitor will have these forms or you can buy them from law stationers.</p><p>Both the LLC1 and CON29 forms should be submitted at the same time if answers to both are required.</p><h4>
+
+			Our Commitment to You</h4><p>We aim to return all official searches within 5 working days and in any case within 10 working days.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=672"> Providing Information
+		(672)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

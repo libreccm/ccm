@@ -1,0 +1,55 @@
+//
+// Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: query-getSubcategories.ora.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.categorization;
+
+
+// This query is modified from the original query in core.
+// the difference is the addition of abstract_p
+// Because we are using categorization for browsing it makes sense to
+// be able to categorize items under the "root" category.  In particular,
+// it makes sense to include the home page under the root category.
+query getSubCategories {
+    BigDecimal id;
+    String name;
+    BigDecimal nchild;
+    Boolean isAbstract;
+    BigDecimal sortKey;
+
+    do {
+        select g.name,
+               g.category_id,
+               count(sd2.category_id) as sub_count, abstract_p, sd1.sort_key
+        from cat_categories g,
+             cat_category_category_map sd1,
+             cat_category_category_map sd2
+        where sd1.category_id = :objectID
+          and g.category_id = sd1.related_category_id
+          and sd1.relation_type = 'child'
+          and sd2.category_id(+) = sd1.related_category_id
+          and sd2.relation_type(+) = 'child'
+        group by g.name, g.category_id, abstract_p, sd1.sort_key
+    } map {
+        id = g.category_id;
+        name = g.name;
+        nchild = sub_count;
+        isAbstract = abstract_p;
+        sortKey = sd1.sort_key;
+    }
+}

@@ -1,0 +1,41 @@
+div.layout-panel, div.layout-panel div {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+div.layout-panel div.top {
+  border-bottom: 4px solid rgb(222,222,222);
+  padding: 8px;
+}
+
+div.layout-panel table.middle {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-spacing: 0;
+  empty-cells: show;
+}
+
+div.layout-panel table.middle td.left {
+  width: 25%;
+  border-right: 3px solid rgb(222,222,222);
+  padding: 8px;
+  vertical-align: top;
+}
+
+div.layout-panel table.middle td.body {
+  padding: 8px;
+  vertical-align: top;
+}
+
+div.layout-panel table.middle td.right {
+  width: 25%;
+  border-left: 3px solid rgb(222,222,222);
+  padding: 8px;
+  vertical-align: top;
+}
+
+div.layout-panel div.bottom {
+  border-top: 3px solid rgb(222,222,222);
+}

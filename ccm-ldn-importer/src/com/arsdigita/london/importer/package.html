@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<title>com.arsdigita.london.importer</title>
+</head>
+<body bgcolor="white">
+
+<p>
+    Generic CMS content items importer.
+</p>
+
+<p> Importer can import content items from XML source, placing them
+  at specified place in folder hierarchy.  Importer expects XML
+  input in format similar to output of DomainObjectTraversal, with
+  some modifications.  There is also possibility to start workflow on
+  imported objects.
+</p>
+
+<p> The basic XML input file has a structure like this:
+</p>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;import source="camden.aplaw.org.uk" xmlns="http://xmlns.redhat.com/waf/london/importer/1.0"&gt;
+  &lt;folder xmlns="http://www.arsdigita.com/cms/1.0" label="Root Folder " name="/" oid="[com.arsdigita.cms.Folder:{id=556}]"&gt;
+   &lt;folder label="one" name="one" oid="[com.arsdigita.cms.Folder:{id=4402}]"&gt;
+     &lt;folder label="Two Test" name="two-test" oid="[com.arsdigita.cms.Folder:{id=4407}]"&gt;
+        &lt;cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" oid="[com.arsdigita.cms.contenttypes.Article:{id=4412}]"&gt;
+           &lt;fileAttachments oid="[com.arsdigita.cms.contentassets.FileAttachment:{id=4448}]"&gt;
+              &lt;name&gt;Address.xsd&lt;/name&gt;
+              &lt;content file="content-4448-Address.xsd"/&gt;
+           &lt;/fileAttachments&gt;
+           &lt;name&gt;eeek&lt;/name&gt;
+           &lt;type oid="[com.arsdigita.cms.ContentType:{id=144}]"/&gt;
+           &lt;launchDate&gt;Tue Dec 02 00:00:00 GMT 2003&lt;/launchDate&gt;
+           &lt;title&gt;Eeek&lt;/title&gt;
+           &lt;textAsset oid="[com.arsdigita.cms.TextAsset:{id=4429}]"&gt;
+              &lt;content&gt;Edit text here&lt;/content&gt;
+           &lt;/textAsset&gt;
+           &lt;imageCaptions oid="[com.arsdigita.cms.ArticleImageAssociation:{id=4439}]"&gt;
+              &lt;caption&gt;sdfdsfs&lt;/caption&gt;
+              &lt;imageAsset oid="[com.arsdigita.cms.ReusableImageAsset:{id=1734}]"&gt;
+                 &lt;name&gt;5.jpg&lt;/name&gt;
+                 &lt;mimeType oid="[com.arsdigita.cms.MimeType:{mimeType=image/jpeg}]"&gt;
+                    &lt;label&gt;JPG image&lt;/label&gt;
+                    &lt;mimeType&gt;image/jpeg&lt;/mimeType&gt;
+                    &lt;fileExtension&gt;jpg&lt;/fileExtension&gt;
+                 &lt;/mimeType&gt;
+                 &lt;height&gt;768&lt;/height&gt;
+                 &lt;width&gt;512&lt;/width&gt;
+                 &lt;content file="content-1734-5.jpg"/&gt;
+              &lt;/imageAsset&gt;
+           &lt;/imageCaptions&gt;
+           &lt;lead&gt;sadfsd&lt;/lead&gt;
+           &lt;dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=4413}]"&gt;
+              &lt;name&gt;eeek-dublin-metadata&lt;/name&gt;
+              &lt;dcLanguage&gt;en&lt;/dcLanguage&gt;
+           &lt;/dublinCore&gt;
+        &lt;/cms:item&gt;
+     &lt;/folder&gt;
+   &lt;/folder&gt;
+  &lt;/folder&gt;
+&lt;/import&gt;
+</pre>
+
+<h3> The <tt>import</tt> tag </h3>
+
+<p> This is the top-level element.  Its mandatory attribute
+  <tt>source</tt> identifies the source of import data.  This is
+  an arbitrary string used to track the objects already processed
+  by importer.  Whenever an imported object is persisted in database,
+  new {@link RemoteOidMapping} record is stored along, with the
+  value of <tt>source</tt> attribute being written to <tt>system_id</tt>
+  column.
+</p>
+
+<h3> The <tt>folder</tt> tag </h3>
+
+<p> Determines the position of imported object.  The <tt>folder</tt>
+  tag can be nested to an arbitrary level.  Importer checks if the
+  folder with the specified <tt>name</tt> (mandatory attribute) exists.
+  If not, it will be created.  Optional attribute <tt>label</tt> is used
+  to provide folder's title (label).
+</p>
+
+<h3> The <tt>cms:item</tt> tag </h3>
+
+<p> Denotes the start of a content item block.  The mandatory attribute
+  <tt>oid</tt> specifies the OID of the source item, not the target one.
+  Importer has no control over OIDs assigned to objects
+  created during import process.
+</p>
+
+<p> However, <tt>oid</tt> is used to determine the correct object type
+  for the imported object.  Moreover, if the <tt>defaultDomainClass</tt>
+  element is not specified, importer will try to create instance of
+  Java class specified in the <tt>oid</tt> attribute.  This must be
+  held in mind when importing data from pre-Rickshaw source, or from
+  any non-CCM source.  In both cases, source OIDs must be adjusted to
+  match the persistence object types present in target CCM instance.
+</p>
+
+<p> Opening &lt;cms:item&gt; tag can contain several optional attributes.
+  Here's what they are used for: </p>
+
+  <ul>
+    <li> <tt>author</tt>: if provided, the attribute value will be interpreted
+          as email address.  If a user with that email address does not already
+          exist, it will be created with some random password that can be
+          reset via password recovery facility.  Workflow will be actived
+          for the imported object, with all tasks being locked by said user.
+     </li>
+    <li> <tt>indexItem</tt>: if equals to <tt>true</tt>, the imported item
+          will be set as the index item to the currently processed folder.
+     </li>
+    <li> <tt>relabelFolder</tt>: if equals to <tt>true</tt> and with
+          <tt>indexItem</tt> set to <tt>true</tt> as well, the currently
+          active folder will be relabeled after this item's title.
+     </li>
+  </ul>
+
+
+<p> Any element underneath opening &lt;cms:item&gt; is expected to
+  contain a persistence attribute.  Simple persistence properties, like
+  <tt>name</tt> or <tt>title</tt>, are being simply taken from bodies of
+  corresponding XML elements.  Role properties, however, represent domain
+  objects and their opening tag has to include <tt>oid</tt> attribute,
+  as per the reasons stated above.  Keep in mind that OID mappings of
+  role properties will also be stored via RemoteOidMapping facility,
+  just like the mapping of the top-level content item.
+</p>
+
+<h3> BLOB handling </h3>
+
+<p> Persistence properties that contain byte[] values can be imported
+  in two ways:
+</p>
+
+<ul>
+  <li> via external file: name of the file containing raw BLOB data
+      can be specified via <tt>file</tt> XML attribute.  If not provided,
+      importer looks up a file named
+      <tt><em>objectID</em>-<em>propertyName</em>.raw</tt>.
+      In both cases the file is expected to be in the <em>lobDir</em>,
+      the directory specified by one of the importer invocation
+      arguments.
+  </li>
+  <li> inline: the BLOB value, base64 encoded,  can be specified in body of XML
+      element if the <tt>encoding="base64"</tt> XML attribute is
+      provided.
+  </li>
+</ul>
+
+<h3> Transaction handling and the <tt>external</tt> tag</h3>
+
+<p> When importing from XML source with no <tt>external</tt> XML tags,
+  importer will open a single transaction and import all the content
+  within its context.  This can cause memory problems when import set
+  is too big.  Sometimes it's enough to have handful of large BLOBs
+  to trigger infamous OutOfMemoryException.  The recommended approach
+  in this case is to split import data into several pieces which are
+  concatenated together via <tt>external</tt> XML tag:
+</p>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;import source="camden.aplaw.org.uk" xmlns="http://xmlns.redhat.com/waf/london/importer/1.0"&gt;
+&lt;folder xmlns="http://www.arsdigita.com/cms/1.0" label="Root Folder " name="/" oid="[com.arsdigita.cms.Folder:{id=556}]"&gt;
+   &lt;folder label="one" name="one" oid="[com.arsdigita.cms.Folder:{id=4402}]"&gt;
+      &lt;external source="one/eeek.xml"/&gt;
+   &lt;/folder&gt;
+   &lt;folder label="Two Test" name="two-test" oid="[com.arsdigita.cms.Folder:{id=4407}]"/&gt;
+   &lt;external source="sfsdfsdfs.xml"/&gt;
+   &lt;external source="mpa-test.xml"/&gt;
+&lt;/folder&gt;
+&lt;/import&gt;
+</pre>
+
+<p> In this case each file referenced in <tt>external</tt> tag will be
+  processed in its own transaction.  Each file included in this way is
+  expected to contain a single <tt>cms:item</tt> block.
+</p>
+
+<h3> Invoking from command line </h3>
+
+<p> Importer can be invoked via standalone command-line tool like this:
+
+<pre>
+  ccm-run com.arsdigita.london.importer.cms.ItemImportTool \
+      master-import.xml /dir/with/files/to/include /dir/containing/lobs
+</pre>
+
+</body>
+</html>

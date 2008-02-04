@@ -1,0 +1,68 @@
+
+// moved to ccm parameters
+
+//init com.arsdigita.cms.docmgr.installer.Initializer {
+//  contentSection = "documents";
+//  internalGroupID = "-200";
+//  legacyFolderName = "legacy";
+//}
+
+
+init com.arsdigita.cms.docmgr.installer.MimeIconInitializer {
+
+    iconURLRoot = "http://server.with.icons/assets/mime-icons/";
+
+    mimeIconMap = {
+        {"application/octet-stream", "icon_exe.gif"},
+        {"audio/x-wav", "icon_wav.gif"},
+        {"video/quicktime", "icon_mov.gif"},
+        {"application/x-msvideo", "icon_avi.gif"},
+        {"application/vnd.visio",  "icon_visio.gif"},
+        {"application/pdf", "icon_pdf.gif" },
+        {"application/msword", "icon_doc.gif"},
+        {"application/msexcel", "icon_xls.gif"},
+        {"application/ms-powerpoint", "icon_pps.gif"},
+        {"text/xml", "icon_xml.gif"},
+        {"text/html", "icon_htm.gif"},
+        {"text/css", "icon_css.gif"},
+        {"text/plain", "icon_txt.gif"},
+        {"image/bmp", "icon_bmp.gif"},
+        // ALL MIME TYPES BELOW USE GENERAL ICON
+        {"application/x-dvi", "icon_gen.gif"},
+        {"application/x-latex", "icon_gen.gif"},
+        {"application/x-tex", "icon_gen.gif"},
+        {"application/x-texinfo", "icon_gen.gif"},
+        {"application/x-troff", "icon_gen.gif"},
+        {"application/x-troff-man", "icon_gen.gif"},
+        {"application/x-troff-me", "icon_gen.gif"},
+        {"application/x-troff-ms", "icon_gen.gif"},
+        {"application/x-wais-source", "icon_gen.gif"},
+        {"application/zip", "icon_gen.gif"},
+        {"application/gzip", "icon_gen.gif"},
+        {"application/x-tar", "icon_gen.gif"},
+        {"audio/basic", "icon_gen.gif"},
+        {"audio/x-aiff", "icon_gen.gif"},
+        {"video/mpeg", "icon_gen.gif"},
+        {"video/x-sgi-movie",  "icon_gen.gif"},
+        {"application/msaccess", "icon_gen.gif"},
+        {"application/postscript", "icon_gen.gif"},
+        {"application/rtf", "icon_gen.gif"},
+        {"text/sgml", "icon_gen.gif"},
+        {"text/x-jsp", "icon_gen.gif"},
+        {"image/gif", "icon_gen.gif"},
+        {"image/ief", "icon_gen.gif"},
+        {"image/jpeg", "icon_gen.gif"},
+        {"image/tiff", "icon_gen.gif"},
+        {"image/x-cmu-rast", "icon_gen.gif"},
+        {"image/x-portable-anymap", "icon_gen.gif"},
+        {"image/x-portable-bitmap", "icon_gen.gif"},
+        {"image/x-portable-graymap", "icon_gen.gif"},
+        {"image/x-portable-pixmap", "icon_gen.gif"},
+        {"image/x-rgb", "icon_gen.gif"},
+        {"image/x-xbitmap", "icon_gen.gif"},
+        {"image/x-xwindowdump", "icon_gen.gif"},
+        {"image/png", "icon_gen.gif"}
+    };
+}
+// End of CMS Document Manager initialization
+

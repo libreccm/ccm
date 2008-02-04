@@ -1,0 +1,41 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+model com.arsdigita.london.terms;
+
+
+query getTermItemCountSummary {
+  Integer[1..1] uniqueID;
+  String[1..1] name;
+  Integer[1..1] count;
+
+  do {
+    select t.unique_id,
+           c.name,
+           (select count(*) 
+              from cat_object_category_map m
+             where m.category_id = t.model_category_id) as count
+      from trm_terms t,
+           cat_categories c
+     where t.model_category_id = c.category_id
+       and t.domain = :domain
+  } map {
+    uniqueID = t.unique_id;
+    name = c.name;
+    count = count;
+  }
+}
+

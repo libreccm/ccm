@@ -1,0 +1,13 @@
+model com.arsdigita.london.importer;
+
+object type RemoteOidMapping {
+
+    String[1..1]  systemId = remote_oid_mapping.system_id VARCHAR(200);
+    String[1..1]    srcOid = remote_oid_mapping.src_oid VARCHAR(500);
+    String[1..1]    dstOid = remote_oid_mapping.dst_oid VARCHAR(500);
+
+    object key (systemId, srcOid);
+
+}
+
+

@@ -1,0 +1,1211 @@
+<tests>
+  <test>
+    <query subselects="0" joins="3" outers="0">
+      query(all(test.Tuple), a = a.name, b = b.name, c = c.name)
+    </query>
+    <query subselects="1" joins="3">
+      query(all(test.StaticTuple), a = a.name, b = b.name, c = c.name)
+    </query>
+    <results>
+      <row a="Zero" b="Ten" c="Twenty"/>
+      <row a="Zero" b="Ten" c="Twenty One"/>
+      <row a="Zero" b="Ten" c="Twenty Two"/>
+      <row a="Zero" b="Ten" c="Twenty Three"/>
+      <row a="Zero" b="Ten" c="Twenty Four"/>
+
+      <row a="Zero" b="Eleven" c="Twenty"/>
+      <row a="Zero" b="Eleven" c="Twenty One"/>
+      <row a="Zero" b="Eleven" c="Twenty Two"/>
+      <row a="Zero" b="Eleven" c="Twenty Three"/>
+      <row a="Zero" b="Eleven" c="Twenty Four"/>
+
+      <row a="Zero" b="Twelve" c="Twenty Five"/>
+      <row a="Zero" b="Twelve" c="Twenty Six"/>
+      <row a="Zero" b="Twelve" c="Twenty Seven"/>
+      <row a="Zero" b="Twelve" c="Twenty Eight"/>
+      <row a="Zero" b="Twelve" c="Twenty Nine"/>
+
+      <row a="One" b="Ten" c="Twenty Nine"/>
+      <row a="One" b="Eleven" c="Twenty Nine"/>
+      <row a="One" b="Twelve" c="Twenty Nine"/>
+      <row a="One" b="Thirteen" c="Twenty Nine"/>
+      <row a="One" b="Fourteen" c="Twenty Nine"/>
+
+      <row a="Two" b="Sixteen" c="Twenty Nine"/>
+      <row a="Three" b="Sixteen" c="Twenty Eight"/>
+      <row a="Four" b="Sixteen" c="Twenty Seven"/>
+      <row a="Five" b="Sixteen" c="Twenty Six"/>
+      <row a="Six" b="Sixteen" c="Twenty Five"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="1">
+      query(all(test.Tuple).cee, id = id, name = name)
+    </query>
+    <query subselects="1" joins="1" outers="1">
+      query(all(test.StaticTuple).cee, id = id, name = name)
+    </query>
+    <results>
+      <row id="20" name="Twenty"/>
+      <row id="20" name="Twenty"/>
+      <row id="20" name="Twenty"/>
+      <row id="20" name="Twenty"/>
+      <row id="20" name="Twenty"/>
+
+      <row id="21" name="Twenty One"/>
+      <row id="21" name="Twenty One"/>
+      <row id="21" name="Twenty One"/>
+      <row id="21" name="Twenty One"/>
+      <row id="21" name="Twenty One"/>
+
+      <row id="22" name="Twenty Two"/>
+      <row id="22" name="Twenty Two"/>
+      <row id="22" name="Twenty Two"/>
+      <row id="22" name="Twenty Two"/>
+      <row id="22" name="Twenty Two"/>
+
+      <row id="23" name="Twenty Three"/>
+      <row id="24" name="Twenty Four"/>
+      <row id="25" name="Twenty Five"/>
+      <row id="26" name="Twenty Six"/>
+      <row id="27" name="Twenty Seven"/>
+
+      <row id="24" name="Twenty Four"/>
+      <row id="24" name="Twenty Four"/>
+      <row id="24" name="Twenty Four"/>
+      <row id="24" name="Twenty Four"/>
+      <row id="24" name="Twenty Four"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" outers="0">
+      query(filter(all(test.Node), id == 30).children, id = id)
+    </query>
+    <query>
+      query(filter(all(test.StaticNode), id == 30).children, id = id)
+    </query>
+    <results>
+      <row id="31"/>
+      <row id="32"/>
+      <row id="33"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="1" joins="0">
+      query(filter(all(test.Node), exists(children)), id = id)
+    </query>
+    <query>
+      query(filter(all(test.StaticNode), exists(children)), id = id)
+    </query>
+    <results>
+      <row id="30"/>
+      <row id="33"/>
+      <row id="36"/>
+      <row id="37"/>
+      <row id="38"/>
+    </results>
+  </test>
+
+  <test>
+    <query fetched="pid,pname" subselects="0" joins="1" outers="1">
+      query(all(test.Node).parent, pid = id, pname = name)
+    </query>
+    <query fetched="pid,pname">
+      query(all(test.StaticNode).parent, pid = id, pname = name)
+    </query>
+    <query fetched="pid" subselects="0" joins="0">
+      query(all(test.Node).parent, pid = id)
+    </query>
+    <query fetched="pid">
+      query(all(test.StaticNode).parent, pid = id)
+    </query>
+    <query fetched="pid">
+      query(all(test.Node), pid = parent.id)
+    </query>
+    <query fetched="pid,pname">
+      query(all(test.Node), pid = parent.id, pname = parent.name)
+    </query>
+    <query fetched="pid,pname,id,name">
+      query(all(test.Node), pid = parent.id, pname = parent.name, id = id,
+            name = name)
+    </query>
+    <query fetched="pid,pname,id,name,tid">
+      query(all(test.Node), id = id, name = name, pid = parent.id,
+            pname = parent.name, tid = type.id)
+    </query>
+    <query fetched="pid,pname,id,name,tid,tname">
+      query(all(test.Node), id = id, name = name, pid = parent.id,
+            pname = parent.name, tid = type.id, tname = type.name)
+    </query>
+    <query fetched="pid,pname,id,name,tid,tname,ptid,ptname">
+      query(all(test.Node), id = id, name = name, pid = parent.id,
+            pname = parent.name, tid = type.id, tname = type.name,
+            ptid = parent.type.id, ptname = parent.type.name)
+    </query>
+    <query fetched="pid,pname,id,name,tid,tname,ptid,ptname,description">
+      query(join(a = all(test.Node), b = all(test.Node), a.id == b.id).b,
+            id = id,
+            name = name,
+            description = description,
+            tid = type.id,
+            tname = type.name,
+            pid = parent.id,
+            pname = parent.name,
+            ptid = parent.type.id,
+            ptname = parent.type.name)
+    </query>
+    <query fetched="pid,pname,id,name,tid,tname,ptid,ptname,description">
+      query(join(a = all(test.Node), b = all(test.Node), a.id == b.id).b,
+            id = id,
+            pid = parent.id,
+            pname = parent.name,
+            ptid = parent.type.id,
+            ptname = parent.type.name,
+            tid = type.id,
+            tname = type.name,
+            name = name,
+            description = description)
+    </query>
+    <query fetched="pid,pname,id,name,tid,tname,ptid,ptname,description">
+      query(left(this = all(test.Node), 
+                 parent = all(test.Node), this.parent == parent),
+            id = this.id,
+            pid = parent.id,
+            pname = parent.name,
+            ptid = parent.type.id,
+            ptname = parent.type.name,
+            tid = this.type.id,
+            tname = this.type.name,
+            name = this.name,
+            description = this.description)
+    </query>
+    <query fetched="pid,pname,id,name,tid,tname,ptid,ptname,description">
+      query(right(parent = all(test.Node),
+                  this = all(test.Node), this.parent == parent),
+            id = this.id,
+            pid = parent.id,
+            pname = parent.name,
+            ptid = parent.type.id,
+            ptname = parent.type.name,
+            tid = this.type.id,
+            tname = this.type.name,
+            name = this.name,
+            description = this.description)
+    </query>
+    <results>
+      <row id="30" name="Thirty" tid="1" tname="Type 1"
+           pid="null" pname="null" ptid="null" ptname="null"
+           description="null"/>
+      <row id="31" name="Thirty One" tid="1" tname="Type 1"
+           pid="30" pname="Thirty" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="32" name="Thirty Two" tid="1" tname="Type 1"
+           pid="30" pname="Thirty" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="33" name="Thirty Three" tid="1" tname="Type 1"
+           pid="30" pname="Thirty" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="34" name="Thirty Four" tid="1" tname="Type 1"
+           pid="33" pname="Thirty Three" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="35" name="Thirty Five" tid="1" tname="Type 1"
+           pid="33" pname="Thirty Three" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="36" name="Thirty Six" tid="1" tname="Type 1"
+           pid="33" pname="Thirty Three" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="37" name="Thirty Seven" tid="1" tname="Type 1"
+           pid="36" pname="Thirty Six" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="38" name="Thirty Eight" tid="1" tname="Type 1"
+           pid="37" pname="Thirty Seven" ptid="1" ptname="Type 1"
+           description="null"/>
+      <row id="39" name="Thirty Nine" tid="1" tname="Type 1"
+           pid="38" pname="Thirty Eight" ptid="1" ptname="Type 1"
+           description="null"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="1">
+      query(all(test.Node).meIfHasParent, id = id, name = name)
+    </query>
+    <results>
+      <row id="null" name="null"/>
+      <row id="31" name="Thirty One"/>
+      <row id="32" name="Thirty Two"/>
+      <row id="33" name="Thirty Three"/>
+      <row id="34" name="Thirty Four"/>
+      <row id="35" name="Thirty Five"/>
+      <row id="36" name="Thirty Six"/>
+      <row id="37" name="Thirty Seven"/>
+      <row id="38" name="Thirty Eight"/>
+      <row id="39" name="Thirty Nine"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="0">
+      query(all(test.Node), id = id, name = name)
+    </query>
+    <query>
+      query(all(test.StaticNode), id = id, name = name)
+    </query>
+    <query>
+      query(sql { test.Node }, id = id, name = name)
+    </query>
+    <query>
+      query(sql { test.StaticNode }, id = id, name = name)
+    </query>
+    <results>
+      <row id="30" name="Thirty"/>
+      <row id="31" name="Thirty One"/>
+      <row id="32" name="Thirty Two"/>
+      <row id="33" name="Thirty Three"/>
+      <row id="34" name="Thirty Four"/>
+      <row id="35" name="Thirty Five"/>
+      <row id="36" name="Thirty Six"/>
+      <row id="37" name="Thirty Seven"/>
+      <row id="38" name="Thirty Eight"/>
+      <row id="39" name="Thirty Nine"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="0">
+      query(filter(all(test.Node), exists(parent)), id = id)
+    </query>
+    <query>
+      query(filter(all(test.StaticNode), exists(parent)), id = id)
+    </query>
+    <query subselects="0" joins="0">
+      query(filter(all(test.Node), not (parent == null)), id = id)
+    </query>
+    <query>
+      query(filter(all(test.StaticNode), not (parent == null)), id = id)
+    </query>
+    <results>
+      <row id="31"/>
+      <row id="32"/>
+      <row id="33"/>
+      <row id="34"/>
+      <row id="35"/>
+      <row id="36"/>
+      <row id="37"/>
+      <row id="38"/>
+      <row id="39"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="1" joins="0">
+      query(filter(g = all(test.Group), sql { 4 in g.members }), id = g.id, name = g.name)
+    </query>
+    <results>
+      <row id="4" name="New Age"/>
+      <row id="7" name="80s"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(join(g = all(test.Group), m = all(test.User),
+                      exists(filter(u = g.members, m == u))),
+                 group = g.name, member = m.name)
+    </query>
+    <query subselects="0" joins="2" outers="0">
+      query(join(g = all(test.Group), m = all(test.User),
+                      exists(filter(mg = m.groups, mg == g))),
+                 group = g.name, member = m.name)
+    </query>
+    <query subselects="0" joins="2" outers="0">
+      query(join(g = all(test.Group), m = all(test.User),
+                      exists(filter(u = g.members, m == u))),
+                 group = g.name, member = m.firstName)
+    </query>
+    <query subselects="0" joins="2" outers="0">
+      query(join(g = all(test.Group), m = all(test.User),
+                 exists(filter(mg = m.groups, mg == g))),
+            group = g.name, member = m.firstName)
+    </query>
+    <query subselects="0" joins="2" outers="1">
+      query(right(g = all(test.Group), m = all(test.User),
+                  exists(filter(mg = m.groups, mg == g))),
+            group = g.name, member = m.name)
+    </query>
+
+    <results>
+      <row group="Pop" member="Britney"/>
+      <row group="Pop" member="Christina"/>
+      <row group="Pop" member="Debbie"/>
+      <row group="Pop" member="Gloria"/>
+      <row group="Pop" member="Hillary"/>
+      <row group="Pop" member="Jennifer"/>
+      <row group="Rock" member="Indigo"/>
+      <row group="R&amp;B" member="Ashanti"/>
+      <row group="Country" member="Faith"/>
+      <row group="New Age" member="Enya"/>
+      <row group="Film" member="Hillary"/>
+      <row group="Film" member="Jennifer"/>
+      <row group="Television" member="Hillary"/>
+      <row group="80s" member="Debbie"/>
+      <row group="80s" member="Enya"/>
+      <row group="80s" member="Gloria"/>
+      <row group="90s" member="Britney"/>
+      <row group="90s" member="Christina"/>
+      <row group="90s" member="Faith"/>
+      <row group="90s" member="Gloria"/>
+      <row group="90s" member="Indigo"/>
+      <row group="90s" member="Jennifer"/>
+      <row group="00s" member="Ashanti"/>
+      <row group="00s" member="Britney"/>
+      <row group="00s" member="Christina"/>
+      <row group="00s" member="Faith"/>
+      <row group="00s" member="Hillary"/>
+      <row group="00s" member="Jennifer"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="2">
+      query(left(g = all(test.Group), m = all(test.User),
+                        exists(filter(u = g.members, m == u))),
+                 group = g.name, member = m.name)
+    </query>
+
+    <results>
+      <row group="Entertainment" member="null"/>
+      <row group="Music" member="null"/>
+      <row group="Pop" member="Britney"/>
+      <row group="Pop" member="Christina"/>
+      <row group="Pop" member="Debbie"/>
+      <row group="Pop" member="Gloria"/>
+      <row group="Pop" member="Hillary"/>
+      <row group="Pop" member="Jennifer"/>
+      <row group="Rock" member="Indigo"/>
+      <row group="R&amp;B" member="Ashanti"/>
+      <row group="Country" member="Faith"/>
+      <row group="New Age" member="Enya"/>
+      <row group="Film" member="Hillary"/>
+      <row group="Film" member="Jennifer"/>
+      <row group="Television" member="Hillary"/>
+      <row group="80s" member="Debbie"/>
+      <row group="80s" member="Enya"/>
+      <row group="80s" member="Gloria"/>
+      <row group="90s" member="Britney"/>
+      <row group="90s" member="Christina"/>
+      <row group="90s" member="Faith"/>
+      <row group="90s" member="Gloria"/>
+      <row group="90s" member="Indigo"/>
+      <row group="90s" member="Jennifer"/>
+      <row group="00s" member="Ashanti"/>
+      <row group="00s" member="Britney"/>
+      <row group="00s" member="Christina"/>
+      <row group="00s" member="Faith"/>
+      <row group="00s" member="Hillary"/>
+      <row group="00s" member="Jennifer"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(all(test.Group).supergroups, id = id, name = name)
+    </query>
+    <results>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="4" outers="0">
+      query(all(test.Group).supergroups.supergroups, id = id, name = name)
+    </query>
+    <results>
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="4" outers="0">
+      query(all(test.Group).supergroups.subgroups, id = id, name = name)
+    </query>
+    <results>
+      <row id="0" name="Pop"/>
+      <row id="1" name="Rock"/>
+      <row id="2" name="R&amp;B"/>
+      <row id="3" name="Country"/>
+      <row id="4" name="New Age"/>
+
+      <row id="0" name="Pop"/>
+      <row id="1" name="Rock"/>
+      <row id="2" name="R&amp;B"/>
+      <row id="3" name="Country"/>
+      <row id="4" name="New Age"/>
+
+      <row id="0" name="Pop"/>
+      <row id="1" name="Rock"/>
+      <row id="2" name="R&amp;B"/>
+      <row id="3" name="Country"/>
+      <row id="4" name="New Age"/>
+
+      <row id="0" name="Pop"/>
+      <row id="1" name="Rock"/>
+      <row id="2" name="R&amp;B"/>
+      <row id="3" name="Country"/>
+      <row id="4" name="New Age"/>
+
+      <row id="0" name="Pop"/>
+      <row id="1" name="Rock"/>
+      <row id="2" name="R&amp;B"/>
+      <row id="3" name="Country"/>
+      <row id="4" name="New Age"/>
+
+      <row id="5" name="Film"/>
+      <row id="6" name="Television"/>
+      <row id="10" name="Music"/>
+
+      <row id="5" name="Film"/>
+      <row id="6" name="Television"/>
+      <row id="10" name="Music"/>
+
+      <row id="5" name="Film"/>
+      <row id="6" name="Television"/>
+      <row id="10" name="Music"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(all(test.Group).subgroups, id = id, name = name)
+    </query>
+    <results>
+      <row id="0" name="Pop"/>
+      <row id="1" name="Rock"/>
+      <row id="2" name="R&amp;B"/>
+      <row id="3" name="Country"/>
+      <row id="4" name="New Age"/>
+
+      <row id="5" name="Film"/>
+      <row id="6" name="Television"/>
+      <row id="10" name="Music"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="3" outers="0">
+      query(all(test.Group).subgroups.subgroups, id = id, name = name)
+    </query>
+    <results>
+      <row id="0" name="Pop"/>
+      <row id="1" name="Rock"/>
+      <row id="2" name="R&amp;B"/>
+      <row id="3" name="Country"/>
+      <row id="4" name="New Age"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="3" outers="0">
+      query(all(test.Group).subgroups.supergroups, id = id, name = name)
+    </query>
+    <results>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+      <row id="10" name="Music"/>
+
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+      <row id="11" name="Entertainment"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(all(test.User).groups, id = id, name = name)
+    </query>
+    <results>
+      <row id="2" name="R&amp;B"/>
+      <row id="9" name="00s"/>
+
+      <row id="0" name="Pop"/>
+      <row id="8" name="90s"/>
+      <row id="9" name="00s"/>
+
+      <row id="0" name="Pop"/>
+      <row id="8" name="90s"/>
+      <row id="9" name="00s"/>
+
+      <row id="0" name="Pop"/>
+      <row id="7" name="80s"/>
+
+      <row id="4" name="New Age"/>
+      <row id="7" name="80s"/>
+
+      <row id="3" name="Country"/>
+      <row id="8" name="90s"/>
+      <row id="9" name="00s"/>
+
+      <row id="0" name="Pop"/>
+      <row id="7" name="80s"/>
+      <row id="8" name="90s"/>
+
+      <row id="0" name="Pop"/>
+      <row id="5" name="Film"/>
+      <row id="6" name="Television"/>
+      <row id="9" name="00s"/>
+
+      <row id="1" name="Rock"/>
+      <row id="8" name="90s"/>
+
+      <row id="0" name="Pop"/>
+      <row id="5" name="Film"/>
+      <row id="8" name="90s"/>
+      <row id="9" name="00s"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="0">
+      query(all(test.A), id = id, name = name)
+    </query>
+    <results>
+      <row id="0" name="Zero"/>
+      <row id="1" name="One"/>
+      <row id="2" name="Two"/>
+      <row id="3" name="Three"/>
+      <row id="4" name="Four"/>
+      <row id="5" name="Five"/>
+      <row id="6" name="Six"/>
+      <row id="7" name="Seven"/>
+      <row id="8" name="Eight"/>
+      <row id="9" name="Nine"/>
+    </results>
+  </test>
+
+  <test>
+    <query>
+      query(size(all(test.A)))
+    </query>
+    <results>
+      <!-- XXX how did this get to be named size? -->
+      <row size="10"/>
+    </results>
+  </test>
+
+  <test>
+    <query ordered="true">query(size(offset(sort(all(test.A), id), 3)))
+    </query>
+    <results>
+      <!-- XXX how did this get to be named size? -->
+      <row size="7"/>
+    </results>
+  </test>
+
+  <test>
+    <query ordered="true">query(offset(sort(all(test.A), id), 3), id = id)
+    </query>
+    <results>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+      <row id="9"/>
+    </results>
+  </test>
+
+  <test>
+    <query ordered="true">query(limit(sort(all(test.A), id), 7), id = id)
+    </query>
+    <results>
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+    </results>
+  </test>
+
+  <test>
+    <query ordered="true">query(limit(offset(sort(all(test.A), id), 3), 6), id = id)
+    </query>
+    <results>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+      <row id="7"/>
+      <row id="8"/>
+    </results>
+  </test>
+
+  <test>
+    <query ordered="true">query(offset(limit(sort(all(test.A), id), 7), 3), id = id)
+    </query>
+    <results>
+      <row id="3"/>
+      <row id="4"/>
+      <row id="5"/>
+      <row id="6"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(join(a = all(test.A), b = all(test.B),
+                 exists(filter(l = all(test.Link),
+                               l.a == a and l.b == b))),
+                 a = a.name, b = b.name)
+    </query>
+    <results>
+      <row a="Zero" b="Ten"/>
+      <row a="One" b="Eleven"/>
+      <row a="One" b="Twelve"/>
+      <row a="Two" b="Ten"/>
+      <row a="Two" b="Twelve"/>
+      <row a="Two" b="Fourteen"/>
+      <row a="Two" b="Sixteen"/>
+      <row a="Two" b="Eighteen"/>
+      <row a="Three" b="Eleven"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(filter(cross(a = all(test.A), b = all(test.B)),
+                        exists(filter(l = all(test.Link),
+                                      l.b == b and l.a == a))).a,
+                 id = id, name = name)
+    </query>
+    <query ordered="true" subselects="0" joins="2" outers="0">
+      query(sort(filter(cross(a = all(test.A), b = all(test.B)),
+                        exists(filter(l = all(test.Link),
+                                      l.b == b and l.a == a))).a,
+                 name),
+            id = id, name = name)
+    </query>
+    <results>
+      <row id="1" name="One"/>
+      <row id="1" name="One"/>
+      <row id="3" name="Three"/>
+      <row id="2" name="Two"/>
+      <row id="2" name="Two"/>
+      <row id="2" name="Two"/>
+      <row id="2" name="Two"/>
+      <row id="2" name="Two"/>
+      <row id="0" name="Zero"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="0">
+      query(join(a = all(test.A), b = all(test.B), a == 3), a = a.id, b = b.id)
+    </query>
+    <results>
+      <row a="3" b ="10"/>
+      <row a="3" b ="11"/>
+      <row a="3" b ="12"/>
+      <row a="3" b ="13"/>
+      <row a="3" b ="14"/>
+      <row a="3" b ="15"/>
+      <row a="3" b ="16"/>
+      <row a="3" b ="17"/>
+      <row a="3" b ="18"/>
+      <row a="3" b ="19"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="0">
+      query(join(a = all(test.A), b = all(test.B), true), a = a.id, b = b.id)
+    </query>
+    <results>
+      <row a="0" b ="10"/>
+      <row a="0" b ="11"/>
+      <row a="0" b ="12"/>
+      <row a="0" b ="13"/>
+      <row a="0" b ="14"/>
+      <row a="0" b ="15"/>
+      <row a="0" b ="16"/>
+      <row a="0" b ="17"/>
+      <row a="0" b ="18"/>
+      <row a="0" b ="19"/>
+
+      <row a="1" b ="10"/>
+      <row a="1" b ="11"/>
+      <row a="1" b ="12"/>
+      <row a="1" b ="13"/>
+      <row a="1" b ="14"/>
+      <row a="1" b ="15"/>
+      <row a="1" b ="16"/>
+      <row a="1" b ="17"/>
+      <row a="1" b ="18"/>
+      <row a="1" b ="19"/>
+
+      <row a="2" b ="10"/>
+      <row a="2" b ="11"/>
+      <row a="2" b ="12"/>
+      <row a="2" b ="13"/>
+      <row a="2" b ="14"/>
+      <row a="2" b ="15"/>
+      <row a="2" b ="16"/>
+      <row a="2" b ="17"/>
+      <row a="2" b ="18"/>
+      <row a="2" b ="19"/>
+
+      <row a="3" b ="10"/>
+      <row a="3" b ="11"/>
+      <row a="3" b ="12"/>
+      <row a="3" b ="13"/>
+      <row a="3" b ="14"/>
+      <row a="3" b ="15"/>
+      <row a="3" b ="16"/>
+      <row a="3" b ="17"/>
+      <row a="3" b ="18"/>
+      <row a="3" b ="19"/>
+
+      <row a="4" b ="10"/>
+      <row a="4" b ="11"/>
+      <row a="4" b ="12"/>
+      <row a="4" b ="13"/>
+      <row a="4" b ="14"/>
+      <row a="4" b ="15"/>
+      <row a="4" b ="16"/>
+      <row a="4" b ="17"/>
+      <row a="4" b ="18"/>
+      <row a="4" b ="19"/>
+
+      <row a="5" b ="10"/>
+      <row a="5" b ="11"/>
+      <row a="5" b ="12"/>
+      <row a="5" b ="13"/>
+      <row a="5" b ="14"/>
+      <row a="5" b ="15"/>
+      <row a="5" b ="16"/>
+      <row a="5" b ="17"/>
+      <row a="5" b ="18"/>
+      <row a="5" b ="19"/>
+
+      <row a="6" b ="10"/>
+      <row a="6" b ="11"/>
+      <row a="6" b ="12"/>
+      <row a="6" b ="13"/>
+      <row a="6" b ="14"/>
+      <row a="6" b ="15"/>
+      <row a="6" b ="16"/>
+      <row a="6" b ="17"/>
+      <row a="6" b ="18"/>
+      <row a="6" b ="19"/>
+
+      <row a="7" b ="10"/>
+      <row a="7" b ="11"/>
+      <row a="7" b ="12"/>
+      <row a="7" b ="13"/>
+      <row a="7" b ="14"/>
+      <row a="7" b ="15"/>
+      <row a="7" b ="16"/>
+      <row a="7" b ="17"/>
+      <row a="7" b ="18"/>
+      <row a="7" b ="19"/>
+
+      <row a="8" b ="10"/>
+      <row a="8" b ="11"/>
+      <row a="8" b ="12"/>
+      <row a="8" b ="13"/>
+      <row a="8" b ="14"/>
+      <row a="8" b ="15"/>
+      <row a="8" b ="16"/>
+      <row a="8" b ="17"/>
+      <row a="8" b ="18"/>
+      <row a="8" b ="19"/>
+
+      <row a="9" b ="10"/>
+      <row a="9" b ="11"/>
+      <row a="9" b ="12"/>
+      <row a="9" b ="13"/>
+      <row a="9" b ="14"/>
+      <row a="9" b ="15"/>
+      <row a="9" b ="16"/>
+      <row a="9" b ="17"/>
+      <row a="9" b ="18"/>
+      <row a="9" b ="19"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(join(a = all(test.A), join(l = all(test.Link),
+                                            b = all(test.B), l.b == b),
+                      filter(a = all(test.A),
+                             exists(filter(link = a.links,
+                                           link == l))) == a),
+                 a = a.name, l = l.name, b = b.name)
+    </query>
+    <query subselects="0" joins="2" outers="0">
+      query(join(a = all(test.A), join(l = all(test.Link),
+                                            b = all(test.B), l.b == b),
+                      l.a == a),
+                 a = a.name, l = l.name, b = b.name)
+    </query>
+    <query fetched="a,l" subselects="0" joins="1" outers="0">
+      query(join(a = all(test.A), l = all(test.Link),
+                      exists(filter(link = a.links, link == l))),
+                 a = a.name, l = l.name)
+    </query>
+    <results>
+      <row a="Zero" l="Zero-Ten" b="Ten"/>
+      <row a="One" l="One-Eleven" b="Eleven"/>
+      <row a="One" l="One-Twelve" b="Twelve"/>
+      <row a="Two" l="Two-Ten" b="Ten"/>
+      <row a="Two" l="Two-Twelve" b="Twelve"/>
+      <row a="Two" l="Two-Fourteen" b="Fourteen"/>
+      <row a="Two" l="Two-Sixteen" b="Sixteen"/>
+      <row a="Two" l="Two-Eighteen" b="Eighteen"/>
+      <row a="Three" l="Three-Eleven" b="Eleven"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="0">
+      query(all(test.A).links, a = a.id, b = b.id, index = index)
+    </query>
+    <query ordered="true" subselects="0" joins="1" outers="0">
+      query(sort(sort(all(test.A).links, index), a), a = a.id, b = b.id, index = index)
+    </query>
+    <results>
+      <row a="0" b="10" index="0"/>
+      <row a="1" b="11" index="0"/>
+      <row a="1" b="12" index="1"/>
+      <row a="2" b="10" index="0"/>
+      <row a="2" b="12" index="1"/>
+      <row a="2" b="14" index="2"/>
+      <row a="2" b="16" index="3"/>
+      <row a="2" b="18" index="4"/>
+      <row a="3" b="11" index="0"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="0">
+      query(filter(all(test.A), id == 2).bees, id = id)
+    </query>
+    <query subselects="0" joins="1" outers="0">
+      query(filter(all(test.A), id == 2).bees\@link.b, id = id)
+    </query>
+    <results>
+      <row id="10"/>
+      <row id="12"/>
+      <row id="14"/>
+      <row id="16"/>
+      <row id="18"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="1">
+      query(all(test.A).first, a = a.id, b = b.id, index = index)
+    </query>
+    <results>
+      <row a="null" b="null" index="null"/>
+      <row a="null" b="null" index="null"/>
+      <row a="null" b="null" index="null"/>
+      <row a="null" b="null" index="null"/>
+      <row a="null" b="null" index="null"/>
+      <row a="null" b="null" index="null"/>
+      <row a="0" b="10" index="0"/>
+      <row a="1" b="11" index="0"/>
+      <row a="2" b="10" index="0"/>
+      <row a="3" b="11" index="0"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="1" outers="0">
+      query(filter(all(test.A).first, exists(a)),
+                 a = a.id, b = b.id, index = index)
+    </query>
+    <query subselects="0" joins="1" outers="0">
+      query(filter(all(test.A).first, exists(a) and exists(b)),
+                 a = a.id, b = b.id, index = index)
+    </query>
+    <query subselects="0" joins="1" outers="0">
+      query(filter(all(test.A).first,
+                        exists(a) and exists(b) and exists(index)),
+                 a = a.id, b = b.id, index = index)
+    </query>
+    <results>
+      <row a="0" b="10" index="0"/>
+      <row a="1" b="11" index="0"/>
+      <row a="2" b="10" index="0"/>
+      <row a="3" b="11" index="0"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="0">
+      query(all(test.User), id = id, name = name)
+    </query>
+    <query subselects="0" joins="0">
+      query(all(test.User), id = id, name = firstName)
+    </query>
+    <results>
+      <row id="0" name="Ashanti"/>
+      <row id="1" name="Britney"/>
+      <row id="2" name="Christina"/>
+      <row id="3" name="Debbie"/>
+      <row id="4" name="Enya"/>
+      <row id="5" name="Faith"/>
+      <row id="6" name="Gloria"/>
+      <row id="7" name="Hillary"/>
+      <row id="8" name="Indigo"/>
+      <row id="9" name="Jennifer"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(filter(all(test.User), name == "Britney").groups, id = id, name = name)
+    </query>
+    <query subselects="0" joins="2" outers="0">
+      query(filter(all(test.User), firstName == "Britney").groups, id = id, name = name)
+    </query>
+    <results>
+      <row id="0" name="Pop"/>
+      <row id="8" name="90s"/>
+      <row id="9" name="00s"/>
+    </results>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(filter(all(test.User), name == "Snurble").groups, id = id, name = name)
+    </query>
+    <results/>
+  </test>
+
+  <test>
+    <query>
+      query(afilter(all(test.User), name == "Snurble").groups, id = id, name = name)
+    </query>
+    <exception type="java.lang.IllegalArgumentException"
+                msg="no such expression: afilter"/>
+  </test>
+
+  <test>
+    <query subselects="0" joins="2" outers="0">
+      query(filter(filter(this = all(test.Node), this.id == 31).this,
+                   exists(parent)).parent,
+            id = id, name = name, description = description,
+            type_id = type.id, type_name = type.name,
+            type_description = type.description)
+    </query>
+    <query fetched="id,name,description" subselects="0" joins="1" outers="0">
+      query(filter(filter(this = all(test.Node), this.id == 31).this,
+                   exists(parent)).parent,
+            id = id, name = name, description = description)
+    </query>
+    <results>
+      <row id="30" name="Thirty" description="null" type_id="1"
+           type_name="Type 1" type_description="Type 1 Description"/>
+    </results>
+  </test>
+
+  <test>
+    <query fetched="id" subselects="0" joins="1" outers="1">
+      query(all(test.Pair1).p2, id = id)
+    </query>
+    <query fetched="id" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair1), exists(p2)).p2, id = id)
+    </query>
+
+    <query fetched="id,name" subselects="0" joins="1" outers="1">
+      query(all(test.Pair1).p2, id = id, name = name)
+    </query>
+    <query fetched="id,name" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair1), exists(p2)).p2, id = id, name = name)
+    </query>
+
+    <query fetched="id,p1.id" subselects="0" joins="1" outers="1">
+      query(all(test.Pair1).p2, id = id, p1\.id = p1.id)
+    </query>
+    <query fetched="id,p1.id" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair1), exists(p2)).p2, id = id, p1\.id = p1.id)
+    </query>
+
+    <query fetched="id,p1.id,p1.name" subselects="0" joins="2" outers="1">
+      query(all(test.Pair1).p2, id = id, p1\.id = p1.id, p1\.name = p1.name)
+    </query>
+    <query fetched="id,p1.id,p1.name" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair1), exists(p2)).p2, id = id, p1\.id = p1.id,
+           p1\.name = p1.name)
+    </query>
+
+    <query fetched="id,name,p1.id" subselects="0" joins="1" outers="1">
+      query(all(test.Pair1).p2, id = id, name = name, p1\.id = p1.id)
+    </query>
+    <query fetched="id,name,p1.id" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair1), exists(p2)).p2, id = id, name = name,
+            p1\.id = p1.id)
+    </query>
+
+    <query fetched="id,name,p1.id,p1.name" subselects="0" joins="2" outers="1">
+      query(all(test.Pair1).p2, id = id, name = name, p1\.id = p1.id,
+            p1\.name = p1.name)
+    </query>
+    <query fetched="id,name,p1.id,p1.name" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair1), exists(p2)).p2, id = id, name = name,
+            p1\.id = p1.id, p1\.name = p1.name)
+    </query>
+
+    <results>
+      <row id="21" name="Twenty One" p1.id="1" p1.name="One"/>
+      <row id="22" name="Twenty Two" p1.id="2" p1.name="Two"/>
+      <row id="23" name="Twenty Three" p1.id="3" p1.name="Three"/>
+    </results>
+  </test>
+
+  <test>
+    <query fetched="id" subselects="0" joins="0">
+      query(all(test.Pair2).p1, id = id)
+    </query>
+    <query fetched="id" subselects="0" joins="0">
+      query(filter(all(test.Pair2), exists(p1)).p1, id = id)
+    </query>
+
+    <query fetched="id,name" subselects="0" joins="1" outers="1">
+      query(all(test.Pair2).p1, id = id, name = name)
+    </query>
+    <query fetched="id,name" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair2), exists(p1)).p1, id = id, name = name)
+    </query>
+
+    <query fetched="id,p2.id" subselects="0" joins="0">
+      query(all(test.Pair2).p1, id = id, p2\.id = p2.id)
+    </query>
+    <query fetched="id,p2.id" subselects="0" joins="0">
+      query(filter(all(test.Pair2), exists(p1)).p1, id = id, p2\.id = p2.id)
+    </query>
+
+    <query fetched="id,p2.id,p2.name" subselects="0" joins="0">
+      query(all(test.Pair2).p1, id = id, p2\.id = p2.id, p2\.name = p2.name)
+    </query>
+    <query fetched="id,p2.id,p2.name" subselects="0" joins="0">
+      query(filter(all(test.Pair2), exists(p1)).p1, id = id, p2\.id = p2.id,
+            p2\.name = p2.name)
+    </query>
+
+    <query fetched="id,name,p2.id" subselects="0" joins="1" outers="1">
+      query(all(test.Pair2).p1, id = id, name = name, p2\.id = p2.id)
+    </query>
+    <query fetched="id,name,p2.id" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair2), exists(p1)).p1, id = id, name = name,
+            p2\.id = p2.id)
+    </query>
+
+    <query fetched="id,name,p2.id,p2.name" subselects="0" joins="1" outers="1">
+      query(all(test.Pair2).p1, id = id, name = name, p2\.id = p2.id,
+            p2\.name = p2.name)
+    </query>
+    <query fetched="id,name,p2.id,p2.name" subselects="0" joins="1" outers="0">
+      query(filter(all(test.Pair2), exists(p1)).p1, id = id, name = name,
+            p2\.id = p2.id, p2\.name = p2.name)
+    </query>
+
+    <results>
+      <row id="1" name="One" p2.id="21" p2.name="Twenty One"/>
+      <row id="2" name="Two" p2.id="22" p2.name="Twenty Two"/>
+      <row id="3" name="Three" p2.id="23" p2.name="Twenty Three"/>
+    </results>
+  </test>
+
+  <test name="FilterParens">
+    <query fetched="id">
+      query(filter(filter(all(test.A), id == 0),
+                   1 == id and (id == 0 or 1 == id)), id = id)
+    </query>
+    <query fetched="id">
+      query(filter(all(test.A),
+                   sql { 1 = 0 } and sql { 1 = 0 or 0 = 0 }), id = id)
+    </query>
+    <results></results>
+  </test>
+
+  <test name="NamedFilter">
+    <query fetched="id">
+      query(filter(all(test.A), sql { test.IdsLessThanThree }), id = id)
+    </query>
+    <results>
+      <row id="0"/>
+      <row id="1"/>
+      <row id="2"/>
+    </results>
+  </test>
+
+  <test>
+    <!-- Encountered when fetching through certain qualias mappings. -->
+    <query fetched="uname,name,desc" joins="1">
+      query(filter(u = all(test.User), u.id == 1), uname = u.name,
+            name = filter(n = all(test.NodeType), n.id == u.id).n.name,
+            desc = filter(n = all(test.NodeType), n.id == u.id).n.description)
+    </query>
+    <results>
+      <row uname="Britney" name="Type 1" desc="Type 1 Description"/>
+    </results>
+  </test>
+
+  <test>
+    <!-- Encountered when fetching through certain qualias mappings. -->
+    <query fetched="name,desc" joins="1">
+      query(filter(this = all(test.Node), this.id == 31).this,
+            name = meIfHasParent.name,
+            desc = meIfHasParent.description)
+    </query>
+    <results>
+      <row name="Thirty One" desc="null"/>
+    </results>
+  </test>
+
+  <test>
+    <!-- Encountered when fetching through certain qualias mappings. -->
+    <query fetched="name,last" joins="1" outers="1">
+      query(all(test.Group), name = other.name, last = other.lastName)
+    </query>
+    <query fetched="group,name,last" joins="1" outers="1">
+      query(all(test.Group), group = name, name = other.name, last = other.lastName)
+    </query>
+    <results>
+      <row id="0" group="Pop" name="Ashanti" last="null"/>
+      <row id="1" group="Rock" name="Britney" last="Spears"/>
+      <row id="2" group="R&amp;B" name="Christina" last="Aguilera"/>
+      <row id="3" group="Country" name="Debbie" last="Gibson"/>
+      <row id="4" group="New Age" name="Enya" last="null"/>
+      <row id="5" group="Film" name="Faith" last="Hill"/>
+      <row id="6" group="Television" name="Gloria" last="Estefan"/>
+      <row id="7" group="80s" name="Hillary" last="Duff"/>
+      <row id="8" group="90s" name="Indigo" last="null"/>
+      <row id="9" group="00s" name="Jennifer" last="Lopez"/>
+      <row id="10" group="Music" name="null" last="null"/>
+      <row id="11" group="Entertainment" name="null" last="null"/>
+    </results>
+  </test>
+</tests>

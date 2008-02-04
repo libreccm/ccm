@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=592}]"><cms:name>batch-8-592</cms:name><cms:language>en</cms:language><cms:title>Council owned land and premises</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=592}]"><cms:name>batch-8-592-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, owned, land, premises</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=592}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council has a computerised system of large scale ordnance survey maps showing the boundaries of all land owned by the Council. Also shown are details of all acquisitions and disposals together with leases, lettings, licences easements and rights of way except market lettings and individual garage site lettings which are separately managed.</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">Can you tell me whether the land next to my house is Council Owned?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">What if I want to know who owns private property?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">What information do I need to give you before you can tell me whether the Council owns a particular property or area of land?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#4">Is there a charge for this information?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#5">How long will it take you to find out the information I have requested?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#6">The Council owes me chief rent - who can I speak to?</a>	
+				</strong>
+			</li>
+		</ul><h3>
+			
+			Can you tell me whether the land next to my house is Council owned?</h3><p>Yes, provided the precise location of the land concerned can be accurately described (see below for information we need in order to help you)</p><h3>
+			
+			What if I want to know who owns private property?</h3><p>Please contact the Land Registry on <strong>
+				
+		<a href="http://www.landreg.gov.uk">www.landreg.gov.uk</a>	
+			</strong>
+			<span class="gen">link to external website</span>or 0207 917 8888 to obtain the relevant enquiry form. NB the Land Registry will be unable to assist you if it turns out that the land concerned is unregistered, in which case you may wish to make enquiries locally with neighbours. Alternatively, if the land is subject to development proposals the Head of Planning will be able to provide information on recent <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=487">planning applications</a>	
+			</strong>
+			<span class="gen">link to pid 487</span>received.</p><h3>
+			
+			What information do I need to give you before you can tell me whether the Council owns a particular property or area of land?</h3><p>We need to know the boundaries of the land in question and if possible the full postal address. The boundaries are often difficult to describe precisely over the telephone without looking together at a detailed map (which can be arranged for personal visitors). We should be able to tell from a telephone enquiry whether the Council owns land nearby, but for a more precise answer, a plan showing the exact boundaries of the land can be submitted by fax or post (see contact details at the top of the page).</p><p>For land or property with a postal address or which can be described accurately without a detailed plan, enquiries may be submitted online via the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/592e">Property/Land Enquiry Form</a>	
+			</strong>
+			<span class="gen">link to online form</span> - note: 
+  please include your email address if available.</p><h3>
+			
+			Is there a charge for this information?</h3><p>Not at present. However, dependent upon the future demand for this service, the Council may consider introducing a charge to offset the administrative costs.</p><h3>
+			
+			How long will it take you to find out the information I have requested?</h3><p>Again, this will be dependent upon demand and also upon the need for a detailed plan to be submitted to the Council. If the level of enquiries remains manageable, and provided all necessary details have been provided to us, then a telephone response can normally be given within one working day. In certain cases, depending on the complexity of land ownership in the area, reference to the Council's deeds may be required in which case the enquiry may take longer.</p><h3>
+			
+			The Council owes me chief rent - who can I speak to?</h3><p>Please contact the Council, using one of the contact methods at the top of the page, providing details of the chief rent due and the amount owing.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=592"> Providing Information
+		(592)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

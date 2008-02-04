@@ -1,0 +1,19 @@
+model com.arsdigita.cms.docmgr;
+
+query workspacesWithRepositories {
+   BigDecimal workspaceID;
+   String title;
+
+   do {
+     select app.application_id as workspace_id,
+            app.title as title
+     from cms_docs_repositories rep,
+          applications app,
+          applications subapp
+     where rep.repository_id = subapp.application_id
+       and app.application_id = subapp.parent_application_id
+   } map {
+     workspaceID = workspace_id;
+     title = title;
+   }
+}

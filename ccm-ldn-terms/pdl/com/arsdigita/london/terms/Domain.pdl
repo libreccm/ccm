@@ -1,0 +1,92 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.terms;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.categorization.Category;
+
+object type Domain {
+    String[1..1] key = trm_domains.key VARCHAR(20);
+    unique String[1..1] url = trm_domains.url VARCHAR(255);
+
+    String[1..1] title = trm_domains.title VARCHAR(100);
+    String[0..1] description = trm_domains.description VARCHAR(4000);
+
+    String[1..1] version = trm_domains.version VARCHAR(20);
+    Date[1..1] released = trm_domains.released TIMESTAMP;
+
+    component Term[0..n] terms = join trm_domains.key
+                                   to trm_terms.domain;
+
+    component Category[1..1] \model = join trm_domains.model_category_id
+                                        to cat_categories.category_id;
+
+    object key (key);
+}
+
+query DefaultApplicationDomain {
+	String domainKey;
+	options {
+        WRAP_QUERIES = false;
+    }
+	
+	do {
+		select d.key from trm_domains d,
+	   	    		      cat_root_cat_object_map m,
+						  applications a
+		where a.primary_url = :path
+		and   m.object_id = a.application_id
+		and   m.use_context is null
+		and   d.model_category_id = m.category_id 
+	} map {
+		domainKey = d.key;
+	}
+}	
+
+// retrieve terms without any children
+query LeafTerms {
+	Term leaf;
+	options {
+        WRAP_QUERIES = false;
+    }
+	
+	do {
+		select a.unique_id,
+			   a.is_atoz,
+			   a.shortcut,
+			   b.object_id,
+			   b.object_type,
+			   b.display_name,
+			   b.default_domain_class
+		from   trm_terms a,
+			   acs_objects b
+		where  a.term_id = b.object_id
+		and    a.domain = :domain
+		and not exists (select 1 from cat_category_category_map
+		                where  category_id = a.model_category_id
+		                and    relation_type = 'child')
+	} map {
+		leaf.uniqueID = a.unique_id;
+		leaf.inAtoZ = a.is_atoz;
+		leaf.shortcut = a.shortcut;
+		leaf.id = b.object_id;
+		leaf.objectType = b.object_type;
+		leaf.displayName = b.display_name;
+		leaf.defaultDomainClass = b.default_domain_class;
+	}
+}	

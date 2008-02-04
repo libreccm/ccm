@@ -1,0 +1,60 @@
+<Server port="::shutdown-port::" shutdown="SHUTDOWN" debug="0">
+
+  <!-- Define the Tomcat Stand-Alone Service -->
+  <Service name="Tomcat-Standalone">
+
+    <!-- Define a non-SSL HTTP/1.1 Connector -->
+    <Connector className="org.apache.catalina.connector.http.HttpConnector"
+      port="::http-port::" minProcessors="10" maxProcessors="20"
+      enableLookups="true" redirectPort="8443"
+      acceptCount="10" debug="0" connectionTimeout="60000"/>
+
+    <!-- Define the top level container in our container hierarchy -->
+    <Engine name="::project-name::" defaultHost="localhost" debug="0">
+
+      <!-- Global logger unless overridden at lower levels -->
+      <Logger className="org.apache.catalina.logger.FileLogger"
+        prefix="catalina_log." suffix=".txt" directory="::log-dir::"
+        timestamp="true"/>
+
+      <!-- Because this Realm is here, an instance will be shared globally -->
+      <Realm className="org.apache.catalina.realm.MemoryRealm" />
+
+      <!-- Define the default virtual host -->
+      <Host name="localhost" debug="0" appBase="::app-home::/dist" unpackWARs="false">
+
+        <!-- Access log processes all requests for this virtual host.  By
+        default, log files are created in the "logs" directory relative to
+        $CATALINA_HOME.  If you wish, you can specify a different
+        directory with the "directory" attribute.  Specify either a relative
+        (to $CATALINA_HOME) or absolute path to the desired directory.
+        -->
+        <Valve className="org.apache.catalina.valves.AccessLogValve"
+          directory="::log-dir::"  prefix="localhost_access_log." suffix=".txt"
+          pattern="common"/>
+
+        <!-- Logger shared by all Contexts related to this virtual host.  By
+        default (when using FileLogger), log files are created in the "logs"
+        directory relative to $CATALINA_HOME.  If you wish, you can specify
+        a different directory with the "directory" attribute.  Specify either a
+        relative (to $CATALINA_HOME) or absolute path to the desired
+        directory.-->
+        <Logger className="org.apache.catalina.logger.FileLogger"
+          directory="::log-dir::" prefix="localhost_log." suffix=".txt"
+          timestamp="true"/>
+
+        <Context path=""
+          docBase=""
+          debug="0"
+          reloadable="true" >
+          <LogSetter name="ccm_tc_log" path="::log-dir::/tomcat.log" />
+          <LogSetter name="ccm_servlet_log" path="::log-dir::/servlet.log" servletLogger="true"/>
+        </Context>
+
+      </Host>
+
+    </Engine>
+
+  </Service>
+
+</Server>

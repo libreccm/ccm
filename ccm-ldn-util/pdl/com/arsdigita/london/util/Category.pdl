@@ -1,0 +1,30 @@
+model com.arsdigita.london.util;
+
+
+query getCategoryChildren {
+    BigDecimal id;
+    String name;
+    String description;
+    BigDecimal parentID;
+    String defaultAncestors;
+    BigDecimal sortKey;
+    
+    do {
+        select c.category_id, c.name, c.description,
+               m.category_id as parent_id, c.default_ancestors,
+	       m.sort_key
+          from cat_categories c,
+               cat_cat_subcat_trans_index t,
+               cat_category_category_map m
+         where t.category_id = :id
+           and t.subcategory_id = c.category_id
+           and c.category_id = m.related_category_id
+    } map {
+        id = c.category_id;
+        name = c.name;
+        description = c.description;
+        parentID = parent_id;
+        sortKey = sort_key;
+        defaultAncestors = c.default_ancestors;
+    }
+}

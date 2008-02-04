@@ -1,0 +1,40 @@
+model com.arsdigita.cms;
+
+query getItemIDsInContentSection {
+
+    BigDecimal id;
+    
+    do {
+        select
+            item_id
+        from
+            cms_items
+        where
+            section_id = :sectionID
+    }
+
+    map {
+        id = item_id;
+    }
+}
+
+query getItemIDsBeforeLifecycleStart {
+
+    BigDecimal id;
+    
+    do {
+        select
+	    m.object_id
+	from
+	    acs_object_lifecycle_map m,
+	    lifecycles l
+	where
+	    m.cycle_id = l.cycle_id
+	and l.start_date_time <= :startDate
+    }
+    
+    map {
+        id = m.object_id;
+    }
+}
+

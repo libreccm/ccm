@@ -1,0 +1,8 @@
+table.property-list th, td {
+  vertical-align: top;
+  text-align: left;
+}
+
+table.property-list th {
+  padding-right: 1pc;
+}

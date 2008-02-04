@@ -1,0 +1,120 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// The contents of this file are subject to the CCM Public
+// License (the "License"); you may not use this file except in
+// compliance with the License. You may obtain a copy of the
+// License at http://www.redhat.com/licenses/ccmpl.html.
+//
+// Software distributed under the License is distributed on an
+// "AS IS" basis, WITHOUT WARRANTY OF ANY KIND, either express
+// or implied. See the License for the specific language governing
+// rights and limitations under the License.
+//
+// $Id: CMSTask.pdl 1288 2006-08-18 09:39:56Z sskracic $
+model com.arsdigita.cms.workflow;
+
+import com.arsdigita.workflow.simple.*;
+import com.arsdigita.kernel.ACSObject;
+
+object type CMSTask extends UserTask {
+    composite CMSTaskType [1..1] taskType = join cms_tasks.task_type_id to cms_task_types.task_type_id;
+
+    reference key (cms_tasks.task_id);
+}
+
+object type CMSTaskType {
+        Integer[1..1] taskTypeID = cms_task_types.task_type_id INTEGER;
+        String [1..1] name = cms_task_types.name VARCHAR(64);
+        String [1..1] defaultUrlGeneratorClass = cms_task_types.classname VARCHAR(128);
+        String [1..1] privilege = cms_task_types.privilege VARCHAR(200);
+
+        object key (taskTypeID);
+}
+
+
+object type TaskEventURLGenerator {
+        Integer [1..1] generatorID = cms_task_url_generators.generator_id INTEGER;
+        String [1..1] event = cms_task_url_generators.event VARCHAR(100);
+        String [1..1] urlGeneratorClass = cms_task_url_generators.classname VARCHAR(128);
+
+        object key (generatorID);
+
+}
+
+association {
+
+        TaskEventURLGenerator [0..n] generators = join cms_task_types.task_type_id to cms_task_url_generators.task_type_id;
+        CMSTaskType [1..1] taskType = join cms_task_url_generators.task_type_id to cms_task_types.task_type_id;
+}
+
+query getItemFromTask {
+    ACSObject obj;
+
+    do {
+        select a.object_id,
+               a.default_domain_class,
+               a.display_name,
+               a.object_type
+          from acs_objects a,
+               cw_tasks t,
+               cw_processes p
+         where t.task_id = :taskID
+           and t.parent_task_id = p.process_id
+           and p.object_id = a.object_id
+    } map {
+        obj.id                  = a.object_id;
+        obj.objectType          = a.object_type;
+        obj.displayName         = a.display_name;
+        obj.defaultDomainClass  = a.default_domain_class;
+    }
+}
+
+object type UnfinishedNotification {
+    BigDecimal[1..1] id = cms_wf_notifications.task_id INTEGER;
+    Date[0..1] lastSentDate = cms_wf_notifications.last_sent_date TIMESTAMP;
+    Integer[0..1] numSent = cms_wf_notifications.num_sent INTEGER;
+
+    object key(id);
+}
+
+query getUnfinishedTasks {
+    CMSTask task;
+
+    do {
+        select a.object_id,
+               a.object_type,
+               a.display_name,
+               a.default_domain_class
+          from acs_objects a,
+               cw_tasks t,
+               cw_user_tasks u,
+               cms_tasks c,
+               cw_processes p,
+               cms_items i
+         where t.task_state = 'enabled'
+           and t.is_active = '1'
+           and t.task_id = a.object_id
+           and t.task_id = u.task_id
+           and t.task_id = c.task_id
+           and p.process_id = t.parent_task_id
+           and p.object_id = i.item_id
+           and i.section_id = :sectionID
+           and u.start_date < :overdueDate
+    } map {
+        task.id = a.object_id;
+        task.objectType = a.object_type;
+        task.displayName = a.display_name;
+        task.defaultDomainClass = a.default_domain_class;
+    }
+}
+
+
+// clear previous UnfinishedNotifications from the DB
+// used when restarting a Workflow task
+data operation clearNotifications {
+    do {
+        delete from cms_wf_notifications
+         where task_id = :taskID
+    }
+}

@@ -1,0 +1,37 @@
+//
+//This library is free software; you can redistribute it and/or
+//modify it under the terms of the GNU Lesser General Public License
+//as published by the Free Software Foundation; either version 2.1 of
+//the License, or (at your option) any later version.
+//
+//This library is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+//Lesser General Public License for more details.
+//
+//You should have received a copy of the GNU Lesser General Public
+//License along with this library; if not, write to the Free Software
+//Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.london.userprefs;
+
+import com.arsdigita.kernel.User;
+
+object type PersistentUserPrefs {
+    BigDecimal[1..1] id = user_prefs.id;
+
+    unique User[0..1] user = join user_prefs.user_id to users.user_id;
+    unique Long[0..1] cookie = user_prefs.cookie;
+    component Pref[0..n] prefs = join user_prefs.id to user_pref.prefs_id;
+
+    object key ( id );
+}
+
+object type Pref {
+    BigDecimal[1..1] id = user_pref.id;
+
+    String[1..1] key = user_pref.key;
+    String[0..1] value = user_pref.value;
+
+    object key ( id );
+}

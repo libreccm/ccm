@@ -1,0 +1,100 @@
+body { 
+  margin: 1em 1em 1em 40px;
+  font-family: sans-serif;
+  color: black;
+  background-image: url(rhlogo-left.gif);
+  background-position: top left;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: white
+}
+h1, h2, h3, h4, h5, h6 { color: #005a9c; }
+h1 {
+	font: 170% sans-serif;
+	font-weight: bold;
+}
+h2 {
+	font: 140% sans-serif;
+	font-weight: bold;
+}
+h3 {
+	font: 110% sans-serif;
+	font-weight: medium;
+}
+h4 {
+	font-style: italic;
+}
+h5 {
+	font-style: italic;
+}
+h6 {
+	font-style: italic;
+}
+address {
+	display: inline;
+}
+pre {
+	background-color: #eeeeff;
+}
+code {
+	color: green;
+	font-weight: bold;
+}
+.missing { 
+  color: red; font-size: smaller 
+}
+.ui { 
+  font-family: sans-serif; font-style: italic
+}
+.gray {
+  background-color: #ccccdd;
+}
+.large {
+  font-size: large
+}
+.indent {
+  padding-left: 20pt
+}
+.elt { 
+  font-weight: bold; 
+  font-family: sans-serif 
+}
+.mult { 
+  font-family: fixed; 
+  text-align: center 
+}
+.footer {
+  font-size: x-small;
+}
+td.number { text-align: right }
+td.unconfirmed { font-style: italic; color: blue }
+table.standard {
+	border-collapse: collapse;
+	border: solid;
+	border-width: 2px;
+	empty-cells: show;
+}
+table.standard th {
+	border: solid;
+	border-width: 1px;
+	background-color: #ccccdd;
+	vertical-align: top;
+	padding: 5px;
+}
+table.standard td {
+	border: solid;
+	border-width: 1px;
+	vertical-align: top;
+	padding: 5px;
+}
+table.standard td.divider {
+	border: solid;
+	border-width: 1px;
+	font-size: x-small;
+	font-weight: bold;
+	font-variant: small-caps;
+	text-align: center;
+	background-color: #eeeeff;
+	vertical-align: top;
+	padding: 5px;
+}

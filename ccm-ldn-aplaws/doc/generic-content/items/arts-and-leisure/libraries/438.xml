@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=438}]"><cms:name>leisure-438</cms:name><cms:language>en</cms:language><cms:title>Libraries - membership/joining</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=438}]"><cms:name>leisure-438-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>library, libraries, joining, join, member, membership</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=438}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>How do I join the library?</i></p><hr/><ul>
+			<li title="*">
+					Joining the library is easy and 
+    membership is free.
+				</li>
+			<li title="*">
+					Either complete the <strong>
+					
+		<a href="http://intouch/lgolx/libraryexternal">online 
+    application form</a>	 <span class="gen">link to online form</span>
+				</strong>, or
+				</li>
+			<li title="*">
+					Call in to any Library, 
+    complete a form and show two proofs of address.
+				</li>
+			<li title="*">
+					We will give you a library card except at the 
+		<a href="/ccm/services/pid.jsp?pid=444">Mobile 
+    Library</a>	
+				<span class="gen">link to pid 444</span>, where we still operate a ticket system. If at a later date you change 
+    your name, address or phone number please tell us so we can keep our records 
+    up to date.
+				</li>
+			<li title="*">
+					You can borrow books right away 
+    but if you wish to borrow sound recordings or videos we will send you a letter 
+    to confirm your address. We will also send a letter if you live outside the
+    area before you can borrow anything.
+				</li>
+			<li title="*">
+					There is no minimum age for children 
+    to join the library. We don't need proof of address if you are under 16 but 
+    a parent or guardian must sign the form before you can borrow any items.
+				</li>
+		</ul><p>
+				Your library card is issued subject to 
+  the byelaws of the Libraries; in signing your ticket you are amp to 
+  comply with these. A copy of the byelaws is available 
+  at each library. All information held on our computer is covered by the Data 
+  Protection Act and will not be given to any unauthorised person or
+organisation.
+			</p><p>Link to Complaints System <strong>
+				
+		<a href="http://195.8.168.168:1024/tmc/formulaws/complaint">Complaints System</a>	
+			</strong>
+			<br/>
+				Track your Complaint <strong>
+				
+		<a href="http://195.8.168.168:1024/tmc/formulaws/tracking">Complaints Tracking</a>	
+			</strong>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=438"> Applications for services
+		(438)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,4 @@
+select t.test_id as c_1
+from tests t
+     join tests start__t on start__t.test_id = ?
+where start__t.optional_self_id = t.test_id

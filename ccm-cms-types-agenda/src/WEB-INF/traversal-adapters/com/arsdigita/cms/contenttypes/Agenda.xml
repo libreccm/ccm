@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+<!-- No need to list all the content types here. Only
+       need to list a type if is adds associations that
+       were not in the parent type, or to remove attributes
+   -->
+
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Agenda" extends="com.arsdigita.cms.TextPage" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:formatter property="/object/creationDate" 
+                     class="com.arsdigita.xml.formatters.DateFormatter"/>
+
+      <xrd:formatter property="/object/agendaDate"
+                     class="com.arsdigita.xml.formatters.DateFormatter"/>
+
+    </xrd:adapter>
+  </xrd:context>
+
+</xrd:adapters>

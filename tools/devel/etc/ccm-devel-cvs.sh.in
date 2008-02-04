@@ -1,0 +1,4 @@
+#!/bin/sh
+
+CCM_DEVEL_CVSROOT=/var/ccm-devel/cvsroot
+export CCM_DEVEL_CVSROOT

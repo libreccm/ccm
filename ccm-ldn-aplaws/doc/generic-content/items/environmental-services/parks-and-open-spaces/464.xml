@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=464}]"><cms:name>batch-7-464</cms:name><cms:language>en</cms:language><cms:title>Grazing</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=464}]"><cms:name>batch-7-464-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>grazing</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=464}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council owns a number of sites within surrounding areas which it lets for horse grazing. Grazing land is only offered on a 12 monthly licence agreement.</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">Where are the sites?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">Are there any vacant sites?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">How much does it cost?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#4">How do I make a payment?</a>	
+				</strong>
+			</li>
+		</ul><h4>
+			
+			Where are the sites?</h4><p>
+			<span class="gen">enter location</span>
+		</p><h4>
+			
+			Are there any vacancies?</h4><p>There is currently a waiting list for vacant sites. If you wish to be placed on the waiting list please complete the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/464a">on-line enquiry form</a>	
+			</strong>
+			<span class="gen">link to online form</span>
+		</p><h4>
+			
+			How much does it cost?</h4><p>The licence fee depends on the size of the field. Terms of the licence will be discussed when a site is offered. Each licence agreement is subject to a one-off payment of &#xA3; <span class="gen">enter amount</span> + VAT to cover administrative costs.</p><h4>
+			
+			How do I make a payment?</h4><p>When payment is due, you will receive an invoice from us. You can make an <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/464h">on-line credit card payment</a>	
+</strong> <span class="gen">link to online form</span> (select 'General Debtors' for the Type of Payment and type your invoice number in the box asking for your 'Customer Reference Number'), or you can post a cheque to us to the address stated on the Invoice.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=464"> Applications for services
+		(464)
+		</a></h3><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=464"> Paying for goods and services
+		(464)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

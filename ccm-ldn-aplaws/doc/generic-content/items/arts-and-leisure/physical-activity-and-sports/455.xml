@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=455}]"><cms:name>arts-and-leisure-455</cms:name><cms:language>en</cms:language><cms:title>Grants and development fund</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=455}]"><cms:name>arts-and-leisure-455-dublin-metadata</cms:name><cms:dcAudience>Headteacher</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>grants, development, fund</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=455}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Grants and Development Funds are available to clubs who can demonstrate a commitment to developing sporting opportunities for young people.</i></p><hr/><p>Terms and Conditions</p><li title="*">The Grant will be used solely towards financing the items as set out in the 
+    approved application and under no circumstances will it be used for any other 
+    purpose.</li><li title="*">Prior to commencement of work/purchase, at least three competitive tenders/quotes 
+    must be provided for items whose total cost exceeds <span class="gen">enter amount</span>
+				</li><li title="*">A full explanation must be submitted to the Head of Recreation if it is your 
+    intention not to accept the lowest tender.</li><li title="*">Your Club must indicate how you intend to acknowledge the support of the Council.</li><li title="*">The Club agrees to participate in reasonable requests to assist publicity/promotional 
+    activities regarding this grant.</li><li title="*">Any representative authorised by the Council will be allowed to inspect the 
+    Facility/Project at any time.</li><li title="*">The Club shall keep proper accounts and records regarding the project and permit 
+    the Council access to them.</li><li title="*">The Club shall keep the Facility/Equipment in good repair and undertake all 
+    things as may be necessary to ensure its proper maintenance.</li><li title="*">The Club to return the attached written agreement to the conditions of the grant.</li><li title="*">The Club to provide receipted invoice for work carried out/goods supplied.</li><li title="*">The Council reserves the right to reclaim all or part of the grant if the above 
+    conditions are not complied with.</li><li title="*">An offer of grant remains valid for a period of one year from the date of the 
+    Panel at which the award is made. If a Club is unable to make a valid claim within 
+    this period, the award is forfeited.</li><p>
+				<strong>
+					
+			
+				</strong>
+				<span class="gen">link 
+  to online form</span>
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=455"> Applications for services
+		(455)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=455}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=455}]"/></cms:links></cms:item>

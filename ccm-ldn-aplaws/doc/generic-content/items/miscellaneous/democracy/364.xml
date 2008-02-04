@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=364}]"><cms:name>elections--electoral-register-364</cms:name><cms:language>en</cms:language><cms:title>Elections - Electoral Register</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=364}]"><cms:name>elections--electoral-register-364-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>election, electoral, register</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=364}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A recent change to the law now means that you can add your name to the register of electors at any time throughout the year. </i></p><hr/><p>If you do not register then you cannot exercise
+      your democratic right to vote in any election.  It is also much harder
+  to obtain credit if you are not on the Register. </p><p>The council is contemplating taking legal
+      proceedings against householders who fail to return their registration
+  form.</p><p>  You can check the Electoral Register at your
+      local Customer Service Centre. Libraries
+      also have local sections of the register. </p><p>Complete back files are held at <span class="gen">enter location</span>. Alternatively you can contact the Electoral Registration
+    Office on  <span class="gen">enter telephone number</span> who will check
+    the register for you. </p><p>  The edited register leaves out the names and addresses of people who have asked
+      for them to be excluded from that version of the register. The edited register
+      can be bought by anyone who asks for a copy, and they may use it for any
+    purpose. </p><p>If you are not on the published register, all
+    you need to do is complete the  <strong>
+				
+			
+			</strong>
+			<span class="gen">link to online form</span>.
+  You need to sign your own form - someone else cannot do it for you. </p><p>When you send us your completed, signed form we will add you to our list of
+    new applications. Any elector can then object to your name being added to the
+  register. If this happens we will write to you. </p><p>If your application is not objected to, we will change your details within
+  <span class="gen">enter amount</span> weeks of receiving your form. We will write to tell you when your application
+  is allowed. </p><p>We will also tell the Electoral Registration Officer for your old address
+  that you have moved, so that your name can be removed from that register. People
+  who live at two homes (including students) are allowed to register at both.
+  If you do not want to be removed from your other address please explain why
+on your form. </p><p>There are special rules about names being added to the voters list during
+  an election period. Because of these you may not be able to vote at that election
+  if you are added during this time. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=364"> Applications for services
+		(364)
+		</a></h3>]]></cms:content></cms:textAsset><cms:links oid="[com.arsdigita.cms.contentassets.RelatedLink:{id=364}]"><cms:targetType>internalLink</cms:targetType><cms:linkOrder>1</cms:linkOrder><cms:linkTitle>PDF Form</cms:linkTitle><cms:targetItem oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=364}]"/></cms:links></cms:item>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<project name="acs-hook" basedir="." default="compile-hook">
+
+  <property name="build.src.dir" value="${build.dir}/src" />
+
+  <target name="compile-hook">
+    <mkdir dir="${build.src.dir}/com/arsdigita/installer"/>
+    <mkdir dir="${build.src.dir}/com/arsdigita/initializer"/>
+    <mkdir dir="${build.src.dir}/com/redhat/persistence/pdl"/>
+    <mkdir dir="${build.src.dir}/com/redhat/persistence/common"/>
+    <mkdir dir="${build.src.dir}/com/redhat/persistence/oql"/>
+    <javacc
+      target="${src.dir}/com/arsdigita/installer/StatementParser.jj"
+      outputdirectory="${build.src.dir}/com/arsdigita/installer"
+      javacchome="${javacc.home.dir}"
+    />
+    <javacc
+      target="${src.dir}/com/arsdigita/initializer/ScriptParser.jj"
+      outputdirectory="${build.src.dir}/com/arsdigita/initializer"
+      javacchome="${javacc.home.dir}"
+    />
+    <javacc
+      target="${src.dir}/com/redhat/persistence/pdl/PDLParser.jj"
+      outputdirectory="${build.src.dir}/com/redhat/persistence/pdl"
+      javacchome="${javacc.home.dir}"
+    />
+    <javacc
+      target="${src.dir}/com/redhat/persistence/common/SQLParser.jj"
+      outputdirectory="${build.src.dir}/com/redhat/persistence/common"
+      javacchome="${javacc.home.dir}"
+    />
+    <javacc
+      target="${src.dir}/com/redhat/persistence/oql/OQLParser.jj"
+      outputdirectory="${build.src.dir}/com/redhat/persistence/oql"
+      javacchome="${javacc.home.dir}"
+    />
+    <copy todir="${build.classes.dir}">
+      <fileset dir=".">
+        <include name="${src.dir}/**/*.pdl"/>
+      </fileset>
+      <mapper to="*" from="${src.dir}/*" type="glob"/>
+    </copy>
+  </target>
+
+  <target name="clean-build-hook"/>
+  <target name="clean-tests-hook"/>
+  <target name="deploy-hook">
+    <condition value="${deploy.dir}/conf" property="deploy.conf.dir">
+        <not>
+            <isset property="deploy.conf.dir"/>
+        </not>
+    </condition>
+    <mkdir dir="${deploy.conf.dir}"/>
+    <copy todir="${deploy.conf.dir}" file="${src.dir}/log4j.properties"/>
+  </target>
+
+</project>

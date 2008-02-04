@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=734}]"><cms:name>arts-and-leisure-734</cms:name><cms:language>en</cms:language><cms:title>Accommodation</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=734}]"><cms:name>arts-and-leisure-734-dublin-metadata</cms:name><cms:dcAudience>Tourist</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>accommodation</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=734}]"><cms:content><![CDATA[<h2>Arts and Leisure</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Information regarding Accommodation in the locality</i></p><hr/><h2>How to book</h2><p>To book your accommodation simply telephone or write to the 
+  establishment of your choice. Remember to state your requirements clearly and precisely 
+  and advise the establishment of your expected time of arrival. It is strongly recommended 
+  that you confirm your booking in writing. Also, if you are delayed on your journey, 
+  a telephone call to inform management that you may be late might help to avoid problems 
+  on arrival.</p><p>Please note, that acceptance of accommodation bookings made 
+  by telephone or in writing are legally binding contracts. If the accommodation is 
+  cancelled, not taken up or left prematurely, the proprietor may be entitled to compensation. 
+  Check cancellation terms in advance.</p><p>All prices are correct at time of print but may be subject to 
+  change. Please confirm price before booking. The inclusion of any establishment 
+  in this guide does not indicate recommendation. No responsibility can be taken for 
+  any errors or omissions. The list of facilities is intended as a general guide. 
+  If you have specific requirements, please check with the establishment concerned.</p><h2>Complaints</h2><p>If you are dissatisfied with your accommodation, you should 
+  inform the management at the time of the incident. This gives the management the 
+  opportunity to take prompt action and to put things right without delay.</p><p>Complaints can also be directed to the Tourist Information Centre 
+  in writing stating at which establishment you stayed, when, and the nature of the 
+  complaint. The staff at the centre will record and investigate complaints, but please 
+  note that they have no statutory control over establishments in their method of 
+  operation and cannot become involved in legal or contractual matters.</p><p>Please find the list of local accommodation below;</p><p>
+<span class="gen">enter details</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=734"> Providing Information
+		(734)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

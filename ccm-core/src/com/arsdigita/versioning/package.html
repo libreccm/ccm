@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+  Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+  
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public License
+  as published by the Free Software Foundation; either version 2.1 of
+  the License, or (at your option) any later version.
+  
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  Lesser General Public License for more details.
+  
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+
+<!--
+  Author:  Vadim Nasardinov (vadimn@redhat.com)
+  Since:   2003-04-23
+  Version: $Revision: #2 $ $Date: 2003/08/08 $
+-->
+</head>
+<body>
+
+Provides for versioning of data objects.
+
+<p>We refer to the previous implementations of the versioning package
+as the "old versioning".  This includes implementations up to and
+including 5.2.x.  If you have used the old versioning before, there is
+a number of key differences between old versioning and this
+implementation that you may want to be aware of.
+</p>
+
+<p>The old versioning operates on the {@link
+com.arsdigita.domain.DomainObject domain object} level. Only those
+domain objects that subclass <code>VersionedACSObject</code> used to
+be versioned.
+</p>
+
+<p>This implementation operates on the {@link
+com.arsdigita.persistence.DataObject data object} level. In order to
+make an object type versioned, its PDL definition must start with the
+"versioned" keyword, like so:</p>
+
+<blockquote><pre>
+versioned object type Quux {
+   BigInteger[1..1] id  = quuces.id INTEGER;
+
+   String[1..1]   name  = quuces.name VARCHAR;
+
+   object type (id);
+}
+</pre></blockquote>
+
+<p>Object types may also be versioned implicitly due to semantic
+constraints imposed by marking some other object type as "versioned".
+For example, a subtype of a versioned object type is also versioned.
+</p>
+
+<blockquote><pre>
+object type GreatQuux extends Quux {
+   String[0..1] email  = great_quuces.email VARCHAR;
+
+   component Foobar[0..n] foobars = join great_quuces.id
+                                      to foobars.great_quux_id;
+   reference key(great_quuces.id);
+}
+</pre></blockquote>
+
+<p>In this example, the <code>GreatQuux</code> object type is
+versioned, because it extends a versioned type. </p>
+
+<p>Components of a versioned type are also versioned. In the above
+example, the <code>Foobar</code> type is versioned, because it is a
+component of the versioned object type <code>GreatQuux</code>.
+</p>
+
+<p>A more complete description of the supported PDL syntax and its
+intended semantics is outside the scope of this brief description.
+Please refer to the Developer Guide for further details.
+</p>
+
+<p>About the only carryover from the old versioning is the {@link
+com.arsdigita.versioning.VersionedACSObject} class.  It has been
+marked as deprecated.  It may be removed in a future release.  You
+should not be using or relying on any of the API provided by this
+class.
+</p>
+
+@see com.arsdigita.persistence
+
+</body>
+</html>

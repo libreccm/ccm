@@ -1,0 +1,129 @@
+
+Forums Rickshaw Work Plan
+=========================
+
+Semantic XML
+------------
+
+The APLAWS-II project requires that all applications generate
+semantic XML for public facing display components. The goal is
+to make it easier for designers to create custom styling by
+providing quick access to the domain data. The scope of this 
+requirement does not extend to administrative UIs. In addition
+only limited work will be done on user facing, interactive forms. 
+The core of the work entails removing all use of the following 
+Bebop classes:
+
+  Table
+  List
+  ColumnPanel
+  GridPanel
+  BoxPanel
+
+And any other similar component with a tendancy to generate XML 
+tags with low information entropy, such as 'bebop:cell'.
+To achieve this, the components will be re-written to use the
+DomainObjectXMLRenderer (or a similar technique). For example
+the following code snippet[1] illustrates how to do without a 
+bebop List or Table class:
+
+  public class SiteListing extends SimpleComponent {    
+    private SiteSelectionModel m_site;
+
+    public SiteListing(SiteSelectionModel site) {
+            m_site = site;
+    }
+
+    public void generateXML(PageState state,
+                            Element parent) {
+
+        Element content = parent.newChildElement(
+            Subsite.SUBSITE_XML_PREFIX + "siteListing",
+            Subsite.SUBSITE_XML_NS
+        );
+
+        Object key = m_site.getSelectedKey(state);
+
+        if (key != null) {
+            content.addAttribute("selected", key.toString());
+        }
+            
+        DomainObjectXMLRenderer renderer = new DomainObjectXMLRenderer(content);
+        renderer.setWrapRoot(true);
+        renderer.setWrapAttributes(true);
+    
+        DomainCollection sites = 
+           new DomainCollection(Site.BASE_DATA_OBJECT_TYPE);
+        sites.addOrder(Site.TITLE);
+
+        while (sites.next()) {
+            DomainObject site = sites.getDomainObject();
+                
+            renderer.walk(site, getClass().getName());
+        }
+    }
+  }   
+
+This generates XML looking like:
+
+      <subsite:siteListing>
+        <object oid="[com.arsdigita.london.subsite.Site:{id=30008}]">
+          <id>30008</id>
+          <title>Another Site</title>
+          <description>Some other stuff</description>
+          <hostname>some.example.com</hostname>
+          <styleDirectory>some</styleDirectory>
+          <frontPage oid="[com.arsdigita.london.portal.Workspace:{id=26024}]">
+            <id>26024</id>
+            <title>Another Site</title>
+            <description>Some other stuff</description>
+            <primaryURL>/portal/some.example.com/</primaryURL>
+          </frontPage>
+        </object>
+        <object oid="[com.arsdigita.london.subsite.Site:{id=32018}]">
+          <id>32018</id>
+          <title>My Site</title>
+          <description>Some stuff</description>
+          <hostname>mysite.example.com</hostname>
+          <styleDirectory>mysite</styleDirectory>
+          <frontPage oid="[com.arsdigita.london.portal.Workspace:{id=30004}]">
+            <id>30004</id>
+            <title>My Site</title>
+            <description>Some stuff</description>
+            <primaryURL>/portal/mysite.example.com/</primaryURL>
+          </frontPage>
+        </object>
+      </subsite:siteListing>
+
+We then write custom XSLT to render this as required.
+
+The main UI classes that will be changed to achieve this goal
+are:
+
+  * ThreadListing - displays a thread summary for the whole forum
+  * NavForm - form linking to a thread summary restricted by category
+  * PostTable - displays a list of posts in a thread
+  * MesssageView - displays a single post
+  * UncategorizedListing - displays a list of threads no categorized.
+  * CategoryListing - displays a list of categories (topics)
+
+
+General Application Cleanup
+---------------------------
+
+As part of the APLAWS-II project, now work is being done to eliminate
+the legacy old dispatcher & improving the categorization APIs. This 
+provides an opportunity to tidy up some of the legacy forums code. It 
+is suggested that the following be done:
+
+  * Uncomment the getServletPath() method in Forum.java
+  * Add servlet-mappings.xml & servlet-declarations.xml
+  * Remove the explicit 'rootCategory' association between
+    Forum <-> Category, in favour of the generic 
+    ACSObject <-> Category association provided by categorization
+    for mapping root categories.
+
+  * Any other revamps to make better use of categorization API
+    & thus eliminate a lot of custom PDL data queries
+
+[1] https://listman.redhat.com/archives/redhat-ccm-list/2003-March/msg00036.html

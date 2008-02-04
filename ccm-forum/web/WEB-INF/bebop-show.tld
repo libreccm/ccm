@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglibrary_1_1.dtd">
+
+<taglib>
+    <tlibversion>1.0</tlibversion>
+    <jspversion>1.1</jspversion>
+    <shortname>bebop-define</shortname> 
+    <uri>http://www.arsdigita.com/bebop-define/tld/1.0</uri>
+
+    <info>this is a tag library for showing components from Bebop pages
+     inside of a JSP.</info>
+    
+    <tag>
+        <name>page</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowPage</tagclass>
+        <teiclass>com.arsdigita.bebop.jsp.ShowPageExtraInfo</teiclass>
+        <bodycontent>JSP</bodycontent>
+        <attribute>
+          <name>pageClass</name>
+          <required>false</required>
+          <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+          <name>master</name>
+          <required>false</required>
+          <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>all</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowAll</tagclass>
+        <bodycontent>JSP</bodycontent>
+    </tag>
+
+    <tag>
+        <name>component</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowComponent</tagclass>
+        <bodycontent>JSP</bodycontent>
+        <attribute>
+          <name>name</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>form</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowForm</tagclass>
+        <bodycontent>JSP</bodycontent>
+        <attribute>
+          <name>name</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>list</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowList</tagclass>
+        <bodycontent>JSP</bodycontent>
+        <attribute>
+          <name>name</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+
+    <tag>
+        <name>listItem</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowListItem</tagclass>
+        <bodycontent>empty</bodycontent>
+    </tag>
+
+    <tag>
+        <name>table</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowTable</tagclass>
+        <bodycontent>JSP</bodycontent>
+        <attribute>
+          <name>name</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>thead</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowTableHeader</tagclass>
+        <bodycontent>JSP</bodycontent>
+    </tag>
+
+    <tag>
+        <name>tbody</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowTableBody</tagclass>
+        <bodycontent>JSP</bodycontent>
+    </tag>
+
+    <tag>
+        <name>row</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowTableRow</tagclass>
+        <bodycontent>JSP</bodycontent>
+    </tag>
+
+    <tag>
+        <name>col</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowListItem</tagclass>
+        <bodycontent>empty</bodycontent>
+    </tag>
+
+    <tag>
+        <name>slave</name>
+        <tagclass>com.arsdigita.bebop.jsp.ShowSlave</tagclass>
+        <bodycontent>JSP</bodycontent>
+    </tag>
+</taglib>

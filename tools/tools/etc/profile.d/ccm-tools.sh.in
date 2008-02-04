@@ -1,0 +1,10 @@
+prefix=@prefix@
+
+CCM_HOME=${prefix}/share/ccm
+CCM_TOOLS_HOME=${prefix}/share/ccm-tools
+
+export CCM_HOME
+export CCM_TOOLS_HOME
+
+
+

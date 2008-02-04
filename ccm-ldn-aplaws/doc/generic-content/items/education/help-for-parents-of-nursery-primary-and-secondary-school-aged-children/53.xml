@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=53}]"><cms:name>education-1-53</cms:name><cms:language>en</cms:language><cms:title>Parents Centres</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=53}]"><cms:name>education-1-53-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>parents, centres</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=53}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We aim to offer parents of young children help, advice, support and information on all aspects of parenting. </i></p><hr/><p>
+				During the year you can enrol for example on courses about First 
+  Aid, Stress and Relaxation, Drug Abuse and computers. For your children there 
+  are soft play days, messy play days, a creche and an educational toy library.
+			</p><p>
+				Please check with individual centres on what they offer you. 
+  Most centres change their timetables and courses termly.
+			</p><p>
+				Parent's Centres also work closely with other agencies such 
+  as health visitors and Family Literacy Project.
+			</p><p>
+<span class="gen">enter facility name</span>
+</p><p>
+<span class="gen">enter facility name</span>
+</p><p>
+<span class="gen">enter facility name</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=53"> Providing Information
+		(53)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

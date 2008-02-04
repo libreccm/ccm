@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=169}]"><cms:name>batch-22-169</cms:name><cms:language>en</cms:language><cms:title>Interpreting and translating</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=169}]"><cms:name>batch-22-169-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>interpreting, translating</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=169}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If English is not your first language and you need help in talking/explaining or understanding a letter, documents bills etc. we can help.</i></p><hr/><p>We have qualified Interpreters who provide both face to face 
+  and telephone Interpretation in the main languages spoken in the area.  Languages include <span class="gen">enter details</span>
+</p><h2>Sign Language Interpreting Services</h2><p>Under 
+  the Disability Discrimination Act, service providers must ensure that deaf people 
+  have equal access to information and services. This may mean providing appropriate 
+  communication support.</p><p>We can provide you with an interpreter if the Deaf Service User 
+  you are dealing with communicates using: </p><ul>
+  <li title="*">British Sign Language (BSL)</li>
+  <li title="*">Sign Supported English (SSE)</li>
+  <li title="*">Deaf/Blind</li>
+  <li title="*">Lipspeaker (Hard of Hearing)</li>
+</ul><p>We will interpret in a variety of settings, for example:</p><ul>
+  <li title="*">Housing applications</li>
+  <li title="*">Council tax enquiries</li>
+  <li title="*">Hospital meetings and consultations</li>
+  <li title="*">Welfare rights services</li>
+  <li title="*">Parent / teacher interviews</li>
+  <li title="*">GP appointments</li>
+  <li title="*">Social Services Meetings</li>
+  <li title="*">Open Consultations meetings</li>
+</ul><h2>What the service provides</h2><p>The service provides confidential, professional and highly qualified 
+  interpretation between sign language and spoken English. </p><p>We aim to be as flexible and responsive as possible and will 
+  act as an aid to communication between Deaf and hearing people. </p><p>We are also able to provide Interpreting Services to private 
+  and voluntary organisations. However, charges may be requested. Please telephone 
+  the service to check details about the free service.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=169"> Providing Information
+		(169)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

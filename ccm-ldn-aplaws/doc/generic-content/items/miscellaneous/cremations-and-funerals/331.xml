@@ -1,0 +1,247 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=331}]"><cms:name>batch-19-331</cms:name><cms:language>en</cms:language><cms:title>Cemeteries and funerals - funeral expenses</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=331}]"><cms:name>batch-19-331-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>Cemeteries, funerals, expenses</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=331}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Please find below a list of funeral expenses for our cemeteries and crematorium</i></p><hr/><p>From <span class="gen">enter date</span>
+		</p><p>The Council provides cemeteries at <span class="gen">enter location</span>
+		</p><h3>Scale of Charges</h3><table width="90%" cellpadding="5" class="centre" summary="Scale of Charges">
+			<tr>
+				<td>
+					<h3>Cemeteries</h3>
+				</td>
+				<td>
+					<h3>Fees</h3>
+				</td>
+			</tr>
+			<tr>
+				<td>Exclusive rights of burial</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Interment Fee (aged 16 years and under)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Interment Fee (aged 17 years and over)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Interment Fee (Non-resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Use of Chapel</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Interment of cremated remains (resident)</td>
+				<td>
+					<span class="gen">enter amount</span>;</td>
+			</tr>
+			<tr>
+				<td>Interment of cremated remains (non-resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Bricking of vaults and semi-vaults</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Timbering of graves</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Temporary grave marker (for new graves)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Right to erect a headstone</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Inscription fee</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Foundation to monuments</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Removal of kerbs for purpose of burial</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Right to place a vase</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Searching register (per grave)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>A wooden casket for cremated remains</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Use of Chapel Organ</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Transfer of ownership</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Selection of grave</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Statutory declaration of ownership</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Individual baby graves (interment)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>New grave using chapel (resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>New grave using chapel (non-resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>New grave direct (resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>New grave direct (non-resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Purchase without interment</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>New grave for cremated remains (resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>New grave for cremated remains (non-resident)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h3>Memorials (prices below include upto 70 characters)</h3>
+				</td>
+			</tr>
+			<tr>
+				<td>Natural stone</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Black granite</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Motif (choice available)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Additional letters</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+		</table><h3>Cremation</h3><table width="90%" cellpadding="5" class="centre" summary="Cremations">
+			<tr>
+				<td>Cremation fee (aged 16 years and under)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Cremation fee (aged 17 years and over)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Cremation fee (non-resident) (aged 17 years and over)</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+			<tr>
+				<td>Special Time 1.00pm</td>
+				<td>
+					<span class="gen">enter amount</span>
+				</td>
+			</tr>
+		</table><p>All the above prices are inclusive of VAT where applicable.</p><p>Out of Hours Booking Service (For Cremations Only) <span class="gen">enter telephone number</span>
+		</p><p>Any additional information can be obtained on application to the Registrar's Office 
+  at the address given below during normal office hours: <span class="gen">enter opening hours</span>, <span class="gen">enter address</span>
+		</p><p>Prices Revised <span class="gen">enter date</span>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=331"> Providing Information
+		(331)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

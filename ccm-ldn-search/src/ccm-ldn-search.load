@@ -1,0 +1,20 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+    <initializer class="com.arsdigita.london.util.Initializer"/>
+  </requires>
+  <provides>
+  <!--
+    <table name=""/>
+  -->
+    <initializer class="com.arsdigita.london.search.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-ldn-search"/>
+    <data class="com.arsdigita.london.search.Loader"/>
+  </scripts>
+</load>

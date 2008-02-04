@@ -1,0 +1,26 @@
+// Author:  Vadim Nasardinov (vadimn@redhat.com)
+// Since:   2003-10-20
+// Version: $Revision: #1 $ $DateTime: 2003/10/20 18:28:33 $
+
+digraph categories {
+    node[fontsize=10,fontname=verdana,height=0.2,shape=box,orientation=landscape];
+
+    root -> Entertainment;
+    root -> Education;
+    root -> Sports;
+
+    Entertainment -> Movies;
+    Entertainment -> TVShows;
+    TVShows[label="TV Shows"];
+    TVShows -> TVEvents;
+    TVEvents[label="Televised events"];
+
+    Sports -> Scores;
+    Sports -> KindsOfSports;
+    Sports -> TVEvents[color=blue];
+
+    KindsOfSports[label="Kinds of sports"];
+    KindsOfSports -> Baseball;
+    KindsOfSports -> IOCCC;
+}
+

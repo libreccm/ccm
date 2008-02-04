@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head> 
+   <title>HTML Package</title>
+  </head>
+  <body>
+
+    <p>This package provides facilities for implementing little
+    HTML-like markup languages that extend HTML.  See {@link
+    com.arsdigita.templating.html.HTMLParser} and {@link
+    com.arsdigita.templating.html.demo} for concrete examples. </p>
+
+    <p>Conceptually, the package revolves around two interfaces:
+    {@link com.arsdigita.templating.html.HTMLParser} and {@link
+    com.arsdigita.templating.html.ContentHandler}. An {@link
+    com.arsdigita.templating.html.HTMLParser html parser} can read
+    HTML text and dispatch events to the {@link
+    com.arsdigita.templating.html.ContentHandler content handler}. The
+    content handler may then process custom tags in a useful
+    manner. </p>
+
+    <p>At this time, the package only provides a single implementation
+      of the {@link com.arsdigita.templating.html.HTMLParser}
+      interface, namely, the {@link
+      com.arsdigita.templating.html.XHTMLParser} class that relies on
+      a SAX parser to perform the actual parsing. </p>
+
+    <p>One example implementation of the {@link
+    com.arsdigita.templating.html.ContentHandler} is provided by
+    {@link com.arsdigita.templating.html.demo.DemoTagHandler}.</p>
+
+    <p>Another possible implementation of the {@link
+    com.arsdigita.templating.html.ContentHandler} interface would be a
+    class that "understands" custom "link" tags of the following form:
+    </p>
+
+    <blockquote><pre style="border: 1px solid black; padding-left: 1ex; padding-right: 1ex;">
+&lt;p>As we mentioned in our <strong>&lt;link cms_id="23889"></strong>previous article<strong>&lt;/link></strong>,
+serious Java practitioner tend to shun the
+&lt;a href="http://www.google.com/search?q=double-checked+locking">Double-Checked
+Locking&lt;/a> pattern...
+    </pre></blockquote>
+
+    <p>where the <code>&lt;link></code> tag may be used to link one
+    CMS article to another.</p>
+  </body>
+</html>

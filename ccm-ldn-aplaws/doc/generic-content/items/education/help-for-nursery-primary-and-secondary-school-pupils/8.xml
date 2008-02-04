@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=8}]"><cms:name>education-2-8</cms:name><cms:language>en</cms:language><cms:title>Special educational needs - (SEN) - statement</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=8}]"><cms:name>education-2-8-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>special, educational, needs, statement</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=8}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A statement of Special Educational Needs is a legal document laying out the details of Special Needs which your child is considered to have.</i></p><hr/><p>The statement then goes on to outline the specific help which 
+  will be made available to meet your child's Special Needs. This is called Special 
+  Educational Provision. A Statement of Special Educational Needs is set out in six 
+  parts:</p><h4>Part 1 - Introduction</h4><ul>
+			<li title="*">The child's name and address and date of birth. </li>
+			<li title="*">The child's home language and religion.</li>
+			<li title="*">The names and address(es) of the child's parents.</li>
+		</ul><h4>Part 2 - Special Educational Needs</h4><p>Details of each and every one of the child's Special Educational 
+  Needs as identified by the LEA during Statutory Assessment from the advice received 
+  and attached as appendices to the statement.</p><h4>Part 3 - Special Educational Provision</h4><p>The Special Educational Provision which the LEA consider necessary 
+  to meet the child's Special Educational Needs.</p><li title="*">The objectives which the Special Educational Provision should aim to meet.</li><li title="*">The Special Educational Provision which the LEA consider appropriate to meet 
+    the needs specified in part 2 and to meet the specified objectives.</li><li title="*">The arrangements for monitoring progress in meeting those objectives, particularly 
+    for setting short-term targets for the child's progress on a regular basis.</li><h4>Part 4 - Placement</h4><p>The type and name of school where the Special Educational Provision 
+  specified in part 3 is to be made or the arrangements for the education to be made 
+  otherwise than in school</p><h4>Part 5 - Non-Educational Needs</h4><p>All relevant non-educational needs of the child as agreed between 
+  the Health Services, Social Services or other agencies and the LEA</p><h4>Part 6 - Non-Educational Provision</h4><p>Details of relevant non-educational provision which will be 
+  made available to meet the non-educational needs of the child as agreed between 
+  the Health Services and/or the Social Services and the LEA, including the agreed 
+  arrangements for its provision.</p><p>If it has been decided to issue a Statement of Special Educational 
+  Needs, then you will first be sent a 'Proposed Statement'. All sections will be 
+  completed except Part 4 (describing the type and name of the school) which is left 
+  blank. Along with the copy of the Proposed Statement, you will receive a letter 
+  from the Sheffield Education Service telling how you can give your views on the 
+  Proposed Statement before a Final Statement is issued. Details of LEA mainstream 
+  and special schools in the area are sent to you at this point, along with details 
+  of all non-maintained and independent schools approved by the Secretary of State 
+  for Education as suitable for children with Special Educational Needs.</p><p>You have a right to express a preference for the LEA maintained 
+  school you want you child to go to. This may be the school that your child is already 
+  attending.</p><p>We will agree with your preference providing:</p><ul>
+			<li title="*">The school you choose is suitable for your child's age, ability and Special 
+    Educational Needs.</li>
+			<li title="*">Your child's attendance there will not effect the efficient education of other 
+    children already at the school.</li>
+			<li title="*">Placing your child in the school will be an efficient use of resources</li>
+		</ul><p>You may also make any representations in respect of seeking 
+  a place at a non-maintained independent school outside the LEA, although the Authority 
+  is not obliged to fund a place in one of these schools. The LEA normally tries to 
+  make provision for children in one of its own schools. Deciding which school you 
+  would prefer your child to attend is a very important matter and we will be pleased 
+  to talk to you and provide you with additional information to assist you with making 
+  your decision.</p><p>You may wish to visit schools in order to familiarise yourself 
+  with the provision made by the Local Education Authority. You have 15 days in which 
+  to make any comments and express your preference of school you want for your child. 
+  Usually the Local Education Authority will send you the Final Statement within 
+  8 weeks of issuing the Proposed Statement. You will be informed of your right of 
+  appeal against the Authority's decision to an independent Special 
+  Needs Tribunal if you do not agree with the Final Statement issued by the Authority.</p><p>An assessment should take no longer than 6 months. (There are 
+  exceptions to this time limit e.g. when professional advice is received late).</p><p>Parents or carers can help by replying quickly whenever the 
+  Local Education Authority contacts you.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=8"> Providing Information
+		(8)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

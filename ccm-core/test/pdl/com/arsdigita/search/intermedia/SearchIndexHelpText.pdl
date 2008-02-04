@@ -1,0 +1,141 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: SearchIndexHelpText.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/16 18:10:38 $
+model com.arsdigita.search.intermedia;
+
+import com.arsdigita.kernel.*;
+
+// Define objects to test SearchIndexHelp class.
+// The following objects are defined:
+//  SearchTestBook      -- a book.
+//  SearchTestChapter   -- a chapter, component of book.
+//  SearchTestAuthor    -- an author, aggregate of book.
+//  SearchTestBookH     -- book, pdl same as SearchTestBook,
+//                         but object (java class) uses 
+//                         SearchIndexHelpCustomize.
+//  SearchTestChapterH  -- chapter, pdl same as SearchTestChapter
+//                         but object uses SearchIndexHelpCustomize
+
+
+//*******************************************
+// SearchTestBook
+//*******************************************
+
+object type SearchTestBook extends ACSObject {
+    String title = search_test_book.title VARCHAR(100);
+
+    reference key (search_test_book.book_id);
+}
+
+association {
+    SearchTestBook[1..1] book =
+        join search_test_book_chapter.chapter_id to
+             search_test_book_chap_map.chapter_id,
+        join search_test_book_chap_map.book_id
+          to search_test_book.book_id;
+    component SearchTestChapter[0..n] chapters =
+        join search_test_book.book_id
+          to search_test_book_chap_map.book_id,
+        join search_test_book_chap_map.chapter_id to
+             search_test_book_chapter.chapter_id;
+}
+
+
+//*******************************************
+// SearchTestChapter
+//*******************************************
+
+object type SearchTestChapter extends ACSObject {
+    Integer    chapterNum = search_test_book_chapter.chapter_num INTEGER;
+    String     content = search_test_book_chapter.content CLOB;
+
+    reference key (search_test_book_chapter.chapter_id);
+}
+
+association {
+    SearchTestAuthor[0..n] authors =
+        join search_test_book_chapter.chapter_id to
+             search_test_chap_auth_map.chapter_id,
+        join search_test_chap_auth_map.author_id
+          to search_test_author.author_id;
+    SearchTestChapter[0..n] chapters =
+        join search_test_author.author_id
+          to search_test_chap_auth_map.author_id,
+        join search_test_chap_auth_map.chapter_id
+          to search_test_book_chapter.chapter_id;
+}
+
+
+//*******************************************
+// SearchTestAuthor
+//*******************************************
+
+object type SearchTestAuthor extends ACSObject {
+    String     name = search_test_author.name VARCHAR(100);
+
+    reference key (search_test_author.author_id);
+}
+
+//*******************************************
+// SearchTestBookH
+//*******************************************
+
+object type SearchTestBookH extends ACSObject {
+    String title = search_test_book.title VARCHAR(100);
+
+    reference key (search_test_book.book_id);
+}
+
+association {
+    SearchTestBookH[1..1] book =
+        join search_test_book_chapter.chapter_id to
+             search_test_book_chap_map.chapter_id,
+        join search_test_book_chap_map.book_id
+          to search_test_book.book_id;
+    component SearchTestChapterH[0..n] chapters =
+        join search_test_book.book_id
+          to search_test_book_chap_map.book_id,
+        join search_test_book_chap_map.chapter_id to
+             search_test_book_chapter.chapter_id;
+}
+
+
+//*******************************************
+// SearchTestChapterH
+//*******************************************
+
+object type SearchTestChapterH extends ACSObject {
+    Integer    chapterNum = search_test_book_chapter.chapter_num INTEGER;
+    String     content = search_test_book_chapter.content CLOB;
+
+    reference key (search_test_book_chapter.chapter_id);
+}
+
+association {
+    SearchTestAuthor[0..n] authors =
+        join search_test_book_chapter.chapter_id to
+             search_test_chap_auth_map.chapter_id,
+        join search_test_chap_auth_map.author_id
+          to search_test_author.author_id;
+    SearchTestChapterH[0..n] chaptersH =
+        join search_test_author.author_id
+          to search_test_chap_auth_map.author_id,
+        join search_test_chap_auth_map.chapter_id
+          to search_test_book_chapter.chapter_id;
+}

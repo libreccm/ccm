@@ -1,0 +1,326 @@
+<public:component tagname="editor" literalcontent="true">
+  <public:attach event="oncontentready" onevent="initEditor()"/>
+  <public:attach event="ondocumentready" onevent="initForm()"/>
+  <public:property name="editText" put="setEditText" get="getEditText"/>
+</public:component>
+
+<style>
+  .tool { border-width: 2px; 
+          border-style: solid; 
+          border-color: #DDDDDD;
+          font-family: Verdana,Arial;
+          font-weight: bold;
+          font-size: 12px; 
+  }
+  .toggle { 
+          font-family: Arial;
+          font-weight: bold;
+          font-size: 12px; 
+  }
+  .editorWidget {
+    height:200;
+    width:100%; 
+    border:1px solid black;
+    padding:4px;
+  }
+</style>
+
+<script>
+  element.style.display = "block";
+
+  var editTextFormElement; 
+  var isVisual = true;
+
+  function initEditor() {
+   
+    for (i = 0; i < document.all.length; i++) {
+      document.all(i).unselectable = "on";
+    }
+
+    visualEditor.unselectable = "off";
+    visualEditor.innerHTML = element.innerHTML;
+
+    for (i = 0; i < visualEditorPanel.all.length; i++) {
+      if (visualEditorPanel.all(i).removeAttribute) 
+        visualEditorPanel.all(i).removeAttribute("unselectable", 0);
+    }
+   
+    sourceEditor.unselectable = "off";
+    sourceEditor.innerText = element.innerHTML;
+
+    defaults.viewLink = document;
+  }
+
+  // binds the editor to its containing form
+  function initForm() {
+
+    // find the form that contains the HTML editor
+    var editorForm = element.parentElement;
+    while (editorForm != null && editorForm.tagName != "FORM") {
+      editorForm = editorForm.parentElement;
+    }
+
+    if (editorForm == null) {
+      alert("Error initializing the HTML editor: " +
+            "it must be contained in a form.");
+      return;
+    }
+
+    // add a hidden form element to submit the text from the editor
+    editTextFormElement = element.document.createElement(
+      "<input type=hidden name=" + element.name + ">");
+    editorForm.appendChild(editTextFormElement);
+
+    // add an event handler to set the hiddent form element before
+    // the form is submitted
+    editorForm.attachEvent("onsubmit", setFormValue);
+  }
+
+  // sets the form value on submission
+  function setFormValue() {
+    editTextFormElement.value = getEditText();
+  }
+
+  // sets the public editText property
+  function setEditText(editText) {
+    visualEditor.innerHTML = editText;
+    sourceEditor.innerText = editText;
+  }
+
+  // gets the public editText property
+  function getEditText() {
+    return (isVisual) ? visualEditor.innerHTML : sourceEditor.innerText;
+  }
+
+  function toggleEditor() {
+
+    if (isVisual) {
+      sourceEditor.innerText = visualEditor.innerHTML;
+      visualEditorPanel.style.display="none";
+      sourceEditorPanel.style.display="block";
+      sourceEditorPanel.focus();
+      isVisual = false;
+    } else {
+      visualEditor.innerHTML = sourceEditor.innerText;
+      sourceEditorPanel.style.display="none";
+      visualEditorPanel.style.display="block";
+      visualEditorPanel.focus();
+      isVisual = true;
+    }
+  }
+
+  function toolOver() {
+    window.event.srcElement.style.borderStyle = "outset";
+  }
+
+  function toolOut() {	
+    window.event.srcElement.style.borderStyle = "solid";
+  }
+
+  function toolDown(command, display, param) {
+    document.execCommand(command, display, param);
+    window.event.srcElement.style.borderStyle = "solid";
+  }
+
+  function applyFormat(command, display, param) {
+    document.execCommand(command, display, param);
+    window.event.srcElement.style.borderStyle = "inset";
+  }
+
+  function formatOut(command) {	
+    if (document.queryCommandState(command)) {
+      window.event.srcElement.style.borderStyle = "inset";
+    } else {
+      window.event.srcElement.style.borderStyle = "solid";
+    }
+  }
+
+  function link(command, display, param) {
+    range = document.selection.createRange();
+    if (range.htmlText == "") {
+      alert("Please select some text before creating a hyperlink.");
+      return;
+    }
+    document.execCommand(command, display, param);
+    document.selection.empty();
+    alert("Hyperlink created.");
+    // window.event.srcElement.style.borderStyle = "solid";
+  }
+
+  function updateFormatTools() {
+    boldTool.style.borderStyle = document.queryCommandState("Bold") ? "inset" : "solid";
+    italicTool.style.borderStyle = document.queryCommandState("Italic") ? "inset" : "solid";
+    underlineTool.style.borderStyle = document.queryCommandState("Underline") ? "inset" : "solid";
+  }   
+
+  function cancelEvent() {
+
+    event.returnValue = false;
+    event.cancelBubble = true;
+  }
+</script>
+
+<body>
+
+  <!-- Begin VISUAL part -->
+
+  <table id="visualEditorPanel" 
+         cellpadding="2" bgcolor="#DDDDDD" width="100%" border="1">
+  <tr><td>
+
+  <!-- Begin toolbar -->
+  <table border="0" cellspacing="0" cellpadding="2" width="100%"> 
+ 
+  <tr><td><table border="0" cellspacing="0" cellpadding="2"><tr> 
+    <td unselectable="on"><img class="tool" unselectable="on"
+             src="/assets/editoricons/Cut24.gif" height="24"  
+             width="24" onmouseover="toolOver()" onmouseout="toolOut()" 
+             onmousedown='toolDown("Cut", false, "")' alt="Cut" /></td> 
+    <td><img class="tool"
+             src="/assets/editoricons/Copy24.gif" height="24"  
+             width="24" onmouseover="toolOver()" onmouseout="toolOut()" 
+             onmousedown='toolDown("Copy", false, "")' alt="Copy" /></td> 
+    <td><img class="tool"
+             src="/assets/editoricons/Paste24.gif" height="24"  
+             width="24" onmouseover="toolOver()" onmouseout="toolOut()" 
+        onmousedown='toolDown("Paste", false, clipboardData.getData("Text"))'
+        alt="Paste" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td><img name="bold" id="boldTool" class="tool" 
+             src="/assets/editoricons/Bold24.gif"
+             height="24" width="24" onmouseover="toolOver()"  
+             onmouseout='formatOut("Bold")' 
+             onmousedown='applyFormat("Bold", false, "")' alt="Bold" /></td> 
+    <td><img name="italic" id="italicTool" class="tool" 
+             src="/assets/editoricons/Italic24.gif"  
+             height="24" width="24" onmouseover="toolOver()"  
+             onmouseout='formatOut("Italic")' 
+             onmousedown='applyFormat("Italic", false, "")' 
+             alt="Italic" /></td> 
+    <td><img name="underline" id="underlineTool" class="tool"
+             src="/assets/editoricons/Underline24.gif" 
+             height="24" width="24" onmouseover="toolOver()"  
+             onmouseout='formatOut("Underline")' 
+             onmousedown='applyFormat("Underline", false, "")' 
+             alt="Underline" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td><img class="tool" height="24"  
+             src="/assets/editoricons/Outdent24.gif" 
+             width="24" onmouseover="toolOver()" onmouseout='toolOut()' 
+             onmousedown='applyFormat("Outdent", false, "")' alt="Outdent" /></td> 
+    <td><img class="tool" height="24"  
+             src="/assets/editoricons/Indent24.gif" 
+             width="24" onmouseover="toolOver()" onmouseout='toolOut()' 
+             onmousedown='applyFormat("Indent", false, "")' alt="Indent" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td><img class="tool" height="24" width="24"
+             src="/assets/editoricons/UnorderedList24.gif"  
+             onmouseover="toolOver()" onmouseout='toolOut()' 
+             onmousedown='applyFormat("InsertUnorderedList", false, "")' 
+             alt="Unordered List" /></td> 
+    <td><img class="tool" height="24" width="24"
+             src="/assets/editoricons/OrderedList24.gif"  
+             onmouseover="toolOver()" onmouseout='toolOut()' 
+             onmousedown='applyFormat("InsertOrderedList", false, "")' 
+             alt="Ordered List" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td><img class="tool" height="24" width="24"
+             src="/assets/editoricons/Bookmarks24.gif"  
+             onmouseover="toolOver()" onmouseout="toolOut()" 
+             onmousedown='link("CreateLink", true, "")' 
+             alt="Create Link" /></td> 
+ 
+  </tr></table></td><td align="center"><button class="toggle"
+      onclick='toggleEditor()'>Edit Source</button></td>
+   
+  </tr> 
+ 
+  <!-- End toolbar -->  
+ 
+  <tr> 
+    <td colspan="2" bgcolor="white"><div class="editorWidget"
+        id="visualEditor" contenteditable="true" onclick="updateFormatTools()"></div></td> 
+  </tr> 
+ 
+  </table> 
+ 
+  </td></tr> 
+  </table> 
+
+  <!-- End visual editor -->
+
+  <!-- Begin source part -->
+
+  <table id="sourceEditorPanel" bgcolor="#DDDDDD" width="100%" border="1" 
+         cellpadding="2" style="display:none">
+  <tr><td>
+
+  <!-- Begin toolbar -->
+  <table border="0" cellspacing="0" cellpadding="2" width="100%"> 
+ 
+  <tr><td><table border="0" cellspacing="0" cellpadding="2"><tr> 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+ 
+    <td>&nbsp;&nbsp;</td> 
+ 
+    <td height="24" width="24"><img class="tool" height="24" width="24"
+        src="/assets/editoricons/blank.gif" /></td> 
+ 
+  </tr></table></td><td align="center"><button class="toggle"
+      onclick='toggleEditor()'>Edit Display</button></td>
+   
+  </tr> 
+ 
+  <!-- End toolbar -->  
+ 
+  <tr>
+    <td colspan="2" bgcolor="white">
+      <textarea class="editorWidget" id="sourceEditor"></textarea>
+    </td>
+  </tr>
+
+  </table>
+ 
+  </td></tr>
+  </table> 
+  <!-- End source part -->
+
+</body>
+
+

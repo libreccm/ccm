@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=593}]"><cms:name>batch-8-593</cms:name><cms:language>en</cms:language><cms:title>Land and property - availability lists</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=593}]"><cms:name>batch-8-593-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>land, property, availability, lists</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=593}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Are you looking for a site or land in the surrounding area for development?</i></p><hr/><p>Use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/593e">search facilities</a>	
+			</strong>
+			<span class="gen">link to online form</span> to find those sites where planning permission has been granted and development has not been started.</p><p>Plans and Policies produce annual reports on housing and employment land availability.</p><p>Reports are now available which set out the housing and employment land supply position. Contact us for a copy of these.</p><p>Information regarding <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=599">Statutory Development Plans</a>	
+			</strong>
+			<span class="gen">link  to pid 599</span>.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=593"> Providing Information
+		(593)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

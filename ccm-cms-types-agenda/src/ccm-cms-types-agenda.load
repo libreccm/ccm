@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_agendas"/>
+    <initializer class="com.arsdigita.cms.contenttypes.AgendaInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-agenda"/>
+    <data class="com.arsdigita.cms.contenttypes.AgendaLoader"/>
+  </scripts>
+</load>

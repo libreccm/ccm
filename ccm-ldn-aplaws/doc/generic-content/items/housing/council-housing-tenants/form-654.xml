@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.FileStorageItem:{id=654}]"><cms:name>property-alteration-by-tenant-form-654</cms:name><cms:language>en</cms:language><cms:title>Property Alteration by Tenant</cms:title><cms:file oid="[com.arsdigita.cms.FileAsset:{id=654}]"><cms:name>654a.pdf</cms:name><cms:content file="654a.pdf"/></cms:file></cms:item>

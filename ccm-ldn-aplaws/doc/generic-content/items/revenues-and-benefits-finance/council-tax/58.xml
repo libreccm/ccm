@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=58}]"><cms:name>batch-20-58</cms:name><cms:language>en</cms:language><cms:title>Council tax - individual account enquiries incl. new accounts
+	</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=58}]"><cms:name>batch-20-58-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, tax, individual, account, enquiries, new</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=58}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently Asked Questions regarding individual account enquiries</i></p><hr/><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">How much do I owe?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">I wish to request a copy bill</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">Pay Council Tax Online</a>	
+				</strong>
+			</li>
+		</ul><h4>
+			
+			How much do I owe?</h4><p>Please use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/58a">interactive form</a>	
+			</strong>
+			<span class="gen">link to online form</span> to find out.</p><h4>
+			
+			I wish to request a copy bill</h4><p>Please fill in the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/58e">online form</a>	
+			</strong>
+			<span class="gen">link to online form</span> to request a copy bill.</p><h4>
+			
+			Pay Council Tax Online</h4><p>Please fill in the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/58h">form online</a>	
+			</strong>
+			<span class="gen">link to online form</span> to pay your Council tax online.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=58"> Applications for services
+		(58)
+		</a></h3><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=58"> Providing Information
+		(58)
+		</a></h3><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=58"> Paying for goods and services
+		(58)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

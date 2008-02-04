@@ -1,0 +1,2600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms:itemMapping xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
+  <terms:domain resource="http://www.esd.org.uk/standards/lgsl/2.01/lgsltermslist.xml"/>
+  <terms:mapping>
+    <terms:term id="1"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-1"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="10"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-10"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="101"/>
+    <terms:item path="/content/generic-content/housing/dealing-with-housing-crime/council-housing--squatters-and-unauthorised-occupants-101"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="108"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-108"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="109"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-109"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="11"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-11"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="110"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/batch-17-110"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="112"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-112"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="114"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-114"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="115"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-115"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="116"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/batch-17-116"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="117"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-117"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="118"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/batch-17-118"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="119"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-119"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="12"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-12"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="120"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-120"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="122"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/batch-17-122"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="123"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-123"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="124"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/batch-17-124"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="125"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-125"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="126"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-126"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="127"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-127"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="128"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-128"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="129"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-129"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="13"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-13"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="130"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-3-130"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="132"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-132"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="135"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-3-135"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="136"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-136"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="137"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-137"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="138"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-138"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="139"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-139"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="14"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-14"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="140"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-140"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="141"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-141"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="142"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-142"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="143"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-143"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="144"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-144"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="145"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-145"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="146"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-146"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="147"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-147"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="148"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-148"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="149"/>
+    <terms:item path="/content/generic-content/housing/multiple-occupancy-homes/housing-3-149"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="15"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-15"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="150"/>
+    <terms:item path="/content/generic-content/housing/multiple-occupancy-homes/batch-17-150"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="151"/>
+    <terms:item path="/content/generic-content/housing/right-to-buy/home-ownership-service--right-to-buy-151"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="156"/>
+    <terms:item path="/content/generic-content/housing/council-leaseholder-and-freeholder-management/home-ownership-service--services-and-community-repairs-156"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="157"/>
+    <terms:item path="/content/generic-content/housing/council-leaseholder-and-freeholder-management/home-ownership-service--deeds-157"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="158"/>
+    <terms:item path="/content/generic-content/housing/council-leaseholder-and-freeholder-management/home-ownership-service--home-move-purchase-grants-158"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="159"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/fostering-159"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="160"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/adoption-160"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="162"/>
+    <terms:item path="/content/generic-content/social-services/carers/advocacy-for-carers-162"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="163"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-163"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="164"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-164"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="169"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-169"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="17"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-17"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="172"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-172"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="173"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-173"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="174"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-174"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="175"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-175"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="176"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-176"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="177"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-177"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="178"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-178"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="18"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-1-18"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="180"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-180"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="189"/>
+    <terms:item path="/content/generic-content/social-services/financial-welfare-benefits-and-other-help/welfare-rights-189"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="19"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-1-19"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="190"/>
+    <terms:item path="/content/generic-content/social-services/financial-welfare-benefits-and-other-help/financial-assessment-190"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="199"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-199"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="2"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-2"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="20"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-1-20"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="200"/>
+    <terms:item path="/content/generic-content/social-services/staying-in-hospital/batch-23-200"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="202"/>
+    <terms:item path="/content/generic-content/social-services/hiv-services/batch-23-202"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="204"/>
+    <terms:item path="/content/generic-content/social-services/physical-and-sensory-disabilities/batch-23-204"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="205"/>
+    <terms:item path="/content/generic-content/social-services/physical-and-sensory-disabilities/batch-23-205"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="209"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-209"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="21"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-1-21"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="22"/>
+    <terms:item path="/content/generic-content/education/help-for-students-in-further-higher-education/education-1-22"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="221"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-221"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="225"/>
+    <terms:item path="/content/generic-content/social-services/carers/adult-carers-225"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="227"/>
+    <terms:item path="/content/generic-content/social-services/community-care/respite-care-227"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="229"/>
+    <terms:item path="/content/generic-content/social-services/community-care/shared-care-229"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="23"/>
+    <terms:item path="/content/generic-content/education/help-for-students-in-further-higher-education/education-1-23"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="230"/>
+    <terms:item path="/content/generic-content/social-services/community-care/sheltered-and-supported-housing-230"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="232"/>
+    <terms:item path="/content/generic-content/social-services/community-care/missing-or-out-of-contact-client-232"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="239"/>
+    <terms:item path="/content/generic-content/social-services/community-care/employment-training-239"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="24"/>
+    <terms:item path="/content/generic-content/education/help-for-students-in-further-higher-education/education-1-24"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="241"/>
+    <terms:item path="/content/generic-content/social-services/community-care/leisure-and-social-activities-241"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="242"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-242"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="246"/>
+    <terms:item path="/content/generic-content/social-services/hiv-services/batch-23-246"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="25"/>
+    <terms:item path="/content/generic-content/education/help-for-students-in-further-higher-education/education-1-25"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="250"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/babysitting-service-250"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="26"/>
+    <terms:item path="/content/generic-content/education/help-for-students-in-further-higher-education/education-2-26"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="260"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/respite-care-for-children-260"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="261"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/shared-care-for-children-261"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="263"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/residential-care-for-children-263"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="264"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/hospice-care-for-children-264"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="266"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/child-protection-266"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="269"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-269"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="27"/>
+    <terms:item path="/content/generic-content/education/adult-education/education-1-27"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="271"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-271"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="272"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-272"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="273"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-273"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="274"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-274"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="275"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-275"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="276"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-276"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="279"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-279"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="280"/>
+    <terms:item path="/content/generic-content/social-services/transportation-mobility/batch-23-280"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="287"/>
+    <terms:item path="/content/generic-content/social-services/financial-welfare-benefits-and-other-help/direct-payments-287"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="29"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-29"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="292"/>
+    <terms:item path="/content/generic-content/social-services/community-care/residential-care-292"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="293"/>
+    <terms:item path="/content/generic-content/social-services/community-care/hospice-care-293"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="296"/>
+    <terms:item path="/content/generic-content/social-services/community-care/community-day-centres-296"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="297"/>
+    <terms:item path="/content/generic-content/social-services/community-care/support-groups-and-organisations-297"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="298"/>
+    <terms:item path="/content/generic-content/social-services/carers/support-groups-and-organisations-298"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="299"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-299"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="3"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-3"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="300"/>
+    <terms:item path="/content/generic-content/social-services/carers/young-carers-300"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="308"/>
+    <terms:item path="/content/generic-content/social-services/legal-help/batch-23-308"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="309"/>
+    <terms:item path="/content/generic-content/social-services/legal-help/batch-23-309"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="31"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-31"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="310"/>
+    <terms:item path="/content/generic-content/social-services/legal-help/batch-23-310"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="311"/>
+    <terms:item path="/content/generic-content/social-services/legal-help/batch-23-311"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="312"/>
+    <terms:item path="/content/generic-content/social-services/out-of-hours/batch-23-312"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="313"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-313"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="315"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-315"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="316"/>
+    <terms:item path="/content/generic-content/social-services/help-at-home/batch-23-316"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="317"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/birth-death-marriage-317"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="318"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/batch-19-318"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="319"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/births-319"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="32"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-32"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="320"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/-320"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="321"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/death-321"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="322"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/stillbirth-322"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="323"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/-323"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="324"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/-324"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="325"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/-325"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="326"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/-326"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="327"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/-327"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="328"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/batch-19-328"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="329"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/batch-11-329"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="33"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-33"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="330"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/batch-11-330"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="331"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/batch-19-331"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="332"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/-332"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="333"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/-333"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="334"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/-334"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="335"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/-335"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="336"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-336"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="337"/>
+    <terms:item path="/content/generic-content/miscellaneous/recruitment/vacancies-337"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="34"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-34"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="343"/>
+    <terms:item path="/content/generic-content/miscellaneous/recruitment/-343"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="344"/>
+    <terms:item path="/content/generic-content/miscellaneous/recruitment/-344"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="345"/>
+    <terms:item path="/content/generic-content/miscellaneous/recruitment/-345"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="346"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/business-planning-346"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="347"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/community-economic-development-347"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="348"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/economic-intelligence-348"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="349"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/business-advice-349"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="35"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-35"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="350"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/business-grants-350"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="351"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/co-operative-development-351"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="352"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/credit-unions-352"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="353"/>
+    <terms:item path="/content/generic-content/miscellaneous/corporate-complaints/complaints--procedure-353"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="354"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/elected-members-minutes-agendas-reports-354"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="355"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/declaration-of-interest-355"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="357"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/councillors-services-and-advice-357"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="358"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/councillors-general-information-358"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="359"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/news-press-releases-359"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="36"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-36"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="360"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/mayoral-invitations-360"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="361"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/elections--proxy-votes-361"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="362"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/elections--voting-362"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="364"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/elections--electoral-register-364"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="365"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/elections--electoral-nominations-365"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="366"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/district-assembly-agendas-minutes-reports-366"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="367"/>
+    <terms:item path="/content/generic-content/miscellaneous/statistics-and-census-information/census-information-367"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="368"/>
+    <terms:item path="/content/generic-content/miscellaneous/legal-services/cctv-procedure-for-the-release-of-evidence-368"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="369"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/procurement/approved-suppliers-369"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="37"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-37"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="370"/>
+    <terms:item path="/content/generic-content/miscellaneous/generic-processes/-370"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="372"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-372"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="373"/>
+    <terms:item path="/content/generic-content/miscellaneous/generic-processes/hall-venue-bookings-373"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="374"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-374"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="375"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-375"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="376"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-376"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="377"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-377"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="378"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-378"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="379"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-379"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="380"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-380"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="381"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-381"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="382"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-382"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="383"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-383"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="384"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-384"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="385"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-385"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="386"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-386"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="387"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-387"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="388"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-388"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="389"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-389"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="39"/>
+    <terms:item path="/content/generic-content/education/help-for-students-in-further-higher-education/education-1-39"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="390"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-390"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="391"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-391"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="392"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-392"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="393"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-393"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="394"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-394"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="395"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-395"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="396"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-396"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="397"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-397"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="398"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-398"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="399"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-399"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="4"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-4"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="40"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-40"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="400"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-400"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="401"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/advice-to-business-401"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="402"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/product-safety-402"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="404"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/weights-and-measures-404"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="406"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/environmental-health-406"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="407"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/environmental-health-407"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="408"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/environmental-health-408"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="41"/>
+    <terms:item path="/content/generic-content/education/learning-resource-centres-school-library-service/education-3-41"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="410"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/environmental-health-410"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="411"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-411"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="412"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-412"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="413"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/-413"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="414"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-414"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="415"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/-415"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="416"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-416"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="417"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-417"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="418"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-418"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="419"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-419"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="42"/>
+    <terms:item path="/content/generic-content/education/learning-resource-centres-school-library-service/education-3-42"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="421"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-421"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="422"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-422"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="423"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-423"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="426"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-426"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="428"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-428"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="429"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-429"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="43"/>
+    <terms:item path="/content/generic-content/education/learning-resource-centres-school-library-service/education-3-43"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="431"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-431"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="432"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/-432"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="433"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-433"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="434"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-434"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="435"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-435"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="436"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-436"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="437"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-437"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="438"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/leisure-438"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="439"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-439"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="44"/>
+    <terms:item path="/content/generic-content/education/learning-resource-centres-school-library-service/education-44-44"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="440"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-440"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="441"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-441"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="442"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-442"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="443"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-443"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="444"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-444"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="445"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-445"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="446"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-446"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="447"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-447"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="448"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-448"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="449"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/arts-and-leisure-449"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="45"/>
+    <terms:item path="/content/generic-content/education/learning-resource-centres-school-library-service/education-3-45"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="451"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-451"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="453"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-453"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="455"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-455"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="456"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/libraries/leisure-456"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="461"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-461"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="462"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-462"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="463"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-463"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="464"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-464"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="465"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-465"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="466"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-466"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="467"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-467"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="468"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-468"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="469"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-469"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="47"/>
+    <terms:item path="/content/generic-content/education/extra-curricular-activities/education-1-47"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="470"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-470"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="471"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/batch-8-471"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="472"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/batch-8-472"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="473"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/batch-8-473"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="474"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/batch-8-474"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="475"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/batch-8-475"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="477"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/batch-8-477"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="478"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/environmental-services-478"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="479"/>
+    <terms:item path="/content/generic-content/environmental-services/parking/batch-8-479"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="48"/>
+    <terms:item path="/content/generic-content/education/extra-curricular-activities/performance-stage-licences-for-school-age-children-48"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="485"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-485"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="487"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-487"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="49"/>
+    <terms:item path="/content/generic-content/education/consultation-on-education/consultation-on-education-49"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="493"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-493"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="494"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-494"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="495"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-495"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="496"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-496"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="497"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-497"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="498"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-498"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="499"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-499"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="5"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-5"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="50"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-50"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="505"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-505"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="508"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-508"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="51"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-51"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="510"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-510"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="511"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-511"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="512"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-512"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="513"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-513"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="514"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-514"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="515"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-515"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="516"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-516"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="517"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-517"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="518"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-518"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="519"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-519"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="52"/>
+    <terms:item path="/content/generic-content/education/extra-curricular-activities/education-1-52"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="520"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-520"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="522"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-522"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="523"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-523"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="524"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-524"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="526"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-526"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="528"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-528"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="53"/>
+    <terms:item path="/content/generic-content/education/help-for-parents-of-nursery-primary-and-secondary-school-aged-children/education-1-53"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="530"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-530"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="531"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-531"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="533"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-533"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="534"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/recycling-534"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="535"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/recycling-535"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="536"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/obstructed-pavements-536"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="537"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/pavements-(including-dangerous-paving)-537"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="538"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-markings-and-signage--yellow-lines-538"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="539"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-markings-and-signage--cycle-lanes-and-routes-539"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="54"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/business-rates-nndr-/batch-20-54"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="540"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-markings-and-signage--road-signs-540"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="541"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-markings-and-signage--street-name-plates-541"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="542"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-markings-and-signage--red-routes-542"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="543"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-markings-and-signage--speed-humps-543"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="545"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-safety--dangerous-road-junctions-545"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="546"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-safety--cycling-and-walking-to-school-546"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="547"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-safety--cycling-proficiency-547"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="548"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/road-safety--traffic-schemes-548"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="549"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/maintenance-programme-structural-surveys-549"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="55"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/business-rates-nndr-/batch-20-55"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="550"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/roads-and-highways--obstructions-550"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="551"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/roads-and-highways--enforcement-551"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="552"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/roads-and-highways--weight-limits-552"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="553"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/roads-and-highways--bridges-(general)-553"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="554"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/roads-and-highways--bridge-strengthening-554"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="555"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/roads-and-highways--flooding-(drains-and-gullies)-555"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="556"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-556"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="557"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/potholes-557"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="558"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/personal-injury-558"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="559"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-559"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="56"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/business-rates-nndr-/batch-20-56"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="560"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-560"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="561"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-561"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="562"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-562"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="563"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-563"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="564"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-564"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="566"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-566"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="567"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-567"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="568"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-568"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="569"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-569"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="57"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax/batch-20-57"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="570"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-570"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="571"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-571"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="573"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-573"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="574"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-574"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="575"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/street-care-and-cleaning-575"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="576"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/dead-animals-576"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="577"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/animal-fouling-577"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="579"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/toilets-579"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="58"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax/batch-20-58"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="580"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/street-litter-and-sweeping-580"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="581"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/street-litter-bins-581"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="582"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/street-cleaning-programme-582"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="583"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/markets--cleaning-583"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="584"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/graffiti-584"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="586"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/vandalism-586"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="587"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/flytipping-587"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="588"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/flyposting-588"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="589"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/grass-cutting-589"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="59"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax/batch-20-59"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="591"/>
+    <terms:item path="/content/generic-content/environmental-services/street-care-and-cleaning/spillage--roads-591"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="592"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-592"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="593"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-593"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="594"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-594"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="595"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-595"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="596"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-596"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="597"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-597"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="598"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-598"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="599"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-building-control-and-town-centre-managment/planning-599"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="6"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-6"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="60"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax/batch-20-60"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="600"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-600"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="601"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-601"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="602"/>
+    <terms:item path="/content/generic-content/environmental-services/demolitions/batch-4-602"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="603"/>
+    <terms:item path="/content/generic-content/environmental-services/demolitions/batch-4-603"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="604"/>
+    <terms:item path="/content/generic-content/environmental-services/records-office/batch-7-604"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="605"/>
+    <terms:item path="/content/generic-content/environmental-services/records-office/batch-7-605"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="606"/>
+    <terms:item path="/content/generic-content/environmental-services/records-office/batch-7-606"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="607"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-607"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="608"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-building-control-and-town-centre-management/planning-608"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="61"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax/batch-20-61"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="610"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-610"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="612"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-612"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="613"/>
+    <terms:item path="/content/generic-content/environmental-services/public-rights-of-way/batch-7-613"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="614"/>
+    <terms:item path="/content/generic-content/environmental-services/public-rights-of-way/batch-7-614"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="615"/>
+    <terms:item path="/content/generic-content/environmental-services/voluntary-organisations/funding-615"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="616"/>
+    <terms:item path="/content/generic-content/environmental-services/markets-management/batch-8-616"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="617"/>
+    <terms:item path="/content/generic-content/environmental-services/markets-management/batch-8-617"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="618"/>
+    <terms:item path="/content/generic-content/environmental-services/archaeological-services/batch-4-618"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="619"/>
+    <terms:item path="/content/generic-content/environmental-services/archaeological-services/batch-4-619"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="62"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax-benefit/batch-20-62"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="620"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/museums-and-galleries/arts-and-leisure-620"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="621"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/museums-and-galleries/arts-and-leisure-621"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="622"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/tourism/art-and-leisure-622"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="623"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/tourism/art-and-leisure-623"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="624"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/exhibitions/arts-and-leisure-624"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="625"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-625"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="626"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-626"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="627"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-627"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="628"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-628"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="629"/>
+    <terms:item path="/content/generic-content/education/extra-curricular-activities/education-1-629"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="63"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax-benefit/batch-20-63"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="630"/>
+    <terms:item path="/content/generic-content/education/help-for-parents-of-nursery-primary-and-secondary-school-aged-children/education-1-630"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="631"/>
+    <terms:item path="/content/generic-content/education/extra-curricular-activities/education-1-631"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="632"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-632"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="633"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-633"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="634"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-634"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="634"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-635"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="636"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-636"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="637"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-637"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="638"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/batch-1-638"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="639"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-639"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="64"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax-benefit/batch-20-64"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="640"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-640"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="641"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-641"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="642"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-642"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="643"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-643"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="644"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/physical-activity-and-sports/arts-and-leisure-644"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="645"/>
+    <terms:item path="/content/generic-content/miscellaneous/corporate-complaints/complaints--advocacy-645"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="646"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-646"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="647"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-647"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="648"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-648"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="649"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-649"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="65"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax-benefit/batch-20-65"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="650"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-650"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="651"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-651"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="652"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-652"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="653"/>
+    <terms:item path="/content/generic-content/miscellaneous/generic-processes/-653"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="654"/>
+    <terms:item path="/content/generic-content/housing/council-housing-tenants/property-alteration-by-tenant-654"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="655"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-655"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="657"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-657"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="658"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/involvement-with-budgetary-process-658"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="659"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/requests-for-official-guides-659"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="66"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax-benefit/batch-20-66"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="660"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-660"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="661"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-661"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="662"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/tourism/arts-and-leisure-662"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="663"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/-663"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="664"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/-664"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="665"/>
+    <terms:item path="/content/generic-content/housing/council-housing-tenants/supported-tenancies-665"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="666"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/housing-2-666"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="668"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-managemenet/planning-668"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="669"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-669"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="67"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax-benefit/batch-20-67"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="670"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-670"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="671"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/-671"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="672"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-672"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="674"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-674"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="675"/>
+    <terms:item path="/content/generic-content/environmental-services/planning-advice-building-control-and-town-centre-management/planning-675"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="676"/>
+    <terms:item path="/content/generic-content/miscellaneous/legal-services/legal-advice-676"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="677"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/property-enquiries-677"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="678"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-678"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="679"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-679"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="68"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/housing-benefit/backdating-claims-68"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="680"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-680"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="680"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-681"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="682"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-682"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="683"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-683"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="684"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-684"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="685"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/export-forums-685"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="686"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-686"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="687"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/local-mps-and-meps--general-information-687"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="688"/>
+    <terms:item path="/content/generic-content/miscellaneous/legal-services/witness-support-688"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="689"/>
+    <terms:item path="/content/generic-content/environmental-services/refuse/bins-689"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="69"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/housing-benefit/new-claim-69"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="690"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/business-awards-690"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="691"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-691"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="692"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/security-services-692"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="693"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/business-security-grants-693"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="694"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-694"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="695"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-695"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="696"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-696"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="697"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/petrol-stations-697"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="698"/>
+    <terms:item path="/content/generic-content/miscellaneous/births-deaths-and-marriages/-698"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="699"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-699"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="7"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-7"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="70"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/housing-benefit/current-claim-70"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="700"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-700"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="701"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-701"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="702"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-702"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="703"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-703"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="704"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-704"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="705"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-705"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="706"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-706"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="707"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-707"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="708"/>
+    <terms:item path="/content/generic-content/environmental-services/environmental-health/batch-6-708"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="709"/>
+    <terms:item path="/content/generic-content/environmental-services/parks-and-open-spaces/batch-7-709"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="71"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/housing-benefit/overpayments-71"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="710"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/food-and-agriculture-710"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="711"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-allocations--change-of-tenancy-711"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="712"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-allocations--furnished-tenancies-712"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="713"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/introductory-tenancies-713"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="714"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-714"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="715"/>
+    <terms:item path="/content/generic-content/housing/improvements-repairs-and-regeneration/batch-16-715"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="716"/>
+    <terms:item path="/content/generic-content/housing/multiple-occupancy-homes/housing-3-716"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="717"/>
+    <terms:item path="/content/generic-content/housing/multiple-occupancy-homes/housing-3-717"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="718"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/health-and-safety--occupational-health-services-718"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="719"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/assemblies-and-committees--diary-and-year-book-719"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="72"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/housing-benefit/appeals-72"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="720"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/community-strategy-720"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="721"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/elections--publishing-results-721"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="722"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/freedom-of-information-act-722"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="723"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/parish-town-councils-and-councillors-723"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="724"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/referenda-724"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="725"/>
+    <terms:item path="/content/generic-content/miscellaneous/generic-processes/-725"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="726"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/council-tax/batch-20-726"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="727"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-727"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="728"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-728"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="729"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-729"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="73"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/housing-benefit/renewal-73"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="730"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-730"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="731"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-731"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="732"/>
+    <terms:item path="/content/generic-content/social-services/advice-and-support/batch-22-732"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="733"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/tourism/arts-and-leisure-733"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="734"/>
+    <terms:item path="/content/generic-content/arts-and-leisure/tourism/arts-and-leisure-734"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="735"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-735"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="736"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-736"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="737"/>
+    <terms:item path="/content/generic-content/education/schools/education-3-737"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="738"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-738"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="739"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-739"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="740"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-740"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="741"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-741"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="742"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-742"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="743"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-743"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="744"/>
+    <terms:item path="/content/generic-content/environmental-services/business-licences-and-street-trading/licensing-744"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="745"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-745"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="746"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-746"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="747"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-747"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="748"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-748"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="749"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-749"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="750"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-750"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="751"/>
+    <terms:item path="/content/generic-content/environmental-services/countryside/batch-4-751"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="752"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-752"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="753"/>
+    <terms:item path="/content/generic-content/environmental-services/health-and-safety/batch-7-753"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="754"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-754"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="755"/>
+    <terms:item path="/content/generic-content/environmental-services/land-and-premises/batch-8-755"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="756"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-756"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="757"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-757"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="758"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-758"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="759"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-759"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="760"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-760"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="761"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-761"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="762"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-762"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="763"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-763"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="764"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-764"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="765"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-765"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="766"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-766"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="767"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-767"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="768"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/batch-13-768"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="769"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/waste-reception-disposal-769"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="77"/>
+    <terms:item path="/content/generic-content/housing/housing-advice/housing-3-77"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="770"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/weather-data-770"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="771"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/winter-storage-771"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="772"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/importation-of-animals-772"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="773"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/notification-of-vessel-aircraft-eta-773"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="774"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/application-for-new-beds-774"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="775"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/notification-of-consigment-to-be-imported-775"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="776"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/ph-control-exercised-776"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="777"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/detention-and-further-action-777"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="778"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/launch-service-778"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="779"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/lifebelts-779"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="780"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/houseboats-780"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="781"/>
+    <terms:item path="/content/generic-content/environmental-services/marine-waterway-services/reservoir-management-781"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="782"/>
+    <terms:item path="/content/generic-content/environmental-services/markets-management/batch-8-782"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="783"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-783"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="784"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-784"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="785"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-785"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="786"/>
+    <terms:item path="/content/generic-content/environmental-services/roads-highways-and-pavements/batch-11-786"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="787"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/advice-to-consumers-787"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="788"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/animal-health-and-welfare-788"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="789"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/fair-trading-789"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="790"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/nurses-agencies-registration-790"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="791"/>
+    <terms:item path="/content/generic-content/environmental-services/trading-standards/food-labelling-and-composition-791"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="792"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/emergency-planning/major-accident-hazards-792"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="793"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/emergency-planning/flooding-793"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="794"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/emergency-planning/pipelines-794"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="795"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/emergency-planning/radiation-795"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="796"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/explosives-licence-796"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="797"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/entertainments-licensing-797"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="798"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/hazchem-information-798"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="799"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/fireworks-registration-799"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="8"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-8"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="800"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/arson-reduction-800"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="801"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/automatic-fire-alarms-801"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="802"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/community-fire-safety-802"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="803"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/enforcement--residential-803"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="804"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/enforcement--non-residential-804"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="805"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/fire-certificates--factories-805"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="806"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/fire-certificates--offices-806"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="807"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/fire-certificates--shops-807"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="808"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/fire-certificates--hotels-boarding-houses-808"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="809"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/fire-warden-commercial-training-809"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="810"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/petroleum-licensing-810"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="811"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/health-and-safety--construction-regulations-811"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="812"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/schools-812"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="813"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/workplace-regulations-813"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="814"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/fire-safety/railway-regulations-814"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="815"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/firefighting-rescue/attending-fires-815"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="816"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/firefighting-rescue/after-care-816"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="817"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/firefighting-rescue/special-services-817"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="818"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/firefighting-rescue/hydrants-maintenance-818"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="819"/>
+    <terms:item path="/content/generic-content/fire-and-emergency-services/firefighting-rescue/securing-premises-after-incidents-819"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="820"/>
+    <terms:item path="/content/generic-content/housing/commercial-property/valuations-820"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="821"/>
+    <terms:item path="/content/generic-content/housing/commercial-property/estates-management-821"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="822"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/media-and-publicity-protocols-822"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="823"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/regeneration-projects-823"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="824"/>
+    <terms:item path="/content/generic-content/miscellaneous/advice-to-business-and-community/european-resource-procurement--european-funding-824"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="825"/>
+    <terms:item path="/content/generic-content/miscellaneous/cremations-and-funerals/batch-19-825"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="826"/>
+    <terms:item path="/content/generic-content/miscellaneous/democracy/data-protection-act-826"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="827"/>
+    <terms:item path="/content/generic-content/miscellaneous/generic-processes/sale-of-sundry-items-and-publications-827"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="828"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/procurement/tenders-828"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="829"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/procurement/contract-management-829"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="830"/>
+    <terms:item path="/content/generic-content/revenues-and-benefits-finance/procurement/procurement-policy-830"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="831"/>
+    <terms:item path="/content/generic-content/social-services/children-young-people-and-families/support-groups-831"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="832"/>
+    <terms:item path="/content/generic-content/social-services/staying-in-hospital/batch-23-832"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="833"/>
+    <terms:item path="/content/generic-content/social-services/staying-in-hospital/batch-23-833"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="834"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-834"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="835"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-835"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="836"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-836"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="837"/>
+    <terms:item path="/content/generic-content/social-services/youth-offending/batch-23-837"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="84"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-allocations--general-information-84"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="85"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-allocations--hard-to-let-easy-access-property-85"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="86"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-allocations--allocated-council-home-86"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="87"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-association--nomination-to-join-the-register-87"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="88"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/mutual-council-home-exchange-88"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="89"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-allocations--allocation-points-89"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="9"/>
+    <terms:item path="/content/generic-content/education/help-for-nursery-primary-and-secondary-school-pupils/education-2-9"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="90"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-3-90"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="91"/>
+    <terms:item path="/content/generic-content/housing/council-housing-tenants/council-housing--tenancy-issues-91"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="92"/>
+    <terms:item path="/content/generic-content/housing/council-lettings-and-housing-allocations-service/housing-allocations--registering-for-a-council-property-92"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="93"/>
+    <terms:item path="/content/generic-content/housing/commercial-property/commercial-property-lettings-93"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="97"/>
+    <terms:item path="/content/generic-content/housing/dealing-with-housing-crime/council-housing--crime-97"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="98"/>
+    <terms:item path="/content/generic-content/housing/dealing-with-housing-crime/council-housing--nuisance-threatening-behaviour-98"/>
+  </terms:mapping>
+  <terms:mapping>
+    <terms:term id="99"/>
+    <terms:item path="/content/generic-content/housing/dealing-with-housing-crime/housing--community-safety-99"/>
+  </terms:mapping>
+</terms:itemMapping>

@@ -1,0 +1,4 @@
+JkWorkersFile    ::app-home::/conf/workers.properties
+JkLogFile        ::log-dir::/mod_jk.log
+JkLogLevel       error
+JkLogStampFormat "[%a %b %d %H:%M:%S %y] "

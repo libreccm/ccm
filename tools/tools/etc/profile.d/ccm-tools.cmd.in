@@ -1,0 +1,12 @@
+if "%CCM_ZIP_ROOT%" == "" (
+    set CCM_ZIP_ROOT=C:\ccm
+)
+
+set prefix=%CCM_ZIP_ROOT%\usr
+
+set CCM_HOME=%prefix%\share\ccm
+set CCM_TOOLS_HOME=%prefix%\share\ccm-tools
+
+
+set prefix=
+

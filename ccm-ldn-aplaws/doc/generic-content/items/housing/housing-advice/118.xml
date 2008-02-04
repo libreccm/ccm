@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=118}]"><cms:name>batch-17-118</cms:name><cms:language>en</cms:language><cms:title>Council housing - current garage arrears</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=118}]"><cms:name>batch-17-118-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, housing, current, garage, arrears</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=118}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Where rent arrears rise to an unacceptable level or an account is in arrears for 
+  too long, the Council may decide to repossess the garage. </i></p><hr/><p>Unlike house and flats, 
+  the Council do not have to apply to courts for a Possession Order.</p><p>The Council operates a policy of automatic repossession should a third Notice to 
+  Quit be served on a garage regardless of whether the account is subsequently cleared.</p><p>Should a garage be repossessed and be found to contain goods, the tenant will be 
+  contacted and asked to removed them. Should the Council have to clear the garage, 
+  the cost of the clearance along with the cost of a lock change should one have been 
+  necessary, will be charged to the former tenant. This is in addition to any arrears 
+  outstanding.</p><p>Most arrears cases can be dealt with relatively simply provided tenants get in 
+  contact early enough. Ignoring the situation can only make matters worse.</p><p>Due to the low level of rent compared to a house or flat, some may regard garage 
+  rent as low priority. However we have a duty to 
+  recover all rent owed to the Council to fund the services we provide. We are also 
+  required to maintain overall levels of outstanding rent including garage rent, within 
+  limits set by Central Government.</p><p>There may also be a waiting list for garages in your area. Please contact us for 
+  more details.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=118"> Providing Information
+		(118)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

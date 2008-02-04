@@ -1,0 +1,196 @@
+#!/usr/bin/perl -w
+
+BEGIN {
+    if ( exists $ENV{'CCM_TOOLS_HOME'} && defined $ENV{'CCM_TOOLS_HOME'} ) {
+        if ( -d "$ENV{'CCM_TOOLS_HOME'}/lib" ) {
+            push @INC, "$ENV{'CCM_TOOLS_HOME'}/lib";
+        } else {
+            print "$ENV{'CCM_TOOLS_HOME'}/lib was not found\n";
+            exit 1;
+        }
+    } else {
+        print "The CCM_TOOLS_HOME environment variable must be set first.\n";
+        exit 1;
+    }
+}
+
+use strict;
+use CCM::CommandsUtil;
+use CCM::Util;
+use File::Copy;
+use File::Path;
+use File::Spec;
+use File::stat;
+use Getopt::Long;
+
+my $OS = $^O;
+my $ROOT =File::Spec->rootdir();
+my $help = 0;
+my $usage = 0;
+my $verbose = 0;
+my $CCM_HOME = $ARGV[0];
+my $service_name = $ARGV[1];
+#my @apps;
+#for (my $i=2; $i <= $#ARGV; $i++) {
+#  push @apps, $ARGV[$i];
+#}
+
+Getopt::Long::Configure("pass_through");
+if ( ! GetOptions(
+                  'help' => \$help,
+                  'usage' => \$usage,
+                  'verbose+' => \$verbose
+                  )
+     ) {
+    CCM::CommandsUtil::printUsageAndExit();
+}
+
+CCM::CommandsUtil::printHelpAndExit() if $help;
+CCM::CommandsUtil::printUsageAndExit() if $usage;
+
+if (    ! defined($CCM_HOME)
+     || ! defined($service_name)
+#     || ! @apps
+     ) {
+    CCM::CommandsUtil::printUsageAndExit();
+}
+
+if ($OS eq 'MSWin32') {
+  CCM::Util::error("$OS not supported");
+}
+if ($> != 0) {
+  CCM::Util::error("you must be root to run this");
+}
+$CCM_HOME = File::Spec->rel2abs($CCM_HOME);
+
+# global list of classpaths maintained by %post in ccm RPMs
+my $classpath = File::Spec->catfile("$ROOT", "etc", "ccm", "ccm.classpath");
+stat($classpath) or CCM::Util::error("could not find global ccm.classpath");
+
+# global list of webapps maintained by %post in ccm RPMs
+my $webapps = File::Spec->catfile("$ROOT", "etc", "ccm", "ccm.webapps");
+stat($webapps) or CCM::Util::error("could not find ccm.webapps");
+
+# envvars provided by ccm-tools
+my $envvars = File::Spec->catfile("$ROOT", "etc", "ccm", "conf", "envvars");
+stat($envvars) or CCM::Util::error("could not find envvars");
+
+# log4j.properties provided by ccm-core
+my $log4j = File::Spec->catfile("$ROOT", "etc", "ccm", "conf", "log4j.properties");
+stat($log4j) or CCM::Util::error("could not find log4j.properties");
+
+# ccm initscript provided by ccm-tools
+my $ccminit = File::Spec->catfile("$ROOT", "etc", "rc.d", "init.d", "ccm");
+stat($ccminit) or CCM::Util::error("could not find ccm initscript");
+
+# don't overwrite existing $CCM_HOME and /etc/rc.d/init.d/$service_name
+my $service = File::Spec->catfile("$ROOT", "etc", "rc.d", "init.d", $service_name);
+!stat($service) or CCM::Util::error("service $service already present");
+!stat($CCM_HOME) or CCM::Util::error("$CCM_HOME already present");
+
+my $verbose_args = "";
+for (1..$verbose) {
+    $verbose_args .= " --verbose";
+}
+
+# create new CCM_HOME with appropriate folder structure
+mkpath($CCM_HOME);
+chdir $CCM_HOME;
+mkdir 'conf';
+mkdir 'webapps';
+mkdir 'data';
+mkdir 'logs';
+mkdir 'tmp';
+my ($ignore, $uid, $gid);
+# owner: ccmadmin
+($ignore,$ignore,$uid,$gid) = getpwnam('ccmadmin')
+  or CCM::Util::error("ccmadmin account missing");
+chown $uid, $gid, 'conf', 'webapps';
+# copy envvars log4j.properties from /etc/ccm/conf/ to conf/
+chdir 'conf';
+copy($envvars, File::Spec->curdir())
+  or CCM::Util::error("envvars copy failed");
+copy($log4j, File::Spec->curdir())
+  or CCM::Util::error("log4j copy failed");
+chown $uid, $gid, 'log4j.properties';
+chdir File::Spec->updir();
+
+#owner: servlet
+($ignore,$ignore,$uid,$gid) = getpwnam('servlet')
+  or CCM::Util::error("servlet account missing");
+chown $uid, $gid, 'data', 'logs', 'tmp';
+my $templates = File::Spec->catdir('webapps','ROOT','packages','content-section','templates');
+mkpath($templates);
+chown $uid, $gid, $templates;
+
+# copy $webapps $classpath to new CCM_HOME, filtering thru @apps
+#&filter($classpath, 'ccm.classpath', \@apps);
+#&filter($webapps, 'ccm.webapps', \@apps);
+
+# at Matt's suggestion, don't bother with filtering,
+# simply symlink to masters in /etc/ccm/
+symlink $classpath, 'ccm.classpath';
+symlink $webapps, 'ccm.webapps';
+
+# copy $ccminit to $service, with modifications
+open DST,">$service"
+    or CCM::Util::error("$service create failed");
+open SRC,"<$ccminit";
+while(<SRC>) {
+  if (/prog=ccm/) {
+    print DST <<"EOF";
+prog=$service_name
+CCM_HOME=$CCM_HOME
+export CCM_HOME
+EOF
+  } else {
+    print DST $_;
+  }
+}
+close SRC;
+close DST;
+chmod 0755, $service;
+
+print <<"EOF";
+You can now load your CCM instance "$service_name" using:
+# CCM_HOME=$CCM_HOME ccm load ...
+# CCM_HOME=$CCM_HOME ccm hostinit ...
+Start using:
+# service $service_name start
+EOF
+
+# copy from src to dst only those lines matching one of patterns in @apps
+sub filter {
+  my $src = shift;
+  my $dst = shift;
+  my $apps = shift;
+
+  open DST,">$dst"
+    or CCM::Util::error("$dst filter copy failed");
+  open SRC,"<$src";
+  my %app_seen;
+  while(<SRC>) {
+    my $line = $_;
+    my $pat;
+    my @matches = grep {$pat=$_.'-[0-9]'; $line =~ $pat} @{$apps};
+    my $times = scalar @matches;
+    if ($times > 0) {
+      $app_seen{$matches[0]} = 1;
+      print DST $line;
+    }
+    if ($times > 1) {
+      CCM::Util::warn("duplicate package: $matches[0]");
+    }
+  }
+  close SRC;
+  close DST;
+  # check that all wanted apps are actually installed
+  my @apps_not_seen;
+  foreach (@{$apps}) {
+    push(@apps_not_seen, $_) unless exists $app_seen{$_};
+  }
+  if (scalar @apps_not_seen > 0) {
+    CCM::Util::error("unable to locate package: $apps_not_seen[0]");
+  }
+}
+

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=721}]"><cms:name>elections--publishing-results-721</cms:name><cms:language>en</cms:language><cms:title>Elections - Publishing Results</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=721}]"><cms:name>elections--publishing-results-721-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>elections, publishing, results</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=721}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The results for the Elections are as follows: </i></p><hr/><table width="90%" cellpadding="5" class="centre" summary="results of the election">
+  <tr>
+    <th>Party Represented</th>
+    <th>Name and Address of Candidate</th>
+    <th>Number of Votes</th>
+  </tr>
+  <tr>
+    <td>
+<span class="gen">enter details</span>
+</td>
+    <td>
+<span class="gen">enter details</span>
+    </td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr>
+    <td>
+<span class="gen">enter details</span>
+</td>
+    <td>
+<span class="gen">enter details</span>
+    </td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=721"> Providing Information
+		(721)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

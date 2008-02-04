@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=575}]"><cms:name>street-care-and-cleaning-575</cms:name><cms:language>en</cms:language><cms:title>Animals - Stray</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=575}]"><cms:name>street-care-and-cleaning-575-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>animals, stray</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=575}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council has a legal duty to deal with stray animals:</i></p><hr/><h2>
+				Dogs
+			</h2><p>
+			<span class="gen">enter council name</span> (&quot;The Council&quot;) has a duty under the 
+  Environmental Protection Act 1990 section 149 to collect and detain stray dogs. 
+  
+			</p><p>
+				The Council also has the 
+  power to dispose of the dogs if they remain unclaimed. 
+			</p><p>
+				When dealing with stray 
+  dogs we will take into account the relevant provisions of:
+			</p><ul>
+			<li title="*">The Dangerous Dogs 
+      Act 1991 </li>
+			<li title="*">The Dogs (Fouling of 
+      Land) Act 1996</li>
+			<li title="*">The Control of Dogs 
+      Order 1992</li>
+			<li title="*">The Protection of Animals 
+      Act 1911</li>
+			<li title="*">The Abandonment of 
+      Animals Act 1960</li>
+			<li title="*">Any other relevant 
+      legislation</li>
+		</ul><p>
+				 The Environmental Protection 
+  Act 1990 Sec 150 requires the finder of of a stray dog to: 
+			</p><ul>
+			<li title="*">Return 
+      the dog to its owner; or</li>
+			<li title="*">contact the local authority 
+      for the area in which the dog was found; or</li>
+			<li title="*">take the dog to the 
+      police station nearest to where the dog was found. </li>
+		</ul><p>
+				 If the finder fails to 
+  take one of these courses of action, he will have commited an offence and would 
+  be liable, upon conviction, to a fine. 
+			</p><p>
+				If the finder requests to 
+  keep the dog, he must supply the officer with his contact details and details 
+  of the dog. The officer is required to keep a record of these details. 
+			</p><p>
+				Regulations require that 
+  the officer makes appropriate enquiries to ascertain that the finder is a suitable 
+  person to keep the dog. 
+			</p><p>
+				The finder must then be 
+  informed verbally and in writing that he is obliged to keep the dog (if unclaimed 
+  by the owner) for not less than one month and that failure to comply with that 
+  obligation is a criminal offence. 
+			</p><h2>
+				Other Animals
+			</h2><p>
+				 Under the Animal Act 1971 
+  the Council can impound any livestock which has strayed onto Council land. 
+  
+			</p><p>
+				The animals are only returned 
+  to their owners after payment for any damages and expenses incurred. 
+			</p><p>
+				Livestock that has strayed 
+  onto private land may also be impounded, at the written request of the landowner. 
+  
+			</p><p>
+				If known, the owner of 
+  the animal will be informed that the animal has strayed onto Council land, and 
+  giving details of where it can be collected within 
+						<span class="gen">enter amount</span> days, subject to the payment for any damage caused, and 
+  expense incurred.
+			</p><p>
+				We will notify the police 
+  of the straying animal and inform them that we intend to impound it.
+			</p><p>
+				After <span class="gen">enter amount</span> days, we will arrange for the animal to be impounded and 
+  removed to a suitable establishment where it will be held for a minimum of <span class="gen">enter amount</span>
+					days.
+			</p><p>
+				The animal will be returned, 
+  on satisfactory proof of ownership and the payment for any damage caused, and 
+  expense incurred.
+			</p><p>
+				If any animal has not been 
+  claimed after <span class="gen">enter amount</span> days, 
+  it will be sold. If the owner appears after this time and produces satisfactory 
+  proof of ownership, any monies received will be given to the owner less the 
+  cost of any damage caused, and expense incurred.
+			</p><p>
+				To report a lost animal, 
+  please use the 
+		<a href="/ccm/services/pid.jsp?pid=forms/575a">online form</a>	
+			<span class="gen">link to online form</span>.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=575"> Applications for services
+		(575)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

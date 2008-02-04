@@ -1,0 +1,203 @@
+<!--
+   - The Resin configuration file.
+   -
+   - This example file is more complicated than is needs to be because
+   - it makes several configurations explicit that can be simplified and
+   - because it needs to configure the examples.
+   -
+   - Look in conf/samples for more realistic sample configurations.
+   -   conf/samples/simple.conf - a simple, basic configuration
+   -   conf/samples/deploy.conf - a simple configuration for deployment
+   -
+   - The configuration is based on a purely element-based XML.  To make
+   - it easier to read, attributes can be used as syntactic sugar.
+   -
+   - The following are equivalent:
+   - <foo><bar>13</bar></foo>  - canonical representation, but verbose
+   - <foo bar=13/>             - typical configuration
+   - <foo><bar id=13/></foo>   - sometimes useful
+  -->
+<caucho.com>
+
+<!--
+   - Resin logging.  Debugging is also available with different values
+   - for id.
+  -->
+<log id='/log' href='stderr:' timestamp='[%Y-%m-%d %H:%M:%S.%s]'/>
+
+<!-- Security providers.  Adding JSSE looks like:
+   - <security-provider id='com.sun.net.ssl.internal.ssl.Provider'/>
+  -->
+
+<!--
+   - You can change the compiler to "javac" or jikes.
+   - The default is "internal" only because it's the most
+   - likely to be available.
+  -->
+<java compiler="internal" compiler-args=""/>
+
+
+<!--
+   - Use precompiled JSP classes if available.
+   - 'static-encoding' - optimization if you stick to one character set
+  -->
+<jsp precompile='true' static-encoding='true' recompile-on-error='false'/>
+
+<http-server>
+  <!--
+     - The root file directory of the server.  Apache users will change
+     - this to /usr/local/apache/htdocs and IIS users will change it
+     - to d:\inetpub\wwwroot
+    -->
+  <app-dir>::webapp-dir::</app-dir>
+
+  <!-- the http port -->
+  ::http-begin::<http port='::http-port::'/>::http-end::
+
+  <!--
+     - The srun port, read by both JVM and plugin
+     - 127.0.0.1 is the localhost
+    -->
+  ::srun-begin::<srun host='::srun-host::' port='::srun-port::'/>::srun-end::
+
+  <!--
+     - How to add SSL:
+     -
+     - <http port=8443>
+     -   <ssl>true</ssl>
+     -   <key-store-type>pkcs12</key-store-type>
+     -   <key-store-file>keys/server_cert.p12</key-store-file>
+     -   <key-store-password>changeit</key-store-password>
+     - </http>
+    -->
+
+  <!--
+     - Interval in seconds between checking for servlet updates. For
+     - development, this can be set to 0 or to a small number to pick up new
+     - servlet versions quickly. For deployment, class-update-interval can be
+     - large to avoid the overhead of checking for updates.
+     -
+     - We disable checking by setting the interval to 10 years.
+    -->
+  <class-update-interval>315360000</class-update-interval>
+
+  <!--
+     - If true, the classloader order follows the Servlet spec.
+     - If false, the classloader order follows the JDK spec.
+    -->
+  <servlet-classloader-hack>false</servlet-classloader-hack>
+
+  <!--
+     - Select an error page to display when the connection fails.
+     -
+     - <error-page exception='connection' location='/my-error-page.html'/>
+    -->
+
+  <!-- To disable /caucho-status, set this to false -->
+  <caucho-status>false</caucho-status>
+
+  <!-- maximum number of threads -->
+  <thread-max>::threads::</thread-max>
+
+  <!--
+     - How many threads to wait for keepalives.  Should be at least the
+     - number of Apache processes to get good performance.
+    -->
+  <thread-keepalive id='::keepalive::'/>
+
+  <!--
+     - How long an idle keepalive connection should listen to the socket.
+    -->
+  <request-timeout id='30s'/>
+
+  <!--
+     - How many sockets to hold in the buffer before failing requests.
+    -->
+  <accept-buffer-size id='256'/>
+  <!--
+     - Maximum number of request threads which will wait for a socket.
+    -->
+  <thread-min id='5'/>
+
+  <!--
+     - Enables/disables exceptions when the browser closes a connection.
+    -->
+  <ignore-client-disconnect>true</ignore-client-disconnect>
+
+  <!--
+     - Enable internal caching.
+     - 'dir' is the directory containing the cache
+     - 'size' is the memory size in kb
+     - 'entries' is the total number of entries
+    -->
+  <!--
+  <cache dir='cache' size='1024' entries='8192'/>
+  -->
+
+  <!--
+     - Expires time for a cacheable file.  Production sites will
+     - normally change this to '15m'
+    -->
+  <cache-mapping url-pattern='/' expires='15m'/>
+
+  <!-- default host if no other host matches -->
+  <host id=''>
+    <!--
+       - The standalone server should uncomment for access logging.
+       - With another web server, like Apache, the web server will
+       - log this information.
+     -->
+     ::http-begin::
+    <access-log id='::log-dir::/resin-access.log' 
+          format='%h %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i"'/>
+     ::http-end::
+
+    <error-log id='::log-dir::/resin-error.log'/>
+
+    <web-app id='/'>
+      <!--
+         - The classpath directive may be repeated.  Source is optional
+         - Servlets and beans generally belong in WEB-INF/classes
+        -->
+      <classpath id='WEB-INF/classes'
+                 source='WEB-INF/classes'
+                 compile='false'/>
+
+      <session-config>
+        <session-max>4096</session-max>
+        <session-timeout>30</session-timeout>
+        <enable-cookies>true</enable-cookies>
+        <enable-url-rewriting>false</enable-url-rewriting>
+
+        <!--
+           - Store sessions in the filesystem, so they can persist across
+           - servlet and class changes.
+           -
+           - Uncomment this during development.
+          -->
+        <!--
+           -  <file-store>WEB-INF/sessions</file-store>
+          -->
+      </session-config>
+
+      <mime-mapping extension='.htc' mime-type='text/x-component'/>
+
+      <!-- enable multipart-mime/form processing -->
+      <!--
+         - <multipart-form upload-max='-1'/>
+        -->
+    </web-app>
+  </host>
+
+  <!--
+     - Known broken browsers.  These should no longer be necessary, but
+     - you can uncomment them if they become a problem.
+     -
+     - <browser-mapping regexp="MSIE 4\.0b2" force10/>
+     - <browser-mapping regexp="RealPlayer 4\.0" force10/>
+     - <browser-mapping regexp="Java/1\\.0" force10/>
+     - <browser-mapping regexp="JDK/1\\.0" force10/>
+    -->
+</http-server>
+</caucho.com>
+

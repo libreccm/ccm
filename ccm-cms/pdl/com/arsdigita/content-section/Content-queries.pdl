@@ -1,0 +1,52 @@
+
+model com.arsdigita.cms;
+
+query getContentItemExpiredBeforeInSection {
+  BigDecimal objectId;
+  String objectType;
+  BigDecimal cycleId;
+  Date startDateTime;
+  Date endDateTime;
+  String listener;
+  String authorName;
+
+  do {
+    select
+      o.object_id, o.object_type,
+      l.cycle_id, l.start_date_time, l.end_date_time, l.listener,
+      n.given_name || ' ' || n.family_name as author_name
+    from
+      lifecycles l, acs_objects o, acs_object_lifecycle_map m, cms_items i, acs_auditing a, users u, person_names n
+    where
+      m.item_id = o.object_id and
+      m.cycle_id = l.cycle_id and
+      l.has_ended = 0 and
+      :endDateTime >= l.end_date_time and
+      i.item_id = o.object_id and
+      i.section_id = :sectionId and
+      i.item_id = a.object_id and
+      a.creation_user = u.user_id and
+      u.name_id = n.name_id
+
+  } map {
+    objectId          = o.object_id;
+    objectType        = o.object_type;
+    cycleId           = l.cycle_id;
+    startDateTime     = l.start_date_time;
+    endDateTime       = l.end_date_time;
+    listener          = l.listener;
+    authorName        = author_name;
+  }
+}
+
+query getCategoryWithName {
+    BigDecimal id;
+
+    do {
+        select category_id
+        from   cat_categories
+        where  name = :name
+    } map {
+        id = category_id;
+    }
+}

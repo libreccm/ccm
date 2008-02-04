@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=273}]"><cms:name>batch-23-273</cms:name><cms:language>en</cms:language><cms:title>Older persons travel pass</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=273}]"><cms:name>batch-23-273-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>older, person, travel, pass</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=273}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>From 1st April 2003, the law regarding concessionary travel passes, or bus passes, has been changed. Now everyone, men and women, over the age of 60 is entitled to recieve a pass from their local council. </i></p><hr/><h2>How can I apply for a Travel Pass?</h2><p>To apply, you need to complete an 
+		<a href="/ccm/services/pid.jsp?pid=forms/273a">
+				<strong>application 
+  form</strong>
+			</a>	
+			<span class="gen">link to online form</span>
+		</p><h2>What proof of identity do I require?</h2><p>Applicants must produce 2 passport sized photographs plus proof 
+  of age and residence; e.g. :</p><ul>
+			<li title="*">Pension Book or Birth Certificate</li>
+			<li title="*">A Council Tax or a Utility Bill</li>
+		</ul><h2>When can I apply?</h2><p>A Travel Pass can only be issued within four working 
+  days of the 60th birthday. Application must not be made more than two weeks in advance. 
+  You can apply by contacting your local Customer Service Centre or library.</p><p>Please note: The person applying for the bus pass must attend 
+  in person.</p><h2>How much does it cost?</h2><p>The pass is issued free of charge but you pay a concessionary 
+  fare for your journey.</p><h2>What do I do if my pass is stolen or lost?</h2><p>If you lose your permit a replacement can be issued immediately. A new application, 
+  proof of identity and photograph are required. If you find your pass in the meantime 
+  please notify the office where you obtained the form.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=273"> Applications for services
+		(273)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

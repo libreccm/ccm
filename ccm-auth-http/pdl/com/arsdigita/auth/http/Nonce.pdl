@@ -1,0 +1,63 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.auth.http;
+
+object type Nonce {
+  BigDecimal[1..1] nonce = auth_http_nonces.nonce INTEGER;
+  Date[1..1] expires = auth_http_nonces.expires TIMESTAMP;
+  Boolean[1..1] used = auth_http_nonces.used BIT;
+
+  object key(nonce);
+}
+
+query CheckNonce {
+    do {
+	select
+	    1
+	from
+	    auth_http_nonces
+	where
+	    nonce = :nonce and
+	    expires > :now and
+	    used = :status
+	for update of
+	    auth_http_nonces.used
+    }
+}
+
+data operation AddNonce {
+    do {
+      insert into auth_http_nonces
+	    (nonce, expires, used)
+      values
+	    (:nonce,
+	     :expires,
+	     :status)
+    }
+}
+
+data operation ExpireNonce {
+    do {
+	update
+	    auth_http_nonces
+	set
+	    used = :status
+	where
+	    nonce = :nonce
+    }
+}

@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=199}]"><cms:name>batch-22-199</cms:name><cms:language>en</cms:language><cms:title>Health Advice</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=199}]"><cms:name>batch-22-199-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>health, advice</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=199}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Below you will find an extensive list of links to organisations that provide advice on a wide variety of health-related matters.</i></p><hr/><p> This Council is not responsible for the content of External Weblink sites. </p><h2>External Links </h2><p>
+			
+		<a href="http://www.ageconcern.org.uk/">Age Concern</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+Age Concern is the UK's largest organisation working with and for older people. They provide vital local services as well as influencing public opinion and government.</p><p>
+			
+		<a href="http://www.alcoholics-anonymous.org.uk/">Alcoholics Anonymous</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Alcoholics Anonymous was established in the 1930's in America and arrived in Britain 55 years ago. There are more than 3,500 AA meetings every week in England, Scotland and Wales. </p><p>
+			
+		<a href="http://www.alzheimers.org.uk/">Alzheimers Society</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  The Alzheimer's Society is the UK's leading care and research charity for people with any form of dementia and their carers.   </p><p>
+			
+		<a href="http://www.bbc.co.uk/health/">BBC Health</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Your Health, Interactive Area, Healthy Living, Medical Conditions, Relationships, News, Message Board and more.   </p><p>
+			
+		<a href="http://www.carbonmonoxidekills.org.uk/help.htm">Carbon Monoxide Kills website</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Carbon Monoxide Advice.   </p><p>
+			
+		<a href="http://www.channel4.com/health">Channel 4 Health</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Health advice from Channel 4   </p><p>
+			
+		<a href="http://www.doh.gov.uk/">Department of Health</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Their aim is to improve the health and well-being of people in England. Here you will find the latest on the Department's work, as well as health and social care guidance, publications and policy. </p><p>
+			
+		<a href="http://www.fphm.org.uk">Faculty of Public Health Medicine</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+of the Royal College of Surgeons</p><p>
+			
+		<a href="http://www.harpweb.org.uk">HARP</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Health for asylum seekers and refugees portal</p><p>
+			
+		<a href="http://www.doh.gov.uk/traveladvice/">Health Advice for Travellers</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Whether you are going off in search of sea and sun, travelling on business, or trekking through the wilds, this site is designed to help you enjoy a healthy journey - and to deal successfully with any medical emergencies which might arise. </p><p>
+			
+		<a href="http://www.hda-online.org.uk">Health Development Agency</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+The Health Development Agency (HDA) identifies the evidence of what works to improve people's health and reduce health inequalities.</p><p>
+			
+		<a href="http://www.medicdirect.co.uk/">MedicDirect</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  The only interactive website hosted by leading UK medical consultants providing comprehensive consumer health information online. </p><p>
+			
+		<a href="http://www.bbc.co.uk/health/mental/">Mental Health - Supporting and Caring</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  BBC site - looks at the issues surrounding support, including how to build better relationships, how to deal with difficult situations, how to care for young people - and the importance of caring for carers.   </p><p>
+			
+		<a href="http://www.cnhlc.sageweb.co.uk">National Chinese Healthy Living Centre</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+The Chinese National Healthy Living Centre aims to promote healthy living, and to provide access to health services, for the Chinese community in the UK. The Centre takes an holistic approach, tackling both the physical and psychological aspects of health. </p><p>
+			
+		<a href="http://www.nelh.nhs.uk/">National Electronic Library for Health</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  The National electronic Library for Health Programme is working with NHS Libraries to develop a digital library for NHS staff, patients and the public. </p><p>
+			
+		<a href="http://www.nhs.uk/patientsvoice/how_to_complain.asp">National Health Service - Making a Complaint</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  How to make a complaint to the NHS </p><p>
+			
+		<a href="http://www.nhs.uk/localnhsservices/dental/dentistry_leaflet.asp">NHS Dental Leaflet</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+This information is meant to answer some common questions about NHS dentistry and make it easier for you to make choices about your own health care.</p><p>
+			
+		<a href="http://www.nhsdirect.nhs.uk">NHS Direct On-Line</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  Your gateway to health info on the internet </p><p>
+			
+		<a href="http://www.lincspals.nhs.uk">PALS - Patients Advice and Liaison Service</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+A new services that puts the patient at the very heart of the NHS and aims to make the journey through the NHS as smooth as possible, making sure that the patient and their carers have access to 'on the spot' information and a way of resolving problems quickly.</p><p>
+			
+		<a href="http://www.ombudsman.org.uk">The Parliamentary and Health Service Ombudsman </a>	
+			<span class="gen">link to external website</span>
+			<br/>
+The Parliamentary Ombudsman and the Health Service Ombudsman undertake independent investigations into complaints about government departments, a range of other public bodies, and the National Health Service.   </p><p>
+			
+		<a href="http://www.healthcentre.org.uk">UK Health Centre</a>	
+			<span class="gen">link to external website</span>
+			<br/>
+  The UK's leading internet health resources library <br/>
+		</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=199"> Providing Information
+		(199)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=564}]"><cms:name>batch-11-564</cms:name><cms:language>en</cms:language><cms:title>Lighting - street lights</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=564}]"><cms:name>batch-11-564-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>lighting, street, lights</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=564}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council is responsible for the design, installation and maintenance of streetlights, traffic signals.</i></p><hr/><p>
+			<strong>Street Lighting</strong>
+		</p><p>Maintenance of the following illuminated street lighting:</p><ul>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+			<li title="*">
+				<span class="gen">enter details</span>
+			</li>
+		</ul><ul>
+			<li title="*">
+				<strong>
+					
+		<a href="#1">How do I report a problem?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#2">The street light outside my house is out/is faulty</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#3">How long will it take to repair?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#4">The metal plate at the base of the lamp column has been removed, how soon will you attend?</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#5">The lamp column outside my house is leaning or damaged</a>	
+				</strong>
+			</li>
+			<li title="*">
+				<strong>
+					
+		<a href="#6">Can the lighting in my street be improved?</a>	
+				</strong>
+			</li>
+		</ul><h3>
+			
+			How do I report a problem?</h3><p>To report problems with street lights, traffic lights, pedestrian crossings or illuminated bollards or to complain about the location of, please use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/564a">online form</a>	
+			</strong>
+			<span class="gen">link to online form.</span> If you are reporting problems with temporary traffic lights, please provide relevant contact details where possible.</p><p>In an emergency or out of hours situation please contact our 24 hour call centre on <span class="gen">enter telephone number</span>
+		</p><h3>
+			
+			The street light outside my house is out/is faulty</h3><p>Please use the <strong>
+				
+		<a href="/ccm/services/pid.jsp?pid=forms/564a">online form</a>	
+			</strong>
+			<span class="gen">link to online form</span> to let us know - the more information you can give us the better (ie. light out altogether, going on/off, burning all day, intermittent etc.), include the number of the column - if you cannot see this then please state the exact location or adjacent house no.</p><h3>
+			
+			How long will it take to repair?</h3><p>Usually, outages are repaired within <span class="gen">enter amount</span> working days. If there is a problem on the electricity cable feeding the column, notification is sent to the Utility who usually attend within <span class="gen">enter amount</span> working days of receiving report.</p><h3>
+			
+			The metal plate at the base of the lamp column has been removed, how soon will you attend?</h3><p>We will attend within <span class="gen">enter amount</span>
+		</p><h3>
+			
+			The lamp column outside my house is leaning or damaged.</h3><p>An Inspector will come out to assess the damage and then determine how urgent the job is.</p><h3>
+			
+			Can the lighting in my street be improved?</h3><p>All changes including improvement requests will be considered by the Authority and prioritised accordingly.</p><p>We take into account age and condition of the existing installation along with the light output. However, all considerations are budget led. Please contact us for more information using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=564"> Applications for services
+		(564)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

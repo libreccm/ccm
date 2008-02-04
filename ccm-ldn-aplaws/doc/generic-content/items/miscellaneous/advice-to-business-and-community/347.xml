@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=347}]"><cms:name>community-economic-development-347</cms:name><cms:language>en</cms:language><cms:title>Community Economic Development</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=347}]"><cms:name>community-economic-development-347-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>community, economic, development</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=347}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Economic Development Unit seeks to develop and regenerate the economy and community, with key objectives being to create employment opportunities and secure external funding for the benefit of the area. </i></p><hr/><p> The overall aims of the Unit are to:</p><ul>
+			<li title="*">Encourage Local Business
+    growth and diversity.</li>
+<li title="*">Promote the area to
+    attract new and sustainable investment. </li>
+<li title="*">Maximise funding opportunities
+    to assist infrastructure development.</li>
+<li title="*">Encourage individuals
+          and organisations to adopt 'Lifelong Learning' to equip them to compete
+    now and into the future.</li>
+<li title="*">Assist in the regeneration
+          of our market towns and villages.</li>
+<li title="*">Assist Local Community
+    groups to harness resources. </li>
+</ul><p>The  Council encourages both competition and sustainability
+    in all areas of the local economy. The Unit actively promotes the area and
+  offers business development and support, and attempts to remove barriers to
+  investment where possible.</p><p>Local residents and communities also focus heavily
+    in the work of the Unit, which keenly encourages improvements to the local
+    physical infrastructure and
+  services.</p><p>Support is given to local community groups in
+    the form of advice, information and grants.
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=347"> Providing Information
+		(347)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

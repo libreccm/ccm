@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=794}]"><cms:name>pipelines-794</cms:name><cms:language>en</cms:language><cms:title>Pipelines</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=794}]"><cms:name>pipelines-794-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>pipelines</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=794}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Pipeline Safety Regulations 1996 task local authorities with the production of emergency plans or the modification of existing plans, to cover certain major accident hazard pipelines (MAHP) within their area. The Health and Safety Executive notify the Council of those pipelines that require plans in the region. </i></p><hr/><p>The following gives
+    an overview of the emergency response to a pipeline incident, showing how
+    the existing procedures of various organisations
+  would be applied and co-ordinated. </p><p>It follows the recommended national format for Pipeline Safety Plans.</p><h2>Pipeline System</h2><p>The operator for the
+      notified Major Accident Hazard Pipelines in this area is Transco (formerly
+      British Gas). The product carried is natural
+  gas.</p><p>Transco supply maps showing
+      pipeline routes and data to the Emergency Planning Team. This information
+    is shared with the Fire Service.
+    The details recorded include data on bore diameter, operating pressure and
+  above ground equipment such as valves and pumping stations. </p><p>  For security reasons this information is not available to the public. Local
+      Authority Planning and Emergency Planning sections can request the Pipeline
+      Major Accident Prevention Document containing the above information from
+    Transco. </p><h2>Hazard and Effect</h2><p>An
+        incident involving a high pressure gas pipeline is readily identified by
+    the following features:</p><p>
+				<strong>Release of gas </strong>-
+      Significant damage to a Major Accident Hazard Pipeline that results in
+      a pipeline puncture
+      or rupture will lead to a pressurised release
+    of natural gas. All pipelines operating under 75 bar (which is used for the
+  National Transmission System) contain odorised gas. </p><p>If ignited this may give rise to a thermal radiation hazard to individuals
+    in the vicinity. Ignition can be immediate, delayed local ignition, delayed
+    remote ignition, or no ignition at all. Each may have different consequences,
+    hazard ranges and duration and for this reason time scale and sequence of any
+  incident will vary.</p><p>
+				<strong>Duration of pipeline</strong>
+				<strong>leaks</strong>  - When a high-pressure pipeline fails, immediate and rapid de-pressurisation
+      occurs over a matter of seconds, and is followed
+    by relatively stable flow as the pipeline unpacks due to the leak and continued
+    pumping of gas into the pipeline. Flow may last for several hours dependant
+    on the location and topography of the pipeline and the time for Transco personnel
+    to arrive on site to shut down valves not shut remotely from the Transco
+  Control Centre.</p><p>
+				<strong>Blast Effects
+        and Projectiles</strong>  - The pressure blast at the time of failure
+        can be significant in close proximity to the pipeline, cover material
+        over
+    the pipeline may be thrown into the air at high velocity, but the serious
+      effects will diminish with distance. Delayed ignition in the vicinity of
+      buildings
+  may result in loss of window glass as a result of blast over pressure. </p><p>
+				<strong>Fire and Explosion</strong> -
+      The ignition of any release of gas will cause a flare, which may have serious
+      effects due to thermal radiation. People can be shielded
+    indoors but radiation levels may be sufficient for the buildings to catch
+      fire. Techniques are available for estimating the thermal radiation from
+      an estimated
+    quantity of gas released over time. Any failure of pipelines carries the
+      risk of ignition, but experience has shown that in the majority of cases
+      ignition
+  does not occur.</p><p>If a release of gas does not ignite immediately, it will form a cloud, which
+    will disperse over large distances. If a cloud of gas ignites it may burn back
+    as a flash fire to the point of origin. As it disperses it will be diluted
+    with air, the concentration falling below the lower explosive level (LEL) when
+    it will no longer present a fire hazard. The distance over which such a release
+    may disperse depends on the type of release and the prevailing weather conditions.
+  Concentrations and duration may be estimated using plume modelling.</p><p>It is important that ignited gas is not extinguished unless specifically requested
+  by the Transco on site controller.</p><p>
+				<strong>Noise</strong> - The release of
+      high-pressure gas creates a great deal of noise, which can be very intense
+      leading to temporary hearing damage. High noise levels
+  can also be disorientating and may cause unexpected behaviour in people effected.</p><p>
+				<strong>Hazard Range
+        and Emergency Planning Distances</strong> - Transco have calculated hazard information related
+      to thermal radiation. This is supplied to the Fire
+  Service and is also available to planning departments in local authorities.</p><h2>Plan Activation</h2><p>In
+        view of the extreme nature of a high-pressure pipeline failure it is likely
+      that initial notification will be by a member of the public either by 999
+        call or to the gas emergency number.</p><p>The Emergency Services
+      and Transco will follow their standard procedures to investigate reports.
+      If at any stage they identify a requirement for additional
+    resources, a mutual decision is taken to notify other organisations and undertake
+    wider co-ordination. This process is the same as that employed in response
+  to other major incidents.</p><p>There
+    is a single national gas emergency number for all notifications:  0800
+    111 999.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=794"> Providing Information
+		(794)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

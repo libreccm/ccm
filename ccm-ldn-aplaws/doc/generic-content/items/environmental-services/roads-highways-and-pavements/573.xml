@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=573}]"><cms:name>batch-11-573</cms:name><cms:language>en</cms:language><cms:title>Road safety - school crossing patrols</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=573}]"><cms:name>batch-11-573-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>road, safety, school, crossing, patrols</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=573}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>School crossing patrols ensure the travel to and from school, 
+  for local children, is as safe as possible.</i></p><hr/><ul>
+	<li title="*">
+<strong>
+
+		<a href="#1">How do you decide where to place a School Crossing Patrol?</a>	
+</strong>
+</li>
+	<li title="*">
+<strong>
+
+		<a href="#2">Can I request a School Crossing Patrol?</a>	
+</strong>
+</li>
+	<li title="*">
+<strong>
+
+		<a href="#3">How many School Crossing Patrols does <span class="gen">enter council name</span> operate?</a>	
+</strong>
+</li>
+	<li title="*">
+<strong>
+
+		<a href="#4">Do you have any job vacancies?</a>	
+</strong>
+</li>
+	</ul><h4>
+
+			How do you decide where to place a School Crossing Patrol?</h4><p>School Crossing Patrols are provided where children are in danger from road traffic when walking to and from school. This is not necessarily directly outside a school but could be anywhere on a direct route.</p><h4>
+
+			Can I request a School Crossing Patrol?</h4><p>Requests for additional school crossing patrols can be made using this form. Following a request we will survey the area to see if it meets the national criteria which includes a vehicle and pedestrian count. </p><h4>
+
+			How many School Crossing Patrols does <span class="gen">enter council name</span> operate?</h4><p>Currently we have <span class="gen">enter amount</span> school crossing patrols in operation.</p><h4>
+
+			Do you have any job vacancies?</h4><p>
+<span class="gen">enter details</span>
+</p><p>For more vacancies please see our <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=337">Recruitment page</a>	
+</strong> <span class="gen">link to pid 337.</span>
+</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=573"> Providing Information
+		(573)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

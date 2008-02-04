@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=788}]"><cms:name>animal-health-and-welfare-788</cms:name><cms:language>en</cms:language><cms:title>Animal Health and Welfare</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=788}]"><cms:name>animal-health-and-welfare-788-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>animal, health, welfare</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=788}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>There is a wide range of legislation in the UK designed to protect the health and welfare of both domesticated and wild animals.</i></p><hr/><p>Animal health and welfare 
+  legislation is enforced jointly by the Local Authority and the <strong>
+
+		<a href="http://www.defra.gov.uk/animalh/animindx.htm">Department 
+  for Environment, Food and Rural Affairs (Defra)</a>	
+</strong>, <span class="gen">link to external website</span>   in association with other government bodies and independent organisations like 
+  the 
+		<a href="http://www.rspca.org.uk/">
+<strong>
+RSPCA
+</strong>
+</a>	. <span class="gen">link to external website</span>
+</p><h2>What the Local Authority do:</h2><p>Licensing of: </p><ul>
+<li title="*">Horse Riding Establishments </li>
+<li title="*">Dog Breeding Establishments</li>
+<li title="*">Animal Boarding Establishments</li>
+<li title="*">Dangerous Wild Animals</li>
+<li title="*">Animal Movements</li>
+</ul><h2>What Defra do: </h2><ul>
+<li title="*">National Animal Health 
+      and Welfare Strategy </li>
+<li title="*">Animal Welfare at Farms, 
+      Markets, Slaughterhouses</li>
+<li title="*">The Pet Travel Scheme</li>
+<li title="*">International Trade 
+      in Animals</li>
+<li title="*">Animal Diseases - 
+      Control and Surveillance, BSE, Tuberculosis, Scrapie, Foot and Mouth Disease </li>
+<li title="*">Animal by-products </li>
+<li title="*">Wildlife Conservation 
+      and Biodiversity</li>
+<li title="*">Wildlife Crime</li>
+</ul><p>
+<strong>Defra Helpline: 
+  </strong> 08459 33 55 
+  77</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=788"> Providing Information
+		(788)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

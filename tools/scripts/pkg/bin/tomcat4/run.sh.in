@@ -1,0 +1,5 @@
+#!/bin/sh
+
+su - ::user:: ::app-home::/bin/run-tomcat.sh $@
+
+exit 0;

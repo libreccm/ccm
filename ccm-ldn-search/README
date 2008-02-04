@@ -1,0 +1,4 @@
+Please make sure that configuration in etc/web-xml.xsl is added to
+your web.xml. 
+
+WEB-INF/server-config.wsd is also need to make Axis work.

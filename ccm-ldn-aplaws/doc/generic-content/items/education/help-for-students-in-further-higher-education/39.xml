@@ -1,0 +1,188 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=39}]"><cms:name>education-1-39</cms:name><cms:language>en</cms:language><cms:title>Further education - sixth form access funds</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=39}]"><cms:name>education-1-39-dublin-metadata</cms:name><cms:dcAudience>Students</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>further, education, sixth, form, access, funds</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=39}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Frequently Asked Questions regarding Sixth Form Access Funds</i></p><hr/><ul>
+
+			<li title="*">
+
+		<a href="#1">What is the Sixth Form Access Fund?</a>	
+</li>
+
+			<li title="*">
+
+		<a href="#2">How do I know if I am eligible?</a>	
+</li>
+
+			<li title="*">
+
+		<a href="#3">What do I do if I think I might be eligible?</a>	
+</li>
+
+			<li title="*">
+
+		<a href="#4">What else might I be entitled to other than the basic grant?</a>	
+</li>
+
+			<li title="*">
+
+		<a href="#5">What happens if I am eligible for a grant?</a>	
+</li>
+
+			<li title="*">
+
+		<a href="#6">Is there funding available for other essential expenses?</a>	
+</li>
+
+			<li title="*">
+
+		<a href="#7">When and how is the grant paid?</a>	
+</li>
+
+			<li title="*">
+
+		<a href="#8">Do I have the right to appeal if I am refused a grant?</a>	
+</li>
+
+		</ul><h4>
+
+			What is the Sixth Form Access Fund?</h4><p>The fund provides support for school students who wish to stay on at school in the sixth form and might not be able to do so without the grant. If you are eligible you will qualify for a grant of &#xA3; <span class="gen">enter amount</span> for the <span class="gen">enter date</span> academic year.</p><h4>
+
+			How do I know if I am eligible?</h4><ul>
+
+			<li title="*">You must have the necessary requirements for entry to the Sixth Form and be following a course approved by the school (such as GCSE, A Level or GNVQ). Your school will be asked to confirm this.</li>
+
+			<li title="*">You must be attending the closest school to your home, where the course is available.</li>
+
+			<li title="*">You must be 16 years old before 1 September and no older than 19 on that date.</li>
+
+			<li title="*">You must have been living in the British Isles for at least 3 years before starting the course. You must live in <span class="gen">enter council name</span> and live here on <span class="gen">enter date</span>
+</li>
+
+			<li title="*">Your family's income must be less than &#xA3; <span class="gen">enter amount</span> (after pension schemes, life assurance etc has been paid). If you have dependant brothers or sisters this will also be taken into account.</li>
+
+		</ul><p>You may also qualify If you fall into one or more of the following groups:</p><ul>
+
+			<li title="*">You were permanently excluded from school in years 10 or 11</li>
+
+			<li title="*">You are looked after by the Local Authority (in care) </li>
+
+			<li title="*">You were absent from school for a long period during years 10 or 11</li>
+
+		</ul><h4>
+
+			What do I do if I think I might be eligible?</h4><p>Your school, your education welfare officer or your social worker should be able to provide further information. If you or your parents need help filling in the forms please ask one of them, or Student Support, for help.</p><p>If you think you might be eligible for a grant, please contact us using the details above, no later than 30 November 2003. Late applications will only be considered if there is money left in the fund and priority will be given to students whose family circumstances have changed.</p><h4>
+
+			What else might I be entitled to other that the basic grant?</h4><p>You may be entitled to an extra grant of &#xA3; <span class="gen">enter amount</span> for transport if you live more than four miles from school, are attending the closest sixth form and qualify for the basic maintenance grant.</p><p>If you live in an area where public transport is not available, live more than four miles from school and are attending the closest sixth form you 
+
+  may be able to obtain a place on a contract bus as a privileged fare-paying passenger. 
+
+  Extra places will be provided through the sixth form access fund wherever possible. 
+
+  Forms are available from the <span class="gen">enter service name</span>, 
+
+ <span class="gen">enter telephone number</span>
+
+		</p><p>If you qualify for the basic maintenance grant you may receive 
+
+  assistance with:</p><ul>
+
+			<li title="*">
+
+				<strong>Field trips, Foreign Exchanges, or Work Experience abroad.</strong>
+
+				<p>We may be able to match the school's contribution to the cost, or EU funding, 
+
+      up to a maximum of &#xA3; <span class="gen">enter amount</span>, thus enabling the school 
+
+      to reduce your contribution. Your school should submit a request on your behalf</p>
+
+			</li>
+
+			<li title="*">
+
+				<strong>Interview expenses for further education and higher education courses.</strong>
+
+				<p>Up to &#xA3; <span class="gen">enter amount here</span> may be available. You will have 
+
+      to produce tickets or receipts and have a letter of confirmation from your school.</p>
+
+				<p>If you are at school but attending college for some courses you may be eligible 
+
+      for transport costs between school and college. The school must submit a request 
+
+      for you so please ask them or the college about this. You do not have to be 
+
+      eligible for the basic maintenance grant to qualify for this.</p>
+
+			</li>
+
+			<li title="*">If you are a parent, you could be eligible for a grant of &#xA3; <span class="gen">enter amount</span> towards childcare costs. You do not have to be eligible 
+
+    for the basic maintenance grant to qualify for this.</li>
+
+		</ul><h4>
+
+			
+			What happens if I am eligible for a grant?</h4><p>If you are told you are eligible for a grant you will be sent a financial form, 
+
+  which your parent/carer will have to fill in. You must return this form as quickly 
+
+  as possible.</p><h4>
+
+			
+			Is there funding available for other essential expenses?</h4><p>Yes, if there is sufficient money left after basic grants have been paid, you may 
+
+  be eligible to claim for any of the following:</p><ul>
+
+			<li title="*">
+
+				<strong>The cost of essential equipment.</strong>
+
+				<p>If you have a disability and your needs are not met from any other sources 
+
+      of funding you may be eligible for support from the fund. Your school must submit 
+
+      a request on your behalf and you should provide supporting information.</p>
+
+			</li>
+
+			<li title="*">
+
+				<strong>School attendance</strong>
+
+				<p>if your Education Welfare Officer or Social Worker supports your request we 
+
+      may be able to help you with exceptional costs to do with school attendance.</p>
+
+			</li>
+
+			<li title="*">
+
+				<strong>Key Skills or enrichment activities</strong>
+
+				<p>If you are eligible for the basic maintenance grant and have a specific requirement 
+
+      in relation to e.g. IT requirements, Duke of Edinburgh Award Schemes etc. your 
+
+      school can make a request for support on your behalf.</p>
+
+			</li>
+
+		</ul><h4>
+
+			
+			When and how is the grant paid?</h4><p>Cheques will be made payable to you and sent to your school for collection. Payments 
+
+  for field trips etc will be made directly to the school.</p><p>The basic grant will be paid in three installments, the first during the autumn 
+
+  term, the second during the spring term and the third during the summer term. Payment 
+
+  for the spring and summer terms will not be released until a satisfactory report 
+
+  has been received from the school.</p><h4>
+
+			
+			Do I have the right to appeal if I am refused a grant?</h4><p>You have the right to appeal in writing, giving details of any special circumstances 
+
+  that may apply. Each case will be considered initially by senior staff.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=39"> Providing Information
+		(39)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

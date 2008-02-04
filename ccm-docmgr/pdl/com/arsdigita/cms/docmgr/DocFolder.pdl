@@ -1,0 +1,11 @@
+model com.arsdigita.cms.docmgr;
+
+import com.arsdigita.cms.Folder;
+
+object type DocFolder extends Folder {
+
+   String[0..1]    description = cms_doc_folders.description VARCHAR(4000);
+
+   reference key (cms_doc_folders.doc_id);
+
+}

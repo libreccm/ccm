@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/axis.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-discovery.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxrpc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jobo.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/saaj.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/tt-bytecode.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/wsdl4j.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-cms"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-util"/>
+	<classpathentry kind="output" path="build/Eclipse"/>
+</classpath>

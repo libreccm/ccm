@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=698}]"><cms:name>-698</cms:name><cms:language>en</cms:language><cms:title>Marriages historical searches</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=698}]"><cms:name>-698-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>marriage, marriages, historical, search, searches</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=698}]"><cms:content><![CDATA[<h2>Miscellaneous</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The indexes in a Superintendent Registrar's office relate 
+  only to births, marriages and deaths which occurred within the Superintendent 
+  Registrar's district. </i></p><hr/><h3>Searches of Marriage Indexes</h3><p>Superintendent Registrars do not have the staff to undertake searches of an indefinite or protracted nature. Usually a 
+  search in the marriage index, covering a period not exceeding 5 years, will be made but only where accurate details have been given of the marriage registration. If a wider search is required it is necessary for the applicant or someone on his/her behalf to make a 
+		<a href="/ccm/services/pid.jsp?pid=forms/698e">
+				<strong>general search</strong>
+			</a>	
+			<span class="gen">link to online form</span> in the indexes. For further information see below and then make enquiries of the Superintendent Registrar.</p><h3>General Searches at a Superintendent Registrar's Office</h3><p>The indexes in a Superintendent Registrar's office relate only to births, marriages and deaths which occurred within the Superintendent Registrar's district.</p><p>A 
+		<a href="/ccm/services/pid.jsp?pid=forms/698e">
+				<strong>general search</strong>
+			</a>	
+			<span class="gen">link to online form</span> is a search in the indexes conducted in person by the applicant or someone on his/her behalf during any number of successive hours not exceeding six. By arrangement with the Superintendent Registrar a person making a 
+		<a href="/ccm/services/pid.jsp?pid=forms/698e">
+				<strong>general search</strong>
+			</a>	
+			<span class="gen">link to online form</span> may have access to the indexes to the registers of births, marriages and deaths but not to the registers themselves. A certificate of any entry identified may be obtained on completion of an application form and on payment of the appropriate fee.</p><p>If a person making a 
+		<a href="/ccm/services/pid.jsp?pid=forms/698e">
+				<strong>general search</strong>
+			</a>	
+			<span class="gen">link to online form</span> is uncertain whether a reference found in the indexes relates to the entry for which he/she is searching, the Superintendent Registrar, on being given definite details by which the entry may be identified, will verify those particulars by reference to the register. Any additional information from the entry can only be made available in the form of a certificate.The cost of checking the first eight references is covered by the GENERAL SEARCH fee, but an additional charge will be made for each subsequent reference checked unless a certificate is issued from the entry, in which case the certificate fee only will be payable.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=698"> Providing Information
+		(698)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+<h2>Adding Moderation to forums</h2>
+
+<h3>Requirements</h3>
+
+<p>Who administers the site will be decided by priviledge granted to
+the Forum Application. There will be a distinction between Forum
+Administrators and Forum Moderators, a new priviledge called
+"forum_moderate" will be added, and a party created. Parties that can
+moderate will be added to this party. </p>
+
+<ul>
+  <li>A forum can have moderation turned on or off</li>
+  <li>Admin users can be created for a forum</li>
+  <li>Admin users get notified when a new message is posted that
+      requires approval</li>
+  <li>Admin users get a page with a list of messages that require
+      approval</li>
+  <li>When a message is rejected, the original subimitter receives an
+      email notice with a link to the message and comment from the Admin
+      user</li>
+  <li>The original submitter can edit the message and submit it for a
+      second review</li>
+</ul>
+
+<h4>Potential additional features</h4>
+<ul>
+  <li>Admin user can reject a message and add a comment as to why</li>
+</ul>
+
+<hr>
+
+<h3>Changes required</h3>
+
+<h4>Status</h4>
+<p>The draft state (pending approval) and approved states will be
+handl
+ed by adding a "status" attribute to ForumMessage.
+<ul>
+  <li>pending - Message only visible to moderators</li>
+  <li>approved - Message visible to all</l>
+  <li>rejected - Message only visible to moderators</li>
+  <li>reapprove - Message visible, but content hidden</li>
+  <li>supressed  - Message visible, but ontent hidden</li>
+</ul>
+</p>
+
+<p>
+<ul>
+  
+  <b>Use cases</b>
+  
+  <li>
+      <b>New message</b>
+      <ol>
+        <li> Submitter posts (notify admin)</li>
+        <li> -> Admin 'approve' / 'reject'</li>
+        <li> -> APPROVED Message goes live</li>
+        <li> OR -> Message stays as draft and submitter is notified
+        go back to 3)</li>
+    </ol>
+      </li>
+
+  <li>
+      <b>Edit message</b>
+      <ol>
+        <li> Submitter edits already approved message (notify admin)
+        status changes to 'reapprove'</li>
+        <li> -> Admin moderates, change state to 'approve', 'supressed',
+or 'rejected' depending on whether they want to hide the entire thread
+        or just the content of the message.</li>
+        <li> -> APPROVED new version of message goes live</li>
+        <li> OR -> REJECTED old version of message stays around?</li>
+    </ol>
+  </li>
+
+  <li><b>user deletes message</b>
+  <ol>
+    <li>-> Status change to 'supressed'</li>
+    </ol>
+    </li>
+  <li>
+      <b>Moderator changes decision</b>
+      <ol>
+        <li>Change status to 'supressed' or 'rejected', depending on wheather they want to remove the entire thread or just the content of the message. </li>
+    </ol>
+  </li>
+</ul>
+</p>
+
+<p>
+When the forum is not moderated, the message filters on the display
+will be turned off. This means that when forum moderation is turned on
+after the forum has been active for a while, all messages will be at
+the "pending" or "reapprove" status.
+</p>
+
+<p> When a moderated forum is changed to unmoderated, all PENDING
+posts will be automatically approved.  </p>
+
+<h4>Views</h4>
+<p>For the moderators the thread list will have two viewing flags
+<ul>
+  <li>Include 'pending' or 'reapprove' messages</li>
+  <li>Include 'rejected' or 'suppressed' messages</li>
+</ul>
+</p>
+
+<h4>Datamodel</h4>
+
+Create new DomainObject Post with the following additional attributes:
+<ul>
+<li>status (pending, approved, rejected, reapprove, suppressed)</li>
+<li>UID of moderator who last changed the status</li>
+</ul>
+
+<pre>
+object type Post extends com.arsdigita.messaging.ThreadedMessage {
+    
+    String [1..1] status = forum_posts.status CHAR(20);
+    reference key(forum_posts.post_id);
+    aggressive load(moderator.id);
+}
+
+association {
+   Party [0..1] moderator = join forum_posts.moderator to parties.party_id;
+   Post [0..1] moderatedMessage = join parties.party_id to forum_posts.moderator;
+}
+
+</pre>
+
+<p>Add moderated boolean attribute to Forum.pdl
+<pre>
+object type Forum extends Application {
+
+    Post[0..n] posts = 
+        join forum_forums.forum_id to messages.object_id;
+
+    Boolean [1..1] isModerated  = forum_forums.is_moderated;
+
+    component ForumSubscription[0..n] subscriptions = 
+        join forum_forums.forum_id to forum_subscriptions.forum_id;
+    component Category[1..1] category =
+        join forum_forums.category_id to cat_categories.category_id;
+   
+    reference key (forum_forums.forum_id);
+}
+</pre>
+</p>
+
+<p>Remove the category related named queries with Categorization API
+in Forum.pdl. Alter named query categoryObject and
+uncategoryObject</p>
+
+<h4>UI changes</h3>
+
+<p>Change index and thread pages to only show approved content.
+
+<table class="standard">
+  <tr>
+    <td><b>Creation steps</b></td>
+    <td>
+        Change the message create/edit form to set the status apropreately.
+    </td>
+    <td><font color="green">DONE</font></td>
+  </tr>
+  
+  <tr>
+    <td> <b>Post listings</b></td>
+  </tr>
+      <ul>
+        <tr>
+          <td><font color="red">new</font>&nbsp;</td>
+          <td>
+              Make MessageList into a MessageTable. Refactor ReplyPostForm,
+              EditPostForm to use ACSObjectSelectionModel. </td>
+          <td>
+              <font color="green">DONE
+              (.5)</font>
+          </td>
+        </tr>
+        
+        <tr>
+          <td><font color="red">new</font>&nbsp;</td>
+          <td>Remove visiblity control from the subcomponents
+MessageTable, ReplyToPostForm, EditPostForm, MessageView and move it
+to the parent container ThreadComponent.</td>
+          <td><font color="green">DONE
+              (.1d)</font></td>
+        </tr>
+
+        <tr>
+          <td>&nbsp;</td>
+          <td>Add filters on the post table dynamically based on
+priviledge. Implement these views:
+        <ol>
+          <li>Moderator view: has links to include "pending",
+"reapprove", "rejected", and "suppressed" messages.</li>
+          <li>User view: only shows approved messages</li>
+          <li>Moderator can change the status of messages via these views</li>
+        </ol>
+        
+        <td>Estimate: 0.5
+            Actual: 0.5<font color="green">DONE</font>
+        </td>
+      </tr>
+
+      <tr>
+        <td>&nbsp;</td>
+        <td>Add a filter to thread listing in ForumUserView, ThreadListing</td>
+        <td>Estimate: .5
+            Actual: about 2 hours  <font color="green">DONE</font>
+        </td>
+      </tr>
+      <tr>
+        <td>Permission checking <font color="red">new</font></td>
+        <td>Don't think the user pages has proper permission checking,
+            so all the pages needs to be checked.</td>
+        <td>Estimate 1 day? <font color="red">DONE, It actually
+appears to be okay (about 2 hours)</font>
+        </td>
+      </tr>
+      
+  <tr>
+    <td><b>Modertaion Administration pane</b>
+    </td>
+    <td>
+        Add another tab to ForumComponent.java<br>
+      <ul>
+        <li>Add another "admin" tab to manage Moderation on/off</li>
+        <li>Show administrators for this forum</li>
+      </ul>
+    </td>
+    <td><font color="green">DONE (1d)</font> but needs more cleaning
++.5</td>
+  </tr>
+</table>
+
+<p><b>email notifications</b></br>
+
+<p>Notifications only go out for approved messages. </p>
+<table class="standard">
+<tr>
+  <td>Notify moderators when a new post is made or if a post is edited</td>
+      
+  <td>Notifications are sent by the various forms calling
+Post.sendNotifications() during the process() method. EditPostForm,
+NewPostForm, and ReplyToPostForm needs to call a similar method to
+send moderation noticies. Make a new message class, that extends
+com.arsdigita.forum.Subscription and implement custom methods for
+getHeader(), getSignature().
+<p>
+      Create a new class called ModerationNotice with a new object
+type that extends ForumSubscriptions. This is created when a forum i screated.
+  </td>
+  <td>Estimate: 1</td>    
+
+<tr>
+  <td>Only send subscription emails for approved posts</td>
+  <td>Forum.getSubscriptions();
+ * add approved messages filter to this method
+      ForumSubscription.sendNotification(); (Notification.sendNotification)
+  </td>
+  <td>Estimate: 1</td>    
+</tr>
+</table>
+
+<h3>Future Improvements</h3>
+<ul>
+  
+  <li>Make the use of Post consistent throughout, instead of mixing
+ThreadedMessage and Post. (MessageListing should be PostListing
+etc).</li>
+
+  <li>The distinction between ThreadedMessage and MessageThread is not
+really necessary. Make the use of MessageThread obsolete</li>
+      
+  <li>c.a.forum.ui.Constants has a bunch of constants. This should be
+moved to the globalization properties in
+c.a.forum.ui.ForumResources.</li>
+
+  <li>Make the configuration for forums take an XML file instead of
+this list of list in enterprise.init.in</li>
+
+</ul> <hr>
+<address>nasakai@redhat.com</address> <!-- hhmts start --> Last
+modified: Thu Jun 5 18:40:28 BST 2003 <!-- hhmts end --> </body>
+</html>

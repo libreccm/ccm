@@ -1,0 +1,3 @@
+select s.sub_id as c_1,
+       s.optional_id as c_2
+from sub s

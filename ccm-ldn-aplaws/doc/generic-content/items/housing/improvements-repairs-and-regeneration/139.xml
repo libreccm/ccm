@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=139}]"><cms:name>housing-2-139</cms:name><cms:language>en</cms:language><cms:title>Housing repairs - emergency out of hours repairs</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=139}]"><cms:name>housing-2-139-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>housing, repairs, emergency, out, hours</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=139}]"><cms:content><![CDATA[<h2>Housing</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We operate an emergency repair service to deal with specified repairs outside of normal working hours.</i></p><hr/><p>The types of repair that fall into this category are:</p><ul>
+  <li title="*">Insecure property</li>
+  <li title="*">Gaining access</li>
+  <li title="*">Dangerous flooring or stairs</li>
+  <li title="*">Total loss of water supply</li>
+  <li title="*">Uncontrollable water leaks</li>
+  <li title="*">Unusable taps in the 'on' position</li>
+  <li title="*">Blocked toilets or soil and vent pipes (If only one in the property)</li>
+  <li title="*">Blocked drains (if backing up)</li>
+  <li title="*">Missing inspection chamber covers</li>
+  <li title="*">Severely damaged or dangerous roofs</li>
+  <li title="*">Electrics sparking or smoking, or bare wires</li>
+  <li title="*">Total loss of electric power</li>
+  <li title="*">Blocked chimney to open fire</li>
+  <li title="*">Removal of brick debris or rubble</li>
+</ul><p>While every effort will be made to rectify the problem with a 'permanent repair' this may not always be possible. Our operative will at the very least make the situation safe. For example, if a window is broken we will secure it with a wooden board, if it is our responsibility, we will then return at a later date to re-glaze the window.</p><p>Loss of heating or hot water is not an emergency. If, however, either you or a member of the household is 'put at risk' by the loss of heating due to age or illness please let the operator know and they will try to make arrangements for the loan of a temporary electric heater.</p><p>If you have an emergency please telephone us using the details given above.</p><p>The operator will ask some questions that are designed to assist with the identification of the problem and our initial response. Please wait for the operator to complete the process or they may not be able to respond to your request for emergency assistance.</p><p>You should remember that if it is necessary to attend on an emergency and you are responsible for the repair, then you will be charged not only for the repair but also for the call out as well.</p><p>When you report a problem to us and we agree it is an emergency we are obliged to attend and make the property safe.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=139"> Providing Information
+		(139)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

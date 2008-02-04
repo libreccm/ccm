@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=15}]"><cms:name>education-3-15</cms:name><cms:language>en</cms:language><cms:title>School records for an individual pupil</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=15}]"><cms:name>education-3-15-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>school, records, individual, pupil</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=15}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We are often asked how long certain records should be retained by a school before they can be disposed of. It is important to remember that many school records are of invaluable help for local historical and genealogical research and there should be a presumption against destroying any records unless it is considered that they are of no such value.</i></p><hr/><p>
+				The following guidance is by no means exhaustive but covers 
+  the items most frequently asked about:
+			</p><p>
+				<strong>School Log Books</strong> - must be retained permanently. 
+  When a log book is completed send it to the Record Office.
+			</p><p>
+				<strong>Admission Registers</strong> - these should be retained permanently 
+  - note that this is not the same as the class register in which daily attendance 
+  is marked.
+			</p><p>
+				<strong>Pupil Record cards or printouts</strong> - to be retained 
+  for a minimum of seven years after the pupil has left school or until the pupil 
+  has reached the age of 25 years, whichever is the later date.
+			</p><p>
+				<strong>Class registers</strong> - to be retained whilst the pupils 
+  are still at school. For example, if a pupil enters school in September 2001 and 
+  leaves in July 2008, the September 2001 register for that class can only be destroyed 
+  in 2008.
+			</p><p>
+				Schools often have presentations, open days, pageants, plays, 
+  old photographs and other records that play an important part in the life of the 
+  school. These records can be deposited with the Record Office but we would suggest 
+  that they be given a free hand to decide which should or should not be retained.
+			</p><p>
+				In every case, the Record Office will confirm what they have 
+  retained and send a copy of the retention details to the school for their information. 
+  Often, schools will want to put on a display of old records for special events. 
+  So long as advance notice is provided for the Record Office they will be able to 
+  arrange for the loan of the records for the school subject to certain safeguards 
+  concerning the security of the items whilst on display. Please contact the Record 
+  Office for full details of the terms under which such loans can be made. Please 
+  remember that the Record Office has two vital advantages concerning the storage 
+  of records - they have a proper temperature and humidity controlled environment 
+  and access to conservation experts both internal and external.
+			</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=15"> Providing Information
+		(15)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

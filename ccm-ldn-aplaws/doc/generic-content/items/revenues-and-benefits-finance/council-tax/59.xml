@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=59}]"><cms:name>batch-20-59</cms:name><cms:language>en</cms:language><cms:title>Council tax - discount</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=59}]"><cms:name>batch-20-59-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, tax, discount</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=59}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The amount of Council Tax you have to pay depends on</i></p><hr/><ul>
+			<li title="*">The valuation band your property is in and</li>
+			<li title="*">The number of people aged 18 or over living in your property</li>
+		</ul><p>When we work out your Council Tax we assume that two people, aged 18 or over, live in most properties.</p><h3>Single Person Discount</h3><p>If only one person, aged 18 or over, lives in your property, we can give you a single person discount of 25% (one quarter).</p><p>We may need to decide where someone's main home is for example, if they work away from home or if they have more than one home.</p><h3>Other Discounts</h3><p>Some people are disregarded for Council Tax purposes. This means that we will not count them when we decide how many people, aged 18 or over, live in your property.</p><p>We may be able to give you a Council Tax Discount if someone in your home is</p><ul>
+			<li title="*">A Student, Student Nurse, Apprentice or Youth Training Trainee</li>
+			<li title="*">A Non-British husband or wife or dependant of a Student (who is prevented by the terms of her / his leave to enter or remain in the UK from working or claiming benefit.</li>
+			<li title="*">Under 20 and still at school or has just left school</li>
+			<li title="*">A person who still has Child Benefit paid for them</li>
+			<li title="*">A person who is a Foreign Language Assistant</li>
+			<li title="*">A person who is severely mentally impaired</li>
+			<li title="*">A Carer</li>
+			<li title="*">In prison or held somewhere else by the authorities</li>
+			<li title="*">Living in hospital</li>
+			<li title="*">Living in a care home</li>
+			<li title="*">A Member of a Religious Community </li>
+			<li title="*">A person who lives in a hostel for the homeless or a night shelter</li>
+			<li title="*">A Member (or dependant) of International Headquarters and defence organisations</li>
+			<li title="*">A Member (or dependant) of a Visiting Force; or</li>
+			<li title="*">A person with diplomatic immunity or privileges.</li>
+		</ul><p>We can reduce your bill by 25% or 50%, depending on how many people we count.</p><p>If we count only one person as living in your property we can give you a discount of 25%.</p><p>If we count nobody as living in your property we can give you a discount 50%.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=59"> Providing Information
+		(59)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

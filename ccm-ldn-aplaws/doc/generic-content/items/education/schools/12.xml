@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=12}]"><cms:name>education-3-12</cms:name><cms:language>en</cms:language><cms:title>Nursery school places</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=12}]"><cms:name>education-3-12-dublin-metadata</cms:name><cms:dcAudience>Parents</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>nursery, school, places</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=12}]"><cms:content><![CDATA[<h2>Education</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>We seek to ensure that as many 4 year old children as possible are offered a one year, part - time place in a nursery school or class which provides quality Early Years education.</i></p><hr/><p>If your child will be 4 years old between <span class="gen">enter date</span> 
+  and <span class="gen">enter date</span> and you would like to take advantage of part-time nursery education, 
+  you should contact as soon as possible the headteacher of the school whose nursery 
+  you would like your child to attend. </p><p>The headteacher will keep a list of pupils whose parents have 
+  asked for a place. This place will normally be for 5 morning or 5 afternoon sessions 
+  a week. The headteacher will inform you by letter in March if a place is available 
+  for your child. If there are more requests for places than there are places available, 
+  the following criteria will be used to decide admissions, in order of priority. 
+</p><h4>1. Children with Special Educational Needs</h4><p>Those children who have been identified as having special educational 
+  needs, or who require assessment to decide if they have such needs and would benefit 
+  from nursery education. </p><h4>2. Children with Medical Needs</h4><p>These children will be children whose medical needs have been 
+  identified by professional services but would not receive a statement of special 
+  educational needs. </p><h4>3. Children from Families with Exceptional Home Circumstances</h4><p>This would include giving consideration to children whose families 
+  are unable to give them appropriate pre-school experience or who are recommended 
+  by other professional services. </p><h4>4. Age (older children receive priority)</h4><h4>5. Distance from Home to School (taking into account ease of 
+  access to and distance from alternatives)</h4><p>In practice, most places will be allocated using criteria 4 
+  and 5. </p><p>The headteacher is responsible for informing parents if they 
+  have been allocated a place for their child. </p><h4>Parents not allocated a place</h4><p>Parents who are not allocated a place at a nursery class will 
+  be informed in writing by the headteacher. A booklet of alternative providers of 
+  nursery education will accompany this refusal letter. Parents should then make their 
+  own enquiries about vacancies directly with another school, private day nursery 
+  or pre-school. </p><h4>Younger Children</h4><p>Children who become 3 between <span class="gen">enter date</span> and <span class="gen">enter date</span> may be offered a place at a Nursery from <span class="gen">enter date</span> after their third birthday, 
+  if places are still available. Headteachers cannot save places for 'rising 3' year 
+  olds. </p><h4>Please note:</h4><p>If your child attends the nursery class attached to a mainstream 
+  Infant or Primary School, this is not a criterion for admission to the reception 
+  class at that school and no place can be guaranteed for your child. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=12"> Providing Information
+		(12)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

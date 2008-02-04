@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=64}]"><cms:name>batch-20-64</cms:name><cms:language>en</cms:language><cms:title>Council tax benefit - current claim</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=64}]"><cms:name>batch-20-64-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>council, tax, benefit, current, claim</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=64}]"><cms:content><![CDATA[<h2>Revenues and Benefits/Finance</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>If anything happens during this time which might affect how much benefit you get, you must tell us immediately.</i></p><hr/><p>If you don't tell us about a change, and we pay you too much benefit, you may have to pay it back.</p><p>You must tell us about the following changes:- </p><p>Changes to the money you get</p><p>Please tell us if:-</p><ul>
+			<li title="*">you start or stop getting Income Support or Job Seekers Allowance (income based)</li>
+			<li title="*">you start or stop getting Family Credit</li>
+			<li title="*">the money you or your partner gets increases or decreases</li>
+			<li title="*">the money non-dependants get increases or decreases</li>
+			<li title="*">there are any other changes in the money people in your home get. For example, someone starts getting Disability Living Allowance</li>
+		</ul><p>Changes in your home</p><p>Please tell us if:-</p><ul>
+			<li title="*">you change your address</li>
+			<li title="*">the number of people in your home changes - for example, someone has a baby</li>
+			<li title="*">a partner comes to live with you</li>
+			<li title="*">a partner leaves</li>
+		</ul><p>Other changes</p><p>Please tell us if:-</p><ul>
+			<li title="*">you, or your partner, go into hospital for more than 6 weeks</li>
+			<li title="*">you, or your partner, become a student, or stop being a student</li>
+			<li title="*">the amount of savings or capital you have changes </li>
+		</ul><p>You do not have to tell us about changes in age (for example, if one your children becomes 11 years old), as we will have this information already.</p><p>To view information regarding <strong>
+
+		<a href="/ccm/services/pid.jsp?pid=67">renewing benefit</a>	
+</strong> <span class="gen">link to pid 67</span>, please use the link provided.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=64"> Providing Information
+		(64)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

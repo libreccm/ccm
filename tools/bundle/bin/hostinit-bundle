@@ -1,0 +1,39 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my $verbose = 0;
+
+if ($ENV{'CCM_TOOLS_DEBUG'}) {
+    $verbose += 2;
+}
+
+if ($ENV{'CCM_TOOLS_VERBOSE'}) {
+    $verbose += 1;
+}
+
+my $bundledir = $ENV{'CCM_TOOLS_HOME'} . "/bundles";
+
+for (my $i = 0; $i < @ARGV; $i++) {
+    if ($ARGV[$i] eq '--name') {
+        my $bundle = $ARGV[$i+1];
+        if (!($bundle =~ m,^/, ||
+              $bundle =~ m,^\.\.?/,)) {
+            $bundle = $bundledir . "/" . $bundle;
+        }
+        if (!-d $bundle) {
+            die "Cannot find bundle $bundle\n";
+        }
+        if (-e $bundle . "/web.xml") {
+            $ENV{'CCM_WEBXML'} = $bundle . "/web.xml";
+        } else {
+            warn "There is no web.xml present in $bundle\n";
+        }
+        splice (@ARGV, $i, 2);
+    }
+}
+if ($verbose > 0) {
+    print "ccm hostinit @ARGV \n"; 
+}
+system "ccm", "hostinit", @ARGV;
+exit $?;

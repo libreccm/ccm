@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=749}]"><cms:name>batch-4-749</cms:name><cms:language>en</cms:language><cms:title>Ranger Services</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=749}]"><cms:name>batch-4-749-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>ranger, services</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=749}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The Council's Countryside Ranger Service manages the Countryside 
+  sites for everyone to enjoy. The Rangers carry out practical conservation work and 
+  environmental education in addition to organising events and activities.</i></p><hr/><p>The Rangers regularly patrol all of our Countryside sites. These 
+  patrols help them to monitor any maintenance problems and promote an effective and 
+  efficient response to issues.</p><p>The presence of Rangers in their familiar and distinctive uniform 
+  can be a very reassuring sight for visitors to the countryside. Knowing that there 
+  is someone there to answer your questions, or help to solve any problems encourages 
+  visitors to venture out and visit sites they are not familiar with. </p><p>Patrolling also gives the Rangers the opportunity to keep a 
+  protective eye on our local wildlife. Being aware of what is present and where it 
+  is located helps us to protect it.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=749"> Providing Information
+		(749)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

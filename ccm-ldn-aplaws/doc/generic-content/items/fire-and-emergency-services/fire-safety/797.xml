@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=797}]"><cms:name>entertainments-licensing-797</cms:name><cms:language>en</cms:language><cms:title>Entertainments Licensing</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=797}]"><cms:name>entertainments-licensing-797-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>entertainments, licensing</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=797}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>A Public Entertainment Licence is issued by the Local Authority for all buildings at which entertainment is provided to the public. </i></p><hr/><p>A Licence is issued either for
+      one or more occasions (an Occasional Licence) or for a period
+    of one year (an Annual Licence).
+    The main purpose of licensing entertainments is to enable the Local Authority
+      to ensure the health, safety and welfare of members of the public.
+    </p><p>Licences are, therefore, only
+      granted when the premises (or site), and ancillary arrangements, meet the
+      standards required by the Police,
+        the Fire Service, and the relevant Council Service. 
+   </p><p>The
+    Fire Service are responsible for advising the Council as to whether the
+    fire
+      safety arrangements
+      for
+  a building are satisfactory for the intended use. </p><p>When you apply for a new
+    annual licence, a copy of your application will be sent to the Fire Safety
+    Officer (FSO). The FSO will normally contact you within
+    14 days to make an appointment to inspect the building. During the inspection,
+    the FSO will discuss the intended uses and the maximum number of people expected
+    to use the building/site at any one time. Following the inspection, you will
+    be advised whether the existing fire precautions are considered to be satisfactory
+    and, if not, what can be done to improve the situation. Advice will also
+    be given on what to do if a fire occurs and calling the Fire Service. The
+    FSO
+  will then send a written report to the Council. </p><p>If you are applying to renew an annual licence, the FSO will check the application
+    form to see whether there has been any change in circumstances since a licence
+    was last issued. If so, you will normally be contacted within 14 days to discuss
+    what changes have been made and whether a further inspection is necessary.
+    The FSO may need to visit even if no changes have been made although this will
+    depend on how long it has been since the last visit. Should a further inspection
+  be necessary, the FSO will, of course, make an appointment. </p><p>Although your contact with the Fire Service will normally be when an inspection
+      is made, please remember that the FSO will be pleased to deal with your queries
+    on fire safety matters at any time.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=797"> Providing Information
+		(797)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

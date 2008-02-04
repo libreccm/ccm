@@ -1,0 +1,6 @@
+usage: stop [OPTIONS]
+
+Options:
+  --help      Display help
+  --usage     Print this message
+  --container Stop the servlet container configured for CCM

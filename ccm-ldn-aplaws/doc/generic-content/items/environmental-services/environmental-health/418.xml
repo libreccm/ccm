@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=418}]"><cms:name>batch-6-418</cms:name><cms:language>en</cms:language><cms:title>Pollution control - contaminated land</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=418}]"><cms:name>batch-6-418-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>environmental, health, Pollution, control, contaminated, land</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=418}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Some land in this country has been contaminated in the past by industries such as:</i></p><hr/><ul>
+  <li title="*">gasworks</li>
+  <li title="*">tanneries</li>
+  <li title="*">chemical works</li>
+  <li title="*">landfills</li>
+</ul><p>These are often called brownfield sites. </p><h3>The Problem</h3><p>Brownfield sites can be a problem for two reasons:</p><li title="*">There may be harmful substances in, on or under the land</li><li title="*">Water pollution might be caused by substances at the site</li><p>However, brownfield sites do not generally cause a problem unless they are redeveloped 
+  for a different use.</p><h3>'Pollutant linkage'</h3><p>Land is only declared 'contaminated' if:</p><li title="*">it contains a source of pollution - the source and</li><li title="*">someone (or something) could be affected by the pollutant - the receptor and</li><li title="*">the pollution can get to the 'receptor' - the pathway</li><p>These three elements together are known as the pollutant linkage.</p><h3> Action required</h3><p>If you own or occupy contaminated land now, or you did in the past, you may be 
+  responsible for cleaning up the pollution. You may still be responsible for cleaning 
+  up the pollution after you have sold the land.</p><p>Some contamination can be a hazard to current occupants or neighbours and the law 
+  says the problem must be put right immediately.</p><h3> Who pays?</h3><p>The law follows the 'polluter pays' principle - the person or organisation that 
+  caused or permitted the contamination must pay to have it put right. If that person 
+  or organisation is not known, then the current owner of the land may become responsible.</p><p>Owners and occupiers of domestic properties are not usually liable for these costs.</p><h3> Re-use of brownfield sites</h3><p>The approval of an application for redevelopment of these sites will only be granted 
+  on condition that the contamination is cleaned up to a standard that makes it suitable 
+  for the new use of the land.</p><p>You should obtain specialist advice from an environmental consultant or a specialist 
+  lawyer before you buy or sell contaminated land. When you buy land in Elmbridge, 
+  the Land Charges department at the local council will tell you if a site has been 
+  declared 'contaminated land'.</p><h3> What the local council does about contaminated land</h3><p>The local council is responsible for enforcing the 'contaminated land' legislation. 
+  The council:</p><ul>
+  <li title="*">publishes a Contaminated Land Strategy, which says how it will find contaminated 
+    sites in its area</li>
+  <li title="*">carries out inspections of land that may be contaminated</li>
+  <li title="*">finds out who is responsible for putting right the contamination and discusses 
+    the problem with them</li>
+  <li title="*">formally declares land contaminated</li>
+  <li title="*">agrees the necessary action and makes sure it is done</li>
+  <li title="*">keeps a Public Register of contaminated land sites, the action that was required 
+    to put the problem right and any legal action that has been taken.</li>
+</ul><p>In some cases the Environment Agency may take over the regulation of a site from 
+  the council, once it has been declared as 'contaminated land'.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=418"> Providing Information
+		(418)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

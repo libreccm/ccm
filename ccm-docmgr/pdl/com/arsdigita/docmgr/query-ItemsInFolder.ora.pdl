@@ -1,0 +1,138 @@
+// copyright statement
+
+model com.arsdigita.docs;
+
+import com.arsdigita.cms.ContentItem;
+
+query ItemsInFolder {
+
+  ContentItem   item;
+  Boolean       isFolder;
+  Boolean       hasLiveVersion;
+  BigDecimal    primaryInstID;
+  BigDecimal    typeId;
+  String        title;
+  BigDecimal    targetDocId;
+  String        url;
+  Integer       foldersCount;
+  Integer       itemsCount;
+  String        description;
+  Long          length;
+  String        mimeType;
+  Date          modified;
+
+  do {
+    select
+      iif.object_type, iif.display_name, iif.default_domain_class, iif.master_id, iif.item_id, iif.parent_id, 
+      iif.version, iif.name, iif.has_live_version, iif.is_folder, pi.item_id as pi_item_id, pi.type_id, 
+      case when is_folder = 1 then iif.label else pi.title end as title, 
+      pi.target_doc_id, pi.url,
+      (
+        select 
+          count(*)
+        from 
+          cms_items i, 
+          cms_folders f
+        where 
+          i.item_id = f.folder_id
+          and i.parent_id = iif.item_id
+          and i.version = :version
+          and (exists (select 1 from cms_folders f where f.folder_id = i.item_id)
+               or
+               exists (select 1 from cms_bundles b where b.bundle_id = i.item_id)
+              )
+      ) as cntf,
+      (
+        select 
+          count(*)
+        from 
+          cms_items i, 
+          cms_folders f
+        where 
+          i.item_id = f.folder_id(+)
+        and i.parent_id = iif.item_id
+        and i.version = :version
+        and (exists (select 1 from cms_folders f where f.folder_id = i.item_id)
+             or
+             exists (select 1 from cms_bundles b where b.bundle_id = i.item_id)
+            )
+        and f.folder_id is null
+      ) as cnti,
+      nvl2(pi.type_id, (
+                        select nvl(d.description, l.description)
+                        from cms_items i, cms_documents d, cms_doc_links l
+                        where 
+                          i.item_id = pi.item_id
+                          and i.item_id = d.doc_id(+)
+                          and i.item_id = l.link_id(+)
+                       ), 
+				               (select description from cms_doc_folders where doc_id = iif.item_id)
+      ) as description, 
+      (select dbms_lob.getLength(f.content) 
+       from cms_documents d, cms_files f 
+       where pi.item_id = d.doc_id(+) and f.file_id = d.asset_id) as length, 
+      (select m.label 
+       from cms_documents d, cms_assets a, cms_mime_types m 
+       where pi.item_id = d.doc_id(+) and a.asset_id = d.asset_id and m.mime_type = a.mime_type
+      ) as mime_type, 
+      (select d.last_modified_cached from cms_documents d where pi.item_id = d.doc_id(+)) as modified
+    from (
+      select 
+        a.object_type, a.display_name, a.default_domain_class,
+        i.master_id, i.item_id, i.parent_id, i.version, i.name,
+        case when exists (select 1 from cms_items where master_id = i.item_id)
+             then 1 else 0 end as has_live_version,
+        case when 0 = nvl(f.folder_id, 0) then 0 else 1 end as is_folder,
+        f.label
+      from 
+        cms_items i, 
+        acs_objects a, 
+        cms_folders f
+      where 
+        i.item_id = a.object_id
+      and 
+        i.item_id = f.folder_id(+)
+      and 
+        i.parent_id = :parent
+      and
+        i.version = :version
+      and (exists (select 1 from cms_folders f where f.folder_id = i.item_id)
+           or
+           exists (select 1 from cms_bundles b where b.bundle_id = i.item_id)
+          )
+      ) iif,
+      (select 
+         b.bundle_id, i.item_id, i.type_id, p.title, l.target_doc_id, l.url 
+       from 
+         cms_bundles b, cms_items i, cms_pages p, cms_doc_links l 
+       where 
+         i.parent_id = b.bundle_id 
+         and i.language = b.default_language
+         and p.item_id = i.item_id
+         and i.item_id = l.link_id(+)
+      ) pi
+    where
+      iif.item_id = pi.bundle_id(+)
+  } map {
+    item.id = iif.item_id;
+    item.objectType = iif.object_type;
+    item.displayName = iif.display_name;
+    item.defaultDomainClass = iif.default_domain_class;
+    item.master.id = iif.master_id;
+    item.version = iif.version;
+    item.name = iif.name;
+    isFolder = iif.is_folder;
+    hasLiveVersion = iif.has_live_version;
+    primaryInstID = pi_item_id;
+    typeId = pi.type_id;
+    title = title;
+    targetDocId = pi.target_doc_id;
+    url = pi.url;
+    foldersCount = cntf;
+    itemsCount = cnti;
+    description = description;
+    length = length;
+    mimeType = mime_type;
+    modified = modified;
+  }
+}

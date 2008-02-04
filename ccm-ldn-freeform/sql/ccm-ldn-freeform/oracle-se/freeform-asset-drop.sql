@@ -1,0 +1,2 @@
+drop table ff_freeform_binary_assets;
+drop table ff_freeform_text_assets;

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?> 
+<!DOCTYPE metadataroot SYSTEM "metadata.dtd">
+
+<!-- create table x (id integer constraint x_id_pk primary key); -->
+<!-- create table y (id integer constraint y_id_pk primary key); -->
+
+<metadataroot name="acs" version="4.0">
+<schema name="oracle">
+ <table name="x" id="oracle:x">
+   <column name="id" datatype="BIGINT" id="oracle:x:id"/>
+   <primarykey id="oracle:x_id_pk">
+     <columnref idref="oracle:x:id"/>
+   </primarykey>
+ </table>
+ <table name="y" id="oracle:y">
+   <column name="id" datatype="BIGINT" id="oracle:y:id"/>
+   <primarykey id="oracle:y_id_pk">
+     <columnref idref="oracle:y:id"/>
+   </primarykey>
+ </table>
+
+<!-- alter table x add constraint x_id_to_y_id foreign key (id) references y(id); -->
+<!-- alter table x add constraint x_id_to_x_id foreign key (id) references x(id); -->
+
+<foreignkey>
+  <columnref idref="oracle:x:id"/>
+  <uniquekeyref idref="oracle:x_id_pk"/>
+</foreignkey>
+
+<foreignkey>
+  <columnref idref="oracle:x:id"/>
+  <uniquekeyref idref="oracle:y_id_pk"/>
+</foreignkey>
+
+
+<!-- alter table y add constraint y_id_to_x_id foreign key (id) references x(id); -->
+<!-- alter table y add constraint y_id_to_y_id foreign key (id) references y(id); -->
+
+<foreignkey>
+  <columnref idref="oracle:y:id"/>
+  <uniquekeyref idref="oracle:y_id_pk"/>
+</foreignkey>
+
+<foreignkey>
+  <columnref idref="oracle:y:id"/>
+  <uniquekeyref idref="oracle:x_id_pk"/>
+</foreignkey>
+</schema>
+</metadataroot>

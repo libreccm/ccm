@@ -1,0 +1,10 @@
+select qt.id as c_1,
+       o.type as c_2,
+       qt.name as c_3,
+       qt.parent_id as c_4,
+       parent__qt.name as c_6,
+       parent__o.type as c_7
+from query_tests qt
+     join objects o on o.id = qt.id
+     left join query_tests parent__qt on parent__qt.id = qt.parent_id
+     left join objects parent__o on parent__o.id = qt.parent_id

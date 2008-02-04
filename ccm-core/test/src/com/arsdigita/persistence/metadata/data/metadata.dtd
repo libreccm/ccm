@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='us-ascii'?>
+
+<!-- DTD for the metadata system -->
+
+<!ELEMENT metadataroot (model|schema)+>
+
+<!ELEMENT model (association|objecttype)+>
+
+<!ELEMENT schema (foreignkey|table)+>
+
+<!ELEMENT association (associationmap|associationrole|linkattribute)+>
+
+<!ELEMENT foreignkey (columnref|uniquekeyref)+>
+
+<!ELEMENT objecttype (attribute|objectmap|rolereference|supertyperef)+>
+
+<!ELEMENT table (column|primarykey|uniquekey)+>
+
+<!ELEMENT associationmap (associationmapentry|foreignkey)+>
+
+<!ELEMENT associationrole (multiplicity|objecttyperef)+>
+
+<!ELEMENT attribute (multiplicity)+>
+<!ATTLIST attribute
+     datatype    (Boolean | Integer | Date | String)    #REQUIRED
+>
+
+<!ELEMENT column EMPTY>
+<!ATTLIST column
+     datatype    CDATA    #REQUIRED
+>
+
+<!ELEMENT columnref EMPTY>
+
+<!ELEMENT linkattribute EMPTY>
+<!ATTLIST linkattribute
+     datatype    (String)    #REQUIRED
+>
+
+<!ELEMENT objectmap (extendedmapentry|foreignkey|objectkey|objectmapentry)+>
+
+<!ELEMENT primarykey (columnref)+>
+
+<!ELEMENT rolereference (associationroleref)+>
+
+<!ELEMENT supertyperef EMPTY>
+
+<!ELEMENT uniquekey (columnref)+>
+
+<!ELEMENT uniquekeyref EMPTY>
+
+<!ELEMENT associationmapentry (columnref|linkattributeref)+>
+
+<!ELEMENT associationroleref EMPTY>
+
+<!ELEMENT extendedmapentry (attributeref|extensiontable)+>
+
+<!ELEMENT multiplicity EMPTY>
+<!ATTLIST multiplicity
+     lowerbound    CDATA    #REQUIRED
+     upperbound    CDATA    #REQUIRED
+>
+
+<!ELEMENT objectkey (attributeref)+>
+
+<!ELEMENT objectmapentry (attributeref|columnref)+>
+
+<!ELEMENT objecttyperef EMPTY>
+
+<!ELEMENT attributeref EMPTY>
+
+<!ELEMENT extensiontable (attributecolumnref|foreignkey|valuecolumnref)+>
+
+<!ELEMENT linkattributeref EMPTY>
+
+<!ELEMENT attributecolumnref EMPTY>
+
+<!ELEMENT valuecolumnref EMPTY>

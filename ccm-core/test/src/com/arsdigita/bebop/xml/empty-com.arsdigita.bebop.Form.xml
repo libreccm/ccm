@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bebop:page xmlns:bebop="http://www.arsdigita.com/bebop/1.0"><bebop:title> </bebop:title><bebop:boxPanel axis="2" center="false" width="100%"><bebop:cell><bebop:form action="/someservlet/" name="TestForm"><bebop:gridPanel><bebop:formWidget name="form.TestForm" type="hidden" value="visited" /></bebop:gridPanel><bebop:pageState name="g11n.enc" value="UTF-8" /><bebop:pageState name="bbp.i" value="d0.1" /><bebop:pageState name="bbp.s" value="1" /></bebop:form></bebop:cell></bebop:boxPanel></bebop:page>

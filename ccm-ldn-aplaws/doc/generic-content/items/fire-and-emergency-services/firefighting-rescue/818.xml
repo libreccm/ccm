@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=818}]"><cms:name>hydrants-maintenance-818</cms:name><cms:language>en</cms:language><cms:title>Firefighting/Rescue - Hydrants Maintenance</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=818}]"><cms:name>hydrants-maintenance-818-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>firefighting, rescue, hydrants, maintenance</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=818}]"><cms:content><![CDATA[<h2>Fire and Emergency Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The first legislative requirement to fix fire plugs (fire hydrants) was made in 1847 with the passing of the Waterworks Clauses Act 1847. Ensuing legislation culminated in the Water Industry Act 1991. </i></p><hr/><p>The current national position
+    is that hydrant installations are inspected and tested using the procedure
+    details in the Home Office Technical Bulletin
+1/1994 (Section 14): </p><p>Hydrants shall be subject
+		    to a periodic test and/or inspection at intervals to be determined by the
+		    brigade taking into account relevant factors such as the location and likely
+	    use of the hydrant.</p><h2> Periodic
+		  Test and/or Inspection </h2><p> The visual inspection
+		    shall pay attention to the hydrant pit, frame, cover, the surface surrounding
+		    the hydrant and the frost valve if fitted. The hydrant indicator plate shall
+		    also be checked. <br/>
+			<br/>
+        The hydrant test shall be conducted by fitting a standpipe to the outlet and
+	      then partially opening the valve to allow a small amount of water to flow.
+	      A blank cap shall then be fitted in the standpipe head, or the valve in the
+	      head closed, and the hydrant fully opened. <br/>
+			<br/>
+        All joints shall be visually inspected for any signs of leakage. <br/>
+			<br/>
+        The hydrant shall be shut off and the standpipe removed with the blank cap
+	      in place or the valve still closed. <br/>
+			<br/>
+			<strong>Note</strong>: Where it is considered necessary to conduct
+				    initial or periodic flow tests on hydrants, it is important to liaise
+				    with the appropriate Water Authority. </p><p>Such tests are carried
+    out on a regular basis, the interval of inspection being left to individual
+              fire authorities
+        to determine. The agreed practice, prior to the publication of this Bulletin,
+        was that included in the Chief and Assistant Chief Fire Officers'; Association
+        (CACFOA) proposed draft Agreement between Water Service Companies and
+        fire authorities with testing normally carried out on an
+annual basis. </p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=818"> Providing Information
+		(818)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

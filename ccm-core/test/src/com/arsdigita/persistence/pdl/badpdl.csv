@@ -1,0 +1,27 @@
+// List of PDL Files and optional error codes to look for.
+// Used by PDLTest to determine if errors are correctly
+// caught by the PDL parser.
+emptyFile
+bogusKey,theBogusKey
+duplicateObjectName,TestObject
+bogusType,BogusType
+duplicateAttributeName0,testAttribute
+duplicateAttributeName1,testAttribute
+duplicateAttributeName2,testAttribute
+duplicateAttributeName3,testAttribute
+bogusMultiplicity0,testAttribute
+bogusMultiplicity1,testAttribute
+bogusMultiplicity2,testAttribute
+bogusParent,TestParent
+inheritanceLoop,TestObject1,TestObject2
+multiplicitousKey,testKey
+bogusMapping0,testAttribute
+bogusMapping1,TestObject2,testAttribute3
+bogusBindType0,testAttribute
+bogusBindType1,TestObject2,testAttribute3
+duplicateMapping,testAttribute
+duplicateEvent,TestObject,insert
+dupColumn
+dupObjectKey
+dupReferenceKey
+dupAggressiveLoad

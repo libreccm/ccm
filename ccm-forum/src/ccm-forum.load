@@ -1,0 +1,15 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <initializer class="com.arsdigita.core.Initializer"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.forum.Initializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-forum"/>
+    <data class="com.arsdigita.forum.Loader"/>
+  </scripts>
+</load>

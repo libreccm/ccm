@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head> 
+   <title>Publish to file</title>
+  </head>
+  <body bgcolor="white">
+    <p>The Publish-To-Filesystem(P2FS) 
+      service writes published content to the file system so that
+      another webserver (e.g. Apache) can serve this content without
+      further intervention by CMS. This makes it possible to build highly
+      scalable live servers that are not bound by factors such as database load.
+    </p>
+    
+    <p>Whenever content in CMS is published or unpublished, a corresponding
+      task is scheduled with P2FS to update the file system
+      appropriately. The {@link
+      com.arsdigita.cms.publishToFile.QueueManager queue manager}
+      periodically checks this queue and processes all entries in it. An
+      item is (re)published by requesting its live version from the
+      editorial server through HTTP. The returned content is the scanned
+      for links to other items (by looking for <tt>oid</tt> attributes in
+      certain HTML tags). The links are rewritten to properly work on the
+      targetted live server (see the <tt>destination</tt> parameter
+      below). In addition to the main HTML file for an item, P2FS will also
+      write all associated local assets of the item to the file system.
+    </p>
+
+    <p>P2FS deployments will have some kind of shared storage between
+    the application server running CMS/P2FS and the web server serving published
+    content.  One typical example is for P2FS to publish to a directory that is
+    NFS-shared between the application server and the web server.  Then, when
+    the application server writes new content the to file system, it will show
+    up under the web server.  Another possible configuration is for the
+    application server and web server to be located on the same physical
+    machine.  Then, the web server could simply link to the directory to which
+    P2FS is writing content.
+    </p>
+
+    <h2>Configuration</h2>
+
+    <p> To use P2FS, you need to add a
+      <tt>com.arsdigita.cms.publishToFile.Initializer</tt> entry to your
+      <tt>enterprise.init</tt>.  For example:
+    </p>
+
+    <pre>
+init com.arsdigita.cms.publishToFile.Initializer {
+    destination = { 
+      { "com.arsdigita.cms.ContentItem", 
+        "/var/p2fs", 
+        false, 
+        "/var/p2fs" },
+      { "com.arsdigita.cms.Template", 
+        "/packages/content-section/templates", 
+        false, 
+        "/packages/content-section/templates" }
+    };
+    publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
+    startupDelay = 30;
+    pollDelay = 5;
+    retryDelay = 120;
+    blockSize = 40;
+    maximumFailCount = 10;
+    blockSelectMethod = "GroupByParent";
+}
+    </pre>
+
+    <p>The first parameter, <tt>destination</tt>,
+     is a list of publish destinations for content types. 
+     Each element in the <tt>desitnation</tt> list is a four-element list in the
+     format:
+     <br>
+     <tt>
+     '{ "content type", "root directory", "shared storage", "url stub" }'. 
+     </tt>
+     <br>
+     Content type is the object type of the content type. 
+     Root directory must be a path to a writable directory, relative 
+     to the webapp root. Shared storage must be <em>true</em> if the root 
+     directory is shared NFS storage, <em>false</em> otherwise. URL stub
+     must be the path component of the URL from which the live server 
+     will serve from this directory.
+    </p>
+    
+    <p>The <tt>publishListener</tt> must name a class that implements
+      {@link com.arsdigita.cms.publishToFile.PublishToFileListener
+      PublishToFileListener}. The listener is called whenever changes to
+      the file system need to be made. It is strongly recommended that the
+      listener in fact subclasses {@link
+      com.arsdigita.cms.publishToFile.PublishToFile PublishToFile}, since
+      most of the basic P2FS functionality is provided by this class.
+    </p>
+
+    <p>
+      The remaining parameters control how the queue of items that need to
+      be written to the file system is processed. Queue processing will
+      start <tt>startupDelay</tt> seconds after the server start, and the
+      queue will be polled for neew entries every <tt>pollDelay</tt>
+      seconds. If <tt>startupDelay</tt> is set to 0, queue processing is
+      <em>completely disabled</em>.
+    </p>
+    
+    <p>The queue manager will process <tt>blockSize</tt> queue entries
+      within one database transaction. Setting this parameter to a higher
+      value can speed up the overall P2FS performance, but will also consume
+      more memory during processing.
+    </p>
+    
+    <p>If processing a queue entry fails for any reason, the processing is
+      retried after <tt>retryDelay</tt> seconds. Entries that could not
+      successfully be processed after <tt>maximumFailCount</tt> will remain
+      in the queue, but will be ignored. Processing an entry can fail for a
+      variety of reasons, for example because the target file system is
+      full, or because the content could not be retrieved from the
+      editorial server through an HTTP request. The server log will contain
+      more detailed information about all procesing failures.
+    </p>
+    
+    <p>The <tt>blockSelectMethod</tt> must always be set to
+      <tt>GroupByParent</tt>.
+    </p>
+
+    <h3>Multi-JVM Deployment</h3>
+    
+    <p>If CMS is run on multiple JVMS (servlet containers), the queue
+      processor <em>must</em> be disabled on all but one of these servers
+      by setting <tt>startupDelay</tt> to 0. It is not possible to have
+      several servers process the queue at the same time.
+    </p>
+
+    <h2>Enabling Templates for P2FS</h2>
+    <p>P2FS scans all content for the HTML tags <tt>&lt;a&gt;</tt>,
+      <tt>&lt;img&gt;</tt>, and &lt;link&gt;. Any such tags that contain an
+      <tt>oid</tt> attribute will be rewritten by P2FS and adjusted to the
+      configured publishing destination. The <tt>oid</tt> attribute must
+      contain the ID of the target content item. For example, the fragment
+    </p>
+    <pre>              &lt;a oid="425"&gt;Another Item&lt;/a&gt;</pre>
+    <p>will be rewritten by P2FS so that the HTML link points to the
+      correct file on the destination live server for the content item with
+      ID 425.
+    </p>
+
+    <p>P2FS uses the <tt>ContentType</tt> HTTP header it received when it
+      requested the live item to determine the file extension of the main
+      file written for an item. Currently, the following content types are
+      supported:
+    </p>
+
+    <table border="1" cellpadding="2" cellspacing="0">
+      <thead>
+        <tr bgcolor="grey">
+          <th>Content Type</th>
+          <th>File Extension</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><tt>text/html</tt></td>
+          <td><tt>.html</tt></td>
+        </tr>
+        <tr>
+          <td><tt>text/plain</tt></td>
+          <td><tt>.txt</tt></td>
+        </tr>
+        <tr>
+          <td><tt>application/php</tt></td>
+          <td><tt>.php</tt></td>
+        </tr>
+        <tr>
+          <td><tt>application/xml</tt></td>
+          <td><tt>.xml</tt></td>
+        </tr>
+        <tr>
+          <td>other</td>
+          <td><tt>.html</tt></td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

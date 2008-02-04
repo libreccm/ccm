@@ -1,0 +1,166 @@
+<data>
+  <test.A id="0" name="Zero"/>
+  <test.A id="1" name="One"/>
+  <test.A id="2" name="Two"/>
+  <test.A id="3" name="Three"/>
+  <test.A id="4" name="Four"/>
+  <test.A id="5" name="Five"/>
+  <test.A id="6" name="Six"/>
+  <test.A id="7" name="Seven"/>
+  <test.A id="8" name="Eight"/>
+  <test.A id="9" name="Nine"/>
+
+  <test.B id="10" name="Ten"/>
+  <test.B id="11" name="Eleven"/>
+  <test.B id="12" name="Twelve"/>
+  <test.B id="13" name="Thirteen"/>
+  <test.B id="14" name="Fourteen"/>
+  <test.B id="15" name="Fifteen"/>
+  <test.B id="16" name="Sixteen"/>
+  <test.B id="17" name="Seventeen"/>
+  <test.B id="18" name="Eighteen"/>
+  <test.B id="19" name="Nineteen"/>
+
+  <test.C id="20" name="Twenty"/>
+  <test.C id="21" name="Twenty One"/>
+  <test.C id="22" name="Twenty Two"/>
+  <test.C id="23" name="Twenty Three"/>
+  <test.C id="24" name="Twenty Four"/>
+  <test.C id="25" name="Twenty Five"/>
+  <test.C id="26" name="Twenty Six"/>
+  <test.C id="27" name="Twenty Seven"/>
+  <test.C id="28" name="Twenty Eight"/>
+  <test.C id="29" name="Twenty Nine"/>
+
+  <test.Link a.id="0" b.id="10" index="0" name="Zero-Ten"/>
+  <test.Link a.id="1" b.id="11" index="0" name="One-Eleven"/>
+  <test.Link a.id="1" b.id="12" index="1" name="One-Twelve"/>
+  <test.Link a.id="2" b.id="10" index="0" name="Two-Ten"/>
+  <test.Link a.id="2" b.id="12" index="1" name="Two-Twelve"/>
+  <test.Link a.id="2" b.id="14" index="2" name="Two-Fourteen"/>
+  <test.Link a.id="2" b.id="16" index="3" name="Two-Sixteen"/>
+  <test.Link a.id="2" b.id="18" index="4" name="Two-Eighteen"/>
+  <test.Link a.id="3" b.id="11" index="0" name="Three-Eleven"/>
+
+  <test.Tuple a.id="0" b.id="10" c.id="20" cee.id="20"/>
+  <test.Tuple a.id="0" b.id="10" c.id="21" cee.id="20"/>
+  <test.Tuple a.id="0" b.id="10" c.id="22" cee.id="20"/>
+  <test.Tuple a.id="0" b.id="10" c.id="23" cee.id="20"/>
+  <test.Tuple a.id="0" b.id="10" c.id="24" cee.id="20"/>
+
+  <test.Tuple a.id="0" b.id="11" c.id="20" cee.id="21"/>
+  <test.Tuple a.id="0" b.id="11" c.id="21" cee.id="21"/>
+  <test.Tuple a.id="0" b.id="11" c.id="22" cee.id="21"/>
+  <test.Tuple a.id="0" b.id="11" c.id="23" cee.id="21"/>
+  <test.Tuple a.id="0" b.id="11" c.id="24" cee.id="21"/>
+
+  <test.Tuple a.id="0" b.id="12" c.id="25" cee.id="22"/>
+  <test.Tuple a.id="0" b.id="12" c.id="26" cee.id="22"/>
+  <test.Tuple a.id="0" b.id="12" c.id="27" cee.id="22"/>
+  <test.Tuple a.id="0" b.id="12" c.id="28" cee.id="22"/>
+  <test.Tuple a.id="0" b.id="12" c.id="29" cee.id="22"/>
+
+  <test.Tuple a.id="1" b.id="10" c.id="29" cee.id="23"/>
+  <test.Tuple a.id="1" b.id="11" c.id="29" cee.id="24"/>
+  <test.Tuple a.id="1" b.id="12" c.id="29" cee.id="25"/>
+  <test.Tuple a.id="1" b.id="13" c.id="29" cee.id="26"/>
+  <test.Tuple a.id="1" b.id="14" c.id="29" cee.id="27"/>
+
+  <test.Tuple a.id="2" b.id="16" c.id="29" cee.id="24"/>
+  <test.Tuple a.id="3" b.id="16" c.id="28" cee.id="24"/>
+  <test.Tuple a.id="4" b.id="16" c.id="27" cee.id="24"/>
+  <test.Tuple a.id="5" b.id="16" c.id="26" cee.id="24"/>
+  <test.Tuple a.id="6" b.id="16" c.id="25" cee.id="24"/>
+
+  <test.NodeType id="1" name="Type 1" description="Type 1 Description"/>
+
+  <test.Node id="30" name="Thirty" type.id="1"/>
+  <test.Node id="31" name="Thirty One" type.id="1" parent.id="30"/>
+  <test.Node id="32" name="Thirty Two" type.id="1" parent.id="30"/>
+  <test.Node id="33" name="Thirty Three" type.id="1" parent.id="30"/>
+  <test.Node id="34" name="Thirty Four" type.id="1" parent.id="33"/>
+  <test.Node id="35" name="Thirty Five" type.id="1" parent.id="33"/>
+  <test.Node id="36" name="Thirty Six" type.id="1" parent.id="33"/>
+  <test.Node id="37" name="Thirty Seven" type.id="1" parent.id="36"/>
+  <test.Node id="38" name="Thirty Eight" type.id="1" parent.id="37"/>
+  <test.Node id="39" name="Thirty Nine" type.id="1" parent.id="38"/>
+
+  <test.User id="0" name="Ashanti"/>
+  <test.User id="1" name="Britney" lastName="Spears"/>
+  <test.User id="2" name="Christina" lastName="Aguilera"/>
+  <test.User id="3" name="Debbie" lastName="Gibson"/>
+  <test.User id="4" name="Enya"/>
+  <test.User id="5" name="Faith" lastName="Hill"/>
+  <test.User id="6" name="Gloria" lastName="Estefan"/>
+  <test.User id="7" name="Hillary" lastName="Duff"/>
+  <test.User id="8" name="Indigo"/>
+  <test.User id="9" name="Jennifer" lastName="Lopez"/>
+
+  <test.Group id="0" name="Pop">
+    <members id="1"/>
+    <members id="2"/>
+    <members id="3"/>
+    <members id="6"/>
+    <members id="7"/>
+    <members id="9"/>
+  </test.Group>
+  <test.Group id="1" name="Rock">
+    <members id="8"/>
+  </test.Group>
+  <test.Group id="2" name="R&amp;B">
+    <members id="0"/>
+  </test.Group>
+  <test.Group id="3" name="Country">
+    <members id="5"/>
+  </test.Group>
+  <test.Group id="4" name="New Age">
+    <members id="4"/>
+  </test.Group>
+  <test.Group id="5" name="Film">
+    <members id="7"/>
+    <members id="9"/>
+  </test.Group>
+  <test.Group id="6" name="Television">
+    <members id="7"/>
+  </test.Group>
+  <test.Group id="7" name="80s">
+    <members id="3"/>
+    <members id="4"/>
+    <members id="6"/>
+  </test.Group>
+  <test.Group id="8" name="90s">
+    <members id="1"/>
+    <members id="2"/>
+    <members id="5"/>
+    <members id="6"/>
+    <members id="8"/>
+    <members id="9"/>
+  </test.Group>
+  <test.Group id="9" name="00s">
+    <members id="0"/>
+    <members id="1"/>
+    <members id="2"/>
+    <members id="5"/>
+    <members id="7"/>
+    <members id="9"/>
+  </test.Group>
+  <test.Group id="10" name="Music">
+    <subgroups id="0"/>
+    <subgroups id="1"/>
+    <subgroups id="2"/>
+    <subgroups id="3"/>
+    <subgroups id="4"/>
+  </test.Group>
+  <test.Group id="11" name="Entertainment">
+    <subgroups id="5"/>
+    <subgroups id="6"/>
+    <subgroups id="10"/>
+  </test.Group>
+
+  <test.Pair1 id="1" name="One"/>
+  <test.Pair1 id="2" name="Two"/>
+  <test.Pair1 id="3" name="Three"/>
+  <test.Pair2 id="21" name="Twenty One" p1.id="1"/>
+  <test.Pair2 id="22" name="Twenty Two" p1.id="2"/>
+  <test.Pair2 id="23" name="Twenty Three" p1.id="3"/>
+</data>

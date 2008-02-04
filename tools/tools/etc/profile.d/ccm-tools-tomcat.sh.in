@@ -1,0 +1,5 @@
+prefix=@prefix@
+
+CCM_SERVLET_TOMCAT_CONF="${prefix}/share/ccm-tools/server/tomcat/bin/tomcat-conf-gen"
+
+export CCM_SERVLET_TOMCAT_CONF

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head> 
+<title>com.arsdigita.search</title>
+</head>
+<body bgcolor="white">
+  
+<p>
+Provides a set of APIs for interacting with search engines.
+The APIs are split into two groups, one set for application
+authors, and another for query engine authors. The former
+are indexer-agnostic, enabling applications to provide
+search functionality without becoming tied to a specific
+implmentation. Applications authors should only use classes
+from the <code>com.arsdigita.seach</code> package. Query
+engine authors may also use classes in the <code>com.arsdigita.search.lucene</code>
+and <code>com.arsdigita.search.intermedia</code> sub-packages.
+</p>
+
+<h2>General APIs</h2>
+
+<ul>
+<li><strong>Search</strong> Convenience APIs for invoking common operations</li>
+<li><strong>SearchConfig</strong> Search configuration parameters</li>
+</ul>
+
+<h2>Application APIs</h2>
+
+
+<h3>Populating the search index</h3>
+<ul>
+<li><strong>MetadataProvider</strong> DomainObject adapter for providing search metadata</li>
+<li><strong>ContentProvider</strong> DomainObject adapter for providing search content</li>
+<li><strong>MetadataProviderRegistry</strong> A registry mapping MetadataProviders to object types</li>
+</ul>
+
+<h3>Querying the search index</h3>
+<ul>
+<li><strong>FilterType</strong> Specification of a type of filter</li>
+<li><strong>QuerySpecification</strong> Specification of a search string and muliple filter specifications</li>
+<li><strong>FilterSpecification</strong> Specification of parameters for a filter type</li>
+</ul>
+
+<h3>Accessing query results</h3>
+<ul>
+<li><strong>DocumentResult</strong> Metadata for a single matching result document</li>
+<li><strong>DocumentResultSet</strong> A set of documents matching a query specification</li>
+</ul>
+
+
+<h2>Query Engine APIs</h2>
+
+<ul>
+<li><strong>QueryEngine</strong> Interface for performing a single search operation</li>
+<li><strong>QueryEngineRegistry</strong> A registry mapping filter types to query engine implementations</li>
+</ul>
+
+<h2>Deprecation</h2>
+
+<p>
+Having been moved into the <code>com.arsdigita.search.intermedia</code> 
+package, the following intermedia specific classes are now deprecated:
+</p>
+<ul>
+<li>SearchableACSObject</li>
+<li>Searchable</li>
+<li>SearchableObserver</li>
+<li>SearchDataQuery</li>
+<li>SearchIndexHelp</li>
+<li>SearchIndexHelpCustomize</li>
+<li>SearchSpecification</li>
+<li>SimpleSearchSpecification</li>
+</ul>
+
+</body>
+</html>

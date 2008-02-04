@@ -1,0 +1,44 @@
+Summary: CCM Tools Bundle
+Name: @PACKAGE@
+Version: @VERSION@
+Release: @RELEASE@
+URL: http://www.aplaws.org.uk
+Source0: %{name}-%{version}.tar.gz
+License: LGPL
+Group: Applications/Internet/CCM
+BuildRoot: %{_tmppath}/%{name}-root
+Requires: ccm-tools >= 6.5.1
+BuildArchitectures: noarch
+Prefix: /usr
+
+%description
+Adds support for processing bundles during
+installation
+
+%prep
+%setup -q
+
+%build
+./configure --prefix=/usr
+make
+make check
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+/usr/share/ccm-tools/commands/hostinit-bundle
+/usr/share/ccm-tools/commands/hostinit-bundle.cmd
+/usr/share/ccm-tools/commands/load-bundle
+/usr/share/ccm-tools/commands/load-bundle.cmd
+
+%changelog
+* Mon Jan 26 2004 Daniel Berrange <berrange@redhat.com>
+- Initial build.
+
+

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  targetNamespace="http://ccm.redhat.com/ccm-project">
+
+  <element name="project">
+    <complexType>
+      <all>
+        <element name="databases" type="ccm:databases" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">
+              The list of databases to generate SQL for. If omitted
+              defaults to all currently supported databases
+            </documentation>
+          </annotation>
+        </element>
+
+        <element name="options" type="ccm:options" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">
+              The list of general project options.
+            </documentation>
+          </annotation>
+        </element>
+
+        <element name="build" type="ccm:build" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">The list of local applications to build and deploy</documentation>
+          </annotation>
+        </element>
+        <element name="prebuilt" type="ccm:prebuilt" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">The list of pre-built applications to deploy</documentation>
+          </annotation>
+        </element>
+      </all>
+
+      <attribute name="name" type="string">
+        <annotation>
+          <documentation xml:lang="en">The name of the bundle packages to generate, eg RPMs, ZIPs</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="prettyName" type="string">
+        <annotation>
+          <documentation xml:lang="en">The human readable package name</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="ccmVersion" type="ccm:ccmVersion" use="optional">
+        <annotation>
+          <documentation xml:lang="en">
+            The CCM version for build tools. Corresponds to version of Core being used.
+            If omitted assumes 5.x build compatability.
+          </documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="type" type="string" use="optional">
+        <annotation>
+          <documentation xml:lang="en">The type of project</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="version" type="ccm:version">
+        <annotation>
+          <documentation xml:lang="en">The version number for the bundle packages</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="release" type="integer">
+        <annotation>
+          <documentation xml:lang="en">The release number for the bundle packages</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="webxml" type="string" use="optional">
+        <annotation>
+          <documentation xml:lang="en">The file to be copied to web.xml in the ROOT webapp upon deployment.</documentation>
+        </annotation>
+      </attribute>
+
+    </complexType>
+
+    <unique name="unique_prebuilt">
+      <selector xpath="ccm:prebuilt/ccm:application"/>
+      <field xpath="@name"/>
+    </unique>
+
+    <unique name="unique_build">
+      <selector xpath="ccm:build/ccm:application"/>
+      <field xpath="@name"/>
+    </unique>
+
+  </element>
+
+  <complexType name="databases">
+    <sequence>
+      <element name="database" minOccurs="1" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en"></documentation>
+        </annotation>
+        <complexType>
+          <attribute name="name" type="ccm:database"/>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="options">
+    <sequence>
+      <element name="option" type="ccm:option" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en"></documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="build">
+    <sequence>
+      <element name="application" type="ccm:buildapp" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en">An local application to build</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="prebuilt">
+    <sequence>
+      <element name="application" type="ccm:prebuiltapp" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en">A pre-built application to deploy</documentation>
+        </annotation>
+      </element>
+    </sequence>
+  </complexType>
+
+  <complexType name="buildapp">
+    <attribute name="name">
+      <annotation>
+        <documentation xml:lang="en">
+          The name of the application. Refers to the name of the directory
+          containing the application.
+        </documentation>
+      </annotation>
+    </attribute>
+    <attribute name="prettyName" use="optional">
+      <annotation>
+        <documentation xml:lang="en">The human friendly name of the application</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="buildOrder" use="optional">
+      <annotation>
+        <documentation xml:lang="en">Order in which to deploy the applications</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="prebuiltapp">
+    <attribute name="name">
+      <annotation>
+        <documentation xml:lang="en">The name of the application</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="version" type="ccm:version">
+      <annotation>
+        <documentation xml:lang="en">The version number of the application</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="buildOrder" use="optional">
+      <annotation>
+        <documentation xml:lang="en">Order in which to deploy the applications</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <complexType name="option">
+    <attribute name="name">
+      <annotation>
+        <documentation xml:lang="en">The name of the options</documentation>
+      </annotation>
+    </attribute>
+    <attribute name="value">
+      <annotation>
+        <documentation xml:lang="en">The value of the options</documentation>
+      </annotation>
+    </attribute>
+  </complexType>
+
+  <simpleType name="database">
+    <annotation>
+      <documentation xml:lang="en">A enumeration of supported databases</documentation>
+    </annotation>
+
+    <restriction base="string">
+      <enumeration value="postgres"/>
+      <enumeration value="oracle-se"/>
+    </restriction>
+  </simpleType>
+
+
+  <simpleType name="ccmVersion">
+    <annotation>
+      <documentation xml:lang="en">A enumeration of build tool compatability versions</documentation>
+    </annotation>
+
+    <restriction base="string">
+      <enumeration value="5x"/>
+      <enumeration value="6.0"/>
+      <enumeration value="6.1"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="version">
+    <annotation>
+      <documentation xml:lang="en">A version number made up of three dot separated integers</documentation>
+    </annotation>
+
+    <restriction base="string">
+      <pattern value="\d+\.\d+\.\d+"/>
+    </restriction>
+  </simpleType>
+</schema>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=752}]"><cms:name>batch-7-752</cms:name><cms:language>en</cms:language><cms:title>Health and safety at work - advice and training</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=752}]"><cms:name>batch-7-752-dublin-metadata</cms:name><cms:dcAudience>Businesses</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>health, safety, work, advice, training</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=752}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Service Charter for Health and Safety at work</i></p><hr/><p>We will</p><ul>
+				<li title="*">We will visit all premesis due for inspection during <span class="gen">enter date</span> (approx 300)</li>
+				<li title="*">Respond to complaints concerning health and safety or workplace conditions within 
+    3 working days.</li>
+				<li title="*">Respond immediately to fatalities in the workplace.</li>
+				<li title="*">Carry out 4 'Basic Health and Safety' training courses at regular intervals 
+    throughout the year.</li>
+			</ul><p>You can help us by:</p><ul>
+				<li title="*">Co-operate with any request for information to progress an investigation.</li>
+				<li title="*">Be prepared to allow time to discuss the outcome and recommendation arising 
+    from a premises inspection.</li>
+			</ul><p>You can contact us using the details above.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=752"> Providing Information
+		(752)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

@@ -1,0 +1,10 @@
+# -*- text -*-
+# This file locates stylesheets, if you are using the
+# "PatternStylesheetResolver". Please read the Javadoc for that file for
+# the full story.
+
+http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
+http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::-::outputtype::.xsl
+
+http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/resource/::webapps::/__ccm__/apps/::application::/xsl/::url::.xsl

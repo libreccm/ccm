@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# no don't export prefix
+prefix=@prefix@
+
+CCM_SCRIPTS_HOME=@datadir@/@PACKAGE@
+
+unset prefix
+export CCM_SCRIPTS_HOME

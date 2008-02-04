@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=478}]"><cms:name>environmental-services-478</cms:name><cms:language>en</cms:language><cms:title>Car Parks - council</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=478}]"><cms:name>environmental-services-478-dublin-metadata</cms:name><cms:dcAudience>General Public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>car, parks, council</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=478}]"><cms:content><![CDATA[<h2>Environmental Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>The council maintains a number of car parks distributed around the area. Below is a list of the car parks, their locations and tariffs.</i></p><hr/><p>
+<span class="gen">enter location</span>
+</p><table width="90%" cellpadding="5" class="centre" summary="">
+  <tr> 
+    <th>Car Park 1</th>
+    <th>Address</th>
+  </tr>
+  <tr> 
+    <td>Type of Payment</td>
+    <td>Pay and Display</td>
+  </tr>
+  <tr> 
+    <td>Tariff</td>
+    <td/>
+  </tr>
+  <tr> 
+    <td>30 minutes</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>1 hour</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>2 hours</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>3 hours</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>4 hours +</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><table width="90%" cellpadding="5" class="centre" summary="">
+  <tr> 
+    <th>Car Park 1</th>
+    <th>Address</th>
+  </tr>
+  <tr> 
+    <td>Type of Payment</td>
+    <td>Pay and Display</td>
+  </tr>
+  <tr> 
+    <td>Tariff</td>
+    <td/>
+  </tr>
+  <tr> 
+    <td>30 minutes</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>1 hour</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>2 hours</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>3 hours</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+  <tr> 
+    <td>4 hours +</td>
+    <td>
+<span class="gen">enter amount</span>
+</td>
+  </tr>
+</table><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=478"> Providing Information
+		(478)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>

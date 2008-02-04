@@ -1,0 +1,59 @@
+//
+// Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+// $Id: RickshawPublishAPIUpgrade.pdl 287 2005-02-22 00:29:02Z sskracic $
+// $DateTime: 2004/08/17 23:15:09 $
+model com.arsdigita.cms;
+
+object type UpgradeItemLifecycleMap {
+  composite ContentItem[1..1] item = join cms_upgrade_item_lifecycle_map.item_id
+                                     to cms_items.item_id;
+  composite Lifecycle[1..1] lifecycle = join cms_upgrade_item_lifecycle_map.lifecycle_id
+                                        to lifecycles.cycle_id;
+  object key(item,lifecycle);
+}                               
+
+object type UpgradeItemNoLifecycleSet {
+  composite ContentItem[1..1] item = join cms_upgrade_item_no_lifecycle.item_id
+                                     to cms_items.item_id;
+  object key(item);
+}                               
+
+object type UpgradeProgress {
+   BigDecimal[1..1]  id = cms_upgrade_progress.id INTEGER;
+   Boolean[1..1] pendingUnpublishDone         = cms_upgrade_progress.pending_unpublish CHAR(1);
+   Boolean[1..1] liveUnpublishDone            = cms_upgrade_progress.live_unpublish CHAR(1);
+   Boolean[1..1] cleanupUnpublishDone         = cms_upgrade_progress.cleanup_unpublish CHAR(1);
+   Boolean[1..1] nonLifecyclePublishDone      = cms_upgrade_progress.non_lifecycle_publish CHAR(1);
+   Boolean[1..1] lifecyclePublishDone         = cms_upgrade_progress.lifecycle_publish CHAR(1);
+   Boolean[1..1] removeOrphanedLifecyclesDone = cms_upgrade_progress.remove_orphaned_lifecycles CHAR(1);
+   object key(id);
+}
+
+query getConnectedLifecycles {
+    BigDecimal id;
+        
+    do  {
+        select distinct cycle_id
+          from acs_object_lifecycle_map
+        union
+        select distinct lifecycle_id as cycle_id
+          from cms_upgrade_item_lifecycle_map
+    } map {
+        id = cycle_id;
+    }
+}

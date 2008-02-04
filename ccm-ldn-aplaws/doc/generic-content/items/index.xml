@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<imp:import xmlns:imp="http://xmlns.redhat.com/waf/london/importer/1.0" source="www.esd.org.uk">
+  <cms:folder xmlns:cms="http://www.arsdigita.com/cms/1.0" label="Root Folder" name="/" oid="[com.arsdigita.cms.Folder:{id=1}]">
+    <cms:folder xmlns:cms="http://www.arsdigita.com/cms/1.0" label="Generic Content" name="generic-content" oid="[com.arsdigita.cms.Folder:{id=2}]">
+      <cms:folder label="Arts and Leisure" name="arts-and-leisure" oid="[com.arsdigita.cms.Folder:{id=3}]">
+        <cms:folder label="Libraries" name="libraries" oid="[com.arsdigita.cms.Folder:{id=4}]">
+          <cms:external source="/arts-and-leisure/libraries/437.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/438.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/439.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/440.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/441.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/442.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/443.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/444.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/445.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/446.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/447.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/448.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/449.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/form-456.xml"/>
+          <cms:external source="/arts-and-leisure/libraries/456.xml"/>
+        </cms:folder>
+        <cms:folder label="Museums and Galleries" name="museums-and-galleries" oid="[com.arsdigita.cms.Folder:{id=5}]">
+          <cms:external source="/arts-and-leisure/museums-and-galleries/620.xml"/>
+          <cms:external source="/arts-and-leisure/museums-and-galleries/621.xml"/>
+        </cms:folder>
+        <cms:folder label="Exhibitions" name="exhibitions" oid="[com.arsdigita.cms.Folder:{id=6}]">
+          <cms:external source="/arts-and-leisure/exhibitions/624.xml"/>
+        </cms:folder>
+        <cms:folder label="Tourism" name="tourism" oid="[com.arsdigita.cms.Folder:{id=7}]">
+          <cms:external source="/arts-and-leisure/tourism/622.xml"/>
+          <cms:external source="/arts-and-leisure/tourism/623.xml"/>
+          <cms:external source="/arts-and-leisure/tourism/662.xml"/>
+          <cms:external source="/arts-and-leisure/tourism/733.xml"/>
+          <cms:external source="/arts-and-leisure/tourism/734.xml"/>
+        </cms:folder>
+        <cms:folder label="Physical Activity and Sports" name="physical-activity-and-sports" oid="[com.arsdigita.cms.Folder:{id=8}]">
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/336.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/451.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/453.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/form-455.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/455.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/638.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/639.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/640.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/641.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/642.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/643.xml"/>
+          <cms:external source="/arts-and-leisure/physical-activity-and-sports/644.xml"/>
+        </cms:folder>
+      </cms:folder>
+      <cms:folder label="Fire and Emergency Services" name="fire-and-emergency-services" oid="[com.arsdigita.cms.Folder:{id=9}]">
+        <cms:folder label="Emergency Planning" name="emergency-planning" oid="[com.arsdigita.cms.Folder:{id=10}]">
+          <cms:external source="/fire-and-emergency-services/emergency-planning/792.xml"/>
+          <cms:external source="/fire-and-emergency-services/emergency-planning/793.xml"/>
+          <cms:external source="/fire-and-emergency-services/emergency-planning/794.xml"/>
+          <cms:external source="/fire-and-emergency-services/emergency-planning/795.xml"/>
+        </cms:folder>
+        <cms:folder label="Fire Safety" name="fire-safety" oid="[com.arsdigita.cms.Folder:{id=11}]">
+          <cms:external source="/fire-and-emergency-services/fire-safety/796.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/797.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/798.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/799.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/800.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/801.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/802.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/803.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/804.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/form-805.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/805.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/form-806.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/806.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/form-807.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/807.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/form-808.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/808.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/809.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/810.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/811.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/812.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/813.xml"/>
+          <cms:external source="/fire-and-emergency-services/fire-safety/814.xml"/>
+        </cms:folder>
+        <cms:folder label="Firefighting/Rescue" name="firefighting-rescue" oid="[com.arsdigita.cms.Folder:{id=12}]">
+          <cms:external source="/fire-and-emergency-services/firefighting-rescue/815.xml"/>
+          <cms:external source="/fire-and-emergency-services/firefighting-rescue/816.xml"/>
+          <cms:external source="/fire-and-emergency-services/firefighting-rescue/817.xml"/>
+          <cms:external source="/fire-and-emergency-services/firefighting-rescue/818.xml"/>
+          <cms:external source="/fire-and-emergency-services/firefighting-rescue/819.xml"/>
+        </cms:folder>
+      </cms:folder>
+      <cms:folder label="Revenues and Benefits/Finance" name="revenues-and-benefits-finance" oid="[com.arsdigita.cms.Folder:{id=13}]">
+        <cms:folder label="Council Tax" name="council-tax" oid="[com.arsdigita.cms.Folder:{id=14}]">
+          <cms:external source="/revenues-and-benefits-finance/council-tax/57.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax/58.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax/59.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax/60.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax/61.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax/726.xml"/>
+        </cms:folder>
+        <cms:folder label="Housing Benefit" name="housing-benefit" oid="[com.arsdigita.cms.Folder:{id=15}]">
+          <cms:external source="/revenues-and-benefits-finance/housing-benefit/68.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/housing-benefit/69.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/housing-benefit/form-70.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/housing-benefit/70.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/housing-benefit/71.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/housing-benefit/72.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/housing-benefit/73.xml"/>
+        </cms:folder>
+        <cms:folder label="Procurement" name="procurement" oid="[com.arsdigita.cms.Folder:{id=16}]">
+          <cms:external source="/revenues-and-benefits-finance/procurement/369.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/procurement/828.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/procurement/829.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/procurement/830.xml"/>
+        </cms:folder>
+        <cms:folder label="Council Tax Benefit" name="council-tax-benefit" oid="[com.arsdigita.cms.Folder:{id=17}]">
+          <cms:external source="/revenues-and-benefits-finance/council-tax-benefit/62.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax-benefit/63.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax-benefit/64.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax-benefit/65.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax-benefit/66.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/council-tax-benefit/67.xml"/>
+        </cms:folder>
+        <cms:folder label="Business Rates [NNDR]
+	" name="business-rates-nndr-" oid="[com.arsdigita.cms.Folder:{id=18}]">
+          <cms:external source="/revenues-and-benefits-finance/business-rates-nndr-/54.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/business-rates-nndr-/55.xml"/>
+          <cms:external source="/revenues-and-benefits-finance/business-rates-nndr-/56.xml"/>
+        </cms:folder>
+      </cms:folder>
+      <cms:folder label="Environmental Services" name="environmental-services" oid="[com.arsdigita.cms.Folder:{id=19}]">
+        <cms:folder label="Planning advice, building control and town centre management" name="planning-advice-building-control-and-town-centre-management" oid="[com.arsdigita.cms.Folder:{id=20}]">
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/485.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/487.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/493.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/494.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/495.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/496.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/497.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/498.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/499.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/505.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/508.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/510.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/511.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/512.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/513.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/514.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/515.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/516.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/649.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/674.xml"/>
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-management/675.xml"/>
+        </cms:folder>
+        <cms:folder label="Street Care and Cleaning" name="street-care-and-cleaning" oid="[com.arsdigita.cms.Folder:{id=21}]">
+          <cms:external source="/environmental-services/street-care-and-cleaning/575.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/576.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/577.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/579.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/580.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/581.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/582.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/583.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/584.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/586.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/587.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/588.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/589.xml"/>
+          <cms:external source="/environmental-services/street-care-and-cleaning/591.xml"/>
+        </cms:folder>
+        <cms:folder label="Environmental Health" name="environmental-health" oid="[com.arsdigita.cms.Folder:{id=22}]">
+          <cms:external source="/environmental-services/environmental-health/406.xml"/>
+          <cms:external source="/environmental-services/environmental-health/407.xml"/>
+          <cms:external source="/environmental-services/environmental-health/408.xml"/>
+          <cms:external source="/environmental-services/environmental-health/410.xml"/>
+          <cms:external source="/environmental-services/environmental-health/411.xml"/>
+          <cms:external source="/environmental-services/environmental-health/412.xml"/>
+          <cms:external source="/environmental-services/environmental-health/413.xml"/>
+          <cms:external source="/environmental-services/environmental-health/414.xml"/>
+          <cms:external source="/environmental-services/environmental-health/415.xml"/>
+          <cms:external source="/environmental-services/environmental-health/416.xml"/>
+          <cms:external source="/environmental-services/environmental-health/417.xml"/>
+          <cms:external source="/environmental-services/environmental-health/418.xml"/>
+          <cms:external source="/environmental-services/environmental-health/431.xml"/>
+          <cms:external source="/environmental-services/environmental-health/432.xml"/>
+          <cms:external source="/environmental-services/environmental-health/433.xml"/>
+          <cms:external source="/environmental-services/environmental-health/434.xml"/>
+          <cms:external source="/environmental-services/environmental-health/612.xml"/>
+          <cms:external source="/environmental-services/environmental-health/625.xml"/>
+          <cms:external source="/environmental-services/environmental-health/626.xml"/>
+          <cms:external source="/environmental-services/environmental-health/660.xml"/>
+          <cms:external source="/environmental-services/environmental-health/661.xml"/>
+          <cms:external source="/environmental-services/environmental-health/664.xml"/>
+          <cms:external source="/environmental-services/environmental-health/691.xml"/>
+          <cms:external source="/environmental-services/environmental-health/707.xml"/>
+          <cms:external source="/environmental-services/environmental-health/708.xml"/>
+        </cms:folder>
+        <cms:folder label="Marine/Waterway Services" name="marine-waterway-services" oid="[com.arsdigita.cms.Folder:{id=23}]">
+          <cms:external source="/environmental-services/marine-waterway-services/556.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/756.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/757.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/758.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/759.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/760.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/761.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/762.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/form-763.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/763.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/764.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/765.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/766.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/767.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/768.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/769.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/770.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/771.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/772.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/773.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/774.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/775.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/776.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/777.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/778.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/779.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/780.xml"/>
+          <cms:external source="/environmental-services/marine-waterway-services/781.xml"/>
+        </cms:folder>
+        <cms:folder label="Roads, Highways and Pavements" name="roads-highways-and-pavements" oid="[com.arsdigita.cms.Folder:{id=24}]">
+          <cms:external source="/environmental-services/roads-highways-and-pavements/372.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/536.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/537.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/538.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/539.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/540.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/541.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/542.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/543.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/545.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/546.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/547.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/548.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/549.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/550.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/551.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/552.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/553.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/554.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/555.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/557.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/558.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/559.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/560.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/561.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/562.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/563.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/564.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/566.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/567.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/568.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/569.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/570.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/571.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/573.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/574.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/607.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/637.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/657.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/701.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/783.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/784.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/form-785.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/785.xml"/>
+          <cms:external source="/environmental-services/roads-highways-and-pavements/786.xml"/>
+        </cms:folder>
+        <cms:folder label="Voluntary Organisations" name="voluntary-organisations" oid="[com.arsdigita.cms.Folder:{id=25}]">
+          <cms:external source="/environmental-services/voluntary-organisations/615.xml"/>
+        </cms:folder>
+        <cms:folder label="Archaeological Services" name="archaeological-services" oid="[com.arsdigita.cms.Folder:{id=26}]">
+          <cms:external source="/environmental-services/archaeological-services/618.xml"/>
+          <cms:external source="/environmental-services/archaeological-services/619.xml"/>
+        </cms:folder>
+        <cms:folder label="Planning, building control and town centre management" name="planning-building-control-and-town-centre-management" oid="[com.arsdigita.cms.Folder:{id=27}]">
+          <cms:external source="/environmental-services/planning-building-control-and-town-centre-management/608.xml"/>
+        </cms:folder>
+        <cms:folder label="Trading Standards" name="trading-standards" oid="[com.arsdigita.cms.Folder:{id=28}]">
+          <cms:external source="/environmental-services/trading-standards/401.xml"/>
+          <cms:external source="/environmental-services/trading-standards/402.xml"/>
+          <cms:external source="/environmental-services/trading-standards/404.xml"/>
+          <cms:external source="/environmental-services/trading-standards/710.xml"/>
+          <cms:external source="/environmental-services/trading-standards/787.xml"/>
+          <cms:external source="/environmental-services/trading-standards/788.xml"/>
+          <cms:external source="/environmental-services/trading-standards/789.xml"/>
+          <cms:external source="/environmental-services/trading-standards/790.xml"/>
+          <cms:external source="/environmental-services/trading-standards/791.xml"/>
+        </cms:folder>
+        <cms:folder label="Markets Management" name="markets-management" oid="[com.arsdigita.cms.Folder:{id=29}]">
+          <cms:external source="/environmental-services/markets-management/616.xml"/>
+          <cms:external source="/environmental-services/markets-management/617.xml"/>
+          <cms:external source="/environmental-services/markets-management/782.xml"/>
+        </cms:folder>
+        <cms:folder label="Parking" name="parking" oid="[com.arsdigita.cms.Folder:{id=30}]">
+          <cms:external source="/environmental-services/parking/471.xml"/>
+          <cms:external source="/environmental-services/parking/472.xml"/>
+          <cms:external source="/environmental-services/parking/473.xml"/>
+          <cms:external source="/environmental-services/parking/474.xml"/>
+          <cms:external source="/environmental-services/parking/475.xml"/>
+          <cms:external source="/environmental-services/parking/477.xml"/>
+          <cms:external source="/environmental-services/parking/478.xml"/>
+          <cms:external source="/environmental-services/parking/479.xml"/>
+        </cms:folder>
+        <cms:folder label="Countryside" name="countryside" oid="[com.arsdigita.cms.Folder:{id=31}]">
+          <cms:external source="/environmental-services/countryside/466.xml"/>
+          <cms:external source="/environmental-services/countryside/467.xml"/>
+          <cms:external source="/environmental-services/countryside/468.xml"/>
+          <cms:external source="/environmental-services/countryside/469.xml"/>
+          <cms:external source="/environmental-services/countryside/470.xml"/>
+          <cms:external source="/environmental-services/countryside/702.xml"/>
+          <cms:external source="/environmental-services/countryside/745.xml"/>
+          <cms:external source="/environmental-services/countryside/746.xml"/>
+          <cms:external source="/environmental-services/countryside/747.xml"/>
+          <cms:external source="/environmental-services/countryside/748.xml"/>
+          <cms:external source="/environmental-services/countryside/749.xml"/>
+          <cms:external source="/environmental-services/countryside/750.xml"/>
+          <cms:external source="/environmental-services/countryside/751.xml"/>
+        </cms:folder>
+        <cms:folder label="Records Office" name="records-office" oid="[com.arsdigita.cms.Folder:{id=32}]">
+          <cms:external source="/environmental-services/records-office/604.xml"/>
+          <cms:external source="/environmental-services/records-office/605.xml"/>
+          <cms:external source="/environmental-services/records-office/606.xml"/>
+        </cms:folder>
+        <cms:folder label="Public Rights of Way" name="public-rights-of-way" oid="[com.arsdigita.cms.Folder:{id=33}]">
+          <cms:external source="/environmental-services/public-rights-of-way/613.xml"/>
+          <cms:external source="/environmental-services/public-rights-of-way/614.xml"/>
+        </cms:folder>
+        <cms:folder label="Health and Safety" name="health-and-safety" oid="[com.arsdigita.cms.Folder:{id=34}]">
+          <cms:external source="/environmental-services/health-and-safety/419.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/421.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/422.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/423.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/426.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/428.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/429.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/435.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/436.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/600.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/601.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/684.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/703.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/752.xml"/>
+          <cms:external source="/environmental-services/health-and-safety/753.xml"/>
+        </cms:folder>
+        <cms:folder label="Business Licences and Street Trading" name="business-licences-and-street-trading" oid="[com.arsdigita.cms.Folder:{id=35}]">
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-374.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/374.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-375.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/375.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-376.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/376.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/377.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/378.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/379.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/380.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/381.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-382.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/382.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-383.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/383.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-384.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/384.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-385.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/385.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/386.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/387.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-388.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/388.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-389.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/389.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/390.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/391.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/392.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-393.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/393.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-394.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/394.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-395.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/395.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-396.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/396.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/397.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-398.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/398.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/399.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-400.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/400.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-632.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/632.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-633.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/633.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-634.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/634.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-635.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/635.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-636.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/636.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-646.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/646.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-647.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/647.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-648.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/648.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-678.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/678.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-679.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/679.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-680.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/680.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-681.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/681.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/682.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/683.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/694.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-695.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/695.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-696.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/696.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/697.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-699.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/699.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/706.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/738.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-739.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/739.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/740.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-741.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/741.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/742.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/form-743.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/743.xml"/>
+          <cms:external source="/environmental-services/business-licences-and-street-trading/744.xml"/>
+        </cms:folder>
+        <cms:folder label="Refuse" name="refuse" oid="[com.arsdigita.cms.Folder:{id=36}]">
+          <cms:external source="/environmental-services/refuse/517.xml"/>
+          <cms:external source="/environmental-services/refuse/518.xml"/>
+          <cms:external source="/environmental-services/refuse/519.xml"/>
+          <cms:external source="/environmental-services/refuse/520.xml"/>
+          <cms:external source="/environmental-services/refuse/522.xml"/>
+          <cms:external source="/environmental-services/refuse/523.xml"/>
+          <cms:external source="/environmental-services/refuse/524.xml"/>
+          <cms:external source="/environmental-services/refuse/526.xml"/>
+          <cms:external source="/environmental-services/refuse/528.xml"/>
+          <cms:external source="/environmental-services/refuse/530.xml"/>
+          <cms:external source="/environmental-services/refuse/531.xml"/>
+          <cms:external source="/environmental-services/refuse/533.xml"/>
+          <cms:external source="/environmental-services/refuse/534.xml"/>
+          <cms:external source="/environmental-services/refuse/535.xml"/>
+          <cms:external source="/environmental-services/refuse/form-689.xml"/>
+          <cms:external source="/environmental-services/refuse/689.xml"/>
+        </cms:folder>
+        <cms:folder label="Planning, building control and town centre managment" name="planning-building-control-and-town-centre-managment" oid="[com.arsdigita.cms.Folder:{id=37}]">
+          <cms:external source="/environmental-services/planning-building-control-and-town-centre-managment/599.xml"/>
+        </cms:folder>
+        <cms:folder label="Land and Premises" name="land-and-premises" oid="[com.arsdigita.cms.Folder:{id=38}]">
+          <cms:external source="/environmental-services/land-and-premises/592.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/593.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/594.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/595.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/596.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/597.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/598.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/610.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/655.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/672.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/754.xml"/>
+          <cms:external source="/environmental-services/land-and-premises/755.xml"/>
+        </cms:folder>
+        <cms:folder label="Demolitions" name="demolitions" oid="[com.arsdigita.cms.Folder:{id=39}]">
+          <cms:external source="/environmental-services/demolitions/602.xml"/>
+          <cms:external source="/environmental-services/demolitions/603.xml"/>
+        </cms:folder>
+        <cms:folder label="Planning advice, building control and town centre managemenet" name="planning-advice-building-control-and-town-centre-managemenet" oid="[com.arsdigita.cms.Folder:{id=40}]">
+          <cms:external source="/environmental-services/planning-advice-building-control-and-town-centre-managemenet/668.xml"/>
+        </cms:folder>
+        <cms:folder label="Parks and Open Spaces" name="parks-and-open-spaces" oid="[com.arsdigita.cms.Folder:{id=41}]">
+          <cms:external source="/environmental-services/parks-and-open-spaces/461.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/462.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/463.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/464.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/465.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/669.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/670.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/686.xml"/>
+          <cms:external source="/environmental-services/parks-and-open-spaces/709.xml"/>
+        </cms:folder>
+      </cms:folder>
+      <cms:folder label="Social Services" name="social-services" oid="[com.arsdigita.cms.Folder:{id=42}]">
+        <cms:folder label="Legal Help" name="legal-help" oid="[com.arsdigita.cms.Folder:{id=43}]">
+          <cms:external source="/social-services/legal-help/308.xml"/>
+          <cms:external source="/social-services/legal-help/309.xml"/>
+          <cms:external source="/social-services/legal-help/310.xml"/>
+          <cms:external source="/social-services/legal-help/311.xml"/>
+        </cms:folder>
+        <cms:folder label="Physical and Sensory Disabilities" name="physical-and-sensory-disabilities" oid="[com.arsdigita.cms.Folder:{id=44}]">
+          <cms:external source="/social-services/physical-and-sensory-disabilities/204.xml"/>
+          <cms:external source="/social-services/physical-and-sensory-disabilities/205.xml"/>
+        </cms:folder>
+        <cms:folder label="Children, Young People and Families" name="children-young-people-and-families" oid="[com.arsdigita.cms.Folder:{id=45}]">
+          <cms:external source="/social-services/children-young-people-and-families/159.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/160.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/250.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/260.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/261.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/263.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/264.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/266.xml"/>
+          <cms:external source="/social-services/children-young-people-and-families/831.xml"/>
+        </cms:folder>
+        <cms:folder label="Out of Hours" name="out-of-hours" oid="[com.arsdigita.cms.Folder:{id=46}]">
+          <cms:external source="/social-services/out-of-hours/312.xml"/>
+        </cms:folder>
+        <cms:folder label="Help at Home" name="help-at-home" oid="[com.arsdigita.cms.Folder:{id=47}]">
+          <cms:external source="/social-services/help-at-home/178.xml"/>
+          <cms:external source="/social-services/help-at-home/180.xml"/>
+          <cms:external source="/social-services/help-at-home/242.xml"/>
+          <cms:external source="/social-services/help-at-home/269.xml"/>
+          <cms:external source="/social-services/help-at-home/271.xml"/>
+          <cms:external source="/social-services/help-at-home/313.xml"/>
+          <cms:external source="/social-services/help-at-home/315.xml"/>
+          <cms:external source="/social-services/help-at-home/316.xml"/>
+        </cms:folder>
+        <cms:folder label="Youth Offending" name="youth-offending" oid="[com.arsdigita.cms.Folder:{id=48}]">
+          <cms:external source="/social-services/youth-offending/172.xml"/>
+          <cms:external source="/social-services/youth-offending/173.xml"/>
+          <cms:external source="/social-services/youth-offending/174.xml"/>
+          <cms:external source="/social-services/youth-offending/175.xml"/>
+          <cms:external source="/social-services/youth-offending/176.xml"/>
+          <cms:external source="/social-services/youth-offending/177.xml"/>
+          <cms:external source="/social-services/youth-offending/834.xml"/>
+          <cms:external source="/social-services/youth-offending/835.xml"/>
+          <cms:external source="/social-services/youth-offending/836.xml"/>
+          <cms:external source="/social-services/youth-offending/837.xml"/>
+        </cms:folder>
+        <cms:folder label="Advice and Support" name="advice-and-support" oid="[com.arsdigita.cms.Folder:{id=49}]">
+          <cms:external source="/social-services/advice-and-support/163.xml"/>
+          <cms:external source="/social-services/advice-and-support/164.xml"/>
+          <cms:external source="/social-services/advice-and-support/169.xml"/>
+          <cms:external source="/social-services/advice-and-support/199.xml"/>
+          <cms:external source="/social-services/advice-and-support/209.xml"/>
+          <cms:external source="/social-services/advice-and-support/299.xml"/>
+          <cms:external source="/social-services/advice-and-support/651.xml"/>
+          <cms:external source="/social-services/advice-and-support/727.xml"/>
+          <cms:external source="/social-services/advice-and-support/728.xml"/>
+          <cms:external source="/social-services/advice-and-support/729.xml"/>
+          <cms:external source="/social-services/advice-and-support/730.xml"/>
+          <cms:external source="/social-services/advice-and-support/731.xml"/>
+          <cms:external source="/social-services/advice-and-support/732.xml"/>
+        </cms:folder>
+        <cms:folder label="Community Care" name="community-care" oid="[com.arsdigita.cms.Folder:{id=50}]">
+          <cms:external source="/social-services/community-care/227.xml"/>
+          <cms:external source="/social-services/community-care/229.xml"/>
+          <cms:external source="/social-services/community-care/230.xml"/>
+          <cms:external source="/social-services/community-care/232.xml"/>
+          <cms:external source="/social-services/community-care/239.xml"/>
+          <cms:external source="/social-services/community-care/241.xml"/>
+          <cms:external source="/social-services/community-care/292.xml"/>
+          <cms:external source="/social-services/community-care/293.xml"/>
+          <cms:external source="/social-services/community-care/296.xml"/>
+          <cms:external source="/social-services/community-care/297.xml"/>
+        </cms:folder>
+        <cms:folder label="Carers" name="carers" oid="[com.arsdigita.cms.Folder:{id=51}]">
+          <cms:external source="/social-services/carers/162.xml"/>
+          <cms:external source="/social-services/carers/225.xml"/>
+          <cms:external source="/social-services/carers/298.xml"/>
+          <cms:external source="/social-services/carers/300.xml"/>
+        </cms:folder>
+        <cms:folder label="HIV Services" name="hiv-services" oid="[com.arsdigita.cms.Folder:{id=52}]">
+          <cms:external source="/social-services/hiv-services/202.xml"/>
+          <cms:external source="/social-services/hiv-services/246.xml"/>
+        </cms:folder>
+        <cms:folder label="Financial/Welfare Benefits and Other Help" name="financial-welfare-benefits-and-other-help" oid="[com.arsdigita.cms.Folder:{id=53}]">
+          <cms:external source="/social-services/financial-welfare-benefits-and-other-help/189.xml"/>
+          <cms:external source="/social-services/financial-welfare-benefits-and-other-help/190.xml"/>
+          <cms:external source="/social-services/financial-welfare-benefits-and-other-help/287.xml"/>
+        </cms:folder>
+        <cms:folder label="Staying in Hospital" name="staying-in-hospital" oid="[com.arsdigita.cms.Folder:{id=54}]">
+          <cms:external source="/social-services/staying-in-hospital/200.xml"/>
+          <cms:external source="/social-services/staying-in-hospital/832.xml"/>
+          <cms:external source="/social-services/staying-in-hospital/833.xml"/>
+        </cms:folder>
+        <cms:folder label="Transportation/Mobility" name="transportation-mobility" oid="[com.arsdigita.cms.Folder:{id=55}]">
+          <cms:external source="/social-services/transportation-mobility/221.xml"/>
+          <cms:external source="/social-services/transportation-mobility/272.xml"/>
+          <cms:external source="/social-services/transportation-mobility/273.xml"/>
+          <cms:external source="/social-services/transportation-mobility/274.xml"/>
+          <cms:external source="/social-services/transportation-mobility/275.xml"/>
+          <cms:external source="/social-services/transportation-mobility/276.xml"/>
+          <cms:external source="/social-services/transportation-mobility/form-279.xml"/>
+          <cms:external source="/social-services/transportation-mobility/279.xml"/>
+          <cms:external source="/social-services/transportation-mobility/280.xml"/>
+        </cms:folder>
+      </cms:folder>
+      <cms:folder label="Miscellaneous" name="miscellaneous" oid="[com.arsdigita.cms.Folder:{id=56}]">
+        <cms:folder label="Legal Services" name="legal-services" oid="[com.arsdigita.cms.Folder:{id=57}]">
+          <cms:external source="/miscellaneous/legal-services/368.xml"/>
+          <cms:external source="/miscellaneous/legal-services/676.xml"/>
+          <cms:external source="/miscellaneous/legal-services/688.xml"/>
+        </cms:folder>
+        <cms:folder label="Recruitment" name="recruitment" oid="[com.arsdigita.cms.Folder:{id=58}]">
+          <cms:external source="/miscellaneous/recruitment/337.xml"/>
+          <cms:external source="/miscellaneous/recruitment/343.xml"/>
+          <cms:external source="/miscellaneous/recruitment/344.xml"/>
+          <cms:external source="/miscellaneous/recruitment/345.xml"/>
+        </cms:folder>
+        <cms:folder label="Statistics and Census Information" name="statistics-and-census-information" oid="[com.arsdigita.cms.Folder:{id=59}]">
+          <cms:external source="/miscellaneous/statistics-and-census-information/367.xml"/>
+        </cms:folder>
+        <cms:folder label="Advice to Business and Community" name="advice-to-business-and-community" oid="[com.arsdigita.cms.Folder:{id=60}]">
+          <cms:external source="/miscellaneous/advice-to-business-and-community/346.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/347.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/348.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/349.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/350.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/351.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/352.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/677.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/685.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/690.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/692.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/693.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/718.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/822.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/823.xml"/>
+          <cms:external source="/miscellaneous/advice-to-business-and-community/824.xml"/>
+        </cms:folder>
+        <cms:folder label="Cremations and Funerals" name="cremations-and-funerals" oid="[com.arsdigita.cms.Folder:{id=61}]">
+          <cms:external source="/miscellaneous/cremations-and-funerals/326.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/327.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/328.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/329.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/330.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/331.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/332.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/333.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/334.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/335.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/671.xml"/>
+          <cms:external source="/miscellaneous/cremations-and-funerals/825.xml"/>
+        </cms:folder>
+        <cms:folder label="Corporate Complaints" name="corporate-complaints" oid="[com.arsdigita.cms.Folder:{id=62}]">
+          <cms:external source="/miscellaneous/corporate-complaints/353.xml"/>
+          <cms:external source="/miscellaneous/corporate-complaints/645.xml"/>
+        </cms:folder>
+        <cms:folder label="Generic Processes" name="generic-processes" oid="[com.arsdigita.cms.Folder:{id=63}]">
+          <cms:external source="/miscellaneous/generic-processes/370.xml"/>
+          <cms:external source="/miscellaneous/generic-processes/373.xml"/>
+          <cms:external source="/miscellaneous/generic-processes/653.xml"/>
+          <cms:external source="/miscellaneous/generic-processes/725.xml"/>
+          <cms:external source="/miscellaneous/generic-processes/form-827.xml"/>
+          <cms:external source="/miscellaneous/generic-processes/827.xml"/>
+        </cms:folder>
+        <cms:folder label="Births, Deaths and Marriages" name="births-deaths-and-marriages" oid="[com.arsdigita.cms.Folder:{id=64}]">
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/317.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/318.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/319.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/320.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/321.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/322.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/323.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/324.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/325.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/663.xml"/>
+          <cms:external source="/miscellaneous/births-deaths-and-marriages/698.xml"/>
+        </cms:folder>
+        <cms:folder label="Democracy" name="democracy" oid="[com.arsdigita.cms.Folder:{id=65}]">
+          <cms:external source="/miscellaneous/democracy/354.xml"/>
+          <cms:external source="/miscellaneous/democracy/355.xml"/>
+          <cms:external source="/miscellaneous/democracy/357.xml"/>
+          <cms:external source="/miscellaneous/democracy/358.xml"/>
+          <cms:external source="/miscellaneous/democracy/359.xml"/>
+          <cms:external source="/miscellaneous/democracy/360.xml"/>
+          <cms:external source="/miscellaneous/democracy/form-361.xml"/>
+          <cms:external source="/miscellaneous/democracy/361.xml"/>
+          <cms:external source="/miscellaneous/democracy/form-362.xml"/>
+          <cms:external source="/miscellaneous/democracy/362.xml"/>
+          <cms:external source="/miscellaneous/democracy/form-364.xml"/>
+          <cms:external source="/miscellaneous/democracy/364.xml"/>
+          <cms:external source="/miscellaneous/democracy/365.xml"/>
+          <cms:external source="/miscellaneous/democracy/366.xml"/>
+          <cms:external source="/miscellaneous/democracy/658.xml"/>
+          <cms:external source="/miscellaneous/democracy/659.xml"/>
+          <cms:external source="/miscellaneous/democracy/687.xml"/>
+          <cms:external source="/miscellaneous/democracy/719.xml"/>
+          <cms:external source="/miscellaneous/democracy/720.xml"/>
+          <cms:external source="/miscellaneous/democracy/721.xml"/>
+          <cms:external source="/miscellaneous/democracy/722.xml"/>
+          <cms:external source="/miscellaneous/democracy/723.xml"/>
+          <cms:external source="/miscellaneous/democracy/724.xml"/>
+          <cms:external source="/miscellaneous/democracy/826.xml"/>
+        </cms:folder>
+      </cms:folder>
+      <cms:folder label="Education" name="education" oid="[com.arsdigita.cms.Folder:{id=66}]">
+        <cms:folder label="Extra-curricular Activities" name="extra-curricular-activities" oid="[com.arsdigita.cms.Folder:{id=67}]">
+          <cms:external source="/education/extra-curricular-activities/47.xml"/>
+          <cms:external source="/education/extra-curricular-activities/48.xml"/>
+          <cms:external source="/education/extra-curricular-activities/52.xml"/>
+          <cms:external source="/education/extra-curricular-activities/629.xml"/>
+          <cms:external source="/education/extra-curricular-activities/631.xml"/>
+        </cms:folder>
+        <cms:folder label="Learning Resource Centres - School Library Service" name="learning-resource-centres-school-library-service" oid="[com.arsdigita.cms.Folder:{id=68}]">
+          <cms:external source="/education/learning-resource-centres-school-library-service/41.xml"/>
+          <cms:external source="/education/learning-resource-centres-school-library-service/42.xml"/>
+          <cms:external source="/education/learning-resource-centres-school-library-service/43.xml"/>
+          <cms:external source="/education/learning-resource-centres-school-library-service/44.xml"/>
+          <cms:external source="/education/learning-resource-centres-school-library-service/45.xml"/>
+        </cms:folder>
+        <cms:folder label="Schools" name="schools" oid="[com.arsdigita.cms.Folder:{id=69}]">
+          <cms:external source="/education/schools/12.xml"/>
+          <cms:external source="/education/schools/form-13.xml"/>
+          <cms:external source="/education/schools/13.xml"/>
+          <cms:external source="/education/schools/14.xml"/>
+          <cms:external source="/education/schools/15.xml"/>
+          <cms:external source="/education/schools/17.xml"/>
+          <cms:external source="/education/schools/29.xml"/>
+          <cms:external source="/education/schools/31.xml"/>
+          <cms:external source="/education/schools/32.xml"/>
+          <cms:external source="/education/schools/33.xml"/>
+          <cms:external source="/education/schools/34.xml"/>
+          <cms:external source="/education/schools/35.xml"/>
+          <cms:external source="/education/schools/36.xml"/>
+          <cms:external source="/education/schools/37.xml"/>
+          <cms:external source="/education/schools/50.xml"/>
+          <cms:external source="/education/schools/705.xml"/>
+          <cms:external source="/education/schools/736.xml"/>
+          <cms:external source="/education/schools/737.xml"/>
+        </cms:folder>
+        <cms:folder label="Help for Parents of Nursery, Primary and Secondary School Aged Children" name="help-for-parents-of-nursery-primary-and-secondary-school-aged-children" oid="[com.arsdigita.cms.Folder:{id=70}]">
+          <cms:external source="/education/help-for-parents-of-nursery-primary-and-secondary-school-aged-children/53.xml"/>
+          <cms:external source="/education/help-for-parents-of-nursery-primary-and-secondary-school-aged-children/630.xml"/>
+        </cms:folder>
+        <cms:folder label="School governors" name="school-governors" oid="[com.arsdigita.cms.Folder:{id=71}]">
+          <cms:external source="/education/school-governors/30.xml"/>
+        </cms:folder>
+        <cms:folder label="Adult Education" name="adult-education" oid="[com.arsdigita.cms.Folder:{id=72}]">
+          <cms:external source="/education/adult-education/27.xml"/>
+        </cms:folder>
+        <cms:folder label="Help for students in further/higher education" name="help-for-students-in-further-higher-education" oid="[com.arsdigita.cms.Folder:{id=73}]">
+          <cms:external source="/education/help-for-students-in-further-higher-education/22.xml"/>
+          <cms:external source="/education/help-for-students-in-further-higher-education/form-23.xml"/>
+          <cms:external source="/education/help-for-students-in-further-higher-education/23.xml"/>
+          <cms:external source="/education/help-for-students-in-further-higher-education/24.xml"/>
+          <cms:external source="/education/help-for-students-in-further-higher-education/25.xml"/>
+          <cms:external source="/education/help-for-students-in-further-higher-education/26.xml"/>
+          <cms:external source="/education/help-for-students-in-further-higher-education/39.xml"/>
+        </cms:folder>
+        <cms:folder label="Consultation on Education" name="consultation-on-education" oid="[com.arsdigita.cms.Folder:{id=74}]">
+          <cms:external source="/education/consultation-on-education/49.xml"/>
+        </cms:folder>
+        <cms:folder label="Help for Nursery, Primary and Secondary School Pupils" name="help-for-nursery-primary-and-secondary-school-pupils" oid="[com.arsdigita.cms.Folder:{id=75}]">
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/1.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/10.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/11.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/18.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/19.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/form-2.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/2.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/20.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/21.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/3.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/4.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/40.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/5.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/51.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/6.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/627.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/628.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/7.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/700.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/704.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/735.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/8.xml"/>
+          <cms:external source="/education/help-for-nursery-primary-and-secondary-school-pupils/9.xml"/>
+        </cms:folder>
+      </cms:folder>
+      <cms:folder label="Housing" name="housing" oid="[com.arsdigita.cms.Folder:{id=76}]">
+        <cms:folder label="Multiple Occupancy Homes" name="multiple-occupancy-homes" oid="[com.arsdigita.cms.Folder:{id=77}]">
+          <cms:external source="/housing/multiple-occupancy-homes/149.xml"/>
+          <cms:external source="/housing/multiple-occupancy-homes/150.xml"/>
+          <cms:external source="/housing/multiple-occupancy-homes/716.xml"/>
+          <cms:external source="/housing/multiple-occupancy-homes/717.xml"/>
+        </cms:folder>
+        <cms:folder label="Improvements, Repairs and Regeneration" name="improvements-repairs-and-regeneration" oid="[com.arsdigita.cms.Folder:{id=78}]">
+          <cms:external source="/housing/improvements-repairs-and-regeneration/125.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/126.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/127.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/128.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/129.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/130.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/132.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/135.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/136.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/137.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/138.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/139.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/140.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/141.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/142.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/143.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/144.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/145.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/146.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/147.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/148.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/650.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/666.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/714.xml"/>
+          <cms:external source="/housing/improvements-repairs-and-regeneration/715.xml"/>
+        </cms:folder>
+        <cms:folder label="Dealing with Housing Crime" name="dealing-with-housing-crime" oid="[com.arsdigita.cms.Folder:{id=79}]">
+          <cms:external source="/housing/dealing-with-housing-crime/101.xml"/>
+          <cms:external source="/housing/dealing-with-housing-crime/97.xml"/>
+          <cms:external source="/housing/dealing-with-housing-crime/98.xml"/>
+          <cms:external source="/housing/dealing-with-housing-crime/99.xml"/>
+        </cms:folder>
+        <cms:folder label="Right to Buy" name="right-to-buy" oid="[com.arsdigita.cms.Folder:{id=80}]">
+          <cms:external source="/housing/right-to-buy/151.xml"/>
+        </cms:folder>
+        <cms:folder label="Council Leaseholder and Freeholder Management" name="council-leaseholder-and-freeholder-management" oid="[com.arsdigita.cms.Folder:{id=81}]">
+          <cms:external source="/housing/council-leaseholder-and-freeholder-management/156.xml"/>
+          <cms:external source="/housing/council-leaseholder-and-freeholder-management/157.xml"/>
+          <cms:external source="/housing/council-leaseholder-and-freeholder-management/158.xml"/>
+        </cms:folder>
+        <cms:folder label="Commercial Property" name="commercial-property" oid="[com.arsdigita.cms.Folder:{id=82}]">
+          <cms:external source="/housing/commercial-property/820.xml"/>
+          <cms:external source="/housing/commercial-property/821.xml"/>
+          <cms:external source="/housing/commercial-property/93.xml"/>
+        </cms:folder>
+        <cms:folder label="Council Lettings and Housing Allocations Service" name="council-lettings-and-housing-allocations-service" oid="[com.arsdigita.cms.Folder:{id=83}]">
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/711.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/712.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/713.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/84.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/85.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/86.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/87.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/88.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/89.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/90.xml"/>
+          <cms:external source="/housing/council-lettings-and-housing-allocations-service/92.xml"/>
+        </cms:folder>
+        <cms:folder label="Council Housing - Tenants" name="council-housing-tenants" oid="[com.arsdigita.cms.Folder:{id=84}]">
+          <cms:external source="/housing/council-housing-tenants/form-654.xml"/>
+          <cms:external source="/housing/council-housing-tenants/654.xml"/>
+          <cms:external source="/housing/council-housing-tenants/665.xml"/>
+          <cms:external source="/housing/council-housing-tenants/91.xml"/>
+        </cms:folder>
+        <cms:folder label="Housing Advice" name="housing-advice" oid="[com.arsdigita.cms.Folder:{id=85}]">
+          <cms:external source="/housing/housing-advice/108.xml"/>
+          <cms:external source="/housing/housing-advice/109.xml"/>
+          <cms:external source="/housing/housing-advice/110.xml"/>
+          <cms:external source="/housing/housing-advice/112.xml"/>
+          <cms:external source="/housing/housing-advice/114.xml"/>
+          <cms:external source="/housing/housing-advice/115.xml"/>
+          <cms:external source="/housing/housing-advice/116.xml"/>
+          <cms:external source="/housing/housing-advice/117.xml"/>
+          <cms:external source="/housing/housing-advice/118.xml"/>
+          <cms:external source="/housing/housing-advice/119.xml"/>
+          <cms:external source="/housing/housing-advice/120.xml"/>
+          <cms:external source="/housing/housing-advice/122.xml"/>
+          <cms:external source="/housing/housing-advice/123.xml"/>
+          <cms:external source="/housing/housing-advice/124.xml"/>
+          <cms:external source="/housing/housing-advice/652.xml"/>
+          <cms:external source="/housing/housing-advice/77.xml"/>
+        </cms:folder>
+      </cms:folder>
+    </cms:folder>
+  </cms:folder>
+</imp:import>

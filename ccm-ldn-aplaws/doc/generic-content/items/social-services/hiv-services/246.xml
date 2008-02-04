@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<cms:item xmlns:cms="http://www.arsdigita.com/cms/1.0" xmlns="http://www.esd.org.uk/standards/esdbody" oid="[com.arsdigita.cms.contenttypes.ESDService:{id=246}]"><cms:name>batch-23-246</cms:name><cms:language>en</cms:language><cms:title>Support for children with HIV</cms:title><cms:dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=246}]"><cms:name>batch-23-246-dublin-metadata</cms:name><cms:dcAudience>General public</cms:dcAudience><cms:dcCoverage>content=&quot;99XX&quot; scheme=&quot;ONS SNAC&quot;</cms:dcCoverage><cms:dcCoveragePostcode/><cms:dcCoverageSpatialRef/><cms:dcCoverageUnit/><cms:dcDateValid/><cms:dcDisposalReview/><cms:dcLanguage>en</cms:dcLanguage><cms:dcTemporalBegin/><cms:dcTemporalEnd/><cms:dcCreatorOwner>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorOwner><cms:dcCreatorContact>LAWS Project - Starter Kit - http://www.laws-project.org.uk</cms:dcCreatorContact><cms:dcPublisher>Tameside MBC - LAWS project - http://laws.tameside.gov.uk</cms:dcPublisher><cms:dcRights/><cms:dcKeywords>support, children, HIV</cms:dcKeywords></cms:dublinCore><cms:textAsset oid="[com.arsdigita.cms.TextAsset:{id=246}]"><cms:content><![CDATA[<h2>Social Services</h2><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><p><i>Children may be HIV positive, or have parents who are.</i></p><hr/><p>Social Services and a number of voluntary organisations work with families where a member is HIV positive to deal with any immediate problems, and to help the family plan for the long term care of children. For further information, 
+  contact your local Social Services office.</p><h3>Voluntary Groups</h3><p>
+			<strong>Barnardo's Positive Options</strong>
+		</p><p>Barnardo's Planning Scheme offers parents who are HIV positive or living with other life threatening illnesses the opportunity to plan for their children's future care, exploring options such as fostering, care by friends and relatives or adoption and giving high priority to the wishes of the child.</p><p>
+			
+		<a href="http://www.cwac.org">
+				<strong>Children with AIDS Charity</strong>
+			</a>	
+			<span class="gen">link to external website</span> assists children and their families to lead as near normal a life as possible.</p><p>Grandma's (<strong>
+				
+			
+			</strong>) 
+  is a church based organisation which aims to provide practical help to children and families affected by HIV/AIDS.</p><p>Further information on services for people affected by 
+		<a href="/ccm/services/pid.jsp?pid=202">
+				<strong>HIV/AIDS</strong>
+			</a>	 <span class="gen">link to pid 202</span> is now available.</p><span class="gen">email address here</span><span class="gen">phone number here</span><span class="gen">sms phone number here</span><span class="gen">fax number here</span><span class="gen">minicom number here</span><span class="gen">postal address here</span><h3>
+		<a href="/ccm/services/pid.jsp?pid=246"> Providing Information
+		(246)
+		</a></h3>]]></cms:content></cms:textAsset></cms:item>
