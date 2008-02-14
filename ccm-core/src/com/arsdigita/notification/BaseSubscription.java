@@ -148,6 +148,10 @@ public abstract class BaseSubscription extends ACSObject {
      * should override one or more of these methods.
      */
     public void sendNotification(ThreadedMessage post) {
+        sendNotification(post, false);
+    }
+
+    public void sendNotification(ThreadedMessage post, boolean deleteNotification) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Sending nofication to: " + getGroup().getName());
         }
@@ -156,9 +160,12 @@ public abstract class BaseSubscription extends ACSObject {
         note.setExpandGroup(new Boolean(true));
         note.setHeader(getHeader(post));
         note.setSignature(getSignature(post));
+        // make sure we don't delete the post itself!!!
+        note.setMessageDelete(Boolean.FALSE);
+        note.setIsPermanent(new Boolean(!deleteNotification));
         note.save();
-    }
 
+    }
     /**
      * Returns a header for forum alerts with the following standard
      * information:
