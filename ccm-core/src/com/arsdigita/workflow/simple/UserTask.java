@@ -73,12 +73,12 @@ public class UserTask extends Task implements Assignable {
 
     public static final String ASSIGNED_USERS = "assignedUsers";
     public static final String ASSIGNED_GROUPS = "assignedGroups";
-    private static final String LOCKING_USER_ID = "lockingUserId";
-    private static final String IS_LOCKED      = "isLocked";
-    private static final String DUE_DATE       = "dueDate";
-    private static final String START_DATE     = "startDate";
-    private static final String DURATION_MINUTES = "durationMinutes";
-    private static final String NOTIFICATION_SENDER_ID = "notificationSenderID";
+    public static final String LOCKING_USER_ID = "lockingUserId";
+    public static final String IS_LOCKED      = "isLocked";
+    public static final String DUE_DATE       = "dueDate";
+    public static final String START_DATE     = "startDate";
+    public static final String DURATION_MINUTES = "durationMinutes";
+    public static final String NOTIFICATION_SENDER_ID = "notificationSenderID";
 
     public static final int DEFAULT_DURATION = 1440;
 

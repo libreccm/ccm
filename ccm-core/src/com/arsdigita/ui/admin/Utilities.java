@@ -44,7 +44,7 @@ final class Utilities {
      * more general
      */
 
-    static final String prepare(String input) {
+    public static final String prepare(String input) {
         Perl5Compiler compiler = new Perl5Compiler();
         Perl5Matcher matcher = new Perl5Matcher();
 

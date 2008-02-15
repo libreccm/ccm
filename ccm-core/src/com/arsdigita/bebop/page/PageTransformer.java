@@ -278,6 +278,9 @@ public class PageTransformer implements PresentationManager {
                           final HttpServletRequest req,
                           final HttpServletResponse resp,
                           final Map params) {
+    	if (resp.isCommitted()) {
+        	return;
+        }
         if (Assert.isEnabled()) {
             Assert.exists(doc, Document.class);
             Assert.exists(req, HttpServletRequest.class);

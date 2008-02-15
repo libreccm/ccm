@@ -32,8 +32,6 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Locale;
 
-import org.apache.log4j.Logger;
-
 /**
  * A BaseDocument provides a base implementation of the
  * Document interface. Query engine implementations should
@@ -43,7 +41,7 @@ import org.apache.log4j.Logger;
  *
  * @see com.arsdigita.search.Document
  */
-public class BaseDocument implements Document, Comparable {
+public class BaseDocument implements Document {
 
     private URL m_url;
     private OID m_oid;
@@ -58,8 +56,6 @@ public class BaseDocument implements Document, Comparable {
     private String m_contentSection;
 
     private BigDecimal m_score;
-
-    static Logger s_log = Logger.getLogger(BaseDocument.class);
 
     /**
      * Creates a new document;
@@ -308,30 +304,4 @@ public class BaseDocument implements Document, Comparable {
 	return m_contentSection;
     }
 
-    /**
-     * Implements Comparable interface to allow ordering of search results
-     * by score descending where database ordering is not used
-     * (e.g. merged remote searches).
-     * 
-     * @param obj
-     * @return int
-     * @throws java.lang.NullPointerException
-     * @throws java.lang.ClassCastException
-     */
-    public int compareTo(Object obj) {
-        if (obj == null) {
-            throw new NullPointerException();
-        }
-
-        BaseDocument otherDocument = (BaseDocument) obj;
-
-        s_log.debug("This score: " + getScore() + ", other score: " 
-                     + otherDocument.getScore() + ", result: " 
-                     + otherDocument.getScore().compareTo(getScore()) 
-                     + " (old result: " 
-                     + getScore().compareTo(otherDocument.getScore()) + ")");
-                
-        
-        return otherDocument.getScore().compareTo(getScore());
-    }
 }

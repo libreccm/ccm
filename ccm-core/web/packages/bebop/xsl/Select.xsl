@@ -35,7 +35,7 @@
   <xsl:template match="bebop:select"
     xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
     <select name="{@name}">
-      <xsl:for-each select="@disabled|@size|@title|@*[starts-with(name(), 'on')]">
+      <xsl:for-each select="@disabled|@size|@title|@id|@*[starts-with(name(), 'on')]">
         <xsl:attribute name="{name()}">
           <xsl:value-of select="."/>
         </xsl:attribute>
