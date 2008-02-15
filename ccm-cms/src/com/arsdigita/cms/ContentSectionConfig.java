@@ -34,6 +34,7 @@ import org.apache.log4j.Logger;
 
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.form.DHTMLEditor;
+import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.dispatcher.DefaultTemplateResolver;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.MultilingualItemResolver;
@@ -47,6 +48,7 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.ClassParameter;
+import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
@@ -121,6 +123,7 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_deleteLifecycleWhenComplete;
     private final Parameter m_deleteExpiryNotificationsWhenSent;
     private final Parameter m_deleteWorkflowNotificationsWhenSent;
+    private final Parameter m_categoryTreeOrdering;
     
     /**
      * Do not instantiate this class directly.
@@ -341,6 +344,15 @@ public final class ContentSectionConfig extends AbstractConfig {
 	("com.arsdigita.cms.delete_workflow_notification_when_sent",
 			Parameter.OPTIONAL, new Boolean(false));
 	
+	m_categoryTreeOrdering = new EnumerationParameter 
+		("com.arsdigita.cms.category_tree_order", 
+				Parameter.OPTIONAL, Category.SORT_KEY );
+	
+	// 2 valid values at the moment - enumeration used rather than boolean in case other 
+	// possible orders are deemed valid
+	((EnumerationParameter)m_categoryTreeOrdering).put("SortKey", Category.SORT_KEY ); 
+	((EnumerationParameter)m_categoryTreeOrdering).put("Alphabetical", Category.NAME);	
+
         register(m_templateRootPath);
         register(m_defaultItemTemplatePath);
         register(m_defaultFolderTemplatePath);
@@ -386,6 +398,7 @@ public final class ContentSectionConfig extends AbstractConfig {
         register(m_deleteLifecycleWhenComplete);
         register(m_deleteExpiryNotificationsWhenSent);
         register(m_deleteWorkflowNotificationsWhenSent);
+        register(m_categoryTreeOrdering);
         loadInfo();
     }
 
@@ -724,4 +737,7 @@ public final class ContentSectionConfig extends AbstractConfig {
              return ((Boolean)get(m_deleteWorkflowNotificationsWhenSent)).booleanValue();
         }
         
+	public String getCategoryTreeOrder () {
+        	return (String)get(m_categoryTreeOrdering);
+        }        
 }

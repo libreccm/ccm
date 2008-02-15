@@ -28,6 +28,7 @@ import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.LockableImpl;
 
@@ -79,7 +80,10 @@ public class SubcategoryList extends SortableCategoryList {
 
             if (category != null && category.hasChildCategories()) {
                 CategoryCollection children = category.getChildren();
-                children.addOrder("link." + Category.SORT_KEY);
+                String order = ContentSection.getConfig().getCategoryTreeOrder();
+                order = order = Category.SORT_KEY.equals(order) ? "link." + order : order;
+                children.addOrder(order);
+             //   children.addOrder("link." + Category.SORT_KEY);
                 return new CategoryCollectionListModel(children);
             } else {
                 return List.EMPTY_MODEL;

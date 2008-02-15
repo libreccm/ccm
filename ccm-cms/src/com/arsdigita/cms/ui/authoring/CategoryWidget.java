@@ -30,6 +30,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
@@ -124,6 +125,10 @@ public class CategoryWidget extends Widget {
         if (sortKey != null) {
             el.addAttribute("sortKey", sortKey.toString());
         }
+        // sort order attribute added to every node in order that same xsl may
+        // be used to transform xml fragments returned by ajax in the Aplaws
+        // extension
+        el.addAttribute("order", ContentSection.getConfig().getCategoryTreeOrder());
         
         String fullname = path == null ? "/" : path + " > " + cat.getName();
         el.addAttribute("fullname", fullname);

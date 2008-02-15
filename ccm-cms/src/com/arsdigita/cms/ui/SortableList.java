@@ -59,16 +59,20 @@ public abstract class SortableList extends List {
     private static final String SELECT_EVENT = "s";
     protected static final String PREV_EVENT = "prev";
     protected static final String NEXT_EVENT = "next";
-    //private boolean m_sortItems;
+    private boolean m_sortItems;
 
     /**
      *  This just makes a standard
      *  {@link SortableList}
      */
     public SortableList(ParameterSingleSelectionModel model) {
-        super(model);
+        this(model, false);
     }
 
+	public SortableList(ParameterSingleSelectionModel model, boolean suppressSort) {
+			super(model);
+			m_sortItems = !suppressSort;
+		}
     /**
      *  This geneates the XML as specified by the arguments pass in to
      *  the constructor.
@@ -99,8 +103,10 @@ public abstract class SortableList extends List {
         do {
             Element item = list.newChildElement
                 (BebopConstants.BEBOP_CELL, BEBOP_XML_NS);
-            item.addAttribute("configure", "true");
+                if (m_sortItems) {
 
+           			item.addAttribute("configure", "true");
+                }
             String key = m.getKey();
             Assert.assertNotNull(key);
 

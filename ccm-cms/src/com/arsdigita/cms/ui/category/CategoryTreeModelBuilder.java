@@ -58,8 +58,8 @@ class CategoryTreeModelBuilder extends LockableImpl
         final ContentSection section = CMS.getContext().getContentSection();
         final Category root = Category.getRootForObject(section, 
                                                         getUseContext(state));
-        
-        final CategoryTreeModelLite model = new CategoryTreeModelLite(root, "sortKey");
+        String order = ContentSection.getConfig().getCategoryTreeOrder();
+        final CategoryTreeModelLite model = new CategoryTreeModelLite(root, order);
 
         return model;
     }

@@ -23,6 +23,7 @@ import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ui.SortableList;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -69,7 +70,7 @@ abstract class SortableCategoryList extends SortableList {
      */
     public SortableCategoryList(final CategoryRequestLocal parent) {
         super(new ParameterSingleSelectionModel
-              (new BigDecimalParameter(CHILDREN)));
+              (new BigDecimalParameter(CHILDREN)), !Category.SORT_KEY.equals(ContentSection.getConfig().getCategoryTreeOrder()));
 
         m_parent = parent;
 

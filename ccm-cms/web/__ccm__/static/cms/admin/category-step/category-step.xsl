@@ -159,9 +159,19 @@
       </span>
     </div>
     <div id="catCh{@node-id}" style="margin-left: 20px; display: {$expand}">
+        <xsl:choose>
+          <xsl:when test="@order='sortKey'">
       <xsl:apply-templates select="cms:category" mode="cms:javascriptCat">
         <xsl:sort data-type="number" select="@sortKey"/>
       </xsl:apply-templates>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates select="cms:category" mode="cms:javascriptCat">
+              <xsl:sort data-type="text" select="@name"/>
+            </xsl:apply-templates>
+          </xsl:otherwise>
+        </xsl:choose>
+      
     </div>
   </xsl:template>
 
