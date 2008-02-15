@@ -120,6 +120,10 @@ public class RemoteSearcher extends Thread {
                 if (results != null && !results.isEmpty()) {
                     s_log.debug("about to add results to the searchgroup");
                     job.getGroup().addResults(  results  );
+                } else {
+                    // Need to add empty results to register completion
+                    // of one servers search.
+                    job.getGroup().addResults(Collections.EMPTY_LIST);
                 }
             } catch( RemoteException ex ) {
                 s_log.error( "Failure making SOAP call to " + url + ": " + 

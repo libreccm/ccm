@@ -19,6 +19,7 @@ import com.arsdigita.search.QuerySpecification;
 import com.arsdigita.search.ResultSet;
 import com.arsdigita.search.Document;
 import com.arsdigita.search.filters.PermissionFilterSpecification;
+import com.arsdigita.search.filters.ContentSectionFilterSpecification;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.cms.search.VersionFilterSpecification;
 import com.arsdigita.cms.ContentItem;
@@ -59,12 +60,21 @@ public class SOAPHandler {
         if (com.arsdigita.search.Search.getConfig().isIntermediaEnabled()) {
             spec.addFilter(new PermissionFilterSpecification());
         }
+
+        String[] sections = Search.getConfig().getRemoteSearchContentSections();
+        if (sections != null) {
+            spec.addFilter(new ContentSectionFilterSpecification(sections));
+        }
+
         spec.addFilter(new VersionFilterSpecification(ContentItem.LIVE));
 
         ResultSet resultSet = com.arsdigita.search.Search.processInternal(
                 spec,
                 com.arsdigita.search.Search.getConfig().getIndexer());
-        Iterator docs = resultSet.getDocuments(0, 50);
+
+        // Get max. number of remote results as specified in config. param.
+        Iterator docs = resultSet.getDocuments(0,
+            Search.getConfig().getMaxRemoteResults().longValue());
 
         s_log.debug("About to return results for query: " + terms);
         

@@ -62,8 +62,15 @@ public class AdvancedQueryComponent extends BaseQueryComponent {
 
             Application app = Web.getContext().getApplication();
             Category root = Category.getRootForObject(app);
-            add(new SimpleCategoryFilterWidget(root));
+            // cg - if no default domain mapped to search application, don't 
+            // display widget. Also, allows implementations that use advanced search
+            // without the advanced search UI to work without default mapping
+            if (root != null) {
 
+            	add(new SimpleCategoryFilterWidget(root));
+            } else {
+            	add(new SimpleCategoryFilterWidget());
+            }
             add(new ContentTypeFilterWidget());
             add(new VersionFilterComponent(context));
         }

@@ -43,7 +43,7 @@ public class SimpleCategoryFilterWidget extends CategoryFilterWidget {
     /**
      * Creates a new category filter
      */
-    protected SimpleCategoryFilterWidget() {
+    public SimpleCategoryFilterWidget() {
         m_roots = new Category[0];
     }
 

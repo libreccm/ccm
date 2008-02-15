@@ -22,6 +22,7 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.IntegerParameter;
+import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
 
 import java.util.StringTokenizer;
@@ -43,6 +44,8 @@ public final class SearchConfig extends AbstractConfig {
     private final Parameter m_numThreads;
     private final Parameter m_searchTimeout;
     private final Parameter m_showSponsoredLinks;
+    private final Parameter m_maxRemoteResults;
+    private final Parameter m_remoteSearchContentSections;
 
     private final Parameter m_simpleRestrictTo;
     private String[] simpleRestrictToArray;
@@ -57,6 +60,12 @@ public final class SearchConfig extends AbstractConfig {
         m_showSponsoredLinks = new BooleanParameter
             ("com.arsdigita.london.search.show_sponsored_links",
              Parameter.REQUIRED, Boolean.FALSE);
+        m_maxRemoteResults = new IntegerParameter
+            ("com.arsdigita.london.search.max_remote_results",
+             Parameter.REQUIRED, new Integer(50));
+        m_remoteSearchContentSections = new StringArrayParameter
+            ("com.arsdigita.london.search.remote_search_content_sections",
+              Parameter.OPTIONAL, null);
         m_simpleRestrictTo = new StringParameter
             ("com.arsdigita.london.search.simple_restrict_to",
              Parameter.OPTIONAL, "");
@@ -64,6 +73,8 @@ public final class SearchConfig extends AbstractConfig {
         register(m_numThreads);
         register(m_searchTimeout);
         register(m_showSponsoredLinks);
+        register(m_maxRemoteResults);
+        register(m_remoteSearchContentSections);
         register(m_simpleRestrictTo);
         loadInfo();
     }
@@ -82,8 +93,25 @@ public final class SearchConfig extends AbstractConfig {
         return (Boolean) get(m_showSponsoredLinks);
     }
 
+    public final Integer getMaxRemoteResults() {
+        return (Integer) get(m_maxRemoteResults);
+    }
+
     public final String getSimpleRestrictTo() {
         return (String) get(m_simpleRestrictTo);
+    }
+
+    /**
+     * When this server is the target of a remote search, this
+     * parameter enables us to filter by content section - so for
+     * example, we can prevent results from subsites being
+     * available externally is we specify the main site content
+     * section. If parameter is unset, then all content sections
+     * are searched
+     * @return
+     */
+    public final String[] getRemoteSearchContentSections() {
+        return (String[])get(m_remoteSearchContentSections);
     }
 
     public final String[] getSimpleRestrictToArray() {
