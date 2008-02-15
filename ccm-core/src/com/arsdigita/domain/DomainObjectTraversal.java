@@ -22,9 +22,12 @@ import com.arsdigita.util.Assert;
 
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.persistence.metadata.Property;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
+import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 
@@ -323,15 +326,38 @@ public abstract class DomainObjectTraversal {
 
                 endRole(obj, path, prop);
             } else if (propValue instanceof DataAssociation) {
+            	
+            	
+            	// see #25808 - this hack prevents the content field of cms_files 
+            	// (which is a blob) from being queried when all we need is a list
+            	// of the files on an item..
+            	if (prop.getName().equals("fileAttachments") && !Domain.getConfig().queryBlobContentForFileAttachments()) { // make true a config
+            		DataQuery fileAttachmentsQuery = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.contentassets.fileAttachmentsQuery");
+            		
+            		fileAttachmentsQuery.setParameter("item_id", obj.getOID().get("id"));
+            		
+            		DataCollection files = new DataQueryDataCollectionAdapter(fileAttachmentsQuery, "file");
+            		
+            		while(files.next()) {
+            			DataObject file = files.getDataObject();
+            			walk(adapter, 
+                                DomainObjectFactory.newInstance
+                                (file),
+                                appendToPath(path, propName),
+                                context,
+                                null);
+            		}
+            		
+            	} else { 
+            	
                 if( s_log.isDebugEnabled() ) {
                     s_log.debug( prop.getName() + " is a DataAssociation" );
                 }
-
                 beginAssociation(obj, path, prop);
-
+                
                 DataAssociationCursor daCursor =
                     ((DataAssociation)propValue).getDataAssociationCursor();
-
+                
                 while (daCursor.next()) {
                     DataObject link = daCursor.getLink();
                     DomainObject linkObj = null;
@@ -345,8 +371,8 @@ public abstract class DomainObjectTraversal {
                          context,
                          linkObj);
                 }
-
                 endAssociation(obj, path, prop);
+            	}
             } else {
                 // Unknown property value type - do nothing
             }

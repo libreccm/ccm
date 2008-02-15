@@ -14,10 +14,10 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 alter table application_types
-add    (container_group_id NUMBER);
+add    container_group_id integer;
 
 alter table applications 
-add   (container_group_id NUMBER);
+add   container_group_id integer;
 
 alter table application_types add
     constraint applic_typ_cont_gro_id_f_lszuh foreign key (container_group_id)
