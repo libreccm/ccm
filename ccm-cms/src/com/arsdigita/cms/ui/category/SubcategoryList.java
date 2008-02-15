@@ -81,7 +81,7 @@ public class SubcategoryList extends SortableCategoryList {
             if (category != null && category.hasChildCategories()) {
                 CategoryCollection children = category.getChildren();
                 String order = ContentSection.getConfig().getCategoryTreeOrder();
-                order = order = Category.SORT_KEY.equals(order) ? "link." + order : order;
+                order = Category.SORT_KEY.equals(order) ? "link." + order : order;
                 children.addOrder(order);
              //   children.addOrder("link." + Category.SORT_KEY);
                 return new CategoryCollectionListModel(children);
