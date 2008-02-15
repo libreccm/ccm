@@ -322,10 +322,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                 if (PARENT.equals(name)) {
                     ContentItem ci = (ContentItem) dobj;
 
-                    if (newVal == null) {
-                        PermissionService.setContext
-                            (ci, ci.getContentSection());
-                    } else {
+                    if (newVal != null) {
                         PermissionService.setContext
                             (ci.getOID(), ((DataObject) newVal).getOID());
                     }
@@ -429,22 +426,28 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
     }
 
+    /*  
+     
+     removed cg - object observer sets context based 
+     on parent whenever parent is updated 
+     
     protected void afterSave() {
         super.afterSave();
-
+	s_log.info("******After Save of object " + getOID());
         // Set the object's context to its parent object for
         // permissioning.
         if (m_wasNew) {
             final ACSObject parent = getParent();
-
             if (parent == null) {
+		s_log.info("parent is null - set context to content section"); 
                 PermissionService.setContext(this, getContentSection());
             } else {
+		s_log.info("parent is " + parent.getOID());
                 PermissionService.setContext(this, parent);
             }
         }
     }
-
+    */
     private void setDefaultContentSection() {
         s_log.debug("Setting the default content section");
 

@@ -104,7 +104,9 @@ public class TextPageBody extends TextAssetBody {
         TextPage item = getTextPage(s);
         TextAsset t = new TextAsset();
         t.setName(item.getName() + "_text_" + item.getID());
-        t.setParent(item);
+        // no need - cg. Text doesn't need a security context,
+        // and ownership of text is recorded in text_pages
+        // t.setParent(item);
         return t;
     }
 
@@ -118,7 +120,10 @@ public class TextPageBody extends TextAssetBody {
     protected void updateTextAsset(PageState s, TextAsset a) {
         TextPage t = getTextPage(s);
         Assert.assertNotNull(t);
-        a.setParent(t);
+        // no need - cg. Text doesn't need a security context,
+        // and ownership of text is recorded in text_pages
+        
+        //  a.setParent(t);
         t.setTextAsset(a);
         a.save();
         t.save();
