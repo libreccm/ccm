@@ -78,26 +78,39 @@ public abstract class AbstractDomainObjectDetails
         Iterator actions = getDomainObjectActions();
         while (actions.hasNext()) {
             String action = (String)actions.next();
-			boolean actionVisible = true;
-			PrivilegeDescriptor privilege =	getDomainObjectActionPrivilege(action);
-			if (privilege != null) {
-				Party party = Kernel.getContext().getParty();
-				if (party == null) {
-					party = Kernel.getPublicUser();
-				}
-				Assert.truth(dobj.getObjectType().isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE),
-					"I can only check permissions on ACS Objects - this domain Object is not a subtype of ACSObject ");
-
-				PermissionDescriptor permission =	new PermissionDescriptor(privilege,(ACSObject) dobj,party);
-				actionVisible = PermissionService.checkPermission(permission);
-			}
-			if (actionVisible) {
-            Element actionEl = parent.newChildElement(m_prefix + ":action",
-                                                      getNamespace());
-            actionEl.addAttribute("name", action);
-            actionEl.addAttribute("url", 
-                                  getDomainObjectActionLink(state, dobj, action));
-        }
+	    if (isActionVisible(action, dobj, state)) {
+		Element actionEl = parent.newChildElement(m_prefix + ":action",
+					getNamespace());
+		actionEl.addAttribute("name", action);
+		actionEl.addAttribute("url", getDomainObjectActionLink(state,
+					dobj, action));
+	    }
+	}
     }
-}
+
+    /**
+     * determine whether this action should be rendered. Default
+     * implementation returns true unless a privilege has been 
+     * specified for the action in which case a permission check 
+     * is carried out for the current user.
+     * @param action
+     * @param dobj
+     * @param state
+     * @return
+     */
+    protected boolean isActionVisible (String action, DomainObject dobj, PageState state) {
+	boolean actionVisible = true;
+	PrivilegeDescriptor privilege =	getDomainObjectActionPrivilege(action);
+	if (privilege != null) {
+	    Party party = Kernel.getContext().getParty();
+	    if (party == null) {
+		party = Kernel.getPublicUser();
+	    }
+	    Assert.truth(dobj.getObjectType().isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE),
+				"I can only check permissions on ACS Objects - this domain Object is not a subtype of ACSObject ");
+	    PermissionDescriptor permission =	new PermissionDescriptor(privilege,(ACSObject) dobj,party);
+	    actionVisible = PermissionService.checkPermission(permission);
+	}
+	return actionVisible;
+    }
 }

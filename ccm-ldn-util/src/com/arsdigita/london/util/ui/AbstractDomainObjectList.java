@@ -25,8 +25,15 @@ import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 
 import com.arsdigita.xml.Element;
+import com.arsdigita.util.Assert;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.Web;
@@ -95,11 +102,50 @@ public abstract class AbstractDomainObjectList
         Iterator actions = getDomainObjectActions();
         while (actions.hasNext()) {
             String action = (String)actions.next();
+            
+            if (isActionVisible(action, dobj, state)) {
             Element el = generateActionXML(state, dobj, action);
             objEl.addContent(el);
         }
+        }
+        
+              
+        
+        
         return objEl;
     }
+    
+    /**
+	 * determine whether this action should be rendered. Default
+	 * implementation returns true unless a privilege has been 
+	 * specified for the action in which case a permission check 
+	 * is carried out for the current user.
+	 * @param action
+	 * @param dobj
+	 * @param state
+	 * @return
+	 */
+	protected boolean isActionVisible (String action, DomainObject dobj, PageState state) {
+    	boolean actionVisible = true;
+        PrivilegeDescriptor privilege = getDomainObjectActionPrivilege(action);
+        if (privilege != null) {
+            Party party = Kernel.getContext().getParty();
+            if (party == null) {
+                party = Kernel.getPublicUser();
+            }
+            Assert
+                    .truth(
+                            dobj.getObjectType().isSubtypeOf(
+                                    ACSObject.BASE_DATA_OBJECT_TYPE),
+                            "I can only check permissions on ACS Objects - this domain Object is not a subtype of ACSObject ");
+
+            PermissionDescriptor permission = new PermissionDescriptor(
+                    privilege, (ACSObject) dobj, party);
+            actionVisible = PermissionService.checkPermission(permission);
+        }
+        return actionVisible;
+    }
+    
     
     protected Element generatePaginatorXML(PageState state,
                                            DomainCollection objs) {
