@@ -47,7 +47,7 @@ query PageNumberForArticleSection {
 		from   ct_mp_sections a,
 		 	   ct_mp_sections b
 
-		where  a.page_break=1
+		where  a.page_break = '1'
 		and   a.rank < b.rank
 		and   a.article_id = b.article_id
 		and   b.section_id = :section
