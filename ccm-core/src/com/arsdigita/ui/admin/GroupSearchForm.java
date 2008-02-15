@@ -101,10 +101,11 @@ public class GroupSearchForm extends Form implements FormProcessListener, AdminC
 			excludedList.add(subgroups.getGroup().getID());
 		}
 		GroupCollection supergroups = parent.getAllSupergroups();
-				List supergroupsList = new ArrayList();
 				while (supergroups.next()) {
 					excludedList.add(supergroups.getGroup().getID());
 				}
+				// make sure we can't add current group as child of itself!!!
+				excludedList.add(parent.getID());
 		
 		if (!excludedList.isEmpty()) {
 		

@@ -66,6 +66,7 @@ public final class WebConfig extends AbstractConfig {
     private final Parameter m_dynamic_host_provider;
     private final Parameter m_deactivate_cache_host_notifications;
     private final Parameter m_secureRequired;
+    private final Parameter m_secureSwitchBack;
 
     public WebConfig() {
         m_scheme = new DefaultSchemeParameter
@@ -113,6 +114,9 @@ public final class WebConfig extends AbstractConfig {
         m_secureRequired = new StringArrayParameter(
                 "waf.web.secure_required", Parameter.OPTIONAL, null);
 
+        m_secureSwitchBack = new StringArrayParameter (
+               "waf.web.secure_switchback", Parameter.OPTIONAL, null);
+
         m_dynamic_host_provider = new StringParameter
             ("waf.web.dynamic_host_provider", Parameter.OPTIONAL, "");
 
@@ -131,6 +135,7 @@ public final class WebConfig extends AbstractConfig {
         register(m_dynamic_host_provider);
         register(m_deactivate_cache_host_notifications);
         register(m_secureRequired);
+        register(m_secureSwitchBack);
 
         loadInfo();
     }
@@ -152,6 +157,18 @@ public final class WebConfig extends AbstractConfig {
         if (secured != null) {
             for (int i=0, n=secured.length; i<n; i++) {
                 if (uri.startsWith(secured[i])) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public final boolean isNonSecureSwitchRequired(String uri) {
+        String[] switchBack = (String[])get(m_secureSwitchBack);
+        if (switchBack != null) {
+            for (int i=0, n=switchBack.length; i<n; i++) {
+                if (uri.startsWith(switchBack[i])) {
                     return true;
                 }
             }
