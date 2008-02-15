@@ -12,8 +12,8 @@
                 <xsl:for-each select="nav:item">
                 <a>
                 <xsl:attribute name="href"><xsl:value-of select="nav:path" /></xsl:attribute>
-                <xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='title']" /></xsl:attribute>
-                <xsl:value-of select="nav:attribute[@name='title']" />
+                <xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='displayName']" /></xsl:attribute>
+                <xsl:value-of select="nav:attribute[@name='displayName']" />
                 </a>
                 <span class="hide">|</span>
                 </xsl:for-each>

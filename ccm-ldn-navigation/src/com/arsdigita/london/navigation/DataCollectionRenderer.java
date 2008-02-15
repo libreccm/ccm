@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -94,6 +95,10 @@ public class DataCollectionRenderer extends LockableImpl {
     public void setWrapAttributes(boolean wrapAttributes) {
         Assert.unlocked(this);
         m_wrapAttributes = wrapAttributes;
+    }
+
+    public List getAttributes () {
+    	return m_attributes;
     }
 
     /**

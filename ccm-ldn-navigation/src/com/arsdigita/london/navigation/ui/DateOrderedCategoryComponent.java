@@ -40,7 +40,7 @@ public class DateOrderedCategoryComponent extends SimpleComponent {
 	public void generateXML(PageState state, Element p) {
 		Element content = Navigation.newElement("dateOrderCategories");
 		exportAttributes(content);
-		Iterator it = Navigation.getConfig().getDateOrderedCategories().iterator();
+		Iterator it = Navigation.getConfig().getDateOrderedCategories(state).iterator();
 		while(it.hasNext()) {
 			Element categoryElement = content.newChildElement(Navigation.newElement("category"));
 			String[] category = StringUtils.split((String)it.next(), ':');

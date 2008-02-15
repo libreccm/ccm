@@ -18,6 +18,8 @@
 
 package com.arsdigita.london.navigation;
 
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -80,6 +82,13 @@ public final class NavigationConfig extends AbstractConfig {
     private static Set s_fixedDateOrderCats = null;
 
     private Category m_defaultCategoryRoot = null;
+
+    // maybe 2 lookups in a single request so prevent double overhead
+    private RequestLocal m_allDateOrderCategories = new RequestLocal () {
+        public Object initialValue (PageState state) {
+            return getCurrentDateOrderCategories();
+        }
+    };
 
     private NavigationModel m_defaultModel = null;
 
@@ -287,7 +296,21 @@ public final class NavigationConfig extends AbstractConfig {
      * in config
      * @return
      */
-    public final Collection getDateOrderedCategories() {
+    public Collection getDateOrderedCategories(PageState state) {
+        Collection categories = null;
+        if (state == null) {
+            categories = getCurrentDateOrderCategories();
+        } else {
+            categories =  (Collection)m_allDateOrderCategories.get(state);
+        }
+        return categories;
+    }
+
+    public boolean isDateOrderedCategory (Category cat, PageState state) {
+        return getDateOrderedCategories(state).contains(cat.getID().toString());
+    }
+
+    private Collection getCurrentDateOrderCategories () {
 	if (s_fixedDateOrderCats == null) {
   	    populateFixedDateOrderCats();
 	}

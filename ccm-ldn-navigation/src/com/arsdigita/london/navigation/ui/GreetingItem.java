@@ -79,6 +79,10 @@ public class GreetingItem extends AbstractComponent {
         if (PermissionService.checkPermission(edit)) {
         	content.addAttribute("canEdit", "true");
         }
+        PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
+        if (PermissionService.checkPermission(publish)) {
+        	content.addAttribute("canPublish", "true");
+        }
         
         ContentBundle bundle = (ContentBundle)item;
         ContentItem baseItem = bundle.getPrimaryInstance();

@@ -58,6 +58,11 @@ public abstract class AbstractObjectList
     
     protected DataCollection getObjects(HttpServletRequest request,
                                         HttpServletResponse response) {
+    	// definition needs to know if the renderer is rendering a date 
+    	// attribute so that it can decide whether to order by date for 
+    	// a date order category
+    	m_definition.setDateAttribute(m_renderer);
+       
         return m_definition.getDataCollection(getModel());
     }
 

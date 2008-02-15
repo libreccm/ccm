@@ -18,6 +18,7 @@
 
 package com.arsdigita.london.navigation;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Category;
 
 
@@ -33,12 +34,16 @@ import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.SessionManager;
 
 import com.arsdigita.persistence.metadata.ObjectType;
+import com.arsdigita.persistence.metadata.Property;
 
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+
+import org.apache.log4j.Logger;
 
 /**
  * A class for building up a definition of parameters to
@@ -58,6 +63,8 @@ public class DataCollectionDefinition extends LockableImpl {
     private ArrayList m_excludedTypes = new ArrayList();
     private ArrayList m_properties = new ArrayList();
     
+    private String m_dateAttribute = null;
+
     public final void setObjectType(String objectType) {
         Assert.unlocked(this);
         validateObjectType(objectType);
@@ -77,6 +84,39 @@ public class DataCollectionDefinition extends LockableImpl {
         Assert.unlocked( this );
 
         m_excludedTypes.add( specificObjectType );
+    }
+
+    private static Logger s_log = Logger.getLogger(DataCollectionDefinition.class);
+
+    public void setDateAttribute (DataCollectionRenderer renderer) {
+        ObjectType type = SessionManager.getMetadataRoot().getObjectType(m_objectType);
+        s_log.debug("set date attribute for collection of " + type.getQualifiedName());
+        if (s_log.isDebugEnabled()) {
+            Iterator properties = type.getProperties();
+            while (properties.hasNext()) {
+                Property prop = (Property)properties.next();
+                s_log.debug("object has property " + prop.getName() + " of class " + prop.getJavaClass().getName());
+            }
+        }
+        Iterator it = (renderer.getAttributes().iterator());
+        while (it.hasNext()) {
+            String attribute = (String)it.next();
+            s_log.debug("renderer is rendering attribute: " + attribute);
+            Property property = type.getProperty(attribute);
+            s_log.debug("property of object: " + property);
+            if (property != null) {
+                s_log.debug("Property class is " + property.getJavaClass().getName());
+            }
+            if (property != null && property.getJavaClass().getName().equals(Date.class.getName())) {
+                m_dateAttribute = attribute;
+                // if more than one date attribute is specified for the type included in this
+                // definition, then we cannot determine in the code which is to be used as the
+                // basis for ordering in XSL - therefore return the first encountered date.
+                // User can control which of the dates is used as basis for sorting by specifying
+                // that date attribute first in the navigation jsp
+                break;
+            }
+        }
     }
 
     private final void validateObjectType(String objectType) {
@@ -132,6 +172,17 @@ public class DataCollectionDefinition extends LockableImpl {
             DataCollectionProperty property = (DataCollectionProperty)
                 properties.next();
             property.addProperty( objects );
+        }
+
+        // for date ordered categories, if pagination occurs, we need to ensure
+        // that primary ordering is the date attribute included in the renderer
+        // if there is one
+        s_log.debug("Category is " + model.getCategory().getID() + ": " + model.getCategory().getName());
+        s_log.debug("getting data collection. Is category date ordered? "  
+            + Navigation.getConfig().isDateOrderedCategory(model.getCategory(), PageState.getPageState()) 
+            + " date attribute has been set to " + m_dateAttribute);
+        if (Navigation.getConfig().isDateOrderedCategory(model.getCategory(), PageState.getPageState()) && m_dateAttribute != null) {
+            objects.addOrder(m_dateAttribute + " desc");
         }
 
         if (m_ordering.size() > 0) {
