@@ -21,6 +21,7 @@ package com.arsdigita.london.util.cmd;
 import com.arsdigita.london.util.Program;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.persistence.CompoundFilter;
+import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -29,6 +30,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.Folder;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
@@ -56,6 +58,13 @@ public class BulkUnpublish extends Program {
             .withLongOpt( "types" )
             .withDescription( "Restrict unpublishing to items of the specified content types" )
             .create( "t" ) );
+        options.addOption(
+  			  OptionBuilder
+  			  .hasArg()
+  			  .withLongOpt( "restrictToFolderId" )
+  			  .withDescription( "Restrict publishing to items within the folder with the specified id" )
+  			  .create( "f" ) );
+        
         options.addOption
             (OptionBuilder
              .hasArg(false)
@@ -65,6 +74,7 @@ public class BulkUnpublish extends Program {
     }
 
     protected void doRun(CommandLine cmdLine) {
+    	final int folderId;
         final String[] types;
         final boolean ignoreErrors = cmdLine.hasOption("i");
 
@@ -79,6 +89,13 @@ public class BulkUnpublish extends Program {
             types = null;
             System.out.println( "Unpublishing all live items" );
         }
+        if (cmdLine.hasOption("f")) {
+            folderId = Integer.parseInt(cmdLine.getOptionValue("f"));
+            Folder folder = new Folder(new OID(Folder.BASE_DATA_OBJECT_TYPE, folderId));
+            	System.out.println( "Unpublishing items in folder: " + folder.getDisplayName());
+        } else {
+        	folderId = -1;
+        }
 
         final List toUnpublish = new ArrayList();
         new Transaction() {
@@ -89,12 +106,17 @@ public class BulkUnpublish extends Program {
                 items.addEqualsFilter("version", ContentItem.LIVE);
                 items.addOrder("title");
 
+                FilterFactory filterFactory = items.getFilterFactory();
+
+                if (folderId >= 0) {
+        		    Filter filter = filterFactory.simple(" ancestors like '%/" + folderId + "/%'");
+        		    items.addFilter(filter);
+        		}
                 if( null != types ) {
-                    FilterFactory ff = items.getFilterFactory();
-                    CompoundFilter or = ff.or();
+                    CompoundFilter or = filterFactory.or();
 
                     for( int i = 0; i < types.length; i++ ) {
-                        or.addFilter( ff.equals( "objectType", types[i] ) );
+                        or.addFilter( filterFactory.equals( "objectType", types[i] ) );
                     }
 
                     items.addFilter( or );
