@@ -37,6 +37,7 @@ import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -159,6 +160,9 @@ public class TermWidget extends Widget {
         if (sortKey != null) {
             el.addAttribute("sortKey", sortKey.toString());
         }
+        // sort order attribute added to every node so that we can 
+        // correctly transform xml fragments returned by ajax 
+        el.addAttribute("order", ContentSection.getConfig().getCategoryTreeOrder());
 
         StringBuffer path = new StringBuffer(parent.getAttribute("fullname"));
         if (path.length() > 0) path.append(" > ");
@@ -224,12 +228,13 @@ public class TermWidget extends Widget {
         Element el = generateCategory(parent, root, ids, null);
         el.addAttribute("fullname", root.getName());
         el.addAttribute("node-id", root.getID().toString());
-		
+        el.addAttribute("order", ContentSection.getConfig().getCategoryTreeOrder());
 	if (Aplaws.getAplawsConfig().ajaxExpandAllBranches()) {
 	    //	recognisable attribute has to be in the XML for each snippet that is transformed,
 	    // hence add it to the parent
 	    el.addAttribute("expand",  "all" );
 	}	
+	
 	List roots = (List) children.get(root.getID());
         if (null != roots) {
             Iterator i = roots.iterator();
