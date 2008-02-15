@@ -20,6 +20,7 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentItem;
 
 // object type to hold Contact content type
 object type Contact extends ContentPage {
@@ -43,3 +44,46 @@ object type Contact extends ContentPage {
 
     reference key ( ct_contacts.contact_id );
 }
+
+association {
+
+		Contact[0..1] associatedContactForItem =
+                join cms_items.item_id to contact_content_item_map.item_id,
+                join contact_content_item_map.contact_id to ct_contacts.contact_id;
+        ContentItem[0..n] associatedContentItemsForContact =
+                join ct_contacts.contact_id to contact_content_item_map.contact_id,
+                join contact_content_item_map.item_id to cms_items.item_id;
+        
+	}
+	
+// the above association works fine for adding but for some strange reason when
+// you try to remove an item from the association it also tries to delete it
+// so instead you have to use a data operation
+
+data operation removeContactFromContentItemAssociation {
+	do {
+		delete from contact_content_item_map where item_id = :itemID		
+	}	
+}
+
+data operation removeContactFromAllAssociations {
+	do {
+		delete from contact_content_item_map where contact_id = :contactID
+	}
+}
+
+query getContactForItem {
+	BigDecimal contactID;
+	BigDecimal itemID;
+	do {
+		select contact_id, item_id 
+			from 
+		contact_content_item_map
+			where
+		item_id = :itemID
+	} map { 
+		contactID = contact_id;
+		itemID = item_id;
+	}
+}
+

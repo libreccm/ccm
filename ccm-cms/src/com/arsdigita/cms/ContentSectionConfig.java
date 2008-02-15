@@ -123,6 +123,7 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_deleteLifecycleWhenComplete;
     private final Parameter m_deleteExpiryNotificationsWhenSent;
     private final Parameter m_deleteWorkflowNotificationsWhenSent;
+	private final Parameter m_hasContactsAuthoringStep;
     private final Parameter m_categoryTreeOrdering;
     
     /**
@@ -353,6 +354,11 @@ public final class ContentSectionConfig extends AbstractConfig {
 	((EnumerationParameter)m_categoryTreeOrdering).put("SortKey", Category.SORT_KEY ); 
 	((EnumerationParameter)m_categoryTreeOrdering).put("Alphabetical", Category.NAME);	
 
+        m_hasContactsAuthoringStep = new BooleanParameter
+        ("com.arsdigita.cms.has_contacts_authoring_step",
+                Parameter.REQUIRED, new Boolean(false));
+        
+
         register(m_templateRootPath);
         register(m_defaultItemTemplatePath);
         register(m_defaultFolderTemplatePath);
@@ -399,6 +405,7 @@ public final class ContentSectionConfig extends AbstractConfig {
         register(m_deleteExpiryNotificationsWhenSent);
         register(m_deleteWorkflowNotificationsWhenSent);
         register(m_categoryTreeOrdering);
+		register(m_hasContactsAuthoringStep);
         loadInfo();
     }
 
@@ -739,5 +746,10 @@ public final class ContentSectionConfig extends AbstractConfig {
         
 	public String getCategoryTreeOrder () {
         	return (String)get(m_categoryTreeOrdering);
-        }        
+        }  
+
+	public boolean getHasContactsAuthoringStep() {
+		return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
+	}
+      
 }
