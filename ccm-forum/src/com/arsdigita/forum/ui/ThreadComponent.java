@@ -19,6 +19,7 @@
 package com.arsdigita.forum.ui;
 
 import com.arsdigita.forum.ForumContext;
+import com.arsdigita.forum.Post;
 import com.arsdigita.forum.ThreadSubscription;
 import com.arsdigita.forum.ui.admin.RejectionForm;
 
@@ -59,8 +60,8 @@ public class ThreadComponent extends ModalContainer implements Constants {
     // References to sub-components for event access.
 
     private Container m_threadView;
-    private Form m_editForm;
-    private Form m_replyForm;
+    private PostForm m_rootForm;
+    private PostForm m_replyForm;
     private Form m_rejectForm;
 
     private static final Logger s_log 
@@ -83,15 +84,18 @@ public class ThreadComponent extends ModalContainer implements Constants {
     private void initComponents() {
         // Add the thread components to the modal container and maintain
         // references for event manipulation purposes.
-        m_editForm = new EditPostForm(m_postModel);
+       s_log.debug("creating edit post form");
+        m_rootForm = new RootPostForm(m_postModel);
         m_replyForm = new ReplyToPostForm(m_postModel);
+        s_log.debug("creating reply to post form");
+        s_log.debug("creating reject form");
         m_rejectForm = new RejectionForm(m_postModel);
-        addForm(m_editForm);
+        addForm(m_rootForm);
         addForm(m_replyForm);
         addForm(m_rejectForm);
 
         m_threadView = new SimpleContainer();        
-        Container linksPanel = new SimpleContainer("forum:threadOptions", 
+        Container linksPanel = new SimpleContainer(FORUM_XML_PREFIX + ":threadOptions", 
                                                    Constants.FORUM_XML_NS);
 
         // Offer links to return to index or control alerts.
@@ -119,11 +123,21 @@ public class ThreadComponent extends ModalContainer implements Constants {
     }
 
     public void makeEditFormVisible(PageState state) {
-        setVisibleComponent(state, m_editForm);
+		s_log.debug("making edit form visible");
+        Post post = (Post)m_postModel.getSelectedObject(state);
+        if (post.getRoot() == null) {
+        	m_rootForm.setContext(state, ReplyToPostForm.EDIT_CONTEXT);
+			setVisibleComponent(state, m_rootForm);
+        } else {
+        	m_replyForm.setContext(state, ReplyToPostForm.EDIT_CONTEXT);
+        	setVisibleComponent(state, m_replyForm);
+        }
+        
     }
 
     public void makeReplyFormVisible(PageState state) {
-        s_log.debug("making reply form invisible");
+        s_log.debug("making reply form visible");
+        m_replyForm.setContext(state, PostForm.REPLY_CONTEXT);
         setVisibleComponent(state, m_replyForm);
     }
 
@@ -135,12 +149,14 @@ public class ThreadComponent extends ModalContainer implements Constants {
      * Creates the component for viewing a thread.
      */
     
-    private final void addForm(Form form) {
+    private final void addForm(final Form form) {
         add(form);
         form.addCompletionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     s_log.debug("FORM ACTION COMPLETED");
-                    makeListViewVisible(e.getPageState());
+					PageState ps = e.getPageState();
+					// ps.reset(form);
+                    makeListViewVisible(ps);
                 }
                 });
 
@@ -148,7 +164,8 @@ public class ThreadComponent extends ModalContainer implements Constants {
                 public void cancel(FormSectionEvent e) {
                     s_log.debug("fire cancel listener");
                     PageState ps = e.getPageState();
-                    makeListViewVisible(e.getPageState());
+                   // ps.reset(form);
+                    makeListViewVisible(ps);
                 }
             });
     }

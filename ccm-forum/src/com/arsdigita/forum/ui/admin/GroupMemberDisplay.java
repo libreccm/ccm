@@ -21,17 +21,20 @@ package com.arsdigita.forum.ui.admin;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.forum.ui.Constants;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.xml.Element;
+
 import java.math.BigDecimal;
 
 
 
-public abstract class GroupMemberDisplay extends MembersDisplay {
+public abstract class GroupMemberDisplay extends MembersDisplay implements Constants {
 
     protected abstract Group getGroup(PageState ps);
 
@@ -64,6 +67,13 @@ public abstract class GroupMemberDisplay extends MembersDisplay {
         Group group = getGroup(ps);
         group.removeMemberOrSubgroup(party);
         group.save();
+        
+    }
+    
+    public void generateXML(PageState state, Element parent) {
+    	Element container = parent.newChildElement(FORUM_XML_PREFIX + ":memberList", FORUM_XML_NS);
+    	container.addAttribute("group", getGroup(state).getName());
+    	super.generateXML(state, container);
     }
 
 }

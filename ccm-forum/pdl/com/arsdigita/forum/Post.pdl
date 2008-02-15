@@ -21,6 +21,9 @@ model com.arsdigita.forum;
 
 import com.arsdigita.messaging.ThreadedMessage; 
 import com.arsdigita.kernel.Party;
+import com.arsdigita.cms.FileAsset;
+import com.arsdigita.cms.ImageAsset;
+
 
 object type Post extends com.arsdigita.messaging.ThreadedMessage {
     
@@ -28,6 +31,31 @@ object type Post extends com.arsdigita.messaging.ThreadedMessage {
     reference key(forum_posts.post_id);
     aggressive load(moderator.id);
 }
+
+object type PostFileAttachment extends FileAsset {
+    Integer[0..1] fileOrder = forum_post_files.file_order INTEGER;
+    reference key (forum_post_files.file_id);
+}
+
+object type PostImageAttachment extends ImageAsset {
+    Integer[0..1] imageOrder = forum_post_images.image_order INTEGER;
+    reference key (forum_post_images.image_id);
+}
+
+association {
+
+    composite Post[0..1] fileMessage = join forum_post_files.post_id to forum_posts.post_id;
+    component PostFileAttachment[0..n] files = join forum_posts.post_id to forum_post_files.post_id;
+
+}
+
+association {
+
+    composite Post[0..1] imageMessage = join forum_post_images.post_id to forum_posts.post_id;
+    component PostImageAttachment[0..n] images = join forum_posts.post_id to forum_post_images.post_id;
+
+}
+
 
 association {
    Party [0..1] moderator = join forum_posts.moderator to parties.party_id;
@@ -53,3 +81,20 @@ query threadModerationStatus {
         id = message_threads.thread_id;
     }
 }
+
+// Subquery for filtering out threads where root post is of a 
+// particular status (eg unconfirmed)
+//
+//query threadStatus {
+ //   BigDecimal id;
+//
+ //   do {
+   //     select m.thread_id 
+    //      from forum_posts f, 
+   //            message_threads m
+  //       where m.root_id = f.post_id
+  //       and f.status <> :status2
+  //  } map {
+  //      id = message_threads.thread_id;
+  //  }
+// }

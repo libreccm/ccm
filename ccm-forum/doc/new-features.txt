@@ -1,0 +1,86 @@
+Main new features included in this release are:
+
+Fine grained forum permissions
+Allow file attachments and images in posts
+Contents of posts are searchable 
+New portlet type lising links to all forums user has read access to
+Allow automatic thread subscription for thread starter (useful for noticeboard type forums)
+Forum admin can prevent posts with no topic
+Expiry can be specified for all types of forum
+Reply count calculation fixed
+HTML Editor can be used for posts 
+Subscription emails can (and should) be sent as html emails)
+
+Other minor changes, fixes and configurable features are also included. 
+Check new config parameter descriptions in com.arsdigita.forum.ForumConfig_parameter.properties
+  
+After deployment, to install new features, either get rid of existing forum app, and load new version, OR 
+
+ccm upgrade ccm-forum --from-version 6.5.0 --to-version 6.5.1
+ccm upgrade ccm-forum --from-version 6.5.1 --to-version 6.5.2
+ccm-run com.arsdigita.london.search.Reindexer --object-type com.arsdigita.forum.Post
+
+
+
+When developing this, I tried to ensure that a basic deployment will not affect the XML 
+that is produced by the current forum application.
+
+I have tested the new implementation with Coventry's theme. There is one theme amendment required (because of a bug fix). 
+In current release, the drop down list for filtering threads by category has the same name as the drop down list for selecting a category when making a new post. This means that the selected value carries through . ie if you have filtered the threads then make a new post, the new post has the filter category selected as default. More importantly, if you make a post and assign a category, then the thread list is filtered after you complete the post.
+
+To fix the bug, I renamed the drop down list in the post form from topic to PostTopic. This means the category drop down is not visible until the two references to @name='topic' in the forum:postForm template are changed to @name='postTopic'
+
+Only other visible changes if the patch is applied without changing config
+are:
+
+Reply count only includes posts that have been approved
+
+Posts are searchable from the main site search. This is a change from the current behaviour . if not desired then it could be made configurable. 
+
+Moderation form and emails are formatted slightly differently
+
+recent forum postings portlet prevents users creating new forum application .
+only site admin can do this. Also filters forums to those that the user has
+read access on.
+
+New portlet . my forums. Lists links to forums that user has read access to.
+
+The other non-visble effect is that the wizard uses java session rather than
+hidden fields. This approach makes it much easier to include links in form
+steps (eg remove an uploaded file etc). The impact is that users in a load
+balanced environment need to consider session affinity. In our production
+environment, this is accomplished by the server that sprays requests to the
+various back end servers. It identifies each browser session and routes all
+their requests to the same back end server. Hence there is no replication of
+session - the user is guaranteed to end up at the server that holds their java
+session. As a result, when a backend server is stopped, there is a risk that a
+user with session on that server in the middle of creating a post will lose
+information entered up to that point. On our site we live with this small risk
+but mitigate it by restarting servers at unsociable hours where possible. 
+
+I have put examle theme files in
+ccm-ldn-aplaws/web/__ccm__/themes/aplaws/forum-example: forum-index.xsl,
+forum-index.css and the contents of images/forum
+
+To have a look at a forum using these files, copy the xsl and css to the top
+level of your theme and make a new forum directory in images and copy the
+images there. I.m afraid these files have continued the existing format of
+putting all the templates in a single file, so they are not the most easily
+maintained, and I make no guarantees about the content, but they do work. and
+if required they may be used as a basis for your own look and feel.
+
+
+There is a separate application - ccm-categorised-forum that adds category path and menu components to the front end, 
+and adds a categorisation tab for admin users. Load this application if you would like this functionality.
+
+When a forum is created, only site admin can access the admin tabs, 
+until you assign users/groups to the forum admin group under the permissions tab.
+
+Next things I plan to do are: 
+
+list pending and reapprove posts under the moderation tab
+create a user info page so users can write a bit about themselves
+allow thread branching so administrators can split long threads or threads that have strayed from the point.
+Allow different thread views - paginated full details, or tree of titles with one post visible (a la sourceforge)
+
+chris.gilbert@westsussex.gov.uk

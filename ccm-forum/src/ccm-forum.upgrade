@@ -5,4 +5,11 @@
   <version from="1.4.3" to="1.4.4">
     <script sql="ccm-forum/upgrade/::database::-1.4.3-1.4.4.sql"/>
   </version>
+  <version from="6.5.0" to="6.5.1">
+    <script sql="ccm-forum/upgrade/::database::-6.5.0-6.5.1.sql"/>
+    <script class="com.arsdigita.forum.upgrade.CreateGroupsAndPortletType"/>
+  </version>
+   <version from="6.5.1" to="6.5.2">
+    <script class="com.arsdigita.forum.upgrade.CreateContainerGroups"/>
+  </version>
 </upgrade>

@@ -27,7 +27,10 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.util.Assert;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
@@ -103,6 +106,15 @@ public final class ForumContext {
             // thread.assertPrivilege(PrivilegeDescriptor.READ);
             m_thread =  thread;
         } catch (DataObjectNotFoundException ex) {
+        	PageState state = PageState.getPageState();
+        	if (state != null) {
+       		    try {
+			state.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;
+		    } catch (IOException e) {
+			s_log.warn("Thread not found, but failed to send a response to user");
+	    	    }
+        	}
             throw new UncheckedWrapperException(
                 "Couldn't find a MessageThread for " + threadID, ex);
         }

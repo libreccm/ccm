@@ -77,7 +77,7 @@ public class ThreadList extends SimpleComponent implements Constants {
 
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement("forum:threadList", FORUM_XML_NS);
+        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":threadList", FORUM_XML_NS);
 
         ThreadCollection threads = getThreads(state);
 
@@ -113,7 +113,7 @@ public class ThreadList extends SimpleComponent implements Constants {
         
         while (threads.next()) {
             MessageThread thread = threads.getMessageThread();
-            Element threadEl = content.newChildElement("forum:thread", FORUM_XML_NS);
+            Element threadEl = content.newChildElement(FORUM_XML_PREFIX + ":thread", FORUM_XML_NS);
             
             ParameterMap map = new ParameterMap();
             map.setParameter(THREAD_PARAM, thread.getID());
@@ -139,7 +139,7 @@ public class ThreadList extends SimpleComponent implements Constants {
                                         long begin,
                                         long end,
                                         long objectCount) {
-        Element paginator = parent.newChildElement("forum:paginator", FORUM_XML_NS);
+        Element paginator = parent.newChildElement(FORUM_XML_PREFIX + ":paginator", FORUM_XML_NS);
         
         URL here = Web.getContext().getRequestURL();
         ParameterMap params = new ParameterMap(here.getParameterMap());

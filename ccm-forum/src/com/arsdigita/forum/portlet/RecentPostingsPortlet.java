@@ -36,7 +36,7 @@ import com.arsdigita.portal.apportlet.AppPortlet;
 
 
 public class RecentPostingsPortlet extends AppPortlet {
-    public static final String versionId = "$Id: RecentPostingsPortlet.java 755 2005-09-02 13:42:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:26:27 $";
+    public static final String versionId = "$Id: RecentPostingsPortlet.java 1628 2007-09-17 08:10:40Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:26:27 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.forum.RecentPostingsPortlet";
@@ -93,6 +93,7 @@ class RecentPostingsPortletRenderer
         Forum forum = (Forum)m_portlet.getParentApplication();
 
         content.addAttribute("noticeboard", (new Boolean(forum.isNoticeboard())).toString());
+        content.addAttribute("forumName", forum.getTitle());
 
         Party party = Kernel.getContext().getParty();
         

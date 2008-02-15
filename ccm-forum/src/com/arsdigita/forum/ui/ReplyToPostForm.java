@@ -19,12 +19,17 @@
 package com.arsdigita.forum.ui;
 
 import com.arsdigita.bebop.Container;
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.forum.Post;
 import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.Forum;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import org.apache.log4j.Logger;
 
@@ -37,79 +42,51 @@ import org.apache.log4j.Logger;
  */
 public class ReplyToPostForm extends PostForm  {
     public static final String versionId =
-        "$Id: ReplyToPostForm.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
+		"$Id: ReplyToPostForm.java 1628 2007-09-17 08:10:40Z chrisg23 $"
+			+ "$Author: chrisg23 $"
+			+ "$DateTime: 2004/08/17 23:26:27 $";
 
-    private static final Logger s_log = Logger.getLogger
-        (ReplyToPostForm.class);
-
-
-    private ACSObjectSelectionModel m_parent;
+	private static final Logger s_log = Logger.getLogger(ReplyToPostForm.class);
 
 
-    public ReplyToPostForm(ACSObjectSelectionModel parent) {
-        super("replyPostForm");
-        m_parent = parent;
+
+	public ReplyToPostForm(ACSObjectSelectionModel post) {
+		super("replyPostForm", post);
         setupComponent();
-    }
 
-    public void register(Page p) {
-        super.register(p);
-        
-        p.addGlobalStateParam(m_parent.getStateParameter());
-    }
-
-
-    protected Post getPost(PageState state,
-                           boolean create) {
-        if (create) {
-            Post post = (Post)((Post)m_parent.getSelectedObject(state)).replyTo();
-            post.setFrom(Kernel.getContext().getParty());
-            return post;
-        }
-        return null;
    }
 
-    protected Container dataEntryStep() {
-        Container entryStep =  super.dataEntryStep();
-        MessageView replyTo = new MessageView(m_parent);
-        entryStep.add(replyTo);
 
-        return entryStep;
-    }
     
-    protected void initWidgets(PageState state,
-                               Post post) {
-        super.initWidgets(state, post);
 
-        Post parent = (Post)m_parent.getSelectedObject(state);
-        String prefix  = "Re:";
-        String subject = parent.getSubject();
         
-        if (subject.length() < 3 ||
-            prefix.equalsIgnoreCase(subject.substring(0,3))) {
-            setSubject(state, subject);
-        } else {
-            setSubject(state, prefix + " " + subject);
-        }
+	protected PostTextStep getTextStep(ACSObjectSelectionModel post) {
+		return new ReplyToPostTextStep(post, this);
     }
     
-    protected void processWidgets(PageState state,
-                                  Post post) {
-        super.processWidgets(state, post);
+	/* (non-Javadoc)
+	 * @see com.arsdigita.forum.ui.PostForm#getPost(com.arsdigita.bebop.PageState)
+	 */
+	protected Post getPost(PageState state) {
+		Post reply;
+		if (getContext(state).equals(PostForm.REPLY_CONTEXT)) {
+			// post model contains the parent post, reply hasn't been created yet
+			Post parent = getSelectedPost(state);
+			reply = (Post) parent.replyTo();
+			Party party = Kernel.getContext().getParty();
+			if (party == null) {
+				// anonymous posts MUST be allowed if we have reached here
+				party = Kernel.getPublicUser();
+			}
 
-        ForumContext ctx = ForumContext.getContext(state);
-        Forum forum = ctx.getForum();
+			reply.setFrom(party);
 
-        if (forum.isModerated() &&
-            !ctx.canModerate()) {
-            post.setStatus(Post.PENDING);
         } else {
-            post.setStatus(Post.APPROVED);
+			// reply is the post in the post model
+			reply = getSelectedPost(state);
         }
+		return reply;
 
-        post.setRefersTo(forum);
     }
 
 }

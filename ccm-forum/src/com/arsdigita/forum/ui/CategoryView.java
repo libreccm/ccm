@@ -75,7 +75,7 @@ public class CategoryView extends SimpleContainer
 
         Container categories = new SimpleContainer();
 
-        Container linksPanel = new SimpleContainer("forum:topicOptions", 
+        Container linksPanel = new SimpleContainer(Constants.FORUM_XML_PREFIX + ":topicOptions", 
                                                    Constants.FORUM_XML_NS);
         m_addCategoryLink = new ToggleLink(new Label(Text.gz("forum.ui.newTopic")));
         m_addCategoryLink.setClassAttr("actionLink");

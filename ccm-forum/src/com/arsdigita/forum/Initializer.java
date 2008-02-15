@@ -18,55 +18,47 @@
  */
 package com.arsdigita.forum;
 
-import com.arsdigita.db.DbHelper;
+import org.apache.log4j.Logger;
+
 import com.arsdigita.bebop.RequestLocal;
-
+import com.arsdigita.db.DbHelper;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.xml.TraversalHandler;
-
+import com.arsdigita.forum.portlet.MyForumsPortlet;
+import com.arsdigita.forum.portlet.RecentPostingsPortlet;
+import com.arsdigita.forum.search.FileAttachmentMetadataProvider;
+import com.arsdigita.forum.search.PostMetadataProvider;
+import com.arsdigita.forum.ui.portlet.RecentPostingsPortletEditor;
+import com.arsdigita.kernel.ACSObjectInstantiator;
+import com.arsdigita.kernel.ResourceType;
+import com.arsdigita.kernel.ResourceTypeConfig;
+import com.arsdigita.kernel.URLService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.kernel.ui.ResourceConfigFormSection;
+import com.arsdigita.messaging.ThreadedMessage;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
-
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-
-import com.arsdigita.xml.XML;
-
-import com.arsdigita.kernel.URLFinder;
-import com.arsdigita.kernel.URLService;
-import com.arsdigita.kernel.NoValidURLException;
-import com.arsdigita.kernel.ACSObjectInstantiator;
-import com.arsdigita.kernel.ResourceTypeConfig;
-import com.arsdigita.kernel.ResourceType;
-import com.arsdigita.kernel.ui.ResourceConfigFormSection;
-
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.domain.DataObjectNotFoundException;
-
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.web.Application;
-import com.arsdigita.messaging.ThreadedMessage;
-
-import com.arsdigita.forum.portlet.RecentPostingsPortlet;
-import com.arsdigita.forum.ui.portlet.RecentPostingsPortletEditor;
+import com.arsdigita.runtime.LegacyInitEvent;
+import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.search.MetadataProviderRegistry;
 import com.arsdigita.web.ui.ApplicationConfigFormSection;
-
-import org.apache.log4j.Logger;
+import com.arsdigita.xml.XML;
 
 /**
  * The forum initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: Initializer.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public class Initializer extends CompoundInitializer {
     public final static String versionId =
-        "$Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
+		"$Id: Initializer.java 1628 2007-09-17 08:10:40Z chrisg23 $"
+			+ "$Author: chrisg23 $"
+			+ "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 
@@ -91,6 +83,29 @@ public class Initializer extends CompoundInitializer {
                 }
             });
         e.getFactory().registerInstantiator(
+				Post.BASE_DATA_OBJECT_TYPE,
+				new ACSObjectInstantiator() {
+					public DomainObject doNewInstance(DataObject dataObject) {
+						return new Post(dataObject);
+					}
+				});
+		
+		e.getFactory().registerInstantiator(
+				PostFileAttachment.BASE_DATA_OBJECT_TYPE,
+				new ACSObjectInstantiator() {
+					protected DomainObject doNewInstance(DataObject dataObject) {
+						return new PostFileAttachment(dataObject);
+					}
+				});
+				
+		e.getFactory().registerInstantiator(
+				PostImageAttachment.BASE_DATA_OBJECT_TYPE,
+				new ACSObjectInstantiator() {
+					protected DomainObject doNewInstance(DataObject dataObject) {
+						return new PostImageAttachment(dataObject);
+					}
+				});
+		e.getFactory().registerInstantiator(
             "com.arsdigita.forum.Inbox",
             new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
@@ -107,6 +122,14 @@ public class Initializer extends CompoundInitializer {
             });
 
         e.getFactory().registerInstantiator(
+				MyForumsPortlet.BASE_DATA_OBJECT_TYPE,
+				new ACSObjectInstantiator() {
+					protected DomainObject doNewInstance(DataObject dataObject) {
+						return new MyForumsPortlet(dataObject);
+					}
+				});
+
+		e.getFactory().registerInstantiator(
             ForumSubscription.BASE_DATA_OBJECT_TYPE,
             new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
@@ -128,42 +151,12 @@ public class Initializer extends CompoundInitializer {
         XML.parse(Forum.getConfig().getTraversalAdapters(),
                   new TraversalHandler());
         
-        URLFinder messageFinder = new URLFinder() {
-                public String find(OID oid, String context) 
-                    throws NoValidURLException {
 
-                    return find(oid);
-                }
-                public String find(OID oid) throws NoValidURLException {
-                    DataObject dobj = SessionManager.getSession().retrieve(oid);
                     
-                    if (dobj == null) {
-                        throw new NoValidURLException("No such data object " + oid);
-                    }
-
-                    Application app = Application.retrieveApplication(dobj);
-
-                    if (app == null) {
-                        throw new NoValidURLException
-                            ("Could not find application instance for " + dobj);
-                    }
-
-                    try {
-                        ThreadedMessage message = new ThreadedMessage(oid);
-                        
-                        String url = app.getPath() +
-                            "/thread.jsp?threadID=" +
-                            message.getThread().getID().toString();
-                        
-                        return url;
-                    } catch(DataObjectNotFoundException e) {
-                        throw new NoValidURLException
-                            ("Could not find application instance for " + dobj);
-                    }
-                }
-            };
         URLService.registerFinder(
-            ThreadedMessage.BASE_DATA_OBJECT_TYPE, messageFinder);
+			ThreadedMessage.BASE_DATA_OBJECT_TYPE,
+			new PostFinder());
+		URLService.registerFinder(PostFileAttachment.BASE_DATA_OBJECT_TYPE, new PostFileAttachmentURLFinder());
 
         new ResourceTypeConfig(RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE) {
             public ResourceConfigFormSection getCreateFormSection
@@ -183,15 +176,20 @@ public class Initializer extends CompoundInitializer {
             }
         };
 
-        new ResourceTypeConfig(Forum.BASE_DATA_OBJECT_TYPE) {
+		// chris.gilbert@westsussex.gov.uk use new constructor that allows create form to be hidden from users other than those
+		// with admin rights on parent app. Particularly appropriate for portlet where users 
+		// customising their own homepage should NOT be allowed to create new forums
+		new ResourceTypeConfig(Forum.BASE_DATA_OBJECT_TYPE, PrivilegeDescriptor.ADMIN, PrivilegeDescriptor.READ) {
             public ResourceConfigFormSection getCreateFormSection
-                (final ResourceType resType, final RequestLocal parentAppRL) {
+				(final ResourceType resType,
+				final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
-                    new ApplicationConfigFormSection(resType, parentAppRL);
+					new ApplicationConfigFormSection(resType, parentAppRL, true);
                 
                 return config;
             }
             
+			
             public ResourceConfigFormSection getModifyFormSection
                 (final RequestLocal application) {
                 final ResourceConfigFormSection config =
@@ -201,5 +199,20 @@ public class Initializer extends CompoundInitializer {
             }
         };
 
+
+		MetadataProviderRegistry.registerAdapter(Post.BASE_DATA_OBJECT_TYPE, new PostMetadataProvider());
+		MetadataProviderRegistry.registerAdapter(PostFileAttachment.BASE_DATA_OBJECT_TYPE, new FileAttachmentMetadataProvider());
+		
+	}
+
+	public void init(LegacyInitEvent e) {
+		super.init(e);
+		
+		if (RuntimeConfig.getConfig().runBackGroundTasks()) {
+			RemoveUnattachedAssetsScheduler.startTimer();
     }
+	
+
+	}
+
 }

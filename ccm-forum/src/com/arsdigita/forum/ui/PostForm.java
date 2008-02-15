@@ -18,10 +18,10 @@
  */
 package com.arsdigita.forum.ui;
 
-import com.arsdigita.bebop.Container;
+import org.apache.log4j.Logger;
+
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.FormStep;
-import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Wizard;
@@ -29,20 +29,17 @@ import com.arsdigita.bebop.event.FormCancelListener;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
-import com.arsdigita.bebop.parameters.StringLengthValidationListener;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.forum.Forum;
+import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.Post;
+import com.arsdigita.forum.ThreadSubscription;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.security.UserContext;
-import com.arsdigita.toolbox.ui.TextTypeWidget;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.xml.Element;
-import com.arsdigita.util.HtmlToText;
-import com.arsdigita.util.MessageType;
-
-import org.apache.log4j.Logger;
 
 /**
  * Class PostForm
@@ -50,150 +47,235 @@ import org.apache.log4j.Logger;
  * @author Jon Orris (jorris@arsdigita.com)
  *
  * @version $Revision #1 $DateTime: 2004/08/17 23:26:27 $
+ * 
+ * rewritten Chris Gilbert.
+ * 
+ * Abstract form for behaviour shared by all types of post. Different types of
+ * post (new or reply) have different text screens, retrieved using
+ * the abstract getTextStep method and also may behave
+ * differently in final processing (final meaning on the last step
+ * of the wizard) by overriding the processWidgets method.
+ * 
+ * They all share the remainder of the steps (currently add files, add images and preview)
+ * and processing relating to shared behaviour
  */
 public abstract class PostForm extends Wizard implements Constants {
 
     public static final String versionId =
-        "$Id: PostForm.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
+		"$Id: PostForm.java 1628 2007-09-17 08:10:40Z chrisg23 $"
+			+ "$Author: chrisg23 $"
+			+ "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(PostForm.class);
 
-    private TextField m_subject;
-    private TextArea m_body;
-    private TextTypeWidget m_bodyType;
+	private PostTextStep m_textStep;
+	private ImagesStep m_attachImages;
+	private AttachedFilesStep m_attachFiles;
+	private ConfirmStep m_confirm;
+	private ACSObjectSelectionModel m_post;
 
+	/**
+	 * context is used because when editing, we might use the root post
+	 * form (with topic selection) or the reply to post form (without
+	 * topic selection). context allows form to behave appropriately
+	 * 
+	 */
+	private StringParameter m_context = new StringParameter("context");
+
+	public static final String NEW_CONTEXT = "new";
+	public static final String REPLY_CONTEXT = "reply";
+	public static final String EDIT_CONTEXT = "edit";
+
+	/**
+	 * 
+	 * Form used for new thread - no existing post object
+	 * 
+	 */
     public PostForm(String name) {
-        super(name, new SimpleContainer());        
-        setMethod(POST);
+		this(name, null);
     }
 
-    protected void setupComponent() {
-        add(dataEntryStep());
-        add(confirmStep());
+	/**
+	 * Used when editing an existing post
+	 * @param name
+	 * @param post
+	 */
+	public PostForm(String name, ACSObjectSelectionModel post) {
+		super(name, new SimpleContainer(), Forum.getConfig().quickFinishAllowed(), true);
+		// note that encoding must be multipart/form-data,and method must be post
+		// in order for attachments to be uploaded. Ensure that these properties
+		// are carried through in XSL if not simply applying the default bebop
+		// templates
+		setEncType("multipart/form-data");
+		setMethod(POST);
+		//setMethod(GET);
+		m_post = post;
 
-        addInitListener(new PostInitListener());
-        addProcessListener(new PostProcessListener());
-        addCancelListener(new PostCancelListener());
     }
 
-    protected void setSubject(PageState state,
-                              String text) {
-        m_subject.setValue(state, text);
+	public void setContext(PageState state, String context) {
+		state.setValue(m_context, context);
     }
 
-    protected Container dataEntryStep() {
-        FormStep initial = new FormStep(
-            "initial",
-            new SimpleContainer("forum:postForm", FORUM_XML_NS));
+	public String getContext(PageState state) {
+		return (String) state.getValue(m_context);
+	}
 
-        m_subject = new TextField(new StringParameter("subject"));
-        m_subject.addValidationListener(new NotEmptyValidationListener());
-        m_subject.addValidationListener(new StringLengthValidationListener(250));
-        m_subject.setSize(60);
-        initial.add(m_subject);
+	protected void setupComponent() {
 
-        m_body = new TextArea(new StringParameter("message"),
-                              8, 60, TextArea.SOFT);
-        m_body.addValidationListener(new NotEmptyValidationListener());
-        m_body.addValidationListener(new StringLengthValidationListener(4000));
-        initial.add(m_body);
+		m_textStep = getTextStep(m_post);
+		add(m_textStep);
+		m_attachImages = new ImagesStep(m_post, this);
+		add(m_attachImages);
+		m_attachFiles = new AttachedFilesStep(m_post, this);
+		add(m_attachFiles);
+		m_confirm = new ConfirmStep(m_post, this);
+		add(m_confirm);
 
-        m_bodyType = new TextTypeWidget(new StringParameter("bodyType"),
-                                        MessageType.TEXT_PLAIN);
-        initial.add(m_bodyType);
+		addInitListener(new PostInitListener());
+		addCancelListener(new PostCancelListener());
+		addSubmissionListener(new PostSubmissionListener());
+		addProcessListener(new PostProcessListener());
 
-        return initial;
     }
 
-    protected Container confirmStep() {
-        SimpleContainer postContainer = new SimpleContainer
-            ("forum:postConfirm", FORUM_XML_NS) {
+	public void register(Page p) {
+		super.register(p);
                 
-                public void generateXML(PageState state,
-                                        Element parent) {
-                    Element content = generateParent(parent);
+		p.addGlobalStateParam(m_context);
                     
-                    Element subject = content.newChildElement("subject");
-                    subject.setText((String)m_subject.getValue(state));
-
-                    Element body = content.newChildElement("body");
-                    body.setText(HtmlToText.generateHTMLText(
-                                     (String)m_body.getValue(state),
-                                     (String)m_bodyType.getValue(state)));
                 }
-            };
         
-        return postContainer;
-    }
+	/**
+	 * return text step appropriate for the type of post - reply doesn't give the option 
+	 * to choose a topic
+	 * @param post
+	 * @return
+	 */
+	protected abstract PostTextStep getTextStep(ACSObjectSelectionModel m_post);
 
-    protected abstract Post getPost(PageState state,
-                                    boolean create);
-
-    protected void initWidgets(PageState state,
-                               Post post) {
-        if (post != null) {
-            m_subject.setValue(state, post.getSubject());
-            m_body.setValue(state, post.getBody());
-            m_bodyType.setValue(state, post.getBodyType());
-        }
-    }
+	/**
+	 * potentially create a new post object (unless we are editing one) Subclasses
+	 * should create a post in whatever way is appropriate (eg a reply form 
+	 * will need to tie the new post to the one that is being replied to)
+	 * @param state
+	 * @return
+	 */
+	protected abstract Post getPost(PageState state);
     
-    protected void processWidgets(PageState state,
-                                  Post post) {
-        post.setSubject((String)m_subject.getValue(state));
-        post.setBody((String)m_body.getValue(state),
-                     (String)m_bodyType.getValue(state));
-    }
+	//
+	//
+	// FORM EVENT LISTENERS. NOTE THAT INDIVIDUAL STEP LISTENERS ARE 
+	// NOTIFIED AFTER THE MAIN FORM LISTENERS - BE AWARE
+	//
+	//
+	//
 
     private class PostInitListener implements FormInitListener {        
         public void init(FormSectionEvent e) {
+			s_log.debug("init called on parent form");
             PageState state = e.getPageState();
             
-            if ( Kernel.getContext().getParty() == null ) {
+			if (Kernel.getContext().getParty() == null
+				&& !ForumContext
+					.getContext(state)
+					.getForum()
+					.anonymousPostsAllowed()) {
                 UserContext.redirectToLoginPage(state.getRequest());
             }
             
-            initWidgets(state,
-                        getPost(state, false));
         }
     }
+	private class PostSubmissionListener implements FormSubmissionListener {
 
-    private class PostProcessListener implements FormProcessListener {   
-        public void process(FormSectionEvent e)
-            throws FormProcessException {
-
-            final PageState state = e.getPageState();
+		/**
+		 * potentially skip steps of the wizard if the forum does not
+		 * allow images or file attachments
+		 */
+		public void submitted(FormSectionEvent e) {
+			s_log.debug("page submitted");
+			PageState state = e.getPageState();
+			ForumContext ctx = ForumContext.getContext(state);
+			Forum forum = ctx.getForum();
+			if (!forum.allowImageUploads()) {
+				hideStep(1, state);
+			}
+			if (!forum.allowFileAttachments()) {
+				hideStep(2, state);
+			}
+		}
+	}
             
-            Post post = getPost(state, true);
-            processWidgets(state, post);
+	private class PostCancelListener implements FormCancelListener {
+		public void cancel(FormSectionEvent e) throws FormProcessException {
             
-            post.sendNotifications();
-            post.sendModeratorAlerts();
+			PageState state = e.getPageState();
+			clearParameters(state);
+			fireCompletionEvent(state);
+		}
+	}
         
+	private class PostProcessListener implements FormProcessListener {
+		public void process(FormSectionEvent e) throws FormProcessException {
+			s_log.debug("process called on Parent Form");
+			final PageState state = e.getPageState();
+			Post post = getPost(state);
+			//m_post.setSelectedObject(state, post);
+			post.setStatus(state);
+			m_textStep.setText(post, state);
             post.save();
+			m_attachFiles.attachFiles(post, state);
+			m_attachImages.attachImages(post, state);
 
+			// sort out notifications
+			if (getContext(state).equals(NEW_CONTEXT)) {
+				s_log.debug("new thread - create subscription");
+				ThreadSubscription sub = post.createThreadSubscription();
+				ForumContext ctx = ForumContext.getContext(state);
+				Forum forum = ctx.getForum();
+				if (forum.autoSubscribeThreadStarter()) {
+					User threadStarter = (User) Kernel.getContext().getParty();
+					if (threadStarter != null
+						&& !threadStarter.equals(Kernel.getPublicUser())) {
+						s_log.debug("auto subscribing current user");
+						sub.subscribe(threadStarter);
+					}
+				}
+			}
+			post.sendNotifications((String) state.getValue(m_context));
+			post.sendModeratorAlerts();
+			clearParameters(state);
             fireCompletionEvent(state);
-            /* XXX: This is the right thing to do, however it results in 
-               the wizard not being reset. I haven't tracked down why.
 
-            state.clearControlEvent();
-            try {
-                throw new RedirectSignal( state.stateAsURL(), true );
-            } catch( IOException ex ) {
-                throw new UncheckedWrapperException( ex );
             }
-            */
+	}
+	
+
+	public Post getSelectedPost(PageState state) {
+		if (m_post == null) {
+			return null;
+		} else {
+			return (Post) m_post.getSelectedObject(state);
         }
     }
 
-    private class PostCancelListener implements FormCancelListener { 
-        public void cancel(FormSectionEvent e) 
-            throws FormProcessException {
+	/**
+	 * required for confirmation step. Post hasn't been created so we
+	 * cannot traverse a domain object. Instead, the form is responsible
+	 * for retrieving a representation of the post as it will appear when saved
+	 * @param state
+	 * @param content
+	 */
+	protected void generatePostXML(PageState state, Element content) {
+		m_textStep.generatePostXML(state, content);
+		m_attachFiles.generatePostXML(state, content);
+		m_attachImages.generatePostXML(state, content);
 
-            PageState state = e.getPageState();
-            fireCompletionEvent(state);
         }
+	
+	private void clearParameters(PageState state) {
+		state.setValue(m_context, null);
+		m_attachImages.clearParameters(state);
+		m_attachFiles.clearParameters(state);
     }
 }

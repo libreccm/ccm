@@ -18,36 +18,67 @@
  */
 package com.arsdigita.forum;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import com.arsdigita.forum.ui.Constants;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.page.BebopApplicationServlet;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import javax.servlet.ServletException;
+
 import org.apache.log4j.Logger;
 
 /**
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
- * @version $Id: ForumServlet.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ForumServlet.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * 
+ * Updated chris.gilbert@westsussex.gov.uk to make use of PageFactory and to enable 
+ * disablement of client/middleware caching
  */
 public class ForumServlet extends BebopApplicationServlet
         implements Constants {
     public static final String versionId =
-        "$Id: ForumServlet.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
+        "$Id: ForumServlet.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(ForumServlet.class);
 
     public void init() throws ServletException {
         super.init();
-
-        final Page forum = BboardDispatcher.buildForumPage
-            (new BigDecimalParameter(TOPIC_PARAM));
-        final Page thread = BboardDispatcher.buildThreadPage
-            (new BigDecimalParameter(THREAD_PARAM));
+		s_log.debug("creating forum page");
+        final Page forum = ForumPageFactory.getPage(ForumPageFactory.FORUM_PAGE);
+		s_log.debug("creating thread page");
+        final Page thread = ForumPageFactory.getPage(ForumPageFactory.THREAD_PAGE);
 
         put("/", forum);
         put("/index.jsp", forum);
         put("/thread.jsp", thread);
+        if (Forum.getConfig().disableClientPageCaching()) {
+        	s_log.debug("caching disabled");
+        	disableClientCaching("/");
+        	disableClientCaching("/index.jsp");
+        	disableClientCaching("/thread.jsp");
+        }
+        
+        // allow other pages to be added
+        // eg - allows categorised forum to add load-category page 
+        // for AJAX category asignment
+        Iterator it = ForumPageFactory.getPages();
+        while (it.hasNext()) {
+        	Object key = (Object)it.next();
+        	if (!key.equals(ForumPageFactory.FORUM_PAGE) && !key.equals(ForumPageFactory.THREAD_PAGE)) {
+        		put("/" + key, ForumPageFactory.getPage((String)key));
+				if (Forum.getConfig().disableClientPageCaching()) {
+					disableClientCaching("/" + key);
+        	
     }
+}
+        }
+        
+    }
+    
+	
+									   
 }

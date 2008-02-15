@@ -25,12 +25,13 @@ import java.math.BigDecimal;
  * XML namespaces, URLs, URL variable names, etc.
  *
  *  @author <a href="mailto:teadams@arsdigita.com">Tracy Adams</a>
- *  @version $Revision: #8 $ $Date: 2004/08/17 $
+ *  @version $Revision: 1.3 $ $Date: 2006/03/08 15:38:33 $
  *  @since ACS 4.7
  */
 
 public interface Constants {
 
+	static final String FORUM_XML_PREFIX = "forum";
     static final String FORUM_XML_NS = "http://www.arsdigita.com/forum/1.0";
 
     static final String FORUM_MODE_VIEW = "view";

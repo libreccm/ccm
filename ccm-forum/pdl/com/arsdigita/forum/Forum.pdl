@@ -32,8 +32,16 @@ object type Forum extends Application {
 
     Boolean [1..1] isModerated  = forum_forums.is_moderated;
     Boolean [1..1] isNoticeboard  = forum_forums.is_noticeboard;
+    component Group [0..1] adminGroup =
+        join forum_forums.admin_group_id to groups.group_id;
     component Group [0..1] moderationGroup =
         join forum_forums.mod_group_id to groups.group_id;
+	component Group [0..1] threadCreateGroup =
+        join forum_forums.create_group_id to groups.group_id;
+	component Group [0..1] threadRespondGroup =
+        join forum_forums.respond_group_id to groups.group_id;
+	component Group [0..1] readGroup =
+        join forum_forums.read_group_id to groups.group_id;
 
     component ForumSubscription[0..n] subscriptions =
         join forum_forums.forum_id to forum_subscriptions.forum_id;
@@ -44,7 +52,12 @@ object type Forum extends Application {
         join forum_forums.lifecycle_definition_id to lifecycle_definitions.definition_id;
 
     BigDecimal [0..1] expireAfter = forum_forums.expire_after;
-
+	Boolean [1..1] fileAttachmentsAllowed = forum_forums.file_attachments_allowed;
+	Boolean [1..1] imageUploadsAllowed = forum_forums.image_uploads_allowed;
+	Boolean [1..1] autoSubscribeThreadStarter = forum_forums.subscribe_thread_starter;
+	Boolean [1..1] noCategoryPostsAllowed = forum_forums.no_category_posts_allowed;
+	Boolean [1..1] anonymousPostsAllowed = forum_forums.anonymous_posts_allowed;
+	String [0..1] introduction = forum_forums.introduction VARCHAR(4000);
     reference key (forum_forums.forum_id);
 }
 

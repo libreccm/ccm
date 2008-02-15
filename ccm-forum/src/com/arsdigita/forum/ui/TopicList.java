@@ -49,7 +49,7 @@ public class TopicList extends SimpleComponent implements Constants {
     
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement("forum:topicList", 
+        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":topicList", 
                                                  FORUM_XML_NS);
         exportAttributes(content);
         
@@ -63,7 +63,7 @@ public class TopicList extends SimpleComponent implements Constants {
 
         DataQuery unCategory = forum.getUnCategory();
         while (unCategory.next()) {
-            Element noTopic = content.newChildElement("forum:noTopicSummary", 
+            Element noTopic = content.newChildElement(FORUM_XML_PREFIX + ":noTopicSummary", 
                                                       FORUM_XML_NS);
 
             Element id = noTopic.newChildElement("id");
@@ -81,7 +81,7 @@ public class TopicList extends SimpleComponent implements Constants {
     public void generateQueryXML(Element parent,
                                  DataQuery query) {
         while (query.next()) {
-            Element content = parent.newChildElement("forum:topicSummary", 
+            Element content = parent.newChildElement(FORUM_XML_PREFIX + ":topicSummary", 
                                                      FORUM_XML_NS);
 
             Iterator keys = s_catProps.iterator();

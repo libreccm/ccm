@@ -30,7 +30,13 @@ import com.arsdigita.bebop.ToggleLink;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.forum.Forum;
 import com.arsdigita.forum.ForumContext;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.toolbox.ui.SecurityContainer;
 
 import org.apache.log4j.Logger;
 
@@ -39,7 +45,7 @@ import org.apache.log4j.Logger;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  *
- * @version $Revision: #8 $ $Author: sskracic $ $DateTime: 2004/08/17 23:26:27 $
+ * @version $Revision: 1.8 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
  */
 public class ForumUserView extends SimpleContainer
     implements Constants {
@@ -47,7 +53,7 @@ public class ForumUserView extends SimpleContainer
     private static Logger s_log = Logger.getLogger(ForumUserView.class);
 
     private Component m_forumView;
-    private Component m_forumPost;
+    private PostForm m_forumPost;
 
     private ModalContainer m_mode;
 
@@ -78,6 +84,7 @@ public class ForumUserView extends SimpleContainer
         */
         p.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                	s_log.debug("create link pressed");
                     PageState s = e.getPageState();
                     /*
                     if ("t".equals((String)s.getValue(m_newPostParam))) {
@@ -87,6 +94,7 @@ public class ForumUserView extends SimpleContainer
                     */
 
                     if (m_newTopicLink.isSelected(s)) {
+                    	m_forumPost.setContext(s, PostForm.NEW_CONTEXT);
                         m_mode.setVisibleComponent(s, m_forumPost);
                     } else {
                         m_mode.setVisibleComponent(s, m_forumView);
@@ -106,10 +114,21 @@ public class ForumUserView extends SimpleContainer
         Container forums = new SimpleContainer();
 
         Container forumOptions = new SimpleContainer(
-            "forum:forumOptions", Constants.FORUM_XML_NS);
+		FORUM_XML_PREFIX + ":forumOptions", Constants.FORUM_XML_NS);
         m_newTopicLink = new ToggleLink(new Label(Text.gz("forum.ui.newPost")));
         m_newTopicLink.setClassAttr("actionLink");
-        forumOptions.add(m_newTopicLink);
+        // chris.gilbert@westsussex.gov.uk - security container added
+		SecurityContainer sc = new SecurityContainer(m_newTopicLink) {
+
+			protected boolean canAccess(Party party, PageState state) {
+				Forum forum = ForumContext.getContext(state).getForum();
+				PermissionDescriptor createThread = new PermissionDescriptor(PrivilegeDescriptor.get(Forum.CREATE_THREAD_PRIVILEGE), forum, party);
+				return PermissionService.checkPermission(createThread);
+				
+			}
+		};
+        
+        forumOptions.add(sc);
         forums.add(forumOptions);
 
         // list of categories
@@ -124,8 +143,8 @@ public class ForumUserView extends SimpleContainer
         return forums;
     }
 
-    private Component createForumPost() {
-        Form editForm = new NewPostForm();
+    private PostForm createForumPost() {
+        PostForm editForm = new RootPostForm();
         editForm.addCompletionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ForumUserView.this

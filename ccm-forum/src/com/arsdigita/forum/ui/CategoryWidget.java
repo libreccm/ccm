@@ -40,25 +40,28 @@ import java.util.TooManyListenersException;
  * @author ron@arsdigita.com
  * @author sarah@arsdigita.com
  *
- * @version $Id: CategoryWidget.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CategoryWidget.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 
 public class CategoryWidget extends SingleSelect implements Constants {
 
     public CategoryWidget(ParameterModel categoryParameter) {
         super(categoryParameter);
-        addOption(new Option(TOPIC_NONE.toString(), 
-                             new Label(Text.gz("forum.ui.topic.none"))));
 
         try {
             addPrintListener(new PrintListener() {
                     public void prepare(PrintEvent e) {
                         PageState s = e.getPageState();
                         final Forum forum = getForum(s);
+						SingleSelect target = (SingleSelect) e.getTarget();
+                            
                         // Get categories for this forum
+                        if (forum.noCategoryPostsAllowed()) {
+				target.addOption(new Option(TOPIC_NONE.toString(), 
+			                        new Label(Text.gz("forum.ui.topic.none"))));
+                        }
                         final Category root = forum.getRootCategory();
                         if (root != null) {
-                            SingleSelect target = (SingleSelect) e.getTarget();
                             addCategories(root, target);
                         }
                     }

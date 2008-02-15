@@ -22,6 +22,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.mail.Mail;
 import com.arsdigita.messaging.ThreadedMessage;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -40,7 +41,7 @@ import org.apache.log4j.Logger;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  *
- * @version $Revision: #8 $ $Author: sskracic $ $DateTime: 2004/08/17 23:26:27 $
+ * @version $Revision: 1.3 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
  */
 
 public class ForumSubscription extends Subscription {
@@ -89,6 +90,10 @@ public class ForumSubscription extends Subscription {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    public String getSubscriptionGroupName() {
+	return "Instant Alert Subscription Group";
+    }
+		
     public Forum getForum() {
         if (m_forum == null) {
             DataObject forumData = (DataObject) get(FORUM);
@@ -106,6 +111,17 @@ public class ForumSubscription extends Subscription {
     private void setForum(Forum forum) {
         m_forum = forum;
         setAssociation(FORUM, m_forum);
+        if (getGroup() != null) {
+            // in the case of moderation alert this is null - good, because
+            // mod group has already been placed in the group hierarchy 
+   	
+            getGroup().setName(getGroupName(forum));
+            forum.getGroup().addSubgroup(getGroup());
+        }
+    }
+
+    public String getGroupName(Forum forum) {
+    	return forum.getTitle() + " " + getSubscriptionGroupName();
     }
 
     protected void afterSave() {
@@ -120,15 +136,18 @@ public class ForumSubscription extends Subscription {
     public String getSignature(ThreadedMessage post) {
         StringBuffer sb = new StringBuffer();
 
-        // XXX
-        /*
-        sb.append(SEPARATOR);
+        if (Mail.getConfig().sendHTMLMessageAsHTMLEmail()) {
+       
+	    sb.append(HTML_SEPARATOR);
+	    sb.append(getReturnURLMessage((Post)post));
+	    sb.append(HTML_SEPARATOR);
         sb.append(ALERT_BLURB);
         sb.append("You are receiving this email because you subscribed to ");
-        sb.append("alerts on this forum.\n\n");
-        sb.append(REPLY_BLURB);
-        */
+	    sb.append("alerts on this forum. To unsubscribe, follow the link above, return to the thread list and change the settings under the alerts tab.\n");
+	    sb.append("</font>");
+        } else {
         sb.append(getReturnURLMessage((Post)post));
+	}
 
         return sb.toString();
     }

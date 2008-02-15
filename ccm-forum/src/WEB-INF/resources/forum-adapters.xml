@@ -79,6 +79,8 @@
         <xrd:property name="/object/root"/>
         <xrd:property name="/object/categories"/>
         <xrd:property name="/object/sender"/>
+        <xrd:property name="/object/images"/>
+        <xrd:property name="/object/files"/>
       </xrd:associations>
     </xrd:adapter>
   </xrd:context>
@@ -131,5 +133,78 @@
       </xrd:associations>
     </xrd:adapter>
   </xrd:context>
+
+  
+  
+  <xrd:context name="com.arsdigita.forum.ui.ConfirmStep">
+  	<xrd:adapter objectType="com.arsdigita.forum.PostFileAttachment">
+  		<xrd:attributes rule="exclude"/>
+  	</xrd:adapter>
+  	
+  	<xrd:adapter objectType="com.arsdigita.forum.PostImageAttachment">
+  		<xrd:attributes rule="exclude"/>
+  	</xrd:adapter>
+    
+  
+  <!--  <xrd:adapter objectType="com.arsdigita.forum.Post"
+      formatter="com.arsdigita.forum.ui.MessageXMLFormatter">
+
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/replyTo"/>
+        <xrd:property name="/object/objectID"/>
+        <xrd:property name="/object/messageID"/>
+        <xrd:property name="/object/root"/>
+        <xrd:property name="/object/inReplyTo"/>
+
+        <xrd:property name="/object/categories/objectType"/>
+        <xrd:property name="/object/categories/defaultDomainClass"/>
+        <xrd:property name="/object/categories/displayName"/>
+        <xrd:property name="/object/categories/isAbstract"/>
+        <xrd:property name="/object/categories/isEnabled"/>
+        <xrd:property name="/object/categories/defaultAncestors"/>
+
+        <xrd:property name="/object/sender/id"/>
+        <xrd:property name="/object/sender/objectType"/>
+        <xrd:property name="/object/sender/defaultDomainClass"/>
+      </xrd:attributes>
+
+      <xrd:associations rule="include">
+        <xrd:property name="/object/root"/>
+        <xrd:property name="/object/categories"/>
+        <xrd:property name="/object/sender"/>
+        <xrd:property name="/object/images"/>
+        <xrd:property name="/object/files"/>
+      </xrd:associations>
+    </xrd:adapter>  -->
+  </xrd:context>
+
+   <xrd:context name="com.arsdigita.forum.search.PostMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.forum.Post">
+      <xrd:attributes rule="include">
+        <xrd:property name="/object/subject"/>
+        <xrd:property name="/object/body"/>
+        <xrd:property name="/object/images/description"/>
+        
+      </xrd:attributes>
+      <xrd:associations rule="include">
+      	<xrd:property name="/object/images"/>
+      </xrd:associations>  
+    </xrd:adapter>
+  </xrd:context>
+  
+  <xrd:context name="com.arsdigita.forum.search.FileAttachmentMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.forum.PostFileAttachment">
+      <xrd:attributes rule="exclude">
+       
+      </xrd:attributes>
+     
+    </xrd:adapter>
+  </xrd:context>
+  
+  
 
 </xrd:adapters>

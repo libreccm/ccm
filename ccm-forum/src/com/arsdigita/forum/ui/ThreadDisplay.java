@@ -18,47 +18,43 @@
  */
 package com.arsdigita.forum.ui;
 
-import com.arsdigita.bebop.SimpleComponent;
-import com.arsdigita.bebop.parameters.IntegerParameter;
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
-
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
-import com.arsdigita.domain.DomainObjectFactory;
-
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.FilterFactory;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.OID;
-
-import com.arsdigita.kernel.Party;
-import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
-
-import com.arsdigita.messaging.MessageThread;
-import com.arsdigita.messaging.ThreadedMessage;
-
-import com.arsdigita.web.URL;
-import com.arsdigita.web.Web;
-import com.arsdigita.web.ParameterMap;
-import com.arsdigita.web.RedirectSignal;
-
-import com.arsdigita.xml.Element;
-import com.arsdigita.xml.XML;
-
-import com.arsdigita.forum.Forum;
-import com.arsdigita.forum.Post;
-import com.arsdigita.forum.ForumContext;
-
-import com.arsdigita.util.Assert;
-import com.arsdigita.util.UncheckedWrapperException;
+import java.io.IOException;
 import java.math.BigDecimal;
+
+import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import javax.servlet.ServletException;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SimpleComponent;
+import com.arsdigita.bebop.parameters.IntegerParameter;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.domain.DomainObjectXMLRenderer;
+import com.arsdigita.forum.Forum;
+import com.arsdigita.forum.ForumContext;
+import com.arsdigita.forum.Post;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.messaging.MessageThread;
+import com.arsdigita.messaging.ThreadedMessage;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.FilterFactory;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.web.ParameterMap;
+import com.arsdigita.web.RedirectSignal;
+import com.arsdigita.web.URL;
+import com.arsdigita.web.Web;
+import com.arsdigita.xml.Element;
+import com.arsdigita.xml.XML;
 
 public class ThreadDisplay extends SimpleComponent implements Constants {
 
@@ -67,8 +63,7 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
 
     private IntegerParameter m_pageNumber =
         new IntegerParameter(PAGINATOR_PARAM);
-
-    private int m_pageSize = 10;
+	private int m_pageSize = Forum.getConfig().getThreadPageSize();
 
     private static final String ACTION_EDIT = "edit";
     private static final String ACTION_DELETE = "delete";
@@ -152,7 +147,7 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
         } else if (ACTION_APPROVE.equals(key)) {
             post.setStatus(Post.APPROVED);
             post.save();
-            post.sendNotifications();
+            post.sendNotifications(null);
         } else if (ACTION_REJECT.equals(key)) {
             m_post.setSelectedObject(state, post);
             m_threadComponent.makeRejectFormVisible(state);
@@ -208,7 +203,7 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
 
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement("forum:threadDisplay",
+        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":threadDisplay",
                                                  FORUM_XML_NS);
         exportAttributes(content);
 
@@ -249,7 +244,7 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
 
         while (messages.next()) {
             Post message = (Post)messages.getDomainObject();
-            Element messageEl = content.newChildElement("forum:message",
+            Element messageEl = content.newChildElement(FORUM_XML_PREFIX + ":message",
                                                         FORUM_XML_NS);
 
             generateActionXML(state, messageEl, message);
@@ -291,12 +286,17 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
 
 
         Party party = Kernel.getContext().getParty();
+        if (party == null) {
+        	party = Kernel.getPublicUser();
+        }
         if (post.canEdit(party)) {
             parent.addAttribute("editURL",
                                 makeURL(state, ACTION_EDIT, post));
         }
 
-        if (!ctx.getForum().isNoticeboard()) {
+		PermissionDescriptor canRespond = new PermissionDescriptor(PrivilegeDescriptor.get(Forum.RESPOND_TO_THREAD_PRIVILEGE), Kernel.getContext().getResource(), party);
+		
+        if (!ctx.getForum().isNoticeboard() && PermissionService.checkPermission(canRespond)) {
             parent.addAttribute("replyURL",
                                 makeURL(state, ACTION_REPLY, post));
         }
@@ -325,7 +325,7 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
                                         long begin,
                                         long end,
                                         long objectCount) {
-        Element paginator = parent.newChildElement("forum:paginator", FORUM_XML_NS);
+        Element paginator = parent.newChildElement(FORUM_XML_PREFIX + ":paginator", FORUM_XML_NS);
 
         URL here = Web.getContext().getRequestURL();
         ParameterMap params = new ParameterMap(here.getParameterMap());

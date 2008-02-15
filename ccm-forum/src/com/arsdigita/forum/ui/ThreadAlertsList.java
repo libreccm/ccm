@@ -57,11 +57,11 @@ public class ThreadAlertsList extends SimpleComponent
     public void generateXML(PageState state,
                             Element parent) {
         Element content = parent.newChildElement(
-            "forum:threadAlertList", FORUM_XML_NS);
+            FORUM_XML_PREFIX + ":threadAlertList", FORUM_XML_NS);
         exportAttributes(content);
 
         DomainCollection subs = ThreadSubscription.
-            getSubsForUser(Kernel.getContext().getParty());
+            getSubsForUser(Kernel.getContext().getParty(), state);
 
         while (subs.next()) {
             ThreadSubscription sub = (ThreadSubscription)subs.getDomainObject();
@@ -73,7 +73,7 @@ public class ThreadAlertsList extends SimpleComponent
     
     public Element generateAlertXML(ThreadSubscription sub) {
         Element subEl = new Element(
-            "forum:threadAlert", FORUM_XML_NS);
+            FORUM_XML_PREFIX + ":threadAlert", FORUM_XML_NS);
 
         ParameterMap map = new ParameterMap();
         map.setParameter(THREAD_PARAM, sub.getThreadReal().getID());

@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  *
- * @version $Revision: #8 $ $Author: sskracic $ $DateTime: 2004/08/17 23:26:27 $
+ * @version $Revision: 1.1 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
  */
 
 public class DailySubscription extends ForumSubscription {
@@ -94,6 +94,11 @@ public class DailySubscription extends ForumSubscription {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+
+    public String getSubscriptionGroupName() {
+	return "Daily Digest Subscription Group"; 
+    }
+
     private Digest getDigest() {
         if (m_digest == null) {
             DataObject digestData = (DataObject) get(DIGEST);
@@ -115,6 +120,11 @@ public class DailySubscription extends ForumSubscription {
     public void sendNotification(Post post) {
         Notification notification = new Notification(getGroup(), post);
         notification.setDigest(getDigest());
+        if (Forum.getConfig().deleteNotifications()) {
+//        	 make sure we don't delete the post itself!!!
+        	notification.setMessageDelete(Boolean.FALSE);
+        	notification.setIsPermanent(Boolean.FALSE);
+        }
         notification.save();
     }
 

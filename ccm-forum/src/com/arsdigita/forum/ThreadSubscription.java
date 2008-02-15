@@ -18,25 +18,27 @@
  */
 package com.arsdigita.forum;
 
+import java.math.BigDecimal;
+
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.Group;
+import com.arsdigita.kernel.GroupCollection;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.mail.Mail;
 import com.arsdigita.messaging.MessageThread;
+import com.arsdigita.messaging.ThreadedMessage;
 import com.arsdigita.notification.Notification;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataQuery;
-import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 
-import java.math.BigDecimal;
-
 /**
- * <font color="red">Experimental</font>
  * Class for managing subscriptions to individual threads in a Forum.
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
@@ -46,7 +48,7 @@ public class ThreadSubscription extends Subscription {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.forum.ThreadSubscription";
 
-    private static final String THREAD = "thread";
+    public static final String THREAD = "thread";
 
     private MessageThread m_thread = null;
 
@@ -66,6 +68,29 @@ public class ThreadSubscription extends Subscription {
         super(oid);
     }
 
+	public String getSubscriptionGroupName() {
+		// not overridden because group should be based on 
+		// thread root post name, but thread hasn't been set when
+		// this is called. Group name is updated in setThread method
+		return super.getSubscriptionGroupName();
+		
+	}
+	
+	public String getSubscriptionGroupName(Forum forum) {
+		return forum.getTitle() + ": " + getThreadReal().getRootMessage().getSubject() + " Subscription Group";
+	}
+	
+	protected Group getParentGroup() {
+		GroupCollection forumGroups = ((Forum)Kernel.getContext().getResource()).getGroup().getSubgroups();
+		forumGroups.addEqualsFilter("name", Forum.THREAD_SUBSCRIPTION_GROUPS_NAME);
+		Group parent = null;
+		if (forumGroups.next()) {
+			parent = forumGroups.getGroup();
+			forumGroups.close();
+		}
+		return parent;
+	}
+	
     public ThreadSubscription(BigDecimal id)
         throws DataObjectNotFoundException {
         super(new OID(BASE_DATA_OBJECT_TYPE, id));
@@ -107,6 +132,7 @@ public class ThreadSubscription extends Subscription {
     public void setThread(MessageThread thread) {
         m_thread = thread;
         setAssociation(THREAD, thread);
+        getGroup().setName(getSubscriptionGroupName((Forum)Kernel.getContext().getResource()));
     }
 
     protected void afterSave() {
@@ -158,30 +184,51 @@ public class ThreadSubscription extends Subscription {
         return sub;
     }
 
-    public static DomainCollection getSubsForUser(Party party) {
-        DataQuery subs = SessionManager.getSession()
-            .retrieveQuery("com.arsdigita.forum.getUserThreadSubscriptions");
+    public static DomainCollection getSubsForUser(Party party, PageState state) {
+        // chris.gilbert@westsussex.gov.uk replace query with standard filtering
+        DataCollection subscriptions = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+        subscriptions.addEqualsFilter("group.allMembers.id", party.getID());
+        
+        // currently specified in config, but could be selected from widget on screen
+        // ie show thread subscriptions for this forum/all forums
+        //
+        // Currently, if subscription for a different forum is selected, the thread is displayed within 
+        // the context of this forum which is not good. I suspect there is a need to set the forum in the 
+        // forum context when thread.jsp is reached. Have not implemented changes as we are only displaying 
+        // subscriptions for current forum cg.
+        if (!Forum.getConfig().showThreadAlertsForAllForums()){        
+        	subscriptions.addEqualsFilter("thread.root.objectID", ForumContext.getContext(state).getForum().getID());
+        }    
 
-        subs.setParameter("userID", party.getID());
+        return new DomainCollection(subscriptions);
 
-        return new DomainCollection(new DataQueryDataCollectionAdapter(subs, "subscription")) {
-                public DomainObject getDomainObject() {
-                    return new ThreadSubscription(m_dataCollection.getDataObject());
-                }
-            };
     }
 
     /**
      * Returns a signature with information about replying to the
      * message
      */
-    public String getSignature(Post post) {
+    public String getSignature(ThreadedMessage post) {
+		StringBuffer sb = new StringBuffer();
+		if (Mail.getConfig().sendHTMLMessageAsHTMLEmail()) {
+			sb.append(HTML_SEPARATOR);
+			sb.append(getReturnURLMessage((Post)post));
+			sb.append(HTML_SEPARATOR);
+			sb.append(ALERT_BLURB);
+			sb.append("You are receiving this email because you subscribed to ");
+			sb.append("alerts on this thread. To unsubscribe, follow the link above and click the 'stop watching thread' link at the top of the page.\n");
+        	sb.append("</font>");
+		} else {
+			sb.append(SEPARATOR);
+			sb.append(ALERT_BLURB);
+			sb.append("You are receiving this email because you subscribed to ");
+			sb.append("alerts on this thread.\n\n");
+			sb.append(REPLY_BLURB);
+			sb.append(getReturnURLMessage((Post)post));
+		}
+		  return sb.toString();
 
-        return SEPARATOR
-            + ALERT_BLURB
-            + "You are receiving this email because you subscribed to "
-            + "alerts on this thread.\n\n"
-            + REPLY_BLURB
-            + getReturnURLMessage(post);
+       
+
     }
 }

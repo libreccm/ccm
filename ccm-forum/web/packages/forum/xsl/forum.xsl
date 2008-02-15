@@ -479,10 +479,10 @@
       <td width="100%"><xsl:apply-templates select="bebop:select[@name='bodyType']"/></td>
     </tr>
     <xsl:choose>
-      <xsl:when test="bebop:select[@name='topic']">
+      <xsl:when test="bebop:select[@name='postTopic']">
         <tr class="even">
           <td>Topic:</td>
-          <td width="100%"><xsl:apply-templates select="bebop:select[@name='topic']"/></td>
+          <td width="100%"><xsl:apply-templates select="bebop:select[@name='postTopic']"/></td>
         </tr>
       </xsl:when>
       <xsl:when test="forum:message">

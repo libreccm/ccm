@@ -21,11 +21,14 @@ package com.arsdigita.forum.ui;
 
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
@@ -45,12 +48,12 @@ import org.apache.log4j.Logger;
  * parent category. temporary hack for testing purposes
  *
  * @author <a href=mailto:sarah@arsdigita.com>Sarah Barwig</a>
- * @version $Revision: #9 $ $Author: sskracic $ $DateTime: 2004/08/17 23:26:27 $
+ * @version $Revision: 1.2 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
  */
 public class CategoryAddForm extends Form {
     public static final String versionId =
-        "$Id: CategoryAddForm.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
+        "$Id: CategoryAddForm.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger
@@ -78,8 +81,24 @@ public class CategoryAddForm extends Form {
         m_description.setWrap(TextArea.SOFT);
         add(m_description);
 
-        Submit submit = new Submit("Create topic");
+	// Cancel button added cg
+	// Would have used a saveCancel section but this would make existing
+	// stylesheets for legacy forums miss the buttons
+        Submit submit = new Submit(Text.gz("forum.ui.topic.save"));
+	final Submit cancel = new Submit(Text.gz("forum.ui.cancel"));
         add(submit);
+        add(cancel);
+	addSubmissionListener(new FormSubmissionListener(){
+		public void submitted(FormSectionEvent e) throws FormProcessException {
+			PageState state = e.getPageState();
+			if (cancel.isSelected(state)){
+				fireCompletionEvent(state);
+				throw new FormProcessException("cancelled");
+			}								
+		}		
+	});
+			
+		
 
         /*
          * Listener to process form data.  Just adds the categories, then

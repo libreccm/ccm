@@ -37,7 +37,18 @@ import org.apache.log4j.Logger;
  *
  * @version $Revision #1 $DateTime: 2004/08/17 23:26:27 $
  */
-public class EditPostForm  extends PostForm {
+public class EditPostForm { // extends PostForm {
+/*
+  
+REMOVED chris Gilbert
+
+Edit step will be different depending whether post is root (category may be changed)
+or reply (category cannot be changed)
+
+UI refactored so that root post & reply to post forms are used for creation 
+and editing
+
+
 
     private static Logger s_log = Logger.getLogger(EditPostForm.class);
 
@@ -102,5 +113,5 @@ public class EditPostForm  extends PostForm {
         }
 
     }
-
+*/
 }

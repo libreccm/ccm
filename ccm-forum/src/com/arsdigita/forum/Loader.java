@@ -22,8 +22,10 @@ import com.arsdigita.loader.PackageLoader;
 
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
+import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.EmailAddress;
+import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.SessionManager;
 
@@ -33,6 +35,7 @@ import com.arsdigita.web.ApplicationType;
 
 import com.arsdigita.portal.apportlet.AppPortletType;
 import com.arsdigita.portal.PortletType;
+import com.arsdigita.forum.portlet.MyForumsPortlet;
 import com.arsdigita.forum.portlet.RecentPostingsPortlet;
 
 import org.apache.log4j.Logger;
@@ -42,12 +45,12 @@ import org.apache.log4j.Logger;
  * Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: Loader.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public class Loader extends PackageLoader {
     public final static String versionId =
-        "$Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
+        "$Id: Loader.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
@@ -60,6 +63,7 @@ public class Loader extends PackageLoader {
                 setupForumAppType();
                 //setupInboxAppType();
                 setupRecentPostingsPortletType();
+                setupMyForumsPortletType();
                 setupDigestUser();
 		SessionManager.getSession().flushAll();
             }
@@ -97,6 +101,17 @@ public class Loader extends PackageLoader {
         return type;
     }
 
+	public static PortletType setupMyForumsPortletType() {
+		
+		PortletType type = PortletType
+				   .createPortletType("My Forums", 
+									  PortletType.WIDE_PROFILE,
+		MyForumsPortlet.BASE_DATA_OBJECT_TYPE);
+			   type.setDescription("Lists forums that user has access to, with last posting date");
+			
+			return type;
+		}
+
     private static void setupDigestUser() {
         s_log.debug("Setting up the digest user");
 
@@ -104,20 +119,36 @@ public class Loader extends PackageLoader {
         // specified in the configuration file.
 
         String email = Forum.getConfig().getDigestUserEmail();
+		UserCollection users = User.retrieveAll();
+		users.addEqualsFilter("primaryEmail", email);
+		if (users.next()) {
+			s_log.debug("user exists");
+		} else {
 
-        if (s_log.isDebugEnabled()) {
             s_log.debug("Creating a user with the email " + email);
-        }
-
         User user = new User();
         user.setPrimaryEmail(new EmailAddress(email));
         user.getPersonName().setGivenName("Forum");
         user.getPersonName().setFamilyName("Digest Sender");
+			users.close();
+		}
+		
+		
     }
 
     public static void setupPrivileges() {
         PrivilegeDescriptor.createPrivilege(
             Forum.FORUM_MODERATION_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(
+            Forum.CREATE_THREAD_PRIVILEGE);
+		PrivilegeDescriptor.createPrivilege(
+					Forum.RESPOND_TO_THREAD_PRIVILEGE);
+		PrivilegeDescriptor.addChildPrivilege(Forum.FORUM_MODERATION_PRIVILEGE, Forum.CREATE_THREAD_PRIVILEGE);
+		PrivilegeDescriptor.addChildPrivilege(Forum.CREATE_THREAD_PRIVILEGE, Forum.RESPOND_TO_THREAD_PRIVILEGE);
+		PrivilegeDescriptor.addChildPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE, PrivilegeDescriptor.READ.getName());
+		
+		
+		
     }
 
 }

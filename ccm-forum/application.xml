@@ -2,11 +2,12 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-forum"
   prettyName="Forum"
-  version="6.5.0"
+  version="6.5.2"
   release="1">
   <ccm:dependencies>
-    <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
-    <ccm:requires name="ccm-cms" version="6.2.0" relation="ge"/>
+
+    <ccm:requires name="ccm-core" version="6.5.3"/>    
+    <ccm:requires name="ccm-cms" version="6.5.3"/>
   </ccm:dependencies>
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>

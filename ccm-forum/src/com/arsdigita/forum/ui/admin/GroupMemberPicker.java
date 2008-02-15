@@ -52,6 +52,19 @@ public abstract class GroupMemberPicker extends UserPicker {
     private Option m_groups;
 
     public GroupMemberPicker() {
+	super();
+    }
+
+    
+    /**
+     * Constructor gives the picker widget
+     * a request parameter based on the context
+     * hence allowing several pickers on one page
+     * without them getting their parameters 
+     * mixed up
+     */
+    public GroupMemberPicker(String context) {
+	super(context);
     }
 
     protected void addWidgets() {

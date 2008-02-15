@@ -18,6 +18,11 @@
  */
 package com.arsdigita.forum;
 
+import java.math.BigDecimal;
+
+import org.apache.log4j.Logger;
+
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.CategorizedObject;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
@@ -26,6 +31,8 @@ import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleService;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.forum.ui.PostForm;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.Party;
@@ -33,18 +40,14 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.messaging.MessageThread;
 import com.arsdigita.messaging.ThreadedMessage;
 import com.arsdigita.notification.Notification;
+import com.arsdigita.persistence.DataAssociation;
+import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataOperation;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import org.apache.log4j.Logger;
 
 /**
  * A Post represents a single posting to a discussion forum.
@@ -105,7 +108,8 @@ import org.apache.log4j.Logger;
  *
  *</ul>
  *</p>
-
+ *
+ *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author Nobuko Asakai (nasakai@redhat.com)
  */
@@ -121,6 +125,16 @@ public class Post extends ThreadedMessage {
      * message */
     public static final String MODERATOR = "moderator";
 
+	/**
+	 * 0..n association with PostImageAttachments
+	 */
+	public static final String IMAGE_ATTACHMENTS = "images";
+
+	/**
+	 * 0..n association with PostFileAttachments
+	 */
+	public static final String FILE_ATTACHMENTS = "files";
+
     /** The status strings */
     public static final String PENDING = "pending";
     public static final String APPROVED = "approved";
@@ -134,6 +148,8 @@ public class Post extends ThreadedMessage {
 
     private Party m_moderator;
 
+	// referred to afterSave method
+	private boolean m_wasNew;
 
     /*
      * The base DomainObject is Post which extends ThreadedMessage. In
@@ -147,7 +163,7 @@ public class Post extends ThreadedMessage {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    protected Post(String typeName) {
+	public Post(String typeName) {
         super(typeName);
     }
 
@@ -155,39 +171,25 @@ public class Post extends ThreadedMessage {
         super(oid);
     }
 
+	public Post(BigDecimal id) {
+		this(new OID(BASE_DATA_OBJECT_TYPE, id));
+	}
+
     public Post(DataObject obj) {
         super(obj);
     }
 
     /**
-     * Creates a new Posting in a form. If the forum
-     * is moderated, then the post's status will be
-     * set to PENDING, otherwise it will be set to
-     * APPROVED
+	 * Creates a new Posting in a forum. The post is
+	 * not yet in a fit state to be saved as it needs
+	 * it's status to be set, and the subject and message
+	 * 
      * @param forum the owner forum
      */
     public static Post create(Forum forum) {
-        return create(forum,
-                      forum.isModerated() ? PENDING : APPROVED);
-    }
-
-    /**
-     * Creates a new Posting in a form. The approval
-     * status will be set as specified.
-     * @param forum the owner forum
-     * @param status the approval status
-     */
-    public static Post create(Forum forum,
-                              String status) {
         Post post = new Post();
-        post.setup(forum, status);
+		post.setForum(forum);
         return post;
-    }
-
-    protected void setup(Forum forum,
-                         String status) {
-        setForum(forum);
-        setStatus(status);
     }
 
     protected String getBaseDataObjectType() {
@@ -195,12 +197,9 @@ public class Post extends ThreadedMessage {
     }
 
     /**
-     * @deprecated use replyTo() instead
+	 * overridden version of method in ThreadedMessage
+	 * used to create a reply to an existing post
      */
-    public Post replyToPost() {
-        return (Post)replyTo();
-    }
-
     public ThreadedMessage newInstance() {
         return create(getForum());
     }
@@ -210,6 +209,7 @@ public class Post extends ThreadedMessage {
      * before saving.
      */
     protected void beforeSave() {
+		m_wasNew = isNew();
         Forum forum = getForum();
         Assert.exists(forum, Forum.class);
 
@@ -222,13 +222,13 @@ public class Post extends ThreadedMessage {
 
         super.beforeSave();
 
-        if (isNew()) {
-            if (forum.isNoticeboard()  &&  forum.getExpireAfter() > 0) {
-                s_log.info("Creating expiration lifecycle for " + getOID());
-                setLifecycle(forum.getLifecycleDefinition());
-            }
-        }
     }
+
+	/**
+	 * set permission contexts for this post to the root post, and for the root
+	 * post to the forum. Additionally create a lifecycle if required for a new
+	 * root post
+	 */
 
     protected void afterSave() {
         super.afterSave();
@@ -238,22 +238,51 @@ public class Post extends ThreadedMessage {
 
         s_log.info("Setting context for " + getOID() + " to " + root.getOID());
         PermissionService.setContext(this, root);
-        s_log.info("Setting context for " + root.getOID() + " to " +
+		s_log.info(
+			"Setting context for " + root.getOID() + " to " + 
                    forum.getOID());
         PermissionService.setContext(root, forum);
+		// originally this was created in beforeSave, but this was when only noticeboard
+		// (reply disabled) forums could have a lifecycle. Now that all forums may 
+		// have a lifecycle on root posts, the method needs to be here in order 
+		// for persistence to work when users are replying to posts chris.gilbert@westsussex.gov.uk
+
+		if (m_wasNew) {
+			if (getRoot() == null && forum.getExpireAfter() > 0) {
+				s_log.info("Creating expiration lifecycle for " + getOID());
+				setLifecycle(forum.getLifecycleDefinition());
+			}
+		}
+		m_wasNew = false;
+
+		DataAssociationCursor files = getFiles();
+
+		// allow attached files to be returned in search results
+		// by setting their status as live
+		while (files.next()) {
+			PostFileAttachment file =
+				(PostFileAttachment) DomainObjectFactory.newInstance(
+					files.getDataObject());
+			if (getStatus().equals(APPROVED)) {
+				file.setLive();
+			} else {
+				file.setDraft();
+			}
+
+		}
 
     }
 
     /**
      * Sends out the notifications for any subscriptions to the forum
      * or thread to which this message belongs. Only sends
-     * notificatios if the post is approved.
+	 * notifications if the post is approved.
      */
-    public void sendNotifications() {
+	public void sendNotifications(final String context) {
         KernelExcursion ex = new KernelExcursion() {
                 protected void excurse() {
                     setEffectiveParty(Kernel.getSystemParty());
-                    doSendNotifications();
+				doSendNotifications(context);
                 }
             };
         ex.run();
@@ -264,6 +293,9 @@ public class Post extends ThreadedMessage {
      * on for the forum.
      */
     public void sendModeratorAlerts() {
+
+		if (!getStatus().equals(APPROVED)) {
+			// don't send if pre-approved (ie posted by a moderator)
         KernelExcursion ex = new KernelExcursion() {
                 protected void excurse() {
                     setEffectiveParty(Kernel.getSystemParty());
@@ -271,17 +303,17 @@ public class Post extends ThreadedMessage {
                 }
             };
         ex.run();
+		} else {
+			s_log.debug("not sending moderator alerts because the post " +
+				"was pre-approved (created by an approver)");
+		}
     }
 
-    private void doSendNotifications() {
-        if (s_log.isDebugEnabled()) {
+	private void doSendNotifications(String context) {
             s_log.debug("sending user notifications");
-        }
         Forum forum = getForum();
         if (getStatus().equals(APPROVED)) {
-            if (s_log.isDebugEnabled()) {
                 s_log.debug("Sending forum level subsriptions");
-            }
             DataCollection subscriptions = forum.getSubscriptions();
 
             while (subscriptions.next()) {
@@ -290,28 +322,30 @@ public class Post extends ThreadedMessage {
                         subscriptions.getDataObject());
                 s_log.debug("notification to  " + subscription.getOID());
 
-                subscription.sendNotification(Post.this);
+				subscription.sendNotification(Post.this, Forum.getConfig().deleteNotifications());
             }
 
-            if (s_log.isDebugEnabled()) {
                 s_log.debug("Sending thread level subsriptions");
-            }
+			if (context == null || !context.equals(PostForm.NEW_CONTEXT)) {
+
             ThreadSubscription sub =
                 ThreadSubscription.getThreadSubscription(getThread());
-
-            if (sub != null ) {
-                sub.sendNotification(this);
+				if (sub == null) {
+					s_log.error(
+						"Got a null ThreadSubscription from "
+							+ "Post # "
+							+ getID());
             } else {
-                s_log.error("Got a null ThreadSubscription from " +
-                            "Post # " + getID());
+					sub.sendNotification(this, Forum.getConfig().deleteNotifications());
+				}
+
             }
+
         } else {
-            if (s_log.isDebugEnabled()) {
                 s_log.debug("Not sending notifications because the " +
                             "message is not approved");
             }
         }
-    }
 
     private void doSendModeratorAlerts() {
         if (s_log.isDebugEnabled()) {
@@ -327,19 +361,16 @@ public class Post extends ThreadedMessage {
             while (alerts.next()) {
                 ModerationAlert alert
                     = (ModerationAlert)
-                    DomainObjectFactory.newInstance(alerts.getDataObject());
-                if (s_log.isDebugEnabled()) {
+					DomainObjectFactory.newInstance(
+					alerts.getDataObject());
                     s_log.debug("Processing moderation alert " + alert.getOID());
-                }
-                alert.sendNotification(this);
+				alert.sendNotification(this, Forum.getConfig().deleteNotifications());
             }
         } else {
-            if (s_log.isDebugEnabled()) {
                 s_log.debug("Not sending moderator alerts because the " +
                             "forum is not moderated");
             }
         }
-    }
 
     /**
      * Set the Forum that contains this post.  Just a wrapper for the
@@ -382,11 +413,32 @@ public class Post extends ThreadedMessage {
      */
 
     public void clearCategories() {
-        DataOperation clearCategories = SessionManager.getSession()
-            .retrieveDataOperation("com.arsdigita.forum.clearCategories");
+		DataCollection categories =
+			SessionManager.getSession().retrieve(
+				Category.BASE_DATA_OBJECT_TYPE);
+		categories.addEqualsFilter(
+			Category.CHILD_OBJECTS + "." + ACSObject.ID,
+			getID());
+		while (categories.next()) {
+			Category cat =
+				(Category) DomainObjectFactory.newInstance(
+					categories.getDataObject());
+			cat.removeChild(this);
+		}
+
+		// above is slower than data operation implementation below,
+		// but data op caused problems in persistence. If edited post
+		// had topic unchanged, then attempt was made to assign topic
+		// category before data op had cleared existing. Hence exception
+		// - attempt to map object to same cat twice
+
+		/*
+		DataOperation clearCategories =
+			SessionManager.getSession().retrieveDataOperation(
+				"com.arsdigita.forum.clearCategories");
         clearCategories.setParameter("postID", this.getID());
         clearCategories.execute();
-        return;
+		return;*/
     }
 
     /**
@@ -397,15 +449,41 @@ public class Post extends ThreadedMessage {
     }
 
     /**
-     * creates a ThreadSubscription, but only if this is a root
+	 * creates a ThreadSubscription, and returns it but only if this is a root,
+	 * else return null
      * Note, you must save() the Post before calling this method.
      */
-    public void createThreadSubscription() {
+	public ThreadSubscription createThreadSubscription() {
+		ThreadSubscription sub = null;
         if (getRoot() == null) {
-            ThreadSubscription sub = new ThreadSubscription();
+			sub = new ThreadSubscription();
             sub.setThread(getThread());
             sub.save();
         }
+		return sub;
+	}
+
+	public ThreadSubscription getSubscription() {
+		MessageThread thread;
+		if (getRoot() != null) {
+			thread = getRootMsg().getThread();
+		} else {
+			thread = getThread();
+		}
+		DataCollection subscriptions =
+			SessionManager.getSession().retrieve(
+				ThreadSubscription.BASE_DATA_OBJECT_TYPE);
+		subscriptions.addEqualsFilter(
+			ThreadSubscription.THREAD,
+			thread.getID());
+		ThreadSubscription subscription = null;
+		while (subscriptions.next()) {
+			subscription =
+				(ThreadSubscription) DomainObjectFactory.newInstance(
+					subscriptions.getDataObject());
+
+		}
+		return subscription;
     }
 
     /**
@@ -416,7 +494,10 @@ public class Post extends ThreadedMessage {
      */
     public boolean canEdit(Party party) {
         Party author = getFrom();
-        return (Forum.getConfig().canAuthorEditPosts()
+		// cg added - for anonymous posts, don't allow editing, else everyone could edit everyone else's posts
+		return (
+			!author.equals(Kernel.getPublicUser())
+				&& Forum.getConfig().canAuthorEditPosts()
                 && author.equals(party))
             || getForum().canEdit(party);
     }
@@ -439,6 +520,38 @@ public class Post extends ThreadedMessage {
         set(STATUS, status);
     }
 
+	/**
+	 * set the status of a new post according to the priviliges of
+	 * the current user - used by UI when creating new post or reply
+	 * @param state
+	 */
+	public void setStatus(PageState state) {
+		setStatus(state, null);
+	}
+
+	/**
+	 * set the status of an edited post according to the privileges
+	 * of the current user and the status of the post that is being
+	 * edited - used by the edit post UI
+	 * @param state
+	 * @param previousStatus
+	 */
+	public void setStatus(PageState state, String previousStatus) {
+		ForumContext ctx = ForumContext.getContext(state);
+		Forum forum = ctx.getForum();
+		// set status of edited post
+		if (forum.isModerated() && !ctx.canModerate()) {
+			if (Post.APPROVED.equals(previousStatus)) {
+				setStatus(Post.REAPPROVE);
+			} else {
+				setStatus(Post.PENDING);
+			}
+		} else {
+			setStatus(Post.APPROVED);
+		}
+
+	}
+
     public String getStatus() {
         return (String)get(STATUS);
     }
@@ -458,24 +571,19 @@ public class Post extends ThreadedMessage {
         return m_moderator;
     }
 
+	// note that the replies to this post are deleted in beforeDelete() of 
+	// ThreadedMessage (and hence beforeDelete is called recursively on their replies)
+
     protected void beforeDelete() {
-        // First delete associated entries in nt_requests this entry and
-        // all of its replies (in case of a root message) have
-        List replies = new ArrayList();
-        List msgIdList = new ArrayList();
-        msgIdList.add(getID());
-        if (getRoot() == null) {
-            DataCollection msgs = SessionManager.getSession()
-                .retrieve(BASE_DATA_OBJECT_TYPE);
-            msgs.addEqualsFilter("root", getID());
-            while (msgs.next()) {
-                replies.add(msgs.getDataObject());
-                msgIdList.add( msgs.getDataObject().getOID().get("id"));
-            }
-        }
-        DataCollection requests = SessionManager.getSession()
-            .retrieve(Notification.BASE_DATA_OBJECT_TYPE);
-        requests.addFilter("messageID in :msgIdList").set("msgIdList", msgIdList);
+		s_log.debug("Post - before delete " + getID());
+
+		//		threaded message recursively deletes children 
+		super.beforeDelete();
+		// remove any nt_requests
+		DataCollection requests =
+			SessionManager.getSession().retrieve(
+				Notification.BASE_DATA_OBJECT_TYPE);
+		requests.addEqualsFilter(Notification.MESSAGE_ID, this.getID());
         while (requests.next()) {
             Notification no = new Notification(requests.getDataObject().getOID());
             no.setMessageDelete(Boolean.FALSE);
@@ -483,21 +591,23 @@ public class Post extends ThreadedMessage {
         }
 
         if (getRoot() == null) {
-            // This posting is the root of the thread.  Make sure all postings
-            // in this thread are deleted before this very one.  Also
-            // take care of thread subscription.
-            ThreadSubscription sub = ThreadSubscription.getThreadSubscription(this.getThread());
+			s_log.debug(
+				"Root post - get rid of thread subscription and thread");
+			// This posting is the root of the thread.  Remove the thread subscription and thread
+			MessageThread thread = getThread();
+			ThreadSubscription sub =
+				ThreadSubscription.getThreadSubscription(thread);
+			if (sub != null) {
+				// if unconfirmed post, then threadsubscription has not been created
             sub.delete();
-            MessageThread thread = MessageThread.getFromRootMessage(this);
-            thread.delete();
-            for (Iterator it = replies.iterator(); it.hasNext(); ) {
-                Post reply = new Post( (DataObject) it.next());
-                reply.delete();
+
             }
+			if (thread != null) {
+				thread.delete();
         }
-        super.beforeDelete();
     }
 
+	}
 
     // package access only
     void setLifecycle(LifecycleDefinition life) {
@@ -507,5 +617,91 @@ public class Post extends ThreadedMessage {
         cycle.save();
     }
 
+	public void addImage(PostImageAttachment image) {
+		DataAssociation images = (DataAssociation) get(Post.IMAGE_ATTACHMENTS);
+		image.addToAssociation(images);
+		long currentImageCount = images.getDataAssociationCursor().size();
+		image.setImageOrder((int) currentImageCount);
+	}
+
+	public void removeImage(PostImageAttachment image) {
+		DataAssociation images = (DataAssociation) get(Post.IMAGE_ATTACHMENTS);
+		image.removeFromAssociation(images);
+		renumberImages();
+	}
+
+	// image order for a new image is based on the count of existing
+	// images, hence necessary to fill in any gaps when images are deleted
+	private void renumberImages() {
+		int count = 1;
+		DataAssociationCursor images = getImages();
+		while (images.next()) {
+			PostImageAttachment image =
+				(PostImageAttachment) DomainObjectFactory.newInstance(
+					images.getDataObject());
+			image.setImageOrder(count);
+			count++;
+		}
+	}
+
+	public DataAssociationCursor getImages() {
+		DataAssociationCursor images =
+			((DataAssociation) get(Post.IMAGE_ATTACHMENTS))
+				.getDataAssociationCursor();
+		images.addOrder(PostImageAttachment.IMAGE_ORDER);
+		return images;
+	}
+
+	public void addFile(PostFileAttachment file) {
+		DataAssociation files = (DataAssociation) get(Post.FILE_ATTACHMENTS);
+		file.addToAssociation(files);
+		PermissionService.setContext(file, this);
+		long currentFileCount = files.getDataAssociationCursor().size();
+		file.setFileOrder((int) currentFileCount);
+	}
+
+	public void removeFile(PostFileAttachment file) {
+		DataAssociation files = (DataAssociation) get(Post.FILE_ATTACHMENTS);
+		file.removeFromAssociation(files);
+		renumberFiles();
+
+	}
+
+	//	file order for a new file is based on the count of existing
+	// files, hence necessary to fill in any gaps when images are deleted
+
+	private void renumberFiles() {
+		int count = 1;
+		DataAssociationCursor files = getFiles();
+		while (files.next()) {
+			PostFileAttachment file =
+				(PostFileAttachment) DomainObjectFactory.newInstance(
+					files.getDataObject());
+			file.setFileOrder(count);
+			count++;
+		}
+
+	}
+
+	public DataAssociationCursor getFiles() {
+		DataAssociationCursor files =
+			((DataAssociation) get(Post.FILE_ATTACHMENTS))
+				.getDataAssociationCursor();
+		files.addOrder(PostFileAttachment.FILE_ORDER);
+		return files;
+
+	}
+
+
+	/**
+	 * used by thread to prevent counting unapproved posts in the 
+	 * reply count.
+	 * 
+	 */
+	// should really be static - revisit this - refer to MessageThread for use
+	protected void addReplyFilter(DataCollection replies) {
+		replies.addEqualsFilter(STATUS, APPROVED);
+
+	}
 
 }

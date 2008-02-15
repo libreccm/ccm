@@ -65,7 +65,7 @@ public class ModeratorEditPane extends SimpleContainer {
 
         Form form = new Form("userPicker", 
                              new BoxPanel(BoxPanel.VERTICAL));
-        form.add(new GroupMemberPicker() {
+        form.add(new GroupMemberPicker("moderator") {
                 public Group getGroup(PageState state) {
                     Forum forum = ForumContext.getContext(state).getForum();
                     return forum.getModerationGroup();

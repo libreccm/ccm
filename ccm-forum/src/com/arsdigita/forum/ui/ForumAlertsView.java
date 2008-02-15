@@ -61,14 +61,14 @@ class ForumAlertsView extends SimpleContainer implements Constants {
     }
 
     private Component forumAlertsSegment() {
-        SimpleContainer seg = new SimpleContainer("forum:forumAlerts", 
+        SimpleContainer seg = new SimpleContainer(FORUM_XML_PREFIX + ":forumAlerts", 
                                                   FORUM_XML_NS);
         seg.add(forumAlertsForm());
         return seg;
     }
 
     private Component threadAlertsSegment() {
-        SimpleContainer seg = new SimpleContainer("forum:threadAlerts", 
+        SimpleContainer seg = new SimpleContainer(FORUM_XML_PREFIX + ":threadAlerts", 
                                                   FORUM_XML_NS);
         seg.add(threadAlertsForm());
         return seg;

@@ -18,16 +18,17 @@
  */
 package com.arsdigita.forum;
 
+import org.apache.log4j.Logger;
+
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.web.URL;
-import com.arsdigita.web.ParameterMap;
+import com.arsdigita.mail.Mail;
 import com.arsdigita.messaging.ThreadedMessage;
 import com.arsdigita.notification.BaseSubscription;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
-import com.arsdigita.util.StringUtils;
-import org.apache.log4j.Logger;
+import com.arsdigita.web.ParameterMap;
+import com.arsdigita.web.URL;
 
 /**
  * The abstract Subscription class provides the ability for Users
@@ -41,12 +42,13 @@ import org.apache.log4j.Logger;
  */
 public abstract class Subscription extends BaseSubscription {
     public static final String versionId =
-        "$Id: Subscription.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
+        "$Id: Subscription.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Subscription.class);
 
+    protected static final String HTML_SEPARATOR = "<br><br>\n<hr>\n<br><br>\n";
     public Subscription(String objectType) {
         super(objectType);
     }
@@ -81,14 +83,26 @@ public abstract class Subscription extends BaseSubscription {
         if (author == null) {
             author = "Unknown";
         }
-
         StringBuffer sb = new StringBuffer();
+        if (Mail.getConfig().sendHTMLMessageAsHTMLEmail()) {
+	        sb.append("<font size='medium' face='Verdana, Arial, Helvetica, sans-serif'>");
+	        sb.append("Forum    : ");
+	        sb.append(post.getForum().getDisplayName()).append("\n<br>");
+	        sb.append("Subject  : ");
+	        sb.append(post.getSubject()).append("\n<br>");
+	        sb.append("Posted by: ");
+	        sb.append(author).append("\n<br><br>");
+        } else { 
+       
         sb.append("Forum    : ");
         sb.append(post.getForum().getDisplayName()).append("\n");
         sb.append("Subject  : ");
         sb.append(post.getSubject()).append("\n");
         sb.append("Posted by: ");
         sb.append(author).append("\n\n");
+
+        }
+
 
         return sb.toString();
     }
@@ -98,7 +112,11 @@ public abstract class Subscription extends BaseSubscription {
      * implementation returns a separator and a generic messages.
      */
     public String getSignature(ThreadedMessage post) {
+    	if (Mail.getConfig().sendHTMLMessageAsHTMLEmail()) {
+    	    return HTML_SEPARATOR + ALERT_BLURB + "</font>";
+    	} else {
         return SEPARATOR + ALERT_BLURB;
+    }
     }
 
     /**
@@ -115,15 +133,13 @@ public abstract class Subscription extends BaseSubscription {
         StringBuffer sb = new StringBuffer();
         sb.append("To reply to this message, go to:\n");
 
+        if (Mail.getConfig().sendHTMLMessageAsHTMLEmail()) {
+        	sb.append("<br><a href='" + url.getURL() + "'>" + url.getURL() + "</a>");
+        } else {
         sb.append(url.getURL());
-
+        }
         return sb.toString();
     }
 
-    /*
-     * @return an appropriate separator for the body and signature of a post.
-     */
-    private static String getSeparator() {
-        return "\n\n" + StringUtils.repeat('-', 20) + "\n\n";
-    }
+    
 }

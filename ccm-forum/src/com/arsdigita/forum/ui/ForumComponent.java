@@ -18,32 +18,36 @@
  */
 package com.arsdigita.forum.ui;
 
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.ModalContainer;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.Party;
-import com.arsdigita.kernel.security.UserContext;
-import com.arsdigita.kernel.permissions.PermissionService;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.permissions.PermissionDescriptor;
-import com.arsdigita.forum.ui.admin.ModerationView;
-import com.arsdigita.forum.Forum;
-import com.arsdigita.forum.ForumContext;
-import com.arsdigita.xml.Element;
-import com.arsdigita.util.UncheckedWrapperException;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
+
 import org.apache.log4j.Logger;
-import java.io.IOException;
+
+import com.arsdigita.bebop.ModalContainer;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.forum.Forum;
+import com.arsdigita.forum.ForumContext;
+import com.arsdigita.forum.ui.admin.ModerationView;
+import com.arsdigita.forum.ui.admin.PermissionsView;
+import com.arsdigita.forum.ui.admin.SetupView;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.kernel.security.UserContext;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.xml.Element;
 
 /**
  * The Bebop Page which provides the complete UI for the bboard application
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  *
- * @version $Revision: #11 $ $Author: sskracic $ $Date: 2004/08/17 $
+ * @version $Revision: 1.3 $ $Author: chrisg23 $ $Date: 2006/03/09 13:48:15 $
  */
 public class ForumComponent extends ModalContainer implements Constants {
 
@@ -53,32 +57,39 @@ public class ForumComponent extends ModalContainer implements Constants {
     public static final String MODE_TOPICS = "topics";
     public static final String MODE_ALERTS = "alerts";
     public static final String MODE_MODERATION = "moderation";
+	public static final String MODE_PERMISSIONS = "permissions";
+	public static final String MODE_SETUP = "setup";
 
     private StringParameter m_mode;
 
     /**
      * Constructs the bboard use interface
      */
-
+	private SetupView m_setupView;
     private ModerationView m_moderationView;
     private ForumAlertsView m_alertsView;
     private CategoryView  m_topicView;
     private ForumUserView m_userView;
+	private PermissionsView m_permissionsView;
 
     public ForumComponent() {
-        super("forum:forum", FORUM_XML_NS);
+		super(FORUM_XML_PREFIX + ":forum", FORUM_XML_NS);
 
         m_mode = new StringParameter("mode");
 
+		m_setupView = new SetupView();
         m_moderationView = new ModerationView();
         m_alertsView     = new ForumAlertsView();
         m_topicView = new CategoryView();
         m_userView     = new ForumUserView();
+		m_permissionsView = new PermissionsView();
 
+		add(m_setupView);
         add(m_moderationView);
         add(m_alertsView);
         add(m_topicView);
         add(m_userView);
+		add(m_permissionsView);
 
         setDefaultComponent(m_userView);
     }
@@ -94,31 +105,56 @@ public class ForumComponent extends ModalContainer implements Constants {
 
         super.respond(state);
 
+		Party party = Kernel.getContext().getParty();
+		Forum forum = ForumContext.getContext(state).getForum();
+
         String mode = (String)state.getControlEventValue();
         state.setValue(m_mode, mode);
+
+		setVisible(state, party, forum, mode);
+	}
+
+	protected void setVisible(
+		PageState state,
+		Party party,
+		Forum forum,
+		String mode) {
+		PermissionDescriptor forumAdmin =
+			new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
+
         if (MODE_TOPICS.equals(mode)) {
+			if (Forum.getConfig().topicCreationByAdminOnly()) {
+				if (party == null) {
+					UserContext.redirectToLoginPage(state.getRequest());
+				}
+				PermissionService.assertPermission(forumAdmin);
+			}
             setVisibleComponent(state, m_topicView);
         } else if (MODE_ALERTS.equals(mode)) {
-            if (Kernel.getContext().getParty() == null) {
+			if (party == null) {
                 UserContext.redirectToLoginPage(state.getRequest());
             }
             setVisibleComponent(state, m_alertsView);
         } else if (MODE_MODERATION.equals(mode)) {
-            Party party = Kernel.getContext().getParty();
             if (party == null) {
                 UserContext.redirectToLoginPage(state.getRequest());
             }
-            Forum forum = ForumContext.getContext(state).getForum();
-
-            PermissionDescriptor permission
-                = new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
-                                           forum,
-                                           party);
-
-            PermissionService.assertPermission(permission);
-
+			PermissionService.assertPermission(forumAdmin);
             setVisibleComponent(state, m_moderationView);
-        } else {
+		} else if (MODE_PERMISSIONS.equals(mode)) {
+			if (party == null) {
+				UserContext.redirectToLoginPage(state.getRequest());
+			}
+			PermissionService.assertPermission(forumAdmin);
+
+			setVisibleComponent(state, m_permissionsView);
+		} else if (MODE_SETUP.equals(mode)) {
+			if (party == null) {
+				UserContext.redirectToLoginPage(state.getRequest());
+			}
+			PermissionService.assertPermission(forumAdmin);
+			setVisibleComponent(state, m_setupView);
+		} else if (MODE_THREADS.equals(mode)) {
             setVisibleComponent(state, m_userView);
         }
     }
@@ -126,27 +162,45 @@ public class ForumComponent extends ModalContainer implements Constants {
     public void generateXML(PageState state,
                             Element parent) {
         Element content = generateParent(parent);
-
-        generateModeXML(state, content, MODE_THREADS);
-        generateModeXML(state, content, MODE_TOPICS);
-        generateModeXML(state, content, MODE_ALERTS);
         Forum forum = ForumContext.getContext(state).getForum();
         content.addAttribute("title", forum.getTitle());
-        content.addAttribute("noticeboard", (new Boolean(forum.isNoticeboard())).toString());
+		content.addAttribute(
+			"noticeboard",
+			(new Boolean(forum.isNoticeboard())).toString());
 
         Party party = Kernel.getContext().getParty();
-        if (party != null) {
+		if (party == null) {
+			party = Kernel.getPublicUser();
+		}
 
-            PermissionDescriptor permission
-                = new PermissionDescriptor(PrivilegeDescriptor.ADMIN,
-                                           forum,
-                                           party);
+		generateModes(state, content, party, forum);
+		generateChildrenXML(state, content);
+	}
+
+	protected void generateModes(
+		PageState state,
+		Element content,
+		Party party,
+		Forum forum) {
+		PermissionDescriptor permission =
+			new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
+
+		generateModeXML(state, content, MODE_THREADS);
+		if (!Forum.getConfig().topicCreationByAdminOnly()) {
+			generateModeXML(state, content, MODE_TOPICS);
+		}
+		generateModeXML(state, content, MODE_ALERTS);
+
             if (PermissionService.checkPermission(permission)) {
                 generateModeXML(state, content, MODE_MODERATION);
+			if (Forum.getConfig().showNewTabs()) {
+				generateModeXML(state, content, MODE_SETUP);
+				generateModeXML(state, content, MODE_PERMISSIONS);
+			}
+			if (Forum.getConfig().topicCreationByAdminOnly()) {
+				generateModeXML(state, content, MODE_TOPICS);
             }
         }
-
-        generateChildrenXML(state, content);
     }
 
     protected void generateModeXML(PageState state,
@@ -157,7 +211,8 @@ public class ForumComponent extends ModalContainer implements Constants {
             current = MODE_THREADS;
         }
 
-        Element content = parent.newChildElement("forum:forumMode", FORUM_XML_NS);
+		Element content =
+			parent.newChildElement(FORUM_XML_PREFIX + ":forumMode", FORUM_XML_NS);
 
         state.setControlEvent(this, "mode", mode);
 

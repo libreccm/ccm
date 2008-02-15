@@ -23,6 +23,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.forum.Post;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.messaging.Message;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.xml.Element;
 
@@ -33,12 +34,14 @@ import org.apache.log4j.Logger;
 class MessageView extends SimpleComponent implements Constants {
     private static final Logger s_log = Logger.getLogger(MessageView.class);
 
+    private ReplyToPostForm m_container;
     private ACSObjectSelectionModel m_postModel;
     private Post m_post;
 
     /** For dynamically selected message views */
-    public MessageView(ACSObjectSelectionModel postModel) {
+    public MessageView(ACSObjectSelectionModel postModel, ReplyToPostForm container) {
         m_postModel = postModel;
+        m_container = container;
     }
 
     public MessageView(Post post) {
@@ -55,12 +58,18 @@ class MessageView extends SimpleComponent implements Constants {
 
     public void generateXML(PageState state,
                             Element parent) {
-        Post post = m_post;
+        Message post = m_post;
         if (m_post == null) {
             post = (Post)m_postModel.getSelectedObject(state);
         }
+        if (m_container.getContext(state).equals(ReplyToPostForm.EDIT_CONTEXT)) {
+        	// post in postmodel is the reply being edited, not the parent
+        	post = post.getParent();
+        }
         
-        Element messageEl = parent.newChildElement("forum:message", 
+        
+        
+        Element messageEl = parent.newChildElement(FORUM_XML_PREFIX + ":message", 
                                                    FORUM_XML_NS);
         exportAttributes(messageEl);
 

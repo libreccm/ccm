@@ -57,8 +57,23 @@ public abstract class UserPicker extends FormSection
     private TextField m_name;
     private List m_userList;
     private Paginator m_pg;
+    // used to differentiate betwen multiple instances on a page (else all get initialised
+    // with the same value)
+    private String m_context;
 
     public UserPicker() {
+	this("");
+    }
+    
+    /**
+     * Constructor gives the picker widget
+     * a request parameter based on the context
+     * hence allowing several pickers on one page
+     * without them getting their parameters
+     * mixed up
+     */
+    public UserPicker(String context) {
+    	m_context = context;
         addWidgets();
         addDisplay();
         
@@ -67,12 +82,12 @@ public abstract class UserPicker extends FormSection
     }
 
     protected void addWidgets() {
-        m_nameParam = new StringParameter("name");
+        m_nameParam = new StringParameter(m_context + "name");
 
         BoxPanel attrs = new BoxPanel( BoxPanel.HORIZONTAL );
 
         Label nameLab = new Label( "Name" );
-        m_name = new TextField("name1");
+        m_name = new TextField(m_context + "name1");
 
         attrs.add( nameLab );
         attrs.add( m_name );

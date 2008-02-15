@@ -40,7 +40,7 @@ public class TopicSelector extends SimpleComponent implements Constants {
     
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement("forum:topicSelector", 
+        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":topicSelector", 
                                                  FORUM_XML_NS);
 
         URL url = URL.request(state.getRequest(), null);
@@ -60,7 +60,7 @@ public class TopicSelector extends SimpleComponent implements Constants {
         
         while (cursor.next()) {
             Category c = new Category(cursor.getDataObject());
-            Element topicEl = content.newChildElement("forum:topic", FORUM_XML_NS);
+            Element topicEl = content.newChildElement(FORUM_XML_PREFIX + ":topic", FORUM_XML_NS);
             DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(topicEl);
             xr.setWrapRoot(false);
             xr.setWrapAttributes(true);
