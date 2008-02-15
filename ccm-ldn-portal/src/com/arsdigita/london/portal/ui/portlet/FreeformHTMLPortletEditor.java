@@ -15,21 +15,32 @@
 
 package com.arsdigita.london.portal.ui.portlet;
 
+import org.apache.log4j.Logger;
+
+import com.arsdigita.bebop.Bebop;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
+import com.arsdigita.bebop.form.DHTMLEditor;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.bebop.util.BebopConstants;
+import com.arsdigita.cms.ui.CMSDHTMLEditor;
+import com.arsdigita.cms.ui.authoring.TextAssetBody.PageTextForm;
 import com.arsdigita.kernel.ResourceType;
+import com.arsdigita.london.portal.Workspace;
 import com.arsdigita.london.portal.portlet.FreeformHTMLPortlet;
 import com.arsdigita.london.portal.ui.PortletConfigFormSection;
 import com.arsdigita.portal.Portlet;
 
 public class FreeformHTMLPortletEditor extends PortletConfigFormSection {
+
+        private Logger s_log = Logger.getLogger(FreeformHTMLPortletEditor.class);
+
+        private static final String FCK_PORTLET_CONFIG = "/assets/fckeditor/config/fckconfig_portlet.js";
 
 	private TextArea m_content;
 
@@ -45,7 +56,20 @@ public class FreeformHTMLPortletEditor extends PortletConfigFormSection {
 	protected void addWidgets() {
 		super.addWidgets();
 
+            if (Workspace.getConfig().useWysiwygEditor())  {
+                m_content = new CMSDHTMLEditor(PageTextForm.TEXT_ENTRY);
+                m_content.setWrap(CMSDHTMLEditor.SOFT);
+                if (Bebop.getConfig().getDHTMLEditor().equals(BebopConstants.BEBOP_FCKEDITOR)) {
+                    ((DHTMLEditor)m_content).setConfig(new DHTMLEditor.Config("portlet-fck", FCK_PORTLET_CONFIG));
+                    m_content.setMetaDataAttribute("height", "300");
+                } else {
+                    // remove this so end users cannot browse through back end folder system
+                    ((DHTMLEditor)m_content).hideButton("insertlink");
+                }
+            } else {
 		m_content = new TextArea(new StringParameter("content"));
+            }
+
 		m_content.setRows(10);
 		m_content.setCols(35);
 		m_content.addValidationListener(new NotNullValidationListener());

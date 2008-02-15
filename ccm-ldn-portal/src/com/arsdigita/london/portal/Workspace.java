@@ -249,6 +249,14 @@ public class Workspace extends Application {
 		Group members = new Group();
 		members.setName(title);
 		members.save();
+		// set this group as subgroup of workspace application type
+		// although workspace applications can be nested, place all 
+		// member groups directly under main container (rather than reflecting
+		// hierarchical structure) because (a) workspace already manages its
+		// own groups so doesn't need a hierarchy and (b) hierarchy would
+		// mean for a given workspace, role would be on the same level 
+		// as member groups of sub workspaces - messy & confusing
+		getApplicationType().getGroup().addSubgroup(members);
 
 		Role admins = members.createRole("Administrators");
 		admins.save();

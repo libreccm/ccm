@@ -26,9 +26,9 @@
   </xsl:template>
 
   <xsl:template match="portal:sitemap">
-    <h3>Applications</h3>
-    <xsl:apply-templates select="portal:applicationList"/>
     <xsl:apply-templates select="portal:applicationPane"/>
+    <h3>All Applications</h3>
+    <xsl:apply-templates select="portal:applicationList"/>
   </xsl:template>
 
   <xsl:template match="portal:workspaceDelete">
