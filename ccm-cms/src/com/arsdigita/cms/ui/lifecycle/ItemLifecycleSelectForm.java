@@ -452,25 +452,36 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             // Apply the new lifecycle.
             ContentItem pending = item.publish(cycleDef, startDate);
+            final Lifecycle lifecycle = pending.getLifecycle();
 
             // XXX domlay Whoa.  This must be broken for multiphase
             // lifecycles.
 
             if (endDate != null) {
-                final Lifecycle lifecycle = pending.getLifecycle();
-
+                
                 // update individual phases
                 final PhaseCollection phases = lifecycle.getPhases();
 
                 while (phases.next()) {
                     final Phase phase = phases.getPhase();
                     java.util.Date thisEnd = phase.getEndDate();
+                    java.util.Date thisStart = phase.getStartDate();
+                    if (thisStart.compareTo(endDate) > 0) {
+                         phase.setStartDate(endDate);
+                         phase.save();
+                    }
 
                     if (thisEnd == null || thisEnd.compareTo(endDate) > 0) {
                         phase.setEndDate(endDate);
                         phase.save();
                     }
                 }
+            }
+            
+            // endOfCycle may be the original date according to lifecycle phase definitions, or endDate if that was before
+            // natural end of lifecycle
+            java.util.Date endOfCycle = lifecycle.getEndDate();
+            if (endOfCycle != null) {
 
                 // if advance notification is requested (!= 0)
                 // add another phase at the start of which the user is notified
@@ -487,15 +498,15 @@ class ItemLifecycleSelectForm extends BaseForm {
                 if (notificationHours != null) {
                     notificationPeriod += notificationHours.intValue();
                 }
-
+                
                 if (notificationPeriod > 0) {
                     notificationDate =
-                        computeNotificationDate(endDate, notificationPeriod);
-
+                        computeNotificationDate(endOfCycle, notificationPeriod);
+                    s_log.debug("adding custom phase");
                     Phase expirationImminentPhase =
                         lifecycle.addCustomPhase("expirationImminent",
                                                  new Long(notificationDate.getTime()),
-                                                 new Long(endDate.getTime()));
+                                                 new Long(endOfCycle.getTime()));
                     expirationImminentPhase.
                         setListenerClassName("com.arsdigita.cms.lifecycle.NotifyLifecycleListener");
                     expirationImminentPhase.save();
@@ -510,7 +521,7 @@ class ItemLifecycleSelectForm extends BaseForm {
             item.save();
 
             final Workflow workflow = m_workflow.getWorkflow(state);
-            try {
+	    try {
                 finish(workflow, item, Web.getContext().getUser());
             } catch (TaskException te) {
                 throw new FormProcessException(te);
@@ -524,7 +535,7 @@ class ItemLifecycleSelectForm extends BaseForm {
             }
         }
     }
-
+    
     static void finish(Workflow workflow, ContentItem item, User user) throws TaskException {
         if (workflow != null) {
             final Engine engine = Engine.getInstance(CMSEngine.CMS_ENGINE_TYPE);

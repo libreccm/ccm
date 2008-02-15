@@ -35,6 +35,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.FormErrorDisplay;
 import com.arsdigita.bebop.form.Submit;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -150,6 +151,7 @@ public class PropertyEditor extends SimpleContainer {
     private List m_list;
     private PropertyEditorModelBuilder m_builder;
     private RequestLocal m_model;
+    private java.util.List m_additionalDisplayComponents = new ArrayList();
 
     /**
      * Constructs a new, empty <code>PropertyEditor</code>.
@@ -277,6 +279,13 @@ public class PropertyEditor extends SimpleContainer {
     }
 
     /**
+     * add an additional component below the list of links
+     * @param c
+     */
+    public void addDisplayComponent(Component c) {
+    	m_additionalDisplayComponents.add(c);
+    }
+    /**
      * Adds the display component if it has not been added already.
      *
      * @param c the display component to add
@@ -288,6 +297,10 @@ public class PropertyEditor extends SimpleContainer {
 
         m_displayPane.add(c);
         m_displayPane.add(m_list);
+        Iterator it = m_additionalDisplayComponents.iterator();
+        while (it.hasNext()) {
+        	m_displayPane.add((Component)it.next());
+        }
 
         m_display = c;
     }

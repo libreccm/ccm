@@ -283,6 +283,9 @@ public class TableHeader extends SimpleComponent {
      * @param column the index of the column to test
      */
     protected boolean isSelected(PageState s, Object key, int column) {
+    	if (getTable().getColumnSelectionModel() == null) {
+            return false;
+    	}
         Object sel = getTable()
             .getColumnSelectionModel().getSelectedKey(s);
         if(sel == null) {

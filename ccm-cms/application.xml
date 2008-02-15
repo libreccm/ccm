@@ -2,11 +2,11 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-cms"
   prettyName="Red Hat CCM Content Management System"
-  version="6.5.2"
-  release="4"
+  version="6.5.3"
+  release="1"
   webapp="ROOT">
   <ccm:dependencies>
-    <ccm:requires name="ccm-core" version="6.5.2" relation="ge"/>
+    <ccm:requires name="ccm-core" version="6.5.5" relation="ge"/>
   </ccm:dependencies>
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/ccm" type="website"/>

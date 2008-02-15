@@ -18,51 +18,14 @@
  */
 package com.arsdigita.cms.workflow;
 
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.ui.ContentItemPage;
-import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.domain.DataObjectNotFoundException;
+import org.apache.log4j.Logger;
+
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.kernel.Group;
-import com.arsdigita.kernel.KernelHelper;
-import com.arsdigita.kernel.Party;
-import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.UserCollection;
-import com.arsdigita.kernel.permissions.PermissionService;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.messaging.Message;
-import com.arsdigita.notification.Notification;
-import com.arsdigita.persistence.DataAssociation;
-import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataOperation;
-import com.arsdigita.persistence.DataQuery;
-import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.metadata.ObjectType;
-import com.arsdigita.util.Assert;
-import com.arsdigita.versioning.TagCollection;
-import com.arsdigita.versioning.Transaction;
-import com.arsdigita.versioning.TransactionCollection;
-import com.arsdigita.versioning.Versions;
-import com.arsdigita.web.URL;
-import com.arsdigita.workflow.simple.TaskComment;
-import com.arsdigita.workflow.simple.TaskException;
-import com.arsdigita.workflow.simple.UserTask;
-import org.apache.log4j.Logger;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * This class represents enables fine grained control of the url that is 
@@ -87,6 +50,7 @@ public class TaskEventURLGenerator extends DomainObject {
 	public static final String EVENT = "event";
 	public static final String URL_GENERATOR_CLASS =
 		"urlGeneratorClass";
+	public static final String CONTENT_TYPE = "contentType";
 	
 	private static final Logger s_log = Logger.getLogger(TaskEventURLGenerator.class);
 

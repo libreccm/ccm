@@ -18,6 +18,11 @@
  */
 package com.arsdigita.cms.ui.authoring;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
@@ -63,6 +68,23 @@ public class SimpleEditStep extends SecurityPropertyEditor
     private static final String STREAMLINED = "_streamlined";
     private static final String STREAMLINED_DONE = "1";
 
+    private static List s_additionalDisplayComponents = new ArrayList();
+
+    /**
+     * allow additional display components to be added to all implementations
+     * of SimpleEditStep. This allows shared optional packages such as notes to 
+     * display information on the initial authoring page of all content types without 
+     * causing dependencies from ccm-cms.
+     * 
+     * Any additional components must be added before the edit step is created.
+     * An initialiser is a suitable location
+     * 
+     * @param c
+     */
+    public static void addAdditionalDisplayComponent(AdditionalDisplayComponent c) {
+    	s_additionalDisplayComponents.add(c);
+    }
+    
     /**
      * Construct a new SimpleEditStep component
      *
@@ -104,6 +126,15 @@ public class SimpleEditStep extends SecurityPropertyEditor
                     showDisplayPane(state);
                 }
             });
+        
+        Iterator it = s_additionalDisplayComponents.iterator();
+        while (it.hasNext()) {
+        	
+        	AdditionalDisplayComponent component = (AdditionalDisplayComponent)it.next();
+        	component.setItemSelectionModel(itemModel);
+        	addDisplayComponent(component);
+        	
+        }
     }
 
     /** 

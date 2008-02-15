@@ -255,13 +255,15 @@ public class CMSTask extends UserTask {
         Assert.assertNotNull(item, "item associated with this CMSTask");
         
         String authoringURL = getAuthoringURL(item);
-        String fullURL = URL.there(getTaskType().getURLGenerator(operation).generateURL(item.getID(), getID()), null).getURL();
+        String fullURL = getTaskType().getURLGenerator(operation, item).generateURL(item.getID(), getID());
+        s_log.debug("URL retrieved from generator: " + fullURL);
+        if (!fullURL.startsWith("http")) {
+	    // url is not fully qualified
+            fullURL = URL.there(fullURL, null).getURL();
+        	
+        }
         // see CMSResources.properties for how these values are used
-        Object[] g11nArgs = new Object[10];
-		// cg - make this configurable. Because our content section managers have access to all 
-        // folders, they get all notifications, but they want to know which area it relates to - 
-        // first folder in item path tells them. config parameter - full item path or just display name
-		// g11nArgs[0] =((ContentItem)item.getParent()).getPath();
+        Object[] g11nArgs = new Object[11];
 		g11nArgs[0] = item.getDisplayName();
         g11nArgs[1] = new Double(getTaskType().getID().doubleValue());
         g11nArgs[2] = fullURL;
@@ -283,7 +285,9 @@ public class CMSTask extends UserTask {
         }
         g11nArgs[8] = getStartDate();
         g11nArgs[9] = URL.there(authoringURL, null).getURL();
-              
+	//if added to email, allows recipient to identify if the item is in a folder 
+	// they are interested in
+        g11nArgs[10] = ((ContentItem)item.getParent()).getPath();
         String subject = (String) GlobalizationUtil.globalize("cms.ui.workflow.email.subject." + operation,
                                                      g11nArgs).localize();
         String body = (String) GlobalizationUtil.globalize("cms.ui.workflow.email.body." + operation,
@@ -481,8 +485,10 @@ public class CMSTask extends UserTask {
                     }
                 }
             }
+			// bugfix - if author is null above then we break out 
+			// of loop early. If normal exit and so cursor has already closed then the 
+			// next line has no effect
 			hist.close();
-			//hist.close here if not closed
     		if (author == null) {
     			// fallback: creator is always available in audit trail 
     			author = item.getCreationUser();

@@ -20,6 +20,7 @@ package com.arsdigita.cms.workflow;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -168,23 +169,36 @@ public class CMSTaskType extends DomainObject {
 							
 }
 	
-	public TaskURLGenerator getURLGenerator(String event) {
-		String key = getID() + " " + event;
+	public TaskURLGenerator getURLGenerator(String event, ContentItem item) {
+		String key = getID() + " " + event + " " + item.getContentType().getID();
 		s_log.debug("looking up url generator for key " + key);
 		TaskURLGenerator generator = (TaskURLGenerator)
 				s_taskURLGeneratorCache.get(key);
 			if (generator == null) {
-				s_log.debug("generator not found in cache");
+				s_log.debug("no generator found in cache");
 				DataAssociationCursor generators = ((DataAssociation)get(URL_GENERATORS)).cursor();
 				generators.addEqualsFilter(TaskEventURLGenerator.EVENT, event);
+				generators.addEqualsFilter(TaskEventURLGenerator.CONTENT_TYPE + "." + ContentType.ID, item.getContentType().getID());
 				try {
 				
 				while (generators.next()) {
-					s_log.debug("specific generator found for " + event + " event on task type " + getName());
+					s_log.debug("specific generator found for " + event + " event on task type " + getName() + " for content type " + item.getContentType().getLabel());
+					// generator class available for this specific event and this specific content type
+					generator = ((TaskEventURLGenerator)DomainObjectFactory.newInstance(generators.getDataObject())).getGenerator();
+					generators.close();
+				} 
+				if (generator == null) {
+					generators.reset();
+					generators.addEqualsFilter(TaskEventURLGenerator.EVENT, event);
+					generators.addEqualsFilter(TaskEventURLGenerator.CONTENT_TYPE, null);
+					while (generators.next()) {
+						s_log.debug("specific generator found for " + event + " event on task type " + getName() + " for any content type");
 					// generator class available for this specific event
 					generator = ((TaskEventURLGenerator)DomainObjectFactory.newInstance(generators.getDataObject())).getGenerator();
 					generators.close();
 				} 
+				}
+				
 				if (generator == null) {
 				
 					s_log.debug("no specific generator for " + event + " event on task type " + getName()+ ". Revert to default");

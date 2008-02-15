@@ -552,11 +552,11 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param p the page that contains this table
      */
     public void register(Page p) {
-        ParameterModel m = getRowSelectionModel().getStateParameter();
+    	ParameterModel m = getRowSelectionModel() == null ? null : getRowSelectionModel().getStateParameter();
         if ( m != null ) {
             p.addComponentStateParam(this, m);
         }
-        m = getColumnSelectionModel().getStateParameter();
+        m = getColumnSelectionModel() == null ? null : getColumnSelectionModel().getStateParameter();
         if ( m != null ) {
             p.addComponentStateParam(this, m);
         }
@@ -601,7 +601,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * <code>false</code> otherwise.
      */
     public boolean isSelectedRow(PageState s, Object rowKey) {
-        if ( rowKey == null ) {
+        if ( rowKey == null || getRowSelectionModel() == null) {
             return false;
         }
         return getRowSelectionModel().isSelected(s)
@@ -619,7 +619,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * <code>false</code> otherwise.
      */
     public boolean isSelectedColumn(PageState s, Object column) {
-        if ( column == null ) {
+        if ( column == null || getColumnSelectionModel() == null) {
             return false;
         }
         return getColumnSelectionModel().isSelected(s)

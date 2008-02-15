@@ -32,9 +32,12 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.event.ChangeEvent;
+import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.event.TableActionAdapter;
 import com.arsdigita.bebop.event.TableActionEvent;
 import com.arsdigita.bebop.event.TableActionListener;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.table.AbstractTableModelBuilder;
 import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.DefaultTableColumnModel;
@@ -114,21 +117,15 @@ public class FolderBrowser extends Table {
     private final static String SORT_KEY_LAST_MODIFIED_DATE = "lastModified";
     private final static String SORT_KEY_CREATION_DATE = "creationDate";
 
-    private RequestLocal m_sortType = new RequestLocal() {
-            public Object initialValue(PageState state) {
-                return SORT_KEY_NAME;
-            }
-        };
-
-    private final RequestLocal m_sortDirection = new RequestLocal() {
-            public Object initialValue(PageState state) {
-                return SORT_ACTION_UP;
-            }
-        };
-
+    private StringParameter m_sortType = new StringParameter("sortType");
+    private StringParameter m_sortDirection = new StringParameter("sortDirn");
+    
     public FolderBrowser(FolderSelectionModel currentFolder) {
         //super(new FolderTableModelBuilder(), s_headers);
         super();
+    m_sortType.setDefaultValue(SORT_KEY_NAME);
+    m_sortDirection.setDefaultValue(SORT_ACTION_UP);
+    
 	setModelBuilder(new FolderTableModelBuilder(currentFolder));
 	setColumnModel(new DefaultTableColumnModel(hideIndexColumn() ? s_noIndexHeaders : s_headers));
 	setHeader(new TableHeader(getColumnModel()));
@@ -144,7 +141,25 @@ public class FolderBrowser extends Table {
         ((FolderTableModelBuilder)getModelBuilder()).setFolderBrowser(this);
 
         m_currentFolder = currentFolder;
+        
+        /*
+         
+        This code should be uncommented if the desired behaviour is for a change
+        of folder to cause reversion to default ordering of contained items 
+        (by name ascending). Our feeling is that the user selected ordering
+        should be retained for the duration of the folder browsing session. If
+        anyone wants this alternative behaviour it should be brought in under 
+        the control of a config parameter.
+        
+        m_currentFolder.addChangeListener(new ChangeListener() {
 
+    		public void stateChanged(ChangeEvent e) {
+    			PageState state = e.getPageState();
+    			state.setValue(m_sortType, m_sortType.getDefaultValue());
+    			state.setValue(m_sortDirection, m_sortDirection.getDefaultValue());
+    			
+    		}});
+    	*/
         setClassAttr("dataTable");
 
         getHeader().setDefaultRenderer(new com.arsdigita.cms.ui.util.DefaultTableCellRenderer());
@@ -182,7 +197,8 @@ public class FolderBrowser extends Table {
         super.register(p);
 
         p.addComponentStateParam(this, m_currentFolder.getStateParameter());
-
+        p.addComponentStateParam(this, m_sortType);
+        p.addComponentStateParam(this, m_sortDirection);
         p.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     final PageState state = e.getPageState();
@@ -209,11 +225,11 @@ public class FolderBrowser extends Table {
         String key = state.getControlEventName();
         String value = state.getControlEventValue();
         if ( SORT_ACTION_UP.equals(key) ) {
-            m_sortType.set(state, value);
-            m_sortDirection.set(state, SORT_ACTION_UP);
+            state.setValue(m_sortType, value);
+            state.setValue(m_sortDirection, SORT_ACTION_UP);
         } else if ( SORT_ACTION_DOWN.equals(key) ) {
-            m_sortType.set(state, value);
-            m_sortDirection.set(state, SORT_ACTION_DOWN);
+        	state.setValue(m_sortType, value);
+            state.setValue(m_sortDirection, SORT_ACTION_DOWN);
         } else {
             super.respond(state);
             //throw new ServletException("Unknown control event: " + key);
@@ -282,9 +298,9 @@ public class FolderBrowser extends Table {
                 itemColl.setRange(new Integer(paginator.getFirst(state)),
                                   new Integer(paginator.getLast(state) + 1));
 
-                String sortKey = (String)m_sortType.get(state);
+                String sortKey = (String)state.getValue(m_sortType);
                 String direction = "asc";
-                if (SORT_ACTION_DOWN.equals((String)m_sortDirection.get(state))) {
+                if (SORT_ACTION_DOWN.equals((String)state.getValue(m_sortDirection))) {
                     direction = "desc";
                 }
 
@@ -342,9 +358,9 @@ public class FolderBrowser extends Table {
                                       boolean isSelected, Object key,
                                       int row, int column) {
             String headerName = (String)((GlobalizedMessage)value).localize();
-            String sortKey = (String)m_sortType.get(state);
+            String sortKey = (String)state.getValue(m_sortType);
             final boolean isCurrentKey = sortKey.equals(m_key);
-            final String currentSortDirection = (String)m_sortDirection.get(state);
+            final String currentSortDirection = (String)state.getValue(m_sortDirection);
             String imageURLStub = null;
 
             if (SORT_ACTION_UP.equals(currentSortDirection)) {

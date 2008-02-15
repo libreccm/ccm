@@ -16,6 +16,7 @@ model com.arsdigita.cms.workflow;
 
 import com.arsdigita.workflow.simple.*;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.ContentType;
 
 object type CMSTask extends UserTask {
     composite CMSTaskType [1..1] taskType = join cms_tasks.task_type_id to cms_task_types.task_type_id;
@@ -36,6 +37,7 @@ object type CMSTaskType {
 object type TaskEventURLGenerator {
         Integer [1..1] generatorID = cms_task_url_generators.generator_id INTEGER;
         String [1..1] event = cms_task_url_generators.event VARCHAR(100);
+        ContentType [0..1] contentType = join cms_task_url_generators.content_type to content_types.type_id;
         String [1..1] urlGeneratorClass = cms_task_url_generators.classname VARCHAR(128);
 
         object key (generatorID);

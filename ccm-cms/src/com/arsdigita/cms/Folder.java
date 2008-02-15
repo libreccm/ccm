@@ -26,8 +26,10 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainCollectionIterator;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
@@ -235,14 +237,13 @@ public class Folder extends ContentItem {
      * @return child items of this folder
      */
     public ItemCollection getItems(boolean bSort) {
-        final DataQuery query = SessionManager.getSession().retrieveQuery
-            (ITEMS_QUERY);
 
-        query.setParameter(PARENT, getID());
+        DataQueryDataCollectionAdapter adapter = new DataQueryDataCollectionAdapter(ITEMS_QUERY, ITEM);
+        adapter.setParameter(PARENT, getID());
         Assert.unequal(PENDING, getVersion());
-        query.setParameter(VERSION, getVersion());
+        adapter.setParameter(VERSION, getVersion());
 
-        return new ItemCollection(query, bSort);
+        return new ItemCollection(adapter, bSort);
     }
 
     /**
@@ -595,10 +596,28 @@ public class Folder extends ContentItem {
 
         /**
          * Constructor
+         * @param adapter an adapter constructed using the query name rather than a
+         * DataQuery object. This constructor must be used if there is any
+         * intention to permission filter the results as only a DataQueryDataCollectionAdapter
+         * constructed using query name has the bug fix to allow permission filtering
+         *
+         * @param bSort whether to sort the collection by isFolder and ID
+         */
+        public ItemCollection (DataQueryDataCollectionAdapter adapter, boolean bSort) {
+            super(adapter);
+            doAlias(adapter);
+            init(adapter, bSort);
+        }
+
+        public ItemCollection (DataQueryDataCollectionAdapter adapter) {
+            this(adapter, true);
+        }
+
+        /**
+         * Constructor
          * @param query the Data Query to use to retrieve the collection
          * @param bSort whether to sort the collection by isFolder and ID
          */
-
         //ideally, we wouldn't sort the collection by default and only provide
         //one constructor.  But, that would break the existing API
         public ItemCollection(DataQuery query, boolean bSort) {

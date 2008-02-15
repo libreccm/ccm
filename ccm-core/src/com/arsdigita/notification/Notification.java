@@ -22,7 +22,9 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.messaging.Message;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.SessionManager;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -466,6 +468,17 @@ public class Notification extends ACSObject implements NotificationConstants {
         if (msgDelete) {
             msg = getMessage();
             if (msg == null) {
+                msgDelete = false;
+            }
+            // find if there are other referring notifications. If so msgdelete = false
+            // so only the last notification tries to delete the message
+            DataCollection notifications = SessionManager.getSession().retrieve(Notification.BASE_DATA_OBJECT_TYPE);
+            notifications.addEqualsFilter(MESSAGE_ID, msg.getID());
+            notifications.addNotEqualsFilter(ID, this.getID());
+            if (notifications.size() > 0) {
+                // other notifications that still refer to the message. Let
+                // the last one out delete the message else foreign key breach
+                // brings down the whole request queue process
                 msgDelete = false;
             }
         } else {
