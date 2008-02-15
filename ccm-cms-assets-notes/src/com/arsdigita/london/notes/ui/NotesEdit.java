@@ -29,6 +29,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
 import com.arsdigita.london.notes.Note;
@@ -53,7 +54,7 @@ public class NotesEdit extends SimpleContainer {
         StringParameter contentParam = new StringParameter( "content" );
         contentParam.addParameterListener( new NotNullValidationListener() );
 
-        final DHTMLEditor content = new DHTMLEditor( contentParam );
+        final DHTMLEditor content = new DHTMLEditor( contentParam,ContentSection.getConfig().getDHTMLEditorConfig() );
         content.setRows( 20 );
 
         m_form.add( content );

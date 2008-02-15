@@ -16,11 +16,16 @@
 
 package com.arsdigita.london.notes;
 
+import java.util.Date;
+
+import com.arsdigita.auditing.AuditingObserver;
+import com.arsdigita.auditing.BasicAuditTrail;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -55,6 +60,11 @@ public class Note extends ACSObject {
     public static final String RANK = "rank";
     public static final String OWNER = "owner";
     public static final String NOTES = "ca_notes";
+    public static final String AUDIT = "auditing";
+    public static final String CREATION_DATE = AUDIT + "." + BasicAuditTrail.CREATION_DATE;
+	
+
+    private BasicAuditTrail auditTrail;
 
     private boolean m_isNew = false;
 
@@ -81,6 +91,25 @@ public class Note extends ACSObject {
         return note;
     }
 
+    /**
+	 * Register auditing observer 
+	 *  (non-Javadoc)
+	 * @see com.arsdigita.domain.DomainObject#initialize()
+	 */
+	protected void initialize() {
+		super.initialize();
+
+		DataObject dataObj = (DataObject) get(AUDIT);
+		if (dataObj != null) {
+			auditTrail = new BasicAuditTrail(dataObj);
+		} else {
+			// creates a new one when one doesn't already exist
+			auditTrail = BasicAuditTrail.retrieveForACSObject(this);
+		}
+
+		addObserver(new AuditingObserver(auditTrail));
+	}
+	
     public String getContent() {
         return (String) get( CONTENT );
     }
@@ -131,6 +160,14 @@ public class Note extends ACSObject {
         return (ContentItem) DomainObjectFactory.newInstance( obj );
     }
 
+    public User getNoteAuthor () {
+    	return auditTrail.getCreationUser();
+    }
+    
+    public Date getCreationDate () {
+    	return auditTrail.getCreationDate();
+    }
+    
     public static DataCollection getNotes( ContentItem item ) {
         Assert.exists( item, ContentItem.class );
 

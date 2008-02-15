@@ -16,12 +16,23 @@ model com.arsdigita.london.notes;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.auditing.BasicAuditTrail;
 
 object type Note extends ACSObject {
     String[0..1]  content = ca_notes.content CLOB;
     Long[1..1] rank    = ca_notes.rank;
 
     reference key ( ca_notes.note_id );
+    
+    // Basic auditing info 
+    unversioned BasicAuditTrail[0..1] auditing =
+        qualias { filter(all(com.arsdigita.auditing.BasicAuditTrail),
+                         id == this.id) };
+    aggressive load(auditing.id,
+                    auditing.creationDate,
+                    auditing.creationIP,
+                    auditing.lastModifiedDate,
+                    auditing.lastModifiedIP);
 }
 
 association {

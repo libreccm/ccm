@@ -16,16 +16,17 @@
 
 package com.arsdigita.london.notes;
 
-import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.domain.DomainObjectTraversal;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.runtime.LegacyInitEvent;
-
 import com.arsdigita.london.notes.ui.NotesStep;
+import com.arsdigita.london.notes.ui.NotesSummary;
+import com.arsdigita.runtime.LegacyInitEvent;
 
 public class NotesInitializer extends ContentAssetInitializer {
     public NotesInitializer() {
@@ -73,5 +74,6 @@ public class NotesInitializer extends ContentAssetInitializer {
         DomainObjectTraversal.registerAdapter( Note.BASE_DATA_OBJECT_TYPE,
                                                new SimpleDomainObjectTraversalAdapter(),
                                                SimpleXMLGenerator.ADAPTER_CONTEXT );
+        SimpleEditStep.addAdditionalDisplayComponent(new NotesSummary());
     }
 }
