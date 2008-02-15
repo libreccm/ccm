@@ -217,3 +217,168 @@ query getAtomicCategoryEntriesForRootCategory {
     sortKey = sort_key;
   }
 }
+
+
+query getAtomicFilteredCategoryEntries {
+  BigDecimal[1..1] id;
+  String[1..1] objectType;
+  String[1..1] title;
+  String[1..1] description;
+  String[1..1] sortKey;
+
+  do {
+    select c.category_id as id,
+           a.object_type as object_type,
+           c.name as title,
+           c.description as description,
+           lower(c.name) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           cat_cat_subcat_trans_index i,
+           cat_root_cat_object_map m
+     where c.category_id = a.object_id
+       and c.enabled_p = '1'
+       and c.category_id = i.subcategory_id
+       and i.category_id = m.category_id
+       and m.object_id = :providerID
+       and not exists (
+           select 1
+             from cat_cat_subcat_trans_index i2
+             where i2.category_id in (
+                 select c2.category_id
+                    from cat_categories c2
+                    where c2.enabled_p = '0'
+               )
+               and i2.subcategory_id = c.category_id
+       )
+       and not exists (
+           select 1
+             from atoz_cat_blacklist_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from atoz_cat_alias_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
+                  cms_bundles cb, cms_items ci
+            where b.type_id = ci.type_id
+              and ci.parent_id = cb.bundle_id
+              and ci.language = cb.default_language
+              and cb.bundle_id = m.object_id
+              and m.category_id = c.category_id
+              and m.index_p = '1'
+              and b.provider_id = :providerID
+       )
+       AND EXISTS (
+       	select 1 
+       	from cat_object_category_map cocm 
+       	where cocm.category_id = c.category_id
+       	)
+     union
+    select c.category_id as id,
+           a.object_type as object_type,
+           m.title as title,
+           c.description as description,
+           lower(m.letter) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           atoz_cat_alias_map m
+     where c.category_id = m.category_id
+       and c.category_id = a.object_id
+       and c.enabled_p = '1'
+       and m.provider_id = :providerID
+  } map {
+    id = id;
+    objectType = object_type;
+    title = title;
+    description = description;
+    sortKey = sort_key;
+  }
+}
+
+query getAtomicFilteredCategoryEntriesForRootCategory {
+  BigDecimal[1..1] id;
+  String[1..1] objectType;
+  String[1..1] title;
+  String[1..1] description;
+  String[1..1] sortKey;
+
+  do {
+    select c.category_id as id,
+           a.object_type as object_type,
+           c.name as title,
+           c.description as description,
+           lower(c.name) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           cat_cat_subcat_trans_index i
+     where c.category_id = a.object_id
+       and c.category_id = i.subcategory_id
+       and c.enabled_p = '1'
+       and i.category_id = :rootCategoryID
+       and not exists (
+           select 1
+             from atoz_cat_blacklist_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from cat_cat_subcat_trans_index i2
+             where i2.category_id in (
+                 select c2.category_id
+                    from cat_categories c2
+                    where c2.enabled_p = '0'
+               )
+               and i2.subcategory_id = c.category_id
+       )
+       and not exists (
+           select 1
+             from atoz_cat_alias_map b
+            where b.category_id = c.category_id
+              and b.provider_id = :providerID
+       )
+       and not exists (
+           select 1
+             from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
+                  cms_bundles cb, cms_items ci
+            where b.type_id = ci.type_id
+              and ci.parent_id = cb.bundle_id
+              and ci.language = cb.default_language
+              and cb.bundle_id = m.object_id
+              and m.category_id = c.category_id
+              and m.index_p = '1'
+              and b.provider_id = :providerID
+       )
+       AND EXISTS (
+       	select 1 
+       	from cat_object_category_map cocm 
+       	where cocm.category_id = c.category_id
+       	)
+    union
+    select c.category_id as id,
+           a.object_type as object_type,
+           m.title as title,
+           c.description as description,
+           lower(m.letter) as sort_key
+      from cat_categories c,
+           acs_objects a,
+           atoz_cat_alias_map m
+     where c.category_id = m.category_id
+       and c.category_id = a.object_id
+       and c.enabled_p = '1'
+       and m.provider_id = :providerID
+  } map {
+    id = id;
+    objectType = object_type;
+    title = title;
+    description = description;
+    sortKey = sort_key;
+  }
+}

@@ -56,6 +56,10 @@ public class AtoZCategoryProvider extends AtoZProvider {
 
     public static final String COMPOUND_ENTRIES = "com.arsdigita.london.atoz.getCompoundCategoryEntries";
 
+    public static final String FILTERED_ATOMIC_ENTRIES = "com.arsdigita.london.atoz.getAtomicFilteredCategoryEntries";
+
+    public static final String FILTERED_ATOMIC_ENTRIES_FOR_ROOT_CATEGORY = "com.arsdigita.london.atoz.getAtomicFilteredCategoryEntriesForRootCategory";
+    
     public AtoZCategoryProvider() {
         this(BASE_DATA_OBJECT_TYPE);
     }
@@ -138,15 +142,26 @@ public class AtoZCategoryProvider extends AtoZProvider {
                 .useSubsiteSpecificNavigationCategory(); // configured using
         // ccm set
         boolean hasSite = subsiteContext.hasSite();
+        boolean filterCats = AtoZ.getConfig().filterCategoryProviders();
+        
         if (hasSite && useSubsiteSpecificNavigationCategory) {
             Site site = subsiteContext.getSite();
             Category root = site.getRootCategory();
+            if(filterCats){
             cats = SessionManager.getSession().retrieveQuery(
-                    ATOMIC_ENTRIES_FOR_ROOT_CATEGORY);
+            		FILTERED_ATOMIC_ENTRIES_FOR_ROOT_CATEGORY);
+            }else{
+            	cats = SessionManager.getSession().retrieveQuery(
+                        ATOMIC_ENTRIES_FOR_ROOT_CATEGORY);
+            }
             cats.setParameter("providerID", getID());
             cats.setParameter("rootCategoryID", root.getID());
         } else {
-            cats = SessionManager.getSession().retrieveQuery(ATOMIC_ENTRIES);
+        	if(filterCats){
+        		cats = SessionManager.getSession().retrieveQuery(FILTERED_ATOMIC_ENTRIES);
+        	}else{
+        		cats = SessionManager.getSession().retrieveQuery(ATOMIC_ENTRIES);
+        	}
             cats.setParameter("providerID", getID());
         }
         return cats;

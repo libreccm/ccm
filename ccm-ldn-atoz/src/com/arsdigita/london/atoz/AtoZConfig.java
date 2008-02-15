@@ -45,6 +45,7 @@ public class AtoZConfig extends AbstractConfig {
     private Parameter m_adapters;
     private Parameter m_rootCategoryPicker;
     private BooleanParameter m_useSubsiteSpecificNavigationCategory;
+    private BooleanParameter m_filterCategoryProdiver;
 
     public AtoZConfig() {
         m_types = new HashSet();
@@ -67,10 +68,16 @@ public class AtoZConfig extends AbstractConfig {
             ("com.arsdigita.london.atoz.use_subsite_specific_navigation_category",
              Parameter.OPTIONAL,
              Boolean.FALSE);
+        
+        m_filterCategoryProdiver = new BooleanParameter (
+        		"com.arsdigita.london.atoz.filterCategoryProviders",
+        		Parameter.OPTIONAL,
+        		Boolean.FALSE);
 
         register(m_adapters);
         register(m_rootCategoryPicker);
-	register(m_useSubsiteSpecificNavigationCategory);
+        register(m_useSubsiteSpecificNavigationCategory);
+        register(m_filterCategoryProdiver);
 
         loadInfo();
     }
@@ -99,5 +106,9 @@ public class AtoZConfig extends AbstractConfig {
 
     public boolean useSubsiteSpecificNavigationCategory() {
         return ((Boolean) get(m_useSubsiteSpecificNavigationCategory)).booleanValue();
+    }
+    
+    public boolean filterCategoryProviders () {
+    	return ((Boolean) get(m_filterCategoryProdiver)).booleanValue();
     }
 }
