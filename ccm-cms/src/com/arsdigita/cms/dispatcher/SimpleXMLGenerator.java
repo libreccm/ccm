@@ -106,6 +106,10 @@ public class SimpleXMLGenerator implements XMLGenerator {
 		if (PermissionService.checkPermission(edit)) {
 			parent.addAttribute("canEdit", "true");
 		}
+		PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
+		if (PermissionService.checkPermission(publish)) {
+			parent.addAttribute("canPublish", "true");
+		}
         String className = item.getDefaultDomainClass();
 
         // Ensure correct subtype of ContentItem is instantiated

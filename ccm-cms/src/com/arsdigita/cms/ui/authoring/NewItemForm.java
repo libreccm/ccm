@@ -33,7 +33,14 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentTypeCollection;
+import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionManager;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 
@@ -104,7 +111,27 @@ public abstract class NewItemForm extends Form {
                         if(!c.isEmpty()) {
                             // Add content types
                             while(c.next()) {
+                            	boolean list = true;
                                 ContentType type = c.getContentType();
+                                if (PermissionService.getDirectGrantedPermissions(type.getOID()).size() > 0) {
+                            		// chris gilbert - allow restriction of some types to certain
+                                    // users/groups. No interface to do this, but group could be
+                                    // created and permission granted in a content type loader
+                                	//
+                                	// can't permission filter the collection because most types
+                                	// will have no permissions granted. This approach involves 
+                                	// a small overhead getting the count of granted permissions for
+                                	// each type (mitigated by only checking DIRECT permissions)
+                                	
+                                    Party party = Kernel.getContext().getParty();
+                                    if (party == null) {
+                                    	party = Kernel.getPublicUser();
+                                    }
+                                    PermissionDescriptor create = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_NEW_ITEM), type, party );
+                        			list = PermissionService.checkPermission(create);
+     
+                                }
+                                if (list) {
                                 //for dp content type label localization
                                 //String t = type.getAssociatedObjectType();
                                 String cn = type.getClassName();
@@ -117,6 +144,8 @@ public abstract class NewItemForm extends Form {
                                     o.addOption(new Option
                                                 (type.getID().toString(), type.getLabel()));
                                 }
+                            }
+                                
                             }
                             c.reset();
                         }
