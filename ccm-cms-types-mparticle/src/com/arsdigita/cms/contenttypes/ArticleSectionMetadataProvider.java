@@ -20,10 +20,8 @@ package com.arsdigita.cms.contenttypes;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.search.ContentPageMetadataProvider;
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.util.StringUtils;
 
 /**
  * This class is an implementation of the Search metadata provider that 
@@ -51,8 +49,9 @@ extends ContentPageMetadataProvider {
             	title.append(": ");
             }
         }
+        if (pageTitle != null) {
         title.append(pageTitle);
-        
+        }
         
         return title.toString();
     }

@@ -152,7 +152,9 @@ public abstract class MultiPartArticleForm extends FormSection
 
         add(new Label(MPArticleGlobalizationUtil.globalize("cms.contenttypes.ui.mparticle.summary")));
         TextArea summaryWidget = new TextArea(new TrimmedStringParameter(SUMMARY));
-        summaryWidget.addValidationListener(new NotNullValidationListener());
+	if (ContentSection.getConfig().mandatoryDescriptions()) {
+	    summaryWidget.addValidationListener(new NotEmptyValidationListener(GlobalizationUtil.globalize("cms.contenttypes.ui.description_missing")));
+	}	
         summaryWidget.setRows(5);
         summaryWidget.setCols(30);
         add(summaryWidget);
