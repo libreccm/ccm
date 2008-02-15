@@ -13,4 +13,27 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
-alter table messages alter body type text; 
+-- NOTE - easier version:  alter table messages alter column body type text;
+-- only works for Postgres 8.x
+
+
+
+
+alter table messages add large_body text;
+
+update messages set large_body = body;
+
+alter table messages drop column body;
+
+alter table messages rename column large_body to body;
+
+commit;
+
+-- reclaim disk space from old column
+
+UPDATE messages SET body = body;
+
+VACUUM FULL messages;
+
+commit;
+
