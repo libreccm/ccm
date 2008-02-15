@@ -23,8 +23,10 @@ import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemImageAttachmentConfig;
 import com.arsdigita.cms.ItemCopier;
 import com.arsdigita.cms.ReusableImageAsset;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -47,6 +49,7 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
 	public static final String TITLE           = "title";
     public static final String IMAGE_ATTACHMENTS = "imageAttachments";
     public static final String ITEM_ATTACHMENTS  = "itemAttachments";
+    public static final String IMAGE_LINK = "imageLink";
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE
@@ -191,4 +194,33 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
 
         return false;
     }
+
+    // chris gilbert - optional link
+
+       public Link getLink() {
+                  Link link = null;
+                  DataObject dobj = (DataObject) get( IMAGE_LINK );
+                  if (dobj != null) {
+
+                  link = (Link) DomainObjectFactory.newInstance( dobj );
+                  }
+                  return link;
+          }
+
+          public void setLink( Link link ) {
+                  Assert.exists( link, Link.class );
+                  set( IMAGE_LINK, link );
+          }
+
+          public void removeLink() {
+                       // when we delete the link, the image still references it in DB
+                       // can't make it composite because then image is deleted if we delete
+                       // link. Have to set link to null first (I think)
+                       DomainObject link = DomainObjectFactory.newInstance((DataObject)get(IMAGE_LINK));
+                       set (IMAGE_LINK, null);
+                       save();
+                       link.delete();
+
+          }
+
 }

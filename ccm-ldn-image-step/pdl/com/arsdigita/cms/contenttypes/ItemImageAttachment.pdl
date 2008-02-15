@@ -9,6 +9,7 @@ object type ItemImageAttachment extends ACSObject {
     String[0..1] caption    = cms_item_image_attachment.caption VARCHAR( 100 );
     String[0..1] title       = cms_item_image_attachment.title VARCHAR( 200 );
     String[0..1] description = cms_item_image_attachment.description VARCHAR( 4000 );
+    component Link[0..1] imageLink = join cms_item_image_attachment.link_id to cms_links.link_id;
 
     composite ReusableImageAsset[0..1] image
         = join cms_item_image_attachment.image_id to cms_images.image_id;
