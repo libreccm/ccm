@@ -116,6 +116,7 @@ public class Loader extends PackageLoader {
 			// set up the portal node
 			Workspace workspace = Workspace.createWorkspace(name, title,
 					parent, Boolean.TRUE.equals(isPublic));
+			
 		}
 	}
 
@@ -124,6 +125,7 @@ public class Loader extends PackageLoader {
 				"workspace", "Portal Workspace",
 				Workspace.BASE_DATA_OBJECT_TYPE);
 		type.setDescription("Portal based collaborative workspaces");
+		type.createGroup();
 		return type;
 	}
 
