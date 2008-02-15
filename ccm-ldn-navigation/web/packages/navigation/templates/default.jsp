@@ -9,6 +9,9 @@
   <jsp:directive.page import="com.arsdigita.london.navigation.Navigation"/>
   <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionDefinition"/>
   <jsp:directive.page import="com.arsdigita.london.navigation.cms.CMSDataCollectionRenderer"/>
+  <jsp:directive.page import="com.arsdigita.london.navigation.DataCollectionDefinition"/>
+  <jsp:directive.page import="com.arsdigita.london.navigation.DataCollectionRenderer"/>
+  
 
   <jsp:scriptlet>
     long age = Navigation.getConfig().getIndexPageCacheLifetime();
@@ -32,6 +35,9 @@
       classname="com.arsdigita.london.navigation.ui.category.Menu"/>
     <define:component name="itemList"
       classname="com.arsdigita.london.navigation.ui.object.SimpleObjectList"/>
+    <define:component name="applicationList"
+      classname="com.arsdigita.london.navigation.ui.object.SimpleObjectList"/>
+   
     <jsp:scriptlet>
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).setDefinition(new CMSDataCollectionDefinition());
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).setRenderer(new CMSDataCollectionRenderer());
@@ -43,7 +49,19 @@
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(30);
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("objectType");
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("title");
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("displayName");
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().addAttribute("launchDate");
+      
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) applicationList).setDefinition(new DataCollectionDefinition());
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) applicationList).setRenderer(new DataCollectionRenderer());
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) applicationList).getDefinition().setObjectType("com.arsdigita.web.Application");
+
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) applicationList).getDefinition().setDescendCategories(false);      
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) applicationList).getDefinition().addOrder("categories.link.sortKey");
+      
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) applicationList).getRenderer().setPageSize(30);
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) applicationList).getRenderer().addAttribute("displayName");
+      
     </jsp:scriptlet>
 
     <define:component name="assignedTerms"

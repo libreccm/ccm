@@ -258,8 +258,8 @@
 		<xsl:for-each select="nav:item">
 		<a>
 		<xsl:attribute name="href"><xsl:value-of select="nav:path" /></xsl:attribute>
-		<xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='title']" /></xsl:attribute>
-		<xsl:value-of select="nav:attribute[@name='title']" />
+		<xsl:attribute name="displayName"><xsl:value-of select="nav:attribute[@name='displayName']" /></xsl:attribute>
+		<xsl:value-of select="nav:attribute[@name='displayName']" />
 		</a>
 		<span class="hide">|</span>
 		</xsl:for-each>
@@ -282,10 +282,10 @@
                 <xsl:sort select="nav:attribute[@name='launchDate']/@hour" order = "{$order}" data-type="number"/>
                 <xsl:sort select="nav:attribute[@name='launchDate']/@minute" order = "{$order}" data-type="number"/>
                 <xsl:sort select="nav:attribute[@name='launchDate']/@second" order = "{$order}" data-type="number"/>
-	    		<xsl:sort select="nav:attribute[@name='title']"/>
+	    		<xsl:sort select="nav:attribute[@name='displayName']"/>
 	      		<a>
 					<xsl:attribute name="href"><xsl:value-of select="nav:path" /></xsl:attribute>
-					<xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='title']" /></xsl:attribute>
+					<xsl:attribute name="title"><xsl:value-of select="nav:attribute[@name='displayName']" /></xsl:attribute>
 					<!-- if there is a launch date, prepend title with date, so that the order of 
 				     entries makes sense -->             
 	             	<xsl:if test="nav:attribute[@name='launchDate']">  
@@ -300,7 +300,7 @@
                         <xsl:value-of select="nav:attribute[@name='launchDate']/@month"/>/
                         <xsl:value-of select="nav:attribute[@name='launchDate']/@year"/> - -->
 	          		</xsl:if>       
-	              	<xsl:value-of select="nav:attribute[@name='title']" /> 
+	              	<xsl:value-of select="nav:attribute[@name='displayName']" /> 
 	            </a>
 	      	   	<span class="hide">|</span>
 	        </xsl:for-each>
