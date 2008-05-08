@@ -58,9 +58,7 @@ class BaseCategoryForm extends BaseForm {
     final TextField m_url;
     final RadioGroup m_isAbstract;
     final RadioGroup m_isEnabled;
-	private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>", false);
-	
-
+    private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>", false);
 
     private final static String NAME        = "name";
     private final static String DESCRIPTION = "description";

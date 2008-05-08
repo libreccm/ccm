@@ -61,9 +61,9 @@ final class CategoryEditForm extends BaseCategoryForm {
             final PageState state = e.getPageState();
             final Category category = m_category.getCategory(state);
 
-            m_name.setValue(state, category.getName());
-            m_description.setValue(state, category.getDescription());
-            m_url.setValue(state, category.getURL());
+            m_name.setValue(state, category.getName(""));
+            m_description.setValue(state, category.getDescription(""));
+            m_url.setValue(state, category.getURL(""));
             // this seems anti-intuitive but the question is "can you place
             // items in this category.  If the user says "yes" then the
             // category is not abstract
@@ -73,7 +73,7 @@ final class CategoryEditForm extends BaseCategoryForm {
                 m_isAbstract.setValue(state, "yes");
             }
 
-            if (category.isEnabled()) {
+            if (category.isEnabled("")) {
                 m_isEnabled.setValue(state, "yes");
             } else {
                 m_isEnabled.setValue(state, "no");

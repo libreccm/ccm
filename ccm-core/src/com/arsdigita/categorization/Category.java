@@ -83,6 +83,24 @@ import org.apache.log4j.Logger;
  *
  * @author Randy Graebner
  * @version $Revision: 1.1 $ $DateTime: $
+ *
+ * <p>Localization is done with some new classes, so the category tree is
+ * now multilanguage. This is completly transparent to the rest of the 
+ * system (hopefully) and uses the negotiated language from the browser
+ * environment. The following attributes are localizable:
+ *
+ * <ul>
+ *   <li>Name</li>
+ *   <li>Description</li>
+ *   <li>URL</li>
+ *   <li>IsEnabled</li>
+ * </ul>
+ *
+ * To use localized URLs I had to change NavigationFileReolver.resolveCategory()
+ * in ccm-ldn-navigation to filter the categories in Java. There might be other
+ * location in the code where this patch may also be needed. So fix it.
+ *
+ * Quasimodo
  */
 public class Category extends ACSObject {
     private static final Logger s_log = Logger.getLogger(Category.class);
@@ -103,6 +121,14 @@ public class Category extends ACSObject {
     public static final PrivilegeDescriptor MAP_DESCRIPTOR =
         new PrivilegeDescriptor("map_to_category");
 
+    // Quasimodo: Begin
+    private static CategorizationConfig s_config = new CategorizationConfig();
+    
+    static {
+        s_config.load();
+    }
+    // Quasimodo: End
+    
     public static final String ROOT_CATEGORY = "rootCategory";
     public static final String USE_CONTEXT   = "useContext";
     public static final String CATEGORY_OWNER = "categoryOwner";
@@ -149,6 +175,8 @@ public class Category extends ACSObject {
     public final static String CHILD_OBJECTS = "childObjects";
     public final static String RELATED_CATEGORIES = RELATED;
     public final static String CATEGORIES = "categories";
+    
+    public static final String LOCALIZATIONS = "localizations";
 
     // some named queries in the pdl files
     private static final String CHILD_CATEGORY_IDS =
@@ -158,6 +186,11 @@ public class Category extends ACSObject {
 
     private HierarchyDenormalization m_hierarchy;
 
+    // Quasimodo: Begin
+    // Save the localized parts of category
+    private CategoryLocalizationCollection m_categoryLocalizationCollection;
+    // Quasimodo: End
+    
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -316,6 +349,15 @@ public class Category extends ACSObject {
     }
 
 
+    // Quasimodo: Begin
+    
+    /**
+     * Retrieves the current configuration
+     */
+    public static CategorizationConfig getConfig() {
+        return s_config;
+    }
+    
     /**
      * @see com.arsdigita.domain.DomainObject#initialize()
      */
@@ -334,20 +376,57 @@ public class Category extends ACSObject {
             setAbstract(false);
             //by default do not ignore the parent index item
             setIgnoreParentIndexItem(false);
+            
         }
-
+        
         m_hierarchy = new HierarchyDenormalization
             ("com.arsdigita.categorization.updateCategoryDescendants", this,
              DEFAULT_ANCESTORS) {};
-    }
+             
+        m_categoryLocalizationCollection = new CategoryLocalizationCollection(this);
 
+    }
+    // Quasimodo: End
+    
+    
+    /**
+     * Quasimodo:
+     * Returns the localized name or the name key if localized version don't exist
+     *
+     * @return the category name.
+     */
+    public String getName(String locale) {
+
+        // Test for localized version
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            
+            // Return value of isEnabled from localized version, so categories could be disabled depending on locale
+            return m_categoryLocalizationCollection.getName();
+                    
+        } else {
+           
+            // Return name key
+            return (String) get(NAME);
+        }
+
+    }
+    
     /**
      * @return the category name.
      */
     public String getName() {
-        return (String) get(NAME);
+        return getName(this.getNegotiatedLocale());
     }
 
+
+    /**
+     * Returns the display name of the category.  This overrides the parent
+     * implementation.
+     * @return the category name.
+     */
+    public String getDisplayName(String locale) {
+        return getName(locale);
+    }
 
     /**
      * Returns the display name of the category.  This overrides the parent
@@ -462,17 +541,55 @@ public class Category extends ACSObject {
      *
      * @param value the new name of the category
      */
-    public void setName(String value) {
-        set(NAME, value);
+    public void setName(String name, String locale) {
+        
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            m_categoryLocalizationCollection.getCategoryLocalization().setName(name);
+        }
+
     }
 
+    /**
+     * Sets the name of the category.
+     *
+     * @param value the new name of the category
+     */
+    public void setName(String name) {
+        set(NAME, name);
+    }
+
+
+    /**
+     * Returns the description of the category.
+     *
+     * Quasimodo:
+     * Returns localized version of description or description key if localized version don't exist
+     *
+     * @return the category description.
+     */
+    public String getDescription(String locale) {
+
+        // Test for localized version
+        // HACK
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            
+            // Return value of isEnabled from localized version, so categories could be disabled depending on locale
+            return m_categoryLocalizationCollection.getDescription();
+            
+        } else {
+           
+            // Return description key
+            return (String) get(DESCRIPTION);
+        }
+
+    }
 
     /**
      * Returns the description of the category.
      * @return the category name.
      */
     public String getDescription() {
-        return (String) get(DESCRIPTION);
+        return getDescription(this.getNegotiatedLocale());
     }
 
     /**
@@ -487,10 +604,47 @@ public class Category extends ACSObject {
      *
      * @param value the new description of the category
      */
-    public void setDescription(String value) {
-        set(DESCRIPTION, value);
+    public void setDescription(String description, String locale) {
+ 
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            m_categoryLocalizationCollection.getCategoryLocalization().setDescription(description);
+        }
+
     }
 
+    /**
+     * Sets the description of the category.
+     *
+     * @param value the new description of the category
+     */
+    public void setDescription(String description) {
+        set(DESCRIPTION, description);
+    }
+
+
+    /**
+     * Returns the URL component of the category.
+     *
+     * Quasimodo:
+     * Returns the localized version of the URL or URL-key if localized version don't exist
+     *
+     * @return URL component used when browsing categories
+     */
+    public String getURL(String locale) {
+
+        // Test for localized version
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            
+            // Return value of isEnabled from localized version, so categories could be disabled depending on locale
+            return m_categoryLocalizationCollection.getURL();
+            
+        } else {
+           
+            // Return URL-key
+            return (String) get(URL);
+        }
+        
+    }
 
     /**
      * Returns the URL component of the category.
@@ -498,10 +652,24 @@ public class Category extends ACSObject {
      * @return URL component used when browsing categories
      */
     public String getURL() {
-        return (String) get(URL);
+        return getURL(this.getNegotiatedLocale());
     }
 
 
+    /**
+     * Sets the URL component of the category.
+     *
+     * @param url URL component used when browsing categories
+     */
+    public void setURL(String url, String locale) {
+ 
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            m_categoryLocalizationCollection.getCategoryLocalization().setURL(url);
+        }
+
+    }
+
+    
     /**
      * Sets the URL component of the category.
      *
@@ -517,11 +685,64 @@ public class Category extends ACSObject {
      *
      * @return <code>true</code> if the category is enabled; <code>false</code>
      * otherwise.
+     *
+     * Quasimodo:
+     * This is getting a bit more compliated:
+     * 1. Check if category is globally disabled
+     * 2. If not, check if localized version exists
+     *  2.1 If so, return isEnabled from localized version
+     *  2.2 If not, return Category.getConfig().getShowInternalName()
+     * 
      */
-    public boolean isEnabled() {
-        return ((Boolean) get(IS_ENABLED)).booleanValue();
+    public boolean isEnabled(String locale) {
+        
+        // If locale == "" return global status
+        // or if globally disabled, return category as disabled
+        if(locale == "" || ((Boolean) get(IS_ENABLED)).booleanValue() == false) {
+            return ((Boolean) get(IS_ENABLED)).booleanValue();
+        }
+        
+        // Test for localized version
+        // HACK
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            
+            // Return value of isEnabled from localized version, so categories could be disabled depending on locale
+            return m_categoryLocalizationCollection.isEnabled();
+            
+        } else {
+           
+            // Return value of Category.getConfig().getShowInternalName()
+            // This will disable all categories without selected locale, if Category.getConfig().getShowInternalName() == false
+            return Category.getConfig().getShowInternalName();
+
+        }
+        
     }
 
+    /**
+     * Determines the current state of the category.
+     *
+     * @return <code>true</code> if the category is enabled; <code>false</code>
+     * otherwise.
+     */
+    public boolean isEnabled() {
+        return isEnabled(this.getNegotiatedLocale());
+    }
+
+
+    /**
+     * Sets whether the category is enabled.
+     *
+     * @param isEnabled <code>true</code> if the category is enabled;
+     * <code>false</false> otherwise.
+     */
+    public void setEnabled(boolean isEnabled, String locale) {
+ 
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+            m_categoryLocalizationCollection.getCategoryLocalization().setEnabled(isEnabled);
+        }
+
+    }
 
     /**
      * Sets whether the category is enabled.
@@ -1706,6 +1927,11 @@ public class Category extends ACSObject {
      * @return Array of constituent categories. The first element of the array
      * is the current category (hence the array will always have length >=
      * 1). If the path is bad, this returns <code>null</code>.
+     *
+     * This one may be patched to work with localized URLs. I didn't do it for now
+     * because I don't know where it is called and if it's really needed to patch.
+     * Quasimodo
+     *
      */
     public Category[] getChildrenByURL(String path) {
         final List children = new LinkedList();
@@ -1971,4 +2197,103 @@ public class Category extends ACSObject {
             (new PermissionDescriptor(PrivilegeDescriptor.ADMIN, this,
                                       Kernel.getContext().getParty()));
     }
+    
+    // Quasimodo: Begin
+    /**
+     * Getting the negotiated locale from requestContext
+     * @return the negotiated language string if in supported lang list or default language else
+     */
+    private String getNegotiatedLocale() {
+        
+        String locale = null;
+        
+        try {
+            
+            // Try to get locale from request context
+            locale = com.arsdigita.dispatcher.DispatcherHelper.getRequestContext().getLocale().getLanguage();
+            
+        } catch(NullPointerException ex) {
+            
+            // If there is no request context (ex. during ccm setup) use default language
+            locale = Category.getConfig().getDefaultLanguage();
+            
+        } finally {
+            
+            // if supported lang contains locale
+            if(Category.getConfig().hasLanguage(locale)) {
+                
+                // then return locale
+                return locale;
+                
+            } else {
+                
+                // else return default language
+                return Category.getConfig().getDefaultLanguage();
+            }
+            
+        }
+
+    }
+    
+    public CategoryLocalizationCollection getCategoryLocalizationCollection() {
+        return m_categoryLocalizationCollection;
+    }
+    
+    public DataAssociation getLocalizations() {
+        return ((DataAssociation) this.get(LOCALIZATIONS));
+    }
+    
+    public boolean hasLocalizations() {
+        return !m_categoryLocalizationCollection.isEmpty();
+    }
+    
+    /**
+     * Add a new language set to this category
+     */
+    public boolean addLanguage(String locale, String name, String description, String url) {
+        
+        // If locale don't exist
+        if(locale != "" && m_categoryLocalizationCollection != null && !m_categoryLocalizationCollection.localizationExists(locale)) {
+        
+            // Get DataAssociation
+            DataAssociation categoryLocalizationAssociation = this.getLocalizations();
+
+            // Add association with category
+            (new CategoryLocalization(locale, name, description, url)).addToAssociation(categoryLocalizationAssociation);
+
+            // Reload CategoryLocalizationCollection
+//            this.m_categoryLocalizationCollection = new CategoryLocalizationCollection(this);
+            
+            return true;
+            
+        }
+        
+        return false;
+        
+    }
+    
+    /**
+     * Delete a language set from this category
+     */
+    public boolean delLanguage(String locale) {
+        
+        // If locale exist
+        if(locale != "" && m_categoryLocalizationCollection != null && m_categoryLocalizationCollection.localizationExists(locale)) {
+
+            // Get DataAssociation
+            DataAssociation categoryLocalizationAssociation = this.getLocalizations();
+
+            // Remove CategoryLocalization from Association
+            m_categoryLocalizationCollection.getCategoryLocalization().removeFromAssociation(categoryLocalizationAssociation);
+        
+            // Reload CategoryLocalizationCollection
+            this.m_categoryLocalizationCollection = new CategoryLocalizationCollection(this);
+
+            return true;
+            
+        }
+        
+        return false;
+    }
+    
 }

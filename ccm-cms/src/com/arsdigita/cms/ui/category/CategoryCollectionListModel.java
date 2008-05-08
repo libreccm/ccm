@@ -73,8 +73,17 @@ public final class CategoryCollectionListModel implements ListModel {
         return m_cat;
     }
 
+    /**
+     * Liest den Namen der Kategorie aus. Angepaßt, damit hier immer
+     * der Wert aus Category gelesen wird und nicht die lokalisierte
+     * Version. Ist hier sinnvoll, da es Teil der Adminoberfläche für
+     * Kategorien ist. Eine lokalisierte Anzeige würde hier nur zu
+     * Verwirrung führen.
+     * 
+     * Quasimodo
+     */
     public Object getElement() {
-        return getCategory().getName();
+        return getCategory().getName("");
     }
 
     public String getKey() {

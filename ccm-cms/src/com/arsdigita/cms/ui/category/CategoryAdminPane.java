@@ -91,22 +91,28 @@ public final class CategoryAdminPane extends BaseAdminPane {
         m_contextModel = new UseContextSelectionModel(new StringParameter(CONTEXT_SELECTED));
 
 
-
+        /* Left column */
+        /* Use context section */
         List list = new List(new CategoryUseContextModelBuilder());
         list.setSelectionModel(m_contextModel);
         list.addChangeListener(new ContextSelectionListener());
+        
+        /* Category tree section */
         m_categoryTree = new BaseTree(new CategoryTreeModelBuilder(m_contextModel));
         m_categoryTree.addChangeListener(new SelectionListener());
         m_model = m_categoryTree.getSelectionModel();
 
-
         setSelectionModel(m_model);
         setSelector(m_categoryTree);
+        
+        /* setup use context form */
         final Section contextSection = new Section();
         contextSection.setHeading(new Label(gz("cms.ui.category.use_contexts")));
         ActionGroup contextGroup = new ActionGroup();
         contextSection.setBody(contextGroup);
         contextGroup.setSubject(list);
+        
+        /* Add use context form to pane */
         ActionLink addContextAction = new ActionLink(new Label(gz("cms.ui.category.add_use_context")));
         Form addContextForm = new AddUseContextForm(m_contextModel);
         getBody().add(addContextForm);
@@ -129,6 +135,10 @@ public final class CategoryAdminPane extends BaseAdminPane {
         m_parent = new ParentRequestLocal();
         m_category = new SelectionRequestLocal();
 
+        /* Right column */
+        /* Context section aka category details */
+
+        /* Action links */
         setAdd(gz("cms.ui.category.add"),
                new CategoryAddForm(m_category, m_model));
 

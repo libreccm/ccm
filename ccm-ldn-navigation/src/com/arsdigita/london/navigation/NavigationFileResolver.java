@@ -16,6 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+
+/**
+ * Diese Klasse ist für die Verabeitung der URLs innerhalb der Anwendung navigation zuständig.
+ */
 package com.arsdigita.london.navigation;
 
 
@@ -315,7 +319,20 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 	return NavigationFileResolver.resolveCategory(root, path);	
     }
 	
-	
+
+    /**
+     * In dieser Methode wird eine URL mit dem Kategorienbaum abgeglichen
+     * und die angeforderte Kategorie zurückgegeben, soweit sie vorhanden
+     * ist.
+     * 
+     * Ursprünglich hat diese Methode addEqualsFilter verwendet, um die 
+     * passenden Kategorien direkt in der SQL-Abfrage zu filtern. Das ist
+     * aber mit den lokalisierten URL der neuen, lokalisierten Kategorien
+     * nicht mehr möglich - oder zumindest habe ich keinen Weg gefunden.
+     * Stattdessen wird die Filterung nun in Java vorgenommen.
+     *
+     * Quasimodo
+     */
     public static Category[] resolveCategory(Category root,
                                        String path) {
         String[] bits = StringUtils.split(path, '/');
@@ -333,16 +350,24 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
             }
 
             CategoryCollection children = cat.getChildren();
-            children.addEqualsFilter(Category.URL, bits[i]);
-            children.addEqualsFilter(Category.IS_ENABLED, Boolean.TRUE);
-            if (children.next()) {
+//            children.addEqualsFilter(Category.URL, bits[i]);
+//            children.addEqualsFilter(Category.IS_ENABLED, Boolean.TRUE);
+//            if (children.next()) {
+            boolean found = false;
+            while (children.next()) {
                 cat = children.getCategory();
-                if (s_log.isDebugEnabled()) {
-                    s_log.debug("Got category " + cat);
+                if(cat.getURL().equals(bits[i]) && cat.isEnabled() == true) {
+                    if (s_log.isDebugEnabled()) {
+                        s_log.debug("Got category " + cat);
+                    }
+                    cats.add(cat);
+                    children.close();
+                    found = true;
+                    break;
                 }
-                cats.add(cat);
-                children.close();
-            } else {
+            }
+//            } else {
+            if(found == false) {
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("No category found ");
                 }

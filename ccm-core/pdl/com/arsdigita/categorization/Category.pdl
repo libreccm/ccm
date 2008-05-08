@@ -22,15 +22,40 @@ model com.arsdigita.categorization;
 import com.arsdigita.kernel.*;
 
 object type Category extends ACSObject {
+
+    // Hier werden die Default-Werte gespeichert ???
     String[0..1] description = cat_categories.description VARCHAR(4000);
     String[1..1] name = cat_categories.name VARCHAR(200);
     String[0..1] url = cat_categories.url VARCHAR(200);
     Boolean[1..1] isEnabled = cat_categories.enabled_p CHAR(1);
+
     Boolean[1..1] isAbstract = cat_categories.abstract_p CHAR(1);
     String[1..1] defaultAncestors = cat_categories.default_ancestors VARCHAR(3209);
     Boolean[1..1] ignoreParentIndexItem = cat_categories.ignore_parent_index_p CHAR(1);
 
     reference key (cat_categories.category_id);
+}
+
+// locale dependend entries
+object type CategoryLocalization extends ACSObject {
+    String[1..1] locale = cat_category_localizations.locale CHAR(2);
+
+    // Moved down from Category
+    String[0..1] description = cat_category_localizations.description VARCHAR(4000);
+    String[1..1] name = cat_category_localizations.name VARCHAR(200);
+    String[0..1] url = cat_category_localizations.url VARCHAR(200);
+    Boolean[1..1] isEnabled = cat_category_localizations.enabled_p CHAR(1);
+
+    reference key (cat_category_localizations.id);
+}
+
+association {
+    composite Category[1..1] category = join cat_category_localizations.category_id
+                                          to cat_categories.category_id;
+
+    component CategoryLocalization[0..n] localizations = join cat_categories.category_id
+                                                           to cat_category_localizations.category_id;
+
 }
 
 object type UseContext {
