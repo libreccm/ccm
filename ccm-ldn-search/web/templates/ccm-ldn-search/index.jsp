@@ -4,6 +4,7 @@
           version="1.2">
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
+  <jsp:directive.page import="com.arsdigita.london.navigation.Navigation"/>
   <jsp:directive.page import="com.arsdigita.toolbox.ui.ApplicationAuthenticationListener"/>
 
   <jsp:scriptlet>
@@ -12,7 +13,11 @@
 
   <define:page name="search" application="search" 
     title="Search" cache="true">
-    <define:component name="simpleSearch" classname="com.arsdigita.london.search.ui.SimpleSearchPane"/>
+    <define:component name="categoryPath"
+      classname="com.arsdigita.london.navigation.ui.category.Path"/>
+    <define:component name="categoryMenu"
+      classname="com.arsdigita.london.navigation.ui.category.Menu"/>
+     <define:component name="simpleSearch" classname="com.arsdigita.london.search.ui.SimpleSearchPane"/>
   </define:page>
 
   <show:all/>
