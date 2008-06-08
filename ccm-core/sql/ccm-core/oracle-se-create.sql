@@ -22,6 +22,8 @@
 
 @@ ddl/oracle-se/create.sql
 
+
+
 @@ default/globalization/table-g11n_charsets.sql
 @@ default/globalization/index-g11n_charsets.sql
 @@ default/globalization/table-g11n_locales.sql

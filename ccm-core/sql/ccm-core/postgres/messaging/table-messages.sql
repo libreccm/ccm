@@ -15,8 +15,8 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: table-messages.sql 287 2005-02-22 00:29:02Z sskracic $
--- $DateTime: 2004/08/16 18:10:38 $
+-- $Id: table-messages.sql 287 2008-06-07 00:29:02Z pboy $
+-- $DateTime: 2008/06/07 18:10:38 $
 
 create table messages ( 
     message_id     integer
@@ -33,7 +33,7 @@ create table messages (
                        references parties (party_id),
     subject        varchar(250)
                    constraint messages_subject_nn not null,
-    body           varchar(4000)
+    body           text
                    constraint messages_body_nn not null,
     type           varchar(50)
                    constraint messages_type_nn not null,

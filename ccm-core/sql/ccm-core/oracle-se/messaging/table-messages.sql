@@ -33,7 +33,7 @@ create table messages (
                        references parties (party_id),
     subject        varchar(250)
                    constraint messages_subject_nn not null,
-    body           varchar(4000)
+    body           clob
                    constraint messages_body_nn not null,
     type           varchar(50)
                    constraint messages_type_nn not null,

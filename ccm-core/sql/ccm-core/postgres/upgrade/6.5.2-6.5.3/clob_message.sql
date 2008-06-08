@@ -19,7 +19,7 @@
 
 
 
-alter table messages add large_body text;
+alter table messages add large_body text NOT NULL;
 
 update messages set large_body = body;
 
@@ -27,13 +27,22 @@ alter table messages drop column body;
 
 alter table messages rename column large_body to body;
 
+
+COMMENT ON COLUMN messages.body IS '
+    Body of the message.
+'; 
+
 commit;
+
 
 -- reclaim disk space from old column
 
 UPDATE messages SET body = body;
 
-VACUUM FULL messages;
+-- VACUUM can not be executed inside a transaction block. (Doesn't matter 
+-- whether before or after the commit; is a transaction block anyway!)
+-- Should be performed after update has finished.
+-- VACUUM FULL messages;
 
 commit;
 

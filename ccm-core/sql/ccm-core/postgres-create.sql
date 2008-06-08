@@ -25,6 +25,9 @@ begin;
 \i default/function-currentDate.sql
 
 \i ddl/postgres/create.sql
+
+
+
 \i default/globalization/table-g11n_charsets.sql
 \i default/globalization/index-g11n_charsets.sql
 \i default/globalization/table-g11n_locales.sql
@@ -142,7 +145,7 @@ begin;
 \i default/auditing/table-acs_auditing.sql
 \i default/auditing/index-acs_auditing.sql
 
-\i default/messaging/table-messages.sql
+\i postgres/messaging/table-messages.sql
 \i default/messaging/index-messages.sql
 \i default/messaging/comment-messages.sql
 \i postgres/messaging/table-message_parts.sql

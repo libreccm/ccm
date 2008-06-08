@@ -21,3 +21,4 @@ and not exists (select 1 from acs_permissions
 			   where object_id = pd_object_id);
 
 commit;
+

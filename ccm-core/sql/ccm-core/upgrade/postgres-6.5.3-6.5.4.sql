@@ -16,7 +16,7 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 
-\echo Red Hat WAF 6.5.3 -> 6.5.4 Upgrade Script (PostgreSQL)
+\echo ccm-core 6.5.3 -> 6.5.4 Upgrade Script (PostgreSQL)
 
 begin;
 

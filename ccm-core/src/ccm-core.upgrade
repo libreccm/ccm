@@ -31,4 +31,7 @@
   <version from="6.5.4" to="6.5.5">
     <script sql="ccm-core/upgrade/::database::-6.5.4-6.5.5.sql"/>
   </version>
+  <version from="6.5.5" to="6.5.6">
+    <script sql="ccm-core/upgrade/::database::-6.5.5-6.5.6.sql"/>
+  </version>
 </upgrade>

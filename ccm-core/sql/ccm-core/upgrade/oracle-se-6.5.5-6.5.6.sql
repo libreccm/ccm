@@ -1,5 +1,5 @@
 --
--- Copyright (C) chris.gilbert@westsussex.gov.uk All Rights Reserved.
+-- Copyright (C) 2008 pb@zes.uni-bremen.de    All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
@@ -16,7 +16,7 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 
-\echo ccm-core 6.5.4 -> 6.5.5 Upgrade Script (PostgreSQL)
+PROMPT ccm-core   6.5.5 -> 6.5.6 Upgrade Script (Oracle)
 
--- nothing doing, unless someone updates ctx triggers for postgres
-;
+@@ ../oracle-se/upgrade/6.5.5-6.5.6/create-category_localizations-table.sql
+

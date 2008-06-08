@@ -21,15 +21,19 @@ model com.arsdigita.messaging;
 
 import com.arsdigita.kernel.*;
 
+// The column body is created as CLOB (Oracle) rsp. TEXT (Postgres)
+// by SQL scripts and is capable to store more than 4000 characters 
+// [varchar(4000) below]
+
 object type Message extends ACSObject {
 
     String[0..1]     replyTo = messages.reply_to VARCHAR(250);
     String[1..1]     subject = messages.subject VARCHAR(250);
-    String[1..1]     body = messages.body CLOB;
+    String[1..1]     body = messages.body VARCHAR(4000);
     String[1..1]     type = messages.type VARCHAR(50);
     Date[1..1]       sent = messages.sent_date TIMESTAMP;
     BigDecimal[0..1] inReplyTo = messages.in_reply_to INTEGER;
-    BigDecimal objectID = messages.object_id INTEGER;
+    BigDecimal       objectID = messages.object_id INTEGER;
     String[0..1]     messageID = messages.rfc_message_id VARCHAR(1000);
 
     Party[1..1] sender = join messages.sender to parties.party_id;

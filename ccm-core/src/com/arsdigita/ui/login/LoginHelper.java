@@ -49,7 +49,7 @@ public class LoginHelper {
      * @return the name of the login UI resource bundle
      **/
     static String getBundleBaseName() {
-        return "com.arsdigita.ui.login.SubsiteResources";
+        return "com.arsdigita.ui.login.LoginResources";
     }
 
     /**
