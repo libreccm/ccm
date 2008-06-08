@@ -15,7 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-// $Id: Forum.pdl 542 2005-06-03 15:17:05Z sskracic $
+// $Id: Forum.pdl 1628 2007-09-17 08:10:40Z chrisg23 $
 // $DateTime: 2004/08/17 23:26:27 $
 model com.arsdigita.forum;
 

@@ -1,7 +1,7 @@
 create table forum_post_images  
-    (post_id  NUMBER,
-	 image_id  NUMBER not null,
-	 image_order NUMBER);
+    (post_id     NUMBER,
+     image_id    NUMBER not null,
+     image_order NUMBER);
 
 
 

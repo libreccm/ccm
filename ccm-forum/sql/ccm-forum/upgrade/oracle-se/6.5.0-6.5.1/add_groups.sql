@@ -1,8 +1,8 @@
 alter table forum_forums
-add (admin_group_id NUMBER,
-         create_group_id  NUMBER,
-         respond_group_id  NUMBER,
-         read_group_id  NUMBER);
+add (admin_group_id   NUMBER,
+     create_group_id  NUMBER,
+     respond_group_id NUMBER,
+     read_group_id    NUMBER);
 
 
 alter table forum_forums add

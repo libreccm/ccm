@@ -6,14 +6,17 @@
   release="1">
   <ccm:dependencies>
 
-    <ccm:requires name="ccm-core" version="6.5.3"/>    
-    <ccm:requires name="ccm-cms" version="6.5.3"/>
+    <ccm:requires name="ccm-core" version="6.5.3" relation="ge"/>    
+    <ccm:requires name="ccm-cms"  version="6.5.3" relation="ge"/>
   </ccm:dependencies>
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
+    A threadded forum application for online discussions using the Red Hat 
+    Web Application Framework.
+
     The Red Hat Web Application Framework is a platform for writing
     database-backed web applications in Java.
   </ccm:description>
