@@ -2,6 +2,6 @@
 
 begin;
 
-\i ../default/upgrade/6.5.0-6.5.1/add_link_column.sql
+\i ../postgres/upgrade/6.5.0-6.5.1/add_link_column.sql
 
 commit;
