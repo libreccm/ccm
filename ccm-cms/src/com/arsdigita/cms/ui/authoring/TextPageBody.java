@@ -44,11 +44,11 @@ import com.arsdigita.util.Assert;
  * this class.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TextPageBody.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TextPageBody.java 1621 2007-09-13 12:43:12Z chrisg23 $
  */
 public class TextPageBody extends TextAssetBody {
 
-    public static final String versionId = "$Id: TextPageBody.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
+    public static final String versionId = "$Id: TextPageBody.java 1621 2007-09-13 12:43:12Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private AuthoringKitWizard m_parent;
     private ItemSelectionModel m_itemModel;

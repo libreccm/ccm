@@ -198,12 +198,12 @@ import java.util.Set;
  * @author Michael Pih
  * @author Stanislav Freidin &lt;sfreidin@redhat.com&gt;
  *
- * @version $Id: ContentItem.java 1374 2006-11-13 13:23:09Z chrisgilbert23 $
+ * @version $Id: ContentItem.java 1621 2007-09-13 12:43:12Z chrisg23 $
  */
 public class ContentItem extends VersionedACSObject implements CustomCopy {
     public static final String versionId =
-        "$Id: ContentItem.java 1374 2006-11-13 13:23:09Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
+        "$Id: ContentItem.java 1621 2007-09-13 12:43:12Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger(ContentItem.class);

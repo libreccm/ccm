@@ -66,12 +66,12 @@ import com.arsdigita.util.StringUtils;
  * @see ContentSection#getConfig()
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ContentSectionConfig.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $
+ * @version $Id: ContentSectionConfig.java 1689 2007-10-26 11:06:23Z chrisg23 $
  */
 public final class ContentSectionConfig extends AbstractConfig {
     public static final String versionId =
-        "$Id: ContentSectionConfig.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
+        "$Id: ContentSectionConfig.java 1689 2007-10-26 11:06:23Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger(ContentSectionConfig.class);

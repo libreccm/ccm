@@ -54,7 +54,7 @@ import java.util.Iterator;
  */
 public class SimpleXMLGenerator implements XMLGenerator {
 
-    public static final String versionId = "$Id: SimpleXMLGenerator.java 1473 2007-03-12 15:16:39Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/17 23:15:09 $";
+    public static final String versionId = "$Id: SimpleXMLGenerator.java 1651 2007-09-18 10:30:06Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(SimpleXMLGenerator.class);

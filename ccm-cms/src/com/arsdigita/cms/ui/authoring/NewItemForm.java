@@ -56,7 +56,7 @@ import java.math.BigDecimal;
  */
 public abstract class NewItemForm extends Form {
 
-    public static final String versionId = "$Id: NewItemForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
+    public static final String versionId = "$Id: NewItemForm.java 1652 2007-09-18 10:35:42Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String RESOURCE_BUNDLE =
         "com.arsdigita.cms.ui.authoring.AuthoringResources";
