@@ -25,7 +25,7 @@
      *  this is just a convenience method
      */
     GlobalizedMessage getMessage(String key) {
-        return new GlobalizedMessage(key, "com.arsdigita.ui.login.SubsiteResources");
+        return new GlobalizedMessage(key, "com.arsdigita.ui.login.LoginResources");
     }
 %>
 
