@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml -complete- containing all modules as of aplaws 1.04      -->
+<!-- project.xml -complete- containing all modules as of aplaws 1.0.5      -->
+<!-- This file should be synchronized with an install bundle, e.g. aplaws-plus-devel-complete      -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
@@ -51,7 +52,7 @@
         <ccm:application name="ccm-docmngr"/>
 -->
         <ccm:application name="ccm-formbuilder-pdf"/>
-        <ccm:application name="ccm-forum"/>
+        <ccm:application name="ccm-forum"/>     
 
         <ccm:application name="ccm-ldn-aplaws"/>
         <ccm:application name="ccm-ldn-atoz"/>
