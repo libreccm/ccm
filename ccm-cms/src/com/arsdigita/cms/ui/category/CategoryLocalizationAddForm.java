@@ -54,9 +54,9 @@ public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
     }
     
     // Deaktivate this widget, if category is root
-    public boolean isVisible(PageState state) {
-        return !m_category.getCategory(state).isRoot();
-    }
+//    public boolean isVisible(PageState state) {
+//        return !m_category.getCategory(state).isRoot();
+//    }
     
     private class InitListener implements FormInitListener {
         public final void init(final FormSectionEvent e)
