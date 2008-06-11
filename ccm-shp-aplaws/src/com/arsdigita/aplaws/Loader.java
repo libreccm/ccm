@@ -232,11 +232,6 @@ public class Loader extends PackageLoader {
             "SHP Welcome Page",
             "SHP Welcome Page for navigation",
             "/packages/navigation/templates/shp-welcome.jsp");
-
-        template = Template.create(
-            "SHP Welcome Page Neu",
-            "SHP Welcome Page for navigation",
-            "/packages/navigation/templates/shp-welcome-neu.jsp");
     
     }
 

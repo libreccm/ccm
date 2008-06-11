@@ -12,15 +12,22 @@
     <ccm:requires name="ccm-ldn-portal" version="6.2.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-terms" version="6.3.1" relation="ge"/>
     <!--  not required anymore (2007-06-09)
-    <ccm:requires name="ccm-ldn-dublin" version="6.2.0" relation="ge"/>
+     ccm:requires name="ccm-ldn-dublin" version="6.2.0" relation="ge"  
     -->
     <ccm:requires name="ccm-ldn-navigation" version="6.2.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-search" version="6.3.0" relation="ge"/>
   </ccm:dependencies>
+
+  <ccm:directories>
+    <ccm:directory name="pdl"/>
+    <ccm:directory name="src"/>
+  </ccm:directories>
+
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
+
   <ccm:description>
     Service module which tailors the aplaws software to a specific purpose
     and/or a specific site.
@@ -31,7 +38,7 @@
     - provide a default theme, which meets accessibility requirements and
       overwrites the default, table based design (cf. web/.../themes)
     
-    This modules tailors APLAWS to a general purpose.
+    This modules tailors APLAWS to SHP (Schaedel-Hirnpatienten.de).
     
     APLAWS is a collaboration and content management system which is based upon
     the Red Hat Web Application Framework, which is a platform for writing
