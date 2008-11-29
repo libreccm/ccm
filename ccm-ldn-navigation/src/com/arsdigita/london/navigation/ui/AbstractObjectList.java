@@ -62,7 +62,7 @@ public abstract class AbstractObjectList
     	// attribute so that it can decide whether to order by date for 
     	// a date order category
     	m_definition.setDateAttribute(m_renderer);
-       
+              
         return m_definition.getDataCollection(getModel());
     }
 
@@ -91,6 +91,15 @@ public abstract class AbstractObjectList
         }
         
         DataCollection objects = getObjects(request, response);
+
+        // Quasimodo: Begin
+        // Limit list to objects in the negotiated language
+        if (objects != null && objects.size() > 0) {
+            String locale = com.arsdigita.dispatcher.DispatcherHelper.getRequestContext().getLocale().getLanguage();
+            objects.addEqualsFilter("language", locale);
+        }
+        // Quasimodo: End
+        
         return m_renderer.generateXML(objects, pageNumber.intValue());
     }
 }
