@@ -22,9 +22,18 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
+import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.Party;
+import com.arsdigita.kernel.permissions.PermissionDescriptor;
+import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.web.LoginSignal;
+import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
 
@@ -42,8 +51,31 @@ public class ContentItemPortletRenderer extends AbstractPortletRenderer {
                                 Element parent) {
         Element content = parent.newChildElement("portlet:contentItem",
                                        "http://www.arsdigita.com/portlet/1.0");
-        
+                
         ContentItem item = m_portlet.getContentItem();
+        
+        Party currentParty = Kernel.getContext().getParty();
+        if (currentParty == null) {
+            currentParty = Kernel.getPublicUser();
+        }
+        
+        PermissionDescriptor read = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_READ_ITEM), item, currentParty);
+        if (!PermissionService.checkPermission(read)) {
+            if (Web.getUserContext().isLoggedIn()) {
+                throw new AccessDeniedException("User does cannot read content item " + item.getName());
+            }
+            throw new LoginSignal(Web.getRequest());
+        }
+        
+        PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
+        if (PermissionService.checkPermission(edit)) {
+            content.addAttribute("canEdit", "true");
+        }
+        PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
+        if (PermissionService.checkPermission(publish)) {
+            content.addAttribute("canPublish", "true");
+        }
+
         if( null == item ) {
             s_log.warn( "No content item for content item portlet " +
                         m_portlet.getOID() );

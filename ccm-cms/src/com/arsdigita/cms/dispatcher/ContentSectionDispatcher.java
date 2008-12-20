@@ -45,7 +45,7 @@ public class ContentSectionDispatcher implements Dispatcher {
 
     public static final String versionId = "$Id: ContentSectionDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
-    static final String CONTENT_ITEM = "com.arsdigita.cms.dispatcher.item";
+    public static final String CONTENT_ITEM = "com.arsdigita.cms.dispatcher.item";
 
     static final String CONTENT_SECTION = "com.arsdigita.cms.dispatcher.section";
 
