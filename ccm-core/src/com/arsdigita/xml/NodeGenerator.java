@@ -18,6 +18,9 @@
  */
 package com.arsdigita.xml;
 
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.persistence.metadata.Property;
+
 /**
  * An interface providing an API for converting an object
  * to a new Element. This is useful when rendering objects where
@@ -28,5 +31,5 @@ package com.arsdigita.xml;
  * 
  */
 public interface NodeGenerator {
-    Element format(Object value);
+    Element format(DomainObject parent, Property property, Object value);
 }

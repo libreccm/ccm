@@ -38,7 +38,7 @@ public class StringUtilsTest extends TestCase {
             "a link to http://www.google.com\n" +
             "and the fractions 1/2 3/4 1/4 and\n" +
             "the symbols for copyright (C),\n" +
-            "trademark (TM) and rights (R)\n" + 
+            "trademark (TM) and rights (R)\n" +
             "\n" +
             "* a bullet list\n" +
             "* more *bullets* in\n" +
@@ -58,59 +58,59 @@ public class StringUtilsTest extends TestCase {
             "@google(http://www.google.com) a few\n" +
             "titled links, including a mailto\n" +
             "@Dan B(mailto:dan@@berrange.com)";
-        String expected = "<div>\n" + 
-            "foo <strong>bar</strong> wibble <em>eek</em>\n" + 
-            "and <a href=\"mailto:dan@berrange.com\">mailto:dan@berrange.com</a> eek!\n" + 
-            "</div>\n" + 
+        String expected = "<div>\n" +
+            "foo <strong>bar</strong> wibble <em>eek</em>\n" +
+            "and <a href=\"mailto:dan@berrange.com\">mailto:dan@berrange.com</a> eek!\n" +
+            "</div>\n" +
             "\n" +
-            "<div>\n" + 
-            "the second <code>paragraph</code> contains\n" + 
-            "a link to <a href=\"http://www.google.com\">http://www.google.com</a>\n" + 
-            "and the fractions &frac12; &frac34; &frac14; and\n" + 
-            "the symbols for copyright &copy;,\n" + 
-            "trademark <sup>TM</sup> and rights &reg;\n" + 
-            "</div>\n" + 
+            "<div>\n" +
+            "the second <code>paragraph</code> contains\n" +
+            "a link to <a href=\"http://www.google.com\">http://www.google.com</a>\n" +
+            "and the fractions &frac12; &frac34; &frac14; and\n" +
+            "the symbols for copyright &copy;,\n" +
+            "trademark <sup>TM</sup> and rights &reg;\n" +
+            "</div>\n" +
             "\n" +
-            "<ul>\n" + 
-            "<li>\n" + 
-            "a bullet list\n" + 
-            "</li>\n" + 
-            "<li>\n" + 
-            "more <strong>bullets</strong> in\n" + 
-            " this list element\n" + 
-            "</li>\n" + 
-            "<li>\n" + 
-            "a final element</li>\n" + 
-            "</ul>\n" + 
+            "<ul>\n" +
+            "<li>\n" +
+            "a bullet list\n" +
+            "</li>\n" +
+            "<li>\n" +
+            "more <strong>bullets</strong> in\n" +
+            " this list element\n" +
+            "</li>\n" +
+            "<li>\n" +
+            "a final element</li>\n" +
+            "</ul>\n" +
             "\n" +
-            "<hr/>\n" + 
+            "<hr/>\n" +
             "\n" +
-            "<ol>\n" + 
-            "<li>\n" + 
-            "now an enumerated list item\n" + 
-            "</li>\n" + 
-            "<li>\n" + 
-            "and one <em>more</em>\n" + 
-            "</li>\n" + 
-            "<li>\n" + 
-            "this one is split over two lines\n" + 
-            "for testing purposes</li>\n" + 
-            "</ol>\n" + 
+            "<ol>\n" +
+            "<li>\n" +
+            "now an enumerated list item\n" +
+            "</li>\n" +
+            "<li>\n" +
+            "and one <em>more</em>\n" +
+            "</li>\n" +
+            "<li>\n" +
+            "this one is split over two lines\n" +
+            "for testing purposes</li>\n" +
+            "</ol>\n" +
             "\n" +
-            "<hr/>\n" + 
+            "<hr/>\n" +
             "\n" +
-            "<div>\n" + 
-            "and now the end is near, lets test\n" + 
-            "<a href=\"http://www.google.com\">google</a> a few\n" + 
-            "titled links, including a mailto\n" + 
-            "<a href=\"mailto:dan@berrange.com\">Dan B</a>\n" + 
+            "<div>\n" +
+            "and now the end is near, lets test\n" +
+            "<a href=\"http://www.google.com\">google</a> a few\n" +
+            "titled links, including a mailto\n" +
+            "<a href=\"mailto:dan@berrange.com\">Dan B</a>\n" +
             "</div>\n";
         String actual = StringUtils.smartTextToHtml(src);
-        
+
         s_log.debug("Input: {" + src + "}\n");
         s_log.debug("Expected: {" + expected + "}\n");
         s_log.debug("Actual: {" + actual + "}\n");
-        
+
         assertTrue(expected.equals(actual));
     }
 
@@ -358,5 +358,17 @@ public class StringUtilsTest extends TestCase {
             actual = StringUtils.replace(pairs[jj], "\\;", ";");
             assertEquals(expected, actual);
         }
+    }
+
+
+    public void testUrlize() {
+        assertEquals(null, StringUtils.urlize(null));
+        assertEquals("", StringUtils.urlize(""));
+        assertEquals("-", StringUtils.urlize(" "));
+        assertEquals("----", StringUtils.urlize("    "));
+        assertEquals("abc-def", StringUtils.urlize("ABC DEF"));
+        assertEquals("-abc-def-", StringUtils.urlize(" ABC DEF "));
+        assertEquals("0123456789abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz-_---", StringUtils.urlize("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_ &/"));
+        assertEquals("helpaplawsorg", StringUtils.urlize("help@aplaws.org"));
     }
 }

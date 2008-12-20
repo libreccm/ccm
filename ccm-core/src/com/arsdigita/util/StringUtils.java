@@ -3,12 +3,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -1299,6 +1299,37 @@ public class StringUtils {
         }
 
         return list;
+    }
+
+    /**
+     * Convert a name into a URL form, the java equivalent of "<code>manipulate-input.js</code>"
+     *
+     * For example, "<code>Business promotions!</code>" will be converted to "<code>business-promotions</code>".
+     *
+     * @param name
+     *            the to be converted into a URL.
+     * @return the converted name, possibly unchanged and null if the input is null.
+     */
+    public static String urlize(String name) {
+        if (name == null) {
+            return null;
+        }
+        StringBuffer urlizedName = new StringBuffer(name.length());
+
+        for (int i = 0; i < name.length(); i++) {
+            char ch = name.charAt(i);
+
+            if (Character.isLetter(ch)) {
+                urlizedName.append(Character.toLowerCase(ch));
+            }
+            else if (Character.isDigit(ch) || ch == '_' || ch == '-') {
+                urlizedName.append(ch);
+            }
+            else if (ch == ' ' || ch == '&' || ch == '/') {
+                urlizedName.append('-');
+            }
+        }
+        return urlizedName.toString();
     }
 }
 

@@ -32,19 +32,19 @@ import junit.framework.TestSuite;
  *  This class is the foundation for the test suite methodology. At each package level,
  *  an PackageTestSuite derived class is defined.  For Ant to handle TestSuites, the class
  *  must define:
- *  <code>
- *      public static Test suite();
- *  </code>
+ *  <pre>
+ *    public static Test suite();</pre>
  *
  *  In the PackageTestSuite framework, this method works as in the following example:
  *
+ *  <pre>
  *    public static Test suite()
  *    {
  *        PersistenceSuite suite = new PersistenceSuite();
  *        populateSuite(suite);
  *        return suite;
- *    }
- *
+ *    }</pre>
+ *  
  *  The PackageTestSuite.populateSuite method adds all the valid test cases in the same
  *  package as the derived Suite class. Optionally, if the property test.testpath is defined,
  *  the framework will look here. test.testpath must be the fully qualified path name.
@@ -75,20 +75,23 @@ public class PackageTestSuite extends TestSuite {
      *  If the test class has a field named FAILS, the test will not be added to the suite.
      *  FAILS can be any public static type, such as:
      *
-     *  <code> public static final boolean FAILS = true; </code>
+     *  <pre>
+     *  public static final boolean FAILS = true;
+     *  </pre>
      *
      *  If the TestCase requires initialization of some external resources, the
      *  class should implement the following method:
      *
-     *  <code>
+     *  <pre>
      *  public static Test suite()
-     *  </code>
+     *  </pre>
      *
      *  This factory method can then return the TestCase wrapped in some TestDecorator
      *  that performs initialization.
      *
      *  An example would be:
-     *  <code>
+     *  
+     *  <pre>
      *  public FooTest extends TestCase {
      *      public static Test suite() {
      *          TestSuite suite = new TestSuite(FooTest.class);
@@ -110,19 +113,24 @@ public class PackageTestSuite extends TestSuite {
      *          SQLLoader.clearDatabase();
      *      }
      *  }
-     *  </code>
+     *  </pre>
      *
      *  There is an alternative methodology, which may be cleaner. Since this whole system,
      *  like the original Ant test setup, relies on class names, there may be a
      *  better way. If the test for some class Foo requires a TestSetup wrapper,
      *  the classes could be named as follows:
      *
-     *      FooTestImpl.java - The TestCase based class. Was FooTest in prior example
-     *      FooTest.java - The TestSetup derived class, which is created wrapping
-     *          FooTestImpl.java.  Was FooSetup in above example
-     *
+     *  <p>
+     *  <ul>
+     *      <li><p>FooTestImpl.java - The TestCase based class. Was FooTest in prior example</p></li>
+     *      <li><p>FooTest.java - The TestSetup derived class, which is created wrapping
+     *          FooTestImpl.java.  Was FooSetup in above example</p></li>
+     *  </ul>
+     *  </p>
+     *  
      *  An example  would be:
-     *  <code>
+     *  
+     *  <pre>
      *  public class FooTest extends TestSetup {
      *        public FooTest(Test test)
      *        {
@@ -132,7 +140,8 @@ public class PackageTestSuite extends TestSuite {
      *          return new FooTest(new TestSuite(FooTestImpl.class));
      *       }
      *  }
-     *  </code>
+     *  </pre>
+     *  
      *  @param testClass The test class to add to the suite.
      */
     public void addTestSuite(final Class testClass) {

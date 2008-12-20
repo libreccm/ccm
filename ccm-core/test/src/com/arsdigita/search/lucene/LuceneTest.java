@@ -77,7 +77,7 @@ public class LuceneTest extends LuceneTestCase {
         note.save();
 
         Indexer idx = new Indexer(Index.getLocation());
-        idx.sync();
+        idx.run();
 
         // This is kindof a hack since it's possible there are other things in
         // the index that will contain the same search term since the search

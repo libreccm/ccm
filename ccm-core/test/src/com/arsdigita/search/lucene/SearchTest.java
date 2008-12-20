@@ -149,7 +149,7 @@ public class SearchTest extends LuceneTestCase {
 
     private void sync() throws Exception {
         Indexer idx = new Indexer(Index.getLocation());
-        idx.sync();
+        idx.run();
 
     }
     private void cleanIndex() throws Exception {

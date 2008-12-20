@@ -85,7 +85,7 @@ public class SimpleDomainObjectXMLFormatter
         
         Object formatted = null;
         if (formatter == null) {
-        	formatted = generator.format(value);
+        	formatted = generator.format(obj, prop, value);
         } else {
         	formatted = formatter.format(value);
         }
