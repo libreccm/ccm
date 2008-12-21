@@ -34,8 +34,10 @@ import com.arsdigita.london.navigation.ApplicationNavigationModel;
 import com.arsdigita.london.navigation.DefaultNavigationModel;
 import com.arsdigita.london.portal.portlet.ApplicationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.ContentDirectoryPortlet;
+import com.arsdigita.london.portal.portlet.FlashPortletInitializer;
 import com.arsdigita.london.portal.portlet.FreeformHTMLPortlet;
 import com.arsdigita.london.portal.portlet.LoginPortlet;
+import com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.RSSFeedPortlet;
 import com.arsdigita.london.portal.portlet.TimeOfDayPortlet;
 import com.arsdigita.london.portal.portlet.WorkspaceDirectoryPortlet;
@@ -59,11 +61,11 @@ import com.arsdigita.xml.XML;
 /**
  * Initializes the Portal system
  * 
- * @version $Id: Initializer.java 1174 2006-06-14 14:14:15Z fabrice $
+ * @version $Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $
  */
 public class Initializer extends CompoundInitializer {
-	public final static String versionId = "$Id: Initializer.java 1174 2006-06-14 14:14:15Z fabrice $"
-			+ "$Author: fabrice $" + "$DateTime: 2004/03/02 06:33:42 $";
+	public final static String versionId = "$Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $"
+			+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
 
 	private static final Logger s_log = Logger.getLogger(Initializer.class);
 
@@ -217,6 +219,7 @@ public class Initializer extends CompoundInitializer {
 				return config;
 			}
 		};
+		
 		new ResourceTypeConfig(RSSFeedPortlet.BASE_DATA_OBJECT_TYPE) {
 			public ResourceConfigFormSection getCreateFormSection(
 					final ResourceType resType, final RequestLocal parentAppRL) {
@@ -267,6 +270,11 @@ public class Initializer extends CompoundInitializer {
 				return config;
 			}
 		};
+
+        	NavigationDirectoryPortlet.registerInstantiator();
+        	NavigationDirectoryPortlet.registerResourceTypeConfig();
+
+        	FlashPortletInitializer.initialize();
 
 		ApplicationNavigationModel.register(Workspace.class.getName(),
 				new DefaultNavigationModel());

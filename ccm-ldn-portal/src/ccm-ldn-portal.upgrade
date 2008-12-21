@@ -11,4 +11,12 @@
   <version from="6.5.0" to="6.5.1">
     <script class="com.arsdigita.london.portal.upgrade.CreateContainerGroups"/>
   </version>
+  <version from="6.5.1" to="6.5.2">
+    <script sql="ccm-ldn-portal/upgrade/::database::-6.5.1-6.5.2.sql"/>
+    <script class="com.arsdigita.london.portal.upgrade.CreateNavigationDirectoryPortlet"/>
+  </version>
+  <version from="6.5.2" to="6.5.3">
+    <script sql="ccm-ldn-portal/upgrade/::database::-6.5.2-6.5.3.sql"/>
+    <script class="com.arsdigita.london.portal.upgrade.CreateFlashPortlet"/>
+  </version>
 </upgrade>

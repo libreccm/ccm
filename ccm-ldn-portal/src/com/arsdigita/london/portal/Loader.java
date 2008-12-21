@@ -28,6 +28,7 @@ import com.arsdigita.london.portal.portlet.ApplicationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.ContentDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.FreeformHTMLPortlet;
 import com.arsdigita.london.portal.portlet.LoginPortlet;
+import com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.RSSFeedPortlet;
 import com.arsdigita.london.portal.portlet.TimeOfDayPortlet;
 import com.arsdigita.london.portal.portlet.WorkspaceDirectoryPortlet;
@@ -44,11 +45,11 @@ import com.arsdigita.web.ApplicationType;
  * Loader.
  * 
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 1174 2006-06-14 14:14:15Z fabrice $
+ * @version $Id: Loader.java 1718 2008-07-16 14:08:38Z terry $
  */
 public class Loader extends PackageLoader {
-	public final static String versionId = "$Id: Loader.java 1174 2006-06-14 14:14:15Z fabrice $"
-			+ "$Author: fabrice $" + "$DateTime: 2004/03/02 06:33:42 $";
+	public final static String versionId = "$Id: Loader.java 1718 2008-07-16 14:08:38Z terry $"
+			+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
 
 	private static final Logger s_log = Logger.getLogger(Loader.class);
 
@@ -85,6 +86,7 @@ public class Loader extends PackageLoader {
 				loadLoginPortlet();
 				loadApplicationDirectoryPortlet();
 				loadWorkspaceDirectoryPortlet();
+                NavigationDirectoryPortlet.loadPortletType();
 			}
 		}.run();
 	}

@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-ldn-portal"
   prettyName="Portal"
-  version="6.5.1"
+  version="6.5.3"
   release="2"
   webapp="ROOT">
   <ccm:dependencies>

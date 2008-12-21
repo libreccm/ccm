@@ -12,6 +12,7 @@
   <xsl:import href="application-directory-portlet.xsl"/>
   <xsl:import href="workspace-directory-portlet.xsl"/>
   <xsl:import href="content-directory-portlet.xsl"/>
+  <xsl:import href="flash-portlet.xsl"/>
   <xsl:import href="../../../../ccm-forum/packages/forum/xsl/recent-postings-portlet.xsl"/>
   <xsl:import href="/__ccm__/servlet/portlet-type/index.xsl"/>
 </xsl:stylesheet>
