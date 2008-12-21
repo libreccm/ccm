@@ -16,3 +16,16 @@ query TypesInSection {
         typeID = type_id;
     }
 }
+
+query blackListTypes {
+    String objectType;
+    
+    do {
+      select ct.classname
+      from atoz_cat_ct_blacklist_map bm,
+           content_types ct
+      where ct.type_id = bm.type_id
+    } map {
+      objectType = classname;
+    }
+}

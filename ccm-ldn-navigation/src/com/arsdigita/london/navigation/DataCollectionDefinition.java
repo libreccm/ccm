@@ -58,6 +58,7 @@ public class DataCollectionDefinition extends LockableImpl {
     private boolean m_descendCategories = false;
     private boolean m_excludeIndexObjects = true;
     private boolean m_checkPermissions = false;
+    private boolean m_blackListTypes = false;
     
     private ArrayList m_ordering = new ArrayList();
     private ArrayList m_excludedTypes = new ArrayList();
@@ -149,6 +150,15 @@ public class DataCollectionDefinition extends LockableImpl {
         m_checkPermissions = checkPermissions;
     }
 
+    /**
+     * Activates a filter for content types which are blacklisted 
+     * in the AtoZ module.
+     */
+    public void setBlackListTypes(boolean blackListTypes) {
+    	Assert.unlocked(this);
+    	m_blackListTypes = blackListTypes;
+    }
+    
     public final void addOrder(String order) {
         Assert.unlocked(this);
         m_ordering.add(order);
@@ -174,15 +184,19 @@ public class DataCollectionDefinition extends LockableImpl {
             property.addProperty( objects );
         }
 
-        // for date ordered categories, if pagination occurs, we need to ensure
-        // that primary ordering is the date attribute included in the renderer
-        // if there is one
-        s_log.debug("Category is " + model.getCategory().getID() + ": " + model.getCategory().getName());
-        s_log.debug("getting data collection. Is category date ordered? "  
-            + Navigation.getConfig().isDateOrderedCategory(model.getCategory(), PageState.getPageState()) 
-            + " date attribute has been set to " + m_dateAttribute);
-        if (Navigation.getConfig().isDateOrderedCategory(model.getCategory(), PageState.getPageState()) && m_dateAttribute != null) {
-            objects.addOrder(m_dateAttribute + " desc");
+        if (model.getCategory() != null) {
+            // for date ordered categories, if pagination occurs, we need to ensure
+            // that primary ordering is the date attribute included in the renderer
+            // if there is one
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("Category is " + model.getCategory().getID() + ": " + model.getCategory().getName());
+                s_log.debug("getting data collection. Is category date ordered? "  
+                    + Navigation.getConfig().isDateOrderedCategory(model.getCategory(), PageState.getPageState()) 
+                    + " date attribute has been set to " + m_dateAttribute);
+            }
+            if (Navigation.getConfig().isDateOrderedCategory(model.getCategory(), PageState.getPageState()) && m_dateAttribute != null) {
+                objects.addOrder(m_dateAttribute + " desc");
+            }
         }
 
         if (m_ordering.size() > 0) {
@@ -213,6 +227,11 @@ public class DataCollectionDefinition extends LockableImpl {
             String excludedType = excludedTypes.next().toString();
             objects.addFilter(ACSObject.OBJECT_TYPE + " != '" + 
                               excludedType + "'" );
+        }
+        
+        if (m_blackListTypes) {
+        	objects.addNotInSubqueryFilter(ACSObject.OBJECT_TYPE, 
+        			"com.arsdigita.london.navigation.blackListTypes");
         }
 
         Category cat = getCategory(model);
@@ -247,7 +266,7 @@ public class DataCollectionDefinition extends LockableImpl {
             // allow subclasses to override the permission check
             checkPermissions(objects);
         }
-    }
+     }
 
     protected void checkPermissions(DataCollection objects) {
         Party party = Kernel.getContext().getParty();
