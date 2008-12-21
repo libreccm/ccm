@@ -105,6 +105,15 @@
         <xrd:property name="/object/displayName"/>
       </xrd:attributes>
     </xrd:adapter>
+    
+    <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZCategoryAlias">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/displayName"/>
+      </xrd:attributes>
+    </xrd:adapter>
   </xrd:context>
 
   <xrd:context name="com.arsdigita.london.atoz.ui.admin.ItemProviderAliasList">
@@ -118,6 +127,7 @@
       -->
       </xrd:attributes>
     </xrd:adapter>
+
     <xrd:adapter objectType="com.arsdigita.london.atoz.AtoZItemAlias">
       <xrd:attributes rule="exclude">
       <!--

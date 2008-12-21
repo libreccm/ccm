@@ -9,5 +9,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-terms"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-util"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ccm-cms-types-siteproxy"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ccm-ldn-aplaws"/>
 	<classpathentry kind="output" path="build/Eclipse"/>
 </classpath>

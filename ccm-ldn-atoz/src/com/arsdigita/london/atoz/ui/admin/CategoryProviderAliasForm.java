@@ -18,37 +18,33 @@
 
 package com.arsdigita.london.atoz.ui.admin;
 
-import com.arsdigita.london.atoz.AtoZCategoryProvider;
-import com.arsdigita.london.util.ui.ObjectCategoryPicker;
+import java.math.BigDecimal;
 
+import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormProcessException;
-
+import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
-
-import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
-
-import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.categorization.Category;
-
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
+import com.arsdigita.london.atoz.AtoZCategoryProvider;
 
 public class CategoryProviderAliasForm extends Form {
 
     private ACSObjectSelectionModel m_provider;
 
+    private TermWidget m_termWidget;
+    
     private TextField m_title;
     private SingleSelect m_letter;
-    private ObjectCategoryPicker m_category;
     private SaveCancelSection m_buttons;
 
     public CategoryProviderAliasForm(ACSObjectSelectionModel provider) {
@@ -70,18 +66,12 @@ public class CategoryProviderAliasForm extends Form {
             m_letter.addOption(new Option(letter, letter.toUpperCase()));
         }
 
-        m_category = new ObjectCategoryPicker("category") {
-                public String getContext(PageState state) {
-                    return null;
-                }
-                public ACSObject getObject(PageState state) {
-                    return (ACSObject)m_provider.getSelectedObject(state);
-                }
-            };
-
         add(m_title);
         add(m_letter);
-        add(m_category); 
+        
+        m_termWidget = new TermWidget(provider);
+        m_termWidget.addValidationListener(new NotNullValidationListener());
+        add(m_termWidget);
 
         m_buttons = new SaveCancelSection(new SimpleContainer());
         add(m_buttons);
@@ -110,7 +100,7 @@ public class CategoryProviderAliasForm extends Form {
             AtoZCategoryProvider provider = (AtoZCategoryProvider)m_provider
                 .getSelectedObject(state);
 
-            Category cat = m_category.getCategory(state);
+            Category cat = new Category(((BigDecimal[])m_termWidget.getValue(state))[0]);
             String letter = (String)m_letter.getValue(state);
             String title = (String)m_title.getValue(state);
 

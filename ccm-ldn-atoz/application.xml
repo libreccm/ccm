@@ -2,11 +2,12 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-ldn-atoz"
   prettyName="A-Z"
-  version="6.5.0"
-  release="2">
+  version="6.6.0"
+  release="4">
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-aplaws" version="6.4.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-util" version="6.2.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-terms" version="6.2.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-navigation" version="6.2.0" relation="ge"/>

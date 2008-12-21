@@ -2,11 +2,13 @@
 <xsl:stylesheet
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+  xmlns:cms="http://www.arsdigita.com/cms/1.0"
   xmlns:atoz="http://xmlns.redhat.com/atoz/1.0"
   version="1.0">
 
   <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
+  <xsl:import href="../../../../../ROOT/__ccm__/static/cms/admin/category-step/category-step.xsl"/>
 
   <xsl:output method="html"/>
 
@@ -208,6 +210,39 @@
     </form>
   </xsl:template>
 
+  <xsl:template match="cms:emptyPage[@title='childCategories']">
+    <xsl:choose>
+      <xsl:when test="cms:category/@order='sortKey'">
+    <xsl:apply-templates select="cms:category/cms:category" mode="cms:javascriptCat">
+      <xsl:with-param name="expand" select="'none'"/>
+          <xsl:sort data-type="number" select="@sortKey"/>
+    </xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="cms:category/cms:category" mode="cms:javascriptCat">
+          <xsl:sort data-type="text" select="@name"/>
+          <xsl:with-param name="expand" select="'none'"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="cms:categoryWidget" mode="cms:javascript">
+    <script type="text/javascript" src="/assets/prototype.js"/>
+    <script type="text/javascript" src="/assets/category-step.js"/>
+    <script type="text/javascript" src="/resource/ccm-ldn-atoz/__ccm__/static/atoz/category-widget.js"/>
+    <div>
+      <xsl:apply-templates select="cms:category" mode="cms:javascriptCat">
+        <xsl:with-param name="expand" select="'block'"/>
+      </xsl:apply-templates>
+    </div>
+    <h3>Selected categories</h3>
+    <select id="catWd" size="5" onClick="catDeselect()" style="width: 400px; height=200px">
+    </select>
+    <select id="catWdHd" name="{@name}" size="5" multiple="multiple" style="display: none">
+    </select>
+  </xsl:template>
+
   <xsl:template match="bebop:form" mode="atoz:categoryAliasForm">
     <form action="{@action}" name="{@name}">
       <xsl:apply-templates select="bebop:formWidget[@type='hidden']"/>
@@ -236,7 +271,7 @@
           <tr class="odd">
             <th>Category:</th>
             <td>
-              <xsl:apply-templates select="bebop:select[@name='category']"/>
+              <xsl:apply-templates select="cms:categoryWidget[@name='category']"/>
               <xsl:apply-templates select="bebop:formErrors[@id='category']"/>
             </td>
           </tr>

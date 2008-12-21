@@ -18,9 +18,12 @@
 
 package com.arsdigita.london.atoz;
 
+import org.apache.log4j.Logger;
+
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.london.navigation.DataCollectionDefinition;
 import com.arsdigita.london.subsite.Site;
 import com.arsdigita.london.subsite.Subsite;
 import com.arsdigita.london.subsite.SubsiteContext;
@@ -30,7 +33,6 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
-import org.apache.log4j.Logger;
 
 public class AtoZCategoryProvider extends AtoZProvider {
 
@@ -46,7 +48,7 @@ public class AtoZCategoryProvider extends AtoZProvider {
 
     public static final String CT_BLACK_LIST = "atozContentTypeBlackList";
 
-    public static final String ALIASES = "atozAliases";
+    public static final String ALIASES = "aliases";
 
     public static final String CT_TYPE_ID = "type_id";
 
@@ -54,11 +56,11 @@ public class AtoZCategoryProvider extends AtoZProvider {
 
     public static final String ATOMIC_ENTRIES_FOR_ROOT_CATEGORY = "com.arsdigita.london.atoz.getAtomicCategoryEntriesForRootCategory";
 
-    public static final String COMPOUND_ENTRIES = "com.arsdigita.london.atoz.getCompoundCategoryEntries";
-
     public static final String FILTERED_ATOMIC_ENTRIES = "com.arsdigita.london.atoz.getAtomicFilteredCategoryEntries";
 
     public static final String FILTERED_ATOMIC_ENTRIES_FOR_ROOT_CATEGORY = "com.arsdigita.london.atoz.getAtomicFilteredCategoryEntriesForRootCategory";
+    
+    public static final String ALL_BLACK_LIST_TYPES = "com.arsdigita.london.atoz.getAllBlackListTypes";
     
     public AtoZCategoryProvider() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -103,13 +105,13 @@ public class AtoZCategoryProvider extends AtoZProvider {
     }
 
     public void addAlias(Category cat, String letter, String title) {
-        DataObject link = add(ALIASES, cat);
-        link.set("letter", letter);
-        link.set("title", title);
+    	AtoZCategoryAlias alias = new AtoZCategoryAlias();
+    	alias.setup(cat, letter, title);
+        add(ALIASES, alias);
     }
 
-    public void removeAlias(Category cat) {
-        remove(ALIASES, cat);
+    public void removeAlias(AtoZCategoryAlias alias) {
+        remove(ALIASES, alias);
     }
 
     public void addBlock(Category cat) {
@@ -133,6 +135,18 @@ public class AtoZCategoryProvider extends AtoZProvider {
     public DomainCollection getContentTypeBlackList() {
         DataAssociation entries = (DataAssociation) get(CT_BLACK_LIST);
         return new DomainCollection(entries);
+    }
+    
+    public static void excludeBlackListTypes(DataCollectionDefinition definition) {
+    	DataQuery types = 
+    		SessionManager.getSession().retrieveQuery(ALL_BLACK_LIST_TYPES);
+    	
+    	while (types.next()) {
+    		String objectType = (String)types.get("objectType");
+    		s_log.debug("Excluding object type from DataCollection: " + objectType);
+    		definition.excludeSpecificObjectType(objectType);
+    	}
+    	types.close();
     }
 
     public DataQuery getAtomicEntries() {

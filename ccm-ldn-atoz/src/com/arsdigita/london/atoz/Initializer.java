@@ -18,29 +18,30 @@
 
 package com.arsdigita.london.atoz;
 
+import com.arsdigita.db.DbHelper;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.domain.DomainObjectInstantiator;
+import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.london.atoz.terms.DomainProvider;
-import com.arsdigita.london.atoz.ui.admin.CategoryProviderForm;
 import com.arsdigita.london.atoz.ui.admin.CategoryProviderAdmin;
-import com.arsdigita.london.atoz.ui.admin.ItemProviderForm;
+import com.arsdigita.london.atoz.ui.admin.CategoryProviderForm;
 import com.arsdigita.london.atoz.ui.admin.ItemProviderAdmin;
+import com.arsdigita.london.atoz.ui.admin.ItemProviderForm;
 import com.arsdigita.london.atoz.ui.admin.SiteProxyProviderAdmin;
 import com.arsdigita.london.atoz.ui.admin.SiteProxyProviderForm;
 import com.arsdigita.london.atoz.ui.terms.DomainProviderAdmin;
 import com.arsdigita.london.atoz.ui.terms.DomainProviderForm;
-
-import com.arsdigita.db.DbHelper;
-import com.arsdigita.domain.xml.TraversalHandler;
-import com.arsdigita.persistence.pdl.ManifestSource;
-import com.arsdigita.persistence.pdl.NameFilter;
-import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.london.navigation.ApplicationNavigationModel;
 import com.arsdigita.london.navigation.DefaultNavigationModel;
-
-import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.pdl.ManifestSource;
+import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
+import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.LegacyInitEvent;
-
+import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.xml.XML;
 
 /**
@@ -94,5 +95,17 @@ public class Initializer extends CompoundInitializer {
                 new AtoZProviderType("ESD Toolkit Domain Provider",
                         "Provides a ESD Toolkit A-Z", DomainProvider.class,
                         DomainProviderForm.class, DomainProviderAdmin.class));
+
     }
+
+	public void init(DomainInitEvent evt) {
+		super.init(evt);
+
+        DomainObjectFactory f = evt.getFactory();
+    	f.registerInstantiator(AtoZCategoryAlias.BASE_DATA_OBJECT_TYPE, new DomainObjectInstantiator() {
+			protected DomainObject doNewInstance(DataObject dataObject) {
+				return new AtoZCategoryAlias(dataObject);
+			}
+    	});
+	}
 }

@@ -26,6 +26,18 @@ object type AtoZCategoryProvider extends AtoZProvider {
     reference key (atoz_cat_provider.provider_id);
 }
 
+object type AtoZCategoryAlias {
+  BigDecimal[1..1] id = atoz_cat_aliases.object_id;
+
+  Category[1..1] category =
+    join atoz_cat_aliases.category_id to cat_categories.category_id;
+
+  String[1..1] letter = atoz_cat_aliases.letter CHAR(1);
+  String[1..1] title = atoz_cat_aliases.title VARCHAR(200);
+  
+  object key (id);
+}
+
 association {
   AtoZCategoryProvider[0..n] atozProvider1 = join cat_categories.category_id
                                                to atoz_cat_blacklist_map.category_id,
@@ -38,16 +50,12 @@ association {
 }
 
 association {
-  AtoZCategoryProvider[0..n] atozProvider2 = join cat_categories.category_id
-                                               to atoz_cat_alias_map.category_id,
-                                             join atoz_cat_alias_map.provider_id
-                                               to atoz_cat_provider.provider_id;
-  Category[0..n] atozAliases = join atoz_cat_provider.provider_id
-                                 to atoz_cat_alias_map.provider_id,
-                               join atoz_cat_alias_map.category_id
-                                 to cat_categories.category_id;
-  String[1..1] letter = atoz_cat_alias_map.letter CHAR(1);
-  String[1..1] title = atoz_cat_alias_map.title VARCHAR(200);
+  AtoZCategoryProvider[1..1] provider =
+    join atoz_cat_aliases.provider_id
+      to atoz_cat_provider.provider_id;
+  component AtoZCategoryAlias[0..n] aliases =
+    join atoz_cat_provider.provider_id
+  	  to atoz_cat_aliases.provider_id;
 }
 
 association {
@@ -102,12 +110,6 @@ query getAtomicCategoryEntries {
        )
        and not exists (
            select 1
-             from atoz_cat_alias_map b
-            where b.category_id = c.category_id
-              and b.provider_id = :providerID
-       )
-       and not exists (
-           select 1
              from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
                   cms_bundles cb, cms_items ci
             where b.type_id = ci.type_id
@@ -121,16 +123,16 @@ query getAtomicCategoryEntries {
      union
     select c.category_id as id,
            a.object_type as object_type,
-           m.title as title,
+           ca.title as title,
            c.description as description,
-           lower(m.letter) as sort_key
+           lower(ca.letter) as sort_key
       from cat_categories c,
            acs_objects a,
-           atoz_cat_alias_map m
-     where c.category_id = m.category_id
+           atoz_cat_aliases ca
+     where c.category_id = ca.category_id
        and c.category_id = a.object_id
        and c.enabled_p = '1'
-       and m.provider_id = :providerID
+       and ca.provider_id = :providerID
   } map {
     id = id;
     objectType = object_type;
@@ -180,12 +182,6 @@ query getAtomicCategoryEntriesForRootCategory {
        )
        and not exists (
            select 1
-             from atoz_cat_alias_map b
-            where b.category_id = c.category_id
-              and b.provider_id = :providerID
-       )
-       and not exists (
-           select 1
              from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
                   cms_bundles cb, cms_items ci
             where b.type_id = ci.type_id
@@ -199,16 +195,16 @@ query getAtomicCategoryEntriesForRootCategory {
     union
     select c.category_id as id,
            a.object_type as object_type,
-           m.title as title,
+           ca.title as title,
            c.description as description,
-           lower(m.letter) as sort_key
+           lower(ca.letter) as sort_key
       from cat_categories c,
            acs_objects a,
-           atoz_cat_alias_map m
-     where c.category_id = m.category_id
+           atoz_cat_aliases ca
+     where c.category_id = ca.category_id
        and c.category_id = a.object_id
        and c.enabled_p = '1'
-       and m.provider_id = :providerID
+       and ca.provider_id = :providerID
   } map {
     id = id;
     objectType = object_type;
@@ -259,12 +255,6 @@ query getAtomicFilteredCategoryEntries {
        )
        and not exists (
            select 1
-             from atoz_cat_alias_map b
-            where b.category_id = c.category_id
-              and b.provider_id = :providerID
-       )
-       and not exists (
-           select 1
              from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
                   cms_bundles cb, cms_items ci
             where b.type_id = ci.type_id
@@ -283,16 +273,16 @@ query getAtomicFilteredCategoryEntries {
      union
     select c.category_id as id,
            a.object_type as object_type,
-           m.title as title,
+           ca.title as title,
            c.description as description,
-           lower(m.letter) as sort_key
+           lower(ca.letter) as sort_key
       from cat_categories c,
            acs_objects a,
-           atoz_cat_alias_map m
-     where c.category_id = m.category_id
+           atoz_cat_aliases ca
+     where c.category_id = ca.category_id
        and c.category_id = a.object_id
        and c.enabled_p = '1'
-       and m.provider_id = :providerID
+       and ca.provider_id = :providerID
   } map {
     id = id;
     objectType = object_type;
@@ -340,12 +330,6 @@ query getAtomicFilteredCategoryEntriesForRootCategory {
        )
        and not exists (
            select 1
-             from atoz_cat_alias_map b
-            where b.category_id = c.category_id
-              and b.provider_id = :providerID
-       )
-       and not exists (
-           select 1
              from atoz_cat_ct_blacklist_map b, cat_object_category_map m,
                   cms_bundles cb, cms_items ci
             where b.type_id = ci.type_id
@@ -364,16 +348,16 @@ query getAtomicFilteredCategoryEntriesForRootCategory {
     union
     select c.category_id as id,
            a.object_type as object_type,
-           m.title as title,
+           ca.title as title,
            c.description as description,
-           lower(m.letter) as sort_key
+           lower(ca.letter) as sort_key
       from cat_categories c,
            acs_objects a,
-           atoz_cat_alias_map m
-     where c.category_id = m.category_id
+           atoz_cat_aliases ca
+     where c.category_id = ca.category_id
        and c.category_id = a.object_id
        and c.enabled_p = '1'
-       and m.provider_id = :providerID
+       and ca.provider_id = :providerID
   } map {
     id = id;
     objectType = object_type;

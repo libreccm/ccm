@@ -24,6 +24,7 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.PageState;
 
 import com.arsdigita.london.atoz.AtoZ;
+import com.arsdigita.london.atoz.AtoZCategoryAlias;
 import com.arsdigita.london.atoz.AtoZCategoryProvider;
 
 import com.arsdigita.domain.DomainObjectXMLRenderer;
@@ -53,15 +54,14 @@ public class CategoryProviderAliasList extends SimpleContainer {
         String value = state.getControlEventValue();
         
         if (DELETE.equals(key)) {
-            Category cat = (Category)DomainObjectFactory
+            AtoZCategoryAlias alias = (AtoZCategoryAlias)DomainObjectFactory
                 .newInstance(OID.valueOf(value));
 
             AtoZCategoryProvider provider = (AtoZCategoryProvider)
                 m_provider.getSelectedObject(state);
-            provider.removeAlias(cat);
+            provider.removeAlias(alias);
         }
     }
-
 
     public void generateXML(PageState state,
                             Element parent) {
@@ -73,9 +73,14 @@ public class CategoryProviderAliasList extends SimpleContainer {
         
         DomainCollection entries = provider.getAliases();
         while (entries.next()) {
+        	AtoZCategoryAlias alias = (AtoZCategoryAlias)entries.getDomainObject();
             Element el = AtoZ.newElement("categoryProviderAlias");
-            el.addAttribute("letter", XML.format(entries.get("link.letter")));
-            el.addAttribute("title", XML.format(entries.get("link.title")));
+            el.addAttribute("letter", XML.format(alias.getLetter()));
+            el.addAttribute("title", XML.format(alias.getTitle()));
+
+            Element elName = new Element("name");
+            elName.setText(alias.getCategory().getName());
+            el.addContent(elName);
 
             try {
                 state.setControlEvent(this, DELETE, entries.getDomainObject()
