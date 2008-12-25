@@ -15,64 +15,63 @@ init com.arsdigita.cms.installer.xml.ContentTypeInitializer {
     };
 }
 
-// Test: temporarly deactivate publishToFile
-// init com.arsdigita.cms.publishToFile.Initializer {
-//     // List of publish destinations for content types 
-//     // Each element is a four-element list in the format 
-//     // '{ "content type", "root directory", "shared storage",  
-//     // "url stub" }'. 
-//     // "Content type" is the object type of the content type. 
-//     // "Root directory" must be a path to a writable directory, relative 
-//     // to the file-system root. "Shared storage" must be _true_ if the root 
-//     // directory is shared NFS storage, _false_ otherwise. "URL stub"
-//     // must be the path component of the URL from which the live server 
-//     // will serve from this directory.
-//     destination = { 
-//       { "com.arsdigita.cms.ContentItem", 
-//         "data/p2fs", 
-//         false, 
-//         "/p2fs" },
-//       { "com.arsdigita.cms.Template", 
-// 	"webapps/ROOT/packages/content-section/templates",
-//         false, 
-//         "/templates" }
-//     };
-// 
-//     // Class which implements PublishToFileListener used to perform
-//     // additional actions when publishing or unpublishing to the file system.
-//     publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
-// 
-//     // Queue management parameters.
-// 
-//     // Set startupDelay to 0 to disable the processing of the queue
-//     // Time (seconds) before starting to monitor the
-//     // queue after a server start
-//     startupDelay = 30;
-// 
-//     // Time (in seconds) between checking if there are entries in the
-//     // publishToFile queue.
-//     // A value <= 0 disables processing the queue on this server.
-//     pollDelay = 5;
-// 
-//     // Time to wait (seconds) before retrying
-//     // to process a failed entry
-//     retryDelay = 120;
-// 
-//     // Number of queue entries to process at once.
-//     blockSize = 40;
-//     // Number of times a failed queue entry will be
-//     // reprocessed. If processing has failed more than
-//     // that number of times, the entry will be
-//     // ignored.
-//     maximumFailCount = 10;
-// 
-//     // Method used to select entries for processing.
-//     // 'QueuedOrder'-in  queued order.
-//     // 'GroupByParent'-group entries according to parent when selecting items
-//     //  (allows optimizations if a listener task required for all elements in a folder
-//     //   can be done only once for the folder).
-//     blockSelectMethod = "GroupByParent";
-// }
+init com.arsdigita.cms.publishToFile.Initializer {
+    // List of publish destinations for content types 
+    // Each element is a four-element list in the format 
+    // '{ "content type", "root directory", "shared storage",  
+    // "url stub" }'. 
+    // "Content type" is the object type of the content type. 
+    // "Root directory" must be a path to a writable directory, relative 
+    // to the file-system root. "Shared storage" must be _true_ if the root 
+    // directory is shared NFS storage, _false_ otherwise. "URL stub"
+    // must be the path component of the URL from which the live server 
+    // will serve from this directory.
+    destination = { 
+      { "com.arsdigita.cms.ContentItem", 
+        "data/p2fs", 
+        false, 
+        "/p2fs" },
+      { "com.arsdigita.cms.Template", 
+	"webapps/ROOT/packages/content-section/templates",
+        false, 
+        "/templates" }
+    };
+
+    // Class which implements PublishToFileListener used to perform
+    // additional actions when publishing or unpublishing to the file system.
+    publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
+
+    // Queue management parameters.
+
+    // Set startupDelay to 0 to disable the processing of the queue
+    // Time (seconds) before starting to monitor the
+    // queue after a server start
+    startupDelay = 30;
+
+    // Time (in seconds) between checking if there are entries in the
+    // publishToFile queue.
+    // A value <= 0 disables processing the queue on this server.
+    pollDelay = 5;
+
+    // Time to wait (seconds) before retrying
+    // to process a failed entry
+    retryDelay = 120;
+
+    // Number of queue entries to process at once.
+    blockSize = 40;
+    // Number of times a failed queue entry will be
+    // reprocessed. If processing has failed more than
+    // that number of times, the entry will be
+    // ignored.
+    maximumFailCount = 10;
+
+    // Method used to select entries for processing.
+    // 'QueuedOrder'-in  queued order.
+    // 'GroupByParent'-group entries according to parent when selecting items
+    //  (allows optimizations if a listener task required for all elements in a folder
+    //   can be done only once for the folder).
+    blockSelectMethod = "GroupByParent";
+}
 
 
 init com.arsdigita.cms.installer.SectionInitializer {
