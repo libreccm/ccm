@@ -28,7 +28,10 @@ import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.Script;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.runtime.Startup;
-import com.arsdigita.util.config.JavaPropertyLoader;
+// pboy (Jan.09) deprecated, replacement: c.ad.util.JavaPropertyReader
+//               comments should be deleted after exentsiv testing
+// import com.arsdigita.util.config.JavaPropertyLoader;
+import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.jdbc.Connections;
 import java.sql.Connection;
 import org.apache.log4j.Logger;
@@ -71,7 +74,7 @@ public class Loader extends PackageLoader {
         txn.beginTxn();
 
         final ScriptContext context = new ScriptContext
-            (session, new JavaPropertyLoader(System.getProperties()));
+            (session, new JavaPropertyReader(System.getProperties()));
 
         final Script script = new Loader();
         script.run(context);
