@@ -7,7 +7,8 @@ import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Iterator;
+// pboy: unneccessary import, to be deleted
+// import java.util.Iterator;
 import java.util.TooManyListenersException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +51,8 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ArrayParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.EmailValidationListener;
-import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
+// pboy: unneccessary import, to be deleted
+// import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
@@ -60,7 +62,8 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.FileAsset;
-import com.arsdigita.cms.docmgr.DocFolder;
+// pboy: unneccessary import, to be deleted
+// import com.arsdigita.cms.docmgr.DocFolder;
 import com.arsdigita.cms.docmgr.DocMgr;
 import com.arsdigita.cms.docmgr.Document;
 import com.arsdigita.dispatcher.DispatcherHelper;

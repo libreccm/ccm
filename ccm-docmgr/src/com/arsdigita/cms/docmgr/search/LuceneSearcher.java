@@ -14,9 +14,9 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.User;
-import com.arsdigita.lucene.LuceneSearch;
-import com.arsdigita.lucene.ObjectTypeFilter;
-import com.arsdigita.lucene.TypeSpecificFilter;
+import com.arsdigita.search.lucene.LuceneSearch;
+import com.arsdigita.search.lucene.ObjectTypeFilter;
+import com.arsdigita.search.lucene.TypeSpecificFilter;
 
 public class LuceneSearcher implements Searcher
 {

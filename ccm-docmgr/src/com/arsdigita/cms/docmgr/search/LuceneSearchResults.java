@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import com.arsdigita.cms.docmgr.ui.DMConstants;
-import com.arsdigita.lucene.LuceneSearch;
+import com.arsdigita.search.lucene.LuceneSearch;
 
 
 /**
