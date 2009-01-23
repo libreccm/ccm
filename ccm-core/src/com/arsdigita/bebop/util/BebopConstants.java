@@ -61,5 +61,6 @@ public interface BebopConstants {
     String BEBOP_SEGMENT       = "bebop:segment";
     String BEBOP_SEG_BODY      = "bebop:segmentBody";
     String BEBOP_SEG_HEADER    = "bebop:segmentHeader";
+    String BEBOP_XINHAEDITOR   = "bebop:xinha";
 
 }

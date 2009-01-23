@@ -148,17 +148,25 @@ public class DHTMLEditor extends TextArea {
         return "DHTMLEditor";
     }
 
-	/**
-	 * deprecated - use {@link setConfig(Config)}
-	 * @param config
-	 */
+    public String getEditorURL() {
+        return Bebop.getConfig().getDHTMLEditorSrcFile().substring(0, Bebop.getConfig().getDHTMLEditorSrcFile().lastIndexOf("/") + 1);
+    }
+    
+    public String getEditorSrc() {
+        return Bebop.getConfig().getDHTMLEditorSrcFile();
+    }
+    
+    /**
+     * deprecated - use {@link setConfig(Config)}
+     * @param config
+     */
     public void setConfig(String config) {
         setAttribute("config", config);
     }
 
-	public void setConfig(Config config) {
-		m_config = config;
-	}
+    public void setConfig(Config config) {
+    	m_config = config;
+    }
 
     public void addPlugin(String name) {
         m_plugins.add(name);
@@ -231,6 +239,10 @@ public class DHTMLEditor extends TextArea {
 
         editor.addAttribute("name", getName());
 
+        // Set the needed config params so they don't have to be hardcoded in the theme
+        editor.addAttribute("editor_url", getEditorURL());
+        editor.addAttribute("editor_src", getEditorSrc());
+        
         if ( value != null ) {
             editor.setText(value);
         }

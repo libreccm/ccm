@@ -123,7 +123,7 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_deleteLifecycleWhenComplete;
     private final Parameter m_deleteExpiryNotificationsWhenSent;
     private final Parameter m_deleteWorkflowNotificationsWhenSent;
-	private final Parameter m_hasContactsAuthoringStep;
+    private final Parameter m_hasContactsAuthoringStep;
     private final Parameter m_categoryTreeOrdering;
     
     /**
@@ -224,10 +224,10 @@ public final class ContentSectionConfig extends AbstractConfig {
              Parameter.OPTIONAL,
              null);
 
-		m_dhtmlEditorHiddenButtons = new StringArrayParameter
-				   ("com.arsdigita.cms.dhtml_editor_hidden_buttons",
-					Parameter.OPTIONAL,
-					null);
+	m_dhtmlEditorHiddenButtons = new StringArrayParameter
+	    ("com.arsdigita.cms.dhtml_editor_hidden_buttons",
+	     Parameter.OPTIONAL,
+	     null);
 					
         m_hideTemplatesTab = new BooleanParameter
             ("com.arsdigita.cms.hide_templates_tab",

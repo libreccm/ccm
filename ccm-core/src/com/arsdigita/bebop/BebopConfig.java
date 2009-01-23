@@ -51,6 +51,7 @@ public final class BebopConfig extends AbstractConfig {
     private final Parameter m_dcpOnLinks;
     private final Parameter m_enableTreeSelect;
     private final EnumerationParameter m_dhtmlEditor;
+    private final Parameter m_dhtmlEditorSrcFile;
     private final Parameter m_showClassName;
 
     public BebopConfig() {
@@ -79,7 +80,12 @@ public final class BebopConfig extends AbstractConfig {
                 BebopConstants.BEBOP_DHTMLEDITOR);
         m_dhtmlEditor.put("HTMLArea", BebopConstants.BEBOP_DHTMLEDITOR); // for compatibility with old XSL
         m_dhtmlEditor.put("FCKeditor", BebopConstants.BEBOP_FCKEDITOR);
+        m_dhtmlEditor.put("Xinha", BebopConstants.BEBOP_XINHAEDITOR);
 
+        m_dhtmlEditorSrcFile = new StringParameter
+                ("waf.bebop.dhtml_editor_src", Parameter.REQUIRED,
+                 "/assets/xinha/XinhaLoader.js");
+        
         m_dcpOnButtons = new BooleanParameter
                       ("waf.bebop.dcp_on_buttons", Parameter.REQUIRED, Boolean.TRUE);
         m_dcpOnLinks = new BooleanParameter
@@ -93,10 +99,11 @@ public final class BebopConfig extends AbstractConfig {
         register(m_tidy);
         register(m_fancyErrors);
         register(m_dhtmlEditor);
+        register(m_dhtmlEditorSrcFile);
         register(m_dcpOnButtons);
         register(m_dcpOnLinks);
         register(m_enableTreeSelect);
-		register(m_showClassName);
+	register(m_showClassName);
 
         loadInfo();
     }
@@ -137,6 +144,10 @@ public final class BebopConfig extends AbstractConfig {
 
     public final String getDHTMLEditor() {
         return (String) get(m_dhtmlEditor);
+    }
+
+    public final String getDHTMLEditorSrcFile() {
+        return (String) get(m_dhtmlEditorSrcFile);
     }
 
     public final boolean showClassName() {
