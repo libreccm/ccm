@@ -19,7 +19,7 @@
 package com.arsdigita.search.lucene;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.runtime.CCM;
+import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
@@ -39,7 +39,10 @@ import java.io.File;
 
 public class LuceneConfig extends AbstractConfig {
 
-    public final static String versionId = "$Id: LuceneConfig.java 890 2005-09-21 17:09:00Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: LuceneConfig.java 890 2005-09-21 17:09:00Z apevec $" +
+            " by $Author: apevec $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger LOG = Logger.getLogger(LuceneConfig.class);
 
     private static LuceneConfig s_conf;
@@ -47,7 +50,7 @@ public class LuceneConfig extends AbstractConfig {
     static synchronized LuceneConfig getConfig() {
         if (s_conf == null) {
             s_conf = new LuceneConfig();
-            s_conf.load("ccm-core/lucene.properties");
+            s_conf.load();
         }
 
         return s_conf;
@@ -57,7 +60,7 @@ public class LuceneConfig extends AbstractConfig {
 
     private StringParameter m_location = new StringParameter
         ("waf.lucene.location", Parameter.REQUIRED,
-         new File(CCM.getDataDirectory(), "lucene").getPath());
+         new File(CCMResourceManager.getWorkDirectory(), "lucene").getPath());
     private IntegerParameter m_interval = new IntegerParameter
         ("waf.lucene.interval", Parameter.REQUIRED, new Integer(2*60));
     private StringParameter m_analyzer = new StringParameter

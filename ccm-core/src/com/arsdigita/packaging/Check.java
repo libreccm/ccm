@@ -69,7 +69,10 @@ import com.arsdigita.runtime.AbstractScript;
 
 public abstract class Check extends AbstractScript {
 
-    public final static String versionId = "$Id: Check.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Check.java 736 2005-09-01 10:46:05Z sskracic $" +
+            "by $Author: sskracic $, " + 
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     public static final class Status {
 
@@ -79,6 +82,7 @@ public abstract class Check extends AbstractScript {
             m_name = name;
         }
 
+        @Override
         public String toString() {
             return m_name;
         }

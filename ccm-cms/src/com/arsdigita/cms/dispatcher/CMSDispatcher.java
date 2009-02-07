@@ -105,7 +105,10 @@ import org.apache.log4j.Logger;
  */
 public class CMSDispatcher implements Dispatcher, ChainedDispatcher {
 
-    public static final String versionId = "$Id: CMSDispatcher.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
+    public static final String versionId = 
+            "$Id: CMSDispatcher.java 1795 2009-02-07 10:47:32Z pboy $" +
+            " by $Author: pboy $, " +
+            "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(CMSDispatcher.class);
@@ -385,8 +388,8 @@ public class CMSDispatcher implements Dispatcher, ChainedDispatcher {
             }
             if ( !sm.canAccess(user, SecurityManager.ADMIN_PAGES ) ) {
                 throw new AccessDeniedException(
-                                                "You do not have access to the administrative pages for the " +
-                                                section.getName() + " content section.");
+                          "You do not have access to the administrative pages for the " +
+                          section.getName() + " content section.");
             }
         } else {
 
@@ -395,8 +398,8 @@ public class CMSDispatcher implements Dispatcher, ChainedDispatcher {
             if ( !sm.canAccess(user, SecurityManager.PUBLIC_PAGES) &&
                  !LocalRequestPassword.validLocalRequest(request)) {
                 throw new AccessDeniedException(
-                                                "You do not have access to the public pages for the " +
-                                                section.getName() + " content section.");
+                          "You do not have access to the public pages for the " +
+                          section.getName() + " content section.");
             }
         }
     }

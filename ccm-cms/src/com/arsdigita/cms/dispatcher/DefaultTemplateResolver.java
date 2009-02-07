@@ -32,9 +32,12 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * ------- May be outdated. TemplateResolver has been reworked.  ----------
  * Resolves the JSP template to use for dispatching an 
  * item. This replaces TemplateResolver since the latter
  * has a useless API.
+ * ------------------------------------------------------------------------
+ *
  * <p>In general, the process for resolving a template involves two
  * steps:</p>
  *
@@ -58,8 +61,8 @@ import javax.servlet.http.HttpServletRequest;
  * </ol>
  */
 
-public class DefaultTemplateResolver extends AbstractTemplateResolver 
-                                                                implements TemplateResolver {
+public class DefaultTemplateResolver extends    AbstractTemplateResolver 
+                                     implements TemplateResolver {
 
     private static Logger s_log = Logger.getLogger(DefaultTemplateResolver.class);
     
@@ -93,7 +96,7 @@ public class DefaultTemplateResolver extends AbstractTemplateResolver
 
             template = getDefaultTemplate(section, item, request);
 
-            Assert.assertNotNull(template, "default template");
+            Assert.exists(template, "default template");
         }
 
         if (s_log.isInfoEnabled()) {
@@ -174,7 +177,8 @@ public class DefaultTemplateResolver extends AbstractTemplateResolver
             template = manager.getDefaultTemplate(section, type, context, mimeType);
         } else {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Item has no content type, not looking for a content type specific template");
+                s_log.debug("Item has no content type, not looking for a " +
+                            "content type specific template");
             }
         }
         

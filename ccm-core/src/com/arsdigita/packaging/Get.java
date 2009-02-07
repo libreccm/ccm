@@ -18,6 +18,7 @@
  */
 package com.arsdigita.packaging;
 
+import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.util.JavaPropertyWriter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ParameterWriter;
@@ -39,14 +40,22 @@ import org.apache.commons.cli.PosixParser;
 
 /**
  * Get
- *
+ * 
+ * Implements the command line interface to list one or more values
+ * from a CCM configuration database (registry)
+ * 
+ * Called by ccm get command
+ * 
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
  **/
 
 class Get extends Command {
 
-    public final static String versionId = "$Id: Get.java 1324 2006-09-21 22:13:16Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Get.java 1324 2006-09-21 22:13:16Z apevec $" +
+            " by $Author: apevec $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options OPTIONS = getOptions();
 

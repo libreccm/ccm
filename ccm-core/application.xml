@@ -2,7 +2,7 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-core"
   prettyName="Core"
-  version="6.5.5"
+  version="6.5.6"
   release="1"
   webapp="ROOT"
   buildHooks="build-hooks.xml">

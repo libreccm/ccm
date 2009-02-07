@@ -24,6 +24,7 @@ import com.arsdigita.bebop.tree.TreeModelBuilder;
 import com.arsdigita.bebop.tree.TreeModel;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryTreeModelLite;
+import com.arsdigita.cms.TemplateContext;
 import com.arsdigita.web.Web;
 import com.arsdigita.util.LockableImpl;
 
@@ -34,11 +35,11 @@ import com.arsdigita.london.navigation.Navigation;
  * Lists category tree.
  *
  * @author Tri Tran (tri@arsdigita.com)
- * @version $Id: CategoryTree.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: CategoryTree.java 1695 2008-03-18 11:47:59Z terry $
  */
 public class CategoryTree extends Tree {
 
-    public static final String versionId = "$Id: CategoryTree.java 755 2005-09-02 13:42:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/01/21 09:04:39 $";
+    public static final String versionId = "$Id: CategoryTree.java 1695 2008-03-18 11:47:59Z terry $ by $Author: terry $, $DateTime: 2004/01/21 09:04:39 $";
 
     /**
      * Construct a new CategoryTree
@@ -60,7 +61,9 @@ public class CategoryTree extends Tree {
 
         public TreeModel makeModel(Tree t, PageState s) {
             Navigation app = (Navigation)Web.getContext().getApplication();
-            Category root = Category.getRootForObject(app);
+            TemplateContext ctx = Navigation.getContext().getTemplateContext();
+            String dispatcherContext = ctx == null ? null : ctx.getContext();
+            Category root = Category.getRootForObject(app, dispatcherContext);
             return new CategoryTreeModelLite(root);
         }
     }

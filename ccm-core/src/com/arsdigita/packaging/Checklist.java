@@ -39,7 +39,10 @@ import org.xml.sax.helpers.DefaultHandler;
 
 class Checklist {
 
-    public final static String versionId = "$Id: Checklist.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Checklist.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     public static Checklist get(String pkg) {
         ClassLoader ldr = Checklist.class.getClassLoader();

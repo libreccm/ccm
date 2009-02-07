@@ -75,12 +75,12 @@ import org.apache.log4j.Logger;
  * associated with the <em>package</em> mounted on each site node.
  *
  * @author Bill Schneider
- * @version $Id: PageTransformer.java 1314 2006-09-06 15:47:44Z apevec $
+ * @version $Id: PageTransformer.java 1655 2007-09-18 11:16:54Z chrisg23 $
  */
 public class PageTransformer implements PresentationManager {
     public static final String versionId =
-        "$Id: PageTransformer.java 1314 2006-09-06 15:47:44Z apevec $" +
-        "$Author: apevec $" +
+        "$Id: PageTransformer.java 1655 2007-09-18 11:16:54Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger

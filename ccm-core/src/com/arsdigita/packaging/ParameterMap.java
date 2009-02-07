@@ -40,7 +40,10 @@ import java.util.Map;
 
 class ParameterMap {
 
-    public final static String versionId = "$Id: ParameterMap.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: ParameterMap.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private List m_contexts = new ArrayList();
     private List m_parameters = new ArrayList();

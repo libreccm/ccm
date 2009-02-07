@@ -87,6 +87,9 @@ public class SecurityConfig extends AbstractConfig {
     private final Parameter m_userBanOn = new BooleanParameter
         ("waf.user_ban_on", Parameter.REQUIRED, Boolean.FALSE);
 
+    /** 
+     * Constructs an empty SecurityConfig object
+     */
     public SecurityConfig() {
         register(m_rootPage);
         register(m_loginPage);

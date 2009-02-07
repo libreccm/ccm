@@ -48,7 +48,10 @@ import java.util.Properties;
 
 class ParameterEditor {
 
-    public final static String versionId = "$Id: ParameterEditor.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: ParameterEditor.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private ParameterMap m_map;
     private BufferedReader m_in;
@@ -352,7 +355,7 @@ class ParameterEditor {
     // XXX: for testing
     public static final void main(String[] args) {
         ParameterMap map = new ParameterMap();
-        map.addContext(new com.arsdigita.runtime.RuntimeConfig());
+        map.addContext(    com.arsdigita.runtime.RuntimeConfig.getConfig());
         map.addContext(new com.arsdigita.web.WebConfig());
         map.addContext(new com.arsdigita.kernel.KernelConfig());
         ParameterEditor pe = new ParameterEditor(map, System.in, System.out);

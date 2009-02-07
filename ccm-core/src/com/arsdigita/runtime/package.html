@@ -6,7 +6,19 @@
 <body bgcolor="white">
 
 <p>The com.arsdigita.runtime package provides classses and interfaces
-for bootstrapping the CCM runtime environment.</p>
+for bootstrapping and manage the CCM runtime environment.</p>
+
+<p>The tasks include:</p>
+<ul>
+    <li>maintain the location of the base directory of the application in the
+    servers file system.</li>
+    <li>maintain the location of the configuration database (registry).</li>
+    <li>maintain the database connection</li>
+</ul>
+
+<p>The classes in this package are used by the application running in a
+servlet container as well as by the installation and maintenance command line
+utilities outside a servlet container. They don't rely on a servlet context.</p>
 
 </body>
 </html>

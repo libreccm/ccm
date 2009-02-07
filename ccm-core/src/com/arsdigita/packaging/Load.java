@@ -18,7 +18,6 @@
  */
 package com.arsdigita.packaging;
 
-import com.arsdigita.core.DBCheck;
 import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.persistence.ConnectionSource;
 import com.arsdigita.persistence.DedicatedConnectionSource;
@@ -27,14 +26,24 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.pdl.PDLCompiler;
-import com.arsdigita.runtime.InteractiveParameterLoader;
+// pboy (Jan.09): deprecated classes and methods removed, 
+//                comments should be deleted after extensiv testing
+// deprecated, no replacement specified by author, 
+// created InteractiveParameterReader analogous to CompoundParameterReader
+//import com.arsdigita.runtime.InteractiveParameterLoader;
+import com.arsdigita.runtime.InteractiveParameterReader;
+import com.arsdigita.runtime.ConfigRegistry;
+import com.arsdigita.runtime.RegistryConfig;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.Startup;
-import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.config.JavaPropertyLoader;
+// deprecated, use c.ad.util.JavaPropertyReader instead
+// import com.arsdigita.util.config.JavaPropertyLoader;
+import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.jdbc.Connections;
-import com.arsdigita.util.parameter.CompoundParameterLoader;
+// deprecated:
+// import com.arsdigita.util.parameter.CompoundParameterLoader;
+import com.arsdigita.util.parameter.CompoundParameterReader;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ParameterContext;
 import java.io.ByteArrayInputStream;
@@ -64,7 +73,11 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
 
 /**
- * PackageTool
+ * PackageTool worker class, implements the "load" command.
+ *  
+ * Loads the database schema and initial content.
+ * 
+ * Called by PackageTool
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #29 $ $Date: 2004/08/16 $
@@ -72,7 +85,10 @@ import org.apache.commons.cli.PosixParser;
 
 class Load extends Command {
 
-    public final static String versionId = "$Id: Load.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Load.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options OPTIONS = getOptions();
 
@@ -216,7 +232,7 @@ class Load extends Command {
         ParameterMap contexts = new ParameterMap();
 
         Properties parameters = new Properties();
-        CompoundParameterLoader loader = new CompoundParameterLoader();
+        CompoundParameterReader cpr = new CompoundParameterReader();
         if (line.hasOption("parameter-file")) {
             String file = line.getOptionValue("parameter-file");
             try {
@@ -227,15 +243,19 @@ class Load extends Command {
                 System.err.println(e.getMessage());
                 return false;
             }
-            loader.add(new JavaPropertyLoader(parameters));
+            // deprecated, use JavaPropertyReader instead
+            // cpr.add(new JavaPropertyLoader(parameters));
+            cpr.add(new JavaPropertyReader(parameters));
         }
         if (line.hasOption("parameters")) {
             Properties props = props(line.getOptionValues("parameters"));
-            loader.add(new JavaPropertyLoader(props));
+            // deprecated, use JavaPropertyReader instead
+            // cpr.add(new JavaPropertyLoader(props));
+            cpr.add(new JavaPropertyReader(props));
             parameters.putAll(props);
         }
         if (line.hasOption("interactive")) {
-            loader.add(new InteractiveParameterLoader(System.in, System.out));
+            cpr.add(new InteractiveParameterReader(System.in, System.out));
         }
 
         Config config = null;
@@ -288,9 +308,10 @@ class Load extends Command {
             Session ssn = null;
             if (all || line.hasOption("schema") || line.hasOption("data")) {
 
-                Check dbcheck = new DBCheck();
-                dbcheck.run(null);
-                if (dbcheck.getStatus() == null || dbcheck.getStatus().equals(Check.FAIL)) {
+                Check checkdb = new CheckDB();
+                checkdb.run(null);
+                if (checkdb.getStatus() == null 
+                    || checkdb.getStatus().equals(Check.FAIL)) {
                     rollbackConfig(config,packages);
                     return false;
                 }
@@ -377,7 +398,7 @@ class Load extends Command {
                     }
 
                     for (int i = 0; i < sorted.length; i++) {
-                        sorted[i].loadData(ssn, loader);
+                        sorted[i].loadData(ssn, cpr);
                     }
                 }
             }
@@ -443,7 +464,12 @@ class Load extends Command {
             for (int i = 0; i < pkgs.length; i++) {
                 boolean isnew = false;
                 for (int j = 0; j < packages.size(); j++) {
-                    if (pkgs[i].toString() == packages.get(j).toString()) {
+                    // Operator == compares object identity.
+                    // comparison here refers to package names, so an
+                    // object comparison will never be true.
+                    // instead: equals()
+                    // if (pkgs[i].toString() == packages.get(j).toString()) {
+                    if (pkgs[i].toString().equals(packages.get(j).toString())) {                        
                         isnew = true;
                     }
                 }

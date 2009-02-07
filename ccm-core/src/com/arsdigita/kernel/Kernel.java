@@ -70,8 +70,12 @@ public class Kernel {
         s_securityConfig = new SecurityConfig();
         
         s_initialContext.setLocale(Locale.getDefault());
-        s_config.load("ccm-core/kernel.properties");
-        s_securityConfig.load("ccm-core/security.properties");
+        // deprecated, use load() instead which loads ccm-core/kernel.properties
+        // by default for KernelConfig / SecurityConfig
+        // s_config.load("ccm-core/kernel.properties");
+        s_config.load();
+        // s_securityConfig.load("ccm-core/security.properties");
+        s_securityConfig.load();
         s_context = new ThreadLocal() {
             public Object initialValue() {
                 return s_initialContext;

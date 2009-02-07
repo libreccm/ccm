@@ -44,13 +44,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * Resolves items to URLs and URLs to items with category-based URLs for multiple language
- * variants.
+ * Resolves items to URLs and URLs to items with category-based URLs for 
+ * multiple language variants.
  *
  * Created Mon Jan 20 14:30:03 2003.
  *
  * @author <a href="mailto:sseago@redhat.com">Scott Seago</a>
- * @version $Id: CategoryItemResolverImpl.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CategoryItemResolverImpl.java 1795 2009-02-07 10:47:32Z pboy $
  */
 public class CategoryItemResolverImpl extends MultilingualItemResolver
     implements CategoryItemResolver, TemplateResolver {
@@ -138,6 +138,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
      * #getCurrentContext}.
      * @return The content item, or null if no such item exists
      */
+    @Override
      public ContentItem getItem(final ContentSection section,
                                 String url,
                                 final String context) {
@@ -146,9 +147,9 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
                          " at URL '" + url + "' for context " + context);
          }
 
-         Assert.assertNotNull(section, "ContentSection section");
-         Assert.assertNotNull(url, "String url");
-         Assert.assertNotNull(context, "String context");
+         Assert.exists(section, "ContentSection section");
+         Assert.exists(url, "String url");
+         Assert.exists(context, "String context");
          url = stripTemplateFromURL(url);
 
          if ( ContentItem.DRAFT.equals(context) ||
@@ -158,7 +159,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
          }
          String categoryURL = url.substring(("/"+CATEGORIES_PREFIX).length());
          Category root = section.getRootCategory();
-         Assert.assertNotNull (root);
+         Assert.exists(root);
 
 
          String file = null;
@@ -191,7 +192,9 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
          cats = root.getChildrenByURL (path + "/" + file);
          if (cats == null) {
              // final element wasn't category. assume an item.
-             if (path == "") {
+             // Really object identity? Don't think so.
+             // if (path == "") {
+             if (path.equals("")) {
                  cats = new Category[1];
                  cats[0] = root;
              } else {
@@ -204,7 +207,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
              return null;
          }
 
-         Assert.assertTrue (cats.length >= 1);
+         Assert.isTrue (cats.length >= 1);
          Category cat = cats[cats.length-1];
          s_log.debug ("Category is " + cat.getDisplayName());
          String lang = null;
@@ -312,9 +315,9 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
                         "' in category '" + category + "'");
         }
 
-        Assert.assertNotNull(itemId,  "BigDecimal itemId");
-        Assert.assertNotNull(context, "Sring context");
-        Assert.assertNotNull(section, "ContentSection section");
+        Assert.exists(itemId,  "BigDecimal itemId");
+        Assert.exists(context, "Sring context");
+        Assert.exists(section, "ContentSection section");
 
         if (ContentItem.DRAFT.equals(context)) {
             // No template context here.
@@ -332,11 +335,11 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
                 .newInstance(new OID(ContentItem.BASE_DATA_OBJECT_TYPE,
                                      itemId));
 
-            if (Assert.isAssertEnabled()) {
-                Assert.assertNotNull(item, "item");
-                Assert.assertTrue(ContentItem.LIVE.equals(item.getVersion()),
-                                  "Generating " + ContentItem.LIVE + " " +
-                                  "URL; this item must be the live version");
+            if (Assert.isEnabled()) {
+                Assert.exists(item, "item");
+                Assert.isTrue(ContentItem.LIVE.equals(item.getVersion()),
+                              "Generating " + ContentItem.LIVE + " " +
+                              "URL; this item must be the live version");
             }
 
             return generateLiveURL(section, item, templateContext, category);
@@ -392,18 +395,18 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
                         context + " in category " + category);
         }
 
-        Assert.assertNotNull(item, "ContentItem item");
-        Assert.assertNotNull(context, "String context");
+        Assert.exists(item, "ContentItem item");
+        Assert.exists(context, "String context");
 
         if (section == null) {
             section = item.getContentSection();
         }
 
         if (ContentItem.DRAFT.equals(context)) {
-            if (Assert.isAssertEnabled()) {
-                Assert.assertTrue(ContentItem.DRAFT.equals(item.getVersion()),
-                                  "Generating " + ContentItem.DRAFT +
-                                  " url: item must be draft version");
+            if (Assert.isEnabled()) {
+                Assert.isTrue(ContentItem.DRAFT.equals(item.getVersion()),
+                              "Generating " + ContentItem.DRAFT +
+                              " url: item must be draft version");
             }
             // CategoryItemResolver doesn't change resolution of
             // back-end URLs
@@ -411,10 +414,10 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
         } else if (CMSDispatcher.PREVIEW.equals(context)) {
             return generatePreviewURL(section, item, templateContext, category);
         } else if (ContentItem.LIVE.equals(context)) {
-            if (Assert.isAssertEnabled()) {
-                Assert.assertTrue(ContentItem.LIVE.equals(item.getVersion()),
-                                  "Generating " + ContentItem.LIVE +
-                                  " url: item must be live version");
+            if (Assert.isEnabled()) {
+                Assert.isTrue(ContentItem.LIVE.equals(item.getVersion()),
+                              "Generating " + ContentItem.LIVE +
+                              " url: item must be live version");
             }
 
             return generateLiveURL(section, item, templateContext, category);
@@ -436,6 +439,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
                                   final BigDecimal itemId,
                                   final String name,
@@ -459,6 +463,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
                                   final BigDecimal itemId,
                                   final String name,
@@ -481,6 +486,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
                                   final ContentItem item,
                                   final ContentSection section,
@@ -502,6 +508,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
      * @return The URL of the item
      * @see #getCurrentContext
      */
+    @Override
     public String generateItemURL(final PageState state,
                                   final ContentItem item,
                                   ContentSection section,
@@ -638,8 +645,8 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
                                         ContentItem item,
                                         String templateContext,
                                         Category category) {
-        Assert.assertNotNull(section, "ContentSection section");
-        Assert.assertNotNull(item, "ContentItem item");
+        Assert.exists(section, "ContentSection section");
+        Assert.exists(item, "ContentItem item");
 
         Category urlCategory = getURLCategory(item,category);
         // Use passed-in category, if item is in it, else use default
@@ -771,6 +778,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
         /**
          * Returns the template associated with the item (if any)
          */
+        @Override
         protected String getItemTemplate(ContentSection section,
                                          ContentItem item,
                                          HttpServletRequest request) {
@@ -838,6 +846,7 @@ public class CategoryItemResolverImpl extends MultilingualItemResolver
             return encodeAsString().equals(obj.encodeAsString());
         }
 
+        @Override
         public int hashCode() {
             return encodeAsString().hashCode();
         }

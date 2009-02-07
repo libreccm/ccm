@@ -1,12 +1,21 @@
 /*
- * CategoryLocalizationAddForm.java
+ * Copyright (C) 2008 Sören Bernstein All Rights Reserved.
  *
- * Created on 18. April 2008, 12:03
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
-
 package com.arsdigita.cms.ui.category;
 
 
@@ -27,18 +36,19 @@ import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 /**
- * Erzeugt ein Formular zum Anlegen einer neuen Lokalisierungen zu der aktuellen Kategorie.
- * Diese Klasse ist Teil der Admin-Oberfläche von APLAWS+ und erweitert die Standardformulare
- * um die Formulare für die Bearbeitung der neuen, mehrsprachigen Kategorien.
+ * Generates a form for creating new localisations for the given category.
  *
- * @author quasi
+ * This class is part of the admin GUI of CCM and extends the standard form
+ * in order to present forms for managing the multi-language categories.
+ *
+ * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  */
 public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
     
     public static final String versionId =
-            "$Id: CategoryLocalizationAddForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-            "$Author: sskracic $" +
-            "$DateTime: 2004/08/17 23:15:09 $";
+        "$Id: CategoryLocalizationAddForm.java 287 2005-02-22 00:29:02Z sskracic $" +
+        "$Author: sskracic $" +
+        "$DateTime: 2004/08/17 23:15:09 $";
     
     private static final Logger s_log = Logger.getLogger
             (CategoryAddForm.class);
@@ -46,7 +56,8 @@ public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
     /** Creates a new instance of CategoryLocalizationAddForm */
     public CategoryLocalizationAddForm(final CategoryRequestLocal category) {
         
-        super("AddCategoryLocalization", gz("cms.ui.category.localization.add"), category);
+        super("AddCategoryLocalization",
+              gz("cms.ui.category.localization.add"), category);
         
         addInitListener(new InitListener());
         addProcessListener(new ProcessListener());
@@ -66,19 +77,23 @@ public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
             final Category category = m_category.getCategory(state);
             
             // Select one entry
-            m_locale.addOption(new Option("", new Label((String) GlobalizationUtil.globalize("cms.ui.select_one").localize())), state);
+            m_locale.addOption(new Option("", 
+                    new Label((String) GlobalizationUtil.globalize(
+                    "cms.ui.select_one").localize())), state);
             
-            // Für alle Sprachen, die unterstützt werden (registry-Eintrag)
+            // all supported languages (by registry entry)
             CategorizationConfig catConfig = new CategorizationConfig();
             StringTokenizer strTok = catConfig.getSupportedLanguages();
             
             while(strTok.hasMoreTokens()) {
                 
                 String code = strTok.nextToken();
-                
-                // Wenn die Sprache bereits existiert, dann entferne sie aus der Auswahlliste
-                if(!category.getCategoryLocalizationCollection().localizationExists(code)) {
-                    m_locale.addOption(new Option(code, new Locale(code).getDisplayLanguage()), state);
+
+                // If lanuage exists, remove it from the selection list
+                if(!category.getCategoryLocalizationCollection().
+                             localizationExists(code)) {
+                    m_locale.addOption(new Option(code,
+                                 new Locale(code).getDisplayLanguage()), state);
                 }                
             }
         }
@@ -103,7 +118,8 @@ public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
             //Assert.assertNotNull(parent, "Category parent");
             
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Adding localization for locale " + locale + " to category " + category);
+                s_log.debug("Adding localization for locale " + locale +
+                            " to category " + category);
             }
             
             if (category.canEdit()) {

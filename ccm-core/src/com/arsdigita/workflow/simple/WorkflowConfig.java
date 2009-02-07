@@ -32,7 +32,10 @@ import com.arsdigita.util.parameter.StringParameter;
 
 public final class WorkflowConfig extends AbstractConfig {
 
-    public final static String versionId = "$Id: WorkflowConfig.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: WorkflowConfig.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private BooleanParameter m_alerts = new BooleanParameter
         ("waf.workflow.simple.alerts_enabled", Parameter.OPTIONAL,

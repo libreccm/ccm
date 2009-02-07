@@ -54,7 +54,7 @@ import junit.framework.TestSuite;
  */
 
 public class PackageTestSuite extends TestSuite {
-    public final static String versionId = "$Id: PackageTestSuite.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = "$Id: PackageTestSuite.java 1720 2008-07-21 13:59:13Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     public PackageTestSuite() {
         super();

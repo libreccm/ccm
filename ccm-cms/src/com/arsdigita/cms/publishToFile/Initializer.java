@@ -33,12 +33,13 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.metadata.ObjectType;
-import com.arsdigita.runtime.CCM;
+import com.arsdigita.runtime.CCMResourceManager;
 
 import org.apache.log4j.Logger;
 
 
-import java.io.File;
+import java.io.*;
+// import java.io.File;
 
 import java.util.List;
 import java.util.Iterator;
@@ -46,6 +47,9 @@ import java.util.Iterator;
 /**
  * Initializes the publish-to-file service. The configuration is described in
  * the {@link com.arsdigita.cms.publishToFile} page.
+ *
+ * (pboy) ToDo: Adjusting the initialisation to the new configuration method
+ * without enterprise.init file.
  *
  * @author Jeff Teeters (teeters@arsdigita.com)
  * @version $Revision: #24 $ $Date: 2004/08/17 $
@@ -242,6 +246,7 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
         }
 
         String contentType = (String)entry.get(0);
+        // destRoot is here relative to webapp root!
         String destRoot = (String) entry.get(1);
         Boolean sharedRoot = (Boolean) entry.get(2);
         String destURL = (String) entry.get(3);
@@ -267,8 +272,11 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
                          "' must not end with a '/'");
         }
 
-        destRoot = new File(System.getProperty("ccm.home"),
+        // Does destRoot really now turns into an absolute fully pathname?!
+        destRoot = new File(CCMResourceManager.getBaseDirectory().getPath(),
                             destRoot).getPath();
+        s_log.info("Destination Root is set to : " + destRoot);
+
 
 
         if (sharedRoot == null) {
@@ -299,10 +307,24 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
         File file = dest.getFile();
         if (!file.exists()) {
             file.mkdirs();
+            s_log.info(file.getPath() + " created");
         }
         boolean writable = false;
+        FileWriter fl;
+        File fname = new File(file.getPath(),"placeholder.txt");
+        s_log.info("Try to create : " + destRoot);
         try {
             writable = file.canWrite() && file.isDirectory();
+            try {
+                fl = new FileWriter(fname.getPath());
+                fl.write("Location for the p2fs module to store static content. \n");
+                fl.close();
+            } catch ( IOException e ) {
+                // Will be reported as an initalization error
+                s_log.warn("Fehler beim Erstellen der Datei " + fname.getPath());
+            }
+
+ 
         } catch ( SecurityException ex ) {
             // Will be reported as an initalization error
         }
@@ -310,7 +332,7 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
             // HACK: Let's see if we can write to the config directory.  If we can,
             // then we're running as ccmadmin inside of ccm load, and there is no
             // need to thrown an exception.
-            File conf = CCM.getConfigDirectory();
+            File conf = CCMResourceManager.getConfigDirectory();
             if (conf.isDirectory() && conf.canWrite()) {
                 // we're ok
             } else {
@@ -319,7 +341,8 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
             }
         }
 
-        if (Template.BASE_DATA_OBJECT_TYPE.equals(contentType) || !ContentSection.getConfig().getDisableItemPfs()) {
+        if (Template.BASE_DATA_OBJECT_TYPE.equals(contentType) ||
+                !ContentSection.getConfig().getDisableItemPfs()) {
             PublishToFile.addDestination(contentType,
                                          dest);
         }

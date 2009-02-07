@@ -49,7 +49,7 @@ import java.io.IOException;
  */
 public abstract class SortableList extends List {
 
-    public static final String versionId = "$Id: SortableList.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
+    public static final String versionId = "$Id: SortableList.java 1618 2007-09-13 12:14:51Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(SortableList.class);

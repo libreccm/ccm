@@ -30,16 +30,32 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import java.io.UnsupportedEncodingException;
+
 /**
  * A wrapper class that implements some functionality of
  * <code>org.jdom.Document</code> using <code>org.w3c.dom.Document</code>.
+ *
+ * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ * pboy (Jan. 09)
+ * Class uses "DocumentBuilderFactory.newInstance()" to setup the parser
+ * (according to the javax.xml specification). This is a simple and
+ * straightforward, but rather thumb method. It requires a JVM wide acceptable
+ * configuration (using a system.property or a static JRE configuration file) and
+ * contrains all programms in a JVM (e.g. multiple CCM running in a container)
+ * to use the same configuration.
+ *
+ * Other methods are available but we have to dig deeper into the CCM code.
+ * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * @author Patrick McNeill 
  * @version ACS 4.5a
  * @since ACS 4.5a
  */
 public class Document {
-    public static final String versionId = "$Id: Document.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: Document.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(Document.class.getName());
@@ -98,6 +114,10 @@ public class Document {
      */
     protected static ThreadLocal s_db = null;
 
+    // ToDo (pboy): we should use
+    //   DocumentBuilderFactory.newInstance(className cname, classLoader cloader)
+    // instead to achieve independence from a JVM wide configuration.
+    // Requires additional modifications in c.ad.util.xml.XML
     static {
         s_builder = DocumentBuilderFactory.newInstance();
         s_builder.setNamespaceAware(true);

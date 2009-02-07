@@ -19,7 +19,7 @@
 package com.arsdigita.util.servlet;
 
 import com.arsdigita.util.Assert;
-import com.arsdigita.util.OrderedMap;
+import com.arsdigita.util.SequentialMap;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -49,10 +49,10 @@ public class HttpParameterMap {
 
     private static ArrayList s_listeners = new ArrayList();
 
-    private final OrderedMap m_params;
+    private final SequentialMap m_params;
 
     public HttpParameterMap() {
-        m_params = new OrderedMap();
+        m_params = new SequentialMap();
     }
 
     public HttpParameterMap(final Map params) {

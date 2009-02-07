@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.core;
+package com.arsdigita.packaging;
 
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -27,12 +27,15 @@ import java.util.HashMap;
 import org.apache.log4j.Logger;
 
 /**
+ * Helper class which can be used by the packaging classes and others. Manages 
+ * messages to be printed and makes it easier to handle multi line messages.
+ * 
  * Subject to change.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: MessageMap.java 287 2005-02-22 00:29:02Z sskracic $
  */
-final class MessageMap {
+public final class MessageMap {
     public static final String versionId =
         "$Id: MessageMap.java 287 2005-02-22 00:29:02Z sskracic $" +
         "$Author: sskracic $" +

@@ -22,11 +22,21 @@ import com.arsdigita.installer.SQLLoader;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.runtime.AbstractScript;
-import com.arsdigita.runtime.InteractiveParameterLoader;
+// pboy (Jan.09):
+// deprecated without recommended replacement
+// created Interactive ParameterReader as a replacement
+// import com.arsdigita.runtime.InteractiveParameterLoader;
+import com.arsdigita.runtime.InteractiveParameterReader;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.config.JavaPropertyLoader;
-import com.arsdigita.util.parameter.CompoundParameterLoader;
-import com.arsdigita.util.parameter.ParameterLoader;
+// deprecated, use c.ad.util.JavaPropertyReader instead
+// import com.arsdigita.util.config.JavaPropertyLoader;
+import com.arsdigita.util.JavaPropertyReader;
+// deprecated, use c.ad.util.parameter.CompoundParameterReader instead
+// import com.arsdigita.util.parameter.CompoundParameterLoader;
+import com.arsdigita.util.parameter.CompoundParameterReader;
+// deprecated, use c.ad.util.parameter.ParameterReader instead
+// import com.arsdigita.util.parameter.ParameterLoader;
+import com.arsdigita.util.parameter.ParameterReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -54,7 +64,10 @@ public abstract class PackageLoader extends AbstractScript {
 
     public final static Logger s_log = Logger.getLogger(PackageLoader.class);
 
-    public final static String versionId = "$Id: PackageLoader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: PackageLoader.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " + 
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     public static boolean exists(Connection conn, String table) {
         try {
@@ -118,10 +131,23 @@ public abstract class PackageLoader extends AbstractScript {
         s_log.info("Loading: Done");
     }
 
-    public static ParameterLoader loader(String[] args) {
-        CompoundParameterLoader result = new CompoundParameterLoader();
-        result.add(new JavaPropertyLoader(props(args)));
-        result.add(new InteractiveParameterLoader(System.in, System.out));
+    /**
+     * 
+     * @param args
+     * @return
+     * //@deprecated use reader() instead
+     * but seems not to be used by any module
+     */
+    //public static ParameterLoader loader(String[] args) {
+        // return ( this.reader(args) );
+    //    return null;
+    // }
+
+    
+    public static ParameterReader reader(String[] args) {
+        CompoundParameterReader result = new CompoundParameterReader();
+        result.add(new JavaPropertyReader(props(args)));
+        result.add(new InteractiveParameterReader(System.in, System.out));
         return result;
     }
 

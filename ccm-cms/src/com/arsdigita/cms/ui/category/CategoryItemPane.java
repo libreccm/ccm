@@ -71,6 +71,7 @@ import org.apache.log4j.Logger;
  * Edits a single category.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  * @version $Id: CategoryItemPane.java 1329 2006-09-27 11:47:05Z sskracic $
  */
 class CategoryItemPane extends BaseItemPane {
@@ -101,7 +102,8 @@ class CategoryItemPane extends BaseItemPane {
         add(m_detailPane);
         setDefault(m_detailPane);
         
-        final ActionLink orderItemsLink = new ActionLink(new Label(gz("cms.ui.category.categorized_objects"))) {
+        final ActionLink orderItemsLink = new ActionLink(new Label(
+                                   gz("cms.ui.category.categorized_objects"))) {
             public boolean isVisible(PageState state) {
                 // update for live items only
                 if (!super.isVisible(state)) {
@@ -123,23 +125,32 @@ class CategoryItemPane extends BaseItemPane {
         add(orderItemsForm2);
         
         // Change index item
-        final ActionLink indexLink = new ActionLink(new Label(gz("cms.ui.category.change_index_item")));
+        final ActionLink indexLink = new ActionLink(new Label(gz(
+                                         "cms.ui.category.change_index_item")));
         final Form indexForm = new IndexItemSelectionForm(m_category);
         add(indexForm);
         
-        ViewItemLink viewIndexLink = new ViewItemLink(new Label(gz("cms.ui.category.view_index_item")),"");
-        EditItemLink editIndexLink = new EditItemLink(new Label(gz("cms.ui.category.edit_index_item")),"");
+        ViewItemLink viewIndexLink = new ViewItemLink(new Label(gz(
+                                        "cms.ui.category.view_index_item")),"");
+        EditItemLink editIndexLink = new EditItemLink(new Label(gz(
+                                        "cms.ui.category.edit_index_item")),"");
         
         // Summary
-        m_detailPane.add(new SummarySection(editLink, deleteLink, indexLink, viewIndexLink, editIndexLink, orderItemsLink));
+        m_detailPane.add(new SummarySection(editLink, deleteLink, indexLink,
+                                 viewIndexLink, editIndexLink, orderItemsLink));
         
         // Quasimodo: BEGIN
         // Localizations
-        ActionLink addCategoryLocalizationLink = new ActionLink(new Label(gz("cms.ui.category.localization.add"))) {
+        ActionLink addCategoryLocalizationLink = new ActionLink(new Label(gz(
+                                         "cms.ui.category.localization.add"))) {
             public boolean isVisible(PageState state) {
                 // Only show addLanguage button, if there are langauges to add
-                int countSupportedLanguages = (new CategorizationConfig()).getSupportedLanguages().countTokens();
-                long countLanguages = m_category.getCategory(state).getCategoryLocalizationCollection().size();
+                int countSupportedLanguages = (
+                        new CategorizationConfig()).getSupportedLanguages()
+                                                   .countTokens();
+                long countLanguages = 
+                        m_category.getCategory(state)
+                                  .getCategoryLocalizationCollection().size();
                 
                 if(countLanguages < countSupportedLanguages) {
                     return true;
@@ -149,7 +160,8 @@ class CategoryItemPane extends BaseItemPane {
             }
         };
         
-        CategoryLocalizationAddForm addCategoryLocalizationForm = new CategoryLocalizationAddForm(m_category);
+        CategoryLocalizationAddForm addCategoryLocalizationForm =
+                                    new CategoryLocalizationAddForm(m_category);
         m_detailPane.add(new CategoryLocalizationSection(addCategoryLocalizationLink));
         add(addCategoryLocalizationForm);
         connect(addCategoryLocalizationLink, addCategoryLocalizationForm);
@@ -225,8 +237,8 @@ class CategoryItemPane extends BaseItemPane {
         }
         
         /*
-         * This alternative constructor sets two additional links, allowing the user to view and
-         * edit the content index item.
+         * This alternative constructor sets two additional links, allowing
+         * the user to view and edit the content index item.
          */
         SummarySection(final ActionLink editLink,
                 final ActionLink deleteLink,
@@ -373,14 +385,16 @@ class CategoryItemPane extends BaseItemPane {
                 }
             };
             
-            final ActionLink restoreDefault = new ActionLink(new Label(gz("cms.ui.restore_default_permissions"))) {
+            final ActionLink restoreDefault = new ActionLink(new Label(gz(
+                                       "cms.ui.restore_default_permissions"))) {
                 public boolean isVisible(PageState ps) {
                     Category cat = m_category.getCategory(ps);
                     return PermissionService.getContext(cat) == null;
                 }
             };
             
-            final ActionLink useCustom = new ActionLink(new Label(gz("cms.ui.use_custom_permissions"))) {
+            final ActionLink useCustom = new ActionLink(new Label(gz(
+                                           "cms.ui.use_custom_permissions"))) {
                 public boolean isVisible(PageState ps) {
                     Category cat = m_category.getCategory(ps);
                     return PermissionService.getContext(cat) != null;
@@ -466,11 +480,13 @@ class CategoryItemPane extends BaseItemPane {
             super(c,s);
         }
         
-        // Build the preview link.  This uses a standard redirect link to find the content.
-        // The prepareURL method is called by the printwriter
+        // Build the preview link.  This uses a standard redirect link to find 
+        // the content. The prepareURL method is called by the printwriter
         protected String prepareURL(final PageState state, String location) {
             
-            ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state).getDirectIndexObject())).getPrimaryInstance();
+            ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state)
+                                                               .getDirectIndexObject()))
+                                                               .getPrimaryInstance();
             if(indexItem==null) {
                 return "";
             } else {
@@ -496,12 +512,18 @@ class CategoryItemPane extends BaseItemPane {
         EditItemLink(Component c, String s) {
             super(c,s);
         }
-        
-        // Build the preview link.  This is based on code in the ContentSoonExpiredPane class.
-        // The prepareURL method of the parent is overwritten.  This method is called by the printwriter
+
+        /**
+         * Build the preview link.  This is based on code in the
+         * ContentSoonExpiredPane class. The prepareURL method of the parent
+         * is overwritten.  This method is called by the printwriter
+         */
+        @Override
         protected String prepareURL(final PageState state, String location) {
             boolean canEdit = false;
-            ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state).getDirectIndexObject())).getPrimaryInstance();
+            ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state)
+                                                         .getDirectIndexObject()))
+                                                         .getPrimaryInstance();
             if(indexItem==null) {
                 return "";
             }
@@ -509,12 +531,18 @@ class CategoryItemPane extends BaseItemPane {
                 return "";
             } else {
                 BigDecimal draftID = indexItem.getDraftVersion().getID();
-                return "item.jsp?item_id=" + draftID + "&set_tab=" + ContentItemPage.AUTHORING_TAB;
+                return "item.jsp?item_id=" + draftID + "&set_tab=" +
+                                             ContentItemPage.AUTHORING_TAB;
             }
         }
-        
-        // We only show this link when an index item exists for this category and
-        // the user is allowed to edit this item.
+
+        /**
+         * We only show this link when an index item exists for this category
+         * and the user is allowed to edit this item.
+         * @param state
+         * @return
+         */
+        @Override
         public boolean isVisible(PageState state) {
             if (!super.isVisible(state)) {
                 return false;
@@ -526,16 +554,26 @@ class CategoryItemPane extends BaseItemPane {
                 return isItemEditable((ContentItem)indexItem,state);
             }
         }
-        
-        // This method checks whether a usern is allowed to edit a particular item
+
+        /**
+         * This method checks whether a usern is allowed to edit a
+         * particular item.
+         *
+         * @param item
+         * @param state
+         * @return
+         */
         private boolean isItemEditable(ContentItem item, PageState state) {
             BigDecimal id = item.getID();
             User user = Web.getContext().getUser();
-            ContentItem ci = new ContentItem(new OID(ContentItem.class.getName(), Integer.parseInt(id.toString())));
-            Iterator permissions = PermissionService.getImpliedPrivileges(ci.getOID(), user.getOID());
+            ContentItem ci = new ContentItem(new OID(ContentItem.class.getName(),
+                                     Integer.parseInt(id.toString())));
+            Iterator permissions = PermissionService.getImpliedPrivileges(
+                                       ci.getOID(), user.getOID());
             while (permissions.hasNext()) {
                 PrivilegeDescriptor permission = (PrivilegeDescriptor)permissions.next();
-                if (permission.equals(PrivilegeDescriptor.ADMIN) || permission.equals(PrivilegeDescriptor.EDIT)) {
+                if (permission.equals(PrivilegeDescriptor.ADMIN) ||
+                        permission.equals(PrivilegeDescriptor.EDIT)) {
                     return true;
                 }
             }

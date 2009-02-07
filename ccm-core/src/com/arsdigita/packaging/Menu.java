@@ -37,7 +37,10 @@ import java.util.Map;
 
 class Menu {
 
-    public final static String versionId = "$Id: Menu.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Menu.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     static final class Layout {
         private Layout() {}

@@ -23,6 +23,12 @@ package com.arsdigita.util.parameter;
 /**
  * @deprecated Use {@link
  * com.arsdigita.util.parameter.ParameterReader} instead.
+ * 
+ * on another location (c.ad.runtime.ScriptContext)
+ *   c.ad.util.parameter.ParameterContext#load(
+ *        c.ad.util.parameter.ParameterReader,
+ *        c.ad.util.parameter.Errorlist       )  instead
+ * 
  */
 public interface ParameterLoader extends ParameterReader {
     public final static String versionId =

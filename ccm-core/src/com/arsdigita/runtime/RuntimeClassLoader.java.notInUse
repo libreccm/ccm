@@ -25,10 +25,21 @@ import java.net.URLClassLoader;
 import org.apache.log4j.Logger;
 
 /**
+ * RuntimeClassLoader
+ *
+ * URLClassLoader inherited from is used to load classes and resources from
+ * a search path of URLs referring to both JAR files and directories.
+ *
+ * Obviously unfinished work.
+ * As of CCM version 6.5 no element of trunk uses this class! Should be made
+ * deprecated.
+ *
  * Subject to change.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: RuntimeClassLoader.java 738 2005-09-01 12:36:52Z sskracic $
+ *
+ * @deprecated
  */
 class RuntimeClassLoader extends URLClassLoader {
     public final static String versionId =

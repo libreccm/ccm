@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 
 public class LuceneTest extends LuceneTestCase {
 
-    public final static String versionId = "$Id: LuceneTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = "$Id: LuceneTest.java 1708 2008-07-12 03:08:52Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(LuceneTest.class);
     private static final String NAME =
         "This is a note.";

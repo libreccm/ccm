@@ -18,20 +18,29 @@
  */
 package com.arsdigita.loader;
 
+import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ParameterRecord;
+// deprecated: import com.arsdigita.util.parameter.ParameterRecord;
+// replaced by c.ad.rt.AbstractConfig, should be deleted after testing
 import com.arsdigita.util.parameter.StringParameter;
+import org.apache.log4j.Logger;
 
 /**
  * MimeTypeRow
+ * A configuration record for MimeTypes
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #5 $ $Date: 2004/08/16 $
  **/
 
-class MimeTypeRow extends ParameterRecord {
+class MimeTypeRow extends AbstractConfig {
 
-    public final static String versionId = "$Id: MimeTypeRow.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: MimeTypeRow.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
+
+    private static final Logger s_log = Logger.getLogger(MimeTypeRow.class);
 
     private StringParameter m_type = new StringParameter
         ("waf.mime.type", Parameter.REQUIRED, null);
@@ -49,7 +58,7 @@ class MimeTypeRow extends ParameterRecord {
         ("waf.mime.sizer_or_inso", Parameter.OPTIONAL, null);
 
     public MimeTypeRow() {
-        super("mime-type-row");
+        // super();
         register(m_type);
         register(m_label);
         register(m_extensions);

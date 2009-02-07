@@ -16,9 +16,10 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.packaging;
+package com.arsdigita.runtime;
 
-import com.arsdigita.runtime.CCM;
+// import com.arsdigita.runtime.RegistryConfig;
+import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -43,11 +44,13 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * The ConfigRegistry class maps between config classes (subclasses of
  * {@link com.arsdigita.runtime.AbstractConfig}), and a location used
- * for persisting the values in a config class. The ConfigRegistry
- * also stores the set of configured packages for a particular CCM
- * instance, and a list of URLs for parent configurations that are
+ * for persisting the values in a config class. 
+ * 
+ * The ConfigRegistry also stores the set of configured packages for a
+ * particular CCMResourceManager instance.
+ * Additionally it stores a list of URLs for parent configurations that are
  * used for defaulting values not present in the local configuration.
- * This mapping is maintained and extended by CCM developers through
+ * This mapping is maintained and extended by CCMResourceManager developers through
  * the use of an XML configuration file placed in the src tree for a
  * particular package. If a particular package is configured, the
  * ConfigRegistry class will look in the classpath for a registry
@@ -64,18 +67,20 @@ import org.xml.sax.helpers.DefaultHandler;
  * &lt;/registry&gt;
  * </pre></blockquite>
  *
- * The mappings stored by this ConfigRegistry will then be extended to
- * include the classes and storage locations specified in the
- * configuration file. These mappings are then used by the
- * ConfigRegistry instance to load config objects.
- *
+ * The mappings stored by this ConfigRegistry will then be extended to include 
+ * the classes and storage locations specified in the configuration file. These 
+ * mappings are then used by the ConfigRegistry instance to load config objects.
+ * 
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #15 $ $Date: 2004/08/16 $
  **/
 
 public class ConfigRegistry {
 
-    public final static String versionId = "$Id: ConfigRegistry.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: ConfigRegistry.java 736 2005-09-01 10:46:05Z sskracic $ " + 
+            "by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(ConfigRegistry.class);
 
     private URL m_url;
@@ -127,7 +132,7 @@ public class ConfigRegistry {
      **/
 
     public ConfigRegistry(ClassLoader loader) {
-        this(CCM.getConfigURL(), loader);
+        this(CCMResourceManager.getConfigURL(), loader);
     }
 
     /**
@@ -136,7 +141,7 @@ public class ConfigRegistry {
      * ccm.conf system property may or may not include a trailing slash.
      **/
     public ConfigRegistry() {
-        this(CCM.getConfigURL());
+        this(CCMResourceManager.getConfigURL());
     }
 
     private void initialize(URL url, ErrorList errs) {

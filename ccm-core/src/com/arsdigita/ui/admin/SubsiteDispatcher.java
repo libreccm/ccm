@@ -18,7 +18,7 @@
  */
 package com.arsdigita.ui.admin;
 
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;

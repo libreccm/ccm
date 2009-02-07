@@ -23,7 +23,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.util.Assert;
-import com.arsdigita.util.OrderedMap;
+import com.arsdigita.util.SequentialMap;
 import com.arsdigita.xml.Element;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
@@ -37,10 +37,10 @@ public abstract class ComponentMap extends SimpleComponent
 
     private static final Logger s_log = Logger.getLogger(ComponentMap.class);
 
-    private final OrderedMap m_components;
+    private final SequentialMap m_components;
 
     public ComponentMap() {
-        m_components = new OrderedMap();
+        m_components = new SequentialMap();
     }
 
     public final Iterator children() {

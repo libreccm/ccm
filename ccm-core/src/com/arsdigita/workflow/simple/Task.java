@@ -18,21 +18,16 @@
  */
 package com.arsdigita.workflow.simple;
 
-import com.arsdigita.auditing.AuditedACSObject;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.User;
-import com.arsdigita.persistence.DataAssociation;
-import com.arsdigita.persistence.DataAssociationCursor;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.metadata.ObjectType;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-
+// duplicate import statements, copy&paste error
+// import com.arsdigita.auditing.AuditedACSObject;
+// import com.arsdigita.domain.DataObjectNotFoundException;
+// import com.arsdigita.kernel.User;
+// import com.arsdigita.persistence.DataAssociation;
+// import com.arsdigita.persistence.DataAssociationCursor;
+// import com.arsdigita.persistence.DataObject;
+// import com.arsdigita.persistence.OID;
+// import com.arsdigita.persistence.SessionManager;
+// import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.auditing.AuditedACSObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -45,7 +40,13 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.workflow.simple.Workflow;
+// import com.arsdigita.workflow.simple.Workflow;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
@@ -82,14 +83,14 @@ public class Task extends AuditedACSObject implements Cloneable {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.workflow.simple.Task";
 
-	public static final String LABEL = "label";
-	public static final String DESCRIPTION = "description";
+    public static final String LABEL = "label";
+    public static final String DESCRIPTION = "description";
     public static final String IS_ACTIVE = "isActive";
-	public static final String DEPENDENCY_LIST = "dependsOn";
-	public static final String PARENT_TASK_ID = "parentTaskID";
-	public static final String COMMENTS = "comments";
-	public static final String TASK_STATE = "taskState";
-	public static final String FINISHED_LISTENERS = "taskFinishedListeners";
+    public static final String DEPENDENCY_LIST = "dependsOn";
+    public static final String PARENT_TASK_ID = "parentTaskID";
+    public static final String COMMENTS = "comments";
+    public static final String TASK_STATE = "taskState";
+    public static final String FINISHED_LISTENERS = "taskFinishedListeners";
 
     static final String DEFAULT_DESCRIPTION = "none";
     static final String DEFAULT_LABEL = "none";
@@ -981,7 +982,7 @@ public class Task extends AuditedACSObject implements Cloneable {
      **/
     public static String getStateString(int state) {
         switch (state) {
-        case ENABLED: return  "enabled";
+        case ENABLED:  return  "enabled";
         case DISABLED: return  "disabled";
         case FINISHED: return  "finished";
         case DELETED:  return  "deleted";

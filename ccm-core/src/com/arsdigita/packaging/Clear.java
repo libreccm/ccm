@@ -18,6 +18,7 @@
  */
 package com.arsdigita.packaging;
 
+import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.util.parameter.Parameter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ import org.apache.commons.cli.PosixParser;
 /**
  * Clear
  *
+ * Implements the command line interface to clear one or more values
+ * in a CCM configuration database (registry)
+
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Clear.java 736 2005-09-01 10:46:05Z sskracic $
  */

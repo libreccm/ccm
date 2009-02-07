@@ -15,11 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
-
-/**
- * Diese Klasse ist für die Verabeitung der URLs innerhalb der Anwendung navigation zuständig.
- */
 package com.arsdigita.london.navigation;
 
 
@@ -49,6 +44,10 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.DefaultApplicationFileResolver;
 import com.arsdigita.web.Web;
 
+/**
+ * Manages the processing of URLs in the Navigation application.
+ * 
+ */
 public class NavigationFileResolver extends DefaultApplicationFileResolver {
 
     private static final Logger s_log = 
@@ -189,8 +188,9 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
     }
         
     /**
-     * @param catsArray
      * sets current path in a cookie
+     *
+     * @param catsArray
      */
     private void setPathCookie(HttpServletResponse resp, Category[] catsArray) {
 		
@@ -321,17 +321,16 @@ public class NavigationFileResolver extends DefaultApplicationFileResolver {
 	
 
     /**
-     * In dieser Methode wird eine URL mit dem Kategorienbaum abgeglichen
-     * und die angeforderte Kategorie zurückgegeben, soweit sie vorhanden
-     * ist.
-     * 
-     * Ursprünglich hat diese Methode addEqualsFilter verwendet, um die 
-     * passenden Kategorien direkt in der SQL-Abfrage zu filtern. Das ist
-     * aber mit den lokalisierten URL der neuen, lokalisierten Kategorien
-     * nicht mehr möglich - oder zumindest habe ich keinen Weg gefunden.
-     * Stattdessen wird die Filterung nun in Java vorgenommen.
+     * Match a URL with the category tree and return the requested
+     * category if exists.
      *
-     * Quasimodo
+     * Quasimodo:
+     * Originally addEqualsFilter has been used to filter the 
+     * appropriate category directly inside the SQL query. This is
+     * possible anymore due to the localised URLs of the new 
+     * localised categories (or at least: not found it).
+     * Therefore we do the filtering in Java now. 
+     *
      */
     public static Category[] resolveCategory(Category root,
                                        String path) {

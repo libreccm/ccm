@@ -18,7 +18,8 @@
  */
 package com.arsdigita.packaging;
 
-import com.arsdigita.runtime.CCM;
+import com.arsdigita.runtime.ConfigRegistry;
+import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.JavaPropertyWriter;
 import com.arsdigita.util.parameter.ErrorList;
@@ -34,8 +35,12 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Config
+ * PackageTool helper class: Writes a config database to its physical storage
+ * in file system.
  *
+ * Used by some command worker classes of the packaging package, which handle
+ * configuration tasks, esp. the "load", "clear", "set" and "get" commands.
+ * 
  * This class is <strong>not</strong> supported API.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
@@ -44,10 +49,17 @@ import java.util.Properties;
 
 public final class Config extends ParameterMap {
 
-    public final static String versionId = "$Id: Config.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Config.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private ConfigRegistry m_reg;
 
+    /**
+     * Constructor, creates an Config object
+     * @param reg
+     **/
     public Config(ConfigRegistry reg) {
         m_reg = reg;
 
@@ -59,6 +71,10 @@ public final class Config extends ParameterMap {
         }
     }
 
+    /**
+     * 
+     * @param errs
+     **/
     void load(ErrorList errs) {
         for (Iterator it = getContexts().iterator(); it.hasNext(); ) {
             ParameterContext ctx = (ParameterContext) it.next();
@@ -79,20 +95,26 @@ public final class Config extends ParameterMap {
     }
 
     public final void save() throws IOException {
-        save(CCM.getConfigDirectory());
+        save(CCMResourceManager.getConfigDirectory());
     }
 
-    void save(File conf) throws IOException {
-        if (!conf.exists()) {
-            throw new IOException("no such directory: " + conf);
+    /**
+     * Write the config parameter to the file system.
+     * 
+     * @param confDir full path of the config directory location in the file system
+     * @throws java.io.IOException
+     **/
+    void save(File confDir) throws IOException {
+        if (!confDir.exists()) {
+            throw new IOException("no such directory: " + confDir);
         }
 
-        if (conf.isFile()) {
-            throw new IOException("expecting directory: " + conf);
+        if (confDir.isFile()) {
+            throw new IOException("expecting directory: " + confDir);
         }
 
-        if (!conf.canWrite()) {
-            throw new IOException("cannot write to directory: " + conf);
+        if (!confDir.canWrite()) {
+            throw new IOException("cannot write to directory: " + confDir);
         }
 
         HashMap stores = new HashMap();
@@ -113,7 +135,7 @@ public final class Config extends ParameterMap {
             String storage = (String) me.getKey();
             Properties props = (Properties) me.getValue();
             if (props.size() == 0) { continue; }
-            File file = new File(conf, storage);
+            File file = new File(confDir, storage);
             File dir = file.getParentFile();
             dir.mkdirs();
             if (!(dir.exists() && dir.isDirectory())) {

@@ -85,12 +85,12 @@ import javax.servlet.ServletException;
  * is identified by an integer.
  *
  * @author David Lutterkort 
- * @version $Id: Table.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Table.java 1638 2007-09-17 11:48:34Z chrisg23 $
  * @see TableModel
  * @see TableColumnModel */
 public class Table extends BlockStylable implements BebopConstants {
 
-    public static final String versionId = "$Id: Table.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = "$Id: Table.java 1638 2007-09-17 11:48:34Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Names for HTML Attributes
     private static final String WIDTH = "width";

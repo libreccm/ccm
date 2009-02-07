@@ -46,19 +46,34 @@ public class Assert {
 
     private static final String DEFAULT_MESSAGE = "Assertion failure";
 
-    private static boolean s_enabled;
-
-    static {
-        final String enabled = System.getProperty
-	    (Assert.class.getName() + ".enabled");
-
-        if (enabled == null) {
-            //s_enabled = false;
-            s_enabled = true;
-        } else {
-            s_enabled = enabled.equals("true");
-        }
-    }
+    /**
+     * Configuration by a system wide / servlet container wide environment
+     * variable is evil and no longer supported API.
+     * Currently Assertion is set alway on. The non-deprecated methods of this
+     * class don't check for isEnabled anyway. So there is no effect.
+     * If configurability is really needed, configuration by config registry
+     * during system setup (eg. @link com.arsdigita.runtime.CCMResourceManager)
+     * has to be implemented
+     */
+    private static boolean s_enabled = true;
+//    private static boolean s_enabled;
+//
+//    static {
+//        final String enabled = System.getProperty
+//	                                     (Assert.class.getName() + ".enabled");
+//
+//        if (enabled == null) {
+//            //s_enabled = false;
+//            //default value is true
+//            s_enabled = true;
+//        } else {
+//            // s_enabled = enabled.equals("true");
+//            // Test: set to true anyway.
+//            // TODO: read from config registry, any dependency from a
+//            // environment variable is deprecated!
+//            s_enabled = true;
+//        }
+//    }
 
     /**
      * Tells whether asserts are turned on.  Use this to wrap code
@@ -107,8 +122,8 @@ public class Assert {
      * @param message An error message
      * @throws AssertionError if the condition is false
      */
-    public static final void truth(final boolean condition,
-                                   final String message) {
+    public static final void isTrue(final boolean condition,
+                                    final String message) {
         if (!condition) {
             error(message);
 
@@ -122,14 +137,57 @@ public class Assert {
      * false.
      *
      * @param condition The condition asserted
+     * @param message An error message
+     * @throws AssertionError if the condition is false
+     * @deprecated use Assert.isTrue(condition, message) instead
+     *             (we will follow the standard naming scheme)
+     */
+    public static final void truth(final boolean condition,
+                                   final String message) {
+        Assert.isTrue(condition, message);
+
+
+        // if (!condition) {
+        //     error(message);
+        //
+        //     throw new AssertionError(message);
+        // }
+    }
+
+    /**
+     * Asserts that an arbitrary condition is true and throws an
+     * error with message <code>message</code> if the condition is
+     * false.
+     *
+     * @param condition The condition asserted
      * @throws AssertionError if the condition is false
      */
-    public static final void truth(final boolean condition) {
+    public static final void isTrue(final boolean condition) {
         if (!condition) {
             error(DEFAULT_MESSAGE);
 
             throw new AssertionError(DEFAULT_MESSAGE);
         }
+    }
+
+    /**
+     * Asserts that an arbitrary condition is true and throws an
+     * error with message <code>message</code> if the condition is
+     * false.
+     *
+     * @param condition The condition asserted
+     * @throws AssertionError if the condition is false
+     * @deprecated use Assert.isTrue(final boolean condition) instead
+     *             (we will follow the standard naming scheme)
+     */
+    public static final void truth(final boolean condition) {
+        Assert.isTrue(condition);
+
+        // if (!condition) {
+        //     error(DEFAULT_MESSAGE);
+        //
+        //    throw new AssertionError(DEFAULT_MESSAGE);
+        // }
     }
 
     /**
@@ -176,6 +234,28 @@ public class Assert {
                                     final Class clacc) {
         if (object == null) {
             final String message = clacc.getName() + " is null";
+
+            error(message);
+
+            throw new AssertionError(message);
+        }
+    }
+
+    /**
+     * Asserts that an object is not null.
+     *
+     * @param object The <code>Object</code> that must not be null
+     * @param label A text to describe <code>Object</code>
+     *
+     * @throws AssertionError if the object is null
+     */
+    public static final void exists(final Object object,
+                                    final String label) {
+        if (object == null) {
+            final String message =
+                    label != null && label.trim().length() > 0
+                        ? "Value of " + label + " is null." 
+                        : DEFAULT_MESSAGE ;
 
             error(message);
 
@@ -326,11 +406,15 @@ public class Assert {
 
     /**
      * @deprecated in favor of {@link #isEnabled()}
+     *
+     * pboy Jan.09: not used by any package in trunk
      */
     public static final boolean ASSERT_ON = true;
 
     /**
      * Indicates state of the ASSERT_ON flag.
+     *
+     * pboy Jan.09: not used by any package in trunk
      *
      * @deprecated Use {@link #isEnabled()} instead
      */
@@ -382,7 +466,7 @@ public class Assert {
      * Verify that a parameter is not null and throw a runtime
      * exception if so.
      *
-     * @deprecated Use {@link #exists(Object,Class)} instead
+     * @deprecated Use {@link #exists(Object)} instead
      */
     public static final void assertNotNull(Object o) {
         assertNotNull(o, "");
@@ -392,7 +476,7 @@ public class Assert {
      * Verify that a parameter is not null and throw a runtime
      * exception if so.
      *
-     * @deprecated Use {@link #exists(Object,Class)} instead
+     * @deprecated Use {@link #exists(Object,String)} instead
      */
     public static final void assertNotNull(Object o, String label) {
         if (isEnabled()) {

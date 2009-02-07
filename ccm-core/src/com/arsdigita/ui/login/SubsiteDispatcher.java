@@ -18,7 +18,7 @@
  */
 package com.arsdigita.ui.login;
 
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ElementComponent;
 import com.arsdigita.bebop.SimpleContainer;
@@ -28,12 +28,17 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.dispatcher.Dispatcher;
+import com.arsdigita.dispatcher.DispatcherConfig;
+import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.security.Initializer;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.web.RedirectSignal;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
@@ -46,6 +51,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletException;
 
+import org.apache.log4j.Logger;
+
+
 /**
  * Dispatcher for the login package.  Manages user registration page, new user
  * page, user workspace, logout, and permissions admin pages.
@@ -54,7 +62,10 @@ import javax.servlet.ServletException;
  **/
 public class SubsiteDispatcher extends BebopMapDispatcher {
 
-    public static final String versionId = "$Id: SubsiteDispatcher.java 1225 2006-06-19 09:27:21Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: SubsiteDispatcher.java 1225 2006-06-19 09:27:21Z apevec $" +
+            " by $Author: apevec $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
 	public class SubsiteDispatcherMap extends HashMap implements Map {
 

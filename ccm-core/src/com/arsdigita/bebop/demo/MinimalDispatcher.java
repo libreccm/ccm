@@ -18,7 +18,7 @@
  */
 package com.arsdigita.bebop.demo;
 
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Page;
 import java.util.HashMap;
 
@@ -28,7 +28,10 @@ import java.util.HashMap;
  */
 public class MinimalDispatcher extends BebopMapDispatcher {
 
-    public static final String versionId = "$Id: MinimalDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: MinimalDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     /** Constructor.  Instantiates the subsite url/page mapping.  */
     public MinimalDispatcher() {

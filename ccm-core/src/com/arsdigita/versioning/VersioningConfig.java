@@ -18,15 +18,24 @@
  */
 package com.arsdigita.versioning;
 
+import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ParameterRecord;
+// import com.arsdigita.util.parameter.ParameterRecord;
+// replaced by c.ad.runtime.AbstractConfig, should be deleted after testing
 import org.apache.log4j.Logger;
 
 /**
+ * A configuration record for configuration of the versioning system.
+ * 
+ * Extends runtime.AbstractConfig. A noargs constructor registers the
+ * parameters with the superclass.
+ * 
  * @author Justin Ross
+ * 
+ * Modified: Peter Boy pboy@barkhof.uni-bremen.de
  */
-public final class VersioningConfig extends ParameterRecord {
+public final class VersioningConfig extends AbstractConfig {
     public static final String versionId =
         "$Id: VersioningConfig.java 287 2005-02-22 00:29:02Z sskracic $" +
         "$Author: sskracic $" +
@@ -37,12 +46,13 @@ public final class VersioningConfig extends ParameterRecord {
     private final Parameter m_debug;
 
     public VersioningConfig() {
-        super("versioning");
+        super();
 
         m_debug = new BooleanParameter
             ("waf.versioning.debug_ui_enabled", Parameter.REQUIRED, Boolean.FALSE);
 
         register(m_debug);
+        
 	loadInfo();
     }
 

@@ -18,6 +18,7 @@
  */
 package com.arsdigita.packaging;
 
+import com.arsdigita.runtime.RegistryConfig;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.runtime.ScriptContext;
@@ -32,7 +33,10 @@ import com.arsdigita.runtime.Startup;
 
 class Status extends Command {
 
-    public final static String versionId = "$Id: Status.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Status.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     public Status() {
         super("status", "Report on the status of a CCM instance");

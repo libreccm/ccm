@@ -18,6 +18,7 @@
  */
 package com.arsdigita.packaging;
 
+import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.util.JavaPropertyReader;
 import java.io.IOException;
 import java.util.Iterator;
@@ -31,13 +32,21 @@ import org.apache.commons.cli.PosixParser;
 /**
  * Set
  *
+ * Implements the command line interface to modify one or more values
+ * in a CCM configuration database (registry)
+ * 
+ * Called by ccm set command
+ * 
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
  **/
 
 class Set extends Command {
 
-    public final static String versionId = "$Id: Set.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Set.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options OPTIONS = getOptions();
 

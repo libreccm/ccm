@@ -18,7 +18,8 @@
  */
 package com.arsdigita.versioning;
 
-import com.arsdigita.runtime.RuntimeConfigLoader;
+// deprecated, use AbstractConfig#load() instead
+// import com.arsdigita.runtime.RuntimeConfigLoader;
 import org.apache.log4j.Logger;
 
 /**
@@ -45,9 +46,13 @@ final class Versioning {
     public static final VersioningConfig getConfig() {
         if (s_config == null) {
             s_config = new VersioningConfig();
-            final RuntimeConfigLoader loader = new RuntimeConfigLoader();
-            loader.load("ccm-core/versioning.properties", false);
-            s_config.load(loader);
+            // deprecated, use abstractConfig#load() instead. It loads the
+            // default config object, which is ccm-core/versioning.properties
+            // for VersioningConfig object by definition
+            // final RuntimeConfigLoader loader = new RuntimeConfigLoader();
+            // loader.load("ccm-core/versioning.properties", false);
+            // s_config.load(loader);
+            s_config.load();
         }
         return s_config;
     }

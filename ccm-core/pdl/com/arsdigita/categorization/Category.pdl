@@ -23,7 +23,7 @@ import com.arsdigita.kernel.*;
 
 object type Category extends ACSObject {
 
-    // Hier werden die Default-Werte gespeichert ???
+    // Default values are stored here ???
     String[0..1] description = cat_categories.description VARCHAR(4000);
     String[1..1] name = cat_categories.name VARCHAR(200);
     String[0..1] url = cat_categories.url VARCHAR(200);

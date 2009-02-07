@@ -183,6 +183,12 @@ public class XML {
         }
 
         try {
+            // ToDo (pboy): We should use
+            // SAXParserFactory.newInstance(String clName, ClassLoader clLoader)
+            // instead to achieve independence of a JVM wide acceptable
+            // configuration (affecting all CCM instances which may run in a
+            // container).
+            // Requires additional modifications in c.ad.util.xml.XML
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setFeature("http://xml.org/sax/features/namespaces", true);
             SAXParser parser = spf.newSAXParser();

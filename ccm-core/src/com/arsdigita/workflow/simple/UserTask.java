@@ -35,7 +35,9 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.runtime.RuntimeConfigLoader;
+// deprecated
+// use: AbstractConfig#load() instead
+// import com.arsdigita.runtime.RuntimeConfigLoader;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -55,15 +57,19 @@ import org.apache.log4j.Logger;
  * @author Stefan Deusch
  **/
 public class UserTask extends Task implements Assignable {
-    public static final String versionId = "$Id: UserTask.java 1564 2007-04-18 16:15:27Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: UserTask.java 1564 2007-04-18 16:15:27Z apevec $" +
+            " by $Author: apevec $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static WorkflowConfig CONFIG;
 
     private static WorkflowConfig getConfig() {
         if (CONFIG == null) {
             CONFIG = new WorkflowConfig();
-            CONFIG.load(new RuntimeConfigLoader
-                    ("ccm-core/workflow.properties", false));
+            // CONFIG.load(new RuntimeConfigLoader
+            //         ("ccm-core/workflow.properties", false));
+            CONFIG.load();
         }
         return CONFIG;
     }

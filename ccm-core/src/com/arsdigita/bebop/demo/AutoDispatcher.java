@@ -18,7 +18,7 @@
  */
 package com.arsdigita.bebop.demo;
 
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -36,7 +36,10 @@ import org.apache.log4j.Logger;
  * */
 public class AutoDispatcher extends BebopMapDispatcher {
 
-    public static final String versionId = "$Id: AutoDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: AutoDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(AutoDispatcher.class);

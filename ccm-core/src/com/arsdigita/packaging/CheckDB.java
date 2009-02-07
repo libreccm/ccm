@@ -16,26 +16,55 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.core;
+package com.arsdigita.packaging;
 
 import com.arsdigita.db.DbHelper;
-import com.arsdigita.packaging.ConfigRegistry;
+import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.jdbc.Connections;
+import com.arsdigita.util.Assert;
 import java.sql.Connection;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+
 /**
- * DBCheck
+ * CheckDB
+ * helper class for the load command worker class Load, checks for
+ * existence of a database and verifies accessibility
+ *
+ * Subject to change!
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
- **/
+ */
 
-public class DBCheck extends BaseCheck {
+public class CheckDB extends BaseCheck {
 
-    public final static String versionId = "$Id: DBCheck.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: DBCheck.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
+    // Integration of service class packaging.MessageMap.
+    // Specifies a package specific message file overriding BaseCheck
+    static {
+        final InputStream in = CheckDB.class.getResourceAsStream
+            ("checkdb.messages_linux");
+        Assert.exists(in, InputStream.class);
+        s_messages.load(new InputStreamReader(in));
+    }
+
+
+    /**
+     * Checks the classpath for the Oracle JDBC driver. The driver is no
+     * longer included in the CCM distribution but must be achieved and 
+     * installed separately.
+     * 
+     * @return true if driver is in the classpath
+     */
     private boolean checkOracleJDBC() {
         final String classname = "oracle.jdbc.driver.OracleDriver";
 
@@ -52,6 +81,27 @@ public class DBCheck extends BaseCheck {
         }
     }
 
+    /**
+     * Checks the classpath for the PostgreSQL JDBC driver. The driver is no
+     * longer included in the CCM distribution,too, but must be achieved and
+     * installed separately.
+     *
+     * @ToDo: An equivalent method for postgres. The driver in not
+     *        included anymore, too.
+     *
+     * @return true if driver is in the classpath
+     */
+    private boolean checkPostgresqlJDBC() {
+        return true;
+    }
+
+    /**
+     * Checks, if the runtime related registry is properly set up and checks 
+     * the stored initial parameter for database access (which had been asked
+     * for by the installation script).
+     * 
+     * @return true if database access is granted
+     */
     private boolean checkDatabaseConnection() {
         if (m_verbose) {
             m_out.println("Checking that RuntimeConfig is configured");
@@ -108,6 +158,12 @@ public class DBCheck extends BaseCheck {
         }
     }
 
+    /**
+     * Checks if the database belongs to the set of supported DBs.
+     * 
+     * @param db
+     * @return
+     */
     private boolean checkSupportedDatabase(int db) {
         if ( db == DbHelper.DB_DEFAULT ) {
             m_out.println(message("unsupported_database"));
@@ -120,6 +176,11 @@ public class DBCheck extends BaseCheck {
         return true;
     }
 
+    /**
+     * Run method required by the script machinery to make things happen.
+     * 
+     * @param ctx
+     */
     public void run(ScriptContext ctx) {
         int db = DbHelper.getDatabaseFromURL(RuntimeConfig.
                                              getConfig().getJDBCURL());

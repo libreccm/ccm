@@ -24,6 +24,16 @@ import com.arsdigita.util.parameter.ErrorList;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ *
+ * Obviously unfinished work. Is only be used in c.ad.util.xml.XMLConfig,
+ * unfinished and not functional as well.
+ *
+ * Removed.
+ *
+ * @author pb
+ * @deprecated 
+ */
 public class AliasedClassParameter extends ClassParameter {
 
     private Map m_aliases;

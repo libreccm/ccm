@@ -96,6 +96,7 @@ public class DispatcherServlet extends BaseServlet {
         m_dispatcher = new BaseDispatcher();
     }
 
+    @Override
     public void doInit() throws ServletException {
         m_fallbackName =
             getServletConfig().getInitParameter(FALLBACK_SERVLET_PARAMETER);
@@ -106,6 +107,7 @@ public class DispatcherServlet extends BaseServlet {
                       (m_fallbackName), RequestDispatcher.class);
     }
 
+    @Override    
     protected void doService(final HttpServletRequest sreq,
                              final HttpServletResponse sresp)
             throws ServletException, IOException {
@@ -142,6 +144,7 @@ public class DispatcherServlet extends BaseServlet {
         }
     }
 
+    @Override
     protected void doDestroy() {
         m_fallbackName = null;
     }

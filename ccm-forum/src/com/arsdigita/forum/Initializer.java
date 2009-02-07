@@ -156,7 +156,8 @@ public class Initializer extends CompoundInitializer {
         URLService.registerFinder(
 			ThreadedMessage.BASE_DATA_OBJECT_TYPE,
 			new PostFinder());
-		URLService.registerFinder(PostFileAttachment.BASE_DATA_OBJECT_TYPE, new PostFileAttachmentURLFinder());
+		URLService.registerFinder(PostFileAttachment.BASE_DATA_OBJECT_TYPE,
+                                  new PostFileAttachmentURLFinder());
 
         new ResourceTypeConfig(RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE) {
             public ResourceConfigFormSection getCreateFormSection
@@ -176,10 +177,14 @@ public class Initializer extends CompoundInitializer {
             }
         };
 
-		// chris.gilbert@westsussex.gov.uk use new constructor that allows create form to be hidden from users other than those
-		// with admin rights on parent app. Particularly appropriate for portlet where users 
-		// customising their own homepage should NOT be allowed to create new forums
-		new ResourceTypeConfig(Forum.BASE_DATA_OBJECT_TYPE, PrivilegeDescriptor.ADMIN, PrivilegeDescriptor.READ) {
+		// chris.gilbert@westsussex.gov.uk
+        // use new constructor that allows create form to be hidden from users
+        // other than those with admin rights on parent app.
+		// Particularly appropriate for portlet where users customising their
+		// own homepage should NOT be allowed to create new forums
+		new ResourceTypeConfig(Forum.BASE_DATA_OBJECT_TYPE, 
+                                PrivilegeDescriptor.ADMIN,
+                                PrivilegeDescriptor.READ) {
             public ResourceConfigFormSection getCreateFormSection
 				(final ResourceType resType,
 				final RequestLocal parentAppRL) {
@@ -200,8 +205,10 @@ public class Initializer extends CompoundInitializer {
         };
 
 
-		MetadataProviderRegistry.registerAdapter(Post.BASE_DATA_OBJECT_TYPE, new PostMetadataProvider());
-		MetadataProviderRegistry.registerAdapter(PostFileAttachment.BASE_DATA_OBJECT_TYPE, new FileAttachmentMetadataProvider());
+		MetadataProviderRegistry.registerAdapter(Post.BASE_DATA_OBJECT_TYPE,
+                                                 new PostMetadataProvider());
+		MetadataProviderRegistry.registerAdapter(PostFileAttachment.BASE_DATA_OBJECT_TYPE,
+                                                 new FileAttachmentMetadataProvider());
 		
 	}
 

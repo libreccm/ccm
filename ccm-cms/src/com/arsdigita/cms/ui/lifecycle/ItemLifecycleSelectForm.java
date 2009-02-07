@@ -85,12 +85,12 @@ import com.arsdigita.workflow.simple.WorkflowTemplate;
  * @author Michael Pih
  * @author Xixi D'moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ItemLifecycleSelectForm.java 1563 2007-04-18 15:58:17Z apevec $
+ * @version $Id: ItemLifecycleSelectForm.java 1643 2007-09-17 14:19:06Z chrisg23 $
  */
 class ItemLifecycleSelectForm extends BaseForm {
     public static final String versionId =
-        "$Id: ItemLifecycleSelectForm.java 1563 2007-04-18 15:58:17Z apevec $" +
-        "$Author: apevec $" +
+        "$Id: ItemLifecycleSelectForm.java 1643 2007-09-17 14:19:06Z chrisg23 $" +
+        "$Author: chrisg23 $" +
         "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger

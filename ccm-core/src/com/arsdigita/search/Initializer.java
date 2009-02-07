@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
  * the appropriate search engine.
  * There are no APIs intended for public use in this class
  */
+@Deprecated
 public class Initializer
     implements com.arsdigita.initializer.Initializer {
 

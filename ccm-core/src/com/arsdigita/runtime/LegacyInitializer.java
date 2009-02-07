@@ -19,7 +19,6 @@
 package com.arsdigita.runtime;
 
 import com.arsdigita.initializer.Script;
-import com.arsdigita.packaging.ConfigRegistry;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.io.IOException;
 import java.io.InputStream;

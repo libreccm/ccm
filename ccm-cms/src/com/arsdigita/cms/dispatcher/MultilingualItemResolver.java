@@ -48,12 +48,12 @@ import java.util.StringTokenizer;
  * Created Mon Jan 20 14:30:03 2003.
  *
  * @author <a href="mailto:mhanisch@redhat.com">Michael Hanisch</a>
- * @version $Id: MultilingualItemResolver.java 1160 2006-06-13 16:42:30Z apevec $
+ * @version $Id: MultilingualItemResolver.java 1795 2009-02-07 10:47:32Z pboy $
  */
 public class MultilingualItemResolver extends AbstractItemResolver implements ItemResolver {
     public static final String versionId =
-        "$Id: MultilingualItemResolver.java 1160 2006-06-13 16:42:30Z apevec $" +
-        "$Author: apevec $" +
+        "$Id: MultilingualItemResolver.java 1795 2009-02-07 10:47:32Z pboy $" +
+        "$Author: pboy $" +
         "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
@@ -98,12 +98,12 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
                          " at URL '" + url + "' for context " + context);
          }
 
-         Assert.assertNotNull(section, "ContentSection section");
-         Assert.assertNotNull(url, "String url");
-         Assert.assertNotNull(context, "String context");
+         Assert.exists(section, "ContentSection section");
+         Assert.exists(url, "String url");
+         Assert.exists(context, "String context");
 
          Folder rootFolder = section.getRootFolder();
-	 url = stripTemplateFromURL(url);
+	     url = stripTemplateFromURL(url);
 
          // nothing to do, if root folder is null
          if (rootFolder == null) {
@@ -164,8 +164,8 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
                  // and return FIXME: Please hack this if there is
                  // more graceful solution. [aavetyan]
 
-                 if (Assert.isAssertEnabled()) {
-                     Assert.assertTrue
+                 if (Assert.isEnabled()) {
+                     Assert.isTrue
                          (url.indexOf(ITEM_ID) >= 0,
                           "url must contain parameter " + ITEM_ID);
                  }
@@ -300,9 +300,9 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
                         context + "' with name '" + name + "'");
         }
 
-        Assert.assertNotNull(itemId,  "BigDecimal itemId");
-        Assert.assertNotNull(context, "Sring context");
-        Assert.assertNotNull(section, "ContentSection section");
+        Assert.exists(itemId,  "BigDecimal itemId");
+        Assert.exists(context, "String context");
+        Assert.exists(section, "ContentSection section");
 
         if (ContentItem.DRAFT.equals(context)) {
             // No template context here.
@@ -314,9 +314,9 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         } else if (ContentItem.LIVE.equals(context)) {
             ContentItem item = new ContentItem(itemId);
 
-            if (Assert.isAssertEnabled()) {
-                Assert.assertNotNull(item, "item");
-                Assert.assertTrue(ContentItem.LIVE.equals(item.getVersion()),
+            if (Assert.isEnabled()) {
+                Assert.exists(item, "item");
+                Assert.isTrue(ContentItem.LIVE.equals(item.getVersion()),
                                   "Generating " + ContentItem.LIVE + " " +
                                   "URL; this item must be the live version");
             }
@@ -370,16 +370,16 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
                         context);
         }
 
-        Assert.assertNotNull(item, "ContentItem item");
-        Assert.assertNotNull(context, "String context");
+        Assert.exists(item, "ContentItem item");
+        Assert.exists(context, "String context");
 
         if (section == null) {
             section = item.getContentSection();
         }
 
         if (ContentItem.DRAFT.equals(context)) {
-            if (Assert.isAssertEnabled()) {
-                Assert.assertTrue(ContentItem.DRAFT.equals(item.getVersion()),
+            if (Assert.isEnabled()) {
+                Assert.isTrue(ContentItem.DRAFT.equals(item.getVersion()),
                                   "Generating " + ContentItem.DRAFT +
                                   " url: item must be draft version");
             }
@@ -388,8 +388,8 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         } else if (CMSDispatcher.PREVIEW.equals(context)) {
             return generatePreviewURL(section, item, templateContext);
         } else if (ContentItem.LIVE.equals(context)) {
-            if (Assert.isAssertEnabled()) {
-                Assert.assertTrue(ContentItem.LIVE.equals(item.getVersion()),
+            if (Assert.isEnabled()) {
+                Assert.isTrue(ContentItem.LIVE.equals(item.getVersion()),
                                   "Generating " + ContentItem.LIVE +
                                   " url: item must be live version");
             }
@@ -442,10 +442,10 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
                         " and section " + section);
         }
 
-        if (Assert.isAssertEnabled()) {
-            Assert.assertTrue(section != null && itemId != null,
-                              "get draft url: neither secion nor item " +
-                              "can be null");
+        if (Assert.isEnabled()) {
+            Assert.isTrue(section != null && itemId != null,
+                          "get draft url: neither secion nor item " +
+                          "can be null");
         }
 
         final String url = ContentItemPage.getItemURL
@@ -495,7 +495,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
          * add template context, if one is given
          */
         // This is breaking URL's...not sure why it's here. XXX
-	// this should work with the appropriate logic. trying again.
+	    // this should work with the appropriate logic. trying again.
         if (!(templateContext == null || templateContext.length() == 0)) {
             url.append(TEMPLATE_CONTEXT_PREFIX + templateContext + "/");
         }
@@ -569,8 +569,8 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
     protected String generatePreviewURL(ContentSection section,
                                         ContentItem item,
                                         String templateContext) {
-        Assert.assertNotNull(section, "ContentSection section");
-        Assert.assertNotNull(item, "ContentItem item");
+        Assert.exists(section, "ContentSection section");
+        Assert.exists(item, "ContentItem item");
 
         final StringBuffer url = new StringBuffer(100);
         url.append(section.getPath());
@@ -644,9 +644,9 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
 
         // XXX this is wrong: here we abort on not finding the
         // parameter; below we return null.
-        if (Assert.isAssertEnabled()) {
-            Assert.assertTrue(pos >= 0,
-                              "Draft URL must contain parameter " + ITEM_ID);
+        if (Assert.isEnabled()) {
+            Assert.isTrue(pos >= 0,
+                          "Draft URL must contain parameter " + ITEM_ID);
         }
 
         String item_id = url.substring(pos); // item_id == ITEM_ID=.... ?
@@ -720,7 +720,12 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
             // will have deal with 'foo' folder.
 
             String name = index > 0 ? url.substring(0, index) : "";
-            parentFolder = name != "" ? (Folder) parentFolder.getItem(URLEncoder.encode(name), true) : parentFolder;
+            parentFolder =
+                // really object identity? Don't think so
+                // name != "" ? (Folder) parentFolder.getItem(URLEncoder.encode(name), true) 
+                //            : parentFolder;
+                name.isEmpty() ? parentFolder
+                               : (Folder) parentFolder.getItem(URLEncoder.encode(name), true);
             url = index + 1 < len ? url.substring(index + 1) : "";
 
             return getItemFromLiveURL(url, parentFolder);
@@ -833,9 +838,9 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
 	    lang = null;    // no extension, so we cannot guess the language
 	}
 
-	if (Assert.isAssertEnabled()) {
-	    Assert.assertNotNull(name, "String name");
-	    Assert.assertTrue(lang == null || lang.length() == 2);
+	if (Assert.isEnabled()) {
+	    Assert.exists(name, "String name");
+	    Assert.exists(lang == null || lang.length() == 2);
 	}
 
 	if (s_log.isDebugEnabled()) {

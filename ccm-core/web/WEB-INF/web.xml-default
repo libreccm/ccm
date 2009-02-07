@@ -3,6 +3,13 @@
         "http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
 
 <web-app>
+
+<!-- The Context Listener is required and used for initializing the runtime
+     environment before any other task is performed or any servlet initialized. -->
+  <listener>
+    <listener-class>com.arsdigita.web.CCMApplicationContextListener</listener-class>
+  </listener>
+
   <servlet>
     <servlet-name>reg</servlet-name>
     <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>

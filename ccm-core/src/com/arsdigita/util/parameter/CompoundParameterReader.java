@@ -25,10 +25,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
- * Subject to change.
- *
  * Aggregates a set of <code>ParameterReaders</code> so they may be
  * treated as one.
+ * 
+ * Subject to change.
  *
  * @see ParameterReader
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;

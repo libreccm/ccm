@@ -72,6 +72,9 @@ public class PublishToFile implements PublishToFileListener {
 
     private final PublishedHTMLProvider m_provider;
 
+    /**
+     * Default Constructor
+     */
     public PublishToFile() {
         m_provider = new HttpHTMLProvider(s_timeout);
     }
@@ -357,8 +360,10 @@ public class PublishToFile implements PublishToFileListener {
     }
 
     /**
-     * Returns an extension given a content type.if the content-type is null assume "html".
-     * @param contentType Content-Type returned from the request, e.g. text/html;charset=ISO-8859-1
+     * Returns an extension given a content type. If the content-type is null
+     * assume "html".
+     * @param contentType Content-Type returned from the request,
+     *        e.g. text/html;charset=ISO-8859-1
      **/
     private static String getFileExtension(String contentType) {
         if ( contentType == null || contentType == "" )
@@ -371,11 +376,13 @@ public class PublishToFile implements PublishToFileListener {
         MimeType type = MimeType.loadMimeType(contentType);
 
         if (type == null) {
-            s_log.error("Unknown content type in published item: " + contentType + " assuming extension 'html'");
+            s_log.error("Unknown content type in published item: " +
+                        contentType + " assuming extension 'html'");
             return ".html";
         } else {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("File extension for " + contentType + " is " + type.getFileExtension());
+                s_log.debug("File extension for " + contentType + " is " +
+                            type.getFileExtension());
             }
             return "." + type.getFileExtension();
         }
@@ -383,7 +390,8 @@ public class PublishToFile implements PublishToFileListener {
 
 
     /***
-     * Publish the page that is at url source to the file system and also any streamed assets that it references.
+     * Publish the page that is at url source to the file system and also any
+     * streamed assets that it references.
      * @param item ContentItem being published.
      * @param where Location Folder, where item will be published
      ***/
@@ -394,7 +402,8 @@ public class PublishToFile implements PublishToFileListener {
 
         // Read 'public' Template in HTML format and write to FS
         // It can be either 'deault' or specified template
-        String publicUrl = url + '?' + ContentSectionServlet.MEDIA_TYPE + '=' + TemplateManager.PUBLIC_CONTEXT;
+        String publicUrl = url + '?' + ContentSectionServlet.MEDIA_TYPE + '=' +
+                           TemplateManager.PUBLIC_CONTEXT;
         if ( !publishPageAtDocRoot(readHTML(publicUrl), where, item, null, host) )
             return false;
 
@@ -470,7 +479,8 @@ public class PublishToFile implements PublishToFileListener {
         final String fileExt = getFileExtension(rf.contentType);
         final String html = rf.body;
         if (s_log.isDebugEnabled()) {
-            s_log.debug("content item before getting bundle is " + item.getName() + " with id " + item.getID());
+            s_log.debug("content item before getting bundle is " + item.getName() +
+                        " with id " + item.getID());
 
         }
 
@@ -526,7 +536,8 @@ public class PublishToFile implements PublishToFileListener {
             scanner.transform(out);
             out.close();
         } catch ( IOException ex ) {
-            throw new PublishToFileException("Unable to write item " + item + " to filesystem.", ex);
+            throw new PublishToFileException("Unable to write item " + item +
+                                             " to filesystem.", ex);
         }
 
         if (s_log.isDebugEnabled()) {

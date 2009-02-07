@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2008 pb@zes.uni-bremen.de    All Rights Reserved.
+-- Copyright (C) 2008 Peter Boy <pb@zes.uni-bremen.de>    All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License

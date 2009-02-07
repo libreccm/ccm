@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.packaging;
+package com.arsdigita.runtime;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.StringUtils;
@@ -38,7 +38,10 @@ import java.net.URL;
 
 public class RegistryConfig extends AbstractConfig {
 
-    public final static String versionId = "$Id: RegistryConfig.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: RegistryConfig.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static String[] array(String str) {
         if (str == null) {

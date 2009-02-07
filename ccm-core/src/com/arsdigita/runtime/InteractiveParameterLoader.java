@@ -34,10 +34,10 @@ import java.util.Iterator;
 /**
  * InteractiveParameterLoader
  *
- * @deprecated
- *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
+ *
+ * @deprecated use {@link InteractiveParameterReader    } instead
  **/
 
 public final class InteractiveParameterLoader implements ParameterLoader {

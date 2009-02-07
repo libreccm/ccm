@@ -1,12 +1,21 @@
 /*
- * CategortyLocalizationTable.java
+ * Copyright (C) 2008 Sören Bernstein All Rights Reserved.
  *
- * Created on 18. April 2008, 12:03
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
-
 package com.arsdigita.cms.ui.category;
 
 import com.arsdigita.bebop.Component;
@@ -33,11 +42,12 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 /**
- * Listet alle vorhandenen Lokalisierungen zu der aktuellen Kategorie auf. Diese Klasse ist Teil
- * der Admin-Oberfläche von APLAWS+ und erweitert die Standardformulare um die Formulare für die
- * Bearbeitung der neuen, mehrsprachigen Kategorien.
+ * Lists all existing localizations for a selected category.
  *
- * @author quasi
+ * This class is part of the admin GUI of CCM and extends the standard form
+ * in order to present forms for managing the multi-language categories.
+ *
+ * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  */
 public class CategoryLocalizationTable extends Table implements TableActionListener {
     
@@ -58,17 +68,23 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
         m_category = category;
         m_model = model;
         
-        // Falls die Tabelle leer ist
-        setEmptyView(new Label(GlobalizationUtil.globalize("cms.ui.category.localization.none")));
+        // if table is empty:
+        setEmptyView(new Label(GlobalizationUtil.globalize(
+                                   "cms.ui.category.localization.none")));
         TableColumnModel tab_model = getColumnModel();
         
-        // Spalten definieren
-        // XXX Globalisieren
-        tab_model.add(new TableColumn(0, GlobalizationUtil.globalize("cms.ui.category.localization.locale").localize(), TABLE_COL_LANG));
-        tab_model.add(new TableColumn(1, GlobalizationUtil.globalize("cms.ui.category.localization.name").localize()));
-        tab_model.add(new TableColumn(2, GlobalizationUtil.globalize("cms.ui.category.localization.description").localize()));
-        tab_model.add(new TableColumn(3, GlobalizationUtil.globalize("cms.ui.category.localization.url").localize()));
-        tab_model.add(new TableColumn(4, GlobalizationUtil.globalize("cms.ui.category.localization.action").localize(), TABLE_COL_DEL));
+        // define columns
+        // XXX globalize
+        tab_model.add(new TableColumn(0, GlobalizationUtil.globalize(
+            "cms.ui.category.localization.locale").localize(), TABLE_COL_LANG));
+        tab_model.add(new TableColumn(1, GlobalizationUtil.globalize(
+            "cms.ui.category.localization.name").localize()));
+        tab_model.add(new TableColumn(2, GlobalizationUtil.globalize(
+            "cms.ui.category.localization.description").localize()));
+        tab_model.add(new TableColumn(3, GlobalizationUtil.globalize(
+            "cms.ui.category.localization.url").localize()));
+        tab_model.add(new TableColumn(4, GlobalizationUtil.globalize(
+            "cms.ui.category.localization.action").localize(), TABLE_COL_DEL));
         
         setModelBuilder(new CategoryLocalizationTableModelBuilder());
         
@@ -78,8 +94,13 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
         addTableActionListener(this);
         
     }
-    
-    private class CategoryLocalizationTableModelBuilder extends LockableImpl implements TableModelBuilder {
+
+    /**
+     * XXXX
+     *
+     */
+    private class CategoryLocalizationTableModelBuilder extends LockableImpl
+            implements TableModelBuilder {
         
         public TableModel makeModel(Table table, PageState state) {
             final Category category = m_category.getCategory(state);
@@ -91,7 +112,11 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
             }
         }
     }
-    
+
+    /**
+     * XXX
+     *
+     */
     private class CategoryLocalizationTableModel implements TableModel {
         
         final private int MAX_DESC_LENGTH = 25;
@@ -110,8 +135,10 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
         }
         
         /**
-         * check collection for the existence of another row.If it has fetch the
-         * value of current CategoryLocalization object into m_categoryLocalization class variable.
+         * Check collection for the existence of another row.
+         * 
+         * If exists, fetch the value of current CategoryLocalization object
+         * into m_categoryLocalization class variable.
          */
         public boolean nextRow() {
             
@@ -139,7 +166,8 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
                     return m_categoryLocalization.getName();
                 case 2:
                     String desc = m_categoryLocalization.getDescription();
-                    if(desc != null && desc.length() > MAX_DESC_LENGTH) desc = desc.substring(MAX_DESC_LENGTH - 3).concat("...");
+                    if(desc != null && desc.length() > MAX_DESC_LENGTH)
+                        desc = desc.substring(MAX_DESC_LENGTH - 3).concat("...");
                     return desc;
                 case 3:
                     return m_categoryLocalization.getURL();
@@ -172,7 +200,8 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
                 int row, int column) {
             
             SecurityManager sm = Utilities.getSecurityManager(state);
-//            CategoryLocalization cl = (CategoryLocalization) m_clSel.getSelectedObject(state);
+//            CategoryLocalization cl =
+//                (CategoryLocalization) m_clSel.getSelectedObject(state);
             
 //            boolean canEdit = sm.canAccess(state.getRequest(),
 //                    SecurityManager.DELETE_ITEM,
@@ -198,7 +227,8 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
                 int row, int column) {
             
 //            SecurityManager sm = Utilities.getSecurityManager(state);
-//            CategoryLocalization categoryLocalization = new CategoryLocalization(new BigDecimal(evt.getRowKey().toString()));
+//            CategoryLocalization categoryLocalization =
+//                new CategoryLocalization(new BigDecimal(evt.getRowKey().toString()));
             
 //            boolean canDelete = sm.canAccess(state.getRequest(),
 //                    SecurityManager.DELETE_ITEM,
@@ -206,7 +236,8 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
 //            if (canDelete) {
               if (true) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) GlobalizationUtil.globalize("cms.ui.category.localization.confirm_delete").localize());
+                link.setConfirmation((String) GlobalizationUtil.globalize(
+                        "cms.ui.category.localization.confirm_delete").localize());
 //                link.setConfirmation("Delete this localization?");
                 return link;
             } else {
@@ -225,7 +256,8 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
         PageState state = evt.getPageState();
         
         // Get selected CategoryLocalization
-        CategoryLocalization categoryLocalization = new CategoryLocalization(new BigDecimal(evt.getRowKey().toString()));
+        CategoryLocalization categoryLocalization =
+            new CategoryLocalization(new BigDecimal(evt.getRowKey().toString()));
         
         // Get Category
         Category category = m_category.getCategory(state);

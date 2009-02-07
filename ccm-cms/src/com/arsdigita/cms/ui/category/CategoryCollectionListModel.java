@@ -74,13 +74,12 @@ public final class CategoryCollectionListModel implements ListModel {
     }
 
     /**
-     * Liest den Namen der Kategorie aus. Angepaßt, damit hier immer
-     * der Wert aus Category gelesen wird und nicht die lokalisierte
-     * Version. Ist hier sinnvoll, da es Teil der Adminoberfläche für
-     * Kategorien ist. Eine lokalisierte Anzeige würde hier nur zu
-     * Verwirrung führen.
-     * 
-     * Quasimodo
+     * Reads the name of the category.
+     *
+     * Quasimodo:
+     * Modified to ensure that the value is read from Category (and not the
+     * localized version). This is necessary because we are in the admin GUI,
+     * a localized version would be confusing.
      */
     public Object getElement() {
         return getCategory().getName("");

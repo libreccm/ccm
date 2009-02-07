@@ -33,7 +33,10 @@ import org.apache.commons.cli.Options;
 
 abstract class Command {
 
-    public final static String versionId = "$Id: Command.java 1324 2006-09-21 22:13:16Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Command.java 1324 2006-09-21 22:13:16Z apevec $" +
+            " by $Author: apevec $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private String m_name;
     private String m_summary;
@@ -72,7 +75,8 @@ abstract class Command {
 
     static void usage(Options options, PrintStream out, String command,String args) {
         String str;
-        final String debugVar = "To show debugging output set the CCM_TOOLS_DEBUG environmental variable";
+        final String debugVar = 
+              "To show debugging output set the CCM_TOOLS_DEBUG environmental variable";
         if (args == null) {
             str = command;
         } else {
@@ -81,7 +85,8 @@ abstract class Command {
 
         HelpFormatter fmt = new HelpFormatter();
         PrintWriter w = new PrintWriter(out);
-        fmt.printHelp(w, 80, str, "\n"+debugVar+"\n\nOptions:", options, 2, 4, null, true);
+        fmt.printHelp(w, 80, str, "\n"+debugVar+"\n\nOptions:", 
+                      options, 2, 4, null, true);
         w.flush();
     }
 

@@ -29,6 +29,11 @@ import org.apache.log4j.Logger;
  * Wrapper for getResourceAsStream, so we can get file-based resources
  * with paths relative to the webapp root without needing a
  * ServletContext object.
+ *
+ * pboy:
+ * Handles a very similiar scope of tasks as c.ad.runtime.CCM. Both should be
+ * integrated into a single class, e.g. CCMResourceManager to simplify and
+ * clean-up of the API!
  */
 
 public class ResourceManager {
@@ -45,7 +50,10 @@ public class ResourceManager {
     private File m_webappRoot;
     private ServletContext m_servletContext;
 
-    public static final String versionId = "$Id: ResourceManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: ResourceManager.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Empty constructor, which we make private to enforce the singleton
@@ -101,6 +109,8 @@ public class ResourceManager {
             }
             return is;
         } else {
+            // No Servlet Context available, check if m_webappRoot has been
+            // setup directly
             try {
                 return new FileInputStream(new File(m_webappRoot, url));
             } catch (FileNotFoundException fnfe) {
@@ -120,12 +130,14 @@ public class ResourceManager {
     /**
      * Gets the full path to a resource.
      *
-     * Kinda hacky way of making sure that XML file loading works. Many Initializers load XML files from WEB-INF,
-     * and had done so by calling ServletContext.getRealPath(). Problem is, under test, there is no ServletContext.
-     * Swithcing to ResourceManager.getResourceAsStream works so long as there is no DTD. Calling this method gets
-     * the correct path, and lets the parser properly load the file.
+     * Kinda hacky way of making sure that XML file loading works. Many 
+     * Initializers load XML files from WEB-INF, and had done so by calling
+     * ServletContext.getRealPath(). Problem is, under test, there is no
+     * ServletContext. Switching to ResourceManager.getResourceAsStream works
+     * so long as there is no DTD. Calling this method gets the correct path,
+     * and lets the parser properly load the file.
      *
-     * Will probably remove when TestServletContext is always available.
+     * Will probably remove, when TestServletContext is always available.
      *
      * @param url
      * @return Full path
@@ -148,9 +160,8 @@ public class ResourceManager {
 
     /**
      * Returns a new File object that refers to the URL argument.
-     * Behaves similarly to getResourceAsStream(),
-     * reading pathnames relative to the webapp root, except
-     * we return a File object.
+     * Behaves similarly to getResourceAsStream(), reading pathnames relative
+     * to the webapp root, except we return a File object.
      *
      * @param url a URL interpreted as a pathname relative to the webapp root
      * @return a File object referring to the named resource, or null

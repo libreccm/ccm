@@ -79,7 +79,7 @@ import java.util.Date;
  *
  * @author Ron Henderson 
  * @author David Dao 
- * @version $Id: Notification.java 287 2005-02-22 00:29:02Z sskracic $ */
+ * @version $Id: Notification.java 1641 2007-09-17 13:46:27Z chrisg23 $ */
 
 public class Notification extends ACSObject implements NotificationConstants {
     // Base DataObject type

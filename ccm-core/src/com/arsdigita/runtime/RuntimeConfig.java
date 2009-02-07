@@ -25,8 +25,8 @@ import com.arsdigita.util.parameter.Parameter;
 import org.apache.log4j.Logger;
 
 /**
- * A configuration record for configuration of the runtime
- * environment.
+ * A configuration record for configuration of the runtime environment itself.
+ * (Which database to use, database user and password, etc)
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: RuntimeConfig.java 1393 2006-11-28 09:12:32Z sskracic $
@@ -50,7 +50,11 @@ public final class RuntimeConfig extends AbstractConfig {
     public static final synchronized RuntimeConfig getConfig() {
         if (s_config == null) {
             s_config = new RuntimeConfig();
-            s_config.require("ccm-core/runtime.properties");
+            // deprecated
+            // s_config.require("ccm-core/runtime.properties");
+            // use instead:
+            // read values from the persistent storage
+            s_config.load();
         }
 
         return s_config;
@@ -66,9 +70,14 @@ public final class RuntimeConfig extends AbstractConfig {
 
     /**
      * Constructs an empty RuntimeConfig object.
-     **/
+     *
+     */
 
     public RuntimeConfig() {
+    // pboy: According to the comment for the getConfig() method a singleton
+    // pattern is to be used. Therefore the constructor must be changed to
+    // private!
+    // private RuntimeConfig() {
         m_url = new JDBCURLParameter("waf.runtime.jdbc_url");
         m_poolSize = new IntegerParameter
             ("waf.runtime.jdbc_pool_size", Parameter.OPTIONAL,
@@ -86,10 +95,10 @@ public final class RuntimeConfig extends AbstractConfig {
         m_resultSetWindowSize = new IntegerParameter
             ("waf.runtime.jdbc_resultset_windowsize", Parameter.REQUIRED,
              new Integer(1));
-		m_runBackgroundTasks = new BooleanParameter
-					("waf.runtime.run_background_tasks",
-					 Parameter.REQUIRED,
-					 Boolean.TRUE);
+	m_runBackgroundTasks = new BooleanParameter
+	    ("waf.runtime.run_background_tasks",
+	     Parameter.REQUIRED,
+	     Boolean.TRUE);
 
         register(m_url);
         register(m_poolSize);

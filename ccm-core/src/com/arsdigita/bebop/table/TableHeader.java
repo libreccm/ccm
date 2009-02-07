@@ -40,11 +40,11 @@ import com.arsdigita.xml.Element;
  * of the column headers is clicked.
  *
  * @author David Lutterkort
- * @version $Id: TableHeader.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TableHeader.java 1638 2007-09-17 11:48:34Z chrisg23 $
  */
 public class TableHeader extends SimpleComponent {
 
-    public static final String versionId = "$Id: TableHeader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = "$Id: TableHeader.java 1638 2007-09-17 11:48:34Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * The control event when the user clicks on a column header.

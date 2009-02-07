@@ -1,12 +1,21 @@
 /*
- * CategoryLocalizationForm.java
+ * Copyright (C) 2008 Sören Bernstein All Rights Reserved.
  *
- * Created on 18. April 2008, 12:04
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
-
 package com.arsdigita.cms.ui.category;
 
 import com.arsdigita.bebop.FormProcessException;
@@ -34,11 +43,12 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.xml.Element;
 
 /**
- * Basisklasse für CategoryLocalizationAddForm und CategoryLocalizationEditForm.
- * Diese Klasse ist Teil der Admin-Oberfläche von APLAWS+ und erweitert die Standardformulare
- * um die Formulare für die Bearbeitung der neuen, mehrsprachigen Kategorien.
+ * Base class for CategoryLocalizationAddForm and CategoryLocalizationEditForm.
  *
- * @author quasi
+ * This class is part of the admin GUI of CCM and extends the standard form
+ * in order to present forms for managing the multi-language categories.
+ *
+ * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  */
 public class CategoryLocalizationForm extends BaseForm {
     
@@ -48,7 +58,9 @@ public class CategoryLocalizationForm extends BaseForm {
     final TextArea m_description;
     final TextField m_url;
     final RadioGroup m_isEnabled;
-    private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>", false);
+    private Label m_script = new Label(
+            "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\">"+
+            "</script>", false);
     
     private final static String LOCALE      = "locale";
     private final static String NAME        = "name";
@@ -56,7 +68,10 @@ public class CategoryLocalizationForm extends BaseForm {
     private final static String URL         = "url";
     private final static String IS_ENABLED  = "isEnabled";
     
-    /** Creates a new instance of CategoryLocalizationForm */
+    /** 
+     * Creates a new instance of CategoryLocalizationForm.
+     *
+     */
     public CategoryLocalizationForm(final String key,
             final GlobalizedMessage heading,
             final CategoryRequestLocal category) {
@@ -65,7 +80,7 @@ public class CategoryLocalizationForm extends BaseForm {
         
         m_category = category;
         
-        // Parameter-Model für den SingleSelect
+        // Parameter-Model for SingleSelect
         ParameterModel localeParam = new StringParameter(LOCALE);
         localeParam.addParameterListener(new StringInRangeValidationListener(0, 2));
         
@@ -145,8 +160,12 @@ public class CategoryLocalizationForm extends BaseForm {
         super.generateXML(ps, parent);
     }
     
-    // Muß erweitert werden um folgende Funktion: Die Namen müssen eindeutig sein in der
-    // gewählten Sprache
+    /**
+     * Purpose:
+     * 
+     * XXXToDo: Should be extended with the function:
+     * Names have to be unambiguous in the selected language
+     */
     class NameUniqueListener implements ParameterListener {
         private final CategoryRequestLocal m_category;
         private final Widget m_widget;
@@ -164,8 +183,15 @@ public class CategoryLocalizationForm extends BaseForm {
             m_type = type;
         }
         
-        
-        // XXX Muß noch angepaßt werden
+
+        /**
+         * Purpose:
+         *
+         * XXX provisional, has to be adapted
+         *
+         * @param e
+         * @throws com.arsdigita.bebop.FormProcessException
+         */
         public final void validate(final ParameterEvent e)
         throws FormProcessException {
             final PageState state = e.getPageState();

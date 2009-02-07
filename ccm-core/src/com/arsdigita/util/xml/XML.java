@@ -20,38 +20,64 @@ package com.arsdigita.util.xml;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Utility class to configure the XML parsers using Sun's javax.xml specified
+ * classes and methods (in the javax.xml..... packages).
+ * 
+ * Currently CCM uses a quite simple but rather thumb method of configuration.
+ * It places the desired parser class names into the system environment
+ * (previously by startup script, now by setProperties), where they are
+ * picked up by the Sun provided classes.
+ * 
+ * This method contrains all programs in a JVM (e.g. all instances of CCM in
+ * a servlet container) to use the same configuration. Other methods are
+ * available but we have to dig deeper into the CCM code.
+ *
+ * Called once by c.ad.core.Initializer at startup.
+ *
+ * modified by
+ * @author pboy
+ */
 public class XML {
     
     private static final Logger s_log = Logger.getLogger
-        (XMLConfig.class);
+        (XML.class);
 
-    private static XMLConfig s_config;
+    /* ************     public getter / setter section          ************ */
     
-    static XMLConfig getConfig() {
-        if (s_config == null) {
-            s_config = new XMLConfig();
-            s_config.load();
-        }
-        return s_config;
-    }
-
+    /**
+     * Actually configures the factory classes to use. It calls an internal
+     * method which modifies the system.property. 
+     */
     public static void setupFactories() {
         setupFactory("javax.xml.parsers.DocumentBuilderFactory",
-                     getConfig().getDOMBuilderFactory());
+                     XMLConfig.getConfig().getDOMBuilderFactoryClassname());
         setupFactory("javax.xml.parsers.SAXParserFactory",
-                     getConfig().getSAXParserFactory());
+                     XMLConfig.getConfig().getSAXParserFactoryClassname());
         setupFactory("javax.xml.transform.TransformerFactory",
-                     getConfig().getXSLTransformerFactory());
+                     XMLConfig.getConfig().getXSLTransformerFactoryClassname());
     }
     
+    /* ************     internal worker methods section          ************ */
+
+    /**
+     * Actually configures the factories to use by setting the system.properties
+     * 
+     * ToDo: Use an alternative Factory constructor of javax.xml. ... (e.g.
+     * DocumentBuilderFactory) which directly accepts a classname and a
+     * class loader, so we do not depend on a system wide configuration.
+     *
+     * @param name  the system property name to set according to the javax.xml spec.
+     * @param impl  the value of the class name of the factory to use
+     */
     static void setupFactory(String name,
-                             Class impl) {
+                             String impl) {
         if (impl != null) {
             if (s_log.isInfoEnabled()) {
                 s_log.info("Setting " + name + " to " + impl);
             }
             System.setProperty(name,
-                               impl.getName());
+                               impl);
         } else {
             if (s_log.isInfoEnabled()) {
                 s_log.info("Leaving " + name + " as " +

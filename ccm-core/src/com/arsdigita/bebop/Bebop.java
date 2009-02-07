@@ -40,7 +40,10 @@ public final class Bebop {
     public static final BebopConfig getConfig() {
         if (s_config == null) {
             s_config = new BebopConfig();
-            s_config.load("ccm-core/bebop.properties");
+            // deprecated, use load() instead, load the default config db,
+            // which is ccm-core /bebop.properties for BebogConfig by definition
+            // s_config.load("ccm-core/bebop.properties");
+            s_config.load();
         }
         return s_config;
     }

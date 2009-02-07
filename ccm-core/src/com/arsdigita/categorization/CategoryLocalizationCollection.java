@@ -1,18 +1,30 @@
 /*
- * CategoryLocalizationCollection.java
+ * Copyright (C) 2008 Sören Bernstein All Rights Reserved.
  *
- * Created on 19. Januar 2008, 13:24
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Author: Quasimodo
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
  */
 
 package com.arsdigita.categorization;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.ACSObjectCollection;
-import com.arsdigita.persistence.DataAssociation;
+// unused imports
+// import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject;
+// import com.arsdigita.persistence.DataObject;
 
 /**
  * Represents a collection of categoryLocalizations.
@@ -21,6 +33,7 @@ import com.arsdigita.persistence.DataObject;
  * Category} and other classes. See, for example, {@link Category#getChildren()}
  * or {@link Category#getDescendants()}.</p>
  *
+ * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  * @author Randy Graebner (randyg@alum.mit.edu)
  * @version $Revision: #15 $ $DateTime: 2004/08/16 18:10:38 $
  **/
@@ -107,7 +120,8 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
      */
     public boolean localizationExists(String locale) {
         
-        // 
+        // Really string comparison using !=  ??
+        // && !locale.isEmpty() ?
         if(!m_dataCollection.isEmpty() && locale != "") {
         
             // First check, if we are already at the right position. This will speed up repeated access for the same locale

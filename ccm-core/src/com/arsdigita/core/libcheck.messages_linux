@@ -1,0 +1,43 @@
+[security_jars]
+Users of Java 1.3.x must place the following jars from the CCM tools
+RPM in the system classpath:
+
+    $CCM_TOOLS_HOME/lib/security/local_policy.jar
+    $CCM_TOOLS_HOME/lib/security/jce.jar
+    $CCM_TOOLS_HOME/lib/security/US_export_policy.jar
+    $CCM_TOOLS_HOME/lib/security/jaas.jar
+    $CCM_TOOLS_HOME/lib/security/sunjce_provider.jar
+
+Add symbolic links to these files to the /usr/local/share/java
+directory or add them directly to the CLASSPATH environment variable.
+
+[jaas_found]
+CHECK: JAAS is available
+
+[jaas_not_found]
+WARNING: JAAS not found
+
+JAAS is the Java Authentication and Authorization Service and is
+required for CCM authentication.  Check your classpath.
+
+[jce_found]
+CHECK: JCE is available
+
+[jce_not_found]
+WARNING: JCE not found
+
+JCE is the Java Cryptography Extension and is required for CCM
+authentication.  Check your classpath.
+
+[classpath]
+The classpath of the CCM runtime includes
+
+  * jar files in JAVA_HOME/jre/lib/ext
+
+  * jars, zips, or class files under one of the paths listed in
+    CCM_HOME/ccm.classpath if it exists or /etc/ccm/ccm.classpath
+    otherwise
+
+  * the CLASSPATH environment variable.
+
+

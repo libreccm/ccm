@@ -22,17 +22,25 @@ init com.arsdigita.cms.publishToFile.Initializer {
     // "url stub" }'. 
     // "Content type" is the object type of the content type. 
     // "Root directory" must be a path to a writable directory, relative 
-    // to the file-system root. "Shared storage" must be _true_ if the root 
+    // to the file-system root.
+    // (pboy): "Root directory here is relative to application base!
+    // "Shared storage" must be _true_ if the root
     // directory is shared NFS storage, _false_ otherwise. "URL stub"
     // must be the path component of the URL from which the live server 
     // will serve from this directory.
     destination = { 
       { "com.arsdigita.cms.ContentItem", 
-        "data/p2fs", 
+        "p2fs", 
         false, 
         "/p2fs" },
-      { "com.arsdigita.cms.Template", 
-	"webapps/ROOT/packages/content-section/templates",
+    // (pboy): starting with webapps refers to the CCM_HOME env variable which
+    // points to the installation root of the servlet container. This is not
+    // used anymore, all specifications are relative to webapplication base.
+    // So the following may have to be changed to "packages/content-section/templates"
+    // if someone tries to use p2fs
+      { "com.arsdigita.cms.Template",
+	    // "webapps/ROOT/packages/content-section/templates",
+	    "packages/content-section/templates",
         false, 
         "/templates" }
     };

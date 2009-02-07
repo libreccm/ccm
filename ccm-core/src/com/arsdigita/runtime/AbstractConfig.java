@@ -18,7 +18,6 @@
  */
 package com.arsdigita.runtime;
 
-import com.arsdigita.packaging.ConfigRegistry;
 import com.arsdigita.util.parameter.AbstractParameterContext;
 import com.arsdigita.util.parameter.ErrorList;
 import org.apache.log4j.Logger;

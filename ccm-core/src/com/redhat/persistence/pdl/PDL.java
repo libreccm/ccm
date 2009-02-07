@@ -20,6 +20,7 @@ package com.redhat.persistence.pdl;
 
 import com.arsdigita.util.WrappedError;
 import com.redhat.persistence.common.Path;
+// not on file but generated on the fly during compilation
 import com.redhat.persistence.common.SQLParser;
 import com.redhat.persistence.metadata.Adapter;
 import com.redhat.persistence.metadata.Column;

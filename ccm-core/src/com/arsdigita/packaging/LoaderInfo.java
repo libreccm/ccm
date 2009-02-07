@@ -27,6 +27,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * LoaderInfo
+ * 
+ * Helper class: 
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
@@ -34,7 +36,10 @@ import org.xml.sax.helpers.DefaultHandler;
 
 class LoaderInfo {
 
-    public final static String versionId = "$Id: LoaderInfo.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: LoaderInfo.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private List m_requiredTables = new ArrayList();
     private List m_providedTables = new ArrayList();

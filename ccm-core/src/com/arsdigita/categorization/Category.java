@@ -418,7 +418,6 @@ public class Category extends ACSObject {
         return getName(this.getNegotiatedLocale());
     }
 
-
     /**
      * Returns the display name of the category.  This overrides the parent
      * implementation.
@@ -728,7 +727,6 @@ public class Category extends ACSObject {
     public boolean isEnabled() {
         return isEnabled(this.getNegotiatedLocale());
     }
-
 
     /**
      * Sets whether the category is enabled.

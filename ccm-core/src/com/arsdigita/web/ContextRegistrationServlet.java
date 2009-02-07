@@ -58,6 +58,7 @@ public class ContextRegistrationServlet extends HttpServlet {
     
     private String m_uri;
 
+    @Override
     public void init(final ServletConfig sconfig) throws ServletException {
         m_uri = sconfig.getInitParameter("uri");
         Assert.exists(m_uri, String.class);
@@ -67,7 +68,8 @@ public class ContextRegistrationServlet extends HttpServlet {
         Web.registerServletContext(m_uri,
                                    sconfig.getServletContext());
     }
-
+    
+    @Override
     public void destroy() {
         Web.unregisterServletContext(m_uri);
     }

@@ -18,7 +18,7 @@
  */
 package com.arsdigita.util.xml;
 
-public class XSLTransformer {
+public final class XSLTransformer {
     public static final String RESIN =
         "com.caucho.xsl.Xsl";
     public static final String JD_XSLT =
@@ -29,4 +29,18 @@ public class XSLTransformer {
         "com.icl.saxon.TransformerFactoryImpl";
     public static final String XALAN =
         "org.apache.xalan.processor.TransformerFactoryImpl";
+
+    public final static String get(String key) {
+
+        // UGLY style, but sufficient for a temporay solution
+
+        // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
+        if(key.toLowerCase().equals("xsltc"))   return XSLTC;
+        if(key.toLowerCase().equals("xalan"))   return XALAN ;
+        if(key.toLowerCase().equals("resin"))   return RESIN;
+        if(key.toLowerCase().equals("jd.xslt")) return JD_XSLT;
+        // return defaultValue
+        return SAXON;
+
+    }
 }

@@ -27,6 +27,22 @@ import java.net.URLStreamHandler;
 
 /**
  * Handler
+ * pboy:
+ *
+ * Handler for the URL  resource:// protocoll.
+ *
+ * To make it work it must be loaded by the system classloader. (Part of the
+ * "java.ext.dirs" system property).
+ *
+ * You may achieve this by:
+ * - appropriate start scripts for CCM (current solution as of version 1.0.4)
+ * - copy system.jar into $JAVA_HOME/jre/lib/ext
+ *
+ * If it is not properly done, you will get a MalformedURLException: unknown
+ * protocol: resource
+ *
+ * ToDo: replace the resource: protokoll by use of the Class or ClassLoader
+ * getResource() and/or getResourceAsStream() methods (system wide).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #2 $ $Date: 2004/08/16 $
@@ -34,7 +50,10 @@ import java.net.URLStreamHandler;
 
 public class Handler extends URLStreamHandler {
 
-    public final static String versionId = "$Id: Handler.java 1509 2007-03-22 00:12:09Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Handler.java 1509 2007-03-22 00:12:09Z apevec $" +
+            " by $Author: apevec $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     protected void parseURL(URL url, String spec, int start, int limit) {
         // trim leading slashes

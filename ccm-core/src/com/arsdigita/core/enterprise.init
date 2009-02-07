@@ -1,4 +1,4 @@
-init com.arsdigita.versioning.Initializer { }
+// init com.arsdigita.versioning.Initializer { }
 
 init com.arsdigita.globalization.Initializer {
     // See http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc
@@ -40,8 +40,9 @@ init com.arsdigita.kernel.security.Initializer {
 
 }
 
-init com.arsdigita.search.Initializer {}
+// init com.arsdigita.search.Initializer {}
 
+// As of version 6.5.x still in use!
 init com.arsdigita.search.intermedia.Initializer {
     timerDelay         = 60;    // Parameters for search timer/indexing
     syncDelay          = 60;    // All units are time in seconds
@@ -50,8 +51,9 @@ init com.arsdigita.search.intermedia.Initializer {
     indexingRetryDelay = 60;
 }
 
-init com.arsdigita.search.lucene.Initializer {}
+// init com.arsdigita.search.lucene.Initializer {}
 
+// As of version 6.5.x still in use!
 init com.arsdigita.notification.Initializer {
     RequestManagerDelay  = 900; // in seconds
     RequestManagerPeriod = 900; // in seconds

@@ -19,8 +19,10 @@
 package com.redhat.persistence.profiler.rdbms;
 
 import com.arsdigita.util.UncheckedWrapperException;
+// not on file but generated during compilation
 import com.redhat.persistence.common.ParseException;
 import com.redhat.persistence.common.SQL;
+// not on file but generated during compilation
 import com.redhat.persistence.common.SQLParser;
 import com.redhat.persistence.common.SQLToken;
 import java.io.StringReader;

@@ -18,7 +18,8 @@
  */
 package com.arsdigita.packaging;
 
-import com.arsdigita.runtime.CCM;
+import com.arsdigita.runtime.CCMResourceManager;
+import com.arsdigita.util.Files;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashSet;
@@ -38,7 +39,10 @@ import org.apache.commons.cli.PosixParser;
 
 class Unload extends Command {
 
-    public final static String versionId = "$Id: Unload.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Unload.java 736 2005-09-01 10:46:05Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options OPTIONS = new Options();
 
@@ -80,7 +84,7 @@ class Unload extends Command {
 
         if (line.hasOption("config")) {
             // XXX: This just deletes everything.
-            File conf = CCM.getConfigDirectory();
+            File conf = CCMResourceManager.getConfigDirectory();
             File[] files = conf.listFiles(new FileFilter() {
                 public boolean accept(File file) {
                     return !EXCLUDE.contains(file.getName());

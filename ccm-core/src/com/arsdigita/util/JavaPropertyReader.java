@@ -27,10 +27,10 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
- * Subject to change.
- *
  * An implementation of <code>ParameterReader</code> that uses
  * standard Java properties to retrieve values.
+ *
+ * Subject to change.
  *
  * @see com.arsdigita.util.parameter.ParameterReader
  * @see JavaPropertyWriter

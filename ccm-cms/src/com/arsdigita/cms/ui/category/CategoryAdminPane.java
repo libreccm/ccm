@@ -63,12 +63,12 @@ import org.apache.log4j.Logger;
  * A split pane for the Category Administration UI.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: CategoryAdminPane.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CategoryAdminPane.java 1795 2009-02-07 10:47:32Z pboy $
  */
 public final class CategoryAdminPane extends BaseAdminPane {
     public static final String versionId =
-        "$Id: CategoryAdminPane.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
+        "$Id: CategoryAdminPane.java 1795 2009-02-07 10:47:32Z pboy $" +
+        "$Author: pboy $" +
         "$DateTime: 2004/08/17 23:15:09 $";
 
     public static final String CONTEXT_SELECTED="sel_context";
@@ -91,6 +91,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
         m_contextModel = new UseContextSelectionModel(new StringParameter(CONTEXT_SELECTED));
 
 
+
         /* Left column */
         /* Use context section */
         List list = new List(new CategoryUseContextModelBuilder());
@@ -102,6 +103,7 @@ public final class CategoryAdminPane extends BaseAdminPane {
         m_categoryTree.addChangeListener(new SelectionListener());
         m_model = m_categoryTree.getSelectionModel();
 
+
         setSelectionModel(m_model);
         setSelector(m_categoryTree);
         
@@ -111,8 +113,6 @@ public final class CategoryAdminPane extends BaseAdminPane {
         ActionGroup contextGroup = new ActionGroup();
         contextSection.setBody(contextGroup);
         contextGroup.setSubject(list);
-        
-        /* Add use context form to pane */
         ActionLink addContextAction = new ActionLink(new Label(gz("cms.ui.category.add_use_context")));
         Form addContextForm = new AddUseContextForm(m_contextModel);
         getBody().add(addContextForm);
@@ -135,10 +135,6 @@ public final class CategoryAdminPane extends BaseAdminPane {
         m_parent = new ParentRequestLocal();
         m_category = new SelectionRequestLocal();
 
-        /* Right column */
-        /* Context section aka category details */
-
-        /* Action links */
         setAdd(gz("cms.ui.category.add"),
                new CategoryAddForm(m_category, m_model));
 

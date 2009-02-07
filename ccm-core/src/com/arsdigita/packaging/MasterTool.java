@@ -28,8 +28,18 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 /**
- * Implements the ccm command line tool.
- *
+ * Main entry point: Implements the ccm command line tool.
+ * 
+ * Analyses the parameters, esp. the command part (1. parameter), and delegates 
+ * the actual work to specializied classes for each command.
+ * 
+ * The main purpose is to be called from an operation system specific script
+ * (or program) which is responsible for delivering the required parameters
+ * and additional information (e.g. the location where to install the
+ * application files via environment variable CCM_HOME). The currently
+ * provided script implementation is ccm, a shell script (sh and bat) backed
+ * by some PERL scripts, located in the tools directory of CCM trunk.
+ * 
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: MasterTool.java 1169 2006-06-14 13:08:25Z fabrice $
  */
@@ -56,9 +66,19 @@ public class MasterTool {
 
     /**
      * Entry point for the the ccm command line tool.
+     * 
+     * Available commands:
+     * - load:    loads the database schema and initial content
+     * - hostinit:populates the applications directors (jsp, classes, etc)
+     * - get:     retrieves a configuration parameter
+     * - set:     stores a configuration parameeter
+     * - upgrade: upgrades database (schema & content) and/or application files
+     * - status:  execution status of the application
+     * - which:   searches for a resource or class
+     * - unload:
      *
      * @param args the command line arguments
-     **/
+     */
 
     public static final void main(final String[] args) {
         final PrintStream out = System.out;

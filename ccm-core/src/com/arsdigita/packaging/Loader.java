@@ -34,7 +34,9 @@ import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.runtime.Startup;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.parameter.ParameterLoader;
+// ParameterLoader is deprecated
+// import com.arsdigita.util.parameter.ParameterLoader;
+import com.arsdigita.util.parameter.ParameterReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -48,6 +50,9 @@ import org.apache.log4j.Logger;
 /**
  * Loader
  *
+ * Helper class for load which actually performs the loading of
+ * the database schema and of the initial content.
+ * 
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #13 $ $Date: 2004/08/16 $
  **/
@@ -56,7 +61,10 @@ class Loader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
-    public final static String versionId = "$Id: Loader.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Loader.java 736 2005-09-01 10:46:05Z sskracic $" +
+            "by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final String INIT = "com.arsdigita.runtime.Initializer";
 
@@ -127,7 +135,10 @@ class Loader {
         }
     }
 
-    public void loadData(Session ssn, ParameterLoader loader) {
+    
+    // deprecated:
+    // public void loadData(Session ssn, ParameterLoader loader) {
+    public void loadData(Session ssn, ParameterReader prd) {
         final List inits = m_info.getProvidedInitializers();
         CompoundInitializer ini = new CompoundInitializer();
         for (Iterator it = inits.iterator(); it.hasNext(); ) {
@@ -140,7 +151,8 @@ class Loader {
         TransactionContext txn = ssn.getTransactionContext();
         txn.beginTxn();
 
-        final ScriptContext ctx = new ScriptContext(ssn, loader);
+        //  final ScriptContext ctx = new ScriptContext(ssn, loader);
+        final ScriptContext ctx = new ScriptContext(ssn, prd);
         new KernelExcursion() {
             protected void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
@@ -194,6 +206,7 @@ class Loader {
         return result;
     }
 
+    @Override
     public String toString() {
         return "<loader for " + m_key + ">";
     }

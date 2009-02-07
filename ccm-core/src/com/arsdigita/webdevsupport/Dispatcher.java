@@ -19,7 +19,7 @@
 package com.arsdigita.webdevsupport;
 
 import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Component;
@@ -90,7 +90,10 @@ public class Dispatcher extends BebopMapDispatcher {
 
     public static final String APP_NAME = "ds";
 
-    public static final String versionId = "$Id: Dispatcher.java 1460 2007-03-02 14:36:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: Dispatcher.java 1460 2007-03-02 14:36:38Z sskracic $" +
+            " by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static boolean s_showDSPages = false;
 
@@ -348,21 +351,25 @@ public class Dispatcher extends BebopMapDispatcher {
 
                                     if (duplicateQueryAndValues) {
                                         result.append(
-                                                      " duplicates #" +
-                                                      ((QueryInfo)seenQueryAndValues.get(current)).getID()
-                                                      );
+                                            " duplicates #" +
+                                            ((QueryInfo)seenQueryAndValues.get(
+                                                  current)).getID()
+                                            );
                                     }
 
                                     if (duplicateQuery) {
                                         result.append(
-                                                      " duplicates text of #" +
-                                                      ((QueryInfo)seenQuery.get(current.getQuery())).getID()
-                                                      );
+                                            " duplicates text of #" +
+                                            ((QueryInfo)seenQuery.get(
+                                                  current.getQuery())).getID()
+                                            );
                                     }
 
                                     return result.toString();
                                 }
-                                case 1: return (current.isClosed() ? current.getTotalTime() + " ms" : "unknown")
+                                case 1: return (current.isClosed() ? 
+                                                current.getTotalTime() + " ms" :
+                                                "unknown")
                                                 + "<br/> (" + current.getTime() + " ms)";
                                 case 2: return current.getConnectionID();
                                 case 3: return "<blockquote><pre>" +
@@ -399,9 +406,11 @@ public class Dispatcher extends BebopMapDispatcher {
                     params.setParameter("query_id", e.getRowKey());
 
                     if (e.getColumn().intValue() == 0) {
-                        throw new RedirectSignal(URL.getDispatcherPath() + "/ds/query-info" + params, true);
+                        throw new RedirectSignal(URL.getDispatcherPath() +
+                                                 "/ds/query-info" + params, true);
                     } else {
-                        throw new RedirectSignal(URL.getDispatcherPath() + "/ds/query-log" + params, true);
+                        throw new RedirectSignal(URL.getDispatcherPath() +
+                                                 "/ds/query-log" + params, true);
                     }
                 }
             });
@@ -467,7 +476,8 @@ public class Dispatcher extends BebopMapDispatcher {
 
 
     private Table makeRequestTable() {
-        final String[] headers = { "Time", "Duration", "Queries", "IP", "Request", "Extra" };
+        final String[] headers = { "Time", "Duration", "Queries", "IP",
+                                   "Request", "Extra" };
 
         TableModelBuilder b = new AbstractTableModelBuilder() {
                 public TableModel makeModel(Table t, PageState s) {
@@ -529,9 +539,11 @@ public class Dispatcher extends BebopMapDispatcher {
                     params.setParameter("request_id", e.getRowKey());
 
                     if (e.getColumn().intValue() == 4) {
-                            throw new RedirectSignal(URL.getDispatcherPath() + "/ds/request-info" + params, true);
+                            throw new RedirectSignal(URL.getDispatcherPath() +
+                                               "/ds/request-info" + params, true);
                     } else if (e.getColumn().intValue() == 5) {
-                        throw new RedirectSignal(URL.getDispatcherPath() + "/ds/query-log" + params, true);
+                        throw new RedirectSignal(URL.getDispatcherPath() +
+                                               "/ds/query-log" + params, true);
                     }
                 }
             });
@@ -625,7 +637,8 @@ public class Dispatcher extends BebopMapDispatcher {
                         if (numqueries != 0) {
                             long queryTime = si.queryTime(ri.getQueries());
                             long non_queryTime = time-queryTime;
-                            stages_list.add(new Label(queryTime + " ms" + leaf + " ("+numqueries+" queries)"));
+                            stages_list.add(new Label(queryTime + " ms" + leaf +
+                                                 " ("+numqueries+" queries)"));
                             stages_list.add(new Label(non_queryTime + " ms" + leaf));
                         } else {
                             stages_list.add(new Label(""));
@@ -648,8 +661,11 @@ public class Dispatcher extends BebopMapDispatcher {
                         unclosed_count++;
                     }
                 }
-                bp.add(new Label("Total Queries: " + query_count + (unclosed_count > 0 ? " (" + unclosed_count + " unclosed)" : "")));
-                bp.add(new Label("Total Time: " + total_time + " ms  (execution: " + total_execute + " ms)"));
+                bp.add(new Label("Total Queries: " + query_count + 
+                                 (unclosed_count > 0 ? " (" + unclosed_count +
+                                  " unclosed)" : "")));
+                bp.add(new Label("Total Time: " + total_time +
+                                 " ms  (execution: " + total_execute + " ms)"));
                 bp.generateXML(state, parent);
             }
         }
@@ -681,7 +697,8 @@ public class Dispatcher extends BebopMapDispatcher {
                     info_list.add(new Label("Type: " +
                                             qi.getType()));
                     info_list.add(new Label("Query: <br/><pre>" +
-                                            StringUtils.quoteHtml( qi.getQuery() ) + "</pre>", false));
+                                            StringUtils.quoteHtml(
+                                            qi.getQuery() ) + "</pre>", false));
                     info_list.add(new Label("Bindvars: " +
                                             qi.getBindvars()));
 

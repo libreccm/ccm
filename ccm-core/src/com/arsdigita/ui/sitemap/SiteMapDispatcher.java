@@ -21,7 +21,7 @@ package com.arsdigita.ui.sitemap;
 
 import com.arsdigita.ui.util.GlobalizationUtil ;
 
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.SplitPanel;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.BoxPanel;
@@ -131,11 +131,13 @@ public class SiteMapDispatcher extends BebopMapDispatcher {
      */
 
     private Page buildDeniedPage() {
-        Page p = PageFactory.buildPage("admin", new Label(new GlobalizedMessage
-                                                          ("ui.admin.dispatcher.accessDenied",
-                                                           "com.arsdigita.ui.admin.AdminResources" )));
+        Page p = PageFactory.buildPage("admin",
+                                 new Label(new GlobalizedMessage
+                                           ("ui.admin.dispatcher.accessDenied",
+                                            "com.arsdigita.ui.admin.AdminResources" )));
 
-        Label label = new Label(GlobalizationUtil.globalize("ui.sitemap.access_denied_to_sitemap"));
+        Label label = new Label(GlobalizationUtil.globalize(
+                                    "ui.sitemap.access_denied_to_sitemap"));
         label.setClassAttr("AccessDenied");
         p.add(label);
 

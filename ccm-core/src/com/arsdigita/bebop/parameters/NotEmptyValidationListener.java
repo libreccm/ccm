@@ -24,11 +24,10 @@ import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
- *     Verifies that the
- *    parameter's value is non-empty.  A value is considererd non-empty
- *    if it exists in the page state, and it contains some data besides
- *    whitespace.
- *
+ *    Verifies that the parameter's value is non-empty.
+ *    A value is considererd non-empty if it exists in the page state,
+ *    and it contains some data besides whitespace.
+ *   
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
  *    @author Stas Freidin 
@@ -37,7 +36,10 @@ import com.arsdigita.globalization.GlobalizedMessage;
  */
 public class NotEmptyValidationListener extends GlobalizedParameterListener {
 
-    public static final String versionId = "$Id: NotEmptyValidationListener.java 1502 2007-03-20 11:38:53Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+            "$Id: NotEmptyValidationListener.java 1502 2007-03-20 11:38:53Z chrisgilbert23 $" +
+            "by $Author: chrisgilbert23 $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     public NotEmptyValidationListener(String label) {
         setError(new GlobalizedMessage(label, getBundleBaseName()));

@@ -1,4 +1,9 @@
+<!-- Specification file for additional checks during the
+     installation process by the packaging tools
+     (see com/arsdigita/packaging/Check.java for details) -->
 <checklist>
+  <!-- type "schema" will be run before the schema for  
+       a package is loaded.                               -->
   <checks type="schema">
     <check class="com.arsdigita.core.LibCheck"/>
   </checks>

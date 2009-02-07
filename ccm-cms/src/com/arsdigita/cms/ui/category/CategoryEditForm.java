@@ -28,6 +28,8 @@ import com.arsdigita.dispatcher.AccessDeniedException;
 import org.apache.log4j.Logger;
 
 /**
+ * XXX
+ *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: CategoryEditForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
@@ -61,6 +63,10 @@ final class CategoryEditForm extends BaseCategoryForm {
             final PageState state = e.getPageState();
             final Category category = m_category.getCategory(state);
 
+            // Quasimodo:
+            // Modified to ensure that the value is read from Category (and not the
+            // localized version). This is necessary because we are in the admin GUI,
+            // a localized version would be confusing.
             m_name.setValue(state, category.getName(""));
             m_description.setValue(state, category.getDescription(""));
             m_url.setValue(state, category.getURL(""));

@@ -19,7 +19,7 @@
 package com.arsdigita.runtime;
 
 import com.arsdigita.persistence.Session;
-import com.arsdigita.util.parameter.ParameterLoader;
+import com.arsdigita.util.parameter.ParameterReader;
 
 /**
  * The ScriptContext class is passed into the {@link
@@ -33,23 +33,26 @@ import com.arsdigita.util.parameter.ParameterLoader;
 
 public class ScriptContext {
 
-    public final static String versionId = "$Id: ScriptContext.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: ScriptContext.java 287 2005-02-22 00:29:02Z sskracic $" + 
+            "by $Author: sskracic $, " +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private final Session m_ssn;
-    private final ParameterLoader m_params;
+    private final ParameterReader m_params;
 
     /**
      * Constructs a new ScriptContext object with the given Session
-     * and ParameterLoader.
+     * and ParameterReader.
      *
      * @param ssn The persistent session to provide to the executing
      * script.
      *
-     * @param params The parameter loader to provide to the executing
+     * @param params The parameter reader to provide to the executing
      * script.
      **/
 
-    public ScriptContext(Session ssn, ParameterLoader params) {
+    public ScriptContext(Session ssn, ParameterReader params) {
         m_ssn = ssn;
         m_params = params;
     }
@@ -65,10 +68,14 @@ public class ScriptContext {
     }
 
     /**
-     * @deprecated Use {@link com.arsdigita.util.parameter.ParameterContext#load(com.arsdigita.util.parameter.ParameterReader, com.arsdigita.util.parameter.ErrorList)} instead.
+     * The original ParameterLoader is deprecated now. As an alternative
+     * was recommended here:
+     * Use {@link com.arsdigita.util.parameter.ParameterContext#load(
+     *                   com.arsdigita.util.parameter.ParameterReader, 
+     *                   com.arsdigita.util.parameter.ErrorList      )} instead.
      **/
 
-    public ParameterLoader getParameterLoader() {
+    public ParameterReader getParams() {
         return m_params;
     }
 

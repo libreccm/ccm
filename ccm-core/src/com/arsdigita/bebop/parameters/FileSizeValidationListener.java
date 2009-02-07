@@ -18,20 +18,21 @@
  */
 package com.arsdigita.bebop.parameters;
 
-import java.awt.Image;
+// pboy: unused imports, to be deleted
+// import java.awt.Image;
 import java.io.File;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.ImageIcon;
+// import javax.swing.ImageIcon;
 
-import org.apache.bcel.generic.INSTANCEOF;
+// import org.apache.bcel.generic.INSTANCEOF;
 
-import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.event.ParameterListener;
+// import com.arsdigita.bebop.FormProcessException;
+// import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.dispatcher.MultipartHttpServletRequest;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.util.Assert;
+// import com.arsdigita.util.Assert;
 
 /**
  *  Verifies that the File is smaller than the specified size in bytes

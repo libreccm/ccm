@@ -27,6 +27,7 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.runtime.Startup;
 import com.arsdigita.sitenode.ServletErrorReport;
 import com.arsdigita.util.ResourceManager;
@@ -39,9 +40,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * <p>The base servlet for CCM servlets.  It manages database
- * transactions, prepares an execution context for the request, and
- * traps and handles requests to redirect.</p>
+ * <p>The base servlet for CCM. It manages database transactions, prepares an
+ * execution context for the request, and traps and handles requests to
+ * redirect.</p>
+ *
+ * <b>Subject zu change!</b>
+ *
+ * Note: In the future the database related tasks may be moved to a
+ *       ContextListener object (CCMAplicationContextListener).
  *
  * <p>Users of this class may implement {@link
  * #doService(HttpServletRequest,HttpServletResponse)} to service a
@@ -68,6 +74,7 @@ public abstract class BaseServlet extends HttpServlet {
     public static final String REQUEST_URL_ATTRIBUTE =
         BaseServlet.class.getName() + ".request_url";
 
+    @Override
     public void init(final ServletConfig sconfig) throws ServletException {
         if (s_log.isInfoEnabled()) {
             s_log.info("Initializing servlet " + sconfig.getServletName() +
@@ -76,7 +83,12 @@ public abstract class BaseServlet extends HttpServlet {
 
         super.init(sconfig);
 
+        // The classes  ResourceManager and CCMResourceManager handle a 
+        // very similiar scope of tasks.
+        // ToDo: integrate both into a single class, e.g. CCMResourceManager
+        // to simplify and clean-up of the code!
         ResourceManager.getInstance().setServletContext(getServletContext());
+        CCMResourceManager.setBaseDirectory(getServletContext().getRealPath("/"));
 
         Startup startup = new Startup();
         if ( !startup.hasRun() ) {
@@ -90,6 +102,7 @@ public abstract class BaseServlet extends HttpServlet {
         // Empty
     }
 
+    @Override    
     public void destroy() {
         if (s_log.isInfoEnabled()) {
             s_log.info
@@ -255,6 +268,7 @@ public abstract class BaseServlet extends HttpServlet {
      *
      * @see javax.servlet.http.HttpServlet#doGet(HttpServletRequest,HttpServletResponse)
      */
+    @Override    
     protected final void doGet(final HttpServletRequest sreq,
                                final HttpServletResponse sresp)
             throws ServletException, IOException {
@@ -272,6 +286,7 @@ public abstract class BaseServlet extends HttpServlet {
      *
      * @see javax.servlet.http.HttpServlet#doPost(HttpServletRequest,HttpServletResponse)
      */
+    @Override    
     protected final void doPost(HttpServletRequest sreq,
                                 final HttpServletResponse sresp)
             throws ServletException, IOException {

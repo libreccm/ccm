@@ -21,7 +21,7 @@ package com.arsdigita.webdevsupport.config;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.xml.Element;
-import com.arsdigita.packaging.ConfigRegistry;
+import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.xml.XML;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.StringUtils;

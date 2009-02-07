@@ -35,7 +35,8 @@ public abstract class AbstractItemResolver implements ItemResolver {
     protected static final String TEMPLATE_CONTEXT_PREFIX = "tem_";
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.cms.dispatcher.ItemResolver#getItem(com.arsdigita.cms.ContentSection, java.lang.String, java.lang.String)
+	 * @see com.arsdigita.cms.dispatcher.ItemResolver#getItem(
+     *        com.arsdigita.cms.ContentSection, java.lang.String, java.lang.String)
 	 */
 	public abstract ContentItem getItem(
 		ContentSection section,
@@ -43,12 +44,16 @@ public abstract class AbstractItemResolver implements ItemResolver {
 		String context);
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.cms.dispatcher.ItemResolver#getCurrentContext(com.arsdigita.bebop.PageState)
+	 * @see com.arsdigita.cms.dispatcher.ItemResolver#getCurrentContext(
+     *                                   com.arsdigita.bebop.PageState)
 	 */
 	public abstract String getCurrentContext(PageState state);
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(com.arsdigita.bebop.PageState, java.math.BigDecimal, java.lang.String, com.arsdigita.cms.ContentSection, java.lang.String)
+	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(
+     *                      com.arsdigita.bebop.PageState, java.math.BigDecimal,
+     *                      java.lang.String, com.arsdigita.cms.ContentSection,
+     *                      java.lang.String)
 	 */
 	public abstract String generateItemURL(
 		PageState state,
@@ -58,7 +63,12 @@ public abstract class AbstractItemResolver implements ItemResolver {
 		String context);
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(com.arsdigita.bebop.PageState, java.math.BigDecimal, java.lang.String, com.arsdigita.cms.ContentSection, java.lang.String, java.lang.String)
+	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(
+     *                                     com.arsdigita.bebop.PageState,
+     *                                     java.math.BigDecimal,
+     *                                     java.lang.String,
+     *                                     com.arsdigita.cms.ContentSection,
+     *                                     java.lang.String, java.lang.String)
 	 */
 	public abstract String generateItemURL(
 		PageState state,
@@ -69,7 +79,11 @@ public abstract class AbstractItemResolver implements ItemResolver {
 		String templateContext);
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(com.arsdigita.bebop.PageState, com.arsdigita.cms.ContentItem, com.arsdigita.cms.ContentSection, java.lang.String)
+	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(
+     *                                     com.arsdigita.bebop.PageState,
+     *                                     com.arsdigita.cms.ContentItem,
+     *                                     com.arsdigita.cms.ContentSection,
+     *                                     java.lang.String)
 	 */
 	public abstract String generateItemURL(
 		PageState state,
@@ -78,7 +92,11 @@ public abstract class AbstractItemResolver implements ItemResolver {
 		String context);
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(com.arsdigita.bebop.PageState, com.arsdigita.cms.ContentItem, com.arsdigita.cms.ContentSection, java.lang.String, java.lang.String)
+	 * @see com.arsdigita.cms.dispatcher.ItemResolver#generateItemURL(
+     *                                     com.arsdigita.bebop.PageState,
+     *                                     com.arsdigita.cms.ContentItem,
+     *                                     com.arsdigita.cms.ContentSection,
+     *                                     java.lang.String, java.lang.String)
 	 */
 	public abstract String generateItemURL(
 		PageState state,
@@ -88,9 +106,12 @@ public abstract class AbstractItemResolver implements ItemResolver {
 		String templateContext);
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.cms.dispatcher.ItemResolver#getMasterPage(com.arsdigita.cms.ContentItem, javax.servlet.http.HttpServletRequest)
+	 * @see com.arsdigita.cms.dispatcher.ItemResolver#getMasterPage(
+     *                                     com.arsdigita.cms.ContentItem,
+     *                                     javax.servlet.http.HttpServletRequest)
 	 */
-	public abstract CMSPage getMasterPage(ContentItem item, HttpServletRequest request) throws ServletException;    
+	public abstract CMSPage getMasterPage(ContentItem item, HttpServletRequest request)
+                    throws ServletException;
     
     /**
      * Finds the template context from the URL and returns it, if it is there.
@@ -115,7 +136,8 @@ public abstract class AbstractItemResolver implements ItemResolver {
                    templateContext = tokenizer.nextToken();
                }
 
-               if (templateContext != null && templateContext.startsWith(TEMPLATE_CONTEXT_PREFIX)) {
+               if (templateContext != null && templateContext.startsWith(
+                                                  TEMPLATE_CONTEXT_PREFIX)) {
                    return templateContext.substring(TEMPLATE_CONTEXT_PREFIX.length());
                } else {
                    return null;

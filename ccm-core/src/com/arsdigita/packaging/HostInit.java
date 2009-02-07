@@ -18,6 +18,7 @@
  */
 package com.arsdigita.packaging;
 
+import com.arsdigita.runtime.ConfigRegistry;
 import com.arsdigita.util.Files;
 import com.arsdigita.util.StringUtils;
 import java.io.BufferedReader;
@@ -37,7 +38,12 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
 
 /**
- * HostInit
+ * PackageTool worker class, implements the "hostinit" command.
+ * 
+ * Populates the CCM application directory in webapps.
+ * Does not create the database nor the config registry.
+ *
+ * Called by the ccm hostinit / ccm hostinit-bundle command
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #16 $ $Date: 2004/08/16 $
@@ -45,7 +51,10 @@ import org.apache.log4j.Logger;
 
 public class HostInit {
 
-    public final static String versionId = "$Id: HostInit.java 736 2005-09-01 10:46:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: HostInit.java 736 2005-09-01 10:46:05Z sskracic $" +
+            "by $Author: sskracic $, " + 
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(HostInit.class);
@@ -141,6 +150,8 @@ public class HostInit {
             err("unable to create system: " + system);
         }
 
+        // check the configuration database (registry) for packages (modules)
+        // retrieve a list of packages to deal with 
         ConfigRegistry reg = new ConfigRegistry();
         List packages = reg.getPackages();
         try {

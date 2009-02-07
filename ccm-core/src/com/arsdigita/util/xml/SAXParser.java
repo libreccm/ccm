@@ -19,10 +19,20 @@
 package com.arsdigita.util.xml;
 
 
-public class SAXParser {
+public final class SAXParser {
     public static final String RESIN =
         "com.caucho.xml.parsers.XmlSAXParserFactory";
 
     public static final String XERCES =
         "org.apache.xerces.jaxp.SAXParserFactoryImpl";
+
+    public final static String get(String key) {
+
+        // UGLY style, but sufficient for a temporay solution
+
+        // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
+        if(key.toLowerCase().equals("resin"))   return RESIN;
+        else                                    return XERCES;
+     }
+
 }

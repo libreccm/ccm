@@ -19,21 +19,21 @@
 package com.arsdigita.xml;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.util.Assert;
+// import com.arsdigita.runtime.RuntimeConfig;
+// import com.arsdigita.util.Assert;
 import com.arsdigita.util.parameter.BooleanParameter;
-import com.arsdigita.util.parameter.EnumerationParameter;
-import com.arsdigita.util.parameter.ErrorList;
-import com.arsdigita.util.parameter.IntegerParameter;
+// import com.arsdigita.util.parameter.EnumerationParameter;
+// import com.arsdigita.util.parameter.ErrorList;
+// import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ParameterError;
+//import com.arsdigita.util.parameter.ParameterError;
 
 import org.apache.log4j.Logger;
 
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+// import java.util.Map;
+// import java.util.HashMap;
+// import java.util.Set;
+// import java.util.HashSet;
 
 /**
  * Stores the configuration record for the XML functionality
