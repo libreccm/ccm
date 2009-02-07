@@ -18,7 +18,7 @@ package com.arsdigita.bookmarks;
 import com.arsdigita.bookmarks.ui.BookmarkEditPane;
 import com.arsdigita.bookmarks.ui.BookmarkBasePage;
 
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Page;
 
 import java.util.HashMap;
