@@ -24,7 +24,7 @@ import java.net.URLDecoder;
 import org.apache.log4j.Category;
 
 import com.arsdigita.bebop.ActionLink;
-import com.arsdigita.bebop.BebopMapDispatcher;
+import com.arsdigita.bebop.page.BebopMapDispatcher;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
@@ -162,7 +162,8 @@ public class DMDispatcher extends BebopMapDispatcher implements DMConstants {
                 }
                 
                 protected void buildContextBar() {
-                	FileDimensionalNavbar navbar = new FileDimensionalNavbar(new RequestLocal() {
+                	FileDimensionalNavbar navbar = new FileDimensionalNavbar(
+                                                           new RequestLocal() {
                 		protected Object initialValue(PageState state) {
                 			BigDecimal id = (BigDecimal) state.getValue(fileIDParam);
                 			return new Document(id);
@@ -269,7 +270,8 @@ public class DMDispatcher extends BebopMapDispatcher implements DMConstants {
                 BigDecimal id = new BigDecimal(str);
                 s_log.debug("requesting file for id: "+str);
 		Document doc = new Document(id);
-                resp.setHeader("Content-Disposition", "attachment; filename=" + URLDecoder.decode(doc.getName()));
+                resp.setHeader("Content-Disposition", "attachment; filename=" +
+                               URLDecoder.decode(doc.getName()));
                 doc.assertPrivilege(PrivilegeDescriptor.READ);
 
 		// if the user has requested an earlier revision, get
