@@ -18,22 +18,27 @@
 
 package com.arsdigita.london.util;
 
-import com.arsdigita.runtime.Startup;
+// unused imports
+// import com.arsdigita.runtime.Startup;
 
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.CommandLine;
+//import org.apache.commons.cli.Options;
+// import org.apache.commons.cli.HelpFormatter;
+// import org.apache.commons.cli.OptionBuilder;
+// import org.apache.commons.cli.GnuParser;
+// import org.apache.commons.cli.ParseException;
+// import org.apache.commons.cli.CommandLine;
 
-import java.io.OutputStream;
-import java.io.PrintWriter;
+// import java.io.OutputStream;
+// import java.io.PrintWriter;
 
 /**
  * 
- * @deprecated - use {@link com.arsdigita.packaging.Program} 
- * 
+ * @deprecated - use {@link com.arsdigita.packaging.Program}
+ * pboy (Jan 2009):
+ * This replacement might be a bad idea. Program is used by a) the packaging
+ * programs during installation, configuration and updates and b) by all
+ * modules which provide a cli interface for bulk tasks (e.g. the import
+ * program). The latter may not be considered to a typical packaging task.
  */
 public abstract class Program extends com.arsdigita.packaging.Program {
     

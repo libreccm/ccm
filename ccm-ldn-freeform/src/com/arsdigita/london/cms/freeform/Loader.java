@@ -40,12 +40,12 @@ import org.apache.log4j.Logger;
  * Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 753 2005-09-02 13:22:34Z sskracic $
+ * @version $Id: Loader.java 1763 2009-01-22 20:01:31Z pboy $
  */
 public class Loader extends PackageLoader {
     public final static String versionId =
-        "$Id: Loader.java 753 2005-09-02 13:22:34Z sskracic $" +
-        "$Author: sskracic $" +
+        "$Id: Loader.java 1763 2009-01-22 20:01:31Z pboy $" +
+        "$Author: pboy $" +
         "$DateTime: 2003/11/08 01:27:15 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
