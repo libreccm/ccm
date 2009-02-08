@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
-  <ctd:content-type label="File Storage Item" description="A File Storage item type" objectType="com.arsdigita.cms.contenttypes.FileStorageItem" classname="com.arsdigita.cms.contenttypes.FileStorageItem">
+  <ctd:content-type label="File Storage Item" 
+              description="A File Storage item type" 
+               objectType="com.arsdigita.cms.contenttypes.FileStorageItem" 
+                classname="com.arsdigita.cms.contenttypes.FileStorageItem">
+                    
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
-      <ctd:authoring-step label="Edit Basic Properties" labelKey="cms.contenttypes.shared.basic_properties.title" labelBundle="com.arsdigita.cms.ui.CMSResources" descriptionKey="cms.contenttypes.shared.basic_properties.description" descriptionBundle="com.arsdigita.cms.ui.CMSResources" component="com.arsdigita.cms.contenttypes.ui.authoring.FileStorageItemPropertiesStep" ordering="1"/>
-      <ctd:authoring-step labelKey="file_storage_item.authoring.file_attachment.title" labelBundle="com.arsdigita.cms.contenttypes.FileStorageItemResources" descriptionKey="file_storage_item.authoring.file_attachment.description" descriptionBundle="com.arsdigita.cms.contenttypes.FileStorageItemResources" description="Upload a file" component="com.arsdigita.cms.contenttypes.ui.authoring.FileStorageItemFileEdit" ordering="2"/>
+        
+      <ctd:authoring-step 
+                     label="Edit Basic Properties" 
+                  labelKey="cms.contenttypes.shared.basic_properties.title" 
+               labelBundle="com.arsdigita.cms.ui.CMSResources" 
+            descriptionKey="cms.contenttypes.shared.basic_properties.description" 
+         descriptionBundle="com.arsdigita.cms.ui.CMSResources" 
+                 component="com.arsdigita.cms.contenttypes.ui.authoring.FileStorageItemPropertiesStep" 
+                  ordering="1"/>
+                  
+      <ctd:authoring-step 
+                  labelKey="file_storage_item.authoring.file_attachment.title" 
+               labelBundle="com.arsdigita.cms.contenttypes.FileStorageItemResources" 
+            descriptionKey="file_storage_item.authoring.file_attachment.description" 
+         descriptionBundle="com.arsdigita.cms.contenttypes.FileStorageItemResources" 
+               description="Upload a file" 
+                 component="com.arsdigita.cms.contenttypes.ui.authoring.FileStorageItemFileEdit" 
+                  ordering="2"/>
+                  
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+      
     </ctd:authoring-kit>
   </ctd:content-type>
 </ctd:content-types>

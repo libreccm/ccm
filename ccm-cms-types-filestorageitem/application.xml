@@ -3,7 +3,7 @@
   name="ccm-cms-types-filestorageitem"
   prettyName="Red Hat CCM Content Types"
   version="6.5.0"
-  release="1"
+  release="2"
   webapp="ROOT">
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
