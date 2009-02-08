@@ -32,7 +32,7 @@ import com.arsdigita.london.theme.Theme;
 import com.arsdigita.london.theme.ThemeConstants;
 import com.arsdigita.london.theme.util.ManifestReader;
 import com.arsdigita.london.theme.util.WhiteListFilenameFilter;
-import com.arsdigita.packaging.RegistryConfig;
+import com.arsdigita.runtime.RegistryConfig;
 import com.arsdigita.util.Files;
 import com.arsdigita.util.IO;
 import com.arsdigita.util.UncheckedWrapperException;
