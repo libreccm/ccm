@@ -1,0 +1,37 @@
+# -*- text -*-
+# This file locates stylesheets, if you are using the
+# "PatternStylesheetResolver". Please read the Javadoc for that file for
+# the full story.
+
+# Output type is for things such as text/javascript
+http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::-::outputtype::-::locale::.xsl
+http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::-::outputtype::.xsl
+
+# Grabs custom item xsl for CMS
+http://::host::/__ccm__/servlet/content-item/index.xsl?oid=::item_template_oid::&delegated=::item_delegated_url::
+
+# added by Quasimodo
+# Theme with single entry point (e.g Mandalay)
+http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/start.xsl
+
+# Theme, with optional locale & prefix
+http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::-::prefix::-::locale::.xsl
+http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::-::prefix::.xsl
+
+# Theme, with optional locale
+http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::-::locale::.xsl
+http://::host::/resource/ccm-ldn-theme/__ccm__/::themedir::/::theme::/::application::-::url::.xsl
+
+# APLAWS default, with locale and prefix
+# XXX change ROOT -> ccm-ldn-aplaws
+http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::-::locale::.xsl
+http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::prefix::.xsl
+
+# APLAWS default, with locale
+# XXX change ROOT -> ccm-ldn-aplaws
+http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::-::locale::.xsl
+http://::host::/resource/ROOT/__ccm__/themes/aplaws/::application::-::url::.xsl
+
+# Global default, from application's own web app
+http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::.xsl

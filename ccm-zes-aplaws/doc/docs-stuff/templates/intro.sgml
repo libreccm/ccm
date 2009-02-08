@@ -1,0 +1,132 @@
+  <!-- $Id: intro.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+  
+  <preface id="ch-intro">
+    <title>Introduction</title>
+
+    <indexterm>
+      <primary>introduction</primary>
+    </indexterm>
+    
+    <para>
+      Welcome to the <citetitle>Manual Entity Goes Here</citetitle>.
+    </para>
+
+    <para>
+      The <citetitle>Manual Entity Goes Here</citetitle> contains information ...
+    </para>
+
+    <para>
+      This guide assumes ...
+      Briefly describe other manuals...
+    </para>
+
+    <para>
+      HTML and PDF versions of the Official &RHL; manuals are available on the
+      Documentation CD and online at <ulink
+      url="http://www.redhat.com/docs/">http://www.redhat.com/docs/</ulink>.
+    </para>
+
+    <note>
+      <title>Note</title> 
+
+      <para>Although this manual reflects the most current information possible,
+      you should read the <citetitle>&RHL; Release Notes</citetitle> for
+      information that may not have been available prior to our documentation
+      being finalized. They can be found on the &RHL; CD #1 and online
+      at:</para>
+      
+      <screen>
+	<ulink url="http://www.redhat.com/docs/manuals/linux">http://www.redhat.com/docs/manuals/linux</ulink>
+      </screen>
+      
+    </note>
+
+    <sect1 id="s1-intro-changes">
+      <title>Changes to This Manual</title>
+
+      <para>
+	This manual has been expanded to include new features in &RHL; &RHLVER;
+	as well as topics requested by our readers. Changes to this
+	manual include:
+      </para>
+      <variablelist>
+	<varlistentry>
+	  <term><citetitle>Chapter Title</citetitle></term>
+	  <listitem>
+	    <para>This new chapter discusses the <application>foo</application>
+	      application, which allows users to ...</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><citetitle>Section Title</citetitle></term>
+	  <listitem>
+	    <para>The <citetitle>Chapter Title</citetitle>
+	      chapter has been expanded to include a <citetitle>Section
+		Title</citetitle> section, which covers ...</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term>foo topic</term>
+	  <listitem>
+	    <para>The foo topic has been expanded to include bar.</para>
+	  </listitem>
+	</varlistentry>
+	<varlistentry>
+	  <term><citetitle>Chapter Title</citetitle></term>
+	  <listitem>
+	    <para>The <citetitle>Chapter Title</citetitle> has been moved to the
+	      <citetitle>Manual Name</citetitle>.</para>
+	  </listitem>
+	</varlistentry>
+      </variablelist>
+
+    </sect1>
+
+    &CONVENTIONS;
+
+    <sect1 id="s1-intro-more-to-come">
+      <title>More to Come</title>
+
+      <para>
+        The <citetitle>Manual Entity Goes Here</citetitle> is part of &RHI;'s growing
+        commitment to provide useful and timely support to &RHL;
+        users. Something about expanding...
+      </para>
+
+      <sect2 id="s2-intro-feedback">
+        <title>Send in Your Feedback</title>
+
+	<para>
+	  If you spot a typo in the <citetitle>Manual Entity Goes Here</citetitle>, or if
+	  you have thought of a way to make this manual better, we would love to hear
+	  from you! Please submit a report in Bugzilla (<ulink
+	  url="http://www.redhat.com/bugzilla">http://www.redhat.com/bugzilla</ulink>)
+	  against the component BUGZILLA COMPONENT NAME.
+	</para>
+
+	<para>
+	  Be sure to mention the manual's identifier:
+	</para>
+<screen>
+&BOOKID;
+</screen>
+	<para>
+	  If you mention this manual's identifier, we will know exactly which
+	  version of the guide you have.
+	</para>
+	
+      <para>
+	  If you have a suggestion for improving the documentation, try to be as
+	  specific as possible. If you have found an error, please include the
+	  section number and some of the surrounding text so we can find it
+	  easily.
+	</para>
+
+      </sect2>
+    </sect1>
+
+    &SUPPORT;
+
+  </preface>
+
+
