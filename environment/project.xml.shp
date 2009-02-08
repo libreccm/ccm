@@ -11,8 +11,12 @@
                   webxml="web.xml-aplaws" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:///usr/share/ccm-devel/xsd/project.xsd">
 
-  <ccm:build>
+<ccm:databases>
+	<ccm:database name="postgres"/>
+</ccm:databases>
 
+
+<ccm:build>
 <!--   Main apps   -->
 <!--   - - - - -   -->
         <ccm:application name="ccm-core"/>
@@ -93,6 +97,7 @@
      contain java code to be compiled!
         <ccm:application name="tools"/>           -->
 
-
   </ccm:build>
+
+
 </ccm:project>
