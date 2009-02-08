@@ -47,27 +47,32 @@ import com.arsdigita.xml.Element;
  */
 public class DHTMLEditor extends TextArea {
 
-    public static final String versionId = "$Id: DHTMLEditor.java 1543 2007-03-27 09:11:02Z chrisgilbert23 $";
-    /**
-     * Constant for specifying <tt>OFF</tt> value for the
-     * <tt>WRAP</tt> attribute of this image input.  See <a
-     * href="http://developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
-     * for a description of what this attribute does.  */
+    public static final String versionId = 
+        "$Id: DHTMLEditor.java 1543 2007-03-27 09:11:02Z chrisgilbert23 $";
 
+    /**
+     * Constant for specifying <tt>OFF</tt> value for the <tt>WRAP</tt> attribute
+     * of this image input.  
+     * 
+     * See <a href="http:
+     * //developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
+     * for a description of what this attribute does.  */
     public static final int OFF = 0;
 
     /**
-     * Constant for specifying <tt>HARD</tt> value for the
-     * <tt>WRAP</tt> attribute of this image input.  * See <a
-     * //href="http://developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
+     * Constant for specifying <tt>HARD</tt> value for the <tt>WRAP</tt> attribute
+     * of this image input.
+     *
+     * See <a href="http://
+     * developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
      * for a description of what this attribute does.
      */
     public static final int HARD = 1;
 
     /**
-     * Constant for specifying <tt>SOFT</tt> value for the
-     * <tt>WRAP</tt> attribute of this image input.  See <a
-     * href="http://developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
+     * Constant for specifying <tt>SOFT</tt> value for the <tt>WRAP</tt> attribute
+     * of this image input.  See <a href="http://
+     * developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
      * for a description of what this attribute does.
      */
     public static final int SOFT = 2;
@@ -76,11 +81,13 @@ public class DHTMLEditor extends TextArea {
         public static final Config STANDARD = new Config("HTMLArea.Config", null);
         
         /** Example FCKEditor configuration. */
-        public static final Config FCK_STANDARD = new Config("FCKEditor.Config.StyleDefault",
-        "/assets/fckeditor/config/fckconfigstyledefault.js");
+        public static final Config FCK_STANDARD =
+                new Config("FCKEditor.Config.StyleDefault",
+                           "/assets/fckeditor/config/fckconfigstyledefault.js");
         
-        public static final Config FCK_CMSADMIN = new Config("FCKEditor.Config.StyleCMSAdmin",
-         "/assets/fckeditor/config/fckconfigstylecmsadmin.js");
+        public static final Config FCK_CMSADMIN =
+                new Config("FCKEditor.Config.StyleCMSAdmin",
+                           "/assets/fckeditor/config/fckconfigstylecmsadmin.js");
 
         private String m_name;
         private String m_path;
@@ -149,7 +156,8 @@ public class DHTMLEditor extends TextArea {
     }
 
     public String getEditorURL() {
-        return Bebop.getConfig().getDHTMLEditorSrcFile().substring(0, Bebop.getConfig().getDHTMLEditorSrcFile().lastIndexOf("/") + 1);
+        return Bebop.getConfig().getDHTMLEditorSrcFile().substring(
+             0, Bebop.getConfig().getDHTMLEditorSrcFile().lastIndexOf("/") + 1);
     }
     
     public String getEditorSrc() {
@@ -172,7 +180,7 @@ public class DHTMLEditor extends TextArea {
         m_plugins.add(name);
     }
     /**
-     * Prevent the specified button from being displayed in the editor toolbar
+     * Prevent the specified button from being displayed in the editor toolbar.
      * @param name name of the button, as specified in the btnList of the htmlarea.js file
      * 
      */

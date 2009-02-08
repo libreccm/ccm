@@ -27,7 +27,10 @@ package com.arsdigita.bebop.util;
  * @version $Id: BebopConstants.java 1224 2006-06-18 22:28:30Z apevec $
  */
 public interface BebopConstants {
-    public static final String versionId = "$Id: BebopConstants.java 1224 2006-06-18 22:28:30Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+        "$Id: BebopConstants.java 1224 2006-06-18 22:28:30Z apevec $" +
+        " by $Author: apevec $, " +
+        "$DateTime: 2004/08/16 18:10:38 $";
 
     String BEBOP_CHECKBOXGROUP = "bebop:checkboxGroup";
     String BEBOP_CHECKBOX      = "bebop:checkbox";
@@ -41,6 +44,7 @@ public interface BebopConstants {
     String BEBOP_TEXTAREA      = "bebop:textarea";
     String BEBOP_DHTMLEDITOR   = "bebop:dhtmleditor";
     String BEBOP_FCKEDITOR     = "bebop:fckeditor";
+    String BEBOP_XINHAEDITOR   = "bebop:xinha";
     String BEBOP_FORMWIDGET    = "bebop:formWidget";
     String BEBOP_FORMERRORS    = "bebop:formErrors";
     String BEBOP_PORTAL        = "bebop:portal";
@@ -61,6 +65,5 @@ public interface BebopConstants {
     String BEBOP_SEGMENT       = "bebop:segment";
     String BEBOP_SEG_BODY      = "bebop:segmentBody";
     String BEBOP_SEG_HEADER    = "bebop:segmentHeader";
-    String BEBOP_XINHAEDITOR   = "bebop:xinha";
 
 }

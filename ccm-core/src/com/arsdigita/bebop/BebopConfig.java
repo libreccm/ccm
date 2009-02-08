@@ -76,20 +76,21 @@ public final class BebopConfig extends AbstractConfig {
              Parameter.REQUIRED,
              Boolean.FALSE);
 
-        m_dhtmlEditor = new EnumerationParameter("waf.bebop.dhtml_editor", Parameter.REQUIRED,
-                BebopConstants.BEBOP_DHTMLEDITOR);
-        m_dhtmlEditor.put("HTMLArea", BebopConstants.BEBOP_DHTMLEDITOR); // for compatibility with old XSL
+        m_dhtmlEditor = new EnumerationParameter("waf.bebop.dhtml_editor", 
+            Parameter.REQUIRED,BebopConstants.BEBOP_DHTMLEDITOR);
+        // HTMLArea for compatibility with old XSL
+        m_dhtmlEditor.put("HTMLArea", BebopConstants.BEBOP_DHTMLEDITOR); 
         m_dhtmlEditor.put("FCKeditor", BebopConstants.BEBOP_FCKEDITOR);
         m_dhtmlEditor.put("Xinha", BebopConstants.BEBOP_XINHAEDITOR);
 
         m_dhtmlEditorSrcFile = new StringParameter
-                ("waf.bebop.dhtml_editor_src", Parameter.REQUIRED,
-                 "/assets/xinha/XinhaLoader.js");
+            ("waf.bebop.dhtml_editor_src", Parameter.REQUIRED,
+             "/assets/xinha/XinhaLoader.js");
         
         m_dcpOnButtons = new BooleanParameter
-                      ("waf.bebop.dcp_on_buttons", Parameter.REQUIRED, Boolean.TRUE);
+            ("waf.bebop.dcp_on_buttons", Parameter.REQUIRED, Boolean.TRUE);
         m_dcpOnLinks = new BooleanParameter
-                      ("waf.bebop.dcp_on_links", Parameter.REQUIRED, Boolean.FALSE);
+            ("waf.bebop.dcp_on_links", Parameter.REQUIRED, Boolean.FALSE);
 
         m_showClassName = new BooleanParameter
             ("waf.bebop.show_class_name", Parameter.OPTIONAL, Boolean.FALSE);
@@ -103,7 +104,7 @@ public final class BebopConfig extends AbstractConfig {
         register(m_dcpOnButtons);
         register(m_dcpOnLinks);
         register(m_enableTreeSelect);
-	register(m_showClassName);
+	    register(m_showClassName);
 
         loadInfo();
     }
