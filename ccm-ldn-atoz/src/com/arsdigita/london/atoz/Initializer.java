@@ -47,10 +47,10 @@ import com.arsdigita.xml.XML;
 /**
  * Initializes the A-Z system
  * 
- * @version $Id: Initializer.java 1052 2005-12-13 22:52:55Z apevec $
+ * @version $Id: Initializer.java 1741 2008-09-01 15:38:21Z clasohm $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId = "$Id: Initializer.java 1052 2005-12-13 22:52:55Z apevec $";
+    public final static String versionId = "$Id: Initializer.java 1741 2008-09-01 15:38:21Z clasohm $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
