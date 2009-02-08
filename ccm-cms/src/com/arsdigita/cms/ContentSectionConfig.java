@@ -57,6 +57,7 @@ import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.URLParameter;
 import com.arsdigita.util.StringUtils;
+
 /**
  * A record containing server-session scoped configuration properties.
  *
@@ -151,8 +152,8 @@ public final class ContentSectionConfig extends AbstractConfig {
              PublishToFileListener.class);
 
         m_linksOnlyInSameSubsite = new BooleanParameter
-        ("com.arsdigita.cms.browse_links_in_same_subsite_only",
-                Parameter.REQUIRED, new Boolean(false));
+            ("com.arsdigita.cms.browse_links_in_same_subsite_only",
+             Parameter.REQUIRED, new Boolean(false));
 
         m_defaultTaskAlerts = new StringArrayParameter
         	("com.arsdigita.cms.default_task_alerts",
@@ -224,10 +225,10 @@ public final class ContentSectionConfig extends AbstractConfig {
              Parameter.OPTIONAL,
              null);
 
-	m_dhtmlEditorHiddenButtons = new StringArrayParameter
-	    ("com.arsdigita.cms.dhtml_editor_hidden_buttons",
-	     Parameter.OPTIONAL,
-	     null);
+	    m_dhtmlEditorHiddenButtons = new StringArrayParameter
+	        ("com.arsdigita.cms.dhtml_editor_hidden_buttons",
+	         Parameter.OPTIONAL,
+	         null);
 					
         m_hideTemplatesTab = new BooleanParameter
             ("com.arsdigita.cms.hide_templates_tab",
@@ -242,12 +243,12 @@ public final class ContentSectionConfig extends AbstractConfig {
              Parameter.REQUIRED, new Boolean(false));
 
         m_hideLaunchDate = new BooleanParameter
-        ("com.arsdigita.cms.hide_launch_date",
-         Parameter.REQUIRED, new Boolean(true));
+            ("com.arsdigita.cms.hide_launch_date",
+             Parameter.REQUIRED, new Boolean(true));
 
         m_requireLaunchDate = new BooleanParameter
-        ("com.arsdigita.cms.require_launch_date",
-         Parameter.REQUIRED, new Boolean(false));
+            ("com.arsdigita.cms.require_launch_date",
+             Parameter.REQUIRED, new Boolean(false));
 
         m_hideUDCTUI = new BooleanParameter
             ("com.arsdigita.cms.hide_udct_ui",
@@ -274,7 +275,8 @@ public final class ContentSectionConfig extends AbstractConfig {
              Parameter.OPTIONAL, new Boolean(false));
 
         m_hideAdditionalResourceFields = new BooleanParameter
-            ("com.arsdigita.cms.contentassets.ui.RelatedLinkPropertyForm.hideAdditionalResourceFields",
+            ("com.arsdigita.cms.contentassets.ui."+
+             "RelatedLinkPropertyForm.hideAdditionalResourceFields",
              Parameter.REQUIRED, new Boolean(false));
 
         m_disableFileAssetExtraction = new BooleanParameter
@@ -302,13 +304,16 @@ public final class ContentSectionConfig extends AbstractConfig {
              Parameter.REQUIRED,
              ItemCategoryExtension.class,
              ItemCategoryExtension.class);
- 	m_hideResetLifecycleLink = new BooleanParameter
+
+ 	    m_hideResetLifecycleLink = new BooleanParameter
             ("com.arsdigita.cms.hide_reset_lifecycle_link",
              Parameter.OPTIONAL, new Boolean(true));
-	m_keywordWeight = new IntegerParameter
+
+	    m_keywordWeight = new IntegerParameter
             ("com.arsdigita.cms.search.intermedia.keyword_weight",
              Parameter.OPTIONAL,
              new Integer(1));
+
         m_titleWeight = new IntegerParameter
             ("com.arsdigita.cms.search.intermedia.title_weight",
              Parameter.OPTIONAL,
@@ -318,13 +323,13 @@ public final class ContentSectionConfig extends AbstractConfig {
              Parameter.OPTIONAL,
              Boolean.FALSE);
 
-        /**
-         * each entry in the list is a : separated pair. The first string
+    /**
+     * each entry in the list is a : separated pair. The first string
 	 * is the className for the type (refer to classname column in contenttypes table
 	 * eg com.arsdigita.cms.contenttypes.MultiPartArticle
 	 * Second string is the name of the bebop step component
 	 * eg com.arsdigita.cms.contenttypes.ui.ImageStep 
-         */
+     */
 	m_skipAssetSteps = new StringArrayParameter
 	    ("com.arsdigita.cms.skip_asset_steps",
 	    Parameter.OPTIONAL,
@@ -341,6 +346,7 @@ public final class ContentSectionConfig extends AbstractConfig {
 	m_deleteExpiryNotificationsWhenSent = new BooleanParameter
 	("com.arsdigita.cms.delete_expiry_notification_when_sent",
 			Parameter.OPTIONAL, new Boolean(false));
+
 	m_deleteWorkflowNotificationsWhenSent = new BooleanParameter
 	("com.arsdigita.cms.delete_workflow_notification_when_sent",
 			Parameter.OPTIONAL, new Boolean(false));
@@ -395,8 +401,8 @@ public final class ContentSectionConfig extends AbstractConfig {
         register(m_unpublishedNotFound);
         register(m_linksOnlyInSameSubsite);
         register(m_categoryAuthoringExtension);
-	register(m_hideResetLifecycleLink);
-	register(m_keywordWeight);
+	    register(m_hideResetLifecycleLink);
+	    register(m_keywordWeight);
         register(m_titleWeight);
         register(m_scoreTitleAndKeywords);
         register(m_skipAssetSteps);
@@ -696,57 +702,57 @@ public final class ContentSectionConfig extends AbstractConfig {
      	}
      	return skipSteps;
      		
-     		
      }
+
     /**
-         * May be used by any content type creation form to decide whether to validate 
-         * description field
-         *
-         */
-        public boolean mandatoryDescriptions() {
-             return ((Boolean)get(m_mandatoryDescriptions)).booleanValue();
-        }
+     * May be used by any content type creation form to decide whether to validate 
+     * description field
+     *
+     */
+    public boolean mandatoryDescriptions() {
+        return ((Boolean)get(m_mandatoryDescriptions)).booleanValue();
+    }
        
-        /**
-         * Used to decide whether lifecycles (and all asociated phases)
-         * should be deleted from the system when complete
-         * 
-         * (Deleting lifecycle means that you lose a bit of historical information
-         * eg when was this item unpublished)
-         */
-        public boolean deleteFinishedLifecycles() {
-             return ((Boolean)get(m_deleteLifecycleWhenComplete)).booleanValue();
-        }
+    /**
+     * Used to decide whether lifecycles (and all asociated phases)
+     * should be deleted from the system when complete
+     * 
+     * (Deleting lifecycle means that you lose a bit of historical information
+     * eg when was this item unpublished)
+     */
+    public boolean deleteFinishedLifecycles() {
+        return ((Boolean)get(m_deleteLifecycleWhenComplete)).booleanValue();
+    }
         
-        /**
-         * Used to decide whether to delete old notification records
-         * for expiry notifications.
-         * 
-         * If true, notifications and messages are deleted if the 
-         * notification is successfully sent. Any send failures are 
-         * retained
-         * 
-         */
-        public boolean deleteExpiryNotifications() {
-             return ((Boolean)get(m_deleteExpiryNotificationsWhenSent)).booleanValue();
-        }
+    /**
+     * Used to decide whether to delete old notification records
+     * for expiry notifications.
+     * 
+     * If true, notifications and messages are deleted if the 
+     * notification is successfully sent. Any send failures are 
+     * retained
+     * 
+     */
+    public boolean deleteExpiryNotifications() {
+        return ((Boolean)get(m_deleteExpiryNotificationsWhenSent)).booleanValue();
+    }
         
-        /**
-         * Used to decide whether to delete old notification records
-         * for workflow notifications.
-         * 
-         * If true, notifications and messages are deleted if the 
-         * notification is successfully sent. Any send failures are 
-         * retained
-         * 
-         */
-        public boolean deleteWorkflowNotifications() {
-             return ((Boolean)get(m_deleteWorkflowNotificationsWhenSent)).booleanValue();
-        }
+    /**
+     * Used to decide whether to delete old notification records
+     * for workflow notifications.
+     * 
+     * If true, notifications and messages are deleted if the 
+     * notification is successfully sent. Any send failures are 
+     * retained
+     * 
+     */
+    public boolean deleteWorkflowNotifications() {
+        return ((Boolean)get(m_deleteWorkflowNotificationsWhenSent)).booleanValue();
+    }
         
 	public String getCategoryTreeOrder () {
-        	return (String)get(m_categoryTreeOrdering);
-        }  
+    	return (String)get(m_categoryTreeOrdering);
+    }  
 
 	public boolean getHasContactsAuthoringStep() {
 		return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
