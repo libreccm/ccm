@@ -18,7 +18,6 @@
 
 package com.arsdigita.london.navigation;
 
-import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
@@ -104,7 +103,37 @@ public class Navigation extends Application {
         return "ccm-ldn-navigation";
     }
     */
-    
+
+    /**
+     * Returns the path to the location of the applications servlet/JSP.
+     *
+     * The methods overwrites the super class to provide a application specific
+     * location for servlets/JSP.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. You will find the following
+     * kind of code:
+     * <servlet>
+     *   <servlet-name>navigation-files</servlet-name>
+     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     *   <init-param>
+     *     <param-name>template-path</param-name>
+     *     <param-value>/templates/ccm-ldn-navigation</param-value>
+     *   </init-param>
+     *   <init-param>
+     *     <param-name>file-resolver</param-name>
+     *     <param-value>com.arsdigita.london.navigation.NavigationFileResolver
+     *     </param-value>
+     *   </init-param>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>navigation-files</servlet-name>
+     *   <url-pattern>/ccm-ldn-navigation/files/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return path to the applications servlet/JSP
+     */
     public String getServletPath() {
         //return "/files";
         return "/ccm-ldn-navigation/files";
