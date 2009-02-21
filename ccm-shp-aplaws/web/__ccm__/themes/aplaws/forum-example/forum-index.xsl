@@ -1,12 +1,12 @@
 <xsl:stylesheet xmlns:forum="http://www.arsdigita.com/forum/1.0"
-				xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-				xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-				xmlns:nav="http://ccm.redhat.com/london/navigation" 
-				xmlns:search="http://rhea.redhat.com/search/1.0" 
-				xmlns:portal="http://www.uk.arsdigita.com/portal/1.0" 				
-				xmlns:cms="http://www.arsdigita.com/cms/1.0" 	
-				exclude-result-prefixes="xsl bebop nav search portal forum cms" 
-				version="1.0">
+		xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+		  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    	  	  xmlns:nav="http://ccm.redhat.com/london/navigation" 
+	       xmlns:search="http://rhea.redhat.com/search/1.0" 
+	       xmlns:portal="http://www.uk.arsdigita.com/portal/1.0" 				
+		  xmlns:cms="http://www.arsdigita.com/cms/1.0" 	
+    exclude-result-prefixes="xsl bebop nav search portal forum cms" 
+	  	    version="1.0">
 
         <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
 	<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
@@ -159,12 +159,12 @@
 				 	<xsl:if test="$preview = 'false'">
 						<div class="actions">
 							<xsl:if test="@approveURL">
-								<a href="{@approveURL}">
-									<img alt="Approve" border="0" src="{$theme-prefix}/images/forum/reward-16x16.gif" />
-								</a>
-								<!--<xsl:text>&#160;</xsl:text>
+							  <a href="{@approveURL}">
+								<img alt="Approve" border="0" src="{$theme-prefix}/images/forum/reward-16x16.gif" />
+							  </a>
+						 	  <!--<xsl:text>&#160;</xsl:text>
 								<a href="{@approveURL}">Approve</a>-->
-								<xsl:text>&#160;</xsl:text>
+							  <xsl:text>&#160;</xsl:text>
 	
 							</xsl:if>
 							<xsl:if test="@rejectURL">

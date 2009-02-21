@@ -12,13 +12,39 @@
   <xsl:param name="theme-prefix" />
 
   <xsl:template match="cms:emptyPage[@title='childCategories']">
+    <xsl:choose>
+      <xsl:when test="cms:category/@order='sortKey'">
     <xsl:apply-templates select="cms:category/cms:category" mode="cms:javascriptCat">
       <xsl:with-param name="expand" select="'none'"/>
+          <xsl:sort data-type="number" select="@sortKey"/>
     </xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="cms:category/cms:category" mode="cms:javascriptCat">
+          <xsl:sort data-type="text" select="@name"/>
+          <xsl:with-param name="expand" select="'none'"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
+    
   </xsl:template>
 
   <xsl:template match="cms:emptyPage[@title='autoCategories']">
-    <xsl:apply-templates select="cms:category" mode="cms:javascriptCat" />
+    <xsl:choose>
+      <xsl:when test="cms:category/@order='sortKey'">
+        <xsl:apply-templates select="cms:category" mode="cms:javascriptCat" >
+        <xsl:with-param name="expand" select="'none'"/>
+          <xsl:sort data-type="number" select="@sortKey"/>
+        </xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="cms:category" mode="cms:javascriptCat" >
+          <xsl:sort data-type="text" select="@name"/>
+          <xsl:with-param name="expand" select="'none'"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
+    
   </xsl:template>
 
 </xsl:stylesheet>

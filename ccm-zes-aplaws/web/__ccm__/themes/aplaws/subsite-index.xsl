@@ -4,7 +4,13 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
   version="1.0">
 
+  <!-- path if installed in its own web context ccm-ldn-subsite
   <xsl:import href="../../../../ccm-ldn-subsite/__ccm__/apps/subsite/xsl/index.xsl"/>
+  -->
+  <!-- path to xsl if installed in the main (common) web context   
+  -->
+  <xsl:import href="../../../__ccm__/apps/subsite/xsl/index.xsl"/>
+
   <xsl:import href="lib/page.xsl"/>
 
   <xsl:param name="theme-prefix"/>

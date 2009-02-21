@@ -4,7 +4,13 @@
   xmlns:aplaws="http://www.arsdigita.com/aplaws/1.0"
   version="1.0">
 
+  <!-- IMPORT DEFINITIONS ccm-forum installed as separate web application ccm-forum
   <xsl:import href="../../../../ccm-forum/__ccm__/apps/forum/xsl/index.xsl"/>
+  -->
+  <!-- IMPORT DEFINITIONS ccm-ldn-shortcuts installed into the main CCM webapp
+  -->
+  <xsl:import href="../../../__ccm__/apps/forum/xsl/index.xsl"/>
+
   <xsl:import href="lib/page.xsl"/>
 
   <xsl:param name="theme-prefix" />

@@ -8,42 +8,40 @@
 				exclude-result-prefixes="xsl bebop nav search portal forum cms" 
 				version="1.0">
 
-        <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
-	<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
-	<xsl:import href="../../../../ROOT/packages/ui/xsl/ui.xsl" />
-	<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
-	-->
- 	<!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
-	-->
-	<xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
-	<xsl:import href="../../../packages/ui/xsl/ui.xsl" />
-	<xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
+  <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
+  <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
+  <xsl:import href="../../../../ROOT/packages/ui/xsl/ui.xsl" />
+  <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
+  -->
+  <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
+  -->
+  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
+  <xsl:import href="../../../packages/ui/xsl/ui.xsl" />
+  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
 
-	<xsl:import href="lib/header.xsl" />
-	<xsl:import href="lib/lib.xsl" />
-	<xsl:import href="lib/leftNav.xsl" />
-        <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
-	<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
-	-->
- 	<!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
-	-->
-	<xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
+  <xsl:import href="lib/header.xsl" />
+  <xsl:import href="lib/lib.xsl" />
+  <xsl:import href="lib/leftNav.xsl" />
+  <xsl:import href="forum-categories.xsl"/>
+  <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
+  <xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
+  -->
+  <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
+  -->
+  <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
   
+  <xsl:param name="theme-prefix" />
+  <xsl:param name="context-prefix" />
+  <xsl:param name="dispatcher-prefix" />
 
-
-
-	<xsl:param name="theme-prefix" />
-	<xsl:param name="context-prefix" />
-	<xsl:param name="dispatcher-prefix" />
-
-	<xsl:output method="html" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" 
-		    doctype-system="http://www.w3.org/TR/html4/loose.dtd" indent="yes" />
+  <xsl:output method="html" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" doctype-system="http://www.w3.org/TR/html4/loose.dtd" indent="yes" />
 
 <!-- ********************* MAIN PAGE LAYOUT TEMPLATES ********************* -->
 
 	<xsl:template match="bebop:page[@class='simplePage']">
 		<html lang="en">
 			<head>
+				<xsl:call-template name="metaData" />
 				<title>
 					Forum
 				</title>
@@ -54,6 +52,11 @@
 			</head>
 
 			<body>
+			<!--	<xsl:if test="/bebop:page/forum:forum/bebop:form[@name='newPostForm']">
+					<xsl:attribute name="onload">
+						<xsl:text>document.newPostForm.subject.focus();</xsl:text>
+					</xsl:attribute>
+				</xsl:if> -->
  				<a name="Ptop"></a>
 				<a class="navHide" href="#startcontent" title="Go directly to main content" accesskey="S">Skip over navigation</a>
 				<span class="hide">|</span>

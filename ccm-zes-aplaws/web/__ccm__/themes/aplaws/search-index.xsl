@@ -11,25 +11,31 @@
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search"
 	version="1.0">
 
-<xsl:import href="lib/header.xsl"/>
-<xsl:import href="lib/lib.xsl"/>
-  
-<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-<xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/index.xsl"/>
+  <xsl:import href="lib/header.xsl"/>
+  <xsl:import href="lib/lib.xsl"/>
 
-<xsl:param name="context-prefix"/>
-<xsl:param name="dispatcher-prefix" />
-<xsl:param name="theme-prefix" />
+  <!-- path if installed in its own web context ccm-ldn-shortcuts 
+    <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
+    <xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/index.xsl"/>
+  -->
+  <!-- path to xsl if installed in the main (common) web context   
+  -->
+  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../../__ccm__/apps/content-section/xsl/index.xsl"/>
 
-<xsl:output 
+  <xsl:param name="context-prefix"/>
+  <xsl:param name="dispatcher-prefix" />
+  <xsl:param name="theme-prefix" />
+
+  <xsl:output 
 	method="html"
 	doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN"
 	doctype-system="http://www.w3.org/TR/html4/loose.dtd"
 	indent="yes" 
-/>
+  />
 	
-<xsl:template match="bebop:page[@application='search']">
-<html lang="en">
+  <xsl:template match="bebop:page[@application='search']">
+    <html lang="en">
 	<head>
 		<title>APLAWS+: Search</title>
 		<xsl:call-template name="cssStyles"/>
@@ -43,29 +49,24 @@
 		<xsl:call-template name="searchBreadcrumb"/>
 		<xsl:call-template name="searchBody"/>
 	</body>
-</html>
-</xsl:template>
+    </html>
+  </xsl:template>
 
 
-<xsl:template name="searchBody">
-    
-
-
-<table id="mainLayout" width="100%" border="0" cellspacing="0" cellpadding="0" summary="This table is used for a three-column page layout">
-<tr>
-    <td width="20%" rowspan="2" align="left" valign="top" id="LHS">
-
+  <xsl:template name="searchBody">
+    <table id="mainLayout" width="100%" border="0" cellspacing="0" cellpadding="0" summary="This table is used for a three-column page layout">
+      <tr>
+        <td width="20%" rowspan="2" align="left" valign="top" id="LHS">
 		<!--LHS NAVIGATION -->
 		<xsl:call-template name="searchNav" />
-    </td>
-    <td colspan="2" align="left" valign="top" id="title">
-
-<!--MAIN CONTENT -->
+        </td>
+        <td colspan="2" align="left" valign="top" id="title">
+        	<!--MAIN CONTENT -->
 		<h1>Search</h1>
-		</td>
-  </tr>
-  <tr>
-    <td width="60%" align="left" valign="top" id="mainContent">
+	</td>
+      </tr>
+      <tr>
+        <td width="60%" align="left" valign="top" id="mainContent">
 		<span class="hide">|</span>
 	
 		<!--CONTENT -->
@@ -77,122 +78,101 @@
 		<div id="related">
 		<h2>Search Options</h2>
 		<xsl:choose>
-		<xsl:when test="@id='search'">
-		<a href="{$dispatcher-prefix}/search/advanced.jsp" title="Search with more options">Advanced search</a><span class="hide">|</span>
-		<a href="{$dispatcher-prefix}/search/remote.jsp" title="Search other borough's LAWs websites">Remote search</a><span class="hide">|</span>
-		</xsl:when>
-			<xsl:when test="@id='advanced'">
-		<a href="{$dispatcher-prefix}/search/" title="Basic search">Search</a><span class="hide">|</span>
-		<a href="{$dispatcher-prefix}/search/remote.jsp" title="Search other borough's LAWs websites">Remote search</a><span class="hide">|</span>
-		</xsl:when>
-			<xsl:when test="@id='remote'">
-		<a href="{$dispatcher-prefix}/search/" title="Basic search">Search</a><span class="hide">|</span>
-		<a href="{$dispatcher-prefix}/search/advanced.jsp" title="Search with more options">Advanced search</a><span class="hide">|</span>
-		</xsl:when>
-		<xsl:otherwise />
+		  <xsl:when test="@id='search'">
+		  <a href="{$dispatcher-prefix}/search/advanced.jsp" title="Search with more options">Advanced search</a><span class="hide">|</span>
+		  <a href="{$dispatcher-prefix}/search/remote.jsp" title="Search other borough's LAWs websites">Remote search
+		  </a><span class="hide">|</span>
+		  </xsl:when>
+		  <xsl:when test="@id='advanced'">
+		  <a href="{$dispatcher-prefix}/search/" title="Basic search">Search</a><span class="hide">|</span>
+		  <a href="{$dispatcher-prefix}/search/remote.jsp" title="Search other borough's LAWs websites">Remote search
+		  </a><span class="hide">|</span>
+		  </xsl:when>
+		  <xsl:when test="@id='remote'">
+			<a href="{$dispatcher-prefix}/search/" title="Basic search">Search</a><span class="hide">|</span>
+			<a href="{$dispatcher-prefix}/search/advanced.jsp" title="Search with more options">Advanced search
+			</a><span class="hide">|</span>
+		  </xsl:when>
+		  <xsl:otherwise />
 		</xsl:choose>
 		</div>
 
 		<xsl:call-template name="sponsoredLinks"/>
 
-    </td>
-  </tr>
-</table>
-<xsl:call-template name="footer"/>
-</xsl:template>
+    	</td>
+      </tr>
+    </table>
+
+    <xsl:call-template name="footer"/>
+  </xsl:template>
 
 
+  <xsl:template name="searchBreadcrumb">
+    <!--BREADCRUMB -->
+
+    <div id="bread">
+    <p>
+    <b><a href="{$dispatcher-prefix}/portal/" title="home">home</a></b>
+    <xsl:text disable-output-escaping="yes">&amp;</xsl:text>gt;
+    <span class="breadHi">
+    <xsl:choose>
+	<xsl:when test="@id='search'">Search</xsl:when>
+      	<xsl:when test="@id='advanced'">Advanced Search</xsl:when>
+      	<xsl:when test="@id='remote'">Remote Search</xsl:when>
+	<xsl:otherwise />
+    </xsl:choose>
+    </span>
+    </p>
+    </div>
+  </xsl:template>
 
 
-
-
-
-
-
-<xsl:template name="searchBreadcrumb">
-
-<!--BREADCRUMB -->
-
-<div id="bread">
-<p>
-<b><a href="{$dispatcher-prefix}/portal/" title="home">home</a></b>
-<xsl:text disable-output-escaping="yes">&amp;</xsl:text>gt;
-<span class="breadHi">
-<xsl:choose>
-			<xsl:when test="@id='search'">Search</xsl:when>
-      		<xsl:when test="@id='advanced'">Advanced Search</xsl:when>
-      		<xsl:when test="@id='remote'">Remote Search</xsl:when>
-			<xsl:otherwise />
-   </xsl:choose>
-   </span>
-</p>
-</div>
-</xsl:template>
-
-
-
-
-
-
-
-
-
-
-
-<xsl:template name="searchNav">
-<div id="nav">
-<div class="navUp">
-<a href="{$dispatcher-prefix}/portal/">
-<xsl:attribute name="title">up to homepage</xsl:attribute>
-<xsl:text disable-output-escaping="yes">&amp;</xsl:text>#094;
-<xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;home</a>
-</div>
-<xsl:choose>
+  <xsl:template name="searchNav">
+    <div id="nav">
+    <div class="navUp">
+    <a href="{$dispatcher-prefix}/portal/">
+    <xsl:attribute name="title">up to homepage</xsl:attribute>
+    <xsl:text disable-output-escaping="yes">&amp;</xsl:text>#094;
+    <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;home</a>
+    </div>
+    <xsl:choose>
 	<xsl:when test="@id='search'">
 	<div class="navHere"><p>Search</p></div>		
 	</xsl:when>
-    <xsl:when test="@id='advanced'">
+    	<xsl:when test="@id='advanced'">
 	<div class="navHere"><p>Advanced search</p></div>		
 	</xsl:when>
-    <xsl:when test="@id='remote'">
+    	<xsl:when test="@id='remote'">
 	<div class="navHere"><p>Remote search</p></div>		
 	</xsl:when>
 	<xsl:otherwise />
-</xsl:choose>
-<a href="/searchhelp" class="navChild" title="Hints and tips" >Hints and Tips</a><span class="hide">|</span>
-</div>
-</xsl:template>
+    </xsl:choose>
+    <a href="/searchhelp" class="navChild" title="Hints and tips" >Hints and Tips</a><span class="hide">|</span>
+    </div>
+  </xsl:template>
 
-
-
-
-
-<xsl:template name="searchMain">
+  <xsl:template name="searchMain">
     <xsl:choose>
-			<xsl:when test="@id='search'">
-        		<xsl:call-template name="basicSearch" />
-      		</xsl:when>
-      		<xsl:when test="@id='advanced'">
-        		<xsl:call-template name="advancedSearch" />
-      		</xsl:when>
-      		<xsl:when test="@id='remote'">
-        		<xsl:call-template name="remoteSearch" />
-      		</xsl:when>
-			<xsl:when test="@id='reindex'">
-					<xsl:apply-templates/>
-			</xsl:when>
-			<xsl:otherwise />
-   </xsl:choose>
-</xsl:template>
+	<xsl:when test="@id='search'">
+        	<xsl:call-template name="basicSearch" />
+      	</xsl:when>
+      	<xsl:when test="@id='advanced'">
+        	<xsl:call-template name="advancedSearch" />
+      	</xsl:when>
+      	<xsl:when test="@id='remote'">
+        	<xsl:call-template name="remoteSearch" />
+      	</xsl:when>
+	<xsl:when test="@id='reindex'">
+		<xsl:apply-templates/>
+	</xsl:when>
+	<xsl:otherwise />
+     </xsl:choose>
+  </xsl:template>
 
 
-
-
-
-
-<xsl:template name="basicSearch">
-<xsl:for-each select="bebop:form[@name='search']">
-<div id="searchArea">
+  <xsl:template name="basicSearch">
+    <xsl:for-each select="bebop:form[@name='search']">
+      <div id="searchArea">
 		<div id="resultsInfo">
 		<xsl:choose>
 		<xsl:when test="//search:results"><xsl:apply-templates select="//search:paginator"  mode="results-summary"/></xsl:when>
@@ -212,20 +192,15 @@
 			</div>
 		 <xsl:apply-templates select="bebop:pageState" />
 		</form>
-</div>
-</xsl:for-each>
-<xsl:call-template name="searchResults" />
-</xsl:template>
+      </div>
+    </xsl:for-each>
+    <xsl:call-template name="searchResults" />
+  </xsl:template>
 
 
-
-
-
-
-
-<xsl:template name="advancedSearch">
-<xsl:for-each select="bebop:form[@name='search']">
-<div id="searchArea">
+  <xsl:template name="advancedSearch">
+    <xsl:for-each select="bebop:form[@name='search']">
+        <div id="searchArea">
 		<div id="resultsInfo">
 		<xsl:choose>
 		<xsl:when test="//search:results"><xsl:apply-templates select="//search:paginator"  mode="results-summary"/></xsl:when>
@@ -267,21 +242,15 @@
 		</div>
 		<xsl:apply-templates select="bebop:pageState" />
 		</form>
-</div>
-</xsl:for-each>
-<xsl:call-template name="searchResults" />
-</xsl:template>
+        </div>
+    </xsl:for-each>
+    <xsl:call-template name="searchResults" />
+  </xsl:template>
 
 
-
-
-
-
-
-
-<xsl:template name="remoteSearch">
-<xsl:for-each select="bebop:form[@name='search']">
-<div id="searchArea">
+  <xsl:template name="remoteSearch">
+    <xsl:for-each select="bebop:form[@name='search']">
+      <div id="searchArea">
 		<div id="resultsInfo">
 		<xsl:choose>
 		<xsl:when test="//search:results"><xsl:apply-templates select="//search:paginator"  mode="results-summary"/></xsl:when>
@@ -326,14 +295,10 @@
 		</div>
 		<xsl:apply-templates select="bebop:pageState" />
 		</form>
-</div>
-</xsl:for-each>
-<xsl:call-template name="searchResults" />
-</xsl:template>
-
-
-
-
+        </div>
+    </xsl:for-each>
+  <xsl:call-template name="searchResults" />
+  </xsl:template>
 
 
 <xsl:template name="sponsoredLinks">

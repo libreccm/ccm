@@ -4,6 +4,9 @@
 
 <web-app>
 
+  <display-name>CCM</display-name>
+  <description>Content and Collaboration Management</description>
+
   <filter>
     <filter-name>shortcuts</filter-name>
     <filter-class>com.arsdigita.london.shortcuts.ShortcutFilter</filter-class>
@@ -17,6 +20,9 @@
   <filter-mapping>
     <filter-name>subsite</filter-name>
     <url-pattern>/ccm/*</url-pattern>
+<!-- please check: with or w/o ccm?
+    <url-pattern>/*</url-pattern>
+-->
   </filter-mapping>
 
   <filter-mapping>
@@ -24,13 +30,21 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-<!-- The Context Listener is required and used for initializing the runtime
-     environment before any other task is performed or any servlet initialized. -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     Context Listener 
+     required and used to initialize the runtime environment before any other 
+     task is performed or any servlet initialized. 
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <listener>
     <listener-class>com.arsdigita.web.CCMApplicationContextListener</listener-class>
   </listener>
 
-<servlet>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     BASE SERVLET DECLARATIONS SECTION
+     basically requirred by ccm-core
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <servlet>
     <servlet-name>reg</servlet-name>
     <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
     <init-param>
@@ -86,16 +100,14 @@
     <servlet-class>com.arsdigita.web.ResourceServlet</servlet-class>
   </servlet>
 
-  <!-- ADDITIONAL SERVLET DECLARATIONS -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     ADDITIONAL SERVLET DECLARATIONS SECTION 
+     basically requirred by ccm-cms
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet>
     <servlet-name>content-section</servlet-name>
     <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
-  </servlet>
-
-  <servlet>
-    <servlet-name>content-item-xsl</servlet-name>
-    <servlet-class>com.arsdigita.cms.dispatcher.ContentItemXSLServlet</servlet-class>
   </servlet>
 
   <servlet>
@@ -104,18 +116,15 @@
   </servlet>
 
   <servlet>
+    <servlet-name>content-item-xsl</servlet-name>
+    <servlet-class>com.arsdigita.cms.dispatcher.ContentItemXSLServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>template-xsl</servlet-name>
     <servlet-class>com.arsdigita.cms.dispatcher.TemplateXSLServlet</servlet-class>
   </servlet>
 
-
- <servlet>
-   <servlet-name>AxisServlet</servlet-name>
-   <display-name>Apache-Axis Servlet</display-name>
-   <servlet-class>
-    org.apache.axis.transport.http.AxisServlet
-   </servlet-class>
- </servlet>
 
  <servlet>
    <servlet-name>TextOnlyServlet</servlet-name>
@@ -141,17 +150,27 @@
    </init-param>
  </servlet>
 
- <servlet>
-   <servlet-name>ThemePreviewServlet</servlet-name>
-   <display-name>Servlet to allow admins to preview look/feel</display-name>
-   <servlet-class>
-    com.arsdigita.london.theme.dispatcher.InternalThemePrefixerServlet
-   </servlet-class>
-   <init-param>
-     <param-name>prefix</param-name>
-     <param-value>/theme</param-value>
-   </init-param>
- </servlet>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     MODULES SERVLET DECLARATIONS SECTION
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <!-- module ccm-ldn-atoz  -  servlet definitions BEGIN   -->
+  <servlet>
+    <servlet-name>atoz-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-atoz</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-atoz  -  servlet definitions END  -->
+
+  <!-- module ccm-forum  -  servlet declarations BEGIN  -->  
+  <servlet>
+    <servlet-name>forum-main</servlet-name>
+    <servlet-class>com.arsdigita.forum.ForumServlet</servlet-class>
+  </servlet>
+  <!-- module ccm-forum  -  servlet declarations END    -->  
 
 <!-- XXX hack -->
 
@@ -181,6 +200,124 @@
     <servlet-name>portlet-type-xsl</servlet-name>
     <servlet-class>com.arsdigita.dispatcher.PortletTypeXSLServlet</servlet-class>
   </servlet>
+ 
+  <!-- module ccm-ldn-rss  -  servlet declaration BEGIN   -->
+  <servlet>
+    <servlet-name>rss-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-rss</param-value>
+    </init-param>
+    <init-param>
+      <param-name>file-resolver</param-name>
+      <param-value>com.arsdigita.london.rss.RSSFileResolver</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-rss  -  servlet declaration END   -->
+
+  <!-- module ccm-ldn-search  -  servlet declarations BEGIN   -->
+  <servlet>
+    <servlet-name>worker</servlet-name>
+    <servlet-class>com.arsdigita.london.search.SearchWorkerServlet</servlet-class>
+    <load-on-startup>4</load-on-startup>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>search-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-search</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+    <servlet-name>AxisServlet</servlet-name>
+    <display-name>Apache-Axis Servlet</display-name>
+    <servlet-class>
+     org.apache.axis.transport.http.AxisServlet
+    </servlet-class>
+  </servlet>
+  <!-- module ccm-ldn-search  -  servlet declarations END  -->
+
+  <!-- module ccm-ldn-shortcuts  -  servlet definitions   -->
+  <servlet>
+    <servlet-name>shortcuts-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-shortcuts</param-value>
+    </init-param>
+  </servlet>
+
+  <!-- module ccm-ldn-subsite  -  servlet declarations BEGIN  -->
+  <servlet>
+    <servlet-name>subsite-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-subsite</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-subsite  -  servlet declarations END  -->
+
+  <!-- module ccm-ldn-terms  -  servlet declarations BEGIN   -->
+  <servlet>
+    <servlet-name>terms-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-terms</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-terms  -  servlet declarations END   -->
+
+  <!-- module ccm-ldn-themes  -  servlet declarations BEGIN   -->
+  <servlet>
+    <servlet-name>theme-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-theme</param-value>
+    </init-param>
+  </servlet>
+
+  <servlet>
+     <servlet-name>ThemeDownload</servlet-name>
+     <servlet-class>com.arsdigita.london.theme.dispatcher.ThemeDownloadServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>ThemePreviewServlet</servlet-name>
+     <display-name>Servlet to allow admins to preview look/feel</display-name>
+    <servlet-class>
+     com.arsdigita.london.theme.dispatcher.InternalThemePrefixerServlet
+    </servlet-class>
+    <init-param>
+      <param-name>prefix</param-name>
+      <param-value>/theme</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-themes  -  servlet declarations END   -->
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     MODULES SERVLET MAPPINGS SECTION
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>atoz-files</servlet-name>
+    <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-atoz  -  servlet mappings END  -->
+
+  <!-- module ccm-forum  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>forum-main</servlet-name>
+    <url-pattern>/forum-main/main/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-forum  -  servlet mappings END    -->
 
   <servlet-mapping>
     <servlet-name>portlet-type-xsl</servlet-name>
@@ -197,7 +334,71 @@
     <url-pattern>/ccm-ldn-navigation/files/*</url-pattern>
   </servlet-mapping>
 
-  <!-- /ADDITIONAL SERVLET DECLARATIONS -->
+  <!-- module ccm-ldn-rss  -  servlet mappings   -->
+  <servlet-mapping>
+    <servlet-name>rss-files</servlet-name>
+    <url-pattern>/ccm-ldn-rss/files/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- module ccm-ldn-search  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>search-files</servlet-name>
+    <url-pattern>/ccm-ldn-search/files/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>AxisServlet</servlet-name>
+    <url-pattern>/services/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-search  -  servlet mappings END  -->
+
+  <!-- module ccm-ldn-shortcuts  -  servlet mappings   -->
+  <servlet-mapping>
+    <servlet-name>shortcuts-files</servlet-name>
+    <url-pattern>/ccm-ldn-shortcuts/files/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- module ccm-ldn-subsite  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>subsite-files</servlet-name>
+    <url-pattern>/ccm-ldn-subsite/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-subsite  -  servlet mappings END  -->
+
+  <!-- module ccm-ldn-terms  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>terms-files</servlet-name>
+    <url-pattern>/ccm-ldn-terms/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-terms  -  servlet mappings END  -->
+
+  <!-- module ccm-ldn-theme  -  servlet mappings BEGIN   -->
+  <servlet-mapping>
+    <servlet-name>theme-files</servlet-name>
+    <url-pattern>/theme-files/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ThemeDownload</servlet-name>
+    <url-pattern>/theme-files/download/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ThemePreviewServlet</servlet-name>
+    <url-pattern>/theme/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-themes  -  servlet mappings END   -->
+
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     BASE SERVLET MAPPINGS SECTION
+     basically requirred by ccm-core
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <servlet-mapping>
+    <servlet-name>reg</servlet-name>
+    <url-pattern>/__ccm__/null/reg/*</url-pattern>
+  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>ccm-dispatcher</servlet-name>
@@ -234,7 +435,10 @@
     <url-pattern>/resource/*</url-pattern>
   </servlet-mapping>
 
-  <!-- ADDITIONAL SERVLET MAPPINGS -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     ADDITIONAL SERVLET MAPPINGS SECTION
+     basically requirred by ccm-cms
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <servlet-mapping>
     <servlet-name>content-section</servlet-name>
@@ -257,11 +461,6 @@
   </servlet-mapping>
 
  <servlet-mapping>
-     <servlet-name>AxisServlet</servlet-name>
-     <url-pattern>/services/*</url-pattern>
- </servlet-mapping>
-
- <servlet-mapping>
      <servlet-name>TextOnlyServlet</servlet-name>
      <url-pattern>/text/*</url-pattern>
  </servlet-mapping>
@@ -271,12 +470,10 @@
      <url-pattern>/print/*</url-pattern>
  </servlet-mapping>
 
- <servlet-mapping>
-     <servlet-name>ThemePreviewServlet</servlet-name>
-     <url-pattern>/theme/*</url-pattern>
- </servlet-mapping>
 
-  <!-- /ADDITIONAL SERVLET MAPPINGS -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     ERROR PAGES
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <error-page>
     <exception-type>com.arsdigita.dispatcher.AccessDeniedException</exception-type>
@@ -303,13 +500,20 @@
     <location>/error/db-not-available.jsp</location>
   </error-page>
 
-
   <error-page>
     <exception-type>java.lang.Exception</exception-type>
     <location>/error/general.jsp</location>
   </error-page>
 
-  <!-- TAGLIBS -->
+  <error-page>
+    <exception-type>java.lang.Error</exception-type>
+    <location>/error/general.jsp</location>
+  </error-page>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+     TAG LIBS
+     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
   <taglib>
     <taglib-uri>/WEB-INF/bebop-show.tld</taglib-uri>
     <taglib-location>/WEB-INF/bebop-show.tld</taglib-location>
