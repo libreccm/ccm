@@ -57,7 +57,9 @@ public class PDFConfig extends AbstractConfig {
         m_xslFile = new StringParameter(
             "com.arsdigita.formbuilder.pdf.xsl_file",
             Parameter.REQUIRED,
-            "webapps/ccm-formbuilder-pdf/xsl/main.xsl");
+            "/packages/ccm-formbuilder-pdf/xsl/main.xsl");
+            // if installed into its own webapp context, originally:
+            // "webapps/ccm-formbuilder-pdf/xsl/main.xsl");
 
         register(m_xslFile);
 

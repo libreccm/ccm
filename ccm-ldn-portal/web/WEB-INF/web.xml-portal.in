@@ -3,6 +3,8 @@
         "http://java.sun.com/j2ee/dtds/web-app_2_3.dtd">
 
 <web-app>
+
+  <!-- module ccm-ldn-portal  -  servlet definitions BEGIN  -->
   <servlet>
     <servlet-name>files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
@@ -11,10 +13,13 @@
       <param-value>/templates/ccm-ldn-portal</param-value>
     </init-param>
   </servlet>
+  <!-- module ccm-ldn-portal  -  servlet definitions END  -->
 
+  <!-- module ccm-ldn-portal  -  servlet mappings BEGIN  -->
   <servlet-mapping>
     <servlet-name>files</servlet-name>
     <url-pattern>/files/*</url-pattern>
   </servlet-mapping>
+  <!-- module ccm-ldn-portal  -  servlet mappings END  -->
 
 </web-app>

@@ -109,10 +109,10 @@ public class Application extends Resource {
     public static Application createRootApplication(final ApplicationType type,
 						    final String title,
 						    final boolean createContainerGroup) {
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             Assert.exists(type, ApplicationType.class);
             Assert.exists(title, String.class);
-            Assert.truth(type.m_legacyFree);
+            Assert.isTrue(type.m_legacyFree);
         }
 
 	return Application.make(type, null, title, null, createContainerGroup);
@@ -131,11 +131,11 @@ public class Application extends Resource {
 						final String title,
 						final Application parent,
 						final boolean createContainerGroup) {
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             Assert.exists(type, ApplicationType.class);
             Assert.exists(fragment, String.class);
             Assert.exists(title, String.class);
-            Assert.truth(!fragment.equals(""),
+            Assert.isTrue(!fragment.equals(""),
                          "The URL fragment must not be the empty string");
         }
 
@@ -178,8 +178,8 @@ public class Application extends Resource {
 	if (createContainerGroup) {
 	    app.createGroup();
 	}
-        if (Assert.isAssertEnabled() && fragment != null) {
-            Assert.truth(fragment.indexOf('/') == -1,
+        if (Assert.isEnabled() && fragment != null) {
+            Assert.isTrue(fragment.indexOf('/') == -1,
                          "The URL fragment must not contain " +
                          "slashes; I got '" + fragment + "'");
         }
@@ -499,9 +499,9 @@ public class Application extends Resource {
      * Sets the dispatcher path of this application.  The
      */
     public final void setPath(String path) {
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             Assert.exists(path, String.class);
-            Assert.truth
+            Assert.isTrue
                 (path.equals("") || (path.startsWith(SLASH)
                                      && !path.endsWith(SLASH)),
                  "The path must either be the empty string (for the " +
@@ -586,6 +586,35 @@ public class Application extends Resource {
         return "";
     }
 
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * Application implementations may overwrite this method to provide an
+     * application specific location, especially if an application (module) is
+     * to be installed along with others in one context.
+     *
+     * If you install the module into its own context you may use a standard
+     * location. In most cases though all modules (applications) of an
+     * webapplication should be installed into one context.
+     *
+     * Frequently it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>applicationName-files</servlet-name>
+     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     *   <init-param>
+     *     <param-name>template-path</param-name>
+     *     <param-value>/templates/ccm-applicationName</param-value>
+     *   </init-param>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>applicationName-files</servlet-name>
+     *   <url-pattern>/ccm-applicationName/files/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return path name to the applications servlet/JSP
+     */
     public String getServletPath() {
         return URL.SERVLET_DIR + "/legacy-adapter";
     }
@@ -652,7 +681,7 @@ public class Application extends Resource {
 	if (parentGroup != null) {
 	    parentGroup.addSubgroup(group);
 	    s_log.debug("setting new group as subgroup of " + parentGroup.getName());
-	}
+        }
 
     }
 
@@ -664,7 +693,7 @@ public class Application extends Resource {
 	Group containerGroup = getGroup();
 	if (containerGroup != null) {
 	    containerGroup.setName(getTitle() + " Groups");
-	}
+        }
     }
     /**
      * Group associated with this application type. Usually

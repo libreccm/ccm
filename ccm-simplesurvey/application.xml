@@ -3,7 +3,8 @@
   name="ccm-simplesurvey"
   prettyName="Core"
   version="6.5.0"
-  release="1">
+  release="1"
+  webapp="ROOT">
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.2.0" relation="ge"/>

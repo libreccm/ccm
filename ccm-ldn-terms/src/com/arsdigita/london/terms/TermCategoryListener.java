@@ -47,7 +47,7 @@ public class TermCategoryListener implements CategoryListener {
     public void onUnmap(Category cat, ACSObject obj) {}
 
     /**
-     *  Create new term by hooking into setDefaultParent() category
+     * Create new term by hooking into setDefaultParent() category
      * event.  First, check whether the category is a model for an
      * existing term.  If yes, do nothing.  Otherwise, find the
      * terms domain in which the parent cat has been defined.

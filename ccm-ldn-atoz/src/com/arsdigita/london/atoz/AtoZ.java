@@ -34,6 +34,10 @@ import com.arsdigita.util.Assert;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Base class of the AtoZ application (module)
+ * 
+ */
 public class AtoZ extends Application {
     
     public static final String BASE_DATA_OBJECT_TYPE 
@@ -59,14 +63,6 @@ public class AtoZ extends Application {
 
     public AtoZ(OID oid) {
         super(oid);
-    }
-    
-    public String getContextPath() {
-        return "/ccm-ldn-atoz";
-    }
-    
-    public String getServletPath() {
-        return "/files";
     }
 
     public void addProvider(AtoZProvider provider) {
@@ -101,9 +97,50 @@ public class AtoZ extends Application {
 
 
     public static Element newElement(String name) {
-        Assert.truth(name.indexOf(":") == -1, "name does not contain :");
+        Assert.isTrue(name.indexOf(":") == -1, "name does not contain :");
         return new Element("atoz:" + name,
                            "http://xmlns.redhat.com/atoz/1.0");
     }
+
+//  /*
+//   * Application specific method only required if installed in its own
+//   * web application context
+//   */
+//  public String getContextPath() {
+//      return "/ccm-ldn-atoz";
+//  }
+
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>atoz-files</servlet-name>
+     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     *   <init-param>
+     *     <param-name>template-path</param-name>
+     *     <param-value>/templates/ccm-ldn-atoz</param-value>
+     *   </init-param>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>atoz-files</servlet-name>
+     *   <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return path name to the applications servlet/JSP
+     */
+    public String getServletPath() {
+        // return "/files";
+        return "/ccm-ldn-atoz/files";
+    }
+
 }
 

@@ -5,8 +5,15 @@
   xmlns:theme="http://ccm.redhat.com/london/theme/1.0"
   version="1.0">
 
+  <!-- IMPORT DEFINITIONS ccm-ldn-theme installed as separate web application
   <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
+  -->
+  <!-- IMPORT DEFINITIONS ccm-ldn-theme installed into the main CCM webapp
+  -->
+  <xsl:import href="../../../../packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../../../packages/ui/xsl/ui.xsl"/>
+
   <xsl:import href="layout-panel.xsl"/>
   <xsl:import href="section.xsl"/>
   <xsl:import href="action-group.xsl"/>

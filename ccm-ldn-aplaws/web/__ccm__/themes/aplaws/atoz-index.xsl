@@ -11,7 +11,13 @@
   exclude-result-prefixes="xsl bebop aplaws ui cms nav search atoz"
   version="1.0">
 
-<xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/index.xsl"/>
+  <!-- IMPORT DEFINITIONS ccm-ldn-atoz installed as separate web application
+  <xsl:import href="../../../../ROOT/__ccm__/apps/content-section/xsl/index.xsl"/>
+  -->
+
+  <!-- IMPORT DEFINITIONS ccm-ldn-atoz  installed into the main CCM webapp
+  -->
+  <xsl:import href="../../../__ccm__/apps/content-section/xsl/index.xsl"/>
 	
 <xsl:import href="lib/header.xsl"/>
 <xsl:import href="lib/lib.xsl"/>

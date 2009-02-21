@@ -1,0 +1,20 @@
+
+  <!-- module ccm-ldn-terms  -  servlet declarations BEGIN  -->
+  <servlet>
+    <servlet-name>terms-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-terms</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-terms  -  servlet declarations END  -->
+
+  <!-- module ccm-ldn-terms  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>terms-files</servlet-name>
+    <url-pattern>/ccm-ldn-terms/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-terms  -  servlet mappings END  -->
+
+

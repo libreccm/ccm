@@ -19,12 +19,14 @@
 package com.arsdigita.forum;
 
 import java.util.Iterator;
-import java.util.Map;
+// unused import
+//import java.util.Map;
 
 import com.arsdigita.forum.ui.Constants;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.page.BebopApplicationServlet;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
+// unused import
+// import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
@@ -68,13 +70,14 @@ public class ForumServlet extends BebopApplicationServlet
         Iterator it = ForumPageFactory.getPages();
         while (it.hasNext()) {
         	Object key = (Object)it.next();
-        	if (!key.equals(ForumPageFactory.FORUM_PAGE) && !key.equals(ForumPageFactory.THREAD_PAGE)) {
+        	if (!key.equals(ForumPageFactory.FORUM_PAGE) &&
+                !key.equals(ForumPageFactory.THREAD_PAGE)) {
         		put("/" + key, ForumPageFactory.getPage((String)key));
 				if (Forum.getConfig().disableClientPageCaching()) {
 					disableClientCaching("/" + key);
         	
-    }
-}
+                }
+            }
         }
         
     }

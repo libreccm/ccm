@@ -6,8 +6,15 @@
   xmlns:subsite="http://ccm.redhat.com/london/subsite/1.0"
   version="1.0">
   
+  <!-- IMPORT DEFINITIONS ccm-ldn-subsite installed as separate web application
   <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
+  -->
+
+  <!-- IMPORT DEFINITIONS ccm-ldn-shortcuts installed into the main CCM webapp
+  -->
+  <xsl:import href="../../../../packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../../../packages/ui/xsl/ui.xsl"/>
   
   <xsl:param name="dispatcher-prefix"/>
 

@@ -1,0 +1,17 @@
+
+  <!-- module ccm-simplesurvey  -  servlet definitions   -->
+  <servlet>
+    <servlet-name>simplesurvey-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-simplesurvey</param-value>
+    </init-param>
+  </servlet>
+
+  <!-- module ccm-simplesurvey  -  servlet mappings   -->
+  <servlet-mapping>
+    <servlet-name>simplesurvey-files</servlet-name>
+    <url-pattern>/ccm-simplesurvey/files/*</url-pattern>
+  </servlet-mapping>
+

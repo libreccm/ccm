@@ -33,8 +33,8 @@ import java.util.Date;
 
 
 /**
- *  this represents a Theme within the system.  Specifically, it represents
- *  a grouping of files that can be used to style a given subsite.
+ * Represents a Theme within the system.  Specifically, it represents
+ * a grouping of files that can be used to style a given subsite.
  *
  *  @author Randy Graebner %lt;randyg@alum.mit.edu&gt;
  */

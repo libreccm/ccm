@@ -25,6 +25,10 @@ import com.arsdigita.web.Application;
 import com.arsdigita.xml.Element;
 
 
+/**
+ * Base class of the ccm-ldn-terms application (module)
+ * 
+ */
 public class Terms extends Application {
     
     public static final String XML_NS = "http://xmlns.redhat.com/london/terms/1.0";
@@ -55,12 +59,45 @@ public class Terms extends Application {
         super(oid);
     }
 
-    public String getContextPath() {
-        return "/ccm-ldn-terms";
-    }
+//  /*
+//   * Application specific method only required if installed in its own
+//   * web application context
+//   */
+//  public String getContextPath() {
+//      return "/ccm-ldn-terms";
+//  }
     
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>terms-files</servlet-name>
+     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     *   <init-param>
+     *     <param-name>template-path</param-name>
+     *     <param-value>/templates/ccm-ldn-terms</param-value>
+     *   </init-param>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>terms-files</servlet-name>
+     *   <url-pattern>/ccm-ldn-terms/files/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return path name to the applications servlet/JSP
+     */
     public String getServletPath() {
-        return "/files";
+        // sufficient if running in its own web application context ccm-ldn-terms
+        // return "/files";
+        return "/ccm-ldn-terms/files";
     }
 
 }

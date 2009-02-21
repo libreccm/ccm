@@ -5,10 +5,20 @@
   xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
   version="1.0">
 
+  <!-- IMPORT DEFINITIONS ccm-ldn-search installed as separate web application
   <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
   <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
   <xsl:import href="../../../../../ROOT/packages/search/xsl/search.xsl"/>
   <xsl:import href="../../../../../ROOT/__ccm__/static/cms/admin/search/search.xsl"/>
+  -->
+
+  <!-- IMPORT DEFINITIONS ccm-ldn-shortcuts installed into the main CCM webapp
+  -->
+  <xsl:import href="../../../../packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../../../packages/ui/xsl/ui.xsl"/>
+  <xsl:import href="../../../../packages/search/xsl/search.xsl"/>
+  <xsl:import href="../../../../__ccm__/static/cms/admin/search/search.xsl"/>
+
 
   <xsl:output method="html"/>
 

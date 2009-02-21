@@ -17,7 +17,8 @@
  */
 package com.arsdigita.london.terms;
 
-import com.arsdigita.london.terms.Terms;
+// unused import
+// import com.arsdigita.london.terms.Terms;
 
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;

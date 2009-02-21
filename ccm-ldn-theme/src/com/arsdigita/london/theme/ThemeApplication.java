@@ -25,6 +25,10 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Base class of the ccm-ldn-theme application (module)
+ * 
+ */
 public class ThemeApplication extends Application {
 
     public static final String DEFAULT_THEME = "defaultTheme";
@@ -54,14 +58,6 @@ public class ThemeApplication extends Application {
         super(oid);
     }    
 
-    public String getContextPath() {
-        return "/ccm-ldn-theme";
-    }
-
-    public String getServletPath() {
-        return "/theme-files";
-    }
-
     public Theme getDefaultTheme() {
         DataObject dObj = (DataObject) get( DEFAULT_THEME );
         if( null == dObj ) return null;
@@ -71,5 +67,46 @@ public class ThemeApplication extends Application {
 
     public void setDefaultTheme( Theme theme ) {
         set( DEFAULT_THEME, theme );
+    }
+
+//  /*
+//   * Application specific method only required if installed in its own
+//   * web application context
+//   */
+//  public String getContextPath() {
+//      return "/ccm-ldn-theme";
+//  }
+
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>theme-files</servlet-name>
+     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     *   <init-param>
+     *     <param-name>template-path</param-name>
+     *     <param-value>/templates/ccm-ldn-theme</param-value>
+     *   </init-param>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>theme-files</servlet-name>
+     *   <url-pattern>/ccm-ldn-theme/files/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return path name to the applications servlet/JSP
+     */
+    public String getServletPath() {
+        // sufficient if executed in its own web application context (ccm-ldn-theme)
+        return "/theme-files";
+        // return "/ccm-ldn-theme/files";
     }
 }

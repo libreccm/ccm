@@ -1,0 +1,16 @@
+<!-- module ccm-ldn-shortcuts  -  servlet definitions   -->
+ <servlet>
+    <servlet-name>shortcuts-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-shortcuts</param-value>
+    </init-param>
+  </servlet>
+
+<!-- module ccm-ldn-shortcuts  -  servlet mappings   -->
+  <servlet-mapping>
+    <servlet-name>shortcuts-files</servlet-name>
+    <url-pattern>/ccm-ldn-shortcuts/files/*</url-pattern>
+  </servlet-mapping>
+

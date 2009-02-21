@@ -1,0 +1,15 @@
+
+  <!-- module ccm-forum  -  servlet declarations BEGIN  -->  
+  <servlet>
+    <servlet-name>forum-main</servlet-name>
+    <servlet-class>com.arsdigita.forum.ForumServlet</servlet-class>
+  </servlet>
+  <!-- module ccm-forum  -  servlet declarations END    -->  
+
+  <!-- module ccm-forum  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>forum-main</servlet-name>
+    <url-pattern>/forum-main/main/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-forum  -  servlet mappings END    -->
+

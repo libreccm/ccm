@@ -6,9 +6,10 @@ package com.arsdigita.london.terms;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentPage;
+// unused import
+// import com.arsdigita.cms.ContentBundle;
+// import com.arsdigita.cms.ContentItem;
+// import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
@@ -35,7 +36,9 @@ public class Util {
 				applicationDomain =
 					Domain.retrieve((String) domains.get("domainKey"));
 			} else {
-				throw new UncheckedWrapperException("No Default Navigation domain found for application " + app == null ? null : app.getTitle());
+				throw new UncheckedWrapperException(
+                      "No Default Navigation domain found for application " +
+                      app == null ? null : app.getTitle());
 			}
 			domains.close();
 		

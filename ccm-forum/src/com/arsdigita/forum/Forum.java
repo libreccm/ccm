@@ -758,14 +758,6 @@ public class Forum extends Application {
 		return (Group) DomainObjectFactory.newInstance(dObj);
 	}
 
-    public String getContextPath() {
-        return "/ccm-forum";
-    }
-
-    public String getServletPath() {
-        return "/main";
-    }
-
     public void setExpireAfter(int value) {
         set(EXPIRE_AFTER, new BigDecimal(value));
         // remove any previous lifecycle definition
@@ -826,8 +818,8 @@ public class Forum extends Application {
     }
 
 	/**
-	 * method required for upgrade - normally groups are set during forum creation and so 
-	 * there is no need to invoke a setter
+	 * method required for upgrade - normally groups are set during   
+	 * forum creation and so there is no need to invoke a setter
 	 * @author cgyg9330
 	 *
 	 */
@@ -837,8 +829,8 @@ public class Forum extends Application {
 			new PermissionDescriptor(PrivilegeDescriptor.ADMIN, this, group));
 	}
 	/**
-	 * method required for upgrade - normally groups are set during forum creation and so 
-	 * there is no need to invoke a setter
+	 * method required for upgrade - normally groups are set during 
+	 * forum creation and so there is no need to invoke a setter
 	 * @author cgyg9330
 	 *
 	 */
@@ -851,8 +843,8 @@ public class Forum extends Application {
 				group));
 	}
 	/**
-	 * method required for upgrade - normally groups are set during forum creation and so 
-	 * there is no need to invoke a setter
+	 * method required for upgrade - normally groups are set during forum 
+	 * creation and so there is no need to invoke a setter
 	 * @author cgyg9330
 	 *
 	 */
@@ -866,7 +858,7 @@ public class Forum extends Application {
 	}
 	/**
 	 * method required for upgrade - normally groups are set during forum creation and so 
-	 * there is no need to invoke a setter
+	 * creation and so there is no need to invoke a setter
 	 * @author cgyg9330
 	 *
 	 */
@@ -939,5 +931,42 @@ public class Forum extends Application {
 						
 		}
 
-}
+    }
+
+//  /*
+//   * Application specific method only required if installed in its own
+//   * web application context
+//   */
+//  public String getContextPath() {
+//      return "/ccm-forum";
+//  }
+
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * The method overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. Example:
+     * <servlet>
+     *   <servlet-name>forum-main</servlet-name>
+     *   <servlet-class>com.arsdigita.forum.ForumServlet</servlet-class>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>forum-main</servlet-name>
+     *   <url-pattern>/ccm-forum/main/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return path name to the applications servlet/JSP
+     */
+    public String getServletPath() {
+        // sufficient it installed into its own web appl. context (ccm-forum)
+        // return "/main";
+        return "/forum-main/main";
+    }
 }

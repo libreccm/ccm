@@ -23,6 +23,10 @@ import com.arsdigita.persistence.OID;
 
 import com.arsdigita.web.Application;
 
+/**
+ * Base class of the shortcuts application.
+ *
+ */
 public class Shortcuts extends Application {
     
     public static final String BASE_DATA_OBJECT_TYPE 
@@ -45,12 +49,45 @@ public class Shortcuts extends Application {
     public Shortcuts(OID oid) {
         super(oid);
     }
-    
-    public String getContextPath() {
-        return "/ccm-ldn-shortcuts";
-    }
 
+//  /*
+//   * Application specific method only required if installed in its own
+//   * web application context
+//   */
+//  public String getContextPath() {
+//      return "/ccm-ldn-shortcuts";
+//  }
+
+    /**
+     * Returns the path name of the location of the applications servlet/JSP.
+     *
+     * The methods overwrites the super class to provide an application specific
+     * location for servlets/JSP. This is necessary if you whish to install the
+     * module (application) along with others in one context. If you install the
+     * module into its own context (no longer recommended for versions newer
+     * than 1.0.4) you may use a standard location.
+     *
+     * Usually it is a symbolic name/path, which will be mapped in the web.xml
+     * to the real location in the file system. You will use the following
+     * kind of code:
+     * <servlet>
+     *   <servlet-name>shortcuts-files</servlet-name>
+     *   <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+     *   <init-param>
+     *     <param-name>template-path</param-name>
+     *     <param-value>/templates/ccm-ldn-shortcuts</param-value>
+     *   </init-param>
+     * </servlet>
+     *
+     * <servlet-mapping>
+     *   <servlet-name>shortcuts-files</servlet-name>
+     *   <url-pattern>/ccm-ldn-shortcuts/files/*</url-pattern>
+     * </servlet-mapping>
+     *
+     * @return path name to the applications servlet/JSP
+     */
     public String getServletPath() {
-        return "/files";
+        // return "/files";
+        return "/ccm-ldn-shortcuts/files";
     }
 }

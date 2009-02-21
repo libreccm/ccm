@@ -1,0 +1,19 @@
+
+  <!-- module ccm-ldn-subsite  -  servlet declarations BEGIN  -->
+  <servlet>
+    <servlet-name>subsite-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-subsite</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-subsite  -  servlet declarations END  -->
+
+  <!-- module ccm-ldn-subsite  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>subsite-files</servlet-name>
+    <url-pattern>/ccm-ldn-subsite/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-subsite  -  servlet mappings END  -->
+

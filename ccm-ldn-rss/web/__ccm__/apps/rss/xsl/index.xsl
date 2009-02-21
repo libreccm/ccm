@@ -2,7 +2,14 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
 
-  <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
-  <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
+  <!--   import statements if executed in its own ccm-ldn-rss web application context
+    <xsl:import href="../../../../../ROOT/packages/bebop/xsl/bebop.xsl"/>
+    <xsl:import href="../../../../../ROOT/packages/ui/xsl/ui.xsl"/>
+  -->
+
+  <!--   import statements if executed in CCM main web application context
+  -->
+  <xsl:import href="../../../../packages/bebop/xsl/bebop.xsl"/>
+  <xsl:import href="../../../../packages/ui/xsl/ui.xsl"/>
 
 </xsl:stylesheet>

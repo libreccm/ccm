@@ -1,0 +1,19 @@
+
+  <!-- module ccm-auth-http  -  servlet definitions BEGIN  -->
+  <servlet>
+    <servlet-name>auth-http-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-auth-http</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-auth-http  -  servlet definitions END  -->
+
+  <!-- module ccm-auth-http  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>auth-http-files</servlet-name>
+    <url-pattern>/ccm-auth-http/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-auth-http  -  servlet mappings END  -->
+

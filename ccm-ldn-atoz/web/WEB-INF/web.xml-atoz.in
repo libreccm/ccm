@@ -1,0 +1,19 @@
+
+  <!-- module ccm-ldn-atoz  -  servlet declarations BEGIN   -->
+  <servlet>
+    <servlet-name>atoz-files</servlet-name>
+    <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+    <init-param>
+      <param-name>template-path</param-name>
+      <param-value>/templates/ccm-ldn-atoz</param-value>
+    </init-param>
+  </servlet>
+  <!-- module ccm-ldn-atoz  -  servlet declarations END  -->
+
+  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN  -->
+  <servlet-mapping>
+    <servlet-name>atoz-files</servlet-name>
+    <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
+  </servlet-mapping>
+  <!-- module ccm-ldn-atoz  -  servlet mappings END  -->
+

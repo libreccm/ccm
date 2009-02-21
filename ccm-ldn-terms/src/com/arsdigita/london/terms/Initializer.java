@@ -44,6 +44,10 @@ import com.arsdigita.kernel.NoValidURLException;
 
 import com.arsdigita.xml.XML;
 
+/**
+ *
+ *
+ */
 public class Initializer extends CompoundInitializer {
 
     public Initializer() {

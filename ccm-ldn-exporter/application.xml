@@ -3,7 +3,8 @@
   name="ccm-ldn-exporter"
   prettyName="exporter"
   version="6.5.0"
-  release="1">
+  release="1"
+  webapp="ROOT">
   <ccm:directories>
     <ccm:directory name="src"/>
     <ccm:directory name="pdl"/>
