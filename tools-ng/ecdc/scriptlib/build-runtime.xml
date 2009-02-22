@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="appserver" default="start">
+
+        <!-- already set
+	<property name="project.dir" value="." />
+	-->
+    <!--  already imported, gets wrong here!
+	<import file="build-common.xml" />   -->
+
+	<target name="install-tomcat">
+		<echo>Installing app server into ${deploy.dir}</echo>
+		<unzip src="${app.server.bundles.zip}" dest="${app.server.parent.dir}" overwrite="true">
+			<patternset>
+				<exclude name="**/webapps/**" />
+			</patternset>
+		</unzip>
+		<replaceregexp file="${webapp.conf.dir}/catalina.properties" match="shared.loader=(.*)" 
+			replace="shared.loader=\1,${catalina.base}/webapps/WEB-INF/classes,${catalina.base}/webapps/WEB-INF/lib/*.jar" 
+			byline="true" />
+		<copy file="ccm-core/lib/xercesImpl.jar" todir="${deploy.dir}/common/endorsed" preservelastmodified="true"/>
+	</target>
+
+	<target name="start">
+		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
+			<sysproperty key="ccm.home" value="${ccm.home}" />
+			<sysproperty key="ccm.conf" value="${webapp.registry.dir}" />
+			<sysproperty key="com.arsdigita.util.Assert.enabled" value="true" />
+			<sysproperty key="log4j.configuration" value="file:///${webapp.conf.dir}/log4j.xml" />
+			<sysproperty key="java.protocol.handler.pkgs" value="${java.protocol.handler.pkgs}" />
+			<sysproperty key="java.ext.dirs" 
+					value="${env.JAVA_HOME}/jre/lib/ext;${env.JAVA_HOME}/lib/ext;${deploy.dir}/webapps/WEB-INF/system" />
+			<sysproperty key="catalina.config" value="file:///${webapp.conf.dir}/catalina.properties" />
+			<sysproperty key="java.endorsed.dirs" value="${deploy.dir}/common/endorsed" />
+			<sysproperty key="catalina.base" value="${deploy.dir}" />
+			<sysproperty key="catalina.home" value="${deploy.dir}" />
+			<sysproperty key="javax.xml.parsers.DocumentBuilderFactory" value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
+			<sysproperty key="javax.xml.parsers.SAXParserFactory" value="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+			<sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
+			<jvmarg value="-Xms256m" />
+			<jvmarg value="-Xmx512m" />
+			<jvmarg value="-XX:PermSize=128m" />
+			<jvmarg value="-XX:MaxPermSize=128m" />
+			<classpath>
+				<pathelement path="${deploy.dir}/bin/bootstrap.jar" />
+			</classpath>
+		</java>
+	</target>
+
+</project>

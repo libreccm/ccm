@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  targetNamespace="http://ccm.redhat.com/ccm-project">
+
+  <element name="application">
+    <complexType>
+      <all>
+        <element name="dependencies" type="ccm:dependencies" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">The list of dependencies on other applications</documentation>
+          </annotation>
+        </element>
+        <element name="description" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">The application description</documentation>
+          </annotation>
+        </element>
+        <element name="directories" type="ccm:directories" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">The list of core directories that are part of this application</documentation>
+          </annotation>
+        </element>
+        <element name="contacts" minOccurs="0">
+          <annotation>
+            <documentation xml:lang="en">Contact information for the application</documentation>
+          </annotation>
+        </element>
+      </all>
+
+      <attribute name="name" type="string">
+        <annotation>
+          <documentation xml:lang="en">The name of the application packages to generate, eg RPMs, ZIPs</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="prettyName" type="string">
+        <annotation>
+          <documentation xml:lang="en">The human readable package name</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="version" type="string">
+        <annotation>
+          <documentation xml:lang="en">The version number for the application packages</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="release" type="integer">
+        <annotation>
+          <documentation xml:lang="en">The release number for the application packages</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="webapp" type="string">
+        <annotation>
+          <documentation xml:lang="en">The webapp to deploy code to</documentation>
+        </annotation>
+      </attribute>
+
+      <attribute name="buildHooks" type="string" use="optional">
+        <annotation>
+          <documentation xml:lang="en">The name of an Ant build file with hooks for the application</documentation>
+        </annotation>
+      </attribute>
+    </complexType>
+  </element>
+
+  <complexType name="dependencies">
+    <choice minOccurs="0" maxOccurs="unbounded">
+      <element name="requires" type="ccm:DependencyType"/>
+      <element name="buildRequires" type="ccm:DependencyType"/>
+      <element name="runRequires" type="ccm:DependencyType"/>
+    </choice>
+  </complexType>
+
+  <complexType name="DependencyType">
+    <attribute name="name" type="string"/>
+    <attribute name="version" type="string"/>
+    <attribute name="relation" type="ccm:relation"/>
+  </complexType>
+
+  <simpleType name="relation">
+    <annotation>
+      <documentation xml:lang="en">A relational operator</documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="lt"/>
+      <enumeration value="le"/>
+      <enumeration value="eq"/>
+      <enumeration value="ge"/>
+      <enumeration value="gt"/>
+    </restriction>
+  </simpleType>
+
+  <complexType name="directories">
+    <sequence>
+      <element name="directory" minOccurs="0" maxOccurs="unbounded">
+        <annotation>
+          <documentation xml:lang="en">List core directories that are part of this application.  If not present, all directories will be assumed.</documentation>
+        </annotation>
+        <complexType>
+          <attribute name="name" type="ccm:directoryName"/>
+        </complexType>
+      </element>
+    </sequence>
+  </complexType>
+
+  <simpleType name="directoryName">
+    <annotation>
+      <documentation xml:lang="en">The name of a core directory</documentation>
+    </annotation>
+
+    <restriction base="string">
+      <enumeration value="pdl"/>
+      <enumeration value="sql"/>
+      <enumeration value="src"/>
+      <enumeration value="test"/>
+    </restriction>
+  </simpleType>
+
+</schema>

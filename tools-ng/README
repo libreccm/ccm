@@ -1,0 +1,23 @@
+tools-ng
+
+Next Generation Tools
+
+This dir is home of tools for development, installation and maintenance of
+new CCM / APLAWS, standards compliant deployment and execution context.
+
+CURRENTLY EVERYTHING HERE IS WORK IN PROGRESS
+
+ecdc/
+  Easy CCM Development Configuration (ECDC)
+  A simplified development environment with minimal installation and
+  preparation prerequisites.
+
+common/
+  Library of files and schemes which may be used by several tools
+
+usertools/
+  User's installation and maintenance tools
+  Comming soon.
+
+README
+  This file

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="load">
+
+    <!--  ALREADY SET in build.xml . Wrong here!
+	<property name="project.dir" value="." />
+    -->
+
+	<import file="${tools.script.dir}/build-common.xml" />
+
+	<target name="load-bundle">
+		<echo>Loading bundle ${bundle.folder} into ${ccm.home}</echo>
+		<copy file="${bundle.folder}/cfg/applications.cfg"
+              tofile=".tmp.applications.cfg" overwrite="yes" />
+		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />
+		<replaceregexp file=".tmp.applications.cfg"
+                       match="[ \t\r\n]+" replace=" " flags="gs" />
+		<loadfile property="applications" srcFile=".tmp.applications.cfg" />
+		<delete file=".tmp.applications.cfg"/>
+		<tstamp>
+			<format pattern="yyyymmddhhmmss" property="timestamp" />
+		</tstamp>
+		<move file="${webapp.conf.dir}/registry"
+              tofile="${webapp.conf.dir}/registry.${timestamp}" preservelastmodified="yes"
+			  failonerror="no" verbose="true" />
+		<java classname="com.arsdigita.packaging.MasterTool"
+              classpathref="ccm.classpath" fork="yes">
+			<sysproperty key="ccm.home" value="${ccm.home}" />
+			<sysproperty key="log4j.configuration"
+                         value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+			<sysproperty key="java.protocol.handler.pkgs"
+                         value="${java.protocol.handler.pkgs}" />
+			<arg line="load ${applications} --parameter-file ${bundle.folder}/cfg/integration.properties" />
+		</java>
+	</target>
+
+    <target name="load-init">
+ 	    <echo>load ${applications} --init</echo>
+ 	    <java classname="com.arsdigita.packaging.MasterTool"
+              classpathref="ccm.classpath" fork="yes">
+ 	          <sysproperty key="ccm.home" value="${ccm.home}" />
+ 	          <sysproperty key="log4j.configuration"
+                           value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+ 	          <sysproperty key="java.protocol.handler.pkgs"
+                           value="${java.protocol.handler.pkgs}" />
+ 	          <arg line="load ${applications} --init" />
+ 	    </java>
+ 	</target>
+ 	
+ 	<target name="load">
+ 	    <echo>load ${applications}</echo>
+ 	    <java classname="com.arsdigita.packaging.MasterTool"
+              classpathref="ccm.classpath" fork="yes">
+ 	          <sysproperty key="ccm.home" value="${ccm.home}" />
+ 	          <sysproperty key="log4j.configuration"
+                           value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+ 	          <sysproperty key="java.protocol.handler.pkgs"
+                           value="${java.protocol.handler.pkgs}" />
+ 	          <arg line="load ${applications}" />
+ 	    </java>
+ 	</target>
+ 	
+</project>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="common">
+
+	<property name="tools.conf.dir" value="${project.dir}/tools-ng/ecdc/conf" />
+	<property name="tools.xsl.dir" value="${project.dir}/tools-ng/common/xsl" />
+
+	<!-- several java programs needed for processing, esp. xml files-->
+	<property name="tools.lib.dir" value="${project.dir}/tools-ng/common/lib" />
+	<path id="tools.classpath">
+		<fileset dir="${tools.lib.dir}" includes="*.jar" />
+	</path>
+
+	<property file="${project.dir}/local.runtime.properties" />
+	<!--  <property file="${project.dir}/runtime.ext.properties" />    -->
+	<property file="${tools.conf.dir}/runtime.properties" />
+
+	<property file="${project.dir}/local.build.properties" />
+	<!-- <property file="${project.dir}/build.ext.properties" /> -->
+	<property file="${tools.conf.dir}/build.properties" />
+
+	<property file="${project.dir}/local.ccm.properties" />
+	<!-- <property file="${project.dir}/ccm.ext.properties" />   -->
+	<property file="${tools.conf.dir}/ccm.properties" />
+
+	<path id="ccm.classpath">
+		<path refid="tools.classpath"/>
+		<pathelement path="${webapp.dist.dir}/WEB-INF/classes"/>
+		<fileset dir="${webapp.dist.dir}/WEB-INF/lib" includes="*.jar" />
+	</path>
+	
+	<condition property="correct.ant.version">
+		<antversion atleast="1.7.0" />
+	</condition>
+	
+	<!-- http://antelope.tigris.org/ -->
+	<taskdef classpathref="tools.classpath" resource="ise/antelope/tasks/antlib.xml" />
+
+</project>

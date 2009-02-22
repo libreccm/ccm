@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<stringAttribute key="bad_container_name" value="\aplaw"/>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/aplaws"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="4"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.debug.core.source_locator_id" value="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"/>
+<stringAttribute key="org.eclipse.debug.core.source_locator_memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;sourceLookupDirector&gt;&#13;&#10;&lt;sourceContainers duplicates=&quot;false&quot;&gt;&#13;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;javaProject name=&amp;quot;aplaws&amp;quot;/&amp;gt;&amp;#13;&amp;#10;&quot; typeId=&quot;org.eclipse.jdt.launching.sourceContainer.javaProject&quot;/&gt;&#13;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;default/&amp;gt;&amp;#13;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.default&quot;/&gt;&#13;&#10;&lt;/sourceContainers&gt;&#13;&#10;&lt;/sourceLookupDirector&gt;&#13;&#10;"/>
+<listAttribute key="org.eclipse.jdt.launching.CLASSPATH">
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry containerPath=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot; javaProject=&quot;aplaws&quot; path=&quot;1&quot; type=&quot;4&quot;/&gt;&#13;&#10;"/>
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry internalArchive=&quot;/aplaws/runtime/apache-tomcat-6.0.18/bin/bootstrap.jar&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#13;&#10;"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.apache.catalina.startup.Bootstrap"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="start"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="aplaws"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.protocol.handler.pkgs=com.arsdigita.util.protocol&#13;&#10;-Dccm.home=${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18&#13;&#10;-Dcatalina.config=file:///${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18/conf/catalina.properties&#13;&#10;-Djava.endorsed.dirs=${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18/common/endorsed&#13;&#10;-Dcatalina.base=${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18&#13;&#10;-Dcatalina.home=${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18&#13;&#10;-Xms256m&#13;&#10;-Xmx512m&#13;&#10;-XX:PermSize=128m&#13;&#10;-XX:MaxPermSize=128m&#13;&#10;-server&#13;&#10;-Dccm.conf=${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18/conf/registry&#13;&#10;-Dcom.arsdigita.util.Assert.enabled=true&#13;&#10;-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl&#13;&#10;-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl&#13;&#10;-Djavax.xml.transform.TransformerFactory=com.icl.saxon.TransformerFactoryImpl&#13;&#10;-Djava.ext.dirs=${env_var:JAVA_HOME}/jre/lib/ext;${env_var:JAVA_HOME}/lib/ext;${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18/webapps/WEB-INF/system&#13;&#10;-Dlog4j.configuration=file:///${workspace_loc:aplaws}/runtime/apache-tomcat-6.0.18/conf/log4j.xml&#13;&#10;-Dcom.sun.management.jmxremote.port=7105&#13;&#10;-Dcom.sun.management.jmxremote.authenticate=false&#13;&#10;-Dcom.sun.management.jmxremote.ssl=false"/>
+</launchConfiguration>
