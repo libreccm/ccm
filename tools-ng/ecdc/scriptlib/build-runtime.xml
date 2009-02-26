@@ -10,15 +10,19 @@
 
 	<target name="install-tomcat">
 		<echo>Installing app server into ${deploy.dir}</echo>
-		<unzip src="${app.server.bundles.zip}" dest="${app.server.parent.dir}" overwrite="true">
+		<unzip src="${app.server.bundles.zip}" dest="${app.server.parent.dir}"
+               overwrite="true">
 			<patternset>
 				<exclude name="**/webapps/**" />
 			</patternset>
 		</unzip>
+    <!-- Nolonger NEEDED! when lib files are copied to another location?
+     -->
 		<replaceregexp file="${webapp.conf.dir}/catalina.properties" match="shared.loader=(.*)" 
 			replace="shared.loader=\1,${catalina.base}/webapps/WEB-INF/classes,${catalina.base}/webapps/WEB-INF/lib/*.jar" 
 			byline="true" />
-		<copy file="ccm-core/lib/xercesImpl.jar" todir="${deploy.dir}/common/endorsed" preservelastmodified="true"/>
+		<copy file="ccm-core/lib/xercesImpl.jar"
+              todir="${deploy.dir}/common/endorsed" preservelastmodified="true"/>
 	</target>
 
 	<target name="start">
