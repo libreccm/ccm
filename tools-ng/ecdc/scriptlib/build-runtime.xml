@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="appserver" default="start">
+<!--  Already definded:
+		ccm.project.dir:		base dir of the development project
+		app.server.bundles.zip	name of the installation file
+		app.server.parent.dir	name of the dir to install into the server into
+		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_HOME)
+		app.server.conf.dir		name of the servers configuration dir
+		webapp.dist.dir			distribution dir for web applications      -->
 
-        <!-- already set
-	<property name="project.dir" value="." />
-	-->
-    <!--  already imported, gets wrong here!
-	<import file="build-common.xml" />   -->
+<project name="appserver" default="start">
 
 	<target name="install-tomcat">
 		<echo>Installing app server into ${deploy.dir}</echo>
@@ -16,37 +18,43 @@
 				<exclude name="**/webapps/**" />
 			</patternset>
 		</unzip>
-    <!-- Nolonger NEEDED! when lib files are copied to another location?
-     -->
-		<replaceregexp file="${webapp.conf.dir}/catalina.properties" match="shared.loader=(.*)" 
+    	<!-- Nolonger NEEDED! when lib files are copied to another location  -->
+		<replaceregexp file="${app.server.conf.dir}/catalina.properties" match="shared.loader=(.*)" 
 			replace="shared.loader=\1,${catalina.base}/webapps/WEB-INF/classes,${catalina.base}/webapps/WEB-INF/lib/*.jar" 
 			byline="true" />
+		<!-- Copy additional files needed for operation   -->
 		<copy file="ccm-core/lib/xercesImpl.jar"
-              todir="${deploy.dir}/common/endorsed" preservelastmodified="true"/>
+              todir="${app.server.deploy.dir}/common/endorsed" preservelastmodified="true"/>
 	</target>
 
 	<target name="start">
 		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
+			<!--  nolonger needed ? (if anything works as expected)   
 			<sysproperty key="ccm.home" value="${ccm.home}" />
 			<sysproperty key="ccm.conf" value="${webapp.registry.dir}" />
 			<sysproperty key="com.arsdigita.util.Assert.enabled" value="true" />
-			<sysproperty key="log4j.configuration" value="file:///${webapp.conf.dir}/log4j.xml" />
+			<sysproperty key="log4j.configuration" value="file:///${app.server..conf.dir}/log4j.xml" />
 			<sysproperty key="java.protocol.handler.pkgs" value="${java.protocol.handler.pkgs}" />
+			-->
+			<!--  nolonger needed ? (if anything works as expected)   
 			<sysproperty key="java.ext.dirs" 
-					value="${env.JAVA_HOME}/jre/lib/ext;${env.JAVA_HOME}/lib/ext;${deploy.dir}/webapps/WEB-INF/system" />
-			<sysproperty key="catalina.config" value="file:///${webapp.conf.dir}/catalina.properties" />
-			<sysproperty key="java.endorsed.dirs" value="${deploy.dir}/common/endorsed" />
-			<sysproperty key="catalina.base" value="${deploy.dir}" />
-			<sysproperty key="catalina.home" value="${deploy.dir}" />
+					value="${env.JAVA_HOME}/jre/lib/ext;${env.JAVA_HOME}/lib/ext;${app.server.deploy.dir}/webapps/WEB-INF/system" />
+			-->
+			<!--  nolonger needed ? (if anything works as expected)   
+			<sysproperty key="java.endorsed.dirs" value="${app.server.deploy.dir}/common/endorsed" />
 			<sysproperty key="javax.xml.parsers.DocumentBuilderFactory" value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
 			<sysproperty key="javax.xml.parsers.SAXParserFactory" value="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
 			<sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
+			-->
+			<sysproperty key="catalina.base" value="${app.server.deploy.dir}" />
+			<sysproperty key="catalina.home" value="${app.server.deploy.dir}" />
+			<sysproperty key="catalina.config" value="file:///${app.server.conf.dir}/catalina.properties" />
 			<jvmarg value="-Xms256m" />
 			<jvmarg value="-Xmx512m" />
 			<jvmarg value="-XX:PermSize=128m" />
 			<jvmarg value="-XX:MaxPermSize=128m" />
 			<classpath>
-				<pathelement path="${deploy.dir}/bin/bootstrap.jar" />
+				<pathelement path="${app.server.deploy.dir}/bin/bootstrap.jar" />
 			</classpath>
 		</java>
 	</target>

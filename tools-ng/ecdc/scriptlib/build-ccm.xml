@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--  Already definded:
+		ccm.project.dir:		base dir of the development project
+		app.server.bundles.zip	name of the installation file
+		app.server.parent.dir	name of the dir to install into the server into
+		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_HOME)
+		app.server.conf.dir		name of the servers configuration dir
+		webapp.dist.dir			distribution dir for web applications      -->
+
 <project name="load">
-
-    <!--  ALREADY SET in build.xml . Wrong here!
-	<property name="project.dir" value="." />
-    -->
-
-	<import file="${tools.script.dir}/build-common.xml" />
 
 	<target name="load-bundle">
 		<echo>Loading bundle ${bundle.folder} into ${ccm.home}</echo>
-		<copy file="${bundle.folder}/cfg/applications.cfg"
+		<copy file="${ccm.bundle.folder}/cfg/applications.cfg"
               tofile=".tmp.applications.cfg" overwrite="yes" />
 		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />
 		<replaceregexp file=".tmp.applications.cfg"
@@ -20,9 +22,11 @@
 		<tstamp>
 			<format pattern="yyyymmddhhmmss" property="timestamp" />
 		</tstamp>
-		<move file="${webapp.conf.dir}/registry"
-              tofile="${webapp.conf.dir}/registry.${timestamp}" preservelastmodified="yes"
+		<!-- nolonger in use
+		<move file="${app.server.conf.dir}/registry"
+              tofile="${app.server.conf.dir}/registry.${timestamp}" preservelastmodified="yes"
 			  failonerror="no" verbose="true" />
+		-->
 		<java classname="com.arsdigita.packaging.MasterTool"
               classpathref="ccm.classpath" fork="yes">
 			<sysproperty key="ccm.home" value="${ccm.home}" />
