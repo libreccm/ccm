@@ -1,0 +1,31 @@
+
+<project basedir="." name="Makefile-Gateway" default="build">
+
+  <property name="libdir" value="../lib"/>
+  <property name="instdir" value="/usr/share/ccm-devel/classes"/>
+
+  <target name="build">
+    <mkdir dir="build"/>
+    <javac srcdir="."
+          destdir="build">
+      <classpath>
+        <fileset dir="${libdir}">
+          <include name="*.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
+  
+  <target name="deploy" depends="build">
+    <copy todir="${instdir}">
+      <fileset dir="build">
+        <include name="**"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean">
+    <delete dir="build"/>
+  </target>
+
+</project>
