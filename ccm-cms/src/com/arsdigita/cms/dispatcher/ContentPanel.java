@@ -21,10 +21,12 @@ package com.arsdigita.cms.dispatcher;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionServlet;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
-
 
 /**
  * <p>This <code>ContentPanel</code> component fetches
@@ -36,7 +38,7 @@ import com.arsdigita.xml.Element;
  */
 public class ContentPanel extends SimpleComponent {
 
-    public static final String versionId = "$Id: ContentPanel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
+    public static final String versionId = "$Id: ContentPanel.java 1848 2009-03-10 03:17:42Z terry $ by $Author: terry $, $DateTime: 2004/08/17 23:15:09 $";
 
     public ContentPanel() {
         super();
@@ -52,7 +54,7 @@ public class ContentPanel extends SimpleComponent {
      */
     protected XMLGenerator getXMLGenerator(PageState state) {
         ContentSection section = CMS.getContext().getContentSection();
-        Assert.assertNotNull(section);
+        Assert.exists(section);
         return section.getXMLGenerator();
     }
 
@@ -64,9 +66,12 @@ public class ContentPanel extends SimpleComponent {
      * @see com.arsdigita.cms.dispatcher.XMLGenerator
      */
     public void generateXML(PageState state, Element parent) {
-        if ( isVisible(state) ) {
+        if (isVisible(state)) {
             Element content = parent.newChildElement("cms:contentPanel", CMS.CMS_XML_NS);
             exportAttributes(content);
+
+            // Generate path information about the content item
+            generatePathInfoXML(state, content);
 
             // Take advantage of caching in the CMS Dispatcher.
             XMLGenerator xmlGenerator = getXMLGenerator(state);
@@ -74,5 +79,31 @@ public class ContentPanel extends SimpleComponent {
             xmlGenerator.generateXML(state, content, null);
         }
     }
+    
+    /**
+     * Generate information about the path to this content item.
+     * 
+     * @param state the page state
+     * @param parent the element that will contain the path info
+     */
+    protected void generatePathInfoXML(PageState state, Element parent) {
+        Element pathInfo = parent.newChildElement("cms:pathInfo", CMS.CMS_XML_NS);
+        
+        if (CMS.getContext().hasContentSection()) {
+            pathInfo.newChildElement("cms:sectionPath", CMS.CMS_XML_NS).setText(
+                    CMS.getContext().getContentSection().getPath());
+        }
+        String url = DispatcherHelper.getRequestContext().getRemainingURLPart();
+        if (url.startsWith(CMSDispatcher.PREVIEW)) {
+            pathInfo.newChildElement("cms:previewPath", CMS.CMS_XML_NS).setText(ContentSectionServlet.PREVIEW);
+        }
+        pathInfo.newChildElement("cms:templatePrefix", CMS.CMS_XML_NS).setText(
+                "/" + AbstractItemResolver.TEMPLATE_CONTEXT_PREFIX);
 
+        if (CMS.getContext().hasContentItem()) {
+            ContentItem item = CMS.getContext().getContentItem();
+            ContentItem bundle = (ContentItem) item.getDraftVersion().getParent();
+            pathInfo.newChildElement("cms:itemPath", CMS.CMS_XML_NS).setText("/" + bundle.getPath());
+        }
+    }
 }
