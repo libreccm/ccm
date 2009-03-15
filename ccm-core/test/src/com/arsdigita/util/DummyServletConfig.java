@@ -54,7 +54,7 @@ public class DummyServletConfig implements ServletConfig {
 
     public Enumeration getInitParameterNames() {
         final Iterator iter = m_initParameters.keySet().iterator();
-        Enumeration enum = new Enumeration() {
+        Enumeration e = new Enumeration() {
             public boolean hasMoreElements() {
                 return iter.hasNext();
             }
@@ -64,7 +64,7 @@ public class DummyServletConfig implements ServletConfig {
             }
         };
 
-        return enum;
+        return e;
     }
 
     public void setInitParameter(String name, String value) {

@@ -18,6 +18,15 @@
  */
 package com.arsdigita.loader;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Locale;
+
+import javax.mail.internet.InternetAddress;
+
+import org.apache.log4j.Logger;
+
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.Kernel;
@@ -33,32 +42,26 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.permissions.UniversalPermissionDescriptor;
 import com.arsdigita.kernel.security.KeyStorage;
-import com.arsdigita.ui.admin.Admin;
-import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.mimetypes.ImageMimeType;
-import com.arsdigita.mimetypes.MimeTypeExtension;
 import com.arsdigita.mimetypes.MimeType;
+import com.arsdigita.mimetypes.MimeTypeExtension;
 import com.arsdigita.mimetypes.TextMimeType;
 import com.arsdigita.portal.Portal;
 import com.arsdigita.runtime.ScriptContext;
+import com.arsdigita.ui.admin.Admin;
+import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.csv.CSVParameterLoader;
+import com.arsdigita.util.parameter.EmailParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.servlet.HttpHost;
-import com.arsdigita.util.StringUtils;
-import com.arsdigita.web.Host;
-import com.arsdigita.web.Web;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Locale;
-
-import org.apache.log4j.Logger;
+import com.arsdigita.web.Host;
+import com.arsdigita.web.Web;
 
 /**
  * CoreLoader
@@ -69,12 +72,11 @@ import org.apache.log4j.Logger;
 
 public class CoreLoader extends PackageLoader {
 
-    public final static String versionId = "$Id: CoreLoader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = "$Id: CoreLoader.java 1841 2009-03-05 07:52:42Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(CoreLoader.class);
 
-    private StringParameter m_email = new StringParameter
-        ("waf.admin.email", Parameter.REQUIRED, null);
+    private EmailParameter m_email = new EmailParameter("waf.admin.email");
 
     private StringParameter m_screen = new StringParameter
         ("waf.admin.name.screen", Parameter.OPTIONAL, null) {
@@ -135,7 +137,7 @@ public class CoreLoader extends PackageLoader {
     }
 
     private String getEmail() {
-        return (String) get(m_email);
+        return ((InternetAddress) get(m_email)).toString();
     }
 
     private String getScreen() {

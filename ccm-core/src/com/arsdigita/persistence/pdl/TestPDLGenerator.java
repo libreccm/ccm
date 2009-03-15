@@ -105,7 +105,7 @@ public class TestPDLGenerator {
         HashMap map = new HashMap();
         for (Iterator iterator = files.iterator(); iterator.hasNext();) {
             String file = (String) iterator.next();
-            String directory = file.substring(0, file.lastIndexOf('/'));
+            String directory = file.substring(0, file.lastIndexOf(File.separator));
             List dirList = (List) map.get(directory);
             if (null == dirList) {
                 dirList = new LinkedList();
@@ -125,7 +125,7 @@ public class TestPDLGenerator {
         String ddlDir = (String) options.get("-generate-ddl");
         if (ddlDir != null) {
 
-            String subdir = directory.substring(directory.indexOf("/com/"));
+            String subdir = directory.substring(directory.indexOf(File.separator + "com" + File.separator));
             ddlDir += subdir;
             Set sqlFiles = new HashSet();
             File sqldir = (File) options.get("-sqldir");

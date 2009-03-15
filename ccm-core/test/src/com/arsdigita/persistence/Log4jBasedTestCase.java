@@ -56,7 +56,7 @@ import org.apache.log4j.WriterAppender;
  */
 public class Log4jBasedTestCase extends PersistenceTestCase {
 
-    public static final String versionId = "$Id: Log4jBasedTestCase.java 749 2005-09-02 12:11:57Z sskracic $";
+    public static final String versionId = "$Id: Log4jBasedTestCase.java 1837 2009-03-05 06:57:16Z terry $";
 
     /**
      * The log object.  Should be modified
@@ -92,10 +92,10 @@ public class Log4jBasedTestCase extends PersistenceTestCase {
     public void logSetUp() throws Exception {
         // nuke all priorities back to DEBUG
         Category root = Category.getRoot();
-        Enumeration enum = root.getCurrentCategories();
+        Enumeration e = root.getCurrentCategories();
 
-        while (enum.hasMoreElements()) {
-            Category cat = (Category)enum.nextElement();
+        while (e.hasMoreElements()) {
+            Category cat = (Category)e.nextElement();
             originalPriorities.put(cat, cat.getPriority());
             cat.setPriority(Priority.DEBUG);
         }

@@ -18,25 +18,6 @@
  */
 package com.arsdigita.loader;
 
-import com.arsdigita.installer.SQLLoader;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.Session;
-import com.arsdigita.runtime.AbstractScript;
-// pboy (Jan.09):
-// deprecated without recommended replacement
-// created Interactive ParameterReader as a replacement
-// import com.arsdigita.runtime.InteractiveParameterLoader;
-import com.arsdigita.runtime.InteractiveParameterReader;
-import com.arsdigita.util.UncheckedWrapperException;
-// deprecated, use c.ad.util.JavaPropertyReader instead
-// import com.arsdigita.util.config.JavaPropertyLoader;
-import com.arsdigita.util.JavaPropertyReader;
-// deprecated, use c.ad.util.parameter.CompoundParameterReader instead
-// import com.arsdigita.util.parameter.CompoundParameterLoader;
-import com.arsdigita.util.parameter.CompoundParameterReader;
-// deprecated, use c.ad.util.parameter.ParameterReader instead
-// import com.arsdigita.util.parameter.ParameterLoader;
-import com.arsdigita.util.parameter.ParameterReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -53,6 +34,16 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.arsdigita.installer.SQLLoader;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.Session;
+import com.arsdigita.runtime.AbstractScript;
+import com.arsdigita.runtime.InteractiveParameterReader;
+import com.arsdigita.util.JavaPropertyReader;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.util.parameter.CompoundParameterReader;
+import com.arsdigita.util.parameter.ParameterReader;
+
 /**
  * PackageLoader
  *
@@ -65,8 +56,8 @@ public abstract class PackageLoader extends AbstractScript {
     public final static Logger s_log = Logger.getLogger(PackageLoader.class);
 
     public final static String versionId = 
-            "$Id: PackageLoader.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " + 
+            "$Id: PackageLoader.java 1840 2009-03-05 07:51:20Z terry $" +
+            " by $Author: terry $, " + 
             "$DateTime: 2004/08/16 18:10:38 $";
 
     public static boolean exists(Connection conn, String table) {
@@ -116,12 +107,13 @@ public abstract class PackageLoader extends AbstractScript {
     public static void load(Connection conn, String script) {
         SQLLoader loader = new SQLLoader(conn) {
             protected Reader open(String name) {
+            	String resourceName = name.replace('\\', '/');
                 ClassLoader cload = getClass().getClassLoader();
-                InputStream is = cload.getResourceAsStream(name);
+                InputStream is = cload.getResourceAsStream(resourceName);
                 if (is == null) {
                     return null;
                 } else {
-                    s_log.info("Loading: " + name);
+                    s_log.info("Loading: " + resourceName);
                     return new InputStreamReader(is);
                 }
             }

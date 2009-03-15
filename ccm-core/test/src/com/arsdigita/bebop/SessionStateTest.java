@@ -214,8 +214,8 @@ public class SessionStateTest extends TestCase {
     private static void exportQueryString(HttpServletDummyRequest req,
                                           String queryString) {
         Hashtable map = HttpUtils.parseQueryString(queryString);
-        for (Enumeration enum = map.keys(); enum.hasMoreElements(); ) {
-            String name = (String)enum.nextElement();
+        for (Enumeration e = map.keys(); e.hasMoreElements(); ) {
+            String name = (String)e.nextElement();
             String[] values = (String[])map.get(name);
             req.setParameterValues(name, values);
         }

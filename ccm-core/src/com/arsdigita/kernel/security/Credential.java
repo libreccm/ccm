@@ -18,18 +18,22 @@
  */
 package com.arsdigita.kernel.security;
 
-import com.arsdigita.util.UncheckedWrapperException;
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.StringTokenizer;
+
 import javax.crypto.Mac;
+
 import org.apache.commons.codec.binary.Base64;
+
+import com.arsdigita.util.UncheckedWrapperException;
 
 /**
  * A unit of data that contains a string value, an expiration date, and a
@@ -42,7 +46,6 @@ import org.apache.commons.codec.binary.Base64;
  **/
 public class Credential {
 
-    public static final String versionId = "$Id: Credential.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * The character used to separate the value, expiration, and validator.
      **/
@@ -73,7 +76,7 @@ public class Credential {
         StringBuffer buf = new StringBuffer();
         buf.append(m_value).append(SEPARATOR);
         buf.append(m_expiration).append(SEPARATOR);
-        buf.append(new String(new Base64().encode(m_validator)));
+        buf.append(URLEncoder.encode(new String(new Base64().encode(m_validator))));
         return buf.toString();
     }
 
@@ -190,7 +193,7 @@ public class Credential {
         throws CredentialParsingException, CredentialExpiredException {
 
         // split string into value, expiration, and validator
-        StringTokenizer tok = new StringTokenizer(credential,
+        StringTokenizer tok = new StringTokenizer(URLDecoder.decode(credential),
                                                   String.valueOf(SEPARATOR));
         if (tok.countTokens() != 3) {
             throw new CredentialParsingException("Bad format");

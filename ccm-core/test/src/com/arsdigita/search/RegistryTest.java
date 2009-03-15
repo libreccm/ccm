@@ -20,12 +20,8 @@ package com.arsdigita.search;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.tools.junit.framework.BaseTestCase;
-import org.apache.log4j.Logger;
 
 public class RegistryTest extends BaseTestCase {
-
-    private static Logger s_log =
-            Logger.getLogger(RegistryTest.class);
 
     public RegistryTest(String name) {
         super(name);
@@ -64,5 +60,9 @@ public class RegistryTest extends BaseTestCase {
         assertTrue(MetadataProviderRegistry.getAdapter(ACSObject.BASE_DATA_OBJECT_TYPE) == null);
         assertTrue(MetadataProviderRegistry.getAdapter(Note.BASE_DATA_OBJECT_TYPE) == null);
         assertTrue(MetadataProviderRegistry.findAdapter(Note.BASE_DATA_OBJECT_TYPE) == null);
+    }
+
+    protected void tearDown() throws Exception {
+        MetadataProviderRegistry.unregisterAdapter(Note.BASE_DATA_OBJECT_TYPE);
     }
 }

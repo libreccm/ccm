@@ -19,6 +19,8 @@
 package com.arsdigita.installer;
 
 import com.arsdigita.util.UncheckedWrapperException;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,7 +39,7 @@ import org.apache.log4j.Logger;
 
 public abstract class SQLLoader {
 
-    public final static String versionId = "$Id: SQLLoader.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = "$Id: SQLLoader.java 1839 2009-03-05 07:50:52Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(SQLLoader.class);
 
@@ -56,8 +58,9 @@ public abstract class SQLLoader {
 
         final SQLLoader loader = new SQLLoader(conn) {
                 protected final Reader open(final String name) {
+                	String resourceName = name.replace('\\', '/');
                     final ClassLoader cload = getClass().getClassLoader();
-                    final InputStream is = cload.getResourceAsStream(name);
+                    final InputStream is = cload.getResourceAsStream(resourceName);
 
                     if (is == null) {
                         return null;
@@ -124,11 +127,11 @@ public abstract class SQLLoader {
 
     private String parent(String path) {
         path = path.trim();
-        if (path.endsWith("/")) {
+        if (path.endsWith(File.separator)) {
             path = path.substring(0, path.length() - 2);
         }
 
-        int index = path.lastIndexOf('/');
+        int index = path.lastIndexOf(File.separatorChar);
         if (index > 0) {
             path = path.substring(0, index);
         } else {
@@ -157,7 +160,7 @@ public abstract class SQLLoader {
         if (front == null) {
             resolved = back;
         } else {
-            resolved = front + "/" + back;
+            resolved = front + File.separatorChar + back;
         }
 
         if (s_log.isDebugEnabled()) {

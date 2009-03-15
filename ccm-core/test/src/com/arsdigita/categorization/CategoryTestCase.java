@@ -198,7 +198,7 @@ public class CategoryTestCase extends BaseTestCase {
                     }
                 } else if (currentValue instanceof BigInteger) {
                     test = ((BigInteger)currentValue)
-                        .compareTo((BigDecimal)prevValue) >= 0;
+                        .compareTo((BigInteger)prevValue) >= 0;
                 } else if (currentValue instanceof Number) {
                     test = ((Number)currentValue).longValue() >=
                         ((Number)prevValue).longValue();

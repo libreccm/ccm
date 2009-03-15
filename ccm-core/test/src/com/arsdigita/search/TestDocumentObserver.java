@@ -21,12 +21,18 @@ package com.arsdigita.search;
 import com.arsdigita.domain.DomainObject;
 
 public class TestDocumentObserver implements DocumentObserver {
-    
+
     public void onSave(DomainObject dobj) {
-        if (TestSearchIndex.containsDocument(dobj)) {
-            TestSearchIndex.removeDocument(dobj);
+        MetadataProvider adapter = MetadataProviderRegistry.findAdapter(dobj.getObjectType());
+
+        if (adapter != null) {
+            if (adapter.isIndexable(dobj)) {
+                if (TestSearchIndex.containsDocument(dobj)) {
+                    TestSearchIndex.removeDocument(dobj);
+                }
+                TestSearchIndex.addDocument(dobj);
+            }
         }
-        TestSearchIndex.addDocument(dobj);
     }
 
     public void onDelete(DomainObject dobj) {

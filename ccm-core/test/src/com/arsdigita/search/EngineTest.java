@@ -314,4 +314,8 @@ public class EngineTest extends BaseTestCase {
         assertTrue(results.getCount() == 15);
         
     }
+
+    protected void tearDown() throws Exception {
+        MetadataProviderRegistry.unregisterAdapter(Note.BASE_DATA_OBJECT_TYPE);
+    }
 }

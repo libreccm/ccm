@@ -19,12 +19,8 @@
 package com.arsdigita.search;
 
 import com.arsdigita.tools.junit.framework.BaseTestCase;
-import org.apache.log4j.Logger;
 
 public class ObserverTest extends BaseTestCase {
-
-    private static Logger s_log =
-            Logger.getLogger(ObserverTest.class);
 
     public ObserverTest(String name) {
         super(name);
@@ -66,7 +62,9 @@ public class ObserverTest extends BaseTestCase {
         // Check it disappears when deleted
         note2.delete();
         assertTrue(!TestSearchIndex.containsDocument(note2));
+    }
 
+    protected void tearDown() throws Exception {
         MetadataProviderRegistry.unregisterAdapter(Note.BASE_DATA_OBJECT_TYPE);
     }
 }

@@ -191,7 +191,8 @@ public class HostInit {
                 }
             } else {
                 if (s_log.isInfoEnabled()) {
-                    s_log.info("Entry found in file that does not correspond to an installed package: " + line);
+                    s_log.info("Entry found in file that does not correspond " +
+                               "to an installed package: " + line);
                 }
             }
         }
@@ -205,7 +206,8 @@ public class HostInit {
         while ((line = reader.readLine()) != null) {
             line = line.trim();
             if (contains(line, packages) && line.endsWith(".jar")) {
-                String newline = line.substring(0, line.lastIndexOf(".jar")) + "-system.jar";
+                String newline = line.substring(0, line.lastIndexOf(".jar")) +
+                                                                    "-system.jar";
                 File file = new File(newline);
                 if (file.isFile()) {
                     if (s_log.isInfoEnabled()) {
