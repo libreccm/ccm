@@ -20,14 +20,15 @@ package com.arsdigita.london.exporter;
 
 import java.io.File;
 
+import org.apache.commons.cli.CommandLine;
+
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-
-import org.apache.commons.cli.CommandLine;
 
 
 public class ItemExportTool extends Program {
@@ -46,21 +47,38 @@ public class ItemExportTool extends Program {
         }
 
         File itemDir = new File(args[0]);
-        if (!itemDir.exists()) {
-            itemDir.mkdir();
+        if (!itemDir.exists() && !itemDir.mkdir()) {
+            System.err.println("mkdir " + itemDir + "failed");
+            return;
         }
         File assetDir = new File(args[1]);
-        if (!assetDir.exists()) {
-            assetDir.mkdir();
+        if (!assetDir.exists() && !assetDir.mkdir()) {
+            System.err.println("mkdir " + assetDir + "failed");
+            return;
         }
 
         final ContentExporter exporter = new ContentExporter(itemDir,
                                                              assetDir);
+
+        // Construct the path to the content section, assuming the user
+        // may or may not have enter the preceding and trailing slashes
+        final StringBuilder path = new StringBuilder();
+        if (!args[2].startsWith("/")) {
+            path.append("/");
+        }
+        path.append(args[2]);
+        if (!args[2].endsWith("/")) {
+            path.append("/");
+        }
         
         Transaction txn = new Transaction() {
                 public void doRun() {
                     ContentSection section = (ContentSection)Application
-                        .retrieveApplicationForPath(args[2]);
+                        .retrieveApplicationForPath(path.toString());
+                    
+                    if (section == null) {
+                        throw new DataObjectNotFoundException("No content section has a path of '" + path + "'");
+                    }
                     
                     exporter.exportManifest(section, 
                                             ContentItem.DRAFT,

@@ -19,17 +19,14 @@
 package com.arsdigita.london.exporter;
 
 import com.arsdigita.db.DbHelper;
-
+import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
-
-import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.CompoundInitializer;
-
 import com.arsdigita.runtime.LegacyInitEvent;
+import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.xml.XML;
-import com.arsdigita.domain.xml.TraversalHandler;
 
 /**
  * Initializes the Exporter app

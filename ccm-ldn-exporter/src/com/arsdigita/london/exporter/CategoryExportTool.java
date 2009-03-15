@@ -19,20 +19,19 @@
 package com.arsdigita.london.exporter;
 
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Date;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 
 import com.arsdigita.categorization.Category;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import java.util.Date;
-import java.io.File;
 
 public class CategoryExportTool extends Program {
 
@@ -64,8 +63,9 @@ public class CategoryExportTool extends Program {
         }
 
         final File catDir = new File(args[2]);
-        if (!catDir.exists()) {
-            catDir.mkdir();
+        if (!catDir.exists() && !catDir.mkdir()) {
+            System.err.println("Could not mkdir " + catDir);
+            return;
         }
 
         final String app = args[0];
@@ -89,13 +89,13 @@ public class CategoryExportTool extends Program {
                     try {
                         catExporter.export(root, 
                                            key,
-                                           new URL(url),
+                                           new URI(url),
                                            title,
                                            null,
                                            version,
                                            new Date(),
                                            exportItems);
-                    } catch (MalformedURLException ex) {
+                    } catch (URISyntaxException ex) {
                         throw new UncheckedWrapperException("Cannot parse url " + url, ex);
                     }
                 }

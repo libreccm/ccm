@@ -18,31 +18,27 @@
 
 package com.arsdigita.london.exporter;
 
-import com.arsdigita.categorization.Category;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentPage;
-import com.arsdigita.xml.Element;
-import com.arsdigita.xml.Document;
-
-import com.arsdigita.util.UncheckedWrapperException;
-
 import java.io.File;
-import java.io.IOException;
 import java.io.FileOutputStream;
-
-import java.net.URL;
-
+import java.io.IOException;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
+
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.xml.Document;
+import com.arsdigita.xml.Element;
 
 public class CategoryExporter {
     
@@ -62,7 +58,7 @@ public class CategoryExporter {
     
     public void export(Category root,
             String key,
-            URL url,
+            URI url,
             String title,
             String description,
             String version,
@@ -80,7 +76,7 @@ public class CategoryExporter {
     
     public void export(Category root,
                        String key,
-                       URL url,
+                       URI url,
                        String title,
                        String description,
                        String version,
@@ -96,7 +92,7 @@ public class CategoryExporter {
     
     private void exportDomain(Category root,
                               String key,
-                              URL url,
+                              URI url,
                               String title,
                               String description,
                               String version,
@@ -125,7 +121,7 @@ public class CategoryExporter {
             if (!cat.equals(root)) {
                 Element term = domain.newChildElement("terms:term",
                         TERMS_XML_NS);
-                term.addAttribute("id", new Integer(id).toString());
+                term.addAttribute("id", Integer.valueOf(id).toString());
                 term.addAttribute("name", cat.getName());
                 term.addAttribute("inAtoZ", "false");
             }
@@ -137,7 +133,7 @@ public class CategoryExporter {
     
     private void exportHierarchy(Category root,
                                  String key,
-                                 URL url) {
+                                 URI url) {
         Map idMap = getIDMap(url);
 
         Element hier = new Element("terms:hierarchy",
@@ -210,7 +206,7 @@ public class CategoryExporter {
     
     private void exportItems(Category root,
                              String key,
-                             URL url) {
+                             URI url) {
         Map idMap = getIDMap(url);
         
         Element items = new Element("terms:itemMapping",
@@ -246,7 +242,7 @@ public class CategoryExporter {
         save(items, key + "-items.xml");
     }
     
-    private Map getIDMap(URL url) {
+    private Map getIDMap(URI url) {
         if (!m_idMaps.containsKey(url)) {
             m_idMaps.put(url, new HashMap());
         }

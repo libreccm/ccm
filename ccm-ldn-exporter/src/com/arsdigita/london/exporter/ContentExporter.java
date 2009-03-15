@@ -65,6 +65,10 @@ public class ContentExporter {
                                String systemID) {
         Session session = SessionManager.getSession();
 
+        if (!m_itemDir.exists() && !m_itemDir.mkdirs()) {
+            throw new UncheckedWrapperException(new IOException("mkdirs " + m_itemDir + " failed"));
+        }
+        
         DataCollection folders = session.retrieve(Folder.BASE_DATA_OBJECT_TYPE);
         Filter f = folders.addInSubqueryFilter(ACSObject.ID,
                                                "com.arsdigita.london.exporter.itemIDsInSection");
@@ -104,7 +108,10 @@ public class ContentExporter {
                 String path = (parent == null ? "" : m_paths.get(parent) + "/" + folder.getName());
                 m_paths.put(folder, path);
                 File dir = new File(m_itemDir, path);
-                dir.mkdir();
+                
+                if (!dir.exists() && !dir.mkdir()) {
+                    throw new UncheckedWrapperException(new IOException("mkdir " + dir + " failed"));
+                }
 
                 if (pel != null) {
                     s_log.debug("Adding " + el + " to " + pel);
@@ -172,7 +179,7 @@ public class ContentExporter {
         
         try {
             File dst = new File(m_itemDir, "index.xml");
-            FileOutputStream os = new FileOutputStream(dst);
+            FileOutputStream os = new FileOutputStream(dst, false);
             
             os.write(doc.toString(true).getBytes("UTF-8"));
             os.flush();
@@ -191,7 +198,7 @@ public class ContentExporter {
 
             OID oid = (OID)oids.next();
             
-            if (s_log.isDebugEnabled()) {
+            if (s_log.isInfoEnabled()) {
                 s_log.info("Exporting item " + oid);
             }
             
@@ -262,7 +269,7 @@ public class ContentExporter {
         Folder parent = (Folder)m_folders.get(base);
         
         if (s_log.isDebugEnabled()) {
-            s_log.warn("Item " + item.getOID() + " with " + ancestors + " parent " + base + " obj " + parent);
+            s_log.debug("Item " + item.getOID() + " with " + ancestors + " parent " + base + " obj " + parent);
         }
         
         return parent;

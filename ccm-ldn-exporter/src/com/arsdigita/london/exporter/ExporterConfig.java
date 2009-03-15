@@ -18,22 +18,17 @@
 
 package com.arsdigita.london.exporter;
 
-import com.arsdigita.runtime.AbstractConfig;
-
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.URLParameter;
-import com.arsdigita.util.UncheckedWrapperException;
-
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.apache.log4j.Logger;
+import com.arsdigita.runtime.AbstractConfig;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.URLParameter;
 
 public class ExporterConfig extends AbstractConfig {
-    private static final Logger s_log = 
-        Logger.getLogger(ExporterConfig.class);
     
     private Parameter m_adapters;
 
