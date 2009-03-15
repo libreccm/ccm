@@ -14,9 +14,9 @@ DEBIAN_HAS_FRONTEND=$orig_DEBIAN_HAS_FRONTEND
 
 # variables we use [especially in ccm-install.sh]
 
-name=ccm-ldn-xmlfeed
+name=ccm-cms-types-xmlfeed
 version=6.3.0
-appname=ccm-ldn-xmlfeed
+appname=ccm-cms-types-xmlfeed
 appversion=6.3.0
 confdir="/etc/ccm/conf"
 sharedjardir="/usr/share/java"

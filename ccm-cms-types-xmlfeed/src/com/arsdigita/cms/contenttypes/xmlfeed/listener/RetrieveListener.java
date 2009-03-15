@@ -80,7 +80,8 @@ public class RetrieveListener implements FormProcessListener{
     private static final Logger s_log = Logger.getLogger(RetrieveListener.class);
 
     // ===== Constants ======================================================= //
-    public static final String versionId = "$Id: RetrieveListener.java 755 2005-09-02 13:42:47Z sskracic $";
+    public static final String versionId =
+            "$Id: RetrieveListener.java 755 2005-09-02 13:42:47Z sskracic $";
     
     /** The key that the results are stored in the request under. */
     public static final String REQUEST_RESULTS_KEY = "XML Feed Results";

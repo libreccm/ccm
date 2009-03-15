@@ -15,7 +15,7 @@
     <initializer class="com.arsdigita.cms.contenttypes.xmlfeed.Initializer"/>
   </provides>
   <scripts>
-    <schema directory="ccm-ldn-xmlfeed"/>
+    <schema directory="ccm-cms-types-xmlfeed"/>
     <data class="com.arsdigita.cms.contenttypes.xmlfeed.Loader"/>
   </scripts>
 </load>

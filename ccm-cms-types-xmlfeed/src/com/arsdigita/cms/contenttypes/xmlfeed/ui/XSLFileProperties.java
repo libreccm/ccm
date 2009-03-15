@@ -90,7 +90,8 @@ public final class XSLFileProperties extends SecurityPropertyEditor
     private static Logger s_log = Logger.getLogger(XSLFileProperties.class);
 
     // ===== Constants ======================================================= //
-    public static final String versionId = "$Id: XSLFileProperties.java 755 2005-09-02 13:42:47Z sskracic $";
+    public static final String versionId =
+            "$Id: XSLFileProperties.java 755 2005-09-02 13:42:47Z sskracic $";
 
     public static final String MIME_TYPE = "application/xsl+xml";
     public static final String FILE_UPLOAD = FileUploadSection.FILE_UPLOAD;

@@ -90,7 +90,8 @@ public final class XMLFeed extends FormItem {
     private static Logger s_log = Logger.getLogger(XMLFeed.class);
 
     // ===== Constants ======================================================= //
-    public static final String versionID = "$Id: XMLFeed.java 755 2005-09-02 13:42:47Z sskracic $";
+    public static final String versionID =
+            "$Id: XMLFeed.java 755 2005-09-02 13:42:47Z sskracic $";
 
     /**
      * The fully qualified model name of the underlying data object, which in
@@ -223,7 +224,8 @@ public final class XMLFeed extends FormItem {
         DataAssociationCursor allFields = getForm().getComponents();
 
         while (allFields.next()) {
-            PersistentComponent c = (PersistentComponent) DomainObjectFactory.newInstance(allFields.getDataObject());
+            PersistentComponent c = (PersistentComponent)
+                    DomainObjectFactory.newInstance(allFields.getDataObject());
             if (c instanceof PersistentWidget && !(c instanceof PersistentSubmit)) {
                 names.add(((PersistentWidget) c).getParameterName());
             }
@@ -250,8 +252,8 @@ public final class XMLFeed extends FormItem {
                                    Component c) {
         super.generateXMLBody(state, parent, c);
         
-        String data = (String)state.getRequest()
-            .getAttribute(RetrieveListener.REQUEST_RESULTS_KEY);
+        String data = (String)state.getRequest().getAttribute(
+                                        RetrieveListener.REQUEST_RESULTS_KEY);
         
         Element label = parent.newChildElement(
             "bebop:label", Component.BEBOP_XML_NS);

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-ldn-xmlfeed"
+  name="ccm-cms-types-xmlfeed"
   prettyName="XML Feed"
   version="6.5.0"
   release="1"
@@ -16,7 +16,11 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Red Hat Web Application Framework is a platform for writing
+    The XML feed content type allows external XML feeds to act as data sources
+    in the CCM system.
+    
+    CCM is a collaboration and content management system which is based upon
+    the Red Hat Web Application Framework (WAF), which is a platform for writing
     database-backed web applications in Java.
   </ccm:description>
 </ccm:application>
