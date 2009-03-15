@@ -18,9 +18,16 @@
  */
 package com.arsdigita.cms.search;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.lucene.document.DateTools;
+import org.apache.lucene.document.DateTools.Resolution;
+import org.apache.lucene.search.Filter;
+import org.apache.lucene.search.RangeFilter;
+
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.search.ContentTypeFilterSpecification;
-import com.arsdigita.cms.search.ContentTypeFilterType;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.search.FilterSpecification;
 import com.arsdigita.search.FilterType;
@@ -33,12 +40,6 @@ import com.arsdigita.search.lucene.PartyFilter;
 import com.arsdigita.search.lucene.SqlFilter;
 import com.arsdigita.search.lucene.TypeSpecificFilter;
 import com.arsdigita.search.lucene.UnionFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import org.apache.lucene.search.DateFilter;
-import org.apache.lucene.search.Filter;
 
 
 public class LuceneQueryEngine extends BaseQueryEngine {
@@ -90,14 +91,17 @@ public class LuceneQueryEngine extends BaseQueryEngine {
     protected void addDateRangeFilter(List list,
                                       DateRangeFilterSpecification filter,
                                       String paramName) {
-        Date startDate = filter.getStartDate();
-        Date endDate = filter.getEndDate();
+        String startDate = (filter.getStartDate() == null ? null : DateTools.dateToString(filter.getStartDate(),
+                Resolution.MINUTE));
+        String endDate = (filter.getEndDate() == null ? null : DateTools.dateToString(filter.getEndDate(),
+                Resolution.MINUTE));
+        
         if (startDate != null && endDate != null) {
-            list.add(new DateFilter(paramName, startDate, endDate));
+            list.add(new RangeFilter(paramName, startDate, endDate, true, true));
         } else if (startDate != null) {
-            list.add(DateFilter.After(paramName, startDate));
+            list.add(RangeFilter.More(paramName, startDate));
         } else if (endDate != null) {
-            list.add(DateFilter.Before(paramName, startDate));
+            list.add(RangeFilter.Less(paramName, endDate));
         }
     }
 
@@ -125,7 +129,6 @@ public class LuceneQueryEngine extends BaseQueryEngine {
 
     protected void addContentTypeFilter(List list,
                                         ContentTypeFilterSpecification filter) {
-        List l = new ArrayList();
         ContentType[] types = filter.getTypes();
         if (types == null || types.length == 0) {
             return;

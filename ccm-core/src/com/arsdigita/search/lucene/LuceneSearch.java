@@ -18,7 +18,6 @@
  */
 package com.arsdigita.search.lucene;
 
-import com.arsdigita.search.Search;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,9 +27,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.DateField;
+import org.apache.lucene.document.DateTools;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.Filter;
@@ -39,6 +39,9 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 
+import com.arsdigita.search.Search;
+import com.arsdigita.util.UncheckedWrapperException;
+
 /**
  *
  * LuceneSearch is a wrapper for the Lucene search facilities. It contains
@@ -46,7 +49,7 @@ import org.apache.lucene.search.Query;
  * information for each hit.
  *
  * @author Richard Su (richard.su@alum.mit.edu)
- * @version $Id: LuceneSearch.java 1391 2006-11-24 15:02:21Z sskracic $
+ * @version $Id: LuceneSearch.java 1846 2009-03-06 04:17:36Z terry $
  *
  **/
 
@@ -110,9 +113,8 @@ public class LuceneSearch {
         try {
             LuceneConfig conf = LuceneConfig.getConfig();
             Analyzer analyzer = conf.getAnalyzer();
-            m_query = QueryParser.parse(searchString,
-                                        Document.CONTENT,
-                                        analyzer);
+            QueryParser parser = new QueryParser(Document.CONTENT, analyzer);
+            m_query = parser.parse(searchString);
         } catch (ParseException ex) {
             LOG.fatal("failed parsing the expression: " + searchString, ex);
         }
@@ -447,7 +449,11 @@ public class LuceneSearch {
         if (date == null || date.equals("")) {
             return null;
         } else {
-            return DateField.stringToDate(date);
+            try {
+                return DateTools.stringToDate(date);
+            } catch (java.text.ParseException e) {
+                throw new UncheckedWrapperException(e);
+            }
         }
     }
 

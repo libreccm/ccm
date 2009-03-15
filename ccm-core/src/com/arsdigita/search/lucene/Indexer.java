@@ -18,29 +18,28 @@
  */
 package com.arsdigita.search.lucene;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimerTask;
+
+import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.DateTools;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
+
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.RuntimeConfig;
-
-import java.io.File;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimerTask;
-import java.util.List;
-import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.DateField;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.Term;
 
 /**
  * Indexer.
@@ -52,8 +51,8 @@ import org.apache.lucene.index.Term;
 class Indexer extends TimerTask {
 
     public final static String versionId =
-        "$Id: Indexer.java 1517 2007-03-22 10:52:37Z sskracic $" +
-        " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+        "$Id: Indexer.java 1845 2009-03-05 13:39:09Z terry $" +
+        " by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger LOG =
         Logger.getLogger(Indexer.class);
@@ -177,7 +176,7 @@ class Indexer extends TimerTask {
             }
             IndexReader ir = IndexReader.open(m_index);
             try {
-                ir.delete(new Term(Document.ID, doc.getID().toString()));
+                ir.deleteDocuments(new Term(Document.ID, doc.getID().toString()));
             } finally {
                 ir.close();
             }
@@ -205,7 +204,7 @@ class Indexer extends TimerTask {
         org.apache.lucene.document.Document result =
             new org.apache.lucene.document.Document();
 
-        result.add(Field.Keyword(Document.ID, doc.getID().toString()));
+        result.add(new Field(Document.ID, doc.getID().toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
         String language = "";
         String country = "";
@@ -214,36 +213,29 @@ class Indexer extends TimerTask {
             language = locale.getLanguage();
             country = locale.getCountry();
         }
-        result.add(Field.Keyword(Document.LANGUAGE, language));
-        result.add(Field.Keyword(Document.COUNTRY, country));
-
-        result.add(Field.Keyword(Document.TYPE, doc.getType()));
-        result.add(Field.Keyword(Document.TYPE_SPECIFIC_INFO,
-                                 toString(doc.getTypeSpecificInfo())));
-        result.add(Field.Keyword(Document.TITLE, doc.getTitle()));
-        result.add(Field.Keyword(Document.SUMMARY,
-                                 toString(doc.getSummary())));
-        result.add(Field.Text(Document.CONTENT, toString(doc.getContent())));
-        result.add(Field.Keyword(Document.CREATION_DATE,
-                                 toString(doc.getCreationDate())));
-        result.add(Field.Keyword(Document.CREATION_PARTY,
-                                 toString(doc.getCreationParty())));
-        result.add(Field.Keyword(Document.LAST_MODIFIED_DATE,
-                                 toString(doc.getLastModifiedDate())));
-        result.add(Field.Keyword(Document.LAST_MODIFIED_PARTY,
-                                 toString(doc.getLastModifiedParty())));
-        result.add(Field.Keyword(Document.CONTENT_SECTION,
-                                 toString(doc.getContentSection())));
+        result.add(new Field(Document.LANGUAGE, language, Field.Store.YES, Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.COUNTRY, country, Field.Store.YES, Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.TYPE, doc.getType(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.TYPE_SPECIFIC_INFO, toString(doc.getTypeSpecificInfo()), Field.Store.YES,
+                Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.TITLE, toString(doc.getTitle()), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.SUMMARY, toString(doc.getSummary()), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.CONTENT, new StringReader(toString(doc.getContent()))));
+        result.add(new Field(Document.CREATION_DATE, DateTools.timeToString(doc.getCreationDate().getTime(),
+                DateTools.Resolution.MINUTE), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.CREATION_PARTY, toString(doc.getCreationParty()), Field.Store.YES,
+                Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.LAST_MODIFIED_DATE, DateTools.timeToString(doc.getLastModifiedDate().getTime(),
+                DateTools.Resolution.MINUTE), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.LAST_MODIFIED_PARTY, toString(doc.getLastModifiedParty()), Field.Store.YES,
+                Field.Index.NOT_ANALYZED));
+        result.add(new Field(Document.CONTENT_SECTION, toString(doc.getContentSection()), Field.Store.YES,
+                Field.Index.NOT_ANALYZED));
 
         return result;
     }
-
-    private static final String toString(Date date) {
-        return date == null ? "" : DateField.dateToString(date);
-    }
-
+    
     private static final String toString(Object obj) {
         return obj == null ? "" : obj.toString();
     }
-
 }
