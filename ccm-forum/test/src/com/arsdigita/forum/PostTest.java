@@ -37,7 +37,7 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
 
 public class PostTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: PostTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:26:27 $";
+    public static final String versionId = "$Id: PostTest.java 1844 2009-03-05 13:25:28Z terry $ by $Author: terry $, $DateTime: 2004/08/17 23:26:27 $";
 
     protected static final String SUBJECT = "This is the subject";
     protected static final String BODY    = "<p>This is the <b>body</b></p>";
@@ -190,7 +190,7 @@ public class PostTest extends BaseTestCase {
     }
 
     public void testSendNotifications() {
-        m_msg.sendNotifications();
+        m_msg.sendNotifications(null);
     }
 
     public void testSubscriptionCreation() {

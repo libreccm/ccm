@@ -27,7 +27,7 @@ import com.arsdigita.tools.junit.framework.BaseTestCase;
 
 public class ThreadSubscriptionTest extends BaseTestCase {
 
-    public static final String versionId = "$Id: ThreadSubscriptionTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:26:27 $";
+    public static final String versionId = "$Id: ThreadSubscriptionTest.java 1844 2009-03-05 13:25:28Z terry $ by $Author: terry $, $DateTime: 2004/08/17 23:26:27 $";
 
     private ThreadSubscription m_subscription;
     private MessageThread m_thread;
@@ -96,7 +96,7 @@ public class ThreadSubscriptionTest extends BaseTestCase {
         m_subscription.subscribe(user);
         m_subscription.save();
 
-        DomainCollection subs = ThreadSubscription.getSubsForUser(user);
+        DomainCollection subs = ThreadSubscription.getSubsForUser(user, null);
 
         boolean found = false;
         while (subs.next()) {
