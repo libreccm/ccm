@@ -18,6 +18,8 @@
   <ccm:description>
     The XML feed content type allows external XML feeds to act as data sources
     in the CCM system.
+
+    It is a kind of a simplified ccm-cms-type-siteproxy content type.
     
     CCM is a collaboration and content management system which is based upon
     the Red Hat Web Application Framework (WAF), which is a platform for writing
