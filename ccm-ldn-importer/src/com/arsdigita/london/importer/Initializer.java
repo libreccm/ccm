@@ -30,7 +30,6 @@ import com.arsdigita.runtime.RuntimeConfig;
  * PDL for {@link RemoteOidMapping}.
  *
  * @author Sebastian Skracic (sskracic@redhat.com)
- * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
 

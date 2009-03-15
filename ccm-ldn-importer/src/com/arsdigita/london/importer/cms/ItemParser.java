@@ -78,7 +78,7 @@ public class ItemParser extends DomainObjectParser {
      * change from one CCM instance to another.  Importer will not try
      * to create any of those.
      */
-    public static final String[] GLOBAL_OID_TYPES = new String[] {
+    static final String[] GLOBAL_OID_TYPES = new String[] {
         "com.arsdigita.cms.MimeType",
         "com.arsdigita.cms.contenttypes.IsoCountry"
       };
@@ -342,7 +342,7 @@ public class ItemParser extends DomainObjectParser {
      * @return the end of lifecycle date, might be null
      */
     public Date getArchiveDate() {
-        return m_archiveDate;
+        return (Date)m_archiveDate.clone();
     }
 
 
@@ -397,7 +397,7 @@ public class ItemParser extends DomainObjectParser {
             count = assocCount.intValue();
         }
         count++;
-        parentObject.put(propName + COUNT_SUFFIX, new Integer(count));
+        parentObject.put(propName + COUNT_SUFFIX, Integer.valueOf(count));
         parentObject.put(propName + COUNT_SUFFIX + count, childObject);
         m_currentDataObject = parentObject;
         m_objectStack.pop();
@@ -544,7 +544,7 @@ public class ItemParser extends DomainObjectParser {
      * retrieved and stored in the returned Map, and DO_NOT_SAVE flag set to TRUE.
      */
     private Map getDataObject(OID srcOid) {
-        String type = getTypeFromOid(srcOid.toString());
+        String type = srcOid.getObjectType().getQualifiedName();
         Map newDataObject = new HashMap();
         newDataObject.put(OID_ATTR, srcOid);
         // For MimeType, OIDs are "global"
@@ -580,25 +580,11 @@ public class ItemParser extends DomainObjectParser {
     }
 
 
-
-    // <cms:item oid="[com.arsdigita.london.cms.dublin.types.DublinArticle:{id=34094}]">
-    private String getTypeFromOid(String oid) {
-        return oid.substring(0, oid.indexOf("-"));
-        //return oid.substring(oid.indexOf('[')+1, oid.indexOf(':'));
-    }
-
-    private String getTypeFromOid(OID oid) {
-        return getTypeFromOid(oid.toString());
-    }
-
-
-
-
     private ACSObject createACSObject(DataObject dobj, Map properties) {
         String domainClass = (String) properties.get(DEFAULT_DOMAIN_CLASS);
         if (domainClass == null) {
             // Default to persistence ObjectType -- possibly dangerous.
-            domainClass = getTypeFromOid(dobj.getOID());
+            domainClass = dobj.getOID().getObjectType().getQualifiedName();
         }
         debugLog("Creating " + domainClass + " ...");
         try {
@@ -685,25 +671,30 @@ public class ItemParser extends DomainObjectParser {
             FileInputStream in = null;
             try {
                 in = new FileInputStream(lobFile);
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+    
+                byte[] buffer = new byte[1024];
+                int length = -1;
+                try {
+                    while ((length = in.read(buffer)) != -1) {
+                        os.write(buffer, 0, length);
+                    }
+                } catch (IOException ioe) {
+                    throw new UncheckedWrapperException(ioe);
+                }
+                byte[] content = os.toByteArray();
+                dobj.put(key, content);
+                debugLog("Successfully loaded file " + lobFile
+                            + ", length: " + content.length + " bytes");
             } catch (FileNotFoundException e) {
                 s_log.error("Lob file: " + lobFile + " does not exist!", e);
-                return;
-            }
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-
-            byte[] buffer = new byte[1024];
-            int length = -1;
-            try {
-                while ((length = in.read(buffer)) != -1) {
-                    os.write(buffer, 0, length);
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    s_log.warn("Failed to close " + lobFile, e);
                 }
-            } catch (IOException ioe) {
-                throw new UncheckedWrapperException(ioe);
             }
-            byte[] content = os.toByteArray();
-            dobj.put(key, content);
-            debugLog("Successfully loaded file " + lobFile
-                        + ", length: " + content.length + " bytes");
         } else {
             s_log.warn("Don't know how to handle property " +
                        key + ", type: " + propertyClass.getName());

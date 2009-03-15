@@ -59,7 +59,7 @@ public class DomainObjectMapper {
             getSystemID(),
             src.toString(),
             dst.getOID().toString());
-        //mapping.save();
+        mapping.save();
     }
 
     public String getSystemID() {

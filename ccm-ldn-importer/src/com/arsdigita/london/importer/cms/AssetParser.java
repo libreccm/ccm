@@ -1,13 +1,10 @@
 package com.arsdigita.london.importer.cms;
 
-import com.arsdigita.london.importer.DomainObjectMapper;
+import java.io.File;
 
 import com.arsdigita.cms.Asset;
 import com.arsdigita.cms.CMS;
-
-import java.io.File;
-
-import org.apache.log4j.Logger;
+import com.arsdigita.london.importer.DomainObjectMapper;
 
 /**
  *   Asset importer, handling the &lt;cms:asset&gt; XML subblock.
@@ -15,8 +12,6 @@ import org.apache.log4j.Logger;
  *  @see com.arsdigita.london.importer
  */
 public class AssetParser extends ItemParser {
-    private static Logger s_log =
-        Logger.getLogger(AssetParser.class);
 
     public AssetParser(File lobDir, DomainObjectMapper mapper) {
         this("asset", CMS.CMS_XML_NS, Asset.BASE_DATA_OBJECT_TYPE, lobDir, mapper);

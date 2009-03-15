@@ -1,8 +1,9 @@
 
 package com.arsdigita.london.importer;
 
-import com.arsdigita.domain.DomainObject;
 import java.io.File;
+
+import com.arsdigita.domain.DomainObject;
 
 
 /**
@@ -13,7 +14,6 @@ import java.io.File;
  */
 public abstract class DomainObjectParser extends AbstractTagParser {
 
-    private String m_objectType;
     private DomainObject m_object;
     private File m_lobDir;
     private DomainObjectMapper m_mapper;
@@ -34,8 +34,6 @@ public abstract class DomainObjectParser extends AbstractTagParser {
                               File lobDir,
                               DomainObjectMapper mapper) {
         super(tagName, tagURI);
-
-        m_objectType = objectType;
         m_lobDir = lobDir;
         m_mapper = mapper;
     }

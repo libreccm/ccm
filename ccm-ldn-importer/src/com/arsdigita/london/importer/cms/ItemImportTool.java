@@ -18,29 +18,25 @@
 
 package com.arsdigita.london.importer.cms;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-import com.arsdigita.london.importer.ParserDispatcher;
-import com.arsdigita.london.importer.DomainObjectMapper;
-import com.arsdigita.london.importer.ImportParser;
-
-import com.arsdigita.util.UncheckedWrapperException;
-
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
-
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentItem;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
-
 import org.apache.log4j.Logger;
+
+import com.arsdigita.cms.ContentBundle;
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.Folder;
+import com.arsdigita.london.importer.DomainObjectMapper;
+import com.arsdigita.london.importer.ImportParser;
+import com.arsdigita.london.importer.ParserDispatcher;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
+import com.arsdigita.util.UncheckedWrapperException;
 
 /**
  *  Standalone command-line tool which invokes the importer.
@@ -60,6 +56,13 @@ public class ItemImportTool extends Program {
         super("Item Import Tool",
               "1.0.0",
               "INDEX-FILE ITEM-DIR ASSET-DIR");
+    }
+
+    public ItemImportTool(boolean startup) {
+        super("Item Import Tool",
+              "1.0.0",
+              "INDEX-FILE ITEM-DIR ASSET-DIR",
+              startup);
     }
 
     protected void doRun(CommandLine cmdLine) {

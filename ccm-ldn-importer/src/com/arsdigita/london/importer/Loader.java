@@ -18,24 +18,13 @@
 
 package com.arsdigita.london.importer;
 
-import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.loader.PackageLoader;
-
-import org.apache.log4j.Logger;
+import com.arsdigita.runtime.ScriptContext;
 
 /**
  * Loader for importer application.
- *
- * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/01/30 08:35:49 $";
-
-    private static final Logger s_log = Logger.getLogger(Loader.class);
-
     public void run(final ScriptContext ctx) {
         // Nada yet
     }

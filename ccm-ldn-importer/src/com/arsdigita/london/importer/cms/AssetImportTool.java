@@ -18,20 +18,15 @@
 
 package com.arsdigita.london.importer.cms;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-
-import com.arsdigita.london.importer.ParserDispatcher;
-import com.arsdigita.london.importer.DomainObjectMapper;
-import com.arsdigita.london.importer.ImportParser;
-
 import java.io.File;
-
-import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 
-import com.arsdigita.cms.ContentSection;
+import com.arsdigita.london.importer.DomainObjectMapper;
+import com.arsdigita.london.importer.ImportParser;
+import com.arsdigita.london.importer.ParserDispatcher;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
 
 
 /**
@@ -47,14 +42,11 @@ import com.arsdigita.cms.ContentSection;
  */
 public class AssetImportTool extends Program {
 
-    private List m_lazyItems;
-
     public AssetImportTool() {
         super("Asset Import Tool",
               "1.0.0",
               "INDEX-FILE ASSET-DIR");
     }
-
 
     protected void doRun(CommandLine cmdLine) {
         final String[] args = cmdLine.getArgs();
@@ -63,9 +55,6 @@ public class AssetImportTool extends Program {
             System.exit(1);
         }
         final DomainObjectMapper mapper = new DomainObjectMapper();
-
-        ContentSection section = (ContentSection)ContentSection
-            .retrieveApplicationForPath("/content/");
 
         Transaction session = new Transaction() {
                 public void doRun() {

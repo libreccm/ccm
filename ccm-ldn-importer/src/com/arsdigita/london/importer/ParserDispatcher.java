@@ -58,13 +58,20 @@ public class ParserDispatcher extends DefaultHandler {
         InputStream is = null;
         try {
             is = new FileInputStream(new File(importFile));
+            XML.parse(is, this);
         } catch (IOException ex) {
             throw new UncheckedWrapperException(
                 "cannot load file " + importFile,
                 ex);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    s_log.warn("Failed to close " + importFile, e);
+                }
+            }
         }
-
-        XML.parse(is, this);
     }
 
     /**
