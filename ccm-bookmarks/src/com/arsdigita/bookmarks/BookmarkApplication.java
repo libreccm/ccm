@@ -31,7 +31,8 @@ import java.math.BigDecimal;
 
 public class BookmarkApplication extends Application {
 
-    public static final String versionId = "$Id: //apps/bookmarks/dev/src/com/arsdigita/bookmarks/BookmarkApplication.java#3 $ by $Author: dennis $, $DateTime: 2003/07/10 14:47:30 $";
+    public static final String versionId =
+            "$Id: //apps/bookmarks/dev/src/com/arsdigita/bookmarks/BookmarkApplication.java#3 $ by $Author: dennis $, $DateTime: 2003/07/10 14:47:30 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.workspace.BookmarkApplication";

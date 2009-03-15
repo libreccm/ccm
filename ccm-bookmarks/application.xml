@@ -13,6 +13,11 @@
     <ccm:contact uri="mailto:info@runtime-collective.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    Bookmarks application for Aplaws.
+    Bookmarks application for CCM. Displays bookmarks for a portal.
+
+
+    CCM is a collaboration and content management system which is based upon
+    the Red Hat Web Application Framework (WAF), which is a platform for writing
+    database-backed web applications in Java.
   </ccm:description>
 </ccm:application>
