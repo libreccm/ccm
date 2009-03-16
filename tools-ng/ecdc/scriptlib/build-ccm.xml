@@ -11,7 +11,7 @@
 <project name="load">
 
 	<target name="load-bundle">
-		<echo>Loading bundle ${bundle.folder} into ${ccm.home}</echo>
+		<echo>Loading bundle ${ccm.bundle.folder} into ${ccm.home}</echo>
 		<copy file="${ccm.bundle.folder}/cfg/applications.cfg"
               tofile=".tmp.applications.cfg" overwrite="yes" />
 		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />

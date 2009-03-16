@@ -10,9 +10,15 @@
 		<fileset dir="${ccm.tools.lib.dir}" includes="*.jar" />
 	</path>
 
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+      <classpath>
+        <pathelement location="${ccm.tools.lib.dir}/ant-contrib.jar"/>
+      </classpath>
+    </taskdef>
+
 
 	<!-- Read configuration files. First from project dir, then add 
-		 requirred defaults from ecdc directory                                  -->
+		 requirred defaults from ecdc directory                              -->
 	<property file="${ccm.project.dir}/local.runtime.properties" />
 	<property file="${ccm.ecdc.conf.dir}/runtime.properties" />
 
@@ -21,7 +27,6 @@
 
 	<property file="${ccm.project.dir}/local.ccm.properties" />
 	<property file="${ccm.ecdc.conf.dir}/ccm.properties" />
-
 
 	<path id="ccm.classpath">
 		<path refid="ccm.tools.classpath"/>
@@ -34,6 +39,8 @@
 	</condition>
 	
 	<!-- http://antelope.tigris.org/ -->
+    <!--
 	<taskdef classpathref="ccm.tools.classpath" resource="ise/antelope/tasks/antlib.xml" />
+    -->
 
 </project>

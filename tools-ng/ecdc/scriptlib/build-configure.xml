@@ -23,12 +23,13 @@
 			<arg value="${ccm.project.dir}/project.xml" />
 		</java>
 		<if>
-			<bool>
-				<not>
-					<equals arg1="${project.validation.errors}" arg2="" />
-				</not>
-			</bool>
+		  <equals arg1="${project.validation.errors}" arg2="" />
+          <then>
+              <echo>Validating the schema of project.xml successful</echo>
+          </then>
+		  <else>
 			<fail message="${project.validation.errors}" />
+		  </else>
 		</if>
 						
 		<!--  Building .ccm.classpath for eclipse IDE -->
@@ -60,10 +61,10 @@
              to include into the classpath  for each module included in the
              project (~/build/classes ~/build/sql ~/lib ~/pdl )              -->
 		<!--
-		<xslt style="${tools.xsl.dir}/classpath-template.xsl" in="project.xml"
-              out="ccm.classpath" classpathref="tools.classpath" force="yes">
-			<param name="base.dir" expression="${project.dir}" />
-			<param name="shared.lib.dist.dir" expression="${tools.lib.dir}" />
+		<xslt style="${ccm.tools.xsl.dir}/classpath-template.xsl" in="project.xml"
+              out="ccm.classpath" classpathref="ccm.tools.classpath" force="yes">
+			<param name="base.dir" expression="${ccm.project.dir}" />
+			<param name="shared.lib.dist.dir" expression="${ccm.tools.lib.dir}" />
 		</xslt>
 		-->
 	</target>

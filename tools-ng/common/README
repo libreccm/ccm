@@ -1,0 +1,29 @@
+tools-ng/common
+
+Next Generation Tools
+Tools for development, installation and maintenance of
+new CCM / APLAWS, standards compliant deployment and execution context.
+
+Subdir common contains directories and files, used by the development 
+environment(s) as well as user installation and deployment scripts
+
+CURRENTLY EVERYTHING HERE IS WORK IN PROGRESS
+
+classes/
+
+
+lib/
+  Set of jar-files used by several tools (esp. to process xml files)
+  and required files vor compilation (e.g. servlet API, JDBC drivers, etc)
+
+src/
+
+
+xsd/
+
+
+xsl/
+
+
+README
+  This file

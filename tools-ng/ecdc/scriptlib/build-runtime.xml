@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--  Already definded:
-		ccm.project.dir:		base dir of the development project
+		ccm.project.dir:		base dir of the development project (environment)
 		app.server.bundles.zip	name of the installation file
 		app.server.parent.dir	name of the dir to install into the server into
-		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_HOME)
+		app.server.deploy.dir	dir the server is to be installed into (i.e. CATALINA_HOME)
 		app.server.conf.dir		name of the servers configuration dir
-		webapp.dist.dir			distribution dir for web applications      -->
+		webapp.dist.dir			distribution dir for ccm web application      -->
 
 <project name="appserver" default="start">
 
@@ -25,6 +25,10 @@
 		<!-- Copy additional files needed for operation   -->
 		<copy file="ccm-core/lib/xercesImpl.jar"
               todir="${app.server.deploy.dir}/common/endorsed" preservelastmodified="true"/>
+		<copy file="tools-ng/dev-lib/ojdbc14.jar"
+              todir="${app.server.deploy.dir}/lib" preservelastmodified="true"/>
+		<copy file="tools-ng/dev-lib/postgresql-jdbc-8.2.506.jar"
+              todir="${app.server.deploy.dir}/lib" preservelastmodified="true"/>
 	</target>
 
 	<target name="start">
