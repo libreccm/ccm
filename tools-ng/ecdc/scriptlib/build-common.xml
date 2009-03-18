@@ -37,7 +37,27 @@
 	<condition property="correct.ant.version">
 		<antversion atleast="1.7.0" />
 	</condition>
+
+	<echo>
+		ccm.project.dir  is  ${ccm.project.dir}
+	</echo>
+    	<property name="ccm.devel.lib.dir" value="${ccm.project.dir}/tools-ng/devel/lib"/>
+    	<property name="ccm.tools.lib.dir" value="${ccm.project.dir}/tools-ng/common/lib"/>
+    	<property name="ccm.tools.rh-jdo.dir" value="${ccm.project.dir}/tools-ng/common/classes"/>
+    	<property name="ccm.home" value="${app.server.deploy.dir}"/>
+    	<property name="catalina.home" value="${app.server.deploy.dir}"/>
+    	<property name="j2ee.webapp.dir" value="${app.server.deploy.dir}/webapps/ccm"/>
+    	<property name="deploy.dir" value="${app.server.deploy.dir}"/>
+
+    	<property name="ccm.config.dir" value="${ccm.project.dir}/tools-ng/common"/>
+	<property name="shared.lib.dist.dir" value="${ccm.tools.lib.dir}"/>
+	<property name="ccm.tools.dir" value="${ccm.project.dir}"/>
+	<property name="webapp.dist.dir" value="${ccm.project.dir}/distribution"/>
 	
+	<echo>  property  ccm.home  is  ${ccm.home}
+		property  ccm.config.dir  is  ${ccm.config.dir}
+	</echo>
+
 	<!-- http://antelope.tigris.org/ -->
     <!--
 	<taskdef classpathref="ccm.tools.classpath" resource="ise/antelope/tasks/antlib.xml" />

@@ -54,14 +54,27 @@
   <xsl:template name="SharedProperties">
     <xsl:variable name="name" select="@name"/>
     <xsl:variable name="prettyName" select="@prettyName"/>
+    <!-- just in case: 
+         check environment to set properties not already set by parent scripts  -->
     <property environment="env"/>
+    <!-- Development libraries requirred by compile / build / deploy step -->
+    <property value="${{env.CCM_DEVEL_LIBS}}" name="ccm.devel.lib.dir"/>
+    <!-- Development libraries requirred by development tools (ant scripts) -->
+    <property value="${{env.CCM_TOOLS_LIBS}}" name="ccm.tools.lib.dir"/>
+    <!-- Development libraries requirred by Red Hat JDO enhancer ANT task preliminary!  -->
+    <property value="${{env.CCM_TOOLS_JDO}}" name="ccm.tools.rh-jdo.dir"/>
+
     <property value="${{env.CATALINA_HOME}}" name="catalina.home.dir"/>
-    <property value="${{env.CCM_CONFIG_HOME}}" name="ccm.config.dir"/>
-    <property value="${{env.CCM_CONFIG_LIB_DIR}}" name="ccm.config.lib.dir"/>
     <property value="${{env.CCM_HOME}}" name="ccm.home"/>
-    <property value="${{env.CCM_SHARED_LIB_DIST_DIR}}" name="shared.lib.dist.dir"/>
-    <property value="${{env.CCM_TOOLS_HOME}}" name="ccm.tools.dir"/>
     <property value="${{env.CCM_WEBAPP_DIST_DIR}}" name="webapp.dist.dir"/>
+
+    <!-- no longer valid! Still used by prebuild modules, has to be adjusted  -->
+    <property value="${{env.CCM_SHARED_LIB_DIST_DIR}}" name="shared.lib.dist.dir"/>
+    <!-- no longer used
+    <property value="${{env.CCM_CONFIG_HOME}}" name="ccm.config.dir"/>        -->
+    <!-- no longer used
+    <property value="${{env.CCM_TOOLS_HOME}}" name="ccm.tools.dir"/>          -->
+
     <property value="ant.properties" name="property.file"/>
     <property file="${{property.file}}"/>
     <property name="app.name" value="{$name}"/>
@@ -113,7 +126,8 @@
     <property value="xml" name="pmd.format"/>
     <property value="${{build.dir}}/pmd" name="pmd.report.dir"/>
     <property value="pmd.${{pmd.format}}" name="pmd.report.file"/>
-    <property value="${{shared.lib.dist.dir}}/jdo" name="jdo.lib.dir"/>
+    <!-- Presumably no longer used does not exist in devel environment, Red Hat made their own
+    <property value="${{shared.lib.dist.dir}}/jdo" name="jdo.lib.dir"/>  -->
     <property value="com.arsdigita.persistence.pdl.PDL" name="ddl.generator.classname"/>
     <property value="com.arsdigita.persistence.pdl.TestPDLGenerator" name="test.ddl.generator.classname"/>
     <xsl:choose>
@@ -133,18 +147,20 @@
         <include name="conf"/>
       </dirset>
       <pathelement path="${{java.class.path}}"/>
+      <!-- does no longer exist i APLAWS 1.0.4 
       <fileset dir="${{ccm.tools.dir}}">
         <include name="lib/security/*.jar"/>
       </fileset>
+      --> 
     </path>
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
       <classpath>
-        <pathelement location="${{shared.lib.dist.dir}}/ant-contrib.jar"/>
+        <pathelement location="${{ccm.tools.lib.dir}}/ant-contrib.jar"/>
       </classpath>
     </taskdef>
     <taskdef name="jdoenhance" classname="com.redhat.ccm.tools.ant.taskdefs.JDOEnhance">
       <classpath>
-        <pathelement location="${{ccm.config.dir}}/classes"/>
+        <pathelement location="${{ccm.tools.rh-jdo.dir}}"/>
       </classpath>
     </taskdef>
   </xsl:template>
@@ -172,11 +188,14 @@
       <xsl:variable name="name" select="@name"/>
       <xsl:variable name="location" select="@location"/>
       <xsl:variable name="version" select="@version"/>
+      <!-- try to find prebuild modules  -->
       <xsl:choose>
         <xsl:when test="$location">
           <property value="{$location}" name="apps.{$name}.location"/>
         </xsl:when>
         <xsl:otherwise>
+	  <!-- shared.lib.dist.dir was /usr/share/java contain ccm apps installed by rpm 
+               no longer valid!                                                 -->
           <property value="${{shared.lib.dist.dir}}" name="apps.{$name}.location"/>
         </xsl:otherwise>
       </xsl:choose>
@@ -223,6 +242,7 @@
       <property value="{$appname}" name="apps.{$name}.name"/>
       <property value="{$appprettyname}" name="apps.{$name}.prettyname"/>
       <property value="{$appversion}" name="apps.{$name}.version"/>
+      <!-- target webapp directory name taken from application.xml  -->
       <xsl:choose>
         <xsl:when test="$appwebapp">
           <property value="{$appwebapp}" name="apps.{$name}.webapp.name"/>
@@ -285,7 +305,7 @@
     <xsl:param name="type" select="'build'"/>
     <xsl:param name="requires" select="'all'"/>
     <path id="{$target}.{$type}.classpath">
-      <pathelement path="${{ccm.config.dir}}/lib/xerces.jar"/>
+      <pathelement path="${{ccm.tools.lib.dir}}/xerces.jar"/>
       <xsl:if test="/ccm:project/ccm:build/ccm:application[@name = $target]">
         <path refid="{$target}.{$type}.classpath.internal"/>
       </xsl:if>
@@ -334,7 +354,7 @@
             <xsl:variable name="buildRequires"
             select="/ccm:project/ccm:application[@name = $fullname]/ccm:dependencies/ccm:buildRequires"/>
             <xsl:if test="count($buildRequires) > 0">
-              <fileset dir="${{ccm.config.lib.dir}}">
+              <fileset dir="${{ccm.devel.lib.dir}}">
               <xsl:for-each select="$buildRequires">
                 <xsl:variable name="name" select="@name"/>
                 <xsl:variable name="version" select="@version"/>
@@ -461,7 +481,7 @@
                 <include name="jdori.jar"/>
                 <include name="jdori-enhancer.jar"/>
               </fileset>
-              <fileset dir="${{ccm.config.lib.dir}}">
+              <fileset dir="${{ccm.devel.lib.dir}}">
                 <include name="xmlParserAPIs.jar"/>
               </fileset>
             </classpath>
@@ -1171,7 +1191,6 @@
             <classpath refid="server.tests.classpath"/>
             <sysproperty key="ccm.home" value="${{ccm.home}}"/>
             <sysproperty value="${{junit.initializer.classname}}" key="waf.runtime.init"/>
-            <sysproperty key="j2ee.webapp.dir" value="${{deploy.dir}}"/>
             <sysproperty key="junit.usefail" value="${{junit.usefail}}"/>
             <sysproperty key="junit.test" value="${{junit.test}}"/>
             <sysproperty key="junit.usecactus" value="${{junit.usecactus}}"/>
@@ -1436,9 +1455,11 @@
         <pathconvert dirsep="/" pathsep=":" property="apps.{$name}.pdl.path.internal" refid="apps.{$name}.pdl.path.internal"/>
       </xsl:for-each>
       <path id="ccm.java.ext.dirs">
+        <!-- no longer present in APLAWS 1.0.4
         <dirset dir="${{ccm.tools.dir}}">
           <include name="lib/security"/>
         </dirset>
+        -->
         <pathelement path="${{java.ext.dirs}}"/>
       </path>
       <pathconvert dirsep="/" pathsep=":" property="ccm.java.ext.dirs" refid="ccm.java.ext.dirs"/>
@@ -1451,14 +1472,13 @@
       <condition property="junit.jvmargs" value="-Djunit.debug=false">
         <not><isset property="junit.jvmargs"/></not>
       </condition>
-      <condition property="deploy.dir" value="${{j2ee.webapp.dir}}">
-        <and>
-          <not><isset property="deploy.dir"/></not>
-          <isset property="j2ee.webapp.dir"/>
-        </and>
-      </condition>
+
+      <!--  Deployment directory structure   -->
       <condition property="deploy.dir" value="deploy">
         <not><isset property="deploy.dir"/></not>
+      </condition>
+      <condition property="deploy.webapp.dir" value="${{deploy.dir}}/webapps">
+        <not><isset property="deploy.webapp.dir"/></not>
       </condition>
       <condition property="deploy.conf.dir" value="${{deploy.dir}}/conf">
         <not><isset property="deploy.conf.dir"/></not>
@@ -1475,27 +1495,34 @@
       <condition property="deploy.system.jars.dir" value="${{deploy.dir}}/webapps/WEB-INF/system">
         <not><isset property="deploy.system.jars.dir"/></not>
       </condition>
-      <condition property="deploy.webapp.dir" value="${{deploy.dir}}/webapps">
-        <not><isset property="deploy.webapp.dir"/></not>
-      </condition>
       <condition property="deploy.war.dir" value="${{deploy.dir}}/webapps">
         <not><isset property="deploy.war.dir"/></not>
       </condition>
+
       <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
         <xsl:variable name="name" select="@name"/>
         <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+        <!-- property shared does not work / not documented how to use  
+             setting in modules application.xml as part of application has no effect       -->
         <xsl:variable name="shared" select="$application/@shared"/>
+
         <property value="${{deploy.webapp.dir}}/${{apps.{$name}.webapp.name}}" name="deploy.dir.{$name}"/>
+        <!--         -->
         <xsl:choose>
           <xsl:when test="$shared = 'false'">
+            <!-- will copy modules classes/libs into module's WEB-INF directory. Works. -->
             <property value="${{deploy.dir.{$name}}}/WEB-INF/classes"       name="deploy.classes.dir.{$name}"/>
             <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"           name="deploy.lib.dir.{$name}"/>
+        <!--         --> 
           </xsl:when>
           <xsl:otherwise>
+            <!-- will copy modules classes/libs into shared directory. 6.1 - 6.4: webapps/WEB-INF non-standard 
+                 up to 6.4 the only metheod that works.                                                         -->
             <property value="${{deploy.shared.classes.dir}}" name="deploy.classes.dir.{$name}"/>
             <property value="${{deploy.shared.lib.dir}}"     name="deploy.lib.dir.{$name}"/>
           </xsl:otherwise>
         </xsl:choose>
+
         <property value="${{deploy.dir.{$name}}}/WEB-INF/src"           name="deploy.src.dir.{$name}"/>
         <property value="${{deploy.dir.{$name}}}/WEB-INF/doc"           name="deploy.doc.dir.{$name}"/>
         <property value="${{deploy.dir.{$name}}}/WEB-INF/test"          name="deploy.test.dir.{$name}"/>
@@ -1503,6 +1530,7 @@
         <property value="${{deploy.dir.{$name}}}/WEB-INF/api"           name="deploy.api.dir.{$name}"/>
         <property value="${{deploy.dir.{$name}}}/WEB-INF/bin"           name="deploy.bin.dir.{$name}"/>
       </xsl:for-each>
+
       <condition property="log4j.configuration.sysproperty" value="file://${{ccm.home}}/conf/log4j.xml">
         <and>
           <not><isset property="log4j.configuration.sysproperty"/></not>
