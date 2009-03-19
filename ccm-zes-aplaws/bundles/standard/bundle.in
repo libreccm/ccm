@@ -1,4 +1,4 @@
-BUNDLE_NAME=aplaws-plus-standard
-BUNDLE_PRETTY_NAME="APLAWS+ Standard Bundle"
+BUNDLE_NAME=aplaws-plus-shp
+BUNDLE_PRETTY_NAME="APLAWS+ SHP Standard Bundle"
 VERSION=1.0.5devel
 RELEASE=1
