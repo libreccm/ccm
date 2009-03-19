@@ -75,7 +75,8 @@ public class StringAd extends SimpleAdapter {
             return;
         }
 
-        oracle.sql.CLOB clob =
+        /* Jens Pelzetter 2009-03-16 commented out to get rid of Netbeans errors */
+        /*oracle.sql.CLOB clob =
             (oracle.sql.CLOB) rs.getClob(column);
         Writer out = clob.getCharacterOutputStream();
         try {
@@ -88,7 +89,6 @@ public class StringAd extends SimpleAdapter {
             // because the classpath isn't set up to include
             // com.arsdigita.util.*
             throw new Error("Unable to write LOB: " + e);
-        }
+        }*/
     }
-
 }

@@ -75,7 +75,8 @@ public class BlobAd extends SimpleAdapter {
             return;
         }
 
-        oracle.sql.BLOB blob =
+        /* Jens Pelzetter 2009-03-16 commented out to get rid of Netbeans errors */
+        /*oracle.sql.BLOB blob =
             (oracle.sql.BLOB) rs.getBlob(column);
         OutputStream out = blob.getBinaryOutputStream();
         try {
@@ -88,7 +89,7 @@ public class BlobAd extends SimpleAdapter {
             // because the classpath isn't set up to include
             // com.arsdigita.util.*
             throw new Error("Unable to write LOB: " + e);
-        }
+        }*/
     }
 
 }

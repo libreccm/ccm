@@ -1,0 +1,12 @@
+model com.arsdigita.cms.ContentPage;
+
+import com.arsdigita.cms.ContentPage;
+
+object type Person extends ContentPage {
+       String[0..1] surname = ct_persons.surname VARCHAR(512);
+       String[0..1] givenname = ct.persons.givenname VARCHAR(512);
+       String[0..1] titlepre = ct.persons.titlepre VARCHAR(256);
+       String[0..1] titlepost = ct.persons.titlepost VARCHAR(256);
+
+       reference key (ct.persons.person_id);
+}
