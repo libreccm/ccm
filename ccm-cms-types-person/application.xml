@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+		 name="ccm-cms-types-person"
+		 prettyName="Red Hat CCM Content Types"
+		 version="6.5.0"
+		 release="1"
+		 webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requieres name="ccm-core" version="6.2.0" relation="ge"/>
+    <ccm:requieres name="ccm-cms" version="6.2.0" relation="ge"/>
+  </ccm:dependencies>
+  <ccm:dependencies>
+    <ccm:directory name="pdl"/>
+    <ccm:directory name="src"/>
+  </ccm:dependencies>
+  <ccm:description>
+    Basic person type for OpenCCM
+  </ccm:description>
+</ccm:application>
+		
