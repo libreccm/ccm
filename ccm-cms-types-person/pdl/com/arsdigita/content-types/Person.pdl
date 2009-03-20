@@ -1,8 +1,8 @@
-model com.arsdigita.cms.ContentPage;
+model com.arsdigita.cms.ContentItem;
 
-import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentItem;
 
-object type Person extends ContentPage {
+object type Person extends ContentItem {
        String[0..1] surname = ct_persons.surname VARCHAR(512);
        String[0..1] givenname = ct.persons.givenname VARCHAR(512);
        String[0..1] titlepre = ct.persons.titlepre VARCHAR(256);
