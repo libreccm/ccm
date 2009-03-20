@@ -4,9 +4,9 @@ import com.arsdigita.cms.ContentItem;
 
 object type Person extends ContentItem {
        String[0..1] surname = ct_persons.surname VARCHAR(512);
-       String[0..1] givenname = ct.persons.givenname VARCHAR(512);
-       String[0..1] titlepre = ct.persons.titlepre VARCHAR(256);
-       String[0..1] titlepost = ct.persons.titlepost VARCHAR(256);
+       String[0..1] givenname = ct_persons.givenname VARCHAR(512);
+       String[0..1] titlepre = ct_persons.titlepre VARCHAR(256);
+       String[0..1] titlepost = ct_persons.titlepost VARCHAR(256);
 
-       reference key (ct.persons.person_id);
+       reference key (ct_persons.person_id);
 }

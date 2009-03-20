@@ -6,8 +6,8 @@
 		 release="1"
 		 webapp="ROOT">
   <ccm:dependencies>
-    <ccm:requieres name="ccm-core" version="6.2.0" relation="ge"/>
-    <ccm:requieres name="ccm-cms" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.2.0" relation="ge"/>
   </ccm:dependencies>
   <ccm:dependencies>
     <ccm:directory name="pdl"/>
