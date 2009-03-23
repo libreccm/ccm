@@ -2,7 +2,7 @@
  * Copyright (C) 2009 University Bremen, Center for Social Politics, Parkallee 39, 28209 Bremen.
  *
  */
-package com.argsdigita.cms.contenttypes;
+package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
 import com.arsdigita.domain.DomainObject;

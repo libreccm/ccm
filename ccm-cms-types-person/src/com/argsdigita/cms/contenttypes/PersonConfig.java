@@ -3,7 +3,7 @@
  *
  */
 
-package com.argsdigita.cms.contenttypes;
+package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;

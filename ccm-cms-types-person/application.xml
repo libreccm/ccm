@@ -9,10 +9,14 @@
     <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.2.0" relation="ge"/>
   </ccm:dependencies>
-  <ccm:dependencies>
+  <ccm:directories>
     <ccm:directory name="pdl"/>
+    <ccm:directory name="sql"/>
     <ccm:directory name="src"/>
-  </ccm:dependencies>
+  </ccm:directories>
+  <ccm:contacts>
+    <ccm:contact uri="mailto:ccm@barkhof.uni-bremen.de" type="support"/>
+  </ccm:contacts>
   <ccm:description>
     Basic person type for OpenCCM
   </ccm:description>
