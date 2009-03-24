@@ -1,4 +1,4 @@
-model com.arsdigita.cms.ContentItem;
+model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentItem;
 
