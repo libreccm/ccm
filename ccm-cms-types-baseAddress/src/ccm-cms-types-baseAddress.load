@@ -1,0 +1,16 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_baseAddresses"/>
+    <initializer class="com.arsdigita.cms.contenttypes.BaseAddressInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-baseAddress"/>
+    <data class="com.arsdigita.cms.contenttypes.BaseAddressLoader"/>
+  </scripts>
+</load>

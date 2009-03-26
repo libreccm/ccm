@@ -1,0 +1,16 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentItem;
+
+// Address object
+object type BaseAddress extends ContentItem {
+
+    String [0..1] address = ct_baseAddresses.address VARCHAR(1000);
+    String [0..1] postalCode = ct_baseAddresses.postalCode VARCHAR(20);
+    String [0..1] city = ct_baseAddresses.city VARCHAR(200);
+    String [0..1] state = ct_baseAddresses.state VARCHAR(200);
+    String [0..1] isoCountryCode = ct_baseAddresses.isoCountryCode VARCHAR(2);
+
+    reference key ( ct_baseAddress.address_id );
+}
+
