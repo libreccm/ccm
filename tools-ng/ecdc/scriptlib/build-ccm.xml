@@ -4,7 +4,8 @@
 		ccm.project.dir:		base dir of the development project
 		app.server.bundles.zip	name of the installation file
 		app.server.parent.dir	name of the dir to install into the server into
-		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_HOME)
+		app.server.home.dir	dir the server are installed into (i.e. CATALINA_HOME)
+		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_BASE)
 		app.server.conf.dir		name of the servers configuration dir
 		webapp.dist.dir			distribution dir for web applications      -->
 
@@ -13,7 +14,7 @@
 	<target name="load-bundle">
 		<echo>Loading bundle ${ccm.bundle.folder} into ${ccm.home}</echo>
 		<copy file="${ccm.bundle.folder}/cfg/applications.cfg"
-              tofile=".tmp.applications.cfg" overwrite="yes" />
+                      tofile=".tmp.applications.cfg" overwrite="yes" />
 		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />
 		<replaceregexp file=".tmp.applications.cfg"
                        match="[ \t\r\n]+" replace=" " flags="gs" />
@@ -24,18 +25,32 @@
 		</tstamp>
 		<!-- nolonger in use
 		<move file="${app.server.conf.dir}/registry"
-              tofile="${app.server.conf.dir}/registry.${timestamp}" preservelastmodified="yes"
+                      tofile="${app.server.conf.dir}/registry.${timestamp}" preservelastmodified="yes"
 			  failonerror="no" verbose="true" />
 		-->
-		<java classname="com.arsdigita.packaging.MasterTool"
-              classpathref="ccm.classpath" fork="yes">
-			<sysproperty key="ccm.home" value="${ccm.home}" />
-			<sysproperty key="log4j.configuration"
-                         value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
-			<sysproperty key="java.protocol.handler.pkgs"
-                         value="${java.protocol.handler.pkgs}" />
-			<arg line="load ${applications} --parameter-file ${bundle.folder}/cfg/integration.properties" />
+
+    <!-- classpath used by command line tools load-bundle, update, ...        -->
+    <path id="ccm.classpath">
+	<path refid="ccm.tools.classpath"/>
+        <!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/classes"/>  -->
+        <pathelement location="${app.server.webapp.dir}/ROOT/WEB-INF/classes"/>
+        <!--  <fileset dir="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/lib" includes="**/*.jar" />  -->
+        <fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
+    </path>
+
+		<java classname="com/arsdigita/packaging/MasterTool"  fork="yes">
+                    <classpath refid="ccm.classpath" />
+		    <sysproperty key="ccm.home" value="${ccm.home}" />
+		    <arg line="load ${applications} --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" />
 		</java>
+                        <!--   
+			<sysproperty key="log4j.configuration"
+                                     value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+                        -->
+                        <!--
+			<sysproperty key="java.protocol.handler.pkgs"
+                                     value="${java.protocol.handler.pkgs}" />
+                        -->
 	</target>
 
     <target name="load-init">
@@ -43,10 +58,12 @@
  	    <java classname="com.arsdigita.packaging.MasterTool"
               classpathref="ccm.classpath" fork="yes">
  	          <sysproperty key="ccm.home" value="${ccm.home}" />
+                        <!--
  	          <sysproperty key="log4j.configuration"
                            value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
  	          <sysproperty key="java.protocol.handler.pkgs"
                            value="${java.protocol.handler.pkgs}" />
+                        -->
  	          <arg line="load ${applications} --init" />
  	    </java>
  	</target>
@@ -56,10 +73,12 @@
  	    <java classname="com.arsdigita.packaging.MasterTool"
               classpathref="ccm.classpath" fork="yes">
  	          <sysproperty key="ccm.home" value="${ccm.home}" />
+                        <!--
  	          <sysproperty key="log4j.configuration"
                            value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
  	          <sysproperty key="java.protocol.handler.pkgs"
                            value="${java.protocol.handler.pkgs}" />
+                        -->
  	          <arg line="load ${applications}" />
  	    </java>
  	</target>

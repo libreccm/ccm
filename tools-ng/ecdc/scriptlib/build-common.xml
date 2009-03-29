@@ -2,13 +2,29 @@
 
 <project name="common">
 
-	<property name="ccm.tools.xsl.dir" value="${ccm.project.dir}/tools-ng/common/xsl" />
+    <!-- build-common
+         defines essential system variables and reads configuration property 
+	 files which configure the specialized scripts.                      -->
+    <fail message="Property ccm.project.dir not set  "
+          unless="ccm.project.dir" />
 
-	<!-- several java programs needed for processing, esp. xml files-->
-	<property name="ccm.tools.lib.dir" value="${ccm.project.dir}/tools-ng/common/lib" />
-	<path id="ccm.tools.classpath">
-		<fileset dir="${ccm.tools.lib.dir}" includes="*.jar" />
-	</path>
+    <condition property="correct.ant.version">
+      <antversion atleast="1.7.0" />
+    </condition>
+
+    <!-- xsl schemas to generate build tools for the specific module set     -->
+    <property name="ccm.tools.xsl.dir" 
+              value="${ccm.project.dir}/tools-ng/common/xsl" />
+    <!-- xsd schemas to validate xml configuration files                     -->
+    <property name="ccm.tools.xsd.dir" 
+              value="${ccm.project.dir}/tools-ng/common/xsd" />
+
+    <!-- several java programs needed for processing, esp. xml files         -->
+    <property name="ccm.tools.lib.dir" 
+              value="${ccm.project.dir}/tools-ng/common/lib" />
+    <path id="ccm.tools.classpath">
+      <fileset dir="${ccm.tools.lib.dir}" includes="*.jar" />
+    </path>
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties">
       <classpath>
@@ -17,50 +33,38 @@
     </taskdef>
 
 
-	<!-- Read configuration files. First from project dir, then add 
-		 requirred defaults from ecdc directory                              -->
-	<property file="${ccm.project.dir}/local.runtime.properties" />
-	<property file="${ccm.ecdc.conf.dir}/runtime.properties" />
+    <!-- Read configuration files. 
+         First from project dir, then add requirred defaults from ecdc dir   -->
 
-	<property file="${ccm.project.dir}/local.build.properties" />
-	<property file="${ccm.ecdc.conf.dir}/build.properties" />
+    <!-- Specifies the test application server runtime managed by build-runtime.xml
+         Provides app.server.*.dir props used by build-runtime and build-project -->
+    <property file="${ccm.project.dir}/local.runtime.properties" />
+    <property file="${ccm.ecdc.conf.dir}/runtime.properties" />
 
-	<property file="${ccm.project.dir}/local.ccm.properties" />
-	<property file="${ccm.ecdc.conf.dir}/ccm.properties" />
+    <!-- Specifies the compiler & build options and the junit test environment  
+         Provides compile.*  build.*   test.*  properties                    -->
+    <property file="${ccm.project.dir}/local.build.properties" />
+    <property file="${ccm.ecdc.conf.dir}/build.properties" />
 
-	<path id="ccm.classpath">
-		<path refid="ccm.tools.classpath"/>
-		<pathelement path="${webapp.dist.dir}/WEB-INF/classes"/>
-		<fileset dir="${webapp.dist.dir}/WEB-INF/lib" includes="*.jar" />
-	</path>
+    <!-- Specifies the ccm build environment 
+         Provides ccm.*                  -->
+    <property file="${ccm.project.dir}/local.ccm.properties" />
+    <property file="${ccm.ecdc.conf.dir}/ccm.properties" />
 
-	<condition property="correct.ant.version">
-		<antversion atleast="1.7.0" />
-	</condition>
+    <property name="ccm.home" value="${app.server.deploy.dir}"/>
+    <property name="ccm.build.lib.dir" value="${ccm.project.dir}/tools-ng/devel/lib"/>
+    <property name="ccm.tools.lib.dir" value="${ccm.project.dir}/tools-ng/common/lib"/>
+    <property name="ccm.tools.rh-jdo.dir" value="${ccm.project.dir}/tools-ng/common/classes"/>
+    <property name="deploy.dir" value="${app.server.deploy.dir}"/>
 
-	<echo>
-		ccm.project.dir  is  ${ccm.project.dir}
-	</echo>
-    	<property name="ccm.devel.lib.dir" value="${ccm.project.dir}/tools-ng/devel/lib"/>
-    	<property name="ccm.tools.lib.dir" value="${ccm.project.dir}/tools-ng/common/lib"/>
-    	<property name="ccm.tools.rh-jdo.dir" value="${ccm.project.dir}/tools-ng/common/classes"/>
-    	<property name="ccm.home" value="${app.server.deploy.dir}"/>
-    	<property name="catalina.home" value="${app.server.deploy.dir}"/>
-    	<property name="j2ee.webapp.dir" value="${app.server.deploy.dir}/webapps/ccm"/>
-    	<property name="deploy.dir" value="${app.server.deploy.dir}"/>
+    <!-- deprecated?  used by prebuild modules only      -->   
+    <property name="shared.lib.dist.dir" value="${ccm.tools.lib.dir}"/>
+    <!-- deprecated?  used by prebuild modules only      -->
+    <property name="webapp.dist.dir" value="${ccm.project.dir}/distribution"/>
 
-    	<property name="ccm.config.dir" value="${ccm.project.dir}/tools-ng/common"/>
-	<property name="shared.lib.dist.dir" value="${ccm.tools.lib.dir}"/>
-	<property name="ccm.tools.dir" value="${ccm.project.dir}"/>
-	<property name="webapp.dist.dir" value="${ccm.project.dir}/distribution"/>
-	
-	<echo>  property  ccm.home  is  ${ccm.home}
-		property  ccm.config.dir  is  ${ccm.config.dir}
-	</echo>
-
-	<!-- http://antelope.tigris.org/ -->
+    <!-- http://antelope.tigris.org/ -->
     <!--
-	<taskdef classpathref="ccm.tools.classpath" resource="ise/antelope/tasks/antlib.xml" />
+      <taskdef classpathref="ccm.tools.classpath" resource="ise/antelope/tasks/antlib.xml" />
     -->
 
 </project>

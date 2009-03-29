@@ -4,7 +4,8 @@
 		ccm.project.dir:		base dir of the development project (environment)
 		app.server.bundles.zip	name of the installation file
 		app.server.parent.dir	name of the dir to install into the server into
-		app.server.deploy.dir	dir the server is to be installed into (i.e. CATALINA_HOME)
+		app.server.home.dir	dir the server is to be installed into (i.e. CATALINA_HOME)
+		app.server.deploy.dir	dir the server is to be installed into (i.e. CATALINA_BASE)
 		app.server.conf.dir		name of the servers configuration dir
 		webapp.dist.dir			distribution dir for ccm web application      -->
 
@@ -18,17 +19,18 @@
 				<exclude name="**/webapps/**" />
 			</patternset>
 		</unzip>
-    	<!-- Nolonger NEEDED! when lib files are copied to another location  -->
+    	<!-- Nolonger NEEDED! when lib files are copied to another location  
 		<replaceregexp file="${app.server.conf.dir}/catalina.properties" match="shared.loader=(.*)" 
 			replace="shared.loader=\1,${catalina.base}/webapps/WEB-INF/classes,${catalina.base}/webapps/WEB-INF/lib/*.jar" 
 			byline="true" />
+        -->
 		<!-- Copy additional files needed for operation   -->
 		<copy file="ccm-core/lib/xercesImpl.jar"
-              todir="${app.server.deploy.dir}/common/endorsed" preservelastmodified="true"/>
-		<copy file="tools-ng/dev-lib/ojdbc14.jar"
-              todir="${app.server.deploy.dir}/lib" preservelastmodified="true"/>
-		<copy file="tools-ng/dev-lib/postgresql-jdbc-8.2.506.jar"
-              todir="${app.server.deploy.dir}/lib" preservelastmodified="true"/>
+              todir="${app.server.home.dir}/lib/endorsed" preservelastmodified="true"/>
+		<copy file="tools-ng/devel/lib/ojdbc14.jar"
+              todir="${app.server.home.dir}/lib" preservelastmodified="true"/>
+		<copy file="tools-ng/devel/lib/postgresql-jdbc-8.2.506.jar"
+              todir="${app.server.home.dir}/lib" preservelastmodified="true"/>
 	</target>
 
 	<target name="start">
@@ -40,25 +42,31 @@
 			<sysproperty key="log4j.configuration" value="file:///${app.server..conf.dir}/log4j.xml" />
 			<sysproperty key="java.protocol.handler.pkgs" value="${java.protocol.handler.pkgs}" />
 			-->
-			<!--  nolonger needed ? (if anything works as expected)   
+			<!--  nolonger needed ? (if anything works as expected)
+                              Required until URL protocol resource is replaced by ResourceParameter or startup.java
+                              is modified to handle the ccm extra protocol properly. Copy directy into java lib/ext!  
 			<sysproperty key="java.ext.dirs" 
-					value="${env.JAVA_HOME}/jre/lib/ext;${env.JAVA_HOME}/lib/ext;${app.server.deploy.dir}/webapps/WEB-INF/system" />
+				     value="${env.JAVA_HOME}/jre/lib/ext;${env.JAVA_HOME}/lib/ext;${app.server.home.dir}/lib/system" />
 			-->
 			<!--  nolonger needed ? (if anything works as expected)   
-			<sysproperty key="java.endorsed.dirs" value="${app.server.deploy.dir}/common/endorsed" />
+			-->
+			<sysproperty key="java.endorsed.dirs" value="${app.server.deploy.dir}/lib/endorsed" />
+
+                        <!-- required to prevent Tomcat from using AElfred to check web.xml / taglibs  -->
+			<sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
 			<sysproperty key="javax.xml.parsers.DocumentBuilderFactory" value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
 			<sysproperty key="javax.xml.parsers.SAXParserFactory" value="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
-			<sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
-			-->
+
+                        <!-- standard parameter to Tomcat operation  -->
+			<sysproperty key="catalina.home" value="${app.server.home.dir}" />
 			<sysproperty key="catalina.base" value="${app.server.deploy.dir}" />
-			<sysproperty key="catalina.home" value="${app.server.deploy.dir}" />
 			<sysproperty key="catalina.config" value="file:///${app.server.conf.dir}/catalina.properties" />
 			<jvmarg value="-Xms256m" />
 			<jvmarg value="-Xmx512m" />
 			<jvmarg value="-XX:PermSize=128m" />
 			<jvmarg value="-XX:MaxPermSize=128m" />
 			<classpath>
-				<pathelement path="${app.server.deploy.dir}/bin/bootstrap.jar" />
+				<pathelement path="${app.server.home.dir}/bin/bootstrap.jar" />
 			</classpath>
 		</java>
 	</target>

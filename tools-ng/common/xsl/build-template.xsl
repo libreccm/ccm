@@ -52,28 +52,40 @@
   </xsl:template>
 
   <xsl:template name="SharedProperties">
+    <!-- Setting the layout of the basic build environment    -->
     <xsl:variable name="name" select="@name"/>
     <xsl:variable name="prettyName" select="@prettyName"/>
     <!-- just in case: 
          check environment to set properties not already set by parent scripts  -->
     <property environment="env"/>
     <!-- Development libraries requirred by compile / build / deploy step -->
-    <property value="${{env.CCM_DEVEL_LIBS}}" name="ccm.devel.lib.dir"/>
+    <property value="${{env.CCM_BUILD_LIBS}}" name="ccm.build.lib.dir"/>
+    <fail message="ccm.build.lib.dir or CCM_DEVEL_LIBS not set. Please check the invoking build.xml script."
+          unless="ccm.build.lib.dir" />
     <!-- Development libraries requirred by development tools (ant scripts) -->
     <property value="${{env.CCM_TOOLS_LIBS}}" name="ccm.tools.lib.dir"/>
+    <fail message="ccm.tools.lib.dir or CCM_TOOLS_LIBS not set. Please check the invoking build.xml script."
+          unless="ccm.tools.lib.dir" />
     <!-- Development libraries requirred by Red Hat JDO enhancer ANT task preliminary!  -->
     <property value="${{env.CCM_TOOLS_JDO}}" name="ccm.tools.rh-jdo.dir"/>
-
-    <property value="${{env.CATALINA_HOME}}" name="catalina.home.dir"/>
+    <fail message="ccm.tools.rh-jdo.dir or CCM_TOOLS_JDO not set. Please check the invoking build.xml script."
+          unless="ccm.tools.rh-jdo.dir" />
+    <!-- Base directory of the application server to deploy to, i.e. CATALINA_HOME -->
+    <property value="${{env.APP_SERVER_HOME}}" name="app.server.home.dir"/>
+    <fail message="app.server.home.dir or APP_SERVER_HOME not set. Please check the invoking build.xml script."
+          unless="app.server.home.dir" />
+    <!-- Shared Lib directory for use by several web applications of the application server  -->
+    <property value="${{env.APP_SERVER_LIB}}" name="app.server.lib.dir"/>
+    <fail message="app.server.lib.dir or APP_SERVER_LIB not set. Please check the invoking build.xml script."
+          unless="app.server.lib.dir" />
+    <!-- XXX deprecated -->
+    <!-- Used to be the same as CATALINA_HOME and a requirred base for PackageMastertool    -->
     <property value="${{env.CCM_HOME}}" name="ccm.home"/>
     <property value="${{env.CCM_WEBAPP_DIST_DIR}}" name="webapp.dist.dir"/>
 
     <!-- no longer valid! Still used by prebuild modules, has to be adjusted  -->
     <property value="${{env.CCM_SHARED_LIB_DIST_DIR}}" name="shared.lib.dist.dir"/>
-    <!-- no longer used
-    <property value="${{env.CCM_CONFIG_HOME}}" name="ccm.config.dir"/>        -->
-    <!-- no longer used
-    <property value="${{env.CCM_TOOLS_HOME}}" name="ccm.tools.dir"/>          -->
+
 
     <property value="ant.properties" name="property.file"/>
     <property file="${{property.file}}"/>
@@ -354,7 +366,7 @@
             <xsl:variable name="buildRequires"
             select="/ccm:project/ccm:application[@name = $fullname]/ccm:dependencies/ccm:buildRequires"/>
             <xsl:if test="count($buildRequires) > 0">
-              <fileset dir="${{ccm.devel.lib.dir}}">
+              <fileset dir="${{ccm.build.lib.dir}}">
               <xsl:for-each select="$buildRequires">
                 <xsl:variable name="name" select="@name"/>
                 <xsl:variable name="version" select="@version"/>
@@ -412,8 +424,13 @@
     </xsl:for-each>
     <!-- The app clean deploy tasks -->
     <target name="clean-deploy" depends="init" description="Cleans out the deployment directory">
+      <!--  XXX  OOPS must be replaced by the individual files which have been copied !
       <delete dir="${{deploy.shared.lib.dir}}"/>
-      <delete dir="${{deploy.private.lib.dir}}"/>
+      -->
+      <!-- is now part of the deploy.webapp.dir
+      <delete dir="${{deploy.external.lib.dir}}"/>
+      -->
+      <!-- XXX OOPS, works for now, but must be replaced by individual files!  -->
       <delete dir="${{deploy.webapp.dir}}"/>
     </target>
     <xsl:call-template name="LocalGroupingTarget">
@@ -481,7 +498,7 @@
                 <include name="jdori.jar"/>
                 <include name="jdori-enhancer.jar"/>
               </fileset>
-              <fileset dir="${{ccm.devel.lib.dir}}">
+              <fileset dir="${{ccm.build.lib.dir}}">
                 <include name="xmlParserAPIs.jar"/>
               </fileset>
             </classpath>
@@ -703,9 +720,10 @@
     </xsl:if>
   </xsl:template>
 
+  <!-- DEPRECATED, server/common not present in Tomcat 6  -->
   <xsl:template name="TargetJSPCompilerClasspath">
     <classpath>
-      <fileset dir="${{catalina.home.dir}}">
+      <fileset dir="${{app.server.home.dir}}">
         <include name="server/lib/*.jar"/>
         <include name="common/lib/*.jar"/>
       </fileset>
@@ -728,7 +746,7 @@
     <target name="jsp-compiler-check">
       <condition property="jsp.compiler.available">
         <and>
-          <available file="${{catalina.home.dir}}" type="dir"/>
+          <available file="${{app.server.home.dir}}" type="dir"/>
           <available classname="org.apache.jasper.JspC">
             <xsl:call-template name="TargetJSPCompilerClasspath"/>
           </available>
@@ -837,10 +855,11 @@
           </xsl:for-each>
         </target>
       </xsl:if>
-      <!-- Deploy libs -->
+      <!-- Deploy external libs, not developed by the CCM project.
+           Located in a modules lib directory.                       -->
       <target name="deploy-lib-{$name}" depends="init">
-        <mkdir dir="${{deploy.private.lib.dir}}"/>
-        <copy todir="${{deploy.private.lib.dir}}">
+        <mkdir dir="${{deploy.external.lib.dir.{$name}}}"/>
+        <copy todir="${{deploy.external.lib.dir.{$name}}}" preservelastmodified="true">
           <fileset dir="{$name}">
             <include name="${{lib.dir}}/**"/>
           </fileset>
@@ -934,7 +953,7 @@
             <include name="{$name}-{$version}-system.jar"/>
           </fileset>
         </copy>
-        <copy todir="${{deploy.private.lib.dir}}" preservelastmodified="true">
+        <copy todir="${{deploy.external.lib.dir.{$name}}}" preservelastmodified="true">
           <fileset dir="${{apps.{$name}.location}}">
             <include name="{$name}-{$version}/**"/>
           </fileset>
@@ -1480,19 +1499,27 @@
       <condition property="deploy.webapp.dir" value="${{deploy.dir}}/webapps">
         <not><isset property="deploy.webapp.dir"/></not>
       </condition>
+      <!-- deploy.conf.dir used to deploy the log4j.properties file to a
+           non-standard location CATALINA_HOME/conf, which is not meant to
+           hold user or webapps specific configuration files.
+           not used anymore
       <condition property="deploy.conf.dir" value="${{deploy.dir}}/conf">
         <not><isset property="deploy.conf.dir"/></not>
       </condition>
-      <condition property="deploy.shared.lib.dir" value="${{deploy.dir}}/webapps/WEB-INF/lib">
+      -->
+      <condition property="deploy.shared.lib.dir" value="${{app.server.lib.dir}}">
         <not><isset property="deploy.shared.lib.dir"/></not>
       </condition>
+      <!-- deploy.private.lib.dir might be no longer used.
+           Previouls used for external libs, too.                                         
       <condition property="deploy.private.lib.dir" value="${{deploy.dir}}/webapps/WEB-INF/lib">
         <not><isset property="deploy.private.lib.dir"/></not>
       </condition>
-      <condition property="deploy.shared.classes.dir" value="${{deploy.dir}}/webapps/WEB-INF/classes">
+      -->
+      <condition property="deploy.shared.classes.dir" value="${{app.server.lib.dir}}">
         <not><isset property="deploy.shared.classes.dir"/></not>
       </condition>
-      <condition property="deploy.system.jars.dir" value="${{deploy.dir}}/webapps/WEB-INF/system">
+      <condition property="deploy.system.jars.dir" value="${{app.server.lib.dir}}/system">
         <not><isset property="deploy.system.jars.dir"/></not>
       </condition>
       <condition property="deploy.war.dir" value="${{deploy.dir}}/webapps">
@@ -1507,21 +1534,27 @@
         <xsl:variable name="shared" select="$application/@shared"/>
 
         <property value="${{deploy.webapp.dir}}/${{apps.{$name}.webapp.name}}" name="deploy.dir.{$name}"/>
-        <!--         -->
+        <!--        
         <xsl:choose>
           <xsl:when test="$shared = 'false'">
+         -->
             <!-- will copy modules classes/libs into module's WEB-INF directory. Works. -->
             <property value="${{deploy.dir.{$name}}}/WEB-INF/classes"       name="deploy.classes.dir.{$name}"/>
             <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"           name="deploy.lib.dir.{$name}"/>
-        <!--         --> 
+            <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"           name="deploy.external.lib.dir.{$name}"/>
+        <!--          
           </xsl:when>
           <xsl:otherwise>
+        -->
             <!-- will copy modules classes/libs into shared directory. 6.1 - 6.4: webapps/WEB-INF non-standard 
-                 up to 6.4 the only metheod that works.                                                         -->
+                 up to 6.4 the only metheod that works.                                                         
             <property value="${{deploy.shared.classes.dir}}" name="deploy.classes.dir.{$name}"/>
             <property value="${{deploy.shared.lib.dir}}"     name="deploy.lib.dir.{$name}"/>
+            <property value="${{deploy.shared.lib.dir}}"     name="deploy.external.lib.dir.{$name}"/>               -->
+        <!--          
           </xsl:otherwise>
         </xsl:choose>
+        -->
 
         <property value="${{deploy.dir.{$name}}}/WEB-INF/src"           name="deploy.src.dir.{$name}"/>
         <property value="${{deploy.dir.{$name}}}/WEB-INF/doc"           name="deploy.doc.dir.{$name}"/>
@@ -1531,19 +1564,26 @@
         <property value="${{deploy.dir.{$name}}}/WEB-INF/bin"           name="deploy.bin.dir.{$name}"/>
       </xsl:for-each>
 
+      <!-- xml version of log4j configuration not supported
       <condition property="log4j.configuration.sysproperty" value="file://${{ccm.home}}/conf/log4j.xml">
         <and>
           <not><isset property="log4j.configuration.sysproperty"/></not>
           <available file="${{ccm.home}}/conf/log4j.xml"/>
         </and>
       </condition>
+      --> 
+      <!-- Non standard location of log4j configuration no longer supported as of GE 6.5
       <condition property="log4j.configuration.sysproperty" value="file://${{ccm.home}}/conf/log4j.properties">
         <and>
           <not><isset property="log4j.configuration.sysproperty"/></not>
           <available file="${{ccm.home}}/conf/log4j.properties"/>
         </and>
       </condition>
-      <condition property="log4j.configuration.sysproperty" value="/log4j.properties">
+      --> 
+      <!--  location of log4j configuration is handled inside the running CCM application.
+            But may be requirred for junit tests?  Otherwise not needed
+      --> 
+      <condition property="log4j.configuration.sysproperty" value="/WEB-INF/conf/log4j.properties">
         <and>
           <not><isset property="log4j.configuration.sysproperty"/></not>
         </and>
