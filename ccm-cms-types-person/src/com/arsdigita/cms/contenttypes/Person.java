@@ -6,7 +6,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -18,8 +18,9 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter
  */
-public class Person extends ContentItem {
+public class Person extends ContentPage {
 
+    public static final String PERSON = "person";
     public static final String SURNAME = "surname";
     public static final String GIVENNAME = "givenname";
     public static final String TITLEPRE = "titlepre";

@@ -35,6 +35,6 @@ public class PersonInitializer extends ContentTypeInitializer {
     }
 
     public String[] getStylesheets() {
-        return new String[] { "" };
+        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/Person.xsl" };
     }
 }
