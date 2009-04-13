@@ -6,6 +6,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
