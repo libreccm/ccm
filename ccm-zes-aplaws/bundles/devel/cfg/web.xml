@@ -4,7 +4,7 @@
 
 <web-app>
 
-  <display-name>CCM</display-name>
+  <display-name>CCM ZeS</display-name> 
   <description>Content and Collaboration Management</description>
 
   <!-- Require secure connection by redirect to host-port part
@@ -331,12 +331,13 @@
      MODULES SERVLET MAPPINGS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN  -->
+  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN  
+       NOT USED HERE
   <servlet-mapping>
     <servlet-name>atoz-files</servlet-name>
     <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
   </servlet-mapping>
-  <!-- module ccm-ldn-atoz  -  servlet mappings END  -->
+       module ccm-ldn-atoz  -  servlet mappings END  -->
 
   <!-- module ccm-forum  -  servlet mappings BEGIN  -->
   <servlet-mapping>
