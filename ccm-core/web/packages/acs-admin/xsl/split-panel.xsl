@@ -114,7 +114,7 @@
         <td class="split_pane_left_item_selected" nowrap="1">
           <xsl:apply-templates/><xsl:text>&#160;</xsl:text><img border="0" height="9" width="5">
             <xsl:attribute name="src">
-              <xsl:value-of select="//@assets"/>/assets/arrow-right.gif</xsl:attribute>
+              <xsl:value-of select="//@assets"/>/assets/images/arrow-right.gif</xsl:attribute>
             </img>
           </td>
         </tr>
