@@ -35,12 +35,12 @@
 	      <xsl:if test="@addAction">
 	        <script LANGUAGE="JavaScript">
 	          <![CDATA[ <!-- begin script ]]>
-	          <![CDATA[ document.write('<a href="]]><xsl:value-of select="@addJSAction"/><![CDATA["><img src="/assets/action-add.png" border="0"/></a>')]]>
+	          <![CDATA[ document.write('<a href="]]><xsl:value-of select="@addJSAction"/><![CDATA["><img src="/assets/category-step/action-add.png" border="0"/></a>')]]>
 	          <![CDATA[ document.write("\<!--") ]]>
 	          <![CDATA[ // end script --> ]]>
 	        </script>
 	        <a href="{@addAction}">
-	          <img src="/assets/action-add.png" border="0"/>
+	          <img src="/assets/category-step/action-add.png" border="0"/>
 	        </a>
 	        <script LANGUAGE="JavaScript">
 	          <![CDATA[ <!-- begin script ]]>
@@ -78,7 +78,7 @@
 	              <li>
 	                <xsl:value-of select="substring(@path, string-length($name) + 5)"/>&#160;
 	                <xsl:if test="@deleteAction">
-	                  <a href="{@deleteAction}"><img src="/assets/action-delete.png" border="0"/></a>
+	                  <a href="{@deleteAction}"><img src="/assets/category-step/action-delete.png" border="0"/></a>
 	                  <xsl:text>&#160;</xsl:text>
 	                  <a href="{@deleteAction}">Remove</a>
 	                </xsl:if>
@@ -112,10 +112,10 @@
 
         if (elChildren.style.display != "block") {
            elChildren.style.display = "block";
-           elImg.src = "/assets/action-delete.png";
+           elImg.src = "/assets/category-step/action-delete.png";
         } else {
            elChildren.style.display = "none";
-           elImg.src = "/assets/action-add.png";
+           elImg.src = "/assets/category-step/action-add.png";
         }
         return true;
       }
@@ -205,14 +205,14 @@
 	      <xsl:choose>
 	        <xsl:when test="count(forum:category[@isEnabled = '1']) > 0 and $expand='none'">
 	          <a href="#" onClick="catToggle('{@nodeID}');">
-	             <img id="catTog{@nodeID}" src="/assets/action-add.png" width="14" height="14" border="0"/></a>
+	             <img id="catTog{@nodeID}" src="/assets/category-step/action-add.png" width="14" height="14" border="0"/></a>
 	        </xsl:when>
 	        <xsl:when test="count(forum:category[@isEnabled = '1']) > 0 and $expand!='none'">
-	          <a href="#" onClick="catToggle('{@nodeID}');"><img id="catTog{@nodeID}" src="/assets/action-delete.png" 
+	          <a href="#" onClick="catToggle('{@nodeID}');"><img id="catTog{@nodeID}" src="/assets/category-step/action-delete.png" 
 	                      width="14" height="14" border="0"/></a>
 	        </xsl:when>
 	        <xsl:otherwise>
-	          <img src="/assets/action-generic.png" width="14" height="14" border="0"/>
+	          <img src="/assets/category-step/action-generic.png" width="14" height="14" border="0"/>
 	        </xsl:otherwise>
 	      </xsl:choose>
 	      <a id="catLn{@nodeID}" href="#" style="padding-left: 6px; display: {$linkStyle}">

@@ -4,11 +4,11 @@
         xmlns:simplesurvey="http://www.arsdigita.com/simplesurvey/1.0"
         xmlns:bebop="http://www.arsdigita.com/bebop/1.0">
 
-   <!-- IMPORT DEFINITIONS ccm-ldn-shortcuts installed as separate web application
+   <!-- IMPORT DEFINITIONS ccm-simplesurvey installed as separate web application
    <xsl:import href="../../../../ROOT/packages/content-section/xsl/cms.xsl"/> 
    -->
 
-   <!-- IMPORT DEFINITIONS ccm-ldn-shortcuts installed into the main CCM webapp
+   <!-- IMPORT DEFINITIONS ccm-simplesurvey installed into the main CCM webapp
    -->
    <xsl:import href="../../../packages/content-section/xsl/cms.xsl"/> 
 

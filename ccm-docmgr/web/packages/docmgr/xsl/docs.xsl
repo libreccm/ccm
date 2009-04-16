@@ -513,7 +513,7 @@ we can have a different image -->
        <![CDATA[ <!-- begin script ]]>
 
        <!-- This is ugly, but I need the whole output on one line =p -->
-       <![CDATA[ document.write(']]><a href="{@href}" onclick="{@onclick}"><img src="{$contextPath}/assets/action-generic.png" border="0" width="11" height="11"><xsl:attribute name="alt"><xsl:apply-templates mode="javascript-mode"/></xsl:attribute></img><![CDATA[')]]>
+       <![CDATA[ document.write(']]><a href="{@href}" onclick="{@onclick}"><img src="{$contextPath}/assets/images/action-generic.png" border="0" width="11" height="11"><xsl:attribute name="alt"><xsl:apply-templates mode="javascript-mode"/></xsl:attribute></img><![CDATA[')]]>
        <![CDATA[ document.write(']]></a><![CDATA[')]]>
        <![CDATA[ // end script --> ]]>
        </script>
@@ -526,7 +526,7 @@ we can have a different image -->
        </script>
 
        <a href="{@href_no_javascript}">
-         <img src="{$contextPath}/assets/action-generic.png" border="0" width="11" height="11">
+         <img src="{$contextPath}/assets/images/action-generic.png" border="0" width="11" height="11">
            <xsl:attribute name="alt">
              <xsl:apply-templates/>
            </xsl:attribute>

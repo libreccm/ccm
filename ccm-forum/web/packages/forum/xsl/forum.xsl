@@ -182,7 +182,7 @@
             <th width="100%" class="{status}">
               <xsl:if test="@approveURL">
                 <nobr>
-                  <a href="{@approveURL}"><img border="0" src="/assets/action-generic.png"/></a>
+                  <a href="{@approveURL}"><img border="0" src="/assets/images/action-generic.png"/></a>
                   <xsl:text>&#160;</xsl:text>
                   <a href="{@approveURL}">Approve</a>
                   <xsl:text>&#160;</xsl:text>
@@ -190,7 +190,7 @@
               </xsl:if>
               <xsl:if test="@rejectURL">
                 <nobr>
-                  <a href="{@rejectURL}"><img border="0" src="/assets/action-generic.png"/></a>
+                  <a href="{@rejectURL}"><img border="0" src="/assets/images/action-generic.png"/></a>
                   <xsl:text>&#160;</xsl:text>
                   <a href="{@rejectURL}">Reject</a>
                   <xsl:text>&#160;</xsl:text>
@@ -205,7 +205,7 @@
             <xsl:if test="@editURL">
               <th>
                 <nobr>
-                  <a href="{@editURL}"><img border="0" src="/assets/action-generic.png"/></a>
+                  <a href="{@editURL}"><img border="0" src="/assets/images/action-generic.png"/></a>
                   <xsl:text>&#160;</xsl:text>
                   <a href="{@editURL}">Edit</a>
                 </nobr>
@@ -214,7 +214,7 @@
             <xsl:if test="@replyURL">
               <th>
                 <nobr>
-                  <a href="{@replyURL}"><img border="0" src="/assets/action-generic.png"/></a>
+                  <a href="{@replyURL}"><img border="0" src="/assets/images/action-generic.png"/></a>
                   <xsl:text>&#160;</xsl:text>
                   <a href="{@replyURL}">Reply</a>
                 </nobr>
@@ -223,7 +223,7 @@
             <xsl:if test="@deleteURL">
               <th>
                 <nobr>
-                  <a href="{@deleteURL}"><img border="0" src="/assets/action-generic.png"/></a>
+                  <a href="{@deleteURL}"><img border="0" src="/assets/images/action-generic.png"/></a>
                   <xsl:text>&#160;</xsl:text>
                   <a href="{@deleteURL}">Delete</a>
                 </nobr>

@@ -66,7 +66,8 @@ public class ThemeConfig extends AbstractConfig {
 
         m_defaultThemeContext = new StringParameter
             ("com.arsdigita.london.theme.default_theme_context", 
-             Parameter.OPTIONAL, "/ccm-ldn-theme/");
+             Parameter.OPTIONAL, "");
+//           Parameter.OPTIONAL, "/ccm-ldn-theme/");
 
         m_defaultThemePath = new StringParameter
             ("com.arsdigita.london.theme.default_theme_path", 

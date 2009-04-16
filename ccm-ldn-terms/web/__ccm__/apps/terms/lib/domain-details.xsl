@@ -49,10 +49,10 @@
         <tr>
           <td>&nbsp;</td>
           <td>
-            <a href="{terms:action[@name='edit']/@url}"><img src="/assets/action-generic.png" width="14" height="14" border="0"/></a>
+            <a href="{terms:action[@name='edit']/@url}"><img src="/__ccm__/static/cms/admin/action-group/action-generic.png" width="14" height="14" border="0"/></a>
             <a href="{terms:action[@name='edit']/@url}">Edit</a>
             <xsl:text>&#160;</xsl:text>
-            <a href="{terms:action[@name='delete']/@url}"><img src="/assets/action-delete.png" width="14" height="14" border="0"/></a>
+            <a href="{terms:action[@name='delete']/@url}"><img src="/__ccm__/static/cms/admin/action-group/action-delete.png" width="14" height="14" border="0"/></a>
             <a href="{terms:action[@name='delete']/@url}">Delete</a>
             <xsl:text>&nbsp;</xsl:text>
           </td>

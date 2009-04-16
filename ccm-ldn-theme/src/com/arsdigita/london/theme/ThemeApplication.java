@@ -71,7 +71,7 @@ public class ThemeApplication extends Application {
 
 //  /*
 //   * Application specific method only required if installed in its own
-//   * web application context
+//   * web application context (which is deprecated now as of version 6.5)
 //   */
 //  public String getContextPath() {
 //      return "/ccm-ldn-theme";

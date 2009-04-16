@@ -22,19 +22,19 @@
       <xsl:if test="@addAction">
         <script LANGUAGE="JavaScript">
           <![CDATA[ <!-- begin script ]]>
-          <![CDATA[ document.write('<a href="]]><xsl:value-of select="@addJSAction"/><![CDATA["><img src="/assets/action-add.png" border="0"/></a>')]]>
+          <![CDATA[ document.write('<a href="]]><xsl:value-of select="@addJSAction"/><![CDATA["><img src="/assets/category-step/action-add.png" border="0"/></a>')]]>
           <![CDATA[ document.write("\<!--") ]]>
           <![CDATA[ // end script --> ]]>
         </script>
         <a href="{@addAction}">
-          <img src="/assets/action-add.png" border="0"/>
+          <img src="/assets/category-step/action-add.png" border="0"/>
         </a>
         <script LANGUAGE="JavaScript">
           <![CDATA[ <!-- begin script ]]>
           <![CDATA[ document.write("--\>") ]]>
           <![CDATA[ // end script --> ]]>
         </script>
-        
+   
         <script LANGUAGE="JavaScript">
           <![CDATA[ <!-- begin script ]]>
           <![CDATA[ document.write('<a href="]]><xsl:value-of select="@addJSAction"/><![CDATA[">Add categories</a>')]]>
@@ -51,7 +51,7 @@
           <![CDATA[ // end script --> ]]>
         </script>
       </xsl:if>
-       
+    
       <xsl:choose>
         <xsl:when test="count(../../cms:itemCategories/cms:itemCategory[starts-with(@path, $name)]) = 0">
           <div>
@@ -65,7 +65,7 @@
               <li>
                 <xsl:value-of select="substring(@path, string-length($name) + 5)"/>&#160;
                 <xsl:if test="@deleteAction">
-                  <a href="{@deleteAction}"><img src="/assets/action-delete.png" border="0"/></a>
+                  <a href="{@deleteAction}"><img src="/assets/category-step/action-delete.png" border="0"/></a>
                   <xsl:text>&#160;</xsl:text>
                   <a href="{@deleteAction}">Remove</a>
                 </xsl:if>
@@ -90,7 +90,7 @@
 
   <xsl:template match="cms:categoryWidget" mode="cms:javascript">
     <script type="text/javascript" src="/assets/prototype.js"/>
-    <script type="text/javascript" src="/assets/category-step.js"/>
+    <script type="text/javascript" src="/assets/category-step/category-step.js"/>
     <div>
       <xsl:apply-templates select="cms:category" mode="cms:javascriptCat">
         <xsl:with-param name="expand" select="'block'"/>
@@ -118,7 +118,7 @@
       </xsl:choose>
     </xsl:variable>
     <xsl:variable name="toggle">
-    	
+  	
       <xsl:choose>
         <xsl:when test="@root = '1' or ancestor::cms:category/@expand='all'">catBranchToggle</xsl:when>
         <xsl:otherwise>catToggle</xsl:otherwise>
@@ -128,13 +128,13 @@
     <div id="catSelf{@id}">
       <xsl:choose>
         <xsl:when test="$expand='none' and (@root='1' or count(cms:category) > 0)">
-          <a href="#" onClick="{$toggle}('{@node-id}');"><img id="catTog{@node-id}" src="/assets/action-add.png" width="14" height="14" border="0"/></a>
+          <a href="#" onClick="{$toggle}('{@node-id}');"><img id="catTog{@node-id}" src="/assets/categeory-step/action-add.png" width="14" height="14" border="0"/></a>
         </xsl:when>
         <xsl:when test="$expand!='none' and (@root='1' or count(cms:category) > 0)">
-          <a href="#" onClick="{$toggle}('{@node-id}');"><img id="catTog{@node-id}" src="/assets/action-delete.png" width="14" height="14" border="0"/></a>
+          <a href="#" onClick="{$toggle}('{@node-id}');"><img id="catTog{@node-id}" src="/assets/category-step/action-delete.png" width="14" height="14" border="0"/></a>
         </xsl:when>
         <xsl:otherwise>
-          <img src="/assets/action-generic.png" width="14" height="14" border="0"/>
+          <img src="/assets/category-step/action-generic.png" width="14" height="14" border="0"/>
         </xsl:otherwise>
       </xsl:choose>
       <a id="catLn{@id}" href="#" style="padding-left: 6px; display: {$linkStyle}">
@@ -189,7 +189,7 @@
     <xsl:if test="@isSelected != '1' and @isAbstract != '1'">
       <option value="{@id}"><xsl:value-of select="@fullname"/></option>
     </xsl:if>
-    
+  
     <xsl:apply-templates select="cms:category[@isAbstract = '0']" mode="cms:plainCat">
       <xsl:sort data-type="number" select="@sortKey"/>
     </xsl:apply-templates>

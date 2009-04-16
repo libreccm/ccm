@@ -8,13 +8,13 @@
            // reload the branch
            new Ajax.Updater('catCh'+id, 'load-cat.jsp',
                 {parameters:'nodeID='+id});
-           elImg.src = "/assets/action-delete.png";
+           elImg.src = "./action-delete.png";
            // TODO check catWd, update selected catLn/catNm
            // in case selected cats are in reloaded branch
         } else {
            elChildren.style.display = "none";
            elChildren.innerHTML = ''; // discard the branch
-           elImg.src = "/assets/action-add.png";
+           elImg.src = "./action-add.png";
         }
         return false;
       }
@@ -24,10 +24,10 @@
 
         if (elChildren.style.display != "block") {
           elChildren.style.display = "block";
-          elImg.src = "/assets/action-delete.png";
+          elImg.src = "./action-delete.png";
         } else {
           elChildren.style.display = "none";
-          elImg.src = "/assets/action-add.png";
+          elImg.src = "./action-add.png";
         }
         return false;
       }

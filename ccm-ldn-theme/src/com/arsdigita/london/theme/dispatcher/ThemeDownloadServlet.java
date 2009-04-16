@@ -306,7 +306,8 @@ public class ThemeDownloadServlet extends BaseServlet implements ThemeConstants 
                                 compressed + "; ratio = " + ratio);
                 }
             } catch (IOException e) {
-                throw new UncheckedWrapperException("Error reading from " + filePath + " or writing to the zip file");
+                throw new UncheckedWrapperException("Error reading from " +
+                              filePath + " or writing to the zip file");
             }
         }
     }

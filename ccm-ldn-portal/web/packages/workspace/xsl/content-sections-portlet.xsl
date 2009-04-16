@@ -13,7 +13,7 @@
   </td>
   <td class="table_cell">
     <a href="{@url}admin/index.jsp">
-      <img border="0" width="11" height="11" alt="admin" src="{$root-context-prefix}/assets/arrow-box.gif"/>
+      <img border="0" width="11" height="11" alt="admin" src="{$root-context-prefix}/assets/images/arrow-box.gif"/>
     </a>
     <a href="{@url}admin/index.jsp" class="action_link">admin</a>
   </td>

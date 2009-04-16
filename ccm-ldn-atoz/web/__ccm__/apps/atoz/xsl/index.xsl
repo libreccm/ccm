@@ -235,7 +235,7 @@
 
   <xsl:template match="cms:categoryWidget" mode="cms:javascript">
     <script type="text/javascript" src="/assets/prototype.js"/>
-    <script type="text/javascript" src="/assets/category-step.js"/>
+    <script type="text/javascript" src="/assets/category-step/category-step.js"/>
     <script type="text/javascript" src="/resource/ccm-ldn-atoz/__ccm__/static/atoz/category-widget.js"/>
     <div>
       <xsl:apply-templates select="cms:category" mode="cms:javascriptCat">
@@ -632,7 +632,7 @@
     <xsl:param name="type" select="'generic'"/>
 
     <a href="{$url}">
-      <img src="/assets/action-{$type}.png" border="0" width="14" height="14">
+      <img src="/assets/category-step/action-{$type}.png" border="0" width="14" height="14">
         <xsl:attribute name="alt">
           <xsl:choose>
             <xsl:when test="$type = 'delete'">
