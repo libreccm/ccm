@@ -32,7 +32,7 @@ public class Initializer extends ContentTypeInitializer {
         "$DateTime: 2004/02/06 11:50:22 $";
 
     public Initializer() {
-        super("ccm-ldn-xmlfeed.pdl.mf",
+        super("ccm-cms-types-xmlfeed.pdl.mf",
               XMLFeed.BASE_DATA_OBJECT_TYPE);
     }
 
