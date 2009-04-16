@@ -16,10 +16,13 @@
   </filter>
   -->
 
+  <!-- Initialize Profiler timers
+       NOT USED with SHP standard / production                                       
   <filter>
     <filter-name>profiler</filter-name>
     <filter-class>com.arsdigita.profiler.ProfilerFilter</filter-class>
   </filter>
+  -->
 
   <filter>
     <filter-name>shortcuts</filter-name>
@@ -31,17 +34,17 @@
     <filter-class>com.arsdigita.london.subsite.SubsiteFilter</filter-class>
   </filter>
 
-  <!-- NOT USED HERE
+<!--    NOT USED HERE
   <filter-mapping>
     <filter-name>secured</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  -->
 
   <filter-mapping>
     <filter-name>profiler</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+-->
 
   <filter-mapping>
     <filter-name>subsite</filter-name>
@@ -179,8 +182,8 @@
      MODULES SERVLET DECLARATIONS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-ldn-atoz  -  servlet definitions BEGIN
-       NOT USED HERE   
+  <!-- module ccm-ldn-atoz  -  servlet definitions BEGIN   
+       NOT USED HERE  
   <servlet>
     <servlet-name>atoz-files</servlet-name>
     <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
@@ -197,8 +200,6 @@
     <servlet-class>com.arsdigita.forum.ForumServlet</servlet-class>
   </servlet>
   <!-- module ccm-forum  -  servlet declarations END    -->  
-
-<!-- XXX hack -->
 
   <servlet>
     <servlet-name>portal-files</servlet-name>
@@ -331,8 +332,8 @@
      MODULES SERVLET MAPPINGS SECTION
      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN
-       NOT USED HERE  
+  <!-- module ccm-ldn-atoz  -  servlet mappings BEGIN     
+       NOT USED HERE     
   <servlet-mapping>
     <servlet-name>atoz-files</servlet-name>
     <url-pattern>/ccm-ldn-atoz/files/*</url-pattern>
@@ -496,6 +497,7 @@
      <servlet-name>PrintFriendlyServlet</servlet-name>
      <url-pattern>/print/*</url-pattern>
  </servlet-mapping>
+
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
      ERROR PAGES
