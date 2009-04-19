@@ -47,13 +47,13 @@ public class ItemExportTool extends Program {
         }
 
         File itemDir = new File(args[0]);
-        if (!itemDir.exists() && !itemDir.mkdir()) {
-            System.err.println("mkdir " + itemDir + "failed");
+        if (!itemDir.exists() && !itemDir.mkdirs()) {
+            System.err.println("mkdirs " + itemDir + "failed");
             return;
         }
         File assetDir = new File(args[1]);
-        if (!assetDir.exists() && !assetDir.mkdir()) {
-            System.err.println("mkdir " + assetDir + "failed");
+        if (!assetDir.exists() && !assetDir.mkdirs()) {
+            System.err.println("mkdirs " + assetDir + "failed");
             return;
         }
 

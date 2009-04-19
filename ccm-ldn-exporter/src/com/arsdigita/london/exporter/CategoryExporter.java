@@ -33,6 +33,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.categorization.Category;
+import com.arsdigita.categorization.CategoryNotFoundException;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DomainCollection;
@@ -195,10 +196,14 @@ public class CategoryExporter {
         Element dstTerm = dst.newChildElement("terms:term",
                                               TERMS_XML_NS);
         dstTerm.addAttribute("id", idMap.get(dstCat).toString());
-        
-        if (dstCat.getDefaultParentCategory().equals(srcCat)) {
-            dst.addAttribute("isDefault", "true");
-        } else {
+            
+        try {
+            if (dstCat.getDefaultParentCategory().equals(srcCat)) {
+                dst.addAttribute("isDefault", "true");
+            } else {
+                dst.addAttribute("isDefault", "false");
+            }
+        } catch (CategoryNotFoundException e) {
             dst.addAttribute("isDefault", "false");
         }
         dst.addAttribute("isPreferred", "true");
