@@ -31,6 +31,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.london.importer.DomainObjectMapper;
 import com.arsdigita.london.importer.ImportParser;
 import com.arsdigita.london.importer.ParserDispatcher;
@@ -43,7 +44,7 @@ import com.arsdigita.util.UncheckedWrapperException;
  * It can be invoked by:
  * <pre>
  * ccm-run com.arsdigita.london.importer.cms.ItemImportTool \
- *   master-import.xml /dir/with/files/to/include /dir/containing/lobs
+ *   master-import.xml /dir/with/files/to/include /dir/containing/lobs content-section-name
  * </pre>
  *
  *  @see com.arsdigita.london.importer
@@ -55,19 +56,19 @@ public class ItemImportTool extends Program {
     public ItemImportTool() {
         super("Item Import Tool",
               "1.0.0",
-              "INDEX-FILE ITEM-DIR ASSET-DIR");
+              "INDEX-FILE ITEM-DIR ASSET-DIR CONTENT-SECTION");
     }
 
     public ItemImportTool(boolean startup) {
         super("Item Import Tool",
               "1.0.0",
-              "INDEX-FILE ITEM-DIR ASSET-DIR",
+              "INDEX-FILE ITEM-DIR ASSET-DIR CONTENT-SECTION",
               startup);
     }
 
     protected void doRun(CommandLine cmdLine) {
         final String[] args = cmdLine.getArgs();
-        if (args.length != 3) {
+        if (args.length != 4) {
             help(System.err);
             System.exit(1);
         }
@@ -75,11 +76,9 @@ public class ItemImportTool extends Program {
         final String masterFile = args[0];
         final File itemDir = new File(args[1]);
         final File assetDir = new File(args[2]);
+        final ContentSection section = getContentSection(args[3]);
 
         final DomainObjectMapper mapper = new DomainObjectMapper();
-
-        final ContentSection section = (ContentSection)ContentSection
-            .retrieveApplicationForPath("/content/");
 
         final List items = new ArrayList();
 
@@ -145,4 +144,29 @@ public class ItemImportTool extends Program {
         new ItemImportTool().run(args);
     }
 
+    /**
+     * Get the content section for the entered path, adding "/" prefix and suffix if necessary.
+     * 
+     * @param rawPath the raw path of the content section, e.g. "content".
+     * 
+     * @return the content section
+     */
+    private ContentSection getContentSection(String rawPath) {
+        final StringBuilder path = new StringBuilder();
+        if (!rawPath.startsWith("/")) {
+            path.append("/");
+        }
+        path.append(rawPath);
+        if (!rawPath.endsWith("/")) {
+            path.append("/");
+        }
+        
+        final ContentSection section = (ContentSection)ContentSection
+            .retrieveApplicationForPath(path.toString());
+        
+        if (section == null) {
+            throw new DataObjectNotFoundException("Content section not found with path " + path);
+        }
+        return section;
+    }
 }
