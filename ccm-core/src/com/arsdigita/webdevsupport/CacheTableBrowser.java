@@ -18,19 +18,6 @@
  */
 package com.arsdigita.webdevsupport;
 
-import com.arsdigita.bebop.ControlLink;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.Table;
-import com.arsdigita.bebop.event.TableActionEvent;
-import com.arsdigita.bebop.event.TableActionListener;
-import com.arsdigita.bebop.table.TableModel;
-import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.caching.CacheTable;
-import com.arsdigita.caching.CacheTable.TimestampedEntry;
-import com.arsdigita.util.LockableImpl;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +26,23 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import com.arsdigita.bebop.ActionLink;
+import com.arsdigita.bebop.ControlLink;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.ListPanel;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.bebop.Table;
+import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.event.TableActionEvent;
+import com.arsdigita.bebop.event.TableActionListener;
+import com.arsdigita.bebop.table.TableModel;
+import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.caching.CacheTable;
+import com.arsdigita.caching.CacheTable.TimestampedEntry;
+import com.arsdigita.util.LockableImpl;
 
 
 /**
@@ -56,23 +60,35 @@ final class CacheTableBrowser extends SimpleContainer {
         m_tableContents = new CacheTableContents();
         m_listOfTables.addTableActionListener(new TableActionListener() {
                 public void cellSelected(TableActionEvent ev) {
-                    int column = ev.getColumn().intValue();
-                    switch (column) {
-                      case 0:
+                int column = ev.getColumn().intValue();
+                switch (column) {
+                case 0:
                     PageState state = ev.getPageState();
-                    m_tableContents.setTableID(state,(String) ev.getRowKey());
-                        break;
-                      case 5:
-                	CacheTable.BROWSER.purge((String) ev.getRowKey());
-  	              	break;
-                    default:
-	              break;
-                    }
+                    m_tableContents.setTableID(state, (String) ev.getRowKey());
+                    break;
+                case 5:
+                    CacheTable.BROWSER.purge((String) ev.getRowKey());
+                    ev.getPageState().redirectWithoutControlEvent(false);
+                default:
+                    break;
                 }
+            }
 
-                public void headSelected(TableActionEvent e) { }
-            });
+            public void headSelected(TableActionEvent e) {
+            }
+        });
 
+        ActionLink purgeAllLink = new ActionLink("Purge all caches");
+        purgeAllLink.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                CacheTable.BROWSER.purgeAll();
+                e.getPageState().redirectWithoutControlEvent(false);
+            }
+        });
+        ListPanel container = new ListPanel(false);
+        container.add(purgeAllLink);        
+        add(container);
+        
         add(m_listOfTables);
         add(m_tableContents);
     }
@@ -137,7 +153,11 @@ final class CacheTableBrowser extends SimpleContainer {
                     return String.valueOf(CacheTable.BROWSER.isShared(m_key));
                 case 5:
                     if (CacheTable.BROWSER.isPurgeAllowed(m_key)) {
-                      return new ControlLink(new Label("purge"));
+                        if (CacheTable.BROWSER.getCurrentSize(m_key) > 0) {
+                            return new ControlLink(new Label("purge"));
+                        } else {
+                            return new Label("(empty)");
+                        }
                     } else {
                       return new Label("can't be purged");
                     }
@@ -160,8 +180,6 @@ final class CacheTableBrowser extends SimpleContainer {
     private static class CacheTableContents extends Table {
         private final static String TABLE_ID_ATTR =
             CacheTableContents.class.getName();
-
-        private String m_tableID;
 
         public CacheTableContents() {
             super(new ModelBuilder(),

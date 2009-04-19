@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -229,19 +230,14 @@ public class CacheTable {
     }
     
     public void setPurgeAllowed(boolean purgeAllowed) {
-      this.purgeAllowed = purgeAllowed;
+        this.purgeAllowed = purgeAllowed;
     }
 
    
-   public boolean isPurgeAllowed() {
-      return purgeAllowed;
+    public boolean isPurgeAllowed() {
+        return purgeAllowed;
     }
     
-    private void removeLRUEntry() {
-        m_list.removeLRUEntry();
-    }
-
-
     /**
      * A convenience wrapper around {@link #put(String, Object)}.
      *
@@ -425,6 +421,39 @@ public class CacheTable {
     }
 
 
+    public synchronized void removeAllEntriesLocally() {
+        m_list.clear();
+        
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("removed all entries from cache table " + m_cacheID);
+        } 
+    }
+    
+    public static void removeAllCacheTables() {
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("remove all entries from all purge-able cache tables");
+        }
+        removeAllCacheTablesLocally();
+        CacheServlet.removeAllFromPeers();
+    }
+        
+    /**
+     *  Iterator over all CacheTables in the cache 
+     *  and clear all purge-able ones
+     */
+    public static synchronized void removeAllCacheTablesLocally() {
+        for(Iterator it = s_caches.values().iterator(); it.hasNext(); ) {
+            CacheTable ct = (CacheTable)it.next();
+            if (ct.isPurgeAllowed()) {
+                ct.removeAll();
+                if (s_log.isDebugEnabled()) {
+                    s_log.debug("removed all entries from cache table " + ct.m_cacheID);
+                }                
+            }
+        }
+    }
+    
+    
     /**
      *  <p> Retrieves the object stored in cache.  If no object by the
      * passed key can be found in cache (maybe because it's expired or
@@ -468,6 +497,7 @@ public class CacheTable {
         String isShared(String tableID);
         boolean isPurgeAllowed(String tableID);
         void purge(String tableID);
+        void purgeAll();
     }
 
     private static class BrowserImpl implements Browser {
@@ -499,15 +529,19 @@ public class CacheTable {
         }
 
         public boolean isPurgeAllowed(String tableID) {
-          return getCacheTable(tableID).isPurgeAllowed();
+            return getCacheTable(tableID).isPurgeAllowed();
         }
         
         public void purge(String tableID) {
-          CacheTable table = getCacheTable(tableID);
-          if (!table.isPurgeAllowed()) {
-            throw new RuntimeException("Table "+tableID+" can't be purged.");
-          }
-          table.removeAll();
+            CacheTable table = getCacheTable(tableID);
+            if (!table.isPurgeAllowed()) {
+                throw new RuntimeException("Table "+tableID+" can't be purged.");
+            }
+            table.removeAll();
+        }
+        
+        public void purgeAll() {
+            CacheTable.removeAllCacheTables();
         }
         
         private static CacheTable getCacheTable(String tableID) {

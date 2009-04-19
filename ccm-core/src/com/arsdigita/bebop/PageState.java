@@ -25,7 +25,9 @@ import com.arsdigita.bebop.util.Traversal;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.ParameterMap;
+import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
@@ -407,16 +409,6 @@ public class PageState {
     }
 
     /**
-     * Return the page component with index i from the page model.
-     *
-     * @pre (i>=0) && (i < size())
-     * @post return != null
-     */
-    private Component getComponent(int i) {
-        return m_page.getComponent(i);
-    }
-
-    /**
      * The index of a component in the page model
      *
      * @pre c != null
@@ -496,7 +488,7 @@ public class PageState {
      */
     public void setVisible(final Component c, final boolean v) {
         if (Assert.isEnabled()) {
-            Assert.truth(getPage().stateContains(c),
+            Assert.isTrue(getPage().stateContains(c),
                          "Component" + c + " is not registered on Page " +
                          getPage());
         }
@@ -703,7 +695,7 @@ public class PageState {
      * @pre c == null || getPage().stateContains(c)
      */
     public void setControlEvent(Component c, String name, String value) {
-        Assert.assertTrue(c == null || getPage().stateContains(c),
+        Assert.isTrue(c == null || getPage().stateContains(c),
                           "c == null || getPage().stateContains(c)");
         if ( m_grabbingComponent != null && m_grabbingComponent != c ) {
             throw new IllegalStateException
@@ -1069,5 +1061,23 @@ public class PageState {
             + "m_invisible = "         + m_invisible                       + newLine
             + "}";
         return result;
+    }
+    
+    /**
+     * Clear the control event then redirect to the new page state.
+     * 
+     * @param isCommitRequested indicates if a commit required before the redirect
+     * 
+     * @throws RedirectSignal to the new page state
+     * 
+     * @see RedirectSignal#RedirectSignal(String, boolean)
+     */
+    public void redirectWithoutControlEvent(boolean isCommitRequested) {
+        clearControlEvent();
+        try {
+            throw new RedirectSignal(stateAsURL(), true);
+        } catch (IOException ioe) {
+            throw new UncheckedWrapperException(ioe);
+        }
     }
 }

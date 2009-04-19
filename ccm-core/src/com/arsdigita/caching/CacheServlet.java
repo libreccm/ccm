@@ -63,6 +63,7 @@ public class CacheServlet extends HttpServlet {
     private static final String ID = "id";
     private static final String KEY = "key";
     private static final String HASH = "hash";
+    private static final String REMOVEALL = "removeAll";
 
     // If you change this, make sure that web.xml is changed as well
     static final String SERVLET_URL = "/expireCache";
@@ -73,16 +74,43 @@ public class CacheServlet extends HttpServlet {
      */
     protected void doGet( HttpServletRequest req, HttpServletResponse res ) {
         String id = req.getParameter( ID );
-        String key = req.getParameter( KEY );
-
+        String key = req.getParameter( KEY );     
+        String removeAll = req.getParameter( REMOVEALL );
+        
         if (s_log.isInfoEnabled()) {
             s_log.info("Got remove request from " + req.getRemoteHost());
         }
 
-        if (id == null || key == null) {
-            return;
+        if (id != null && key != null){
+          //normal expire cache entry request
+          if (s_log.isInfoEnabled()) {
+              s_log.info("Got remove request from " + req.getRemoteHost());
+          }  
+            
+          String hash = req.getParameter( HASH );
+          expireCacheEntry(id, key, hash);
+        } else if (id != null && key == null && removeAll != null) {
+           //purge a single cache request
+           if (s_log.isInfoEnabled()) {
+              s_log.info("Got remove all entries request from " + req.getRemoteHost());
+           } 
+           if(removeAll.equals("true")){ 
+               removeCacheEntries(id); 
+           }
+        } else if (id == null && key == null && removeAll != null) {
+            //purge all caches request
+            if (s_log.isInfoEnabled()) {
+                s_log.info("Got remove all cache request from " + req.getRemoteHost());
+            }
+            if(removeAll.equals("true")){ 
+                removeAllCache(); 
+            }
+        } else {
+            s_log.error("Got an invalid cache request from " + req.getRemoteHost());
         }
-
+    }
+    
+    protected void expireCacheEntry(String id, String key, String hash) {
         id = URLDecoder.decode(id);
         key = URLDecoder.decode(key);
 
@@ -94,7 +122,6 @@ public class CacheServlet extends HttpServlet {
 
         s_log.debug("Removing " + key + " from cache " + id);
 
-        final String hash = req.getParameter( HASH );
         final Integer hashCode = getHashCode(hash);
         if (hashCode == null) {
             // unconditionally remove
@@ -104,6 +131,25 @@ public class CacheServlet extends HttpServlet {
         }
     }
 
+    protected void removeCacheEntries(String id) {
+        id = URLDecoder.decode(id);
+        final CacheTable cache = CacheTable.getCache( id );
+        if (cache == null) {
+            s_log.debug("No cache with id " + id);
+            return;
+        }
+
+        s_log.debug("Removing all entries from cache " + id);
+        // unconditionally remove
+        cache.removeAllEntriesLocally();
+    }
+    
+    protected void removeAllCache() {
+        s_log.debug("Removing all Cache tables");
+        // unconditionally remove all
+        CacheTable.removeAllCacheTablesLocally();
+    }
+    
     private Integer getHashCode(final String hash) {
         if (hash == null) {
             return null;
@@ -134,7 +180,33 @@ public class CacheServlet extends HttpServlet {
         removeFromPeers(cache_id, key);
     }
 
-
+ 
+    /**
+     * remote all entries from all purge-able tables in the peer's.
+     * 
+     * The fact that there is no ID parameter tells the 
+     * peers to purge all cache tables. 
+     */
+    static void removeAllFromPeers() {
+        final ParameterMap params = new ParameterMap();
+        params.setParameter(REMOVEALL, "true");
+        
+        notifyPeers(params);
+    }
+    
+    /**
+     * remote all entries from the peer's cache table with an id of cacheID.
+     * 
+     * @param cacheID id of the cache table to purge
+     */
+    static void removeAllEntriesFromPeersTable(String cacheID) {
+        final ParameterMap params = new ParameterMap();
+        params.setParameter(ID, cacheID);
+        params.setParameter(REMOVEALL, "true");
+        
+        notifyPeers(params);
+    }
+    
     /**
      *  Sometimes we need to remove entries only from peer webservers.
      */
@@ -158,7 +230,11 @@ public class CacheServlet extends HttpServlet {
      */
     private static void notifyPeers(final String id,
                                     final String key,
-                                    final String hash) {
+                                    final String hash) {    
+        notifyPeers(makeParameterMap(id, key, hash));
+    }
+    
+    private static void notifyPeers(ParameterMap params) {
         if (!Web.getConfig().getDeactivateCacheHostNotifications()) {
             s_log.debug("about to notify peers");
             final Session session = SessionManager.getSession();
@@ -174,7 +250,7 @@ public class CacheServlet extends HttpServlet {
             f.set("currPort", new Integer(current.getPort()));
             while (hosts.next()) {
                 final Host host = (Host) hosts.getDomainObject();
-                notifyPeer(host, makeParameterMap(id, key, hash));
+                notifyPeer(host, params);
             }
         }
     }
