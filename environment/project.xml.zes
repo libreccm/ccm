@@ -6,10 +6,11 @@
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
                     name="aplaws" 
-                 version="2.9.2" 
-                 release="1" 
+                 version="1-0-5" 
+                 release="alpha-1" 
                   webxml="web.xml-aplaws" 
-      xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:///usr/share/ccm-devel/xsd/project.xsd">
+                  webapp="ROOT" 
+      xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
 
   <ccm:build>
 
