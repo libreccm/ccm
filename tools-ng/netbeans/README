@@ -1,0 +1,9 @@
+Create a directory nbproject in the base dir of your APLAWS devel
+environment (usually trunk). Copy the file project.xml into that
+directory.
+
+Open Netbeans, open a new project, select freeform web project
+with existing ANT file, choose your devel directory. Netbeans 
+will find the project file and create a new project which contains
+all APLAWS packages.
+

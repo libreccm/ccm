@@ -43,6 +43,8 @@
        <xsl:with-param name="databases" select="$databases"/>
     </xsl:call-template>
     <xsl:call-template name="TargetDeploy"/>
+    <xsl:call-template name="TargetPackage"/>
+    <xsl:call-template name="TargetWar"/>
     <xsl:call-template name="TargetJavadoc"/>
     <xsl:call-template name="TargetVerify"/>
     <xsl:call-template name="TargetTest">
@@ -52,31 +54,37 @@
   </xsl:template>
 
   <xsl:template name="SharedProperties">
-    <!-- Setting the layout of the basic build environment    -->
     <xsl:variable name="name" select="@name"/>
     <xsl:variable name="prettyName" select="@prettyName"/>
+
+    <!-- Setting the layout of the basic build environment    -->
     <!-- just in case: 
          check environment to set properties not already set by parent scripts  -->
     <property environment="env"/>
     <!-- Development libraries requirred by compile / build / deploy step -->
     <property value="${{env.CCM_BUILD_LIBS}}" name="ccm.build.lib.dir"/>
-    <fail message="ccm.build.lib.dir or CCM_DEVEL_LIBS not set. Please check the invoking build.xml script."
+    <fail message="ccm.build.lib.dir or CCM_DEVEL_LIBS not set.
+                   Please check the invoking build.xml script."
           unless="ccm.build.lib.dir" />
     <!-- Development libraries requirred by development tools (ant scripts) -->
     <property value="${{env.CCM_TOOLS_LIBS}}" name="ccm.tools.lib.dir"/>
-    <fail message="ccm.tools.lib.dir or CCM_TOOLS_LIBS not set. Please check the invoking build.xml script."
+    <fail message="ccm.tools.lib.dir or CCM_TOOLS_LIBS not set.
+                   Please check the invoking build.xml script."
           unless="ccm.tools.lib.dir" />
     <!-- Development libraries requirred by Red Hat JDO enhancer ANT task preliminary!  -->
     <property value="${{env.CCM_TOOLS_JDO}}" name="ccm.tools.rh-jdo.dir"/>
-    <fail message="ccm.tools.rh-jdo.dir or CCM_TOOLS_JDO not set. Please check the invoking build.xml script."
+    <fail message="ccm.tools.rh-jdo.dir or CCM_TOOLS_JDO not set.
+                   Please check the invoking build.xml script."
           unless="ccm.tools.rh-jdo.dir" />
     <!-- Base directory of the application server to deploy to, i.e. CATALINA_HOME -->
     <property value="${{env.APP_SERVER_HOME}}" name="app.server.home.dir"/>
-    <fail message="app.server.home.dir or APP_SERVER_HOME not set. Please check the invoking build.xml script."
+    <fail message="app.server.home.dir or APP_SERVER_HOME not set.
+                   Please check the invoking build.xml script."
           unless="app.server.home.dir" />
     <!-- Shared Lib directory for use by several web applications of the application server  -->
     <property value="${{env.APP_SERVER_LIB}}" name="app.server.lib.dir"/>
-    <fail message="app.server.lib.dir or APP_SERVER_LIB not set. Please check the invoking build.xml script."
+    <fail message="app.server.lib.dir or APP_SERVER_LIB not set.
+                   Please check the invoking build.xml script."
           unless="app.server.lib.dir" />
     <!-- XXX deprecated -->
     <!-- Used to be the same as CATALINA_HOME and a requirred base for PackageMastertool    -->
@@ -85,6 +93,9 @@
 
     <!-- no longer valid! Still used by prebuild modules, has to be adjusted  -->
     <property value="${{env.CCM_SHARED_LIB_DIST_DIR}}" name="shared.lib.dist.dir"/>
+
+    <!-- Base directory for the package step to create a binary repo  -->
+    <property value="packages" name="package.dir"/>
 
 
     <property value="ant.properties" name="property.file"/>
@@ -180,16 +191,25 @@
   <xsl:template name="CheckDependencies">
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="appname" select="@name"/>
-      <xsl:variable name="appfullname" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
-      <xsl:for-each select="/ccm:project/ccm:application[@name=$appfullname]/ccm:dependencies/ccm:requires">
+      <xsl:variable
+           name="appfullname"
+           select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+      <xsl:for-each
+           select="/ccm:project/ccm:application[@name=$appfullname]/ccm:dependencies/ccm:requires">
         <xsl:variable name="name" select="@name"/>
         <xsl:variable name="version" select="@version"/>
         <xsl:variable name="relation" select="@relation"/>
-        <xsl:if test="count(/ccm:project/ccm:prebuilt/ccm:application[@name = $name]) + count(/ccm:project/ccm:application[@name = $name]) &lt; 1">
-          <xsl:message terminate="yes"><xsl:value-of select="concat($appname,' depends on ',$name,'-',$version)"/></xsl:message>
+        <xsl:if test="count(/ccm:project/ccm:prebuilt/ccm:application[@name = $name]) +
+                      count(/ccm:project/ccm:application[@name = $name]) &lt; 1">
+          <xsl:message terminate="yes">
+              <xsl:value-of select="concat($appname,' depends on ',$name,'-',$version)"/>
+          </xsl:message>
         </xsl:if>
-        <xsl:if test="count(/ccm:project/ccm:prebuilt/ccm:application[@name = $name]) + count(/ccm:project/ccm:application[@name = $name]) > 1">
-          <xsl:message terminate="yes"><xsl:value-of select="concat('multiple applications provide ',$name)"/></xsl:message>
+        <xsl:if test="count(/ccm:project/ccm:prebuilt/ccm:application[@name = $name]) +
+                      count(/ccm:project/ccm:application[@name = $name]) > 1">
+          <xsl:message terminate="yes">
+              <xsl:value-of select="concat('multiple applications provide ',$name)"/>
+          </xsl:message>
         </xsl:if>
       </xsl:for-each>
     </xsl:for-each>
@@ -229,12 +249,14 @@
     </xsl:for-each>
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="app" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application"/>
+      <xsl:variable name="app"
+                  select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application"/>
       <xsl:variable name="appname" select="$app/@name"/>
       <xsl:variable name="appprettyname" select="$app/@prettyName"/>
       <xsl:variable name="appversion" select="$app/@version"/>
       <xsl:variable name="appwebapp" select="$app/@webapp"/>
-      <xsl:variable name="requires" select="/ccm:project/ccm:application[@name=$appname]/ccm:dependencies/ccm:requires"/>
+      <xsl:variable name="requires"
+                  select="/ccm:project/ccm:application[@name=$appname]/ccm:dependencies/ccm:requires"/>
       <path id="apps.{$name}.pdl.path">
         <pathelement location="{$name}/${{pdl.dir}}"/>
         <path refid="apps.{$name}.pdl.path.internal"/>
@@ -242,8 +264,11 @@
       <path id="apps.{$name}.pdl.path.internal">
         <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
           <xsl:variable name="name" select="@name"/>
-          <xsl:variable name="fullname" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
-          <xsl:for-each select="/ccm:project/ccm:application[@name=$appname]/ccm:dependencies/ccm:requires">
+          <xsl:variable
+               name="fullname"
+               select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+          <xsl:for-each
+               select="/ccm:project/ccm:application[@name=$appname]/ccm:dependencies/ccm:requires">
             <xsl:variable name="requiredname" select="@name"/>
             <xsl:if test="$requiredname = $fullname">
               <path refid="apps.{$name}.pdl.path"/>
@@ -298,13 +323,15 @@
     <xsl:param name="type"/>
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="fullname" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+      <xsl:variable name="fullname"
+           select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
       <xsl:for-each select="$requires">
         <xsl:variable name="requiredname" select="@name"/>
         <xsl:if test="$requiredname = $fullname">
           <path refid="{$name}.{$type}.classpath.internal"/>
           <xsl:call-template name="AppPropertyClassPath_Requires">
-            <xsl:with-param name="requires" select="/ccm:project/ccm:application[@name=$requiredname]/ccm:dependencies/ccm:requires"/>
+            <xsl:with-param name="requires"
+               select="/ccm:project/ccm:application[@name=$requiredname]/ccm:dependencies/ccm:requires"/>
             <xsl:with-param name="type" select="$type"/>
           </xsl:call-template>
         </xsl:if>
@@ -362,7 +389,9 @@
               <include name="${{etclib.dir}}/*.jar"/>
               <include name="${{etclib.dir}}/*.zip"/>
             </fileset>
-            <xsl:variable name="fullname" select="document(concat($target,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+            <xsl:variable name="fullname"
+                          select="document(concat($target,'/application.xml'),
+                                  /ccm:project)/ccm:application/@name"/>
             <xsl:variable name="buildRequires"
             select="/ccm:project/ccm:application[@name = $fullname]/ccm:dependencies/ccm:buildRequires"/>
             <xsl:if test="count($buildRequires) > 0">
@@ -393,10 +422,14 @@
   <xsl:template name="TargetClean">
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+      <xsl:variable name="application"
+                    select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
       <xsl:variable name="buildhooks" select="$application/@buildHooks"/>
-      <xsl:variable name="hastestdir" select="$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"/>
-      <target name="clean-{$name}" description="Cleans out the '{$name}' build environment and whole deployment directory">
+      <xsl:variable name="hastestdir"
+           select="$application/ccm:directories/ccm:directory[@name='test'] or
+                   not($application/ccm:directories)"/>
+      <target name="clean-{$name}"
+              description="Cleans out the '{$name}' build environment and whole deployment directory">
         <xsl:attribute name="depends">
           <xsl:value-of select="'init'"/>
           <xsl:value-of select="',clean-deploy'"/>
@@ -435,7 +468,8 @@
     </target>
     <xsl:call-template name="LocalGroupingTarget">
       <xsl:with-param name="targetname" select="'clean'"/>
-      <xsl:with-param name="description" select="'Cleans out the build environment and deployment directory'"/>
+      <xsl:with-param name="description"
+                    select="'Cleans out the build environment and deployment directory'"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -443,15 +477,25 @@
     <xsl:param name="databases"/>
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+      <xsl:variable
+          name="application"
+          select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
       <xsl:variable name="fullname" select="$application/@name"/>
       <xsl:variable name="buildhooks" select="$application/@buildHooks"/>
-      <xsl:variable name="hassqldir" select="$application/ccm:directories/ccm:directory[@name='sql'] or not($application/ccm:directories)"/>
-      <xsl:variable name="hassrcdir" select="$application/ccm:directories/ccm:directory[@name='src'] or not($application/ccm:directories)"/>
-      <xsl:variable name="haspdldir" select="$application/ccm:directories/ccm:directory[@name='pdl'] or not($application/ccm:directories)"/>
+      <xsl:variable name="hassqldir"
+                    select="$application/ccm:directories/ccm:directory[@name='sql'] or
+                            not($application/ccm:directories)"/>
+      <xsl:variable name="hassrcdir"
+                    select="$application/ccm:directories/ccm:directory[@name='src'] or
+                            not($application/ccm:directories)"/>
+      <xsl:variable name="haspdldir"
+                    select="$application/ccm:directories/ccm:directory[@name='pdl'] or
+                            not($application/ccm:directories)"/>
       <xsl:variable name="jdodirs" select="$application/ccm:jdo/ccm:directory"/>
-      <xsl:variable name="requires" select="/ccm:project/ccm:application[@name=$fullname]/ccm:dependencies/ccm:requires"/>
-      <target name="compile-{$name}" description="Compiles the Java code for the '{$name}' application" depends="init">
+      <xsl:variable name="requires"
+                  select="/ccm:project/ccm:application[@name=$fullname]/ccm:dependencies/ccm:requires"/>
+      <target name="compile-{$name}"
+              description="Compiles the Java code for the '{$name}' application" depends="init">
         <xsl:if test="$buildhooks">
           <ant target="compile-hook" dir="{$name}" inheritRefs="true">
             <xsl:attribute name="antfile">
@@ -490,7 +534,9 @@
         </xsl:if>
       </target>
       <xsl:if test="$jdodirs">
-        <target name="jdo-{$name}" description="JOD enhances the Java classes for the '{$name}' application" depends="init,compile-{$name}">
+        <target name="jdo-{$name}" 
+                description="JOD enhances the Java classes for the '{$name}' application"
+                depends="init,compile-{$name}">
           <jdoenhance destination="{$name}/${{build.classes.dir}}">
             <classpath>
               <fileset dir="${{jdo.lib.dir}}">
@@ -529,11 +575,14 @@
       <xsl:choose>
         <xsl:when test="$haspdldir">
           <!-- DDL generate task -->
-          <target name="generate-ddl-{$name}" description="Generates DDL for the '{$name}' application">
+          <target name="generate-ddl-{$name}"
+                  description="Generates DDL for the '{$name}' application">
             <xsl:attribute name="depends">
               <xsl:value-of select="concat('init,compile-',$name)"/>
-              <xsl:if test="$hassqldir"><xsl:value-of select="concat(',copy-sql-',$name)"/></xsl:if>
-              <xsl:if test="$hassqldir"><xsl:value-of select="concat(',copy-src-',$name)"/></xsl:if>
+              <xsl:if test="$hassqldir">
+                  <xsl:value-of select="concat(',copy-sql-',$name)"/></xsl:if>
+              <xsl:if test="$hassqldir">
+                  <xsl:value-of select="concat(',copy-src-',$name)"/></xsl:if>
             </xsl:attribute>
             <xsl:variable name="sourcexml" select="/"/>
             <if>
@@ -590,17 +639,21 @@
         </target>
       </xsl:if>
       <target name="jar-classes-{$name}" depends="init,build-{$name}">
-        <jar destfile="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar" update="true">
+        <jar destfile="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar"
+             update="true">
           <fileset dir="{$name}/${{build.classes.dir}}"/>
           <xsl:choose>
             <xsl:when test="$haspdldir">
               <manifest>
-                <attribute name="Class-Path" value="${{apps.{$name}.name}}-${{apps.{$name}.version}}-pdl.jar ${{apps.{$name}.name}}-${{apps.{$name}.version}}-sql.jar"/>
+                <attribute name="Class-Path" 
+                value="${{apps.{$name}.name}}-${{apps.{$name}.version}}-pdl.jar
+                       ${{apps.{$name}.name}}-${{apps.{$name}.version}}-sql.jar"/>
               </manifest>
             </xsl:when>
             <xsl:when test="$hassqldir">
               <manifest>
-                <attribute name="Class-Path" value="${{apps.{$name}.name}}-${{apps.{$name}.version}}-sql.jar"/>
+                <attribute name="Class-Path"
+                           value="${{apps.{$name}.name}}-${{apps.{$name}.version}}-sql.jar"/>
               </manifest>
             </xsl:when>
           </xsl:choose>
@@ -609,14 +662,16 @@
       <xsl:if test="$haspdldir">
         <target name="jar-pdl-{$name}" depends="init,build-{$name}">
           <mkdir dir="{$name}/${{pdl.dir}}"/>
-          <jar destfile="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}-pdl.jar" update="true">
+          <jar destfile="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}-pdl.jar"
+               update="true">
             <fileset dir="{$name}/${{pdl.dir}}"/>
           </jar>
         </target>
       </xsl:if>
       <xsl:if test="$haspdldir or $hassqldir">
         <target name="jar-sql-{$name}" depends="init,build-{$name}">
-          <jar destfile="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}-sql.jar" update="true">
+          <jar destfile="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}-sql.jar"
+               update="true">
             <fileset dir="{$name}/${{build.sql.dir}}">
               <exclude name=".ddl-timestamp"/>
             </fileset>
@@ -638,18 +693,28 @@
   <xsl:template name="TargetBuildApp">
     <xsl:param name="target"/>
     <xsl:param name="requires"/>
-    <xsl:variable name="application" select="document(concat($target,'/application.xml'),/ccm:project)/ccm:application"/>
+    <xsl:variable name="application"
+                  select="document(concat($target,
+                          '/application.xml'),/ccm:project)/ccm:application"/>
     <xsl:variable name="buildhooks" select="$application/@buildHooks"/>
-    <xsl:variable name="hassqldir" select="$application/ccm:directories/ccm:directory[@name='sql'] or not($application/ccm:directories)"/>
-    <xsl:variable name="hassrcdir" select="$application/ccm:directories/ccm:directory[@name='src'] or not($application/ccm:directories)"/>
-    <xsl:variable name="haspdldir" select="$application/ccm:directories/ccm:directory[@name='pdl'] or not($application/ccm:directories)"/>
+    <xsl:variable name="hassqldir"
+         select="$application/ccm:directories/ccm:directory[@name='sql'] or
+                 not($application/ccm:directories)"/>
+    <xsl:variable name="hassrcdir"
+         select="$application/ccm:directories/ccm:directory[@name='src'] or
+                 not($application/ccm:directories)"/>
+    <xsl:variable name="haspdldir"
+         select="$application/ccm:directories/ccm:directory[@name='pdl'] or
+                 not($application/ccm:directories)"/>
     <xsl:variable name="jdodirs" select="$application/ccm:jdo/ccm:directory"/>
-    <target name="build-{$target}" description="Builds the '{$target}' application (compile, generate DDL, jar, etc)">
+    <target name="build-{$target}"
+            description="Builds the '{$target}' application (compile, generate DDL, jar, etc)">
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
         <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
           <xsl:variable name="name" select="@name"/>
-          <xsl:variable name="fullname" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+          <xsl:variable name="fullname"
+               select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
           <xsl:for-each select="$requires">
             <xsl:variable name="requiredname" select="@name"/>
             <xsl:if test="$requiredname = $fullname">
@@ -695,7 +760,8 @@
     <xsl:param name="includeself" select="'no'"/>
     <xsl:param name="pathType" select="'library-path'"/>
     <xsl:param name="sourcexml" select="/"/>
-    <xsl:if test="($requires = 'all') or ($includeself = 'yes') or (count($requires) > 0) or (count($sourcexml//ccm:project/ccm:prebuilt/ccm:application) > 0)">
+    <xsl:if test="($requires = 'all') or ($includeself = 'yes') or (count($requires) > 0) or
+                    (count($sourcexml//ccm:project/ccm:prebuilt/ccm:application) > 0)">
       <xsl:element name="arg">
         <xsl:attribute name="line">
           <xsl:value-of select="concat('-',$pathType,' ')"/>
@@ -732,7 +798,8 @@
   </xsl:template>
 
   <xsl:template name="TargetVerify">
-    <target name="verify-pdl" depends="init" unless="pdl.no.verify" description="Verifies that the PDL files compile">
+    <target name="verify-pdl" depends="init" unless="pdl.no.verify"
+            description="Verifies that the PDL files compile">
       <java classname="${{ddl.generator.classname}}" failonerror="yes" fork="yes">
         <sysproperty key="java.ext.dirs" value="${{ccm.java.ext.dirs}}"/>
         <classpath refid="server.build.classpath"/>
@@ -776,9 +843,11 @@
       </javac>
     </target>
     <target name="no-build-jsp" unless="jsp.compiler.available">
-      <echo message="JSP verification skipped.  The CATALINA_HOME environment variable must point to a Tomcat 4.1 installation."/>
+      <echo message="JSP verification skipped.
+                     The CATALINA_HOME environment variable must point to a Tomcat 4.1 installation."/>
     </target>
-    <target name="verify-jsp" depends="init,build-jsp,no-build-jsp" description="Verifies that JSP files compile (requires Tomcat 4.1)"/>
+    <target name="verify-jsp" depends="init,build-jsp,no-build-jsp"
+            description="Verifies that JSP files compile (requires Tomcat 4.1)"/>
   </xsl:template>
 
   <xsl:template name="TargetDeploySystemJar">
@@ -788,7 +857,9 @@
       <available file="{$name}/${{build.classes.dir}}/{$package}" type="dir"/>
       <then>
         <mkdir dir="${{deploy.system.jars.dir}}"/>
-        <jar destfile="${{deploy.system.jars.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}-system.jar" update="true">
+        <jar
+         destfile="${{deploy.system.jars.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}-system.jar"
+         update="true">
           <fileset dir="{$name}/${{build.classes.dir}}">
             <include name="{$package}**"/>
           </fileset>
@@ -802,11 +873,19 @@
     <!-- Deploy hooks -->
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+      <xsl:variable
+             name="application"
+           select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
       <xsl:variable name="buildhooks" select="$application/@buildHooks"/>
-      <xsl:variable name="haspdldir" select="$application/ccm:directories/ccm:directory[@name='pdl'] or not($application/ccm:directories)"/>
-      <xsl:variable name="hassqldir" select="$application/ccm:directories/ccm:directory[@name='sql'] or not($application/ccm:directories)"/>
-      <xsl:variable name="hassrcdir" select="$application/ccm:directories/ccm:directory[@name='src'] or not($application/ccm:directories)"/>
+      <xsl:variable name="haspdldir"
+           select="$application/ccm:directories/ccm:directory[@name='pdl'] or
+                   not($application/ccm:directories)"/>
+      <xsl:variable name="hassqldir"
+           select="$application/ccm:directories/ccm:directory[@name='sql'] or
+                   not($application/ccm:directories)"/>
+      <xsl:variable name="hassrcdir"
+           select="$application/ccm:directories/ccm:directory[@name='src'] or
+                   not($application/ccm:directories)"/>
       <xsl:if test="$application/@buildHooks">
         <target name="deploy-{$name}-hook" depends="init">
           <ant target="deploy-hook" dir="{$name}" inheritRefs="true">
@@ -832,7 +911,8 @@
       <!-- Deploy Jar -->
       <target name="deploy-jar-classes-{$name}" depends="init,jar-classes-{$name}">
         <mkdir dir="${{deploy.lib.dir.{$name}}}"/>
-        <copy todir="${{deploy.lib.dir.{$name}}}" file="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar"/>
+        <copy todir="${{deploy.lib.dir.{$name}}}"
+              file="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar"/>
         <xsl:for-each select="$application/ccm:systemPackages/ccm:package">
           <xsl:call-template name="TargetDeploySystemJar">
             <xsl:with-param name="name" select="$name"/>
@@ -879,7 +959,8 @@
       </xsl:if>
         <!-- Deploy sql -->
       <xsl:if test="$hassqldir or $haspdldir">
-        <target name="deploy-sql-{$name}" depends="init,generate-ddl-{$name},jar-sql-{$name}">
+        <target  name="deploy-sql-{$name}"
+              depends="init,generate-ddl-{$name},jar-sql-{$name}">
           <mkdir dir="${{deploy.lib.dir.{$name}}}"/>
           <copy todir="${{deploy.lib.dir.{$name}}}">
             <fileset dir="{$name}/${{build.dir}}">
@@ -914,33 +995,45 @@
           </copy>
         </target>
       </xsl:if>
+
       <!-- Deploy app -->
-      <target name="deploy-{$name}" description="Builds and deploys the '{$name}' application">
+      <target name="deploy-{$name}"
+              description="Builds and deploys the '{$name}' application">
         <xsl:attribute name="depends">
           <xsl:text>init</xsl:text>
           <xsl:text>,build-</xsl:text><xsl:value-of select="@name"/>
-          <xsl:if test="$buildhooks"><xsl:value-of select="concat(',deploy-',$name,'-hook')"/></xsl:if>
-          <xsl:if test="$hassrcdir or $haspdldir"><xsl:value-of select="concat(',deploy-classes-',$name)"/></xsl:if>
+          <xsl:if test="$buildhooks"><xsl:value-of
+                  select="concat(',deploy-',$name,'-hook')"/></xsl:if>
+          <xsl:if test="$hassrcdir or $haspdldir"><xsl:value-of
+                  select="concat(',deploy-classes-',$name)"/></xsl:if>
           <xsl:value-of select="concat(',deploy-lib-',$name)"/>
-          <xsl:if test="$haspdldir"><xsl:value-of select="concat(',deploy-pdl-',$name)"/></xsl:if>
-          <xsl:if test="$hassqldir or $haspdldir"><xsl:text>,deploy-sql-</xsl:text><xsl:value-of select="@name"/></xsl:if>
+          <xsl:if test="$haspdldir"><xsl:value-of
+                select="concat(',deploy-pdl-',$name)"/></xsl:if>
+          <xsl:if test="$hassqldir or $haspdldir"><xsl:text>,deploy-sql-</xsl:text>
+               <xsl:value-of select="@name"/>
+          </xsl:if>
           <xsl:value-of select="concat(',deploy-web-',$name)"/>
           <xsl:value-of select="concat(',deploy-bin-',$name)"/>
         </xsl:attribute>
         <echo message="deployed '{$name}' to ${{deploy.dir.{$name}}}"/>
       </target>
+
     </xsl:for-each>
+
+
     <xsl:call-template name="LocalGroupingTarget">
       <xsl:with-param name="targetname" select="'deploy-web'"/>
     </xsl:call-template>
     <xsl:call-template name="LocalGroupingTarget">
       <xsl:with-param name="targetname" select="'deploy-jar-classes'"/>
     </xsl:call-template>
+
     <!-- Deploy prebuilt apps -->
     <xsl:for-each select="/ccm:project/ccm:prebuilt/ccm:application">
       <xsl:variable name="name" select="@name"/>
       <xsl:variable name="version" select="@version"/>
-      <target name="deploy-{$name}" depends="init" description="Deploys the '{$name}' prebuilt application">
+      <target name="deploy-{$name}" depends="init"
+              description="Deploys the '{$name}' prebuilt application">
         <copy todir="${{deploy.shared.lib.dir}}" preservelastmodified="true">
           <fileset dir="${{apps.{$name}.location}}">
             <include name="{$name}-{$version}.jar"/>
@@ -968,6 +1061,8 @@
         <echo message="deployed '{$name}' to ${{deploy.webapp.dir}}"/>
       </target>
     </xsl:for-each>
+
+    <!-- deploy pre-built modules specified in project.xml -->
     <target name="deploy-global">
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
@@ -976,6 +1071,8 @@
         </xsl:for-each>
       </xsl:attribute>
     </target>
+
+    <!-- deploy each actually built module specified in project.xml -->
     <target name="deploy-local">
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
@@ -985,9 +1082,12 @@
         </xsl:for-each>
       </xsl:attribute>
     </target>
+
     <target name="copy-webxml-init" depends="init">
-      <available file="${{deploy.webapp.dir}}/ROOT/WEB-INF" type="dir" property="root.webapp.exists"/>
-      <condition property="resolved.webxml.source.file" value="${{deploy.webapp.dir}}/ROOT/WEB-INF/${{webxml.source.file}}">
+      <available file="${{deploy.webapp.dir}}/ROOT/WEB-INF" type="dir"
+                 property="root.webapp.exists"/>
+      <condition property="resolved.webxml.source.file"
+                 value="${{deploy.webapp.dir}}/ROOT/WEB-INF/${{webxml.source.file}}">
         <and>
           <isset property="root.webapp.exists"/>
           <available file="${{deploy.webapp.dir}}/ROOT/WEB-INF/${{webxml.source.file}}"/>
@@ -1000,18 +1100,93 @@
         <not><isset property="resolved.webxml.source.file"/></not>
       </condition>
     </target>
-    <target name="copy-webxml" depends="init,copy-webxml-init" if="root.webapp.exists">
-      <copy file="${{resolved.webxml.source.file}}" tofile="${{deploy.webapp.dir}}/ROOT/WEB-INF/web.xml"/>
+
+    <target name="copy-webxml"
+            depends="init,copy-webxml-init" if="root.webapp.exists">
+      <copy file="${{resolved.webxml.source.file}}"
+            tofile="${{deploy.webapp.dir}}/ROOT/WEB-INF/web.xml"/>
     </target>
+
     <!-- Master deploy -->
     <target name="deploy" depends="init,deploy-global,deploy-local,copy-webxml">
-      <xsl:attribute name="description">Builds and deploys all applications, also deploys prebuilt applications and config files</xsl:attribute>
+      <xsl:attribute name="description">
+          Builds and deploys all applications, also deploys prebuilt applications and config files
+      </xsl:attribute>
     </target>
-  </xsl:template>
+  </xsl:template>  <!-- TargetDeploy -->
+
+  <xsl:template name="TargetPackage">
+    <xsl:variable name="name" select="@name"/>
+
+
+  </xsl:template>  <!-- TargetPackage -->
+
+  <!-- Create a war file out of the deployed set of packages including the
+       eventually created configuration of the deployed application          -->
+  <xsl:template name="TargetWar">
+    <xsl:variable name="name" select="@name"/>
+
+
+    <!-- Master step create-war -->
+                      <!-- depends="init,deploy-global,deploy-local,copy-webxml"
+    -->
+    <target name="create-war">
+      <xsl:attribute name="description">
+          Creates a WAR file of the deployed application.
+      </xsl:attribute>
+      <xsl:attribute name="depends">
+        <xsl:text>deploy</xsl:text>
+        <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
+          <xsl:text>,jar-classes-</xsl:text><xsl:value-of select="@name"/>
+        </xsl:for-each>
+      </xsl:attribute>
+
+      <echo>
+        Creating a WAR file from directory ${{deploy.dir}}/webapps/ROOT
+        REMEMBER:
+        You have to perform the load-bundle step first if you would like
+        to have a valid web.xml file and a basic configuration!
+      </echo>
+      
+      <xsl:variable name="name" select="@name"/>
+      <xsl:variable name="context" select="@webxml"/>
+      
+        <!-- web.xml will be copied implicitly from deployed WEB-INF! -->
+        <war>
+          <xsl:attribute name="destfile">
+          <xsl:text>${ccm.project.dir}/</xsl:text><xsl:value-of select="@name"/>
+          <xsl:text>-</xsl:text><xsl:value-of select="@version"/>
+          <xsl:text>-</xsl:text><xsl:value-of select="@release"/>
+          <xsl:text>.war</xsl:text>
+          </xsl:attribute>
+
+          <fileset dir="${{deploy.dir}}/webapps/ROOT/">
+            <exclude name="**/classes/**"/>
+          </fileset>
+          <xsl:for-each select="/ccm:project/ccm:application">
+            <xsl:variable name="name" select="@name"/>
+            <xsl:variable name="version" select="@version"/>
+
+            <lib>
+              <xsl:attribute name="file">
+                <xsl:value-of select="@name"/><xsl:text>/build/</xsl:text>
+                <xsl:value-of select="@name"/><xsl:text>-</xsl:text>
+                <xsl:value-of select="@version"/>
+                <xsl:text>.jar</xsl:text>
+              </xsl:attribute>
+            </lib>
+          </xsl:for-each>
+
+        </war>
+
+      </target>
+
+  </xsl:template>  <!-- TargetWar -->
 
   <xsl:template name="TargetCopyTestPDL">
     <xsl:param name="target" select="'default-value'"/>
     <xsl:param name="requires" select="'all'"/>
+
     <target depends="init" name="copy-test-pdl-{$target}">
       <mkdir dir="{$target}/${{build.test.classes.dir}}"/>
       <copy todir="{$target}/${{build.test.classes.dir}}">
@@ -1038,7 +1213,8 @@
             </copy>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:variable name="fullname" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+            <xsl:variable name="fullname"
+                 select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
             <xsl:for-each select="$requires">
               <xsl:variable name="requiredname" select="@name"/>
               <xsl:if test="$requiredname = $fullname">
@@ -1081,14 +1257,19 @@
   <xsl:template name="TargetBuildAppTest">
     <xsl:param name="target"/>
     <xsl:param name="requires"/>
-    <target name="build-tests-{$target}" description="Build the tests for the '{$target}' application">
+    <target name="build-tests-{$target}"
+            description="Build the tests for the '{$target}' application">
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
         <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
           <xsl:variable name="name" select="@name"/>
-          <xsl:variable name="fullname" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
-          <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
-          <xsl:variable name="hastestdir" select="$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"/>
+          <xsl:variable name="fullname"
+               select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+          <xsl:variable name="application"
+               select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+          <xsl:variable name="hastestdir"
+               select="$application/ccm:directories/ccm:directory[@name='test'] or
+                       not($application/ccm:directories)"/>
           <xsl:for-each select="$requires">
             <xsl:variable name="requiredname" select="@name"/>
             <xsl:if test="($requiredname = $fullname) and $hastestdir">
@@ -1109,22 +1290,29 @@
     <xsl:variable name="name" select="@name"/>
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
-      <xsl:variable name="hastestdir" select="$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"/>
+      <xsl:variable name="application"
+           select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+      <xsl:variable name="hastestdir"
+                  select="$application/ccm:directories/ccm:directory[@name='test'] or
+                          not($application/ccm:directories)"/>
       <xsl:variable name="requires" select="$application/ccm:dependencies/ccm:requires"/>
       <xsl:if test="$hastestdir">
         <xsl:call-template name="TargetBuildAppTest">
           <xsl:with-param name="target" select="@name"/>
           <xsl:with-param name="requires" select="$requires"/>
         </xsl:call-template>
-        <target name="compile-tests-{$name}" depends="init,build-{$name}" if="{$name}.test.src.dir.exists">
+        <target name="compile-tests-{$name}" depends="init,build-{$name}"
+                if="{$name}.test.src.dir.exists">
           <path id="{$name}.tests.compile.srcpath">
             <pathelement location="{$name}/${{test.src.dir}}"/>
           </path>
           <xsl:call-template name="TargetJavaC">
-            <xsl:with-param name="destdir" select="concat($name,'/${build.test.classes.dir}')"/>
-            <xsl:with-param name="srcpathref" select="concat($name,'.tests.compile.srcpath')"/>
-            <xsl:with-param name="classpathref" select="concat($name,'.tests.classpath')"/>
+            <xsl:with-param name="destdir"
+                          select="concat($name,'/${build.test.classes.dir}')"/>
+            <xsl:with-param name="srcpathref"
+                          select="concat($name,'.tests.compile.srcpath')"/>
+            <xsl:with-param name="classpathref"
+                          select="concat($name,'.tests.classpath')"/>
           </xsl:call-template>
         </target>
         <target depends="init" name="copy-test-src-{$name}" if="{$name}.test.src.dir.exists">
@@ -1188,8 +1376,12 @@
             <param name="deploy.web.dir" value="${{test.deploy.dir}}/WEB-INF"/>
           </antcall>
         </target>
-        <target name="runtests-{$name}" depends="init,build-tests-{$name},copy-test-pdl-{$name},generate-test-ddl-{$name},deploy-test-webapp-{$name}">
-          <xsl:attribute name="description"><xsl:value-of select="concat('Runs the tests for the ',$name,' application')"/></xsl:attribute>
+        <target name="runtests-{$name}"
+                depends="init,build-tests-{$name},copy-test-pdl-{$name},
+                         generate-test-ddl-{$name},deploy-test-webapp-{$name}">
+          <xsl:attribute name="description">
+              <xsl:value-of select="concat('Runs the tests for the ',$name,' application')"/>
+          </xsl:attribute>
           <mkdir dir="{$name}/${{test.tmp.dir}}"/>
           <junit
             printsummary="yes"
@@ -1201,7 +1393,8 @@
             <jvmarg line="${{junit.jvmargs}}"/>
             <xsl:choose>
               <xsl:when test="/ccm:project/ccm:options/ccm:option[@name='junitCustomFormatter']/@value = 1">
-                <formatter classname="${{junit.formatter.classname}}" extension="${{junit.formatter.extension}}"/>
+                <formatter classname="${{junit.formatter.classname}}"
+                           extension="${{junit.formatter.extension}}"/>
               </xsl:when>
               <xsl:otherwise>
                 <formatter type="${{junit.formatter}}"/>
@@ -1225,20 +1418,29 @@
             <sysproperty value="${{apps.{$name}.name}}.test.pdl.mf" key="waf.runtime.test.pdl"/>
             <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
               <xsl:variable name="name" select="@name"/>
-              <xsl:variable name="fullname" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
-              <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
-              <xsl:variable name="hastestdir" select="$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"/>
+              <xsl:variable name="fullname"
+                   select=
+                   "document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"
+              />
+              <xsl:variable name="application"
+                   select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+              <xsl:variable name="hastestdir"
+                   select=
+                   "$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"
+              />
               <xsl:for-each select="$requires">
                 <xsl:variable name="requiredname" select="@name"/>
                 <xsl:if test="$requiredname = $fullname">
-                  <sysproperty value="${{apps.{$name}.name}}.test.pdl.mf" key="waf.runtime.test.pdl"/>
+                  <sysproperty value="${{apps.{$name}.name}}.test.pdl.mf"
+                               key="waf.runtime.test.pdl"/>
                 </xsl:if>
               </xsl:for-each>
             </xsl:for-each>
             <xsl:for-each select="/ccm:project/ccm:prebuilt/ccm:application">
               <xsl:variable name="name" select="@name"/>
               <xsl:variable name="version" select="@version"/>
-              <sysproperty value="${{apps.{$name}.name}}-{$version}.test.pdl.mf" key="waf.runtime.test.pdl"/>
+              <sysproperty value="${{apps.{$name}.name}}-{$version}.test.pdl.mf"
+                           key="waf.runtime.test.pdl"/>
             </xsl:for-each>
             <batchtest todir="{$name}">
               <fileset dir="{$name}/${{build.test.classes.dir}}">
@@ -1253,8 +1455,11 @@
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
         <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
-          <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
-          <xsl:variable name="hastestdir" select="$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"/>
+          <xsl:variable name="application"
+               select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+          <xsl:variable name="hastestdir"
+               select="$application/ccm:directories/ccm:directory[@name='test'] or
+                       not($application/ccm:directories)"/>
           <xsl:if test="$hastestdir">
             <xsl:value-of select="concat(',build-tests-',@name)"/>
           </xsl:if>
@@ -1265,8 +1470,12 @@
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
         <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
-          <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
-          <xsl:variable name="hastestdir" select="$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"/>
+          <xsl:variable name="application"
+               select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+          <xsl:variable name="hastestdir"
+            select=
+            "$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"
+          />
           <xsl:if test="$hastestdir">
             <xsl:value-of select="concat(',runtests-',@name)"/>
           </xsl:if>
@@ -1293,10 +1502,14 @@
                 <include name="{$sourcedirectory}/**"/>
               </fileset>
             </path>
-            <map from="${{basedir}}${{file.separator}}{$target}${{file.separator}}{$sourcedirectory}${{file.separator}}" to=""/>
+            <map from=
+            "${{basedir}}${{file.separator}}{$target}${{file.separator}}{$sourcedirectory}${{file.separator}}"
+                 to=""
+            />
           </pathconvert>
           <mkdir dir="{$target}/${{build.classes.dir}}"/>
-          <echo message="${{{$type}.files.{$target}}}" file="{$target}/${{build.classes.dir}}/${{apps.{$target}.name}}.{$type}.mf"/>
+          <echo message="${{{$type}.files.{$target}}}"
+                file="{$target}/${{build.classes.dir}}/${{apps.{$target}.name}}.{$type}.mf"/>
         </then>
       </if>
     </target>
@@ -1307,14 +1520,17 @@
 
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+      <xsl:variable name="application"
+                  select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
       <xsl:variable name="requires" select="$application/ccm:dependencies/ccm:requires"/>
-      <target name="javadoc-{$name}" description="Generates the API documentation for the '{$name}' application">
+      <target name="javadoc-{$name}"
+              description="Generates the API documentation for the '{$name}' application">
         <xsl:attribute name="depends">
           <xsl:text>init</xsl:text>
           <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
             <xsl:variable name="name" select="@name"/>
-            <xsl:variable name="fullname" select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
+            <xsl:variable name="fullname"
+                        select="document(concat($name,'/application.xml'),/ccm:project)/ccm:application/@name"/>
             <xsl:for-each select="$requires">
               <xsl:variable name="requiredname" select="@name"/>
               <xsl:if test="$requiredname = $fullname">
@@ -1354,7 +1570,8 @@
       </xsl:for-each>
     </target>
 
-    <target name="javadoc" depends="init,javadoc-combine-src" description="Generates the combined API documentation">
+    <target name="javadoc" depends="init,javadoc-combine-src"
+            description="Generates the combined API documentation">
       <mkdir dir="${{javadoc.dir}}"/>
       <javadoc
         maxmemory="384m"
@@ -1379,8 +1596,11 @@
       <xsl:attribute name="depends">
         <xsl:text>init</xsl:text>
         <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
-          <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
-          <xsl:variable name="hastestdir" select="$application/ccm:directories/ccm:directory[@name='test'] or not($application/ccm:directories)"/>
+          <xsl:variable name="application"
+               select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+          <xsl:variable name="hastestdir"
+               select="$application/ccm:directories/ccm:directory[@name='test'] or
+                       not($application/ccm:directories)"/>
           <xsl:if test="$hastestdir">
             <xsl:text>,build-tests-</xsl:text><xsl:value-of select="@name"/>
           </xsl:if>
@@ -1446,13 +1666,16 @@
     </target>
 
     <target name="pmd-check">
-      <available property="pmd.available" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="ccm.base.classpath"/>
+      <available property="pmd.available" classname="net.sourceforge.pmd.ant.PMDTask"
+                 classpathref="ccm.base.classpath"/>
     </target>
 
-    <target name="pmd" depends="init,pmd-check" if="pmd.available" description="Runs the PMD utility over the code">
+    <target name="pmd" depends="init,pmd-check" if="pmd.available"
+            description="Runs the PMD utility over the code">
       <mkdir dir="${{pmd.report.dir}}"/>
       <echo message="Generating ${{pmd.report.dir}}/${{pmd.report.file}} for *.java files"/>
-      <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"  classpathref="ccm.base.classpath"/>
+      <taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask"
+               classpathref="ccm.base.classpath"/>
       <pmd rulesetfiles="${{pmd.rulesets}}">
         <formatter type="${{pmd.format}}" toFile="${{pmd.report.dir}}/${{pmd.report.file}}"/>
         <fileset dir=".">
@@ -1469,9 +1692,13 @@
       <tstamp><format property="YEAR" pattern="yyyy"/></tstamp>
       <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
         <xsl:variable name="name" select="@name"/>
-        <available property="{$name}.test.src.dir.exists" file="{$name}/${{test.src.dir}}" type="dir"/>
-        <pathconvert dirsep="/" pathsep=":" property="apps.{$name}.pdl.path" refid="apps.{$name}.pdl.path"/>
-        <pathconvert dirsep="/" pathsep=":" property="apps.{$name}.pdl.path.internal" refid="apps.{$name}.pdl.path.internal"/>
+        <available property="{$name}.test.src.dir.exists"
+                   file="{$name}/${{test.src.dir}}" type="dir"/>
+        <pathconvert dirsep="/" pathsep=":"
+                     property="apps.{$name}.pdl.path" refid="apps.{$name}.pdl.path"/>
+        <pathconvert dirsep="/" pathsep=":"
+                     property="apps.{$name}.pdl.path.internal"
+                     refid="apps.{$name}.pdl.path.internal"/>
       </xsl:for-each>
       <path id="ccm.java.ext.dirs">
         <!-- no longer present in APLAWS 1.0.4
@@ -1481,8 +1708,11 @@
         -->
         <pathelement path="${{java.ext.dirs}}"/>
       </path>
-      <pathconvert dirsep="/" pathsep=":" property="ccm.java.ext.dirs" refid="ccm.java.ext.dirs"/>
-      <condition property="junit.jvmargs" value="-Xdebug -Xrunjdwp:transport=dt_socket,address=${{test.remote.port}},server=y,suspend=y -Xnoagent -Djava.compiler=NONE">
+      <pathconvert dirsep="/" pathsep=":" property="ccm.java.ext.dirs"
+                   refid="ccm.java.ext.dirs"/>
+      <condition property="junit.jvmargs"
+       value="-Xdebug -Xrunjdwp:transport=dt_socket,address=${{test.remote.port}},
+               server=y,suspend=y -Xnoagent -Djava.compiler=NONE">
         <and>
           <not><isset property="junit.jvmargs"/></not>
           <isset property="debugtests"/>
@@ -1528,7 +1758,8 @@
 
       <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
         <xsl:variable name="name" select="@name"/>
-        <xsl:variable name="application" select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+        <xsl:variable name="application"
+                      select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
         <!-- property shared does not work / not documented how to use  
              setting in modules application.xml as part of application has no effect       -->
         <xsl:variable name="shared" select="$application/@shared"/>
@@ -1539,33 +1770,34 @@
           <xsl:when test="$shared = 'false'">
          -->
             <!-- will copy modules classes/libs into module's WEB-INF directory. Works. -->
-            <property value="${{deploy.dir.{$name}}}/WEB-INF/classes"       name="deploy.classes.dir.{$name}"/>
-            <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"           name="deploy.lib.dir.{$name}"/>
-            <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"           name="deploy.external.lib.dir.{$name}"/>
+            <property value="${{deploy.dir.{$name}}}/WEB-INF/classes"  name="deploy.classes.dir.{$name}"/>
+            <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"      name="deploy.lib.dir.{$name}"/>
+            <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"      name="deploy.external.lib.dir.{$name}"/>
         <!--          
           </xsl:when>
           <xsl:otherwise>
         -->
-            <!-- will copy modules classes/libs into shared directory. 6.1 - 6.4: webapps/WEB-INF non-standard 
-                 up to 6.4 the only metheod that works.                                                         
-            <property value="${{deploy.shared.classes.dir}}" name="deploy.classes.dir.{$name}"/>
-            <property value="${{deploy.shared.lib.dir}}"     name="deploy.lib.dir.{$name}"/>
-            <property value="${{deploy.shared.lib.dir}}"     name="deploy.external.lib.dir.{$name}"/>               -->
+        <!-- will copy modules classes/libs into shared directory. 6.1 - 6.4: webapps/WEB-INF non-standard 
+             up to 6.4 the only metheod that works.                                                         
+        <property value="${{deploy.shared.classes.dir}}" name="deploy.classes.dir.{$name}"/>
+        <property value="${{deploy.shared.lib.dir}}"     name="deploy.lib.dir.{$name}"/>
+        <property value="${{deploy.shared.lib.dir}}"     name="deploy.external.lib.dir.{$name}"/>          -->
         <!--          
           </xsl:otherwise>
         </xsl:choose>
         -->
 
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/src"           name="deploy.src.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/doc"           name="deploy.doc.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/test"          name="deploy.test.dir.{$name}"/>
-        <property value="${{deploy.test.dir.{$name}}}/classes"          name="deploy.test.classes.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/api"           name="deploy.api.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/bin"           name="deploy.bin.dir.{$name}"/>
+        <property value="${{deploy.dir.{$name}}}/WEB-INF/src"   name="deploy.src.dir.{$name}"/>
+        <property value="${{deploy.dir.{$name}}}/WEB-INF/doc"   name="deploy.doc.dir.{$name}"/>
+        <property value="${{deploy.dir.{$name}}}/WEB-INF/test"  name="deploy.test.dir.{$name}"/>
+        <property value="${{deploy.test.dir.{$name}}}/classes"  name="deploy.test.classes.dir.{$name}"/>
+        <property value="${{deploy.dir.{$name}}}/WEB-INF/api"   name="deploy.api.dir.{$name}"/>
+        <property value="${{deploy.dir.{$name}}}/WEB-INF/bin"   name="deploy.bin.dir.{$name}"/>
       </xsl:for-each>
 
       <!-- xml version of log4j configuration not supported
-      <condition property="log4j.configuration.sysproperty" value="file://${{ccm.home}}/conf/log4j.xml">
+      <condition property="log4j.configuration.sysproperty"
+                 value="file://${{ccm.home}}/conf/log4j.xml">
         <and>
           <not><isset property="log4j.configuration.sysproperty"/></not>
           <available file="${{ccm.home}}/conf/log4j.xml"/>
@@ -1573,7 +1805,8 @@
       </condition>
       --> 
       <!-- Non standard location of log4j configuration no longer supported as of GE 6.5
-      <condition property="log4j.configuration.sysproperty" value="file://${{ccm.home}}/conf/log4j.properties">
+      <condition property="log4j.configuration.sysproperty"
+                 value="file://${{ccm.home}}/conf/log4j.properties">
         <and>
           <not><isset property="log4j.configuration.sysproperty"/></not>
           <available file="${{ccm.home}}/conf/log4j.properties"/>
@@ -1591,7 +1824,8 @@
     </target>
 
     <target name="usage" description="Displays usage help">
-      <echo message="Run 'ant -projecthelp' for a list of targets.  See ant.apache.org for more information on Ant."/>
+      <echo message="Run 'ant -projecthelp' for a list of targets.
+                     See ant.apache.org for more information on Ant."/>
     </target>
 
   </xsl:template>

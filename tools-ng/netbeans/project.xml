@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.ant.freeform</type>
+    <configuration>
+        <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
+            <!-- Wenn Sie diese Datei manuell editieren, vermeiden Sie die Einstellung der Eigenschaften mittels Werkzeug. -->
+            <name>CCM (trunk)</name>
+            <properties/>
+            <folders>
+                <source-folder>
+                    <label>webapps</label>
+                    <type>doc_root</type>
+                    <location>/var/ccm-devel/web/pb/trunk/webapps</location>
+                </source-folder>
+                <source-folder>
+                    <label>WEB-INF</label>
+                    <type>web_inf</type>
+                    <location>/var/ccm-devel/web/pb/trunk/webapps/WEB-INF</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-core (Source)</label>
+                    <type>java</type>
+                    <location>ccm-core/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-assets-fileattachment (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-assets-fileattachment/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-assets-notes (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-assets-notes/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-assets-relatedlink (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-assets-relatedlink/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-address (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-address/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-agenda (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-agenda/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-article (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-article/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-bookmark (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-bookmark/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-contact (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-contact/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-esdservice (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-esdservice/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-event (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-event/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-faqitem (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-faqitem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-filestorageitem (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-filestorageitem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-formitem (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-formitem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-formsectionitem (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-formsectionitem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-glossaryitem (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-glossaryitem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-htmlform (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-htmlform/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-inlinesite (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-inlinesite/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-job (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-job/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-legalnotice (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-legalnotice/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-minutes (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-minutes/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-motditem (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-motditem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-mparticle (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-mparticle/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-newsitem (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-newsitem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-organization (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-organization/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-pressrelease (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-pressrelease/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-service (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-service/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-siteproxy (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-siteproxy/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-xmlfeed (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-xmlfeed/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-auth-http (Source)</label>
+                    <type>java</type>
+                    <location>ccm-auth-http/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-bookmarks (Source)</label>
+                    <type>java</type>
+                    <location>ccm-bookmarks/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-docmgr (Source)</label>
+                    <type>java</type>
+                    <location>ccm-docmgr/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-formbuilder-pdf (Source)</label>
+                    <type>java</type>
+                    <location>ccm-formbuilder-pdf/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-forum (Source)</label>
+                    <type>java</type>
+                    <location>ccm-forum/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-simplesurvey (Source)</label>
+                    <type>java</type>
+                    <location>ccm-simplesurvey/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-user-preferences (Source)</label>
+                    <type>java</type>
+                    <location>ccm-user-preferences/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-weblog (Source)</label>
+                    <type>java</type>
+                    <location>ccm-weblog/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-webpage (Source)</label>
+                    <type>java</type>
+                    <location>ccm-webpage/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-aplaws (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-aplaws/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-atoz (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-atoz/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-dublin (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-dublin/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-exporter (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-exporter/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-freeform (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-freeform/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-image-step (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-image-step/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-importer (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-importer/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-navigation (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-navigation/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-portal (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-portal/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-rss (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-rss/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-search (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-search/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-shortcuts (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-shortcuts/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-subsite (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-subsite/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-terms (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-terms/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-theme (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-theme/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-ldn-util (Source)</label>
+                    <type>java</type>
+                    <location>ccm-ldn-util/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-shp-aplaws (Source)</label>
+                    <type>java</type>
+                    <location>ccm-shp-aplaws/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-shp-aplaws (Web)</label>
+                    <type>java</type>
+                    <location>ccm-shp-aplaws/web</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-zes-aplaws (Source)</label>
+                    <type>java</type>
+                    <location>ccm-zes-aplaws/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-zes-aplaws (Web)</label>
+                    <type>java</type>
+                    <location>ccm-zes-aplaws/web</location>
+                </source-folder>
+            </folders>
+            <ide-actions>
+                <action name="build">
+                    <target>build</target>
+                </action>
+                <action name="clean">
+                    <target>clean</target>
+                </action>
+                <action name="javadoc">
+                    <target>javadoc</target>
+                </action>
+                <action name="run">
+                    <target>runtests</target>
+                </action>
+                <action name="test">
+                    <target>build-tests</target>
+                </action>
+                <action name="redeploy">
+                    <target>deploy</target>
+                </action>
+                <action name="rebuild">
+                    <target>clean</target>
+                    <target>build</target>
+                </action>
+            </ide-actions>
+            <view>
+                <items>
+                    <source-folder style="tree">
+                        <label>Web Pages</label>
+                        <location>/var/ccm-devel/web/pb/trunk/webapps</location>
+                    </source-folder>
+                    <source-folder style="tree">
+                        <label>WEB-INF Content</label>
+                        <location>/var/ccm-devel/web/pb/trunk/webapps/WEB-INF</location>
+                    </source-folder>
+                    <source-folder style="tree">
+                        <label>Webseiten</label>
+                        <location>../../../web/pb/trunk/webapps</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-core (Source)</label>
+                        <location>ccm-core/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms (Source)</label>
+                        <location>ccm-cms/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-assets-fileattachment (Source)</label>
+                        <location>ccm-cms-assets-fileattachment/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-assets-notes (Source)</label>
+                        <location>ccm-cms-assets-notes/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-assets-relatedlink (Source)</label>
+                        <location>ccm-cms-assets-relatedlink/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-address (Source)</label>
+                        <location>ccm-cms-types-address/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-agenda (Source)</label>
+                        <location>ccm-cms-types-agenda/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-article (Source)</label>
+                        <location>ccm-cms-types-article/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-bookmark (Source)</label>
+                        <location>ccm-cms-types-bookmark/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-contact (Source)</label>
+                        <location>ccm-cms-types-contact/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-esdservice (Source)</label>
+                        <location>ccm-cms-types-esdservice/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-event (Source)</label>
+                        <location>ccm-cms-types-event/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-faqitem (Source)</label>
+                        <location>ccm-cms-types-faqitem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-filestorageitem (Source)</label>
+                        <location>ccm-cms-types-filestorageitem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-formitem (Source)</label>
+                        <location>ccm-cms-types-formitem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-formsectionitem (Source)</label>
+                        <location>ccm-cms-types-formsectionitem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-glossaryitem (Source)</label>
+                        <location>ccm-cms-types-glossaryitem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-htmlform (Source)</label>
+                        <location>ccm-cms-types-htmlform/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-inlinesite (Source)</label>
+                        <location>ccm-cms-types-inlinesite/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-job (Source)</label>
+                        <location>ccm-cms-types-job/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-legalnotice (Source)</label>
+                        <location>ccm-cms-types-legalnotice/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-minutes (Source)</label>
+                        <location>ccm-cms-types-minutes/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-motditem (Source)</label>
+                        <location>ccm-cms-types-motditem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-mparticle (Source)</label>
+                        <location>ccm-cms-types-mparticle/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-newsitem (Source)</label>
+                        <location>ccm-cms-types-newsitem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-organization (Source)</label>
+                        <location>ccm-cms-types-organization/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-pressrelease (Source)</label>
+                        <location>ccm-cms-types-pressrelease/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-service (Source)</label>
+                        <location>ccm-cms-types-service/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-siteproxy (Source)</label>
+                        <location>ccm-cms-types-siteproxy/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-xmlfeed (Source)</label>
+                        <location>ccm-cms-types-xmlfeed/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-auth-http (Source)</label>
+                        <location>ccm-auth-http/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-bookmarks (Source)</label>
+                        <location>ccm-bookmarks/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-docmgr (Source)</label>
+                        <location>ccm-docmgr/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-formbuilder-pdf (Source)</label>
+                        <location>ccm-formbuilder-pdf/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-forum (Source)</label>
+                        <location>ccm-forum/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-simplesurvey (Source)</label>
+                        <location>ccm-simplesurvey/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-user-preferences (Source)</label>
+                        <location>ccm-user-preferences/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-weblog (Source)</label>
+                        <location>ccm-weblog/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-webpage (Source)</label>
+                        <location>ccm-webpage/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-aplaws (Source)</label>
+                        <location>ccm-ldn-aplaws/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-atoz (Source)</label>
+                        <location>ccm-ldn-atoz/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-dublin (Source)</label>
+                        <location>ccm-ldn-dublin/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-exporter (Source)</label>
+                        <location>ccm-ldn-exporter/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-freeform (Source)</label>
+                        <location>ccm-ldn-freeform/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-image-step (Source)</label>
+                        <location>ccm-ldn-image-step/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-importer (Source)</label>
+                        <location>ccm-ldn-importer/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-navigation (Source)</label>
+                        <location>ccm-ldn-navigation/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-portal (Source)</label>
+                        <location>ccm-ldn-portal/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-rss (Source)</label>
+                        <location>ccm-ldn-rss/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-search (Source)</label>
+                        <location>ccm-ldn-search/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-shortcuts (Source)</label>
+                        <location>ccm-ldn-shortcuts/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-subsite (Source)</label>
+                        <location>ccm-ldn-subsite/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-terms (Source)</label>
+                        <location>ccm-ldn-terms/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-theme (Source)</label>
+                        <location>ccm-ldn-theme/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-ldn-util (Source)</label>
+                        <location>ccm-ldn-util/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-shp-aplaws (Source)</label>
+                        <location>ccm-shp-aplaws/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-shp-aplaws (Web)</label>
+                        <location>ccm-shp-aplaws/web</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-zes-aplaws (Source)</label>
+                        <location>ccm-zes-aplaws/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-zes-aplaws (Web)</label>
+                        <location>ccm-zes-aplaws/web</location>
+                    </source-folder>
+                    <source-file>
+                        <location>build.xml</location>
+                    </source-file>
+                </items>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="clean"/>
+                    <ide-action name="javadoc"/>
+                    <ide-action name="run"/>
+                    <ide-action name="test"/>
+                    <ide-action name="redeploy"/>
+                    <ide-action name="rebuild"/>
+                </context-menu>
+            </view>
+            <subprojects/>
+        </general-data>
+        <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
+            <compilation-unit>
+                <package-root>ccm-core/src</package-root>
+                <package-root>ccm-cms/src</package-root>
+                <package-root>ccm-cms-assets-fileattachment/src</package-root>
+                <package-root>ccm-cms-assets-notes/src</package-root>
+                <package-root>ccm-cms-assets-relatedlink/src</package-root>
+                <package-root>ccm-cms-types-address/src</package-root>
+                <package-root>ccm-cms-types-agenda/src</package-root>
+                <package-root>ccm-cms-types-article/src</package-root>
+                <package-root>ccm-cms-types-bookmark/src</package-root>
+                <package-root>ccm-cms-types-contact/src</package-root>
+                <package-root>ccm-cms-types-esdservice/src</package-root>
+                <package-root>ccm-cms-types-event/src</package-root>
+                <package-root>ccm-cms-types-faqitem/src</package-root>
+                <package-root>ccm-cms-types-filestorageitem/src</package-root>
+                <package-root>ccm-cms-types-formitem/src</package-root>
+                <package-root>ccm-cms-types-formsectionitem/src</package-root>
+                <package-root>ccm-cms-types-glossaryitem/src</package-root>
+                <package-root>ccm-cms-types-htmlform/src</package-root>
+                <package-root>ccm-cms-types-inlinesite/src</package-root>
+                <package-root>ccm-cms-types-job/src</package-root>
+                <package-root>ccm-cms-types-legalnotice/src</package-root>
+                <package-root>ccm-cms-types-minutes/src</package-root>
+                <package-root>ccm-cms-types-motditem/src</package-root>
+                <package-root>ccm-cms-types-mparticle/src</package-root>
+                <package-root>ccm-cms-types-newsitem/src</package-root>
+                <package-root>ccm-cms-types-organization/src</package-root>
+                <package-root>ccm-cms-types-pressrelease/src</package-root>
+                <package-root>ccm-cms-types-service/src</package-root>
+                <package-root>ccm-cms-types-siteproxy/src</package-root>
+                <package-root>ccm-cms-types-xmlfeed/src</package-root>
+                <package-root>ccm-auth-http/src</package-root>
+                <package-root>ccm-bookmarks/src</package-root>
+                <package-root>ccm-docmgr/src</package-root>
+                <package-root>ccm-formbuilder-pdf/src</package-root>
+                <package-root>ccm-forum/src</package-root>
+                <package-root>ccm-simplesurvey/src</package-root>
+                <package-root>ccm-user-preferences/src</package-root>
+                <package-root>ccm-weblog/src</package-root>
+                <package-root>ccm-webpage/src</package-root>
+                <package-root>ccm-ldn-aplaws/src</package-root>
+                <package-root>ccm-ldn-atoz/src</package-root>
+                <package-root>ccm-ldn-dublin/src</package-root>
+                <package-root>ccm-ldn-exporter/src</package-root>
+                <package-root>ccm-ldn-freeform/src</package-root>
+                <package-root>ccm-ldn-image-step/src</package-root>
+                <package-root>ccm-ldn-importer/src</package-root>
+                <package-root>ccm-ldn-navigation/src</package-root>
+                <package-root>ccm-ldn-portal/src</package-root>
+                <package-root>ccm-ldn-rss/src</package-root>
+                <package-root>ccm-ldn-search/src</package-root>
+                <package-root>ccm-ldn-shortcuts/src</package-root>
+                <package-root>ccm-ldn-subsite/src</package-root>
+                <package-root>ccm-ldn-terms/src</package-root>
+                <package-root>ccm-ldn-theme/src</package-root>
+                <package-root>ccm-ldn-util/src</package-root>
+                <package-root>ccm-shp-aplaws/src</package-root>
+                <package-root>ccm-shp-aplaws/web</package-root>
+                <package-root>ccm-zes-aplaws/src</package-root>
+                <package-root>ccm-zes-aplaws/web</package-root>
+                <classpath mode="compile">ccm-core/lib/log4j.jar:/usr/share/java/ccm-servlet-2.3.jar:ccm-core/lib/lucene-1.4.3.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:/usr/share/java/bcel.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/saxon.jar:/usr/share/java/jakarta-commons-digester.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/PDFBox-0.7.2-log4j.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-cms/lib/jai_codec.jar::ccm-cms/lib/jai_core.jar::ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-formbuilder-pdf/lib/fop.jar:/usr/share/java/ojdbc14.jar</classpath>
+                <source-level>1.5</source-level>
+            </compilation-unit>
+        </java-data>
+        <preferences xmlns="http://www.netbeans.org/ns/auxiliary-configuration-preferences/1">
+            <module name="org-netbeans-modules-editor-indent">
+                <node name="CodeStyle">
+                    <property name="usedProfile" value="default"/>
+                    <node name="project">
+                        <property name="tab-size" value="8"/>
+                        <property name="text-limit-width" value="80"/>
+                    </node>
+                </node>
+                <node name="text">
+                    <node name="x-java">
+                        <node name="CodeStyle">
+                            <node name="project"/>
+                        </node>
+                    </node>
+                </node>
+            </module>
+        </preferences>
+        <web-data xmlns="http://www.netbeans.org/ns/freeform-project-web/1">
+            <web-module>
+                <doc-root>/var/ccm-devel/web/pb/trunk/webapps</doc-root>
+                <classpath>ccm-core/lib/log4j.jar:/usr/share/java/ccm-servlet.jar</classpath>
+                <j2ee-spec-level>1.3</j2ee-spec-level>
+            </web-module>
+        </web-data>
+    </configuration>
+</project>

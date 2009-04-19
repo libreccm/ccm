@@ -71,7 +71,7 @@
         </annotation>
       </attribute>
 
-      <attribute name="release" type="integer">
+      <attribute name="release" type="string">
         <annotation>
           <documentation xml:lang="en">The release number for the bundle packages</documentation>
         </annotation>
@@ -82,6 +82,13 @@
           <documentation xml:lang="en">The file to be copied to web.xml in the ROOT webapp upon deployment.</documentation>
         </annotation>
       </attribute>
+
+      <attribute name="webapp" type="string" use="optional">
+        <annotation>
+          <documentation xml:lang="en">The name of the web application's context, i.e. the web application name. </documentation>
+        </annotation>
+      </attribute>
+
 
     </complexType>
 
@@ -218,11 +225,11 @@
 
   <simpleType name="version">
     <annotation>
-      <documentation xml:lang="en">A version number made up of three dot separated integers</documentation>
+      <documentation xml:lang="en">A version number made up of three dot or hyphen separated integers</documentation>
     </annotation>
 
     <restriction base="string">
-      <pattern value="\d+\.\d+\.\d+"/>
+      <pattern value="\d+[\-\.]\d+[\-\.]\d+"/>
     </restriction>
   </simpleType>
 </schema>

@@ -46,17 +46,23 @@ Oracle 10g RDBMS or PostgresQL up to version 8.2
 (d)  Edit the file local.ccm.properties and replace the specified bundle name
      by your working bundle
 
-(e)  ant configure will create the compile and deploy tasks
+(e)  ant install-tomcat  will install a test environment (Tomcat 6) into
+     the runtime directory
 
-(f)  ant deploy will compile and deploy into your test environment (runtime)
+(f)  ant configure will create the compile and deploy tasks
 
-(g)  ant load-bundle will load the database. May take several minutes!
+(g)  ant deploy will compile and deploy into your test environment (runtime)
 
-(h)  ant start
+(h)  ant load-bundle will load the database. May take several minutes!
 
-(i)  Open your browser:
+(i)  ant start  will start tomcat
+
+(j)  Open your browser:
          http://localhost:8080/
          http://localhost:8080/ccm/content-center/
+
+(k)  ant create-war will create a war file of the deployed project for
+     installation in any Tomcat 6 compliant servlet container. 
 
 
 4. NOTES
