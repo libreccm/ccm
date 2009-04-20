@@ -7,16 +7,17 @@
      Comment out those modules to don't need. Keep the included modules in sync
      with the bundles application file!                                      -->
 
-<ccm:project name="aplaws-svn"
-       prettyName="aplaws-svn"
-       ccmVersion="6.1" 
-       type="application"
-       webxml="web.xml-aplaws"
-       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools/devel/xsd/project.xsd"
-       xmlns:ccm="http://ccm.redhat.com/ccm-project"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       version="2.9.2"
-       release="1">
+<ccm:project  xmlns:ccm="http://ccm.redhat.com/ccm-project"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools/devel/xsd/project.xsd"
+             ccmVersion="6.1" 
+                   name="aplaws"
+             prettyName="APLAWS plus"
+                   type="application"
+                version="1-0-5"
+                release="alpha-1"
+                 webxml="web.xml-aplaws"
+                 webapp="ROOT" >
 
   <!-- List all target databases here -->
   <ccm:databases>

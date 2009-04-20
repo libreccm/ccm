@@ -41,34 +41,47 @@ Oracle 10g RDBMS or PostgresQL up to version 8.2
 (c)  If you don't already have a project.xml file in place, copy the file
      project.xml.complete, too, and rename it to project.xml
      Comment out those modules to don't need. Keep the included modules in sync
-     with the bundles application file! (see later)
+     with the bundles application file! (see later).
+     Specify name, version, release as you need, don't alter the other
+     attributes (exp. ccmVersion and webapps)!
 
 (d)  Edit the file local.ccm.properties and replace the specified bundle name
-     by your working bundle
+     by your working bundle. Keep the list of modules in sync with
+     project.xml!
 
-(e)  ant install-tomcat  will install a test environment (Tomcat 6) into
-     the runtime directory
+(e)  ant install-tomcat 
+     will create a runtime directory and install Tomcat 6 for testing. 
 
-(f)  ant configure will create the compile and deploy tasks
+(f)  ant configure 
+     will create the compile and deploy tasks
 
-(g)  ant deploy will compile and deploy into your test environment (runtime)
+(g)  ant deploy 
+     will compile and deploy into your test environment (runtime)
 
-(h)  ant load-bundle will load the database. May take several minutes!
+(h)  ant load-bundle 
+     will load the database. May take several minutes!
 
-(i)  ant start  will start tomcat
+(i)  ant start  
+     will start tomcat
 
 (j)  Open your browser:
          http://localhost:8080/
          http://localhost:8080/ccm/content-center/
 
-(k)  ant create-war will create a war file of the deployed project for
+(k)  ant create-war 
+     will create a war file from the deployed project for
      installation in any Tomcat 6 compliant servlet container. 
+
+(l)  ant package
+     will create a repository of binary modules which may serve
+     as a base for distribution and user install & maintenance
+
 
 
 4. NOTES
 
 Configuration:
-	ccm-ldn-aplaws/bundles/* ("complete" bundle is default)
+	ccm-ldn-aplaws/bundles/* ("devel" bundle is default)
 	local.build.properties
 	local.runtime.properties
 	local.ccm.properties

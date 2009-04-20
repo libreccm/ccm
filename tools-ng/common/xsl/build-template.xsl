@@ -870,7 +870,7 @@
 
   <xsl:template name="TargetDeploy">
     <xsl:variable name="name" select="@name"/>
-    <!-- Deploy hooks -->
+
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
       <xsl:variable
@@ -886,6 +886,8 @@
       <xsl:variable name="hassrcdir"
            select="$application/ccm:directories/ccm:directory[@name='src'] or
                    not($application/ccm:directories)"/>
+
+      <!-- Deploy hooks -->
       <xsl:if test="$application/@buildHooks">
         <target name="deploy-{$name}-hook" depends="init">
           <ant target="deploy-hook" dir="{$name}" inheritRefs="true">
@@ -895,19 +897,7 @@
           </ant>
         </target>
       </xsl:if>
-      <!-- Deploy War -->
-      <target name="deploy-war-{$name}" depends="init,jar-classes-{$name}">
-        <mkdir dir="${{deploy.war.dir}}"/>
-        <mkdir dir="{$name}/${{lib.dir}}"/>
-        <war destfile="${{deploy.war.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.war"
-             webxml="{$name}/${{web.dir}}/WEB-INF/web.xml">
-          <fileset dir="{$name}/${{web.dir}}">
-            <exclude name="WEB-INF/web.xml"/>
-          </fileset>
-          <lib dir="{$name}/${{lib.dir}}"/>
-          <classes dir="{$name}/${{build.classes.dir}}"/>
-        </war>
-      </target>
+
       <!-- Deploy Jar -->
       <target name="deploy-jar-classes-{$name}" depends="init,jar-classes-{$name}">
         <mkdir dir="${{deploy.lib.dir.{$name}}}"/>
@@ -920,6 +910,7 @@
           </xsl:call-template>
         </xsl:for-each>
       </target>
+
         <!-- Deploy classes -->
       <xsl:if test="$hassrcdir or $haspdldir">
         <target name="deploy-classes-{$name}" depends="init,build-{$name}">
@@ -1118,6 +1109,148 @@
   <xsl:template name="TargetPackage">
     <xsl:variable name="name" select="@name"/>
 
+    <!-- Step through the list of modules to compile and package as specified in project.xml -->
+    <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
+
+      <xsl:variable name="name" select="@name"/>
+      <xsl:variable name="application"
+                    select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
+      <xsl:variable name="buildhooks" select="$application/@buildHooks"/>
+      <!-- Check if module uses pdl  -->
+      <xsl:variable name="haspdldir"
+           select="$application/ccm:directories/ccm:directory[@name='pdl'] or
+                   not($application/ccm:directories)"/>
+      <!-- Check if module uses sql  -->
+      <xsl:variable name="hassqldir"
+           select="$application/ccm:directories/ccm:directory[@name='sql'] or
+                   not($application/ccm:directories)"/>
+      <!-- Check if module uses an additional src dir to compile  -->
+      <xsl:variable name="hassrcdir"
+           select="$application/ccm:directories/ccm:directory[@name='src'] or
+                   not($application/ccm:directories)"/>
+
+
+    <!-- Package hooks -->
+      <xsl:if test="$application/@buildHooks">
+        <target name="package-{$name}-hook" depends="init">
+          <ant target="deploy-hook" dir="{$name}" inheritRefs="true">
+            <xsl:attribute name="antfile">
+              <xsl:value-of select="$application/@buildHooks"/>
+            </xsl:attribute>
+          </ant>
+        </target>
+      </xsl:if>
+
+
+      <!-- Package Jar Classes -->
+      <target name="package-jar-classes-{$name}" depends="init,jar-classes-{$name}">
+        <mkdir dir="${{package.dir}}/binaries/"/>
+        <copy todir="${{package.dir}}/binaries/"
+              file="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar"/>
+      <!--
+        <xsl:for-each select="$application/ccm:systemPackages/ccm:package">
+          <xsl:call-template name="TargetDeploySystemJar">
+            <xsl:with-param name="name" select="$name"/>
+            <xsl:with-param name="package" select="@path"/>
+          </xsl:call-template>
+        </xsl:for-each>
+      -->
+      </target>
+
+      <!-- Package pdl -->
+      <xsl:if test="$haspdldir">
+        <target name="package-pdl-{$name}" depends="init,jar-pdl-{$name}">
+
+          <mkdir dir="${{package.dir}}/binaries/"/>
+          <copy todir="${{package.dir}}/binaries/">
+            <fileset dir="{$name}/${{build.dir}}">
+              <include name="*pdl.jar"/>
+            </fileset>
+          </copy>   
+          
+        </target>
+      </xsl:if>
+
+      <!-- Package sql -->
+      <xsl:if test="$hassqldir or $haspdldir">
+        <target  name="package-sql-{$name}"
+              depends="init,generate-ddl-{$name},jar-sql-{$name}">
+          <mkdir dir="${{package.dir}}/binaries/"/>
+          <copy todir="${{package.dir}}/binaries/">
+            <fileset dir="{$name}/${{build.dir}}">
+              <include name="*sql.jar"/>
+            </fileset>
+          </copy>
+        </target>
+      </xsl:if>
+
+      <!-- Package external libs, not developed by the CCM project.
+           Located in a modules lib directory.                       -->
+      <target name="package-lib-{$name}" depends="init">
+        <mkdir dir="${{package.dir}}/binaries/{$name}/lib/"/>
+        <copy todir="${{package.dir}}/binaries/{$name}/lib/" preservelastmodified="true">
+          <fileset dir="{$name}">
+            <include name="${{lib.dir}}/**"/>
+          </fileset>
+          <mapper type="glob" to="*" from="${{lib.dir}}${{file.separator}}*"/>
+        </copy>
+      </target>
+
+      <!-- Package web directory -->
+      <target name="package-web-{$name}" depends="init">
+        <mkdir dir="${{package.dir}}/binaries/{$name}/web/"/>
+        <copy todir="${{package.dir}}/binaries/{$name}/web/">
+          <fileset dir="{$name}">
+            <include name="${{web.dir}}/**"/>
+          </fileset>
+          <mapper type="glob" to="*" from="${{web.dir}}${{file.separator}}*"/>
+        </copy>
+      </target>
+
+
+      <!-- Package an app by combining all necessary steps -->
+      <target name="package-{$name}" description="Packages the '{$name}' application">
+        <xsl:attribute name="depends">
+          <xsl:text>init</xsl:text>
+          <xsl:text>,build-</xsl:text><xsl:value-of select="@name"/>
+          <xsl:if test="$buildhooks"><xsl:value-of
+                  select="concat(',package-',$name,'-hook')"/></xsl:if>
+          <xsl:value-of select="concat(',package-jar-classes-',$name)"/>
+          <xsl:if test="$haspdldir">
+              <xsl:value-of select="concat(',package-pdl-',$name)"/>
+          </xsl:if>
+          <xsl:if test="$hassqldir or $haspdldir">
+              <xsl:value-of select="concat(',package-sql-',$name)"/>
+          </xsl:if>
+          <!--
+          <xsl:if test="$hassrcdir or $haspdldir"><xsl:value-of
+                  select="concat(',package-classes-',$name)"/></xsl:if>
+          <xsl:value-of select="concat(',package-bin-',$name)"/>
+          -->
+          <xsl:value-of select="concat(',package-lib-',$name)"/>
+          <xsl:value-of select="concat(',package-web-',$name)"/>
+        </xsl:attribute>
+        <echo message="Package created for '{$name}' in ${{package.dir}}/binaries/"/>
+      </target>
+
+    </xsl:for-each>
+
+    <!-- Master package -->
+                      <!-- depends="init,deploy-global,deploy-local,copy-webxml" -->
+    <!-- Step through the list of modules and package each one built  -->
+    <target name="package">
+      <xsl:attribute name="description">
+          Builds all applications and creates binary packages for each module
+      </xsl:attribute>
+      <xsl:attribute name="depends">
+        <xsl:text>init</xsl:text>
+        <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
+          <xsl:variable name="name" select="@name"/>
+          <xsl:text>,package-</xsl:text><xsl:value-of select="@name"/>
+        </xsl:for-each>
+      </xsl:attribute>
+      <!-- <mkdir dir="${{package.dir}}"/>  -->
+    </target>
 
   </xsl:template>  <!-- TargetPackage -->
 
@@ -1152,7 +1285,7 @@
       <xsl:variable name="context" select="@webxml"/>
       
         <!-- web.xml will be copied implicitly from deployed WEB-INF! -->
-        <war>
+        <war needxmlfile="False" >
           <xsl:attribute name="destfile">
           <xsl:text>${ccm.project.dir}/</xsl:text><xsl:value-of select="@name"/>
           <xsl:text>-</xsl:text><xsl:value-of select="@version"/>
