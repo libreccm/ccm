@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2009 Peter Boy (pb@zes.uni-bremen.de) All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -60,7 +61,7 @@ import org.apache.log4j.Logger;
  */
 public final class CCMResourceManager {
        public final static String versionId =
-        "$Id: CCM.java 1393 2006-11-28 09:12:32Z sskracic $" +
+        "$Id: CCMResourceManager.java 1393 2006-11-28 09:12:32Z sskracic $" +
         "$Author: pboy $" +
         "$DateTime: 2009/01/10 18:10:38 $";
 
@@ -160,12 +161,12 @@ public final class CCMResourceManager {
      * <b>Note! API changed!</b>
      *
      * Originally it is used to determine all file object locations of a
-     * CCMResourceManager installation, during the installation step as well as 
+     * CCM installation, during the installation step as well as 
      * while running the application inside a servlet container. The CCM installation
      * of a servlet container used to use a non-standard layout. It is based upon a
      * system wide environment variable CCM_HOME to determine the home directory.
      *
-     * The dependence from a system wide environment variable prevents a servlet
+     * The dependency from a system wide environment variable prevents a servlet
      * container to run multiple instances of CCM. In addition to it CCM will
      * be migrated to be installable in a standard way to a standard container.
      * Therefore all file locations will be given to the applications
@@ -175,24 +176,43 @@ public final class CCMResourceManager {
      * Method getHomeDirectory() is preserved during the transition phase.
      * <b>It may be removed in the future!</b> Or it may be moved to
      * c.ad.packaging for assistence of the installation step only.
+     *
+     * MODIFIED:
+     * CCM_HOME is now interpreted as the path to the applications base
+     * directory (web application context).
      * 
      * @return Directory location in the servers file system as File object.
      */
     static final File getHomeDirectory() {
-        final String home = System.getProperty("ccm.home");
+
+        String home = System.getProperty("ccm.home");
 
         if (home == null) {
             throw new IllegalStateException
                 ("The ccm.home system property is null or not defined");
         }
 
-        final File file = new File(home);
-
-        if (!file.exists()) {
-            throw new IllegalStateException
-                ("The file given in the ccm.home system property " +
-                 "does not exist");
+        // make a guess, weather ist is old style (i.e. referring to the containers
+        // base directory and therefor does not contain the webapps part) or
+        // new style referring to the apps base directory (and therefor containing
+        // the webapps part)
+        if (home.indexOf("webapps") > 0 ){
+            // should be new style
         }
+        else {
+            // presumably old style, add path to standard context name
+            home += "/webapps/ROOT)";
+        }
+
+        File file = new File(home);
+
+//      No need to require that home exists (indeed, during install it will not).
+//      Should be created by invoking method if not.
+//      if (!file.exists()) {
+//          throw new IllegalStateException
+//              ("The file given in the ccm.home system property " +
+//               "does not exist");
+//      }
 
         if (!file.isDirectory()) {
             throw new IllegalStateException
@@ -296,7 +316,9 @@ public final class CCMResourceManager {
 
 
         // temporary: enforce that BaseDir is ROOT!
-        m_baseDir.renameTo(new File(m_baseDir.getParent(),"ROOT"));
+        // removed, all modules are now installed into one context and
+        // its name is specified in project.xml
+        // m_baseDir.renameTo(new File(m_baseDir.getParent(),"ROOT"));
 
         // eventually: check if dir exists, create it if not.
         if (!m_baseDir.exists()) {
@@ -327,8 +349,9 @@ public final class CCMResourceManager {
             // environment variable.
             // During transition phase only! Must be removed when the new
             // standard compliant installation method is fully in place
-            m_baseDir = new File(new File(CCMResourceManager.getHomeDirectory(),
-                                          "webapps"), "ROOT");
+            // MODIFIED
+            // HomeDirectory now specifies the applications context dir.
+            m_baseDir = CCMResourceManager.getHomeDirectory();
 
             // eventually: check if dir exists, create it if not.
             if (!m_baseDir.exists()) {

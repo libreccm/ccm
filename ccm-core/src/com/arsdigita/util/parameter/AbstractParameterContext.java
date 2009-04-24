@@ -98,14 +98,29 @@ public abstract class AbstractParameterContext implements ParameterContext {
     }
 
     /**
-     * @see ParameterContext#get(Parameter)
+     * From ParameterContext#get(Parameter):
+     * Gets the unmarshaled value of <code>param</code>.  If the
+     * loaded value is null, <code>param.getDefaultValue()</code> is
+     * returned.
+     *
+     * @param param The named <code>Parameter</code> whose value to
+     * retrieve; it cannot be null
+     * @return The unmarshaled Java object value of <code>param</code>
      */
     public Object get(final Parameter param) {
         return get(param, param.getDefaultValue());
     }
 
     /**
-     * @see ParameterContext#get(Parameter,Object)
+     * From ParameterContext#get(Parameter,Object)
+     * Gets the unmarshaled value of <code>param</code>, returning
+     * <code>dephalt</code> if <code>param</code>'s value is null.
+     *
+     * @param param The <code>Parameter</code> whose value to
+     * retrieve; it cannot be null
+     * @param dephalt The fallback default value; it may be null
+     * @return The unmarshaled Java object value of <code>param</code>
+     * or <code>dephalt</code> if the former is null
      */
     public Object get(final Parameter param, final Object dephault) {
         if (Assert.isEnabled()) {
@@ -139,6 +154,8 @@ public abstract class AbstractParameterContext implements ParameterContext {
     }
 
     /**
+     *
+     *
      * Reads and unmarshals all values associated with the registered
      * parameters from <code>reader</code>.  Any errors are returned.
      *
@@ -156,7 +173,15 @@ public abstract class AbstractParameterContext implements ParameterContext {
     }
 
     /**
-     * @see ParameterContext#load(ParameterReader,ErrorList)
+     * From ParameterContext#load(ParameterReader,ErrorList):
+     * Reads and unmarshals all values associated with the registered
+     * parameters from <code>reader</code>.  If any errors are
+     * encountered, they are added to <code>errors</code>.
+     *
+     * @param reader The <code>ParameterReader</code> from which to
+     * fetch the values; it cannot be null
+     * @param errors The <code>ErrorList</code> that captures any
+     * errors while loading; it cannot be null
      */
     public final void load(final ParameterReader reader,
                            final ErrorList errors) {

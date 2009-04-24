@@ -154,6 +154,32 @@ public abstract class AbstractParameter implements Parameter {
      * Calls {@link #doRead(ParameterReader,ErrorList)}.
      *
      * @see Parameter#read(ParameterReader,ErrorList)
+     *
+     * From Parameter#read(ParameterReader,ErrorList):
+     * Gets the parameter value as a Java object. The value will have
+     * a specific runtime type and so may be appropriately cast.
+     *
+     * Reading typically follows the following procedure:
+     *
+     * <ul>
+     *   <li>Read the literal string value associated with the
+     *   parameter from <code>reader</code></li>
+     *
+     *   <li>Convert the literal string value into an approprite Java
+     *   object</li>
+     * </ul>
+     *
+     * If at any point in the process an error is encountered, it is
+     * added to <code>errors</code>.  Callers of this method will
+     * typically construct an <code>ErrorList</code> in which to
+     * collect errors.
+     *
+     * @param reader The <code>ParameterReader</code> from which to
+     * recover a string literal value; it cannot be null
+     * @param errors The <code>ErrorList</code> in which to collect
+     * any errors encountered; it cannot be null
+     * @return The Java object value of the parameter
+     *
      */
     public final Object read(final ParameterReader reader,
                              final ErrorList errors) {

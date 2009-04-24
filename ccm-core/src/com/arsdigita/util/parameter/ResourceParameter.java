@@ -31,7 +31,9 @@ import org.apache.log4j.Logger;
  * InputStream for the given Resource.  If it does not, and if it is
  * required, it logs an error.  Otherwise, it returns null.
  *
- * @deprecated Use {@link URLParameter} instead.
+ * Had been deprecated for a while in favour of an URLParameter and a
+ * application specific resource: protocol extension (c.ad.util.protocol.resource).
+ * As of version 6.5 reverted to ResourceParameter to avoid non-standard extensions.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: ResourceParameter.java 287 2005-02-22 00:29:02Z sskracic $
