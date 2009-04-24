@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<xsl:stylesheet version="1.0"
-  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:common="http://exslt.org/common"
-  xmlns:xalan="http://xml.apache.org/xslt"
-  xmlns:ccm="http://ccm.redhat.com/ccm-project"
+<xsl:stylesheet   version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+             xmlns:common="http://exslt.org/common"
+              xmlns:xalan="http://xml.apache.org/xslt"
+                xmlns:ccm="http://ccm.redhat.com/ccm-project"
   exclude-result-prefixes="ccm common">
 
-  <xsl:output method="xml"
-    encoding="UTF-8"
-    indent="yes"
+  <xsl:output    method="xml"
+               encoding="UTF-8"
+                 indent="yes"
     xalan:indent-amount="4"/>
 
   <xsl:template match="ccm:project">
@@ -54,13 +54,16 @@
   </xsl:template>
 
   <xsl:template name="SharedProperties">
-    <xsl:variable name="name" select="@name"/>
-    <xsl:variable name="prettyName" select="@prettyName"/>
+    <xsl:variable select="@name" name="name"/>
+    <xsl:variable select="@prettyName" name="prettyName" />
+    <xsl:variable select="@webapp" name="context" />
+
 
     <!-- Setting the layout of the basic build environment    -->
     <!-- just in case: 
          check environment to set properties not already set by parent scripts  -->
     <property environment="env"/>
+
     <!-- Development libraries requirred by compile / build / deploy step -->
     <property value="${{env.CCM_BUILD_LIBS}}" name="ccm.build.lib.dir"/>
     <fail message="ccm.build.lib.dir or CCM_DEVEL_LIBS not set.
@@ -76,16 +79,19 @@
     <fail message="ccm.tools.rh-jdo.dir or CCM_TOOLS_JDO not set.
                    Please check the invoking build.xml script."
           unless="ccm.tools.rh-jdo.dir" />
+
     <!-- Base directory of the application server to deploy to, i.e. CATALINA_HOME -->
     <property value="${{env.APP_SERVER_HOME}}" name="app.server.home.dir"/>
     <fail message="app.server.home.dir or APP_SERVER_HOME not set.
                    Please check the invoking build.xml script."
           unless="app.server.home.dir" />
+
     <!-- Shared Lib directory for use by several web applications of the application server  -->
     <property value="${{env.APP_SERVER_LIB}}" name="app.server.lib.dir"/>
     <fail message="app.server.lib.dir or APP_SERVER_LIB not set.
                    Please check the invoking build.xml script."
           unless="app.server.lib.dir" />
+
     <!-- XXX deprecated -->
     <!-- Used to be the same as CATALINA_HOME and a requirred base for PackageMastertool    -->
     <property value="${{env.CCM_HOME}}" name="ccm.home"/>
@@ -97,11 +103,16 @@
     <!-- Base directory for the package step to create a binary repo  -->
     <property value="packages" name="package.dir"/>
 
-
+    <!-- currently no longer used
     <property value="ant.properties" name="property.file"/>
     <property file="${{property.file}}"/>
-    <property name="app.name" value="{$name}"/>
-    <property name="app.prettyname" value="{$prettyName}"/>
+    -->
+	<!-- here: taken from project.xml-->
+    <property name="this.appName" value="{$name}"/>
+    <property name="this.appPrettyname" value="{$prettyName}"/>
+    <property name="this.appContext" value="{$context}"/>
+
+	<!-- CCM source dir structure-->
     <property value="build" name="build.dir"/>
     <property value="lib" name="lib.dir"/>
     <property value="etc/lib" name="etclib.dir"/>
@@ -111,6 +122,7 @@
     <property value="web" name="web.dir"/>
     <property value="ddl" name="ddl.dir"/>
     <property value="bin" name="bin.dir"/>
+
     <property value="8300" name="test.remote.port"/>
     <property value="false" name="test.sql.verbose"/>
     <property value="true" name="test.sql.continue"/>
@@ -120,6 +132,7 @@
     <property value="test/src" name="test.src.dir"/>
     <property value="${{build.dir}}/test" name="test.deploy.dir"/>
     <property value="${{build.dir}}/tmp" name="test.tmp.dir"/>
+
     <property value="${{build.dir}}/src" name="build.src.dir"/>
     <property value="${{build.dir}}/classes" name="build.classes.dir"/>
     <property value="${{build.dir}}/sql" name="build.sql.dir"/>
@@ -127,6 +140,7 @@
     <property value="${{build.test.dir}}/classes" name="build.test.classes.dir"/>
     <property value="${{build.test.dir}}/sql" name="build.test.sql.dir"/>
     <property value="${{etclib.dir}}" name="javacc.home.dir"/>
+
     <property value="*Suite.class" name="junit.suite"/>
     <property value="" name="junit.test"/>
     <property value="off" name="junit.haltonfailure"/>
@@ -137,6 +151,7 @@
     <property value="xml" name="junit.formatter.extension"/>
     <property value="false" name="junit.showoutput"/>
     <property value="com.arsdigita.tools.junit.extensions.CoreInitializer" name="junit.initializer.classname"/>
+
     <property value="${{build.dir}}/api" name="javadoc.dir"/>
     <property value="${{build.dir}}/api-apps" name="app.javadoc.dir"/>
     <property value="" name="pdl.args"/>
@@ -153,6 +168,7 @@
     <property value="${{shared.lib.dist.dir}}/jdo" name="jdo.lib.dir"/>  -->
     <property value="com.arsdigita.persistence.pdl.PDL" name="ddl.generator.classname"/>
     <property value="com.arsdigita.persistence.pdl.TestPDLGenerator" name="test.ddl.generator.classname"/>
+
     <xsl:choose>
       <xsl:when test="@webxml">
         <property name="webxml.source.file">
@@ -162,9 +178,11 @@
         </property>
       </xsl:when>
       <xsl:otherwise>
-        <property name="webxml.source.file" value="web.xml-default"/>
+        <property name="webxml.source.file" value="web.xml-core"/>
       </xsl:otherwise>
     </xsl:choose>
+    <echo message="web.xml file requested: ${{webxml.source.file}}" />
+
     <path id="ccm.base.classpath">
       <dirset dir="${{ccm.home}}">
         <include name="conf"/>
@@ -370,7 +388,8 @@
         <xsl:variable name="name" select="@name"/>
         <path refid="{$name}.{$type}.classpath"/>
       </xsl:for-each>
-      <path refid="ccm.base.classpath"/>
+      <!--  <path refid="ccm.base.classpath"/>   -->
+      <pathelement path="${{java.class.path}}"/>
     </path>
     <xsl:if test="/ccm:project/ccm:build/ccm:application[@name = $target]">
       <path id="{$target}.{$type}.classpath.internal">
@@ -460,11 +479,11 @@
       <!--  XXX  OOPS must be replaced by the individual files which have been copied !
       <delete dir="${{deploy.shared.lib.dir}}"/>
       -->
-      <!-- is now part of the deploy.webapp.dir
+      <!-- is now part of the this.deploy.dir
       <delete dir="${{deploy.external.lib.dir}}"/>
       -->
       <!-- XXX OOPS, works for now, but must be replaced by individual files!  -->
-      <delete dir="${{deploy.webapp.dir}}"/>
+      <delete dir="${{this.deploy.dir}}"/>
     </target>
     <xsl:call-template name="LocalGroupingTarget">
       <xsl:with-param name="targetname" select="'clean'"/>
@@ -493,7 +512,8 @@
                             not($application/ccm:directories)"/>
       <xsl:variable name="jdodirs" select="$application/ccm:jdo/ccm:directory"/>
       <xsl:variable name="requires"
-                  select="/ccm:project/ccm:application[@name=$fullname]/ccm:dependencies/ccm:requires"/>
+           select="/ccm:project/ccm:application[@name=$fullname]/ccm:dependencies/ccm:requires"/>
+
       <target name="compile-{$name}"
               description="Compiles the Java code for the '{$name}' application" depends="init">
         <xsl:if test="$buildhooks">
@@ -526,10 +546,14 @@
             <pathelement location="{$name}/${{build.src.dir}}"/>
           </path>
           <xsl:call-template name="TargetJavaC">
-            <xsl:with-param name="destdir" select="concat($name, '/${build.classes.dir}')"/>
-            <xsl:with-param name="srcdir" select="concat($name,'/${src.dir}')"/>
-            <xsl:with-param name="srcpathref" select="concat($name,'.compile.srcpath')"/>
-            <xsl:with-param name="classpathref" select="concat($name,'.build.classpath')"/>
+            <xsl:with-param name="destdir"
+                            select="concat($name, '/${build.classes.dir}')"/>
+            <xsl:with-param name="srcdir"
+                            select="concat($name,'/${src.dir}')"/>
+            <xsl:with-param name="srcpathref"
+                            select="concat($name,'.compile.srcpath')"/>
+            <xsl:with-param name="classpathref"
+                            select="concat($name,'.build.classpath')"/>
           </xsl:call-template>
         </xsl:if>
       </target>
@@ -558,12 +582,14 @@
                 <include name="{$name}"/>
               </xsl:for-each>
             </dirset>
-            <mapper type="merge" to="${{basedir}}/{$name}/${{build.dir}}/.jdo-timestamp"/>
+            <mapper type="merge"
+                    to="${{basedir}}/{$name}/${{build.dir}}/.jdo-timestamp"/>
             <jdo>
               <pathelement location="{$name}/${{src.dir}}"/>
             </jdo>
           </jdoenhance>
-          <echo message="jdo-timestamp" file="{$name}/${{build.dir}}/.jdo-timestamp"/>
+          <echo message="jdo-timestamp"
+                file="{$name}/${{build.dir}}/.jdo-timestamp"/>
         </target>
       </xsl:if>
 
@@ -603,7 +629,8 @@
               </then>
             </if>
             <mkdir dir="{$name}/${{build.dir}}"/>
-            <echo message="ddl-timestamp" file="{$name}/${{build.sql.dir}}/.ddl-timestamp"/>
+            <echo message="ddl-timestamp"
+                  file="{$name}/${{build.sql.dir}}/.ddl-timestamp"/>
           </target>
           <xsl:call-template name="TargetManifest">
             <xsl:with-param name="target" select="$name"/>
@@ -850,6 +877,7 @@
             description="Verifies that JSP files compile (requires Tomcat 4.1)"/>
   </xsl:template>
 
+
   <xsl:template name="TargetDeploySystemJar">
     <xsl:param name="name"/>
     <xsl:param name="package"/>
@@ -868,9 +896,13 @@
     </if>
   </xsl:template>
 
+  <!--  D E P L O Y
+        construct ant script for the deploy target                         -->
   <xsl:template name="TargetDeploy">
     <xsl:variable name="name" select="@name"/>
 
+    <!-- step through the list of included modules in project.xml and 
+         execute for each one                                              -->
     <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
       <xsl:variable name="name" select="@name"/>
       <xsl:variable
@@ -900,8 +932,8 @@
 
       <!-- Deploy Jar -->
       <target name="deploy-jar-classes-{$name}" depends="init,jar-classes-{$name}">
-        <mkdir dir="${{deploy.lib.dir.{$name}}}"/>
-        <copy todir="${{deploy.lib.dir.{$name}}}"
+        <mkdir dir="${{this.deploy.lib.dir}}"/>
+        <copy todir="${{this.deploy.lib.dir}}"
               file="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar"/>
         <xsl:for-each select="$application/ccm:systemPackages/ccm:package">
           <xsl:call-template name="TargetDeploySystemJar">
@@ -914,8 +946,8 @@
         <!-- Deploy classes -->
       <xsl:if test="$hassrcdir or $haspdldir">
         <target name="deploy-classes-{$name}" depends="init,build-{$name}">
-          <mkdir dir="${{deploy.classes.dir.{$name}}}"/>
-          <copy todir="${{deploy.classes.dir.{$name}}}">
+          <mkdir dir="${{this.deploy.classes.dir}}"/>
+          <copy todir="${{this.deploy.classes.dir}}">
             <fileset dir="{$name}/${{build.classes.dir}}"/>
           </copy>
           <xsl:for-each select="$application/ccm:systemPackages/ccm:package">
@@ -926,62 +958,68 @@
           </xsl:for-each>
         </target>
       </xsl:if>
+
       <!-- Deploy external libs, not developed by the CCM project.
            Located in a modules lib directory.                       -->
       <target name="deploy-lib-{$name}" depends="init">
-        <mkdir dir="${{deploy.external.lib.dir.{$name}}}"/>
-        <copy todir="${{deploy.external.lib.dir.{$name}}}" preservelastmodified="true">
+        <mkdir dir="${{this.deploy.externallib.dir}}"/>
+        <copy todir="${{this.deploy.externallib.dir}}" preservelastmodified="true">
           <fileset dir="{$name}">
             <include name="${{lib.dir}}/**"/>
           </fileset>
           <mapper type="glob" to="*" from="${{lib.dir}}${{file.separator}}*"/>
         </copy>
       </target>
-        <!-- Deploy pdl -->
+
+      <!-- Deploy pdl -->
       <xsl:if test="$haspdldir">
         <target name="deploy-pdl-{$name}" depends="init,jar-pdl-{$name}">
-          <mkdir dir="${{deploy.lib.dir.{$name}}}"/>
-          <copy todir="${{deploy.lib.dir.{$name}}}">
+          <mkdir dir="${{this.deploy.lib.dir}}"/>
+          <copy todir="${{this.deploy.lib.dir}}">
             <fileset dir="{$name}/${{build.dir}}">
               <include name="*pdl.jar"/>
             </fileset>
           </copy>
         </target>
       </xsl:if>
-        <!-- Deploy sql -->
+
+      <!-- Deploy sql -->
       <xsl:if test="$hassqldir or $haspdldir">
         <target  name="deploy-sql-{$name}"
               depends="init,generate-ddl-{$name},jar-sql-{$name}">
-          <mkdir dir="${{deploy.lib.dir.{$name}}}"/>
-          <copy todir="${{deploy.lib.dir.{$name}}}">
+          <mkdir dir="${{this.deploy.lib.dir}}"/>
+          <copy todir="${{this.deploy.lib.dir}}">
             <fileset dir="{$name}/${{build.dir}}">
               <include name="*sql.jar"/>
             </fileset>
           </copy>
         </target>
       </xsl:if>
+
       <!-- Deploy web -->
       <target name="deploy-web-{$name}" depends="init">
-        <copy todir="${{deploy.dir.{$name}}}">
+        <copy todir="${{this.deploy.dir}}">
           <fileset dir="{$name}">
             <include name="${{web.dir}}/**"/>
           </fileset>
           <mapper type="glob" to="*" from="${{web.dir}}${{file.separator}}*"/>
         </copy>
       </target>
+
       <!-- Deploy bin -->
       <target name="deploy-bin-{$name}" depends="init">
-        <copy todir="${{deploy.bin.dir.{$name}}}">
+        <copy todir="${{this.deploy.bin.dir}}">
           <fileset dir="{$name}">
             <include name="${{bin.dir}}/**"/>
           </fileset>
           <mapper type="glob" to="*" from="${{bin.dir}}${{file.separator}}*"/>
         </copy>
       </target>
-        <!-- Deploy Javadoc -->
+
+      <!-- Deploy Javadoc -->
       <xsl:if test="$hassrcdir">
         <target name="deploy-javadoc-{$name}" depends="init,javadoc-{$name}">
-          <copy todir="${{deploy.api.dir.{$name}}}">
+          <copy todir="${{this.deploy.api.dir.{$name}}}">
             <fileset dir="${{app.javadoc.dir}}/{$name}"/>
           </copy>
         </target>
@@ -1006,7 +1044,7 @@
           <xsl:value-of select="concat(',deploy-web-',$name)"/>
           <xsl:value-of select="concat(',deploy-bin-',$name)"/>
         </xsl:attribute>
-        <echo message="deployed '{$name}' to ${{deploy.dir.{$name}}}"/>
+        <echo message="deployed '{$name}' to ${{this.deploy.dir}}"/>
       </target>
 
     </xsl:for-each>
@@ -1043,13 +1081,13 @@
           </fileset>
           <mapper type="glob" to="*" from="{$name}-{$version}${{file.separator}}*"/>
         </copy>
-        <copy todir="${{deploy.webapp.dir}}" preservelastmodified="true">
+        <copy todir="${{this.deploy.dir}}" preservelastmodified="true">
           <fileset dir="${{webapp.dist.dir}}">
             <include name="{$name}-{$version}/**"/>
           </fileset>
           <mapper type="glob" to="*" from="{$name}-{$version}${{file.separator}}*"/>
         </copy>
-        <echo message="deployed '{$name}' to ${{deploy.webapp.dir}}"/>
+        <echo message="deployed '{$name}' to ${{this.deploy.dir}}"/>
       </target>
     </xsl:for-each>
 
@@ -1075,13 +1113,13 @@
     </target>
 
     <target name="copy-webxml-init" depends="init">
-      <available file="${{deploy.webapp.dir}}/ROOT/WEB-INF" type="dir"
+      <available file="${{this.deploy.dir}}/WEB-INF" type="dir"
                  property="root.webapp.exists"/>
       <condition property="resolved.webxml.source.file"
-                 value="${{deploy.webapp.dir}}/ROOT/WEB-INF/${{webxml.source.file}}">
+                 value="${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}">
         <and>
           <isset property="root.webapp.exists"/>
-          <available file="${{deploy.webapp.dir}}/ROOT/WEB-INF/${{webxml.source.file}}"/>
+          <available file="${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}"/>
           <not>
             <available file="${{webxml.source.file}}"/>
           </not>
@@ -1090,12 +1128,13 @@
       <condition property="resolved.webxml.source.file" value="${{webxml.source.file}}">
         <not><isset property="resolved.webxml.source.file"/></not>
       </condition>
+      <echo message="web.xml to use: ${{this.deploy.dir}}/WEB-INF/${{webxml.source.file}}" />
     </target>
 
     <target name="copy-webxml"
             depends="init,copy-webxml-init" if="root.webapp.exists">
       <copy file="${{resolved.webxml.source.file}}"
-            tofile="${{deploy.webapp.dir}}/ROOT/WEB-INF/web.xml"/>
+            tofile="${{this.deploy.dir}}/WEB-INF/web.xml"/>
     </target>
 
     <!-- Master deploy -->
@@ -1282,7 +1321,6 @@
       </echo>
       
       <xsl:variable name="name" select="@name"/>
-      <xsl:variable name="context" select="@webxml"/>
       
         <!-- web.xml will be copied implicitly from deployed WEB-INF! -->
         <war needxmlfile="False" >
@@ -1293,7 +1331,7 @@
           <xsl:text>.war</xsl:text>
           </xsl:attribute>
 
-          <fileset dir="${{deploy.dir}}/webapps/ROOT/">
+          <fileset dir="${{this.deploy.dir}}">
             <exclude name="**/classes/**"/>
           </fileset>
           <xsl:for-each select="/ccm:project/ccm:application">
@@ -1616,6 +1654,7 @@
       </xsl:attribute>
     </target>
   </xsl:template>
+
   <xsl:template name="TargetManifest">
     <xsl:param name="target"/>
     <xsl:param name="type"/>
@@ -1820,6 +1859,8 @@
       </pmd>
     </target>
 
+	<!--   	I N I T
+			target initializes all the name space                          -->
     <target name="init">
       <echo message="${{ant.file}}"/>
       <tstamp><format property="YEAR" pattern="yyyy"/></tstamp>
@@ -1833,6 +1874,8 @@
                      property="apps.{$name}.pdl.path.internal"
                      refid="apps.{$name}.pdl.path.internal"/>
       </xsl:for-each>
+
+	<!-- should be deprecated, TODO: check for usage  -->
       <path id="ccm.java.ext.dirs">
         <!-- no longer present in APLAWS 1.0.4
         <dirset dir="${{ccm.tools.dir}}">
@@ -1841,6 +1884,7 @@
         -->
         <pathelement path="${{java.ext.dirs}}"/>
       </path>
+
       <pathconvert dirsep="/" pathsep=":" property="ccm.java.ext.dirs"
                    refid="ccm.java.ext.dirs"/>
       <condition property="junit.jvmargs"
@@ -1856,96 +1900,42 @@
       </condition>
 
       <!--  Deployment directory structure   -->
-      <condition property="deploy.dir" value="deploy">
-        <not><isset property="deploy.dir"/></not>
-      </condition>
-      <condition property="deploy.webapp.dir" value="${{deploy.dir}}/webapps">
-        <not><isset property="deploy.webapp.dir"/></not>
-      </condition>
-      <!-- deploy.conf.dir used to deploy the log4j.properties file to a
-           non-standard location CATALINA_HOME/conf, which is not meant to
-           hold user or webapps specific configuration files.
-           not used anymore
-      <condition property="deploy.conf.dir" value="${{deploy.dir}}/conf">
-        <not><isset property="deploy.conf.dir"/></not>
-      </condition>
-      -->
-      <condition property="deploy.shared.lib.dir" value="${{app.server.lib.dir}}">
-        <not><isset property="deploy.shared.lib.dir"/></not>
-      </condition>
-      <!-- deploy.private.lib.dir might be no longer used.
-           Previouls used for external libs, too.                                         
-      <condition property="deploy.private.lib.dir" value="${{deploy.dir}}/webapps/WEB-INF/lib">
-        <not><isset property="deploy.private.lib.dir"/></not>
-      </condition>
-      -->
-      <condition property="deploy.shared.classes.dir" value="${{app.server.lib.dir}}">
-        <not><isset property="deploy.shared.classes.dir"/></not>
-      </condition>
-      <condition property="deploy.system.jars.dir" value="${{app.server.lib.dir}}/system">
+      <property value="${{app.server.webapp.dir}}/${{this.appContext}}" name="this.deploy.dir"/>
+	  <!-- DEPRECATED
+		 system jar should be no longer requirred. Will be removed asap.   -->
+      <condition property="deploy.system.jars.dir" value="${{app.server.shared.dir}}/system">
         <not><isset property="deploy.system.jars.dir"/></not>
       </condition>
-      <condition property="deploy.war.dir" value="${{deploy.dir}}/webapps">
-        <not><isset property="deploy.war.dir"/></not>
-      </condition>
 
-      <xsl:for-each select="/ccm:project/ccm:build/ccm:application">
-        <xsl:variable name="name" select="@name"/>
-        <xsl:variable name="application"
-                      select="document(concat(@name,'/application.xml'),/ccm:project)/ccm:application"/>
-        <!-- property shared does not work / not documented how to use  
-             setting in modules application.xml as part of application has no effect       -->
-        <xsl:variable name="shared" select="$application/@shared"/>
-
-        <property value="${{deploy.webapp.dir}}/${{apps.{$name}.webapp.name}}" name="deploy.dir.{$name}"/>
-        <!--        
-        <xsl:choose>
+	  <!-- Should the jars and/or libs get installed into a shared directory?   
+      <xsl:choose>
           <xsl:when test="$shared = 'false'">
          -->
-            <!-- will copy modules classes/libs into module's WEB-INF directory. Works. -->
-            <property value="${{deploy.dir.{$name}}}/WEB-INF/classes"  name="deploy.classes.dir.{$name}"/>
-            <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"      name="deploy.lib.dir.{$name}"/>
-            <property value="${{deploy.dir.{$name}}}/WEB-INF/lib"      name="deploy.external.lib.dir.{$name}"/>
-        <!--          
+        <!-- will copy modules classes/libs into applications WEB-INF directory. Works. -->
+        <property value="${{this.deploy.dir}}/WEB-INF/classes"  name="this.deploy.classes.dir"/>
+        <property value="${{this.deploy.dir}}/WEB-INF/lib"      name="this.deploy.lib.dir"/>
+        <property value="${{this.deploy.dir}}/WEB-INF/lib"      name="this.deploy.externallib.dir"/>
+      <!--          
           </xsl:when>
           <xsl:otherwise>
-        -->
+      -->
         <!-- will copy modules classes/libs into shared directory. 6.1 - 6.4: webapps/WEB-INF non-standard 
              up to 6.4 the only metheod that works.                                                         
-        <property value="${{deploy.shared.classes.dir}}" name="deploy.classes.dir.{$name}"/>
-        <property value="${{deploy.shared.lib.dir}}"     name="deploy.lib.dir.{$name}"/>
-        <property value="${{deploy.shared.lib.dir}}"     name="deploy.external.lib.dir.{$name}"/>          -->
-        <!--          
-          </xsl:otherwise>
-        </xsl:choose>
-        -->
+        <property value="${{app.server.shared.dir}}"	name="this.deploy.classes.dir"/>
+        <property value="${{app.server.shared.dir}}"    name="this.deploy.lib.dir"/>
+        <property value="${{app.server.shared.dir}}"    name="this.deploy.externallib.dir"/>          -->
+      <!--          
+        </xsl:otherwise>
+      </xsl:choose>
+      -->
 
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/src"   name="deploy.src.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/doc"   name="deploy.doc.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/test"  name="deploy.test.dir.{$name}"/>
-        <property value="${{deploy.test.dir.{$name}}}/classes"  name="deploy.test.classes.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/api"   name="deploy.api.dir.{$name}"/>
-        <property value="${{deploy.dir.{$name}}}/WEB-INF/bin"   name="deploy.bin.dir.{$name}"/>
-      </xsl:for-each>
+      <property value="${{this.deploy.dir}}/WEB-INF/src"   name="this.deploy.src.dir"/>
+      <property value="${{this.deploy.dir}}/WEB-INF/doc"   name="this.deploy.doc.dir"/>
+      <property value="${{this.deploy.dir}}/WEB-INF/api"   name="this.deploy.api.dir"/>
+      <property value="${{this.deploy.dir}}/WEB-INF/bin"   name="this.deploy.bin.dir"/>
+      <property value="${{this.deploy.dir}}/WEB-INF/test"  name="this.deploy.test.dir"/>
+      <property value="${{this.deploy.test.dir}}/classes"  name="this.deploy.test.classes.dir"/>
 
-      <!-- xml version of log4j configuration not supported
-      <condition property="log4j.configuration.sysproperty"
-                 value="file://${{ccm.home}}/conf/log4j.xml">
-        <and>
-          <not><isset property="log4j.configuration.sysproperty"/></not>
-          <available file="${{ccm.home}}/conf/log4j.xml"/>
-        </and>
-      </condition>
-      --> 
-      <!-- Non standard location of log4j configuration no longer supported as of GE 6.5
-      <condition property="log4j.configuration.sysproperty"
-                 value="file://${{ccm.home}}/conf/log4j.properties">
-        <and>
-          <not><isset property="log4j.configuration.sysproperty"/></not>
-          <available file="${{ccm.home}}/conf/log4j.properties"/>
-        </and>
-      </condition>
-      --> 
       <!--  location of log4j configuration is handled inside the running CCM application.
             But may be requirred for junit tests?  Otherwise not needed
       --> 

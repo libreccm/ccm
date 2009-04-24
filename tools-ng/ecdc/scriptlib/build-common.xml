@@ -51,15 +51,15 @@
     <property file="${ccm.project.dir}/local.ccm.properties" />
     <property file="${ccm.ecdc.conf.dir}/ccm.properties" />
 
-    <property name="ccm.home" value="${app.server.deploy.dir}"/>
     <property name="ccm.build.lib.dir" value="${ccm.project.dir}/tools-ng/devel/lib"/>
     <property name="ccm.tools.lib.dir" value="${ccm.project.dir}/tools-ng/common/lib"/>
     <property name="ccm.tools.rh-jdo.dir" value="${ccm.project.dir}/tools-ng/common/classes"/>
-    <property name="deploy.dir" value="${app.server.deploy.dir}"/>
+    <!-- preliminary, must be taken from project.xml  -->
+    <property name="ccm.home" value="${app.server.webapp.dir}/ROOT"/>
 
-    <!-- deprecated?  used by prebuild modules only      -->   
+    <!-- deprecated  used by prebuild modules only      -->   
     <property name="shared.lib.dist.dir" value="${ccm.tools.lib.dir}"/>
-    <!-- deprecated?  used by prebuild modules only      -->
+    <!-- deprecated  used by prebuild modules only      -->
     <property name="webapp.dist.dir" value="${ccm.project.dir}/distribution"/>
 
     <!-- http://antelope.tigris.org/ -->
