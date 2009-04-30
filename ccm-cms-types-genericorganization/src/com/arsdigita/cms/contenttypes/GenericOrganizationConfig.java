@@ -17,19 +17,16 @@
  *
  */
 
-package com.arsdigita.cms.contenttypes.util;
+package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.runtime.AbstractConfig;
+import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.BooleanParameter;
 
-public class PersonGlobalizationUtil {
-    final public static String BUNDLE_NAME = 
-	"com.arsdigita.cms.contenttypes.util.PersonResourceBundle";
+/**
+ *
+ * @author Jens Pelzetter
+ */
+public class GenericOrganizationConfig extends AbstractConfig {
 
-    public static GlobalizedMessage globalize (String key) {
-	return new GlobalizedMessage(key, BUNDLE_NAME);
-    }
-
-    public static GlobalizedMessage globalize (String key, Object[] args) {
-	return new GlobalizedMessage(key, BUNDLE_NAME, args);
-    }
 }

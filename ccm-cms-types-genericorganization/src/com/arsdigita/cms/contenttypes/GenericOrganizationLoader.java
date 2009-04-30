@@ -17,19 +17,25 @@
  *
  */
 
-package com.arsdigita.cms.contenttypes.util;
+package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 
-public class PersonGlobalizationUtil {
-    final public static String BUNDLE_NAME = 
-	"com.arsdigita.cms.contenttypes.util.PersonResourceBundle";
+import org.apache.log4j.Logger;
 
-    public static GlobalizedMessage globalize (String key) {
-	return new GlobalizedMessage(key, BUNDLE_NAME);
+/**
+ *
+ * @author Jens Pelzetter
+ */
+public class GenericOrganizationLoader extends AbstractContentTypeLoader {
+   
+    public static final Logger s_log = Logger.getLogger(GenericOrganizationLoader.class);
+    private static final String[] TYPES = {
+	"/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Person.xml"
+    };
+
+    public String[] getTypes() {
+	return TYPES;
     }
-
-    public static GlobalizedMessage globalize (String key, Object[] args) {
-	return new GlobalizedMessage(key, BUNDLE_NAME, args);
-    }
+    
 }

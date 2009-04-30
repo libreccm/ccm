@@ -31,25 +31,27 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class PersonInitializer extends ContentTypeInitializer {
 
+public class GenericOrganizationInitializer extends ContentTypeInitializer {
+    
     public final static String versionId =
-            "$Id: PersonInitializer.java 1 2009-03-19 08:30:26Z jensp $" +
-            "$Author: jensp $" +
-            "$DateTime: 2009/03/19 09:30:00 $";
+	"$Id: GenericOrganizationInitializer.java 1 2009-04-30 09:32:55Z jensp $" +
+	"$Author: jensp $" +
+	"$DateTime: 2009/04/30 11:33:39 $";
 
-    private static final Logger s_log = Logger.getLogger(PersonInitializer.class);
+    private static final Logger s_log = Logger.getLogger(GenericOrganizationInitializer.class);
 
-    public PersonInitializer() {
-        super("ccm-cms-types-person.pdl.mf",
-              Person.BASE_DATA_OBJECT_TYPE);
+    public GenericOrganizationInitializer() {
+	super("ccm-cms-types-genericorganization.pdl.mf",
+	      GenericOrganization.BASE_DATA_OBJECT_TYPE);
     }
 
     public void init(DomainInitEvent evt) {
-        super.init(evt);
+	super.init(evt);
     }
 
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/Person.xsl" };
+	return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xsl" };
     }
+       
 }
