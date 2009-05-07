@@ -201,7 +201,7 @@ public final class CCMResourceManager {
         }
         else {
             // presumably old style, add path to standard context name
-            home += "/webapps/ROOT)";
+            home += "/webapps/ROOT";
         }
 
         File file = new File(home);
