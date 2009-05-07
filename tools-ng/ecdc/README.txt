@@ -58,6 +58,12 @@ Oracle 10g RDBMS or PostgresQL up to version 8.2
 (g)  ant deploy 
      will compile and deploy into your test environment (runtime)
 
+As a temporary measure:
+     copy ${CATALINA_HOME}/lib/system/ccm-core*  
+       to ${JAVA_HOME}/jre/lib/ext
+
+     otherwise you will get a malformedURL exception during server startup
+
 (h)  ant load-bundle 
      will load the database. May take several minutes!
 
@@ -67,6 +73,11 @@ Oracle 10g RDBMS or PostgresQL up to version 8.2
 (j)  Open your browser:
          http://localhost:8080/
          http://localhost:8080/ccm/content-center/
+
+     Be aware: the previous ccm-scripts based environment used
+     port 9000 by default. May be still specified in your
+     bundle file (integration.properties). Wrong port number will
+     result in a stylesheet compilation error during server startup!
 
 (k)  ant create-war 
      will create a war file from the deployed project for
