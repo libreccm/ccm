@@ -6,6 +6,7 @@
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
                     name="aplaws" 
+              prettyName="APLAWS plus" 
                  version="1-0-5" 
                  release="alpha-1" 
                   webxml="web.xml-aplaws" 
