@@ -31,7 +31,9 @@ import com.redhat.persistence.oql.Query;
 
 class Select extends Operation {
 
-    public final static String versionId = "$Id: Select.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: Select.java 738 2005-09-01 12:36:52Z sskracic $" +
+            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Query m_query;
     private Signature m_sig ;

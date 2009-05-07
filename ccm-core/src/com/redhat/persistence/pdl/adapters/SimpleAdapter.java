@@ -24,7 +24,11 @@ import com.redhat.persistence.metadata.ObjectType;
 
 
 /**
- * SimpleAdapter
+ * SimpleAd (SimpleAdapter) is the base clase for the various type specific
+ * classes.
+ *
+ * It implements general management methods (get/set the data type etc). Is is
+ * only used by the type specific classes of its package.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
@@ -32,19 +36,21 @@ import com.redhat.persistence.metadata.ObjectType;
 
 abstract class SimpleAdapter extends Adapter {
 
-    public final static String versionId = "$Id: SimpleAdapter.java 735 2005-09-01 06:42:59Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: SimpleAdapter.java 735 2005-09-01 06:42:59Z sskracic $" +
+            "$DateTime: 2004/08/16 18:10:38 $";
 
     private String m_type;
     private int m_defaultJDBCType;
 
     protected SimpleAdapter(String type, int defaultJDBCType) {
-	if (type == null) { throw new IllegalArgumentException(); }
-	m_type = type;
+        if (type == null) { throw new IllegalArgumentException(); }
+        m_type = type;
         m_defaultJDBCType = defaultJDBCType;
     }
 
     public PropertyMap getProperties(Object obj) {
-	return new PropertyMap(getObjectType(obj));
+        return new PropertyMap(getObjectType(obj));
     }
 
     public ObjectType getObjectType(Object obj) {

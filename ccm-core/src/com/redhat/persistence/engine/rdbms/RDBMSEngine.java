@@ -68,7 +68,9 @@ import org.apache.log4j.Priority;
 
 public class RDBMSEngine extends Engine {
 
-    public final static String versionId = "$Id: RDBMSEngine.java 1327 2006-09-25 08:10:48Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: RDBMSEngine.java 1327 2006-09-25 08:10:48Z sskracic $" +
+            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger LOG = Logger.getLogger(RDBMSEngine.class);
 

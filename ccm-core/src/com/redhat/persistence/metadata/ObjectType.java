@@ -33,7 +33,9 @@ import java.util.List;
 
 public class ObjectType extends Element {
 
-    public final static String versionId = "$Id: ObjectType.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: ObjectType.java 738 2005-09-01 12:36:52Z sskracic $" +
+            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final Model m_model;
     private final String m_name;

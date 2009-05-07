@@ -33,24 +33,26 @@ import java.sql.Types;
 
 public class DoubleAd extends SimpleAdapter {
 
-    public final static String versionId = "$Id: DoubleAd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: DoubleAd.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public DoubleAd() {
-	super("global.Double", Types.DOUBLE);
+        super("global.Double", Types.DOUBLE);
     }
 
     public void bind(PreparedStatement ps, int index, Object obj, int type)
-	throws SQLException {
-	ps.setDouble(index, ((Double) obj).doubleValue());
+                    throws SQLException {
+        ps.setDouble(index, ((Double) obj).doubleValue());
     }
 
     public Object fetch(ResultSet rs, String column) throws SQLException {
-	double d = rs.getDouble(column);
-	if (rs.wasNull()) {
-	    return null;
-	} else {
-	    return new Double(d);
-	}
+        double d = rs.getDouble(column);
+        if (rs.wasNull()) {
+            return null;
+        } else {
+            return new Double(d);
+        }
     }
 
 }

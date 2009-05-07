@@ -45,11 +45,19 @@
   <target name="clean-build-hook"/>
   <target name="clean-tests-hook"/>
 
+<!--  Old way with proprietary locations, separate contexts per module, and ccm perl scripts
   <target name="deploy-hook">
     <fail message="Property deploy.dir.ccm-core not defined." 
           unless="deploy.dir.ccm-core" />
     <mkdir dir="${deploy.dir.ccm-core}/WEB-INF/conf"/>
     <copy todir="${deploy.dir.ccm-core}/WEB-INF/conf" file="${src.dir}/log4j.properties"/>
+  </target>
+-->
+  <target name="deploy-hook">
+    <fail message="Property this.deploy.dir not defined." 
+          unless="this.deploy.dir" />
+    <mkdir dir="${this.deploy.dir}/WEB-INF/conf"/>
+    <copy todir="${this.deploy.dir}/WEB-INF/conf" file="${src.dir}/log4j.properties"/>
   </target>
 
 </project>

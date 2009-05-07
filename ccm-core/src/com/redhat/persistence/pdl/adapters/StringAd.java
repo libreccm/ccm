@@ -30,7 +30,8 @@ import java.sql.Types;
 
 
 /**
- * StringAd
+ * StringAd: StringAdapter class
+ *
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
@@ -38,15 +39,17 @@ import java.sql.Types;
 
 public class StringAd extends SimpleAdapter {
 
-    public final static String versionId = "$Id: StringAd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: StringAd.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public StringAd() {
-	super("global.String", Types.VARCHAR);
+            super("global.String", Types.VARCHAR);
     }
 
     public void bind(PreparedStatement ps, int index, Object obj, int type)
-	throws SQLException {
-	ps.setString(index, (String) obj);
+        throws SQLException {
+        ps.setString(index, (String) obj);
     }
 
     public Object fetch(ResultSet rs, String column) throws SQLException {

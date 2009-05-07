@@ -53,7 +53,9 @@ import java.util.List;
 
 public abstract class SQLWriter {
 
-    public final static String versionId = "$Id: SQLWriter.java 735 2005-09-01 06:42:59Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: SQLWriter.java 735 2005-09-01 06:42:59Z sskracic $" +
+            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private RDBMSEngine m_engine;
     private Operation m_op = null;
@@ -120,7 +122,8 @@ public abstract class SQLWriter {
             } catch (SQLException e) {
                 if (cycle != null) { cycle.endSet(e); }
                 throw new WrappedError
-                    ("SQL error binding [" + (index) + "] to " + obj + " in " + m_sql.toString(), e);
+                    ("SQL error binding [" + (index) + "] to " + obj +
+                     " in " + m_sql.toString(), e);
             }
         }
     }
