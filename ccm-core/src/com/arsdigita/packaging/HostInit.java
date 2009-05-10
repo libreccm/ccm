@@ -38,12 +38,25 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.log4j.Logger;
 
 /**
- * PackageTool worker class, implements the "hostinit" command.
+ * Implements the "hostinit" command.
+ *
+ * Called by the ccm hostinit / ccm hostinit-bundle command
  * 
  * Populates the CCM application directory in webapps.
  * Does not create the database nor the config registry.
  *
- * Called by the ccm hostinit / ccm hostinit-bundle command
+ * Options:
+ *  --help           Display help
+ *  --usage          Print this message
+ *  --container      Specify the servlet container to initialize
+ *  --clean          REQUIRED: Delete the existing webapp directories
+ *                   before performing file copy.
+ *
+ * Command line call of hostinit via ccm scripts (shell, perl) 
+ * root@localhost# ccm hostinit­bundle   \
+ *                     ­­clean \
+ *                     ­­name aplaws­plus­standard ­­container=tomcat \
+ *                     http­port=8080 shutdown­port=8081 ajp­port=8009
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #16 $ $Date: 2004/08/16 $
@@ -103,6 +116,7 @@ public class HostInit {
             System.exit(1);
         }
 
+        // Register custom protocol handlers
         com.arsdigita.runtime.Startup.startup();
 
         CommandLine line;
@@ -118,9 +132,14 @@ public class HostInit {
         String destination = line.getOptionValue("destination");
         boolean clean = line.hasOption("clean");
 
+        // base dir for all webapps, same as CATALINA_HOME
+        // same as CCM_HOME
         File dest = new File(destination);
+        // Currently: non-standard location of lib and classes
         File inf = new File(dest, "WEB-INF");
+        // Currentliy: non-standard location of lib
         File lib = new File(inf, "lib");
+        // currently: non-standard, special URL:resource handler, to be discarded
         File system = new File(inf, "system");
 
         if (!dest.exists()) {
@@ -163,6 +182,13 @@ public class HostInit {
         }
     }
 
+    /**
+     * 
+     * @param pathfile
+     * @param packages
+     * @param dest
+     * @throws java.io.IOException
+     */
     private static void copy(String pathfile, List packages, File dest)
         throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(pathfile));
@@ -199,6 +225,19 @@ public class HostInit {
         reader.close();
     }
 
+    /**
+     * Copies the ccm-core-6.y.z-system.jar (java extension for URL:resource
+     * protocol handler) to its special location. 
+     * 
+     * Will not be used as soon as the resource protocol is replaced by a 
+     * standard compliant mechanism.
+     * 
+     * @param pathfile
+     * @param packages
+     * @param dest
+     * @throws java.io.IOException
+     * @deprecated 
+     */
     private static void copySystem(String pathfile, List packages, File dest)
         throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(pathfile));
@@ -220,6 +259,14 @@ public class HostInit {
         reader.close();
     }
 
+    /**
+     * Copies all files in a given directory (dir) to a 
+     * destination directory (dest).
+     * 
+     * @param dir
+     * @param dest
+     * @throws java.io.IOException
+     */
     private static void copyDirectory(File dir, File dest) throws IOException {
         if (s_log.isInfoEnabled()) {
             s_log.info("Copying directory " + dir.toString());
@@ -236,6 +283,13 @@ public class HostInit {
         }
     }
 
+    /**
+     * Copies .....   (currently not used.)
+     * 
+     * @param file
+     * @param dest
+     * @throws java.io.IOException
+     */
     private static void copyJar(File file, File dest) throws IOException {
         if (s_log.isInfoEnabled()) {
             s_log.info("Copying JAR " + file.toString());

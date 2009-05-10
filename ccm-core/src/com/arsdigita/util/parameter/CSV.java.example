@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import javax.mail.internet.InternetAddress;
 
 /**
- * Subject to change.
+ * Demonstrates how to use the CSVParameterLoader class.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: CSV.java 287 2005-02-22 00:29:02Z sskracic $
@@ -49,6 +49,7 @@ public final class CSV {
         Object[] row;
         ParameterValue value;
 
+        // step through each unit (line) of the input stream
         while (loader.next()) {
             row = new Object[params.length];
 

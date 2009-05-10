@@ -16,13 +16,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.util.csv;
+package com.arsdigita.util.parameter;
 
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.parameter.ErrorList;
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ParameterLoader;
-import com.arsdigita.util.parameter.ParameterValue;
+// import com.arsdigita.util.parameter.ErrorList;
+// import com.arsdigita.util.parameter.Parameter;
+// import com.arsdigita.util.parameter.ParameterLoader;
+// import com.arsdigita.util.parameter.ParameterValue;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
@@ -31,12 +31,13 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Subject to change.
+ * Processes an input stream (a set of lines, each containing a comma separated
+ * list of parameter values) and ....
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: CSVParameterLoader.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public final class CSVParameterLoader implements ParameterLoader {
+public final class CSVParameterLoader implements ParameterReader {
     public final static String versionId =
         "$Id: CSVParameterLoader.java 287 2005-02-22 00:29:02Z sskracic $" +
         "$Author: sskracic $" +
@@ -46,16 +47,31 @@ public final class CSVParameterLoader implements ParameterLoader {
     private final Parameter[] m_params;
     private final HashMap m_line;
 
+    /**
+     * Constructor
+     * 
+     * @param reader: input stream to read values
+     * @param params: array of parameter objects to store procecced values
+     */
     public CSVParameterLoader(final Reader reader, final Parameter[] params) {
-        m_reader = new LineNumberReader(reader);
-        m_params = params;
-        m_line = new HashMap(params.length);
+        m_reader = new LineNumberReader(reader);  // input stream
+        m_params = params;                        // array of parameters
+        m_line = new HashMap(params.length);      //
     }
 
+    /**
+     * read
+     * 
+     * 
+     * 
+     * @param param
+     * @param errors
+     * @return
+     */
     public final String read(final Parameter param, final ErrorList errors) {
         return (String) m_line.get(param);
     }
-
+/*
     public final ParameterValue load(final Parameter param) {
         final ParameterValue value = new ParameterValue();
 
@@ -66,7 +82,13 @@ public final class CSVParameterLoader implements ParameterLoader {
 
         return value;
     }
-
+*/
+    /**
+     * Just a public visible entry point into internalNext, used to process
+     * an exception if thrown.
+     * 
+     * @return: boolean true if any values could be processed.
+     */
     public final boolean next() {
         try {
             return internalNext();
@@ -75,6 +97,14 @@ public final class CSVParameterLoader implements ParameterLoader {
         }
     }
 
+    /**
+     * Internally used worker method which processes the next() method.
+     * 
+     * Reads in a line from input stream and asks parseLine to process it. The
+     * resulting array of strings  (each containing a value) 
+     * @return
+     * @throws java.io.IOException
+     */
     private boolean internalNext() throws IOException {
         final String line = m_reader.readLine();
 
@@ -83,8 +113,13 @@ public final class CSVParameterLoader implements ParameterLoader {
         } else {
             final String[] elems = parseLine(line);
 
+            // m_params: array of parameters to store the comma separated values
+            // used to determine the max. number of values which can be processed.
             for (int i = 0; i < m_params.length; i++) {
                 if (i < elems.length) {
+                    // If for the given index into the array of parametes a
+                    // corresponding element in the array of strings exist,
+                    // store it in a hash map (a hash map per line)
                     m_line.put(m_params[i], elems[i]);
                 } else {
                     m_line.put(m_params[i], null);
@@ -99,6 +134,12 @@ public final class CSVParameterLoader implements ParameterLoader {
     private static final char QUOTE = '"';
     private static final char SEPARATOR = ',';
 
+    /**
+     * Internal used helper method of method parseLine.
+     *  
+     * @param c
+     * @return
+     */
     private char escape(char c) {
         switch (c) {
         case 'n':
@@ -112,6 +153,15 @@ public final class CSVParameterLoader implements ParameterLoader {
         }
     }
 
+    /**
+     * Takes a string and analyses it as a list of comma separated values.
+     * 
+     * Internally used to store each value found in a new string and add it
+     * to an array of strings.
+     * 
+     * @param line: string containing a comma separated list of values
+     * @return : array of strings, each containing a value of the list
+     */
     private String[] parseLine(final String line) {
         int length = line.length();
 
@@ -128,8 +178,8 @@ public final class CSVParameterLoader implements ParameterLoader {
 
         // The characters between seperators.
         StringBuffer buf = new StringBuffer(length);
-        // Marks the begining of the field relative to buf, -1
-        // indicates the beginning of buf.
+        // Marks the begining of the field relative to buf,
+        // -1 indicates the beginning of buf.
         int begin = -1;
         // Marks the end of the field relative to buf.
         int end = 0;
@@ -195,6 +245,14 @@ public final class CSVParameterLoader implements ParameterLoader {
         return fields;
     }
 
+    /**
+     * internal helper method for method parseLine
+     * 
+     * @param field
+     * @param begin
+     * @param end
+     * @return
+     */
     private String field(StringBuffer field, int begin, int end) {
         if (begin < 0) {
             return field.substring(0, end);

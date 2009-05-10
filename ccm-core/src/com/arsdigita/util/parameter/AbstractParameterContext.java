@@ -76,7 +76,7 @@ public abstract class AbstractParameterContext implements ParameterContext {
 
         if (Assert.isEnabled()) {
             Assert.exists(param, Parameter.class);
-            Assert.truth(!m_param.contains(param),
+            Assert.isTrue(!m_param.contains(param),
                          param + " is already registered");
         }
 
@@ -125,7 +125,7 @@ public abstract class AbstractParameterContext implements ParameterContext {
     public Object get(final Parameter param, final Object dephault) {
         if (Assert.isEnabled()) {
             Assert.exists(param, Parameter.class);
-            Assert.truth(m_param.contains(param),
+            Assert.isTrue(m_param.contains(param),
                          param + " has not been registered");
         }
 

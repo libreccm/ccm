@@ -18,8 +18,8 @@
  */
 package com.arsdigita.util.parameter;
 
-import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.ErrorList;
+// import com.arsdigita.util.parameter.StringParameter;
+// import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.StringUtils;
 
 /**

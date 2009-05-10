@@ -53,7 +53,7 @@ import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.csv.CSVParameterLoader;
+import com.arsdigita.util.parameter.CSVParameterLoader;
 import com.arsdigita.util.parameter.EmailParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
@@ -72,7 +72,9 @@ import com.arsdigita.web.Web;
 
 public class CoreLoader extends PackageLoader {
 
-    public final static String versionId = "$Id: CoreLoader.java 1841 2009-03-05 07:52:42Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: CoreLoader.java 1841 2009-03-05 07:52:42Z terry $" +
+            "  by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(CoreLoader.class);
 
@@ -423,8 +425,14 @@ public class CoreLoader extends PackageLoader {
         type.setDescription("A Portal!");
     }
 
+    /**
+     * Reads supported mime types from a file and ???.
+     * 
+     * Run once during initial load.
+     */
     private void loadMimeTypes() {
         ClassLoader cload = Thread.currentThread().getContextClassLoader();
+        // get filename containing supported mime types as comma separated list
         String resource = getResource();
         InputStream is = cload.getResourceAsStream(resource);
         if (is == null) {
@@ -435,7 +443,9 @@ public class CoreLoader extends PackageLoader {
             MimeTypeRow row = new MimeTypeRow();
             CSVParameterLoader loader = new CSVParameterLoader
                 (new InputStreamReader(is), row.getParameters());
+
             while (loader.next()) {
+                
                 row.load(loader);
 
                 s_log.info("Adding mimetype: " + row.getType() + " (" +
