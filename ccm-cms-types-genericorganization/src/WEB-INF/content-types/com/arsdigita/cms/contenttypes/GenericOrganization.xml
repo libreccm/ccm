@@ -6,19 +6,19 @@
 
   <ctd:content-type
       label="Genericorganization"
-      description="A generic, Genericorganization type"
-      objectType="com.arsdigita.cms.contenttypes.Genericorganization"
-      classname="com.arsdigita.cms.contenttypes.Genericorganization">
+      description="A generic, GenericOrganization type"
+      objectType="com.arsdigita.cms.contenttypes.GenericOrganization"
+      classname="com.arsdigita.cms.contenttypes.GenericOrganization">
     
     <ctd:authoring-kit 
 	createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
      
       <ctd:authoring-step 
 	  labelKey="genericorganization.authoring.basic_properties.title" 
-	  labelBundle="com.arsdigita.cms.contenttypes.GenericorganizationResources"
+	  labelBundle="com.arsdigita.cms.contenttypes.GenericOrganizationResources"
 	  descriptionKey="genericorganization.authoring.basic_properties.description" 
-	  descriptionBundle="com.arsdigita.cms.contenttypes.GenericorganizationResources"
-	  component="com.arsdigita.cms.contenttypes.ui.GenericorganizationPropertiesStep" 
+	  descriptionBundle="com.arsdigita.cms.contenttypes.GenericOrganizationResources"
+	  component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationPropertiesStep" 
 	  ordering="1"/>
       
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>

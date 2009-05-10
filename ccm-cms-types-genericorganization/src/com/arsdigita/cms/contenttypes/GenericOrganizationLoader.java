@@ -31,7 +31,7 @@ public class GenericOrganizationLoader extends AbstractContentTypeLoader {
    
     public static final Logger s_log = Logger.getLogger(GenericOrganizationLoader.class);
     private static final String[] TYPES = {
-	"/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Person.xml"
+	"/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xml"
     };
 
     public String[] getTypes() {

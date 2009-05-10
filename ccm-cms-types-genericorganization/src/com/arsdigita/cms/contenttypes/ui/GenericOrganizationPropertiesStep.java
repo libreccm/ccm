@@ -52,10 +52,10 @@ public class GenericOrganizationPropertiesStep extends SimpleEditStep {
 	    new WorkflowLockedComponentAccess(editSheet, itemModel),
 	    editSheet.getSaveCancelSection().getCancelButton());
 
-	setDisplayComponent(getPersonPropertySheet(itemModel));	
+	setDisplayComponent(getGenericOrganizationPropertySheet(itemModel));	
     }
 
-    public static Component getPersonPropertySheet(ItemSelectionModel itemModel) {
+    public static Component getGenericOrganizationPropertySheet(ItemSelectionModel itemModel) {
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
 	sheet.add((String)GlobalizationUtil.globalize("cms.contenttypes.ui.organizationname").localize(), GenericOrganization.ORGANIZATIONNAME);

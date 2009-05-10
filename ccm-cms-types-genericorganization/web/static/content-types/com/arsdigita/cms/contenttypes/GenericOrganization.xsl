@@ -8,16 +8,16 @@
   version="1.0">
   
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.GenericOrganization']"
-    mode="cms:CT_graphics"
-    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_GenericOrganization">
+		mode="cms:CT_graphics"
+		name="cms:CT_graphics_com_arsdigita_cms_contenttypes_GenericOrganization">
     <p>
       <xsl:value-of select="./name"></xsl:value-of>
     </p>
   </xsl:template>
 
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.GenericOrganization']"
-    mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_cms_contenttypes_GenericOrganization">
+		mode="cms:CT_text"
+		name="cms:CT_text_com_arsdigita_cms_contenttypes_GenericOrganization">
     <p>
       <xsl:value-of select="./name"></xsl:value-of>
     </p>
