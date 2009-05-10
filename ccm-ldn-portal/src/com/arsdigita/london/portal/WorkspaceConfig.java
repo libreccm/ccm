@@ -83,10 +83,9 @@ public class WorkspaceConfig extends AbstractConfig {
 				"com.arsdigita.london.portal.admin_only_portlet_types",
 				Parameter.OPTIONAL, new String[0]);
 
-                m_htmlPortletWysiwygEditor = new BooleanParameter(
-                                "com.arsdigita.london.portal.portlet.freeform_html.wysiwyg_editor",
-                                Parameter.REQUIRED,
-                                Boolean.FALSE);
+        m_htmlPortletWysiwygEditor = new BooleanParameter(
+                "com.arsdigita.london.portal.portlet.freeform_html.wysiwyg_editor",
+                Parameter.REQUIRED, Boolean.FALSE);
 
 		m_workspacePartyPrivilege = new StringParameter(
 				"com.arsdigita.london.portal.workspacePartyPrivilege",
@@ -101,7 +100,7 @@ public class WorkspaceConfig extends AbstractConfig {
 		register(m_createUserWorkspaces);
 		register(m_excludedPortletTypes);
 		register(m_adminPortletTypes);
-                register(m_htmlPortletWysiwygEditor);
+        register(m_htmlPortletWysiwygEditor);
 		register(m_workspacePartyPrivilege);
 		register(m_checkWorkspaceReadPermissions);
 
