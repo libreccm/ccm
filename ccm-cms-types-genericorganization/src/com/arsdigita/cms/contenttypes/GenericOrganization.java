@@ -36,6 +36,8 @@ import java.math.BigDecimal;
 public class GenericOrganization extends ContentPage {
 
     public static final String ORGANIZATIONNAME = "organizationname";
+    public static final String ORGANIZATIONNAMEADDENDUM = "organizationnameaddendum";
+    public static final String DESCRIPTION = "description";
 
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganization";
     private static final GenericOrganizationConfig s_config = new GenericOrganizationConfig();
@@ -84,5 +86,21 @@ public class GenericOrganization extends ContentPage {
 
     public void setOrganizationName(String name) {
 	set(ORGANIZATIONNAME, name);
+    }
+
+    public String getOrganizationNameAddendum() {
+	return (String)get(ORGANIZATIONNAMEADDENDUM);
+    }
+
+    public void setOrganizationNameAddendum(String addendum) {
+	set(ORGANIZATIONNAMEADDENDUM, addendum);
+    }
+
+    public String getDescription() {
+	return (String)get(DESCRIPTION);
+    }
+
+    public void setDescription(String description) {
+	set(DESCRIPTION, description);
     }
 }

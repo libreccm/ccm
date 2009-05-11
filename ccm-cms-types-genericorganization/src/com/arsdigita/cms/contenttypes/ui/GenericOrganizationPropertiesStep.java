@@ -58,7 +58,9 @@ public class GenericOrganizationPropertiesStep extends SimpleEditStep {
     public static Component getGenericOrganizationPropertySheet(ItemSelectionModel itemModel) {
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-	sheet.add((String)GlobalizationUtil.globalize("cms.contenttypes.ui.organizationname").localize(), GenericOrganization.ORGANIZATIONNAME);
+	sheet.add((String)GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.name").localize(), GenericOrganization.ORGANIZATIONNAME);
+	sheet.add((String)GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.nameaddendum").localize(), GenericOrganization.ORGANIZATIONNAMEADDENDUM);
+	sheet.add((String)GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.description").localize(), GenericOrganization.DESCRIPTION);
 
 	if(!ContentSection.getConfig().getHideLaunchDate()) {
 	    sheet.add((String)GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),

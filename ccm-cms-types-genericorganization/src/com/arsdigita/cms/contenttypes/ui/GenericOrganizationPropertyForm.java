@@ -59,6 +59,8 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
     private GenericOrganizationPropertiesStep m_step;
 
     public static final String ORGANIZATIONNAME = GenericOrganization.ORGANIZATIONNAME;
+    public static final String ORGANIZATIONNAMEADDENDUM = GenericOrganization.ORGANIZATIONNAMEADDENDUM;
+    public static final String DESCRIPTION = GenericOrganization.DESCRIPTION;
 
     public static final String ID = "GenericOrganization_edit";
 
@@ -78,7 +80,19 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
 	add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationname")));
 	ParameterModel organizationNameParam = new StringParameter(ORGANIZATIONNAME);
 	TextField organizationName = new TextField(organizationNameParam);
-	add(organizationName);	   		      
+	add(organizationName);
+
+	add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationnameaddendum")));
+	ParameterModel organizationNameAddendumParam = new StringParameter(ORGANIZATIONNAMEADDENDUM);
+	TextField organizationNameAddendum = new TextField(organizationNameAddendumParam);
+	add(organizationNameAddendum);
+
+	add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.description")));
+	ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
+	TextArea description = new TextArea(descriptionParam);
+	description.setCols(40);
+	description.setRows(5);
+	add(description);
     }
 
     public void init(FormSectionEvent fse) {
@@ -86,6 +100,8 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
 	GenericOrganization orga = (GenericOrganization)super.initBasicWidgets(fse);
 
 	data.put(ORGANIZATIONNAME, orga.getOrganizationName());	
+	data.put(ORGANIZATIONNAMEADDENDUM, orga.getOrganizationNameAddendum());
+	data.put(DESCRIPTION, orga.getDescription());
     }
 
     public void submitted(FormSectionEvent fse) {
@@ -104,6 +120,8 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
 	    && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 
 	    orga.setOrganizationName((String)data.get(ORGANIZATIONNAME));
+	    orga.setOrganizationNameAddendum((String)data.get(ORGANIZATIONNAMEADDENDUM));
+	    orga.setDescription((String)data.get(DESCRIPTION));
 
 	    orga.save();
 	}

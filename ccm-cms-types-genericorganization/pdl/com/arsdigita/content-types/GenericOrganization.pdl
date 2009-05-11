@@ -24,6 +24,8 @@ import com.arsdigita.cms.ContentPage;
 
 object type GenericOrganization extends ContentPage {
        String[0..1] organizationname = ct_genericorganizations.organizationname VARCHAR(512);
+       String[0..1] organizationnameaddendum = ct_genericorganizations.organizationnameaddendum VARCHAR(512);
+       String[0..1] description = ct_genericorganizations.description VARCHAR(2000);
 
        reference key (ct_genericorganizations.organization_id);
 }
