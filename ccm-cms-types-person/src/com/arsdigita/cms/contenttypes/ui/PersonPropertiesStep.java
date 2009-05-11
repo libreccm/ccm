@@ -57,10 +57,10 @@ public class PersonPropertiesStep extends SimpleEditStep {
     public static Component getPersonPropertySheet(ItemSelectionModel itemModel) {
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.name").localize(), Person.SURNAME);
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.name").localize(), Person.GIVENNAME);
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.name").localize(), Person.TITLEPRE);
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.name").localize(), Person.TITLEPOST);
+	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize(), Person.SURNAME);
+	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize(), Person.GIVENNAME);
+	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize(), Person.TITLEPRE);
+	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), Person.TITLEPOST);
 	
 	if(!ContentSection.getConfig().getHideLaunchDate()) {
 	    sheet.add((String)PersonGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),

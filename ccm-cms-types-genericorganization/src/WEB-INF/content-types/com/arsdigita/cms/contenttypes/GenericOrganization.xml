@@ -5,7 +5,7 @@
 		   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type
-      label="Genericorganization"
+      label="GenericOrganization"
       description="A generic, GenericOrganization type"
       objectType="com.arsdigita.cms.contenttypes.GenericOrganization"
       classname="com.arsdigita.cms.contenttypes.GenericOrganization">

@@ -43,6 +43,7 @@ import com.arsdigita.cms.contenttypes.GenericOrganization;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.domain.DomainCollection;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Level;
 import com.arsdigita.cms.util.GlobalizationUtil;
 
 
@@ -75,9 +76,9 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
 	super.addWidgets();
 
 	add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationname")));
-	ParameterModel nameParam = new StringParameter(ORGANIZATIONNAME);
-	TextField name = new TextField(nameParam);
-	add(name);	   		      
+	ParameterModel organizationNameParam = new StringParameter(ORGANIZATIONNAME);
+	TextField organizationName = new TextField(organizationNameParam);
+	add(organizationName);	   		      
     }
 
     public void init(FormSectionEvent fse) {
@@ -88,8 +89,11 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
     }
 
     public void submitted(FormSectionEvent fse) {
+	s_log.log (Level.DEBUG, "GenericOrganization submitted");
+
 	if (m_step != null 
 	    && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+	    s_log.log (Level.DEBUG, "GenericOrganization submit canceled");
 	    m_step.cancelStreamlinedCreation(fse.getPageState());
 	}
     }
@@ -101,7 +105,8 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
 
 	if (orga != null
 	    && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
-	    orga.setName((String)data.get(ORGANIZATIONNAME));
+
+	    orga.setOrganizationName((String)data.get(ORGANIZATIONNAME));
 
 	    orga.save();
 	}
