@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes;
 
 
+import com.arsdigita.globalization.LocaleNegotiator;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -26,6 +27,9 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
 
 /**
  * <p><code>DomainObject</code> class to represent address <code>ContentType</code>
@@ -34,11 +38,10 @@ import java.math.BigDecimal;
  * This content type represents a generic address which is not country specific.
  * It provides methods for creating new address objects, retrieving existing 
  * objects from the persistent storage and retrieving and setting is properties.</p>
- * <p>This class extends {@link com.arsdigita.cms.ContentPage content page} and
+ * <p>This class extends {@link com.arsdigita.cms.ContentItem content item} and
  * adds extended attributes specific for an not country specific address:</p>
  * 
- * @author <a href="mailto:dominik@redhat.com">Dominik Kacprzak</a>
- * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @author Sören Bernstein
  **/
 public class BaseAddress extends ContentItem {
 
@@ -131,44 +134,74 @@ public class BaseAddress extends ContentItem {
     }
 
     /* accessors *****************************************************/
-    public String getAddress( ) {
-        return ( String ) get( ADDRESS );
+    public String getAddress() {
+        return (String) get(ADDRESS);
     }
 
-    public void setAddress( String address ) {
-        set( ADDRESS, address );
+    public void setAddress(String address) {
+        set(ADDRESS, address);
     }
 
-    public String getIsoCountryCode( ) {
-        return ( String ) get( ISO_COUNTRY_CODE );
+    public String getIsoCountryCode() {
+        return (String) get(ISO_COUNTRY_CODE);
     }
 
-    public void setIsoCountryCode( String isoCountryCode ) {
-        set( ISO_COUNTRY_CODE, isoCountryCode );
+    public void setIsoCountryCode(String isoCountryCode) {
+        set(ISO_COUNTRY_CODE, isoCountryCode);
     }
 
-    public String getPostalCode( ) {
-        return ( String ) get( POSTAL_CODE );
+    public String getPostalCode() {
+        return (String) get(POSTAL_CODE);
     }
 
-    public void setPostalCode( String postalCode ) {
-        set( POSTAL_CODE, postalCode );
+    public void setPostalCode(String postalCode) {
+        set(POSTAL_CODE, postalCode);
     }
 
-    public String getCity( ) {
-        return ( String ) get( CITY );
+    public String getCity() {
+        return (String) get(CITY);
     }
 
-    public void setCity( String city ) {
-        set( CITY, city );
+    public void setCity(String city) {
+        set(CITY, city);
     }
 
-    public String getState( ) {
-        return ( String ) get( STATE );
+    public String getState() {
+        return (String) get(STATE);
     }
 
-    public void setState( String state ) {
-        set( STATE, state );
+    public void setState(String state) {
+        set(STATE, state);
     }
 
+    // Convert the iso country code to country names using the current locale
+    public String getCountryNameFromIsoCode(String isoCountryCode) {
+     
+        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "", null);
+        
+        java.util.Locale locale = new java.util.Locale("", isoCountryCode);
+
+        return locale.getDisplayCountry(negotiatedLocale.getLocale());
+
+    }
+    
+    // Get a sorted list auf all countries
+    public ArrayList getSortedListOfCountries(Locale inLang) {
+        
+        Locale[] locales = Locale.getAvailableLocales();
+        ArrayList <String> countryNames = new ArrayList<String>();
+        
+        for(Locale locale : locales) {
+            
+            if(locale.getDisplayCountry(inLang) != null) {
+                
+                countryNames.add(locale.getDisplayCountry(inLang));
+                
+            }
+        }
+        
+        Collections.sort(countryNames);
+        
+        return countryNames;
+    }
 }
