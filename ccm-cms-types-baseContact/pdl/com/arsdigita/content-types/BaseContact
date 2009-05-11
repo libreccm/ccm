@@ -1,0 +1,26 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.*;
+
+// Contact Object
+object type BaseContact extends Person {
+
+    component BaseAddress [0..n] addresses = join ct_baseContacts.address_id
+                                               to ct_baseAddresses.address_id;
+
+    component BaseContactEntry [0..n] contactentries = join ct_baseContacts.contact_id
+                                                         to ct_baseContactEntries.contact_id;
+
+    reference key ( ct_baseContacts.contact_id );
+}
+
+object type BaseContactEntry {
+
+  String [1..1] key = ct_baseContactEntries.key VARCHAR(100);
+  String [1..1] description = ct_baseContactEntries.description VARCHAR(100);
+  String [1..1] value = ct_baseContactEntries.value VARCHAR(100);
+  
+  reference key ( ct_baseContactEntries.contactentry_id );
+
+}
