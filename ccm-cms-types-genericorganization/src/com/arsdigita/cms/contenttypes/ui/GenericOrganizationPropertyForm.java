@@ -89,11 +89,8 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
     }
 
     public void submitted(FormSectionEvent fse) {
-	s_log.log (Level.DEBUG, "GenericOrganization submitted");
-
 	if (m_step != null 
 	    && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
-	    s_log.log (Level.DEBUG, "GenericOrganization submit canceled");
 	    m_step.cancelStreamlinedCreation(fse.getPageState());
 	}
     }
