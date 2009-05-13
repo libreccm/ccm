@@ -1,13 +1,17 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.BaseAddress;
 import com.arsdigita.cms.*;
 
 // Contact Object
-object type BaseContact extends Person {
+object type BaseContact extends ContentPage {
 
-    component BaseAddress [0..n] addresses = join ct_baseContacts.address_id
-                                               to ct_baseAddresses.address_id;
+    componetn Person [0..1] person = join ct_baseContacts.person_id
+                                       to ct_persons.person_id;
+
+    component BaseAddress [0..1] address = join ct_baseContacts.address_id
+                                             to ct_baseAddresses.address_id;
 
     component BaseContactEntry [0..n] contactentries = join ct_baseContacts.contact_id
                                                          to ct_baseContactEntries.contact_id;

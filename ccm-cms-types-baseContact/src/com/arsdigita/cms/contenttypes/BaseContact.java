@@ -35,30 +35,33 @@ import java.math.BigDecimal;
 public class BaseContact extends ContentPage {
 
     /** PDL property names */
+    public static final String PERSON = "person";
+    public static final String ADDRESS = "address";
+    public static final String CONTACT_ENTRIES = "contactentries";
 
     /** Data object type for tihs domain object */
     public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.Organization";
+        = "com.arsdigita.cms.contenttypes.baseContact";
 
-    public BaseContact () {
+    public BaseContact() {
         super(BASE_DATA_OBJECT_TYPE);
     }
 
-    public BaseContact ( BigDecimal id )
+    public BaseContact(BigDecimal id)
             throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public BaseContact ( OID id )
+    public BaseContact(OID id)
             throws DataObjectNotFoundException {
         super(id);
     }
 
-    public BaseContact ( DataObject obj ) {
+    public BaseContact(DataObject obj) {
         super(obj);
     }
 
-    public BaseContact ( String type ) {
+    public BaseContact(String type) {
         super(type);
     }
 
@@ -72,46 +75,40 @@ public class BaseContact extends ContentPage {
     ///////////////////////////////////////////////////////////////
     // accessors
 
-/*
-    public String getLink () {
-        return (String)get(LINK);
+    // Set the person for this contact
+    public Person getPerson() {
+        return (Person) get(PERSON);
     }
-
-    public void setLink ( String link ) {
-        set(LINK, link);
+    
+    // Get the person for this contact
+    public void setPerson(Person person) {
+        set(PERSON, person);
     }
-*/
-
-
-/*
-    public BigDecimal getImageID() {
-        return (BigDecimal)get(IMAGE_ID);
+    
+    // Get the address for this contact
+    public BaseAddress getAddress() {
+        return (BaseAddress) get(ADDRESS);
     }
-
-    public ImageAsset getImage() {
-        DataObject obj = (DataObject)get(IMAGE);
-        if ( obj == null ) {
-            return null;
-        }
-        return new ImageAsset(obj);
+    
+    // Set the address for this contact
+    public void setAddress(BaseAddress address) {
+        set(ADDRESS, address);
     }
-
-    public void setImage(ImageAsset image) {
-        if (image != null)
-            image.setMaster(this);
-        setAssociation(IMAGE,image);
+    
+    // Get all contact entries for this contact, p. ex. phone number, type of contact etc.
+    public BaseContactEntryCollection getContactEntries() {
+        return new BaseContactEntryCollection ((DataCollection) get(CONTACT_ENTRIES));
     }
-
-
-    public void delete() {
-        ImageAsset image = getImage();
-        if (image != null) {
-            setAssociation(IMAGE, null);
-            save();
-            image.delete();
-        }
-
-        super.delete();
+    
+    // Add a contact entry for this contact
+    public void addContactEntry(BaseContactEntry contactEntry) {
+        Assert.exists(contactEntry, BaseContactEntry.class);
+        add(CONTACT_ENTRIES, contactEntry);
     }
-*/
+    
+    // Remove a contect entry for this contact
+    public void removeContactEntry(BaseContactEntry contactEntry) {
+        Assert.exists(contactEntry, BaseContactEntry.class);
+        remove(CONTACT_ENTRIES, contactEntry);
+    }
 }

@@ -3,7 +3,8 @@
     <table name="inits"/>
     <table name="acs_objects"/>
     <table name="cms_items"/>
-    <table name="ct_baseAdresses"/>
+    <table name="ct_baseAddresses"/>
+    <table name="ct_persons"/>
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
