@@ -3,10 +3,12 @@
 		<table name="inits" />
 		<table name="acs_objects" />
 		<table name="cms_items" />
+		<table name="ct_persons" />
 		<initializer class="com.arsdigita.cms.Initializer" />
 	</requires>
 	<provides>
 		<table name="ct_genericorganizations" />
+		<table name="ct_organizationfunctions" />
 		<initializer class="com.arsdigita.cms.contenttypes.GenericOrganizationInitializer"/>		
 	</provides>
 	<scripts>

@@ -27,7 +27,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
-
+import com.arsdigita.persistence.DataCollection;
 /**
  * An very generic type to represent an organization.
  *
@@ -38,6 +38,7 @@ public class GenericOrganization extends ContentPage {
     public static final String ORGANIZATIONNAME = "organizationname";
     public static final String ORGANIZATIONNAMEADDENDUM = "organizationnameaddendum";
     public static final String DESCRIPTION = "description";
+    public static final String FUNCTIONS = "functions";
 
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganization";
     private static final GenericOrganizationConfig s_config = new GenericOrganizationConfig();
@@ -102,5 +103,19 @@ public class GenericOrganization extends ContentPage {
 
     public void setDescription(String description) {
 	set(DESCRIPTION, description);
+    }
+
+    public OrganizationFunctionCollection getOrganizationFunctions() {
+	return new OrganizationFunctionCollection((DataCollection) get(FUNCTIONS));
+    }
+
+    public void addOrganizationFunction(OrganizationFunction organizationFunction) {
+	Assert.exists(organizationFunction, OrganizationFunction.class);
+	add(FUNCTIONS, organizationFunction);
+    }
+
+    public void removeOrganizationFunction(OrganizationFunction organizationFunction) {
+	Assert.exists(organizationFunction, OrganizationFunction.class);
+	remove(FUNCTIONS, organizationFunction);
     }
 }
