@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!-- project.xml -complete- containing all modules as of aplaws 1.04       -->
+<!-- project.xml -complete- containing all modules as of current version of aplaws    -->
 
 <!-- If you don't already have a project.xml file in place, You have to copy
      this one to your development base directory renaming it to project.xml
      Comment out those modules to don't need. Keep the included modules in sync
-     with the bundles application file!                                      -->
+     with the bundles application file!                                               -->
 
 <ccm:project  xmlns:ccm="http://ccm.redhat.com/ccm-project"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools/devel/xsd/project.xsd"
+     xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd"
              ccmVersion="6.1" 
                    name="aplaws"
              prettyName="APLAWS plus"
@@ -57,6 +57,7 @@
 		<ccm:application name="ccm-cms-types-pressrelease"/>
 		<ccm:application name="ccm-cms-types-service"/>
 		<ccm:application name="ccm-cms-types-siteproxy"/>
+        <ccm:application name="ccm-cms-types-xmlfeed"/>
 		<ccm:application name="ccm-bookmarks"/>
 		<ccm:application name="ccm-core"/>
 		<ccm:application name="ccm-formbuilder-pdf"/>
@@ -77,7 +78,6 @@
 		<ccm:application name="ccm-ldn-terms"/>
 		<ccm:application name="ccm-ldn-theme"/>
 		<ccm:application name="ccm-ldn-util"/>
-		<ccm:application name="ccm-ldn-xmlfeed"/>
 		<ccm:application name="ccm-simplesurvey"/>
 		<ccm:application name="ccm-user-preferences"/>
 	</ccm:build>

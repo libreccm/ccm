@@ -2,11 +2,11 @@
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-bookmarks"
   prettyName="Bookmarks"
-  version="6.5.0"
+  version="6.6.0"
   release="1"
   webapp="ROOT">
   <ccm:dependencies>
-    <ccm:requires name="ccm-core" version="6.3.0" relation="ge"/>
+    <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
   </ccm:dependencies>
   <ccm:contacts>
     <ccm:contact uri="http://www.runtime-collective.com" type="website"/>

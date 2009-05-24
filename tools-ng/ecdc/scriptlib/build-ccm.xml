@@ -14,7 +14,7 @@
 	<target name="load-bundle" depends="prepare-load">
 		<echo>Loading bundle ${ccm.bundle.folder} into ${ccm.home}</echo>
 
-		<java classname="com/arsdigita/packaging/MasterTool"  fork="yes">
+		<java classname="com.arsdigita.packaging.MasterTool"  fork="yes">
                     <classpath refid="ccm.classpath" />
 		    <sysproperty key="ccm.home" value="${ccm.home}" />
 		    <arg line="load ${applications} --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" />

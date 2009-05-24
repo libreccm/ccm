@@ -7,15 +7,27 @@ new CCM / APLAWS, standards compliant deployment and execution context.
 
 CURRENTLY EVERYTHING HERE IS WORK IN PROGRESS
 
+common/
+  Library of files and schemes which may be used by several development
+  and user tools (ecdc, maven, and others)
+
+devel/
+  Library of files which are requirred by either the test runtime
+  or the compiler to do its work (e.g. jdbc drivers).
+
 ecdc/
   Easy CCM Development Configuration (ECDC)
   A simplified development environment with minimal installation and
   preparation prerequisites.
 
-common/
-  Library of files and schemes which may be used by several tools
+maven/
+  Maven development environment. 
+  Comming soon.
 
-usertools/
+netbeans/
+  Netbeans integration. Project file which defines all CCM packages. 
+
+user/
   User's installation and maintenance tools
   Comming soon.
 

@@ -3,18 +3,18 @@
   name="ccm-ldn-atoz"
   prettyName="A-Z"
   version="6.6.0"
-  release="4"
+  release="1"
   webapp="ROOT">
 
   <ccm:dependencies>
-    <ccm:requires name="ccm-core" version="6.2.0" relation="ge"/>
-    <ccm:requires name="ccm-cms" version="6.2.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-aplaws" version="6.4.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-util" version="6.2.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-terms" version="6.2.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-navigation" version="6.2.0" relation="ge"/>
-    <ccm:requires name="ccm-ldn-subsite" version="6.2.0" relation="ge"/>
-    <ccm:requires name="ccm-cms-types-siteproxy" version="6.2.0" relation="ge"/>
+    <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-aplaws" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-util" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-navigation" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-subsite" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms-types-siteproxy" version="6.6.0" relation="ge"/>
   </ccm:dependencies>
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>

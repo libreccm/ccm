@@ -10,20 +10,20 @@ environment(s) as well as user installation and deployment scripts
 CURRENTLY EVERYTHING HERE IS WORK IN PROGRESS
 
 classes/
-
+  JDO enhancer developed by Red Hat for use in APLAWS build system
 
 lib/
   Set of jar-files used by several tools (esp. to process xml files)
   and required files vor compilation (e.g. servlet API, JDBC drivers, etc)
 
 src/
-
+  Source and build script for Red Hat APLAWS JDO enhancer
 
 xsd/
-
+  document definitions ( for project.xml, application.xml)
 
 xsl/
-
+  xsl to construct a projects build file
 
 README
   This file
