@@ -18,19 +18,16 @@
  */
 package com.arsdigita.cms;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.log4j.Logger;
+/* May 2009:
+ * This file serves as an information for developers how to replace
+ * the URL resource: protocol extension (which is a application specific,
+ * non-standard extension of the Java URL protocol) by supported,
+ * standard compliant API.
+ *
+ * Look for:
+ * // URL resource: protocol handler removal: START
+ * Will be removed as soon as a stable release 6.6 is created.
+ */
 
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.form.DHTMLEditor;
@@ -45,7 +42,10 @@ import com.arsdigita.cms.publishToFile.PublishToFileListener;
 import com.arsdigita.cms.ui.authoring.ItemCategoryExtension;
 import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.UncheckedWrapperException;
+// URL resource: protocol handler removal: START
+// remove
+// import com.arsdigita.util.UncheckedWrapperException;
+// URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
@@ -53,10 +53,35 @@ import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.ParameterError;
+// URL resource: protocol handler removal: START
+// new: import:
+import com.arsdigita.util.parameter.ResourceParameter;
+// URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.URLParameter;
+// URL resource: protocol handler removal: START
+// remove:
+// import com.arsdigita.util.parameter.URLParameter;
+// new: import:
 import com.arsdigita.util.StringUtils;
+// URL resource: protocol handler removal: END
+
+// URL resource: protocol handler removal: START
+// remove:
+// import java.io.IOException;
+// import java.net.MalformedURLException;
+// import java.net.URL;
+// URL resource: protocol handler removal: END
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 /**
  * A record containing server-session scoped configuration properties.
@@ -197,16 +222,24 @@ public final class ContentSectionConfig extends AbstractConfig {
         m_useSectionCategories = new BooleanParameter
             ("com.arsdigita.cms.use_section_categories",
              Parameter.REQUIRED, new Boolean(true));
-
-        try {
-            m_itemAdapters = new URLParameter
-                ("com.arsdigita.cms.item_adapters",
-                 Parameter.REQUIRED,
-                 new URL("resource:WEB-INF/resources/cms-item-adapters.xml"));
-        } catch (MalformedURLException ex) {
-            throw new UncheckedWrapperException("Cannot parse URL", ex);
-        }
-
+        
+        // URL resource: protocol handler removal: START
+        // remove:
+        // try {
+        //   m_itemAdapters = new URLParameter
+        //       ("com.arsdigita.cms.item_adapters",
+        //        Parameter.REQUIRED,
+        //        new URL("resource:WEB-INF/resources/cms-item-adapters.xml"));
+        // } catch (MalformedURLException ex) {
+        //     throw new UncheckedWrapperException("Cannot parse URL", ex);
+        // }
+        // ADD:
+        m_itemAdapters = new ResourceParameter
+            ("com.arsdigita.cms.item_adapters",
+             Parameter.REQUIRED,
+             "/WEB-INF/resources/cms-item-adapters.xml");
+        // URL resource: protocol handler removal: END
+        
         m_defaultSection = new StringParameter
             ("com.arsdigita.cms.default_content_section",
              Parameter.REQUIRED, "content");
@@ -456,11 +489,15 @@ public final class ContentSectionConfig extends AbstractConfig {
     }
 
     public final InputStream getItemAdapters() {
-        try {
-            return ((URL)get(m_itemAdapters)).openStream();
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException("Cannot read stream", ex);
-        }
+    // URL resource: protocol handler removal: START
+    // remove:
+    //  try {
+    //      return ((URL)get(m_itemAdapters)).openStream();
+    //  } catch (IOException ex) {
+    //      throw new UncheckedWrapperException("Cannot read stream", ex);
+    //  }
+    // ADD:
+        return (InputStream)get(m_itemAdapters);
     }
 
     public final String getDefaultContentSection() {
@@ -576,6 +613,7 @@ public final class ContentSectionConfig extends AbstractConfig {
         }
 
         // value != null
+        @Override
         protected Object unmarshal(String value, ErrorList errors) {
             Class theClass = (Class) super.unmarshal(value,errors);
             if (theClass != null) {
@@ -597,6 +635,7 @@ public final class ContentSectionConfig extends AbstractConfig {
             super(name, multiplicity, defaultObj);
         }
         
+        @Override
         protected Object unmarshal(String value, ErrorList errors) {
             return DHTMLEditor.Config.valueOf(value);
         }

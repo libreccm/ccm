@@ -18,30 +18,21 @@
 
 package com.arsdigita.london.exporter;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.URLParameter;
+import com.arsdigita.util.parameter.ResourceParameter;
+
+import java.io.InputStream;
 
 public class ExporterConfig extends AbstractConfig {
     
     private Parameter m_adapters;
 
     public ExporterConfig() {
-        try {
-            m_adapters = new URLParameter
-                ("com.arsdigita.london.exporter.traversal_adapters", 
-                 Parameter.REQUIRED,
-                 new URL(null,
-                         "resource:WEB-INF/resources/exporter-adapters.xml"));
-        } catch (MalformedURLException ex) {
-            throw new UncheckedWrapperException("Cannot parse URL", ex);
-        }
+        m_adapters = new ResourceParameter
+            ("com.arsdigita.london.exporter.traversal_adapters", 
+             Parameter.REQUIRED,
+             "/WEB-INF/resources/exporter-adapters.xml");
         
         register(m_adapters);
         
@@ -49,11 +40,11 @@ public class ExporterConfig extends AbstractConfig {
     }
 
 
+    /**
+     * 
+     * @return InputStream
+     */
     InputStream getTraversalAdapters() {
-        try {
-            return ((URL)get(m_adapters)).openStream();
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException("Cannot read stream", ex);
-        }
+            return (InputStream)get(m_adapters);
     }    
 }

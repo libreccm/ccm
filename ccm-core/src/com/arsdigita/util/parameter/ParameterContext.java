@@ -19,10 +19,12 @@
 package com.arsdigita.util.parameter;
 
 /**
- * Subject to change.
+ * A container of parameters.  
+ * 
+ * A parameter context binds together a set of parameters and keeps their values.
+ * 
  *
- * A container of parameters.  A parameter context binds together a
- * set of parameters and keeps their values.
+ * Subject to change.
  *
  * @see com.arsdigita.util.parameter.Parameter
  * @author Justin Ross &lt;jross@redhat.com&gt;

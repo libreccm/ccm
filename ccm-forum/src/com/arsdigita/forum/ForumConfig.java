@@ -18,23 +18,23 @@
  */
 package com.arsdigita.forum;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.apache.log4j.Logger;
-
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.UncheckedWrapperException;
+// import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.URLParameter;
+import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.web.Web;
+
+import java.io.IOException;
+import java.io.InputStream;
+// import java.net.MalformedURLException;
+// import java.net.URL;
+
+import org.apache.log4j.Logger;
 
 /**
  * A set of configuration parameters for forums.
@@ -68,6 +68,7 @@ public class ForumConfig extends AbstractConfig {
     private Parameter m_deleteSentSubscriptionNotifications;
 
     public ForumConfig() {
+
         m_adminEditPosts = new BooleanParameter(
             "com.arsdigita.forum.admin_can_edit_posts",
             Parameter.REQUIRED,
@@ -91,52 +92,47 @@ public class ForumConfig extends AbstractConfig {
         	
         m_adminOnlyCreateTopics = new BooleanParameter (
         	"com.arsdigita.forum.admin_only_to_create_topics",
-		Parameter.REQUIRED,
-		Boolean.FALSE);
-	m_maxImageSize = new IntegerParameter (
-		"com.arsdigita.forum.maximum_image_size",
-		Parameter.OPTIONAL, null);
-	m_maxFileSize = new IntegerParameter (
-		"com.arsdigita.forum.maximum_file_size",
-		Parameter.OPTIONAL, null);
+            Parameter.REQUIRED,
+            Boolean.FALSE);
+	    m_maxImageSize = new IntegerParameter (
+		    "com.arsdigita.forum.maximum_image_size",
+		    Parameter.OPTIONAL, null);
+	    m_maxFileSize = new IntegerParameter (
+		    "com.arsdigita.forum.maximum_file_size",
+    		Parameter.OPTIONAL, null);
 		
-	m_showNewTabs = new BooleanParameter(
-		"com.arsdigita.forum.show_new_tabs",
-		Parameter.OPTIONAL,
-		Boolean.FALSE);
-	m_showAllThreadAlerts = new BooleanParameter(
-		"com.arsdigita.forum.show_all_forum_thread_alerts",
-		Parameter.OPTIONAL,
-		Boolean.TRUE);
-	m_useWysiwygEditor = new BooleanParameter(
+        m_showNewTabs = new BooleanParameter(
+            "com.arsdigita.forum.show_new_tabs",
+            Parameter.OPTIONAL,
+            Boolean.FALSE);
+        m_showAllThreadAlerts = new BooleanParameter(
+            "com.arsdigita.forum.show_all_forum_thread_alerts",
+            Parameter.OPTIONAL,
+            Boolean.TRUE);
+        m_useWysiwygEditor = new BooleanParameter(
 			"com.arsdigita.forum.use_wysiwyg_editor",
 			Parameter.OPTIONAL,
 			Boolean.FALSE);
-	m_rejectionMessage = new StringParameter(
+        m_rejectionMessage = new StringParameter(
             "com.arsdigita.forum.rejection_form_message.example",
             Parameter.OPTIONAL,
             null);
-	m_threadPageSize = new IntegerParameter (
+        m_threadPageSize = new IntegerParameter (
 			"com.arsdigita.forum.thread_page_size",
 			Parameter.REQUIRED, new Integer(10));
-	m_quickFinish = new BooleanParameter(
+        m_quickFinish = new BooleanParameter(
 			"com.arsdigita.forum.allow_quick_finish",
 			Parameter.OPTIONAL,
 			Boolean.FALSE);   
-	m_deleteSentSubscriptionNotifications = new BooleanParameter(
+        m_deleteSentSubscriptionNotifications = new BooleanParameter(
 			"com.arsdigita.forum.delete_sent_subscription_notifications",
 			Parameter.OPTIONAL,
 			Boolean.FALSE);   
 
-        try {
-            m_adapters = new URLParameter
-                ("com.arsdigita.forum.traversal_adapters",
-                 Parameter.REQUIRED,
-                 new URL(null,
-                         "resource:WEB-INF/resources/forum-adapters.xml"));
-        } catch (MalformedURLException ex) {
-            throw new UncheckedWrapperException("Cannot parse URL", ex);
-        }
+        m_adapters = new ResourceParameter
+            ("com.arsdigita.forum.traversal_adapters",
+             Parameter.REQUIRED,
+             "/WEB-INF/resources/forum-adapters.xml");
 
         register(m_digestUserEmail);
         register(m_adminEditPosts);
@@ -158,11 +154,7 @@ public class ForumConfig extends AbstractConfig {
     }
 
     InputStream getTraversalAdapters() {
-        try {
-            return ((URL)get(m_adapters)).openStream();
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException("Cannot read stream", ex);
-        }
+        return (InputStream)get(m_adapters);
     }
 
     public boolean canAdminEditPosts() {

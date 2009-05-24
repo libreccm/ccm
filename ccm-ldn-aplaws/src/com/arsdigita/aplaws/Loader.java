@@ -18,14 +18,6 @@
 
 package com.arsdigita.aplaws;
 
-import com.arsdigita.london.navigation.Navigation;
-import com.arsdigita.london.navigation.Template;
-import com.arsdigita.london.navigation.TemplateMapping;
-import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.importer.Parser;
-import com.arsdigita.london.portal.PageLayout;
-import com.arsdigita.london.portal.Workspace;
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.RootCategoryCollection;
 import com.arsdigita.cms.ContentSection;
@@ -45,7 +37,13 @@ import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.URLParameter;
 import com.arsdigita.web.Application;
 
-import org.apache.log4j.Logger;
+import com.arsdigita.london.navigation.Navigation;
+import com.arsdigita.london.navigation.Template;
+import com.arsdigita.london.navigation.TemplateMapping;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.importer.Parser;
+import com.arsdigita.london.portal.PageLayout;
+import com.arsdigita.london.portal.Workspace;
 
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -53,6 +51,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 /**
  * Loader.

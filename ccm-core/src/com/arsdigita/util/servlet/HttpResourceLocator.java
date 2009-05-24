@@ -173,20 +173,20 @@ public class HttpResourceLocator {
                                final String servletPath,
                                final String pathInfo,
                                final HttpParameterMap params) {
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             Assert.exists(host, HttpHost.class);
             Assert.exists(contextPath, String.class);
             Assert.exists(servletPath, String.class);
 
             if (contextPath.startsWith("/")) {
-                Assert.truth
+                Assert.isTrue
                     (!contextPath.endsWith("/"),
                      "A contextPath starting with '/' must not end in '/'; " +
                      "I got '" + contextPath + "'");
             }
 
             if (pathInfo != null) {
-                Assert.truth(pathInfo.startsWith("/"),
+                Assert.isTrue(pathInfo.startsWith("/"),
                              "I expected a pathInfo starting with '/' " +
                              "and got '" + pathInfo + "' instead");
             }

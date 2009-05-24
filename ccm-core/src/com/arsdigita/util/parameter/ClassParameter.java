@@ -21,9 +21,9 @@ package com.arsdigita.util.parameter;
 import org.apache.commons.beanutils.converters.ClassConverter;
 
 /**
- * Subject to change.
- *
  * A parameter representing a Java <code>Class</code>.
+ *
+ * Subject to change.
  *
  * @see java.lang.Class
  * @see Parameter

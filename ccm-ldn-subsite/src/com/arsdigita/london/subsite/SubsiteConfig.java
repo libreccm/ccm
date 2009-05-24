@@ -20,20 +20,20 @@ package com.arsdigita.london.subsite;
 
 import com.arsdigita.runtime.AbstractConfig;
 
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.URLParameter;
-import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.ClassParameter;
-import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.ResourceParameter;
+import com.arsdigita.util.parameter.StringParameter;
+// import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.london.util.ui.ApplicationCategoryPicker;
 import java.io.InputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import org.apache.log4j.Logger;
+// import java.net.URL;
+// import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.HashMap;
+
+import org.apache.log4j.Logger;
 
 
 public class SubsiteConfig extends AbstractConfig {
@@ -42,21 +42,17 @@ public class SubsiteConfig extends AbstractConfig {
 
     private Map m_themes = new HashMap();
 
-    private URLParameter m_adapters;
+    private ResourceParameter m_adapters;
     private StringParameter m_frontPageApplicationTypeParameter;
     private StringParameter m_frontPageParentURLParameter;
     private Parameter m_rootCategoryPicker;
 
     public SubsiteConfig() {
-        try {
-            m_adapters = new URLParameter
-                ("com.arsdigita.london.subsite.traversal_adapters", 
-                 Parameter.REQUIRED, 
-                 new URL(null,
-                         "resource:WEB-INF/resources/subsite-adapters.xml"));
-        } catch (MalformedURLException ex) {
-            throw new UncheckedWrapperException("Cannot parse URL", ex);
-        }
+
+        m_adapters = new ResourceParameter
+            ("com.arsdigita.london.subsite.traversal_adapters", 
+             Parameter.REQUIRED, 
+             "/WEB-INF/resources/subsite-adapters.xml");
 
         m_frontPageApplicationTypeParameter = new StringParameter
             ("com.arsdigita.london.subsite.front_page_application",
@@ -81,11 +77,7 @@ public class SubsiteConfig extends AbstractConfig {
     }
 
     InputStream getTraversalAdapters() {
-        try {
-            return ((URL)get(m_adapters)).openStream();
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException("Cannot read stream", ex);
-        }
+        return (InputStream) get(m_adapters);
     }
 
     public String getFrontPageApplicationType() {

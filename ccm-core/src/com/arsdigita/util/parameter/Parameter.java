@@ -19,11 +19,13 @@
 package com.arsdigita.util.parameter;
 
 /**
+ * Describes a named property that can read, write, and validate its
+ * own value.
+ *
  * Subject to change.
  *
- * Describes a named property that can read, write, and validate its
- * own value.  See the documentation on {@link #read}, {@link #write},
- * and {@link #validate} for details.
+ * See the documentation on {@link #read}, {@link #write}, and {@link #validate}
+ * for details.
 
  * They have the following features as well:
  *
@@ -49,9 +51,9 @@ package com.arsdigita.util.parameter;
  * successfully or fail outright.
  *
  * Parameters are stateless "messages".  They do not store their own
- * values.  Instead, a {@link
- * com.arsdigita.util.parameter.ParameterContext} manages a set of
- * parameters and keeps their values.
+ * values.  Instead, a {@link com.arsdigita.util.parameter.ParameterContext}
+ * manages a set of parameters and keeps their values.
+ * 
  *
  * Here's what it typically looks like to use a parameter:
  *
@@ -174,7 +176,7 @@ public interface Parameter {
 
     /**
      * Writes the parameter value as a string literal.  The parameter
-     * marshals he object <code>value</code> to a string and sends it
+     * marshals the object <code>value</code> to a string and sends it
      * to <code>writer</code>.
      *
      * @param writer The <code>ParameterWriter</code> that will take

@@ -32,10 +32,10 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
- * Subject to change.
- *
  * A base implementation of the <code>ParameterContext</code>
  * interface.
+ *
+ * Subject to change.
  *
  * @see com.arsdigita.util.parameter.ParameterContext
  * @author Justin Ross &lt;jross@redhat.com&gt;
@@ -98,10 +98,10 @@ public abstract class AbstractParameterContext implements ParameterContext {
     }
 
     /**
-     * From ParameterContext#get(Parameter):
-     * Gets the unmarshaled value of <code>param</code>.  If the
-     * loaded value is null, <code>param.getDefaultValue()</code> is
-     * returned.
+     * Gets the unmarshaled value of <code>param</code>.
+     *
+     * If the loaded value is null, <code>param.getDefaultValue()</code>
+     * is returned.
      *
      * @param param The named <code>Parameter</code> whose value to
      * retrieve; it cannot be null
@@ -112,7 +112,6 @@ public abstract class AbstractParameterContext implements ParameterContext {
     }
 
     /**
-     * From ParameterContext#get(Parameter,Object)
      * Gets the unmarshaled value of <code>param</code>, returning
      * <code>dephalt</code> if <code>param</code>'s value is null.
      *
@@ -154,8 +153,6 @@ public abstract class AbstractParameterContext implements ParameterContext {
     }
 
     /**
-     *
-     *
      * Reads and unmarshals all values associated with the registered
      * parameters from <code>reader</code>.  Any errors are returned.
      *
@@ -173,7 +170,6 @@ public abstract class AbstractParameterContext implements ParameterContext {
     }
 
     /**
-     * From ParameterContext#load(ParameterReader,ErrorList):
      * Reads and unmarshals all values associated with the registered
      * parameters from <code>reader</code>.  If any errors are
      * encountered, they are added to <code>errors</code>.

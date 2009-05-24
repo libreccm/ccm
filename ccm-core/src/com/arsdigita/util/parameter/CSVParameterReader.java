@@ -35,9 +35,9 @@ import java.util.List;
  * list of parameter values) and ....
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: CSVParameterLoader.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CSVParameterReader.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public final class CSVParameterLoader implements ParameterReader {
+public final class CSVParameterReader implements ParameterReader {
     public final static String versionId =
         "$Id: CSVParameterLoader.java 287 2005-02-22 00:29:02Z sskracic $" +
         "$Author: sskracic $" +
@@ -53,7 +53,7 @@ public final class CSVParameterLoader implements ParameterReader {
      * @param reader: input stream to read values
      * @param params: array of parameter objects to store procecced values
      */
-    public CSVParameterLoader(final Reader reader, final Parameter[] params) {
+    public CSVParameterReader(final Reader reader, final Parameter[] params) {
         m_reader = new LineNumberReader(reader);  // input stream
         m_params = params;                        // array of parameters
         m_line = new HashMap(params.length);      //
@@ -72,6 +72,12 @@ public final class CSVParameterLoader implements ParameterReader {
         return (String) m_line.get(param);
     }
 /*
+ * May 2009: Obviously a reminiscence from previous versions of code. This class
+ * is currently used by coreloader only and it does not use the load method
+ * and it works with load commented out.
+ *
+ * Code should be removed after extensive testing.
+ *
     public final ParameterValue load(final Parameter param) {
         final ParameterValue value = new ParameterValue();
 

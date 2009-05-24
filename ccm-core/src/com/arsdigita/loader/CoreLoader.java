@@ -18,15 +18,6 @@
  */
 package com.arsdigita.loader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Locale;
-
-import javax.mail.internet.InternetAddress;
-
-import org.apache.log4j.Logger;
-
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.Kernel;
@@ -53,7 +44,7 @@ import com.arsdigita.ui.sitemap.SiteMap;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.util.parameter.CSVParameterLoader;
+import com.arsdigita.util.parameter.CSVParameterReader;
 import com.arsdigita.util.parameter.EmailParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
@@ -63,6 +54,15 @@ import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.Web;
 
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Locale;
+
+import javax.mail.internet.InternetAddress;
+
+import org.apache.log4j.Logger;
 /**
  * CoreLoader
  *
@@ -441,7 +441,7 @@ public class CoreLoader extends PackageLoader {
 
         try {
             MimeTypeRow row = new MimeTypeRow();
-            CSVParameterLoader loader = new CSVParameterLoader
+            CSVParameterReader loader = new CSVParameterReader
                 (new InputStreamReader(is), row.getParameters());
 
             while (loader.next()) {

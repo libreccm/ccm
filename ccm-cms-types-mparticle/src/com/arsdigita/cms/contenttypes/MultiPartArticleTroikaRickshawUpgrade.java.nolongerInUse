@@ -60,8 +60,12 @@ public class MultiPartArticleTroikaRickshawUpgrade {
 
         final ContentType type = ContentType.findByAssociatedObjectType
             (MultiPartArticle.BASE_DATA_OBJECT_TYPE);
+        // URL resource: protocol extension no longer supported!
+        // Replace by ResourceParameter (if applicable) or ordinary string
+        // and open as this.getclass().getResourceAsStream()
         final URL templateURL = new URL
             (null, "resource:WEB-INF/content-types/com/arsdigita/cms" +
+            //      ^^^^^^^^^  no longer supperted !!
              "/contenttypes/mparticle-item.jsp");
 
         final ContentSectionCollection coll = ContentSection.getAllSections();

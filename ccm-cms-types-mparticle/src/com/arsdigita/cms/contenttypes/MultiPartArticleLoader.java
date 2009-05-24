@@ -21,12 +21,13 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
-import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.URLParameter;
+import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
-import java.net.MalformedURLException;
-import java.net.URL;
+
+import java.io.InputStream;
+
+import org.apache.log4j.Logger;
 
 /**
  * Loader.
@@ -35,10 +36,13 @@ import java.net.URL;
  * @version $Id: MultiPartArticleLoader.java 1561 2007-04-16 15:37:21Z apevec $
  */
 public class MultiPartArticleLoader extends AbstractContentTypeLoader {
+
     public final static String versionId =
         "$Id: MultiPartArticleLoader.java 1561 2007-04-16 15:37:21Z apevec $" +
         "$Author: apevec $" +
         "$DateTime: 2004/08/17 23:15:09 $";
+
+    private static final Logger s_log = Logger.getLogger(MultiPartArticleLoader.class);
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/MultiPartArticle.xml"
@@ -48,23 +52,20 @@ public class MultiPartArticleLoader extends AbstractContentTypeLoader {
         return TYPES;
     }
 
-    private URLParameter m_template;
+    private ResourceParameter m_template;
 
     public MultiPartArticleLoader() {
-        try {
-            m_template = new URLParameter
-                ("com.arsdigita.cms.contenttypes.mparticle.template",
-                 Parameter.REQUIRED,
-                 new URL(null,
-                         "resource:WEB-INF/content-types/com/arsdigita/cms/contenttypes" +
-                         "/mparticle-item.jsp"));
-        } catch (MalformedURLException ex) {
-            throw new UncheckedWrapperException("cannot parse url", ex);
-        }
+
+        m_template = new ResourceParameter
+            ("com.arsdigita.cms.contenttypes.mparticle.template",
+             Parameter.REQUIRED,
+             "/WEB-INF/content-types/com/arsdigita/cms/contenttypes" +
+                         "/mparticle-item.jsp");
 
         register(m_template);
     }
 
+    @Override
     protected void prepareSection(final ContentSection section,
                                   final ContentType type,
                                   final LifecycleDefinition ld,
@@ -73,7 +74,7 @@ public class MultiPartArticleLoader extends AbstractContentTypeLoader {
 
         setDefaultTemplate("MultiPartArticle-mparticle-item",
                            "mparticle-item",
-                           (URL)get(m_template),
+                           (InputStream)get(m_template),
                            section, type,ld, wf);
 
     }

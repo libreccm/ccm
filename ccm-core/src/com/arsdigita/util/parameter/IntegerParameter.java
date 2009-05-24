@@ -21,9 +21,9 @@ package com.arsdigita.util.parameter;
 import org.apache.commons.beanutils.converters.IntegerConverter;
 
 /**
- * Subject to change.
- *
  * A parameter representing a Java <code>Integer</code>.
+ *
+ * Subject to change.
  *
  * @see java.lang.Integer
  * @see Parameter

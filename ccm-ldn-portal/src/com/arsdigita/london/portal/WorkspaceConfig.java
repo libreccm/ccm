@@ -20,17 +20,13 @@ package com.arsdigita.london.portal;
 
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.URLParameter;
+import com.arsdigita.util.parameter.ResourceParameter;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +36,7 @@ public class WorkspaceConfig extends AbstractConfig {
 
 	private static final Logger s_log = Logger.getLogger(WorkspaceConfig.class);
 
-	private URLParameter m_adapters;
+	private ResourceParameter m_adapters;
 
 	private StringParameter m_defaultLayout;
 
@@ -50,22 +46,18 @@ public class WorkspaceConfig extends AbstractConfig {
 
 	private Parameter m_adminPortletTypes;
 
-        private BooleanParameter m_htmlPortletWysiwygEditor;
+    private BooleanParameter m_htmlPortletWysiwygEditor;
 
 	private StringParameter m_workspacePartyPrivilege;
 
 	private BooleanParameter m_checkWorkspaceReadPermissions;
 
 	public WorkspaceConfig() {
-		try {
-			m_adapters = new URLParameter(
-					"com.arsdigita.london.portal.traversal_adapters",
-					Parameter.REQUIRED,
-					new URL(null,
-							"resource:WEB-INF/resources/portal-adapters.xml"));
-		} catch (MalformedURLException ex) {
-			throw new UncheckedWrapperException("Cannot parse URL", ex);
-		}
+
+		m_adapters = new ResourceParameter(
+			"com.arsdigita.london.portal.traversal_adapters",
+			Parameter.REQUIRED,
+			"/WEB-INF/resources/portal-adapters.xml");
 
 		m_defaultLayout = new StringParameter(
 				"com.arsdigita.london.portal.default_layout",
@@ -108,11 +100,7 @@ public class WorkspaceConfig extends AbstractConfig {
 	}
 
 	InputStream getTraversalAdapters() {
-		try {
-			return ((URL) get(m_adapters)).openStream();
-		} catch (IOException ex) {
-			throw new UncheckedWrapperException("Cannot read stream", ex);
-		}
+		return (InputStream) get(m_adapters);
 	}
 
 	public String getDefaultLayout() {

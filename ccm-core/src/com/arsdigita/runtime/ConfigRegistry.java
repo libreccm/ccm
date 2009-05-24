@@ -19,7 +19,7 @@
 package com.arsdigita.runtime;
 
 // import com.arsdigita.runtime.RegistryConfig;
-import com.arsdigita.runtime.CCMResourceManager;
+// import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.util.Classes;
 import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.UncheckedWrapperException;

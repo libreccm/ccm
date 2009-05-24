@@ -29,7 +29,7 @@ import java.net.URLStreamHandler;
  * Handler
  * pboy:
  *
- * Handler for the URL  resource:// protocoll.
+ * Handler for the URL  resource:// protocol.
  *
  * To make it work it must be loaded by the system classloader. (Part of the
  * "java.ext.dirs" system property).
@@ -41,11 +41,13 @@ import java.net.URLStreamHandler;
  * If it is not properly done, you will get a MalformedURLException: unknown
  * protocol: resource
  *
- * ToDo: replace the resource: protokoll by use of the Class or ClassLoader
- * getResource() and/or getResourceAsStream() methods (system wide).
- *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #2 $ $Date: 2004/08/16 $
+ *
+ * ToDo: replace the resource: protokoll by use of the Class or ClassLoader
+ * getResource() and/or getResourceAsStream() methods (system wide).
+ * @deprecated  Use ResourceParameter instead.
+ * See c.ad.cms.ContentSectionConfig.java as an example how to modify code.
  **/
 
 public class Handler extends URLStreamHandler {

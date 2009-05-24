@@ -22,14 +22,19 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.AbstractScript;
-import com.arsdigita.runtime.InteractiveParameterLoader;
+// InteractiveParameterLoader extents ParameterLoader, which is deprecated.
+// InteractiveParameterReader should be used instead.
+// import com.arsdigita.runtime.InteractiveParameterLoader;
+import com.arsdigita.runtime.InteractiveParameterReader;
 import com.arsdigita.runtime.Script;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.runtime.Startup;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ParameterLoader;
+// ParameterLoader is deprecated, use ParameterReader instead.
+// import com.arsdigita.util.parameter.ParameterLoader;
+import com.arsdigita.util.parameter.ParameterReader;
 import com.arsdigita.util.parameter.StringParameter;
 import org.apache.log4j.Logger;
 
@@ -72,15 +77,19 @@ public final class HostLoader extends AbstractScript {
 	new Startup().run();
 
 	final Session session = SessionManager.getSession();
-	final ParameterLoader loader = new InteractiveParameterLoader
+	// final ParameterLoader loader = new InteractiveParameterLoader
+	//     (System.in, System.out);
+	final ParameterReader reader = new InteractiveParameterReader
 	    (System.in, System.out);
 
 	final TransactionContext transaction = session.getTransactionContext();
 	transaction.beginTxn();
 
         Script script = new HostLoader();
-        script.load(loader, new ErrorList());
-        script.run(new ScriptContext(session, loader));
+        // script.load(loader, new ErrorList());
+        // script.run(new ScriptContext(session, loader));
+        script.load(reader, new ErrorList());
+        script.run(new ScriptContext(session, reader));
 
 	transaction.commitTxn();
     }

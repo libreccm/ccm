@@ -21,9 +21,9 @@ package com.arsdigita.util.parameter;
 import org.apache.commons.beanutils.converters.StringConverter;
 
 /**
- * Subject to change.
- *
  * A parameter representing a Java <code>String</code>.
+ *
+ * Subject to change.
  *
  * @see java.lang.String
  * @see Parameter

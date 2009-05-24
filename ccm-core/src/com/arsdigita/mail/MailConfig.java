@@ -27,6 +27,7 @@ import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.URLParameter;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
@@ -40,7 +41,10 @@ import java.util.Properties;
 
 public final class MailConfig extends AbstractConfig {
 
-    public final static String versionId = "$Id: MailConfig.java 1513 2007-03-22 09:09:03Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+        "$Id: MailConfig.java 1513 2007-03-22 09:09:03Z chrisgilbert23 $" +
+        " by $Author: chrisgilbert23 $, "+
+        "$DateTime: 2004/08/16 18:10:38 $";
 
     private Properties m_props;
 

@@ -22,15 +22,16 @@ import com.arsdigita.util.Assert;
 import org.apache.commons.beanutils.ConversionException;
 
 /**
- * Subject to change.
+ * A base implementation of the <code>Parameter</code> interface.
  *
- * A base implementation of the <code>Parameter</code> interface.  It
- * offers subclasses use of the Apache BeanUtils framework, should
+ * It offers subclasses use of the Apache BeanUtils framework, should
  * they opt to use it.
  *
- * Methods of the form <code>doXXX</code> are extension points for
- * subclasses.  The <code>isRequired()</code> and
- * <code>getDefaultValue()</code> methods may also be overriden.
+ * Methods of the form <code>doXXX</code> are extension points for subclasses.
+ * The <code>isRequired()</code> and <code>getDefaultValue()</code>
+ * methods may also be overriden.
+ *
+ * Subject to change.
  *
  * @see Parameter
  * @author Justin Ross &lt;jross@redhat.com&gt;
@@ -105,10 +106,9 @@ public abstract class AbstractParameter implements Parameter {
     }
 
     /**
-     * Parameter users may override this method to make the
-     * multiplicity of the parameter dependent on the multiplicity of
-     * related parameters.
-     *
+     * Parameter users may override this method to make the multiplicity of
+     * the parameter dependent on the multiplicity of related parameters.
+     * 
      * @see Parameter#isRequired()
      */
     public boolean isRequired() {
@@ -151,13 +151,10 @@ public abstract class AbstractParameter implements Parameter {
     //
 
     /**
-     * Calls {@link #doRead(ParameterReader,ErrorList)}.
-     *
-     * @see Parameter#read(ParameterReader,ErrorList)
-     *
-     * From Parameter#read(ParameterReader,ErrorList):
-     * Gets the parameter value as a Java object. The value will have
-     * a specific runtime type and so may be appropriately cast.
+     * Gets the parameter value as a Java object. 
+     * 
+     * The value will have a specific runtime type and so may be
+     * appropriately cast.
      *
      * Reading typically follows the following procedure:
      *
@@ -173,6 +170,8 @@ public abstract class AbstractParameter implements Parameter {
      * added to <code>errors</code>.  Callers of this method will
      * typically construct an <code>ErrorList</code> in which to
      * collect errors.
+     * Actually calls {@link #doRead(ParameterReader,ErrorList)} (as an
+     * extension point for subclasses).
      *
      * @param reader The <code>ParameterReader</code> from which to
      * recover a string literal value; it cannot be null
@@ -192,14 +191,14 @@ public abstract class AbstractParameter implements Parameter {
     }
 
     /**
-     * Reads the value of the parameter from <code>reader</code>,
-     * unmarshals it, and returns it.  If any errors are encountered,
+     * Extension point to read the value of the parameter from <code>reader</code>.
+     *
+     * It unmarshals the value, and returns it.  If any errors are encountered,
      * they are added to <code>errors</code>.
      *
-     * If the literal string value from <code>reader</code> is not
-     * null, this method delegates to {@link
-     * #unmarshal(String,ErrorList)}.
-     *
+     * If the literal string value from <code>reader</code> is not null,
+     * this method delegates to {@link #unmarshal(String,ErrorList)}.
+     * 
      * This implementation is suited to a parameter with a singular
      * scalar value.  Subclasses that are compound parameters should
      * override this method to delegate to child parameters.

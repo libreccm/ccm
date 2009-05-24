@@ -18,16 +18,16 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
+// import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
-import com.arsdigita.workflow.simple.WorkflowTemplate;
-import com.arsdigita.util.UncheckedWrapperException;
-import java.net.URL;
-import java.net.MalformedURLException;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.URLParameter;
+import com.arsdigita.util.parameter.ResourceParameter;
+// import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.workflow.simple.WorkflowTemplate;
+import java.io.InputStream;
+// import java.net.MalformedURLException;
 
 
 /**
@@ -46,19 +46,14 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SiteProxy.xml"
     };
 
-    private URLParameter m_template;
+    private ResourceParameter m_template;
 
     public SiteProxyLoader() {
-        try {
-            m_template = new URLParameter
-                ("com.arsdigita.cms.contenttypes.siteproxy.defaulttemplate", 
-                 Parameter.REQUIRED,
-                 new URL(null,
-                         "resource:WEB-INF/content-types/com/arsdigita/cms/contenttypes" +
-                         "/siteproxy-item.jsp"));
-        } catch (MalformedURLException ex) {
-            throw new UncheckedWrapperException("cannot parse url", ex);
-        }
+        m_template = new ResourceParameter
+            ("com.arsdigita.cms.contenttypes.siteproxy.defaulttemplate", 
+             Parameter.REQUIRED,
+             "/WEB-INF/content-types/com/arsdigita/cms/contenttypes" +
+             "/siteproxy-item.jsp");
 
         register(m_template);
     }
@@ -67,6 +62,7 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
         return TYPES;
     }
 
+    @Override
     protected void prepareSection(final ContentSection section,
                                   final ContentType type,
                                   final LifecycleDefinition ld,
@@ -75,7 +71,7 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
 
         setDefaultTemplate("SiteProxyDefaultTemplate",
                            "siteproxy-item",
-                           (URL)get(m_template),
+                           (InputStream)get(m_template),
                            section, type,ld, wf);
 
     }

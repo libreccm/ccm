@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<!--
+  Copyright (C) 
+
+  This library is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public License
+  as published by the Free Software Foundation; either version 2.1 of
+  the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+  Author:  Peter Boy (pboy@users.source forge .net)
+  Since:   2009-05-23
+  Version: $Revision: #1 $ $Date: 2009/05/23 $
+-->
+
+<title>com.arsdigita.util.parameter</title>
+</head>
+
+<body bgcolor="white">
+<!-- Summary (one sentence!) -->
+<p>
+Provides a framework to handle different types of <em>configuration parameters</em>,
+held in a <em>registry</em> (configuration database), in a transparent
+and easy to use way - not to be confused with other kind of parameters as
+command line parameters.
+</p>
+<h4>Interface ParameterContext</h4>
+<p>
+<!-- Description (one or more paragraphs), describe what the package contains
+     and state its purpose                                                      -->
+Key element is <strong>ParameterContext</strong> (Interface) which describes a
+<em>container of parameters</em>. A parameter context binds together a set of
+parameters and keeps their values.
+
+Among it's most important methods are</p>
+<ul>
+<li>get(param) to get the <em>unmarshaled</em> parameter value as an object,
+converted from the encoded (marshaled) representation used for storing the
+value</li>
+<li>getParameters() to list all included parameters</li>
+</ul>
+<h4>Interface Parameter</h4>
+<p>
+Each <strong>parameter</strong> is described by the <code>Parameter.java</code>
+interface. It is designed as a <strong>named property</strong> that can read,
+write, and validate its own value. Parameters are
+<strong>stateless "messages"</strong>. They do not store their own values. 
+Instead, a {@link com.arsdigita.util.parameter.ParameterContext}
+manages a set of parameters and keeps their values.
+</p>
+Among it's most important methods are</p>
+<ul>
+<li><code>read</code> to read the literal (encoded / marshaled) value (usually
+a String type) from the storage and convert (unmarshal) it to the
+appropriate Java object.</li>
+</ul>
+<h4>Interface Implementations</h4>
+<p>
+The classes <code>AbstractParameterContext</code> and
+<code>AbstractParameter</code> provide a basic implementation of both
+interfaces. It's most important feature is the marshal / unmarshal mechanism.
+</p>
+<p>
+Any specific parameter which inherits from these implementation must override
+at least:</p>
+<ul>
+<li>unmarshal()</li>
+<li>getDefaultValue()</li>
+</ul>
+
+<h3>How To Use</h3>
+<p>
+See package <code>com.arsdigita.cms</code> as an example. The class 
+<code>ContextSectionConfig</code> provides a configuration registry for the
+package.</p>
+<ul>
+<li><code>ContextSectionConfig</code> provides the actual registry</li>
+<li>extends <code>AbstractConfig</code></li>
+<li>extends <code>AbstractParameterContext</code></li>
+<li>implements <code>ParameterContext</code></li>
+</ul>
+<p>
+[More details comming soon  :-) ]
+</p>
+
+<!-- Package Specification if applicable -->
+<!--
+<h3>Package Specification</h3>
+<p>
+</p>
+-->
+
+<!-- Related Documentation if applicable -->
+<!--
+<h3>Related Documentation</h3>
+<p>
+</p>
+-->
+
+
+<!-- Class & Interface Summary if applicable
+     describes logical groupings of classes & interfaces  -->
+<!--
+<h3>Class & Interface Summary</h3>
+<p>
+</p>
+-->
+
+
+<!-- Developers Comment if applicable
+     lists possible problems & pitfalls, future plannings  -->
+
+<div style="background-color: #FFFFCC;">
+<h3>Developers Comment</h3>
+<p>
+There is some weakness in the current design and implementation of the package.
+</p>
+<ul>
+<li>The <code>Parameter</code> Interface collects errors during processing in an
+<code>ErrorList</code> object, "in lieu of throwing exceptions that are not
+useful in creating error-recovery UIs".
+<ul>
+<li>This is just another time where APLAWS uses a non standard, application
+specific extension</li>
+<li>There is no systematik application code which makes use of this feature to
+avoid exceptions. Practically it is just a devious route to an exception.</li>
+<li>It makes usage of the package unnecessary complicated, cumbersome and
+results in bloated code.</li>
+</ul>
+</li>
+<li>The class hierarchy is unneccessary compless and fine granulated. At least
+the classes <code>AbstractConfig</code> and <code>AbstractParameterContext</code>
+could be combined.</li>
+<li>The <code>AbstractParameterContext</code> implementation is weak. Several
+parameters are not able to convert to the intended object type, but need
+external support, e.g BoleanParameter, where the get() method must be assisted
+by the asBoolean() method of the Boolean class.</li>
+</ul>
+<p>
+Therefore the project should consider to redesign the package and reimplement it
+in the long run.
+</p>
+</div>
+
+
+</body>
+</html>
+

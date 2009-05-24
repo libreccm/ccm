@@ -16,14 +16,19 @@
     <ccm:buildRequires name="postgresql-jdbc"/>
     <ccm:runRequires name="ccm-servlet-2.3"/>
   </ccm:dependencies>
-  <!-- As of Tomcat 6 obviously no longer needed to avoid the malformed URL exception
-       thrown by the resource URL method
-       Correction: Still needed. URL resource protocoll must be replaced by another
-       Solution, e.g. reuse of ResourceParameter
-  -->
+
+  <!-- DEPRECATED
+       Up to version APLAWS+ 1.0.5 / CCM 6.5 the system used an application
+       specific URL resource: protocol extension which required a system jar
+       file to be distributed to a special directory in Tomcat and a special
+       Tomcat configuration (ext.lib.dir).
+       Now replaced by standard compliant code. Mechanism preserved here as an
+       template just in case needed for another purpose.
   <ccm:systemPackages>
     <ccm:package path="com/arsdigita/util/protocol/"/>
   </ccm:systemPackages>
+  -->
+
   <ccm:contacts>
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>

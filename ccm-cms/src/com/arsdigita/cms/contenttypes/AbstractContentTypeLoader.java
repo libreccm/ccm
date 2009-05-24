@@ -45,7 +45,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Date;
-import java.net.URL;
 
 import java.util.Iterator;
 import java.util.List;
@@ -61,7 +60,10 @@ import java.util.List;
 
 public abstract class AbstractContentTypeLoader extends PackageLoader {
 
-    public final static String versionId = "$Id: AbstractContentTypeLoader.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
+    public final static String versionId = 
+        "$Id: AbstractContentTypeLoader.java 754 2005-09-02 13:26:17Z sskracic $" +
+        " by $Author: sskracic $, " +
+        "$DateTime: 2004/08/17 23:15:09 $";
 
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
@@ -161,7 +163,7 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      */
     protected Template setDefaultTemplate(final String name,
                                           final String label,
-                                          final URL templateURL,
+                                          final InputStream templateIs,
                                           final ContentSection section,
                                           final ContentType type,
                                           final LifecycleDefinition ld,
@@ -172,17 +174,10 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
         template.setContentSection(section);
         template.setParent(section.getTemplatesFolder());
 
-        InputStream stream;
-        try {
-            stream = templateURL.openStream();
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException("Cannot read stream", ex);
-        }
-
-        Assert.truth(stream != null, "Template not found");
+        Assert.isTrue(templateIs != null, "Template not found");
         
         final BufferedReader input = new BufferedReader
-            (new InputStreamReader(stream));
+            (new InputStreamReader(templateIs));
         
         final StringBuffer body = new StringBuffer();
         

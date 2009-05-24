@@ -35,21 +35,19 @@ import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.ClassParameter;
-import com.arsdigita.util.parameter.URLParameter;
+import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.web.Application;
-
-import org.apache.log4j.Logger;
 
 import java.io.InputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import java.lang.reflect.Constructor;
+
+import org.apache.log4j.Logger;
 
 /**
  * Configuration record for the navigation app
@@ -105,9 +103,9 @@ public final class NavigationConfig extends AbstractConfig {
             ("com.arsdigita.london.navigation.default_template",
              Parameter.REQUIRED, "/packages/navigation/templates/default.jsp");
 	// not desirable default value (IMHO) but retains existing behaviour
-	m_inheritTemplates = new BooleanParameter
-	    ("com.arsdigita.london.navigation.inherit_templates",
-	     Parameter.REQUIRED, new Boolean(true));
+        m_inheritTemplates = new BooleanParameter
+            ("com.arsdigita.london.navigation.inherit_templates",
+            Parameter.REQUIRED, new Boolean(true));
         m_defaultContentSectionURL = new StringParameter
             ("com.arsdigita.london.navigation.default_content_section_url",
              Parameter.REQUIRED, "/content/");
@@ -123,15 +121,10 @@ public final class NavigationConfig extends AbstractConfig {
         m_relatedItemsFactory = new ClassParameter
             ("com.arsdigita.london.navigation.related_items_factory",
              Parameter.REQUIRED, RelatedItemsQueryFactoryImpl.class);
-        try {
-            m_traversalAdapters = new URLParameter
-                ("com.arsdigita.london.navigation.traversal_adapters", 
-                 Parameter.REQUIRED,
-                 new URL(null,
-                         "resource:WEB-INF/resources/navigation-adapters.xml"));
-        } catch (MalformedURLException ex) {
-            throw new UncheckedWrapperException("Cannot parse URL", ex);
-        }
+        m_traversalAdapters = new ResourceParameter
+            ("com.arsdigita.london.navigation.traversal_adapters", 
+             Parameter.REQUIRED,
+             "/WEB-INF/resources/navigation-adapters.xml");
         m_categoryMenuShowNephews = new BooleanParameter
             ("com.arsdigita.london.navigation.category_menu_show_nephews",
              Parameter.OPTIONAL, new Boolean(false));
@@ -149,21 +142,21 @@ public final class NavigationConfig extends AbstractConfig {
         m_categoryMenuShowGrandChildrenLimit = new IntegerParameter
                 ("com.arsdigita.london.navigation.category_menu_show_grand_children_limit",
                 Parameter.OPTIONAL, new Integer(1));
-	// Quasimodo: End
-	m_dateOrderCategories = new StringArrayParameter
-	    ("com.arsdigita.london.navigation.date_order_categories",
-	     Parameter.OPTIONAL, new String[0]);
-	m_topLevelDateOrderCategories = new StringArrayParameter
-	    ("com.arsdigita.london.navigation.top_level_date_order_categories",
-	     Parameter.OPTIONAL, new String[0]);
-	m_defaultMenuCatProvider = new ClassParameter
-	    ("com.arsdigita.london.navigation.default_menu_cat_provider",
-	     Parameter.OPTIONAL, null);
+        // Quasimodo: End
+        m_dateOrderCategories = new StringArrayParameter
+            ("com.arsdigita.london.navigation.date_order_categories",
+             Parameter.OPTIONAL, new String[0]);
+        m_topLevelDateOrderCategories = new StringArrayParameter
+            ("com.arsdigita.london.navigation.top_level_date_order_categories",
+            Parameter.OPTIONAL, new String[0]);
+        m_defaultMenuCatProvider = new ClassParameter
+            ("com.arsdigita.london.navigation.default_menu_cat_provider",
+            Parameter.OPTIONAL, null);
 
         register(m_indexPageCacheLifetime);
         register(m_generateItemURL);
         register(m_defaultTemplate);
-	register(m_inheritTemplates);
+        register(m_inheritTemplates);
         register(m_defaultContentSectionURL);
         register(m_relatedItemsContext);
         register(m_defaultModelClass);
@@ -177,9 +170,9 @@ public final class NavigationConfig extends AbstractConfig {
         register(m_categoryMenuShowGrandChildrenMin);
         register(m_categoryMenuShowGrandChildrenLimit);
         // Quasimodo: End
-	register(m_dateOrderCategories);
-	register(m_topLevelDateOrderCategories);
-	register(m_defaultMenuCatProvider);
+        register(m_dateOrderCategories);
+        register(m_topLevelDateOrderCategories);
+        register(m_defaultMenuCatProvider);
         loadInfo();
 
         // Quasimodo: Begin
@@ -263,11 +256,7 @@ public final class NavigationConfig extends AbstractConfig {
     }
 
     InputStream getTraversalAdapters() {
-        try {
-            return ((URL)get(m_traversalAdapters)).openStream();
-        } catch (IOException ex) {
-            throw new UncheckedWrapperException("Cannot read stream", ex);
-        }
+        return (InputStream)get(m_traversalAdapters);
     }
     
     public final boolean getCategoryMenuShowNephews() {
