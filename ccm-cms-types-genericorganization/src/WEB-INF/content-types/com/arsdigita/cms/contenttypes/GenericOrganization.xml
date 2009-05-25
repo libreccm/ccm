@@ -18,9 +18,17 @@
 	  labelBundle="com.arsdigita.cms.contenttypes.GenericOrganizationResources"
 	  descriptionKey="genericorganization.authoring.basic_properties.description" 
 	  descriptionBundle="com.arsdigita.cms.contenttypes.GenericOrganizationResources"
-	  component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationPropertiesStep" 
+	  component="com.arsdigita.cms.contenttypes.ui.genericOrganization.GenericOrganizationPropertiesStep" 
 	  ordering="1"/>
       
+      <ctd:authoring-step
+	  labelKey="genericorganization.authoring.functions.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.GenericOrganizationResources"
+	  descriptionKey="genericorganization.authoring.functions.description" 
+	  descriptionBundle="com.arsdigita.cms.contenttypes.GenericOrganizationResources"
+	  component="com.arsdigita.cms.contenttypes.ui.genericOrganization.OrganizationFunctionPanel"
+	  ordering="2"/>
+
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
     </ctd:authoring-kit>
     

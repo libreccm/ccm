@@ -22,7 +22,8 @@ public class OrganizationFunctionCollection extends DomainCollection {
     }
 
     public OrganizationFunction getOrganizationFunction() {
-	return (OrganizationFunction)getDomainObject();
+	//return (OrganizationFunction)getDomainObject();
+	return new OrganizationFunction(m_dataCollection.getDataObject());
     }
 
 }

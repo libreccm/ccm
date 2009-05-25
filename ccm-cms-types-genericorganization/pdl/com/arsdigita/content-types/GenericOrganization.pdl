@@ -33,9 +33,9 @@ object type GenericOrganization extends ContentPage {
        reference key (ct_genericorganizations.organization_id);
 }
 
-object type OrganizationFunction extends ContentPage {
+object type OrganizationFunction extends ContentItem {
 
-       String[1..1] functionname = ct_organizationfunctions.name VARCHAR(256);
+       String[1..1] functionname = ct_organizationfunctions.functionname VARCHAR(256);
 
        reference key ( ct_organizationfunctions.function_id );
 }

@@ -17,7 +17,7 @@
  *
  */
 
-package com.arsdigita.cms.contenttypes.ui;
+package com.arsdigita.cms.contenttypes.ui.genericOrganization;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;

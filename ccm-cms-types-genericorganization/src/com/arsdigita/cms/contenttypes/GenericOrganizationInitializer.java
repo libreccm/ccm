@@ -25,6 +25,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import org.apache.log4j.Logger;
 
 /**
@@ -53,5 +54,9 @@ public class GenericOrganizationInitializer extends ContentTypeInitializer {
     public String[] getStylesheets() {
 	return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xsl" };
     }
+
+    public String getTraversalXML() {
+    return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/GenericOrganization.xml";
+  }
        
 }

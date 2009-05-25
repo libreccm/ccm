@@ -9,6 +9,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -17,7 +18,7 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 
-public class OrganizationFunction extends ContentPage {
+public class OrganizationFunction extends ContentItem {
     
     private static final Logger s_log = Logger.getLogger(OrganizationFunction.class);
 
@@ -43,6 +44,10 @@ public class OrganizationFunction extends ContentPage {
 
     public OrganizationFunction(DataObject dataObject) {
 	super(dataObject);
+    }
+
+    public String getBaseDataObjectType() {
+	return BASE_DATA_OBJECT_TYPE;
     }
 
     //Accessors
