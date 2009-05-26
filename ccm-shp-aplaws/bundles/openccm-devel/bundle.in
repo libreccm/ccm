@@ -1,0 +1,4 @@
+BUNDLE_NAME=aplaws-plus-openccm-devel
+BUNDLE_PRETTY_NAME="APLAWS+ OpenCCM Devel Bundle"
+VERSION=1.0.5devel
+RELEASE=1
