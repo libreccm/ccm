@@ -66,9 +66,9 @@ public class Contact extends ContentPage {
   public static final String CONTACT_ADDRESS = "contactAddress";
   public static final String PHONES = "phones";
 
-	public static final String ITEMS = "associatedContentItemsForContact";
-
-	private static final Logger s_log = Logger.getLogger(Contact.class);
+    public static final String ITEMS = "associatedContentItemsForContact";
+    
+    private static final Logger s_log = Logger.getLogger(Contact.class);
 
   /** data object type for this domain object */
 	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Contact";
@@ -79,81 +79,81 @@ public class Contact extends ContentPage {
   }
 
   /**
-	 * Adds an association between this contact and the given content item.
-	 * @param item
-	 */
-	public void addContentItem(ContentItem item) {
-		s_log.debug("item is " + item);
-		item.addToAssociation(getItemsForContact());
-	}
-
-	/**
-	 * Deletes the association between this contact and the given content item.
-	 * @param item
-	 */
-	public void removeContentItem(ContentItem item) {
-		s_log.debug("item is " + item);
-		DataOperation operation = SessionManager
-				.getSession()
-				.retrieveDataOperation(
-						"com.arsdigita.cms.contenttypes.removeContactFromContentItemAssociation");
-		operation.setParameter("itemID", new Integer(item.getID().intValue()));
-		operation.execute();
-	}
-
-	/**
-	 * Removes all mappings between this contact and any other content item.
-	 *
-	 */
-	private void removeItemMappings() {
-		DataOperation operation = SessionManager
-		.getSession()
-		.retrieveDataOperation("com.arsdigita.cms.contenttypes.removeContactFromAllAssociations");
-		operation.setParameter("contactID", new Integer(this.getID().intValue()));
-		operation.execute();
-	}
-		
-	
-	/**
-	 * Gets the DataAssociation that holds the mapping between this contact and any content items.
-	 * @return
-	 */
-	public DataAssociation getItemsForContact() {
-		return (DataAssociation) get(ITEMS);
-	}
-
-	
-	/**
-	 * Returns the Contact for a given content item.
-	 * @param item
-	 * @return
-	 */
-	public static Contact getContactForItem(ContentItem item) {
-		s_log.debug("getting contact for item " + item);
-		DataQuery query = SessionManager.getSession().retrieveQuery(
-				"com.arsdigita.cms.contenttypes.getContactForItem");
-		query.setParameter("itemID", item.getID());
-		BigDecimal contactID;
-		Contact contact = null;
-		while (query.next()) {
-			contactID = (BigDecimal) query.get("contactID");
-			contact = new Contact(contactID);
-		}
-		s_log.debug("returning contact " + contact);
-		return contact;
-	}
-
-	
-	
-	
-	/**
-   * Constructor. Retrieves an object instance with the given id.
-   * @param id the id of the object to retrieve
+   * Adds an association between this contact and the given content item.
+   * @param item
    */
-  public Contact( BigDecimal id ) throws DataObjectNotFoundException {
-      this(new OID(BASE_DATA_OBJECT_TYPE, id));
-  }
-
+    public void addContentItem(ContentItem item) {
+	s_log.debug("item is " + item);
+	item.addToAssociation(getItemsForContact());
+    }
+    
+    /**
+     * Deletes the association between this contact and the given content item.
+     * @param item
+     */
+    public void removeContentItem(ContentItem item) {
+	s_log.debug("item is " + item);
+	DataOperation operation = SessionManager
+	    .getSession()
+	    .retrieveDataOperation(
+				   "com.arsdigita.cms.contenttypes.removeContactFromContentItemAssociation");
+	operation.setParameter("itemID", new Integer(item.getID().intValue()));
+	operation.execute();
+    }
+    
+    /**
+     * Removes all mappings between this contact and any other content item.
+     *
+     */
+    private void removeItemMappings() {
+	DataOperation operation = SessionManager
+	    .getSession()
+	    .retrieveDataOperation("com.arsdigita.cms.contenttypes.removeContactFromAllAssociations");
+	operation.setParameter("contactID", new Integer(this.getID().intValue()));
+	operation.execute();
+    }
+    
+    
+    /**
+     * Gets the DataAssociation that holds the mapping between this contact and any content items.
+     * @return
+     */
+    public DataAssociation getItemsForContact() {
+	return (DataAssociation) get(ITEMS);
+    }
+    
+    
+    /**
+     * Returns the Contact for a given content item.
+     * @param item
+     * @return
+     */
+    public static Contact getContactForItem(ContentItem item) {
+	s_log.debug("getting contact for item " + item);
+	DataQuery query = SessionManager.getSession().retrieveQuery(
+								    "com.arsdigita.cms.contenttypes.getContactForItem");
+	query.setParameter("itemID", item.getID());
+	BigDecimal contactID;
+	Contact contact = null;
+	while (query.next()) {
+	    contactID = (BigDecimal) query.get("contactID");
+	    contact = new Contact(contactID);
+	}
+	s_log.debug("returning contact " + contact);
+	return contact;
+    }
+    
+    
+	
+    
+    /**
+     * Constructor. Retrieves an object instance with the given id.
+     * @param id the id of the object to retrieve
+     */
+    public Contact( BigDecimal id ) throws DataObjectNotFoundException {
+	this(new OID(BASE_DATA_OBJECT_TYPE, id));
+    }
+    
   /**
    * Constructor. Retrieves an object instance with the given OID.
    *

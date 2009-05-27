@@ -36,12 +36,16 @@ import com.arsdigita.cms.TemplateManagerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 
 /**
  *  This looks to see if there is a given item and if there is it returns
  *  the oid for that item as the gererated value
  */
 public class ItemTemplatePatternGenerator implements PatternGenerator {
+
+    private static final Logger logger = Logger.getLogger(ItemTemplatePatternGenerator.class);
 
     private static ContentItemDispatcher s_disp = new ContentItemDispatcher();
 
@@ -60,6 +64,9 @@ public class ItemTemplatePatternGenerator implements PatternGenerator {
             if (mapping == null) {
                 // there is no mapping so we try to get the default for the
                 // content type
+		if (item.getContentSection() == null) {
+		    logger.error("WARNING: item.getContentSection() returns NULL here!");
+		}
                 template =
                     TemplateManagerFactory.getInstance().getDefaultTemplate
                     (item.getContentSection(), item.getContentType(), 

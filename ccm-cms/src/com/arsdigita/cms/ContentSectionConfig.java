@@ -793,8 +793,8 @@ public final class ContentSectionConfig extends AbstractConfig {
     	return (String)get(m_categoryTreeOrdering);
     }  
 
-	public boolean getHasContactsAuthoringStep() {
-		return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
-	}
+    public boolean getHasContactsAuthoringStep() {
+	return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
+    }
       
 }

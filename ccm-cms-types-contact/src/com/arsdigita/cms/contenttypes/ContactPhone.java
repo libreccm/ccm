@@ -84,7 +84,7 @@ public class ContactPhone extends ContentItem {
       return BASE_DATA_OBJECT_TYPE;
   }
 
-
+    //Accessors   
   public String getPhoneType(){
     return (String) get(PHONE_TYPE);
   }

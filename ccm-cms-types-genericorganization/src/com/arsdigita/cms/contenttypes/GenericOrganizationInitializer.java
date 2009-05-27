@@ -26,7 +26,14 @@ import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
+import com.arsdigita.cms.ContentPage;
 import org.apache.log4j.Logger;
+import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
+import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.runtime.LegacyInitEvent;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.contenttypes.ui.genericOrganization.GenericOrganizationPropertiesStep;
 
 /**
  *
@@ -47,8 +54,42 @@ public class GenericOrganizationInitializer extends ContentTypeInitializer {
 	      GenericOrganization.BASE_DATA_OBJECT_TYPE);
     }
 
+
     public void init(DomainInitEvent evt) {
 	super.init(evt);
+    }
+    /*public void init(LegacyInitEvent evt) {
+	super.init(evt);
+
+	if(ContentSection.getConfig().getHasGenericOrganizationsAuthoringStep()) {
+	    AuthoringKitWizard.registerAssetStep(getBaseType(),
+						 getAuthoringStep(),
+						 getAuthoringStepLabel(),
+						 getAuthoringStepDescription(),
+						 getAuthoringStepSortKey());
+
+	    ContentItemTraversalAdapter associatedGenericOrganizationTraversalAdapters = new ContentItemTraversalAdapter();
+	    associatedGenericOrganizationTraversalAdapters.addAssociationProperty("/object/functions");	    
+	}
+	}*/
+
+    private int getAuthoringStepSortKey() {
+	return 1;
+    }
+
+    private GlobalizedMessage getAuthoringStepDescription() {
+	return new GlobalizedMessage("com.arsdigita.cms.contenttypes.genericorganization_authoring_step_description",
+				     "com.arsdigita.cms.contenttypes.GenericOrganizationResources");
+    }
+
+    private GlobalizedMessage getAuthoringStepLabel() {
+	return new GlobalizedMessage("com.arsdigita.cms.contenttypes.genericorganization_authoring_step_label",
+				     "com.arsdigita.cms.contenttypes.GenericOrganizationResources");				     
+    }
+
+    private Class getAuthoringStep() {
+	//return AddGenericOrganizationPropertiesStep.class;
+	return GenericOrganizationPropertiesStep.class;
     }
 
     public String[] getStylesheets() {
@@ -57,6 +98,10 @@ public class GenericOrganizationInitializer extends ContentTypeInitializer {
 
     public String getTraversalXML() {
     return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/GenericOrganization.xml";
-  }
-       
+    }
+ 
+    private String getBaseType() {
+	return ContentPage.BASE_DATA_OBJECT_TYPE;
+    }
+      
 }

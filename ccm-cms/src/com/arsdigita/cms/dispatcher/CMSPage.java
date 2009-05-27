@@ -246,6 +246,8 @@ public class CMSPage extends Page implements ResourceHandler {
                          RequestContext actx)
         throws IOException, ServletException {
 
+	s_log.error("Starting dispatch()...");
+
         DeveloperSupport.startStage("CMSPage.dispatch: serve page");
 
         CMSExcursion excursion = new CMSExcursion() {
@@ -255,11 +257,14 @@ public class CMSPage extends Page implements ResourceHandler {
 
                     if (app == null) {
                         // We're at the content center; do nothing.
+			s_log.info("dispatch: We're at the content center; do nothing.");
                     } else if (app instanceof ContentSection) {
+			s_log.info("dispatch: Setting section = app");
                         section = (ContentSection) app;
                     } else {
                         // hack to deal with category browser mounted
                         // under section app.
+			s_log.info("dispatch: hack for category browser");
                         app = app.getParentApplication();
                         if (app instanceof ContentSection) {
                             section = (ContentSection) app;
@@ -289,6 +294,7 @@ public class CMSPage extends Page implements ResourceHandler {
                                 throw new AccessDeniedException(
                                   "You do not have privileges to administer item " + itemID);
                             }
+			    
                         } catch (DataObjectNotFoundException donfe) {
                             s_log.warn("Failed to load content item " + itemID);
                         }

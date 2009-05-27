@@ -40,3 +40,39 @@ object type OrganizationFunction extends ContentItem {
        reference key ( ct_organizationfunctions.function_id );
 }
 
+association {
+	    GenericOrganization[0..1] associatedOrganizationForItem = 
+	    			      join cms_items.item_id to genericorganization_content_item_map.item_id,
+				      join genericorganization_content_item_map.organization_id to ct_genericorganizations.organization_id;
+
+            ContentItem[0..n] associatedContentItemsForOrganization =
+	    		      join ct_genericorganizations.organization_id to genericorganization_content_item_map.organization_id,
+			      join genericorganization_content_item_map.item_id to cms_items.item_id;
+}
+
+// As mentioned in ccm-cms-types-contact/Contact.pdl (orginal version) an association of the above pattern
+// does not work when removing items from the association. Instead of this, an data operation has to be used.
+
+data operation removeGenericOrganizationFromContentItemAssociation {
+     do {
+     	delete from genericorganization_content_item_map where item_id = :itemID
+     }
+}
+
+data operation removeGenericOrganizationFromAllAssociations {
+     do {
+     	delete from genericorganization_content_item_map where organization_id = :organizationID;
+     }
+}
+
+query getGenericOrganizationForItem {
+      BigDecimal genericOrganizationID;
+      BigDecimal itemID;
+
+      do {
+      	 select genericorganization_id, item_id from genericorganization_content_item_map where item_id = :itemID
+      } map {
+      	genericOrganizationID = genericorganization_id;
+	itemID = item_id;
+      }
+}

@@ -41,7 +41,7 @@
     // in the section change
     synchronized(this) {
         if (Utilities.getLastSectionRefresh(section).after(timestamp)) {
-            s_log.debug("refreshing itemPage");
+            s_log.error("refreshing itemPage");
             itemPage = new ContentItemPage();
             itemPage.init();
             timestamp = new Date();
@@ -49,6 +49,12 @@
     }
 
     RequestContext context = DispatcherHelper.getRequestContext(request);
+    if(itemPage == null) {
+      s_log.error("WARNING: itemPage is NULL");
+    }
+    else {
+      s_log.error("ALL OK: itemPage is not null");
+    }      
     itemPage.dispatch(request, response, context);
     s_log.debug("exited item.jsp's service method");
   </jsp:scriptlet>
