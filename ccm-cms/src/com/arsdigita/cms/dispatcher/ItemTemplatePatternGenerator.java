@@ -64,9 +64,6 @@ public class ItemTemplatePatternGenerator implements PatternGenerator {
             if (mapping == null) {
                 // there is no mapping so we try to get the default for the
                 // content type
-		if (item.getContentSection() == null) {
-		    logger.error("WARNING: item.getContentSection() returns NULL here!");
-		}
                 template =
                     TemplateManagerFactory.getInstance().getDefaultTemplate
                     (item.getContentSection(), item.getContentType(), 

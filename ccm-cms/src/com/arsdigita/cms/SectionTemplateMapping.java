@@ -232,16 +232,6 @@ public class SectionTemplateMapping extends TemplateMapping {
         DataCollection da = SessionManager.getSession().retrieve
             (BASE_DATA_OBJECT_TYPE);
         SectionTemplateCollection c = new SectionTemplateCollection(da);
-	//Debug code, inserted by jensp 2009-05-26
-	if (section == null) {
-	    logger.error("WARNING: section is NULL at this point!");
-	}
-	if (section.ID == null) {
-	    logger.error("WARNING: ACSObject.ID is NULL at this point!");
-	}
-	if (section.getID() == null) {
-	    logger.error("WARNING: section.getID() returns NULL at this point!");
-	}
         c.addEqualsFilter(SECTION + "." + ACSObject.ID, section.getID());
         c.addOrder(CONTENT_TYPE + "." + ContentType.LABEL);
         c.addOrder(USE_CONTEXT);
