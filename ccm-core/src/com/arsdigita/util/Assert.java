@@ -409,7 +409,7 @@ public class Assert {
      *
      * pboy Jan.09: not used by any package in trunk
      */
-    public static final boolean ASSERT_ON = true;
+    // public static final boolean ASSERT_ON = true;
 
     /**
      * Indicates state of the ASSERT_ON flag.
@@ -418,9 +418,9 @@ public class Assert {
      *
      * @deprecated Use {@link #isEnabled()} instead
      */
-    public static final boolean isAssertOn() {
-        return isEnabled();
-    }
+    // public static final boolean isAssertOn() {
+    //     return isEnabled();
+    // }
 
     /**
      * Tells whether asserts are turned on.  Use this to wrap code

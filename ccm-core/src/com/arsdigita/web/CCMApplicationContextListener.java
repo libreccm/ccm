@@ -23,13 +23,16 @@
  */
 package com.arsdigita.web;
 
-// import com.arsdigita.runtime.CCMResourceManager;
-import com.arsdigita.runtime.*;
+import com.arsdigita.runtime.CCMResourceManager;
+import com.arsdigita.runtime.Startup;
+// import com.arsdigita.util.ResourceManager;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
  * Web application lifecycle listener, used to perform central initialization
@@ -72,18 +75,48 @@ public class CCMApplicationContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent applicationStartEvent) {
         // throw new UnsupportedOperationException("Not supported yet.");
 
+        /**
+         * Fully qualified path name to application base in the servers file system
+         */
         String m_appBase ;
 
+        /**
+         * Log4J config file name including path relative to application base
+         */
+        String m_log4j ;
+
         // s_log.setLevel( INFO );
+        s_log.info("Starting CCM Application.");
 
 
         ServletContext sc = applicationStartEvent.getServletContext();
         m_appBase = sc.getRealPath("/");
 
-        CCMResourceManager.setBaseDirectory(sc.getRealPath("/"));
+        //Configure log4j configuration file
+        m_log4j = sc.getInitParameter("log4j-conf-file");
+        s_log.info("Logging context parameeter is: " + m_log4j);
+        // if the log4j-init-file is not set, then no point in trying
+        if(m_log4j != null) {
+            PropertyConfigurator.configure(m_appBase+m_log4j);
+        }
+        else {
+            PropertyConfigurator.configure(m_appBase+
+                                           "WEB-INF/conf/log4j.properties");
+        }
+
+        // The classes  ResourceManager and CCMResourceManager handle a
+        // very similiar scope of tasks.
+        // ToDo: integrate both into a single class, e.g. CCMResourceManager
+        // to simplify and clean-up of the code!
+        CCMResourceManager.setBaseDirectory(m_appBase);
         s_log.info("CCMApplicationContextListener: BaseDir set to: " + m_appBase );
-        s_log.debug("CCMApplicationContextListener done." );
-        s_log.fatal("CCMApplicationContextListener: BaseDir set to: " + m_appBase );
+
+        // Central startup procedure, initialize the database and
+        // domain coupling machinary
+        Startup startup = new Startup();
+        if ( !startup.hasRun() ) {
+            startup.run();
+        }
 
 
 
@@ -96,7 +129,11 @@ public class CCMApplicationContextListener implements ServletContextListener {
      */
     public void contextDestroyed(ServletContextEvent applicationEndEvent) {
         // throw new UnsupportedOperationException("Not supported yet.");
+        s_log.info("Shutdown procedure started.");
 
         // do nothing at the moment
+
+        s_log.info("CCM Application shutdown.");
+
     }
 }

@@ -37,6 +37,7 @@ import com.arsdigita.util.Classes;
 import com.arsdigita.util.SystemProperties;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
+
 import java.io.InputStreamReader;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -48,6 +49,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -80,34 +82,6 @@ public  class Startup extends CompoundInitializer {
         ("waf.runtime.init", Parameter.OPTIONAL, null);
 
     private static boolean s_hasRun = false;
-
-    private static boolean s_hasStartup = false;
-
-    /**
-     * This method must be called before any CCM resources are loaded.
-     */
-    public static void startup() {
-        if (s_hasStartup) {
-            return;
-        }
-        
-        // Register custom protocol handlers
-        String handlerPackages =
-            System.getProperty("java.protocol.handler.pkgs");
-        if (handlerPackages == null)
-            handlerPackages = "com.arsdigita.util.protocol";
-        else
-            handlerPackages = "com.arsdigita.util.protocol|" + handlerPackages;
-        System.setProperty("java.protocol.handler.pkgs", handlerPackages);
-
-        s_hasStartup = true;
-    }
-
-    /**
-     * Constructs a new startup by defaulting the connection source to
-     * a dedicated connection source that uses the JDBC URL specified
-     * by the waf.runtime.jdbc_url parameter.
-     **/
 
     public Startup() {
         this(new PooledConnectionSource
@@ -254,7 +228,8 @@ public  class Startup extends CompoundInitializer {
     public final void run() {
         s_log.info("Initializing WAF runtime");
 
-        startup();
+        // Deprecated, no longer needed.
+        // startup();
         
         DbHelper.setDatabase
             (DbHelper.getDatabaseFromURL(RuntimeConfig.

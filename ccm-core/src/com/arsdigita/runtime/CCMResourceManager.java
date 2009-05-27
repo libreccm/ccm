@@ -20,14 +20,16 @@
 package com.arsdigita.runtime;
 
 import com.arsdigita.util.UncheckedWrapperException;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import org.apache.log4j.Logger;
 
 /**
  * <p>CCMResourceManager Runtime environment repository object, stores essential
- * properties of the runtime environment.</p>
+ * properties of the runtime environment and provides them on request.</p>
  * 
  * <p>Currently, is is limited to the </p>
  * <ul>
@@ -37,10 +39,11 @@ import org.apache.log4j.Logger;
  *
  * <p>The singleton is initialised</p>
  * <ul>
- * <li>either during startup of the container (called by BaseServlet, in future
- * by a specialised ApplicationContextListener) </li>
+ * <li>either during startup of the container (called by 
+ * @see com.arsdigita.web.CCMApplicationContextListener (must be configured in
+ * web.xml)</li>
  * <li>or by the command line system at the beginning of the processing (esp.
- * package c.ad.packaging).</li>
+ * package @see com.arsdigita.packaging.Mastertool).</li>
  * </ul>
  * <p>Currently as a fall back mechanism the environmant Variable CCM_HOME is
  * evaluated and used a last resort, if no initialisation has been done when
@@ -49,7 +52,7 @@ import org.apache.log4j.Logger;
  * <p>It is essential for the proper working of CCM that CCMResourceManager is
  * initialised before any operation starts, as it is the case with the Startup
  * class of the runtime package, which is responsible for organising database
- * assess.</p>
+ * access.</p>
  *
  *
  * <p><b>Subject to change!</b></p>
@@ -60,10 +63,8 @@ import org.apache.log4j.Logger;
  * @version $Id: CCMResourceManager.java 751 2005-09-02 12:52:23Z sskracic $
  */
 public final class CCMResourceManager {
-       public final static String versionId =
-        "$Id: CCMResourceManager.java 1393 2006-11-28 09:12:32Z sskracic $" +
-        "$Author: pboy $" +
-        "$DateTime: 2009/01/10 18:10:38 $";
+    public final static String versionId =
+        "$Id: CCMResourceManager.java 1393 2006-11-28 09:12:32Z sskracic $" ;
 
     private static final Logger s_log = Logger.getLogger(CCMResourceManager.class);
 
@@ -169,7 +170,7 @@ public final class CCMResourceManager {
      * The dependency from a system wide environment variable prevents a servlet
      * container to run multiple instances of CCM. In addition to it CCM will
      * be migrated to be installable in a standard way to a standard container.
-     * Therefore all file locations will be given to the applications
+     * Therefore all file locations will be given relative to the applications
      * directory (the baseDirectory @see m_baseDir).
      *
      *
@@ -192,7 +193,7 @@ public final class CCMResourceManager {
                 ("The ccm.home system property is null or not defined");
         }
 
-        // make a guess, weather ist is old style (i.e. referring to the containers
+        // make a guess, wether it is old style (i.e. referring to the containers
         // base directory and therefor does not contain the webapps part) or
         // new style referring to the apps base directory (and therefor containing
         // the webapps part)
@@ -303,22 +304,12 @@ public final class CCMResourceManager {
     /**
      * Stores the passed in String as File object.
      *
-     * XXX contemporary Hack: checks if the last part of the dir is ROOT,
-     * otherwise replaces the ccm-<module> part. Must be removed as soon as all
-     * CCMResourceManager modules are relocated in one single context (app directory) 
-     * instead of spreaded as separate applications.
      * @param baseDirName String containing the path, must not be null
      */
     private final void storeBaseDir(String baseDirName) {
 
-        s_log.info("storeBaseDir: BaseDir name is given as " + baseDirName );
+        s_log.debug("storeBaseDir: BaseDir name is given as " + baseDirName );
         m_baseDir = new File(baseDirName);
-
-
-        // temporary: enforce that BaseDir is ROOT!
-        // removed, all modules are now installed into one context and
-        // its name is specified in project.xml
-        // m_baseDir.renameTo(new File(m_baseDir.getParent(),"ROOT"));
 
         // eventually: check if dir exists, create it if not.
         if (!m_baseDir.exists()) {
@@ -331,8 +322,6 @@ public final class CCMResourceManager {
             throw new IllegalStateException
                 ("Base directory value is not a directory: " + m_baseDir);
         }
-
-        s_log.info("storeBaseDir: BaseDir is stored as " + m_baseDir );
 
     }
 

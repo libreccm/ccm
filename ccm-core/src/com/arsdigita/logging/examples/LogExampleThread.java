@@ -29,7 +29,9 @@ import org.apache.log4j.Logger;
  * @version $Revision: #10 $ $Date: 2004/08/16 $
  */
 public class LogExampleThread extends Thread {
-    public final static String versionId = "$Id: LogExampleThread.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String 
+        versionId = "$Id: LogExampleThread.java 287 2005-02-22 00:29:02Z sskracic $" +
+                    " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // get the category named the same as this class
     private static final Logger cat = Logger.getLogger(LogExampleThread.class);

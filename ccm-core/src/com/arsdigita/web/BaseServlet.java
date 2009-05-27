@@ -27,16 +27,16 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.runtime.CCMResourceManager;
-import com.arsdigita.runtime.Startup;
 import com.arsdigita.sitenode.ServletErrorReport;
 import com.arsdigita.util.ResourceManager;
+
 import java.io.IOException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -46,8 +46,8 @@ import org.apache.log4j.Logger;
  *
  * <b>Subject zu change!</b>
  *
- * Note: In the future the database related tasks may be moved to a
- *       ContextListener object (CCMAplicationContextListener).
+ * Note: Database initialization (Startup() ) has been moved to
+ *       CCMAplicationContextListener).
  *
  * <p>Users of this class may implement {@link
  * #doService(HttpServletRequest,HttpServletResponse)} to service a
@@ -88,12 +88,6 @@ public abstract class BaseServlet extends HttpServlet {
         // ToDo: integrate both into a single class, e.g. CCMResourceManager
         // to simplify and clean-up of the code!
         ResourceManager.getInstance().setServletContext(getServletContext());
-        CCMResourceManager.setBaseDirectory(getServletContext().getRealPath("/"));
-
-        Startup startup = new Startup();
-        if ( !startup.hasRun() ) {
-            startup.run();
-        }
         
         doInit();
     }

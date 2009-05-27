@@ -84,7 +84,8 @@ public class MasterTool {
         final PrintStream out = System.out;
         final PrintStream err = System.err;
 
-        com.arsdigita.runtime.Startup.startup();
+        // nolonger needed
+        // com.arsdigita.runtime.Startup.startup();
 
         Commands cmds = new Commands();
         Command help = new Help();

@@ -33,7 +33,9 @@ import org.apache.log4j.RollingFileAppender;
  * @version $Revision: #9 $ $Date: 2004/08/16 $
  */
 public class LogExample {
-    public final static String versionId = "$Id: LogExample.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public final static String versionId = 
+            "$Id: LogExample.java 287 2005-02-22 00:29:02Z sskracic $" +
+            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // get the logger named the same as this class
     static final Logger cat = Logger.getLogger(LogExample.class);
@@ -45,10 +47,10 @@ public class LogExample {
         try {
             // create a rolling file appender with standard layout
             RollingFileAppender rfa = new RollingFileAppender(
-                                                              new PatternLayout(
-                                                                                PatternLayout.TTCC_CONVERSION_PATTERN
-                                                                                ), filename
-                                                              );
+                                      new PatternLayout(
+                                          PatternLayout.TTCC_CONVERSION_PATTERN
+                                          ), filename
+                                      );
 
             // add our secure log filter to this appender so that it
             // won't get any of the secure log messages

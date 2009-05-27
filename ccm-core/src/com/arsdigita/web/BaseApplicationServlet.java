@@ -18,25 +18,26 @@
  */
 package com.arsdigita.web;
 
-import com.arsdigita.util.Assert;
 import com.arsdigita.dispatcher.InitialRequestContext;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.util.Assert;
-import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.web.Application;
 import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.KernelRequestContext;
 import com.arsdigita.kernel.security.SessionContext;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.sitenode.SiteNodeRequestContext;
+import com.arsdigita.util.Assert;
+import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.web.Application;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -165,7 +166,7 @@ public abstract class BaseApplicationServlet extends BaseServlet {
             }
         }
 
-        Assert.assertNotNull(id, "BigDecimal id");
+        Assert.exists(id, "BigDecimal id");
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Retrieving application " + id + " from the " +
@@ -175,6 +176,13 @@ public abstract class BaseApplicationServlet extends BaseServlet {
         return Application.retrieveApplication(id);
     }
 
+    /**
+     * 
+     * @param sreq
+     * @param app
+     * @param uc
+     * @return
+     */
     private RequestContext makeLegacyContext(HttpServletRequest sreq,
                                              final Application app,
                                              final UserContext uc) {

@@ -24,6 +24,7 @@ import com.arsdigita.util.JavaPropertyReader;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,6 +36,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.TreeSet;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -50,7 +52,8 @@ import org.apache.log4j.Logger;
  *
  *
  * @author Dan Berrange
- * @see <a href="http://www.tuxedo.org/~esr/jargon/html/entry/guru-meditation.html">http://www.tuxedo.org/~esr/jargon/html/entry/guru-meditation.html</a>
+ * @see <a href="http://www.tuxedo.org/~esr/jargon/html/entry/guru-meditation.html">
+ *         http://www.tuxedo.org/~esr/jargon/html/entry/guru-meditation.html</a>
  */
 public class ErrorReport {
     public static final String versionId =
@@ -79,7 +82,7 @@ public class ErrorReport {
     }
 
     public static void initializeAppender(String directory) {
-        Assert.assertNotNull(directory, "directory is null");
+        Assert.exists(directory, "directory is null");
 
         File file = new File(directory);
         if (!file.exists()) {

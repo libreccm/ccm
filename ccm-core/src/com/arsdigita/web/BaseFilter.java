@@ -31,8 +31,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import com.arsdigita.runtime.Startup;
-
 import org.apache.log4j.Logger;
 
 
@@ -42,30 +40,43 @@ import org.apache.log4j.Logger;
  * method to open up a default persistence session, and
  * then hand off to the doService method. Subclasses 
  * should override this doService method to provide the 
- * processing they require. 
+ * processing they require.
+ *
+ * Assumes a initialized database connection and domain
+ * coupling machinery (provided by CCMApplicationListener
+ * during container startup).
+ *
+ * Actually, the class does nothing at all!
  */
 public class BaseFilter implements Filter {
 
     private static Logger s_log = Logger.getLogger(BaseFilter.class);
 
+    /**
+     * 
+     * @param sconfig
+     * @throws javax.servlet.ServletException
+     */
     public final void init(final FilterConfig sconfig) throws ServletException {
         if (s_log.isInfoEnabled()) {
             s_log.info("Initializing filter " + sconfig.getFilterName() +
                        " (class: " + getClass().getName() + ")");
         }
-
-        Startup startup = new Startup();
-        if ( !startup.hasRun() ) {
-            startup.run();
-        }
         
         doInit();
     }
 
+    /**
+     * 
+     * @throws javax.servlet.ServletException
+     */
     protected void doInit() throws ServletException {
         // Empty
     }
 
+    /**
+     * 
+     */
     public final void destroy() {
         if (s_log.isInfoEnabled()) {
             s_log.info
@@ -75,10 +86,21 @@ public class BaseFilter implements Filter {
         doDestroy();
     }
 
+    /**
+     * 
+     */
     protected void doDestroy() {
         // Empty
     }
 
+    /**
+     * 
+     * @param sreq
+     * @param sresp
+     * @param chain
+     * @throws java.io.IOException
+     * @throws javax.servlet.ServletException
+     */
     public void doFilter(ServletRequest sreq,
                          ServletResponse sresp,
                          FilterChain chain)
