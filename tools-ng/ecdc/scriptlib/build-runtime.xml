@@ -18,49 +18,35 @@
 	<target name="install-tomcat">
 		<echo>Installing app server into ${app.server.parent.dir}</echo>
 		<unzip src="${app.server.bundles.zip}" dest="${app.server.parent.dir}"
-               overwrite="true">
+                       overwrite="true">
 			<patternset>
 				<exclude name="**/ROOT/**" />
 			</patternset>
 		</unzip>
-    	<!-- Nolonger NEEDED! 
-			 lib files are placed int the webapps WEB-INF dir now (or in a standard shared dir)
-		<replaceregexp file="${app.server.conf.dir}/catalina.properties" match="shared.loader=(.*)" 
-			replace="shared.loader=\1,${catalina.base}/webapps/WEB-INF/classes,${catalina.base}/webapps/WEB-INF/lib/*.jar" 
-			byline="true" />
-        -->
+
 		<!-- Copy additional files needed for operation   -->
 		<copy file="ccm-core/lib/xercesImpl.jar"
-              todir="${app.server.shared.dir}/endorsed" preservelastmodified="true"/>
+                      todir="${app.server.shared.dir}/endorsed" preservelastmodified="true"/>
 		<copy file="tools-ng/devel/lib/ojdbc14.jar"
-              todir="${app.server.shared.dir}" preservelastmodified="true"/>
+                      todir="${app.server.shared.dir}" preservelastmodified="true"/>
 		<copy file="tools-ng/devel/lib/postgresql-jdbc-8.2.506.jar"
-              todir="${app.server.shared.dir}" preservelastmodified="true"/>
+                      todir="${app.server.shared.dir}" preservelastmodified="true"/>
 	</target>
 
 	<target name="start">
 		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
 
 			<!--  nolonger needed ? (if anything works as expected)   
-			<sysproperty key="ccm.home" value="${ccm.home}" />
-			<sysproperty key="ccm.conf" value="${webapp.registry.dir}" />
-			<sysproperty key="com.arsdigita.util.Assert.enabled" value="true" />
-			<sysproperty key="log4j.configuration" value="file:///${app.server..conf.dir}/log4j.xml" />
-			<sysproperty key="java.protocol.handler.pkgs" value="${java.protocol.handler.pkgs}" />
-			-->
-            <!--  Required until URL protocol resource is replaced by ResourceParameter or startup.java
-                  is modified to handle the ccm extra protocol properly. Copy directy into java lib/ext!  
-			<sysproperty key="java.ext.dirs" 
-				     value="${env.JAVA_HOME}/jre/lib/ext;${env.JAVA_HOME}/lib/ext;${app.server.home.dir}/lib/system" />
-			-->
-			<!--  nolonger needed ? (if anything works as expected)   
-			-->
+			      seems to be needed if sysproperty javax....xerces...SAYParser ....  below is set.
 			<sysproperty key="java.endorsed.dirs" value="${app.server.shared.dir}/endorsed" />
+			-->
 
-                        <!-- required to prevent Tomcat from using AElfred to check web.xml / taglibs  -->
+                        <!-- Previously required to prevent Tomcat from using AElfred to check web.xml / taglibs  -->
+			<!-- seems to work now without, please comment in if something goes wrong with XML processing
 			<sysproperty key="javax.xml.transform.TransformerFactory" value="com.icl.saxon.TransformerFactoryImpl" />
 			<sysproperty key="javax.xml.parsers.DocumentBuilderFactory" value="org.apache.xerces.jaxp.DocumentBuilderFactoryImpl" />
 			<sysproperty key="javax.xml.parsers.SAXParserFactory" value="org.apache.xerces.jaxp.SAXParserFactoryImpl" />
+			-->
 
                         <!-- standard parameter to Tomcat operation  -->
 			<sysproperty key="catalina.home" value="${app.server.home.dir}" />

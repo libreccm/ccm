@@ -49,7 +49,7 @@ public class XML {
 
     private static final Logger s_log = Logger.getLogger(XML.class);
 
-    private static XMLConfig s_config;
+    // private static XMLConfig s_config;
 
     private static Map s_formatters = new HashMap();
     static {
@@ -60,7 +60,6 @@ public class XML {
 
     /**
      * Retrieves the current configuration
-     */
     public static XMLConfig getConfig() {
         if (s_config == null) {
             s_config = new XMLConfig();
@@ -68,6 +67,7 @@ public class XML {
         }
         return s_config;
     }
+     */
     
     /**
      * Registers a formatter for serializing objects of a

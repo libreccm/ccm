@@ -72,7 +72,7 @@ public final class Classes {
             Assert.exists(clacc, Class.class);
             Assert.exists(params, Class.class);
             Assert.exists(values, Object.class);
-            Assert.truth(params.length == values.length);
+            Assert.isTrue(params.length == values.length);
         }
 
         try {

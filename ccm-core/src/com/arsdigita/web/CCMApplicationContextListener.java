@@ -26,6 +26,7 @@ package com.arsdigita.web;
 import com.arsdigita.runtime.CCMResourceManager;
 import com.arsdigita.runtime.Startup;
 // import com.arsdigita.util.ResourceManager;
+import com.arsdigita.xml.FactoriesSetup;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -94,7 +95,7 @@ public class CCMApplicationContextListener implements ServletContextListener {
 
         //Configure log4j configuration file
         m_log4j = sc.getInitParameter("log4j-conf-file");
-        s_log.info("Logging context parameeter is: " + m_log4j);
+        s_log.info("Logging context parameter is: " + m_log4j);
         // if the log4j-init-file is not set, then no point in trying
         if(m_log4j != null) {
             PropertyConfigurator.configure(m_appBase+m_log4j);
@@ -109,7 +110,10 @@ public class CCMApplicationContextListener implements ServletContextListener {
         // ToDo: integrate both into a single class, e.g. CCMResourceManager
         // to simplify and clean-up of the code!
         CCMResourceManager.setBaseDirectory(m_appBase);
-        s_log.info("CCMApplicationContextListener: BaseDir set to: " + m_appBase );
+        s_log.info("BaseDir set to: " + m_appBase );
+
+        // Setup the XML factory configuration
+        FactoriesSetup.setupFactories();
 
         // Central startup procedure, initialize the database and
         // domain coupling machinary

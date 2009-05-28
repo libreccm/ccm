@@ -39,7 +39,7 @@ import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.sitemap.SiteMap;
-import com.arsdigita.util.xml.XML;
+import com.arsdigita.xml.FactoriesSetup;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.WebApp;
 import com.arsdigita.web.ApplicationType;
@@ -130,13 +130,14 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-	e.getFactory().registerInstantiator
+	    e.getFactory().registerInstantiator
             (BasicAuditTrail.BASE_DATA_OBJECT_TYPE,
-	     new DomainObjectInstantiator() {
-		public DomainObject doNewInstance(final DataObject data) {
-		    return new BasicAuditTrail(data);
-	        }
-	    });
+	         new DomainObjectInstantiator() {
+		         public DomainObject doNewInstance(final DataObject data) {
+		                return new BasicAuditTrail(data);
+	             }
+	         });
+
         // register the document converters
         Converter converter = new PDFConverter();
         ConverterRegistry.registerConverter(converter, 
@@ -168,6 +169,6 @@ public class Initializer extends CompoundInitializer {
         CoreLoader.loadHost();
         txn.commitTxn();
 
-        XML.setupFactories();
+        FactoriesSetup.setupFactories();
     }
 }

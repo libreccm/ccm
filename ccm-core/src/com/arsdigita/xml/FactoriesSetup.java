@@ -16,32 +16,53 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.util.xml;
+package com.arsdigita.xml;
 
 import org.apache.log4j.Logger;
 
 /**
- * Utility class to configure the XML parsers using Sun's javax.xml specified
- * classes and methods (in the javax.xml..... packages).
- * 
- * Currently CCM uses a quite simple but rather thumb method of configuration.
- * It places the desired parser class names into the system environment
- * (previously by startup script, now by setProperties), where they are
- * picked up by the Sun provided classes.
- * 
- * This method contrains all programs in a JVM (e.g. all instances of CCM in
- * a servlet container) to use the same configuration. Other methods are
- * available but we have to dig deeper into the CCM code.
+ * Utility class to configure the FactoriesSetup parsers using Sun's javax.xml 
+ * specified classes and methods (in the javax.xml..... packages) and should be
+ * invokes as early as possible in the CCM startup process.
  *
- * Called once by c.ad.core.Initializer at startup.
+ * Parsers rsp. transformers are created using a factory class. There are 2
+ * methods available:
+ *
+ * Static method newinstance()
+ *    searches the configuration following 4 steps:
+ *    1. Use the <code>javax.xml.parsers.[name]Factory</code> system property
+ *    2. Use properties file "lib/jaxp.properties" in the JRE directory
+ *    3. Use the Services API, which will look in a file
+ *       <code>META-INF/services/javax.xml.parsers.[name]Factory</code>
+ *       in jars available to the runtime.
+ *    4. Platform default <code>[name]Factory</code> instance
+ *
+ * Static method newInstance(String factoryClassName, ClassLoader classLoader)
+ *    Currently not used by CCM code. Refactoring requirred.
+ * C.f.
+ * http://www.docjar.com/html/api/javax/xml/parsers/DocumentBuilderFactory.java.html
+ * 
+ * Previously CCM used to place the desired parser class names as runtime
+ * parameters (-D...) into the Tomcat startup script. This method requires a
+ * custom Tomcat configuration and constrains all other applications running in 
+ * the servlet container to use the same configuration.
+ * 
+ * The preferred method is the second option of <code>newinstance</code>, but
+ * requires to dig deeper into the CCM code.
+ *
+ * As an <em>intermediate</em> solution the implementation to use is stored in 
+ * the configuration registry, read at startup and set as system.properties.
+ *
+ * Called once by c.ad.core.Initializer at startup and
+ * CCMApplicationContextListener.
  *
  * modified by
  * @author pboy
  */
-public class XML {
+public class FactoriesSetup {
     
     private static final Logger s_log = Logger.getLogger
-        (XML.class);
+        (FactoriesSetup.class);
 
     /* ************     public getter / setter section          ************ */
     
@@ -85,4 +106,28 @@ public class XML {
             }
         }
     }
+    /**
+     * Actually unfinished work.
+     *
+     * ToDo: Use an alternative Factory constructor of javax.xml. ... (e.g.
+     * DocumentBuilderFactory) which directly accepts a classname and a
+     * class loader, so we do not depend on a system wide configuration.
+     *
+     * @param impl  the value of the class name of the factory to use
+     */
+//  static void setupDomBuilderFactory( String implClass) {
+//      if (implClass != null) {
+         // if (s_log.isInfoEnabled()) {
+         //     s_log.info("Setting " + name + " to " + impl);
+         // }
+         // System.setProperty(name,
+         //                    impl);
+//      } else {
+         // if (s_log.isInfoEnabled()) {
+         //     s_log.info("Leaving " + name + " as " +
+         //                System.getProperty(name));
+         // }
+//      }
+//  }
+
 }

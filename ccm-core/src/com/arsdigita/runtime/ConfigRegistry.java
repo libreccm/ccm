@@ -27,6 +27,7 @@ import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.ParameterContext;
 import com.arsdigita.util.parameter.ParameterReader;
 import com.arsdigita.xml.XML;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -37,9 +38,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.log4j.Logger;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
+
+import org.apache.log4j.Logger;
 
 /**
  * The ConfigRegistry class maps between config classes (subclasses of

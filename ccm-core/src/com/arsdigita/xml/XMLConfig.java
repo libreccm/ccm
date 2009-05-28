@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005 Runtime Collective Ltd. All Rights Reserved.
+ * Copyright (C) 2004 Red Hat Inc. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,41 +19,161 @@
 package com.arsdigita.xml;
 
 import com.arsdigita.runtime.AbstractConfig;
-// import com.arsdigita.runtime.RuntimeConfig;
-// import com.arsdigita.util.Assert;
-import com.arsdigita.util.parameter.BooleanParameter;
-// import com.arsdigita.util.parameter.EnumerationParameter;
-// import com.arsdigita.util.parameter.ErrorList;
-// import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-//import com.arsdigita.util.parameter.ParameterError;
+import com.arsdigita.util.parameter.BooleanParameter;
+import com.arsdigita.util.parameter.StringParameter;
 
 import org.apache.log4j.Logger;
 
-// import java.util.Map;
-// import java.util.HashMap;
-// import java.util.Set;
-// import java.util.HashSet;
-
 /**
- * Stores the configuration record for the XML functionality
+ * Stores the configuration record for the XML functionality.
+ *
+ * Most important: Configuration of the XML factories:
+ * - Document Builder
+ * - Sax Parser
+ * - XSL Transformer
+ *
  */
 public final class XMLConfig extends AbstractConfig {
 
-    private static Logger s_log = Logger.getLogger(XMLConfig.class);
+    public final static String versionId =
+        "$Id: XMLConfig.java 1393 2006-11-28 09:12:32Z sskracic $" +
+        "$Author: sskracic $" +
+        "$DateTime: 2004/08/16 18:10:38 $";
 
-    private Parameter m_activateFullTimeFormatter;
+    private static final Logger s_log = Logger.getLogger
+        (XMLConfig.class);
 
+    private static XMLConfig s_config;
+
+    // supported XSL transformer implementations
+    private static final String RESIN =
+        "com.caucho.xsl.Xsl";
+    private static final String JD_XSLT =
+        "jd.xml.xslt.trax.TransformerFactoryImpl";
+    private static final String XSLTC =
+        "org.apache.xalan.xsltc.trax.TransformerFactoryImpl";
+    private static final String SAXON =
+        "com.icl.saxon.TransformerFactoryImpl";
+    private static final String XALAN =
+        "org.apache.xalan.processor.TransformerFactoryImpl";
+
+    // supported documentBuilder implementations
+    private static final String DOM_XERCES =
+        "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
+    private static final String DOM_RESIN =
+        "com.caucho.xml.parsers.XmlDocumentBuilderFactory";
+
+    // supported SAX parser implementations
+    private static final String SAX_XERCES =
+        "org.apache.xerces.jaxp.SAXParserFactoryImpl";
+    private static final String SAX_RESIN =
+        "com.caucho.xml.parsers.XmlSAXParserFactory";
+
+    /**
+     * Returns the singleton configuration record for the XML functionality
+     *
+     * @return The <code>XMLConfig</code> record; it cannot be null
+     */
+    public static final synchronized XMLConfig getConfig() {
+        if (s_config == null) {
+            s_config = new XMLConfig();
+            // read values from the persistent storage
+            s_config.load();
+        }
+
+        return s_config;
+    }
+
+    private final Parameter m_xfmr     = new StringParameter
+                ("waf.xml.xsl_transformer", Parameter.REQUIRED, "saxon");
+
+    private final Parameter m_builder  = new StringParameter
+                ("waf.xml.dom_builder",     Parameter.REQUIRED, "xerces");
+
+    private final Parameter m_parser   = new StringParameter
+                ("waf.xml.sax_parser",      Parameter.REQUIRED, "xerces");
+
+    private Parameter m_activateFullTimeFormatter = new BooleanParameter
+                ("waf.xml.activate_full_date_formatter",
+                 Parameter.OPTIONAL, new Boolean(false));
+
+
+
+
+    /**
+     * Constructs an empty XMLConfig object following the singelton pattern.
+     *
+     * They are meant as an singelton pattern (with private constructor), but
+     * it does not work with the associated classes AbstractConfig and
+     * ConfigRegistry because they can currently not deal with a private constructor
+     */
+
+    // private XMLConfig() {
     public XMLConfig() {
-
-        m_activateFullTimeFormatter = new BooleanParameter
-            ("waf.xml.activate_full_date_formatter", 
-             Parameter.OPTIONAL, 
-             new Boolean(false));
-
+        
+        register(m_xfmr);
+        register(m_builder);
+        register(m_parser);
         register(m_activateFullTimeFormatter);
 
         loadInfo();
+    }
+
+    
+    /* ************     public getter / setter section          ************ */
+
+
+    /**
+     * Returns the XSL Transformer factory class name to use.
+     * 
+     * The method assures that the return value is a valid class name.
+     *
+     * @return String XSL Transformer factory class name
+     */
+    public final String getXSLTransformerFactoryClassname() {
+
+        String m_key = (String) get(m_xfmr);
+
+        // Defined values: saxon (default)|jd.xslt|resin|xalan|xsltc
+        if(m_key.toLowerCase().equals("xsltc"))   return XSLTC;
+        if(m_key.toLowerCase().equals("xalan"))   return XALAN ;
+        if(m_key.toLowerCase().equals("resin"))   return RESIN;
+        if(m_key.toLowerCase().equals("jd.xslt")) return JD_XSLT;
+        // return defaultValue
+        return SAXON;
+    }
+
+    /**
+     * Returns the Document Builder factory class name to use
+     *
+     * The method assures that the return value is a valid class name.
+     *
+     * @return String Document Builder factory class name
+     */
+    public final String getDOMBuilderFactoryClassname() {
+
+        String m_key = (String) get(m_builder);
+
+        // Defined values: xerces (default)|resin
+        if(m_key.toLowerCase().equals("resin"))   return DOM_RESIN;
+          else                                    return DOM_XERCES;
+    }
+
+    /**
+     * Returns the Sax Parser factory class name to use.
+     *
+     * The method assures that the return value is a valid class name.
+     *
+     * @return String Sax Parser factory class name
+     */
+    public final String getSAXParserFactoryClassname() {
+
+        String m_key = (String) get(m_parser);
+
+        // Defined values: xerces (default)|resin
+        if(m_key.toLowerCase().equals("resin"))   return SAX_RESIN;
+          else                                    return SAX_XERCES;
     }
 
     /**
@@ -69,4 +189,5 @@ public final class XMLConfig extends AbstractConfig {
     public void setActivateFullTimeFormatter(boolean activateFullTimeFormatter) {
         set (m_activateFullTimeFormatter,new Boolean(activateFullTimeFormatter));
     }
+
 }

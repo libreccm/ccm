@@ -21,6 +21,7 @@ package com.arsdigita.xml.formatters;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.xml.Formatter;
 import com.arsdigita.xml.XML;
+import com.arsdigita.xml.XMLConfig;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -47,7 +48,7 @@ public class FullDateFormatter extends DateFormatter {
 
         String parentResult = super.format(value);
 
-        if (!XML.getConfig().getActivateFullTimeFormatter()) {
+        if (!XMLConfig.getConfig().getActivateFullTimeFormatter()) {
             return parentResult;
         }
 
