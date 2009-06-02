@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules" 
+	      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	      xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+       <xrd:adapter objectType="com.arsdigita.cms.contenttypes.OrganizationRole"
+		    extends="com.arsdigita.cms.ContentPage" 
+		    traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+	      <xrd:attributes rule="exclude">
+	      </xrd:attributes>
+	      
+	      <xrd:associations rule="include">
+		<xrd:property name="/object/rolename"/>	
+	      </xrd:associations>
+	      
+       </xrd:adapter>
+
+       <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericOrganization" 
+		    extends="com.arsdigita.cms.TextPage" 
+		    traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+	 <xrd:attributes rule="exclude">
+	   <xrd:property name="/object/roles/id"/>
+	   <xrd:property name="/object/roles/defaultDomainClass"/>
+	   <xrd:property name="/object/roles/objectType"/>
+	   <xrd:property name="/object/roles/displayName"/>
+	   <xrd:property name="/object/roles/isDeleted"/>
+	   <xrd:property name="/object/roles/ancestors"/>
+	   <xrd:property name="/object/roles/version"/>
+	   <xrd:property name="/object/roles/name"/>
+	   <xrd:property name="/object/roles/language"/>
+	 </xrd:attributes>
+	 <xrd:associations rule="include">
+	   <xrd:property name="/object/organizationroles"/>
+	 </xrd:associations>
+       </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.cms.search.ContentPageMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericOrganization" extends="com.arsdigita.cms.ContentItem" traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/roles/id"/>
+        <xrd:property name="/object/roles/defaultDomainClass"/>
+        <xrd:property name="/object/roles/objectType"/>
+        <xrd:property name="/object/roles/displayName"/>
+        <xrd:property name="/object/roles/isDeleted"/>
+        <xrd:property name="/object/roles/ancestors"/>
+        <xrd:property name="/object/roles/version"/>
+        <xrd:property name="/object/roles/name"/>
+        <xrd:property name="/object/roles/language"/>
+      </xrd:attributes>
+
+    </xrd:adapter>
+  </xrd:context>
+
+  <xrd:context name="com.arsdigita.cms.contenttypes.OrganizationRoleMetadataProvider">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.OrganizationRole" 
+      traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+      <xrd:attributes rule="exclude">
+        <xrd:property name="/object/id"/>
+        <xrd:property name="/object/defaultDomainClass"/>
+        <xrd:property name="/object/objectType"/>
+        <xrd:property name="/object/displayName"/>
+        <xrd:property name="/object/isDeleted"/>
+        <xrd:property name="/object/ancestors"/>
+        <xrd:property name="/object/version"/>
+        <xrd:property name="/object/name"/>
+        <xrd:property name="/object/language"/>
+
+      </xrd:attributes>
+      <xrd:associations rule="include">
+        <xrd:property name="/object/text"/>
+      </xrd:associations>
+    </xrd:adapter>
+  </xrd:context>
+  
+</xrd:adapters>

@@ -1,0 +1,9 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentPage;
+
+object type OrganizationRole extends ContentPage {
+       String[1..1] rolename = ct_genericorganization_roles.rolename VARCHAR(512);
+
+       reference key (ct_genericorganization_roles.role_id);
+}

@@ -13,7 +13,6 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.TrimmedStringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -143,6 +142,10 @@ public class RoleEditForm extends Form {
             }
 
             role.setRolename((String)data.get(OrganizationRole.ROLENAME));
+
+            if(m_container != null) {
+                m_container.onlyShowComponent(state, GenericOrganizationViewRoles.ROLES_TABLE + m_container.getTypeIdStr());
+            }
         }
     }
 
