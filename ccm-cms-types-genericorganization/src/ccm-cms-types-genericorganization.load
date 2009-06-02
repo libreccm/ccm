@@ -8,7 +8,7 @@
 	</requires>
 	<provides>
 		<table name="ct_genericorganizations" />
-		<table name="ct_organizationfunctions" />
+		<table name="ct_organizationroles" />
 		<initializer class="com.arsdigita.cms.contenttypes.GenericOrganizationInitializer"/>		
 	</provides>
 	<scripts>

@@ -20,6 +20,14 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.lifecycle.LifecycleDefinition;
+import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.ResourceParameter;
+import com.arsdigita.workflow.simple.WorkflowTemplate;
+
+import java.io.InputStream;
 
 import org.apache.log4j.Logger;
 
@@ -29,13 +37,39 @@ import org.apache.log4j.Logger;
  */
 public class GenericOrganizationLoader extends AbstractContentTypeLoader {
    
-    public static final Logger s_log = Logger.getLogger(GenericOrganizationLoader.class);
+    private static final Logger s_log = Logger.getLogger(GenericOrganizationLoader.class);
     private static final String[] TYPES = {
 	"/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xml"
     };
 
     public String[] getTypes() {
 	return TYPES;
+    }
+
+    private ResourceParameter m_template;
+    
+    public GenericOrganizationLoader() {
+        super();
+	m_template = new ResourceParameter("com.arsdigita.cms.contenttypes.genericorganization.template",
+					   Parameter.REQUIRED,
+					   "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/genericorganization-item.jsp");
+	register(m_template);
+    }
+
+    @Override
+	protected void prepareSection(final ContentSection section,
+				      final ContentType type,
+				      final LifecycleDefinition ld,
+				      final WorkflowTemplate wf) {
+	super.prepareSection(section, type, ld, wf);
+	
+	setDefaultTemplate("GenericOrganization-genericorganization-item",
+			   "genericorganization-item",
+			   (InputStream)get(m_template),
+			   section,
+			   type,
+			   ld,
+			   wf);
     }
     
 }

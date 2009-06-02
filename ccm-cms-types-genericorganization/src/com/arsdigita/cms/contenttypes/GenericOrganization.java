@@ -47,23 +47,21 @@ public class GenericOrganization extends ContentPage {
     public static final String ORGANIZATIONNAME = "organizationname";
     public static final String ORGANIZATIONNAMEADDENDUM = "organizationnameaddendum";
     public static final String DESCRIPTION = "description";
-    public static final String FUNCTIONS = "functions";
+    public static final String ROLES = "roles";
 
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganization";
-
-    public static final String ITEMS = "associatedContentItemsForGenericOrganization";
 
     private static final GenericOrganizationConfig s_config = new GenericOrganizationConfig();
 
     private static final Logger s_log = Logger.getLogger(GenericOrganization.class);
 
-//     static {
-// 	s_config.load();
-//     }
+     static {
+ 	s_config.load();
+     }
 
-//     public static final GenericOrganizationConfig getConfig () {
-// 	return s_config;
-//     }
+     public static final GenericOrganizationConfig getConfig () {
+ 	return s_config;
+     }
 
     /**
      * Default constructor. This creates a new (empty) organization
@@ -88,71 +86,6 @@ public class GenericOrganization extends ContentPage {
 	super(type);
     }
 
-    public void beforeSave() {
-	super.beforeSave();
-
-	Assert.exists(getContentType(), ContentType.class);
-    }
-
-    //Functions for adding and removing associated ContentItems
-
-    /**
-     * Adds an association.
-     * 
-     * @param item The item to associated with the organization.
-     */
-    public void addContentItem(ContentItem item) {
-	s_log.debug("item is " + item);
-	item.addToAssociation(getItemsForGenericOrganization());
-    }
-
-    /**
-     * Removes an association
-     *
-     * @item The item which should longer be associated with this organization.
-     */
-    public void removeContentItem(ContentItem item) {
-	s_log.debug("item is " + item);
-	DataOperation operation = SessionManager.getSession().retrieveDataOperation("com.arsdigita.cms.contenttypes.removeGenericOrganizationFromContentItemAssociation");
-	operation.setParameter("itemID", new Integer(item.getID().intValue()));
-	operation.execute();
-    }
-
-    /**
-     * Removes all mappings between this organization and any other content items
-     */
-    private void removeItemMappings() {
-	DataOperation operation = SessionManager.getSession().retrieveDataOperation("com.arsdigita.cms.contenttypes.removeGenericOrganizationFromAllAssociations");
-	operation.setParameter("organizationID", new Integer(this.getID().intValue()));
-    }
-
-    /**
-     * Gets the DataAssociation object for this organization
-     */
-    public DataAssociation getItemsForGenericOrganization() {
-	return (DataAssociation)get(ITEMS);
-    }
-
-    /**
-     * Returns the organization for a given content item
-     * 
-     * @param item
-     * @return The Organization
-     */
-    public static GenericOrganization getGenericOrganizationForItem(ContentItem item) {
-	s_log.debug("getting contact for item " + item);
-	DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.contenttypes.getGenericOrganizationForItem");
-	query.setParameter("itemID", item.getID());
-	BigDecimal orgaID;
-	GenericOrganization orga = null;
-	while(query.next()) {
-	    orgaID = (BigDecimal)query.get("organizationID");
-	    orga = new GenericOrganization(orgaID);	    
-	}
-	s_log.debug("returning GenericOrganization " + orga);
-	return orga;
-    }
-    
 
     /* accessors *************************************************/
     public String getOrganizationName() {
@@ -179,23 +112,18 @@ public class GenericOrganization extends ContentPage {
 	set(DESCRIPTION, description);
     }
 
-    public OrganizationFunctionCollection getOrganizationFunctions() {
-	return new OrganizationFunctionCollection((DataCollection) get(FUNCTIONS));
+    public OrganizationRoleCollection getOrganizationRoles() {
+	return new OrganizationRoleCollection((DataCollection) get(ROLES));
     }
 
-    public void addOrganizationFunction(OrganizationFunction organizationFunction) {
-	Assert.exists(organizationFunction, OrganizationFunction.class);
-	add(FUNCTIONS, organizationFunction);
+    public void addOrganizationRole(OrganizationRole organizationRole) {
+	Assert.exists(organizationRole, OrganizationRole.class);
+	add(ROLES, organizationRole);
     }
 
-    public void removeOrganizationFunction(OrganizationFunction organizationFunction) {
-	Assert.exists(organizationFunction, OrganizationFunction.class);
-	remove(FUNCTIONS, organizationFunction);
+    public void removeOrganizationRole(OrganizationRole organizationRole) {
+	Assert.exists(organizationRole, OrganizationRole.class);
+	remove(ROLES, organizationRole);
     }
-
-    private DataObject retrieveDataObject(String attr) {
-	return (DataObject)get(attr);
-    }
-
     
 }
