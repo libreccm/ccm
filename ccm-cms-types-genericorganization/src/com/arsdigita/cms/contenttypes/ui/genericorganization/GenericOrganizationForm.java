@@ -16,28 +16,49 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganization;
-import com.arsdigita.persistence.metadata.Element;
 import com.arsdigita.ui.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
 import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 
 /**
+ * A form section for editing an orgnization.
  *
  * @author Jens Pelzetter
  */
 public abstract class GenericOrganizationForm extends FormSection implements FormInitListener, FormProcessListener, FormValidationListener {
 
+    /**
+     * ItemSelectionModel for the form section
+     */
     protected ItemSelectionModel m_itemModel;
+    /**
+     * SaveCancelSection (Save and Cancel buttons) for this sections.
+     */
     protected SaveCancelSection m_saveCancelSection;
 
     private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>");
 
+    /**
+     * Organizationname.
+     */
     public static final String ORGANIZATIONAME = GenericOrganization.ORGANIZATIONNAME;
+    /**
+     * Addedum
+     */
     public static final String ORGANIZATIONNAMEADDENDUM = GenericOrganization.ORGANIZATIONNAMEADDENDUM;
+    /**
+     * Description
+     */
     public static final String DESCRIPTION = GenericOrganization.DESCRIPTION;
     private static final Logger logger = Logger.getLogger(GenericOrganizationForm.class);
 
+    /**
+     * Creates the columnpanel, adds the widgets, the SaveCancelSection and the listeners.
+     *
+     * @param formName
+     * @param itemModel
+     */
     public GenericOrganizationForm(String formName, ItemSelectionModel itemModel) {
         super(new ColumnPanel(2));
 
@@ -59,15 +80,25 @@ public abstract class GenericOrganizationForm extends FormSection implements For
         addValidationListener(this);
     }
 
+    /**
+     * Adds the SavaCancelSection.
+     */
     public void addSaveCancelSection() {
         m_saveCancelSection = new SaveCancelSection();
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
     }
 
+    /**
+     *
+     * @return The SaveCancelSection of the form section.
+     */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
     }
 
+    /**
+     * Adds the widgets to the form.
+     */
     protected void addWidgets() {
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.genericorganization.ui.organizationname")));
         TextField organizationName = new TextField(ORGANIZATIONAME);
@@ -89,6 +120,12 @@ public abstract class GenericOrganizationForm extends FormSection implements For
     public abstract void process (FormSectionEvent e) throws FormProcessException;
     public abstract void validate (FormSectionEvent e) throws FormProcessException;
 
+    /**
+     * Inits the widgets.
+     *
+     * @param e
+     * @return
+     */
     public GenericOrganization initBasicWidgets(FormSectionEvent e) {
         Assert.exists(m_itemModel, ItemSelectionModel.class);
 
@@ -105,6 +142,12 @@ public abstract class GenericOrganizationForm extends FormSection implements For
         return orga;
     }
 
+    /**
+     * Processes the widgets.
+     *
+     * @param e
+     * @return
+     */
     public GenericOrganization processBasicWidgets(FormSectionEvent e) {
         Assert.exists(m_itemModel, ItemSelectionModel.class);
 
@@ -121,6 +164,13 @@ public abstract class GenericOrganizationForm extends FormSection implements For
         return orga;
     }
 
+    /**
+     * Creates a new organization.
+     *
+     * @param state
+     * @return
+     * @throws com.arsdigita.bebop.FormProcessException
+     */
     public GenericOrganization createGenericOrganization(PageState state) throws FormProcessException {
         Assert.exists(m_itemModel, ItemSelectionModel.class);
 

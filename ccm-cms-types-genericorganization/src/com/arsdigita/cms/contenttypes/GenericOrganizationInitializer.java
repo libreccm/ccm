@@ -18,36 +18,54 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
 import org.apache.log4j.Logger;
 import com.arsdigita.runtime.LegacyInitEvent;
 
 /**
+ * Initializer of the GenericOrganization content type.
  *
  * @author Jens Pelzetter
  */
 public class GenericOrganizationInitializer extends ContentTypeInitializer {
 
-    public final static String versionId =
+    /*public final static String versionId =
             "$Id: GenericOrganizationInitializer.java 1 2009-04-30 09:32:55Z jensp $" +
             "$Author: jensp $" +
-            "$DateTime: 2009/04/30 11:33:39 $";
+            "$DateTime: 2009/04/30 11:33:39 $";*/
     private static final Logger s_log = Logger.getLogger(GenericOrganizationInitializer.class);
 
+    /**
+     * Constructor. calls only the constructor of the parent class with name of
+     * the pdl.mf file of the content type an the BASIC_DATA_OBJECT_TYPE.
+     */
     public GenericOrganizationInitializer() {
         super("ccm-cms-types-genericorganization.pdl.mf",
                 GenericOrganization.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     *
+     * @return path of the traversal-adapter XML file.
+     */
     @Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/GenericOrganization.xml";
     }
 
+    /**
+     *
+     * @return path of the XSL stylesheet file. The stylesheet is very generic, because this
+     * contenttype will be used with the new mandalay theme only.
+     */
     public String getStylesheet() {
         return "static/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xsl";
     }
 
+    /**
+     * Calls the init method of the parent class.
+     *
+     * @param evt The init event. LegacyInitEvent is marked deprecated. What should be used insted?
+     */
     @Override
     public void init(LegacyInitEvent evt) {
         super.init(evt);

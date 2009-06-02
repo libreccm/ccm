@@ -18,17 +18,33 @@ import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 
 /**
+ * Form for deleting a role.
  *
  * @author Jens Pelzetter
  */
 public class RoleDeleteForm extends Form implements FormInitListener, FormSubmissionListener, FormProcessListener {
 
     private static final Logger logger = Logger.getLogger(RoleDeleteForm.class);
+    /**
+     * ItemSelectionModel for the organization.
+     */
     protected ItemSelectionModel m_selectionOrganization;
+    /**
+     * ItemSelectionModle for the role
+     */
     protected ItemSelectionModel m_selectionRole;
+    /**
+     * SaveCancelSection of this form
+     */
     protected SaveCancelSection m_saveCancelSection;
     private Label m_roleNameLabel;
 
+    /**
+     * Constructor.
+     *
+     * @param selectionOrganization
+     * @param selectionRole
+     */
     public RoleDeleteForm(ItemSelectionModel selectionOrganization, ItemSelectionModel selectionRole) {
         super("RoleDeleteForm", new ColumnPanel(2));
 
@@ -51,6 +67,11 @@ public class RoleDeleteForm extends Form implements FormInitListener, FormSubmis
         addProcessListener(this);
     }
 
+    /**
+     * Adds the SaveCancelSection of this form.
+     *
+     * @return
+     */
     protected SaveCancelSection addSaveCancelSection() {
         m_saveCancelSection = new SaveCancelSection();
         m_saveCancelSection.getSaveButton().setButtonLabel("Delete");

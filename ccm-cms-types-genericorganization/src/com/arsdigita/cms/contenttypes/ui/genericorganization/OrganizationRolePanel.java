@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 
 /**
+ * Panel for editing roles.
  *
  * @author Jens Pelzetter
  */
@@ -30,6 +31,9 @@ public class OrganizationRolePanel extends SimpleComponent {
     private boolean m_showAllRoles = false;
     //private static final String versionId = "$Id: OrganizationRolePanel.java 2009-06-01T10:42+02:00";
 
+    /**
+     * Constructor.
+     */
     public OrganizationRolePanel() {
         super();
     }
@@ -41,9 +45,20 @@ public class OrganizationRolePanel extends SimpleComponent {
         addGlobalStateParams(p);
     }
 
+    /**
+     * Adds a global state param. Not in use yet.
+     *
+     * @param p
+     */
     public void addGlobalStateParams(Page p) {
     }
 
+    /**
+     *
+     * @param state
+     * @param item
+     * @return The XMLGenerator for the panel.
+     */
     protected XMLGenerator getXMLGenerator(PageState state, ContentItem item) {
         ContentSection section = null;
 
@@ -61,10 +76,21 @@ public class OrganizationRolePanel extends SimpleComponent {
         return section.getXMLGenerator();
     }
 
+    /**
+     * Sets the value of the showAllRoles property.
+     *
+     * @param showAll
+     */
     public void setShowAllRoles(boolean showAll) {
         this.m_showAllRoles = showAll;
     }
 
+    /**
+     * Returns the current ContentItem.
+     *
+     * @param state
+     * @return
+     */
     protected ContentItem getContentItem(PageState state) {
         CMSContext context = CMS.getContext();
 
@@ -75,6 +101,12 @@ public class OrganizationRolePanel extends SimpleComponent {
         return context.getContentItem();
     }
 
+    /**
+     *
+     * @param item
+     * @param state
+     * @return An array with all roles associated with the organization.
+     */
     protected OrganizationRole[] getOrganizationRoles(ContentItem item, final PageState state) {
         GenericOrganization orga = (GenericOrganization) item;
         OrganizationRoleCollection roles = orga.getOrganizationRoles();
@@ -102,6 +134,13 @@ public class OrganizationRolePanel extends SimpleComponent {
         generateXML(item, parent, state);
     }
 
+    /**
+     * Creates the XML for the panel.
+     *
+     * @param item
+     * @param element
+     * @param state
+     */
     public void generateXML(ContentItem item, Element element, PageState state) {
         Element content = element.newChildElement("cms:organizationRolePanel", CMS.CMS_XML_NS);
         exportAttributes(content);
@@ -114,6 +153,14 @@ public class OrganizationRolePanel extends SimpleComponent {
         }
     }
 
+    /**
+     * Creates the XML for a role.
+     *
+     * @param state
+     * @param parent
+     * @param role
+     * @param xmlGenerator
+     */
     protected void generateRoleXML(final PageState state, final Element parent, final ContentItem role, final XMLGenerator xmlGenerator) {
         CMSExcursion excursion = new CMSExcursion() {
 
@@ -133,6 +180,3 @@ public class OrganizationRolePanel extends SimpleComponent {
         }
     }
 }
-
-
-

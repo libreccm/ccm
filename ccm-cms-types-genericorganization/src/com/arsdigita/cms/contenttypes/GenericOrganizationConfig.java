@@ -24,6 +24,7 @@ import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.BooleanParameter;
 
 /**
+ * Configuration for GenericOrganization. Not used yet.
  *
  * @author Jens Pelzetter
  */

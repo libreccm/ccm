@@ -793,6 +793,16 @@ public final class ContentSectionConfig extends AbstractConfig {
     	return (String)get(m_categoryTreeOrdering);
     }  
 
+    /**
+     * I'am not sure for what this method is. I found it here when I tried
+     * figure out how add multiple parts to an ContentType, like ccm-cms-types-contact
+     * and the Multipart article do. I think this method should not be here because
+     * it is only needed by one specific contenttype. Because of this, I think that
+     * this method and the contact are violating many rules of modern software design.
+     * Jens Pelzetter, 2009-06-02.
+     *
+     * @return
+     */
     public boolean getHasContactsAuthoringStep() {
 	return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
     }

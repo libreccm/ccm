@@ -37,27 +37,75 @@ import com.arsdigita.util.Assert;
 public class GenericOrganizationViewRoles extends ResettableContainer {
 
     /* Ids for the editing panels */
+    /**
+     * Identifier for the table of roles
+     */
     public static final String ROLES_TABLE = "rolesTable";
+    /**
+     * Identifier for the role edit form
+     */
     public static final String ROLES_EDIT = "rolesEdit";
+    /**
+     * Identifier for the role delete form
+     */
     public static final String ROLES_DELETE = "rolesDelete";
 
     /* class attributes */
+    /**
+     * Identifier for the data table
+     */
     public static final String DATA_TABLE = "dataTable";
+    /**
+     * Identifier for the action link
+     */
     public static final String ACTION_LINK = "actionLink";
+    /**
+     * The authoring wizard
+     */
     protected AuthoringKitWizard m_wizard;
+    /**
+     * ItemSelectionModel for the organization
+     */
     protected ItemSelectionModel m_selectionOrganization;
+    /**
+     * ItemSelection for the role
+     */
     protected ItemSelectionModel m_selectionRole;
+    /**
+     * ItemSelectionModel for moving the role position (currently not used)
+     */
     protected ItemSelectionModel m_moveRole;
+    /**
+     * Move parameter (not used yet)
+     */
     protected BigDecimalParameter m_moveParameter;
 
     /* Visual components doing the word */
+    /**
+     * Table with all roles associated with the organization.
+     */
     protected RoleTable m_roleTable;
+    /**
+     * Form for editing a role
+     */
     protected RoleEditForm m_roleEdit;
+    /**
+     * Form for deleting a role
+     */
     protected RoleDeleteForm m_roleDelete;
+    /**
+     * Begin link
+     */
     protected ActionLink m_beginLink;
     private Label m_moveRoleLabel;
     private String m_typeIdStr;
 
+    /**
+     * Constructor.
+     *
+     * @param selOrga
+     * @param wizard
+     */
     public GenericOrganizationViewRoles(ItemSelectionModel selOrga, AuthoringKitWizard wizard) {
         super();
         m_selectionOrganization = selOrga;
@@ -70,6 +118,11 @@ public class GenericOrganizationViewRoles extends ResettableContainer {
         add(buildRoleDelete(), false);
     }
 
+    /**
+     * Builds the table of roles.
+     *
+     * @return The table of roles.
+     */
     protected Container buildRoleTable() {
         ColumnPanel c = new ColumnPanel(1);
         c.setKey(ROLES_TABLE + m_typeIdStr);
@@ -146,6 +199,11 @@ public class GenericOrganizationViewRoles extends ResettableContainer {
         return c;
     }
 
+    /**
+     * Builds the edit form.
+     *
+     * @return The edit form.
+     */
     protected Container buildRoleEdit() {
         ColumnPanel c = new ColumnPanel(1);
         c.setKey(ROLES_EDIT + m_typeIdStr);
@@ -175,6 +233,11 @@ public class GenericOrganizationViewRoles extends ResettableContainer {
         return c;
     }
 
+    /**
+     * Builds the delete form
+     *
+     * @return The delete form.
+     */
     protected Container buildRoleDelete() {
         ColumnPanel c = new ColumnPanel(1);
         c.setKey(ROLES_DELETE + m_typeIdStr);
@@ -197,6 +260,11 @@ public class GenericOrganizationViewRoles extends ResettableContainer {
         return c;
     }
 
+    /**
+     * Builds the view all roles link.
+     *
+     * @return The ViewAllLink.
+     */
     protected ActionLink buildViewAllLink() {
         ActionLink viewAllLink = new ActionLink((String) GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.view_all_roles").localize());
         viewAllLink.setClassAttr(ACTION_LINK);
@@ -210,6 +278,11 @@ public class GenericOrganizationViewRoles extends ResettableContainer {
         return viewAllLink;
     }
 
+    /**
+     * Builds the add link.
+     *
+     * @return The add link.
+     */
     protected ActionLink buildAddLink() {
         ActionLink addLink = new ActionLink((String) GlobalizationUtil.globalize("cms.contenttypes.ui.genericorgnization.add_new_role").localize()) {
 
@@ -244,6 +317,10 @@ public class GenericOrganizationViewRoles extends ResettableContainer {
 
     }
 
+    /**
+     * 
+     * @return The typeIdStr.
+     */
     public String getTypeIdStr() {
         return m_typeIdStr;
     }

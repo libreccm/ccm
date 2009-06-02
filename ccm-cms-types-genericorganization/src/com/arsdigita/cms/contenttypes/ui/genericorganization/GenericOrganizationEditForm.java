@@ -13,6 +13,7 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.util.Assert;
 
 /**
+ * Form for editing a GenericOrganization.
  *
  * @author Jens Pelzetter
  */
@@ -20,6 +21,12 @@ public class GenericOrganizationEditForm extends GenericOrganizationForm impleme
 
     private SimpleEditStep m_step;
 
+    /**
+     * Constructor.
+     *
+     * @param itemModel
+     * @param step
+     */
     public GenericOrganizationEditForm(ItemSelectionModel itemModel, SimpleEditStep step) {
         super("GenericOrganizationEditForm", itemModel);
         addSubmissionListener(this);

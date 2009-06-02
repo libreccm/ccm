@@ -25,6 +25,7 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
+ * Form for editing a role.
  *
  * @author Jens Pelzetter
  */
@@ -40,12 +41,28 @@ public class RoleEditForm extends Form {
 
     private SaveCancelSection m_saveCancelSection;
 
-    public static final String ROLENAME = "rolename";
+    /**
+     * Rolename identifier string.
+     */
+    public static final String ROLENAME = OrganizationRole.ROLENAME;
 
+    /**
+     * Constructor.
+     *
+     * @param selectionOrganization
+     * @param selectionRole
+     */
     public RoleEditForm(ItemSelectionModel selectionOrganization, ItemSelectionModel selectionRole) {
         this(selectionOrganization, selectionRole, null);
     }
 
+    /**
+     * Constructor.
+     *
+     * @param selectionOrganization
+     * @param selectionRole
+     * @param container
+     */
     public RoleEditForm(ItemSelectionModel selectionOrganization, ItemSelectionModel selectionRole, GenericOrganizationViewRoles container) {
         super("RoleEditForm", new ColumnPanel(2));
 
@@ -71,16 +88,28 @@ public class RoleEditForm extends Form {
         addProcessListener(new RoleProcessListener());
     }
 
+    /**
+     * Adds the SaveCancelSection to the form.
+     *
+     * @return
+     */
     protected SaveCancelSection addSaveCancelSection() {
         m_saveCancelSection = new SaveCancelSection();
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
         return m_saveCancelSection;
     }
 
+    /**
+     *
+     * @return The SaveCancelSection of this form.
+     */
     public SaveCancelSection getSaveCancelSection() {
         return m_saveCancelSection;
     }
 
+    /**
+     * Adds the widgets to the form.
+     */
     protected void addWidgets() {
         logger.info("Adding widgets for role form...");
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.rolename")));
@@ -149,6 +178,13 @@ public class RoleEditForm extends Form {
         }
     }
 
+    /**
+     * Creates a new role.
+     *
+     * @param event
+     * @param orga
+     * @return The role.
+     */
     protected OrganizationRole createRole(FormSectionEvent event, GenericOrganization orga) {
         logger.info("creating new role...");
 

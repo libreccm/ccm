@@ -16,10 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
@@ -32,44 +30,58 @@ import java.io.InputStream;
 import org.apache.log4j.Logger;
 
 /**
+ * Loader for the GenericOrganization content type.
  *
  * @author Jens Pelzetter
  */
 public class GenericOrganizationLoader extends AbstractContentTypeLoader {
-   
+
     private static final Logger s_log = Logger.getLogger(GenericOrganizationLoader.class);
     private static final String[] TYPES = {
-	"/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xml"
+        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xml"
     };
+    private ResourceParameter m_template;
 
+    /**
+     * Returns the value of the type string.
+     *
+     * @return The type string.
+     */
     public String[] getTypes() {
-	return TYPES;
+        return TYPES;
     }
 
-    private ResourceParameter m_template;
-    
+    /**
+     * Constructor. 
+     */
     public GenericOrganizationLoader() {
         super();
-	m_template = new ResourceParameter("com.arsdigita.cms.contenttypes.genericorganization.template",
-					   Parameter.REQUIRED,
-					   "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/genericorganization-item.jsp");
-	register(m_template);
+        m_template = new ResourceParameter("com.arsdigita.cms.contenttypes.genericorganization.template",
+                Parameter.REQUIRED,
+                "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/genericorganization-item.jsp");
+        register(m_template);
     }
 
+    /**
+     *
+     * @param section
+     * @param type
+     * @param ld
+     * @param wf
+     */
     @Override
-	protected void prepareSection(final ContentSection section,
-				      final ContentType type,
-				      final LifecycleDefinition ld,
-				      final WorkflowTemplate wf) {
-	super.prepareSection(section, type, ld, wf);
-	
-	setDefaultTemplate("GenericOrganization-genericorganization-item",
-			   "genericorganization-item",
-			   (InputStream)get(m_template),
-			   section,
-			   type,
-			   ld,
-			   wf);
+    protected void prepareSection(final ContentSection section,
+            final ContentType type,
+            final LifecycleDefinition ld,
+            final WorkflowTemplate wf) {
+        super.prepareSection(section, type, ld, wf);
+
+        setDefaultTemplate("GenericOrganization-genericorganization-item",
+                "genericorganization-item",
+                (InputStream) get(m_template),
+                section,
+                type,
+                ld,
+                wf);
     }
-    
 }

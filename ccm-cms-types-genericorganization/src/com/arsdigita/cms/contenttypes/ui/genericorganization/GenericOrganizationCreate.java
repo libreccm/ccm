@@ -19,6 +19,7 @@ import com.arsdigita.cms.ui.authoring.CreationSelector;
 import com.arsdigita.ui.util.GlobalizationUtil;
 
 /**
+ * Form for creating a new organization.
  *
  * @author Jens Pelzetter
  */
@@ -26,6 +27,12 @@ public class GenericOrganizationCreate extends GenericOrganizationForm implement
     private CreationSelector m_parent;
     private ApplyWorkflowFormSection m_workflowSection;
 
+    /**
+     * Constructor.
+     *
+     * @param itemModel
+     * @param parent
+     */
     public GenericOrganizationCreate(ItemSelectionModel itemModel, CreationSelector parent) {
         super("GenericOrganizationCreate", itemModel);
         m_parent = parent;
@@ -35,6 +42,9 @@ public class GenericOrganizationCreate extends GenericOrganizationForm implement
         getSaveCancelSection().getSaveButton().setButtonLabel("Create");
     }
 
+    /**
+     * Adds all widgets to the form.
+     */
     @Override
     protected void addWidgets() {
         m_workflowSection = new ApplyWorkflowFormSection();

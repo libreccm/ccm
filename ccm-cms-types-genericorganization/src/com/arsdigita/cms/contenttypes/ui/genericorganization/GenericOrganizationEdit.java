@@ -10,11 +10,18 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.ui.util.GlobalizationUtil;
 
 /**
+ * EditStep for editing an organization.
  *
  * @author Jens Pelzetter
  */
 public class GenericOrganizationEdit extends SimpleEditStep {
 
+    /**
+     * Constructor.
+     *
+     * @param itemModel
+     * @param parent
+     */
     public GenericOrganizationEdit(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(itemModel, parent);
 
@@ -25,10 +32,20 @@ public class GenericOrganizationEdit extends SimpleEditStep {
         setDisplayComponent(getGenericOrganizationPropertiesSheet(itemModel));
     }
 
+    /**
+     *
+     * @param model
+     * @return A new instance of this class.
+     */
     protected GenericOrganizationForm getForm(ItemSelectionModel model) {
         return new GenericOrganizationEditForm(model, this);
     }
 
+    /**     
+     *
+     * @param model
+     * @return A sheet with widgets for the properites of GenericOrgnization.
+     */
     public Component getGenericOrganizationPropertiesSheet(ItemSelectionModel model) {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(model);

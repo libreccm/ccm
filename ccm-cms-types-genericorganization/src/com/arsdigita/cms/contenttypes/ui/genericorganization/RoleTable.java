@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
+ * Table listing all Roles associated with a organization.
  *
  * @author Jens Pelzetter
  */
@@ -34,14 +35,32 @@ public class RoleTable extends Table {
     private final static Logger logger = Logger.getLogger(RoleTable.class);
 
     // columns headings
+    /**
+     * Heading for first column
+     */
     public static final String COL_TITLE = "Role";
+    /**
+     * Heading for second column
+     */
     public static final String COL_EDIT = "Edit";
+    /**
+     * Heading for third column
+     */
     public static final String COL_MOVE = "Move";
+    /**
+     * Heading for last column
+     */
     public static final String COL_DEL = "Delete";
     private ItemSelectionModel m_selectionOrganization;
     private ItemSelectionModel m_selectionRole;
     private ItemSelectionModel m_moveRole;
 
+    /**
+     * Constructor.
+     *
+     * @param selOrga
+     * @param moveRole
+     */
     public RoleTable(ItemSelectionModel selOrga, ItemSelectionModel moveRole) {
         super();
         m_selectionOrganization = selOrga;
@@ -91,6 +110,11 @@ public class RoleTable extends Table {
 
     }
 
+    /**
+     * Sets the ItemSelectionModel.
+     *
+     * @param itemModel
+     */
     public void setRoleModel(ItemSelectionModel itemModel) {
         if (itemModel == null) {
             logger.warn("null item model");
@@ -98,11 +122,26 @@ public class RoleTable extends Table {
         m_selectionRole = itemModel;
     }
 
+    /**
+     * Builder class for the table model.
+     */
     protected class RoleTableModelBuilder extends LockableImpl implements TableModelBuilder {
 
+        /**
+         * ItemSelectionModel for the organization.
+         */
         protected ItemSelectionModel m_selectionOrganization;
+        /**
+         * ItemSelectionModel for moving the role (feature not implemented yet)
+         */
         protected ItemSelectionModel m_moveRole;
 
+        /**
+         * Constructor.
+         *
+         * @param selectionOrganization
+         * @param moveRole
+         */
         public RoleTableModelBuilder(ItemSelectionModel selectionOrganization, ItemSelectionModel moveRole) {
             m_selectionOrganization = selectionOrganization;
             m_moveRole = moveRole;
@@ -117,6 +156,9 @@ public class RoleTable extends Table {
         }
     }
 
+    /**
+     * TableModel for the RoleTable.
+     */
     protected class RoleTableModel implements TableModel {
 
         private TableColumnModel m_colModel;
@@ -126,6 +168,14 @@ public class RoleTable extends Table {
         private ItemSelectionModel m_moveRole;
         private OrganizationRole m_role;
 
+        /**
+         * Constructor.
+         *
+         * @param table
+         * @param state
+         * @param orga
+         * @param moveRole
+         */
         public RoleTableModel(Table table, PageState state, GenericOrganization orga, ItemSelectionModel moveRole) {
             m_colModel = table.getColumnModel();
             m_table = (RoleTable) table;
@@ -176,14 +226,25 @@ public class RoleTable extends Table {
         }
     }
 
+    /**
+     * Renderer for the cells of the RoleTable.
+     */
     public class RoleTableCellRenderer extends LockableImpl implements TableCellRenderer {
 
         private boolean m_active;
 
+        /**
+         * Constructor.
+         */
         public RoleTableCellRenderer() {
             this(false);
         }
 
+        /**
+         * Constructor.
+         * 
+         * @param active
+         */
         public RoleTableCellRenderer(boolean active) {
             m_active = active;
         }
