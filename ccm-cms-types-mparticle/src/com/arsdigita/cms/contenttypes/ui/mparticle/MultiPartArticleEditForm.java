@@ -41,7 +41,9 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
 
     public MultiPartArticleEditForm(ItemSelectionModel itemModel, 
                                     SimpleEditStep step) {
-        super("MutliPartArticleEditForm", itemModel);
+        //I assume this was a typo, so I corrected it:
+        //super("MutliPartArticleEditForm", itemModel);
+        super("MultiPartArticleEditForm", itemModel);
         addSubmissionListener(this);
         m_step = step;
     }
@@ -60,7 +62,7 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
 
     public void process(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
-        MultiPartArticle article = (MultiPartArticle)processBasicWidgets(e);
+        MultiPartArticle article = processBasicWidgets(e);
         m_step.maybeForwardToNextStep(e.getPageState());
     }
 
@@ -98,4 +100,5 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
         return (Folder) parent;
     }
 
+    
 }

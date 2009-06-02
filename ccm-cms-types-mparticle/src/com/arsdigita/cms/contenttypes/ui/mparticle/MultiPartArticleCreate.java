@@ -67,6 +67,7 @@ public class MultiPartArticleCreate extends MultiPartArticleForm
         getSaveCancelSection().getSaveButton().setButtonLabel("Create");
     }
 
+    @Override
     protected void addWidgets() {
         m_workflowSection = new ApplyWorkflowFormSection();
         add(m_workflowSection, ColumnPanel.INSERT);

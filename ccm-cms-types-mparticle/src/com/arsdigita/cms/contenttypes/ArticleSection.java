@@ -63,8 +63,7 @@ public class ArticleSection extends ContentPage {
      *
      * @param id the id of the object to retrieve
      */
-    public ArticleSection(BigDecimal id) 
-        throws DataObjectNotFoundException {
+    public ArticleSection(BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
@@ -73,8 +72,7 @@ public class ArticleSection extends ContentPage {
      *
      * @param id the id of the object to retrieve
      */
-    public ArticleSection(OID id) 
-        throws DataObjectNotFoundException {
+    public ArticleSection(OID id) throws DataObjectNotFoundException {
         super(id);
     }
 

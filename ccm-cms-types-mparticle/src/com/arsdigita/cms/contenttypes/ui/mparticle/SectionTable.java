@@ -55,8 +55,12 @@ import java.math.BigDecimal;
  */
 public class SectionTable extends Table
 {
-    private static final Logger log =
-        Logger.getLogger(SectionTable.class.getName());
+    /**
+     *  The class has already a logger (s_log), so I removed this.
+     *  Jens Pelzetter 2009-05-29
+     */
+    /*private static final Logger log =
+        Logger.getLogger(SectionTable.class.getName());*/
 
     // column headings
     public static final String COL_TITLE  = "Section";
@@ -75,6 +79,7 @@ public class SectionTable extends Table
      *
      * @param selArticle a selection model that returns the MultiPartArticle
      * which holds the sections to display.
+     * @param moveSection
      */
     public SectionTable ( ItemSelectionModel selArticle, ItemSelectionModel moveSection ) {
         super();
@@ -194,7 +199,12 @@ public class SectionTable extends Table
         private ArticleSection m_section;
 
 
-        /** Constructor. */
+        /** Constructor.
+         * @param table
+         * @param state
+         * @param article
+         * @param moveSection
+         */
         public SectionTableModel ( Table table, PageState state,
                                    MultiPartArticle article, ItemSelectionModel moveSection ) {
             m_colModel = table.getColumnModel();

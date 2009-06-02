@@ -60,18 +60,17 @@ public class MultiPartArticle extends ContentPage {
     public static final String RANK    = "rank";
     public static final String ARTICLE = "article";
     public static final String SECTION = "section";
+    
+    private static MultiPartArticleConfig s_config = new MultiPartArticleConfig();
 
+    static {
+	s_config.load();
+    }
+    
+    public static MultiPartArticleConfig getConfig() {
+	return s_config;
+    }
 
-
-	private static MultiPartArticleConfig s_config = new MultiPartArticleConfig();
-
-	static {
-		s_config.load();
-	}
-
-	public static MultiPartArticleConfig getConfig() {
-		return s_config;
-	}
     /** Default constructor. */
     public MultiPartArticle() {
         super(BASE_DATA_OBJECT_TYPE);
