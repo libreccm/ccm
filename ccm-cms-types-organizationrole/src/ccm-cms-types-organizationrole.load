@@ -1,0 +1,15 @@
+<load>
+	<requires>
+		<table name="inits"/>
+		<table name="acs_objects"/>
+		<table name="cms_items"/>
+	</requires>
+	<provides>
+		<table name="ct_organizationroles"/>
+		<initializer class="com.arsdigita.cms.contenttypes.OrganizationRoleInitializer"/>
+	</provides>
+	<scripts>
+		<schema directory="ccm-cms-types-organizationrole"/>
+		<data class="com.arsdigita.cms.contenttypes.OrganizationRoleLoader"/>
+	</scripts>
+</load>

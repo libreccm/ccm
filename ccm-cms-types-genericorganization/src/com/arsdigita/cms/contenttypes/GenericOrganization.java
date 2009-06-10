@@ -25,6 +25,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 
 import org.apache.log4j.Logger;
 
@@ -153,7 +154,6 @@ public class GenericOrganization extends ContentPage {
     public void setOrganizationName(String name) {
         set(ORGANIZATIONNAME, name);
     }
-
 
     /**
      *

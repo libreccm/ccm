@@ -47,10 +47,10 @@ public class GenericOrganizationInitializer extends ContentTypeInitializer {
      *
      * @return path of the traversal-adapter XML file.
      */
-    @Override
+    /*@Override
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/GenericOrganization.xml";
-    }
+    }*/
 
     /**
      *

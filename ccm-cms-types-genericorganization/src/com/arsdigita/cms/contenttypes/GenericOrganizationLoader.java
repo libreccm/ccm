@@ -56,10 +56,10 @@ public class GenericOrganizationLoader extends AbstractContentTypeLoader {
      */
     public GenericOrganizationLoader() {
         super();
-        m_template = new ResourceParameter("com.arsdigita.cms.contenttypes.genericorganization.template",
+        /*m_template = new ResourceParameter("com.arsdigita.cms.contenttypes.genericorganization.template",
                 Parameter.REQUIRED,
                 "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/genericorganization-item.jsp");
-        register(m_template);
+        register(m_template);*/
     }
 
     /**
@@ -69,7 +69,7 @@ public class GenericOrganizationLoader extends AbstractContentTypeLoader {
      * @param ld
      * @param wf
      */
-    @Override
+    /*@Override
     protected void prepareSection(final ContentSection section,
             final ContentType type,
             final LifecycleDefinition ld,
@@ -83,5 +83,5 @@ public class GenericOrganizationLoader extends AbstractContentTypeLoader {
                 type,
                 ld,
                 wf);
-    }
+    }*/
 }
