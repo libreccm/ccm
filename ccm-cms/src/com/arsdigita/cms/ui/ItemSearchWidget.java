@@ -137,6 +137,7 @@ public class ItemSearchWidget extends FormSection
             this.parent = parent;
         }
 
+        @Override
         public boolean isVisible(PageState ps) {
             return ((m_search.isSelected(ps) ||
                      hasQuery(ps)) &&
@@ -151,6 +152,7 @@ public class ItemSearchWidget extends FormSection
             super("<hr/>", false);
         }
 
+        @Override
         public boolean isVisible(PageState ps) {
             return ((m_search.isSelected(ps) ||
                      m_searchComponent.hasQuery(ps)) &&

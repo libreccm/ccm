@@ -18,6 +18,7 @@
  */
 package com.arsdigita.util;
 
+import com.arsdigita.bebop.event.TableActionEvent;
 import org.apache.log4j.Logger;
 
 /**
@@ -65,6 +66,10 @@ public class UncheckedWrapperException extends RuntimeException {
      */
     public UncheckedWrapperException (String msg) {
         this(msg, null);
+    }
+
+    public UncheckedWrapperException(TableActionEvent e) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**

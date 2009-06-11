@@ -4,12 +4,11 @@
 		<table name="acs_objects" />
 		<table name="cms_items" />
 		<table name="ct_persons" />
-		<table name="ct_organizationroles" />
 		<initializer class="com.arsdigita.cms.Initializer" />
 	</requires>
 	<provides>
 		<table name="ct_genericorganizations" />
-		<initializer class="com.arsdigita.cms.contenttypes.GenericOrganizationInitializer"/>		
+		<initializer class="com.arsdigita.cms.contenttypes.GenericOrganizationInitializer"/>				
 	</provides>
 	<scripts>
 		<schema directory="ccm-cms-types-genericorganization" />

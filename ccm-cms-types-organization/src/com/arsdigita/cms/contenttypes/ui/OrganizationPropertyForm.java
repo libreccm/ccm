@@ -72,7 +72,7 @@ public class OrganizationPropertyForm
         super( ID, itemModel );
         m_step = step;
         addSubmissionListener(this);
-    }
+    }   
 
     /**
      * Adds widgets to the form.

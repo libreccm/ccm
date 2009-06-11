@@ -22,10 +22,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.domain.DomainObjectFactory;
 
 import org.apache.log4j.Logger;
 
@@ -70,24 +67,24 @@ public class GenericOrganization extends ContentPage {
      * Type of this class (used for internal purposed).
      */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganization";
-    private static final GenericOrganizationConfig s_config = new GenericOrganizationConfig();
+    //private static final GenericOrganizationConfig s_config = new GenericOrganizationConfig();
     private static final Logger s_log = Logger.getLogger(GenericOrganization.class);
 
     /**
      * Called when the class is loaded by the Java class loader.
      */
-    static {
+    /*static {
         s_config.load();
-    }
+    }*/
 
     /**
      * Returns a possibly existing configuration object for the class.
      *
      * @return config object
      */
-    public static final GenericOrganizationConfig getConfig() {
+    /*public static final GenericOrganizationConfig getConfig() {
         return s_config;
-    }
+    }*/
 
     /**
      * Default constructor. This creates a new (empty) organization
@@ -187,33 +184,5 @@ public class GenericOrganization extends ContentPage {
      */
     public void setOrganizationDescription(String description) {
         set(DESCRIPTION, description);
-    }
-
-    /**
-     *
-     * @return All roles associated with this organization.
-     */
-    public OrganizationRoleCollection getOrganizationRoles() {
-        return new OrganizationRoleCollection((DataCollection) get(ROLES));
-    }
-
-    /**
-     * Adds a role to a organization.
-     *
-     * @param organizationRole The role to add.
-     */
-    public void addOrganizationRole(OrganizationRole organizationRole) {
-        Assert.exists(organizationRole, OrganizationRole.class);
-        add(ROLES, organizationRole);
-    }
-
-    /**
-     * Removes a role from a organization.
-     *
-     * @param organizationRole The role to remove.
-     */
-    public void removeOrganizationRole(OrganizationRole organizationRole) {
-        Assert.exists(organizationRole, OrganizationRole.class);
-        remove(ROLES, organizationRole);
-    }
+    }    
 }
