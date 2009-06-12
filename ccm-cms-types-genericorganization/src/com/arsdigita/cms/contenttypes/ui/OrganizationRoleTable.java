@@ -4,7 +4,6 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.ExternalLink;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.Table;
@@ -70,6 +69,7 @@ public class OrganizationRoleTable extends Table {
         addTableActionListener(new OrganizationRoleTableActionListener());
         setRowSelectionModel(m_roleModel);
         setDefaultCellRenderer(new OrganizationRoleTableRenderer());
+        setModelBuilder(new OrganizationRoleTableModelBuilder(itemModel));
     }
 
     protected void addColumns() {

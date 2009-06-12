@@ -197,8 +197,8 @@ public class OrganizationRole extends ACSObject {
         }
 
         DataOperation operation = getSwapOperation(operationName);
-        operation.setParameter("linkOrder", new Integer(key));
-        operation.setParameter("nextLinkOrder", new Integer(otherKey));
+        operation.setParameter("roleOrder", new Integer(key));
+        operation.setParameter("nextRoleOrder", new Integer(otherKey));
         operation.execute();
     }
 
@@ -222,9 +222,9 @@ public class OrganizationRole extends ACSObject {
             return 0;
         }
         int returnOrder = 0;
-        DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.contenttypes.allRoleOrderForItem");
+        DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.contenttypes.allRoleOrderForOrganization");
         query.setParameter("ownerID", getRoleOwner().getID());
-        query.addOrder("linkOrder DESC");
+        query.addOrder("roleOrder DESC");
         if (query.next()) {
             Integer roleOrder = ((Integer) query.get("roleOrder"));
             query.close();

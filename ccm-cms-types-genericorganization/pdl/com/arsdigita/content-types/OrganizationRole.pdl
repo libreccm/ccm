@@ -62,12 +62,12 @@ data operation swapOrganizationRoleWithNextInGroup {
 }
 
 query allRoleOrderForOrganization {
-      Integer linkOrder;
+      Integer roleOrder;
 
       do {
       	 select r.role_order from ct_organizationroles r where r.owner_id = :ownerID
       }
       map {
-      	  linkOrder = r.linkOrder;
+      	  roleOrder = r.role_order;
       }     
 }

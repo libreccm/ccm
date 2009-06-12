@@ -20,7 +20,6 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.Article;
 import com.arsdigita.cms.contenttypes.GenericOrganization;
 import com.arsdigita.cms.contenttypes.OrganizationRole;
 import com.arsdigita.cms.contenttypes.Person;
@@ -127,6 +126,7 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         GenericOrganization orga = this.getOrganization(s);
         Assert.exists(orga);
         OrganizationRole role = new OrganizationRole();
+        role.setRoleOwner(orga);
         return role;
     }
 
