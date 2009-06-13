@@ -20,8 +20,6 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.BooleanParameter;
 
 /**
  * Configuration for GenericOrganization. Not used yet.

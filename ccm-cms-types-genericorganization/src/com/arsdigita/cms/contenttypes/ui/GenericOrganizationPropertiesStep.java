@@ -18,6 +18,8 @@ import java.text.DateFormat;
 import org.apache.log4j.Logger;
 
 /**
+ * AuthoringStep for the basic properties of an organization (name, name addendum and
+ * a short description).
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
@@ -25,8 +27,18 @@ public class GenericOrganizationPropertiesStep extends SimpleEditStep {
 
     private static final Logger logger = Logger.getLogger(GenericOrganizationPropertiesStep.class);
 
+    /**
+     * Name of the this edit sheet (Don't know if this this really needed.
+     * It has the same value in almost all PropertiesStep classes)
+     */
     public static final String EDIT_SHEET_NAME = "edit";
 
+    /**
+     * Constructor for the PropertiesStep.
+     *
+     * @param itemModel
+     * @param parent
+     */
     public GenericOrganizationPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(itemModel, parent);
 
@@ -39,6 +51,13 @@ public class GenericOrganizationPropertiesStep extends SimpleEditStep {
         setDisplayComponent(getGenericOrganizationPropertySheet(itemModel));
     }
 
+    /**
+     * Creates and returns the sheet for editing the basic properties
+     * of an organization. (@see GenericOrganizationPropertyForm).
+     *
+     * @param itemModel
+     * @return The sheet for editing the properties of the organization.
+     */
     public static Component getGenericOrganizationPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 

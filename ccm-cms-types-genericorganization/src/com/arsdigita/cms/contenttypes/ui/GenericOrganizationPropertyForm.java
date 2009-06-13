@@ -20,6 +20,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import org.apache.log4j.Logger;
 
 /**
+ * Form for editing the basic properties of an organization.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
@@ -42,12 +43,26 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
      */
     public static final String DESCRIPTION = GenericOrganization.DESCRIPTION;
 
+    /**
+     * ID of the form
+     */
     public static final String ID = "GenericOrganization_edit";
 
+    /**
+     * Constrctor taking an ItemSelectionModel
+     *
+     * @param itemModel
+     */
     public GenericOrganizationPropertyForm(ItemSelectionModel itemModel)    {
         this(itemModel, null);
     }
 
+    /**
+     * Constrctor taking an ItemSelectionModel and an instance of GenericOrganizationPropertiesStep.
+     *
+     * @param itemModel
+     * @param step
+     */
     public GenericOrganizationPropertyForm(ItemSelectionModel itemModel, GenericOrganizationPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;

@@ -35,10 +35,9 @@ import org.apache.log4j.Logger;
  *
  * It is also possible to add roles to the organization, e.g. CEO, mayor or others.
  * The following features are planned to implement in one of the next commits:
- * - Ability to add persons (ccm-cms-types-person) to a role
  * - Adding OrganizationUnits
  *
- * The current version of this contenttype is modeled on base on the MultipartArticle
+ * The current version of this contenttype is modeled on base of the MultipartArticle
  * contenttype.
  *
  * @author Jens Pelzetter

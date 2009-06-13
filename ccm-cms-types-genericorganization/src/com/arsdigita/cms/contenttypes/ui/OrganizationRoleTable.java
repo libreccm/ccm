@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
+ * Table for displaying the existings roles associated with an organization.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
@@ -41,11 +42,29 @@ public class OrganizationRoleTable extends Table {
     private TableColumn m_delCol;
     private RequestLocal m_size;
     private RequestLocal m_editor;
+    /**
+     * Identifier for an Edit event.
+     */
     protected final static String EDIT_EVENT = "Edit";
+    /**
+     * ID for an Delete event.
+     */
     protected final static String DELETE_EVENT = "Delete";
+    /**
+     * ID for an Up event.
+     */
     protected final static String UP_EVENT = "up";
+    /**
+     * ID for an down event.
+     */
     protected final static String DOWN_EVENT = "down";
 
+    /**
+     * Constructor. Creates a new table a sets the column headers.
+     *
+     * @param itemModel
+     * @param roleModel
+     */
     public OrganizationRoleTable(ItemSelectionModel itemModel, OrganizationRoleSelectionModel roleModel) {
         super();
         this.m_itemModel = itemModel;
@@ -72,6 +91,9 @@ public class OrganizationRoleTable extends Table {
         setModelBuilder(new OrganizationRoleTableModelBuilder(itemModel));
     }
 
+    /**
+     * Called by the constructor to add the columns of the table.
+     */
     protected void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
@@ -181,7 +203,7 @@ public class OrganizationRoleTable extends Table {
                     try {
                         logger.debug("About to delete");
                         m_roleModel.clearSelection(state);
-                        role.delete();;
+                        role.delete();
                     } catch(Exception ex) {
                         throw new UncheckedWrapperException(ex);
                     }

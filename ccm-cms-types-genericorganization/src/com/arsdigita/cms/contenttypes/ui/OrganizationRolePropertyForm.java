@@ -29,12 +29,19 @@ import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
 
 /**
+ * Form for editing a role.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
 public class OrganizationRolePropertyForm extends FormSection implements FormInitListener, FormProcessListener, FormValidationListener, FormSubmissionListener {
 
+    /**
+     * Logger for this class.
+     */
     public final static Logger logger = Logger.getLogger(OrganizationRolePropertyForm.class);
+    /**
+     * ID of the form
+     */
     public final static String ID = "organizationrole_edit";
     //public final static String SSL_PROTOCOL = "https://";
     //public final static String HTTP_PROTOCOL = "http://";
@@ -45,6 +52,12 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "organizationRole";
 
+    /**
+     * Creates an new instance of the form.
+     *
+     * @param itemModel
+     * @param roleModel
+     */
     public OrganizationRolePropertyForm(ItemSelectionModel itemModel, OrganizationRoleSelectionModel roleModel) {
         super(new ColumnPanel(2));
         this.m_itemModel = itemModel;
@@ -59,6 +72,10 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         addSubmissionListener(this);
     }
 
+    /**
+     * Adds the widgets to the form. For choosing the associated person,
+     * an ItemSearchWidget is used.
+     */
     protected void addWidgets() {
         this.m_rolename = new TextField("rolename");
         this.m_rolename.addValidationListener(new NotNullValidationListener());
@@ -66,12 +83,18 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         add(this.m_rolename);
 
         add(new Label("Person"));
-        //logger.error(String.format("Person.CONTENT_TYPE = %s", Person.CONTENT_TYPE));
-        //logger.error(String.format("Article.CONTENT_TYPE = %s", Article.CONTENT_TYPE));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH,  ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Person"));
+        /* Create the ItemSearchWidget. The ContentType.findByAssociatedObjecType
+         * gets the ContentType of com.arsdigita.cms.contenttypes.Person and passes
+         * it to the constructor of the ItemSearchWidget. The ItemSearchWidget will only
+         * display object of type Person or derivated types.
+         */
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Person"));
         add(this.m_itemSearch);
     }
 
+    /**
+     * Adds the Save and Cancel buttons.
+     */
     public void addSaveCancelSection() {
         this.m_saveCancelSection = new SaveCancelSection();
         try {
@@ -104,22 +127,40 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         add(m_saveCancelSection, ColumnPanel.FULL_WIDTH);
     }
 
+    /**
+     *
+     * @return The section with the Save and Cancel buttons.
+     */
     public SaveCancelSection getSaveCancelSection() {
         return this.m_saveCancelSection;
     }
 
+    /**
+     *
+     * @return The RoleSelectionModel of the form.
+     */
     protected OrganizationRoleSelectionModel getRoleSelectionModel() {
         return this.m_roleModel;
     }
 
     /*protected Person getPerson(PageState s) {
-        return (Person) m_itemModel.getSelectedObject(s);
+    return (Person) m_itemModel.getSelectedObject(s);
     }*/
-
+    /**
+     *
+     * @param s
+     * @return * The organization which roles are edited.
+     */
     protected GenericOrganization getOrganization(PageState s) {
-        return (GenericOrganization)m_itemModel.getSelectedObject(s);
+        return (GenericOrganization) m_itemModel.getSelectedObject(s);
     }
 
+    /**
+     * Creates a new OrganizationRole.
+     *
+     * @param s
+     * @return Newly created OrganizationRole.
+     */
     protected OrganizationRole createOrganizationRole(PageState s) {
         //Person person = this.getPerson(s);
         //Assert.exists(person);
@@ -130,12 +171,18 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         return role;
     }
 
+    /**
+     * Sets the properties of an instance of OrganizationRole.
+     *
+     * @param role
+     * @param e
+     */
     protected void setOrganizationRoleProperties(OrganizationRole role, FormSectionEvent e) {
         PageState state = e.getPageState();
         FormData data = e.getFormData();
 
-        role.setRolename((String)m_rolename.getValue(state));
-        role.setTargetItem((Person)data.get(ITEM_SEARCH));
+        role.setRolename((String) m_rolename.getValue(state));
+        role.setTargetItem((Person) data.get(ITEM_SEARCH));
 
         role.save();
     }

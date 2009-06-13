@@ -7,7 +7,6 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganization;
 import com.arsdigita.cms.contenttypes.OrganizationRole;
-import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -16,6 +15,7 @@ import com.arsdigita.util.LockableImpl;
 import org.apache.log4j.Logger;
 
 /**
+ *  TableModelBuilder for the OrganizationRoleTable.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
@@ -25,6 +25,11 @@ public class OrganizationRoleTableModelBuilder extends LockableImpl implements T
 
     private ItemSelectionModel m_itemModel;
 
+    /**
+     * Constructor to create a new instance. Needs an ItemSelectionModel instance.
+     *
+     * @param itemModel
+     */
     public OrganizationRoleTableModelBuilder(ItemSelectionModel itemModel) {
         this.m_itemModel = itemModel;
     }
@@ -41,17 +46,29 @@ public class OrganizationRoleTableModelBuilder extends LockableImpl implements T
         }
     }
 
+    /**
+     *
+     * @param s
+     * @return
+     */
     public DataCollection getRoles(PageState s) {
         Assert.isTrue(this.m_itemModel.isSelected(s), "item selected");
         GenericOrganization orga = (GenericOrganization) m_itemModel.getSelectedItem(s);
         return OrganizationRole.getRoles(orga);
     }
 
+    /**
+     * TableModel for the OrganizationRoleTable.
+     */
     public static class OrganizationRoleTableModel implements TableModel {
 
         OrganizationRole m_role;
         DataCollection m_roles;
 
+        /**
+         *
+         * @param roles
+         */
         public OrganizationRoleTableModel(DataCollection roles) {
             m_roles = roles;
             m_role = null;
@@ -79,6 +96,10 @@ public class OrganizationRoleTableModelBuilder extends LockableImpl implements T
             return m_role.getID();
         }
 
+        /**
+         *
+         * @return Number of roles in the table.
+         */
         public long size() {
             return m_roles.size();
         }
