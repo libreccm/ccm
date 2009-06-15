@@ -36,6 +36,7 @@ public class OrganizationRoleTable extends Table {
     private OrganizationRoleSelectionModel m_roleModel;
     private ItemSelectionModel m_itemModel;
     private TableColumn m_roleNameCol;
+    private TableColumn m_personCol;
     private TableColumn m_moveUpCol;
     private TableColumn m_moveDownCol;
     private TableColumn m_editCol;
@@ -97,17 +98,19 @@ public class OrganizationRoleTable extends Table {
     protected void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
-        m_roleNameCol = new TableColumn(i, "Role");
-        m_editCol = new TableColumn(++i, "Edit");
-        m_delCol = new TableColumn(++i, "Delete");
-        m_moveUpCol = new TableColumn(++i, "");
-        m_moveDownCol = new TableColumn(++i, "");
+        this.m_roleNameCol = new TableColumn(i, "Role");
+        this.m_personCol = new TableColumn(++i, "Person");
+        this.m_editCol = new TableColumn(++i, "Edit");
+        this.m_delCol = new TableColumn(++i, "Delete");
+        this.m_moveUpCol = new TableColumn(++i, "");
+        this.m_moveDownCol = new TableColumn(++i, "");
 
-        model.add(m_roleNameCol);
-        model.add(m_editCol);
-        model.add(m_delCol);
-        model.add(m_moveUpCol);
-        model.add(m_moveDownCol);
+        model.add(this.m_roleNameCol);
+        model.add(this.m_personCol);
+        model.add(this.m_editCol);
+        model.add(this.m_delCol);
+        model.add(this.m_moveUpCol);
+        model.add(this.m_moveDownCol);
         setColumnModel(model);
     }
 
@@ -124,6 +127,9 @@ public class OrganizationRoleTable extends Table {
             String url = role.getURI(state);
             if (column == m_roleNameCol.getModelIndex()) {
                 ExternalLink extLink = new ExternalLink(role.getRolename(), url);
+                return extLink;
+            } else if (column == m_personCol.getModelIndex()) {
+                ExternalLink extLink = new ExternalLink(role.getTargetItem().getTitle(), url);
                 return extLink;
             } else if (column == m_editCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
@@ -142,8 +148,8 @@ public class OrganizationRoleTable extends Table {
                     return new Label(DELETE_EVENT);
                 }
             } else if (column == m_moveUpCol.getModelIndex()) {
-                if (Boolean.TRUE.equals(m_editor.get(state)) && !isLast) {
-                    Label downLabel = new Label(DOWN_EVENT);
+                if (Boolean.TRUE.equals(m_editor.get(state)) && !isFirst) {
+                    Label downLabel = new Label(UP_EVENT);
                     downLabel.setClassAttr("linkSort");
                     return new ControlLink(downLabel);
                 } else {
@@ -191,9 +197,10 @@ public class OrganizationRoleTable extends Table {
             OrganizationRole role = getOrganizationRole(e);
             Assert.exists(role);
 
-            if (col == m_roleNameCol.getModelIndex()) {
+            /*if (col == m_roleNameCol.getModelIndex()) {
                 //Nothing to do...
-            } else if (col == m_editCol.getModelIndex()) {
+            } else*/
+            if (col == m_editCol.getModelIndex()) {
                 if(Boolean.TRUE.equals(m_editor.get(state))) {
                     logger.debug("setting organizationRoleModel to: " + role.getRolename());
                     m_roleModel.setSelectedObject(state, role);

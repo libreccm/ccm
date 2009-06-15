@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+		 name="ccm-cms-types-organizationalunit"
+		 prettyName="Red Hat CCM Content Types"
+		 version="6.6.0"
+		 release="1"
+		 webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms-types-person" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms-types-article" version="6.6.0" requires="ge"/>
+  </ccm:dependencies>
+  <ccm:directories>
+    <ccm:directory name="pdl"/>
+    <ccm:directory name="sql"/>
+    <ccm:directory name="src"/>
+  </ccm:directories>
+  <ccm:contacts>
+    <ccm:contact uri="mailto:ccm@barkhof.uni-bremen.de" type="support"/>
+  </ccm:contacts>
+  <ccm:description>
+    Content type for representing organizational units.
+  </ccm:description>
+</ccm:application>

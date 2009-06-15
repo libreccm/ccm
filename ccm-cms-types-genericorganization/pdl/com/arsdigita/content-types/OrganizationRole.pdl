@@ -47,19 +47,21 @@ query getRefferingRoles {
 
 data operation swapOrganizationRoleWithNextInGroup {
      do {
-     	update organizationroles 
+     	update ct_organizationroles 
 	set role_order = CASE WHEN (role_order = :roleOrder) THEN
 	       	              (:nextRoleOrder)
 			 ELSE
 			      (:roleOrder)
 			 END
         where (role_order = :roleOrder or role_order = :nextRoleOrder)
-        and (select owner_id from ct_organizationroles where organizationrole_id=role_id) = :roleID
-	and 2 = (select count(*) from ct_organizationroles r where r.role_id=r.organizationrole_id
-	                                                     and (role_order = :roleOrder or role_order = :nextRoleOrder)
-                                                             and owner_id = :ownerID)
+	and owner_id = :ownerID
      }
 }
+
+//	and 2 = (select count(*) from ct_organizationroles r where r.role_id=r.role_id
+//	                                                     and (role_order = :roleOrder or role_order = :nextRoleOrder)
+ //                                                            and owner_id = :ownerID)
+
 
 query allRoleOrderForOrganization {
       Integer roleOrder;

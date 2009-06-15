@@ -234,7 +234,7 @@ public class OrganizationRole extends ACSObject {
      * @throws java.lang.UnsupportedOperationException
      */
     public void swapWithPrevious() throws UnsupportedOperationException {
-        swapWithNext("com.arsdigita.cms.contenttypes.allRoleOrderForOrganization", "com.arsdigita.cms.contenttypes.swapOrganizationRoleWithNextInGroup");
+        swapWithPrevious("com.arsdigita.cms.contenttypes.allRoleOrderForOrganization", "com.arsdigita.cms.contenttypes.swapOrganizationRoleWithNextInGroup");
     }
 
     /**
@@ -289,6 +289,8 @@ public class OrganizationRole extends ACSObject {
      * @param operationName
      */
     protected void swapKeys(boolean swapNext, String queryName, String operationName) {
+        logger.info("this is swapKeys()...");
+
         String methodName = null;
         if (swapNext) {
             methodName = "swapWithNext";
@@ -299,6 +301,7 @@ public class OrganizationRole extends ACSObject {
         Assert.isTrue(!isNew(), methodName + "cannot be called on an object that is new");
 
         Integer currentKey = (Integer) get(ORDER);
+        logger.info(String.format("currentKey = %s", currentKey.intValue()));
 
         if (currentKey == null) {
             alphabetize();
@@ -310,11 +313,11 @@ public class OrganizationRole extends ACSObject {
                 "list");
 
         int key = currentKey.intValue();
+        logger.info(String.format("key = %d", key));
 
         DataQuery query = getSwapQuery(queryName);
 
-        int otherKey = key;
-
+        int otherKey; // = key;
         if (swapNext) {
             otherKey = key + 1;
             query.addOrder("roleOrder ASC");
@@ -330,9 +333,13 @@ public class OrganizationRole extends ACSObject {
             query.close();
         }
 
+        logger.info(String.format("otherKey = %s", otherKey));
+
         DataOperation operation = getSwapOperation(operationName);
+        //operation.setParameter("roleID", this.get(ID));
         operation.setParameter("roleOrder", new Integer(key));
         operation.setParameter("nextRoleOrder", new Integer(otherKey));
+        logger.info(String.format("swapoperation = %s", operation.toString()));
         operation.execute();
     }
 
