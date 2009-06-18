@@ -15,7 +15,7 @@ import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.OrganizationRole;
+import com.arsdigita.cms.contenttypes.Orga2OrgaUnit;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -26,110 +26,76 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * Table for displaying the existings roles associated with an organization.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class OrganizationRoleTable extends Table {
+public class Orga2OrgaUnitTable extends Table {
 
-    private final static Logger logger = Logger.getLogger(OrganizationRoleTable.class);
-    private OrganizationRoleSelectionModel m_roleModel;
+    private final static Logger logger = Logger.getLogger(Orga2OrgaUnitTable.class);
+    private Orga2OrgaUnitSelectionModel m_o2ouModel;
     private ItemSelectionModel m_itemModel;
-    private TableColumn m_roleNameCol;
-    private TableColumn m_personCol;
+    private TableColumn m_orgaUnitCol;
     private TableColumn m_moveUpCol;
     private TableColumn m_moveDownCol;
     private TableColumn m_editCol;
     private TableColumn m_delCol;
     private RequestLocal m_size;
     private RequestLocal m_editor;
-    /**
-     * Identifier for an Edit event.
-     */
     protected final static String EDIT_EVENT = "Edit";
-    /**
-     * ID for an Delete event.
-     */
     protected final static String DELETE_EVENT = "Delete";
-    /**
-     * ID for an Up event.
-     */
     protected final static String UP_EVENT = "up";
-    /**
-     * ID for an down event.
-     */
     protected final static String DOWN_EVENT = "down";
 
-    /**
-     * Constructor. Creates a new table a sets the column headers.
-     *
-     * @param itemModel
-     * @param roleModel
-     */
-    public OrganizationRoleTable(ItemSelectionModel itemModel, OrganizationRoleSelectionModel roleModel) {
+    public Orga2OrgaUnitTable(ItemSelectionModel itemModel, Orga2OrgaUnitSelectionModel o2ouModel) {
         super();
         this.m_itemModel = itemModel;
-        this.m_roleModel = roleModel;
+        this.m_o2ouModel = o2ouModel;
         addColumns();
 
         m_size = new RequestLocal();
         m_editor = new RequestLocal() {
 
             @Override
-            public Object initialValue(PageState state) {
-                SecurityManager sm = Utilities.getSecurityManager(state);
-                ContentItem item = m_itemModel.getSelectedItem(state);
-                Boolean val = new Boolean(sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM, item));
+            public Object initialValue(PageState s) {
+                SecurityManager sm = Utilities.getSecurityManager(s);
+                ContentItem item = m_itemModel.getSelectedItem(s);
+                Boolean val = new Boolean(sm.canAccess(s.getRequest(), SecurityManager.EDIT_ITEM, item));
                 return val;
             }
         };
 
-        Label empty = new Label("There are no roles for this organization.");
+        Label empty = new Label("There are no organizational units for this organization.");
         setEmptyView(empty);
-        addTableActionListener(new OrganizationRoleTableActionListener());
-        setRowSelectionModel(m_roleModel);
-        setDefaultCellRenderer(new OrganizationRoleTableRenderer());
-        setModelBuilder(new OrganizationRoleTableModelBuilder(itemModel));
+        addTableActionListener(new Orga2OrgaUnitTableActionListener());
+        setRowSelectionModel(m_o2ouModel);
+        setDefaultCellRenderer(new Orga2OrgaUnitTableRenderer());
+        setModelBuilder(new Orga2OrgaUnitTableModelBuilder(itemModel));
     }
 
-    /**
-     * Called by the constructor to add the columns of the table.
-     */
-    protected void addColumns() {
+    public void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
-        this.m_roleNameCol = new TableColumn(i, "Role");
-        this.m_personCol = new TableColumn(++i, "Person");
+        this.m_orgaUnitCol = new TableColumn(i, "Organizational Unit");
         this.m_editCol = new TableColumn(++i, "Edit");
-        this.m_delCol = new TableColumn(++i, "Delete");
-        this.m_moveUpCol = new TableColumn(++i, "");
-        this.m_moveDownCol = new TableColumn(++i, "");
-
-        model.add(this.m_roleNameCol);
-        model.add(this.m_personCol);
-        model.add(this.m_editCol);
         model.add(this.m_delCol);
         model.add(this.m_moveUpCol);
         model.add(this.m_moveDownCol);
         setColumnModel(model);
     }
 
-    private class OrganizationRoleTableRenderer implements TableCellRenderer {
+    private class Orga2OrgaUnitTableRenderer implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value, boolean isSelected, Object key, int row, int column) {
-            OrganizationRole role = (OrganizationRole) value;
+            Orga2OrgaUnit o2ou = (Orga2OrgaUnit) value;
             boolean isFirst = (row == 0);
             if (m_size.get(state) == null) {
-                m_size.set(state, new Long(((OrganizationRoleTableModelBuilder.OrganizationRoleTableModel) table.getTableModel(state)).size()));
+                m_size.set(state, new Long(((Orga2OrgaUnitTableModelBuilder.Orga2OrgaUnitTableModel) table.getTableModel(state)).size()));
             }
             boolean isLast = (row == ((Long) m_size.get(state)).intValue() - 1);
 
-            String url = role.getURI(state);
-            if (column == m_roleNameCol.getModelIndex()) {
-                ExternalLink extLink = new ExternalLink(role.getRolename(), url);
-                return extLink;
-            } else if (column == m_personCol.getModelIndex()) {
-                ExternalLink extLink = new ExternalLink(role.getTargetItem().getTitle(), url);
+            String url = o2ou.getURI(state);
+            if (column == m_orgaUnitCol.getModelIndex()) {
+                ExternalLink extLink = new ExternalLink(o2ou.getTargetItem().getOrganizationalUnitName(), url);
                 return extLink;
             } else if (column == m_editCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
@@ -169,64 +135,57 @@ public class OrganizationRoleTable extends Table {
         }
     }
 
-    private class OrganizationRoleTableActionListener implements TableActionListener {
+    private class Orga2OrgaUnitTableActionListener implements TableActionListener {
 
-        private OrganizationRole getOrganizationRole(TableActionEvent e) {
+        private Orga2OrgaUnit getOrga2OrgaUnit(TableActionEvent e) {
             Object o = e.getRowKey();
             BigDecimal id;
-            if(o instanceof String) {
-                logger.debug("row key is a string: " + o);
-                id = new BigDecimal((String)o);
+            if (o instanceof String) {
+                id = new BigDecimal((String) o);
             } else {
-                id = (BigDecimal)e.getRowKey();
+                id = (BigDecimal) e.getRowKey();
             }
 
             Assert.exists(id);
-            OrganizationRole role;
+            Orga2OrgaUnit o2ou;
             try {
-                role = (OrganizationRole)DomainObjectFactory.newInstance(new OID(OrganizationRole.BASE_DATA_OBJECT_TYPE, id));
-            } catch(DataObjectNotFoundException ex) {
+                o2ou = (Orga2OrgaUnit) DomainObjectFactory.newInstance(new OID(Orga2OrgaUnit.BASE_DATA_OBJECT_TYPE, id));
+            } catch (DataObjectNotFoundException ex) {
                 throw new UncheckedWrapperException(ex);
             }
-            return role;
+            return o2ou;
         }
 
         public void cellSelected(TableActionEvent e) {
             int col = e.getColumn().intValue();
             PageState state = e.getPageState();
-            OrganizationRole role = getOrganizationRole(e);
-            Assert.exists(role);
+            Orga2OrgaUnit o2ou = getOrga2OrgaUnit(e);
+            Assert.exists(o2ou);
 
-            /*if (col == m_roleNameCol.getModelIndex()) {
-                //Nothing to do...
-            } else*/
             if (col == m_editCol.getModelIndex()) {
-                if(Boolean.TRUE.equals(m_editor.get(state))) {
-                    logger.debug("setting organizationRoleModel to: " + role.getRolename());
-                    m_roleModel.setSelectedObject(state, role);
+                if (Boolean.TRUE.equals(m_editor.get(state))) {
+                    m_o2ouModel.setSelectedObject(state, o2ou);
                 }
-            } else if(col == m_delCol.getModelIndex()) {
-                if(Boolean.TRUE.equals(m_editor.get(state))) {
+            } else if (col == m_delCol.getModelIndex()) {
+                if (Boolean.TRUE.equals(m_editor.get(state))) {
                     try {
-                        logger.debug("About to delete");
-                        m_roleModel.clearSelection(state);
-                        role.delete();
-                    } catch(Exception ex) {
+                        m_o2ouModel.clearSelection(state);
+                        o2ou.delete();
+                    } catch (Exception ex) {
                         throw new UncheckedWrapperException(ex);
                     }
                 }
-            } else if(col == m_moveUpCol.getModelIndex()) {
-                m_roleModel.clearSelection(state);
-                role.swapWithPrevious();
-            } else if(col == m_moveDownCol.getModelIndex()) {
-                m_roleModel.clearSelection(state);
-                role.swapWithNext();
+            } else if (col == m_moveUpCol.getModelIndex()) {
+                m_o2ouModel.clearSelection(state);
+                o2ou.swapWithPrevious();
+            } else if (col == m_moveDownCol.getModelIndex()) {
+                m_o2ouModel.clearSelection(state);
+                o2ou.swapWithNext();
             }
+
         }
 
         public void headSelected(TableActionEvent e) {
-            //Nothing
         }
-
     }
 }

@@ -34,7 +34,7 @@ public class OrganizationalUnitInitializer extends ContentTypeInitializer {
     }
 
     public String getStylesheet() {
-        return "static/content-types/com/arsdigita/cms/contenttypes/OrganizationalUnit.xml";
+        return "static/content-types/com/arsdigita/cms/contenttypes/OrganizationalUnit.xsl";
     }
 
     @Override

@@ -3,6 +3,7 @@
 		<table name="inits" />
 		<table name="acs_objects" />
 		<table name="cms_items" />
+		<table name="ct_organizationalunits" />
 		<table name="ct_persons" />
 		<initializer class="com.arsdigita.cms.Initializer" />
 	</requires>

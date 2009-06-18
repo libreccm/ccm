@@ -30,8 +30,8 @@ import java.math.BigDecimal;
  */
 public class OrganizationalUnit extends ContentPage {
 
-    public final static String ORGANIZATIONALUNIT_NAME = "organizationalunitname";
-    public final static String ORGANIZATIONAL_DESCRIPTION = "description";
+    public final static String ORGANIZATIONALUNIT_NAME = "organizationalunitName";
+    public final static String ORGANIZATIONALUNIT_DESCRIPTION = "organizationalunitDescription";
 
     public final static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.OrganizationalUnit";
 
@@ -65,10 +65,10 @@ public class OrganizationalUnit extends ContentPage {
     }
 
     public String getOrganizationalUnitDescription() {
-        return (String) get(ORGANIZATIONAL_DESCRIPTION);
+        return (String) get(ORGANIZATIONALUNIT_DESCRIPTION);
     }
 
     public void setOrganizationalUnitDescription(String description) {
-        set(ORGANIZATIONAL_DESCRIPTION, description);
+        set(ORGANIZATIONALUNIT_DESCRIPTION, description);
     }
 }

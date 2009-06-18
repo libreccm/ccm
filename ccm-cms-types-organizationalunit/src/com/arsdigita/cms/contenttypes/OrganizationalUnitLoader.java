@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 public class OrganizationalUnitLoader extends AbstractContentTypeLoader {
 
     private final static Logger logger = Logger.getLogger(OrganizationalUnitLoader.class);
-    private final static String[] TYPES = {"/WEB-INF/content-types/com/arsdigita/cms/contentypes/OrganizationalUnit.xml"};    
+    private final static String[] TYPES = {"/WEB-INF/content-types/com/arsdigita/cms/contenttypes/OrganizationalUnit.xml"};
 
     public String[] getTypes() {
         return TYPES;

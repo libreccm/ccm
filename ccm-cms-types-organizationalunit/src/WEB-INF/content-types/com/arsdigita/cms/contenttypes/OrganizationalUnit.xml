@@ -18,6 +18,7 @@
 			  component="com.arsdigita.cms.contenttypes.ui.OrganizationalUnitPropertiesStep"
 			  ordering="1"/>
 
+      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
     </ctd:authoring-kit>
 
   </ctd:content-type>
