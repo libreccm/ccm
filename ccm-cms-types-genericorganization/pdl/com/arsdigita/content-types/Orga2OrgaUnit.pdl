@@ -30,7 +30,7 @@ object type Orga2OrgaUnit extends ACSObject {
 }
 
 association {
-  composite GenericOrganization[0..1] unitOwner = join ct_orga2orgaunits.unit_owner to ct_genericorganizations.organization_id;
+  composite GenericOrganization[0..1] unitOwner = join ct_orga2orgaunits.owner_id to ct_genericorganizations.organization_id;
   composite Orga2OrgaUnit[0..n] units = join ct_genericorganizations.organization_id to ct_orga2orgaunits.owner_id;
 }
 

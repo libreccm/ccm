@@ -965,6 +965,11 @@ public class Page extends BlockStylable implements Container {
         Assert.assertNotLocked(this);
 
         if ( ! stateContains(c) ) {
+            if(c == null) {
+                s_log.error("c is null");
+            } else {
+                //s_log.error("c: " + c.toString());
+            }
             String key = c.getKey();
             if (key == null) {
                 key = Integer.toString(m_components.size());

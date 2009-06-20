@@ -6,7 +6,7 @@
 
   <ctd:content-type
       label="GenericOrganization"
-      description="A generic, GenericOrganization type"
+      description="A generic organization type"
       objectType="com.arsdigita.cms.contenttypes.GenericOrganization"
       classname="com.arsdigita.cms.contenttypes.GenericOrganization">
     

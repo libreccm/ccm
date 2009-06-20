@@ -41,7 +41,7 @@ public class OrganizationalUnitPropertyForm extends BasicPageForm implements For
     }
 
     @Override
-    public void addWidgets() {
+    public void addWidgets() {        
         super.addWidgets();
 
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.organizationalunit.ui.unitname")));
@@ -54,20 +54,20 @@ public class OrganizationalUnitPropertyForm extends BasicPageForm implements For
         TextArea description = new TextArea(ORGANIZATIONALUNIT_DESCRIPTION);
         description.setRows(5);
         description.setCols(30);
-        add(description);
+        add(description);        
     }
 
     @Override
-    public void init(FormSectionEvent e) throws FormProcessException {
+    public void init(FormSectionEvent e) throws FormProcessException {        
         FormData data = e.getFormData();
         OrganizationalUnit orgaUnit = (OrganizationalUnit) super.initBasicWidgets(e);
 
         data.put(ORGANIZATIONALUNIT_NAME, orgaUnit.getOrganizationalUnitName());
-        data.put(ORGANIZATIONALUNIT_DESCRIPTION, orgaUnit.getOrganizationalUnitDescription());
+        data.put(ORGANIZATIONALUNIT_DESCRIPTION, orgaUnit.getOrganizationalUnitDescription());       
     }
 
     @Override
-    public void process(FormSectionEvent e) throws FormProcessException {
+    public void process(FormSectionEvent e) throws FormProcessException {        
         FormData data = e.getFormData();
 
         OrganizationalUnit orgaUnit = (OrganizationalUnit) super.processBasicWidgets(e);
@@ -81,14 +81,13 @@ public class OrganizationalUnitPropertyForm extends BasicPageForm implements For
 
         if (this.m_step != null) {
             this.m_step.maybeForwardToNextStep(e.getPageState());
-        }
-
+        }        
     }
 
-    public void submitted(FormSectionEvent e) throws FormProcessException {
+    public void submitted(FormSectionEvent e) throws FormProcessException {       
         if ((this.m_step != null) &&
                 (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
             this.m_step.cancelStreamlinedCreation(e.getPageState());
-        }
+        }        
     }
 }

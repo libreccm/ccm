@@ -25,8 +25,8 @@ public class OrganizationalUnitPropertiesStep extends SimpleEditStep {
     private final static Logger logger = Logger.getLogger(OrganizationalUnitPropertiesStep.class);
     public final static String EDIT_SHEET_NAME = "edit";
 
-    public OrganizationalUnitPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
-        super(itemModel, parent);
+    public OrganizationalUnitPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {        
+        super(itemModel, parent);       
 
         setDefaultEditKey(EDIT_SHEET_NAME);
         BasicPageForm editSheet;
@@ -34,10 +34,10 @@ public class OrganizationalUnitPropertiesStep extends SimpleEditStep {
         editSheet = new OrganizationalUnitPropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
 
-        setDisplayComponent(getOrganizationalUnitPropertySheet(itemModel));
+        setDisplayComponent(getOrganizationalUnitPropertySheet(itemModel));        
     }
 
-    public static Component getOrganizationalUnitPropertySheet(ItemSelectionModel itemModel) {
+    public static Component getOrganizationalUnitPropertySheet(ItemSelectionModel itemModel) {        
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.organizatialunit.unitname"), OrganizationalUnit.ORGANIZATIONALUNIT_NAME);
@@ -56,7 +56,7 @@ public class OrganizationalUnitPropertiesStep extends SimpleEditStep {
                 }
             });
         }
-
+       
         return sheet;
     }
 }

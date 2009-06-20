@@ -66,6 +66,7 @@ public class Orga2OrgaUnit extends ACSObject {
 
     public void setUnitOwner(GenericOrganization orga) {
         Assert.exists(orga, GenericOrganization.class);
+        logger.debug(String.format("Setting unit owner to %s", orga.getOrganizationName()));
         setAssociation(UNITOWNER, orga);
     }
 
@@ -123,7 +124,7 @@ public class Orga2OrgaUnit extends ACSObject {
         swapWithNext("com.arsdigita.cms.contenttypes.allUnitsOrderForOrganization", "com.arsdigita.cms.contenttypes.swapOrga2OrgaUnitWithNextInGroup");
     }
 
-    public void swapWithPrevious() {
+    public void swapWithPrevious() {       
         swapWithPrevious("com.arsdigita.cms.contenttypes.allUnitsOrderForOrganization", "com.arsdigita.cms.contenttypes.swapOrga2OrgaUnitWithNextInGroup");
     }
 
@@ -136,7 +137,7 @@ public class Orga2OrgaUnit extends ACSObject {
     }
 
     protected DataQuery getSwapQuery(String queryName) {
-        DataQuery query = SessionManager.getSession().retrieve(queryName);
+        DataQuery query = SessionManager.getSession().retrieveQuery(queryName);
         query.setParameter("ownerID", getUnitOwner().getID());
         return query;
     }

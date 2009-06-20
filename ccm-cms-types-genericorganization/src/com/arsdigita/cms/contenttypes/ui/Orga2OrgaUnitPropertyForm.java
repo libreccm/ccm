@@ -53,10 +53,10 @@ public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitLi
         addSubmissionListener(this);
     }
 
-    protected void addWidgets() {
+    protected void addWidgets() {       
         add(new Label("OrganizationalUnit"));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.OrganizationalUnit"));
-        add(this.m_itemSearch);
+        add(this.m_itemSearch);       
     }
 
     public void addSaveCancelSection() {

@@ -77,6 +77,12 @@ public class Orga2OrgaUnitTable extends Table {
         int i = 0;
         this.m_orgaUnitCol = new TableColumn(i, "Organizational Unit");
         this.m_editCol = new TableColumn(++i, "Edit");
+        this.m_delCol = new TableColumn(++i, "Delete");
+        this.m_moveUpCol = new TableColumn(++i, "");
+        this.m_moveDownCol = new TableColumn(++i, "");
+
+        model.add(this.m_orgaUnitCol);
+        model.add(this.m_editCol);
         model.add(this.m_delCol);
         model.add(this.m_moveUpCol);
         model.add(this.m_moveDownCol);
