@@ -58,12 +58,6 @@ Oracle 10g RDBMS or PostgresQL up to version 8.2
 (g)  ant deploy 
      will compile and deploy into your test environment (runtime)
 
-As a temporary measure:
-     copy ${CATALINA_HOME}/lib/system/ccm-core*  
-       to ${JAVA_HOME}/jre/lib/ext
-
-     otherwise you will get a malformedURL exception during server startup
-
 (h)  ant load-bundle 
      will load the database. May take several minutes!
 
