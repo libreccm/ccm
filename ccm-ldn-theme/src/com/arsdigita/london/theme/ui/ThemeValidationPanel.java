@@ -159,9 +159,14 @@ class ThemeValidationPanel extends GridPanel implements ThemeConstants {
         // any error messages that are found
         Theme theme = m_model.getSelectedTheme(state);
 
-        //The call to resolve returns a url similar to this:
-        // http://localhost:9008/resource/ccm-ldn-theme,ROOT/__ccm__/apps/theme/xsl/index.xsl
-        String base = "http://" + Web.getConfig().getHost().toString() + "/resource/ccm-ldn-theme/";
+        // The call to resolve returns a url similar to this:
+        // http://localhost:9008/resource/ccm-ldn-theme,ROOT/__ccm__/apps/theme/xsl/index.xs
+        //
+        // TODO: This is VERY UGLY! Bad style to code a path into source code!
+        // String base = "http://" + Web.getConfig().getHost().toString() +
+        //               "/resource/ccm-ldn-theme/";
+        String base = "http://" + Web.getConfig().getHost().toString() +
+                      "/resource/ROOT/";
         File currentRoot = new File(Web.getServletContext().getRealPath("/"));
         File devDir = new File(currentRoot, DEV_THEMES_BASE_DIR + 
                                theme.getURL());
