@@ -22,12 +22,12 @@ http://::host::/resource/::webapp::/__ccm__/::themedir::/::theme::/::application
 http://::host::/resource/::webapp::/__ccm__/::themedir::/::theme::/::application::-::url::-::locale::.xsl
 http://::host::/resource/::webapp::/__ccm__/::themedir::/::theme::/::application::-::url::.xsl
 
-# APLAWS default, with locale and prefix
+# APLAWS generic default, with locale and prefix
 # XXX change ROOT -> ccm-ldn-aplaws
 http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::-::prefix::-::locale::.xsl
 http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::-::prefix::.xsl
 
-# APLAWS default, with locale
+# APLAWS generic default, with locale
 # XXX change ROOT -> ccm-ldn-aplaws
 http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::-::locale::.xsl
 http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::url::.xsl
