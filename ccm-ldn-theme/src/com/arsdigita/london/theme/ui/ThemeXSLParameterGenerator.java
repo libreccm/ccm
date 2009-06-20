@@ -73,7 +73,8 @@ public class ThemeXSLParameterGenerator implements XSLParameterGenerator,
         }
 
         if (themeURL != null) {
-            return "/" + WEB_APP_NAME + "/" + CCM_PREFIX + "/" +
+        //  return "/" + WEB_APP_NAME + "/" + CCM_PREFIX + "/" +
+            return "/" + CCM_PREFIX + "/" +
                 Web.getContext().getRequestURL().getContextPath() +
                 baseDir + themeURL;
         } else {
@@ -88,4 +89,4 @@ public class ThemeXSLParameterGenerator implements XSLParameterGenerator,
             return themeURL;
         }
     }
-}
+} 

@@ -28,7 +28,7 @@ public interface ThemeConstants {
     // TODO: it would be nice if this value in com.arsdigita.web.URL
     // was public
     public final static String CCM_PREFIX = "__ccm__";
-    public final static String WEB_APP_NAME = "ccm-ldn-theme";
+    public final static String WEB_APP_NAME = "ROOT";
 
     // The location of the sync jsp used to sync up the multiple servers.
     public final static String SYNC_JSP = "sync-theme.jsp";
