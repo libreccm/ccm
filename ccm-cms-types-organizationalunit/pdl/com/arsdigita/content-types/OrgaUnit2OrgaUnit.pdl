@@ -1,0 +1,69 @@
+//
+// Copyright (C) 2009 Center of Socialpolitics, University of Bremen
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.kernel.ACSObject;
+
+object type OrgaUnit2OrgaUnit extends ACSObject {
+       OrganizationalUnit[0..1] targetItem = join ct_orgaunit2orgaunits.target_item_id to ct_organizationalunits.organizationalunit_id;
+
+       Integer[0..1] unitOrder = ct_orgaunit2orgaunits.unit_order INTEGER;
+
+       reference key(ct_orgaunit2orgaunits.orgaunit2orgaunit_id);
+       aggressive load (unitOwner.id);
+}
+
+association {
+  composite OrganizationalUnit[0..1] unitOwner = join ct_orgaunit2orgaunits.owner_id to ct_organizationalunits.organizationalunit_id;
+  composite OrgaUnit2OrgaUnit[0..n] units = join ct_organizationalunits.organizationalunit_id to ct_orgaunit2orgaunits.owner_id;
+}
+
+query getReferingOrgaUnits {
+      BigDecimal id;
+
+      do {
+      	 select u.organizationalunit_id from orgaunit2orgaunits u where u.target_item_id = :itemID
+      } map {
+      	id = u.orgaunit2orgaunit_id;
+      }      
+}
+
+data operation swapOrgaUnit2OrgaUnitWithNextInGroup {
+     do {
+     	update ct_orgaunit2orgaunits
+	set unit_order = CASE WHEN (unit_order = :unitOrder) THEN
+	    	       	      (:nextUnitOrder)
+		       	 ELSE
+			      (:unitOrder)
+			 END
+        where (unit_order = :unitOrder or unit_order = :nextUnitOrder)
+	and owner_id = :ownerID
+     }
+}
+
+query allUnitsOrderForUnit {
+      Integer unitOrder;
+
+      do {
+      	 select u.unit_order from ct_orgaunit2orgaunits u where u.owner_id = :ownerID
+      }
+      map {
+      	  unitOrder = u.unitOrder;
+      }
+}

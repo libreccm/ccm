@@ -17,8 +17,7 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.GenericOrganization;
-import com.arsdigita.cms.contenttypes.Orga2OrgaUnit;
+import com.arsdigita.cms.contenttypes.OrgaUnit2OrgaUnit;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.util.Assert;
@@ -26,34 +25,24 @@ import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
 
 /**
- * The form for adding, editing and removing associations between an organization
- * and an organizational unit.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitListener, FormProcessListener, FormValidationListener, FormSubmissionListener {
+public class OrgaUnit2OrgaUnitPropertyForm extends FormSection implements FormInitListener, FormProcessListener, FormValidationListener, FormSubmissionListener {
 
-    private final static Logger logger = Logger.getLogger(Orga2OrgaUnitPropertyForm.class);
-    /**
-     * ID String.
-     */
-    public final static String ID = "orga2orgaunit_edit";
+    private final static Logger logger = Logger.getLogger(OrgaUnit2OrgaUnitPropertyForm.class);
+    public final static String ID = "orgaUnit2OrgaUnit_edit";
     private ItemSelectionModel m_itemModel;
-    private Orga2OrgaUnitSelectionModel m_o2ouModel;
+    private OrgaUnit2OrgaUnitSelectionModel m_ou2ouModel;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
-    private final String ITEM_SEARCH = "orga2OrgaUnit";
+    private final String ITEM_SEARCH = "orgaUnit2OrgaUnit";
 
-    /**
-     * Creates the new form using the ItemSelectionModel and Orga2OrgaUnitSelectionModel proviveded.
-     *
-     * @param itemModel
-     * @param o2ouModel
-     */
-    public Orga2OrgaUnitPropertyForm(ItemSelectionModel itemModel, Orga2OrgaUnitSelectionModel o2ouModel) {
+    public OrgaUnit2OrgaUnitPropertyForm(ItemSelectionModel itemModel, OrgaUnit2OrgaUnitSelectionModel ou2ouModel) {
         super(new ColumnPanel(2));
         this.m_itemModel = itemModel;
-        this.m_o2ouModel = o2ouModel;
+        this.m_ou2ouModel = ou2ouModel;
+
 
         addWidgets();
         addSaveCancelSection();
@@ -64,26 +53,20 @@ public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitLi
         addSubmissionListener(this);
     }
 
-    /**
-     * Creates the widgets for the form.
-     */
     protected void addWidgets() {
         add(new Label("OrganizationalUnit"));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.OrganizationalUnit"));
-        add(this.m_itemSearch);       
+        add(this.m_itemSearch);
     }
 
-    /**
-     * Creates the section with the save and the cancel button.
-     */
-    public void addSaveCancelSection() {
+    protected void addSaveCancelSection() {
         this.m_saveCancelSection = new SaveCancelSection();
         try {
             this.m_saveCancelSection.getCancelButton().addPrintListener(new PrintListener() {
 
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
-                    if (m_o2ouModel.isSelected(e.getPageState())) {
+                    if (m_ou2ouModel.isSelected(e.getPageState())) {
                         target.setButtonLabel("Cancel");
                     } else {
                         target.setButtonLabel("Reset");
@@ -95,7 +78,7 @@ public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitLi
 
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
-                    if (m_o2ouModel.isSelected(e.getPageState())) {
+                    if (m_ou2ouModel.isSelected(e.getPageState())) {
                         target.setButtonLabel("Save");
                     } else {
                         target.setButtonLabel("Create");
@@ -117,52 +100,28 @@ public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitLi
         return this.m_saveCancelSection;
     }
 
-    /**
-     * Returns the Orga2OrgaUnitSelectionModel used.
-     *
-     * @return The Orga2OrgaUnitSelectionModel used.
-     */
-    protected Orga2OrgaUnitSelectionModel getO2OUSelectionModel() {
-        return this.m_o2ouModel;
+    protected OrgaUnit2OrgaUnitSelectionModel getOU2OUSelectionModel() {
+        return this.m_ou2ouModel;
     }
 
-    /**
-     * Returns the Organization of the assocication displayed by the form.
-     *
-     * @param s
-     * @return The Organization of the assocication displayed by the form.
-     */
-    protected GenericOrganization getOrganization(PageState s) {
-        return (GenericOrganization) m_itemModel.getSelectedItem(s);
+    protected OrganizationalUnit getOrganizationalUnit(PageState state) {
+        return (OrganizationalUnit) this.m_itemModel.getSelectedItem(state);
     }
 
-    /**
-     * Creates a new Orga2OrgaUnit assoication form the values of the form.
-     *
-     * @param s
-     * @return
-     */
-    protected Orga2OrgaUnit createOrga2OrgaUnit(PageState s) {
-        GenericOrganization orga = this.getOrganization(s);
-        Assert.exists(orga);
-        Orga2OrgaUnit o2ou = new Orga2OrgaUnit();
-        o2ou.setUnitOwner(orga);
-        return o2ou;
+    protected OrgaUnit2OrgaUnit createOrgaUnit2OrgaUnit(PageState state) {
+        OrganizationalUnit ou = this.getOrganizationalUnit(state);
+        Assert.exists(ou);
+        OrgaUnit2OrgaUnit ou2ou = new OrgaUnit2OrgaUnit();
+        ou2ou.setUnitOwner(ou);
+        return ou2ou;
     }
 
-    /**
-     * Sets the properties of an Orga2OrgaUnit instance.
-     *
-     * @param o2ou
-     * @param e
-     */
-    protected void setOrga2OrgaUnitProperties(Orga2OrgaUnit o2ou, FormSectionEvent e) {
-        PageState state = e.getPageState();
-        FormData data = e.getFormData();
+    protected void setOrgaUnit2OrgaUnitProperties(OrgaUnit2OrgaUnit ou2ou, FormSectionEvent event) {        
+        FormData data = event.getFormData();
 
-        o2ou.setTargetItem((OrganizationalUnit) data.get(ITEM_SEARCH));
+        ou2ou.setTargetItem((OrganizationalUnit) data.get(ITEM_SEARCH));
 
-        o2ou.save();
+        ou2ou.save();
     }
 
     public void init(FormSectionEvent e) throws FormProcessException {
@@ -171,12 +130,12 @@ public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitLi
 
         setVisible(state, true);
 
-        Orga2OrgaUnit o2ou;
-        if (m_o2ouModel.isSelected(state)) {
-            o2ou = m_o2ouModel.getSelectedO2OU(state);
+        OrgaUnit2OrgaUnit ou2ou;
+        if (this.m_ou2ouModel.isSelected(state)) {
+            ou2ou = this.m_ou2ouModel.getSelectedOU2OU(state);
             try {
-                data.put(ITEM_SEARCH, o2ou.getTargetItem());
-            } catch (IllegalStateException ex) {
+                data.put(ITEM_SEARCH, ou2ou.getTargetItem());
+            } catch(IllegalStateException ex) {
                 throw ex;
             }
         } else {
@@ -186,33 +145,33 @@ public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitLi
 
     public void process(FormSectionEvent e) throws FormProcessException {
         PageState state = e.getPageState();
-        Orga2OrgaUnit o2ou;
+        OrgaUnit2OrgaUnit ou2ou;
 
-        if (this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            this.m_o2ouModel.clearSelection(state);
+        if (this.m_saveCancelSection.getCancelButton().isSelected(state)) {
+            this.m_ou2ouModel.clearSelection(state);
         } else {
-            if (this.m_o2ouModel.isSelected(state)) {
-                o2ou = m_o2ouModel.getSelectedO2OU(state);
+            if (this.m_ou2ouModel.isSelected(state)) {
+                ou2ou = m_ou2ouModel.getSelectedOU2OU(state);
             } else {
-                o2ou = createOrga2OrgaUnit(state);
+                ou2ou = createOrgaUnit2OrgaUnit(state);
             }
-            setOrga2OrgaUnitProperties(o2ou, e);
+            setOrgaUnit2OrgaUnitProperties(ou2ou, e);
         }
 
-        m_o2ouModel.clearSelection(state);
-        init(e);
+        this.m_ou2ouModel.clearSelection(state);
+        this.init(e);
     }
 
     public void validate(FormSectionEvent e) throws FormProcessException {
         if (e.getFormData().get(ITEM_SEARCH) == null) {
-            throw new FormProcessException("OrganiztionalUnit selection is required");
+            throw new FormProcessException("OrganizationalUnit selection is requiered");
         }
     }
 
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (this.m_saveCancelSection.getCancelButton().isSelected(e.getPageState())) {
-            m_o2ouModel.clearSelection(e.getPageState());
-            init(e);
+            this.m_ou2ouModel.clearSelection(e.getPageState());
+            this.init(e);
             throw new FormProcessException("cancelled");
         }
     }

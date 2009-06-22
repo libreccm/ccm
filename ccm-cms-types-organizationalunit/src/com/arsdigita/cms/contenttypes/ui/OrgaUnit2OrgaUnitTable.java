@@ -15,9 +15,8 @@ import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.Orga2OrgaUnit;
+import com.arsdigita.cms.contenttypes.OrgaUnit2OrgaUnit;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
@@ -26,15 +25,13 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * The table used by {@see Orga2OrgaUnitPropertyForm} for displying the existing
- * associations between an organization and an organizational unit.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class Orga2OrgaUnitTable extends Table {
+public class OrgaUnit2OrgaUnitTable extends Table {
 
-    private final static Logger logger = Logger.getLogger(Orga2OrgaUnitTable.class);
-    private Orga2OrgaUnitSelectionModel m_o2ouModel;
+    private final static Logger logger = Logger.getLogger(OrgaUnit2OrgaUnitTable.class);
+    private OrgaUnit2OrgaUnitSelectionModel m_ou2ouModel;
     private ItemSelectionModel m_itemModel;
     private TableColumn m_orgaUnitCol;
     private TableColumn m_moveUpCol;
@@ -60,41 +57,32 @@ public class Orga2OrgaUnitTable extends Table {
      */
     protected final static String DOWN_EVENT = "down";
 
-    /**
-     * Creates an new table.
-     *
-     * @param itemModel
-     * @param o2ouModel
-     */
-    public Orga2OrgaUnitTable(ItemSelectionModel itemModel, Orga2OrgaUnitSelectionModel o2ouModel) {
+    public OrgaUnit2OrgaUnitTable(ItemSelectionModel itemModel, OrgaUnit2OrgaUnitSelectionModel ou2ouModel) {
         super();
         this.m_itemModel = itemModel;
-        this.m_o2ouModel = o2ouModel;
+        this.m_ou2ouModel = ou2ouModel;
         addColumns();
 
-        m_size = new RequestLocal();
-        m_editor = new RequestLocal() {
+        this.m_size = new RequestLocal();
+        this.m_editor = new RequestLocal() {
 
             @Override
-            public Object initialValue(PageState s) {
-                SecurityManager sm = Utilities.getSecurityManager(s);
-                ContentItem item = m_itemModel.getSelectedItem(s);
-                Boolean val = new Boolean(sm.canAccess(s.getRequest(), SecurityManager.EDIT_ITEM, item));
+            public Object initialValue(PageState state) {
+                SecurityManager sm = Utilities.getSecurityManager(state);
+                ContentItem item = m_itemModel.getSelectedItem(state);
+                Boolean val = new Boolean(sm.canAccess(state.getRequest(), SecurityManager.EDIT_ITEM, item));
                 return val;
             }
         };
 
-        Label empty = new Label("There are no organizational units for this organization.");
+        Label empty = new Label("There are no organizational units associated with this organizational unit.");
         setEmptyView(empty);
-        addTableActionListener(new Orga2OrgaUnitTableActionListener());
-        setRowSelectionModel(m_o2ouModel);
-        setDefaultCellRenderer(new Orga2OrgaUnitTableRenderer());
-        setModelBuilder(new Orga2OrgaUnitTableModelBuilder(itemModel));
+        addTableActionListener(new OrgaUnit2OrgaUnitTableActionListener());
+        setRowSelectionModel(this.m_ou2ouModel);
+        setDefaultCellRenderer(new OrgaUnit2OrgaUnitTableRenderer());
+        setModelBuilder(new OrgaUnit2OrgaUnitTableModelBuilder(itemModel));
     }
 
-    /**
-     * Adds the columns of the table.
-     */
     public void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
@@ -112,19 +100,19 @@ public class Orga2OrgaUnitTable extends Table {
         setColumnModel(model);
     }
 
-    private class Orga2OrgaUnitTableRenderer implements TableCellRenderer {
+    private class OrgaUnit2OrgaUnitTableRenderer implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value, boolean isSelected, Object key, int row, int column) {
-            Orga2OrgaUnit o2ou = (Orga2OrgaUnit) value;
+            OrgaUnit2OrgaUnit ou2ou = (OrgaUnit2OrgaUnit) value;
             boolean isFirst = (row == 0);
             if (m_size.get(state) == null) {
-                m_size.set(state, new Long(((Orga2OrgaUnitTableModelBuilder.Orga2OrgaUnitTableModel) table.getTableModel(state)).size()));
+                m_size.set(state, new Long(((OrgaUnit2OrgaUnitTableModelBuilder.OrgaUnit2OrgaUnitTableModel) table.getTableModel(state)).size()));
             }
             boolean isLast = (row == ((Long) m_size.get(state)).intValue() - 1);
 
-            String url = o2ou.getURI(state);
+            String url = ou2ou.getURI(state);
             if (column == m_orgaUnitCol.getModelIndex()) {
-                ExternalLink extLink = new ExternalLink(o2ou.getTargetItem().getOrganizationalUnitName(), url);
+                ExternalLink extLink = new ExternalLink(ou2ou.getTargetItem().getOrganizationalUnitName(), url);
                 return extLink;
             } else if (column == m_editCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
@@ -164,54 +152,53 @@ public class Orga2OrgaUnitTable extends Table {
         }
     }
 
-    private class Orga2OrgaUnitTableActionListener implements TableActionListener {
+    private class OrgaUnit2OrgaUnitTableActionListener implements TableActionListener {
 
-        private Orga2OrgaUnit getOrga2OrgaUnit(TableActionEvent e) {
-            Object o = e.getRowKey();
+        private OrgaUnit2OrgaUnit getOrgaUnit2OrgaUnit(TableActionEvent event) {
+            Object o = event.getRowKey();
             BigDecimal id;
             if (o instanceof String) {
                 id = new BigDecimal((String) o);
             } else {
-                id = (BigDecimal) e.getRowKey();
+                id = (BigDecimal) event.getRowKey();
             }
 
             Assert.exists(id);
-            Orga2OrgaUnit o2ou;
+            OrgaUnit2OrgaUnit ou2ou;
             try {
-                o2ou = (Orga2OrgaUnit) DomainObjectFactory.newInstance(new OID(Orga2OrgaUnit.BASE_DATA_OBJECT_TYPE, id));
-            } catch (DataObjectNotFoundException ex) {
+                ou2ou = (OrgaUnit2OrgaUnit) DomainObjectFactory.newInstance(new OID(OrgaUnit2OrgaUnit.BASE_DATA_OBJECT_TYPE, id));
+            } catch (Exception ex) {
                 throw new UncheckedWrapperException(ex);
             }
-            return o2ou;
+            return ou2ou;
         }
 
         public void cellSelected(TableActionEvent e) {
             int col = e.getColumn().intValue();
             PageState state = e.getPageState();
-            Orga2OrgaUnit o2ou = getOrga2OrgaUnit(e);
-            Assert.exists(o2ou);
+            OrgaUnit2OrgaUnit ou2ou = getOrgaUnit2OrgaUnit(e);
+            Assert.exists(ou2ou);
 
             if (col == m_editCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
-                    m_o2ouModel.setSelectedObject(state, o2ou);
+                    m_ou2ouModel.setSelectedObject(state, ou2ou);
                 }
             } else if (col == m_delCol.getModelIndex()) {
                 if (Boolean.TRUE.equals(m_editor.get(state))) {
                     try {
-                        m_o2ouModel.clearSelection(state);
-                        o2ou.delete();
+                        m_ou2ouModel.clearSelection(state);
+                        ou2ou.delete();
                     } catch (Exception ex) {
                         throw new UncheckedWrapperException(ex);
                     }
                 }
             } else if (col == m_moveUpCol.getModelIndex()) {
-                m_o2ouModel.clearSelection(state);
-                o2ou.swapWithPrevious();
+                m_ou2ouModel.clearSelection(state);
+                ou2ou.swapWithPrevious();
             } else if (col == m_moveDownCol.getModelIndex()) {
-                m_o2ouModel.clearSelection(state);
-                o2ou.swapWithNext();
+                m_ou2ouModel.clearSelection(state);
+                ou2ou.swapWithNext();
             }
-
         }
 
         public void headSelected(TableActionEvent e) {

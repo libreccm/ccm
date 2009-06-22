@@ -15,6 +15,7 @@ import com.arsdigita.util.LockableImpl;
 import org.apache.log4j.Logger;
 
 /**
+ * ModelBuilder for the TableModel of the {@see Orga2OrgaUnitTable}.
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
@@ -23,6 +24,11 @@ public class Orga2OrgaUnitTableModelBuilder extends LockableImpl implements Tabl
     private final static Logger logger = Logger.getLogger(Orga2OrgaUnitTableModelBuilder.class);
     private ItemSelectionModel m_itemModel;
 
+    /**
+     * Creates an new TableModelBuilder.
+     *
+     * @param itemModel
+     */
     public Orga2OrgaUnitTableModelBuilder(ItemSelectionModel itemModel) {
         this.m_itemModel = itemModel;
     }
@@ -37,17 +43,31 @@ public class Orga2OrgaUnitTableModelBuilder extends LockableImpl implements Tabl
         }
     }
 
+    /**
+     * Gets all organizational units associated with the selected organization.
+     *
+     * @param s
+     * @return All organizational units associated with the selected organization.
+     */
     public DataCollection getUnits(PageState s) {
         Assert.isTrue(this.m_itemModel.isSelected(s), "item selected");
         GenericOrganization orga = (GenericOrganization) this.m_itemModel.getSelectedItem(s);
         return Orga2OrgaUnit.getUnits(orga);
     }
 
+    /**
+     * The table model for the the {@see Orga2OrgaUnitTable}.
+     */
     public static class Orga2OrgaUnitTableModel implements TableModel {
 
         Orga2OrgaUnit m_o2ou;
         DataCollection m_units;
 
+        /**
+         * Creates a new TableModel
+         *
+         * @param units The associations between an organization and some organizational units to display.
+         */
         public Orga2OrgaUnitTableModel(DataCollection units) {
             m_units = units;
             m_o2ou = null;
@@ -75,6 +95,11 @@ public class Orga2OrgaUnitTableModelBuilder extends LockableImpl implements Tabl
             return m_o2ou.getID();
         }
 
+        /**
+         * Returns the number of associations displayed.
+         *
+         * @return The number of associations displayed.
+         */
         public long size() {
             return m_units.size();
         }

@@ -8,6 +8,7 @@
 	</requires>
 	<provides>
 		<table name="ct_organizationalunits" />
+		<table name="ct_orgaunit2orgaunits" />
 		<initializer class="com.arsdigita.cms.contenttypes.OrganizationalUnitInitializer"/>
 	</provides>
 	<scripts>
