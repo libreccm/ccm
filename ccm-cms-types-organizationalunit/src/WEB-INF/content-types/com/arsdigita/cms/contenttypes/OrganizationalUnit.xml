@@ -18,6 +18,13 @@
 			  component="com.arsdigita.cms.contenttypes.ui.OrganizationalUnitPropertiesStep"
 			  ordering="1"/>
 
+      <ctd:authoring-step labelKey="organizationalunit.authoring.subunits.title"
+			  labelBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
+			  descriptionKey="organizationalunit.authoring.subunits_properties.description"
+			  descriptionBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
+			  component="com.arsdigita.cms.contenttypes.ui.OrgaUnit2OrgaUnitPropertiesStep"
+			  ordering="2"/>
+      
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
     </ctd:authoring-kit>
 

@@ -115,11 +115,11 @@ public class OrgaUnit2OrgaUnit extends ACSObject {
     }
 
     public void swapWithNext() {
-        swapWithNext("com.arsdigita.cms.cotenttypes.addUnitsOrderForUnit", "com.arsdigita.cms.contenttypes.swapOrgaUnit2OrgaUnitWithNextInGroup");
+        swapWithNext("com.arsdigita.cms.contenttypes.allUnitsOrderForUnit", "com.arsdigita.cms.contenttypes.swapOrgaUnit2OrgaUnitWithNextInGroup");
     }
 
     public void swapWithPrevious() {
-        swapWithPrevious("com.arsdigita.cms.cotenttypes.addUnitsOrderForUnit", "com.arsdigita.cms.contenttypes.swapOrgaUnit2OrgaUnitWithNextInGroup");
+        swapWithPrevious("com.arsdigita.cms.contenttypes.allUnitsOrderForUnit", "com.arsdigita.cms.contenttypes.swapOrgaUnit2OrgaUnitWithNextInGroup");
     }
 
     public void swapWithNext(String queryName, String operationName) {

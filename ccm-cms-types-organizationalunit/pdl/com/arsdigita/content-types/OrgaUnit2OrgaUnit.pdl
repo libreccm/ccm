@@ -64,6 +64,6 @@ query allUnitsOrderForUnit {
       	 select u.unit_order from ct_orgaunit2orgaunits u where u.owner_id = :ownerID
       }
       map {
-      	  unitOrder = u.unitOrder;
+      	  unitOrder = u.unit_order;
       }
 }
