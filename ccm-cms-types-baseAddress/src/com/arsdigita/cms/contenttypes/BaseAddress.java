@@ -21,7 +21,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.globalization.LocaleNegotiator;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -43,7 +43,7 @@ import java.util.Locale;
  * 
  * @author Sören Bernstein
  **/
-public class BaseAddress extends ContentItem {
+public class BaseAddress extends ContentPage {
 
     /** PDL property name for address */
     public static final String ADDRESS = "address";

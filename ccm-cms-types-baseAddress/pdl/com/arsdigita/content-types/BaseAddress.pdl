@@ -11,6 +11,6 @@ object type BaseAddress extends ContentItem {
     String [0..1] state = ct_baseAddresses.state VARCHAR(200);
     String [0..1] isoCountryCode = ct_baseAddresses.isoCountryCode VARCHAR(2);
 
-    reference key ( ct_baseAddress.address_id );
+    reference key ( ct_baseAddresses.address_id );
 }
 
