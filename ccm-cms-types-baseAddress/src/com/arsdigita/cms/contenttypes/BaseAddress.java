@@ -27,9 +27,8 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
+import java.util.TreeMap;
 
 /**
  * <p><code>DomainObject</code> class to represent address <code>ContentType</code>
@@ -175,33 +174,29 @@ public class BaseAddress extends ContentPage {
     }
 
     // Convert the iso country code to country names using the current locale
-    public String getCountryNameFromIsoCode(String isoCountryCode) {
+    public static String getCountryNameFromIsoCode(String isoCountryCode) {
      
         LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "", null);
-        
         java.util.Locale locale = new java.util.Locale("", isoCountryCode);
-
         return locale.getDisplayCountry(negotiatedLocale.getLocale());
 
     }
     
     // Get a sorted list auf all countries
-    public ArrayList getSortedListOfCountries(Locale inLang) {
+    public static TreeMap getSortedListOfCountries(Locale inLang) {
         
-        Locale[] locales = Locale.getAvailableLocales();
-        ArrayList <String> countryNames = new ArrayList<String>();
-        
-        for(Locale locale : locales) {
-            
-            if(locale.getDisplayCountry(inLang) != null) {
-                
-                countryNames.add(locale.getDisplayCountry(inLang));
-                
+        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "", null);
+        String[] countries = Locale.getISOCountries();
+        TreeMap <String,String> countryNames = new TreeMap<String,String>();
+
+        for(String country : countries) {
+            if(inLang != null) {
+                countryNames.put(new java.util.Locale("", country).getDisplayCountry(inLang), country);
+            } else {
+                countryNames.put(new java.util.Locale("", country).getDisplayCountry(negotiatedLocale.getLocale()), country);
             }
         }
-        
-        Collections.sort(countryNames);
-        
+
         return countryNames;
     }
 }

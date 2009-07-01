@@ -1,9 +1,9 @@
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 
 // Address object
-object type BaseAddress extends ContentItem {
+object type BaseAddress extends ContentPage {
 
     String [0..1] address = ct_baseAddresses.address VARCHAR(1000);
     String [0..1] postalCode = ct_baseAddresses.postalCode VARCHAR(20);

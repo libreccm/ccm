@@ -29,12 +29,12 @@ public class BaseAddressConfig extends AbstractConfig {
 
     public BaseAddressConfig() {
         m_hideCountryCodeSelection = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.address.hide_country_code_selection",
+			"com.arsdigita.cms.contenttypes.baseaddress.hide_country_code_selection",
 			Parameter.REQUIRED,
 			new Boolean(false));
 	
 	m_hidePostalCode = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.address.hide_postal_code",
+			"com.arsdigita.cms.contenttypes.baseaddress.hide_postal_code",
 			Parameter.REQUIRED,
 			new Boolean(false));
 	
