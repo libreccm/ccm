@@ -1,4 +1,4 @@
-package com.arsdigita.cms.contenttypes.ui;
+package com.arsdigita.cms.contenttypes.ui.organizationalunit;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.PageState;

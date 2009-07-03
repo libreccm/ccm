@@ -41,19 +41,23 @@
     // in the section change
     synchronized(this) {
         if (Utilities.getLastSectionRefresh(section).after(timestamp)) {
-            s_log.error("refreshing itemPage");
+            s_log.debug("refreshing itemPage");
+	    s_log.debug("Creating new ContentItemPage instance...");
             itemPage = new ContentItemPage();
+	    s_log.debug("Calling init on new instance...");
             itemPage.init();
+	    s_log.debug("Creating time stamp...");
             timestamp = new Date();
         }
     }
 
+    s_log.debug("Starting dispatch process...");
     RequestContext context = DispatcherHelper.getRequestContext(request);
     if(itemPage == null) {
-      s_log.error("WARNING: itemPage is NULL");
+      s_log.warn("WARNING: itemPage is NULL");
     }
     else {
-      s_log.error("ALL OK: itemPage is not null");
+      s_log.info("ALL OK: itemPage is not null");
     }      
     itemPage.dispatch(request, response, context);
     s_log.debug("exited item.jsp's service method");

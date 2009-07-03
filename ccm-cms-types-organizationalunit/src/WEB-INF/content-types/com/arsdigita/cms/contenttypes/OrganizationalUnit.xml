@@ -15,15 +15,30 @@
 			  labelBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
 			  descriptionKey="organizationalunit.authoring.basic_properties.description"
 			  descriptionBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
-			  component="com.arsdigita.cms.contenttypes.ui.OrganizationalUnitPropertiesStep"
+			  component="com.arsdigita.cms.contenttypes.ui.organizationalunit.OrganizationalUnitPropertiesStep"
 			  ordering="1"/>
 
       <ctd:authoring-step labelKey="organizationalunit.authoring.subunits.title"
 			  labelBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
 			  descriptionKey="organizationalunit.authoring.subunits_properties.description"
 			  descriptionBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
-			  component="com.arsdigita.cms.contenttypes.ui.OrgaUnit2OrgaUnitPropertiesStep"
+			  component="com.arsdigita.cms.contenttypes.ui.organizationalunit.OrgaUnit2OrgaUnitPropertiesStep"
 			  ordering="2"/>
+
+      <ctd:authoring-step labelKey="organizationalunit.authoring.members.title"
+			  labelBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
+			  descriptionKey="organizationalunit.authoring.members_properties.description"
+			  descriptionBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
+			  component="com.arsdigita.cms.contenttypes.ui.organizationalunit.MembershipPropertiesStep"
+			  ordering="3"/>
+
+      <ctd:authoring-step labelKey="organizationalunit.authoring.membershipstatus.title"
+			  labelBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
+			  descriptionKey="organizationalunit.authoring.membershipstatus_properties.description"
+			  descriptionBundle="com.arsdigita.cms.contenttypes.OrganizationalUnitResources"
+			  component="com.arsdigita.cms.contenttypes.ui.organizationalunit.MembershipStatusPropertiesStep"
+			  ordering="4"/>
+
       
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
     </ctd:authoring-kit>

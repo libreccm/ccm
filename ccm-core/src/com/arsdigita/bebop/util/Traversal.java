@@ -92,6 +92,8 @@ public abstract class Traversal {
                 ("Component " + c + " is part of a cycle");
         }
 
+        //s_log.debug("preorder called for component " + c.toString());
+
         int flag = test(c);
 
         if (flag == PERFORM_ACTION) {

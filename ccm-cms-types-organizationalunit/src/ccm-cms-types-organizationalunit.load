@@ -9,7 +9,8 @@
 	<provides>
 		<table name="ct_organizationalunits" />
 		<table name="ct_orgaunit2orgaunits" />
-		<initializer class="com.arsdigita.cms.contenttypes.OrganizationalUnitInitializer"/>
+		<table name="ct_membershipstatus" />
+		<initializer class="com.arsdigita.cms.contenttypes.OrganizationalUnitInitializer"/>	
 	</provides>
 	<scripts>
 		<schema directory="ccm-cms-types-organizationalunit" />

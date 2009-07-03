@@ -1,11 +1,11 @@
-package com.arsdigita.cms.contenttypes.ui;
+package com.arsdigita.cms.contenttypes.ui.organizationalunit;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.OrgaUnit2OrgaUnit;
+import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -18,50 +18,50 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class OrgaUnit2OrgaUnitTableModelBuilder extends LockableImpl implements TableModelBuilder {
+public class MembershipTableModelBuilder extends LockableImpl implements TableModelBuilder {
 
-    private final static Logger logger = Logger.getLogger(OrgaUnit2OrgaUnitTableModelBuilder.class);
+    private final static Logger logger = Logger.getLogger(MembershipTableModelBuilder.class);
 
     private ItemSelectionModel m_itemModel;
 
-    public OrgaUnit2OrgaUnitTableModelBuilder(ItemSelectionModel itemModel) {
+    public MembershipTableModelBuilder(ItemSelectionModel itemModel) {
         this.m_itemModel = itemModel;
     }
 
     public TableModel makeModel(Table t, PageState s) {
-        DataCollection units = getUnits(s);
+        DataCollection members = getMembers(s);
 
-        if(units.isEmpty()) {
+        if(members.isEmpty()) {
             return Table.EMPTY_MODEL;
         } else {
-            return new OrgaUnit2OrgaUnitTableModel(units);
+            return new MembershipTableModel(members);
         }
     }
 
-    public DataCollection getUnits(PageState state) {
+    public DataCollection getMembers(PageState state) {
         Assert.isTrue(this.m_itemModel.isSelected(state), "item selected");
         OrganizationalUnit unit = (OrganizationalUnit) this.m_itemModel.getSelectedItem(state);
-        return OrgaUnit2OrgaUnit.getUnits(unit);
+        return Membership.getMemberships(unit);
     }
 
-    public static class OrgaUnit2OrgaUnitTableModel implements TableModel {
+    public static class MembershipTableModel implements TableModel {
 
-        OrgaUnit2OrgaUnit m_ou2ou;
-        DataCollection m_units;
+        Membership m_membership;
+        DataCollection m_memberships;
 
-        public OrgaUnit2OrgaUnitTableModel(DataCollection units) {
-            this.m_units = units;
-            this.m_ou2ou = null;
+        public MembershipTableModel(DataCollection memberships) {
+            m_memberships = memberships;
+            m_membership = null;
         }
 
         public int getColumnCount() {
-            return (int) this.m_units.size();
+            return (int) m_memberships.size();
         }
 
         public boolean nextRow() {
-            if (this.m_units.next()) {
-                DataObject obj = this.m_units.getDataObject();
-                this.m_ou2ou = (OrgaUnit2OrgaUnit) DomainObjectFactory.newInstance(obj);
+            if (m_memberships.next()) {
+                DataObject obj = m_memberships.getDataObject();
+                m_membership = (Membership) DomainObjectFactory.newInstance(obj);
                 return true;
             } else {
                 return false;
@@ -69,16 +69,16 @@ public class OrgaUnit2OrgaUnitTableModelBuilder extends LockableImpl implements 
         }
 
         public Object getElementAt(int columnIndex) {
-            return this.m_ou2ou;
+            return m_membership;
         }
 
         public Object getKeyAt(int columnIndex) {
-            return this.m_ou2ou.getID();
+            return m_membership.getID();
         }
 
         public long size() {
-            return this.m_units.size();
+            return m_memberships.size();
         }
-        
+
     }
 }

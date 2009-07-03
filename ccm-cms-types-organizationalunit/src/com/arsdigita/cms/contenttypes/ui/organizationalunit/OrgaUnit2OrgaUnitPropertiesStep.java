@@ -1,5 +1,6 @@
-package com.arsdigita.cms.contenttypes.ui;
+package com.arsdigita.cms.contenttypes.ui.organizationalunit;
 
+import com.arsdigita.cms.contenttypes.ui.*;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormSection;
