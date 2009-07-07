@@ -38,7 +38,7 @@
             <xsl:if test="./isoCountryCode/countryName">
               <tr>
                 <th>Country:</th>
-                <td class="contentText" valign="top" align="left"><xsl:value-of select="./isoCountryCode/countryName"/></td>
+                <td class="contentText" valign="top" align="left"><xsl:value-of select="./country"/></td>
               </tr>
             </xsl:if>
           </table>

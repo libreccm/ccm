@@ -55,7 +55,7 @@ public class BaseAddressPropertiesStep extends SimpleEditStep {
 
     public static Component getBaseAddressPropertySheet(ItemSelectionModel itemModel) {
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
-
+        
         sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.name").localize(), BaseAddress.NAME);
         sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.title").localize(), BaseAddress.TITLE);
 	sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.address").localize(), BaseAddress.ADDRESS);
@@ -63,14 +63,14 @@ public class BaseAddressPropertiesStep extends SimpleEditStep {
 	sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.city").localize(), BaseAddress.CITY);
 	sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.state").localize(), BaseAddress.STATE);
 
-        sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.country").localize(), 
+        sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.iso_country_code").localize(), 
                 BaseAddress.ISO_COUNTRY_CODE,
                 new DomainObjectPropertySheet.AttributeFormatter() {
                    public String format(DomainObject item,
                                         String attribute,
                                         PageState state) {
                       BaseAddress baseAddress = (BaseAddress)item;
-                      if(baseAddress.getIsoCountryCode() != null) {
+                      if(baseAddress != null && baseAddress.getIsoCountryCode() != null) {
                           return BaseAddress.getCountryNameFromIsoCode(baseAddress.getIsoCountryCode());
                       } else {
                           return (String)BaseAddressGlobalizationUtil.globalize
@@ -78,7 +78,7 @@ public class BaseAddressPropertiesStep extends SimpleEditStep {
                       }
                    }
                 }
-       );
+        );
 	
 	if(!ContentSection.getConfig().getHideLaunchDate()) {
 	    sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),

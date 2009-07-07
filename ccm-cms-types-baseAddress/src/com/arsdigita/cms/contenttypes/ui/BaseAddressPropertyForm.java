@@ -103,7 +103,7 @@ public class BaseAddressPropertyForm extends BasicPageForm implements FormProces
 	add(state);
         
         if (!BaseAddress.getConfig().getHideCountryCodeSelection()) {
-            add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.country").localize()));
+            add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.iso_country_code").localize()));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
             
