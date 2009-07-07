@@ -23,7 +23,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
@@ -41,7 +41,7 @@ public class BaseContact extends ContentPage {
 
     /** Data object type for tihs domain object */
     public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.baseContact";
+        = "com.arsdigita.cms.contenttypes.BaseContact";
 
     public BaseContact() {
         super(BASE_DATA_OBJECT_TYPE);

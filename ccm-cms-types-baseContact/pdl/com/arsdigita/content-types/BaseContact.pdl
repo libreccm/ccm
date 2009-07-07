@@ -2,12 +2,13 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.contenttypes.BaseAddress;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
 // Contact Object
 object type BaseContact extends ContentPage {
 
-    componetn Person [0..1] person = join ct_baseContacts.person_id
+    component Person [0..1] person = join ct_baseContacts.person_id
                                        to ct_persons.person_id;
 
     component BaseAddress [0..1] address = join ct_baseContacts.address_id
@@ -19,7 +20,7 @@ object type BaseContact extends ContentPage {
     reference key ( ct_baseContacts.contact_id );
 }
 
-object type BaseContactEntry {
+object type BaseContactEntry extends ACSObject {
 
   String [1..1] key = ct_baseContactEntries.key VARCHAR(100);
   String [1..1] description = ct_baseContactEntries.description VARCHAR(100);
@@ -28,3 +29,4 @@ object type BaseContactEntry {
   reference key ( ct_baseContactEntries.contactentry_id );
 
 }
+

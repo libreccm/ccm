@@ -8,20 +8,25 @@
 
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.kernel.ACSObjectCollection;
 import com.arsdigita.persistence.DataCollection;
-import org.apache.log4j.Logger;
+
         
 /**
  *
  * @author quasi
  */
-public class BaseContactEntryCollection extends DomainCollection {
+public class BaseContactEntryCollection extends ACSObjectCollection {
     
     /**
      * Creates a new instance of BaseContactEntryCollection
      */
-    public BaseContactEntryCollection() {
+    public BaseContactEntryCollection(BaseContact baseContact) {
+        super((DataCollection) baseContact.getContactEntries());
+    }
+    
+    public BaseContactEntryCollection(DataCollection dataCollection) {
+        super(dataCollection);
     }
     
     public final String getKey() {
