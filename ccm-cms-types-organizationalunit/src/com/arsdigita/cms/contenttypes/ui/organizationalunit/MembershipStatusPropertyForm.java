@@ -1,7 +1,6 @@
 package com.arsdigita.cms.contenttypes.ui.organizationalunit;
 
 import com.arsdigita.bebop.ColumnPanel;
-import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
@@ -20,6 +19,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
 
@@ -55,7 +55,7 @@ public class MembershipStatusPropertyForm extends FormSection implements FormIni
 
     protected void addWidgets() {
         logger.debug("Adding widgets...");
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.membershipstatus.warning_changes_here_significant_for_all")));
+        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.membershipstatus.warning_changes_here_significant_for_all")), ColumnPanel.FULL_WIDTH);
         this.m_statusName = new TextField("statusName");
         this.m_statusName.addValidationListener(new NotNullValidationListener());
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.membershipstatus.statusname")));
@@ -118,7 +118,6 @@ public class MembershipStatusPropertyForm extends FormSection implements FormIni
         //FormData data = e.getFormData();
 
         status.setStatusName((String) m_statusName.getValue(state));
-
         status.save();
         logger.debug("properties set");
     }

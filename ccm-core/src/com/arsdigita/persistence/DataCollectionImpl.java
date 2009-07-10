@@ -21,6 +21,7 @@ package com.arsdigita.persistence;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.redhat.persistence.DataSet;
 import com.redhat.persistence.common.Path;
+import org.apache.log4j.Logger;
 
 /**
  * DataCollectionImpl
@@ -28,7 +29,6 @@ import com.redhat.persistence.common.Path;
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #13 $ $Date: 2004/08/16 $
  **/
-
 class DataCollectionImpl extends DataQueryImpl implements DataCollection {
 
     public final static String versionId = "$Id: DataCollectionImpl.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
@@ -50,7 +50,6 @@ class DataCollectionImpl extends DataQueryImpl implements DataCollection {
     /**
      * @deprecated
      **/
-
     public void setParameter(String p, Object o) {
         super.setParameter(p, o);
     }
@@ -58,7 +57,6 @@ class DataCollectionImpl extends DataQueryImpl implements DataCollection {
     /**
      * @deprecated
      **/
-
     public Object getParameter(String p) {
         return super.getParameter(p);
     }
@@ -70,5 +68,4 @@ class DataCollectionImpl extends DataQueryImpl implements DataCollection {
     public boolean contains(DataObject data) {
         throw new Error("not implemented");
     }
-
 }

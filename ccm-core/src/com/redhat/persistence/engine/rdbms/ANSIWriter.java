@@ -151,6 +151,7 @@ public class ANSIWriter extends SQLWriter {
 
 class RetainUpdatesWriter extends ANSIWriter {
 
+    @Override
     public void write(StaticOperation sop) {
 	write(sop.getSQLBlock().getSQL());
     }

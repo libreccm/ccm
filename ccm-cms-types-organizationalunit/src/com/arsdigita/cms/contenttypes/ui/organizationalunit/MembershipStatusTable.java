@@ -59,7 +59,7 @@ public class MembershipStatusTable extends Table {
             }
         };
 
-        Label empty = new Label("There are no status.");
+        Label empty = new Label("There are no status values available.");
         setEmptyView(empty);
         addTableActionListener(new MembershipStatusTableActionListener());
         setRowSelectionModel(this.m_statusModel);

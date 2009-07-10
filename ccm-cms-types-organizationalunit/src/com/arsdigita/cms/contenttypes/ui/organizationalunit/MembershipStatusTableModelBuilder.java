@@ -10,6 +10,7 @@ import com.arsdigita.cms.contenttypes.MembershipStatusCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 import org.apache.log4j.Logger;
@@ -30,7 +31,8 @@ public class MembershipStatusTableModelBuilder extends LockableImpl implements T
     public TableModel makeModel(Table t, PageState s) {
         DataCollection statusValues = getStatus(s);
 
-        if (statusValues.isEmpty()) {
+        if (statusValues == null ||
+                statusValues.isEmpty()) {
             return Table.EMPTY_MODEL;
         } else {
             return new MembershipStatusTableModel(statusValues);
@@ -39,7 +41,14 @@ public class MembershipStatusTableModelBuilder extends LockableImpl implements T
 
     public DataCollection getStatus(PageState state) {
         //Assert.isTrue(this.m_itemModel.isSelected(state), "item selected");
-        return (DataCollection) MembershipStatusCollection.getMembershipStatusCollection().getDomainObject();
+        /*try {
+            logger.debug("Returning data collection...");
+            return (DataCollection) MembershipStatusCollection.getMembershipStatusCollection().getDomainObject();
+        } catch (Exception ex) {
+            logger.debug("returning null because I got this exception:\n", ex);
+            return null;
+        }*/
+        return SessionManager.getSession().retrieve(MembershipStatus.BASE_DATA_OBJECT_TYPE);
     }
 
     public static class MembershipStatusTableModel implements TableModel {

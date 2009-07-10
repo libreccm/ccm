@@ -25,10 +25,14 @@ import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Membership;
+import com.arsdigita.cms.contenttypes.MembershipStatus;
 import com.arsdigita.cms.contenttypes.MembershipStatusCollection;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.ui.ItemSearchWidget;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
@@ -37,14 +41,12 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class MembershipPropertyForm  extends FormSection implements FormInitListener, FormProcessListener, FormValidationListener, FormSubmissionListener {
+public class MembershipPropertyForm extends FormSection implements FormInitListener, FormProcessListener, FormValidationListener, FormSubmissionListener {
 
     private final static Logger logger = Logger.getLogger(MembershipPropertyForm.class);
-
     public final static String ID = "membership_edit";
     private ItemSelectionModel m_itemModel;
     private MembershipSelectionModel m_membershipModel;
-
     private ItemSearchWidget m_personSearch;
     private final static String PERSON_SEARCH = "membership";
     private SingleSelect m_status;
@@ -75,9 +77,12 @@ public class MembershipPropertyForm  extends FormSection implements FormInitList
         ParameterModel statusParam = new StringParameter((Membership.STATUS));
         this.m_status = new SingleSelect(statusParam);
         add(this.m_status);
-        MembershipStatusCollection statusValues = MembershipStatusCollection.getMembershipStatusCollection();
-        while(statusValues.next()) {
-            this.m_status.addOption(new Option(statusValues.getMembershipStatusId().toString(), statusValues.getMembershipStatusName()));
+        //MembershipStatusCollection statusValues = MembershipStatusCollection.getMembershipStatusCollection();        
+        DataCollection statusValues = SessionManager.getSession().retrieve(MembershipStatus.BASE_DATA_OBJECT_TYPE);
+        while (statusValues.next()) {
+            //this.m_status.addOption(new Option(statusValues.getMembershipStatusId().toString(), statusValues.getMembershipStatusName()));
+            MembershipStatus status = (MembershipStatus) DomainObjectFactory.newInstance(statusValues.getDataObject());
+            this.m_status.addOption(new Option(status.getID().toString(), status.getStatusName()));
         }
 
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membership.from")));
@@ -118,7 +123,7 @@ public class MembershipPropertyForm  extends FormSection implements FormInitList
                     }
                 }
             });
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             throw new UncheckedWrapperException("this cannot happen", ex);
         }
         add(this.m_saveCancelSection, ColumnPanel.FULL_WIDTH);
@@ -172,7 +177,7 @@ public class MembershipPropertyForm  extends FormSection implements FormInitList
             }
         } else {
             data.put(PERSON_SEARCH, null);
-        }
+        }        
     }
 
     public void process(FormSectionEvent e) throws FormProcessException {
@@ -199,7 +204,7 @@ public class MembershipPropertyForm  extends FormSection implements FormInitList
             throw new FormProcessException("Person selection is required");
         }
 
-        if(e.getFormData().get(Membership.STATUS) == null) {
+        if (e.getFormData().get(Membership.STATUS) == null) {
             throw new FormProcessException("Status of membership is required");
         }
     }
