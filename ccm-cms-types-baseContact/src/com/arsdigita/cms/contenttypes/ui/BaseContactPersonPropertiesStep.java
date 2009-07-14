@@ -43,11 +43,11 @@ public class BaseContactPersonPropertiesStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
     
 //XXX
-//Alternativ addPerson        
         if(false/*EMPTY*/) {
             
-//            BasicPageForm editPersonSheet = new BaseContactAddPersonPropertyForm(itemModel, this);
-//            add(EDIT_PERSON_SHEET_NAME, "Edit Person", new WorkflowLockedComponentAccess(editPersonSheet, itemModel), editPersonSheet.getSaveCancelSection().getCancelButton());
+            BasicPageForm addPersonSheet = new BaseContactEditPersonPropertyForm(itemModel, this);
+//            BasicPageForm addPersonSheet = new BaseContactAddPersonPropertyForm(itemModel, this);
+            add(EDIT_PERSON_SHEET_NAME, "Add Person", new WorkflowLockedComponentAccess(addPersonSheet, itemModel), addPersonSheet.getSaveCancelSection().getCancelButton());
 
             /* Set the displayComponent for this step */
             setDisplayComponent(getEmptyPersonPropertySheet(itemModel));

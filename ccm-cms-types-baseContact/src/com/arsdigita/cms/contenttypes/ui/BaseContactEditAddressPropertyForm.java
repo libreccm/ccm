@@ -12,6 +12,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -32,6 +33,7 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import java.util.Iterator;
 import java.util.Map;
 import com.arsdigita.cms.contenttypes.BaseAddress;
+import com.arsdigita.cms.contenttypes.BaseContact;
 import com.arsdigita.cms.contenttypes.util.BaseAddressGlobalizationUtil;
 
 import org.apache.log4j.Logger;
@@ -80,8 +82,6 @@ public class BaseContactEditAddressPropertyForm extends BasicPageForm implements
 
     @Override
     public void addWidgets() {
-//        super.addWidgets();
-
 	add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.address").localize()));
 	ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener( new NotNullValidationListener( ) );
@@ -141,15 +141,18 @@ public class BaseContactEditAddressPropertyForm extends BasicPageForm implements
 
     public void init(FormSectionEvent fse) {
 	FormData data = fse.getFormData();
-//	BaseAddress baseAddress = (BaseAddress)super.initBasicWidgets(fse);
-
-//	data.put(ADDRESS, baseAddress.getAddress());
-//	data.put(POSTAL_CODE, baseAddress.getPostalCode());
-//	data.put(CITY, baseAddress.getCity());
-//	data.put(STATE, baseAddress.getState());
-//        if(!BaseAddress.getConfig().getHideCountryCodeSelection()) {
-//            data.put(ISO_COUNTRY_CODE, baseAddress.getIsoCountryCode());
-//        }
+        PageState state = fse.getPageState();
+        BaseContact baseContact = (BaseContact)getItemSelectionModel().getSelectedObject(state);
+       
+        if(baseContact.getAddress() != null) {
+            data.put(ADDRESS, baseContact.getAddress().getAddress());
+            data.put(POSTAL_CODE, baseContact.getAddress().getPostalCode());
+            data.put(CITY, baseContact.getAddress().getCity());
+            data.put(STATE, baseContact.getAddress().getState());
+            if(!BaseAddress.getConfig().getHideCountryCodeSelection()) {
+                data.put(ISO_COUNTRY_CODE, baseContact.getAddress().getIsoCountryCode());
+            }
+        }
     }
 
     public void submitted(FormSectionEvent fse) {
@@ -161,18 +164,18 @@ public class BaseContactEditAddressPropertyForm extends BasicPageForm implements
 
     public void process(FormSectionEvent fse) {
 	FormData data = fse.getFormData();
+        PageState state = fse.getPageState();
+        BaseContact baseContact = (BaseContact)getItemSelectionModel().getSelectedObject(state);
 
-	BaseAddress baseAddress = (BaseAddress)super.processBasicWidgets(fse);
-
-	if (baseAddress != null &&
+	if (baseContact.getAddress() != null &&
 	    getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
-	    baseAddress.setAddress((String)data.get(ADDRESS));
-	    baseAddress.setPostalCode((String)data.get(POSTAL_CODE));
-	    baseAddress.setCity((String)data.get(CITY));
-	    baseAddress.setState((String)data.get(STATE));
-	    baseAddress.setIsoCountryCode((String)data.get(ISO_COUNTRY_CODE));
+	    baseContact.getAddress().setAddress((String)data.get(ADDRESS));
+	    baseContact.getAddress().setPostalCode((String)data.get(POSTAL_CODE));
+	    baseContact.getAddress().setCity((String)data.get(CITY));
+	    baseContact.getAddress().setState((String)data.get(STATE));
+	    baseContact.getAddress().setIsoCountryCode((String)data.get(ISO_COUNTRY_CODE));
             
-	    baseAddress.save();
+	    baseContact.getAddress().save();
 	}
 	
 	if (m_step != null) {

@@ -43,11 +43,14 @@ public class BaseContactAddressPropertiesStep extends SimpleEditStep {
     
     public BaseContactAddressPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
         super(itemModel, parent, prefix);
+
+//        BaseContact baseContact = (BaseContact)itemModel.getSelectedObject(state);
         
 //XXX
-        if(false/*EMPTY*/) {
-//            BasicPageForm editAddressSheet = new BaseContactAddAddressPropertyForm(itemModel, this);
-//            add(ADD_ADDRESS_SHEET_NAME, "Add Address", new WorkflowLockedComponentAccess(addAddressSheet, itemModel), addAddressSheet.getSaveCancelSection().getCancelButton());
+        if(/*baseContact.getAddress() == null*/ true) {
+//            BasicPageForm addAddressSheet = new BaseContactAddAddressPropertyForm(itemModel, this);
+            BasicPageForm addAddressSheet = new BaseContactEditAddressPropertyForm(itemModel, this);
+            add(ADD_ADDRESS_SHEET_NAME, "Add Address", new WorkflowLockedComponentAccess(addAddressSheet, itemModel), addAddressSheet.getSaveCancelSection().getCancelButton());
         
             /* Set the displayComponent for this step */
             setDisplayComponent(getEmptyBaseAddressPropertySheet(itemModel));
