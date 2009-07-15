@@ -22,24 +22,23 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
-import com.arsdigita.bebop.event.TableActionListener;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.categorization.CategoryLocalization;
-import com.arsdigita.categorization.CategoryLocalizationCollection;
+import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.contenttypes.BaseContact;
+import com.arsdigita.cms.contenttypes.BaseContactEntry;
+import com.arsdigita.cms.contenttypes.BaseContactEntryCollection;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import java.util.Locale;
 
 /**
  * Lists all existing contact entries for a selected contact.
@@ -212,7 +211,7 @@ public class BaseContactEntriesTable extends Table {
             if(true) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) GlobalizationUtil.globalize(
-                        "cms.ui.category.localization.confirm_delete").localize());
+                        "cms.contenttypes.ui.baseContact.confirm_delete").localize());
                 return link;
             } else {
                 return new Label(value.toString());

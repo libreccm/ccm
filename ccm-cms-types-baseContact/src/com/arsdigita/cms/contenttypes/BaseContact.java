@@ -111,4 +111,9 @@ public class BaseContact extends ContentPage {
         Assert.exists(contactEntry, BaseContactEntry.class);
         remove(CONTACT_ENTRIES, contactEntry);
     }
+    
+    public boolean hasContactEntries() {
+        return !this.getContactEntries().isEmpty();
+    }
+    }
 }

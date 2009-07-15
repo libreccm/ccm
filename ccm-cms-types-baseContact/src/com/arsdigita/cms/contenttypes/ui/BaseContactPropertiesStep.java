@@ -14,8 +14,6 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.cms.contenttypes.Person;
-import com.arsdigita.cms.contenttypes.util.PersonGlobalizationUtil;
 
 import java.text.DateFormat;
 import org.apache.log4j.Logger;
@@ -60,12 +58,13 @@ public class BaseContactPropertiesStep extends SimpleEditStep {
 
         BaseContactPersonPropertiesStep personProperties = new BaseContactPersonPropertiesStep(itemModel, parent);
         BaseContactAddressPropertiesStep addressProperties = new BaseContactAddressPropertiesStep(itemModel, parent);
+        BaseContactEntriesTable baseContactEntries = new BaseContactEntriesTable(itemModel, parent);
 
         /* Add the SimpleEditStep to the segmented panel */
         segmentedPanel.addSegment(new Label("Basic"), basicProperties);
         segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.person").localize()), personProperties);
         segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.address").localize()), addressProperties);
-//        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.baseContactEntries").localize()), BaseContactEntriesSection);        
+        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.baseContactEntries").localize()), baseContactEntries);
         
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);
