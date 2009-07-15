@@ -35,6 +35,7 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
+import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
@@ -49,10 +50,11 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
     private MembershipSelectionModel m_membershipModel;
     private ItemSearchWidget m_personSearch;
     private final static String PERSON_SEARCH = "membership";
-    private SingleSelect m_status;
+    private ChangeableSingleSelect m_status;
     private com.arsdigita.bebop.form.Date m_from;
     private com.arsdigita.bebop.form.Date m_to;
     private SaveCancelSection m_saveCancelSection;
+    private MembershipPropertiesStep propertiesStep;
 
     public MembershipPropertyForm(ItemSelectionModel itemModel, MembershipSelectionModel membershipModel) {
         super(new ColumnPanel(2));
@@ -68,22 +70,23 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
         addSubmissionListener(this);
     }
 
+    protected void setPropertiesStep(MembershipPropertiesStep propertiesStep) {
+        this.propertiesStep = propertiesStep;
+    }
+
     protected void addWidgets() {
+        logger.debug("adding widgets...");
+
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.orgnizationalunit.membership.Person")));
         this.m_personSearch = new ItemSearchWidget(PERSON_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Person"));
         add(this.m_personSearch);
 
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.orgnizationalunit.membership.Status")));
         ParameterModel statusParam = new StringParameter((Membership.STATUS));
-        this.m_status = new SingleSelect(statusParam);
+        this.m_status = new ChangeableSingleSelect(statusParam);
         add(this.m_status);
         //MembershipStatusCollection statusValues = MembershipStatusCollection.getMembershipStatusCollection();        
-        DataCollection statusValues = SessionManager.getSession().retrieve(MembershipStatus.BASE_DATA_OBJECT_TYPE);
-        while (statusValues.next()) {
-            //this.m_status.addOption(new Option(statusValues.getMembershipStatusId().toString(), statusValues.getMembershipStatusName()));
-            MembershipStatus status = (MembershipStatus) DomainObjectFactory.newInstance(statusValues.getDataObject());
-            this.m_status.addOption(new Option(status.getID().toString(), status.getStatusName()));
-        }
+        this.addStatusOptions();
 
         add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membership.from")));
         ParameterModel fromParam = new DateParameter(Membership.FROM);
@@ -95,6 +98,15 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
         ParameterModel toParam = new DateParameter(Membership.TO);
         this.m_to = new com.arsdigita.bebop.form.Date(toParam);
         add(this.m_to);
+    }
+
+    private void addStatusOptions() {
+        DataCollection statusValues = SessionManager.getSession().retrieve(MembershipStatus.BASE_DATA_OBJECT_TYPE);
+        while (statusValues.next()) {
+            //this.m_status.addOption(new Option(statusValues.getMembershipStatusId().toString(), statusValues.getMembershipStatusName()));
+            MembershipStatus status = (MembershipStatus) DomainObjectFactory.newInstance(statusValues.getDataObject());
+            this.m_status.addOption(new Option(status.getID().toString(), status.getStatusName()));
+        }
     }
 
     protected void addSaveCancelSection() {
@@ -159,8 +171,19 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
     }
 
     public void init(FormSectionEvent e) throws FormProcessException {
+        logger.debug("Init listener invoked.");
+
         FormData data = e.getFormData();
         PageState state = e.getPageState();
+
+        //Iterator it = this.m_status.getOptions();
+        //while(it.hasNext()) {
+        //    Option o = (Option) it.next();
+        //    //this.m_status.removeOption(o);
+        //}
+
+        this.m_status.clearOptions();
+        this.addStatusOptions();
 
         setVisible(state, true);
 

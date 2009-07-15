@@ -10,6 +10,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ui.ResettableContainer;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedContainer;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -17,12 +18,14 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedContainer;
  */
 public class MembershipPropertiesStep extends ResettableContainer {
 
+    private static final Logger logger = Logger.getLogger(MembershipPropertiesStep.class);
     private AuthoringKitWizard m_parent;
     private ItemSelectionModel m_itemModel;
     private BigDecimalParameter m_membershipParam = new BigDecimalParameter("membership");
     private MembershipSelectionModel m_membershipModel; // = new MembershipSelectionModel(m_membershipParam);
 
     public MembershipPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+        logger.debug("Creating MembershipPropertiesStep");
         this.m_itemModel = itemModel;
         this.m_parent = parent;
         setMembershipSelectionModel();
@@ -59,7 +62,9 @@ public class MembershipPropertiesStep extends ResettableContainer {
     }
 
     public FormSection getEditSheet() {
-        return new MembershipPropertyForm(m_itemModel, m_membershipModel);
+        MembershipPropertyForm propertyForm =  new MembershipPropertyForm(m_itemModel, m_membershipModel);
+        propertyForm.setPropertiesStep(this);
+        return propertyForm;
     }
 
     @Override
@@ -67,5 +72,4 @@ public class MembershipPropertiesStep extends ResettableContainer {
         super.register(p);
         p.addComponentStateParam(this, m_membershipParam);
     }
-
 }

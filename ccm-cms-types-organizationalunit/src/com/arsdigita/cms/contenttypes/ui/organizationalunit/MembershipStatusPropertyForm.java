@@ -118,7 +118,7 @@ public class MembershipStatusPropertyForm extends FormSection implements FormIni
         //FormData data = e.getFormData();
 
         status.setStatusName((String) m_statusName.getValue(state));
-        status.save();
+        status.save();        
         logger.debug("properties set");
     }
 
