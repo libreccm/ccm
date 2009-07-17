@@ -58,13 +58,13 @@ public class BaseContactPropertiesStep extends SimpleEditStep {
 
         BaseContactPersonPropertiesStep personProperties = new BaseContactPersonPropertiesStep(itemModel, parent);
         BaseContactAddressPropertiesStep addressProperties = new BaseContactAddressPropertiesStep(itemModel, parent);
-        BaseContactEntriesTable baseContactEntries = new BaseContactEntriesTable(itemModel, parent);
+//        BaseContactEntriesTable baseContactEntries = new BaseContactEntriesTable(itemModel, parent);
 
         /* Add the SimpleEditStep to the segmented panel */
         segmentedPanel.addSegment(new Label("Basic"), basicProperties);
         segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.person").localize()), personProperties);
         segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.address").localize()), addressProperties);
-        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.baseContactEntries").localize()), baseContactEntries);
+//        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.baseContactEntries").localize()), baseContactEntries);
         
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);

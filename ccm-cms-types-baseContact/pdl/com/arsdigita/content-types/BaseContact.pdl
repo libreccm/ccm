@@ -8,10 +8,10 @@ import com.arsdigita.cms.*;
 // Contact Object
 object type BaseContact extends ContentPage {
 
-    component Person [0..1] person = join ct_baseContacts.person_id
+    Person [0..1] person = join ct_baseContacts.person_id
                                        to ct_persons.person_id;
 
-    component BaseAddress [0..1] address = join ct_baseContacts.address_id
+    BaseAddress [0..1] address = join ct_baseContacts.address_id
                                              to ct_baseAddresses.address_id;
 
     component BaseContactEntry [0..n] contactentries = join ct_baseContacts.contact_id
@@ -29,4 +29,3 @@ object type BaseContactEntry extends ACSObject {
   reference key ( ct_baseContactEntries.contactentry_id );
 
 }
-

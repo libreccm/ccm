@@ -23,7 +23,11 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataOperation;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
@@ -75,24 +79,34 @@ public class BaseContact extends ContentPage {
     ///////////////////////////////////////////////////////////////
     // accessors
 
-    // Set the person for this contact
+    // Get the person for this contact
     public Person getPerson() {
-        return (Person) get(PERSON);
+        return (Person) DomainObjectFactory.newInstance((DataObject)get(PERSON));
     }
     
-    // Get the person for this contact
+    // Set the person for this contact
     public void setPerson(Person person) {
         set(PERSON, person);
     }
     
+    // Unset the address for this contact
+    public void unsetPerson() {
+        set(PERSON, null);
+    }
+    
     // Get the address for this contact
     public BaseAddress getAddress() {
-        return (BaseAddress) get(ADDRESS);
+        return (BaseAddress)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
     }
     
     // Set the address for this contact
     public void setAddress(BaseAddress address) {
         set(ADDRESS, address);
+    }
+    
+    // Unset the address for this contact
+    public void unsetAddress() {
+        set(ADDRESS, null);
     }
     
     // Get all contact entries for this contact, p. ex. phone number, type of contact etc.
@@ -114,6 +128,5 @@ public class BaseContact extends ContentPage {
     
     public boolean hasContactEntries() {
         return !this.getContactEntries().isEmpty();
-    }
     }
 }
