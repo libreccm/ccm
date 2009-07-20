@@ -20,64 +20,64 @@
 
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.metadata.ObjectType;
+import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author quasi
  */
-public class BaseContactEntry extends ACSObject {
+public class BaseContactEntry extends ContentItem {
     
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.BaseContactEntry";
     private static final String BASE_DATA_OBJECT_PACKAGE = "com.arsdigita.cms.contenttypes";
-
+    
     private static final Logger s_log = Logger.getLogger(BaseContactEntry.class);
     
     /** PDL property names */
     public static final String KEY = "key";
     public static final String VALUE = "value";
     public static final String DESCRIPTION = "description";
-
+    
     
     /**
      * Creates a new instance of BaseContactEntry
      */
-    public BaseContactEntry(String typeName) {
-        super(typeName);
-    }
-
-    public BaseContactEntry(ObjectType type) {
-        super(type);
-    }
-
-    public BaseContactEntry(OID oid) {
-        super(oid);
-    }
-    
-    public BaseContactEntry(DataObject dataObject) {
-        super(dataObject);
-    }
-    
     public BaseContactEntry() {
         this(BASE_DATA_OBJECT_TYPE);
     }
     
-    public BaseContactEntry(String key, String value, String description) {
-        this();
-        setKey(key);
-        setValue(value);
-        setDescription(description);
+    public BaseContactEntry(String typeName) {
+        super(typeName);
     }
     
-    public BaseContactEntry(OID oid, String key, String value, String description) {
-        this(oid);
+    public BaseContactEntry(OID oid) {
+        super(oid);
+    }
+    
+    public BaseContactEntry(DataObject object) {
+        super(object);
+    }
+    
+    /**
+     * Constructor. Retrieves an object instance with the given id.
+     * @param id the id of the object to retrieve
+     */
+    public BaseContactEntry(BigDecimal id) throws DataObjectNotFoundException {
+        this(new OID(BASE_DATA_OBJECT_TYPE, id));
+    }
+    
+    public BaseContactEntry(BaseContact contact, String key, String value, String description) {
+        this();
+        setName(key + " for " + contact.getName() + "(" + contact.getID() + ")");
         setKey(key);
         setValue(value);
         setDescription(description);
+        save();
     }
     
     /////////////////////////////////////////////////

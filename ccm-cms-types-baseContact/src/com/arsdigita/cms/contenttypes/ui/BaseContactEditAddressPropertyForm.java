@@ -91,23 +91,27 @@ public class BaseContactEditAddressPropertyForm extends BasicPageForm implements
         address.setCols(30);
 	add(address);
 
-	add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.postal_code").localize()));
-	ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
-	TextField postalCode = new TextField(postalCodeParam);
-        /* XXX NumberListener ?*/
-	add(postalCode);
+        if(!BaseContact.getConfig().getHideAddressPostalCode()) {
+            add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.postal_code").localize()));
+            ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
+            TextField postalCode = new TextField(postalCodeParam);
+            /* XXX NumberListener ?*/
+            add(postalCode);
+        }
 
 	add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.city").localize()));
 	ParameterModel cityParam = new StringParameter(CITY);
 	TextField city = new TextField(cityParam);
 	add(city);
 
-	add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.state").localize()));
-	ParameterModel stateParam = new StringParameter(STATE);
-	TextField state = new TextField(stateParam);
-	add(state);
+        if(!BaseContact.getConfig().getHideAddressState()) {
+            add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.state").localize()));
+            ParameterModel stateParam = new StringParameter(STATE);
+            TextField state = new TextField(stateParam);
+            add(state);
+        }
         
-        if (!BaseAddress.getConfig().getHideCountryCodeSelection()) {
+        if (!BaseContact.getConfig().getHideAddressCountry()) {
             add(new Label((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.iso_country_code").localize()));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));

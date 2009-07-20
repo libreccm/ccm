@@ -43,6 +43,9 @@ public class BaseContact extends ContentPage {
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
 
+    // Config
+    private static BaseContactConfig s_config = new BaseContactConfig();
+    
     /** Data object type for tihs domain object */
     public static final String BASE_DATA_OBJECT_TYPE
         = "com.arsdigita.cms.contenttypes.BaseContact";
@@ -75,6 +78,13 @@ public class BaseContact extends ContentPage {
         Assert.exists(getContentType(), ContentType.class);
     }
 
+    /**
+     * Retrieves the current configuration
+     */
+    public static BaseContactConfig getConfig() {
+        return s_config;
+    }
+    
 
     ///////////////////////////////////////////////////////////////
     // accessors

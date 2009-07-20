@@ -14,6 +14,7 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.cms.contenttypes.BaseContact;
 
 import java.text.DateFormat;
 import org.apache.log4j.Logger;
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
 public class BaseContactPropertiesStep extends SimpleEditStep {
 
     private static final Logger logger = Logger.getLogger(BaseContactPropertiesStep.class);
-
+    
     /**
      * Name of the this edit sheet (Don't know if this this really needed.
      * It has the same value in almost all PropertiesStep classes)
@@ -50,21 +51,31 @@ public class BaseContactPropertiesStep extends SimpleEditStep {
         
         /* A new SimpleEditStep */
         SimpleEditStep basicProperties = new SimpleEditStep(itemModel, parent, EDIT_BASIC_SHEET_NAME);
+        
         /* Create the edit component for this SimpleEditStep and the corresponding link */
         BasicPageForm editBasicSheet = new BaseContactPropertyForm(itemModel, this);
         basicProperties.add(EDIT_BASIC_SHEET_NAME, "Edit Basic", new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
+        
         /* Set the displayComponent for this step */
         basicProperties.setDisplayComponent(getBaseContactPropertySheet(itemModel));
 
-        BaseContactPersonPropertiesStep personProperties = new BaseContactPersonPropertiesStep(itemModel, parent);
-        BaseContactAddressPropertiesStep addressProperties = new BaseContactAddressPropertiesStep(itemModel, parent);
-//        BaseContactEntriesTable baseContactEntries = new BaseContactEntriesTable(itemModel, parent);
-
         /* Add the SimpleEditStep to the segmented panel */
         segmentedPanel.addSegment(new Label("Basic"), basicProperties);
-        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.person").localize()), personProperties);
-        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.address").localize()), addressProperties);
-//        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.baseContactEntries").localize()), baseContactEntries);
+
+        // If not disabled via registry, add the ui for attaching a person
+        if(!BaseContact.getConfig().getHidePerson()) {
+            BaseContactPersonPropertiesStep personProperties = new BaseContactPersonPropertiesStep(itemModel, parent);
+            segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.person").localize()), personProperties);
+        }
+        
+        // If not disabled via registry, add the ui for attaching a baseAddress
+        if(!BaseContact.getConfig().getHideAddress()) {
+            BaseContactAddressPropertiesStep addressProperties = new BaseContactAddressPropertiesStep(itemModel, parent);
+            segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.address").localize()), addressProperties);
+        }
+
+        BaseContactEntriesPropertiesStep baseContactEntries = new BaseContactEntriesPropertiesStep(itemModel, parent);
+        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.baseContactEntries").localize()), baseContactEntries);
         
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);

@@ -35,7 +35,6 @@ public class BaseContactAddressPropertiesStep extends SimpleEditStep {
     public static final String CHANGE_ADDRESS_SHEET_NAME = "changeAddress";
     public static final String DELETE_ADDRESS_SHEET_NAME = "deleteAddress";
 
-    
     /** Creates a new instance of BaseContactAddressPropertiesStep */
     public BaseContactAddressPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         this(itemModel, parent, "");
@@ -77,26 +76,29 @@ public class BaseContactAddressPropertiesStep extends SimpleEditStep {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
         
         sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.address").localize(), "address." + BaseAddress.ADDRESS);
-        sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.postal_code").localize(), "address." + BaseAddress.POSTAL_CODE);
+        if(!BaseContact.getConfig().getHideAddressPostalCode()) 
+            sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.postal_code").localize(), "address." + BaseAddress.POSTAL_CODE);
         sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.city").localize(), "address." + BaseAddress.CITY);
-        sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.state").localize(), "address." + BaseAddress.STATE);
+        if(!BaseContact.getConfig().getHideAddressState()) 
+            sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.state").localize(), "address." + BaseAddress.STATE);
         
-        sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.iso_country_code").localize(),
-                "address." + BaseAddress.ISO_COUNTRY_CODE,
-                new DomainObjectPropertySheet.AttributeFormatter() {
-            public String format(DomainObject item,
-                    String attribute,
-                    PageState state) {
-                BaseAddress baseAddress = ((BaseContact)item).getAddress();
-                if(baseAddress != null && baseAddress.getIsoCountryCode() != null) {
-                    return BaseAddress.getCountryNameFromIsoCode(baseAddress.getIsoCountryCode());
-                } else {
-                    return (String)BaseAddressGlobalizationUtil.globalize
-                            ("cms.ui.unknown").localize();
+        if(!BaseContact.getConfig().getHideAddressCountry()) {
+            sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.iso_country_code").localize(),
+                    "address." + BaseAddress.ISO_COUNTRY_CODE,
+                    new DomainObjectPropertySheet.AttributeFormatter() {
+                public String format(DomainObject item,
+                        String attribute,
+                        PageState state) {
+                    BaseAddress baseAddress = ((BaseContact)item).getAddress();
+                    if(baseAddress != null && baseAddress.getIsoCountryCode() != null) {
+                        return BaseAddress.getCountryNameFromIsoCode(baseAddress.getIsoCountryCode());
+                    } else {
+                        return (String)BaseAddressGlobalizationUtil.globalize
+                                ("cms.ui.unknown").localize();
+                    }
                 }
-            }
+            });
         }
-        );
         
         return sheet;
         

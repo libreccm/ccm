@@ -20,10 +20,10 @@ object type BaseContact extends ContentPage {
     reference key ( ct_baseContacts.contact_id );
 }
 
-object type BaseContactEntry extends ACSObject {
+object type BaseContactEntry extends ContentItem {
 
   String [1..1] key = ct_baseContactEntries.key VARCHAR(100);
-  String [1..1] description = ct_baseContactEntries.description VARCHAR(100);
+  String [0..1] description = ct_baseContactEntries.description VARCHAR(100);
   String [1..1] value = ct_baseContactEntries.value VARCHAR(100);
   
   reference key ( ct_baseContactEntries.contactentry_id );

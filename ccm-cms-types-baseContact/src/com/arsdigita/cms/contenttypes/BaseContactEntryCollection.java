@@ -8,15 +8,16 @@
 
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.kernel.ACSObjectCollection;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 
         
 /**
  *
  * @author quasi
  */
-public class BaseContactEntryCollection extends ACSObjectCollection {
+public class BaseContactEntryCollection extends DomainCollection {
     
     /**
      * Creates a new instance of BaseContactEntryCollection
@@ -42,7 +43,7 @@ public class BaseContactEntryCollection extends ACSObjectCollection {
     }
     
     public BaseContactEntry getBaseContactEntry() {
-        return (BaseContactEntry) getDomainObject();
+    return new BaseContactEntry(m_dataCollection.getDataObject());
     }
     
 }

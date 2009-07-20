@@ -28,20 +28,24 @@ import org.apache.log4j.Logger;
  */
 public class BaseContactInitializer extends ContentTypeInitializer {
     public final static String versionId =
-        "$Id: BaseContactInitializer.java $" +
-        "$Author: quasi $" +
-        "$DateTime: 2009/03/15 $";
+            "$Id: BaseContactInitializer.java $" +
+            "$Author: quasi $" +
+            "$DateTime: 2009/03/15 $";
     private static final Logger s_log = Logger.getLogger(BaseContactInitializer.class);
-
+    
     public BaseContactInitializer() {
         super("ccm-cms-types-baseContact.pdl.mf",
-              BaseContact.BASE_DATA_OBJECT_TYPE);
+                BaseContact.BASE_DATA_OBJECT_TYPE);
     }
-
+    
     public String[] getStylesheets() {
         return new String[] {
             "/static/content-types/com/arsdigita/cms/contenttypes/BaseContact.xsl"
         };
     }
-
+    
+    public String getTraversalXML() {
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/BaseContact.xml";
+    }
+    
 }
