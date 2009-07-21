@@ -27,6 +27,7 @@ import com.arsdigita.cms.contenttypes.BaseAddress;
 import com.arsdigita.cms.contenttypes.BaseContact;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
 
 import org.apache.log4j.Logger;
@@ -77,7 +78,7 @@ public class BaseContactAttachAddressPropertyForm extends BasicPageForm implemen
 
     @Override
     public void addWidgets() {
-        add(new Label("BaseContact.address"));
+        add(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.select_address").localize()));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.BaseAddress"));
         add(this.m_itemSearch);       
     }
@@ -118,9 +119,9 @@ public class BaseContactAttachAddressPropertyForm extends BasicPageForm implemen
                     Submit target = (Submit) e.getTarget();
 
                     if (baseContact.getAddress() != null) {
-                        target.setButtonLabel("Change");
+                        target.setButtonLabel((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.select_address.change").localize());
                     } else {
-                        target.setButtonLabel("Add");
+                        target.setButtonLabel((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.select_address.add").localize());
                     }
                 }
             });
@@ -131,14 +132,14 @@ public class BaseContactAttachAddressPropertyForm extends BasicPageForm implemen
 
     public void validate(FormSectionEvent e) throws FormProcessException {
         if (e.getFormData().get(ITEM_SEARCH) == null) {
-            throw new FormProcessException("BaseAddress selection is required");
+            throw new FormProcessException((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.select_address.wrong_type").localize());
         }
     }
 
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(e.getPageState())) {
             init(e);
-            throw new FormProcessException("cancelled");
+            throw new FormProcessException((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.select_address.cancelled").localize());
         }
     }
 }

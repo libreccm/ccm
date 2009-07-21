@@ -46,7 +46,7 @@ public class BaseContactPersonPropertiesStep extends SimpleEditStep {
 //        if(false/*EMPTY*/) {
             
             BasicPageForm addPersonSheet = new BaseContactAttachPersonPropertyForm(itemModel, this);
-            add(ADD_PERSON_SHEET_NAME, "Attach Person", new WorkflowLockedComponentAccess(addPersonSheet, itemModel), addPersonSheet.getSaveCancelSection().getCancelButton());
+            add(ADD_PERSON_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.attach_person").localize(), new WorkflowLockedComponentAccess(addPersonSheet, itemModel), addPersonSheet.getSaveCancelSection().getCancelButton());
 
             /* Set the displayComponent for this step */
 //            setDisplayComponent(getEmptyPersonPropertySheet(itemModel));
@@ -54,13 +54,13 @@ public class BaseContactPersonPropertiesStep extends SimpleEditStep {
 //        } else {
             
             BasicPageForm editPersonSheet = new BaseContactEditPersonPropertyForm(itemModel, this);
-            add(EDIT_PERSON_SHEET_NAME, "Edit Person", new WorkflowLockedComponentAccess(editPersonSheet, itemModel), editPersonSheet.getSaveCancelSection().getCancelButton());
+            add(EDIT_PERSON_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.edit_person").localize(), new WorkflowLockedComponentAccess(editPersonSheet, itemModel), editPersonSheet.getSaveCancelSection().getCancelButton());
             
 //            BasicPageForm changePersonSheet = new BaseContactEditPersonPropertyForm(itemModel, this);
-//            add(CHANGE_PERSON_SHEET_NAME, "Change Person", new WorkflowLockedComponentAccess(changePersonSheet, itemModel), changePersonSheet.getSaveCancelSection().getCancelButton());
+//            add(CHANGE_PERSON_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.reattach_person").localize(), new WorkflowLockedComponentAccess(changePersonSheet, itemModel), changePersonSheet.getSaveCancelSection().getCancelButton());
             
             BasicPageForm deletePersonSheet = new BaseContactDeletePersonForm(itemModel, this);
-            add(DELETE_PERSON_SHEET_NAME, "Delete Person", new WorkflowLockedComponentAccess(deletePersonSheet, itemModel), deletePersonSheet.getSaveCancelSection().getCancelButton());
+            add(DELETE_PERSON_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.delete_person").localize(), new WorkflowLockedComponentAccess(deletePersonSheet, itemModel), deletePersonSheet.getSaveCancelSection().getCancelButton());
 
             /* Set the displayComponent for this step */
             setDisplayComponent(getPersonPropertySheet(itemModel));

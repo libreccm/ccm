@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -44,9 +45,8 @@ public class BaseContactEntriesPropertiesStep extends SimpleEditStep {
   public BaseContactEntriesPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
     super(itemModel, parent, prefix);
 
-//XXX
     BasicItemForm addContactEntrySheet = new BaseContactEntryAddForm(itemModel);
-    add(ADD_CONTACT_ENTRY_SHEET_NAME, "Add Contact Entry", new WorkflowLockedComponentAccess(addContactEntrySheet, itemModel), addContactEntrySheet.getSaveCancelSection().getCancelButton());
+    add(ADD_CONTACT_ENTRY_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.add_contactEntry").localize(), new WorkflowLockedComponentAccess(addContactEntrySheet, itemModel), addContactEntrySheet.getSaveCancelSection().getCancelButton());
 
     BaseContactEntriesTable contactEntriesTable = new BaseContactEntriesTable(itemModel); 
     setDisplayComponent(contactEntriesTable);

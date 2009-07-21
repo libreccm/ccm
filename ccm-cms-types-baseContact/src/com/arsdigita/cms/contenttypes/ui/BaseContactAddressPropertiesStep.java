@@ -48,7 +48,7 @@ public class BaseContactAddressPropertiesStep extends SimpleEditStep {
 //XXX
 //        if(/*baseContact.getAddress() == null*/ true) {
             BasicPageForm attachAddressSheet = new BaseContactAttachAddressPropertyForm(itemModel, this);
-            add(ADD_ADDRESS_SHEET_NAME, "Attach Address", new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
+            add(ADD_ADDRESS_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.attach_address").localize(), new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
         
             /* Set the displayComponent for this step */
 //            setDisplayComponent(getEmptyBaseAddressPropertySheet(itemModel));
@@ -57,13 +57,13 @@ public class BaseContactAddressPropertiesStep extends SimpleEditStep {
         
             // editAddress
             BasicPageForm editAddressSheet = new BaseContactEditAddressPropertyForm(itemModel, this);
-            add(EDIT_ADDRESS_SHEET_NAME, "Edit Address", new WorkflowLockedComponentAccess(editAddressSheet, itemModel), editAddressSheet.getSaveCancelSection().getCancelButton());
+            add(EDIT_ADDRESS_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.edit_address").localize(), new WorkflowLockedComponentAccess(editAddressSheet, itemModel), editAddressSheet.getSaveCancelSection().getCancelButton());
 
 //            BasicPageForm attachAddressSheet = new BaseContactAttachAddressPropertyForm(itemModel, this);
-//            add(CHANGE_ADDRESS_SHEET_NAME, "Reattach Address", new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
+//            add(CHANGE_ADDRESS_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.reattach_address").localize(), new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
 
             BasicPageForm deleteAddressSheet = new BaseContactDeleteAddressForm(itemModel, this);
-            add(DELETE_ADDRESS_SHEET_NAME, "Delete Address", new WorkflowLockedComponentAccess(deleteAddressSheet, itemModel), deleteAddressSheet.getSaveCancelSection().getCancelButton());
+            add(DELETE_ADDRESS_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.delete_address").localize(), new WorkflowLockedComponentAccess(deleteAddressSheet, itemModel), deleteAddressSheet.getSaveCancelSection().getCancelButton());
 
             /* Set the displayComponent for this step */
             setDisplayComponent(getBaseAddressPropertySheet(itemModel));

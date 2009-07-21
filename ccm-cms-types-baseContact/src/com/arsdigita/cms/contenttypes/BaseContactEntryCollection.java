@@ -10,7 +10,6 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject;
 
         
 /**
@@ -18,12 +17,12 @@ import com.arsdigita.persistence.DataObject;
  * @author quasi
  */
 public class BaseContactEntryCollection extends DomainCollection {
-    
+
     /**
      * Creates a new instance of BaseContactEntryCollection
      */
     public BaseContactEntryCollection(BaseContact baseContact) {
-        super((DataCollection) baseContact.getContactEntries());
+        this((DataCollection) baseContact.getContactEntries());
     }
     
     public BaseContactEntryCollection(DataCollection dataCollection) {
@@ -43,7 +42,7 @@ public class BaseContactEntryCollection extends DomainCollection {
     }
     
     public BaseContactEntry getBaseContactEntry() {
-    return new BaseContactEntry(m_dataCollection.getDataObject());
+        return new BaseContactEntry(m_dataCollection.getDataObject());
     }
     
 }

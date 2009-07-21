@@ -35,8 +35,8 @@ import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.BaseContact;
 import com.arsdigita.cms.contenttypes.BaseContactEntry;
 import com.arsdigita.cms.contenttypes.BaseContactEntryCollection;
+import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
@@ -63,14 +63,14 @@ public class BaseContactEntriesTable extends Table implements TableActionListene
         this.m_itemModel = itemModel;
         
         // if table is empty:
-        setEmptyView(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactentries.none")));
+        setEmptyView(new Label(BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry.none")));
         TableColumnModel tab_model = getColumnModel();
         
         // define columns
-        tab_model.add(new TableColumn(0, GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactentries.key").localize(), TABLE_COL_EDIT));
-        tab_model.add(new TableColumn(1, GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactentries.value").localize()));
-        tab_model.add(new TableColumn(2, GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactentries.description").localize()));
-        tab_model.add(new TableColumn(3, GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactentries.delete").localize(), TABLE_COL_DEL));
+        tab_model.add(new TableColumn(0, BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry.key").localize(), TABLE_COL_EDIT));
+        tab_model.add(new TableColumn(1, BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry.value").localize()));
+        tab_model.add(new TableColumn(2, BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry.description").localize()));
+        tab_model.add(new TableColumn(3, BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry.action").localize(), TABLE_COL_DEL));
         
         setModelBuilder(new BaseContactTableModelBuilder(itemModel));
         
@@ -154,7 +154,7 @@ public class BaseContactEntriesTable extends Table implements TableActionListene
         public Object getElementAt(int columnIndex) {
             switch (columnIndex){
                 case 0:
-                    return m_baseContactEntry.getKey();
+                    return (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry.key." + m_baseContactEntry.getKey()).localize();
                 case 1:
                     return m_baseContactEntry.getValue();
                 case 2:
@@ -221,8 +221,7 @@ public class BaseContactEntriesTable extends Table implements TableActionListene
                                              baseContact);
             if(canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) GlobalizationUtil.globalize(
-                        "cms.contenttypes.ui.baseContact.confirm_delete").localize());
+                link.setConfirmation((String) BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.confirm_delete").localize());
                 return link;
             } else {
                 return new Label(value.toString());

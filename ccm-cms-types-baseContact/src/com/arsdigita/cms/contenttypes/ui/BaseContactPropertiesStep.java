@@ -15,6 +15,7 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SegmentedPanel;
 import com.arsdigita.cms.contenttypes.BaseContact;
+import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 
 import java.text.DateFormat;
 import org.apache.log4j.Logger;
@@ -54,28 +55,28 @@ public class BaseContactPropertiesStep extends SimpleEditStep {
         
         /* Create the edit component for this SimpleEditStep and the corresponding link */
         BasicPageForm editBasicSheet = new BaseContactPropertyForm(itemModel, this);
-        basicProperties.add(EDIT_BASIC_SHEET_NAME, "Edit Basic", new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
+        basicProperties.add(EDIT_BASIC_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
         
         /* Set the displayComponent for this step */
         basicProperties.setDisplayComponent(getBaseContactPropertySheet(itemModel));
 
         /* Add the SimpleEditStep to the segmented panel */
-        segmentedPanel.addSegment(new Label("Basic"), basicProperties);
+        segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.basic_properties").localize()), basicProperties);
 
         // If not disabled via registry, add the ui for attaching a person
         if(!BaseContact.getConfig().getHidePerson()) {
             BaseContactPersonPropertiesStep personProperties = new BaseContactPersonPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.person").localize()), personProperties);
+            segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.person").localize()), personProperties);
         }
         
         // If not disabled via registry, add the ui for attaching a baseAddress
         if(!BaseContact.getConfig().getHideAddress()) {
             BaseContactAddressPropertiesStep addressProperties = new BaseContactAddressPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.address").localize()), addressProperties);
+            segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.address").localize()), addressProperties);
         }
 
         BaseContactEntriesPropertiesStep baseContactEntries = new BaseContactEntriesPropertiesStep(itemModel, parent);
-        segmentedPanel.addSegment(new Label((String)GlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.baseContactEntries").localize()), baseContactEntries);
+        segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry").localize()), baseContactEntries);
         
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);

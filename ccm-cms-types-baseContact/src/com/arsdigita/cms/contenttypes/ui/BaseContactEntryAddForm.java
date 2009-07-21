@@ -29,7 +29,6 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.BaseContact;
 import com.arsdigita.cms.contenttypes.BaseContactEntry;
-import com.arsdigita.cms.contenttypes.util.BaseAddressGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -65,11 +64,11 @@ public class BaseContactEntryAddForm extends BasicItemForm {
         ParameterModel contactEntryKeyParam = new StringParameter(BaseContactEntry.KEY);
         SingleSelect contactEntryKey = new SingleSelect(contactEntryKeyParam);
         contactEntryKey.addValidationListener(new NotNullValidationListener());
-        contactEntryKey.addOption(new Option("", new Label((String)BaseAddressGlobalizationUtil.globalize("cms.ui.select_one" ).localize())));
+        contactEntryKey.addOption(new Option("", new Label((String)BaseContactGlobalizationUtil.globalize("cms.ui.select_one").localize())));
         
         // Add the Options to the SingleSelect widget
         StringTokenizer keyList = BaseContact.getConfig().getContactEntryKeys();
-        while(keyList.hasMoreTokens()) {
+        while(keyList.hasMoreElements()) {
             String currentKey = keyList.nextToken();
             contactEntryKey.addOption(new Option(currentKey, ((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry.key." + currentKey).localize())));
         }

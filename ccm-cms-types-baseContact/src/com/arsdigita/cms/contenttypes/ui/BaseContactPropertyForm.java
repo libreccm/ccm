@@ -56,17 +56,7 @@ public class BaseContactPropertyForm extends BasicPageForm implements FormProces
         super.addWidgets();
 
 /*
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.genericorganization.ui.organizationname")));
-        ParameterModel organizationNameParam = new StringParameter(ORGANIZATIONAME);
-        TextField organizationName = new TextField(organizationNameParam);
-        organizationName.addValidationListener(new NotNullValidationListener());
-        add(organizationName);
-
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.genericorganization.ui.organizationnameaddendum")));
-        TextField organizationNameAddendum = new TextField(ORGANIZATIONNAMEADDENDUM);
-        add(organizationNameAddendum);
-
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.genericorganzation.ui.description")));
+        add(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.basic_properties.description").localize())));
         TextArea description = new TextArea(DESCRIPTION);
         description.setRows(5);
         description.setCols(30);

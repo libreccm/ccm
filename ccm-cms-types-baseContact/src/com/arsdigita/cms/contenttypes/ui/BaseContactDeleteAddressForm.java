@@ -19,6 +19,7 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.BaseContact;
+import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -43,7 +44,7 @@ public class BaseContactDeleteAddressForm extends BasicPageForm implements FormP
     }
     
     public void addWidgets() {
-        add(new Label("BaseContact.address.delete"));
+        add(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.delete_address.label").localize()));
     }
     
     /**
@@ -56,7 +57,7 @@ public class BaseContactDeleteAddressForm extends BasicPageForm implements FormP
                 public void prepare(PrintEvent e) {
                     BaseContact baseContact = (BaseContact)getItemSelectionModel().getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
-                        target.setButtonLabel("Delete");
+                        target.setButtonLabel((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.delete_address.button_label").localize());
                 }
             });
         } catch (Exception ex) {
