@@ -96,7 +96,26 @@ public class MembershipTable extends Table {
             String url = membership.getURI(state);
             if (column == m_personCol.getModelIndex()) {
                 Person person = membership.getTargetItem();
-                String fullName = String.format("%s %s %s, %s", person.getTitlePre(), person.getGivenName(), person.getSurname(), person.getTitlePost());
+                StringBuilder fullNameBuilder = new StringBuilder();
+
+                if(person.getTitlePre() != null) {
+                    fullNameBuilder.append(person.getTitlePre());
+                    fullNameBuilder.append(" ");
+                }
+                if(person.getGivenName() != null) {
+                    fullNameBuilder.append(person.getGivenName());
+                    fullNameBuilder.append(" ");
+                }
+                if(person.getSurname() != null) {
+                    fullNameBuilder.append(person.getSurname());
+                    fullNameBuilder.append(" ");
+                }
+                if(person.getTitlePost() != null) {
+                    fullNameBuilder.append(person.getTitlePost());
+                }
+
+                //String fullName = String.format("%s %s %s, %s", person.getTitlePre(), person.getGivenName(), person.getSurname(), person.getTitlePost());
+                String fullName = fullNameBuilder.toString();
                 ExternalLink extLink = new ExternalLink(fullName, url);
                 return extLink;
             } else if(column == m_statusCol.getModelIndex()) {

@@ -116,6 +116,7 @@ public class Membership extends ACSObject {
 
     public void setMembershipOwner(OrganizationalUnit ou) {
         Assert.exists(ou, OrganizationalUnit.class);
+        logger.debug("Setting membership owner to " + ou.getOrganizationalUnitName());
         setAssociation(MEMBERSHIP_OWNER, ou);
     }
 

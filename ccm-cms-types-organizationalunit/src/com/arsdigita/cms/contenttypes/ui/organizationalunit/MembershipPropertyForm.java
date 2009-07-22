@@ -35,6 +35,8 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
 
@@ -155,9 +157,11 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
 
     protected Membership createMembership(PageState state) {
         OrganizationalUnit ou = this.getOrganizationalUnit(state);
+        logger.debug("Owning ou: " + ou.getOrganizationalUnitName());
         Assert.exists(ou);
         Membership membership = new Membership();
         membership.setMembershipOwner(ou);
+        logger.debug("set ou to: " + membership.getMembershipOwner().getOrganizationalUnitName());
         return membership;
     }
 
@@ -166,6 +170,13 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
         FormData data = event.getFormData();
 
         membership.setTargetItem((Person) data.get(PERSON_SEARCH));
+
+        MembershipStatus status = new MembershipStatus(new BigDecimal((String) this.m_status.getValue(state)));
+        logger.debug("this.m_status.getValues() = " + this.m_status.getValue(state));
+        membership.setStatus(status);
+
+        membership.setFrom((Date) this.m_from.getValue(state));
+        membership.setTo((Date) this.m_to.getValue(state));
 
         membership.save();
     }
@@ -200,7 +211,7 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
             }
         } else {
             data.put(PERSON_SEARCH, null);
-        }        
+        }
     }
 
     public void process(FormSectionEvent e) throws FormProcessException {

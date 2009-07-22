@@ -20,9 +20,12 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -30,8 +33,13 @@ import java.math.BigDecimal;
  */
 public class OrganizationalUnit extends ContentPage {
 
+    private final static Logger logger = Logger.getLogger(OrganizationalUnit.class);
+
     public final static String ORGANIZATIONALUNIT_NAME = "organizationalunitName";
     public final static String ORGANIZATIONALUNIT_DESCRIPTION = "organizationalunitDescription";
+
+    public final static String DIRECTION = "direction";
+    public final static String ASSISTANT_DIRECTION = "assistentDirection";
 
     public final static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.OrganizationalUnit";
 
@@ -70,5 +78,40 @@ public class OrganizationalUnit extends ContentPage {
 
     public void setOrganizationalUnitDescription(String description) {
         set(ORGANIZATIONALUNIT_DESCRIPTION, description);
+    }
+
+    public Person getDirection() {
+        DataObject dobj = (DataObject) get(DIRECTION);
+        if (dobj != null) {
+            return (Person) DomainObjectFactory.newInstance(dobj);
+        } else {
+            return null;
+        }
+    }
+
+    public void setDirection(Person person) {
+        logger.debug("Setting direction...");
+        Assert.exists(person, Person.class);
+        setAssociation(DIRECTION, person);
+    }
+
+    public Person getAssistentDirection() {
+        DataObject dobj = (DataObject) get(ASSISTANT_DIRECTION);
+        if (dobj != null) {
+            return (Person) DomainObjectFactory.newInstance(dobj);
+        } else {
+            return null;
+        }
+    }
+
+
+    public void setAssistentDirection(Person person) {
+        Assert.exists(person, Person.class);
+        setAssociation(ASSISTANT_DIRECTION, person);
+    }
+
+    @Override
+    public String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
     }
 }

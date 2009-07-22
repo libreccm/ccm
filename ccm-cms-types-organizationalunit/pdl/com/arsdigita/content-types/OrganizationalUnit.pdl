@@ -28,4 +28,17 @@ object type OrganizationalUnit extends ContentPage {
        String[0..1] organizationalunitDescription = ct_organizationalunits.organizationalunit_description VARCHAR(2048);
        
        reference key (ct_organizationalunits.organizationalunit_id);
+       //aggressive load (direction.id);
+       //aggressive load (assistentDirection.id);
 }
+
+association {
+	    Person[0..1] direction = join ct_organizationalunits.direction_id to ct_persons.person_id;
+	    OrganizationalUnit[0..n] directedUnit = join ct_persons.person_id to ct_organizationalunits.direction_id;
+}
+
+association {
+	    Person[0..1] assistentDirection = join ct_organizationalunits.assistantDirection_id to ct_persons.person_id;
+	    OrganizationalUnit[0..n] assistenedDirectedUnit = join ct_persons.person_id to ct_organizationalunits.assistantDirection_id;
+}
+

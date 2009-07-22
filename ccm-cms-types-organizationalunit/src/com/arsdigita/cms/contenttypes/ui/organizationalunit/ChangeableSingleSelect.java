@@ -17,6 +17,7 @@ import java.util.Iterator;
 public class ChangeableSingleSelect extends SingleSelect {
 
     private ArrayList m_options;
+    private ArrayList m_selected;
     private RequestLocal m_requestOptions = new RequestLocal() {
 
         @Override
@@ -25,12 +26,17 @@ public class ChangeableSingleSelect extends SingleSelect {
         }
     };
 
+    private final static String TOO_MANY_OPTIONS_SELECTED =
+        "Only one option may be selected by default on this option group.";
+
     public ChangeableSingleSelect(String name) {
         super(new StringParameter(name));
+        this.m_selected = new ArrayList();
     }
 
     public ChangeableSingleSelect(ParameterModel model) {
         super(model);
+        this.m_selected = new ArrayList();
     }
 
     @Override
@@ -109,4 +115,25 @@ public class ChangeableSingleSelect extends SingleSelect {
             }
         }
     }
+
+    @Override
+    @SuppressWarnings("deprecation")
+    public void setOptionSelected(String value) {
+        Assert.assertNotLocked(this);
+        if (!isMultiple()) {
+            // only one option may be selected
+            // to this selected list better be empty
+            Assert.assertTrue(m_selected.size() == 0, TOO_MANY_OPTIONS_SELECTED);
+            m_selected.add(value);
+            getParameterModel().setDefaultValue(value);
+        } else {
+            m_selected.add(value);
+            getParameterModel().setDefaultValue(m_selected.toArray());
+        }
+    }
+
+     public void setOptionSelected(Option option) {
+        setOptionSelected(option.getValue());
+    }
+
 }
