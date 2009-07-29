@@ -65,7 +65,7 @@ public class GenericOrganization extends ContentPage {
     /**
      * Type of this class (used for internal purposed).
      */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganization";
+    public static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganization";
     //private static final GenericOrganizationConfig s_config = new GenericOrganizationConfig();
     private static final Logger s_log = Logger.getLogger(GenericOrganization.class);
 
