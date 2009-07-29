@@ -23,22 +23,12 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.DomainObject;
 
-object type OrganizationalUnit extends ContentPage {
-       String[0..1] organizationalunitName = ct_organizationalunits.organizationalunit_name VARCHAR(512);
-       String[0..1] organizationalunitDescription = ct_organizationalunits.organizationalunit_description VARCHAR(2048);
+object type type ResearchNetwork extends ContentPage {
+       String[0..1] researchNetworkTitle = ct_researchNetworks.researchnetwork_title VARCHAR(512);
+       String[0..1] researchNetworkDirection = ct_researchnetwork.researchnetwork_direction VARCHAR(1024);
+       String[0..1] researchNetworkCoordination = ct_researchnetwork.researchnetwork_coordination VARCHAR(1024);
+       String[0..1] researchNetworkDescription = ct_researchnetwork.researchnetwork_description VARCHAR(4096);
+       String[0..1] researchNetworkWebsite = ct_researchnetwork.researchnetwork_website VARCHAR(512);
        
-       reference key (ct_organizationalunits.organizationalunit_id);
-       //aggressive load (direction.id);
-       //aggressive load (assistentDirection.id);
+       reference key (ct_researchnetworks.researchnetwork_id);
 }
-
-association {
-	    Person[0..1] direction = join ct_organizationalunits.direction_id to ct_persons.person_id;
-	    OrganizationalUnit[0..n] directedUnit = join ct_persons.person_id to ct_organizationalunits.direction_id;
-}
-
-association {
-	    Person[0..1] assistentDirection = join ct_organizationalunits.assistantDirection_id to ct_persons.person_id;
-	    OrganizationalUnit[0..n] assistenedDirectedUnit = join ct_persons.person_id to ct_organizationalunits.assistantDirection_id;
-}
-
