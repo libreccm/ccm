@@ -1,0 +1,36 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.contenttypes.GenricOrganization;
+import com.arsdigita.cms.contenttypes.BaseAddress;
+import com.arsdigita.cms.contenttypes.BaseContact;
+//import com.arsdigita.cms.contenttypes.HealthCareFacility;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+// HealthCareFacility Object
+object type HealthCareFacility extends GenericOrganization {
+
+    BaseAddress[0..1] address = join ct_healthCareFacilities.address_id
+                                  to ct_baseAddresses.address_id;
+
+    reference key ( ct_healthCareFacilities.hcf_id );
+}
+
+association {
+
+    BaseContact[0..n] contacts = join ct_healthCareFacilities.hcf_id
+                                   to ct_healthCareFacility_baseContact_map.hcf_id,
+                                 join ct_healthCareFacility_baseContact_map.contact_id
+                                   to ct_baseContacts.contact_id;
+
+    HealthCareFacility[0..n] healthCareFacilities = join ct_baseContacts.contact_id
+                                                     to ct_healthCareFacility_baseContact_map.contact_id,
+                                                   join ct_healthCareFacility_baseContact_map.hcf_id
+                                                     to ct_healthCareFacilities.hcf_id;
+
+    // Link Attribute
+    String contact_type = ct_healthCareFacility_baseContact_map.contact_type VARCHAR(100);
+    BigDecimal contact_order = ct_healthCareFacility_baseContact_map.contact_order INTEGER;
+
+}
+

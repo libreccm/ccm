@@ -1,0 +1,20 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <table name="ct_genericorganizations"/>
+    <table name="ct_baseAddresses"/>
+    <table name="ct_baseContacts"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_healtCareFacilities"/>
+<!--    <table name="ct_healtCareFacility_baseContact_map"/> -->
+    <initializer class="com.arsdigita.cms.contenttypes.HealthCareFacilityInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-healthCareFacility"/>
+    <data class="com.arsdigita.cms.contenttypes.HealthCareFacilityLoader"/>
+  </scripts>
+</load>
