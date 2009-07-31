@@ -24,7 +24,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.DomainObject;
 
 object type type ResearchNetwork extends ContentPage {
-       String[0..1] researchNetworkTitle = ct_researchNetworks.researchnetwork_title VARCHAR(512);
+       String[1..1] researchNetworkTitle = ct_researchNetworks.researchnetwork_title VARCHAR(512);
        String[0..1] researchNetworkDirection = ct_researchnetwork.researchnetwork_direction VARCHAR(1024);
        String[0..1] researchNetworkCoordination = ct_researchnetwork.researchnetwork_coordination VARCHAR(1024);
        String[0..1] researchNetworkDescription = ct_researchnetwork.researchnetwork_description VARCHAR(4096);
