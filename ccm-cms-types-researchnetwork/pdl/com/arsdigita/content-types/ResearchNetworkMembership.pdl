@@ -21,15 +21,15 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.kernel.ACSObject;
 
 object type ResearchNetworkMembership extends ACSObject {
-       Person[0..1] targetItem = join ct_researchnetworkmemberships_target_item_id to ct_persons.person_id;
+       Person[0..1] targetItem = join ct_researchnetworkmemberships.target_item_id to ct_persons.person_id;
 
        reference key(ct_researchnetworkmemberships.membership_id);
        aggressive load (membershipOwner.id);
 }
 
 association {
-	    composite ResearchNetwork[0..1] membershipOwner = join ct_researchnetworkmemberships.owner_id to ct_researchnetworks_researchnetwork_id;
-	    composite ResearchNetworkMembers[0..n] members = join ct_researchnetworks.researchnetwork.id to ct_researchnetworkmemberships.owner_id;
+	    composite ResearchNetwork[0..1] membershipOwner = join ct_researchnetworkmemberships.owner_id to ct_researchnetworks.researchnetwork_id;
+	    composite ResearchNetworkMembership[0..n] members = join ct_researchnetworks.researchnetwork_id to ct_researchnetworkmemberships.owner_id;
 }
 
 query getResearchNetworkMembershipsReferingToResearchNetworks {

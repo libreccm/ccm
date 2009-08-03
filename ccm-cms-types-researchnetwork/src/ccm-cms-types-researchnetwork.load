@@ -8,7 +8,7 @@
 	</requires>
 	<provides>
 		<table name="ct_researchnetworks" />
-		<table name="ct_researchnetworkmembers" />
+		<table name="ct_researchnetworkmemberships" />
 		<initializer class="com.arsdigita.cms.contenttypes.ResearchNetworkInitializer"/>		
 	</provides>
 	<scripts>

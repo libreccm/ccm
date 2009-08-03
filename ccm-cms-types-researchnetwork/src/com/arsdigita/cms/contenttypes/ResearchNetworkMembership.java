@@ -27,8 +27,8 @@ import org.apache.log4j.Logger;
 public class ResearchNetworkMembership extends ACSObject {
 
     private static final Logger s_log = Logger.getLogger(ResearchNetwork.class);
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.ResearchNetworkMember";
-    public static final String MEMBER_OWNER = "memberOwner";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.ResearchNetworkMembership";
+    public static final String MEMBER_OWNER = "membershipOwner";
     public static final String TARGET_ITEM = "targetItem";
 
     public ResearchNetworkMembership() {

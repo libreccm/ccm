@@ -60,7 +60,7 @@ public class ResearchNetworkMembershipPropertiesStep extends ResettableContainer
         return container;
     }
 
-    public FormSection getEditSheet() {
+    public FormSection getEditSheet() {        
         ResearchNetworkMembershipPropertyForm propertyForm = new ResearchNetworkMembershipPropertyForm(m_itemModel, m_membershipModel);
         propertyForm.setPropertiesStep(this);
         return propertyForm;

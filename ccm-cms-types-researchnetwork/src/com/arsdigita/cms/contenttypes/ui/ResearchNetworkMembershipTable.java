@@ -16,7 +16,6 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.contenttypes.ResearchNetworkMembership;
 import com.arsdigita.domain.DataObjectNotFoundException;

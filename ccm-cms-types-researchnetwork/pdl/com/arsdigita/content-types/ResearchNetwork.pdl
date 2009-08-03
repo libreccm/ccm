@@ -23,12 +23,12 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.DomainObject;
 
-object type type ResearchNetwork extends ContentPage {
-       String[1..1] researchNetworkTitle = ct_researchNetworks.researchnetwork_title VARCHAR(512);
-       String[0..1] researchNetworkDirection = ct_researchnetwork.researchnetwork_direction VARCHAR(1024);
-       String[0..1] researchNetworkCoordination = ct_researchnetwork.researchnetwork_coordination VARCHAR(1024);
-       String[0..1] researchNetworkDescription = ct_researchnetwork.researchnetwork_description VARCHAR(4096);
-       String[0..1] researchNetworkWebsite = ct_researchnetwork.researchnetwork_website VARCHAR(512);
+object type ResearchNetwork extends ContentPage {
+       String[0..1] researchNetworkTitle = ct_researchnetworks.researchnetwork_title VARCHAR(512);
+       String[0..1] researchNetworkDirection = ct_researchnetworks.researchnetwork_direction VARCHAR(1024);
+       String[0..1] researchNetworkCoordination = ct_researchnetworks.researchnetwork_coordination VARCHAR(1024);
+       String[0..1] researchNetworkDescription = ct_researchnetworks.researchnetwork_description VARCHAR(4096);
+       String[0..1] researchNetworkWebsite = ct_researchnetworks.researchnetwork_website VARCHAR(512);
        
        reference key (ct_researchnetworks.researchnetwork_id);
 }

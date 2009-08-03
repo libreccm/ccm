@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-		 name="ccm-cms-types-organizationalunit"
-		 prettyName="Red Hat CCM Content Types"
+		 name="ccm-cms-types-researchnetwork"
 		 version="6.6.0"
 		 release="1"
 		 webapp="ROOT">

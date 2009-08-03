@@ -6,6 +6,7 @@ import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.ResearchNetwork;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -38,6 +39,13 @@ public class ResearchNetworkPropertiesStep extends SimpleEditStep {
 
     public static Component getResearchNetworkPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
+
+        //Display the properties
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.title"), ResearchNetwork.RESEARCHNETWORK_TITLE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.direction"), ResearchNetwork.RESEARCHNETWORK_DIRECTION);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.coordination"), ResearchNetwork.RESEARCHNETWORK_COORDINATION);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.website"), ResearchNetwork.RESEARCHNETWORK_WEBSITE);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.direction"), ResearchNetwork.RESEARCHNETWORK_DESCRIPTION);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {
