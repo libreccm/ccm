@@ -20,7 +20,7 @@
 	  descriptionBundle="com.arsdigita.cms.contenttypes.PersonResources"
 	  component="com.arsdigita.cms.contenttypes.ui.PersonPropertiesStep" 
 	  ordering="1"/>
-      
+
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
     </ctd:authoring-kit>
     

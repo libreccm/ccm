@@ -20,7 +20,6 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
@@ -39,7 +38,7 @@ public class Person extends ContentPage {
     public static final String SURNAME = "surname";
     public static final String GIVENNAME = "givenname";
     public static final String TITLEPRE = "titlepre";
-    public static final String TITLEPOST = "titlepost";
+    public static final String TITLEPOST = "titlepost";    
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Person";
     private static final PersonConfig s_config = new PersonConfig();
@@ -109,5 +108,5 @@ public class Person extends ContentPage {
      }
      public void setTitlePost(String titlePost) {
          set(TITLEPOST, titlePost);
-     }
+     }     
 }

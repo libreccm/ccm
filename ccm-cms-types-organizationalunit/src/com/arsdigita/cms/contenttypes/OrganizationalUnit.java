@@ -18,12 +18,18 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
+import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
@@ -31,7 +37,7 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class OrganizationalUnit extends ContentPage {
+public class OrganizationalUnit extends ContentPage implements ExtraXMLGenerator {
 
     private final static Logger logger = Logger.getLogger(OrganizationalUnit.class);
 
@@ -45,6 +51,7 @@ public class OrganizationalUnit extends ContentPage {
 
     public OrganizationalUnit() {
         super(BASE_DATA_OBJECT_TYPE);
+        extraXMLGenerators.add(this);
     }
 
     public OrganizationalUnit(BigDecimal id) throws DataObjectNotFoundException {
@@ -53,14 +60,17 @@ public class OrganizationalUnit extends ContentPage {
 
     public OrganizationalUnit(OID id) throws DataObjectNotFoundException {
         super(id);
+        extraXMLGenerators.add(this);
     }
 
     public OrganizationalUnit(DataObject obj) {
         super(obj);
+        extraXMLGenerators.add(this);
     }
 
     public OrganizationalUnit(String type) {
         super(type);
+        extraXMLGenerators.add(this);
     }
 
     /* accessors ***************************************************/
@@ -113,5 +123,15 @@ public class OrganizationalUnit extends ContentPage {
     @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
+    }    
+
+    public void generateXML(ContentItem item, Element element, PageState state) {
+        Element members = element.newChildElement("cms:organizationalunitMembersPanel", CMS.CMS_XML_NS);
+
+        
+    }
+
+    public void addGlobalStateParams(Page p) {
+
     }
 }
