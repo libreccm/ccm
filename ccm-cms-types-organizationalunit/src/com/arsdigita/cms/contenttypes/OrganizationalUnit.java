@@ -18,18 +18,13 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
-import com.arsdigita.xml.Element;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
@@ -37,7 +32,7 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter <jens@jp-digital.de>
  */
-public class OrganizationalUnit extends ContentPage implements ExtraXMLGenerator {
+public class OrganizationalUnit extends ContentPage{
 
     private final static Logger logger = Logger.getLogger(OrganizationalUnit.class);
 
@@ -45,13 +40,14 @@ public class OrganizationalUnit extends ContentPage implements ExtraXMLGenerator
     public final static String ORGANIZATIONALUNIT_DESCRIPTION = "organizationalunitDescription";
 
     public final static String DIRECTION = "direction";
-    public final static String ASSISTANT_DIRECTION = "assistentDirection";
+    public final static String ASSISTENT_DIRECTION = "assistentDirection";
+
+    public final static String MEMBERSHIPS = "memberships";
 
     public final static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.OrganizationalUnit";
 
     public OrganizationalUnit() {
-        super(BASE_DATA_OBJECT_TYPE);
-        extraXMLGenerators.add(this);
+        super(BASE_DATA_OBJECT_TYPE);       
     }
 
     public OrganizationalUnit(BigDecimal id) throws DataObjectNotFoundException {
@@ -59,18 +55,15 @@ public class OrganizationalUnit extends ContentPage implements ExtraXMLGenerator
     }
 
     public OrganizationalUnit(OID id) throws DataObjectNotFoundException {
-        super(id);
-        extraXMLGenerators.add(this);
+        super(id);       
     }
 
     public OrganizationalUnit(DataObject obj) {
-        super(obj);
-        extraXMLGenerators.add(this);
+        super(obj);        
     }
 
     public OrganizationalUnit(String type) {
-        super(type);
-        extraXMLGenerators.add(this);
+        super(type);       
     }
 
     /* accessors ***************************************************/
@@ -106,7 +99,7 @@ public class OrganizationalUnit extends ContentPage implements ExtraXMLGenerator
     }
 
     public Person getAssistentDirection() {
-        DataObject dobj = (DataObject) get(ASSISTANT_DIRECTION);
+        DataObject dobj = (DataObject) get(ASSISTENT_DIRECTION);
         if (dobj != null) {
             return (Person) DomainObjectFactory.newInstance(dobj);
         } else {
@@ -114,24 +107,31 @@ public class OrganizationalUnit extends ContentPage implements ExtraXMLGenerator
         }
     }
 
-
     public void setAssistentDirection(Person person) {
         Assert.exists(person, Person.class);
-        setAssociation(ASSISTANT_DIRECTION, person);
+        setAssociation(ASSISTENT_DIRECTION, person);
     }
+
+    /*public MembershipCollection getMemberships() {
+        return new MembershipCollection ((DataCollection) get(MEMBERSHIPS));
+    }*/
+
+    /*public void addMembership(Membership membership) {
+        Assert.exists(membership, Membership.class);
+        add(MEMBERSHIPS, membership);
+    }*/
+
+    /*public void removeMembership(Membership membership) {
+        Assert.exists(membership, Membership.class);
+        remove(MEMBERSHIPS, membership);
+    }*/
+
+    /*public boolean hasMemberships() {
+        return !this.getMemberships().isEmpty();
+    }*/
 
     @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
-    }    
-
-    public void generateXML(ContentItem item, Element element, PageState state) {
-        Element members = element.newChildElement("cms:organizationalunitMembersPanel", CMS.CMS_XML_NS);
-
-        
-    }
-
-    public void addGlobalStateParams(Page p) {
-
-    }
+    } 
 }

@@ -117,7 +117,7 @@ public class Membership extends ACSObject {
     public void setMembershipOwner(OrganizationalUnit ou) {
         Assert.exists(ou, OrganizationalUnit.class);
         logger.debug("Setting membership owner to " + ou.getOrganizationalUnitName());
-        setAssociation(MEMBERSHIP_OWNER, ou);
+        setAssociation(MEMBERSHIP_OWNER, ou);        
     }
 
     public Person getTargetItem() {
@@ -159,5 +159,5 @@ public class Membership extends ACSObject {
         DataCollection dc = session.retrieve(BASE_DATA_OBJECT_TYPE);
         dc.addEqualsFilter(MEMBERSHIP_OWNER + ".id", ou.getID());
         return dc;
-    }
+    } 
 }

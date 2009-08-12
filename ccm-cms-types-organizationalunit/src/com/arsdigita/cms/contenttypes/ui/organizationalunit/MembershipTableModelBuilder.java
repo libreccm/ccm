@@ -42,6 +42,7 @@ public class MembershipTableModelBuilder extends LockableImpl implements TableMo
         Assert.isTrue(this.m_itemModel.isSelected(state), "item selected");
         OrganizationalUnit unit = (OrganizationalUnit) this.m_itemModel.getSelectedItem(state);
         return Membership.getMemberships(unit);
+        //return unit.getMemberships();
     }
 
     public static class MembershipTableModel implements TableModel {
@@ -62,6 +63,7 @@ public class MembershipTableModelBuilder extends LockableImpl implements TableMo
             if (m_memberships.next()) {
                 DataObject obj = m_memberships.getDataObject();
                 m_membership = (Membership) DomainObjectFactory.newInstance(obj);
+                //m_membership = (Membership) m_memberships.getDataObject();
                 return true;
             } else {
                 return false;

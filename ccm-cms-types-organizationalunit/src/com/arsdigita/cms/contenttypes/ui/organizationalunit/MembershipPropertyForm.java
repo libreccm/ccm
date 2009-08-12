@@ -179,6 +179,12 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
         membership.setTo((Date) this.m_to.getValue(state));
 
         membership.save();
+        logger.debug("Adding membership to collection of orgaunit...");
+        OrganizationalUnit orgaunit = this.getOrganizationalUnit(state);
+        //orgaunit.addMembership(membership);
+        logger.debug("saving orgaunit...");
+        //this.getOrganizationalUnit(state).save();
+        logger.debug("done.");
     }
 
     public void init(FormSectionEvent e) throws FormProcessException {
@@ -212,6 +218,7 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
         } else {
             data.put(PERSON_SEARCH, null);
         }
+        logger.debug("init listener finished.");
     }
 
     public void process(FormSectionEvent e) throws FormProcessException {

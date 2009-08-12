@@ -30,5 +30,7 @@ object type ResearchNetwork extends ContentPage {
        String[0..1] researchNetworkDescription = ct_researchnetworks.researchnetwork_description VARCHAR(4096);
        String[0..1] researchNetworkWebsite = ct_researchnetworks.researchnetwork_website VARCHAR(512);
        
+       ResearchNetworkMembership[0..n] memberships = join ct_researchnetworks.researchnetwork_id to ct_researchnetworkmemberships.owner_id;
+
        reference key (ct_researchnetworks.researchnetwork_id);
 }

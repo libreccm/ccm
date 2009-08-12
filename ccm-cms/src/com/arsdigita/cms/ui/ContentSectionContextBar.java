@@ -62,6 +62,11 @@ class ContentSectionContextBar extends WorkspaceContextBar {
 
         if (CMS.getContext().hasContentItem()) {
             final ContentItem item = CMS.getContext().getContentItem();
+            if (item == null) {
+                s_log.warn("item is null");
+            } else if(item.getContentType() == null) {
+                s_log.warn("item.getContentType() returns null. item.class.getName(): " + item.getClass().getName());
+            }
             isTemplate = 
                 item.getContentType().equals(ContentType.findByAssociatedObjectType(Template.BASE_DATA_OBJECT_TYPE));
             if (isTemplate) {

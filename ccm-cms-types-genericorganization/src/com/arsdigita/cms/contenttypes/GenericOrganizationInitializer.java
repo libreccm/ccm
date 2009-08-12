@@ -57,8 +57,9 @@ public class GenericOrganizationInitializer extends ContentTypeInitializer {
      * @return path of the XSL stylesheet file. The stylesheet is very generic, because this
      * contenttype will be used with the new mandalay theme only.
      */
-    public String getStylesheet() {
-        return "static/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xsl";
+    @Override
+    public String[] getStylesheets() {
+        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xsl" };
     }
 
     /**

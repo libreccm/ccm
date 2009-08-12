@@ -26,11 +26,15 @@ import com.arsdigita.cms.DomainObject;
 object type OrganizationalUnit extends ContentPage {
        String[0..1] organizationalunitName = ct_organizationalunits.organizationalunit_name VARCHAR(512);
        String[0..1] organizationalunitDescription = ct_organizationalunits.organizationalunit_description VARCHAR(2048);
-       
+
+       OrganizationalUnit subunits = join ct_organizationalunits.organizationalunit_id to ct_orgaunit2orgaunits.owner_id; 
+       Membership[0..n] memberships = join ct_organizationalunits.organizationalunit_id to ct_memberships.owner_id;                   
+
        reference key (ct_organizationalunits.organizationalunit_id);
        //aggressive load (direction.id);
        //aggressive load (assistentDirection.id);
 }
+
 
 association {
 	    Person[0..1] direction = join ct_organizationalunits.direction_id to ct_persons.person_id;

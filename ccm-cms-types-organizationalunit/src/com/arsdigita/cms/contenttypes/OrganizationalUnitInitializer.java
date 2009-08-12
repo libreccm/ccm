@@ -33,12 +33,13 @@ public class OrganizationalUnitInitializer extends ContentTypeInitializer {
         super("ccm-cms-types-organizationalunit.pdl.mf",  OrganizationalUnit.BASE_DATA_OBJECT_TYPE);
     }
 
-    public String getStylesheet() {
-        return "static/content-types/com/arsdigita/cms/contenttypes/OrganizationalUnit.xsl";
+    @Override
+    public String[] getStylesheets() {
+        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/OrganizationalUnit.xsl" };
     }
 
     @Override
-    public void init(LegacyInitEvent evt) {
-        super.init(evt);
+     public String getTraversalXML() {
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/OrganizationalUnit.xml";
     }
 }
