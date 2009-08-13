@@ -29,7 +29,7 @@ object type GenericOrganization extends ContentPage {
        String[0..1] description = ct_genericorganizations.description VARCHAR(2000);
 
        OrganizationRole[0..n] organizationroles = join ct_genericorganizations.organization_id to ct_organizationroles.owner_id;
-       OrganizationalUnit[0..n] subunits = join ct_genericorganizations.organization_id to ct_orga2orgaunits.orga2orgaunit_id;
+       Orga2OrgaUnit[0..n] subunits = join ct_genericorganizations.organization_id to ct_orga2orgaunits.owner_id;
 
        reference key (ct_genericorganizations.organization_id);
 }
