@@ -20,29 +20,18 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.event.ParameterEvent;
-import com.arsdigita.bebop.event.ParameterListener;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.bebop.parameters.URLValidationListener;
-import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.contenttypes.util.PersonGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.domain.DomainCollection;
 import org.apache.log4j.Logger;
 
 /**
