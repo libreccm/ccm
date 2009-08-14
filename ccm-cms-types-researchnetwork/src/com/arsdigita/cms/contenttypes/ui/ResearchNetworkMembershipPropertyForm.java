@@ -20,6 +20,7 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.contenttypes.ResearchNetwork;
+import com.arsdigita.cms.contenttypes.ResearchNetworkGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.ResearchNetworkMembership;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.util.Assert;
@@ -60,7 +61,7 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
     }
 
     protected void addWidgets() {
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.membership.person")));
+        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.membership.person")));
         this.m_personSearch = new ItemSearchWidget(PERSON_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Person"));
         add(this.m_personSearch);
     }
@@ -73,9 +74,9 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_membershipModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("cancel");
+                        target.setButtonLabel(GlobalizationUtil.globalize("cancel"));
                     } else {
-                        target.setButtonLabel("Reset");
+                        target.setButtonLabel(GlobalizationUtil.globalize("reset"));
                     }
                 }
             });
@@ -85,9 +86,9 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if(m_membershipModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("Save");
+                        target.setButtonLabel(GlobalizationUtil.globalize("save"));
                     } else {
-                        target.setButtonLabel("Create");
+                        target.setButtonLabel(GlobalizationUtil.globalize("create"));
                     }
                 }
             });

@@ -19,7 +19,9 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.OrgaUnit2OrgaUnit;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
@@ -54,7 +56,7 @@ public class OrgaUnit2OrgaUnitPropertyForm extends FormSection implements FormIn
     }
 
     protected void addWidgets() {
-        add(new Label("OrganizationalUnit"));
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.OrganizationalUnit"));
         add(this.m_itemSearch);
     }
@@ -67,9 +69,9 @@ public class OrgaUnit2OrgaUnitPropertyForm extends FormSection implements FormIn
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_ou2ouModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("Cancel");
+                        target.setButtonLabel(GlobalizationUtil.globalize("cancel"));
                     } else {
-                        target.setButtonLabel("Reset");
+                        target.setButtonLabel(GlobalizationUtil.globalize("reset"));
                     }
                 }
             });
@@ -79,9 +81,9 @@ public class OrgaUnit2OrgaUnitPropertyForm extends FormSection implements FormIn
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_ou2ouModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("Save");
+                        target.setButtonLabel(GlobalizationUtil.globalize("save"));
                     } else {
-                        target.setButtonLabel("Create");
+                        target.setButtonLabel(GlobalizationUtil.globalize("create"));
                     }
                 }
             });

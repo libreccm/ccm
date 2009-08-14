@@ -15,6 +15,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ResearchNetwork;
+import com.arsdigita.cms.contenttypes.ResearchNetworkGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import org.apache.log4j.Logger;
 
@@ -47,30 +48,30 @@ public class ResearchNetworkPropertyForm extends BasicPageForm implements FormPr
     public void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.title")));
+        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.title")));
         ParameterModel researchNetworkTitleParam = new StringParameter(RESEARCHNETWORK_TITLE);
         TextField researchNetworkTitle = new TextField(researchNetworkTitleParam);
         researchNetworkTitle.addValidationListener(new NotNullValidationListener());
         add(researchNetworkTitle);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.direction")));
+        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.direction")));
         TextArea researchNetworkDirection = new TextArea(RESEARCHNETWORK_DIRECTION);
         researchNetworkDirection.setRows(5);
         researchNetworkDirection.setCols(30);
         add(researchNetworkDirection);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.coordination")));
+        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.coordination")));
         TextArea researchNetworkCoordination = new TextArea(RESEARCHNETWORK_COORDINATION);
         researchNetworkCoordination.setRows(5);
         researchNetworkCoordination.setCols(30);
         add(researchNetworkCoordination);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.website")));
+        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.website")));
         ParameterModel researchNetworkWebsiteParam = new StringParameter(RESEARCHNETWORK_WEBSITE);
         TextField researchNetworkWebsite = new TextField(researchNetworkWebsiteParam);
         add(researchNetworkWebsite);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.description")));
+        add(new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.researchnetwork.ui.description")));
         TextArea researchNetworkAreaDescription = new TextArea(RESEARCHNETWORK_DESCRIPTION);
         researchNetworkAreaDescription.setRows(10);
         researchNetworkAreaDescription.setCols(30);

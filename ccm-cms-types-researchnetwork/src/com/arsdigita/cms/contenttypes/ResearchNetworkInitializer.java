@@ -15,8 +15,14 @@ public class ResearchNetworkInitializer extends ContentTypeInitializer {
         super("ccm-cms-types-researchnetwork.pdl.mf", ResearchNetwork.BASE_DATA_OBJECT_TYPE);
     }
 
-    public String getStylesheet() {
-        return "static/content-types/com/arsdigita/cms/contenttypes/ResearchNetwork.xsl";
+    @Override
+    public String[] getStylesheets() {
+        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/ResearchNetwork.xsl" };
+    }
+   
+    @Override
+    public String getTraversalXML() {
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/ResearchNetwork.xml";
     }
 
     @Override

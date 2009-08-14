@@ -16,10 +16,10 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
-import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.util.UncheckedWrapperException;
 import org.apache.log4j.Logger;
 
@@ -55,10 +55,10 @@ public class MembershipStatusPropertyForm extends FormSection implements FormIni
 
     protected void addWidgets() {
         logger.debug("Adding widgets...");
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.membershipstatus.warning_changes_here_significant_for_all")), ColumnPanel.FULL_WIDTH);
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.membershipstatus.warning_changes_here_significant_for_all")), ColumnPanel.FULL_WIDTH);
         this.m_statusName = new TextField("statusName");
         this.m_statusName.addValidationListener(new NotNullValidationListener());
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.membershipstatus.statusname")));
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.membershipstatus.statusname")));
         add(this.m_statusName);
         logger.debug("widgets added");
     }
@@ -72,9 +72,9 @@ public class MembershipStatusPropertyForm extends FormSection implements FormIni
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_statusModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("Cancel");
+                        target.setButtonLabel(GlobalizationUtil.globalize("cancel"));
                     } else {
-                        target.setButtonLabel("Reset");
+                        target.setButtonLabel(GlobalizationUtil.globalize("reset"));
                     }
                 }
             });
@@ -84,9 +84,9 @@ public class MembershipStatusPropertyForm extends FormSection implements FormIni
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_statusModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("Save");
+                        target.setButtonLabel(GlobalizationUtil.globalize("save"));
                     } else {
-                        target.setButtonLabel("Create");
+                        target.setButtonLabel(GlobalizationUtil.globalize("create"));
                     }
                 }
             });

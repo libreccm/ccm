@@ -11,9 +11,10 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
-import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.cms.contenttypes.GenericOrganizationGlobalizationUtil;
 import com.arsdigita.bebop.Component;
 
+import com.arsdigita.cms.util.GlobalizationUtil;
 import java.text.DateFormat;
 import org.apache.log4j.Logger;
 
@@ -61,9 +62,9 @@ public class GenericOrganizationPropertiesStep extends SimpleEditStep {
     public static Component getGenericOrganizationPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationname"), GenericOrganization.ORGANIZATIONNAME);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationnameaddendum"), GenericOrganization.ORGANIZATIONNAMEADDENDUM);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.description"), GenericOrganization.DESCRIPTION);
+        sheet.add(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationname"), GenericOrganization.ORGANIZATIONNAME);
+        sheet.add(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationnameaddendum"), GenericOrganization.ORGANIZATIONNAMEADDENDUM);
+        sheet.add(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.description"), GenericOrganization.DESCRIPTION);
 
         if(!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {

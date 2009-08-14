@@ -16,6 +16,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.OrgaUnit2OrgaUnit;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
@@ -75,7 +76,7 @@ public class OrgaUnit2OrgaUnitTable extends Table {
             }
         };
 
-        Label empty = new Label("There are no organizational units associated with this organizational unit.");
+        Label empty = new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.noOrgaUnitsAssociatedWithThisOrgaUnit"));
         setEmptyView(empty);
         addTableActionListener(new OrgaUnit2OrgaUnitTableActionListener());
         setRowSelectionModel(this.m_ou2ouModel);
@@ -86,9 +87,9 @@ public class OrgaUnit2OrgaUnitTable extends Table {
     public void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
-        this.m_orgaUnitCol = new TableColumn(i, "Organizational Unit");
-        this.m_editCol = new TableColumn(++i, "Edit");
-        this.m_delCol = new TableColumn(++i, "Delete");
+        this.m_orgaUnitCol = new TableColumn(i, OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit"));
+        this.m_editCol = new TableColumn(++i, "cms.contenttypes.ui.organizationalunit.edit");
+        this.m_delCol = new TableColumn(++i, "cms.contenttypes.ui.organizationalunit.edit.delete");
         this.m_moveUpCol = new TableColumn(++i, "");
         this.m_moveDownCol = new TableColumn(++i, "");
 

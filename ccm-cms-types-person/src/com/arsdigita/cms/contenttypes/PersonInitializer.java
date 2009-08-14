@@ -45,10 +45,12 @@ public class PersonInitializer extends ContentTypeInitializer {
               Person.BASE_DATA_OBJECT_TYPE);
     }
 
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
     }
 
+    @Override
     public String[] getStylesheets() {
         return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/Person.xsl" };
     }

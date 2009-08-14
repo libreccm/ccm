@@ -17,10 +17,10 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganization;
+import com.arsdigita.cms.contenttypes.GenericOrganizationGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.OrganizationRole;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.ui.ItemSearchWidget;
@@ -79,10 +79,10 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
     protected void addWidgets() {
         this.m_rolename = new TextField("rolename");
         this.m_rolename.addValidationListener(new NotNullValidationListener());
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.rolename")));
+        add(new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.rolename")));
         add(this.m_rolename);
 
-        add(new Label("Person"));
+        add(new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.person")));
         /* Create the ItemSearchWidget. The ContentType.findByAssociatedObjecType
          * gets the ContentType of com.arsdigita.cms.contenttypes.Person and passes
          * it to the constructor of the ItemSearchWidget. The ItemSearchWidget will only

@@ -9,7 +9,6 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganization;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
@@ -17,6 +16,7 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 
+import com.arsdigita.cms.contenttypes.GenericOrganizationGlobalizationUtil;
 import org.apache.log4j.Logger;
 
 /**
@@ -41,7 +41,7 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
     /**
      * Description
      */
-    public static final String DESCRIPTION = GenericOrganization.DESCRIPTION;
+    public static final String ORGANIZATIONDESCRIPTION = GenericOrganization.ORGANIZATIONDESCRIPTION;
 
     /**
      * ID of the form
@@ -73,18 +73,18 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
     public void addWidgets() {
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.genericorganization.ui.organizationname")));
+        add(new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationname")));
         ParameterModel organizationNameParam = new StringParameter(ORGANIZATIONAME);
         TextField organizationName = new TextField(organizationNameParam);
         organizationName.addValidationListener(new NotNullValidationListener());
         add(organizationName);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.genericorganization.ui.organizationnameaddendum")));
+        add(new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationnameaddendum")));
         TextField organizationNameAddendum = new TextField(ORGANIZATIONNAMEADDENDUM);
         add(organizationNameAddendum);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.genericorganzation.ui.description")));
-        TextArea description = new TextArea(DESCRIPTION);
+        add(new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganzation.description")));
+        TextArea description = new TextArea(ORGANIZATIONDESCRIPTION);
         description.setRows(5);
         description.setCols(30);
         add(description);
@@ -97,7 +97,7 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
 
         data.put(ORGANIZATIONAME, orga.getOrganizationName());
         data.put(ORGANIZATIONNAMEADDENDUM, orga.getOrganizationNameAddendum());
-        data.put(DESCRIPTION, orga.getDescription());
+        data.put(ORGANIZATIONDESCRIPTION, orga.getDescription());
     }
 
     @Override
@@ -111,7 +111,7 @@ public class GenericOrganizationPropertyForm extends BasicPageForm implements Fo
                 && (getSaveCancelSection().getSaveButton().isSelected(e.getPageState()))) {
             orga.setOrganizationName((String)data.get(ORGANIZATIONAME));
             orga.setOrganizationNameAddendum((String)data.get(ORGANIZATIONNAMEADDENDUM));
-            orga.setDescription((String)data.get(DESCRIPTION));
+            orga.setDescription((String)data.get(ORGANIZATIONDESCRIPTION));
 
             logger.error("Saving new values of orga");
             orga.save();

@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -64,7 +65,7 @@ public class MembershipTable extends Table {
             }
         };
 
-        Label empty = new Label("This organizational unit has no members.");
+        Label empty = new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.nomembers"));
         setEmptyView(empty);
         addTableActionListener(new MembershipTableActionListener());
         setRowSelectionModel(m_membershipModel);
@@ -75,9 +76,9 @@ public class MembershipTable extends Table {
     public void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
-        this.m_personCol = new TableColumn(i, "Person");
-        this.m_statusCol = new TableColumn(++i, "Status");
-        this.m_editCol = new TableColumn(++i, "Edit");
+        this.m_personCol = new TableColumn(i, OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.person"));
+        this.m_statusCol = new TableColumn(++i, OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.status"));
+        this.m_editCol = new TableColumn(++i, OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.edit"));
 
         model.add(this.m_personCol);
         model.add(this.m_statusCol);

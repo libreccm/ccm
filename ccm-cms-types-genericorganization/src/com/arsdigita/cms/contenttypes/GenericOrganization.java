@@ -57,7 +57,7 @@ public class GenericOrganization extends ContentPage {
     /**
      * A short description of the organization.
      */
-    public static final String ORGANIZATIONDESCRIPTION = "description";
+    public static final String ORGANIZATIONDESCRIPTION = "organizationdescription";
     /**
      * Roles associated with the organization.
      */
@@ -173,7 +173,7 @@ public class GenericOrganization extends ContentPage {
      * @return Description of the organization, if any.
      */
     public String getOrganizationDescription() {
-        return (String) get(DESCRIPTION);
+        return (String) get(ORGANIZATIONDESCRIPTION);
     }
 
     /**
@@ -182,6 +182,6 @@ public class GenericOrganization extends ContentPage {
      * @param description The (new) description.
      */
     public void setOrganizationDescription(String description) {
-        set(DESCRIPTION, description);
+        set(ORGANIZATIONDESCRIPTION, description);
     }    
 }

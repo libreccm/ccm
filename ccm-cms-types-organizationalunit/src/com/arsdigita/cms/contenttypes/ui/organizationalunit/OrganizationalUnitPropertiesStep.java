@@ -7,6 +7,7 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -40,8 +41,8 @@ public class OrganizationalUnitPropertiesStep extends SimpleEditStep {
     public static Component getOrganizationalUnitPropertySheet(ItemSelectionModel itemModel) {        
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.organizatialunit.unitname"), OrganizationalUnit.ORGANIZATIONALUNIT_NAME);
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.organizatialunit.unitdescription"), OrganizationalUnit.ORGANIZATIONALUNIT_DESCRIPTION);
+        sheet.add(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizatialunit.unitname"), OrganizationalUnit.ORGANIZATIONALUNIT_NAME);
+        sheet.add(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizatialunit.unitdescription"), OrganizationalUnit.ORGANIZATIONALUNIT_DESCRIPTION);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {

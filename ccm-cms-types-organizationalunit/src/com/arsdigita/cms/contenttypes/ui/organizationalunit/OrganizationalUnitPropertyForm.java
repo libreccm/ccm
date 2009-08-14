@@ -15,6 +15,7 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import org.apache.log4j.Logger;
 
@@ -44,13 +45,13 @@ public class OrganizationalUnitPropertyForm extends BasicPageForm implements For
     public void addWidgets() {        
         super.addWidgets();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.organizationalunit.ui.unitname")));
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.unitname")));
         ParameterModel orgaUnitNameParam = new StringParameter(ORGANIZATIONALUNIT_NAME);
         TextField orgaUnitName = new TextField(orgaUnitNameParam);
         orgaUnitName.addValidationListener(new NotNullValidationListener());
         add(orgaUnitName);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.organizationalunit.ui.description")));
+        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.description")));
         TextArea description = new TextArea(ORGANIZATIONALUNIT_DESCRIPTION);
         description.setRows(5);
         description.setCols(30);

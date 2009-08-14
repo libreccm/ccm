@@ -15,10 +15,8 @@ import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.parameters.DateParameter;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.util.GlobalizationUtil;
@@ -26,8 +24,8 @@ import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
-import com.arsdigita.cms.contenttypes.MembershipStatusCollection;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -37,7 +35,6 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
@@ -79,24 +76,24 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
     protected void addWidgets() {
         logger.debug("adding widgets...");
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.orgnizationalunit.membership.Person")));
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.orgnizationalunit.membership.Person")));
         this.m_personSearch = new ItemSearchWidget(PERSON_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Person"));
         add(this.m_personSearch);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.orgnizationalunit.membership.Status")));
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.orgnizationalunit.membership.Status")));
         ParameterModel statusParam = new StringParameter((Membership.STATUS));
         this.m_status = new ChangeableSingleSelect(statusParam);
         add(this.m_status);
         //MembershipStatusCollection statusValues = MembershipStatusCollection.getMembershipStatusCollection();        
         this.addStatusOptions();
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membership.from")));
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membership.from")));
         ParameterModel fromParam = new DateParameter(Membership.FROM);
         //fromParam.addParameterListener(new NotNullValidationListener());
         this.m_from = new com.arsdigita.bebop.form.Date(fromParam);
         add(this.m_from);
 
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membership.to")));
+        add(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membership.to")));
         ParameterModel toParam = new DateParameter(Membership.TO);
         this.m_to = new com.arsdigita.bebop.form.Date(toParam);
         add(this.m_to);
@@ -119,9 +116,9 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_membershipModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("cancel");
+                        target.setButtonLabel(GlobalizationUtil.globalize("cancel"));
                     } else {
-                        target.setButtonLabel("Reset");
+                        target.setButtonLabel(GlobalizationUtil.globalize("reset"));
                     }
                 }
             });
@@ -131,9 +128,9 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
                 public void prepare(PrintEvent e) {
                     Submit target = (Submit) e.getTarget();
                     if (m_membershipModel.isSelected(e.getPageState())) {
-                        target.setButtonLabel("Save");
+                        target.setButtonLabel(GlobalizationUtil.globalize("save"));
                     } else {
-                        target.setButtonLabel("Create");
+                        target.setButtonLabel(GlobalizationUtil.globalize("create"));
                     }
                 }
             });

@@ -17,6 +17,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.ResearchNetworkGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.ResearchNetworkMembership;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -61,7 +62,7 @@ public class ResearchNetworkMembershipTable extends Table {
             }
         };
 
-        Label empty = new Label("This research network has no associated persons.");
+        Label empty = new Label(ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.membership.noMembers"));
         setEmptyView(empty);
         addTableActionListener(new ResearchNetworkMembershipTableActionListener());
         setRowSelectionModel(m_membershipModel);
@@ -71,9 +72,9 @@ public class ResearchNetworkMembershipTable extends Table {
 
     public void addColumns() {
         TableColumnModel model = getColumnModel();
-        this.m_personCol = new TableColumn(0, "Person");
-        this.m_editCol = new TableColumn(1, "Edit");
-        this.m_delCol = new TableColumn(2, "Delete");
+        this.m_personCol = new TableColumn(0, ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.membership.person"));
+        this.m_editCol = new TableColumn(1, ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.membership.edit"));
+        this.m_delCol = new TableColumn(2, ResearchNetworkGlobalizationUtil.globalize("cms.contenttypes.ui.researchnetwork.membership.delete"));
 
         model.add(this.m_personCol);
         model.add(this.m_editCol);

@@ -26,7 +26,7 @@ import com.arsdigita.cms.DomainObject;
 object type GenericOrganization extends ContentPage {
        String[0..1] organizationname = ct_genericorganizations.organizationname VARCHAR(512);
        String[0..1] organizationnameaddendum = ct_genericorganizations.organizationnameaddendum VARCHAR(512);
-       String[0..1] description = ct_genericorganizations.description VARCHAR(2000);
+       String[0..1] organizationdescription = ct_genericorganizations.organizationdescription VARCHAR(2000);
 
        OrganizationRole[0..n] organizationroles = join ct_genericorganizations.organization_id to ct_organizationroles.owner_id;
        Orga2OrgaUnit[0..n] subunits = join ct_genericorganizations.organization_id to ct_orga2orgaunits.owner_id;

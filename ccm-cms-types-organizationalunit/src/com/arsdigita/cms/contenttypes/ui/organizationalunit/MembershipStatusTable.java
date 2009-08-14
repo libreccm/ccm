@@ -15,6 +15,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -70,9 +71,9 @@ public class MembershipStatusTable extends Table {
     protected void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
-        this.m_statusNameCol = new TableColumn(i, "Status name");
-        this.m_editCol = new TableColumn(++i, "Edit");
-        this.m_delCol = new TableColumn(++i, "Delete");
+        this.m_statusNameCol = new TableColumn(i, OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membershipstatus.name"));
+        this.m_editCol = new TableColumn(++i, OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membershipstatus.edit"));
+        this.m_delCol = new TableColumn(++i, OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.membershipstatus.delete"));
 
         model.add(this.m_statusNameCol);
         model.add(this.m_editCol);

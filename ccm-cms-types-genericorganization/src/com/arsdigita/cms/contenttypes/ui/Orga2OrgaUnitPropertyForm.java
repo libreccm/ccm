@@ -18,6 +18,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganization;
+import com.arsdigita.cms.contenttypes.GenericOrganizationGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.Orga2OrgaUnit;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
 import com.arsdigita.cms.ui.ItemSearchWidget;
@@ -68,7 +69,7 @@ public class Orga2OrgaUnitPropertyForm extends FormSection implements FormInitLi
      * Creates the widgets for the form.
      */
     protected void addWidgets() {
-        add(new Label("OrganizationalUnit"));
+        add(new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.organizationalunit")));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.OrganizationalUnit"));
         add(this.m_itemSearch);       
     }

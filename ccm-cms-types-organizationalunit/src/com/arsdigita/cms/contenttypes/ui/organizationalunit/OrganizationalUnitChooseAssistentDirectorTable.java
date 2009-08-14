@@ -33,6 +33,7 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
+import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -65,7 +66,7 @@ public class OrganizationalUnitChooseAssistentDirectorTable extends Table implem
         model.add(new TableColumn(0, COL_PERSON));
         model.add(new TableColumn(1, COL_CHOOSE_PERSON));
 
-        setEmptyView(new Label("New Persons available."));
+        setEmptyView(new Label(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.assistentdirector.noPersonsAvailable")));
         setModelBuilder(new OrganizationalUnitChooseAssistentDirectorTableModelBuilder());
 
         model.get(1).setCellRenderer(new SelectCellRenderer());
@@ -147,7 +148,7 @@ public class OrganizationalUnitChooseAssistentDirectorTable extends Table implem
 
         public Component getComponent(Table table, PageState state, Object value, boolean isSelected, Object key, int row, int column) {
             ControlLink link = new ControlLink(value.toString());
-            link.setConfirmation("Select this person?");
+            link.setConfirmation(OrganizationalUnitGlobalizationUtil.globalize("cms.contenttypes.ui.organizationalunit.assistentdirector.selectThisPerson").localize().toString());
             return link;
         }
 

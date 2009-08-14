@@ -15,6 +15,7 @@ import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.contenttypes.GenericOrganizationGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.OrganizationRole;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -84,7 +85,7 @@ public class OrganizationRoleTable extends Table {
             }
         };
 
-        Label empty = new Label("There are no roles for this organization.");
+        Label empty = new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.noRolesForThisOrga"));
         setEmptyView(empty);
         addTableActionListener(new OrganizationRoleTableActionListener());
         setRowSelectionModel(m_roleModel);
@@ -98,10 +99,10 @@ public class OrganizationRoleTable extends Table {
     protected void addColumns() {
         TableColumnModel model = getColumnModel();
         int i = 0;
-        this.m_roleNameCol = new TableColumn(i, "Role");
-        this.m_personCol = new TableColumn(++i, "Person");
-        this.m_editCol = new TableColumn(++i, "Edit");
-        this.m_delCol = new TableColumn(++i, "Delete");
+        this.m_roleNameCol = new TableColumn(i, GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.role").localize());
+        this.m_personCol = new TableColumn(++i, GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.person").localize());
+        this.m_editCol = new TableColumn(++i, GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.edit").localize());
+        this.m_delCol = new TableColumn(++i, GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.delete").localize());
         this.m_moveUpCol = new TableColumn(++i, "");
         this.m_moveDownCol = new TableColumn(++i, "");
 

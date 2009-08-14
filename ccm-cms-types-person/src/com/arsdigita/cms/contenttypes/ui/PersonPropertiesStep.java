@@ -21,7 +21,6 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -34,6 +33,7 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.contenttypes.util.PersonGlobalizationUtil;
 
+import com.arsdigita.cms.util.GlobalizationUtil;
 import java.text.DateFormat;
 
 public class PersonPropertiesStep extends SimpleEditStep {
@@ -63,7 +63,7 @@ public class PersonPropertiesStep extends SimpleEditStep {
 	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), Person.TITLEPOST);
 	
 	if(!ContentSection.getConfig().getHideLaunchDate()) {
-	    sheet.add((String)PersonGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),
+	    sheet.add((String)GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),
 		      ContentPage.LAUNCH_DATE,
 		      new DomainObjectPropertySheet.AttributeFormatter() {
 			  public String format(DomainObject item,
@@ -74,7 +74,7 @@ public class PersonPropertiesStep extends SimpleEditStep {
 				  return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
 			      }
 			      else {
-				  return (String)PersonGlobalizationUtil.globalize("cms.ui.unknown").localize();
+				  return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
 			      }
 			  }
 		      });

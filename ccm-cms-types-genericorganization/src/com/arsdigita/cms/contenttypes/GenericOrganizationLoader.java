@@ -18,15 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.lifecycle.LifecycleDefinition;
-import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ResourceParameter;
-import com.arsdigita.workflow.simple.WorkflowTemplate;
-
-import java.io.InputStream;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -40,7 +31,7 @@ public class GenericOrganizationLoader extends AbstractContentTypeLoader {
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/GenericOrganization.xml"
     };
-    private ResourceParameter m_template;
+    //private ResourceParameter m_template;
 
     /**
      * Returns the value of the type string.
@@ -50,18 +41,16 @@ public class GenericOrganizationLoader extends AbstractContentTypeLoader {
     public String[] getTypes() {
         return TYPES;
     }
-
     /**
      * Constructor. 
      */
-    public GenericOrganizationLoader() {
-        super();
+    //public GenericOrganizationLoader() {
+    //  super();
         /*m_template = new ResourceParameter("com.arsdigita.cms.contenttypes.genericorganization.template",
-                Parameter.REQUIRED,
-                "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/genericorganization-item.jsp");
-        register(m_template);*/
-    }
-
+    Parameter.REQUIRED,
+    "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/genericorganization-item.jsp");
+    register(m_template);*/
+    //}
     /**
      *
      * @param section
@@ -71,17 +60,17 @@ public class GenericOrganizationLoader extends AbstractContentTypeLoader {
      */
     /*@Override
     protected void prepareSection(final ContentSection section,
-            final ContentType type,
-            final LifecycleDefinition ld,
-            final WorkflowTemplate wf) {
-        super.prepareSection(section, type, ld, wf);
+    final ContentType type,
+    final LifecycleDefinition ld,
+    final WorkflowTemplate wf) {
+    super.prepareSection(section, type, ld, wf);
 
-        setDefaultTemplate("GenericOrganization-genericorganization-item",
-                "genericorganization-item",
-                (InputStream) get(m_template),
-                section,
-                type,
-                ld,
-                wf);
+    setDefaultTemplate("GenericOrganization-genericorganization-item",
+    "genericorganization-item",
+    (InputStream) get(m_template),
+    section,
+    type,
+    ld,
+    wf);
     }*/
 }
