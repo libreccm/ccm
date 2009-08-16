@@ -18,21 +18,20 @@
 
 package com.arsdigita.london.terms.importer;
 
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.util.Assert;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.net.URL;
-import java.util.Date;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
 
 public class DomainBuilder {
     

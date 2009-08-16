@@ -44,6 +44,19 @@
           <th>Released:</th>
           <td><xsl:value-of select="terms:released"/></td>
         </tr>
+        <tr class="odd">
+          <th>Indexer trained:</th>
+          <td>
+            <xsl:choose>
+                <xsl:when test="terms:indexer">
+                    <xsl:value-of select="terms:indexer/terms:lastModifiedDate"/>
+                    <xsl:text> by </xsl:text> 
+                    <xsl:value-of select="terms:indexer/terms:lastModifiedUser/terms:primaryEmail"/>
+                </xsl:when>
+                <xsl:otherwise>(never)</xsl:otherwise>
+            </xsl:choose>
+          </td>
+        </tr>
       </tbody>
       <tfoot>
         <tr>
@@ -54,6 +67,19 @@
             <xsl:text>&#160;</xsl:text>
             <a href="{terms:action[@name='delete']/@url}"><img src="/__ccm__/static/cms/admin/action-group/action-delete.png" width="14" height="14" border="0"/></a>
             <a href="{terms:action[@name='delete']/@url}">Delete</a>
+            <xsl:text>&nbsp;</xsl:text>
+            <a href="{terms:action[@name='train']/@url}"><img src="/assets/action-generic.png" width="14" height="14" border="0"/></a>
+            <xsl:choose>
+                <xsl:when test="terms:indexer">
+                    <a href="{terms:action[@name='train']/@url}">Retrain indexer</a>
+                    <xsl:text>&nbsp;</xsl:text>
+                    <a href="{terms:action[@name='untrain']/@url}"><img src="/assets/action-delete.png" width="14" height="14" border="0"/></a>
+                    <a href="{terms:action[@name='untrain']/@url}">Delete indexer</a>
+                </xsl:when>
+                <xsl:otherwise>
+                    <a href="{terms:action[@name='train']/@url}">Train indexer</a>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:text>&nbsp;</xsl:text>
           </td>
         </tr>

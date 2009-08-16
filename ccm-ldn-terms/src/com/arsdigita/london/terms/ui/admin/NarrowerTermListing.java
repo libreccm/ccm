@@ -18,23 +18,22 @@
 
 package com.arsdigita.london.terms.ui.admin;
 
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.london.util.ui.AbstractDomainObjectList;
-import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
-import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Terms;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.xml.XML;
+import com.arsdigita.london.util.ui.AbstractDomainObjectList;
+import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
+import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.xml.Element;
+import com.arsdigita.xml.XML;
 
 public class NarrowerTermListing extends AbstractDomainObjectList {
 
-    private DomainObjectParameter m_domain;
     private DomainObjectParameter m_term;
 
     public static final String ACTION_VIEW = "view";
@@ -46,7 +45,6 @@ public class NarrowerTermListing extends AbstractDomainObjectList {
               Terms.XML_PREFIX,
               Terms.XML_NS);
 
-        m_domain = domain;
         m_term = term;
         
         registerDomainObjectAction(ACTION_VIEW);
@@ -70,6 +68,17 @@ public class NarrowerTermListing extends AbstractDomainObjectList {
                     term.removeNarrowerTerm(otherTerm);
                 }
             });
+    }
+
+    /**
+     * Only generate the terms list for a preferred term.
+     * @see Term#isPreferredTerm()
+     */
+    public void generateXML(PageState state, Element parent) {
+        Term term = (Term)state.getValue(m_term);       
+        if (term.isPreferredTerm()) {
+            super.generateXML(state, parent);
+        }
     }
 
     protected Element generateObjectXML(PageState state,

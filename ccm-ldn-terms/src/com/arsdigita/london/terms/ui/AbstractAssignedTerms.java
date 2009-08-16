@@ -18,17 +18,17 @@
 
 package com.arsdigita.london.terms.ui;
 
-import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SimpleComponent;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.Term;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
-import com.arsdigita.bebop.SimpleComponent;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.london.terms.Term;
-import com.arsdigita.london.terms.Domain;
-import com.arsdigita.categorization.Category;
 
 public abstract class AbstractAssignedTerms extends SimpleComponent {
 

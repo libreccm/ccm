@@ -19,13 +19,13 @@
 package com.arsdigita.london.terms.upgrade;
 
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-import com.arsdigita.london.terms.Loader;
+import org.apache.commons.cli.CommandLine;
 
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
-import org.apache.commons.cli.CommandLine;
+import com.arsdigita.london.terms.Loader;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
 
 
 public class Upgrade100to101 extends Program {

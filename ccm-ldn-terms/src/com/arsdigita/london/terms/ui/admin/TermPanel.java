@@ -17,25 +17,24 @@
  */
 package com.arsdigita.london.terms.ui.admin;
 
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.Page;
+import org.apache.log4j.Logger;
+
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.domain.DomainCollection;
-
-import com.arsdigita.london.util.ui.ModalContainer;
-import com.arsdigita.london.util.ui.ActionLink;
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
-import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
-import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Terms;
+import com.arsdigita.london.util.ui.ActionLink;
+import com.arsdigita.london.util.ui.ModalContainer;
+import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
+import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.xml.Element;
-
-import org.apache.log4j.Logger;
 
 public class TermPanel extends ModalContainer {
 
@@ -43,7 +42,10 @@ public class TermPanel extends ModalContainer {
 
     private TermListing m_termListing;
     private RelatedTermListing m_relatedTermListing;
+    private BroaderTermListing m_broaderTermListing;
     private NarrowerTermListing m_narrowerTermListing;
+    private PreferredTermListing m_preferredTermListing;
+    private NonPreferredTermListing m_nonPreferredTermListing;
     private ActionLink m_addTerm;
     private TermForm m_termForm;
     private TermDetails m_termDetails;
@@ -74,6 +76,7 @@ public class TermPanel extends ModalContainer {
                                                 Term.BASE_DATA_OBJECT_TYPE);
         
         m_termListing = new TermListing(m_domain, m_term);
+        m_broaderTermListing = new BroaderTermListing(m_domain, m_term);       
         m_narrowerTermListing = new NarrowerTermListing(m_domain, m_term);        
         m_addNarrowerTerm = new ActionLink("Add narrower term");
         m_addNarrowerTerm.setIdAttr("addNarrowerTerm");
@@ -83,6 +86,8 @@ public class TermPanel extends ModalContainer {
         m_removeRootTerm.setIdAttr("removeRootTerm");
         m_termPicker = new TermPicker(m_domain, m_otherTerm);
         m_relatedTermListing = new RelatedTermListing(m_domain, m_term);
+        m_preferredTermListing = new PreferredTermListing(m_domain, m_term);
+        m_nonPreferredTermListing = new NonPreferredTermListing(m_domain, m_term);
         m_addTerm = new ActionLink("Create term");
         m_addTerm.setIdAttr("createTerm");
         m_termDetails = new TermDetails(m_term);
@@ -146,6 +151,45 @@ public class TermPanel extends ModalContainer {
                 }
             });
 
+        m_broaderTermListing.addDomainObjectActionListener(
+                BroaderTermListing.ACTION_VIEW,
+                new ModeChangeListener(MODE_VIEW_TERM));
+        m_broaderTermListing.addDomainObjectActionListener(
+                BroaderTermListing.ACTION_VIEW,
+            new DomainObjectActionListener() {
+                public void actionPerformed(DomainObjectActionEvent e) {
+                    PageState state = e.getPageState();
+                    Term term = (Term)state.getValue(m_term);
+                    state.setValue(m_domain, term.getDomain());
+                }
+            });
+
+        m_preferredTermListing.addDomainObjectActionListener(
+                PreferredTermListing.ACTION_VIEW,
+                new ModeChangeListener(MODE_VIEW_TERM));
+        m_preferredTermListing.addDomainObjectActionListener(
+                PreferredTermListing.ACTION_VIEW,
+            new DomainObjectActionListener() {
+                public void actionPerformed(DomainObjectActionEvent e) {
+                    PageState state = e.getPageState();
+                    Term term = (Term)state.getValue(m_term);
+                    state.setValue(m_domain, term.getDomain());
+                }
+            });
+
+        m_nonPreferredTermListing.addDomainObjectActionListener(
+                NonPreferredTermListing.ACTION_VIEW,
+                new ModeChangeListener(MODE_VIEW_TERM));
+        m_nonPreferredTermListing.addDomainObjectActionListener(
+                NonPreferredTermListing.ACTION_VIEW,
+            new DomainObjectActionListener() {
+                public void actionPerformed(DomainObjectActionEvent e) {
+                    PageState state = e.getPageState();
+                    Term term = (Term)state.getValue(m_term);
+                    state.setValue(m_domain, term.getDomain());
+                }
+            });
+
         m_addTerm.addActionListener(
             new ModeChangeListener(MODE_CREATE_TERM));
         m_addTerm.addActionListener(
@@ -176,6 +220,7 @@ public class TermPanel extends ModalContainer {
             });
         
         add(m_termListing);
+        add(m_broaderTermListing);
         add(m_narrowerTermListing);
 
         SimpleContainer rootLinks = new SimpleContainer();
@@ -186,6 +231,8 @@ public class TermPanel extends ModalContainer {
         add(m_removeRootTerm);
         add(m_termPicker);
         add(m_relatedTermListing);
+        add(m_preferredTermListing);
+        add(m_nonPreferredTermListing);
         add(m_addTerm);
         add(m_termDetails);
         add(m_termForm);
@@ -197,7 +244,10 @@ public class TermPanel extends ModalContainer {
                      new Component[] { m_termListing, 
                                        m_addTerm, 
                                        m_termDetails,
+                                       m_broaderTermListing,
                                        m_narrowerTermListing,
+                                       m_preferredTermListing,
+                                       m_nonPreferredTermListing,
                                        rootLinks,
                                        m_removeRootTerm,
                                        m_relatedTermListing });

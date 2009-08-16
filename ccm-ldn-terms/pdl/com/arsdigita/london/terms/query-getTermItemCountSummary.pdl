@@ -18,7 +18,7 @@ model com.arsdigita.london.terms;
 
 
 query getTermItemCountSummary {
-  Integer[1..1] uniqueID;
+  String[1..1] uniqueID;
   String[1..1] name;
   Integer[1..1] count;
 

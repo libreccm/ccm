@@ -19,25 +19,21 @@
 package com.arsdigita.london.terms.ui.admin;
 
 
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.Resettable;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.Resettable;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.ActionEvent;
-
+import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.domain.DomainCollection;
-
+import com.arsdigita.london.terms.Terms;
 import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
 import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 
-import com.arsdigita.london.terms.Terms;
-
 
 public class TermPicker extends SimpleContainer implements Resettable {
 
-    private DomainObjectParameter m_domain;
     private DomainObjectParameter m_term;
 
     private TermNameSearchForm m_search;
@@ -49,7 +45,6 @@ public class TermPicker extends SimpleContainer implements Resettable {
         super(Terms.XML_PREFIX + 
               ":termPicker",
               Terms.XML_NS);
-        m_domain = domain;
         m_term = term;
         
         m_search = new TermNameSearchForm();

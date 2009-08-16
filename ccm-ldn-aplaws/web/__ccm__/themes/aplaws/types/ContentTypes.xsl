@@ -21,7 +21,6 @@ version="1.0">
 <xsl:import href="LegalNotice.xsl"/>
 <xsl:import href="Minutes.xsl"/>
 <xsl:import href="Service.xsl"/>
-<xsl:import href="Person.xsl"/>
 <xsl:import href="PressRelease.xsl"/>
 <xsl:import href="NewsItem.xsl"/>
 <xsl:import href="InlineSite.xsl"/>
@@ -57,9 +56,6 @@ version="1.0">
 </xsl:template>
 <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Service' and not(@useContext = 'itemAdminSummary')]">
 <xsl:call-template name="CT_Service_graphics"/>
-</xsl:template>
-<xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Person' and not(@useContext = 'itemAdminSummary')]">
-  <xsl:call-template name="CT_Person_graphics"/>
 </xsl:template>
 <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.PressRelease' and not(@useContext = 'itemAdminSummary')]">
 <xsl:call-template name="CT_PressRelease_graphics"/>

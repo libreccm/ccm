@@ -18,13 +18,12 @@
 
 package com.arsdigita.london.terms.ui.admin;
 
+import com.arsdigita.bebop.Component;
+import com.arsdigita.london.terms.Terms;
 import com.arsdigita.london.util.ui.ActionLink;
 import com.arsdigita.london.util.ui.ModalContainer;
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
-import com.arsdigita.bebop.Component;
-
-import com.arsdigita.london.terms.Terms;
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 
 public class TermListing extends ModalContainer {
 

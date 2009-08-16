@@ -17,43 +17,35 @@
  */
 package com.arsdigita.london.terms.ui.admin;
 
+import java.util.TooManyListenersException;
+
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
-import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.form.RadioGroup;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
-import com.arsdigita.bebop.parameters.IntegerParameter;
-import com.arsdigita.bebop.parameters.BooleanParameter;
-import com.arsdigita.bebop.event.ParameterListener;
-import com.arsdigita.bebop.event.ParameterEvent;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.event.ParameterEvent;
+import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.bebop.FormProcessException;
-
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.RadioGroup;
+import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.BooleanParameter;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainCollection;
-
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
-
-
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Terms;
-import com.arsdigita.london.terms.Util;
-
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.util.UncheckedWrapperException;
-
-
-import java.util.TooManyListenersException;
 
 public class TermForm extends Form {
 
@@ -90,8 +82,9 @@ public class TermForm extends Form {
     }
     
     protected void addWidgets() {
-        m_uniqueid = new TextField(new IntegerParameter("uniqueID"));
-        m_uniqueid.setSize(10);
+        m_uniqueid = new TextField(new StringParameter("uniqueID"));
+        m_uniqueid.setSize(32);
+        m_uniqueid.setMaxLength(128);
         m_uniqueid.addValidationListener(new NotNullValidationListener());
         m_uniqueid.addValidationListener(new UniqueValidationListener());
         m_uniqueid.setMetaDataAttribute("label", "Unique ID");
@@ -153,7 +146,7 @@ public class TermForm extends Form {
 
             if (term == null) {
                 Domain domain = (Domain)state.getValue(m_domain);
-				m_uniqueid.setValue(state, Util.getNextTermID(domain));
+				m_uniqueid.setValue(state, null);
                 m_name.setValue(state, null);
                 m_desc.setValue(state, null);
                 m_shortcut.setValue(state, null);
@@ -163,7 +156,7 @@ public class TermForm extends Form {
                 m_name.setValue(state, term.getName());
                 m_desc.setValue(state, term.getDescription());
                 m_shortcut.setValue(state, term.getShortcut());
-                m_inatoz.setValue(state, new Boolean(term.isInAtoZ()));
+                m_inatoz.setValue(state, Boolean.valueOf(term.isInAtoZ()));
              }
         }
     }
@@ -188,7 +181,7 @@ public class TermForm extends Form {
 
             if (term == null) {
                 Domain domain = (Domain)state.getValue(m_domain);
-                term = Term.create((Integer)m_uniqueid.getValue(state),
+                term = Term.create((String)m_uniqueid.getValue(state),
                                    (String)m_name.getValue(state),
                                    ((Boolean)m_inatoz.getValue(state))
                                    .booleanValue(),
@@ -215,7 +208,7 @@ public class TermForm extends Form {
             PageState state = e.getPageState();
             Term term = (Term)state.getValue(m_term);
             if (term == null) {
-                Integer id = (Integer)m_uniqueid.getValue(state);
+                String id = (String)m_uniqueid.getValue(state);
                 
                 Domain domain = (Domain)state.getValue(m_domain);
                 try {

@@ -18,17 +18,15 @@
 
 package com.arsdigita.london.terms.ui.admin;
 
-import com.arsdigita.london.util.ui.AbstractDomainObjectList;
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
-import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
-import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
-
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.domain.DomainCollection;
-
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.london.terms.Terms;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.Terms;
+import com.arsdigita.london.util.ui.AbstractDomainObjectList;
+import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
+import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 
 public class DomainUsage extends AbstractDomainObjectList {
     

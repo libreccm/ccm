@@ -89,14 +89,31 @@
   </xsl:template>
 
   <xsl:template match="cms:categoryWidget" mode="cms:javascript">
+    <xsl:if test="cms:autoCategories">
+    <h3>Suggested categories</h3>
+    <xsl:choose>
+        <xsl:when test="cms:autoCategories/cms:category">
+            <xsl:for-each select="cms:autoCategories/cms:category">
+                <div style="padding: 5px 15px 5px 5px; float: left;">
+                <input name="{../../@name}" type="checkbox" value="{@id}"><xsl:value-of select="@fullname"/></input>
+                </div>
+            </xsl:for-each>
+            <br clear="both"/>
+        </xsl:when>
+        <xsl:otherwise>
+            None
+        </xsl:otherwise>
+    </xsl:choose>
+    </xsl:if>
     <script type="text/javascript" src="/assets/prototype.js"/>
     <script type="text/javascript" src="/assets/category-step/category-step.js"/>
+    <h3>Select categories</h3>
     <div>
       <xsl:apply-templates select="cms:category" mode="cms:javascriptCat">
         <xsl:with-param name="expand" select="'block'"/>
       </xsl:apply-templates>
     </div>
-    <h3>Selected categories</h3>
+    <h4>Selected categories</h4>
     <select id="catWd" size="5" onClick="catDeselect()" style="width: 400px; height=200px">
     </select>
     <select id="catWdHd" name="{@name}" size="5" multiple="multiple" style="display: none">

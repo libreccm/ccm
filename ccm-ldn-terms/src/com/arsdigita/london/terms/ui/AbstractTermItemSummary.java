@@ -18,14 +18,12 @@
 
 package com.arsdigita.london.terms.ui;
 
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.TermItemCountQuery;
-
-import com.arsdigita.bebop.SimpleComponent;
-import com.arsdigita.bebop.PageState;
-
-import com.arsdigita.xml.XML;
 import com.arsdigita.xml.Element;
+import com.arsdigita.xml.XML;
 
 /**
  * A widget that outputs the term item count summary 

@@ -18,15 +18,15 @@
 
 package com.arsdigita.london.terms.ui.admin;
 
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.london.util.ui.AbstractDomainObjectList;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Terms;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.london.util.ui.AbstractDomainObjectList;
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 
 public class TermFilteredListing extends AbstractDomainObjectList {
 

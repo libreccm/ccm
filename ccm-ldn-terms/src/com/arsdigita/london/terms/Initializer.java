@@ -18,36 +18,27 @@
 
 package com.arsdigita.london.terms;
 
+import com.arsdigita.categorization.Category;
+import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.xml.TraversalHandler;
-
+import com.arsdigita.kernel.ACSObjectInstantiator;
+import com.arsdigita.kernel.NoValidURLException;
+import com.arsdigita.kernel.URLFinder;
+import com.arsdigita.kernel.URLService;
+import com.arsdigita.london.terms.indexing.Indexer;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.pdl.ManifestSource;
+import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
-
-import com.arsdigita.db.DbHelper;
-
-import com.arsdigita.persistence.pdl.ManifestSource;
-import com.arsdigita.persistence.pdl.NameFilter;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
-
-import com.arsdigita.categorization.Category;
-
-import com.arsdigita.kernel.ACSObjectInstantiator;
-import com.arsdigita.kernel.URLService;
-import com.arsdigita.kernel.URLFinder;
-import com.arsdigita.kernel.NoValidURLException;
-
 import com.arsdigita.xml.XML;
 
-/**
- *
- *
- */
 public class Initializer extends CompoundInitializer {
 
     public Initializer() {
@@ -61,9 +52,7 @@ public class Initializer extends CompoundInitializer {
     }
 
     public void init(DomainInitEvent e) {
-        DomainObjectFactory f = e.getFactory();
-
-        f.registerInstantiator
+        DomainObjectFactory.registerInstantiator
             (Domain.BASE_DATA_OBJECT_TYPE,
              new DomainObjectInstantiator() {
                  public DomainObject doNewInstance(DataObject dataObject) {
@@ -71,7 +60,7 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-        f.registerInstantiator
+        DomainObjectFactory.registerInstantiator
             (Term.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
                  public DomainObject doNewInstance(DataObject dataObject) {
@@ -79,7 +68,7 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-        f.registerInstantiator
+        DomainObjectFactory.registerInstantiator
             (Terms.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
                  public DomainObject doNewInstance(DataObject dataObject) {
@@ -87,13 +76,19 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-        f.registerInstantiator
+        DomainObjectFactory.registerInstantiator
             ("com.arsdigita.categorization.UseContext",
              new DomainObjectInstantiator() {
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new DomainUseContext(dataObject);
                  }
              });
+
+        DomainObjectFactory.registerInstantiator(Indexer.BASE_DATA_OBJECT_TYPE, new DomainObjectInstantiator() {
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new DomainUseContext(dataObject);
+            }
+        });
 
         URLService.registerFinder(
             Term.BASE_DATA_OBJECT_TYPE,

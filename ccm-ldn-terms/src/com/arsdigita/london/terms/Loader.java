@@ -17,9 +17,6 @@
  */
 package com.arsdigita.london.terms;
 
-// unused import
-// import com.arsdigita.london.terms.Terms;
-
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
@@ -36,10 +33,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/03/17 08:31:10 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
@@ -61,11 +54,10 @@ public class Loader extends PackageLoader {
 
         Application admin = Application.retrieveApplicationForPath("/admin/");
 
-        Application app =
-            Application.createApplication(type,
-                                          "terms",
-                                          "CCM Terms Admin",
-                                          admin);
+        Application.createApplication(type,
+                                      "terms",
+                                      "CCM Terms Admin",
+                                      admin);
     }
 
 }

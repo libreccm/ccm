@@ -18,18 +18,15 @@
 
 package com.arsdigita.london.terms.importer;
 
-import org.apache.commons.digester.Digester;
-import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.commons.digester.Digester;
+import org.xml.sax.SAXException;
+
 import com.arsdigita.util.UncheckedWrapperException;
 
-
-import org.apache.log4j.Logger;
-
 public class Parser {
-
-    private static final Logger s_log = Logger.getLogger(Parser.class);
 
     private Digester m_digester;
     

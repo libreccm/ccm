@@ -18,11 +18,11 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
 import org.apache.commons.cli.CommandLine;
 
 import com.arsdigita.london.terms.importer.Parser;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
 
 public class Importer extends Program {
     

@@ -18,20 +18,19 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.tools.junit.extensions.BaseTestSetup;
-import com.arsdigita.tools.junit.extensions.CoreTestSetup;
-import com.arsdigita.tools.junit.framework.PackageTestSuite;
 import junit.framework.Test;
+
+import com.arsdigita.tools.junit.extensions.BaseTestSetup;
+import com.arsdigita.tools.junit.framework.PackageTestSuite;
 
 /**
  * CategorizationSuite
  *
  *
  * @author Joseph A. Bank (jbank@alum.mit.edu)
- * @version 1.0
+ * @version "$Id: TermsSuite.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class TermsSuite extends PackageTestSuite {
-    public static final String versionId = "$Id: TermsSuite.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/01/07 13:43:31 $";
     public TermsSuite() {
         super();
     }

@@ -18,6 +18,8 @@
  */
 package com.arsdigita.london.terms;
 
+import org.apache.log4j.Logger;
+
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.categorization.CategoryListener;
@@ -25,8 +27,6 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
-
-import org.apache.log4j.Logger;
 
 /**
  *  Attempts to create new term in the proper terms domain
@@ -91,14 +91,14 @@ public class TermCategoryListener implements CategoryListener {
         }
         DomainCollection terms = termDomain.getTerms();
         terms.addOrder(Term.UNIQUE_ID + " DESC");
-        Integer maxID = new Integer(0);
+        Integer maxID = Integer.valueOf(0);
         if (terms.next()) {
-            maxID = (Integer) terms.get(Term.UNIQUE_ID);
+            maxID = Integer.valueOf((String) terms.get(Term.UNIQUE_ID));
             terms.close();
         }
 
         Term.create(cat,
-                    new Integer(maxID.intValue()+1),
+                    String.valueOf(maxID.intValue()+1),
                     false,
                     "",
                     termDomain

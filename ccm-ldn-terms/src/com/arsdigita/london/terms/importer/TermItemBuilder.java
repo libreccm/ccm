@@ -18,21 +18,19 @@
 
 package com.arsdigita.london.terms.importer;
 
-import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.Term;
-import com.arsdigita.util.Assert;
+import java.net.URL;
+
+import org.apache.log4j.Logger;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
-
-import com.arsdigita.kernel.SiteNode;
-import com.arsdigita.util.StringUtils;
 import com.arsdigita.domain.DataObjectNotFoundException;
-
-import org.apache.log4j.Logger;
-
-import java.net.URL;
+import com.arsdigita.kernel.SiteNode;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.Term;
+import com.arsdigita.util.Assert;
+import com.arsdigita.util.StringUtils;
 
 
 public class TermItemBuilder {

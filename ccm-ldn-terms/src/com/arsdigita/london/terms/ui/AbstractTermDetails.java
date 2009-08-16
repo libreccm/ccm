@@ -18,11 +18,11 @@
 
 package com.arsdigita.london.terms.ui;
 
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
-import com.arsdigita.xml.Element;
+import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.london.terms.Term;
+import com.arsdigita.xml.Element;
 
 public abstract class AbstractTermDetails extends SimpleComponent {
 

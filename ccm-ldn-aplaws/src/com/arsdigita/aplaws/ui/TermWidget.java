@@ -19,26 +19,6 @@
 
 package com.arsdigita.aplaws.ui;
 
-import com.arsdigita.london.terms.Domain;
-import com.arsdigita.london.terms.Term;
-
-import com.arsdigita.aplaws.Aplaws;
-import com.arsdigita.bebop.form.Widget;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.parameters.ArrayParameter;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.xml.Element;
-import com.arsdigita.xml.XML;
-
-import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ContentSection;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,6 +27,27 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import com.arsdigita.aplaws.Aplaws;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.form.Widget;
+import com.arsdigita.bebop.parameters.ArrayParameter;
+import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.Term;
+import com.arsdigita.london.terms.indexing.Indexer;
+import com.arsdigita.london.terms.indexing.RankedTerm;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.xml.Element;
+import com.arsdigita.xml.XML;
 
 /**
  * A Widget for selecting Terms. Based heavily on CategoryWidget.
@@ -129,14 +130,46 @@ public class TermWidget extends Widget {
         }
 
         Element el = generateCategory(widget, domain.getModel(), ids, null);
-	if (Aplaws.getAplawsConfig().ajaxExpandAllBranches()) {
- 	    // add attribute to the parent node, so that in stylesheet 
-	    // we can look for any ancestor with this attribute (can't 
-	    // add attribute to categoryWidget element as that is not 
-	    // visible when subbranches are transformed)
-	    el.addAttribute("expand",  "all" );
-	}	
-        for (Iterator i=roots.iterator(); i.hasNext(); ) {
+        
+        /**
+         * Used by kea based keyphrase extraction facility.
+         * (Added r1885) 
+         * 
+         * @Author: terry_permeance
+         */
+        Indexer indexer = Indexer.retrieve(domain);
+        if (indexer != null) {
+            ContentItem item = CMS.getContext().getContentItem();
+            List<RankedTerm> autoTerms = indexer.index(item, 16);  
+            Element autoCategories = widget.newChildElement("cms:autoCategories", CMS.CMS_XML_NS);      
+            for (Iterator<RankedTerm> i = autoTerms.iterator(); i.hasNext(); ) {
+                RankedTerm nextRankedTerm = i.next();
+                Category cat = nextRankedTerm.getTerm().getModel();
+                if (!ids.contains(cat.getID())) {
+                    String fullname = cat.getQualifiedName(" > ", false);                    
+                    if (fullname != null) {
+                        Element catEl = autoCategories.newChildElement("cms:category", CMS.CMS_XML_NS);
+                        catEl.addAttribute("id", XML.format(cat.getID()));
+                        catEl.addAttribute("name", cat.getName());
+                        catEl.addAttribute("description", cat.getDescription());
+                        catEl.addAttribute("isAbstract", cat.isAbstract() ? "1" : "0");
+                        catEl.addAttribute("isEnabled", cat.isEnabled() ? "1" : "0");
+                        catEl.addAttribute("sortKey", nextRankedTerm.getRanking().toString());
+                        catEl.addAttribute("fullname", fullname);
+                    }
+                }
+            }
+        }
+        
+    	if (Aplaws.getAplawsConfig().ajaxExpandAllBranches()) {
+     	    // add attribute to the parent node, so that in stylesheet 
+    	    // we can look for any ancestor with this attribute (can't 
+    	    // add attribute to categoryWidget element as that is not 
+    	    // visible when subbranches are transformed)
+    	    el.addAttribute("expand",  "all" );
+    	}	
+
+    	for (Iterator i=roots.iterator(); i.hasNext(); ) {
             TermSortKeyPair pair = (TermSortKeyPair) i.next();
             Term term = pair.getTerm();
             BigDecimal sortKey = pair.getSortKey();

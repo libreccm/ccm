@@ -18,15 +18,15 @@
 
 package com.arsdigita.london.terms.ui.admin;
 
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.bebop.event.ActionListener;
+import com.arsdigita.london.terms.Terms;
 import com.arsdigita.london.util.ui.ActionLink;
 import com.arsdigita.london.util.ui.ModalContainer;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
-import com.arsdigita.london.terms.Terms;
 
 public class DomainPanel extends ModalContainer {
 

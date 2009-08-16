@@ -18,15 +18,15 @@
 
 package com.arsdigita.london.terms.ui;
 
-import com.arsdigita.london.util.ui.AbstractCategoryPicker;
-import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.util.ui.AbstractCategoryPicker;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.persistence.SessionManager;
 
 
 public class RootCategoryPicker extends AbstractCategoryPicker {

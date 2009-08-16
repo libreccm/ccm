@@ -19,15 +19,15 @@
 package com.arsdigita.london.terms.importer;
 
 
+import java.net.URL;
+
+import org.apache.log4j.Logger;
+
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.util.Assert;
-
-import org.apache.log4j.Logger;
-
-import java.net.URL;
 
 public class MixedHierarchyBuilder {
     

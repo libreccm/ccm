@@ -18,9 +18,8 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.DataObject;
-
+import com.arsdigita.persistence.OID;
 import com.arsdigita.web.Application;
 import com.arsdigita.xml.Element;
 

@@ -19,21 +19,15 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.categorization.Category;
-import com.arsdigita.categorization.CategoryCollection;
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
-
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+
+import com.arsdigita.categorization.Category;
+import com.arsdigita.categorization.CategoryCollection;
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
 
 public class DefaultAncestorsFixer extends Program {
     

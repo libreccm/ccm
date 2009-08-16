@@ -33,8 +33,8 @@ object type Domain {
     component Term[0..n] terms = join trm_domains.key
                                    to trm_terms.domain;
 
-    component Category[1..1] \model = join trm_domains.model_category_id
-                                        to cat_categories.category_id;
+    composite Category[1..1] \model = join trm_domains.model_category_id
+                              to cat_categories.category_id;
 
     object key (key);
 }
@@ -90,3 +90,39 @@ query LeafTerms {
 		leaf.defaultDomainClass = b.default_domain_class;
 	}
 }	
+
+// retrieve orphan terms (has no ancestor and has no preferred term)
+query OrphanTerms {
+	Term leaf;
+	options {
+        WRAP_QUERIES = false;
+    }
+	
+	do {
+		select a.unique_id,
+			   a.is_atoz,
+			   a.shortcut,
+			   b.object_id,
+			   b.object_type,
+			   b.display_name,
+			   b.default_domain_class
+		from   trm_terms a,
+			   acs_objects b,
+			   cat_categories c
+		where  a.term_id = b.object_id
+		and    a.domain = :domain
+		and    a.model_category_id = c.category_id
+		and    c.default_ancestors = c.category_id || '/'
+		and    not exists (select 1 from cat_category_category_map
+		                   where  category_id = a.model_category_id
+		                   and    relation_type = 'preferred')
+	} map {
+		leaf.uniqueID = a.unique_id;
+		leaf.inAtoZ = a.is_atoz;
+		leaf.shortcut = a.shortcut;
+		leaf.id = b.object_id;
+		leaf.objectType = b.object_type;
+		leaf.displayName = b.display_name;
+		leaf.defaultDomainClass = b.default_domain_class;
+	}
+}

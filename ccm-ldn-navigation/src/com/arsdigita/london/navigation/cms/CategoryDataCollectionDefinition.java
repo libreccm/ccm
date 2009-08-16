@@ -29,14 +29,6 @@ public class CategoryDataCollectionDefinition extends CMSDataCollectionDefinitio
     private Category m_category = null;
 
     public void setCategoryByPID(String pid, String domain) {
-	setCategoryByPID(Integer.parseInt(pid), domain);
-    }
-
-    public void setCategoryByPID(int pid, String domain) {
-	setCategoryByPID(new Integer(pid), domain);
-    }
-
-    public void setCategoryByPID(Integer pid, String domain) {
 	Domain dom = Domain.retrieve(domain);
 	Term term = dom.getTerm(pid);
 	Category cat = term.getModel();

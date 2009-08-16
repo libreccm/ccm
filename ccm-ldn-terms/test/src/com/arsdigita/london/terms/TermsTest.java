@@ -18,18 +18,16 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.tools.junit.framework.BaseTestCase;
-import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.persistence.SessionManager;
-
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import java.util.Date;
-
-import java.net.URL;
-import java.net.MalformedURLException;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.tools.junit.framework.BaseTestCase;
+import com.arsdigita.util.UncheckedWrapperException;
 
 
 /**
@@ -42,9 +40,6 @@ public class TermsTest extends BaseTestCase {
     private final static int NONPREFERRED_COUNT = 5;
     private final static int PREFERRED_COUNT = 10;
     private final static int NARROWER_COUNT = 5;
-
-    private final static int TOTAL_COUNT = NONPREFERRED_COUNT +
-        NARROWER_COUNT + PREFERRED_COUNT;
 
     private Domain m_domain1;
 
@@ -210,7 +205,6 @@ public class TermsTest extends BaseTestCase {
         
         for (int i = 0 ; i < preferred.length ; i++) {
             int n = i % nonpreferred.length;
-            boolean def = i < nonpreferred.length;
             preferred[i].addNarrowerTerm(nonpreferred[n],
                                          false,
                                          true);

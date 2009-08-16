@@ -18,36 +18,30 @@
 
 package com.arsdigita.london.terms.ui.admin;
 
+import java.net.URL;
+import java.util.TooManyListenersException;
+
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.SimpleContainer;
+import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
-import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.form.Date;
-import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormProcessListener;
+import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.bebop.FormProcessException;
-
-
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
-
-import com.arsdigita.london.util.ui.parameters.URLParameter;
-
+import com.arsdigita.bebop.form.Date;
+import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Terms;
-
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
+import com.arsdigita.london.util.ui.parameters.URLParameter;
 import com.arsdigita.util.UncheckedWrapperException;
-
-import java.net.URL;
-
-import java.util.TooManyListenersException;
 
 public class DomainForm extends Form {
 

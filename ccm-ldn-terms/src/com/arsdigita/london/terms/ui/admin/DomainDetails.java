@@ -19,22 +19,24 @@
 package com.arsdigita.london.terms.ui.admin;
 
 
-import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DeleteException;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.Terms;
+import com.arsdigita.london.terms.indexing.Indexer;
 import com.arsdigita.london.util.ui.AbstractDomainObjectDetails;
 import com.arsdigita.london.util.ui.ErrorMessage;
 import com.arsdigita.london.util.ui.event.DomainObjectActionAbortedException;
-import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
 import com.arsdigita.london.util.ui.event.DomainObjectActionEvent;
-import com.arsdigita.london.terms.Terms;
+import com.arsdigita.london.util.ui.event.DomainObjectActionListener;
+import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.xml.Element;
-
-import java.util.Set;
-
-import org.apache.log4j.Logger;
 
 public class DomainDetails extends AbstractDomainObjectDetails {
     private static final Logger s_log =
@@ -45,6 +47,8 @@ public class DomainDetails extends AbstractDomainObjectDetails {
 
     public static final String ACTION_EDIT = "edit";
     public static final String ACTION_DELETE = "delete";
+    public static final String ACTION_TRAIN = "train";
+    public static final String ACTION_UNTRAIN = "untrain";
 
     public DomainDetails(DomainObjectParameter domain) {
         super("domainDetails", 
@@ -56,6 +60,8 @@ public class DomainDetails extends AbstractDomainObjectDetails {
 
         registerDomainObjectAction(ACTION_EDIT);
         registerDomainObjectAction(ACTION_DELETE);
+        registerDomainObjectAction(ACTION_TRAIN);
+        registerDomainObjectAction(ACTION_UNTRAIN);
 
         addDomainObjectActionListener(
             ACTION_DELETE,
@@ -97,6 +103,27 @@ public class DomainDetails extends AbstractDomainObjectDetails {
                     s_log.debug( "Delete succeeded" );
                 }
             });
+        
+        addDomainObjectActionListener(ACTION_TRAIN, new DomainObjectActionListener() {
+            public void actionPerformed(DomainObjectActionEvent e) {
+                Domain domain = (Domain) e.getObject();
+                Indexer indexer = Indexer.retrieve(domain);
+                if (indexer == null) {
+                    indexer = Indexer.create(domain);
+                }
+                indexer.train();
+            }
+        });
+        
+        addDomainObjectActionListener(ACTION_UNTRAIN, new DomainObjectActionListener() {
+            public void actionPerformed(DomainObjectActionEvent e) {
+                Domain domain = (Domain) e.getObject();
+                Indexer indexer = Indexer.retrieve(domain);
+                if (indexer != null) {
+                    indexer.delete();
+                }
+            }
+        });
     }
     
     protected DomainObject getDomainObject(PageState state) {

@@ -18,11 +18,11 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.london.util.Program;
-import com.arsdigita.london.util.Transaction;
-import com.arsdigita.web.Application;
-
 import org.apache.commons.cli.CommandLine;
+
+import com.arsdigita.london.util.Transaction;
+import com.arsdigita.packaging.Program;
+import com.arsdigita.web.Application;
 
 
 public class SetRoot extends Program {

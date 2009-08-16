@@ -21,7 +21,7 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.categorization.Category;
 
 object type Term extends ACSObject {
-    Integer[1..1] uniqueID = trm_terms.unique_id INTEGER;
+    String[1..1] uniqueID = trm_terms.unique_id VARCHAR(128);
     Boolean[1..1] inAtoZ = trm_terms.is_atoz BIT;
 
     String[0..1] shortcut = trm_terms.shortcut VARCHAR(50);

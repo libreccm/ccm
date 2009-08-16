@@ -28,9 +28,27 @@
     </xsl:call-template>
   </xsl:template>
 
+  <xsl:template match="terms:preferredTermListing">
+    <xsl:call-template name="terms:termListing">
+      <xsl:with-param name="heading"><xsl:text>Preferred Terms</xsl:text></xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="terms:nonPreferredTermListing">
+    <xsl:call-template name="terms:termListing">
+      <xsl:with-param name="heading"><xsl:text>Non-preferred Terms</xsl:text></xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
   <xsl:template match="terms:narrowerTermListing">
     <xsl:call-template name="terms:termListing">
       <xsl:with-param name="heading"><xsl:text>Narrower Terms</xsl:text></xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="terms:broaderTermListing">
+    <xsl:call-template name="terms:termListing">
+      <xsl:with-param name="heading"><xsl:text>Broader Terms</xsl:text></xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -65,7 +83,7 @@
           </xsl:variable>
           
           <tr class="{$class}">
-            <td>
+            <td width="20%">
               <xsl:value-of select="terms:uniqueID"/>
             </td>
             <xsl:choose>
@@ -91,7 +109,7 @@
               </xsl:otherwise>
             </xsl:choose>
             <xsl:if test="terms:action[@name='remove']">
-              <td>
+              <td width="20%">
                 <a href="{terms:action[@name='remove']/@url}">Remove</a>
               </td>
             </xsl:if>
@@ -114,15 +132,15 @@
   </xsl:template>
 
   <xsl:template match="terms:paginator">
-    <xsl:if test="terms:paginator/@pageNumber > 1">
-      <a href="{@baseURL}&amp;{@pageParam}={@pageNumber - 1}">&lt;&lt;&lt;Previous </a>
+    <xsl:if test="@pageNumber > 1">
+      <a href="{@baseURL}&amp;{@pageParam}={@pageNumber - 1}">&lt;&lt;&lt;Previous</a><xsl:text> </xsl:text>
     </xsl:if>
     <xsl:text>Page </xsl:text>
     <xsl:value-of select="@pageNumber"/>
     <xsl:text> of </xsl:text>
     <xsl:value-of select="@pageCount"/>
     <xsl:if test="@pageNumber &lt; @pageCount">
-      <a href="{@baseURL}&amp;{@pageParam}={@pageNumber + 1}"> Next &gt;&gt;&gt;</a>
+      <xsl:text> </xsl:text><a href="{@baseURL}&amp;{@pageParam}={@pageNumber + 1}">Next&gt;&gt;&gt;</a>
     </xsl:if>
   </xsl:template>
 

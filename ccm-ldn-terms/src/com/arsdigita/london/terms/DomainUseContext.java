@@ -18,8 +18,8 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.persistence.DataObject;
 
 // XXX nasty hack this should be part of categoriation
 class DomainUseContext extends DomainObject {

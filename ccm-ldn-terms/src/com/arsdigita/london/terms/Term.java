@@ -18,18 +18,18 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.util.Assert;
-
 import org.apache.log4j.Logger;
 import org.apache.oro.text.perl.Perl5Util;
+
+import com.arsdigita.categorization.Category;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.util.Assert;
 
 /**
  * Instances of this class represent entries in a domain
@@ -70,6 +70,17 @@ public class Term extends ACSObject {
     }
 
     /**
+     * @see #create(String, String, boolean, String, Domain)
+     */
+    public static Term create(Integer uniqueID,
+            String name,
+            boolean inAtoZ,
+            String shortcut,
+            Domain domain) {
+        return create(String.valueOf(uniqueID), name, inAtoZ, shortcut, domain);
+    }
+    
+    /**
      * Creates a new term within a domain. All
      * parameters are required except for shortcut
      * @param uniqueID the unique identifier for the term
@@ -79,7 +90,7 @@ public class Term extends ACSObject {
      * @param domain the domain containing this term
      * @return the newly created term
      */
-    public static Term create(Integer uniqueID,
+    public static Term create(String uniqueID,
                               String name,
                               boolean inAtoZ,
                               String shortcut,
@@ -108,7 +119,7 @@ public class Term extends ACSObject {
      *  Creates a new term using an existing model category.
      */
     static Term create(Category cat,
-                       Integer uniqueID,
+                       String uniqueID,
                        boolean inAtoZ,
                        String shortcut,
                        Domain domain) {
@@ -129,16 +140,16 @@ public class Term extends ACSObject {
     }
 
 
-    private void setUniqueID(Integer uniqueID) {
-        Assert.exists(uniqueID, Integer.class);
+    private void setUniqueID(String uniqueID) {
+        Assert.exists(uniqueID, String.class);
         set(UNIQUE_ID, uniqueID);
     }
 
     /**
      * Retrieves the unique identifier for this term.
      */
-    public Integer getUniqueID() {
-        return (Integer)get(UNIQUE_ID);
+    public String getUniqueID() {
+        return (String)get(UNIQUE_ID);
     }
 
     /**
@@ -182,7 +193,7 @@ public class Term extends ACSObject {
      * @param inAtoZ the new value for the flag
      */
     public void setInAtoZ(boolean inAtoZ) {
-        set(IN_ATOZ, new Boolean(inAtoZ));
+        set(IN_ATOZ, Boolean.valueOf(inAtoZ));
     }
 
     /**
@@ -228,6 +239,28 @@ public class Term extends ACSObject {
             .newInstance((DataObject)get(MODEL));
     }
 
+    /**
+     * Is this term a non-preferred term (synonym)?
+     * @return <code>true</code> if this term has at least one preferred term, otherwise <code>false</code>.
+     */
+    public boolean isNonPreferredTerm() {
+        return !isPreferredTerm();
+    }
+
+    /**
+     * Is this term a preferred term ?
+     * @return <code>true</code> if this term has no preferred term, otherwise <code>false</code>.
+     */
+    public boolean isPreferredTerm() {
+        DomainCollection dc = getPreferredTerms();
+        try
+        {
+            return dc.isEmpty();
+        }
+        finally {
+            dc.close();
+        }
+    }
 
     /**
      * Adds a narrower term to this term
@@ -415,7 +448,19 @@ public class Term extends ACSObject {
         terms.addEqualsFilter("model.parents.link.relationType", Category.PREFERRED);
         return terms;
     }
-    
+
+    /**
+     * Retrieves the non-preferred terms.
+     * Empty when the current term has no synonyms. 
+     * @return a collection of non-preferred terms
+     */
+    public DomainCollection getNonPreferredTerms() {
+        DomainCollection terms = getDomain().getTerms();
+        terms.addEqualsFilter("model.related.id", getModel().getID());
+        terms.addEqualsFilter("model.related.link.relationType", Category.PREFERRED);
+        return terms;
+    }
+
     /**
      * Classifies an object against this term
      * @param obj the object to classify

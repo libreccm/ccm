@@ -18,27 +18,27 @@
 
 package com.arsdigita.london.terms;
 
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.domain.DomainObjectFactory;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Date;
+
+import org.apache.log4j.Logger;
+
+import com.arsdigita.categorization.Category;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DeleteCheckObserver;
 import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.ObservableDomainObject;
-import com.arsdigita.categorization.Category;
-import com.arsdigita.persistence.DataObject;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
+import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-
-import java.util.Date;
-
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import org.apache.log4j.Logger;
 
 
 /**
@@ -47,6 +47,12 @@ import org.apache.log4j.Logger;
  */
 public class Domain extends ObservableDomainObject {
     
+    public void delete() throws PersistenceException {
+        Category model = getModel();
+        super.delete();
+        model.delete();
+    }
+
     private static final Logger s_log = Logger.getLogger(Domain.class);
 
     public static final String BASE_DATA_OBJECT_TYPE = 
@@ -174,13 +180,20 @@ public class Domain extends ObservableDomainObject {
     }
 
     /**
+     * @see #getTerm(String)
+     */
+    public Term getTerm(Integer uniqueID) {
+        return getTerm(String.valueOf(uniqueID));
+    }
+
+    /**
      * Retrieves the term within this domain with
      * the corresponding unique identifier.
      *
      * @param uniqueID the id of the term to retrieve
      * @return the term matching the unique id.
      */
-    public Term getTerm(Integer uniqueID) {
+    public Term getTerm(String uniqueID) {
         DomainCollection terms = getTerms();
         terms.addEqualsFilter(Term.UNIQUE_ID, uniqueID);
         if (terms.next()) {
@@ -338,7 +351,7 @@ public class Domain extends ObservableDomainObject {
      * @param term the root term
      */
     public void addRootTerm(Term term) {
-        Assert.truth(term.getDomain().equals(this),
+        Assert.isTrue(term.getDomain().equals(this),
                      "root term is in this domain");
 
         if (s_log.isDebugEnabled()) {
@@ -351,7 +364,7 @@ public class Domain extends ObservableDomainObject {
     }
     
     public void removeRootTerm(Term term) {
-        Assert.truth(term.getDomain().equals(this),
+        Assert.isTrue(term.getDomain().equals(this),
                      "root term is in this domain");
 
         if (s_log.isDebugEnabled()) {
@@ -384,14 +397,13 @@ public class Domain extends ObservableDomainObject {
     }
  
     /**
-     * Retrieves any terms not in the hiearchy
+     * Retrieves any terms that are orphans
      */
     public DomainCollection getOrphanedTerms() {
-        DomainCollection terms = getTerms();
-        terms.addFilter("model.defaultAncestors = model.id || '/'");
-        return terms;        
+        DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.london.terms.OrphanTerms");
+        query.setParameter("domain", getKey());
+        return new DomainCollection(new DataQueryDataCollectionAdapter(query, "leaf"));
     }
-
     
     /**
      * Sets this domain as the root for an object
@@ -446,5 +458,18 @@ public class Domain extends ObservableDomainObject {
 
         category.deleteCategoryAndOrphan();
         super.beforeDelete();
+    }
+
+    public static Domain findByModel(Category rootCategory) {
+        DataCollection domains = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+
+        domains.addEqualsFilter(MODEL, rootCategory.getID());
+
+        if (domains.next()) {
+            Domain domain = (Domain) DomainObjectFactory.newInstance(domains.getDataObject());
+            domains.close();
+            return domain;
+        }
+        throw new DataObjectNotFoundException("Domain with model " + rootCategory + " not found");
     }
 }

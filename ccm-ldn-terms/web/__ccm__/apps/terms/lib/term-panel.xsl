@@ -16,9 +16,12 @@
           <xsl:apply-templates select="terms:termDetails"/>
           <xsl:apply-templates select="bebop:link[@id='addRootTerm']"/>
           <xsl:apply-templates select="bebop:link[@id='removeRootTerm']"/>
+          <xsl:apply-templates select="terms:broaderTermListing"/>
           <xsl:apply-templates select="terms:narrowerTermListing"/>
           <xsl:apply-templates select="bebop:link[@id='addNarrowerTerm']"/>
           <xsl:apply-templates select="terms:relatedTermListing"/>
+          <xsl:apply-templates select="terms:preferredTermListing"/>
+          <xsl:apply-templates select="terms:nonPreferredTermListing"/>
           <xsl:apply-templates select="terms:termPicker"/>
           <xsl:apply-templates select="terms:termFilteredListing"/>
           <xsl:apply-templates select="bebop:form"/>
