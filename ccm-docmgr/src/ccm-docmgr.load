@@ -2,6 +2,7 @@
   <requires>
     <table name="inits"/>
     <table name="acs_objects"/>
+    <table name="cms_items"/>
     <initializer class="com.arsdigita.core.Initializer"/>
   </requires>
   <provides>
