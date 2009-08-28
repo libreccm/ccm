@@ -87,8 +87,11 @@ public abstract class DomainObjectTraversal {
     public static void registerAdapter(final ObjectType type,
                                        final DomainObjectTraversalAdapter adapter,
                                        final String context) {
-        Assert.assertNotNull(adapter, "The DomainObjectTraversalAdapter is null for context '" + context + "' and object type '" + type);
-        Assert.assertNotNull(type, "The ObjectType for context '" + context + "' and adapter '" + adapter + "' is null");
+        Assert.exists(adapter,
+                      "The DomainObjectTraversalAdapter is null for context '"
+                    + context + "' and object type '" + type);
+        Assert.exists(type, "The ObjectType for context '" + context +
+                            "' and adapter '" + adapter + "' is null");
         Assert.exists(context, String.class);
         if (s_log.isDebugEnabled()) {
             s_log.debug("Registering adapter " +
@@ -223,7 +226,7 @@ public abstract class DomainObjectTraversal {
 
     /**
      * Walks over properties of a domain object, invoking
-     * methods to handle assoications, roles and attributes.
+     * methods to handle associations, roles and attributes.
      *
      * @param obj the domain object to traverse
      * @param context the context for the traversal adapter
@@ -329,14 +332,20 @@ public abstract class DomainObjectTraversal {
             	
             	
             	// see #25808 - this hack prevents the content field of cms_files 
-            	// (which is a blob) from being queried when all we need is a list
-            	// of the files on an item..
-            	if (prop.getName().equals("fileAttachments") && !Domain.getConfig().queryBlobContentForFileAttachments()) { // make true a config
-            		DataQuery fileAttachmentsQuery = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.contentassets.fileAttachmentsQuery");
+            	// (which is a blob) from being queried when all we need is a 
+            	// list of the files on an item..
+            	if (prop.getName().equals("fileAttachments") && 
+                    !Domain.getConfig().queryBlobContentForFileAttachments()) {
+                    // make true a config
+            		DataQuery fileAttachmentsQuery = 
+                        SessionManager.getSession().retrieveQuery(
+                        "com.arsdigita.cms.contentassets.fileAttachmentsQuery");
             		
-            		fileAttachmentsQuery.setParameter("item_id", obj.getOID().get("id"));
+            		fileAttachmentsQuery.setParameter("item_id",
+                                                      obj.getOID().get("id"));
             		
-            		DataCollection files = new DataQueryDataCollectionAdapter(fileAttachmentsQuery, "file");
+            		DataCollection files = new DataQueryDataCollectionAdapter(
+                        fileAttachmentsQuery, "file");
             		
             		while(files.next()) {
             			DataObject file = files.getDataObject();

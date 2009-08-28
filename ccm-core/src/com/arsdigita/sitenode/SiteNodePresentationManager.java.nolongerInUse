@@ -52,7 +52,8 @@ import org.apache.log4j.Logger;
 /**
  * Class for managing and obtaining Stylesheets.
  *
- * @deprecated Use {@link com.arsdigita.bebop.page.PageTransformer} in conjunction with {@link com.arsdigita.templating.LegacyStylesheetResolver}.
+ * @deprecated Use {@link com.arsdigita.bebop.page.PageTransformer} in conjunction
+ * with {@link com.arsdigita.templating.LegacyStylesheetResolver}.
  * @author Bill Schneider
  * @version $Id: SiteNodePresentationManager.java 562 2005-06-12 23:53:19Z apevec $
  * @deprecated use BasePresentationManager instead.

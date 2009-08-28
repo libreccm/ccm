@@ -78,10 +78,18 @@ import org.apache.log4j.Logger;
  *
  * <p>
  *
- * @deprecated Use {@link com.arsdigita.web.DispatcherServlet} instead.
  * @author Bill Schneider
  * @version $Revision: #43 $ $Date: 2004/08/16 $
  * @since 4.5
+ * @deprecated Use {@link com.arsdigita.web.DispatcherServlet} instead.
+ * Pboy (2009-08-06):
+ * a) SiteNodeDispatcher is still included in web.xml
+ * b) content-center needs SiteNodeDispatcher
+ * c) SiteNodeDispatcher is fallback in web.DispatcherServlet (cf web.xml)
+ * d) webDispatcherServlet  requires a fallback as parameter
+ * therefore: SideNodeDispatcher is still required at the moment.
+ * ToDo: test if web.LegacyAdapterServlet, a 'servlet that does what
+ * SiteNodeDispatcher does' can do the job.
  */
 public class SiteNodeDispatcher extends KernelDispatcherServlet
         implements Dispatcher {

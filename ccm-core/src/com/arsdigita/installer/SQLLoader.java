@@ -127,11 +127,13 @@ public abstract class SQLLoader {
 
     private String parent(String path) {
         path = path.trim();
-        if (path.endsWith(File.separator)) {
+        // Fixed file separator, now works on Windoze as well as Linux
+        if (path.endsWith("/")) {
             path = path.substring(0, path.length() - 2);
         }
 
-        int index = path.lastIndexOf(File.separatorChar);
+        // Fixed file separator, now works on Windoze as well as Linux
+        int index = path.lastIndexOf("/");
         if (index > 0) {
             path = path.substring(0, index);
         } else {
@@ -152,6 +154,10 @@ public abstract class SQLLoader {
         String front = parent(from);
         String back = included;
         while (back.startsWith("../")) {
+            if (s_log.isDebugEnabled()) { 
+                s_log.debug("Back: '" + back + "'"); 
+                s_log.debug("Front: '" + front + "'"); 
+           } 
             back = back.substring(3);
             front = parent(front);
         }
