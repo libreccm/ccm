@@ -224,6 +224,11 @@ public class Loader extends PackageLoader {
             "/packages/navigation/templates/zes-default.jsp");
 
         template = Template.create(
+            "ZeS Portalseite",
+            "ZeS Portal Page",
+            "/packages/navigation/templates/zes-portal.jsp");
+
+        template = Template.create(
             "ZeS Recent",
             "ZeS reverse order page",
             "/packages/navigation/templates/zes-recent.jsp");
