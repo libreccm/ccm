@@ -42,6 +42,14 @@ public class GlossaryItem extends ContentPage {
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE
         = "com.arsdigita.cms.contenttypes.GlossaryItem";
+    
+    private static GlossaryItemConfig config = new GlossaryItemConfig();
+    static {
+    	config.load();
+    }
+    public static GlossaryItemConfig getConfig() {
+    	return config;
+    }
 
     public GlossaryItem() {
         this( BASE_DATA_OBJECT_TYPE );

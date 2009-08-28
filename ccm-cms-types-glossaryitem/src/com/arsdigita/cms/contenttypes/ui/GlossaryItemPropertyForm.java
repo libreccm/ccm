@@ -19,21 +19,13 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.contenttypes.GlossaryItem;
-import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-
 
 /**
  * Form to edit the basic properties of an GlossaryItem. This form can be
@@ -50,7 +42,7 @@ public class GlossaryItemPropertyForm
 
     /** Name of this form */
     public static final String ID = "GlossaryItem_edit";
-
+    
     /**
      * Creates a new form to edit the GlossaryItem object specified by the item
      * selection model passed in.
@@ -82,16 +74,9 @@ public class GlossaryItemPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add( new Label(GlossaryGlobalizationUtil.globalize("cms.contenttypes.ui.glossary.definition") ));
-        ParameterModel definitionParam
-            = new StringParameter( DEFINITION );
-        definitionParam
-            .addParameterListener( new NotNullValidationListener() );
-        TextArea definition = new TextArea( definitionParam );
-        definition.setCols( 40 );
-        definition.setRows( 5 );
-        add( definition );
-
+        GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
+        add(builder.makeDefinitionLabel());
+        add(builder.makeDefinitionArea());
     }
 
     /** Form initialisation hook. Fills widgets with data. */

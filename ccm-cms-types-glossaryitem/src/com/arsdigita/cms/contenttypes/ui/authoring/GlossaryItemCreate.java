@@ -21,18 +21,14 @@ package com.arsdigita.cms.contenttypes.ui.authoring;
 import com.arsdigita.cms.contenttypes.GlossaryItem;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.PageCreate;
 import com.arsdigita.cms.ui.authoring.CreationSelector;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.contenttypes.util.GlossaryGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.ui.GlossaryItemWidgetBuilder;
 
 /*
  * A page that will create a new GlossaryItem.
@@ -55,27 +51,20 @@ public class GlossaryItemCreate extends PageCreate {
     }
 
     protected void addWidgets() {
-        
         super.addWidgets();
         
-        TextArea definition = new TextArea(DEFINITION);
-        definition.addValidationListener(new NotNullValidationListener());
-        definition.setCols(40);
-        definition.setRows(5);
-
-        add(new Label(GlossaryGlobalizationUtil.globalize("cms.contenttypes.ui.glossary.definition")));
-        add(definition);
+        GlossaryItemWidgetBuilder builder = new GlossaryItemWidgetBuilder();
+        add(builder.makeDefinitionLabel());
+        add(builder.makeDefinitionArea());
     }
 
     public void process(FormSectionEvent e) throws FormProcessException {
 
         FormData data = e.getFormData();
         PageState state = e.getPageState();
-        ItemSelectionModel m = getItemSelectionModel();
 
         // Try to get the content section from the state parameter
         Folder f = m_parent.getFolder(state);
-        ContentSection sec = m_parent.getContentSection(state);
         GlossaryItem item = (GlossaryItem)createContentPage(state);
         item.setLanguage((String) data.get(LANGUAGE));                        
         item.setName((String)data.get(NAME));
