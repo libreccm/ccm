@@ -142,6 +142,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
     private ContentTypeAdminPane m_typePane;
     private UserAdminPane m_userAdminPane;
     private ContentSoonExpiredPane m_csePane;
+    private ReportPane m_reportPane;
 
     private static class TitlePrinter implements PrintListener {
         public void prepare(PrintEvent e) {
@@ -173,6 +174,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         m_typePane = getContentTypeAdminPane();
         m_userAdminPane = getUserAdminPane();
         m_csePane = getCSEPane();
+        m_reportPane = getReportPane();
 
         // The panes
         m_tabbedPane = createTabbedPane();
@@ -204,6 +206,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
 			m_tabbedPane.setTabVisible(state, m_rolePane, sm.canAccess(user,SecurityConstants.STAFF_ADMIN));
             // csePane: should check permission
             m_tabbedPane.setTabVisible(state, m_csePane, true);
+            // TODO Check for reportPane as well
 		    }
 		}
             });
@@ -313,6 +316,13 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         return m_csePane;
     }
 
+    protected ReportPane getReportPane() {
+        if (m_reportPane == null) {
+        	m_reportPane = new ReportPane();
+        }
+        return m_reportPane;
+    }
+
     /**
      * Adds the specified component, with the specified tab name, to
      * the tabbed pane only if it is not null.
@@ -359,6 +369,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         tab(pane, "cms.ui.content_types", getContentTypeAdminPane());
         tab(pane, "cms.ui.user_admin", getUserAdminPane());
         tab(pane, "cms.ui.cse", getCSEPane());
+        tab(pane, "cms.ui.reports", getReportPane());
 
         return pane;
     }

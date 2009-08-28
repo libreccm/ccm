@@ -1,0 +1,68 @@
+//
+// Copyright (C) 2009 Permeance Technologies Pty Ltd. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+
+model com.arsdigita.cms;
+
+query getContentSectionSummary {
+  BigDecimal folderId;
+  String folder;
+  BigDecimal subfolderCount;
+
+  do {
+	SELECT ci.item_id as folder_id,
+	       ci.name AS folder,
+		  (SELECT COUNT(*)-1
+		     FROM cms_items ci2
+		   WHERE ci2.type_id is null
+		   START WITH ci2.item_id = ci.item_id
+		   CONNECT BY PRIOR ci2.item_id = ci2.parent_id
+		  ) AS subfolder_count
+    FROM content_sections cs,
+         cms_items ci
+    WHERE ci.section_id = cs.section_id
+      AND cs.section_id = :sectionId
+  	  AND ci.type_id is null
+	  AND ci.master_id is null
+	  AND ((ci.parent_id = cs.root_folder_id) or (ci.item_id = cs.root_folder_id))
+	  order by ci.name
+  } map {
+  	folderId               = folder_id;
+    folder                 = folder;
+    subfolderCount         = subfolder_count;
+  }
+}
+
+query getContentTypeCountPerFolder {
+  String contentType;
+  Long typeCount;
+
+  do {
+    SELECT ct.label as content_type,
+           COUNT(*) as type_count
+    FROM   content_types ct,
+           (SELECT *
+            FROM cms_items ci
+            START WITH ci.parent_id = :folderId
+            CONNECT BY PRIOR ci.item_id = ci.parent_id and ci.language is null) ci
+    WHERE ci.type_id = ct.type_id
+    GROUP BY ct.label
+  } map {
+  	contentType           = content_type;
+    typeCount             = type_count;
+  }
+}
