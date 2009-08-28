@@ -1,4 +1,4 @@
-alter table trm_terms add (unique_id_string varchar(128) default 'UNKNOWN' not null );
+alter table trm_terms add unique_id_string varchar(128) default 'UNKNOWN' not null;
 alter table trm_terms rename column unique_id to unique_id_old;
 alter table trm_terms rename column unique_id_string to unique_id;
 update trm_terms set unique_id = unique_id_old;
