@@ -80,9 +80,6 @@
 		<ccm:application name="ccm-ldn-util"/>
 		<ccm:application name="ccm-simplesurvey"/>
 		<ccm:application name="ccm-user-preferences"/>
-        <ccm:application name="ccm-portlet"/>
-        <ccm:application name="ccm-portlet-helloworld"/>
-        <ccm:application name="ccm-portlet-content-item"/>
 	</ccm:build>
 
   <!-- List all shared, pre-built applications here -->

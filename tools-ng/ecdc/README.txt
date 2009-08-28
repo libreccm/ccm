@@ -49,6 +49,25 @@ Oracle 10g RDBMS or PostgresQL up to version 8.2
      by your working bundle. Keep the list of modules in sync with
      project.xml!
 
+     ---------------------------------------------------------------------------
+     EXAMPLE: Set up the "devel" environment with Oracle:
+
+     (i)  Add the following configuration property to local.ccm.properties
+          in order to use the "devel" bundle:
+
+          ccm.bundle.folder=${ccm.project.dir}/ccm-ldn-aplaws/bundles/devel
+
+     (ii) Append the following properties to
+          ccm-ldn-aplaws/bundles/devel/cfg/integration.properties in order
+          to provide a minimum configuration for running the server:
+
+          waf.admin.name.screen=admin
+          waf.web.server=localhost\:8080
+          waf.runtime.jdbc_url=jdbc\:oracle\:thin\:ccm/ccm@localhost\:1521\:ORCL
+          waf.kernel.primary_user_identifier=screen_name
+          com.arsdigita.forum.digest_user_email=admin@example.com
+     ---------------------------------------------------------------------------
+
 (e)  ant install-tomcat 
      will create a runtime directory and install Tomcat 6 for testing. 
 
