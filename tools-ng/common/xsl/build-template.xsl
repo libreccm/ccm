@@ -1207,8 +1207,36 @@
     <target name="copy-webxml"
             depends="init,copy-webxml-init" if="root.webapp.exists">
       <copy file="${{resolved.webxml.source.file}}"
-            tofile="${{this.deploy.dir}}/WEB-INF/web.xml"/>
+            tofile="${{this.deploy.dir}}/WEB-INF/web.xml" overwrite="yes"/>
+      <foreach param="file" target="merge-webxml">
+         <path>
+           <fileset dir="${{this.deploy.dir}}/WEB-INF" includes="web.*.xml"/>
+         </path>
+      </foreach>
     </target>
+
+    <target name="merge-webxml" depends="init">
+        <echo>Merging in ${file}</echo>
+        <property name="customWebXML" value="${{file}}"/>
+        <property name="originalWebXML" value="${{this.deploy.dir}}/WEB-INF/web.xml"/>
+        <property name="mergedWebXML" value="${{customWebXML}}.merged"/>
+        <script language="javascript">
+            <classpath>
+                <fileset dir="tools-ng/webxml/lib" includes="*.jar"/>
+            </classpath>
+            importClass(java.lang.System);
+            importClass(com.liferay.portal.tools.WebXMLBuilder);
+            importClass(com.liferay.portal.kernel.util.FileUtil);
+            importClass(com.liferay.portal.util.FileImpl);
+            importClass(com.liferay.portal.xml.SAXReaderImpl);
+            importClass(com.liferay.portal.kernel.xml.SAXReaderUtil);
+            new FileUtil().setFile(FileImpl.getInstance());
+            new SAXReaderUtil().setSAXReader(new SAXReaderImpl());
+            var builder = new WebXMLBuilder(originalWebXML, customWebXML, mergedWebXML);
+        </script>
+        <copy tofile="${{originalWebXML}}" file="${{mergedWebXML}}" overwrite="yes"/>
+        <delete file="${{mergedWebXML}}"/>
+    </target>    
 
     <!-- Master deploy -->
     <target name="deploy"

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+
+    <filter>
+        <filter-name>subsite</filter-name>
+        <filter-class>com.arsdigita.london.subsite.SubsiteFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>subsite</filter-name>
+        <url-pattern>/ccm/*</url-pattern>
+        <!-- please check: with or w/o ccm?
+    <url-pattern>/*</url-pattern>
+-->
+    </filter-mapping>
+
+    <!-- module ccm-ldn-subsite  -  servlet declarations BEGIN  -->
+    <servlet>
+        <servlet-name>subsite-files</servlet-name>
+        <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
+        <init-param>
+            <param-name>template-path</param-name>
+            <param-value>/templates/ccm-ldn-subsite</param-value>
+        </init-param>
+    </servlet>
+    <!-- module ccm-ldn-subsite  -  servlet declarations END  -->
+
+    <!-- module ccm-ldn-subsite  -  servlet mappings BEGIN  -->
+    <servlet-mapping>
+        <servlet-name>subsite-files</servlet-name>
+        <url-pattern>/ccm-ldn-subsite/files/*</url-pattern>
+    </servlet-mapping>
+    <!-- module ccm-ldn-subsite  -  servlet mappings END  -->
+
+</web-app>
