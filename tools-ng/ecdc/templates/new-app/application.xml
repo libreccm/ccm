@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="@new.app.name@" prettyName="@new.app.name@" version="6.6.0" release="1" webapp="ROOT"
+    xsi:schemaLocation="http://ccm.redhat.com/ccm-project tools/devel/xsd/project.xsd">
+    <ccm:dependencies>
+        <ccm:requires name="ccm-core" version="6.6.0" relation="ge" />
+    </ccm:dependencies>
+    <ccm:contacts>
+        <ccm:contact uri="http://aplaws.org" type="website" />
+    </ccm:contacts>
+    <ccm:description>
+        Please describe the @new.app.name@ application!
+    </ccm:description>
+</ccm:application>

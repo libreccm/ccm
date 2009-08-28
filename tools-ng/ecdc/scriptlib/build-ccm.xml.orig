@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  Already definded:
+		ccm.project.dir:		base dir of the development project
+		app.server.bundles.zip	name of the installation file
+		app.server.parent.dir	name of the dir to install into the server into
+		app.server.home.dir	dir the server are installed into (i.e. CATALINA_HOME)
+		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_BASE)
+		app.server.conf.dir		name of the servers configuration dir
+		app.server.webapp.dir	distribution dir for web applications      -->
+
+<project name="load">
+
+	<target name="load-bundle" depends="prepare-load">
+		<echo>Loading bundle ${ccm.bundle.folder} into ${ccm.home}</echo>
+
+		<java classname="com.arsdigita.packaging.MasterTool"  fork="yes">
+            <classpath refid="ccm.classpath" />
+		    <sysproperty key="ccm.home" value="${ccm.home}" />
+		    <arg line="load ${applications} --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" />
+		</java>
+        <!--   
+            <sysproperty key="log4j.configuration"
+                         value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+        -->
+        <!--
+			<sysproperty key="java.protocol.handler.pkgs"
+                         value="${java.protocol.handler.pkgs}" />
+        -->
+	</target>
+
+    <target name="load-bundle-config" depends="prepare-load">
+        <echo>load ${applications} --init using ${ccm.bundle.folder}/cfg/integration.properties</echo> 
+        <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="load  ${applications} --config --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" /> 
+        </java> 
+    </target>
+
+	<target name="load" depends="prepare-load">
+ 	    <echo>load ${applications} </echo>
+ 	    <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+ 	          <sysproperty key="ccm.home" value="${ccm.home}" />
+              <!--
+ 	              <sysproperty key="log4j.configuration"
+                               value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+ 	              <sysproperty key="java.protocol.handler.pkgs"
+                           value="${java.protocol.handler.pkgs}" />
+              -->
+ 	          <arg line="load  ${applications} " />
+ 	    </java>
+ 	</target>
+ 	
+ 	<target name="prepare-load">
+ 	    <echo>prepare bundle ${ccm.bundle.folder}</echo>
+		<copy file="${ccm.bundle.folder}/cfg/applications.cfg"
+                      tofile=".tmp.applications.cfg" overwrite="yes" />
+		<replaceregexp file=".tmp.applications.cfg" match="#.*" replace="" byline="true" />
+		<replaceregexp file=".tmp.applications.cfg"
+                       match="[ \t\r\n]+" replace=" " flags="gs" />
+		<loadfile property="applications" srcFile=".tmp.applications.cfg" />
+		<delete file=".tmp.applications.cfg"/>
+		<tstamp>
+			<format pattern="yyyymmddhhmmss" property="timestamp" />
+		</tstamp>
+		<!-- nolonger in use
+		<move file="${app.server.conf.dir}/registry"
+                      tofile="${app.server.conf.dir}/registry.${timestamp}" preservelastmodified="yes"
+			  failonerror="no" verbose="true" />
+		-->
+
+		<!-- classpath used by command line tools load-bundle, update, ...        -->
+		<path id="ccm.classpath">
+			<path refid="ccm.tools.classpath"/>
+			<!--  <pathelement location="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/classes"/>  -->
+			<pathelement location="${app.server.webapp.dir}/ROOT/WEB-INF/classes"/>
+			<!--  <fileset dir="runtime/apache-tomcat-6.0.18/webapps/ROOT/WEB-INF/lib" includes="**/*.jar" />  -->
+			<fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
+		</path>
+	</target>
+ 
+   <target name="upgrade" description="Upgrade">
+        <fail message="Configure the package being upgraded using the ccm.upgrade.package property">
+            <condition>
+                <or>
+                    <not>
+                        <isset property="ccm.upgrade.package" />
+                    </not>
+                    <equals arg1="ccm-xxx" arg2="${ccm.upgrade.package}" />
+                </or>
+            </condition>
+        </fail>
+        <fail message="Configure the source version using the ccm.upgrade.from.version property">
+            <condition>
+                <or>
+                    <not>
+                        <isset property="ccm.upgrade.from.version" />
+                    </not>
+                    <equals arg1="xxx" arg2="${ccm.upgrade.from.version}" />
+                    <not>
+	                        <matches pattern="[0-9]+\.[0-9]+\.[0-9]+" string="${ccm.upgrade.from.version}" />
+                    </not>
+                </or>
+            </condition>
+        </fail>
+        <fail message="Configure the target version using the ccm.upgrade.to.version property">
+            <condition>
+                <or>
+                    <not>
+                        <isset property="ccm.upgrade.to.version" />
+                    </not>
+                    <equals arg1="xxx" arg2="${ccm.upgrade.to.version}" />
+                    <not>
+                        <matches pattern="[0-9]+\.[0-9]+\.[0-9]+" string="${ccm.upgrade.to.version}" />
+                    </not>
+                </or>
+            </condition>
+        </fail>
+
+        <echo message="Upgrading ${ccm.upgrade.package} from version ${ccm.upgrade.from.version} to ${ccm.upgrade.to.version}" />
+
+        <java classname="com.arsdigita.packaging.MasterTool" fork="yes">
+            <classpath refid="ccm.classpath" />
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="upgrade ${ccm.upgrade.package} --from-version=${ccm.upgrade.from.version} --to-version=${ccm.upgrade.to.version}" />
+        </java>
+    </target>	
+
+</project>

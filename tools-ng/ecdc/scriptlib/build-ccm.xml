@@ -126,4 +126,39 @@
         </java>
     </target>	
 
+    <target name="new-app">
+        <fail message="Please specify -Dnew.app.name=&lt;name&gt; at the command line">
+            <condition>
+                <not>
+                    <isset property="new.app.name" />
+                </not>
+            </condition>
+        </fail>
+        <echo>Creating new application ${new.app.name}</echo>
+        <mkdir dir="${new.app.name}" />
+        <copy todir="${new.app.name}" preservelastmodified="true" verbose="true">
+            <fileset dir="${ccm.project.dir}/tools-ng/ecdc/templates/new-app">
+                <exclude name="src/new.app.name.*" />
+            </fileset>
+            <filterset>
+                <filter token="new.app.name" value="${new.app.name}" />
+            </filterset>
+        </copy>
+        <copy tofile="${new.app.name}/src/${new.app.name}.config" file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.config" preservelastmodified="true" verbose="true">
+            <filterset>
+                <filter token="new.app.name" value="${new.app.name}" />
+            </filterset>
+        </copy>
+        <copy tofile="${new.app.name}/src/${new.app.name}.load" file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.load" preservelastmodified="true" verbose="true">
+            <filterset>
+                <filter token="new.app.name" value="${new.app.name}" />
+            </filterset>
+        </copy>
+        <copy tofile="${new.app.name}/src/${new.app.name}.upgrade" file="${ccm.project.dir}/tools-ng/ecdc/templates/new-app/src/new.app.name.upgrade" preservelastmodified="true" verbose="true">
+            <filterset>
+                <filter token="new.app.name" value="${new.app.name}" />
+            </filterset>
+        </copy>
+    </target>
+
 </project>

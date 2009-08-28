@@ -32,6 +32,27 @@
 		<copy file="tools-ng/devel/lib/postgresql-jdbc-8.2.506.jar"
                       todir="${app.server.shared.dir}" preservelastmodified="true"/>
 	</target>
+    
+    <target name="uninstall-liferay">
+        <echo>Uninstalling Liferay from ${app.server.webapp.dir}</echo>
+        <delete dir="${app.server.webapp.dir}/portal"/>
+    </target>
+        
+    <target name="install-liferay" depends="uninstall-liferay">
+        <echo>Installing Liferay into ${app.server.webapp.dir}</echo>
+        <mkdir dir="${app.server.webapp.dir}/portal"/>
+        <unzip src="tools-ng/liferay/liferay-portal-5.2.3.war" dest="${app.server.webapp.dir}/portal"/>
+        <copy file="tools-ng/liferay/conf/portal-ext.properties" 
+              todir="${app.server.webapp.dir}/portal/WEB-INF/classes" preservelastmodified="true"/>
+        <unzip src="tools-ng/liferay/liferay-portal-dependencies-5.2.3.zip" 
+               dest="${app.server.home.dir}/lib" overwrite="true">
+            <mapper type="flatten"/>
+        </unzip>
+        <copy file="ccm-core/lib/mail.jar" 
+              todir="${app.server.home.dir}/lib" preservelastmodified="true"/>
+        <copy file="tools-ng/liferay/jta.jar" 
+              todir="${app.server.home.dir}/lib" preservelastmodified="true"/>
+    </target>
 
 	<target name="start">
 		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
