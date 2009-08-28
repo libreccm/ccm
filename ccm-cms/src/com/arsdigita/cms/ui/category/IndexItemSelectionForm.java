@@ -88,57 +88,53 @@ public class IndexItemSelectionForm extends CMSForm {
         m_options = new RadioGroup(new StringParameter("items"));
         try {
             m_options.addPrintListener(new PrintListener() {
-                    public void prepare(PrintEvent event) {
-                        RadioGroup group = (RadioGroup)event.getTarget();
-                        PageState state = event.getPageState();
-                        Category category = getCategory(event.getPageState());
-                        CategorizedCollection children = category.getObjects
-                            (ContentItem.BASE_DATA_OBJECT_TYPE);
+                public void prepare(PrintEvent event) {
+                    RadioGroup group = (RadioGroup)event.getTarget();
+                    PageState state = event.getPageState();
+                    Category category = getCategory(event.getPageState());
+                    CategorizedCollection children = category.getObjects
+                        (ContentItem.BASE_DATA_OBJECT_TYPE);
 
-                        boolean valueSet = false;
+					// option for NO index Object
+					group.addOption(new Option(NONE_OPTION_VALUE, 
+								   new Label(NONE_OPTION_VALUE)));
 
-			// option for NO index Object
-			group.addOption(new Option(NONE_OPTION_VALUE, 
-						   new Label(NONE_OPTION_VALUE)));
-
-                        while (children.next()) {
-                            ACSObject item =
-                                (ACSObject) children.getDomainObject();
-
-                            if ((item instanceof ContentItem) &&
-                                ((ContentItem) item).getVersion().equals(ContentItem.DRAFT)) {
-
-                                group.addOption
-                                    (new Option(item.getID().toString(),
-                                                ((ContentItem)item).getName()));
-                            }
-                        }
-                        // get currently selected item
-                        ACSObject indexItem =
-                            category.getDirectIndexObject();
-                        if (indexItem != null && indexItem instanceof ContentItem) {
-                            group.setValue
-                                (state,
-                                 ((ContentItem)indexItem)
-                                 .getWorkingVersion()
-                                 .getID().toString());
-                            valueSet = true;
-                        }
-			else{
-			    group.setValue(state, NONE_OPTION_VALUE);
-			    valueSet = true;
-			}
-
-                        if (category.getParentCategoryCount() > 0) {
-                            group.addOption
-                                (new Option(NULL_OPTION_VALUE, new Label
-                                            ("Inherit Index from Parent Categoy")));
-                            if (!valueSet) {
-                                group.setValue(state, NULL_OPTION_VALUE);
-                            }
-                        }
-                    }
-                });
+					// option for inheriting from the parent category
+					if (category.getParentCategoryCount() > 0) {
+		                group.addOption
+		                    (new Option(NULL_OPTION_VALUE,
+		                     new Label("Inherit Index from Parent Category")));
+		            }
+					
+			        while (children.next()) {
+			            ACSObject item =
+			                (ACSObject) children.getDomainObject();
+			
+			            if ((item instanceof ContentItem) &&
+			                ((ContentItem) item).getVersion().equals(ContentItem.DRAFT)) 
+			            {
+			                group.addOption
+			                    (new Option(item.getID().toString(),
+			                                ((ContentItem)item).getName()));
+			            }
+			        }
+		            // get currently selected item
+		            ACSObject indexItem = category.getDirectIndexObject();
+		            if (indexItem != null && indexItem instanceof ContentItem) {
+		                group.setValue(state, ((ContentItem) indexItem)
+		                		.getWorkingVersion()
+		                        .getID().toString());
+		            } else {
+		            	String value = NONE_OPTION_VALUE;
+		            	if (!category.ignoreParentIndexItem() 
+		            			&& category.getParentCategoryCount() > 0) 
+		            	{
+		            		value = NULL_OPTION_VALUE;
+		            	}
+					    group.setValue(state, value);
+					}
+				}
+	        });
         } catch (java.util.TooManyListenersException e) {
             s_log.error("Error adding init listener to Radio Group", e);
             throw new UncheckedWrapperException(e);

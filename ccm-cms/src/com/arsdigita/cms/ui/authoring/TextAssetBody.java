@@ -50,6 +50,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.Asset;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentSectionConfig;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.TextAsset;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
@@ -101,6 +102,11 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
     private StringParameter m_streamlinedCreationParam;
     private static final String STREAMLINED = "_streamlined";
     private static final String STREAMLINED_DONE = "1";
+    
+    private static final ContentSectionConfig s_config = new ContentSectionConfig();
+    static {
+	    s_config.load();
+    }
 
     /**
      * Construct a new TextPageBody component
@@ -128,10 +134,12 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
             new StringParameter(parent == null ? "item" :
                                 parent.getContentType().getAssociatedObjectType() + "_body_done");
 
-        PageFileForm f = getPageFileForm();
-        addFileWidgets(f);
-        add(FILE_UPLOAD, "Upload a file", f,
-            f.getSaveCancelSection().getCancelButton());
+        if (!s_config.getHideTextAssetUploadFile()) {
+	        PageFileForm f = getPageFileForm();
+	        addFileWidgets(f);
+	        add(FILE_UPLOAD, "Upload a file", f,
+	            f.getSaveCancelSection().getCancelButton());
+        }
 
         PageTextForm t = new PageTextForm();
         addTextWidgets(t);

@@ -35,6 +35,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.categorization.CategorizationConfig;
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.categorization.CategoryNotFoundException;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
@@ -55,7 +56,6 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.ActionGroup;
 import com.arsdigita.toolbox.ui.PropertyList;
-import com.arsdigita.toolbox.ui.PropertyList.Property;
 import com.arsdigita.toolbox.ui.Section;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.Web;
@@ -267,10 +267,23 @@ class CategoryItemPane extends BaseItemPane {
                 final Category category = m_category.getCategory(state);
                 final ACSObject item = category.getDirectIndexObject();
                 
-                String itemTitle = "";
+                String itemTitle = "None";
                 
                 if (item != null) {
                     itemTitle = item.getDisplayName();
+                } else if (!category.ignoreParentIndexItem()  
+                                   && category.getParentCategoryCount() > 0)  
+                { 
+                        Category ancestor = findParentCategoryWithNonInheritedIndexItem(category); 
+                        if (ancestor != null) { 
+                                if (ancestor.getIndexObject() != null) { 
+                                        itemTitle = ancestor.getIndexObject().getDisplayName(); 
+                                } 
+                                itemTitle += " (Inherited from "  
+                                      + ancestor.getDisplayName() + ")"; 
+                        } else { 
+                                // The complete hierarchy is set to inherit. 
+                                // Just leave the itemTitle as None. 
                 }
                 
                 props.add(new Property(gz("cms.ui.name"),
@@ -293,6 +306,27 @@ class CategoryItemPane extends BaseItemPane {
                 return props;
             }
         }
+    } 
+     
+    // Loop over the parents and recurse up the hierarchy the find the first
+    // parent with an explicit index item ignoreParentIndexItem is true.
+    private Category findParentCategoryWithNonInheritedIndexItem(Category c) {
+    	if (c.getParentCategoryCount() == 0) {
+    		return null;
+    	}
+    	CategoryCollection parents = c.getParents();
+    	while (parents.next()) {
+    		Category p = parents.getCategory();
+    		if (p.getDirectIndexObject() != null || p.ignoreParentIndexItem()) {
+    			return p;
+    		}
+    		// Try the parents of this parent.
+    		Category gp = findParentCategoryWithNonInheritedIndexItem(p);
+    		if (gp != null) {
+    			return gp;
+    		}
+    	}
+    	return null;
     }
     
     // Quasimodo: BEGIN

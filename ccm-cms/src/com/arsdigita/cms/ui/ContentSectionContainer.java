@@ -19,6 +19,8 @@
 package com.arsdigita.cms.ui;
 
 
+import java.math.BigDecimal;
+
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -54,8 +56,6 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.web.Web;
-
-import java.math.BigDecimal;
 
 /**
  * Displays all the content sections in table, with links to the admin
@@ -107,15 +107,15 @@ public class ContentSectionContainer extends CMSContainer {
         m_typeSel = typeSel;
         m_sectionSel = sectionSel;
 
-        m_formContainer = new FormContainer();
-        add(m_formContainer);
+      	m_formContainer = new FormContainer();
+       	add(m_formContainer);
         m_table = new ContentSectionTable();
         add(m_table);
     }
 
     public void register(Page p) {
         super.register(p);
-        p.setVisibleDefault(m_formContainer, false);
+       	p.setVisibleDefault(m_formContainer, false);
     }
 
     private class FormContainer extends CMSContainer {
@@ -208,7 +208,7 @@ public class ContentSectionContainer extends CMSContainer {
          * @pre ( state != null  && id != null )
          **/
         public void setSectionId(PageState state, BigDecimal id) {
-            Assert.assertNotNull(id);
+            Assert.exists(id);
             m_sectionIDParamWidget.setValue(state, id);
         }
 
@@ -226,7 +226,7 @@ public class ContentSectionContainer extends CMSContainer {
          **/
         public ContentSection getContentSection(PageState state) {
             BigDecimal id = getContentSectionID(state);
-            Assert.assertNotNull(id);
+            Assert.exists(id);
             ContentSection section;
             try {
                 section = new ContentSection(id);
@@ -435,7 +435,8 @@ public class ContentSectionContainer extends CMSContainer {
                 // If the user has no access, return an empty Label
                 SecurityManager sm = new SecurityManager(section);
 
-                if (! sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder)) {
+                if (! sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder) 
+                		|| !ContentSection.getConfig().getAllowContentCreateInSectionListing()) {
                     return new Label("&nbsp;", false);
                 } else {
                     // set the value of the sectionIdParameter in the form

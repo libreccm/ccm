@@ -151,6 +151,8 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_deleteWorkflowNotificationsWhenSent;
     private final Parameter m_hasContactsAuthoringStep;
     private final Parameter m_categoryTreeOrdering;
+    private final Parameter m_hideTextAssetUploadFile;
+    private final Parameter m_allowContentCreateInSectionListing;
     
     /**
      * Do not instantiate this class directly.
@@ -397,6 +399,15 @@ public final class ContentSectionConfig extends AbstractConfig {
         ("com.arsdigita.cms.has_contacts_authoring_step",
                 Parameter.REQUIRED, new Boolean(false));
         
+        m_hideTextAssetUploadFile = new BooleanParameter(
+    			"com.arsdigita.cms.hide_text_asset_upload_file",
+    			Parameter.REQUIRED,
+    			new Boolean(false));
+        
+        m_allowContentCreateInSectionListing = new BooleanParameter(
+        		"com.arsdigita.cms.allow_content_create_in_section_listing",
+        		Parameter.REQUIRED,
+        		new Boolean(true));
 
         register(m_templateRootPath);
         register(m_defaultItemTemplatePath);
@@ -445,6 +456,8 @@ public final class ContentSectionConfig extends AbstractConfig {
         register(m_deleteWorkflowNotificationsWhenSent);
         register(m_categoryTreeOrdering);
 		register(m_hasContactsAuthoringStep);
+		register(m_hideTextAssetUploadFile);
+		register(m_allowContentCreateInSectionListing);
         loadInfo();
     }
 
@@ -806,5 +819,12 @@ public final class ContentSectionConfig extends AbstractConfig {
     public boolean getHasContactsAuthoringStep() {
 	return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
     }
-      
+	
+	public final boolean getHideTextAssetUploadFile() {
+	    return ((Boolean) get(m_hideTextAssetUploadFile)).booleanValue();
+    }
+	
+	public final boolean getAllowContentCreateInSectionListing() {
+		return ((Boolean) get(m_allowContentCreateInSectionListing)).booleanValue();
+	}
 }

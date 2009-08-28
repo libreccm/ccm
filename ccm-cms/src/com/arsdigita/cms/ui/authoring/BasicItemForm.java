@@ -168,7 +168,8 @@ public abstract class BasicItemForm extends FormSection
         nameWidget.setOnBlur(
             "if (this.value == '') " +
             "{ defaulting = true; this.value = urlize(this.form." + TITLE +
-            ".value) }"
+            ".value) } " +
+            " else { this.value = urlize(this.value); }"
             );
         add(nameWidget);
 

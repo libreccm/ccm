@@ -130,7 +130,8 @@ class BaseCategoryForm extends BaseForm {
         m_url.setOnFocus("defaulting = false");
         m_url.setOnBlur("if (this.value == '') " +
                         "{ defaulting = true; this.value = urlize(this.form." + NAME +
-                        ".value) }");
+                        ".value) } " +
+                        "else { this.value = urlize(this.value); }");
         addField(gz("cms.ui.category.url"),m_url);
 
         addAction(new Finish());

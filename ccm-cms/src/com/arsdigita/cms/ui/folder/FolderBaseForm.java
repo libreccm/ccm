@@ -67,6 +67,8 @@ abstract class FolderBaseForm extends CMSForm {
         "if (this.value == '') {" +
         "    defaulting = true;" +
         "    this.value = urlize(this.form." + TITLE + ".value)" +
+        "} else {" +
+        "    this.value = urlize(this.value);" +
         "}";
 
 	private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>", false);

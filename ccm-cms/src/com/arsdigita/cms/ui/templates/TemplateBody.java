@@ -91,8 +91,10 @@ public class TemplateBody extends TextAssetBody {
         // Set the right component access on the forms -
         // FIXME: Update this for templating permissions !
         Component f = getComponent(FILE_UPLOAD);
-        setComponentAccess(FILE_UPLOAD,
-                           new WorkflowLockedComponentAccess(f, itemModel));
+        if (f != null) {
+            setComponentAccess(FILE_UPLOAD,
+                               new WorkflowLockedComponentAccess(f, itemModel));
+        }
         Component t = getComponent(TEXT_ENTRY);
         setComponentAccess(TEXT_ENTRY,
                            new WorkflowLockedComponentAccess(t, itemModel));
