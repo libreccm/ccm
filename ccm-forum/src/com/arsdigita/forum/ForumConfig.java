@@ -40,13 +40,14 @@ import org.apache.log4j.Logger;
  * A set of configuration parameters for forums.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Chris Gilbert Westsussex Council / Westsussex Learning Grid
  * @version $Id: ForumConfig.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public class ForumConfig extends AbstractConfig {
-    public final static String versionId =
-        "$Id: ForumConfig.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
+    // public final static String versionId =
+    //  "$Id: ForumConfig.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
+    //  "$Author: chrisg23 $" +
+    //  "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(ForumConfig.class);
 
