@@ -48,6 +48,22 @@
                            value="${java.protocol.handler.pkgs}" />
               -->
  	          <arg line="load  ${applications} " />
+        </java>
+    </target>
+
+    <target name="load-data" depends="prepare-load">
+        <echo>load --data ${applications}</echo>
+        <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="load --data ${applications}" />
+        </java>
+    </target>
+
+    <target name="load-init" depends="prepare-load">
+        <echo>load --init ${applications}</echo>
+        <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="load --data ${applications}" />
  	    </java>
  	</target>
  	
