@@ -4,7 +4,7 @@
 
 <web-app>
 
-  <display-name>CCM SHP</display-name>
+  <display-name>OpenCCM</display-name>
   <description>Content and Collaboration Management</description>
 
   <!-- Require secure connection by redirect to host-port part
