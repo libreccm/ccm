@@ -15,47 +15,39 @@
 		<echo>Loading bundle ${ccm.bundle.folder} into ${ccm.home}</echo>
 
 		<java classname="com.arsdigita.packaging.MasterTool"  fork="yes">
-                    <classpath refid="ccm.classpath" />
+            <classpath refid="ccm.classpath" />
 		    <sysproperty key="ccm.home" value="${ccm.home}" />
 		    <arg line="load ${applications} --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" />
 		</java>
-                        <!--   
-			<sysproperty key="log4j.configuration"
-                                     value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
-                        -->
-                        <!--
+        <!--   
+            <sysproperty key="log4j.configuration"
+                         value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+        -->
+        <!--
 			<sysproperty key="java.protocol.handler.pkgs"
-                                     value="${java.protocol.handler.pkgs}" />
-                        -->
+                         value="${java.protocol.handler.pkgs}" />
+        -->
 	</target>
 
-	<target name="load-init" depends="prepare-load">
- 	    <echo>load ${applications} --init using ${ccm.bundle.folder}/cfg/integration.properties</echo>
- 	    <java classname="com.arsdigita.packaging.MasterTool"
-              classpathref="ccm.classpath" fork="yes">
+    <target name="load-bundle-config" depends="prepare-load">
+        <echo>load ${applications} --init using ${ccm.bundle.folder}/cfg/integration.properties</echo> 
+        <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="load  ${applications} --config --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" /> 
+        </java> 
+    </target>
+
+	<target name="load" depends="prepare-load">
+ 	    <echo>load ${applications} </echo>
+ 	    <java classname="com.arsdigita.packaging.MasterTool" classpathref="ccm.classpath" fork="yes">
  	          <sysproperty key="ccm.home" value="${ccm.home}" />
-                        <!--
- 	          <sysproperty key="log4j.configuration"
-                           value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
- 	          <sysproperty key="java.protocol.handler.pkgs"
+              <!--
+ 	              <sysproperty key="log4j.configuration"
+                               value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
+ 	              <sysproperty key="java.protocol.handler.pkgs"
                            value="${java.protocol.handler.pkgs}" />
-                        -->
- 	          <arg line="load  ${applications} --config --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" />
- 	    </java>
- 	</target>
- 	
- 	<target name="load" depends="prepare-load">
- 	    <echo>load ${applications}</echo>
- 	    <java classname="com.arsdigita.packaging.MasterTool"
-              classpathref="ccm.classpath" fork="yes">
- 	          <sysproperty key="ccm.home" value="${ccm.home}" />
-                        <!--
- 	          <sysproperty key="log4j.configuration"
-                           value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
- 	          <sysproperty key="java.protocol.handler.pkgs"
-                           value="${java.protocol.handler.pkgs}" />
-                        -->
- 	          <arg line="load ${applications}" />
+              -->
+ 	          <arg line="load  ${applications} " />
  	    </java>
  	</target>
  	
@@ -86,5 +78,52 @@
 			<fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
 		</path>
 	</target>
- 	
+ 
+   <target name="upgrade" description="Upgrade">
+        <fail message="Configure the package being upgraded using the ccm.upgrade.package property">
+            <condition>
+                <or>
+                    <not>
+                        <isset property="ccm.upgrade.package" />
+                    </not>
+                    <equals arg1="ccm-xxx" arg2="${ccm.upgrade.package}" />
+                </or>
+            </condition>
+        </fail>
+        <fail message="Configure the source version using the ccm.upgrade.from.version property">
+            <condition>
+                <or>
+                    <not>
+                        <isset property="ccm.upgrade.from.version" />
+                    </not>
+                    <equals arg1="xxx" arg2="${ccm.upgrade.from.version}" />
+                    <not>
+	                        <matches pattern="[0-9]+\.[0-9]+\.[0-9]+" string="${ccm.upgrade.from.version}" />
+                    </not>
+                </or>
+            </condition>
+        </fail>
+        <fail message="Configure the target version using the ccm.upgrade.to.version property">
+            <condition>
+                <or>
+                    <not>
+                        <isset property="ccm.upgrade.to.version" />
+                    </not>
+                    <equals arg1="xxx" arg2="${ccm.upgrade.to.version}" />
+                    <not>
+                        <matches pattern="[0-9]+\.[0-9]+\.[0-9]+" string="${ccm.upgrade.to.version}" />
+                    </not>
+                </or>
+            </condition>
+        </fail>
+
+        <echo message="Upgrading ${ccm.upgrade.package} from version ${ccm.upgrade.from.version} to ${ccm.upgrade.to.version}" />
+
+        <java classname="com.arsdigita.packaging.MasterTool" fork="yes">
+            <classpath refid="ccm.classpath" />
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="upgrade ${ccm.upgrade.package} --from-version=${ccm.upgrade.from.version} --to-version=${ccm.upgrade.to.version}" />
+        </java>
+    </target>	
+
 </project>
