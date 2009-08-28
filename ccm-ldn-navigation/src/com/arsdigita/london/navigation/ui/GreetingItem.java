@@ -85,7 +85,18 @@ public class GreetingItem extends AbstractComponent {
         }
         
         ContentBundle bundle = (ContentBundle)item;
-        ContentItem baseItem = bundle.getPrimaryInstance();
+
+        /* Fix by Jens Pelzetter, 2009-08-28
+         * bundle.getPrimaryInstance() does not about the preferred languages
+         * of the User Client, instead it returns the primary instance of
+         * a ContentItem (the first language created).
+         *
+         * Fixed by using negotiate() instead, which takes the locale
+         * send by the User Client in account and tries to find a suitable
+         * language version.
+         */
+        //ContentItem baseItem = bundle.getPrimaryInstance();
+        ContentItem baseItem = bundle.negotiate(request.getLocales());
         Element itemEl = content.newChildElement("cms:item",
                                                  CMS.CMS_XML_NS);
         
