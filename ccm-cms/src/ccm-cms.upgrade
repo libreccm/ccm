@@ -32,5 +32,8 @@
    <version from="6.5.2" to="6.5.3">
     <script sql="ccm-cms/upgrade/::database::-6.5.2-6.5.3.sql"/>
   </version>
+   <version from="6.5.3" to="6.5.4">
+    <script sql="ccm-cms/upgrade/::database::-6.5.3-6.5.4.sql"/>
+  </version>
 
 </upgrade>
