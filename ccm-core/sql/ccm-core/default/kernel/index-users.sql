@@ -19,3 +19,5 @@
 -- $DateTime: 2004/08/16 18:10:38 $
 
 create unique index users_name_id_idx on users(name_id);
+
+create unique index users_lower_screen_name_idx on users(lower(screen_name));

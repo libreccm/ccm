@@ -88,7 +88,9 @@ public class LoadSQLPlusScript {
     }
 
     public void loadSQLPlusScript (String scriptFilename) {
-        loadScript(scriptFilename);
+        if (scriptFilename != null) {
+            loadScript(scriptFilename.replace('\\', '/'));
+        }
     }
 
     protected void loadScript(String scriptFilename) {
@@ -100,6 +102,7 @@ public class LoadSQLPlusScript {
                 try {
                     return new FileReader(name);
                 } catch (FileNotFoundException e) {
+                    s_log.warn("File not found: " + name);
                     return null;
                 }
             }

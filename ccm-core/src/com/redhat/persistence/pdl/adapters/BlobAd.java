@@ -18,27 +18,27 @@
  */
 package com.redhat.persistence.pdl.adapters;
 
-import com.arsdigita.db.DbHelper;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import com.arsdigita.db.DbHelper;
+
 
 /**
  * BlobAd
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: BlobAd.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class BlobAd extends SimpleAdapter {
-
-    public final static String versionId = "$Id: BlobAd.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public BlobAd() {
 	super("global.Blob", Types.BLOB);
@@ -75,11 +75,9 @@ public class BlobAd extends SimpleAdapter {
             return;
         }
 
-        /* Jens Pelzetter 2009-03-16 commented out to get rid of Netbeans errors */
-        /*oracle.sql.BLOB blob =
-            (oracle.sql.BLOB) rs.getBlob(column);
-        OutputStream out = blob.getBinaryOutputStream();
+        Blob blob = rs.getBlob(column);
         try {
+            OutputStream out = (OutputStream)(blob.getClass().getMethod("getBinaryOutputStream", new Class[0]).invoke(blob));
             out.write((byte[]) value);
             out.flush();
             out.close();
@@ -88,8 +86,18 @@ public class BlobAd extends SimpleAdapter {
             // persistence exception here breaks ant verify-pdl
             // because the classpath isn't set up to include
             // com.arsdigita.util.*
-            throw new Error("Unable to write LOB: " + e);
-        }*/
+            throw new Error("Unable to write LOB", e);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Unable to write BLOB", e);
+        } catch (SecurityException e) {
+            throw new RuntimeException("Unable to write BLOB", e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Unable to write BLOB", e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("Unable to write BLOB", e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Unable to write BLOB", e);
+        }
     }
 
 }

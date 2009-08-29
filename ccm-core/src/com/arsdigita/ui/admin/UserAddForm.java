@@ -18,6 +18,8 @@
  */
 package com.arsdigita.ui.admin;
 
+import javax.mail.internet.InternetAddress;
+
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -28,7 +30,6 @@ import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.PersonName;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
-import javax.mail.internet.InternetAddress;
 
 /**
  * Form used to add a new user to the system.
@@ -57,8 +58,6 @@ class UserAddForm extends UserForm
         // Add validation listeners for required parameters
 
         m_question.addValidationListener
-            (new NotEmptyValidationListener());
-        m_answer.addValidationListener
             (new NotEmptyValidationListener());
     }
 

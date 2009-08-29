@@ -18,9 +18,9 @@
  */
 package com.redhat.persistence.pdl.adapters;
 
-import com.arsdigita.db.DbHelper;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Clob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,20 +28,18 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import com.arsdigita.db.DbHelper;
+
 
 /**
  * StringAd: StringAdapter class
  *
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: StringAd.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class StringAd extends SimpleAdapter {
-
-    public final static String versionId = 
-            "$Id: StringAd.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public StringAd() {
             super("global.String", Types.VARCHAR);
@@ -78,11 +76,9 @@ public class StringAd extends SimpleAdapter {
             return;
         }
 
-        /* Jens Pelzetter 2009-03-16 commented out to get rid of Netbeans errors */
-        /*oracle.sql.CLOB clob =
-            (oracle.sql.CLOB) rs.getClob(column);
-        Writer out = clob.getCharacterOutputStream();
+        Clob clob = rs.getClob(column);
         try {
+            Writer out = (Writer)clob.getClass().getMethod("getCharacterOutputStream", new Class[0]).invoke(clob);
             out.write(((String) value).toCharArray());
             out.flush();
             out.close();
@@ -92,6 +88,17 @@ public class StringAd extends SimpleAdapter {
             // because the classpath isn't set up to include
             // com.arsdigita.util.*
             throw new Error("Unable to write LOB: " + e);
-        }*/
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Unable to write CLOB", e);
+        } catch (SecurityException e) {
+            throw new RuntimeException("Unable to write CLOB", e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Unable to write CLOB", e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("Unable to write CLOB", e);
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("Unable to write CLOB", e);
+        }
     }
+
 }

@@ -63,6 +63,7 @@ public abstract class SQLLoader {
                     final InputStream is = cload.getResourceAsStream(resourceName);
 
                     if (is == null) {
+                        s_log.warn("Resource not found: " + resourceName);
                         return null;
                     } else {
                         return new InputStreamReader(is);
@@ -166,7 +167,7 @@ public abstract class SQLLoader {
         if (front == null) {
             resolved = back;
         } else {
-            resolved = front + File.separatorChar + back;
+            resolved = front + '/' + back;
         }
 
         if (s_log.isDebugEnabled()) {

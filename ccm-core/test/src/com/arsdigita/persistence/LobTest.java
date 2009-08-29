@@ -18,27 +18,27 @@
  */
 package com.arsdigita.persistence;
 
-import com.arsdigita.db.DbHelper;
-import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
 import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 import org.apache.log4j.Logger;
+
+import com.arsdigita.db.DbHelper;
 
 /**
  * LobTest - for testing Blob and Clob datatype.
  *
  * @author Jeff Teeters 
- * @version $Revision: #17 $ $Date: 2004/08/16 $
+ * @version $Id: LobTest.java 745 2005-09-02 10:50:34Z sskracic $
  */
 
 public class LobTest extends PersistenceTestCase {
-
-    public static final String versionId = "$Id: LobTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Logger s_cat =
         Logger.getLogger(LobTest.class);
@@ -253,7 +253,6 @@ public class LobTest extends PersistenceTestCase {
             dt.save();
 
             dt = getSession().retrieve(new OID("examples.Datatype", BigInteger.ZERO));
-            String bar = (String) dt.get("string");
             String foundString = (String) dt.get("clob");
             dt.delete();
 
@@ -365,7 +364,7 @@ public class LobTest extends PersistenceTestCase {
 
     private void executeOracleUpdate(Connection conn, String testString,
                                      int id)
-        throws java.sql.SQLException, java.io.IOException {
+        throws java.sql.SQLException, java.io.IOException, IllegalArgumentException, SecurityException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         PreparedStatement ps =
             conn.prepareStatement("insert into t_datatypes  (id, j_clob) " +
                                   "values  (?, EMPTY_CLOB())");
@@ -383,8 +382,8 @@ public class LobTest extends PersistenceTestCase {
             ps.setBigDecimal(1, new BigDecimal(BigInteger.valueOf(id)));
             ResultSet rs = ps.executeQuery();
             rs.next();
-            oracle.sql.CLOB Clob = (oracle.sql.CLOB)rs.getClob(1);
-            Writer char_stream = Clob.getCharacterOutputStream ();
+            Clob clob = rs.getClob(1);
+            Writer char_stream = (Writer)clob.getClass().getMethod("getCharacterOutputStream", new Class[0]).invoke(clob);
             char_stream.write(testString);
             char_stream.flush();
             char_stream.close();

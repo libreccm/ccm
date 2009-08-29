@@ -9,7 +9,7 @@
   buildHooks="build-hooks.xml">
   <ccm:dependencies>
     <ccm:buildRequires name="httpunit" version="1.5.4" relation="ge"/>
-    <ccm:buildRequires name="junit" version="3.8" relation="ge"/>
+    <ccm:buildRequires name="junit" version="3.8.1" relation="ge"/>
     <ccm:buildRequires name="junitperf" version="1.8" relation="ge"/>
     <ccm:buildRequires name="ccm-servlet" version="2.3" relation="ge"/>
     <ccm:buildRequires name="ojdbc14"/>

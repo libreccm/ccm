@@ -37,6 +37,6 @@ class CreateUserPane extends SegmentedPanel
     }
 
     public void reset(PageState ps) {
-        // empty
+        ps.setValue(USER_ID_PARAM, null);
     }
 }

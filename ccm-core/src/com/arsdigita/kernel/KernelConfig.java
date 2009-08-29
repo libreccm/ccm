@@ -22,19 +22,13 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.Parameter;
-import org.apache.log4j.Logger;
 
 /**
  * @author Justin Ross
  * @see com.arsdigita.kernel.Kernel
+ * @version $Id: KernelConfig.java 1233 2006-06-22 12:37:05Z apevec $
  */
 public final class KernelConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: KernelConfig.java 1233 2006-06-22 12:37:05Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
-
-    private static final Logger s_log = Logger.getLogger(KernelConfig.class);
 
     private final Parameter m_debug;
     private final Parameter m_permissions;
@@ -86,6 +80,14 @@ public final class KernelConfig extends AbstractConfig {
 
     public final String getPrimaryUserIdentifier() {
         return (String) get(m_identifier);
+    }
+    
+    public final boolean emailIsPrimaryIdentifier() {
+        return "email".equals(get(m_identifier));
+    }
+    
+    public final boolean screenNameIsPrimaryIdentifier() {
+        return !emailIsPrimaryIdentifier();
     }
     
     public final boolean isSSOenabled() {

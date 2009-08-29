@@ -35,10 +35,12 @@ import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.StringLengthValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.URLParameter;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.ui.login.PasswordValidationListener;
+import com.arsdigita.util.StringUtils;
 
 import java.math.BigDecimal;
 import javax.mail.internet.InternetAddress;
@@ -130,7 +132,7 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
 
         // Password answer
         m_answer = new TextField(new StringParameter(USER_FORM_INPUT_ANSWER));
-        m_answer.setSize(30);
+        m_answer.setSize(50);
 
         add(USER_FORM_LABEL_ANSWER);
         add(m_answer);
@@ -140,6 +142,7 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
             (new EmailParameter(USER_FORM_INPUT_PRIMARY_EMAIL));
         m_primaryEmail.addValidationListener
             (new NotEmptyValidationListener());
+        m_primaryEmail.setSize(50);
         add(USER_FORM_LABEL_PRIMARY_EMAIL);
         add(m_primaryEmail);
 
@@ -150,12 +153,16 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
 
         m_additionalEmail = new TextField
             (new EmailParameter(USER_FORM_INPUT_ADDITIONAL_EMAIL));
+        m_additionalEmail.setSize(50);
         add(USER_FORM_LABEL_ADDITIONAL_EMAIL);
         add(m_additionalEmail);
 
         // Screen name
         m_screenName = new TextField
             (new StringParameter(USER_FORM_INPUT_SCREEN_NAME));
+        if (Kernel.getConfig().screenNameIsPrimaryIdentifier()) {
+            m_screenName.addValidationListener(new NotEmptyValidationListener());
+        }
         add(USER_FORM_LABEL_SCREEN_NAME);
         add(m_screenName);
 
@@ -204,14 +211,8 @@ class UserForm extends Form implements FormValidationListener, AdminConstants {
             String password = (String) m_password.getValue(ps);
             String confirm  = (String) m_confirmPassword.getValue(ps);
 
-            if (password != null && confirm != null) {
+            if (!StringUtils.emptyString(password) && !StringUtils.emptyString(confirm)) {
                 if (!password.equals(confirm)) {
-                    data.addError(USER_FORM_INPUT_PASSWORD_CONFIRMATION,
-                                  (String) USER_FORM_ERROR_PASSWORD_NOT_MATCH.localize(req));
-                }
-            } else {
-                if (password != null || confirm != null) {
-                    // One of the field is null.
                     data.addError(USER_FORM_INPUT_PASSWORD_CONFIRMATION,
                                   (String) USER_FORM_ERROR_PASSWORD_NOT_MATCH.localize(req));
                 }

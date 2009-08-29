@@ -36,7 +36,6 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
-import org.apache.log4j.Logger;
 
 /**
  * Represents a user.
@@ -47,14 +46,12 @@ import org.apache.log4j.Logger;
 public class User extends Party {
 
     public static final String versionId = "$Id: User.java 1586 2007-05-31 13:05:10Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
-
     private PersonName m_name;
 
     private boolean m_external;
-    
-	/** An attribute name for the underlying data object. */
-	public static final String BANNED = "banned";
 
+    /** An attribute name for the underlying data object. */
+    public static final String BANNED = "banned";
 
     /**
      * Every instance of group must encapsulate a data object whose
@@ -84,9 +81,7 @@ public class User extends Party {
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.OID
      **/
-    public static User retrieve(BigDecimal id)
-        throws DataObjectNotFoundException
-    {
+    public static User retrieve(BigDecimal id) throws DataObjectNotFoundException {
         return retrieve(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
@@ -108,11 +103,9 @@ public class User extends Party {
      * @see com.arsdigita.persistence.OID
      * @see DomainObjectFactory#newInstance(OID)
      **/
-    public static User retrieve(OID oid)
-        throws DataObjectNotFoundException
-    {
+    public static User retrieve(OID oid) throws DataObjectNotFoundException {
         User user = (User) DomainObjectFactory.newInstance(oid);
-        if (user==null) {
+        if (user == null) {
             throw new
                 DataObjectNotFoundException("Domain object factory " +
                                             "produced null user for OID " +
@@ -133,7 +126,7 @@ public class User extends Party {
     public static User retrieve(DataObject userData) {
         User user = (User) DomainObjectFactory.newInstance(userData);
 
-        if (user==null) {
+        if (user == null) {
             throw new RuntimeException("Domain object factory produced " +
                                        "null user for data object " +
                                        userData);
@@ -172,14 +165,12 @@ public class User extends Party {
      **/
     public User(boolean external) {
         this(BASE_DATA_OBJECT_TYPE);
-    	m_external = external;
+        m_external = external;
     }
-    
-    
-    
+
     public User() {
-    	this (false);
-        
+        this(false);
+
     }
 
     /**
@@ -201,8 +192,9 @@ public class User extends Party {
     }
 
     public User(String givenName, String familyName, String email) {
-    	this (givenName, familyName, email, false);
+        this(givenName, familyName, email, false);
     }
+
     /**
      * Constructor in which the contained <code>DataObject</code> is
      * initialized with a new <code>DataObject</code> with an
@@ -219,7 +211,6 @@ public class User extends Party {
     public User(String typeName) {
         super(typeName);
     }
-
 
     /**
      * Constructor in which the contained <code>DataObject</code> is
@@ -287,7 +278,7 @@ public class User extends Party {
             m_name = new PersonName();
             setAssociation("name", m_name);
 
-			set(BANNED, new Boolean(false));
+            set(BANNED, new Boolean(false));
         }
     }
 
@@ -390,31 +381,28 @@ public class User extends Party {
 
         // If the domain object is new or the primary email has been changed,
         // validate it.
-        if ( (isNew() || isPropertyModified("primaryEmail")) &&
-                KernelHelper.emailIsPrimaryIdentifier()) {
+        if ((isNew() || isPropertyModified("primaryEmail")) && Kernel.getConfig().emailIsPrimaryIdentifier()) {
             validatePrimaryEmail();
         }
-	if ((isNew() || isPropertyModified("primaryEmail")
-		   || isPropertyModified("screenName")) &&
-	     !KernelHelper.emailIsPrimaryIdentifier()) {
+        if ((isNew() || isPropertyModified("primaryEmail") || isPropertyModified("screenName"))
+                && !Kernel.getConfig().emailIsPrimaryIdentifier()) {
 
-	    if (getPrimaryEmail() == null) {
-		throw new RuntimeException("Primary email must be specified");
-	    }
-	    validateScreenName();
-	}
+            if (getPrimaryEmail() == null) {
+                throw new RuntimeException("Primary email must be specified");
+            }
+            validateScreenName();
+        }
 
     }
-
 
     protected void afterSave() {
         super.afterSave();
-	// users have admin permissions on themselves (needed to change 
-	// email, for instance).
+        // users have admin permissions on themselves (needed to change 
+        // email, for instance).
         if (!m_external) {
-		PermissionDescriptor perm = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, this, this);
-        PermissionService.grantPermission(perm);
-    }
+            PermissionDescriptor perm = new PermissionDescriptor(PrivilegeDescriptor.ADMIN, this, this);
+            PermissionService.grantPermission(perm);
+        }
     }
 
     /**
@@ -444,35 +432,29 @@ public class User extends Party {
         }
 
         // Verify uniqueness of email
-        DataQuery query = SessionManager.getSession()
-            .retrieveQuery("com.arsdigita.kernel.UserPrimaryEmail");
-        Filter f =
-            query.addFilter("primaryEmailAddress=:email " +
-                            "and userID != :userID");
+        DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.kernel.UserPrimaryEmail");
+        Filter f = query.addFilter("primaryEmailAddress=:email " + "and userID != :userID");
         f.set("email", email.getEmailAddress());
         f.set("userID", getID());
-        if (query.size()>0) {
+        if (query.size() > 0) {
             throw new RuntimeException("Primary email must be unique among users");
         }
     }
 
     protected void validateScreenName() {
 
-        String sn = getScreenName().toLowerCase();
+        String sn = getScreenName();
 
         if (sn == null) {
             throw new RuntimeException("Screen Name must be specified");
         }
-
+        
         // Verify uniqueness of screen name
-        DataQuery query = SessionManager.getSession()
-            .retrieveQuery("com.arsdigita.kernel.UserPrimaryEmail");
-        Filter f =
-            query.addFilter("lowerScreenName=:sn " +
-                            "and userID != :userID");
-        f.set("sn", sn);
+        DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.kernel.UserPrimaryEmail");
+        Filter f = query.addFilter("lowerScreenName=:sn " + "and userID != :userID");
+        f.set("sn", sn.toLowerCase());
         f.set("userID", getID());
-        if (query.size()>0) {
+        if (query.size() > 0) {
             throw new RuntimeException("Screen Name must be unique among users");
         }
     }
@@ -481,19 +463,18 @@ public class User extends Party {
         return SessionManager.getSession().retrieveDataOperation(name);
     }
 
-	/**
-	 * Getter for the banned property, which is persisted to the database
-	 */
-	public boolean isBanned() {
-		return ((Boolean) get(BANNED)).booleanValue();
+    /**
+     * Getter for the banned property, which is persisted to the database
+     */
+    public boolean isBanned() {
+        return ((Boolean) get(BANNED)).booleanValue();
     }
 
-	/**
-	 * Setter for the banned property, which is persisted to the database
-	 */
-	public void setBanned(boolean b) {
-		set(BANNED, new Boolean(b));
-	}
+    /**
+     * Setter for the banned property, which is persisted to the database
+     */
+    public void setBanned(boolean b) {
+        set(BANNED, new Boolean(b));
+    }
 
 }
-  
