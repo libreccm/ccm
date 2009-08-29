@@ -75,10 +75,6 @@ import org.apache.log4j.Logger;
  * @version $Id: CategoryItemPane.java 1329 2006-09-27 11:47:05Z sskracic $
  */
 class CategoryItemPane extends BaseItemPane {
-    public static final String versionId =
-            "$Id: CategoryItemPane.java 1329 2006-09-27 11:47:05Z sskracic $" +
-            "$Author: sskracic $" +
-            "$DateTime: 2004/08/17 23:15:09 $";
     
     private static final Logger s_log = Logger.getLogger
             (CategoryItemPane.class);
@@ -284,6 +280,7 @@ class CategoryItemPane extends BaseItemPane {
                         } else { 
                                 // The complete hierarchy is set to inherit. 
                                 // Just leave the itemTitle as None. 
+                	}
                 }
                 
                 props.add(new Property(gz("cms.ui.name"),
