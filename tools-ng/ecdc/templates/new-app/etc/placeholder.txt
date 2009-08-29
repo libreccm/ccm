@@ -1,0 +1,13 @@
+   
+Originally, this directory was meant to hold any custom fragments 
+a package will need to add to the system initializer file,
+"enterprise.init", in a file called "enterprise.init.in". When 
+building a project, one of the steps to take was to run a task that 
+concatenates all the appropriate fragments together into one master 
+configuration file.
+
+The enterprise.init file is gone and replaced by a newer
+initialization system.
+                    
+The etc/ directory might also contain custom libraries or other 
+special files a package relies on.

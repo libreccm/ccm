@@ -19,14 +19,6 @@
 		    <sysproperty key="ccm.home" value="${ccm.home}" />
 		    <arg line="load ${applications} --parameter-file ${ccm.bundle.folder}/cfg/integration.properties" />
 		</java>
-        <!--   
-            <sysproperty key="log4j.configuration"
-                         value="file:runtime/${app.server.bundles.name}/conf/log4j.xml" />
-        -->
-        <!--
-			<sysproperty key="java.protocol.handler.pkgs"
-                         value="${java.protocol.handler.pkgs}" />
-        -->
 	</target>
 
     <target name="load-bundle-config" depends="prepare-load">
@@ -79,11 +71,6 @@
 		<tstamp>
 			<format pattern="yyyymmddhhmmss" property="timestamp" />
 		</tstamp>
-		<!-- nolonger in use
-		<move file="${app.server.conf.dir}/registry"
-                      tofile="${app.server.conf.dir}/registry.${timestamp}" preservelastmodified="yes"
-			  failonerror="no" verbose="true" />
-		-->
 
 		<!-- classpath used by command line tools load-bundle, update, ...        -->
 		<path id="ccm.classpath">
@@ -94,6 +81,7 @@
 			<fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
 		</path>
 	</target>
+
  
    <target name="upgrade" description="Upgrade">
         <fail message="Configure the package being upgraded using the ccm.upgrade.package property">

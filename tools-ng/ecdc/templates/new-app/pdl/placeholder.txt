@@ -1,0 +1,6 @@
+   
+This directory contains the PDL files for custom data objects 
+an application creates and uses. It is organized like Java packages, 
+with directories following a package hierarchy. Like Java, PDL code 
+is organized in packages (called "models"), and PDL objects can extend
+other PDL objects.

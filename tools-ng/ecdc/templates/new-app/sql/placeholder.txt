@@ -1,0 +1,10 @@
+   
+This directory contains the custom SQL files that create, drop,
+aand upgrade the database schema for an application, and a single 
+custom create script ("oracle-se-create.sql", for example) for each 
+supported database. 
+
+SQL files are organized by package and by the database they are 
+appropriate for. Note that auto generated sql, which is what most of 
+your sql will be, only appears in the build and deployment directories,
+not in this sql/ directory!
