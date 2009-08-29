@@ -55,15 +55,10 @@ import java.util.List;
  * that can be used by content types to reduce code duplication.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #12 $ $Date: 2004/08/17 $
+ * @version $Revision: #754 $ $Date: 2005/09/02 $ $Author: sskracic $
  **/
 
 public abstract class AbstractContentTypeLoader extends PackageLoader {
-
-    public final static String versionId = 
-        "$Id: AbstractContentTypeLoader.java 754 2005-09-02 13:26:17Z sskracic $" +
-        " by $Author: sskracic $, " +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {

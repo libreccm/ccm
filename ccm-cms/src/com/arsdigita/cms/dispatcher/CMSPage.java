@@ -68,13 +68,9 @@ import org.apache.log4j.Logger;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Revision: #30 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: CMSPage.java 1312 2006-09-04 11:26:55Z sskracic $
  */
 public class CMSPage extends Page implements ResourceHandler {
-    public static final String versionId =
-        "$Id: CMSPage.java 1312 2006-09-04 11:26:55Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(CMSPage.class);
 
@@ -289,7 +285,6 @@ public class CMSPage extends Page implements ResourceHandler {
                                 throw new AccessDeniedException(
                                   "You do not have privileges to administer item " + itemID);
                             }
-			    
                         } catch (DataObjectNotFoundException donfe) {
                             s_log.warn("Failed to load content item " + itemID);
                         }

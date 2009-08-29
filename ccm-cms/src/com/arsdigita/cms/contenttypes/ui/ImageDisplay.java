@@ -36,10 +36,9 @@ import java.math.BigDecimal;
  * be nice about it.
  *
  * @author Hugh Brock (hbrock@redhat.com)
+ * @version $Id: ImageDisplay.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ImageDisplay extends SimpleComponent {
-
-    public static final String versionId = "$Id: ImageDisplay.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final ItemSelectionModel m_item;
 

@@ -39,11 +39,9 @@ import com.arsdigita.util.Assert;
  *
  * @author Randy Graebner (randyg@redhat.com)
  *
- * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ContentGroupAssociation.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ContentGroupAssociation extends ContentItem {
-
-    protected static final String versionId = "$Id: ContentGroupAssociation.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.contenttypes.ContentGroupAssociation";

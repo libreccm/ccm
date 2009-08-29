@@ -40,11 +40,9 @@ import javax.servlet.http.HttpServletRequest;
  *
  *
  * @author Karl Goldstein (karlg@arsdigita.com)
- * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: TemplateResolver.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public interface TemplateResolver {
-
-    public static final String versionId = "$Id: TemplateResolver.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Returns the JSP template filename relative to the webapp

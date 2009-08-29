@@ -22,11 +22,9 @@ package com.arsdigita.cms.dispatcher;
  * <p>An interface for caching objects.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: Cache.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface Cache {
-
-    public static final String versionId = "$Id: Cache.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Lookup and fetch a cached object.

@@ -66,12 +66,10 @@ import org.apache.log4j.Logger;
  * </ol>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #18 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ContentCenterDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ContentCenterDispatcher extends LockableImpl
     implements Dispatcher {
-
-    public static final String versionId = "$Id: ContentCenterDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * The path of the file that maps resources.

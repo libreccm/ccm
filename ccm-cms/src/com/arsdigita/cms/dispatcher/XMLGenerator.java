@@ -36,11 +36,9 @@ import com.arsdigita.xml.Element;
  * formats it as an XML document.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: XMLGenerator.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface XMLGenerator {
-
-    public static final String versionId = "$Id: XMLGenerator.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Generates the XML to render the content panel.

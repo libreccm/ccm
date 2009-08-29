@@ -50,11 +50,9 @@ import java.util.Map;
  * System.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: 1.1.2.2 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: Utilities.java 1546 2007-03-28 14:28:57Z chrisgilbert23 $
  */
 public class Utilities {
-
-    public static final String versionId = "$Id: Utilities.java 1546 2007-03-28 14:28:57Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public final static String CMS_WORKSPACE = WorkspaceInstaller.PACKAGE_KEY;
     public final static String CMS_SERVICE = ServiceInstaller.PACKAGE_KEY;

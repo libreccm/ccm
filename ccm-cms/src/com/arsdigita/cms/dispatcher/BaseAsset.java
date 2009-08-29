@@ -37,8 +37,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 
+/**
+ *
+ * @version $Id: BaseAsset.java 1571 2007-04-20 15:57:54Z apevec $
+ */
 class BaseAsset extends ResourceHandlerImpl {
-    public static final String versionId = "$Id: BaseAsset.java 1571 2007-04-20 15:57:54Z apevec $ by $Author: apevec $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(BaseAsset.class);
 

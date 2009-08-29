@@ -101,14 +101,9 @@ import org.apache.log4j.Logger;
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Uday Mathur (umathur@arsdigita.com)
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #26 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: CMSDispatcher.java 1795 2009-02-07 10:47:32Z pboy $
  */
 public class CMSDispatcher implements Dispatcher, ChainedDispatcher {
-
-    public static final String versionId = 
-            "$Id: CMSDispatcher.java 1795 2009-02-07 10:47:32Z pboy $" +
-            " by $Author: pboy $, " +
-            "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(CMSDispatcher.class);

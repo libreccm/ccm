@@ -48,12 +48,13 @@ import java.math.BigDecimal;
 
 
 /**
- *  This displays a sortable list of items within a given content group
+ * This displays a sortable list of items within a given content group
+ *
+ * @version $Id: ContentGroupItemList.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 class ContentGroupItemList extends SortableList {
 
-    public static final String versionId = "$Id: ContentGroupItemList.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
+ 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(ContentGroupItemList.class);
 
