@@ -36,6 +36,7 @@ files with xsl.import.  This stylesheet is locale-independent.
 <xsl:import href="TextArea.xsl"/>
 <xsl:import href="DHTMLEditor.xsl"/>
 <xsl:import href="FCKEditor.xsl"/>
+<xsl:import href="XinhaEditor.xsl"/>
 <xsl:import href="Tree.xsl"/>
 <xsl:import href="Widget.xsl"/>
 <xsl:import href="SegmentedPanel.xsl"/>
