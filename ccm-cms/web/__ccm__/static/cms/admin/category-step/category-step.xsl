@@ -145,7 +145,7 @@
     <div id="catSelf{@id}">
       <xsl:choose>
         <xsl:when test="$expand='none' and (@root='1' or count(cms:category) > 0)">
-          <a href="#" onClick="{$toggle}('{@node-id}');"><img id="catTog{@node-id}" src="/assets/categeory-step/action-add.png" width="14" height="14" border="0"/></a>
+          <a href="#" onClick="{$toggle}('{@node-id}');"><img id="catTog{@node-id}" src="/assets/category-step/action-add.png" width="14" height="14" border="0"/></a>
         </xsl:when>
         <xsl:when test="$expand!='none' and (@root='1' or count(cms:category) > 0)">
           <a href="#" onClick="{$toggle}('{@node-id}');"><img id="catTog{@node-id}" src="/assets/category-step/action-delete.png" width="14" height="14" border="0"/></a>
