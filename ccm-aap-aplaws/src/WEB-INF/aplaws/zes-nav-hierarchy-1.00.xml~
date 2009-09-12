@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : hierarchy-nav-zes-1.00.xml
+    Created on : 8. Aug. 2007, 10:30
+    Author     : pb
+    Description:
+        Purpose of the document follows.
+-->
+
+<terms:hierarchy xmlns:terms="http://xmlns.redhat.com/london/terms/1.0">
+  <terms:domain resource="http://www.aplaws.org.uk/standards/nav/1.03/termslist.xml"/>
+  <!-- set root terms  -->
+  <terms:term id="1000"/>
+  <terms:term id="3000"/>
+  <terms:term id="5000"/>
+  
+  <terms:orderedPair>
+    <!-- narrower terms, first level  -->  
+    <terms:source>
+      <terms:term id="1000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="1200"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="1400"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="1600"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="1800"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="2100"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="1000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="9001"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3200"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3400"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <!--  narrower terms, second level  -->
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3400"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3450"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3400"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3500"/>
+    </terms:destination>
+  </terms:orderedPair>
+<!--  narrower terms, second level END  -->
+  
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3600"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3800"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  
+  <!--  narrower terms, second level  -->
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3800"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3840"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3800"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3880"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3800"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="3920"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <!--  narrower terms, second level END  -->
+  
+  
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="4100"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="4300"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="3000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="9200"/>
+    </terms:destination>
+  </terms:orderedPair>
+
+
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="5000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="5100"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="5000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="5350"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="5000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="5600"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="5000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="5900"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="5000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="6100"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="5000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="6800"/>
+    </terms:destination>
+  </terms:orderedPair>
+  <terms:orderedPair>
+    <terms:source>
+      <terms:term id="5000"/>
+    </terms:source>
+    <terms:destination isDefault="true" isPreferred="true">
+      <terms:term id="9002"/>
+    </terms:destination>
+  </terms:orderedPair>
+  
+  </terms:hierarchy>

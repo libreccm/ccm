@@ -1,0 +1,6 @@
+2007-08-06:
+./ccm-aap-aplaws/src/WEB-INF/content-types/c...types/aplaws-mparticle-item.jsp
+<define:page name="itemPage" application="content  changed to
+<define:page name="itemPage" application="content-section"
+as is all other contenttyp jsp pages. Requires corresponding modification
+in the theme! 

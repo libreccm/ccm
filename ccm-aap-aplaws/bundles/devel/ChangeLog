@@ -1,0 +1,9 @@
+* Thu Sep 22 2005 Alan Pevec <apevec@redhat.com>
+- Build all APLAWS+ bundles from the common set of templates.
+
+* Mon Feb 21 2005 Alan Pevec <apevec@redhat.com>
+- Requires applications.
+
+* Mon Jan 26 2004 Daniel Berrange <berrange@redhat.com>
+- Initial build.
+
