@@ -30,10 +30,9 @@ import java.util.Date;
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
+ * @version $Id: ThemeCollection.java 755 2005-09-02 13:42:47Z sskracic $ 
  */
 public class ThemeCollection extends ACSObjectCollection {
-
-    public static final String versionId = "$Id: ThemeCollection.java 755 2005-09-02 13:42:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/01/29 09:49:40 $";
 
     /**
      * Constructor.

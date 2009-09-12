@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
+  name="ccm-iaw-aplaws"
+  prettyName="IAW-APLAWS"
+  version="6.6.0"
+  release="1"
+  webapp="ROOT">
+  <ccm:dependencies>
+    <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-subsite" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-portal" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-terms" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-navigation" version="6.6.0" relation="ge"/>
+    <ccm:requires name="ccm-ldn-search" version="6.6.0" relation="ge"/>
+  </ccm:dependencies>
+
+  <ccm:directories>
+    <ccm:directory name="pdl"/>
+    <ccm:directory name="src"/>
+  </ccm:directories>
+
+  <ccm:contacts>
+    <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
+    <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
+  </ccm:contacts>
+
+  <ccm:description>
+    Service module which tailors the aplaws software to a specific purpose
+    and/or a specific site.
+    - setting up a categorization / terms system (cf. load.java)
+    - integrate custom spezific jsp's
+    - setting up custom specific configuration parameters (cf. the bundles)
+    - overwrite default classes by custom specific ones (cf. src/.../aplaws)
+    - provide a default theme, which meets accessibility requirements and
+      overwrites the default, table based design (cf. web/.../themes)
+    
+    This modules tailors APLAWS for use at the "Institut fuer Arbeit und
+    Wirtschaft (IAW), University of Bremen, Germany.
+    
+    APLAWS is a collaboration and content management system which is based upon
+    the Red Hat Web Application Framework, which is a platform for writing
+    database-backed web applications in Java. 
+  </ccm:description>
+</ccm:application>

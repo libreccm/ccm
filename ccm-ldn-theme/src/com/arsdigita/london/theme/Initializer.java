@@ -46,10 +46,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Initializer.java 758 2005-09-02 14:26:56Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 758 2005-09-02 14:26:56Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/03/16 07:06:30 $";
 
     private static Logger s_log =
             Logger.getLogger(Initializer.class);

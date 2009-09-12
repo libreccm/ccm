@@ -1,0 +1,130 @@
+This is a copy of Dave Mason's .emacs file. Add the following to your
+own:
+
+----------------------begin cut-------------------------
+
+;;
+;;MODES
+;;
+
+(setq auto-mode-alist (cons '("\\.sgml$" . sgml-mode) auto-mode-alist))
+;;(setq auto-mode-alist (cons '("\\.sgm$" . sgml-mode) auto-mode-alist))
+
+;;turn on html-helper-mode
+;;don't really need this with psgml, i think
+(autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
+(setq auto-mode-alist (cons '("\\.html$" . html-helper-mode)
+auto-mode-alist))
+
+;; turn on auto-fill in `text-mode' and derived modes 
+;;(mail, news, etc)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+;;
+;;SGML!!
+;;
+;;#############################################################
+
+;;
+;;PSGML mode stuff
+;;
+
+
+(autoload 'sgml-mode "psgml" "My Most Major Mode" t)
+
+(setq sgml-mode-hook '(lambda () "Defaults for SGML mode." (turn-on-auto-fill) (setq fill-column 80)))
+
+(defun My-SGML-keymap ()
+  (local-set-key [(alt i)] 
+                 '(lambda ()
+                    (interactive)
+                    (sgml-indent-line)
+                    (sgml-insert-element 'item)
+                    (sgml-indent-line)))
+  (local-set-key [(alt l)] 
+                 '(lambda ()
+                    (interactive)
+                    (sgml-insert-element 'list)
+                    (sgml-insert-element 'item)
+                    (sgml-indent-line)))
+  (local-set-key [(alt p)]
+                 '(lambda ()
+                    (interactive)
+                    (sgml-indent-line)
+                    (sgml-insert-element 'para)
+                    (sgml-indent-line)))
+  (local-set-key [(alt -)]
+                 '(lambda ()
+                    (interactive)
+                    (insert "&mdash;"))))      
+
+(add-hook 'sgml-mode-hook 'My-SGML-keymap)
+
+;;
+;; Fix up indentation of data...
+;;
+
+(setq-default sgml-indent-data t)
+
+;;
+;; SGML markup faces.
+;;
+
+(setq-default sgml-set-face t)
+
+
+(make-face 'sgml-comment-face)
+(make-face 'sgml-doctype-face)
+(make-face 'sgml-end-tag-face)
+(make-face 'sgml-entity-face)
+(make-face 'sgml-ignored-face)
+(make-face 'sgml-ms-end-face)
+(make-face 'sgml-ms-start-face)
+(make-face 'sgml-pi-face)
+(make-face 'sgml-sgml-face)
+(make-face 'sgml-short-ref-face)
+(make-face 'sgml-start-tag-face)
+
+(set-face-foreground 'sgml-comment-face "maroon")
+(set-face-foreground 'sgml-doctype-face "dark green")
+(set-face-foreground 'sgml-end-tag-face "blue2")
+(set-face-foreground 'sgml-entity-face "red2")
+(set-face-foreground 'sgml-ignored-face "maroon")
+(set-face-background 'sgml-ignored-face "gray90")
+(set-face-foreground 'sgml-ms-end-face "maroon")
+(set-face-foreground 'sgml-ms-start-face "maroon")
+(set-face-foreground 'sgml-pi-face "maroon")
+(set-face-foreground 'sgml-sgml-face "maroon")
+(set-face-foreground 'sgml-short-ref-face "goldenrod")
+(set-face-foreground 'sgml-start-tag-face "blue2")
+
+(setq-default sgml-markup-faces
+              '((comment . sgml-comment-face)
+                (doctype . sgml-doctype-face)
+                (end-tag . sgml-end-tag-face)
+                (entity . sgml-entity-face)
+                (ignored . sgml-ignored-face)
+                (ms-end . sgml-ms-end-face)
+                (ms-start . sgml-ms-start-face)
+                (pi . sgml-pi-face)
+                (sgml . sgml-sgml-face)
+                (short-ref . sgml-short-ref-face)
+                (start-tag . sgml-start-tag-face)))
+
+
+(defun docbook-mode ()
+  (sgml-mode)
+  )
+
+
+;;
+;;END SGML STUFF
+;;
+;;##################################################################
+
+
+ (global-set-key [(f1)] (lambda () (interactive) (manual-
+       entry (current-word))))
+
+
+---------------------end cut-------------------------------

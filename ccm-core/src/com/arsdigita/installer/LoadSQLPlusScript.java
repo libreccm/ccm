@@ -29,9 +29,12 @@ import java.sql.SQLException;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
+/**
+ *
+ * @version $Id: LoadSQLPlusScript.java 287 2005-02-22 00:29:02Z sskracic $ 
+ */
 public class LoadSQLPlusScript {
 
-    public static final String versionId = "$Id: LoadSQLPlusScript.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
             Logger.getLogger(LoadSQLPlusScript.class);

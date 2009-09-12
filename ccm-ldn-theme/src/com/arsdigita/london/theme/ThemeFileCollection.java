@@ -29,10 +29,9 @@ import java.util.Date;
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
+ * @version $Id: ThemeFileCollection.java 990 2005-11-09 17:10:48Z sskracic $
  */
 public class ThemeFileCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: ThemeFileCollection.java 990 2005-11-09 17:10:48Z sskracic $ by $Author: sskracic $, $DateTime: 2004/01/29 09:49:40 $";
 
     /**
      * Constructor.

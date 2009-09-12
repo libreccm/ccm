@@ -41,11 +41,10 @@ import com.arsdigita.persistence.metadata.ObjectType;
  * Represents a user.
  *
  * @author Phong Nguyen
- * @version 1.0
+ * @version $Id: User.java 1586 2007-05-31 13:05:10Z chrisgilbert23 $
  **/
 public class User extends Party {
 
-    public static final String versionId = "$Id: User.java 1586 2007-05-31 13:05:10Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
     private PersonName m_name;
 
     private boolean m_external;

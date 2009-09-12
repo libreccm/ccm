@@ -1,0 +1,11 @@
+
+To import this content, run:
+
+  ccm-run com.arsdigita.london.importer.cms.ItemImportTool ./items/index.xml ./items/ ./assets/
+  ccm-run com.arsdigita.london.terms.Importer ./items/term-mapping.xml
+  
+To publish this & any other content in the CMS, run
+
+  ccm-run com.arsdigita.london.util.cmd.BulkPublish
+
+-- End

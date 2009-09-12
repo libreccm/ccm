@@ -24,8 +24,6 @@ import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 
-import org.apache.log4j.Logger;
-
 /**
  * Loader.
  *
@@ -33,9 +31,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Loader extends PackageLoader {
-
-    private static final Logger s_log = Logger.getLogger(Loader.class);
-
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
             public void excurse() {
