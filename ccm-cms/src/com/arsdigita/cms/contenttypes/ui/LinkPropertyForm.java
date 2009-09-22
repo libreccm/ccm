@@ -39,6 +39,7 @@ import com.arsdigita.bebop.form.CheckboxGroup;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Web;
@@ -455,7 +456,22 @@ public class LinkPropertyForm extends FormSection
       } else {
           // Internal
           link.setTargetURI(null);
-          link.setTargetItem((ContentItem) data.get(ITEM_SEARCH));
+          
+          // Quasimodo: BEGIN
+          // This is part of the patch to make RelatedLink (and Link) multilanguage compatible
+          // Here we have to link to the content bundle instead of the content item, if there's one
+          // else we don't have a proper multilanguage support'
+          ContentItem ci = (ContentItem) data.get(ITEM_SEARCH);
+          
+          // If the selected target item ci has a parent of type ContentBundle
+          if (ci.getParent() instanceof ContentBundle) {
+              // Then there a multiple language versions of this content item and we want to
+              // link to the content bundle, so we can later negotiate the language depending
+              // on browser settings
+             ci = (ContentItem) ci.getParent();
+          }
+          
+          link.setTargetItem(ci);
       }
       // Process whether link is to be opened in new window
       boolean isNewWindow = false;

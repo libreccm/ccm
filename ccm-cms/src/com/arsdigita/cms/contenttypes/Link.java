@@ -20,9 +20,11 @@ package com.arsdigita.cms.contenttypes;
 
 
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.dispatcher.ItemResolver;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
@@ -193,7 +195,24 @@ public class Link extends ACSObject  {
      */
     public ContentItem getTargetItem() {
         DataObject object = (DataObject)get(TARGET_ITEM);
-        return (ContentItem)DomainObjectFactory.newInstance(object);
+        ACSObject acsObject = (ACSObject) DomainObjectFactory.newInstance(object);
+
+        // Quasimodo: BEGIN
+        // This is part of the patch to make RelatedLink (and Link) multilanguage compatible
+        // Here we have to check if the target item is a content bundle, so we have to negotiate the language
+        // If we don't do this, all related links would come back as type ContentBundle'instead of the actual
+        // content type
+        ContentItem ci;
+        // If acsObject is instance of ContentBundle
+        if(acsObject instanceof ContentBundle) {
+            // get the negotiated language version of this ContentBundle 
+            ci = ((ContentBundle) acsObject).negotiate(DispatcherHelper.getRequest().getLocales());
+        } else {
+            // else there are no language versions so just use the acsObject
+          ci = (ContentItem) acsObject;
+        }
+        // Quasimodo: END
+        return ci;
     }
 
     /**
