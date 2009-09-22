@@ -21,6 +21,9 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.BooleanParameter;
+import com.arsdigita.util.parameter.IntegerParameter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class EventConfig extends AbstractConfig {
     
@@ -30,65 +33,85 @@ public class EventConfig extends AbstractConfig {
     private final Parameter m_hideLinkToMap;
     private final Parameter m_hideCost;
     private final Parameter m_useHtmlDateDescription;
-
+    private final Parameter m_startYear;
+    private final Parameter m_endYearDelta;
+    
     public EventConfig() {
         m_hideDateDescription = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.event.hide_date_description",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	m_hideMainContributor = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.event.hide_main_contributor",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	m_hideEventType = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.event.hide_event_type",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	m_hideLinkToMap = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.event.hide_link_to_map",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	m_hideCost = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.event.hide_cost",
-			Parameter.REQUIRED,
-			new Boolean(false));
-
+                "com.arsdigita.cms.contenttypes.event.hide_date_description",
+                Parameter.REQUIRED,
+                new Boolean(false));
+        
+        m_hideMainContributor = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.event.hide_main_contributor",
+                Parameter.REQUIRED,
+                new Boolean(false));
+        
+        m_hideEventType = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.event.hide_event_type",
+                Parameter.REQUIRED,
+                new Boolean(false));
+        
+        m_hideLinkToMap = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.event.hide_link_to_map",
+                Parameter.REQUIRED,
+                new Boolean(false));
+        
+        m_hideCost = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.event.hide_cost",
+                Parameter.REQUIRED,
+                new Boolean(false));
+        
         m_useHtmlDateDescription = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.event.use_html_date_description",
-			Parameter.REQUIRED,
-			new Boolean(true));   // depricated, may be false in future releases
-	
+                "com.arsdigita.cms.contenttypes.event.use_html_date_description",
+                Parameter.REQUIRED,
+                new Boolean(true));   // depricated, may be false in future releases
+        
+        m_startYear = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.event.start_year",
+                Parameter.REQUIRED,
+                new Integer(GregorianCalendar.getInstance().get(Calendar.YEAR) - 1));
+        
+        m_endYearDelta = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.event.end_year_delta",
+                Parameter.REQUIRED,
+                new Integer(3));
+        
         register(m_hideDateDescription);
-	register(m_hideMainContributor);
-	register(m_hideEventType);
-	register(m_hideLinkToMap);
-	register(m_hideCost);
+        register(m_hideMainContributor);
+        register(m_hideEventType);
+        register(m_hideLinkToMap);
+        register(m_hideCost);
         register(m_useHtmlDateDescription);
-
+        register(m_startYear);
+        register(m_endYearDelta);
+        
         loadInfo();
     }
     
     public final boolean getHideDateDescription() {
-	    return ((Boolean) get(m_hideDateDescription)).booleanValue();
+        return ((Boolean) get(m_hideDateDescription)).booleanValue();
     }
     public final boolean getHideMainContributor() {
-	    return ((Boolean) get(m_hideMainContributor)).booleanValue();
+        return ((Boolean) get(m_hideMainContributor)).booleanValue();
     }
     public final boolean getHideEventType() {
-	    return ((Boolean) get(m_hideEventType)).booleanValue();
+        return ((Boolean) get(m_hideEventType)).booleanValue();
     }
     public final boolean getHideLinkToMap() {
-	    return ((Boolean) get(m_hideLinkToMap)).booleanValue();
+        return ((Boolean) get(m_hideLinkToMap)).booleanValue();
     }
     public final boolean getHideCost() {
-	    return ((Boolean) get(m_hideCost)).booleanValue();
+        return ((Boolean) get(m_hideCost)).booleanValue();
     }
     public final boolean getUseHtmlDateDescription() {
-	    return ((Boolean) get(m_useHtmlDateDescription)).booleanValue();
+        return ((Boolean) get(m_useHtmlDateDescription)).booleanValue();
+    }
+    public final int getStartYear() {
+        return ((Integer) get(m_startYear)).intValue();
+    }
+    public final int getEndYearDelta() {
+        return ((Integer) get(m_endYearDelta)).intValue();
     }
 }
- 
+

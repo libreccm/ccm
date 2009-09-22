@@ -41,6 +41,8 @@ import com.arsdigita.cms.contenttypes.Event;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.contenttypes.util.EventGlobalizationUtil;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Form to edit the basic properties of an <code>Event</code> object. Used by
@@ -127,6 +129,9 @@ public class EventPropertyForm extends BasicPageForm
         // Use bebop date instead of java.util.date
         com.arsdigita.bebop.form.Date startDate
             = new com.arsdigita.bebop.form.Date(eventStartDateParam);
+        // Set the upper und lower boundary of the year select box
+        startDate.setYearRange(Event.getConfig().getStartYear(), 
+                               GregorianCalendar.getInstance().get(Calendar.YEAR) + Event.getConfig().getEndYearDelta());
         add(startDate);
 
         ParameterModel eventStartTimeParam = new TimeParameter(START_TIME);
@@ -143,6 +148,8 @@ public class EventPropertyForm extends BasicPageForm
         // Use bebop date instead of java.util.date
         com.arsdigita.bebop.form.Date endDate
             = new com.arsdigita.bebop.form.Date(eventEndDateParam);
+        endDate.setYearRange(Event.getConfig().getStartYear(), 
+                             GregorianCalendar.getInstance().get(Calendar.YEAR) + Event.getConfig().getEndYearDelta());
         add(endDate);
 
         ParameterModel eventEndTimeParam = new TimeParameter(END_TIME);
