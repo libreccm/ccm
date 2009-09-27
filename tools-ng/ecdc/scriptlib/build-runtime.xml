@@ -55,6 +55,20 @@
     </target>
 
 	<target name="start">
+        <if>
+            <equals arg1="${app.server.debug.on}" arg2="true" />
+            <then>
+   		     <property name="app.server.debugger"
+                       value="-agentlib:jdwp=transport=dt_socket,server=y,address=${app.server.debug.port},suspend=${app.server.debug.suspend}" />
+            </then>
+            <!--
+            -->
+            <else>
+   		     <property name="app.server.debugger"
+                       value="  " />
+            </else>
+        </if>
+
 		<java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
 
 			<!--  nolonger needed ? (if anything works as expected)   
@@ -77,6 +91,7 @@
 			<jvmarg value="-Xmx512m" />
 			<jvmarg value="-XX:PermSize=128m" />
 			<jvmarg value="-XX:MaxPermSize=128m" />
+			<jvmarg value="${app.server.debugger}" />
 			<classpath>
 				<pathelement path="${app.server.home.dir}/bin/bootstrap.jar" />
 			</classpath>
