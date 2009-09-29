@@ -39,7 +39,7 @@ query getRefferingRoles {
       BigDecimal id;
 
       do {
-      	 select r.role_id from organizationroles r where r.target_item_id = :itemID
+      	 select r.role_id from ct_organizationroles r where r.target_item_id = :itemID
       } map {
       	id = r.role_id;
       }

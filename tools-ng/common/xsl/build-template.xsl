@@ -1225,11 +1225,11 @@
                 <fileset dir="tools-ng/webxml/lib" includes="*.jar"/>
             </classpath>
             importClass(java.lang.System);
-            importClass(com.liferay.portal.tools.WebXMLBuilder);
-            importClass(com.liferay.portal.kernel.util.FileUtil);
-            importClass(com.liferay.portal.util.FileImpl);
-            importClass(com.liferay.portal.xml.SAXReaderImpl);
-            importClass(com.liferay.portal.kernel.xml.SAXReaderUtil);
+            importClass(Packages.com.liferay.portal.tools.WebXMLBuilder);
+            importClass(Packages.com.liferay.portal.kernel.util.FileUtil);
+            importClass(Packages.com.liferay.portal.util.FileImpl);
+            importClass(Packages.com.liferay.portal.xml.SAXReaderImpl);
+            importClass(Packages.com.liferay.portal.kernel.xml.SAXReaderUtil);
             new FileUtil().setFile(FileImpl.getInstance());
             new SAXReaderUtil().setSAXReader(new SAXReaderImpl());
             var builder = new WebXMLBuilder(originalWebXML, customWebXML, mergedWebXML);
