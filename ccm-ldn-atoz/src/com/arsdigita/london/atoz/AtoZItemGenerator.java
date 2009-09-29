@@ -21,6 +21,7 @@ package com.arsdigita.london.atoz;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
@@ -58,7 +59,11 @@ public class AtoZItemGenerator extends AbstractAtoZGenerator {
             bundle = new ContentBundle(new BigDecimal(entries.get("id")
                     .toString()));
             if (bundle != null) {
-                item = bundle.getPrimaryInstance();
+                /* Fix by Quasimodo*/
+                /* getPrimaryInstance doesn't negotiate the language of the content item */
+                /* item = bundle.getPrimaryInstance(); */
+                item = bundle.negotiate(DispatcherHelper.getRequest().getLocales());
+                
                 if (item != null) {
                     // this is necessary because aliases refer to the non-live
                     // version,

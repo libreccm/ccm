@@ -48,26 +48,26 @@ import org.apache.log4j.Logger;
 
 /**
  * DomainObject class which represents <code>DocLink<code> ContentType objects.
- *  
+ *
  * A DocLink will either have an internal reference to another Document
  * _or_ contain an external (http) URL.
  *
  * @author <a href="mailto:sshinde@redhat.com">Shashin Shinde</a>
  * @author Crag Wolfe
- * 
+ *
  * $Id: DocLink.java,v 1.1 2004/12/15 16:06:37 pkopunec Exp $
  *
  */
 
 public class DocLink extends ContentPage implements Resource, Searchable {
-
-    private static final Logger s_log = Logger.getLogger(DocLink.class.getName()); 
-
+    
+    private static final Logger s_log = Logger.getLogger(DocLink.class.getName());
+    
     private static final String NAME_SUFFIX = "-LinkTo";
     
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.docmgr.DocLink";
+            "com.arsdigita.cms.docmgr.DocLink";
     /** Data object type for this domain object (for CMS compatibility) */
     public static final String TYPE = BASE_DATA_OBJECT_TYPE;
     
@@ -80,73 +80,73 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     public DocLink() {
         this(BASE_DATA_OBJECT_TYPE);
         try {
-			setContentType(
-                                       ContentType.findByAssociatedObjectType(BASE_DATA_OBJECT_TYPE));
+            setContentType(
+                    ContentType.findByAssociatedObjectType(BASE_DATA_OBJECT_TYPE));
         } catch (DataObjectNotFoundException e) {
             throw new UncheckedWrapperException(
-                                                (String) GlobalizationUtil
-                                                .globalize("cms.contenttypes.event_type_not_registered")
-                                                .localize(),
-                                                e);
+                    (String) GlobalizationUtil
+                    .globalize("cms.contenttypes.event_type_not_registered")
+                    .localize(),
+                    e);
         }
     }
-
+    
     public DocLink(BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
-
+    
     public DocLink(OID id) throws DataObjectNotFoundException {
         super(id);
     }
-
+    
     public DocLink(DataObject obj) {
         super(obj);
     }
-
+    
     public DocLink(String type) {
         super(type);
     }
-
+    
     public void setTitle(String title) {
         setName(URLEncoder.encode(title));
         super.setTitle(title);
     }
-
+    
     /**
      * @see com.arsdigita.cms.docmgr.Resource#getDescription()
      */
     public String getDescription() {
         return (String) get(DESCRIPTION);
     }
-
+    
     public void setDescription(String desc){
         set(DESCRIPTION,desc);
     }
-
+    
     public boolean isExternal() {
         String s = getExternalURL();
         return s != null && s.length() > 0;
     }
-
+    
     public String getExternalURL() {
         return (String) get(EXTERNAL_URL);
     }
-
+    
     public void setExternalURL(String externalURL){
         set(EXTERNAL_URL,externalURL);
     }
-
+    
     public Repository getRepository() {
         if (get(REPOSITORY) == null) {
             return null;
         }
         return new Repository((DataObject) get(REPOSITORY));
     }
-
+    
     public void setRepository(Repository repository) {
         set(REPOSITORY, repository);
     }
-
+    
     /* redundant to versioning, only for performance */
     public Date getLastModifiedLocal() {
         return (Date) get(LAST_MOD_LOCAL);
@@ -156,8 +156,8 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     public void setLastModifiedLocal(Date last) {
         set(LAST_MOD_LOCAL, last);
     }
-
-    /** 
+    
+    /**
      * Set Target Document of this Link.Also set's the name of the Link.
      * i.e. target.getName()-LinkToxxxx
      */
@@ -167,7 +167,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     }
     
     /**
-     * Helper method to generate the name of the Link using the 
+     * Helper method to generate the name of the Link using the
      * NAME_SUFFIX,target Document id,and target document name.
      * Also truncates the name if it exceeds 200 characters.
      */
@@ -186,24 +186,24 @@ public class DocLink extends ContentPage implements Resource, Searchable {
             return buf.toString();
         }
     }
-
+    
     public Document getTarget() {
         if (get(TARGET) == null) {
             return null;
         }
         return new Document((DataObject) get(TARGET));
     }
-
+    
     /**
      * @see com.arsdigita.cms.docmgr.Resource#getParentResource().
      * Returns the parent <code>DocFolder</code>
      */
     public Resource getParentResource() {
         DocFolder parent =
-            (DocFolder) ((ContentBundle) getParent()).getParent();
+                (DocFolder) ((ContentBundle) getParent()).getParent();
         return parent;
     }
-
+    
     /**
      * @see com.arsdigita.cms.docmgr.Resource#isFolder().
      * returns false to indicate that it's not a folder.
@@ -211,7 +211,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     public boolean isFolder() {
         return false;
     }
-
+    
     /**
      * @see com.arsdigita.cms.docmgr.Resource#isFile().
      * returns true to indicate that it's a file.
@@ -219,7 +219,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     public boolean isFile() {
         return true;
     }
-
+    
     /**
      * Copies the resource into another location.  Preserves the
      * original name of the resource but places the copy inside a new
@@ -231,7 +231,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     public Resource copyTo(Resource parent) throws ResourceExistsException {
         return copyTo(getTitle(), parent);
     }
-
+    
     /**
      * Copies the resource into another location with a new name.
      *
@@ -240,16 +240,16 @@ public class DocLink extends ContentPage implements Resource, Searchable {
      * @return a copy of the original resource.
      */
     public Resource copyTo(String name, final Resource parent) throws ResourceExistsException {
-        Folder.ItemCollection ic = 
-            ((Folder) parent).getItems();
+        Folder.ItemCollection ic =
+                ((Folder) parent).getItems();
         ic.addEqualsFilter("name",URLEncoder.encode(name));
         boolean resourceExists = ic.next();
         ic.close();
         if(resourceExists) {
             throw new ResourceExistsException
-                ("Copying document would result in duplicate: "+name);
+                    ("Copying document would result in duplicate: "+name);
         }
-
+        
         ContentItem item = this;
         if (item.getParent() instanceof ContentBundle) {
             item = (ContentBundle) item.getParent();
@@ -258,22 +258,22 @@ public class DocLink extends ContentPage implements Resource, Searchable {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Copying item " + item);
         }
-
+        
         final ContentItem newItem = item.copy();
         newItem.copyServicesFrom(item);
         newItem.setParent((Folder) parent);
         newItem.setContentSection(item.getContentSection());
         newItem.save();
-
+        
         new KernelExcursion() {
             protected void excurse() {
                 setParty(Kernel.getSystemParty());
                 PermissionService.setContext(newItem,(ACSObject) parent);
             }}.run();
-
-        return (Resource) ((ContentBundle) newItem).getPrimaryInstance();
+            
+            return (Resource) ((ContentBundle) newItem).getPrimaryInstance();
     }
-
+    
     /**
      * Copies the resource into the same location (same parent) with passed
      * in name as new name.
@@ -285,7 +285,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
         final ACSObject parent = getParent();
         return copyTo(name , (Resource) parent);
     }
-
+    
     /**
      * @see com.arsdigita.cms.docmgr.Resource#toURL().
      * Not Supported.throws <code>UnsupportedOperationException</code>
@@ -293,7 +293,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     public URL toURL() {
         throw new UnsupportedOperationException();
     }
-
+    
     /**
      * @see com.arsdigita.cms.docmgr.Resource#setParentResource(com.arsdigita.cms.docmgr.Resource)
      */
@@ -301,16 +301,16 @@ public class DocLink extends ContentPage implements Resource, Searchable {
         final ContentBundle cb = (ContentBundle) getParent();
         cb.setParent((ACSObject) parent);
         cb.save();
-
+        
         new KernelExcursion() {
             protected void excurse() {
                 setParty(Kernel.getSystemParty());
                 PermissionService.setContext(cb, (ACSObject) parent);
             }
         }
-            .run();
+        .run();
     }
-
+    
     /**
      * @see com.arsdigita.cms.docmgr.Resource#isRoot()
      * returns false to indicate that it's not the root.
@@ -318,7 +318,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
     public boolean isRoot() {
         return false;
     }
-
+    
     /**
      * Delete this Link along with it's parent ContentBundle
      * @see com.arsdigita.domain.DomainObject#delete()
@@ -327,22 +327,22 @@ public class DocLink extends ContentPage implements Resource, Searchable {
         ((ContentBundle) getParent()).delete();
     }
     
-    /** 
+    /**
      * Over-ride to avoid any indexing of data for this ContentType.
-     * returns empty string; 
+     * returns empty string;
      */
     public String getSearchXMLContent() {
         return "";
     }
-
-    /** 
+    
+    /**
      * Over-ride to avoid any indexing of data for this ContentType.
-     * returns empty byte array; 
+     * returns empty byte array;
      */
     public byte[] getSearchRawContent() {
         return new byte[0];
     }
-
+    
     public void setCategories(String[] catIDs) {
         HashSet newCategories = new HashSet();
         if (catIDs != null) {
@@ -351,12 +351,12 @@ public class DocLink extends ContentPage implements Resource, Searchable {
                 s_log.debug("newCategories: "+catIDs[i]);
             }
         }
-
-	CategoryCollection cats = getCategoryCollection();
-	Category cat;
-	if (cats.next()) {
-	    cat = cats.getCategory();
-	    String catID = cat.getID().toString();
+        
+        CategoryCollection cats = getCategoryCollection();
+        Category cat;
+        if (cats.next()) {
+            cat = cats.getCategory();
+            String catID = cat.getID().toString();
             if (newCategories.contains(catID)) {
                 newCategories.remove(catID);
             } else {
@@ -366,27 +366,27 @@ public class DocLink extends ContentPage implements Resource, Searchable {
         Iterator additions = newCategories.iterator();
         while (additions.hasNext()) {
             addCategory(new Category(new BigDecimal
-                                     ((String) additions.next())));
+                    ((String) additions.next())));
         }
     }
-
+    
     protected void beforeSave() {
-    	super.beforeSave();
-    	setLastModifiedLocal(new Date());
+        super.beforeSave();
+        setLastModifiedLocal(new Date());
     }
-
+    
     public String getSearchLanguage() {
         // Returns language type of document.  "eng" is english, (ISO 639-2)
         // If not English, should be overridden.
         return "eng";
     }
-
+    
     public String getSearchLinkText() {
         return generateLinkName(getTarget());
     }
-
+    
     public String getSearchUrlStub() {
-       return "";
+        return "";
     }
-
+    
 }
