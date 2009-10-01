@@ -61,11 +61,10 @@
    		     <property name="app.server.debugger"
                        value="-agentlib:jdwp=transport=dt_socket,server=y,address=${app.server.debug.port},suspend=${app.server.debug.suspend}" />
             </then>
-            <!--
-            -->
             <else>
+             <!-- dummy value required to start tomcat successfully -->
    		     <property name="app.server.debugger"
-                       value="  " />
+                       value="-showversion" />
             </else>
         </if>
 
