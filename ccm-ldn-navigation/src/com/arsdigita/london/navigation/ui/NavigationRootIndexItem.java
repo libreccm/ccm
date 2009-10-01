@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -41,9 +41,9 @@ import org.apache.log4j.Logger;
  * @version $Revision: $ $Date: $
  */
 public class NavigationRootIndexItem extends AbstractComponent {
-
+    
     public static final String versionId = "$Id: $";
-
+    
     private static Logger log = Logger.getLogger(NavigationRootIndexItem.class);;
     
     private static final String TAG_PARENT = "navrootindex";
@@ -52,7 +52,7 @@ public class NavigationRootIndexItem extends AbstractComponent {
     public NavigationRootIndexItem() {
         super();
     }
-
+    
     /**
      * Generates the XML.
      *
@@ -60,11 +60,20 @@ public class NavigationRootIndexItem extends AbstractComponent {
      * @param parent The parent DOM element
      */
     public Element generateXML(HttpServletRequest request, HttpServletResponse response) {
-
+        
         Element parentElement = Navigation.newElement(TAG_PARENT);
-
+        
         try {
-            ContentItem indexItem = ((ContentBundle) Navigation.getConfig().getDefaultCategoryRoot().getIndexObject()).getPrimaryInstance().getLiveVersion();
+            /*Fix by Quasimodo*/
+            /* getPrimaryInstance doesn't negotiate the language of the content item */
+            /* ContentItem indexItem = ((ContentBundle) Navigation.getConfig().getDefaultCategoryRoot().getIndexObject()).getPrimaryInstance().getLiveVersion(); */
+            ContentItem indexItem = ((ContentBundle) Navigation.getConfig().getDefaultCategoryRoot().getIndexObject()).negotiate(request.getLocales());
+            // if there is no matching language version for this content item
+            if(indexItem == null) {
+                // get the primary instance instead (fallback)
+                indexItem = ((ContentBundle) Navigation.getConfig().getDefaultCategoryRoot().getIndexObject()).getPrimaryInstance();
+            }
+            indexItem = indexItem.getLiveVersion();
             Element itemElement = parentElement.newChildElement(TAG_ITEM, CMS.CMS_XML_NS);
             DomainObjectXMLRenderer renderer = new DomainObjectXMLRenderer(itemElement);
             // not sure these are necessary
@@ -75,7 +84,7 @@ public class NavigationRootIndexItem extends AbstractComponent {
         } catch (Exception e) {
             log.warn("Could not get index ContentItem of the root navigation category.", e);
         }
-
+        
         return parentElement;
     }
 }

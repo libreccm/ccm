@@ -21,6 +21,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSectionConfig;
 import com.arsdigita.cms.ExtraXMLGenerator;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.london.navigation.Navigation;
 import com.arsdigita.xml.Element;
 
@@ -32,13 +33,13 @@ import com.arsdigita.xml.Element;
  * @version $Id: GreetingItem.java 285 2005-02-22 00:29:02Z sskracic $
  */
 public class GreetingItemExtraXML extends AbstractComponent {
-
+    
     private static final Logger s_log = Logger.getLogger(GreetingItemExtraXML.class);
-
+    
     public static final String extraTag = "greetingItemExtraXML";
     
     Map xmlGenerators = new HashMap();
-
+    
     public void register(Page p) {
         super.register(p);
         
@@ -62,26 +63,26 @@ public class GreetingItemExtraXML extends AbstractComponent {
             xmlGenerators.put(type, genInstances);
         }
     }
-
+    
     public Element generateXML(HttpServletRequest request,
-                               HttpServletResponse response) {
-
+            HttpServletResponse response) {
+        
         ContentItem item = getItem();
         
         if (item == null) {
             return null;
         }
-
+        
         List generators = (List) xmlGenerators.get(item.getClass().getName());
-
+        
         if (s_log.isDebugEnabled()) {
             s_log.debug("Item : "+item.getName()+", type : "+item.BASE_DATA_OBJECT_TYPE+", no generators : "+(generators == null ? "null" : ""+generators.size()));
         }
-
+        
         if (generators == null || generators.isEmpty()) {
             return null;
         }
-
+        
         Element content = Navigation.newElement(extraTag);
         PageState state = PageState.getPageState(request);
         for (Iterator i=generators.iterator(); i.hasNext(); ) {
@@ -91,12 +92,12 @@ public class GreetingItemExtraXML extends AbstractComponent {
             }
             generator.generateXML(item, content, state);
         }
-
+        
         return content;
     }
-
+    
     public ContentItem getItem() {
-
+        
         ContentItem item = (ContentItem) getObject();
         if (null == item || !item.isLive()) {
             return null;
@@ -105,10 +106,18 @@ public class GreetingItemExtraXML extends AbstractComponent {
         if (!ContentItem.VERSION.equals(item.getVersion())) {
             item = item.getLiveVersion();
         }
-
+        
         ContentBundle bundle = (ContentBundle) item;
-        ContentItem baseItem = bundle.getPrimaryInstance();
-
+        /*Fix by Quasimodo*/
+        /* getPrimaryInstance doesn't negotiate the language of the content item */
+        /* ContentItem baseItem = bundle.getPrimaryInstance(); */
+        ContentItem baseItem = bundle.negotiate(DispatcherHelper.getRequest().getLocales());
+        // If there is no matching language version for this content item
+        if(baseItem == null) {
+        // get the primary instance instead (fallback)
+            baseItem = bundle.getPrimaryInstance();
+        }
+        
         return baseItem;
     }
 }
