@@ -1,72 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--  Already definded:
-		ccm.project.dir:		base dir of the development project
-		app.server.bundles.zip	name of the installation file
-		app.server.parent.dir	name of the dir to install into the server into
-		app.server.deploy.dir	dir the server are installed into (i.e. CATALINA_HOME)
-		app.server.conf.dir		name of the servers configuration dir
-		webapp.dist.dir			distribution dir for web applications      -->
+        ccm.project.dir:        base dir of the development project
+        app.server.bundles.zip  name of the installation file
+        app.server.parent.dir   name of the dir to install into the server into
+        app.server.deploy.dir   dir the server are installed into (i.e. CATALINA_HOME)
+        app.server.conf.dir     name of the servers configuration dir
+        webapp.dist.dir         distribution dir for web applications      -->
 
 <project name="configure" default="configure">
 
-	<target name="configure">
-		<echo>Validating the schema of project.xml</echo>
-			
-		<!-- http://xerces.apache.org/xerces2-j/samples-dom.html#Counter -->
-		<java classname="dom.Counter" classpathref="ccm.tools.classpath"
+    <target name="configure">
+        <echo>Validating the schema of project.xml</echo>
+
+        <!-- http://xerces.apache.org/xerces2-j/samples-dom.html#Counter -->
+        <java classname="dom.Counter" classpathref="ccm.tools.classpath"
               errorproperty="project.validation.errors"
-			  outputproperty="project.validation.output">
-			<arg value="-s" />
-			<arg value="-f" />
-			<arg value="-v" />
-			<arg value="${ccm.project.dir}/project.xml" />
-		</java>
-		<if>
-		  <equals arg1="${project.validation.errors}" arg2="" />
+              outputproperty="project.validation.output">
+            <arg value="-s" />
+            <arg value="-f" />
+            <arg value="-v" />
+            <arg value="${ccm.project.dir}/project.xml" />
+        </java>
+        <if>
+          <equals arg1="${project.validation.errors}" arg2="" />
           <then>
               <echo>Validating the schema of project.xml successful</echo>
           </then>
-		  <else>
-			<fail message="${project.validation.errors}" />
-		  </else>
-		</if>
-						
-		<!--  Building .ccm.classpath for eclipse IDE -->
-		<!-- 
-		<echo message="Regenerating .classpath" />
-		<xslt style="${tools.xsl.dir}/eclipse-classpath-template.xsl"
-              in="project.xml" out=".classpath"
-		      classpathref="tools.classpath" force="yes">
-			<param name="base.dir" expression="${project.dir}" />
-			<param name="shared.lib.dist.dir" expression="${tools.lib.dir}" />
-		</xslt>
-		-->
+          <else>
+            <fail message="${project.validation.errors}" />
+          </else>
+        </if>
 
-		<!-- Building the core: build-projects.xml from projects.xml with all
+        <!--  Building .ccm.classpath for eclipse IDE -->
+        <!--
+        <echo message="Regenerating .classpath" />
+        <xslt style="${tools.xsl.dir}/eclipse-classpath-template.xsl"
+              in="project.xml" out=".classpath"
+              classpathref="tools.classpath" force="yes">
+            <param name="base.dir" expression="${project.dir}" />
+            <param name="shared.lib.dist.dir" expression="${tools.lib.dir}" />
+        </xslt>
+        -->
+
+        <!-- Building the core: build-projects.xml from projects.xml with all
              targets for compile / build / deploy
-		     uses currently the xsl templates used by the ccm scripts 		-->
-		<echo message="Regenerating build-projects.xml" />
-		<xslt style="${ccm.tools.xsl.dir}/combine.xsl" 
-			  in="project.xml"
-              out=".tmp.project.xml" 
-			  classpathref="ccm.tools.classpath" force="yes" />
-		<xslt style="${ccm.tools.xsl.dir}/build-template.xsl" 
-			  in=".tmp.project.xml"
-              out="build-projects.xml" 
-			  classpathref="ccm.tools.classpath" force="yes" />
-		<delete file=".tmp.project.xml"/>
-			
-		<!-- Building ccm.classpath which used to contain a list with dirs 
+             uses currently the xsl templates used by the ccm scripts       -->
+        <echo message="Regenerating build-projects.xml" />
+        <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
+            <classpath refid="ccm.tools.classpath"/>
+            <arg value="-IN"/>
+            <arg value="project.xml"/>
+            <arg value="-OUT"/>
+            <arg value=".tmp.project.xml"/>
+            <arg value="-XSL"/>
+            <arg value="${ccm.tools.xsl.dir}/combine.xsl"/>
+            <arg value="-XML"/>
+        </java>
+        <java classname="org.apache.xalan.xslt.Process" fork="yes" failonerror="true">
+            <classpath refid="ccm.tools.classpath"/>
+            <arg value="-IN" />
+            <arg value=".tmp.project.xml"/>
+            <arg value="-OUT"/>
+            <arg value="build-projects.xml"/>
+            <arg value="-XSL"/>
+            <arg value="${ccm.tools.xsl.dir}/build-template.xsl"/>
+            <arg value="-XML"/>
+        </java>
+        <delete file=".tmp.project.xml"/>
+
+        <!-- Building ccm.classpath which used to contain a list with dirs
              to include into the classpath  for each module included in the
              project (~/build/classes ~/build/sql ~/lib ~/pdl )              -->
-		<!--
-		<xslt style="${ccm.tools.xsl.dir}/classpath-template.xsl" in="project.xml"
+        <!--
+        <xslt style="${ccm.tools.xsl.dir}/classpath-template.xsl" in="project.xml"
               out="ccm.classpath" classpathref="ccm.tools.classpath" force="yes">
-			<param name="base.dir" expression="${ccm.project.dir}" />
-			<param name="shared.lib.dist.dir" expression="${ccm.tools.lib.dir}" />
-		</xslt>
-		-->
-	</target>
+            <param name="base.dir" expression="${ccm.project.dir}" />
+            <param name="shared.lib.dist.dir" expression="${ccm.tools.lib.dir}" />
+        </xslt>
+        -->
+    </target>
 
 </project>
