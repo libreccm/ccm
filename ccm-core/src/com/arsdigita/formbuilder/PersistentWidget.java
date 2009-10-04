@@ -18,27 +18,27 @@
  */
 package com.arsdigita.formbuilder;
 
-import com.arsdigita.formbuilder.parameters.PersistentParameterListener;
-import com.arsdigita.formbuilder.util.FormBuilderUtil;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.form.Widget;
+import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.formbuilder.parameters.PersistentParameterListener;
+import com.arsdigita.formbuilder.util.FormBuilderUtil;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.UncheckedWrapperException;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
 
 
 /**
@@ -211,7 +211,7 @@ public abstract class PersistentWidget extends PersistentComponent {
                     objectStream.writeObject(defaultValue);
 
                     //                stringValue = new String(byteStream.toByteArray(), "ISO-8859-1");
-                    stringValue = new sun.misc.BASE64Encoder().encode(byteStream.toByteArray());
+                    stringValue = new String(new Base64().encode(byteStream.toByteArray()));
 
 
                     s_log.debug("setDefaultValue serializing object " + defaultValue.toString() +
@@ -287,7 +287,7 @@ public abstract class PersistentWidget extends PersistentComponent {
             // This is a serialized object - resurrect it
             // from the String
             java.io.ByteArrayInputStream byteStream =
-                new java.io.ByteArrayInputStream((new sun.misc.BASE64Decoder()).decodeBuffer(defaultValue));
+                new java.io.ByteArrayInputStream(new Base64().decode(defaultValue.getBytes()));
             
             //((String)defaultValue).getBytes("ISO-8859-1"));
             
