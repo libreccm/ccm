@@ -20,7 +20,7 @@ query getContentItemExpiredBeforeInSection {
     where
       m.item_id = o.object_id and
       m.cycle_id = l.cycle_id and
-      l.has_ended = 0 and
+      l.has_ended = '0' and
       :endDateTime >= l.end_date_time and
       i.item_id = o.object_id and
       i.section_id = :sectionId and

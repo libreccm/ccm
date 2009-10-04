@@ -48,7 +48,7 @@
         </xsl:if>
       </script>      
 
-      <!-- DE Lade die externe JavaScript-Datei für Xinha -->
+      <!-- DE Lade die externe JavaScript-Datei fuer Xinha -->
       <script type="text/javascript" src="{@editor_src}"/>
       
       <!-- DE Lade die angegebene Konfiguration -->

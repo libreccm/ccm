@@ -206,7 +206,7 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
         // start thread for monitoring queue
         int startupDelay = getInteger(QUEUE_POLL_STARTUP_DELAY).intValue();
         int pollDelay = getInteger(QUEUE_POLL_DELAY).intValue();
-        QueueManager.startWatchingQueue(startupDelay, pollDelay);
+        // QueueManager.startWatchingQueue(startupDelay, pollDelay);
     }
 
     //

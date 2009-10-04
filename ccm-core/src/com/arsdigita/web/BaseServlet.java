@@ -60,10 +60,6 @@ import org.apache.log4j.Logger;
  * @version $Id: BaseServlet.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public abstract class BaseServlet extends HttpServlet {
-    public static final String versionId =
-        "$Id: BaseServlet.java 738 2005-09-01 12:36:52Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log = Logger.getLogger(BaseServlet.class);
 

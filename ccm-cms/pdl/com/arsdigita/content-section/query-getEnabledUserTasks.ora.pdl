@@ -35,7 +35,7 @@ query getEnabledUserTasks {
     BigDecimal lockingUserID;
     String taskType;
     String taskTypeClass;
-    Integer status;
+    String status;
     String processLabel;
     do {
         select cw_tasks.task_id,
@@ -56,11 +56,11 @@ query getEnabledUserTasks {
                cms_items.name,
                cms_pages.title,
                CASE WHEN (cw_user_tasks.locking_user_id = :userId) then
-                     1
+                     '1'
                 WHEN (cw_user_tasks.locking_user_id is null) then
-                     2
+                     '2'
                 ELSE
-                     3
+                     '3'
                 END as status,
                 cw_user_tasks.locking_user_id,
                 cw_tasks_proc.label as processLabel

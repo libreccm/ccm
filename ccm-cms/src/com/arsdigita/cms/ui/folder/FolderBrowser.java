@@ -76,13 +76,9 @@ import javax.servlet.ServletException;
  * separate item selection model is updated.
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
- * @version $Revision: #22 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: FolderBrowser.java 1540 2007-03-26 20:44:49Z apevec $
  */
 public class FolderBrowser extends Table {
-    public static final String versionId =
-            "$Id: FolderBrowser.java 1540 2007-03-26 20:44:49Z apevec $" +
-            "$Author: apevec $" +
-            "$DateTime: 2004/08/17 23:15:09 $";
     
     private static final Logger s_log = Logger.getLogger(FolderBrowser.class);
     

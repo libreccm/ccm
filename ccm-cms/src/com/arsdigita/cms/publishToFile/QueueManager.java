@@ -85,7 +85,7 @@ public class QueueManager implements Runnable {
 
     // Following true if should keep watching queue
 
-    static private boolean s_keepWatchingQueue = true;
+    static private boolean s_keepWatchingQueue =  true;
     static private Thread s_queueThread = null;
 
     // Class implementing methods run when publishing or unpublishing to file.
@@ -217,9 +217,9 @@ public class QueueManager implements Runnable {
      * @pre ! item instanceof ContainerItem
      ***/
     public static void queuePublish(ContentItem item) {
-        Assert.truth( !(item instanceof ContentBundle),
+        Assert.isTrue( !(item instanceof ContentBundle),
                 "Cannot queue content bundle " + item );
-        Assert.truth(item.isLiveVersion(), "Item is not live");
+        Assert.isTrue(item.isLiveVersion(), "Item is not live");
         if (s_log.isInfoEnabled()) {
             s_log.info("Queue publish task for " + item.getID());
         }
@@ -330,11 +330,11 @@ public class QueueManager implements Runnable {
             s_log.info("Queue move task for " + liveItem.getID());
         }
 
-        Assert.truth(liveItem != null && liveItem.isLiveVersion(),
+        Assert.isTrue(liveItem != null && liveItem.isLiveVersion(),
                      "Item is not live");
-        Assert.truth(source != null && source.isLiveVersion(),
+        Assert.isTrue(source != null && source.isLiveVersion(),
                      "Source is not live");
-        Assert.truth(destination != null && destination.isLiveVersion(),
+        Assert.isTrue(destination != null && destination.isLiveVersion(),
                      "Destination is not live");
 
         // for move put itemId as destination folder ID, for parent_id source
@@ -346,9 +346,9 @@ public class QueueManager implements Runnable {
     }
 
     private static void queue(ContentItem item, String task) {
-        Assert.truth( !(item instanceof ContentBundle),
+        Assert.isTrue( !(item instanceof ContentBundle),
                 "Cannot queue content bundle " + item );
-        Assert.truth(item.isLiveVersion(), "Item is not live");
+        Assert.isTrue(item.isLiveVersion(), "Item is not live");
 
         ACSObject parent = item.getParent();
         BigDecimal parentID = null;
@@ -447,6 +447,9 @@ public class QueueManager implements Runnable {
      * middle of processing a block of entries.
      */
     public static void stopWatchingQueue() {
+        if (s_log.isInfoEnabled()) {
+            s_log.info("Going to stop queue processing.");
+        }
         s_keepWatchingQueue = false;
     }
 

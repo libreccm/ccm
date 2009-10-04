@@ -42,12 +42,9 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael Schloming &lt;rhs@mit.edu&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @version $Id: Web.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public class Web {
-    public static final String versionId =
-        "$Id: Web.java 738 2005-09-01 12:36:52Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     public static final String ROOT_WEBAPP = "ROOT";
 
@@ -137,8 +134,8 @@ public class Web {
      * @return the servlet context matching uri, or null
      */
     public static final ServletContext getServletContext(String uri) {
-        Assert.truth(uri.startsWith("/"), "uri must start with /");
-        Assert.truth(uri.endsWith("/"), "uri must end with /");
+        Assert.isTrue(uri.startsWith("/"), "uri must start with /");
+        Assert.isTrue(uri.endsWith("/"), "uri must end with /");
         return (ServletContext)s_contexts.get(uri);
     }
 
@@ -149,7 +146,7 @@ public class Web {
     static final void registerServletContext(String uri,
                                              ServletContext ctx) {
         s_log.debug("Mapping " + ctx + " to " + uri);
-        Assert.truth(s_contexts.get(uri) == null, 
+        Assert.isTrue(s_contexts.get(uri) == null,
                      "a context mapping exists at " + uri);
         s_contexts.put(uri, ctx);
     }

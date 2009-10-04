@@ -139,7 +139,7 @@ public class PermissionManager {
 
         Filter f = query.addFilter(" exists ( com.arsdigita.kernel.permissions."
                 + queryName + " and  RAW["
-                + permission.getPrivilegeDescriptor().getColumnName() + " = 1 ])");
+                + permission.getPrivilegeDescriptor().getColumnName() + " = '1' ])");
         f.set("objectID", permission.getACSObjectOID().get("id"));
         f.set("partyID", constructAccessList(permission.getPartyOID()));//.get("id"));
 
@@ -541,7 +541,7 @@ public class PermissionManager {
             Filter f = factory.simple(
                 " exists ( com.arsdigita.kernel.permissions.PartyPermissionFilterQuery"
                 + " and RAW[dogc.pd_object_id] = " + propertyName
-                + " and RAW[" + privilege.getColumnName() + "] = 1)");
+                + " and RAW[" + privilege.getColumnName() + "] = '1')");
              f.set("partyID", constructAccessList(partyOID));//partyOID.get("id"));
              return f;
         }
@@ -557,7 +557,7 @@ public class PermissionManager {
         Filter f = factory.simple(
                 " exists ( com.arsdigita.kernel.permissions.ObjectPermissionFilterQuery"
                 + " and RAW[dgm.pd_member_id] = " + propertyName
-                + " and RAW[" + privilege.getColumnName() + "] = 1)");
+                + " and RAW[" + privilege.getColumnName() + "] = '1')");
         f.set("objectID", objectOID.get("id"));
         return f;
     }

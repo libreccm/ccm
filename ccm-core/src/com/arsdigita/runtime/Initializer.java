@@ -35,10 +35,6 @@ package com.arsdigita.runtime;
  * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface Initializer {
-    public final static String versionId =
-        "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Initializes the object-relational mapping metadata by loading

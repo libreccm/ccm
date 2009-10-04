@@ -159,8 +159,8 @@ public class UserHomeFolderMap extends ACSObject {
 
     public static UserHomeFolderMap findUserHomeFolderMap(User user, ContentSection section) {
 	DataCollection maps = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
-	maps.addEqualsFilter(USER_ID,user.getID().toString());
-	maps.addEqualsFilter(SECTION_ID,section.getID().toString());
+	maps.addEqualsFilter(USER_ID, user.getID());
+	maps.addEqualsFilter(SECTION_ID, section.getID());
 
 	UserHomeFolderMap map = null;
 	if ( maps.next() ) {

@@ -17,10 +17,6 @@
  *
  */
 
-/*
- *            !!! WORK IN PROGRESS !!!
- *          NOT READY for prime time yet
- */
 package com.arsdigita.web;
 
 import com.arsdigita.runtime.CCMResourceManager;
@@ -33,6 +29,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
@@ -137,7 +134,8 @@ public class CCMApplicationContextListener implements ServletContextListener {
 
         // do nothing at the moment
 
-        s_log.info("CCM Application shutdown.");
+        s_log.info("CCM Application shut down.");
+        LogManager.shutdown();
 
     }
 }

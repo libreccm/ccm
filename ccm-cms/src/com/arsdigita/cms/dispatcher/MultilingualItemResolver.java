@@ -51,10 +51,6 @@ import java.util.StringTokenizer;
  * @version $Id: MultilingualItemResolver.java 1795 2009-02-07 10:47:32Z pboy $
  */
 public class MultilingualItemResolver extends AbstractItemResolver implements ItemResolver {
-    public static final String versionId =
-            "$Id: MultilingualItemResolver.java 1795 2009-02-07 10:47:32Z pboy $" +
-            "$Author: pboy $" +
-            "$DateTime: 2004/08/17 23:15:09 $";
     
     private static final Logger s_log = Logger.getLogger
             (MultilingualItemResolver.class);
@@ -720,12 +716,8 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
             // will have deal with 'foo' folder.
             
             String name = index > 0 ? url.substring(0, index) : "";
-            parentFolder =
-                    // really object identity? Don't think so
-                    // name != "" ? (Folder) parentFolder.getItem(URLEncoder.encode(name), true)
-                    //            : parentFolder;
-                    name.isEmpty() ? parentFolder
-                    : (Folder) parentFolder.getItem(URLEncoder.encode(name), true);
+            parentFolder = "".equals(name) ? parentFolder
+                : (Folder) parentFolder.getItem(URLEncoder.encode(name), true);
             url = index + 1 < len ? url.substring(index + 1) : "";
             
             return getItemFromLiveURL(url, parentFolder);

@@ -57,7 +57,7 @@ query getLifecycleStart {
     where
       m.item_id = o.object_id and
       m.cycle_id = l.cycle_id and
-      l.has_begun = 0 and
+      l.has_begun = '0' and
       :startDateTime >= l.start_date_time
   } map {
     objectId          = o.object_id;
@@ -87,7 +87,7 @@ query getLifecycleEnd {
     where
       m.item_id = o.object_id and
       m.cycle_id = l.cycle_id and
-      l.has_ended = 0 and
+      l.has_ended = '0' and
       :endDateTime >= l.end_date_time
   } map {
     objectId          = o.object_id;
@@ -117,7 +117,7 @@ query getPhaseStart {
     where
       m.item_id = o.object_id and
       m.cycle_id = p.cycle_id and
-      p.has_begun = 0 and
+      p.has_begun = '0' and
       :startDateTime >= p.start_date_time
   } map {
     objectId          = o.object_id;
@@ -149,7 +149,7 @@ query getPhaseEnd {
     where
       m.item_id = o.object_id and
       m.cycle_id = p.cycle_id and
-      p.has_ended = 0 and
+      p.has_ended = '0' and
       :endDateTime >= p.end_date_time
   } map {
     objectId          = o.object_id;

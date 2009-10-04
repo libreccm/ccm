@@ -56,10 +56,6 @@ import org.apache.log4j.Logger;
  * @version $Id: ContentBundle.java 967 2005-10-28 18:08:42Z sskracic $
  */
 public class ContentBundle extends ContentItem {
-    public static final String versionId =
-            "$Id: ContentBundle.java 967 2005-10-28 18:08:42Z sskracic $" +
-            "$Author: sskracic $" +
-            "$DateTime: $";
     
     private static final Logger s_log = Logger.getLogger(ContentBundle.class);
     
