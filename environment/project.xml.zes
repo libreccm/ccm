@@ -5,10 +5,10 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="aplaws" 
+                    name="aplaws-zes" 
               prettyName="APLAWS plus" 
-                 version="1-0-5" 
-                 release="alpha-1" 
+                 version="1-0-9" 
+                 release="beta-2" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
