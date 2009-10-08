@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+  <ctd:content-type
+      label="Project"
+      description="A project content type"
+      objectType="com.arsdigita.cms.contenttypes.Project"
+      classname="com.arsdigita.cms.contenttypes.Project">
+    
+    <ctd:authoring-kit
+	createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+      <ctd:authoring-step
+	  labelKey="project.authoring.basic_properties.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ProjectResources"
+	  descriptionKey="project.authoring.basic_properties.description"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ProjectResources"
+	  component="com.arsdigita.cms.contenttypes.ui.project.ProjectPropertiesStep"
+	  ordering="1"/>
+      
+      <ctd:authoring-step
+	  labelKey="project.authoring.project2orgaunit.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ProjectResources"
+	  descriptionKey="project.authoring.project2orgaunit.description"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ProjectResources"
+	  component="com.arsdigita.cms.contenttypes.ui.project.Project2OrgaUnitPropertiesStep"
+	  ordering="2"/>
+
+      <ctd:authoring-step
+	  labelKey="project.authoring.project2person.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ProjectResources"
+	  descriptionKey="project.authoring.project2person.description"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ProjectResources"
+	  component="com.arsdigita.cms.contenttypes.ui.project.Project2PersonPropertiesStep"
+	  ordering="1"/>
+
+      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>      
+    </ctd:authoring-kit>
+
+  </ctd:content-type>
+
+</ctd:content-types>

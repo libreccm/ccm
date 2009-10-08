@@ -1,0 +1,70 @@
+//
+// Copyright (C) 2009 Jens Pelzetter, for the Center of Social Politics of the University of Bremen
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentItem;
+import com.arsdigita.kernel.ACSObject;
+
+object type Project2OrgaUnit extends ACSObject {
+       OrganizationalUnit[0..1] targetItem = join ct_project2orgaunits.target_item_id to ct_organizationalunits.organizationalunit_id;
+       
+       Integer[0..1] unitOrder = ct_project2orgaunits.unit_order INTEGER;
+       
+       reference key(ct_project2orgaunits.project2orgaunit_id);
+       aggressive load(project.id);
+}
+
+association {
+	    composite Project[0..1] project = join ct_project2orgaunits.project_id to ct_projects.project_id;
+	    composite Project2OrgaUnit[0..n] units = join ct_projects.project_id to ct_project2orgaunits.project_id;
+}
+
+query getReferingProjects {
+      BigDecimal id;
+
+      do {
+        select u.organizationalunit_id from project2orgaunits u where u.target_item_id = :itemID
+      } map {
+        id = u.project2orgaunit_id;
+      }
+}
+
+data operation swapProject2OrgaUnitWithNextInGroup {
+     do {
+     	update ct_project2orgaunits
+	set unit_order = CASE WHEN (unit_order = :unitOrder) THEN
+	    	       	      (:nextUnitOrder)
+			 ELSE
+			      (:unitOrder)
+			 END
+        where (unit_order = :unitOrder or unit_order = :nextUnitOrder)
+	and project_id = :projectID
+     }
+}
+
+query allUnitsOrderForProject {
+      Integer unitOrder;
+
+      do {
+      	 select u.unit_order from ct_project2orgaunits u where u.project_id = :projectID
+      } map {
+      	unitOrder = u.unit_order;
+      }
+}
