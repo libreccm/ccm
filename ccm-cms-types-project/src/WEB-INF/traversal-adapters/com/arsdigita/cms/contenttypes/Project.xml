@@ -9,10 +9,11 @@
 		 extends="com.arsdigita.cms.ContentPage">
       
       <xrd:associations rule="include">
-	<xrd:property name="/object/Project2OrgaUnit"/>
-	<xrd:property name="/object/Project2OrgaUnit/targetItem"/>
-	<xrd:property name="/object/Project2Person"/>
-	<xrd:property name="/object/Project2Person/targetItem"/>
+	<xrd:property name="/object/units"/>
+	<xrd:property name="/object/units/targetItem"/>
+	<xrd:property name="/object/project2Person"/>
+	<xrd:property name="/object/project2Person/task"/>
+	<xrd:property name="/object/project2Person/targetItem"/>
       </xrd:associations>
 
     </xrd:adapter>

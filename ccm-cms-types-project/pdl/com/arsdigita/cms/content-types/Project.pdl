@@ -27,7 +27,7 @@ object type Project extends ContentPage {
        String[0..1] projectname = ct_projects.projectname VARCHAR(512);
        String[0..1] funding = ct_projects.funding VARCHAR(2048);
        String[0..1] projectDescription = ct_projects.projectdescription VARCHAR(2048);       
-       Project2OrgaUnit[0..n] organizationalUnits = join ct_projects.project_id to ct_project2orgaunits.owner_id;
+       //Project2OrgaUnit[0..n] organizationalUnits = join ct_projects.project_id to ct_project2orgaunits.owner_id;
        Date[0..1] beginDate = ct_projects.beginDate DATE;
        Date[0..1] endDate = ct_projects.endDate DATE;
        //boolean finished = ct_projects.finished BOOLEAN; 
