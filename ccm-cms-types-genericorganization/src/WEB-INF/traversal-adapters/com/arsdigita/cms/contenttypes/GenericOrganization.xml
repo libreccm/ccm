@@ -12,6 +12,8 @@
 	<xrd:property name="/object/organizationroles/targetItem"/>
 	<xrd:property name="/object/subunits"/>
 	<xrd:property name="/object/subunits/targetItem"/>
+	<xrd:property name="/object/subunits/targetItem/memberships"/>
+	<xrd:property name="/object/subunits/targetItem/memberships/targetItem"/>	
       </xrd:associations>
 
     </xrd:adapter>

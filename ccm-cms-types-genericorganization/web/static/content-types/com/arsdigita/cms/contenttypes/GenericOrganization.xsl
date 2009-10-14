@@ -50,6 +50,22 @@
       </xsl:for-each>
     </ul>
     
+    <ul>
+      <xsl:for-each select="./subunits/targetItem/memberships/targetItem">     
+        <xsl:sort select="surname" order="ascending" data-type="text" case-order="upper-first" />
+        <xsl:sort select="givenname" order="ascending" data-type="text" case-order="upper-first" />
+        <li>
+          <a>
+            <xsl:attribute name="href">
+            <xsl:text>/redirect?oid=</xsl:text>
+            <xsl:value-of select="./@oid" />         
+            </xsl:attribute>
+   <xsl:value-of select="./titlePre"/>&nbsp;<xsl:value-of select="./givenname"/>&nbsp;<xsl:value-of select="./surname"/>&nbsp;<xsl:value-of select="./titlePost"/>                          
+          </a>
+        </li>
+      </xsl:for-each>
+    </ul>
+
   </xsl:template>
 
   <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.GenericOrganization']"
@@ -95,7 +111,7 @@
         </li>
       </xsl:for-each>
     </ul>
-    
+
   </xsl:template>
 
 </xsl:stylesheet>
