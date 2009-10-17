@@ -80,15 +80,10 @@ import org.apache.commons.cli.PosixParser;
  * Called by PackageTool
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #29 $ $Date: 2004/08/16 $
+ * @version $Id: Load.java 736 2005-09-01 10:46:05Z sskracic $
  **/
 
 class Load extends Command {
-
-    public final static String versionId = 
-            "$Id: Load.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options OPTIONS = getOptions();
 
@@ -153,10 +148,21 @@ class Load extends Command {
           .create());*/
     }
 
+    /**
+     * Standard constructor, super class provides basic functions as name, 
+     * short description, usage and help message.
+     * 
+     */
     public Load() {
         super("load", "Load a CCM package");
     }
 
+    /**
+     * Invoked from the central tool "MasterTool" to execute the load process.
+     * 
+     * @param args
+     * @return
+     */
     public boolean run(String[] args) {
         CommandLine line;
 
@@ -167,6 +173,8 @@ class Load extends Command {
             return false;
         }
 
+        // fill with command line arguments which is a list of packages by their
+        // package-keys to load.
         List packages = line.getArgList();
         if (packages.isEmpty()) {
             usage(OPTIONS, System.err, "PACKAGE-KEYS");
@@ -183,6 +191,9 @@ class Load extends Command {
                               || line.hasOption("data")
                               || line.hasOption("init"));
 
+        // RegistryConfig contains a list of package-keys of packages to be
+        // installed.
+        // Constructs a new and empty config object.
         RegistryConfig rc = new RegistryConfig();
         rc.load();
         List loaded = Arrays.asList(rc.getPackages());

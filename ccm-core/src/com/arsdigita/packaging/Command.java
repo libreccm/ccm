@@ -25,23 +25,26 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
 /**
- * Command
+ * Helper class to provide basic functions all commands need to have.
+ *
+ * Provides name, short description, usage and help information.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: Command.java 1324 2006-09-21 22:13:16Z apevec $
  **/
 
 abstract class Command {
-
-    public final static String versionId = 
-            "$Id: Command.java 1324 2006-09-21 22:13:16Z apevec $" +
-            " by $Author: apevec $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private String m_name;
     private String m_summary;
     private boolean m_verbose;
 
+    /**
+     * Represetents basic components of a command (command line interface).
+     *  
+     * @param name  Name of the command to execute as string
+     * @param summary Short Description of the command as string
+     */
     protected Command(String name, String summary) {
         m_name = name;
         m_summary = summary;

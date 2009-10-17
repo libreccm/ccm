@@ -42,14 +42,24 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 
 /**
- * Loader.
+ * Executes nonrecurring at install time and loads (and configures ) a default
+ * workspace instance (i.e. instance of ccm-ldn-portal) in a default configuration.
+ *
+ * Configuration can be modified by configuration parameters before processing,
+ * otherwise hardcoded default values take effect. A set of portlets, part of
+ * the ccm-ldn-portal package, are loaded as well, so they are statically available.
+ *
+ * After processing the installation values can not be modified anymore without
+ * a fresh installation of the whole system.
  * 
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 1718 2008-07-16 14:08:38Z terry $
  */
 public class Loader extends PackageLoader {
-	public final static String versionId = "$Id: Loader.java 1718 2008-07-16 14:08:38Z terry $"
-			+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
+    // versionID no longer used as a system variable. version information is
+    // kept as part of java doc.
+	// public final static String versionId = "$Id: Loader.java 1718 2008-07-16 14:08:38Z terry $"
+	//		+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
 
 	private static final Logger s_log = Logger.getLogger(Loader.class);
 
@@ -65,13 +75,21 @@ public class Loader extends PackageLoader {
 			"com.arsdigita.london.portal.default_is_public",
 			Parameter.REQUIRED, Boolean.TRUE);
 
-	public Loader() {
+	/**
+     * Standard constructor. 
+     */
+    public Loader() {
 		register(m_isPublic);
 		register(m_url);
 		register(m_title);
 	}
 
-	public void run(final ScriptContext ctx) {
+	/**
+     * Run script invoked by the loader script.
+     *
+     * @param ctx
+     */
+    public void run(final ScriptContext ctx) {
 		new KernelExcursion() {
 			public void excurse() {
 				setEffectiveParty(Kernel.getSystemParty());
@@ -91,15 +109,23 @@ public class Loader extends PackageLoader {
 		}.run();
 	}
 
-	private void createApplication(String url, Boolean isPublic, String title) {
+	/**
+     * 
+     * @param url
+     * @param isPublic
+     * @param title
+     */
+    private void createApplication(String url, Boolean isPublic, String title) {
+
 		ApplicationType type = setupWorkspaceType();
 
 		if (url != null) {
-			s_log.debug("process url " + url);
 
-			Assert.truth(url.startsWith("/"), "url starts with /");
-			Assert.truth(url.endsWith("/"), "url ends with /");
-			Assert.truth(!url.equals("/"), "url is not /");
+            // check weather the url parameter is properly formatted
+			s_log.debug("process url " + url);
+			Assert.isTrue(url.startsWith("/"), "url starts with /");
+			Assert.isTrue(url.endsWith("/"), "url ends with /");
+			Assert.isTrue(!url.equals("/"), "url is not /");
 
 			int last = url.lastIndexOf("/", url.length() - 2);
 			s_log.debug("last slash at " + last);
@@ -122,7 +148,17 @@ public class Loader extends PackageLoader {
 		}
 	}
 
-	private ApplicationType setupWorkspaceType() {
+	/**
+     * Creates a workspace application type as a legacy-compatible application
+     * type.
+     *
+     * No localization here because it is an invariant configuration.
+     *
+     * @return
+     */
+    private ApplicationType setupWorkspaceType() {
+        // The first string is a key parameter used to create a
+        // legacy package type to back the new application type.
 		ApplicationType type = ApplicationType.createApplicationType(
 				"workspace", "Portal Workspace",
 				Workspace.BASE_DATA_OBJECT_TYPE);

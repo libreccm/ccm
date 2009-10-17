@@ -77,6 +77,14 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 // XXX this class is disgusting
+/**
+ * PersitentPortals are able to have more than one column, and the constructor
+ * for PersitentPortal takes in an integer argument for number of columns.
+ * 
+ * HomepagePortals defined on the jsp page each construct instances of this
+ * class, one for the portal in view mode, one in edit mode. 
+ * 
+ */
 public class PersistentPortal extends SimpleContainer {
 
 	public static final String ACTION_CUSTOMIZE = "customize";

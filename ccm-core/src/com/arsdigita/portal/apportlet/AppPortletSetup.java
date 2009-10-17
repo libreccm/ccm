@@ -91,7 +91,7 @@ public class AppPortletSetup extends PortletSetup {
             notice("  ProviderApplicationType: " + m_provider);
             notice("  Key: " + m_key);
             notice("  StyleSheet: " + m_stylesheet);
-	    notice("  IsPortalApplication: " + m_isPortalApplication);
+            notice("  IsPortalApplication: " + m_isPortalApplication);
 
             portletType = AppPortletType.createAppPortletType
                 (m_title, m_profile, m_typeName);
@@ -106,7 +106,8 @@ public class AppPortletSetup extends PortletSetup {
 
             notice("Done installing.");
         } else {
-            portletType = (AppPortletType)AppPortletType.retrieveAppPortletTypeForAppPortlet(m_typeName);
+            portletType = (AppPortletType)
+                AppPortletType.retrieveAppPortletTypeForAppPortlet(m_typeName);
         }
 
         DomainObjectFactory.registerInstantiator(m_typeName, m_instantiator);

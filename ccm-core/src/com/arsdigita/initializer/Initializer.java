@@ -19,6 +19,8 @@
 package com.arsdigita.initializer;
 
 /**
+ * OLD INITIALIZATION SYSTEM - DEPRECATED
+ * 
  * Any class implementing this interface may appear in an initialization
  * script read in by the Script class. A class that does this should construct
  * its own configuration object and initialize the parameters with the

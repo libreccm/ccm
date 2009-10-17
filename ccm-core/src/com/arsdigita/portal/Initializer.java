@@ -35,8 +35,7 @@ import org.apache.log4j.Logger;
  * @version $Id: Initializer.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public class Initializer implements com.arsdigita.initializer.Initializer {
-    public static final String versionId = "$Id: Initializer.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
+    
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
     private Configuration m_conf = new Configuration();

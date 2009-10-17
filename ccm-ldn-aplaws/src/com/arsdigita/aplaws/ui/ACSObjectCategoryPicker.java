@@ -35,9 +35,10 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
+// unused imports
+// import com.arsdigita.cms.ContentItem;
+// import com.arsdigita.cms.CMS;
+// import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +52,8 @@ import org.apache.log4j.Logger;
  * chris gilbert
  */
 public abstract class ACSObjectCategoryPicker extends SimpleContainer {
-    private static final Logger s_log = Logger.getLogger(ItemCategoryPicker.class);
+
+    private static final Logger s_log = Logger.getLogger(ACSObjectCategoryPicker.class);
 
     private ACSObjectCategoryForm m_form;
     private BigDecimalParameter m_root;

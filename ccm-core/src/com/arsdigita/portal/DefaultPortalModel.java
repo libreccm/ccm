@@ -29,11 +29,8 @@ import java.util.ArrayList;
 import java.math.BigDecimal;
 
 /**
- *
- *
- * <p>A default implementation of {@link
- * com.arsdigita.bebop.portal.PortalModel} that provides a stateful
- * backing to the Bebop portal classes.</p>
+ * <p>A default implementation of {@link com.arsdigita.bebop.portal.PortalModel}
+ * that provides a stateful backing to the Bebop portal classes.</p>
  *
  * @see com.arsdigita.bebop.portal.PortalModel
  * @see Portal
@@ -43,7 +40,6 @@ import java.math.BigDecimal;
  * @version $Id: DefaultPortalModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefaultPortalModel implements PortalModel {
-    public static final String versionId = "$Id: DefaultPortalModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static Category s_cat = Category.getInstance
         (DefaultPortalModel.class.getName());
@@ -62,15 +58,15 @@ public class DefaultPortalModel implements PortalModel {
     public DefaultPortalModel
         (PageState pageState, BigDecimalParameter portalIDParam) {
 
-        Assert.assertNotNull(pageState);
-        Assert.assertNotNull(portalIDParam);
+        Assert.exists(pageState);
+        Assert.exists(portalIDParam);
 
         BigDecimal portalID = (BigDecimal)pageState.getValue
             (portalIDParam);
 
         m_portal = Portal.retrieve(portalID);
 
-        Assert.assertNotNull(m_portal);
+        Assert.exists(m_portal);
     }
 
     /**
@@ -81,11 +77,11 @@ public class DefaultPortalModel implements PortalModel {
      * @pre portalID != null
      */
     public DefaultPortalModel(BigDecimal portalID) {
-        Assert.assertNotNull(portalID);
+        Assert.exists(portalID);
 
         m_portal = Portal.retrieve(portalID);
 
-        Assert.assertNotNull(m_portal);
+        Assert.exists(m_portal);
     }
 
     /**
@@ -95,7 +91,7 @@ public class DefaultPortalModel implements PortalModel {
      * @pre portal != null
      */
     public DefaultPortalModel(Portal portal) {
-        Assert.assertNotNull(portal);
+        Assert.exists(portal);
 
         m_portal = portal;
     }

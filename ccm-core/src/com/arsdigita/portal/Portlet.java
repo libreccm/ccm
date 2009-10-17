@@ -37,9 +37,8 @@ import org.apache.log4j.Logger;
  *
  * <p>
  * A Portlet is a domain class that provides a window or <i>channel</i> into 
- * a content source
- * ( such as a web application, content item, remote content site). The
- * portlet is added, usually along with other portlets, to a {@link Portal} 
+ * a content source (such as a web application, content item, remote content site).
+ * The portlet is added, usually along with other portlets, to a {@link Portal}
  * which provides a way for multiple sources of content to be agregated
  * on one web page view.</p>
  * <p>

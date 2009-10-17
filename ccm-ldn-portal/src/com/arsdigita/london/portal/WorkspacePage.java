@@ -32,7 +32,8 @@ public class WorkspacePage extends Portal {
 
 	public static final String WORKSPACE = "workspace";
 
-	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.portal.WorkspacePage";
+	public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.london.portal.WorkspacePage";
 
 	public WorkspacePage() {
 		this(BASE_DATA_OBJECT_TYPE);

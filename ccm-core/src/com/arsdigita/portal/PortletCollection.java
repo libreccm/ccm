@@ -24,8 +24,6 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
 
 /**
- * 
- *
  * <p>Describes a set of portlet domain objects.</p>
  *
  * @see Portlet
@@ -36,7 +34,10 @@ import com.arsdigita.util.Assert;
  * @version $Id: PortletCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PortletCollection extends ApplicationCollection {
-    public static final String versionId = "$Id: PortletCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
+    // public static final String versionId =
+    //     "$Id: PortletCollection.java 287 2005-02-22 00:29:02Z sskracic $" +
+    //     "by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public PortletCollection(DataCollection dataCollection) {
         super(dataCollection);
@@ -53,7 +54,7 @@ public class PortletCollection extends ApplicationCollection {
 
         Portlet portlet = Portlet.retrievePortlet(dataObject);
 
-        Assert.assertNotNull(portlet);
+        Assert.exists(portlet);
 
         return portlet;
     }

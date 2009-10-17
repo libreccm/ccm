@@ -232,7 +232,8 @@ public class PublishToFile implements PublishToFileListener {
         else if ( qe.isMoveTask() )
             return move(qe);
         else {
-            throw new PublishToFileException("Unsupported  " + qe + " task passed to the queue");
+            throw new PublishToFileException("Unsupported  " + qe +
+                                             " task passed to the queue");
         }
     }
 
@@ -257,7 +258,8 @@ public class PublishToFile implements PublishToFileListener {
      ***/
     protected boolean move(QueueEntry qe) {
         ContentItem liveItem = qe.getItem();
-        ContentItem dstFolder= Utilities.getContentItemOrNull(new BigDecimal(qe.getDestination()) ) ;
+        ContentItem dstFolder= Utilities.getContentItemOrNull(
+                                   new BigDecimal(qe.getDestination()) ) ;
         if ( liveItem == null || dstFolder == null )
             return false; // there is nothing to do
 
@@ -291,11 +293,12 @@ public class PublishToFile implements PublishToFileListener {
                     fileName = resolver.getTemplatePath(template);
                 }
 
-                // The 'templateRoot' bit is specified in enterprise.init as the 'destination'
-                // for the Template object type, so we must strip it off here, otherwise it
-                // gets double appended
+                // The 'templateRoot' bit is specified in enterprise.init as the 
+                // 'destination' for the Template object type, so we must
+                // strip it off here, otherwise it gets double appended
                 String templateRoot = ContentSection.getConfig().getTemplateRoot();
-                Assert.truth(fileName.startsWith(templateRoot), "filename starts with templateRoot");
+                Assert.truth(fileName.startsWith(templateRoot),
+                                           "filename starts with templateRoot");
 
                 PublishedFile f = PublishedFile.loadOrCreate(
                     template,
@@ -417,11 +420,13 @@ public class PublishToFile implements PublishToFileListener {
      * @param item - actuall ContentItem to be published
      * @param where - destination folder to be published
      */
-    private void publishOtherTemplates(String url, ContentItem item, Folder where, Host host) {
+    private void publishOtherTemplates(String url, ContentItem item, Folder where,
+                                       Host host) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("publishAllTemplates url " + url);
             s_log.debug("item is " + item.getName() + " with id " + item.getID());
-            s_log.debug("folder where is " + where.getName() + " with id " + where.getID());
+            s_log.debug("folder where is " + where.getName() + 
+                        " with id " +        where.getID());
 
         }
         ContentItem draft = item.getWorkingVersion();

@@ -24,11 +24,9 @@ import com.arsdigita.util.UncheckedWrapperException;
  * Publish to file exception.
  *
  * @author Jeff Teeters (teeters@arsdigita.com)
- * @version $Revision: #8 $ $Date: 2004/08/17 $
+ * @version $Id: PublishToFileException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PublishToFileException extends UncheckedWrapperException {
-
-    public static final String versionId = "$Id: PublishToFileException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public PublishToFileException(String message) {
         super("woohoo: " + message);

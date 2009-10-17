@@ -21,9 +21,10 @@ package com.arsdigita.bebop.portal;
 import java.util.Iterator;
 
 /**
- *  <p>Defines a model for
- * use by Portal.  Portal builds and uses a PortalModel inside its
- * {@link Portal#generateXML} method.</p>
+ * <p>Defines a model for use by Portal.</p>
+ * <p>
+ * Portal builds and uses a PortalModel inside its {@link Portal#generateXML} method.
+ * </p>
  *
  * @see Portal
  * @see PortalModelBuilder

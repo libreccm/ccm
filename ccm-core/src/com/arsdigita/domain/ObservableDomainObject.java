@@ -36,11 +36,13 @@ import java.util.ArrayList;
  * operations.
  *
  * @author Joseph Bank
- * @version 1.0
+ * @version $Id: ObservableDomainObject.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public abstract class ObservableDomainObject extends DomainObject {
 
-    public static final String versionId = "$Id: ObservableDomainObject.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    public static final String versionId = 
+        "$Id: ObservableDomainObject.java 287 2005-02-22 00:29:02Z sskracic $" +
+        "by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(ObservableDomainObject.class);

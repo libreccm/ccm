@@ -19,27 +19,27 @@ import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.OID;
+// unused import com.arsdigita.persistence.OID;
 import com.arsdigita.web.*;
 import com.arsdigita.kernel.*;
-import com.arsdigita.sitenode.*;
+// unused import com.arsdigita.sitenode.*;
 import com.arsdigita.bookmarks.*;
 import com.arsdigita.bookmarks.ui.*;
-import com.arsdigita.domain.DomainObjectFactory;
+// unused  import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.initializer.Configuration;
-import com.arsdigita.initializer.InitializationException;
-import com.arsdigita.domain.DataObjectNotFoundException;
+// unused import com.arsdigita.initializer.InitializationException;
+// unused import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.portal.apportlet.AppPortletSetup;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.DataInitEvent;
+// unused import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
-import com.arsdigita.util.Assert;
+// unusd import com.arsdigita.util.Assert;
 import org.apache.log4j.Logger;
 
 
@@ -48,18 +48,12 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:jparsons@redhat.com">Jim Parsons</a>
  */
-// public class Initializer extends BaseInitializer {
 public class Initializer extends CompoundInitializer {
 
     private static final Logger s_log = Logger.getLogger
         (Initializer.class);
 
     private Configuration m_conf = new Configuration();
-
-//     public Initializer() throws InitializationException {
-//         super();
-        
-//     }
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -84,7 +78,7 @@ public class Initializer extends CompoundInitializer {
 	      TransactionContext txn = SessionManager.getSession()
             .getTransactionContext();
         txn.beginTxn();
-	setupBookmarks();
+	    setupBookmarks();
         txn.commitTxn();
         s_log.info("Bookamrks Initializer completed.");
     }

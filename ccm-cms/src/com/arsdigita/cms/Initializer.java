@@ -86,10 +86,6 @@ import com.arsdigita.cms.util.LanguageUtil;
  * @version $Id: Initializer.java 1428 2007-01-24 12:39:56Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 1428 2007-01-24 12:39:56Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -173,6 +169,8 @@ public class Initializer extends CompoundInitializer {
                   new TraversalHandler());
 
 
+        // Just set the class implementing methods run when for publishing
+        // or unpublishing to file. No initialisation of the class here.
         try {
             QueueManager.setListener((PublishToFileListener)
                                      ContentSection.getConfig()

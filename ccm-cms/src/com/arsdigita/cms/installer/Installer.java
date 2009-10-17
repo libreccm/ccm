@@ -51,12 +51,10 @@ import com.arsdigita.persistence.SessionManager;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: Installer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Installer implements PackageEventListener {
 //public class Installer {
-
-    public static final String versionId = "$Id: Installer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public final static String PACKAGE_KEY = "content-section";
 

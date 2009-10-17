@@ -57,12 +57,10 @@ import com.arsdigita.search.converter.TextConverter;
  * CoreInitializer
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #15 $ $Date: 2004/08/16 $
+ * @version $Id: Initializer.java 1547 2007-03-29 14:24:57Z chrisgilbert23 $
  **/
 
 public class Initializer extends CompoundInitializer {
-
-    public final static String versionId = "$Id: Initializer.java 1547 2007-03-29 14:24:57Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();

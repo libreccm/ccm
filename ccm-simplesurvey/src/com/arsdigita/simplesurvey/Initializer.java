@@ -33,10 +33,6 @@ import com.arsdigita.runtime.RuntimeConfig;
  * @version $Id: Initializer.java 759 2005-09-02 15:25:32Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 759 2005-09-02 15:25:32Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();

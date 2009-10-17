@@ -49,10 +49,10 @@ import org.apache.log4j.Logger;
  * @version $Id: ApplicationType.java 1520 2007-03-22 13:36:04Z chrisgilbert23 $
  */
 public class ApplicationType extends ResourceType {
-    public static final String versionId =
-        "$Id: ApplicationType.java 1520 2007-03-22 13:36:04Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
+ // public static final String versionId =
+ //     "$Id: ApplicationType.java 1520 2007-03-22 13:36:04Z chrisgilbert23 $" +
+ //     "$Author: chrisgilbert23 $" +
+ //     "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (ApplicationType.class);
@@ -102,9 +102,8 @@ public class ApplicationType extends ResourceType {
 			      final boolean createContainerGroup) {
         this(objectType);
 
-        Assert.assertNotNull(title, "String title");
-        Assert.assertNotNull(applicationObjectType,
-                             "String applicationObjectType");
+        Assert.exists(title, "String title");
+        Assert.exists(applicationObjectType, "String applicationObjectType");
 
         setTitle(title);
         setApplicationObjectType(applicationObjectType);
@@ -125,9 +124,10 @@ public class ApplicationType extends ResourceType {
     }
 
     /**
-     * Creates a new application type.  Types created via this
-     * constructor are "legacy free" and do not create a legacy
-     * package type for compatibility with older applications.
+     * Creates a new "legacy free" application type.
+     * 
+     * Types created via this constructor are "legacy free" and do not create
+     * a legacy package type for compatibility with older applications.
      */
     public ApplicationType(final String title,
                            final String applicationObjectType) {
@@ -213,7 +213,8 @@ public class ApplicationType extends ResourceType {
     public static ApplicationType createApplicationType
         (String key, String title, String applicationObjectType) {
         	
-        return ApplicationType.createApplicationType(key, title, applicationObjectType, false);
+        return ApplicationType.createApplicationType(
+                                      key, title, applicationObjectType, false);
        
     }
 

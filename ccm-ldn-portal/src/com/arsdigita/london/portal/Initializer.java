@@ -64,8 +64,8 @@ import com.arsdigita.xml.XML;
  * @version $Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $
  */
 public class Initializer extends CompoundInitializer {
-	public final static String versionId = "$Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $"
-			+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
+	// public final static String versionId = "$Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $"
+	//		+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
 
 	private static final Logger s_log = Logger.getLogger(Initializer.class);
 
@@ -276,7 +276,9 @@ public class Initializer extends CompoundInitializer {
 
         	FlashPortletInitializer.initialize();
 
-		ApplicationNavigationModel.register(Workspace.class.getName(),
+            // import from london.navigation required 
+            // causes horizontal dependency between portal and navigation
+            ApplicationNavigationModel.register(Workspace.class.getName(),
 				new DefaultNavigationModel());
 	}
 }

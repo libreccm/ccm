@@ -24,6 +24,14 @@ import com.arsdigita.london.navigation.DataCollectionDefinition;
 import com.arsdigita.london.navigation.cms.CMSDataCollectionDefinition;
 import com.arsdigita.london.navigation.ui.portlet.ItemListPortletRenderer;
 
+/**
+ * Portlet to display a list of (content) items.
+ *
+ * The items can be selected / restricted by base type and filtered by a
+ * category or category tree. Ordering and length of the list can be configured.
+ *
+ * @version $Id: $
+ */
 public class ItemListPortlet extends ObjectListPortlet {
     
 

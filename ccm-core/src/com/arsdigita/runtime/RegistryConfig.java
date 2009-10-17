@@ -29,13 +29,15 @@ import java.net.URL;
 
 
 /**
- * A config class used by the ConfigRegistry itself. Contains the
- * waf.config.packages parameter and the waf.config.parents parameter.
+ * A config class used by the registry itself.
+ *
+ * Contains the parameters:
+ * waf.config.packages: comma separated package-key list of installed packages
+ * waf.config.parents :
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
  **/
-
 public class RegistryConfig extends AbstractConfig {
 
     public final static String versionId = 

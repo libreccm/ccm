@@ -592,7 +592,12 @@ public class Category extends ACSObject {
     }
 
     /**
-     * returns a string repesenting the default ancestors of the category
+     * Returns a string repesenting the default ancestors of the category
+     *
+     * It can be useful and more efficient then working with the
+     * CategoryCollection returned by @see getDefaultAscendants() when comparing
+     * ids whose position in the path is known.
+     * (Added by Chris Gilbert)
      */
     public String getDefaultAncestors () {
     	return (String)get(DEFAULT_ANCESTORS);

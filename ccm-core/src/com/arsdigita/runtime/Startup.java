@@ -53,23 +53,36 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
- * An entry point initializer for the CCM runtime. This class may be
- * used to bootstrap the CCM runtime environment into a state where it
- * is safe to perform database I/O. It does this by accessing a
- * persistent list of all the initializers required by the currently
- * loaded packages. This guarantees that any of these packages has the
- * opportunity to load any object-relational metadata and register any
- * domain-data coupling metadata before any database I/O is performed.
+ * An entry point initializer for the CCM runtime used to bootstrap the CCM
+ * runtime environment into a state where it is safe to perform database I/O.
+ * It does this by accessing a persistent list of all the initializers
+ * required by the currently loaded packages. This guarantees that any of these
+ * packages has the opportunity to load any object-relational metadata and
+ * register any domain-data coupling metadata before any database I/O is
+ * performed.
  *
+ * USAGE:
+ * Construct an instance of this class and invoke its run() method.
+ * <pre>
+ * Startup startup = new Startup();
+ * if ( !startup.hasRun() ) {
+ *          startup.run();
+ *      }
+ * </pre>
+ *
+ * In a servlet container runtime environment this should be done either in the
+ * first loaded servlet (BaseServlet in CCM) or in a special application
+ * listener servlet invoked by the servlet container at startuo time and before
+ * any other operation takes place (CCMApplicationListener).
+ *
+ * In a command line JVM environment (installation & maintenace procedures) it
+ * has to be performed once at the very beginning (e.g. package c.a.packaging)
+ * 
  * @author Rafael Schloming &lt;rhs@mit.edu&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Startup.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public  class Startup extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Startup.java 738 2005-09-01 12:36:52Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Startup.class);
 
@@ -83,6 +96,12 @@ public  class Startup extends CompoundInitializer {
 
     private static boolean s_hasRun = false;
 
+    // Constructor section
+
+    /**
+     * Default startup method. Determines the database connection information 
+     * and delegates to a startup worker methods.
+     */
     public Startup() {
         this(new PooledConnectionSource
              (RuntimeConfig.getConfig().getJDBCURL(),
@@ -108,15 +127,85 @@ public  class Startup extends CompoundInitializer {
         m_source = source;
     }
 
-    private void addWafInitializer() {
-        String claas = (String)SystemProperties.get(s_init);
-        if (claas != null) {
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("adding: " + claas);
-            }
-            add((Initializer) Classes.newInstance(claas));
-        }
+
+    // Public API
+
+
+    /**
+     * Executes the initialization process using the default session
+     * and global metadata root.
+     *
+     * @see MetadataRoot#getMetadataRoot()
+     * @see SessionManager#getSession()
+     **/
+
+    public final void run() {
+        s_log.info("Initializing WAF runtime");
+
+        DbHelper.setDatabase
+            (DbHelper.getDatabaseFromURL(RuntimeConfig.
+                                         getConfig().getJDBCURL()));
+        addRuntimeInitializers();
+        //addWafInitializer();
+
+        final MetadataRoot root = MetadataRoot.getMetadataRoot();
+        // XXX It shouldn't be necessary to do this until the legacy
+        // init step, but SessionManager.getMetadataRoot depends on
+        // the session, and the DomainObjectFactory calls it.
+        final Session session = session("default", root);
+
+        run(session, this);
+
+        s_log.info("Initialization complete");
     }
+
+    /**
+     * Executes the initialization process.
+     *
+     * This method is going to move.
+     */
+    public static final void run(final Session session,
+                                 final Initializer init) {
+
+        Assert.exists(session, Session.class);
+        Assert.exists(init, Initializer.class);
+
+        s_hasRun = true;
+
+        final PDLCompiler compiler = new PDLCompiler();
+        final MetadataRoot root = session.getMetadataRoot();
+
+        Assert.exists(root, MetadataRoot.class);
+
+        init.init(new DataInitEvent(compiler));
+
+        compiler.emit(root);
+
+        init.init(new DomainInitEvent(new DomainObjectFactory()));
+
+        init.init(new LegacyInitEvent(session));
+
+    }
+
+    public static boolean hasRun() {
+        return s_hasRun;
+    }
+
+    public static final void main(final String[] args) throws SQLException {
+        final String url;
+        final int size;
+        if (args.length == 0) {
+            url = RuntimeConfig.getConfig().getJDBCURL();
+        } else {
+            url = args[0];
+        }
+
+        new Startup(new DedicatedConnectionSource(url)).run();
+    }
+
+    // ////////////////////////////////
+    // Private section / helper methods
+    // ////////////////////////////////
 
     /*
      *  Adds the runtime initializers from the database.
@@ -132,7 +221,18 @@ public  class Startup extends CompoundInitializer {
             }
             add((Initializer) Classes.newInstance(inits[i]));
         }
+
         addWafInitializer();
+    }
+
+    private void addWafInitializer() {
+        String claas = (String)SystemProperties.get(s_init);
+        if (claas != null) {
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("adding: " + claas);
+            }
+            add((Initializer) Classes.newInstance(claas));
+        }
     }
 
     /**
@@ -188,95 +288,6 @@ public  class Startup extends CompoundInitializer {
         return session;
     }
 
-
-    /**
-     * Executes the initialization process.
-     *
-     * This method is going to move.
-     */
-    public static final void run(final Session session,
-                                 final Initializer init) {
-
-        Assert.exists(session, Session.class);
-        Assert.exists(init, Initializer.class);
-
-        s_hasRun = true;
-
-        final PDLCompiler compiler = new PDLCompiler();
-        final MetadataRoot root = session.getMetadataRoot();
-
-        Assert.exists(root, MetadataRoot.class);
-
-        init.init(new DataInitEvent(compiler));
-
-        compiler.emit(root);
-
-        init.init(new DomainInitEvent(new DomainObjectFactory()));
-
-        init.init(new LegacyInitEvent(session));
-
-    }
-
-    /**
-     * Executes the initialization process using the default session
-     * and global metadata root.
-     *
-     * @see MetadataRoot#getMetadataRoot()
-     * @see SessionManager#getSession()
-     **/
-
-    public final void run() {
-        s_log.info("Initializing WAF runtime");
-
-        // Deprecated, no longer needed.
-        // startup();
-        
-        DbHelper.setDatabase
-            (DbHelper.getDatabaseFromURL(RuntimeConfig.
-                                         getConfig().getJDBCURL()));
-        addRuntimeInitializers();
-        //addWafInitializer();
-
-        final MetadataRoot root = MetadataRoot.getMetadataRoot();
-        // XXX It shouldn't be necessary to do this until the legacy
-        // init step, but SessionManager.getMetadataRoot depends on
-        // the session, and the DomainObjectFactory calls it.
-        final Session session = session("default", root);
-        run(session, this);
-
-        s_log.info("Initialization complete");
-    }
-
-    public static boolean hasRun() {
-        return s_hasRun;
-    }
-
-//     /**
-//      * Executes the initialization process for the default session and
-//      * the <code>Startup</code>-determined set of initializers.
-//      */
-//     public final void run() {
-//          s_log.info("Initializing WAF runtime");
-
-//          final MetadataRoot root = MetadataRoot.getMetadataRoot();
-//          final Session session = session("default", root);
-
-//          Startup.run(session, this);
-
-//          s_log.info("Initialization complete");
-//     }
-
-    public static final void main(final String[] args) throws SQLException {
-        final String url;
-        final int size;
-        if (args.length == 0) {
-            url = RuntimeConfig.getConfig().getJDBCURL();
-        } else {
-            url = args[0];
-        }
-
-        new Startup(new DedicatedConnectionSource(url)).run();
-    }
 
     private static void sort(String[] inits, Session session, MetadataRoot mroot) {
         Set all = new HashSet(Arrays.asList(inits));

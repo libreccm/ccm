@@ -25,10 +25,17 @@ import com.arsdigita.london.portal.ui.portlet.ContentDirectoryPortletRenderer;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.Portlet;
 
+/**
+ * Portlet to display a selected navigation category tree including links to
+ * the corresponding navigation index page.
+ * 
+ * 
+ * @version $Id: ContentDirectoryPortlet.java 1174 2006-06-14 14:14:15Z fabrice $ 
+ */
 public class ContentDirectoryPortlet extends Portlet {
-    public static final String versionId = "$Id: ContentDirectoryPortlet.java 1174 2006-06-14 14:14:15Z fabrice $ by $Author: fabrice $, $DateTime: 2003/08/08 05:59:54 $";
-
-	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.portal.portlet.ContentDirectoryPortlet";
+ 
+	public static final String BASE_DATA_OBJECT_TYPE =
+            "com.arsdigita.london.portal.portlet.ContentDirectoryPortlet";
 
     public static final String ROOT = "root";
 

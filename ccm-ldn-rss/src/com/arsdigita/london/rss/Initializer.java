@@ -47,7 +47,6 @@ public class Initializer extends CompoundInitializer {
              ("ccm-ldn-rss.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-        // XXX  rss.enterprise.init is empty. not needed here
         add(new LegacyInitializer("com/arsdigita/london/rss/enterprise.init"));
     }
 }

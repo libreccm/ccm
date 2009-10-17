@@ -22,7 +22,7 @@ import com.arsdigita.cms.docmgr.Document;
 import com.arsdigita.cms.docmgr.DocumentCategoryBrowserApplication;
 import com.arsdigita.cms.docmgr.LegacyCategoryBrowserApplication;
 import com.arsdigita.cms.docmgr.Repository;
-import com.arsdigita.cms.docmgr.search.SearchUtils;
+// unused: import com.arsdigita.cms.docmgr.search.SearchUtils;
 import com.arsdigita.cms.docmgr.ui.CategoryDocsNavigatorPortlet;
 import com.arsdigita.cms.docmgr.ui.LegacyCategoryDocsNavigatorPortlet;
 import com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet;
@@ -51,9 +51,7 @@ import com.arsdigita.web.ApplicationType;
  * @version $Revision: #11 $ $Date: 2004/01/14 $
  */
 
-//public class Initializer implements com.arsdigita.initializer.Initializer {
 public class Initializer extends CompoundInitializer {
-
 
     private Configuration m_conf = new Configuration();
 

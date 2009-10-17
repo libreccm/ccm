@@ -105,17 +105,16 @@ public final class ContentSectionConfig extends AbstractConfig {
     private static Map s_skipAssetSteps = null; 
 
     private final Parameter m_templateRootPath;
+    private final Parameter m_categoryAuthoringAddForm;
     private final Parameter m_defaultItemTemplatePath;
     private final Parameter m_defaultFolderTemplatePath;
+    private final Parameter m_defaultSection;
     private final Parameter m_languages;
-    private final Parameter m_publishToFileClass;
-    private final Parameter m_disableItemPfs;
     private final Parameter m_defaultItemResolverClass;
     private final Parameter m_defaultTemplateResolverClass;
-    private final Parameter m_categoryAuthoringAddForm;
+    private final Parameter m_disableItemPfs;
     private final Parameter m_useSectionCategories;
     private final Parameter m_itemAdapters;
-    private final Parameter m_defaultSection;
     private final Parameter m_useStreamlinedCreation;
     private final Parameter m_dhtmlEditorConfig;
     private final Parameter m_dhtmlEditorPlugins;
@@ -129,6 +128,7 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_hideFolderIndexCheckbox;
     private final Parameter m_defaultNotificationTime;
     private final Parameter m_publishLifecycleListenerClass;
+    private final Parameter m_publishToFileClass;
     private final Parameter m_notifyAuthorOnLifecycle;
     private final Parameter m_saveTextCleansWordTags;
     private final Parameter m_hideAdditionalResourceFields;

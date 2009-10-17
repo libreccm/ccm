@@ -55,7 +55,7 @@ public class AppPortlet extends Portlet {
 
         AppPortletType portletType = AppPortletType.retrieveAppPortletType(dataObject);
 
-        Assert.assertNotNull(portletType);
+        Assert.exists(portletType);
 
         return portletType;
     }

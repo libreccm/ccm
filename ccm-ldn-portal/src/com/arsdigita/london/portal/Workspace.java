@@ -53,6 +53,12 @@ import com.arsdigita.web.Web;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+/**
+ * Workspace domain class, a workspace represents an area containing 0...n portals
+ * each arranged as a pane of page. Each portal (or pane) manages a number of portlets.
+ * 
+ * 
+ */
 public class Workspace extends Application {
 
 	private static final Logger s_log = Logger.getLogger(Workspace.class);
@@ -83,11 +89,20 @@ public class Workspace extends Application {
 	 */
 	private static Workspace defaultHomepageWorkspace = null;
 
-	public Workspace(DataObject obj) {
+	/**
+     * Constructor
+     * @param obj
+     */
+    public Workspace(DataObject obj) {
 		super(obj);
 	}
 
-	public Workspace(OID oid) throws DataObjectNotFoundException {
+	/**
+     * Constructor, retrieves the workspace from database using its OID
+     * @param oid
+     * @throws com.arsdigita.domain.DataObjectNotFoundException
+     */
+    public Workspace(OID oid) throws DataObjectNotFoundException {
 
 		super(oid);
 	}
@@ -96,24 +111,57 @@ public class Workspace extends Application {
 	 * public String getContextPath() { return "ccm-ldn-portal"; }
 	 */
 
-	public String getServletPath() {
+	/**
+     * 
+     * @return ServletPath (constant) probably should be synchron with web.xml
+     *                     entry
+     */
+    public String getServletPath() {
 		// return "/files";
 		return "/ccm-ldn-portal/files";
 	}
 
-	public static Workspace createWorkspace(String url, String title,
+	/**
+     * Wrapper class to handle a limited set of parameters, 
+     * here: page layout is set to default layout.
+     *  
+     * @param url
+     * @param title
+     * @param parent
+     * @param isPublic
+     * @return
+     */
+    public static Workspace createWorkspace(String url, String title,
 			Application parent, boolean isPublic) {
 		return createWorkspace(url, title, PageLayout.getDefaultLayout(),
 				parent, isPublic);
 	}
 
-	public static Workspace createWorkspace(String url, String title,
+	/**
+     * 
+     * @param url
+     * @param title
+     * @param parent  parent application
+     * @param owner
+     * @return
+     */
+    public static Workspace createWorkspace(String url, String title,
 			Application parent, User owner) {
 		return createWorkspace(url, title, PageLayout.getDefaultLayout(),
 				parent, owner);
 	}
 
-	public static Workspace createWorkspace(String url, String title,
+	/**
+     * Does the real work to create a workspace in the storage (db)
+     * 
+     * @param url
+     * @param title
+     * @param layout
+     * @param parent
+     * @param isPublic
+     * @return
+     */
+    public static Workspace createWorkspace(String url, String title,
 			PageLayout layout, Application parent, boolean isPublic) {
 		if (s_log.isDebugEnabled()) {
 			s_log.debug("Creating group workspace, isPublic:" + isPublic
@@ -128,7 +176,17 @@ public class Workspace extends Application {
 		return workspace;
 	}
 
-	public static Workspace createWorkspace(String url, String title,
+	/**
+     * Does the real work to create a workspace in the storage (db)
+     * 
+     * @param url
+     * @param title
+     * @param layout
+     * @param parent
+     * @param owner
+     * @return
+     */
+    public static Workspace createWorkspace(String url, String title,
 			PageLayout layout, Application parent, User owner) {
 		if (s_log.isDebugEnabled()) {
 			s_log.debug("Creating personal workspace for " + owner.getOID()
@@ -692,8 +750,7 @@ public class Workspace extends Application {
 			Workspace workspace = (Workspace) Application
 					.retrieveApplication(personalWorkspaces.getDataObject());
 			if (personalWorkspaces.next())
-				s_log
-						.error("more than one personal workspaces for this user!!");
+				s_log.error("more than one personal workspaces for this user!!");
 			personalWorkspaces.close();
 
 			return workspace;

@@ -21,9 +21,10 @@ package com.arsdigita.portal;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
 import com.arsdigita.bebop.portal.PortletRenderer;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.portal.Portlet;
-import com.arsdigita.portal.Portal;
-import com.arsdigita.portal.PortletType;
+// same package
+// import com.arsdigita.portal.Portlet;
+// import com.arsdigita.portal.Portal;
+// import com.arsdigita.portal.PortletType;
 import com.arsdigita.kernel.Resource;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -59,7 +60,7 @@ public class AgentPortlet extends Portlet {
               createAgentPortlet(Portlet p, Resource parent, Portal portal) {
         PortletType ptype = 
              PortletType.retrievePortletTypeForPortlet(BASE_DATA_OBJECT_TYPE);
-        Assert.assertNotNull(ptype, "PortletType");
+        Assert.exists(ptype, "PortletType");
         AgentPortlet aportlet = (AgentPortlet) Resource.createResource
                       (ptype, p.getTitle(), parent);
         aportlet.setCellNumber(p.getCellNumber());
@@ -77,7 +78,7 @@ public class AgentPortlet extends Portlet {
 
     // To make this role accessible to the Portal domain object.
     public void setSuperPortlet(final Portlet portlet) {
-        Assert.assertNotNull(portlet);
+        Assert.exists(portlet);
 
         setAssociation("superportlet", portlet);
 
@@ -89,7 +90,7 @@ public class AgentPortlet extends Portlet {
 
         Portlet portlet = Portlet.retrievePortlet(dataObject);
 
-        Assert.assertNotNull(portlet);
+        Assert.exists(portlet);
 
         return portlet;
     }

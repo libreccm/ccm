@@ -18,7 +18,8 @@
 
 package com.arsdigita.london.navigation;
 
-import com.arsdigita.london.navigation.Navigation;
+// same package
+// import com.arsdigita.london.navigation.Navigation;
 
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.kernel.ACSObjectInstantiator;
@@ -54,10 +55,10 @@ import org.apache.log4j.Logger;
  * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/03/03 12:26:48 $";
+ // public final static String versionId =
+ //     "$Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $" +
+ //     "$Author: sskracic $" +
+ //     "$DateTime: 2004/03/03 12:26:48 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 

@@ -47,11 +47,11 @@ import org.apache.log4j.Logger;
  * <p>
  * A Portal is a Persistence-backed framework for aggregating content
  * from multiple web applications/content sources. 
- * The <code>com.arsdigita.portal
- * </code> package is an infrastructural package that can be used to quickly
- * implement a basic portal server, but is primarily intended as a
- * foundation for the development of more sophisticated Portal systems such as
- * workspaces that feature multiple portals as named tabs within the workspace.
+ * The <code>com.arsdigita.portal</code> package is an infrastructural package
+ * that can be used to quickly implement a basic portal server, but is
+ * primarily intended as a foundation for the development of more sophisticated
+ * Portal systems such as workspaces that feature multiple portals as named tabs
+ * within the workspace.
  * </p>
  * <p>
  * Containment properties of Portals, such as versioning, permissioning, and
@@ -63,7 +63,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Portal.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Portal extends Resource {
-    public static final String versionId = "$Id: Portal.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.portal.Portal";
@@ -74,14 +73,29 @@ public class Portal extends Resource {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    /**
+     * Constructor
+     * @param dataObject
+     */
     protected Portal(DataObject dataObject) {
         super(dataObject);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param dataObjectType
+     */
     protected Portal(String dataObjectType) {
         super(dataObjectType);
     }
 
+    /**
+     * Constructor
+     * 
+     * @param oid
+     * @throws com.arsdigita.domain.DataObjectNotFoundException
+     */
     public Portal(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -179,6 +193,10 @@ public class Portal extends Resource {
         return new Portal(dataObject);
     }
 
+    /**
+     * 
+     * @return
+     */
     public static PortalCollection retrieveAll() {
         DataCollection dataCollection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
@@ -269,7 +287,7 @@ public class Portal extends Resource {
      */
     public void addPortlet(Portlet portlet, int cellNumber) {
         Assert.exists(portlet, Portlet.class);
-        Assert.truth(cellNumber >= 1, "cellNumber >= 1");
+        Assert.isTrue(cellNumber >= 1, "cellNumber >= 1");
 
         LinkedList portletList = getPortletListForCell(cellNumber);
         synchronized (portletList) {
@@ -325,7 +343,7 @@ public class Portal extends Resource {
         LinkedList portletList = getPortletListForCell(portlet.getCellNumber());
         int currentIndex = portletList.indexOf(portlet);
 
-        Assert.truth(currentIndex != -1, "Portlet not found.");
+        Assert.isTrue(currentIndex != -1, "Portlet not found.");
 
         try {
             synchronized (portletList) {
@@ -345,7 +363,7 @@ public class Portal extends Resource {
         LinkedList portletList = getPortletListForCell(portlet.getCellNumber());
         int currentIndex = portletList.indexOf(portlet);
 
-        Assert.truth(currentIndex != -1, "Portlet not found.");
+        Assert.isTrue(currentIndex != -1, "Portlet not found.");
 
         try {
             synchronized (portletList) {
@@ -365,7 +383,7 @@ public class Portal extends Resource {
         LinkedList portletList = getPortletListForCell(portlet.getCellNumber());
         int currentIndex = portletList.indexOf(portlet);
 
-        Assert.truth(currentIndex != -1, "Portlet not found.");
+        Assert.isTrue(currentIndex != -1, "Portlet not found.");
 
         synchronized (portletList) {
             portletList.remove(currentIndex);

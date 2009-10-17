@@ -44,6 +44,7 @@ import com.arsdigita.web.Web;
  * 
  *
  * @author Justin Ross
+ * @version $Id: PortletType.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PortletType extends ResourceType {
 
@@ -72,9 +73,9 @@ public class PortletType extends ResourceType {
          String portletObjectType) {
         super(dataObjectType);
 
-        Assert.assertNotNull(title, "title");
-        Assert.assertNotNull(profile, "profile");
-        Assert.assertNotNull(portletObjectType, "portletObjectType");
+        Assert.exists(title, "title");
+        Assert.exists(profile, "profile");
+        Assert.exists(portletObjectType, "portletObjectType");
 
         PackageType packageType = null;
 
@@ -106,36 +107,36 @@ public class PortletType extends ResourceType {
     }
 
     public static PortletType retrievePortletType(BigDecimal id) {
-        Assert.assertNotNull(id, "id");
+        Assert.exists(id, "id");
 
         return PortletType.retrievePortletType
             (new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     public static PortletType retrievePortletType(OID oid) {
-        Assert.assertNotNull(oid, "oid");
+        Assert.exists(oid, "oid");
 
         DataObject dataObject = SessionManager.getSession().retrieve(oid);
 
-        Assert.assertNotNull(dataObject);
+        Assert.exists(dataObject);
 
         return PortletType.retrievePortletType(dataObject);
     }
 
     public static PortletType retrievePortletType(DataObject dataObject) {
-        Assert.assertNotNull(dataObject, "dataObject");
+        Assert.exists(dataObject, "dataObject");
 
         return new PortletType(dataObject);
     }
 
     public static PortletType retrievePortletTypeForPortlet
         (String portletObjectType) {
-        Assert.assertNotNull(portletObjectType, "portletObjectType");
+        Assert.exists(portletObjectType, "portletObjectType");
 
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
-        Assert.assertNotNull(collection, "collection");
+        Assert.exists(collection, "collection");
 
         collection.addEqualsFilter("objectType", portletObjectType);
 
@@ -158,7 +159,7 @@ public class PortletType extends ResourceType {
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
-        Assert.assertNotNull(collection, "collection");
+        Assert.exists(collection, "collection");
         collection.addEqualsFilter("hasEmbeddedView", Boolean.TRUE);
 
         return new PortletTypeCollection(collection);
@@ -169,7 +170,7 @@ public class PortletType extends ResourceType {
     //
 
     public void setProviderApplicationType(ApplicationType applicationType) {
-        Assert.assertNotNull(applicationType, "applicationType");
+        Assert.exists(applicationType, "applicationType");
 
         setAssociation("providerApplicationType", applicationType);
     }
@@ -191,7 +192,7 @@ public class PortletType extends ResourceType {
     public boolean hasFullPageView() {
         Boolean hasFullPageView = (Boolean) get("hasFullPageView");
 
-        Assert.assertNotNull(hasFullPageView, "hasFullPageView");
+        Assert.exists(hasFullPageView, "hasFullPageView");
 
         return hasFullPageView.booleanValue();
     }
@@ -203,7 +204,7 @@ public class PortletType extends ResourceType {
     public boolean hasEmbeddedView() {
         Boolean hasEmbeddedView = (Boolean)get("hasEmbeddedView");
 
-        Assert.assertNotNull(hasEmbeddedView, "hasEmbeddedView");
+        Assert.exists(hasEmbeddedView, "hasEmbeddedView");
 
         return hasEmbeddedView.booleanValue();
     }

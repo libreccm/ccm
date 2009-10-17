@@ -72,7 +72,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.london.navigation.Template;
+// same package
+// import com.arsdigita.london.navigation.Template;
 import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.xml.XML;
 
@@ -83,10 +84,10 @@ import com.arsdigita.xml.XML;
  * @version $Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/03/15 11:10:54 $";
+ // public final static String versionId =
+ //     "$Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $" +
+ //     "$Author: sskracic $" +
+ //     "$DateTime: 2004/03/15 11:10:54 $";
 
     public static final Logger s_log = Logger.getLogger(Initializer.class);
 

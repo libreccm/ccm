@@ -37,10 +37,6 @@ import java.util.Map;
  * @version $Id: Template.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class Template extends TextAsset {
-    public static final String versionId =
-        "$Id: Template.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(Template.class);
 
@@ -175,9 +171,9 @@ public class Template extends TextAsset {
      * Set whether it is possible to write the items with this template
      * to the filesystem (as static HTML files).
      *
-     * @param isPublishable true if the items may be written to the filesystem, false if the
-     *   template is designed for highly dynamic items which should always be
-     *   served from the database.
+     * @param isPublishable true if the items may be written to the filesystem, 
+     *   false if the template is designed for highly dynamic items which should
+     *   always be served from the database.
      */
     public void setPublishable(Boolean isPublishable) {
         set(IS_PUBLISHABLE, isPublishable);

@@ -27,10 +27,6 @@ import org.apache.log4j.Logger;
  * @version $Id: SiteProxyInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  */
 public class SiteProxyInitializer extends ContentTypeInitializer {
-    public final static String versionId =
-        "$Id: SiteProxyInitializer.java 757 2005-09-02 14:12:21Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(SiteProxyInitializer.class);
 

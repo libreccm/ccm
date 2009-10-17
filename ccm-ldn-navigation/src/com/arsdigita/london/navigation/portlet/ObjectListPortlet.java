@@ -43,6 +43,14 @@ import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Portlet to display a list of objects.
+ * 
+ * The objects can be selected / restricted by object type and filtered by a
+ * category or category tree. Ordering and length of the list can be configured.
+ * 
+ * @version $Id: $
+ */
 public class ObjectListPortlet extends Portlet {
     private static final Logger s_log =
         Logger.getLogger( ObjectListPortlet.class );
