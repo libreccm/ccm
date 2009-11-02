@@ -54,7 +54,7 @@
               todir="${app.server.home.dir}/lib" preservelastmodified="true"/>
     </target>
 
-	<target name="start">
+	<target name="start" description="Start the Tomcat server">
         <if>
             <equals arg1="${app.server.debug.on}" arg2="true" />
             <then>
@@ -97,4 +97,17 @@
 		</java>
 	</target>
 
+    <target name="stop" description="Stop the Tomcat server">
+        <java classname="org.apache.catalina.startup.Bootstrap" fork="yes">
+            <!-- standard parameter to Tomcat operation  -->
+            <sysproperty key="catalina.home" value="${app.server.home.dir}" />
+            <sysproperty key="catalina.base" value="${app.server.home.dir}" />
+            <sysproperty key="catalina.config" value="file:///${app.server.conf.dir}/catalina.properties" />
+            <classpath>
+                <pathelement path="${app.server.home.dir}/bin/bootstrap.jar" />
+            </classpath>
+            <arg value="stop"/>
+        </java>
+    </target>
+    
 </project>
