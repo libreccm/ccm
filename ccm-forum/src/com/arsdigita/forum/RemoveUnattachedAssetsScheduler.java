@@ -44,17 +44,17 @@ import com.arsdigita.util.UncheckedWrapperException;
  * halfway through making a new post
  *
  * @author Chris Gilbert(chris.gilbert@westsussex.gov.uk)
-  * @version $Revision: 1.1 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: RemoveUnattachedAssetsScheduler.java,v 1.1 2006/07/13 10:19:28 cgyg9330 Exp $
  */
 public class RemoveUnattachedAssetsScheduler {
 
-    public static final String versionId = "$Id: RemoveUnattachedAssetsScheduler.java,v 1.1 2006/07/13 10:19:28 cgyg9330 Exp $ by $Author: cgyg9330 $, $DateTime: 2004/08/17 23:15:09 $";
 
     // For storing timer which runs a method periodically to fire
     // begin and end events
     private static Timer s_Timer;
     
-    // if process runs very very slowly, prevent duplicate attempt fro mrunning before the first one ends
+    // if process runs very very slowly, prevent duplicate attempt from
+    // running before the first one ends
     private static boolean s_running = false;
 
     private static Logger s_log =
@@ -70,7 +70,15 @@ public class RemoveUnattachedAssetsScheduler {
         }
 
         // Timer triggers straight away, and then every 24 hours
-        // don't run timer as a daemon - if server stops, kill this process too, as no one will be creating new posts
+        // don't run timer as a daemon - if server stops, kill this process 
+        // too, as no one will be creating new posts
+        // s_Timer = new Timer(true);
+
+        // Problem as with version 6.6  / rev. 2021 and earlier:
+        // The tomcat shutdown command does not finish completely. Several
+        // background processes prevent a clean shutdown. Details have to be
+        // figured out yet (Nov. 2, 2009)
+        // Timer is now a daemon thread so that Tomcat stops gracefully 
         s_Timer = new Timer(false);
         
         s_Timer.scheduleAtFixedRate(new RemoveUnattachedAssetsTask(), 0, 1000 * 60 * 60 * 24);
@@ -108,8 +116,5 @@ public class RemoveUnattachedAssetsScheduler {
         }
     }
 
-
-
-  
 
 }
