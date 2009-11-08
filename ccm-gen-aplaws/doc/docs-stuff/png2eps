@@ -1,0 +1,89 @@
+#!/usr/bin/perl
+#
+#
+# convert image to Encapsulated Postscript, with possible scaling of width
+#
+
+# Downloaded from http://people.redhat.com/dcm/
+#
+# Modified by tfox for Red Hat Documentation - default to width of 4
+#
+# Modified by tfox for Red Hat Documentation - if eps exists, use same scaling
+#
+
+if ($ARGV[0] =~ /^--width=(.+)$/) {
+       $width = $1;
+       shift (@ARGV);
+}
+
+#print "width =",$width,"\n";
+
+#print "argv =",$ARGV[0],"\n";
+
+$infile = $ARGV[0];
+
+$outfile = $infile;
+$outfile =~ s/\.png/\.eps/;
+
+if (!(-e $infile)) {
+print "File doesn't exist\n";
+exit 1;
+}
+
+if (!(-e $outfile)) {
+#    print "EPS File doesn't exist\n";
+    #default width to 4 if it is not specified
+    if ($width == "") {
+	$width = "4";
+    } 
+} else
+{
+#if eps exists AND no width is specified, use existing scaling
+    if ($width == "") {
+	print "scaling $infile based on existing EPS\n";
+	$epsimagesz = `identify $outfile`;
+	#print "epsimagesz=", $epsimagesz,"\n";
+
+	($epsname, $epstype, $epssize, $epsrest) =  split / /, $epsimagesz, 4;
+#       print "epssplit:", $epsname, " ", $epstype, " ", $epssize, " ", $epsrest, "\n";
+	#print "epssize = ",$epssize,"\n";
+
+	($epsx, $epsy) = split /x/, $epssize, 2;
+	($epsy, $epsrest) = split /\+/, $epsy, 2;
+
+	#print $epsx," by ",$epsy, "\n";  
+	$width = $epsx/72.0;
+	#print "epswidth=", $width, "\n";
+    } 
+}
+
+$imagesz = `identify $ARGV[0]`;
+#print "imagesz=", $imagesz,"\n";
+
+($name, $type, $size, $rest) =  split / /, $imagesz, 4;
+#print "split:", $name, " ", $type, " ", $size, " ", $rest, "\n";
+#print "size = ",$size,"\n";
+
+($x, $y) = split /x/, $size, 2;
+($y, $rest) = split /\+/, $y, 2;
+
+#print $x," by ",$y, "\n";
+
+
+# if width set, we need to scale
+if ($width != "") {
+  $scale = $width * (72.0/$x);
+} else {
+  $scale = 1;
+}
+
+$scale = 72.0/$scale;
+#print "scale = ",$scale,"\n";
+
+#print $infile," ",$outfile,"\n";
+system("convert $infile tmpimage.pgm");
+#system("giftopnm $infile | ppmtopgm > tmpimage.pgm");
+system("convert -density $scale -colorspace gray tmpimage.pgm $outfile");
+system("rm tmpimage.pgm");
+
+

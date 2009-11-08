@@ -1,0 +1,95 @@
+<xs:schema 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://www.uk.arsdigita.com/portal/1.0"
+  xmlns:portlet="http://www.uk.arsdigita.com/portlet/1.0"
+  xmlns:debug="http://xmlns.redhat.com/waf/bebop/debug/1.0"
+  xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+  elementFormDefault="qualified" 
+  targetNamespace="http://www.uk.arsdigita.com/portal/1.0">
+
+
+  <xs:element name="workspace">
+    <xs:sequence>
+      <xs:element name="workspaceDetails" type="workspaceDetails">
+      <xs:element name="portalList" type="portalList">
+      <xs:element name="bebop:portal" type="portalDisplay">
+    </xs:sequence>
+  </xs:element>
+
+
+  <xs:complexType name="workspaceDetails">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        This outputs metadata about the workspace along with a 
+        summary of permissions.
+      </xs:documentation>
+
+      <xs:appinfo>
+        <debug:class>com.arsdigita.london.portal.ui.WorkspaceDetails</debug:class>
+      </xs:appinfo>
+    </xs:annotation>
+
+    <xs:sequence>
+      <xs:element name="objectType" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="title" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="description" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="primaryURL" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+
+    <xs:attribute name="oid" type="xs:string"/>
+    <xs:attribute name="canEdit" type="xs:boolean"/>
+    <xs:attribute name="canAdmin" type="xs:boolean"/>
+  </xs:complexType>
+
+
+
+  <xs:complexType name="portalList">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        This component generates a summary list of all portals
+        in a workspace. One use of this is to generate a set
+        of tabbed panes for switching between portals.
+      </xs:documentation>
+
+      <xs:appinfo>
+        <debug:class>com.arsdigita.london.portal.ui.PortalList</debug:class>
+      </xs:appinfo>
+    </xs:annotation>
+
+    <xs:sequence>
+      <xs:element name="portalDetails" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="objectType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="title" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="description" minOccurs="0" maxOccurs="1"/>
+          </xs:sequence>
+
+          <xs:attribute name="oid" type="xs:string"/>
+          <xs:attribute name="isSelected" type="xs:boolean"/>
+
+          <xs:attribute name="selectAction" type="xs:url"/>
+          <xs:attribute name="deleteAction" type="xs:url" use="optional"/>
+          <xs:attribute name="moveLeftAction" type="xs:url" use="optional"/>
+          <xs:attribute name="moveRightAction" type="xs:url" use="optional"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="bebop:form"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+
+  <xs:complexType name="portalDisplay">
+    <xs:annotation>
+      <xs:appinfo>
+        <debug:class>com.arsdigita.london.portal.ui.PersistentPortal</debug:class>
+      </xs:appinfo>
+    </xs:annotation>
+
+    <xs:sequence>
+      <xs:element name="" minOccurs="" maxOccurs="">
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

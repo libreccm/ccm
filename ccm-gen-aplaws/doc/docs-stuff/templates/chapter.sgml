@@ -1,0 +1,47 @@
+  <!-- $Id: chapter.sgml 287 2005-02-22 00:29:02Z sskracic $ -->
+
+  <chapter id="ch-chapter">
+    <title>Chapter Title</title>
+
+    <indexterm>
+      <primary>chapter</primary>
+    </indexterm>
+
+    <para>
+      Text goes here...
+    </para>
+
+  <sect1 id="idname">
+    <title>Title for sect1</title>
+    <para>
+      Some text ...
+    </para>
+
+    <figure id="id-for-fig">
+      <title>Title for Figure</title>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="./figs/chapter/someimage.eps"
+		     format="eps">
+	</imageobject>
+	<imageobject>
+	  <imagedata fileref="./figs/chapter/someimage.png"
+		     format="png">
+	</imageobject>
+	<textobject>
+	  <para>
+	    Some text description of this image
+	  </para>
+	</textobject>
+      </mediaobject>
+    </figure>
+    
+    <sect2 id="idname2">
+      <title>Title for sect2</title>
+      <para>
+	More text ...
+      </para>
+    </sect2>
+  </sect1>
+
+  </chapter>
