@@ -8,7 +8,7 @@
                     name="aplaws-zes" 
               prettyName="APLAWS plus" 
                  version="1-0-9" 
-                 release="beta-2" 
+                 release="rc-1" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
