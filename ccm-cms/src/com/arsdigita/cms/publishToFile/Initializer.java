@@ -206,7 +206,7 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
         // start thread for monitoring queue
         int startupDelay = getInteger(QUEUE_POLL_STARTUP_DELAY).intValue();
         int pollDelay = getInteger(QUEUE_POLL_DELAY).intValue();
-        // QueueManager.startWatchingQueue(startupDelay, pollDelay);
+        QueueManager.startWatchingQueue(startupDelay, pollDelay);
     }
 
     //
@@ -272,7 +272,7 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
                          "' must not end with a '/'");
         }
 
-        // Does destRoot really now turns into an absolute fully pathname?!
+        // Does destRoot really now turns into an absolute fully pathname
         destRoot = new File(CCMResourceManager.getBaseDirectory().getPath(),
                             destRoot).getPath();
         s_log.info("Destination Root is set to : " + destRoot);
@@ -321,7 +321,7 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
                 fl.close();
             } catch ( IOException e ) {
                 // Will be reported as an initalization error
-                s_log.warn("Fehler beim Erstellen der Datei " + fname.getPath());
+                s_log.warn("Error creating file " + fname.getPath());
             }
 
  

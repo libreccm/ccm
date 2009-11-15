@@ -432,6 +432,9 @@ public class QueueManager implements Runnable {
      */
     public static void startWatchingQueue(int startupDelay, int pollDelay) {
         if ( startupDelay > 0 ) {
+            if (s_log.isInfoEnabled()) {
+                s_log.info("Going to start queue processing.");
+            }
             s_queueThread = new Thread( new QueueManager(startupDelay, pollDelay) );
             s_queueThread.setDaemon(true);
             s_queueThread.setName("cms-p2fs-queue");
@@ -442,9 +445,9 @@ public class QueueManager implements Runnable {
 
     /**
      * Stop watching and processing the queue. The background thread that
-     * processes the queue will terminate after this method has been
-     * called. Termination is not immediate, since the queue may be in the
-     * middle of processing a block of entries.
+     * processes the queue will terminate after this method has been called.
+     * Termination is not immediate, since the queue may be in the middle of
+     * processing a block of entries.
      */
     public static void stopWatchingQueue() {
         if (s_log.isInfoEnabled()) {
