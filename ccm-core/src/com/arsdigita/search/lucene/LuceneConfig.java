@@ -34,15 +34,11 @@ import java.io.File;
  * LuceneConfig
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: LuceneConfig.java 890 2005-09-21 17:09:00Z apevec $
  **/
 
 public class LuceneConfig extends AbstractConfig {
 
-    public final static String versionId = 
-            "$Id: LuceneConfig.java 890 2005-09-21 17:09:00Z apevec $" +
-            " by $Author: apevec $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger LOG = Logger.getLogger(LuceneConfig.class);
 
     private static LuceneConfig s_conf;

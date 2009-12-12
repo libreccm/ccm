@@ -40,7 +40,10 @@ init com.arsdigita.kernel.security.Initializer {
 
 }
 
-// init com.arsdigita.search.Initializer {}
+//  As of version 6.5.x still in use!
+//  May be ommitted if ccm-ldn-search is used which sets the search engine
+//  by its own (Lucene)
+//init com.arsdigita.search.Initializer {}
 
 // As of version 6.5.x still in use!
 init com.arsdigita.search.intermedia.Initializer {
@@ -51,9 +54,9 @@ init com.arsdigita.search.intermedia.Initializer {
     indexingRetryDelay = 60;
 }
 
-// init com.arsdigita.search.lucene.Initializer {}
+//  As of version 6.5.x still in use!
+init com.arsdigita.search.lucene.Initializer {}
 
-// As of version 6.5.x still in use!
 init com.arsdigita.notification.Initializer {
     RequestManagerDelay  = 900; // in seconds
     RequestManagerPeriod = 900; // in seconds
