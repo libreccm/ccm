@@ -31,11 +31,10 @@ import java.sql.PreparedStatement;
  * Implementation of the Sequence class for the Postgres RDBMS.
  *
  * @author Patrick McNeill
+ * @version $Id: PostgresSequenceImpl.java 738 2005-09-01 12:36:52Z sskracic $
  */
 
 public class PostgresSequenceImpl extends SequenceImpl {
-
-    public static final String versionId = "$Id: PostgresSequenceImpl.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_sequenceName;
 

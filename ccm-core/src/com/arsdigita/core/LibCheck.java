@@ -32,15 +32,11 @@ import java.io.InputStreamReader;
  * The check is activated during initial setup by the file /ccm-core.checklist!
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: LibCheck.java 736 2005-09-01 10:46:05Z sskracic $
  */
 
 public class LibCheck extends BaseCheck {
 
-    public final static String versionId = 
-            "$Id: LibCheck.java 736 2005-09-01 10:46:05Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     // Integrating the packaging.MessageMap service class providing a
     // package specific message file by overriding the variable in BaseCheck.

@@ -57,6 +57,7 @@ init com.arsdigita.search.intermedia.Initializer {
 //  As of version 6.5.x still in use!
 init com.arsdigita.search.lucene.Initializer {}
 
+// As of version 6.5.x still in use!
 init com.arsdigita.notification.Initializer {
     RequestManagerDelay  = 900; // in seconds
     RequestManagerPeriod = 900; // in seconds

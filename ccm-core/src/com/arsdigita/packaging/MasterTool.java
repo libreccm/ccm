@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import org.apache.log4j.Logger;
 
 /**
  * Main entry point: Implements the ccm command line tool.
@@ -41,15 +40,9 @@ import org.apache.log4j.Logger;
  * by some PERL scripts, located in the tools directory of CCM trunk.
  * 
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: MasterTool.java 1169 2006-06-14 13:08:25Z fabrice $
+ * @version $Id: MasterTool.java 2031 2009-12-10 03:34:04Z terry $
  */
 public class MasterTool {
-    public static final String versionId =
-        "$Id: MasterTool.java 1169 2006-06-14 13:08:25Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
-
-    private static final Logger s_log = Logger.getLogger(MasterTool.class);
 
     private static void usage(Commands cmds, PrintStream out) {
         out.println("usage: ccm [OPTIONS | COMMAND]");
@@ -106,16 +99,19 @@ public class MasterTool {
             System.exit(1);
         }
 
-        String name = args[0];
+        String name = args[0].trim();
         Command cmd = cmds.get(name);
 
         if (cmd == null) {
-            err.println("no such command: " + name);
+            err.println("no such command: '" + name + "'");
             System.exit(1);
         }
 
         String[] command = new String[args.length - 1];
         System.arraycopy(args, 1, command, 0, command.length);
+        for (int i=0; i<command.length; i++) { 
+            command[i] = command[i].trim();
+        }
 
         boolean result = cmd.run(command);
         if (cmd == help || cmd == usage) {
