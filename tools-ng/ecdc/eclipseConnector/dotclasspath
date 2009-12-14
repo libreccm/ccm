@@ -172,5 +172,6 @@
     <classpathentry kind="lib" path="ccm-ldn-terms/lib/jena.jar"/>
     <classpathentry kind="lib" path="ccm-ldn-terms/lib/xpp3-1.1.4c.jar"/>
     <classpathentry kind="lib" path="ccm-ldn-terms/lib/xstream-1.3.1.jar"/>
+	<classpathentry kind="lib" path="ccm-core/lib/bcprov-jdk16-144.jar"/>
     <classpathentry kind="output" path="build/eclipse/classes"/>
 </classpath>

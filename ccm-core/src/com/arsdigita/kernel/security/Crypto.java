@@ -18,8 +18,6 @@
  */
 package com.arsdigita.kernel.security;
 
-import com.arsdigita.util.UncheckedWrapperException;
-
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
@@ -31,6 +29,7 @@ import java.security.Security;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Iterator;
 import java.util.Set;
+
 import javax.crypto.Cipher;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -41,16 +40,19 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+import com.arsdigita.util.UncheckedWrapperException;
 
 /**
  * Provides cryptographic functions and stores the server's secret key.
  *
  * @author Sameer Ajmani
  * @since ACS 4.5
+ * @version $Id: Crypto.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 public class Crypto {
 
-    public static final String versionId = "$Id: Crypto.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
         Logger.getLogger(Crypto.class);
     private static int PBE_SALT_BYTES = 8;    // required by SunJCE
@@ -63,6 +65,10 @@ public class Crypto {
     private static String PREFERRED_MAC_ALGO = null;
 
     public static final String CHARACTER_ENCODING = "UTF-8";
+
+    static {
+        Security.addProvider(new BouncyCastleProvider());
+    }
 
     /**
      * Creates a new Message Authentication Code (MAC) calculator that uses
@@ -103,7 +109,7 @@ public class Crypto {
             } catch (NoSuchAlgorithmException ex) {
                 String msg =
                     "Couldn't find " + PREFERRED_MAC_ALGO + ". Make sure you have the right" +
-                    "provider(s) installed. Check $JAVA_HOME/jre/lib/java.security";
+                    "provider(s) installed. Check $JAVA_HOME/jre/lib/security/java.security";
                 s_log.error(msg, ex);
                 throw new KernelLoginException(msg, ex);
             }
@@ -348,10 +354,18 @@ public class Crypto {
 
         Provider[] jceProviders = Security.getProviders();
         for (int i = 0 ; i < jceProviders.length ; i++) {
+
+            if (s_log.isDebugEnabled()) {
+                s_log.info("Security provider: " + jceProviders[i].getName());
+            }
             Set e = jceProviders[i].entrySet();
             Iterator iterator = e.iterator();
             while ( iterator.hasNext() ) {
                 String current = iterator.next().toString();
+
+                if (s_log.isDebugEnabled()) {
+                    s_log.info("\t" + current);
+                }
                 if ( current.startsWith("Mac") ) {
                     algorithm = current.substring(4,current.indexOf("="));
                     if ( algorithm.indexOf("ImplementedIn") == -1 &&
