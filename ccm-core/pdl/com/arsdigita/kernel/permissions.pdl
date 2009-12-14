@@ -161,8 +161,8 @@ query ObjectDirectPermissionCollection {
                      0 as user_p,
                      groups.name as name,
                      parties.primary_email as primary_email,
-                     '' as given_name,
-                     '' as family_name,
+                     cast('' as char) as given_name,
+                     cast('' as char) as family_name,
                      0 as name_id
               from groups, parties
               where groups.group_id = parties.party_id) parties
@@ -181,7 +181,7 @@ query ObjectDirectPermissionCollection {
         from acs_permissions,
              (select users.user_id as party_id,
                      1 as user_p,
-                     '' as name,
+                     cast('' as char) as name,
                      parties.primary_email as primary_email,
                      person_names.given_name as given_name,
                      person_names.family_name as family_name,
@@ -506,8 +506,8 @@ query ObjectPermissionCollection {
                      0 as user_p,
                      groups.name as name,
                      parties.primary_email as primary_email,
-                     '' as given_name,
-                     '' as family_name,
+                     cast('' as char) as given_name,
+                     cast('' as char) as family_name,
                      0 as name_id
               from groups, parties
               where groups.group_id = parties.party_id) parties
@@ -541,7 +541,7 @@ query ObjectPermissionCollection {
                and p.object_id = dgc.pd_context_id) acs_permissions,
              (select users.user_id as party_id,
                      1 as user_p,
-                     '' as name,
+                     cast('' as char) as name,
                      parties.primary_email as primary_email,
                      person_names.given_name as given_name,
                      person_names.family_name as family_name,
