@@ -177,4 +177,17 @@
             <arg line="${ccm.parameters}" />
         </java>
     </target>
+
+    <target name="ccm-run">
+        <echo>ccm-run ${ccm.classname} ${ccm.parameters}</echo>
+        <java classname="${ccm.classname}" fork="yes">
+            <classpath>
+                <path refid="ccm.tools.classpath" />
+                <pathelement location="${app.server.webapp.dir}/ROOT/WEB-INF/classes" />
+                <fileset dir="${app.server.webapp.dir}/ROOT/WEB-INF/lib" includes="**/*.jar" />
+            </classpath>
+            <sysproperty key="ccm.home" value="${ccm.home}" />
+            <arg line="${ccm.parameters}" />
+        </java>
+    </target>
 </project>
