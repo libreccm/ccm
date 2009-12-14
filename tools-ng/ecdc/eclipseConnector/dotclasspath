@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="lib" path="tools/rpms/junit/SOURCES/junit-3.8.1.jar"/>
-    <classpathentry kind="lib" path="tools/rpms/junitperf/SOURCES/junitperf-1.8.jar"/>
-    <classpathentry kind="lib" path="tools/rpms/httpunit/SOURCES/httpunit-1.5.4.jar"/>
+    <classpathentry kind="lib" path="tools-ng/devel/lib/junit-3.8.1.jar"/>
+    <classpathentry kind="lib" path="tools-ng/devel/lib/junitperf-1.8.jar"/>
+    <classpathentry kind="lib" path="tools-ng/devel/lib/httpunit-1.5.4.jar"/>
     <classpathentry kind="src" path="ccm-auth-http/src"/>
     <classpathentry kind="src" path="ccm-cms-types-xmlfeed/build/src"/>
     <classpathentry kind="src" path="ccm-cms-types-xmlfeed/src"/>
