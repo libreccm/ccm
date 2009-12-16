@@ -43,16 +43,17 @@ init com.arsdigita.kernel.security.Initializer {
 //  As of version 6.5.x still in use!
 //  May be ommitted if ccm-ldn-search is used which sets the search engine
 //  by its own (Lucene)
-//init com.arsdigita.search.Initializer {}
+init com.arsdigita.search.Initializer {}
 
 // As of version 6.5.x still in use!
-init com.arsdigita.search.intermedia.Initializer {
-    timerDelay         = 60;    // Parameters for search timer/indexing
-    syncDelay          = 60;    // All units are time in seconds
-    maxSyncDelay       = 7200;  // see com.arsdigita.search.BuildIndex.java
-    maxIndexingTime    = 7200;  // for definitions
-    indexingRetryDelay = 60;
-}
+// Comment in to use intermedia search
+//init com.arsdigita.search.intermedia.Initializer {
+//    timerDelay         = 60;    // Parameters for search timer/indexing
+//    syncDelay          = 60;    // All units are time in seconds
+//    maxSyncDelay       = 7200;  // see com.arsdigita.search.BuildIndex.java
+//    maxIndexingTime    = 7200;  // for definitions
+//    indexingRetryDelay = 60;
+//}
 
 //  As of version 6.5.x still in use!
 init com.arsdigita.search.lucene.Initializer {}
@@ -149,8 +150,9 @@ init com.arsdigita.portal.Initializer { }
 // init com.arsdigita.localization.demo.Initializer { }
 // init com.arsdigita.bebop.jsp.Initializer { }
 
+// Set to true when using intermedia search
 init com.arsdigita.mimetypes.MimeTypeInitializer {
-    INSOFilterEnabled = true;
+    INSOFilterEnabled = false;
 }
 
 // init com.arsdigita.populate.apps.Initializer {

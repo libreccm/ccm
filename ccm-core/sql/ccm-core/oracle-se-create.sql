@@ -14,9 +14,6 @@
 -- You should have received a copy of the GNU Lesser General Public
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
---
--- $Id: oracle-se-create.sql 1704 2008-06-08 14:45:43Z pboy $
--- $DateTime: 2004/08/16 18:10:38 $
 
 @@ oracle-se/function-currentDate.sql
 
@@ -176,14 +173,15 @@
 @@ default/notification/index-nt_requests.sql
 @@ default/notification/table-nt_queue.sql
 
-@@ default/search/table-search_content.sql
-@@ default/search/block-autogroup.sql
-@@ default/search/index-xml_content_index.sql
-@@ default/search/index-raw_content_index.sql
-@@ default/search/table-content_change_time.sql
-@@ default/search/table-search_indexing_jobs.sql
-@@ default/search/insert-dummy.sql
-@@ default/search/package-search_indexing.sql
+-- Oracle Intermedia
+-- @@ default/search/table-search_content.sql
+-- @@ default/search/block-autogroup.sql
+-- @@ default/search/index-xml_content_index.sql
+-- @@ default/search/index-raw_content_index.sql
+-- @@ default/search/table-content_change_time.sql
+-- @@ default/search/table-search_indexing_jobs.sql
+-- @@ default/search/insert-dummy.sql
+-- @@ default/search/package-search_indexing.sql
 
 @@ default/versioning/table-vc_objects.sql
 @@ default/versioning/comment-vc_objects.sql
@@ -284,8 +282,10 @@
 
 @@ default/kernel/index-foreign_keys.sql
 
-@@ oracle-se/mimetypes/index-convert_to_html_index.sql
-@@ oracle-se/mimetypes/function-convert_to_html.sql
+-- Oracle INSO filtering
+-- @@ oracle-se/mimetypes/index-convert_to_html_index.sql
+-- @@ oracle-se/mimetypes/function-convert_to_html.sql
+
 @@ default/mimetypes/insert-cms_mime_status.sql
 
 @@ ddl/oracle-se/deferred.sql
