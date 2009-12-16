@@ -1220,11 +1220,20 @@
         <property name="customWebXML" value="${{file}}"/>
         <property name="originalWebXML" value="${{this.deploy.dir}}/WEB-INF/web.xml"/>
         <property name="mergedWebXML" value="${{customWebXML}}.merged"/>
-        <script language="javascript">
+        <!-- manager property javax avoids dependency on bsf which introduced a lot 
+             of cross-OS problems                                                  -->
+        <script language="javascript" manager="javax">
             <classpath>
                 <fileset dir="tools-ng/webxml/lib" includes="*.jar"/>
             </classpath>
             importClass(java.lang.System);
+            <!-- Fixed Bug in combination with version ant-apache-bsf tasks 
+                 1.7.1/bsf-2.4.0. by prefixing non Java API packages with "Packages" cf: 
+                 http://wiki.apache.org/ant/AntOddities#Using_your_own_classes_inside_.3Cscript.3E. 
+
+                 Need for bsf removed now by introducing manager="javax" above so this 
+                 fix (introduced in r2016) may be removed (Dec. 2009 r2045)
+            -->
             importClass(Packages.com.liferay.portal.tools.WebXMLBuilder);
             importClass(Packages.com.liferay.portal.kernel.util.FileUtil);
             importClass(Packages.com.liferay.portal.util.FileImpl);
