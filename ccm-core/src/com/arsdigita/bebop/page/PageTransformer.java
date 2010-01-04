@@ -160,11 +160,20 @@ public class PageTransformer implements PresentationManager {
                 
 					 }
              });
+
         registerXSLParameterGenerator
             ("user-agent",
              new XSLParameterGenerator() {
                 public String generateValue(HttpServletRequest request) {
                     return request.getHeader("User-Agent");
+                }
+             });
+
+        registerXSLParameterGenerator
+            ("negotiated-language",
+             new XSLParameterGenerator() {
+                public String generateValue(HttpServletRequest request) {
+                    return com.arsdigita.dispatcher.DispatcherHelper.getRequestContext().getLocale().getLanguage();
                 }
              });
     }
