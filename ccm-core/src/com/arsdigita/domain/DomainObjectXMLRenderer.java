@@ -25,14 +25,14 @@ import com.arsdigita.xml.Element;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import com.arsdigita.xml.XML;
+import java.text.DateFormat;
 import java.util.Stack;
 
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.Locale;
 import org.apache.log4j.Logger;
 
 /**
@@ -358,6 +358,16 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
                     element.addAttribute("hour", Integer.toString(calDate.get(Calendar.HOUR_OF_DAY)));
                     element.addAttribute("minute", Integer.toString(calDate.get(Calendar.MINUTE)));
                     element.addAttribute("second", Integer.toString(calDate.get(Calendar.SECOND)));
+
+                    // Quasimodo: BEGIN
+                    // Add attributes for date and time
+                    Locale negLocale = com.arsdigita.dispatcher.DispatcherHelper.getRequestContext().getLocale();
+                    DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, negLocale);
+                    DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT, negLocale);
+                    element.addAttribute("date", dateFormatter.format(date));
+                    element.addAttribute("time", timeFormatter.format(date));
+                    // Quasimodo: END
+
                 }
 		}
             } else {
