@@ -253,7 +253,7 @@ public abstract class DomainObjectTraversal {
         walk(adapter, obj, "/object", context, null);
     }
 
-    private void walk(final DomainObjectTraversalAdapter adapter,
+    protected void walk(final DomainObjectTraversalAdapter adapter,
                       final DomainObject obj,
                       final String path,
                       final String context,

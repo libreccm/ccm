@@ -22,11 +22,11 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
 import com.arsdigita.dispatcher.AccessDeniedException;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -93,8 +93,7 @@ public class ContentItemPortletRenderer extends AbstractPortletRenderer {
         Element contentItem = content.newChildElement("cms:item",
                 CMS.CMS_XML_NS);
 
-        DomainObjectXMLRenderer renderer = new DomainObjectXMLRenderer(
-                contentItem);
+        ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(contentItem);
 
         renderer.setWrapAttributes(true);
         renderer.setWrapRoot(false);
@@ -106,8 +105,12 @@ public class ContentItemPortletRenderer extends AbstractPortletRenderer {
     
     public String getCacheKey(PageState state) {
         ContentItem item = m_portlet.getContentItem();
-        if( null == item ) return "";
-        if( item.isLive() ) return item.getPublicVersion().getOID().toString();
+        if( null == item ) {
+            return "";
+        }
+        if( item.isLive() ) {
+            return item.getPublicVersion().getOID().toString();
+        }
 
         // Don't cache it if it's not live
         return "";

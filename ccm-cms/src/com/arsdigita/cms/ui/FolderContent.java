@@ -22,11 +22,11 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.xml.Element;
 
 
@@ -205,7 +205,7 @@ public class FolderContent extends SimpleComponent {
         log.debug("Rendering item '"+item.getName()+"'.");
 
         Element itemElement = parent.newChildElement(TAG_ITEM, CMS.CMS_XML_NS);
-        DomainObjectXMLRenderer renderer = new DomainObjectXMLRenderer(itemElement);
+        ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(itemElement);
 
         // not sure these are necessary
         renderer.setWrapAttributes(true);

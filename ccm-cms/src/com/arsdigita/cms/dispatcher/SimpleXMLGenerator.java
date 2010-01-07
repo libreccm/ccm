@@ -22,6 +22,7 @@ package com.arsdigita.cms.dispatcher;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.UserDefinedContentItem;
@@ -29,7 +30,6 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectTraversal;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
@@ -144,8 +144,8 @@ public class SimpleXMLGenerator implements XMLGenerator {
             // This is the preferred method
             Element content = startElement(useContext);
 
-            DomainObjectXMLRenderer renderer =
-                new DomainObjectXMLRenderer(content);
+            ContentItemXMLRenderer renderer =
+                new ContentItemXMLRenderer(content);
 
             renderer.setWrapAttributes(true);
             renderer.setWrapRoot(false);

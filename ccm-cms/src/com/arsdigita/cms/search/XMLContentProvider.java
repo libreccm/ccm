@@ -20,12 +20,12 @@ package com.arsdigita.cms.search;
 
 
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.search.ContentType;
 import com.arsdigita.search.ContentProvider;
 
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.xml.Document;
 import com.arsdigita.xml.Element;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -60,8 +60,8 @@ public class XMLContentProvider implements ContentProvider {
     public byte[] getBytes() {
         
         Element root = new Element("cms:item", CMS.CMS_XML_NS);
-        DomainObjectXMLRenderer renderer =
-            new DomainObjectXMLRenderer(root);
+        ContentItemXMLRenderer renderer =
+            new ContentItemXMLRenderer(root);
 
         renderer.setWrapAttributes(true);
         renderer.walk(m_obj, m_adapterContext);
