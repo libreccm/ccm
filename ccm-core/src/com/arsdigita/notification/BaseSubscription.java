@@ -31,10 +31,10 @@ import com.arsdigita.util.StringUtils;
 import org.apache.log4j.Logger;
 
 /**
- * The abstract BaseSubscription class provides the ability for Users
- * to sign up for email notifications.  Subclasses will specify
- * the object to which the notifications apply and messages that should
- * be sent along with the notifications.
+ * The abstract BaseSubscription class provides the ability for Users to sign up
+ * for email notifications. Subclasses will specify the object to which the
+ * notifications apply and messages that should be sent along with the
+ * notifications.
  *
  * The default implementation provides instant notifications.  Subclasses
  * should override sendNotification() to alter this behavior.
@@ -56,9 +56,9 @@ public abstract class BaseSubscription extends ACSObject {
     /**
      * A separator to use between the body and signature of an alert.
      */
-
     protected final static String SEPARATOR =
         getSeparator();
+
     protected final static String ALERT_BLURB =
         "This is an automated alert from the Discussion Forum system. ";
     protected final static String REPLY_BLURB =
@@ -90,9 +90,9 @@ public abstract class BaseSubscription extends ACSObject {
     }
     
     /**
-     * default implementation returns a generic group name
+     * Default implementation, returns a generic group name.
      * 
-     * subtypes should override this method to provide a meaningful name
+     * Subtypes should override this method to provide a meaningful name.
      * @return
      */
     protected String getSubscriptionGroupName() {
@@ -142,10 +142,10 @@ public abstract class BaseSubscription extends ACSObject {
     }
 
     /**
-     * This method will send immediate notifications to subscribed
-     * users with the header and signature specified by getHeader()
-     * and getSignature.  Subclasses which desire different behavior
-     * should override one or more of these methods.
+     * This method will send immediate notifications to subscribed users with
+     * the header and signature specified by getHeader() and getSignature().
+     * Subclasses which desire different behavior should override one or more
+     * of these methods.
      */
     public void sendNotification(ThreadedMessage post) {
         sendNotification(post, false);

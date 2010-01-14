@@ -45,14 +45,10 @@ import com.arsdigita.runtime.RuntimeConfig;
  * Indexer.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: Indexer.java 1845 2009-03-05 13:39:09Z terry $
  **/
 
 class Indexer extends TimerTask {
-
-    public final static String versionId =
-        "$Id: Indexer.java 1845 2009-03-05 13:39:09Z terry $" +
-        " by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger LOG =
         Logger.getLogger(Indexer.class);

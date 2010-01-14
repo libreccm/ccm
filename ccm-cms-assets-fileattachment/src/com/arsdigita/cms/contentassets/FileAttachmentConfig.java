@@ -11,6 +11,9 @@ public class FileAttachmentConfig extends AbstractConfig {
     Parameter editFormClass;
     Parameter showAssetID;
     
+    /**
+     * Constructor, don't use is directly!
+     */
     public FileAttachmentConfig() {
         editFormClass = new ClassParameter ("com.arsdigita.cms.contentassets.file_edit_form",
                 Parameter.REQUIRED,

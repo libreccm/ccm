@@ -19,8 +19,8 @@
 package com.arsdigita.forum;
 
 
-import java.util.Calendar;
-import java.util.Date;
+// import java.util.Calendar;
+// import java.util.Date;
 import java.util.Timer;
 
 import org.apache.log4j.Logger;
@@ -40,8 +40,8 @@ import com.arsdigita.util.UncheckedWrapperException;
  * before completing the post. This
  * process gets rid of them on a daily basis to keep them under control
  * 
- * nb - We can't just delete all unattached assets, as some may be there because the user is 
- * halfway through making a new post
+ * nb - We can't just delete all unattached assets, as some may be there because 
+ * the user is  halfway through making a new post
  *
  * @author Chris Gilbert(chris.gilbert@westsussex.gov.uk)
  * @version $Id: RemoveUnattachedAssetsScheduler.java,v 1.1 2006/07/13 10:19:28 cgyg9330 Exp $
@@ -62,7 +62,11 @@ public class RemoveUnattachedAssetsScheduler {
 
     
     /**
-     * startTimer - starts the timer
+     * Starts the timer background process which starts a cleanup routine for
+     * unfinished posts.
+     *
+     * Remember to kill this process if server stops, otherwise the servlet
+     * container might not terminate cleanly.
      */
     public static synchronized void startTimer() {
         if ( s_Timer != null ) {
@@ -70,18 +74,26 @@ public class RemoveUnattachedAssetsScheduler {
         }
 
         // Timer triggers straight away, and then every 24 hours
-        // don't run timer as a daemon - if server stops, kill this process 
-        // too, as no one will be creating new posts
-        // s_Timer = new Timer(true);
+        s_Timer = new Timer(true);
+        s_Timer.scheduleAtFixedRate(new RemoveUnattachedAssetsTask(),
+                                    0, 1000 * 60 * 60 * 24);
+        s_log.debug("Background timer process started.");
+    }
 
-        // Problem as with version 6.6  / rev. 2021 and earlier:
-        // The tomcat shutdown command does not finish completely. Several
-        // background processes prevent a clean shutdown. Details have to be
-        // figured out yet (Nov. 2, 2009)
-        // Timer is now a daemon thread so that Tomcat stops gracefully 
-        s_Timer = new Timer(false);
-        
-        s_Timer.scheduleAtFixedRate(new RemoveUnattachedAssetsTask(), 0, 1000 * 60 * 60 * 24);
+    /**
+     * Stops the timer background process.
+     *
+     * In order to enable the servlet container (esp. Tomcat) to shut down
+     * cleanly it is necessary to invoke the stop method! This ist true for
+     * Tomcat 6 regardless weather the time is started as a deamon or not.
+     */
+    public static synchronized void stopTimer() {
+        if ( s_Timer != null ) {
+            // Timer exists
+            s_log.debug("Cancel background timer process, ");
+            s_Timer.cancel();
+        }
+
     }
 
 
@@ -89,7 +101,7 @@ public class RemoveUnattachedAssetsScheduler {
      * run - Run the task
      */
     public static synchronized void run() {
-    	s_log.debug("Firing off scheduler");
+        s_log.debug("Firing off scheduler");
         Session ssn = SessionManager.getSession();
         if ( !s_running ) {
             new KernelExcursion() {
@@ -97,7 +109,8 @@ public class RemoveUnattachedAssetsScheduler {
                     s_running = true;
                     try {
 			setEffectiveParty(Kernel.getSystemParty());
-			TransactionContext txn =SessionManager.getSession().getTransactionContext();
+			TransactionContext txn =
+                                SessionManager.getSession().getTransactionContext();
 			txn.beginTxn();
                 	    
                    	PostFileAttachment.removeUnattachedFiles();

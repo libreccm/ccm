@@ -24,10 +24,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Subject to change.
- *
  * A parameter that manages a collection of <code>Parameter</code> to
  * <code>Object</code> value mappings.
+ *
+ * Subject to change.
  *
  * @see java.util.Map
  * @see Parameter

@@ -30,18 +30,15 @@ import java.util.Timer;
 
 
 /**
- * The BuildIndex class provides methods to keep track of when
- * the index should be rebuilt and to automatically rebuild
- * the index.
+ * The BuildIndex class provides methods to keep track of when the index should
+ * be rebuilt and to automatically rebuild the index.
  *
- * All the methods in the class are called either directly or
- * indirectly from method checkState, which is called periodically by
- * a timer.  The object and timer are initialized at server startup by
- * a call to the Initializer (see Initializer.java) from
- * enterprise.init.
+ * All the methods in the class are called either directly or indirectly from
+ * method checkState, which is called periodically by a timer.
+ * The object and timer are initialized at server startup by the Initializer
+ * (see Initializer.java)
  *
- * A summary of how this class controls the index rebuilding is
- * given below:
+ * A summary of how this class controls the index rebuilding is given below:
  *
  * When content that is searchable is changed or added, the
  * SearchableObserver object for the content creates and saves
@@ -64,9 +61,9 @@ import java.util.Timer;
  * @author Jeff Teeters
  * @author Joseph Bank
  * @version 1.0
- **/
+ * @version $Id: BuildIndex.java 560 2005-06-10 17:01:14Z apevec $
+ */
 class BuildIndex {
-    public static final String versionId = "$Id: BuildIndex.java 560 2005-06-10 17:01:14Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Creates a s_logging category with name = to the full name of class
     private static final Logger s_log =
@@ -106,10 +103,9 @@ class BuildIndex {
 
     /**
      * setParametersValues - initialize delay and time values.
-     * Values must be specified in milliseconds.  This called by
-     * the Initializer and also by tests (which
-     * use values much shorter than the defaults).
-     **/
+     * Values must be specified in milliseconds. This called by the Initializer
+     * and also by tests (which use values much shorter than the defaults).
+     */
     static void setParameterValues(int timerDelay,
                                    int syncDelay,
                                    int maxSyncDelay,

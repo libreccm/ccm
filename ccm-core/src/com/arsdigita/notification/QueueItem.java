@@ -61,16 +61,14 @@ class QueueItem extends ObservableDomainObject
         new HtmlToText();
 
     /**
-     * The message object contained by this notification.  Retrieved
-     * once from the database and cached.
+     * The message object contained by this notification.  Retrieved once
+     * from the database and cached.
      */
-
     private Message m_message;
 
     /**
      * Creates a QueueItem from an OID.
      */
-
     QueueItem(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -78,7 +76,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Creates a QueueItem from a Notification and recipient.
      */
-
     QueueItem(Notification n, Party to) {
         super(BASE_DATA_OBJECT_TYPE);
         set(REQUEST_ID, n.getID());
@@ -88,7 +85,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Set the success flag for this notification.
      */
-
     void setSuccess(Boolean b) {
         set(SUCCESS, b);
     }
@@ -96,7 +92,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Gets the message object contained by this notification.
      */
-
     Message getMessage()
         throws DataObjectNotFoundException
     {
@@ -109,7 +104,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Returns the email address of the recipient as a String.
      */
-
     String getTo() {
         return (String) get(PARTY_TO_ADDR);
     }
@@ -117,7 +111,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Returns the email address of the sender as a String.
      */
-
     String getFrom()
         throws DataObjectNotFoundException
     {
@@ -127,7 +120,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Returns the subject of the notification.
      */
-
     String getSubject()
         throws DataObjectNotFoundException
     {
@@ -137,7 +129,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Gets the header for this notification.
      */
-
     private String getHeader() {
         return StringUtils.nullToEmptyString((String) get(HEADER));
     }
@@ -145,7 +136,6 @@ class QueueItem extends ObservableDomainObject
     /**
      * Gets the signature for this notification.
      */
-
     private String getSignature() {
         return StringUtils.nullToEmptyString((String) get(SIGNATURE));
     }
@@ -159,7 +149,6 @@ class QueueItem extends ObservableDomainObject
      *
      * @return a plain text message to send as email to a user
      */
-
     String getBody() throws DataObjectNotFoundException {
 
         Message msg = getMessage();
@@ -178,6 +167,10 @@ class QueueItem extends ObservableDomainObject
         return sb.toString();
     }
 
+    /**
+     * 
+     * @param mail
+     */
     void setBody(Mail mail) {
     	Message msg = getMessage();
     	String altBody = getBody();
@@ -206,7 +199,6 @@ class QueueItem extends ObservableDomainObject
      *
      * @param mail the Mail to add attachments to
      */
-
     void addAttachments(Mail mail)
         throws MessagingException
     {
@@ -229,18 +221,34 @@ class QueueItem extends ObservableDomainObject
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     BigDecimal getRetryCount() {
         return (BigDecimal) get(RETRY_COUNT);
     }
 
+    /**
+     * 
+     * @param i
+     */
     void setRetryCount(BigDecimal i) {
         set(RETRY_COUNT, i);
     }
 
+    /**
+     * 
+     */
     void incrRetryCount() {
         set(RETRY_COUNT, getRetryCount().add(new BigDecimal(1)));
     }
 
+    /**
+     * 
+     * @param body
+     * @return
+     */
     private StringBuffer qualifyImageTags (StringBuffer body) {
     	s_log.debug("qualify image tags");
     	boolean inTagTest = false;
@@ -258,8 +266,10 @@ class QueueItem extends ObservableDomainObject
     		    // start of an image attribute value  (or end)
     		    if (converted.toString().endsWith("src=" + nextChar)) {
     			s_log.debug("In fact, the start of the src attribute");
-    			converted.append("http://" + Web.getConfig().getServer().toString());
-    			s_log.debug("inserting server name " + Web.getConfig().getServer().toString());
+    			converted.append("http://" +
+                                Web.getConfig().getServer().toString());
+    			s_log.debug("inserting server name " +
+                                Web.getConfig().getServer().toString());
     			inImageTag = false;
     			inTagTest = false;
     		    }

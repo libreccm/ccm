@@ -402,7 +402,7 @@ public class SearchSpecification {
         //String sql_for_page = reformatSqlForPage(page);
         String sql_for_page = m_sql;
 
-        SearchDataQuery dq = new com.arsdigita.search.SearchDataQuery(
+        SearchDataQuery dq = new SearchDataQuery(
             SessionManager.getSession(),
             sql_for_page, m_columns);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -18,72 +18,74 @@
  */
 package com.arsdigita.cms.lifecycle;
 
-import com.arsdigita.initializer.Configuration;
-import com.arsdigita.initializer.InitializationException;
+import com.arsdigita.runtime.ContextInitEvent;
+import com.arsdigita.runtime.ContextCloseEvent;
+
 import org.apache.log4j.Logger;
 
 /**
- * Initializes the scheduler thread to fire all the events for the
- * lifecycles or phases that have just began or ended.
+ * Initializes the Lifecycle package.
  *
- * Where the initializer is registered, you need to include the
- * delay and frequency in seconds
+ * Initializes the scheduler thread to fire all the events for the lifecycles
+ * or phases that have just began or ended.
  *
- * @author Jack Chung
- * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * A value of 0 for the delay parameter (see below) disables LC background thread.
+ * This initializer is a sub-initializer of the cms initializer which adds it
+ * to the list of initializers to be executed
+ *
+ * @author Peter Boy (pboy@barkhof.uni-bremen.de)
+ * @version $Id: $
+ *
  */
+public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
-public class Initializer
-    implements com.arsdigita.initializer.Initializer {
+    // Creates a s_logging category with name = to the full name of class
+    public static final Logger s_log = Logger.getLogger(Initializer.class);
 
-    public static final String versionId = "$Id: Initializer.java 1292 2006-08-25 17:55:03Z apevec $ by $Author: apevec $, $DateTime: 2004/08/17 23:15:09 $";
-
-    private static Logger s_log =
-        Logger.getLogger(Initializer.class);
-
-    private Configuration m_conf = new Configuration();
-
-    private Scheduler scheduler;
-
-    public Initializer() throws InitializationException {
-        // XXX move to ccm registry
-        m_conf.initParameter("delay",
-                             "The delay of the scheduler in seconds, 0 to disable LC background thread",
-                             Integer.class);
-        m_conf.initParameter("frequency",
-                             "The frequency of the scheduler in seconds",
-                             Integer.class);
-    }
 
     /**
-     * Returns the configuration object used by this initializer.
-     **/
-    public Configuration getConfiguration() {
-        return m_conf;
+     * 
+     */
+    public Initializer() {
     }
 
 
     /**
-     * Called on startup.
-     **/
-    public void startup() {
+     * Implementation of the {@link Initializer#init(ContextInitEvent)}
+     * method.
+     *
+     * Initializes the scheduler thread to fire all the events for the
+     * lifecycles or phases that have just began or ended.
+     *
+     * A delay value of 0 inhibits start of processing.
+     * @param evt The context init event.
+     */
+    public void init(ContextInitEvent evt) {
+        s_log.debug("lifecycle background startup beginn.");
 
-        long delay = ((Integer) m_conf.getParameter("delay")).longValue();
-        long frequency = ((Integer) m_conf.getParameter("frequency")).longValue();
+        LifecycleConfig conf = LifecycleConfig.getConfig();
+        s_log.debug("lifecycle configuration loaded.");
+
+        Integer delay = conf.getDelay();
+            s_log.debug("delay configuration loaded. Value: " + delay  );
+        Integer frequency = conf.getFrequency();
+            s_log.debug("frequency configuration loaded. Value: " + frequency );
 
         if (delay > 0) {
-            Scheduler.s_timerDelay = delay * (long) 1000;
-            Scheduler.s_timerFrequency = frequency * (long) 1000;
+            Scheduler.setTimerDelay(delay);
+            Scheduler.setTimerFrequency(frequency);
             Scheduler.startTimer();
         }
-    }
+
+        s_log.debug("lifecycle background processing started");
+     }
 
     /**
-     * Called on shutdown. It's probably not a good idea to depend on this
-     * being called.
-     **/
-    public void shutdown() {
+     *
+     */
+    public void close(ContextCloseEvent evt) {
         Scheduler.stopTimer();
+        s_log.debug("lifecycle background processing stopped");
     }
 
 }

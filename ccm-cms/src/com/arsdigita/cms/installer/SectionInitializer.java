@@ -47,6 +47,11 @@ import java.util.Timer;
  * @author Daniel Berrange (berrange@redhat.com)
  * @author Michael Pih
  * @version $Revision: #43 $ $DateTime: 2004/08/17 23:15:09 $
+ *
+ * XXX As of version 6.5 (pboy):
+ * Commented out in cms.enterprise.init since several versions. Not invoked by
+ * any other package of trunk. Some Parameters (as ITEM_RESOLVER_CLASS) are
+ * configured in ContentSectionConfig.java as a temporary measure.
  */
 public class SectionInitializer extends com.arsdigita.kernel.BaseInitializer {
 

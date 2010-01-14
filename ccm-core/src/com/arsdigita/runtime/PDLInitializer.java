@@ -23,10 +23,11 @@ import com.arsdigita.persistence.pdl.PDLSource;
 
 
 /**
- * The PDLInitializer class provides an implementation of the {@link
- * Initializer} interface that works in conjunction with the {@link
- * PDLSource} interface and implementations thereof in order to
- * provide a convenient way to initialize object-relational metadata.
+ * Provides an implementation of the {@link Initializer} interface that works
+ * in conjunction with the {@link PDLSource} interface and implementations
+ * thereof in order to provide a convenient way to initialize object-relational
+ * metadata.
+ *
  * This class is most convenient when used in conjunction with the
  * {@link CompoundInitializer} class. For example:
  *
@@ -49,24 +50,21 @@ import com.arsdigita.persistence.pdl.PDLSource;
  * }
  * </blockquote>
  *
- * The class defined above will load all the object-relational
- * metadata for the current database referenced from the
- * example-app.pdl.mf manifest file.
+ * The class defined above will load all the object-relational metadata for the
+ * current database referenced from the example-app.pdl.mf manifest file.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: PDLInitializer.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class PDLInitializer implements Initializer {
 
-    public final static String versionId = "$Id: PDLInitializer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private final PDLSource m_source;
 
     /**
-     * Constructs a new implementation of the {@link Initializer}
-     * interface that will upon invokation load any object-relational
-     * metadata referenced by the given PDLSource.
+     * Constructs a new implementation of the {@link Initializer} interface
+     * that will upon invokation load any object-relational metadata
+     * referenced by the given PDLSource.
      *
      * @param source The object-relational metadata to load.
      **/
@@ -76,10 +74,9 @@ public class PDLInitializer implements Initializer {
     }
 
     /**
-     * An implementation of the {@link
-     * Initializer#init(DataInitEvent)} that loads the
-     * object-relational metadata from the PDLSource specified during
-     * construction of this PDLInitializer.
+     * An implementation of the {@link Initializer#init(DataInitEvent)} that
+     * loads the object-relational metadata from the PDLSource specified
+     * during construction of this PDLInitializer.
      **/
 
     public void init(DataInitEvent evt) {
@@ -100,6 +97,22 @@ public class PDLInitializer implements Initializer {
      **/
 
     public void init(LegacyInitEvent evt) {
+        // do nothing
+    }
+
+    /**
+     * An empty implementation of {@link Initializer#init(ContextInitEvent)}.
+     **/
+
+    public void init(ContextInitEvent evt) {
+        // do nothing
+    }
+
+    /**
+     * An empty implementation of {@link Initializer#close()}.
+     **/
+
+    public void close(ContextCloseEvent evt) {
         // do nothing
     }
 

@@ -90,11 +90,11 @@ public abstract class ThemeFileManager extends Thread implements ThemeConstants 
 
     /**
      * Stop watching and processing the file. The background thread that
-     * processes the file will terminate after this method has been
-     * called. Termination is not immediate, since the file may be in the
-     * middle of processing a block of entries.
+     * processes the file will terminate after this method has been called.
+     * Termination is not immediate, since the file may be in the middle of
+     * processing a block of entries.
      */
-    public void stopWatchingFiless() {
+    public void stopWatchingFiles() {
         m_keepWatchingFiles = false;
     }
 

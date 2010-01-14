@@ -40,7 +40,7 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
     public static final String[] EMPTY_ARRAY = new String[0];
 
     protected ContentTypeInitializer(final String manifestFile,
-                                  final String objectType) {
+                                     final String objectType) {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
@@ -53,6 +53,10 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
         m_objectType = objectType;
     }
 
+    /**
+     * 
+     * @param evt Type of initialization
+     */
     public void init(LegacyInitEvent evt) {
         super.init(evt);
 
@@ -87,10 +91,21 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
 
     }
 
+    /**
+     * Should be overwritten by each content type to provide its TraversalXML
+     * 
+     * @return
+     */
     public String getTraversalXML() {
         return "";
     }
 
+    /**
+     * Should be overwritten by each content types initializer to provide the
+     * correct location of is stylesheets.
+     * 
+     * @return
+     */
     public String[] getStylesheets() {
         return EMPTY_ARRAY;
     }

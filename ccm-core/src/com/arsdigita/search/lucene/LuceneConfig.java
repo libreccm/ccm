@@ -43,15 +43,6 @@ public class LuceneConfig extends AbstractConfig {
 
     private static LuceneConfig s_conf;
 
-    static synchronized LuceneConfig getConfig() {
-        if (s_conf == null) {
-            s_conf = new LuceneConfig();
-            s_conf.load();
-        }
-
-        return s_conf;
-    }
-
     private Class m_analyzerClass;
 
     private StringParameter m_location = new StringParameter
@@ -63,11 +54,23 @@ public class LuceneConfig extends AbstractConfig {
         ("waf.lucene.analyzer", Parameter.REQUIRED,
          "org.apache.lucene.analysis.standard.StandardAnalyzer");
 
+    /**
+     * Constructor - don't use it directly! Use getconfig()
+     */
     public LuceneConfig() {
         register(m_location);
         register(m_interval);
         register(m_analyzer);
         loadInfo();
+    }
+
+    static synchronized LuceneConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new LuceneConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
     }
 
     public String getIndexLocation() {

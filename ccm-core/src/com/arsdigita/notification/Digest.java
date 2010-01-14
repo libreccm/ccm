@@ -30,12 +30,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Models the envelope information associated with a
- * digest. When a digest is processed, all notifications associated
- * with it are grouped for delivery as a single unit to each receiver.
- * The outbound email generated for the receivers has a common
- * subject, header, separator between the individual messages, and
- * signature.
+ * Models the envelope information associated with a digest.
+ *
+ * When a digest is processed, all notifications associated with it are grouped
+ * for delivery as a single unit to each receiver. The outbound email generated
+ * for the receivers has a common subject, header, separator between the
+ * individual messages, and signature.
  *
  * @author Ron Henderson 
  * @author David Dao 
@@ -63,7 +63,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * consisting of 78 dashes (-).
      *
      */
-
     public Digest () {
         super(BASE_DATA_OBJECT_TYPE);
 
@@ -81,7 +80,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * @param header the common header
      * @param signature the common signature
      */
-
     public Digest (Party  from,
                    String subject,
                    String header,
@@ -89,10 +87,10 @@ public class Digest extends ACSObject implements NotificationConstants {
     {
         this();
         
-        Assert.assertNotNull(from, "Party from");
-        Assert.assertNotNull(subject, "String subject");
-        Assert.assertNotNull(header, "String header");
-        Assert.assertNotNull(signature, "String signature");
+        Assert.exists(from, "Party from");
+        Assert.exists(subject, "String subject");
+        Assert.exists(header, "String header");
+        Assert.exists(signature, "String signature");
 
         setFrom(from);
         setSubject(subject);
@@ -105,7 +103,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      *
      * @param oid the OID of the digest
      */
-
     public Digest (OID oid)
         throws DataObjectNotFoundException
     {
@@ -117,7 +114,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      *
      * @param dataObj the DataObject the Digest will wrap
      */
-
     public Digest(DataObject dataObj) {
         super(dataObj);
     }
@@ -127,7 +123,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      *
      * @param id the id for the DataObject to retrieve.
      */
-
     public Digest (BigDecimal id)
         throws DataObjectNotFoundException
     {
@@ -138,7 +133,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Gets the sender of the digest.
      * @return the sender.
      */
-
     public Party getFrom()
         throws DataObjectNotFoundException
     {
@@ -152,7 +146,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      *
      * @return the sender's email address as a String.
      */
-
     public String getFromEmail() {
         try {
             return getFrom().getPrimaryEmail().toString();
@@ -165,9 +158,8 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Sets the common sender for the digest.
      * @param from the common sender
      */
-
     public void setFrom (Party from) {
-        Assert.assertNotNull(from, "Party from");
+        Assert.exists(from, "Party from");
 
         set(PARTY_FROM, from.getID());
     }
@@ -176,7 +168,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Gets the common subject for the digest.
      * @return the common subject for the digest.
      */
-
     public String getSubject () {
         return (String) get(SUBJECT);
     }
@@ -185,7 +176,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Sets the common subject for the digest.
      * @param subject the common subject
      */
-
     public void setSubject (String subject) {
         set(SUBJECT, subject);
     }
@@ -194,7 +184,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Gets the common header for the digest.
      * @return the common header for the digest.
      */
-
     public String getHeader () {
         return (String) get(HEADER);
     }
@@ -203,7 +192,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Set the common header for the digest.
      * @param header the common header
      */
-
     public void setHeader (String header) {
         set(HEADER, header);
     }
@@ -212,7 +200,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Gets the current separator for elements of the digest.
      * @return the separator
      */
-
     public String getSeparator () {
         return (String) get(SEPARATOR);
     }
@@ -224,7 +211,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      *
      * @param separator the value of the separator
      */
-
     public void setSeparator (String separator) {
         set(SEPARATOR, separator);
     }
@@ -237,7 +223,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * @param s the separator character
      * @param n the repeat count
      */
-
     public void setSeparator (char s, int n) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < n; i++)
@@ -249,7 +234,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * Gets the signature used for this digest.
      * @return the signature for this digest.
      */
-
     public String getSignature () {
         return (String) get(SIGNATURE);
     }
@@ -259,7 +243,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      *
      * @param signature the signature for the digest
      */
-
     public void setSignature (String signature) {
         set(SIGNATURE, signature);
     }
@@ -269,7 +252,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * digest.
      * @return the processing frequency for this digest.
      */
-
     public Integer getFrequency () {
         return (Integer) get(FREQUENCY);
     }
@@ -279,7 +261,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      *
      * @param frequency the processing frequency in minutes
      */
-
     public void setFrequency (int frequency) {
         set(FREQUENCY, new Integer(frequency));
     }
@@ -287,7 +268,6 @@ public class Digest extends ACSObject implements NotificationConstants {
     /**
      * Sets the date when this digest will next be processed.
      */
-
     private void setNextRun (Date nextRun) {
         set(NEXT_RUN, nextRun);
     }
@@ -297,7 +277,6 @@ public class Digest extends ACSObject implements NotificationConstants {
         cal.add(Calendar.MINUTE, getFrequency().intValue());
         setNextRun(cal.getTime());
     }
-
     /**
      * Get the date when this digest will next be processed.
      */
@@ -311,7 +290,6 @@ public class Digest extends ACSObject implements NotificationConstants {
      * notifications.  Verifies that all required parameters have been
      * specified before saving.
      */
-
     protected void beforeSave() {
 
         String message =

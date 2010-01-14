@@ -66,6 +66,18 @@ final class Types {
     public final static Types STRING      = newType(14, "java.lang.String");
     public final static Types TIMESTAMP   = newType(15, "java.sql.Timestamp");
 
+    // XXX Quickfix:
+    // Method initialize() should only be run once.
+    // Originally it had been controlled by the package this.initializer,
+    // which uses the old initializer system and has been commented out in
+    // enterprise.ini for a long time.
+    // As a quick replacement we introduce the variable here.
+    // Fixme: It might be necessary to controle it by the core initializer, so
+    // CCM can be restarted in a servlet container using management extension
+    // (and without restarting the container itself).
+    // (2010-01-14, as of version 6.6.0)
+    private static boolean s_hasRun = false;
+
     private BigInteger m_id;
     private String m_name;
     private DataObject m_dobj;
@@ -105,13 +117,20 @@ final class Types {
     }
 
     static void initialize() {
-        if (Initializer.hasRun()) {
+        // XXX FixMe
+        // refers to the old style initializer of the package versioning which
+        // is commented out of the enterprise.ini file (since an unkown time,
+        // currently version 1.0.5
+        // Must be dealt with internally here!
+    //  if (Initializer.hasRun()) {
+        if ( s_hasRun ) {
             throw new IllegalStateException("can't be called more than once");
         }
         for (Iterator ii=s_typesByID.values().iterator(); ii.hasNext(); ) {
             Types type = (Types) ii.next();
             type.getDataObject();
         }
+        s_hasRun = true;
     }
 
     /**

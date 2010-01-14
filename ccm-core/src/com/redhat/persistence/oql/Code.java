@@ -566,7 +566,7 @@ public class Code {
         return names(cols(c, type), alias);
     }
 
-    private static Column[] cols(Constraint c, ObjectType type) {       
+    private static Column[] cols(Constraint c, ObjectType type) {
         Column[] cols = c.getColumns();
         Root root = type.getRoot();
         ObjectType basetype = type.getBasetype();

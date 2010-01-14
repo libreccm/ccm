@@ -18,45 +18,48 @@
  */
 package com.arsdigita.search;
 
-import com.arsdigita.initializer.Configuration;
-import com.arsdigita.initializer.InitializationException;
-
 import com.arsdigita.domain.GlobalObserverManager;
+import com.arsdigita.runtime.DomainInitEvent;
 
 import org.apache.log4j.Logger;
 
 /**
- * This initializer (which will soon go away) activates
- * the appropriate search engine.
- * There are no APIs intended for public use in this class
+ * Activates the appropriate search engine.
+ *
+ * There are no APIs intended for public use in this class.
+ *
+ * @author Peter Boy (pboy@barkhof.uni-bremen.de)
+ * @version $Id: $
  */
-@Deprecated
-public class Initializer
-    implements com.arsdigita.initializer.Initializer {
+public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
-    private Configuration m_conf = new Configuration();
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
 
-    private static final Logger s_log =
-        Logger.getLogger(Initializer.class);
 
-    public Initializer() throws InitializationException {
+    /**
+     * Default (empty) Constructor
+     */
+    public Initializer() {
     }
 
-    public Configuration getConfiguration() {
-        return m_conf;
-    }
 
-    public void startup() {
+    /**
+     * An implementation of {@link Initializer#init(DomainInitEvent)}.
+     *
+     * @param evt The domain init event.
+     **/
+    public void init(DomainInitEvent evt) {
+        s_log.debug("domain init procedure started ");
+
         if (Search.getConfig().getIndexerType().getObserver() != null) {
-            s_log.info("registering observer for indexer: " + Search.getConfig().getIndexerType());
+            s_log.info("registering observer for indexer: " +
+                       Search.getConfig().getIndexerType());
             GlobalObserverManager gom = GlobalObserverManager.getManager();
             gom.addObserver(new SearchObserver());
         } else {
             s_log.info("Not registering a search observer");
         }
-        
+
+        s_log.debug("domain init procedure finished ");
     }
-
-    public void shutdown() {}
-
 }

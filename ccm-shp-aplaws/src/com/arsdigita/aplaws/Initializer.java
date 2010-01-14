@@ -21,7 +21,10 @@ package com.arsdigita.aplaws;
 import com.arsdigita.categorization.Categorization;
 import com.arsdigita.london.terms.TermCategoryListener;
 import com.arsdigita.runtime.CompoundInitializer;
+import com.arsdigita.runtime.ContextCloseEvent;
+import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.runtime.LegacyInitEvent;
 import org.apache.log4j.Logger;
 
 import com.arsdigita.templating.PatternStylesheetResolver;
@@ -37,6 +40,17 @@ public class Initializer extends CompoundInitializer {
         (Initializer.class.getName());
 
 
+    /**
+     * An empty implementation of {@link Initializer#init(DataInitEvent)}.
+     */
+    public void init(DataInitEvent evt) {}
+
+
+    /**
+     * Package Implementation of  {@link Initializer#init(DomainInitEvent)}. 
+     * 
+     * @param evt
+     */
     public void init(DomainInitEvent evt) {
         super.init(evt);
 
@@ -47,4 +61,19 @@ public class Initializer extends CompoundInitializer {
             new WebAppPatternGenerator()
         );
     }
+
+    /**
+     * Implementation of the {@link Initializer#init(LegacyInitEvent)}
+     * method.
+     *
+     * @param evt The legacy init event.
+     **/
+    public void init(LegacyInitEvent evt) {
+      }
+
+    /**
+     * An empty implementation of {@link Initializer#close()}.
+     */
+    public void close(ContextCloseEvent evt) {}
+
 }

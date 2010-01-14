@@ -55,10 +55,9 @@ import com.arsdigita.util.StringUtils;
  * @see com.arsdigita.search.intermedia.SearchDataQuery
  *
  * @author Joseph A. Bank (jbank@alum.mit.edu)
- * @version 1.0
+ * @version $Id: SimpleSearchSpecification.java 1431 2007-02-05 16:40:16Z chrisgilbert23 $
  **/
 public class SimpleSearchSpecification extends SearchSpecification {
-    public static final String versionId = "$Id: SimpleSearchSpecification.java 1431 2007-02-05 16:40:16Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
     
     private static final Logger s_log = Logger.getLogger(SimpleSearchSpecification.class);
     final static String WORD_ESCAPE_BEGIN = "\"";
@@ -265,7 +264,7 @@ public class SimpleSearchSpecification extends SearchSpecification {
     public static String cleanSearchString(String searchString, String joinString) {
         StringBuffer sb = new StringBuffer();
         StringBuffer word_sb = new StringBuffer();
-        String stemmingOperator = Search.getConfig().includeStemming() ? "$" : "";
+        String stemmingOperator = IntermediaConfig.getConfig().includeStemming() ? "$" : "";
         boolean skip_whitespace = true;
         boolean in_quotes = false;
         String next_joinString = "";
@@ -337,7 +336,7 @@ public class SimpleSearchSpecification extends SearchSpecification {
     public DataQuery getPage(int page) {
         // Reformat SQL to specify the rows on the page
         String sql_for_page = reformatSqlForPage(page);
-        SearchDataQuery sdq = new com.arsdigita.search.SearchDataQuery(
+        SearchDataQuery sdq = new SearchDataQuery(
             SessionManager.getSession(),
             sql_for_page, s_columns);
         // XXX: Removed by rhs@mit.edu. See apology above.

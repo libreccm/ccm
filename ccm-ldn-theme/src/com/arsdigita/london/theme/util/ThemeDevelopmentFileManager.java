@@ -18,14 +18,14 @@ package com.arsdigita.london.theme.util;
 import com.arsdigita.london.theme.Theme;
 import com.arsdigita.london.theme.ThemeFile;
 import com.arsdigita.london.theme.ThemeFileCollection;
-import java.io.File;
-import org.apache.log4j.Logger;
+
 import java.io.File;
 
+import org.apache.log4j.Logger;
 
 /**
- *  Class for polling the database to look for new/updated development 
- *  files in the ThemeFile table.  
+ *  Class for polling the database to look for new/updated development files
+ *  in the ThemeFile table.  
  *
  *  For "development" files, it looks at every file in the db and, if
  *  the timestamp is after the timestamp of the file on the file system (or
@@ -57,11 +57,10 @@ public class ThemeDevelopmentFileManager extends ThemeFileManager {
 
     // is there a way to move this code up in to the parent class?
     /**
-     * Start watching the files.  This method spawns a
-     * background thread that looks for changes in files in the database 
-     * if there is not already a thread that has been spawned.  If there
-     * is already a running thread then this is a no-op that returns a
-     * reference to the running thread.
+     * Start watching the files. This method spawns a background thread that
+     * looks for changes in files in the database if there is not already a
+     * thread that has been spawned.  If there is already a running thread then
+     * this is a no-op that returns a reference to the running thread.
      *
      * The thread starts processing after <code>startupDelay</code> seconds. 
      * The db is checked for new/updated

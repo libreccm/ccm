@@ -24,7 +24,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.util.StringUtils;
+// import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
 
 import java.math.BigDecimal;
@@ -45,15 +45,12 @@ class SimpleQueueManager extends TimerTask
     implements NotificationConstants
 {
 
-    public static final String versionId = "$Id: SimpleQueueManager.java 1513 2007-03-22 09:09:03Z chrisgilbert23 $ by $Author: chrisgilbert23 $,  $Date: 2004/08/16 $";
-
     private static final Logger s_log =
         Logger.getLogger(SimpleQueueManager.class.getName());
 
     /**
      * Performs one sweep of the SimpleQueueManager.
      */
-
     public void run() {
 
         s_log.info("processing current requests");

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+              
   <ctd:content-type label="File Storage Item" 
               description="A File Storage item type" 
                objectType="com.arsdigita.cms.contenttypes.FileStorageItem" 

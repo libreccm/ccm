@@ -95,10 +95,6 @@ import org.apache.log4j.Logger;
  * @version $Id: ContentSectionConfig.java 1689 2007-10-26 11:06:23Z chrisg23 $
  */
 public final class ContentSectionConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: ContentSectionConfig.java 1689 2007-10-26 11:06:23Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger(ContentSectionConfig.class);
 
@@ -160,9 +156,7 @@ public final class ContentSectionConfig extends AbstractConfig {
      * @see ContentSection#getConfig()
      **/
     public ContentSectionConfig() {
-        m_templateRootPath = new StringParameter
-            ("com.arsdigita.cms.template_root_path",
-             Parameter.REQUIRED, "/packages/content-section/templates");
+
         m_defaultItemTemplatePath = new StringParameter
             ("com.arsdigita.cms.default_item_template_path",
              Parameter.REQUIRED, "/default/item.jsp");
@@ -172,11 +166,6 @@ public final class ContentSectionConfig extends AbstractConfig {
         m_languages = new StringParameter
             ("com.arsdigita.cms.languages",
              Parameter.REQUIRED, "en,de,fr,nl,it,pt,es");
-        m_publishToFileClass = new SpecificClassParameter
-            ("com.arsdigita.cms.publish_to_file_class",
-             Parameter.REQUIRED,
-             PublishToFile.class,
-             PublishToFileListener.class);
 
         m_linksOnlyInSameSubsite = new BooleanParameter
             ("com.arsdigita.cms.browse_links_in_same_subsite_only",
@@ -211,12 +200,9 @@ public final class ContentSectionConfig extends AbstractConfig {
              ItemCategoryForm.class,
              SimpleComponent.class);
 
-        // XXX: temporary parameter. will be removed when MapParameter
-        // works and the p2fs initializer is converted away from the
-        // legacy init
-        m_disableItemPfs = new BooleanParameter
-            ("com.arsdigita.cms.disable_item_pfs",
-             Parameter.REQUIRED, new Boolean(false));
+        m_templateRootPath = new StringParameter
+            ("com.arsdigita.cms.template_root_path",
+             Parameter.REQUIRED, "/packages/content-section/templates");
 
         // XXX: temporary parameter. will be removed when
         // SectionInitializer is replaced with a separate Section
@@ -374,10 +360,6 @@ public final class ContentSectionConfig extends AbstractConfig {
 		    	("com.arsdigita.cms.mandatory_descriptions",
 		    	Parameter.OPTIONAL, new Boolean(false));
 	
-	m_deleteLifecycleWhenComplete = new BooleanParameter
-		("com.arsdigita.cms.delete_lifecycle_when_complete",
-				Parameter.OPTIONAL, new Boolean(false));
-	
 	m_deleteExpiryNotificationsWhenSent = new BooleanParameter
 	("com.arsdigita.cms.delete_expiry_notification_when_sent",
 			Parameter.OPTIONAL, new Boolean(false));
@@ -408,6 +390,27 @@ public final class ContentSectionConfig extends AbstractConfig {
         		"com.arsdigita.cms.allow_content_create_in_section_listing",
         		Parameter.REQUIRED,
         		new Boolean(true));
+
+        // Lifecycle package
+
+	m_deleteLifecycleWhenComplete = new BooleanParameter
+		("com.arsdigita.cms.delete_lifecycle_when_complete",
+				Parameter.OPTIONAL, new Boolean(false));
+
+        // PublishToFile package
+        m_publishToFileClass = new SpecificClassParameter
+            ("com.arsdigita.cms.publish_to_file_class",
+             Parameter.REQUIRED,
+             PublishToFile.class,
+             PublishToFileListener.class);
+
+        // XXX: temporary parameter. will be removed when MapParameter
+        // works and the p2fs initializer is converted away from the
+        // legacy init
+        m_disableItemPfs = new BooleanParameter
+            ("com.arsdigita.cms.disable_item_pfs",
+             Parameter.REQUIRED, new Boolean(false));
+
 
         register(m_templateRootPath);
         register(m_defaultItemTemplatePath);

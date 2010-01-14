@@ -40,6 +40,8 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
+import com.arsdigita.runtime.ContextInitEvent;
+import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
@@ -55,10 +57,6 @@ import com.arsdigita.xml.XML;
  * @version $Id: Initializer.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-		"$Id: Initializer.java 1628 2007-09-17 08:10:40Z chrisg23 $"
-			+ "$Author: chrisg23 $"
-			+ "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 
@@ -83,29 +81,29 @@ public class Initializer extends CompoundInitializer {
                 }
             });
         e.getFactory().registerInstantiator(
-				Post.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new Post(dataObject);
-					}
-				});
+            Post.BASE_DATA_OBJECT_TYPE,
+	    new ACSObjectInstantiator() {
+	        public DomainObject doNewInstance(DataObject dataObject) {
+                    return new Post(dataObject);
+                }
+            });
 		
-		e.getFactory().registerInstantiator(
-				PostFileAttachment.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					protected DomainObject doNewInstance(DataObject dataObject) {
-						return new PostFileAttachment(dataObject);
-					}
-				});
+	e.getFactory().registerInstantiator(
+            PostFileAttachment.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                protected DomainObject doNewInstance(DataObject dataObject) {
+                    return new PostFileAttachment(dataObject);
+                }
+            });
 				
-		e.getFactory().registerInstantiator(
-				PostImageAttachment.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					protected DomainObject doNewInstance(DataObject dataObject) {
-						return new PostImageAttachment(dataObject);
-					}
-				});
-		e.getFactory().registerInstantiator(
+	e.getFactory().registerInstantiator(
+		PostImageAttachment.BASE_DATA_OBJECT_TYPE,
+		new ACSObjectInstantiator() {
+			protected DomainObject doNewInstance(DataObject dataObject) {
+				return new PostImageAttachment(dataObject);
+			}
+		});
+	e.getFactory().registerInstantiator(
             "com.arsdigita.forum.Inbox",
             new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
@@ -122,14 +120,14 @@ public class Initializer extends CompoundInitializer {
             });
 
         e.getFactory().registerInstantiator(
-				MyForumsPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					protected DomainObject doNewInstance(DataObject dataObject) {
-						return new MyForumsPortlet(dataObject);
-					}
-				});
+            MyForumsPortlet.BASE_DATA_OBJECT_TYPE,
+            new ACSObjectInstantiator() {
+                protected DomainObject doNewInstance(DataObject dataObject) {
+                    return new MyForumsPortlet(dataObject);
+                }
+            });
 
-		e.getFactory().registerInstantiator(
+        e.getFactory().registerInstantiator(
             ForumSubscription.BASE_DATA_OBJECT_TYPE,
             new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
@@ -150,13 +148,10 @@ public class Initializer extends CompoundInitializer {
         
         XML.parse(Forum.getConfig().getTraversalAdapters(),
                   new TraversalHandler());
-        
-
-                    
-        URLService.registerFinder(
-			ThreadedMessage.BASE_DATA_OBJECT_TYPE,
-			new PostFinder());
-		URLService.registerFinder(PostFileAttachment.BASE_DATA_OBJECT_TYPE,
+                            
+        URLService.registerFinder(ThreadedMessage.BASE_DATA_OBJECT_TYPE,
+                                  new PostFinder());
+        URLService.registerFinder(PostFileAttachment.BASE_DATA_OBJECT_TYPE,
                                   new PostFileAttachmentURLFinder());
 
         new ResourceTypeConfig(RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE) {
@@ -177,19 +172,19 @@ public class Initializer extends CompoundInitializer {
             }
         };
 
-		// chris.gilbert@westsussex.gov.uk
+        // chris.gilbert@westsussex.gov.uk
         // use new constructor that allows create form to be hidden from users
         // other than those with admin rights on parent app.
-		// Particularly appropriate for portlet where users customising their
-		// own homepage should NOT be allowed to create new forums
-		new ResourceTypeConfig(Forum.BASE_DATA_OBJECT_TYPE, 
+        // Particularly appropriate for portlet where users customising their
+        // own homepage should NOT be allowed to create new forums
+        new ResourceTypeConfig(Forum.BASE_DATA_OBJECT_TYPE,
                                 PrivilegeDescriptor.ADMIN,
                                 PrivilegeDescriptor.READ) {
             public ResourceConfigFormSection getCreateFormSection
 				(final ResourceType resType,
 				final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
-					new ApplicationConfigFormSection(resType, parentAppRL, true);
+                    new ApplicationConfigFormSection(resType, parentAppRL, true);
                 
                 return config;
             }
@@ -204,22 +199,30 @@ public class Initializer extends CompoundInitializer {
             }
         };
 
-
-		MetadataProviderRegistry.registerAdapter(Post.BASE_DATA_OBJECT_TYPE,
-                                                 new PostMetadataProvider());
-		MetadataProviderRegistry.registerAdapter(PostFileAttachment.BASE_DATA_OBJECT_TYPE,
-                                                 new FileAttachmentMetadataProvider());
+        MetadataProviderRegistry.registerAdapter(
+                Post.BASE_DATA_OBJECT_TYPE,
+                new PostMetadataProvider());
+        MetadataProviderRegistry.registerAdapter(
+                PostFileAttachment.BASE_DATA_OBJECT_TYPE,
+                new FileAttachmentMetadataProvider());
 		
-	}
-
-	public void init(LegacyInitEvent e) {
-		super.init(e);
-		
-		if (RuntimeConfig.getConfig().runBackGroundTasks()) {
-			RemoveUnattachedAssetsScheduler.startTimer();
     }
-	
 
-	}
+    public void init(LegacyInitEvent e) {
+        super.init(e);
+		
+        if (RuntimeConfig.getConfig().runBackGroundTasks()) {
+            RemoveUnattachedAssetsScheduler.startTimer();
+        }
+	
+    }
+
+    public void close(ContextCloseEvent e) {
+
+        if (RuntimeConfig.getConfig().runBackGroundTasks()) {
+            RemoveUnattachedAssetsScheduler.startTimer();
+        }
+
+    }
 
 }

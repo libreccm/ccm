@@ -21,20 +21,15 @@ package com.arsdigita.runtime;
 import com.arsdigita.persistence.pdl.PDLCompiler;
 
 /**
- * A DataInitEvent is passed to the {@link
- * Initializer#init(DataInitEvent)} method in order to provide the
- * target Initializer access to the objects necessary to properly
- * initialize the data layer.
+ * A DataInitEvent is passed to the {@link Initializer#init(DataInitEvent)}
+ * method in order to provide the target Initializer access to the objects
+ * necessary to properly initialize the data layer.
  *
  * @author Rafael Schloming &lt;rhs@mit.edu&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: DataInitEvent.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class DataInitEvent {
-    public final static String versionId =
-        "$Id: DataInitEvent.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private final PDLCompiler m_compiler;
 

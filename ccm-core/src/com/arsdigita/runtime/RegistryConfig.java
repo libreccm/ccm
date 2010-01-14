@@ -36,14 +36,9 @@ import java.net.URL;
  * waf.config.parents :
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: RegistryConfig.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class RegistryConfig extends AbstractConfig {
-
-    public final static String versionId = 
-            "$Id: RegistryConfig.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static String[] array(String str) {
         if (str == null) {

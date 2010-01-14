@@ -35,8 +35,7 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: CompoundInitializer.java 287 2005-02-22 00:29:02Z sskracic $
- **/
-
+ */
 public class CompoundInitializer implements Initializer {
 
     private static final Logger s_log = 
@@ -48,8 +47,7 @@ public class CompoundInitializer implements Initializer {
 
     /**
      * Creates a new and empty compound initializer.
-     **/
-
+     */
     public CompoundInitializer() {
         this(s_log);
     }
@@ -60,33 +58,30 @@ public class CompoundInitializer implements Initializer {
      *
      * @param log A logger to be used for logging progress through
      *            initialization.
-     **/
-
+     */
     public CompoundInitializer(Logger log) {
         m_log = log;
     }
 
     /**
-     * Adds <code>init</code> to the set of initializers to be
-     * initialized by this CompoundInitializer. The most recently
-     * added initializers will be invoked last.
+     * Adds <code>init</code> to the set of initializers to be initialized by
+     * this CompoundInitializer. 
+     * 
+     * The most recently added initializers will be invoked last.
      *
      * @param init The initializer to add to this CompoundInitializer
-     **/
-
+     */
     public void add(Initializer init) {
         m_inits.add(init);
     }
 
     /**
-     * Implementation of the {@link Initializer#init(DataInitEvent)}
-     * method. This implementation proceeds through the list of sub
-     * initializers in order and invokes the init(DataInitEvent)
-     * method of each sub initializer in turn.
+     * Implementation of the {@link Initializer#init(DataInitEvent)} method.
+     * This implementation proceeds through the list of sub initializers in order
+     * and invokes the init(DataInitEvent) method of each sub initializer in turn.
      *
      * @param evt The data init event.
-     **/
-
+     */
     public void init(DataInitEvent evt) {
         int i = 1;
         for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
@@ -100,14 +95,13 @@ public class CompoundInitializer implements Initializer {
     }
 
     /**
-     * Implementation of the {@link Initializer#init(DomainInitEvent)}
-     * method. This implementation proceeds through the list of sub
-     * initializers in order and invokes the init(DomainInitEvent)
-     * method of each sub initializer in turn.
+     * Implementation of the {@link Initializer#init(DomainInitEvent)} method.
+     * This implementation proceeds through the list of sub initializers in
+     * order and invokes the init(DomainInitEvent) method of each sub initializer
+     * in turn.
      *
      * @param evt The domain init event.
-     **/
-
+     */
     public void init(DomainInitEvent evt) {
         int i = 1;
         for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
@@ -121,14 +115,13 @@ public class CompoundInitializer implements Initializer {
     }
 
     /**
-     * Implementation of the {@link Initializer#init(LegacyInitEvent)}
-     * method. This implementation proceeds through the list of sub
-     * initializers in order and invokes the init(LegacyInitEvent)
-     * method of each sub initializer in turn.
+     * Implementation of the {@link Initializer#init(LegacyInitEvent)} method.
+     * This implementation proceeds through the list of sub initializers in
+     * order and invokes the init(LegacyInitEvent) method of each sub initializer
+     * in turn.
      *
      * @param evt The legacy init event.
-     **/
-
+     */
     public void init(LegacyInitEvent evt) {
         int i = 1;
         for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
@@ -139,6 +132,54 @@ public class CompoundInitializer implements Initializer {
             }
             init.init(evt);
         }
+    }
+
+    /**
+     * Implementation of the {@link Initializer#init(ContextInitEvent)} method.
+     * This implementation proceeds through the list of sub initializers in
+     * order and invokes the init(LegacyInitEvent) method of each sub initializer
+     * in turn.
+     *
+     * @param evt The legacy init event.
+     */
+    public void init(ContextInitEvent evt) {
+        int i = 1;
+        for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
+            Initializer init = (Initializer) it.next();
+            if (m_log.isInfoEnabled()) {
+                m_log.info("Running Context Init for " + init.getClass() +
+                           " (" + i + " out of " + m_inits.size() + ")");
+            }
+            init.init(evt);
+        }
+    }
+
+    /**
+     * Implementation of the {@link Initializer#close(ContextCloseEvent)} method.
+     *
+     * This implementation proceeds through the list of sub initializers in order
+     * and invokes the close(ContextCloseEvent) method of each sub initializer
+     * in turn.
+     *
+     *
+     * @param evt The context close event.
+     */
+    public void close(ContextCloseEvent evt) {
+        s_log.info("CompoundInitializer.close(ContextCloseEvent) invoked");
+
+        if (m_inits.isEmpty()) {
+            s_log.info("m_inits is empty");
+        }
+        int i = 1;
+        for (Iterator it = m_inits.iterator(); it.hasNext(); i++) {
+            Initializer init = (Initializer) it.next();
+            if (m_log.isInfoEnabled()) {
+                m_log.info("Closing " + init.getClass() +
+                           " (" + i + " out of " + m_inits.size() + ")");
+            }
+            init.close(null);
+        }
+        s_log.info("CompoundInitializer.close(ContextCloseEvent) completed");
     }
 
 }

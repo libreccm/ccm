@@ -91,19 +91,19 @@ public class Search {
                              CACHE_SIZE,
                              CACHE_LIFETIME);
     
-    /**
-     * Constant for intermedia search indexer
-     * @deprecated use IndexerType.INTERMEDIA.getKey()
-     */
-    public static final String INDEXER_INTERMEDIA = 
-        IndexerType.INTERMEDIA.getKey();
+//  /**
+//   * Constant for intermedia search indexer
+//   * @deprecated use IndexerType.INTERMEDIA.getKey()
+//   */
+//  public static final String INDEXER_INTERMEDIA =
+//      IndexerType.INTERMEDIA.getKey();
 
-    /**
-     * Constant for lucene search indexer
-     * @deprecated use IndexerType.LUCENE.getKey()
-     */
-    public static final String INDEXER_LUCENE = 
-        IndexerType.LUCENE.getKey();
+//  /**
+//   * Constant for lucene search indexer
+//   * @deprecated use IndexerType.LUCENE.getKey()
+//   */
+//  public static final String INDEXER_LUCENE =
+//      IndexerType.LUCENE.getKey();
     
     /**
      * Constant for serach XML namespace prefix

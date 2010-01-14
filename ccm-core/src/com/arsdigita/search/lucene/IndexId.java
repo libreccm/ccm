@@ -45,6 +45,7 @@ class IndexId extends DomainObject {
 
     private IndexId() {
         super(SessionManager.getSession().create(oid()));
+        s_log.debug( "Constructor invoked. "  );
         set(HOST, getHost());
 
         int id = 0;
@@ -60,14 +61,16 @@ class IndexId extends DomainObject {
 
         ids.close();
 
-        Assert.truth(id >= 0, "id greater than or equal to 0");
-        Assert.truth(id <= 30, "id less than or equal to 30");
+        Assert.isTrue(id >= 0, "id greater than or equal to 0");
+        Assert.isTrue(id <= 30, "id less than or equal to 30");
 
         set(INDEX_ID, new Integer(id));
 
         if( s_log.isDebugEnabled() ) {
             s_log.debug( "New Index ID " + id );
         }
+        s_log.debug( "Constructor finished. "  );
+
     }
 
     private static OID oid() {
@@ -88,9 +91,18 @@ class IndexId extends DomainObject {
 
     static class LoaderImpl implements Initializer.Loader {
         public void load() {
+            s_log.debug( "LoadImpl.load() invoked. "  );
+
             if (IndexId.retrieveIndexID() == null ) {
+                s_log.debug( "Invoking IndexId(). "  );
                 new IndexId();
-            }
+                s_log.debug( "IndexId() has been invoked. "  ); }
+             else {
+                s_log.debug( "IndexId() has been skipped. "  );
+             }
+            
+            s_log.debug( "LoadImpl.load() finished. "  );
         }
     }
+
 }

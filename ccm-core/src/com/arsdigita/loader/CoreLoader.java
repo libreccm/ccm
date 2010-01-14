@@ -210,7 +210,21 @@ public class CoreLoader extends PackageLoader {
             Host.create(hhost.getName(), hhost.getPort());
         }
 
+        // Loader for lucene search engine.
+        // Used to invoke static class LoaderImpl - method load() in
+        // com.arsdigita.search.lucene.IndexId. Same procedure is invoked by
+        // the initializer each time the system starts. So it's redundant here.
+        // Using initializer code is favourable because it may be conditionally 
+        // performed, depending on configuration (Lucene or Intermedia).
+        // But the currently given implementation requires the the loader
+        // instruction here to let the code initialization time (i.e. at each
+        // startup) work properly. If left out here instantiation in
+        // c.ad.search.lucene.Initializer (public final static Loader LOADER)
+        // doesn't work!
         com.arsdigita.search.lucene.Initializer.LOADER.load();
+        //
+        // As of version 6.6.0 release 2 refactored to the new initializer system
+        //--com.arsdigita.search.lucene.LegacyInitializer.LOADER.load();
     }
 
     private SiteNode loadKernel() {

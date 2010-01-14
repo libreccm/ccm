@@ -20,12 +20,12 @@ package com.arsdigita.persistence;
 
 import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.pdl.PDLCompiler;
-import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.RuntimeConfig;
+
 import java.io.StringReader;
 import org.apache.log4j.Logger;
+
 import org.apache.log4j.Level;
 
 /**
@@ -35,21 +35,19 @@ import org.apache.log4j.Level;
  * @version $Revision: #23 $ $Date: 2004/08/16 $
  **/
 
-public class Initializer implements com.arsdigita.runtime.Initializer {
+public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
     private static final Logger s_log =
         Logger.getLogger(Initializer.class.getName());
 
-    public void init(DataInitEvent evt) { }
-
     /**
-     * Sets up the session and loads the persistence metadata from a
-     * file somewhere in your classpath. The name of the file to which
-     * to search for is defined by the metadataXmlFileName
-     * initialization parameter.
+     * Sets up the session and loads the persistence metadata from a file
+     * somewhere in your classpath. The name of the file to which to search for
+     * is defined by the metadataXmlFileName initialization parameter.
      **/
     public void init(DomainInitEvent evt) {
-        com.redhat.persistence.oql.Query.setQueryCacheSize( RuntimeConfig.getConfig().getQueryCacheSize() );
+        com.redhat.persistence.oql.Query.setQueryCacheSize(
+                                RuntimeConfig.getConfig().getQueryCacheSize() );
 
         // Finally the files out of the database
         TransactionContext txn = null;
@@ -125,5 +123,4 @@ public class Initializer implements com.arsdigita.runtime.Initializer {
         }
     }
 
-    public void init(LegacyInitEvent evt) { }
 }

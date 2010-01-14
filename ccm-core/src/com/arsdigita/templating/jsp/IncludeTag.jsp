@@ -12,7 +12,7 @@ import javax.servlet.jsp.*;
  *
  * <p>Usage:</p>
  *
- * <pre><code>&lt;acs:include path="path/to/component.jsp" />
+ * <pre>&lt;acs:include path="path/to/component.jsp" /&gt; </pre>
  **/
 public class IncludeTag extends TagSupport {
 

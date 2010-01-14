@@ -51,6 +51,17 @@ final class EventType {
 
     private final static String DATA_TYPE = Constants.PDL_MODEL + ".EventType";
 
+    // Method initialize() should only be run once.
+    // Originally it had been controlled by the package this.initializer,
+    // which uses the old initializer system and has been commented out in
+    // enterprise.ini for a long time.
+    // As a quick replacement we introduce the variable here.
+    // Fixme: It might be necessary to controle it by the core initializer, so
+    // CCM can be restarted in a servlet container using management extension
+    // (and without restarting the container itself).
+    // (2010-01-14, as of version 6.6.0)
+    private static boolean s_hasRun = false;
+
     private final BigInteger m_id;
     private final String m_name;
 
@@ -67,13 +78,20 @@ final class EventType {
     }
 
     static void initialize() {
-        if (Initializer.hasRun()) {
-            throw new IllegalStateException("can't be called more than once");
+        // XXX FixMe
+        // refers to the old style initializer of the package versioning which
+        // is commented out of the enterprise.ini file (since an unkown time,
+        // currently version 1.0.5
+        // Must be dealt with internally here!
+    //  if (Initializer.hasRun()) {
+        if ( s_hasRun ) {
+           throw new IllegalStateException("can't be called more than once");
         }
         for (Iterator ii=s_types.values().iterator(); ii.hasNext(); ) {
             EventType type = (EventType) ii.next();
             type.getDataObject();
         }
+        s_hasRun = true;
     }
 
     synchronized DataObject getDataObject() {

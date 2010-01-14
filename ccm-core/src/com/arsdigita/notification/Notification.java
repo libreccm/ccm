@@ -82,15 +82,14 @@ import java.util.Date;
  * @version $Id: Notification.java 1641 2007-09-17 13:46:27Z chrisg23 $ */
 
 public class Notification extends ACSObject implements NotificationConstants {
-    // Base DataObject type
 
+    // Base DataObject type
     public static final String BASE_DATA_OBJECT_TYPE =
         Notification.class.getName();
 
     /**
-     * Creates an empty <code>Notification</code>.  This constructor
-     * is invoked by all others to initialize the following default
-     * parameters:
+     * Creates an empty <code>Notification</code>.  This constructor is invoked
+     * by all others to initialize the following default parameters:
      *
      * <ol>
      * <li>REQUEST_DATE to the current time
@@ -104,7 +103,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * constructor or by calling the appropriate methods to change
      * these parameter settings.
      */
-
     public Notification() {
         super(BASE_DATA_OBJECT_TYPE);
 
@@ -116,8 +114,8 @@ public class Notification extends ACSObject implements NotificationConstants {
     }
 
     /**
-     * Creates a notification by supplying the digest, sender,
-     * receiver, subject, and body of the message.
+     * Creates a notification by supplying the digest, sender, receiver,
+     * subject, and body of the message.
      *
      * @param digest the digest this notification is part of
      * @param to the party receiving the message
@@ -125,7 +123,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * @param subject the subject of the message
      * @param body the body of the message
      */
-
     public Notification(Digest digest, Party to, Party from,
                         String subject, String body) {
         this(to,from,subject,body);
@@ -133,34 +130,31 @@ public class Notification extends ACSObject implements NotificationConstants {
     }
 
     /**
-     * Creates a notification by supplying the digest, the receiver, and an existing
-     * message to send.
+     * Creates a notification by supplying the digest, the receiver, and an
+     * existing message to send.
      *
      * @param digest notification belongs to this digest
      * @param to the party recieving the message
      * @param msg the message to send
      */
-
     public Notification(Digest digest, Party to, Message msg) {
         this(to,msg);
         setDigest(digest);
     }
 
     /**
-     * Creates a notification by supplying the sender, receiver,
-     * subject, and body of the message.  Creates an internal {@link Message}
-     * object to store this information and sets the MessageDelete
-     * flag to <code>true</code> so the internal object is deleted when
-     * the notification is deleted.  Also sets the isPermanent flag to
-     * <code>false</code> so the notification will be deleted after
-     * processing.
+     * Creates a notification by supplying the sender, receiver, subject, and
+     * body of the message.  Creates an internal {@link Message} object to store
+     * this information and sets the MessageDelete flag to <code>true</code> so
+     * the internal object is deleted when the notification is deleted.
+     * Also sets the isPermanent flag to <code>false</code> so the
+     * notification will be deleted after processing.
      *
      * @param to the party receiving the message
      * @param from the party sending the message
      * @param subject the subject of the message
      * @param body the body of the message
      */
-
     public Notification(Party to, Party from, String subject, String body) {
         this();
 
@@ -174,13 +168,12 @@ public class Notification extends ACSObject implements NotificationConstants {
 
     /**
      * Creates a notification by supplying the receiver and an existing
-     * message to send. All other information (subject, body, and
-     * sender) is encapsulated by the message.
+     * message to send. All other information (subject, body, and sender)
+     * is encapsulated by the message.
      *
      * @param to the party recieving the message
      * @param msg the message to send
      */
-
     public Notification(Party to, Message msg) {
         this();
 
@@ -190,12 +183,10 @@ public class Notification extends ACSObject implements NotificationConstants {
 
 
     /**
-     * Retrieves an existing notification from the database using its
-     * OID.
+     * Retrieves an existing notification from the database using its OID.
      *
      * @param oid the OID of the notification
      */
-
     public Notification(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -206,7 +197,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      *
      * @param id the BigDecimal ID of the notification
      */
-
     public Notification(BigDecimal id) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE,id));
     }
@@ -215,7 +205,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * Sets the sender of the notification.
      * @param to the sender of the notification
      */
-
     public void setTo(Party to) {
         set(PARTY_TO, to.getID());
     }
@@ -224,7 +213,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * Gets the message object contained by this notification, which
      * may be null.
      */
-
     private Message getMessage() {
         BigDecimal id = (BigDecimal) get(MESSAGE_ID);
         Message msg = null;
@@ -247,7 +235,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * Note: should we disable this for anything not isNew()?
      * @param msg the message of this notification
      */
-
     public void setMessage(Message msg) {
 
         if (msg.isNew()) {
@@ -260,7 +247,6 @@ public class Notification extends ACSObject implements NotificationConstants {
     /**
      * Get the status of this notification.
      */
-
     public String getStatus() {
         return (String) get(STATUS);
     }
@@ -273,13 +259,12 @@ public class Notification extends ACSObject implements NotificationConstants {
     }
 
     /**
-     * Gets the flag for whether this notification remains in the
-     * database after processing.
+     * Gets the flag for whether this notification remains in the database
+     * after processing.
      *
-     * @return <code>true</code> if this notification remains in the
-     * database after processing; <code>false</code> otherwise.
+     * @return <code>true</code> if this notification remains in the database
+     * after processing; <code>false</code> otherwise.
      */
-
     public Boolean getIsPermanent() {
         return new Boolean(!((Boolean) get(EXPUNGE_P)).booleanValue());
     }
@@ -292,7 +277,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * @param permanent <code>true</code> if this notification should
      * remain in the database after processing
      */
-
     public void setIsPermanent(Boolean permanent) {
         set(EXPUNGE_P, new Boolean(!permanent.booleanValue()));
     }
@@ -302,7 +286,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * @return <code>true</code> if the MessageDelete flag is set;
      * <code>false</code> otherwise.
      */
-
     public Boolean getMessageDelete() {
         return (Boolean) get(EXPUNGE_MSG_P);
     }
@@ -313,7 +296,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * @param value <code>true</code> if the underlying message should be
      * deleted when this request is deleted
      */
-
     public void setMessageDelete(Boolean value) {
         set(EXPUNGE_MSG_P, value);
     }
@@ -340,7 +322,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * @return the digest of this notification, or null if
      * there is no digest.
      */
-
     public Digest getDigest()
         throws DataObjectNotFoundException
     {
@@ -358,7 +339,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      *
      * @param digest the digest this message belongs to
      */
-
     public void setDigest(Digest digest) {
         set(DIGEST_ID, digest.getID());
     }
@@ -398,7 +378,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * @param header the header of the alert
      * @since 4.8.1
      */
-
     public void setHeader(String header) {
         set(HEADER, header);
     }
@@ -411,19 +390,17 @@ public class Notification extends ACSObject implements NotificationConstants {
      * @param signature the signature of the alert
      * @since 4.8.1
      */
-
     public void setSignature(String signature) {
         set(SIGNATURE, signature);
     }
 
     /**
-     * Returns <code>true</code> if the primary MIME type of the
-     * contained message matches the specified MIME type. Always
-     * returns false if a message has not been specified.
+     * Returns <code>true</code> if the primary MIME type of the contained
+     * message matches the specified MIME type. Always returns false if a
+     * message has not been specified.
      *
      * @return true if the contained Message is of the specified type.
      */
-
     private boolean isMimeType(String type) {
         Message msg = getMessage();
         if (msg == null) {
@@ -435,9 +412,8 @@ public class Notification extends ACSObject implements NotificationConstants {
 
     protected void beforeSave() {
 
-        // Check to see if we need to save the underlying
-        // message. This could be the case if we generated an internal
-        // message.
+        // Check to see if we need to save the underlying message. This
+        // could be the case if we generated an internal message.
 
         Message msg = getMessage();
         if (msg != null) {
@@ -455,7 +431,6 @@ public class Notification extends ACSObject implements NotificationConstants {
      * Deletes the notification.  This also checks to see if the
      * corresponding message should be deleted at the same time.
      */
-
     public void delete() {
 
         boolean msgDelete = getMessageDelete().booleanValue();

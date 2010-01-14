@@ -64,221 +64,228 @@ import com.arsdigita.xml.XML;
  * @version $Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $
  */
 public class Initializer extends CompoundInitializer {
-	// public final static String versionId = "$Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $"
-	//		+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
 
-	private static final Logger s_log = Logger.getLogger(Initializer.class);
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
 
-	public Initializer() {
+    /**
+     * Constructor
+     * 
+     */
+    public Initializer() {
 		final String url = RuntimeConfig.getConfig().getJDBCURL();
 		final int database = DbHelper.getDatabaseFromURL(url);
 
 		add(new PDLInitializer(new ManifestSource("ccm-ldn-portal.pdl.mf",
-				new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
-	}
+				new NameFilter(DbHelper.getDatabaseSuffix(database),
+                                "pdl"))));
+    }
 
-	public void init(DomainInitEvent e) {
-		super.init(e);
+    /**
+     * 
+     * @param e
+     */
+    public void init(DomainInitEvent e) {
 
-		XML.parse(Workspace.getConfig().getTraversalAdapters(),
-				new TraversalHandler());
+        super.init(e);
 
-		e.getFactory().registerInstantiator(Workspace.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new Workspace(dataObject);
-					}
-				});
+	XML.parse(Workspace.getConfig().getTraversalAdapters(),
+                  new TraversalHandler());
 
-		e.getFactory().registerInstantiator(
-				WorkspacePage.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new WorkspacePage(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                Workspace.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new Workspace(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(PageLayout.BASE_DATA_OBJECT_TYPE,
-				new DomainObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new PageLayout(dataObject);
-					}
-				});
+	e.getFactory().registerInstantiator(
+                WorkspacePage.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new WorkspacePage(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new ApplicationDirectoryPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                PageLayout.BASE_DATA_OBJECT_TYPE,
+                new DomainObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new PageLayout(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new ContentDirectoryPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+		ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new ApplicationDirectoryPortlet(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new WorkspaceDirectoryPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new ContentDirectoryPortlet(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new FreeformHTMLPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new WorkspaceDirectoryPortlet(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(LoginPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new LoginPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new FreeformHTMLPortlet(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new TimeOfDayPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(LoginPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                            return new LoginPortlet(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				RSSFeedPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new RSSFeedPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                   public DomainObject doNewInstance(DataObject dataObject) {
+                       return new TimeOfDayPortlet(dataObject);
+                   }
+                });
 
-		e.getFactory().registerInstantiator(
-				MyWorkspacesPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new MyWorkspacesPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                RSSFeedPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new RSSFeedPortlet(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				WorkspaceNavigatorPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new WorkspaceNavigatorPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                MyWorkspacesPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new MyWorkspacesPortlet(dataObject);
+                    }
+                });
 
-		e.getFactory().registerInstantiator(
-				WorkspaceSummaryPortlet.BASE_DATA_OBJECT_TYPE,
-				new ACSObjectInstantiator() {
-					public DomainObject doNewInstance(DataObject dataObject) {
-						return new WorkspaceSummaryPortlet(dataObject);
-					}
-				});
+        e.getFactory().registerInstantiator(
+                WorkspaceNavigatorPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new WorkspaceNavigatorPortlet(dataObject);
+                    }
+                });
 
-		new ResourceTypeConfig(Workspace.BASE_DATA_OBJECT_TYPE) {
-			public ResourceConfigFormSection getCreateFormSection(
-					final ResourceType resType, final RequestLocal parentAppRL) {
-				final ResourceConfigFormSection config = new WorkspaceConfigFormSection(
-						resType, parentAppRL);
+        e.getFactory().registerInstantiator(
+                WorkspaceSummaryPortlet.BASE_DATA_OBJECT_TYPE,
+                new ACSObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new WorkspaceSummaryPortlet(dataObject);
+                    }
+                });
 
-				return config;
-			}
+        new ResourceTypeConfig(Workspace.BASE_DATA_OBJECT_TYPE) {
+                public ResourceConfigFormSection getCreateFormSection(
+                            final ResourceType resType,
+                            final RequestLocal parentAppRL) {
+                    final ResourceConfigFormSection config =
+                            new WorkspaceConfigFormSection(resType, parentAppRL);
+                    return config;
+                 }
 
-			public ResourceConfigFormSection getModifyFormSection(
-					final RequestLocal application) {
-				final ResourceConfigFormSection config = new WorkspaceConfigFormSection(
-						application);
+                public ResourceConfigFormSection getModifyFormSection(
+                            final RequestLocal application) {
+                    final ResourceConfigFormSection config =
+                            new WorkspaceConfigFormSection(application);
+                    return config;
+                }
+        };
 
-				return config;
-			}
-		};
+        new ResourceTypeConfig(ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE) {
+                public ResourceConfigFormSection getCreateFormSection(
+                            final ResourceType resType,
+                            final RequestLocal parentAppRL) {
+                    final ResourceConfigFormSection config =
+                            new ContentDirectoryPortletEditor(resType,
+						              parentAppRL);
+                    return config;
+                }
 
-		new ResourceTypeConfig(ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE) {
-			public ResourceConfigFormSection getCreateFormSection(
-					final ResourceType resType, final RequestLocal parentAppRL) {
-				final ResourceConfigFormSection config = new ContentDirectoryPortletEditor(
-						resType, parentAppRL);
-
-				return config;
-			}
-
-			public ResourceConfigFormSection getModifyFormSection(
-					final RequestLocal application) {
-				final ContentDirectoryPortletEditor config = new ContentDirectoryPortletEditor(
-						application);
-
-				return config;
-			}
-		};
+                public ResourceConfigFormSection getModifyFormSection(
+                            final RequestLocal application) {
+                    final ContentDirectoryPortletEditor config =
+                            new ContentDirectoryPortletEditor(application);
+                    return config;
+                }
+        };
 		
-		new ResourceTypeConfig(RSSFeedPortlet.BASE_DATA_OBJECT_TYPE) {
-			public ResourceConfigFormSection getCreateFormSection(
-					final ResourceType resType, final RequestLocal parentAppRL) {
-				final RSSFeedPortletEditorForm config = new RSSFeedPortletEditorForm(
-						resType, parentAppRL);
+        new ResourceTypeConfig(RSSFeedPortlet.BASE_DATA_OBJECT_TYPE) {
+                public ResourceConfigFormSection getCreateFormSection(
+                            final ResourceType resType,
+                            final RequestLocal parentAppRL) {
+                    final RSSFeedPortletEditorForm config =
+                            new RSSFeedPortletEditorForm(resType, parentAppRL);
+                    return config;
+                }
 
-				return config;
-			}
+                public ResourceConfigFormSection getModifyFormSection(
+                            final RequestLocal application) {
+                    final RSSFeedPortletEditorForm config =
+                            new RSSFeedPortletEditorForm(application);
+                    return config;
+                }
 
-			public ResourceConfigFormSection getModifyFormSection(
-					final RequestLocal application) {
-				final RSSFeedPortletEditorForm config = new RSSFeedPortletEditorForm(
-						application);
+                public ResourceConfigComponent getCreateComponent(
+                            final ResourceType resType,
+                            final RequestLocal parentAppRL) {
+                    final ResourceConfigComponent config =
+                            new RSSFeedPortletEditor(resType, parentAppRL);
+                    return config;
+                }
 
-				return config;
-			}
+                public ResourceConfigComponent getModifyComponent(
+                            final RequestLocal application) {
+                    final RSSFeedPortletEditor config =
+                            new RSSFeedPortletEditor(application);
+                    return config;
+                }
+        };
 
-			public ResourceConfigComponent getCreateComponent(
-					final ResourceType resType, final RequestLocal parentAppRL) {
-				final ResourceConfigComponent config = new RSSFeedPortletEditor(
-						resType, parentAppRL);
+        new ResourceTypeConfig(FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE) {
+                public ResourceConfigFormSection getCreateFormSection(
+                            final ResourceType resType,
+                            final RequestLocal parentAppRL) {
+                    final ResourceConfigFormSection config =
+                            new FreeformHTMLPortletEditor(resType, parentAppRL);
+                    return config;
+                }
 
-				return config;
-			}
+                public ResourceConfigFormSection getModifyFormSection(
+                            final RequestLocal application) {
+                    final FreeformHTMLPortletEditor config =
+                            new FreeformHTMLPortletEditor(application);
+                    return config;
+                }
+        };
 
-			public ResourceConfigComponent getModifyComponent(
-					final RequestLocal application) {
-				final RSSFeedPortletEditor config = new RSSFeedPortletEditor(
-						application);
+        NavigationDirectoryPortlet.registerInstantiator();
+        NavigationDirectoryPortlet.registerResourceTypeConfig();
 
-				return config;
-			}
-		};
-		new ResourceTypeConfig(FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE) {
-			public ResourceConfigFormSection getCreateFormSection(
-					final ResourceType resType, final RequestLocal parentAppRL) {
-				final ResourceConfigFormSection config = new FreeformHTMLPortletEditor(
-						resType, parentAppRL);
+        FlashPortletInitializer.initialize();
 
-				return config;
-			}
-
-			public ResourceConfigFormSection getModifyFormSection(
-					final RequestLocal application) {
-				final FreeformHTMLPortletEditor config = new FreeformHTMLPortletEditor(
-						application);
-
-				return config;
-			}
-		};
-
-        	NavigationDirectoryPortlet.registerInstantiator();
-        	NavigationDirectoryPortlet.registerResourceTypeConfig();
-
-        	FlashPortletInitializer.initialize();
-
-            // import from london.navigation required 
-            // causes horizontal dependency between portal and navigation
-            ApplicationNavigationModel.register(Workspace.class.getName(),
-				new DefaultNavigationModel());
-	}
+        // import from london.navigation required 
+        // causes horizontal dependency between portal and navigation
+        ApplicationNavigationModel.register(Workspace.class.getName(),
+				            new DefaultNavigationModel());
+    }
 }

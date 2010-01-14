@@ -31,10 +31,6 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @version $Id: SingletonParameter.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public class SingletonParameter extends ClassParameter {
-    public final static String versionId =
-        "$Id: SingletonParameter.java 738 2005-09-01 12:36:52Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     public SingletonParameter(final String name) {
         super(name);

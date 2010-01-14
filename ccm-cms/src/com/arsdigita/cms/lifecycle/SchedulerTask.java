@@ -25,17 +25,19 @@ import java.util.TimerTask;
 
 
 /**
- * The SchedulerTask class provides the method that is scheduled
- * by the timer created by Scheduler.  It simply calls the
- * run method of Scheduler.
+ * The SchedulerTask class provides the method that is scheduled by the timer
+ * created by Scheduler.  It simply calls the run method of Scheduler.
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #7 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SchedulerTask.java 754 2005-09-02 13:26:17Z sskracic $
  **/
 class SchedulerTask extends TimerTask {
 
-    public static final String versionId = "$Id: SchedulerTask.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     private static final Logger s_log = Logger.getLogger(SchedulerTask.class);
+
+    /**
+     * 
+     */
     public void run() {
         try {
             Scheduler.run();

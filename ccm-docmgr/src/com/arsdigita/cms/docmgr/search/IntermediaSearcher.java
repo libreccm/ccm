@@ -15,9 +15,9 @@ import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.search.SearchDataQuery;
-import com.arsdigita.search.SearchSpecification;
-import com.arsdigita.search.SimpleSearchSpecification;
+import com.arsdigita.search.intermedia.SearchDataQuery;
+import com.arsdigita.search.intermedia.SearchSpecification;
+import com.arsdigita.search.intermedia.SimpleSearchSpecification;
 import com.arsdigita.util.StringUtils;
 
 /**

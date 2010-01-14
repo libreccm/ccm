@@ -59,6 +59,17 @@ final class VersioningEventProcessor extends EventProcessor
     private final static Logger s_log =
         Logger.getLogger(VersioningEventProcessor.class);
 
+    // VersioningEventProcessor should only be run once.
+    // Originally it had been controlled by the package this.initializer,
+    // which uses the old initializer system and has been commented out in
+    // enterprise.ini for a long time.
+    // As a quick replacement we introduce the variable here.
+    // Fixme: It might be necessary to controle it by the core initializer, so
+    // CCM can be restarted in a servlet container using management extension
+    // (and without restarting the container itself).
+    // (2010-01-14, as of version 6.6.0)
+    private static final boolean s_hasRun = false;
+
     private Event.Switch m_switch;
     private VersioningTxn m_vTxn;
     private boolean m_suspended;
@@ -175,7 +186,13 @@ final class VersioningEventProcessor extends EventProcessor
     }
 
     private boolean canBeIgnored(ObjectEvent ev) {
-        if ( !Initializer.hasRun() ) { return true; }
+        // XXX FixMe
+        // refers to the old style initializer of the package versioning which
+        // is commented out of the enterprise.ini file (since an unkown time,
+        // currently version 1.0.5
+        // Must be dealt with internally here!
+    //  if ( !Initializer.hasRun() ) { return true; }
+        if ( !s_hasRun ) { return true; }
         if ( m_suspended ) { return true; }
 
         final ObjectType objType = functions.getObjectType(ev);

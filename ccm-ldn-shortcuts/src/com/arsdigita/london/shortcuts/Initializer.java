@@ -41,11 +41,10 @@ import com.arsdigita.runtime.DomainInitEvent;
  * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/01/23 10:22:44 $";
 
+    /**
+     * Constructor
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -56,6 +55,10 @@ public class Initializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
+    /**
+     * Implementation of the init(DomainInitEvent) initializer.
+     * @param e
+     */
     public void init(DomainInitEvent e) {
         super.init(e);
 

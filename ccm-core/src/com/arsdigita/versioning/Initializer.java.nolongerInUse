@@ -21,6 +21,8 @@ package com.arsdigita.versioning;
 import com.arsdigita.initializer.Configuration;
 import com.arsdigita.initializer.InitializationException;
 
+import org.apache.log4j.Logger;
+
 /**
  * Sets up observers and initializes a few disconnected data objects needed by
  * versioning.
@@ -34,6 +36,8 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
     private static final String DEBUG_ON = "debugInterfaceOn";
     private static boolean s_hasRun = false;
 
+    private static final Logger s_log = Logger.getLogger(Initializer.class);
+
     public Initializer() throws InitializationException {
         m_conf.initParameter(DEBUG_ON,
                              "Enable/disable the versioning servlet.",
@@ -42,10 +46,12 @@ public class Initializer implements com.arsdigita.initializer.Initializer {
     }
 
     public Configuration getConfiguration() {
+        s_log.debug("Versioning Initializer configuration loading.");
         return m_conf;
     }
 
     public void startup() throws InitializationException {
+        s_log.debug("Versioning Initializer is loading.");
         EventType.initialize();
         Types.initialize();
         s_hasRun = true;

@@ -1,4 +1,8 @@
-// init com.arsdigita.versioning.Initializer { }
+//  ccm.core.enterprise.init
+//
+//  Old initialization prozess configuration file.
+//
+
 
 init com.arsdigita.globalization.Initializer {
     // See http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc
@@ -40,70 +44,15 @@ init com.arsdigita.kernel.security.Initializer {
 
 }
 
-//  As of version 6.5.x still in use!
-//  May be ommitted if ccm-ldn-search is used which sets the search engine
-//  by its own (Lucene)
-init com.arsdigita.search.Initializer {}
 
-// As of version 6.5.x still in use!
-// Comment in to use intermedia search
-//init com.arsdigita.search.intermedia.Initializer {
-//    timerDelay         = 60;    // Parameters for search timer/indexing
-//    syncDelay          = 60;    // All units are time in seconds
-//    maxSyncDelay       = 7200;  // see com.arsdigita.search.BuildIndex.java
-//    maxIndexingTime    = 7200;  // for definitions
-//    indexingRetryDelay = 60;
-//}
-
-//  As of version 6.5.x still in use!
-init com.arsdigita.search.lucene.Initializer {}
-
-// As of version 6.5.x still in use!
-init com.arsdigita.notification.Initializer {
-    RequestManagerDelay  = 900; // in seconds
-    RequestManagerPeriod = 900; // in seconds
-    SimpleQueueDelay     = 900; // in seconds
-    SimpleQueuePeriod    = 900; // in seconds
-    DigestQueueDelay     = 900; // in seconds
-    DigestQueuePeriod    = 900; // in seconds
+// Set to true when using intermedia search
+init com.arsdigita.mimetypes.MimeTypeInitializer {
+    INSOFilterEnabled = false;
 }
 
-// init com.arsdigita.categorization.dispatch.Initializer { }
-
-// The formbuilder application is now deprecated and will
-// be removed in the next release. Use the FormItem content
-// type instead
-// init com.arsdigita.formbuilder.Initializer { }
-
-// This is an example initializer for populating
-// the BebopObjectType & MetaObject stores
-//init com.arsdigita.formbuilder.installer.Initializer {
-//    widgetTypes = {
-//        { "forms", "Checkbox group", "Checkbox groups", 
-//          "com.arsdigita.formbuilder.PersistentCheckboxGroup",
-//          "com.arsdigita.formbuilder.ui.editors.CheckboxGroupEditor" },
-//        { "forms", "Date field", "Date fields", 
-//          "com.arsdigita.formbuilder.PersistentDate",
-//          "com.arsdigita.formbuilder.ui.editors.DateForm" }
-//    };
-//    processListenerTypes = {
-//        { "forms", "Confirmation email", "Confirmation emails",
-//          "com.arsdigita.formbuilder.actions.ConfirmEmailListener",
-//          "com.arsdigita.formbuilder.ui.editors.ConfirmEmailForm" },
-//        { "forms", "URL redirect", "URL redirects",
-//          "com.arsdigita.formbuilder.actions.ConfirmRedirectListener",
-//          "com.arsdigita.formbuilder.ui.editors.ConfirmRedirectForm" }
-//    };
-//    dataQueries = {
-//        { "forms", "com.arsdigita.formbuilder.DataQueryUsers", 
-//          "List of all registered users" },
-//        { "forms", "com.arsdigita.formbuilder.DataQueryPackages", 
-//          "List of all installed packages" }
-//    };
-//}
 
 
-init com.arsdigita.webdevsupport.Initializer { 
+init com.arsdigita.webdevsupport.Initializer {
   active = false;
 }
 
@@ -124,6 +73,84 @@ init com.arsdigita.ui.Initializer {
 //    { "right", "com.arsdigita.x.y.z" }
   };
 
+}
+
+init com.arsdigita.portal.Initializer { }
+
+
+// The formbuilder application is now deprecated and will
+// be removed in the next release. Use the FormItem content
+// type instead
+// Method commend says:
+//  /**
+//   * Called on startup. Note. As you can not find a call
+//   * to this method in enterprise.ini, this method
+//   * may appear to execute mysteriously.
+//   * However, the process that runs through enterprise.ini
+//   * automitically calls the startup() method of any
+//   * class that implements com.arsdigita.util.initializer.Initializer
+//   * present in enterprise.ini
+//   **/
+// Has to be checked in detail. As of version 6.5 a lot of packages nevertheless 
+// are using it!
+//
+// init com.arsdigita.formbuilder.Initializer { }
+
+// This is an example initializer for populating
+// the BebopObjectType & MetaObject stores
+//init com.arsdigita.formbuilder.installer.Initializer {
+//    widgetTypes = {
+//        { "forms", "Checkbox group", "Checkbox groups",
+//          "com.arsdigita.formbuilder.PersistentCheckboxGroup",
+//          "com.arsdigita.formbuilder.ui.editors.CheckboxGroupEditor" },
+//        { "forms", "Date field", "Date fields",
+//          "com.arsdigita.formbuilder.PersistentDate",
+//          "com.arsdigita.formbuilder.ui.editors.DateForm" }
+//    };
+//    processListenerTypes = {
+//        { "forms", "Confirmation email", "Confirmation emails",
+//          "com.arsdigita.formbuilder.actions.ConfirmEmailListener",
+//          "com.arsdigita.formbuilder.ui.editors.ConfirmEmailForm" },
+//        { "forms", "URL redirect", "URL redirects",
+//          "com.arsdigita.formbuilder.actions.ConfirmRedirectListener",
+//          "com.arsdigita.formbuilder.ui.editors.ConfirmRedirectForm" }
+//    };
+//    dataQueries = {
+//        { "forms", "com.arsdigita.formbuilder.DataQueryUsers",
+//          "List of all registered users" },
+//        { "forms", "com.arsdigita.formbuilder.DataQueryPackages",
+//          "List of all installed packages" }
+//    };
+//}
+
+// init com.arsdigita.populate.apps.Initializer {
+//     numApps=3;
+//     PopulateAppPair = {
+// 	//populateForum args: numPosts, numMsgs per post
+// 	{ "com.arsdigita.forum.PopulateForum", {3, 5}},
+// 	//populateDocmgr args: numFolderLevels, numFolders, numFiles
+// 	{ "com.arsdigita.docmgr.PopulateDocmgr", {3, 2, 2}},
+//  	//populateFaq args: numQuestions
+//  	{ "com.arsdigita.faq.PopulateFaq", {5}},
+//  	//populateGlossary args: numWords
+//  	{ "com.arsdigita.glossary.PopulateGlossary", {5}},
+//  	//populateBookmarks args: numBookmarks
+//  	{ "com.arsdigita.bookmarks.PopulateBookmarks", {5}}
+//     };
+// }
+
+
+// /////////////////////////////////////////////////////////////////
+//
+//    Initializer definitely replaced by new initialization system
+//
+// /////////////////////////////////////////////////////////////////
+
+// Move configuration options to enterprise.init.nolongerInUse
+
+// no longer used - old versioning system?
+// init com.arsdigita.versioning.Initializer { }
+
 //  Application specific page components
 //  applicationLayouts = {
 //    { "forums",
@@ -143,30 +170,3 @@ init com.arsdigita.ui.Initializer {
 //      }
 //    }
 //  };
-}
-
-init com.arsdigita.portal.Initializer { }
-
-// init com.arsdigita.localization.demo.Initializer { }
-// init com.arsdigita.bebop.jsp.Initializer { }
-
-// Set to true when using intermedia search
-init com.arsdigita.mimetypes.MimeTypeInitializer {
-    INSOFilterEnabled = false;
-}
-
-// init com.arsdigita.populate.apps.Initializer {
-//     numApps=3;
-//     PopulateAppPair = {
-// 	//populateForum args: numPosts, numMsgs per post
-// 	{ "com.arsdigita.forum.PopulateForum", {3, 5}},
-// 	//populateDocmgr args: numFolderLevels, numFolders, numFiles
-// 	{ "com.arsdigita.docmgr.PopulateDocmgr", {3, 2, 2}},
-//  	//populateFaq args: numQuestions
-//  	{ "com.arsdigita.faq.PopulateFaq", {5}},
-//  	//populateGlossary args: numWords
-//  	{ "com.arsdigita.glossary.PopulateGlossary", {5}},
-//  	//populateBookmarks args: numBookmarks
-//  	{ "com.arsdigita.bookmarks.PopulateBookmarks", {5}}
-//     };
-// }

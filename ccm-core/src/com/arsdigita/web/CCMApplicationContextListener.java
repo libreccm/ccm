@@ -1,18 +1,18 @@
 /*
  * Copyright (C) 2008-2009 Peter Boy, pboy@zes.uni-bremen.de All Rights Reserved.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the
+ * Free Software Foundation; either version 2.1 of the License, or (at your
+ * option) any later version.
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
@@ -20,7 +20,9 @@
 package com.arsdigita.web;
 
 import com.arsdigita.runtime.CCMResourceManager;
-import com.arsdigita.runtime.Startup;
+import com.arsdigita.runtime.ContextCloseEvent;
+import com.arsdigita.runtime.ContextInitEvent;
+import com.arsdigita.runtime.Runtime;
 // import com.arsdigita.util.ResourceManager;
 import com.arsdigita.xml.FactoriesSetup;
 
@@ -39,8 +41,8 @@ import org.apache.log4j.PropertyConfigurator;
  * the database connection.
  *
  * The methods of this classes are by definition only invoked by the servlet
- * container / web application server, not by any servlet or java class of the
- * application itself! Invokation is managed by the deployment descriptor.
+ * container / web application server, not by any servlet or java class of 
+ * the application itself! Invokation is managed by the deployment descriptor.
  *
  * Note! Don't forget to configure it in web.xml deployment descriptor!
  *   <listener>
@@ -52,11 +54,14 @@ import org.apache.log4j.PropertyConfigurator;
  * tags and before the servlet tags!
  *
  * @author pboy
+ * @version  $Id: $
  */
 
 public class CCMApplicationContextListener implements ServletContextListener {
 
     private static Logger s_log = Logger.getLogger(CCMApplicationContextListener.class);
+
+    private static Runtime runtime ;
 
     /**
      * Used to initialize classes at startup of the application, most of which
@@ -71,7 +76,6 @@ public class CCMApplicationContextListener implements ServletContextListener {
      * @param applicationStartEvent
      */
     public void contextInitialized(ServletContextEvent applicationStartEvent) {
-        // throw new UnsupportedOperationException("Not supported yet.");
 
         /**
          * Fully qualified path name to application base in the servers file system
@@ -114,28 +118,30 @@ public class CCMApplicationContextListener implements ServletContextListener {
 
         // Central startup procedure, initialize the database and
         // domain coupling machinary
-        Startup startup = new Startup();
-        if ( !startup.hasRun() ) {
-            startup.run();
+        // Runtime runtime = new Runtime();
+        runtime = new Runtime();
+        if ( !runtime.hasRun() ) {
+            runtime.startup( new ContextInitEvent(applicationStartEvent));
         }
-
-
 
     }
 
     /**
-     * Not used yet.
+     * 
      * 
      * @param applicationEndEvent
      */
     public void contextDestroyed(ServletContextEvent applicationEndEvent) {
-        // throw new UnsupportedOperationException("Not supported yet.");
         s_log.info("Shutdown procedure started.");
 
-        // do nothing at the moment
+        // Central shutdown procedure, used to clean up any runtime resources.
+        // Runtime runtime = new Runtime();
+        if ( runtime.hasRun() ) {
+            s_log.info("hasRun() returned true, shutdown procedure started.");
+            runtime.shutdown( new ContextCloseEvent(applicationEndEvent));
+        }
 
         s_log.info("CCM Application shut down.");
         LogManager.shutdown();
-
     }
 }

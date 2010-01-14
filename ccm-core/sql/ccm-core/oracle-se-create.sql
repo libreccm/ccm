@@ -14,6 +14,9 @@
 -- You should have received a copy of the GNU Lesser General Public
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+--
+-- $Id: oracle-se-create.sql 1704 2008-06-08 14:45:43Z pboy $
+-- $DateTime: 2004/08/16 18:10:38 $
 
 @@ oracle-se/function-currentDate.sql
 

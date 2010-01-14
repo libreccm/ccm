@@ -24,7 +24,7 @@ import com.arsdigita.bebop.event.ParameterListener;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.cms.docmgr.search.IntermediaSearcher;
 import com.arsdigita.cms.docmgr.search.SearchUtils;
-import com.arsdigita.search.SimpleSearchSpecification;
+import com.arsdigita.search.intermedia.SimpleSearchSpecification;
 import com.arsdigita.util.StringUtils;
 
 

@@ -23,6 +23,9 @@ import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 
+// Support for Logging.
+import org.apache.log4j.Logger;
+
 /**
  * SyncInitializer
  *
@@ -33,10 +36,9 @@ import com.arsdigita.persistence.TransactionContext;
  * or it doesn't.
  *
  * @author David Eison
- * @version $Revision: #4 $ */
+ * @version $Id: $
+ */
 
-// Support for Logging.
-import org.apache.log4j.Logger;
 
 public class SyncInitializer
     implements com.arsdigita.initializer.Initializer {
@@ -44,9 +46,7 @@ public class SyncInitializer
     private Configuration m_conf = new Configuration();
 
     private static final Logger s_log =
-        Logger.getLogger(Initializer.class);
-
-    public final static String versionId = "$Id";
+        Logger.getLogger(SyncInitializer.class);
 
     public SyncInitializer() throws InitializationException {
     }

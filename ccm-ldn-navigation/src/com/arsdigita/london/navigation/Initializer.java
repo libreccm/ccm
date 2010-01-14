@@ -84,13 +84,12 @@ import com.arsdigita.xml.XML;
  * @version $Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
- // public final static String versionId =
- //     "$Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $" +
- //     "$Author: sskracic $" +
- //     "$DateTime: 2004/03/15 11:10:54 $";
 
     public static final Logger s_log = Logger.getLogger(Initializer.class);
 
+    /**
+     * Constructor
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -302,8 +301,8 @@ public class Initializer extends CompoundInitializer {
                         s_log.info("Application path is " + appURL);
                     }
 
-                    Assert.truth(appURL.startsWith("/"), "url starts with '/'");
-                    Assert.truth(appURL.endsWith("/"), "url ends with '/'");
+                    Assert.isTrue(appURL.startsWith("/"), "url starts with '/'");
+                    Assert.isTrue(appURL.endsWith("/"), "url ends with '/'");
 
                     ParameterMap map = new ParameterMap();
                     String path;

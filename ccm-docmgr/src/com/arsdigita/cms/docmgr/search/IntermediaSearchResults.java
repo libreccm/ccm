@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import com.arsdigita.cms.docmgr.ui.DMConstants;
-import com.arsdigita.search.SearchDataQuery;
+import com.arsdigita.search.intermedia.SearchDataQuery;
 
 
 /**

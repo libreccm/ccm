@@ -46,8 +46,6 @@ import org.apache.log4j.Logger;
  */
 public class ContentPage extends ContentItem { 
 
-    public static final String versionId = "$Id: ContentPage.java 1263 2006-07-17 08:18:47Z cgyg9330 $ by $Author: cgyg9330 $, $DateTime: 2004/08/17 23:15:09 $";
-
     private static final Logger s_log = Logger.getLogger(ContentPage.class);
 
     public static final String BASE_DATA_OBJECT_TYPE =
@@ -56,7 +54,7 @@ public class ContentPage extends ContentItem {
     public static final String TITLE = "title";
     public static final String SUMMARY = "summary";
     public static final String LAUNCH_DATE = "launchDate";
-	public static final String DESCRIPTION = "pageDescription";
+    public static final String DESCRIPTION = "pageDescription";
 
 
     protected static final String PAGES_IN_FOLDER =

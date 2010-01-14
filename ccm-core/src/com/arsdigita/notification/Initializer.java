@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -18,14 +18,19 @@
  */
 package com.arsdigita.notification;
 
+import com.arsdigita.runtime.ContextCloseEvent;
+import com.arsdigita.runtime.ContextInitEvent;
+import com.arsdigita.runtime.GenericInitializer;
+
 import java.util.Timer;
-import com.arsdigita.initializer.Configuration;
-import com.arsdigita.initializer.InitializationException;
+
 import org.apache.log4j.Logger;
 
 /**
- * Initializes three timer tasks to maintain the notification
- * service. These tasks handle the following:
+ * Initializes the Notification package.
+ *
+ * Initializes three timer tasks to maintain the notification service. These
+ * tasks handle the following:
  * <UL>
  * <LI><b>RequestManager</b> schedules new requests for a notification
  * in the outbound mail queue, and updates the status of items in the
@@ -38,146 +43,89 @@ import org.apache.log4j.Logger;
  * mail queue that are part of a digest.
  * </ul>
  *
- * @author David Dao 
- * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
- * @since
+ * @author David Dao
+ * @author Peter Boy (pboy@barkhof.uni-bremen.de)
+ * @version $Id: $
  */
+public class Initializer extends GenericInitializer {
 
-public class Initializer
-    implements NotificationParameters,
-               com.arsdigita.initializer.Initializer
-{
+    // Creates a s_logging category with name = to the full name of class
+    public static final Logger s_log = Logger.getLogger(Initializer.class);
 
-    public static final String versionId = "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    // Timer threads.  Each one is started as a daemon.
     /**
-     * For logging.
+     * Schedules new requests for a notification in the outbound mail queue
+     * and updates the status of items in the request table that have already
+     * been processed..
      */
-
-    private static final Logger s_log =
-        Logger.getLogger(Initializer.class);
-
-    /**
-     * Configuration.
-     */
-
-    private Configuration m_conf = new Configuration();
+    private static Timer NotificationRequestManagerTimer = new Timer(true);
 
     /**
-     * Timer threads.  Each one is started as a daemon.
+     * Processes messages in the outbound mail queue that are part of a digest.
      */
-
-    private static Timer timer0 = new Timer(true);
-    private static Timer timer1 = new Timer(true);
-    private static Timer timer2 = new Timer(true);
-
-    public Initializer() throws InitializationException {
-        m_conf.initParameter(REQUEST_MANAGER_DELAY,
-                             REQUEST_MANAGER_DELAY_DESCRIPTION,
-                             Integer.class,
-                             new Integer(0));
-
-        m_conf.initParameter(REQUEST_MANAGER_PERIOD,
-                             REQUEST_MANAGER_PERIOD_DESCRIPTION,
-                             Integer.class,
-                             new Integer(900));
-
-        m_conf.initParameter(SIMPLE_QUEUE_DELAY,
-                             SIMPLE_QUEUE_DELAY_DESCRIPTION,
-                             Integer.class,
-                             new Integer(0));
-
-        m_conf.initParameter(SIMPLE_QUEUE_PERIOD,
-                             SIMPLE_QUEUE_PERIOD_DESCRIPTION,
-                             Integer.class,
-                             new Integer(900));
+    private static Timer NotificationDigestQueueTimer = new Timer(true);
+    
+    /**
+     * processes messages in the outbound mail queue that are not part of a digest.
+     */
+    private static Timer NotificationSimpleQueueTimer = new Timer(true);
 
 
-        m_conf.initParameter(DIGEST_QUEUE_DELAY,
-                             DIGEST_QUEUE_DELAY_DESCRIPTION,
-                             Integer.class,
-                             new Integer(0));
-
-        m_conf.initParameter(DIGEST_QUEUE_PERIOD,
-                             DIGEST_QUEUE_PERIOD_DESCRIPTION,
-                             Integer.class,
-                             new Integer(900));
+    /**
+     * Default (empty) Constructor
+     */
+    public Initializer() {
+//      s_log.debug("notification initializer instantiated.");
     }
 
     /**
-     * Returns the configuration object used by this initializer.
-     */
-
-    public final Configuration getConfiguration() {
-        return m_conf;
-    }
-
-    /**
-     * Starts up the notification service.
-     */
-
-    public void startup() {
-
-        timer0.scheduleAtFixedRate(new DigestQueueManager(),
-                                   getTimeMsec(DIGEST_QUEUE_DELAY),
-                                   getTimeMsec(DIGEST_QUEUE_PERIOD));
-
-        timer1.scheduleAtFixedRate(new SimpleQueueManager(),
-                                    getTimeMsec(SIMPLE_QUEUE_DELAY),
-                                    getTimeMsec(SIMPLE_QUEUE_PERIOD));
-
-        timer2.scheduleAtFixedRate(new RequestManager(),
-                                    getTimeMsec(REQUEST_MANAGER_DELAY),
-                                    getTimeMsec(REQUEST_MANAGER_PERIOD));
-    }
-
-    /**
-     * Helper method to lookup a timing key and convert its value to
-     * milliseconds.
+     * Implementation of the {@link Initializer#init(ContextInitEvent)}.
      *
-     * @param key is the configuration parameter key
-     */
+     * Start various background threads for notification service which are
+     * needed for a proper servlet container context operation.
+     *
+     * @param evt The context init event.
+     **/
+    public void init(ContextInitEvent evt) {
+        s_log.debug("notification background startup begin.");
 
-    private long getTimeMsec(String key) {
-        return ((Integer) m_conf.getParameter(key)).longValue() * 1000L;
+        NotificationConfig conf = NotificationConfig.getConfig();
+        s_log.debug("Notification configuration loaded.");
+
+        NotificationRequestManagerTimer.scheduleAtFixedRate(
+                                   new RequestManager(),
+                                   conf.getRequestManagerDelay(),
+                                   conf.getRequestManagerPeriod()
+                                  );
+
+        NotificationDigestQueueTimer.scheduleAtFixedRate(
+                                new DigestQueueManager(),
+                                conf.getDigestQueueDelay(),
+                                conf.getDigestQueuePeriod()
+                               );
+
+        NotificationSimpleQueueTimer.scheduleAtFixedRate(
+                                new SimpleQueueManager(),
+                                conf.getSimpleQueueDelay(),
+                                conf.getSimpleQueuePeriod()
+                               );
+
+        s_log.debug("notification background processing started");
     }
 
     /**
-     * Shuts down the notification service.
+     * Implementation of the {@link Initializer#close(ContextCloseEvent)}.
+     *
+     * Stops background threads started during initialization so the servlet
+     * container can terminate the applications main thread.
      */
+    public void close(ContextCloseEvent evt) {
 
-    public void shutdown() {
+        NotificationSimpleQueueTimer.cancel();
+        NotificationDigestQueueTimer.cancel();
+        NotificationRequestManagerTimer.cancel();
+
+        s_log.debug("Notification background processing stopped");
     }
-}
-
-/**
- * Private interface for storing constants
- */
-
-interface NotificationParameters {
-
-    public final static String REQUEST_MANAGER_DELAY =
-        "RequestManagerDelay";
-    public final static String REQUEST_MANAGER_DELAY_DESCRIPTION =
-        "Request manager's delay in seconds.";
-    public final static String REQUEST_MANAGER_PERIOD =
-        "RequestManagerPeriod";
-    public final static String REQUEST_MANAGER_PERIOD_DESCRIPTION =
-        "Request manager's period in seconds";
-    public final static String SIMPLE_QUEUE_DELAY =
-        "SimpleQueueDelay";
-    public final static String SIMPLE_QUEUE_DELAY_DESCRIPTION =
-        "Simple queue's delay in seconds.";
-    public final static String SIMPLE_QUEUE_PERIOD =
-        "SimpleQueuePeriod";
-    public final static String SIMPLE_QUEUE_PERIOD_DESCRIPTION =
-        "Simple queue's period in seconds.";
-    public final static String DIGEST_QUEUE_DELAY =
-        "DigestQueueDelay";
-    public final static String DIGEST_QUEUE_DELAY_DESCRIPTION =
-        "Digest queue's delay in seconds.";
-    public final static String DIGEST_QUEUE_PERIOD =
-        "DigestQueuePeriod";
-    public final static String DIGEST_QUEUE_PERIOD_DESCRIPTION =
-        "Digest queue's period in seconds.";
 
 }

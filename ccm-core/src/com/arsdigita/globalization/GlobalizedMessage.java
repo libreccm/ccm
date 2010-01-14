@@ -41,10 +41,9 @@ import org.apache.log4j.Logger;
  * @see java.util.Locale
  * @see java.util.ResourceBundle
  *
- * @version $Revision: #13 $ $Date: 2004/08/16 $
+ * @version $Id: GlobalizedMessage.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class GlobalizedMessage {
-    public final static String versionId = "$Id: GlobalizedMessage.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_cat =
         Logger.getLogger(GlobalizedMessage.class.getName());

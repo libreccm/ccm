@@ -29,10 +29,6 @@ import com.arsdigita.persistence.Session;
  * @version $Id: LegacyInitEvent.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class LegacyInitEvent {
-    public final static String versionId =
-        "$Id: LegacyInitEvent.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private final Session m_session;
 

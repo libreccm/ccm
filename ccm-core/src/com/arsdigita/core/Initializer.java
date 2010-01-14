@@ -62,6 +62,9 @@ import com.arsdigita.search.converter.TextConverter;
 
 public class Initializer extends CompoundInitializer {
 
+    /**
+     * Constructor
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -72,6 +75,11 @@ public class Initializer extends CompoundInitializer {
             (new ManifestSource
              ("ccm-core.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
+
+        add(new com.arsdigita.search.Initializer());
+        add(new com.arsdigita.search.lucene.Initializer());
+        add(new com.arsdigita.search.intermedia.Initializer());
+        add(new com.arsdigita.notification.Initializer());
 
         add(new LegacyInitializer("com/arsdigita/core/enterprise.init"));
         add(new OptionalLegacyInitializer("enterprise.init"));
@@ -131,8 +139,8 @@ public class Initializer extends CompoundInitializer {
 	    e.getFactory().registerInstantiator
             (BasicAuditTrail.BASE_DATA_OBJECT_TYPE,
 	         new DomainObjectInstantiator() {
-		         public DomainObject doNewInstance(final DataObject data) {
-		                return new BasicAuditTrail(data);
+		       public DomainObject doNewInstance(final DataObject data) {
+		              return new BasicAuditTrail(data);
 	             }
 	         });
 

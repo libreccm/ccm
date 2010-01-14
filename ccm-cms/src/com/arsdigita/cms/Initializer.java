@@ -96,6 +96,11 @@ public class Initializer extends CompoundInitializer {
              ("ccm-cms.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
+        // add(new LegacyInitializer("com/arsdigita/cms/publishToFile/enterprise.init"));
+
+        add(new com.arsdigita.cms.publishToFile.Initializer());
+        add(new com.arsdigita.cms.lifecycle.Initializer());
+
         add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
     }
     /**

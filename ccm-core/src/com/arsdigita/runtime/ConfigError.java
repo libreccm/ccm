@@ -26,14 +26,12 @@ import org.apache.log4j.Logger;
  *
  * An error to indicate invalid configurations.
  *
+ * Usage:  throw new ConfigError( "message" ); 
+ *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: ConfigError.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ConfigError extends Error {
-    public final static String versionId =
-        "$Id: ConfigError.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (ConfigError.class);

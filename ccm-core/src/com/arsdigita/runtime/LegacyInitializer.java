@@ -56,13 +56,11 @@ import java.io.InputStream;
  * @deprecated
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: LegacyInitializer.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
-public class LegacyInitializer implements Initializer {
-
-    public final static String versionId = "$Id: LegacyInitializer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
+public class LegacyInitializer extends GenericInitializer {
+ 
     protected String m_init;
     protected ConfigRegistry m_reg;
 
@@ -100,24 +98,6 @@ public class LegacyInitializer implements Initializer {
 
     public LegacyInitializer(String init) {
         this(init, Thread.currentThread().getContextClassLoader());
-    }
-
-    /**
-     * Implentation of {@link Initializer#init(DataInitEvent evt)}
-     * that does nothing.
-     **/
-
-    public void init(DataInitEvent evt) {
-        // do nothing
-    }
-
-    /**
-     * Implentation of {@link Initializer#init(DomainInitEvent evt)}
-     * that does nothing.
-     **/
-
-    public void init(DomainInitEvent evt) {
-        // do nothing
     }
 
     /**

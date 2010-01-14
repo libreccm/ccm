@@ -32,6 +32,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
+import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
@@ -117,5 +118,13 @@ public class Initializer extends CompoundInitializer {
             (pubStartupDelay, pubPollDelay, null);
         ThemeDevelopmentFileManager.startWatchingFiles
             (devStartupDelay, devPollDelay, null);
+    }
+
+    /**
+     * 
+     */
+    public void close(ContextCloseEvent evt) {
+        ThemePublishedFileManager.getInstance().stopWatchingFiles();
+        ThemeDevelopmentFileManager.getInstance().stopWatchingFiles();
     }
 }

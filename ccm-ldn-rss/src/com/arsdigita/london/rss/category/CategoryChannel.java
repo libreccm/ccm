@@ -25,7 +25,7 @@ import com.arsdigita.london.rss.RSSImage;
 import com.arsdigita.kernel.URLService;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.ACSObjectCollection;
-import com.arsdigita.search.Searchable;
+import com.arsdigita.search.intermedia.Searchable;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.util.Assert;
 

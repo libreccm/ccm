@@ -38,18 +38,16 @@ import org.apache.log4j.Logger;
 
 /**
  * The RequestManager is a child of TimerTask. It is scheduled for periodic
- * execution in the Initializer. RequestManager sweeps through the list of notification
- * requests and queues them for sending. Once a request is in the queue, its
- * status is updated each time together and any necessary clean-up work is performed.
+ * execution in the Initializer. RequestManager sweeps through the list of
+ * notification requests and queues them for sending. Once a request is in
+ * the queue, its status is updated each time together and any necessary
+ * clean-up work is performed.
  *
  * @author David Dao 
  * @version $Id: RequestManager.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 class RequestManager extends TimerTask {
-
-    public static final String versionId =
-        "$Id: RequestManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $,  $Date: 2004/08/16 $";
 
     private static final Logger s_log =
         Logger.getLogger(RequestManager.class.getName());
@@ -74,8 +72,8 @@ class RequestManager extends TimerTask {
         "com.arsdigita.notification.GetCompleteNotifications";
 
     /**
-     * Implements the run method of TimerTask. This is the execution block each time
-     * the RequestManager runs. The following actions are performed:
+     * Implements the run method of TimerTask. This is the execution block each
+     * time the RequestManager runs. The following actions are performed:
      * <ul>
      * <li>Updates the status of requests, identifying which succeeded or failed
      * since the method was last run
@@ -86,124 +84,122 @@ class RequestManager extends TimerTask {
 
     public void run() {
         KernelExcursion rootExcursion = new KernelExcursion() {
-                protected void excurse() {
-                    setEffectiveParty(Kernel.getSystemParty());
-                    s_log.info("processing current requests.");
-                    long time = System.currentTimeMillis();
+            protected void excurse() {
+                setEffectiveParty(Kernel.getSystemParty());
+                s_log.info("processing current requests.");
+                long time = System.currentTimeMillis();
+
+                /**
+                 * Check and update status of requests that have already been queued.
+                 */
+                boolean committedTxn = false;
+                Session session = SessionManager.getSession();
+                session.getTransactionContext().beginTxn();
+
+                try {
+                    session.retrieveDataOperation(UPDATE_NOTIFICATION_SUCCESSFUL).execute();
+                    session.retrieveDataOperation(UPDATE_NOTIFICATION_FAILURE).execute();
 
                     /**
-                     * Check and update status of requests that have already been queued.
+                     * NOTE: I need to rewrite this query. Currently this query is working
+                     * correctly if it executes after UPDATE_NOTIFICATION_SUCCESSFUL and
+                     * UPDATE_NOTIFICATION_FAILURE.
                      */
 
-                    boolean committedTxn = false;
-                    Session session = SessionManager.getSession();
-                    session.getTransactionContext().beginTxn();
+                    session.retrieveDataOperation(UPDATE_NOTIFICATION_PARTIAL_FAILURE).execute();
 
-                    try {
-                        session.retrieveDataOperation(UPDATE_NOTIFICATION_SUCCESSFUL).execute();
-                        session.retrieveDataOperation(UPDATE_NOTIFICATION_FAILURE).execute();
+                    // delete from nt_queue where status in ('sent', failed, partial-failure)
 
-                        /**
-                         * NOTE: I need to rewrite this query. Currently this query is working
-                         * correctly if it executes after UPDATE_NOTIFICATION_SUCCESSFUL and
-                         * UPDATE_NOTIFICATION_FAILURE.
-                         */
+                    session.retrieveDataOperation(DELETE_NOTIFICATION_QUEUED).execute();
 
-                        session.retrieveDataOperation(UPDATE_NOTIFICATION_PARTIAL_FAILURE).execute();
+                    // Iterate through a list of notifications and invoke delete on each
+                    // object.
+                    // Why I am not using one query to do the delete?
+                    // Because there is no DELETE CASCADE in the datamodel for nt_requests
+                    // table.
 
-                        // delete from nt_queue where status in ('sent', failed, partial-failure)
-
-                        session.retrieveDataOperation(DELETE_NOTIFICATION_QUEUED).execute();
-
-                        // Iterate through a list of notifications and invoke delete on each
-                        // object.
-                        // Why I am not using one query to do the delete?
-                        // Because there is no DELETE CASCADE in the datamodel for nt_requests
-                        // table.
-
-                        DataQuery qry = session.retrieveQuery(GET_COMPLETE_NOTIFICATIONS);
-                        while (qry.next()) {
-                            try {
-                                OID oid = new OID(Notification.BASE_DATA_OBJECT_TYPE, qry.get(REQUEST_ID));
-                                Notification n = new Notification(oid);
-                                n.delete();
-                            } catch (DataObjectNotFoundException e) {
-                                s_log.error("Retrieve complete notification", e);
-                                // skip this notification.
-                            }
-                        }
-                        session.getTransactionContext().commitTxn();
-                        committedTxn = true;
-
-                    } finally {
-                        if (!committedTxn) {
-                            session.getTransactionContext().abortTxn();
+                    DataQuery qry = session.retrieveQuery(GET_COMPLETE_NOTIFICATIONS);
+                    while (qry.next()) {
+                        try {
+                            OID oid = new OID(Notification.BASE_DATA_OBJECT_TYPE, qry.get(REQUEST_ID));
+                            Notification n = new Notification(oid);
+                            n.delete();
+                        } catch (DataObjectNotFoundException e) {
+                            s_log.error("Retrieve complete notification", e);
+                            // skip this notification.
                         }
                     }
+                    session.getTransactionContext().commitTxn();
+                    committedTxn = true;
 
-                    /**
-                     * Tranfer pending requests to the outbound queue.
-                     */
+                } finally {
+                    if (!committedTxn) {
+                        session.getTransactionContext().abortTxn();
+                    }
+                }
 
-                    session.getTransactionContext().beginTxn();
-                    committedTxn = false;
+                /**
+                 * Tranfer pending requests to the outbound queue.
+                 */
 
-                    try {
-                        DataQuery query = session.retrieveQuery(GET_PENDING_NOTIFCATIONS);
+                session.getTransactionContext().beginTxn();
+                committedTxn = false;
 
-                        while (query.next()) {
+                try {
+                    DataQuery query = session.retrieveQuery(GET_PENDING_NOTIFCATIONS);
 
-                            BigDecimal requestID = (BigDecimal) query.get(REQUEST_ID);
-                            BigDecimal partyTo = (BigDecimal) query.get(PARTY_TO);
+                    while (query.next()) {
 
-                            try {
+                        BigDecimal requestID = (BigDecimal) query.get(REQUEST_ID);
+                        BigDecimal partyTo = (BigDecimal) query.get(PARTY_TO);
 
-                                OID oid = new OID(Party.BASE_DATA_OBJECT_TYPE, partyTo);
-                                Party party = (Party) DomainObjectFactory.newInstance(oid);
+                        try {
 
-                                Notification notification = new Notification(new OID(Notification.BASE_DATA_OBJECT_TYPE, requestID));
-                                notification.setStatus(NOTIFICATION_IN_QUEUE);
-                                notification.save();
+                            OID oid = new OID(Party.BASE_DATA_OBJECT_TYPE, partyTo);
+                            Party party = (Party) DomainObjectFactory.newInstance(oid);
 
-                                // Add notification to queue
+                            Notification notification = new Notification(new OID(Notification.BASE_DATA_OBJECT_TYPE, requestID));
+                            notification.setStatus(NOTIFICATION_IN_QUEUE);
+                            notification.save();
 
-                                Boolean isGroupExpand = notification.getExpandGroup();
-                                boolean expand = true; // Default value for group expand
+                            // Add notification to queue
+                            Boolean isGroupExpand = notification.getExpandGroup();
+                            boolean expand = true; // Default value for group expand
 
-                                if (isGroupExpand != null)
-                                    expand = isGroupExpand.booleanValue();
+                            if (isGroupExpand != null)
+                                expand = isGroupExpand.booleanValue();
 
-                                if ((party instanceof User) || (!expand)) {
-                                    QueueItem queued = new QueueItem(notification, party);
+                            if ((party instanceof User) || (!expand)) {
+                                QueueItem queued = new QueueItem(notification, party);
+                                queued.save();
+                            } else if (party instanceof Group) {
+                                // Expand group.
+                                Group group = (Group) party;
+                                UserCollection userCollection = group.getAllMemberUsers();
+                                while (userCollection.next()) {
+                                    User user = userCollection.getUser();
+                                    QueueItem queued = new QueueItem(notification, user);
                                     queued.save();
-                                } else if (party instanceof Group) {
-                                    // Expand group.
-                                    Group group = (Group) party;
-                                    UserCollection userCollection = group.getAllMemberUsers();
-                                    while (userCollection.next()) {
-                                        User user = userCollection.getUser();
-                                        QueueItem queued = new QueueItem(notification, user);
-                                        queued.save();
-                                    }
                                 }
-                            } catch (Exception e) {
-                                s_log.warn("RequestManager", e);
-                                e.printStackTrace();
                             }
-                        }
-
-                        session.getTransactionContext().commitTxn();
-                        committedTxn = true;
-
-                    } finally {
-                        if (!committedTxn) {
-                            session.getTransactionContext().abortTxn();
+                        } catch (Exception e) {
+                            s_log.warn("RequestManager", e);
+                            e.printStackTrace();
                         }
                     }
 
-                    time = System.currentTimeMillis() - time;
-                    s_log.info("RequestManager executed in " + time + " ms.");
-                }};
+                    session.getTransactionContext().commitTxn();
+                    committedTxn = true;
+
+                } finally {
+                    if (!committedTxn) {
+                        session.getTransactionContext().abortTxn();
+                    }
+                }
+
+                time = System.currentTimeMillis() - time;
+                s_log.info("RequestManager executed in " + time + " ms.");
+            }};
 
         try {
             rootExcursion.run();

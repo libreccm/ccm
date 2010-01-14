@@ -27,12 +27,9 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Randy Graebner
+ * @version $Id: DispatcherConfig.java 1169 2006-06-14 13:08:25Z fabrice $
  */
 public final class DispatcherConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: DispatcherConfig.java 1169 2006-06-14 13:08:25Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(DispatcherConfig.class);
 

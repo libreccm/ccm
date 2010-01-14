@@ -15,7 +15,7 @@ init com.arsdigita.cms.installer.xml.ContentTypeInitializer {
     };
 }
 
-init com.arsdigita.cms.publishToFile.Initializer {
+//-- init com.arsdigita.cms.publishToFile.LegacyInitializer {
     // List of publish destinations for content types 
     // Each element is a four-element list in the format 
     // '{ "content type", "root directory", "shared storage",  
@@ -28,58 +28,58 @@ init com.arsdigita.cms.publishToFile.Initializer {
     // directory is shared NFS storage, _false_ otherwise. "URL stub"
     // must be the path component of the URL from which the live server 
     // will serve from this directory.
-    destination = { 
-      { "com.arsdigita.cms.ContentItem", 
-        "p2fs", 
-        false, 
-        "/p2fs" },
+//--     destination = {
+//--       { "com.arsdigita.cms.ContentItem",
+//--         "p2fs",
+//--         false,
+//--         "/p2fs" },
     // (pboy): starting with webapps refers to the CCM_HOME env variable which
     // points to the installation root of the servlet container. This is not
     // used anymore, all specifications are relative to webapplication base.
     // So the following may have to be changed to "packages/content-section/templates"
     // if someone tries to use p2fs
-      { "com.arsdigita.cms.Template",
-	    // "webapps/ROOT/packages/content-section/templates",
-	    "packages/content-section/templates",
-        false, 
-        "/templates" }
-    };
+//--       { "com.arsdigita.cms.Template",
+//-- 	    // "webapps/ROOT/packages/content-section/templates",
+//-- 	    "packages/content-section/templates",
+//--         false,
+//--         "/templates" }
+//--     };
 
     // Class which implements PublishToFileListener used to perform
     // additional actions when publishing or unpublishing to the file system.
-    publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
+//--     publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
 
     // Queue management parameters.
 
     // Set startupDelay to 0 to disable the processing of the queue
     // Time (seconds) before starting to monitor the
     // queue after a server start
-    startupDelay = 30;
+//--     startupDelay = 30;
 
     // Time (in seconds) between checking if there are entries in the
     // publishToFile queue.
     // A value <= 0 disables processing the queue on this server.
-    pollDelay = 5;
+//--     pollDelay = 5;
 
     // Time to wait (seconds) before retrying
     // to process a failed entry
-    retryDelay = 120;
+//--     retryDelay = 120;
 
     // Number of queue entries to process at once.
-    blockSize = 40;
+//--     blockSize = 40;
     // Number of times a failed queue entry will be
     // reprocessed. If processing has failed more than
     // that number of times, the entry will be
     // ignored.
-    maximumFailCount = 10;
+//--     maximumFailCount = 10;
 
     // Method used to select entries for processing.
     // 'QueuedOrder'-in  queued order.
     // 'GroupByParent'-group entries according to parent when selecting items
     //  (allows optimizations if a listener task required for all elements in a folder
     //   can be done only once for the folder).
-    blockSelectMethod = "GroupByParent";
-}
+//--     blockSelectMethod = "GroupByParent";
+//-- }
 
 
 init com.arsdigita.cms.installer.SectionInitializer {
@@ -346,25 +346,6 @@ init com.arsdigita.formbuilder.installer.Initializer {
 //
 //}
 
-init com.arsdigita.cms.lifecycle.Initializer {
-  // How long do we wait (in seconds) after system startup
-  // before we start processing lifecycles?
-  delay     = 60;
-  // How often (in seconds) does the system look for pending
-  // items to make live and live items to expire
-  frequency = 600;
-}
-
-// This is no longer needed. Item adapters are now set via standard
-// initializers. Legacy initializer is still available if you need
-// to register multiple adapter files.
-//init com.arsdigita.domain.installer.DomainObjectTraversalInitializer {
-//  adapters = {
-//    "/WEB-INF/resources/cms-item-adapters.xml"
-//  };
-//
-//}
-
 //Used when running CMS in conjunction with a Portal
 init com.arsdigita.cms.installer.portlet.Initializer {}
 
@@ -392,4 +373,36 @@ init com.arsdigita.cms.installer.portlet.Initializer {}
 // 	};
 //     numUsers = 10;
 // }
+
+
+
+// //////////////////////////////////////////////////////////
+//
+//    Initializer replaced by new initialization system
+//
+// //////////////////////////////////////////////////////////
+
+
+// No longer needed, refactored as a sub-initializer of ccm initializer
+// (following the new initializer system)
+//
+// init com.arsdigita.cms.lifecycle.LegacyInitializer {
+//   // How long do we wait (in seconds) after system startup
+//   // before we start processing lifecycles?
+//   delay     = 60;
+//   // How often (in seconds) does the system look for pending
+//   // items to make live and live items to expire
+//   frequency = 600;
+// }
+
+
+// This is no longer needed. Item adapters are now set via standard
+// initializers. Legacy initializer is still available if you need
+// to register multiple adapter files.
+//init com.arsdigita.domain.installer.DomainObjectTraversalInitializer {
+//  adapters = {
+//    "/WEB-INF/resources/cms-item-adapters.xml"
+//  };
+//
+//}
 

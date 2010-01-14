@@ -41,14 +41,11 @@ import com.arsdigita.bebop.util.BebopConstants;
  */
 public class TextArea extends Widget implements BebopConstants {
 
-    public static final String versionId = "$Id: TextArea.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Constant for specifying <tt>OFF</tt> value for the
      * <tt>WRAP</tt> attribute of this image input.  See <a
      * href="http://developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
      * for a description of what this attribute does.  */
-
     public static final int OFF = 0;
 
     /**
@@ -127,7 +124,7 @@ public class TextArea extends Widget implements BebopConstants {
     }
 
     /**
-     *      Sets the <tt>COLS</tt> attribute for the <tt>TEXTAREA</tt> tag.
+     *      Sets the <tt>WRAP</tt> attribute for the <tt>TEXTAREA</tt> tag.
      */
     public void setWrap(int wrap) {
         String wrapString = null;

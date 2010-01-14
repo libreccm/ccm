@@ -41,8 +41,6 @@ import org.apache.log4j.Logger;
  */
 public abstract class ParameterModel implements Lockable {
 
-    public static final String versionId = "$Id: ParameterModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * The name of this ParameterModel. The constructor will throw an
      * exception if the specified name is null

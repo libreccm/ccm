@@ -22,21 +22,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 /**
  * The GlobalObserverManager class is a singleton class that allows observers
- * implementing the GlobalObserver interface to be registered. Once such
- * observers are registered they have the opportunity to observe every single
- * observable domain object that is created. The
- * GlobalObserver.shouldObserve(DomainObject) method can be used by an
- * observer to select which objects to observe.
+ * implementing the GlobalObserver interface to be registered.
  *
+ * Once such observers are registered they have the opportunity to observe
+ * every single observable domain object that is created. The
+ * GlobalObserver.shouldObserve(DomainObject) method can be used by an observer
+ * to select which objects to observe.
+ * 
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
+ * @version $Id: GlobalObserverManager.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public class GlobalObserverManager {
-
-    public final static String versionId = "$Id: GlobalObserverManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final GlobalObserverManager s_manager =
         new GlobalObserverManager();
@@ -45,11 +46,13 @@ public class GlobalObserverManager {
     /**
      * Returns the global observer manager. This is a singleton class that
      * allows the "global" observers, or observers of any
-     **/
-
+     */
     public static final GlobalObserverManager getManager() {
+        s_log.debug("getInstance of GlobalObserverManager invoked.");
         return s_manager;
     }
+
+    private static final Logger s_log = Logger.getLogger(GlobalObserverManager.class);
 
     private List m_observers = new ArrayList();
 
@@ -60,9 +63,10 @@ public class GlobalObserverManager {
      * Adds a new observer.
      *
      * @param doo the new observer
-     **/
+     */
 
     public void addObserver(GlobalObserver go) {
+        s_log.debug("addObserver invoked.");
         m_observers.add(go);
     }
 
@@ -71,8 +75,7 @@ public class GlobalObserverManager {
      * Returns the global observers.
      *
      * @return The observers for the given domain object.
-     **/
-
+     */
     Iterator getObservers() {
         return m_observers.iterator();
     }

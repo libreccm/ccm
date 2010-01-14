@@ -22,13 +22,25 @@ package com.arsdigita.runtime;
 
 /**
  * The Initializer interface is used to prepare the CCM runtime for
- * interaction with the CCM database. This is done in two phases.
- * First the data layer is initialized by loading any
- * object-relational mapping metadata. Secondly the domain layer is
- * initialized by registering any domain metadata. This usually
- * consists of domain object instantiators and observers. It is not
- * safe for CCM code to interact with a CCM database until these
+ * interaction with the CCM database as well as cleanly shutdown a running CCM.
+ *
+ * Every CCM module usually provides an implementation of the initializer
+ * interface (specified in <module>.load and processed during installation in
+ * the load step) which is invoked by the startup mechanism at boot time (and
+ * in case of shutdown) of the application ( @see com.arsdigita.runtime.Startup ).
+ *
+ * Preparation is done in two phases:
+ * First the data layer is initialized by loading any object-relational
+ * mapping metadata. 
+ * Secondly the domain layer is initialized by registering any domain metadata.
+ * This usually consists of domain object instantiators and observers. Any
+ * other initialization requirements may be handled here as well.
+ *
+ * It is not safe for CCM code to interact with a CCM database until these
  * phases have been completed.
+ *
+ * Shutdown is done in one step where a domain object may provide housekeeping
+ * functionality, e.g. stop watch dogs or other background processes.
  *
  * @author Rafael Schloming &lt;rhs@mit.edu&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
@@ -67,5 +79,17 @@ public interface Initializer {
      * {@link #init(DomainInitEvent)}
      */
     void init(LegacyInitEvent e);
+
+    /**
+     *
+     * @param e
+     */
+    void init(ContextInitEvent e);
+
+    /**
+     * Destroys the domain object, especially used to stop any background
+     * process.
+     */
+    public void close(ContextCloseEvent evt);
 
 }

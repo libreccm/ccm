@@ -38,7 +38,6 @@ public final class SearchConfig extends AbstractConfig {
     private Parameter m_lazyUpdates;
     private Parameter m_xmlContentWeight;
     private Parameter m_rawContentWeight;
-    private Parameter m_stemming;
 
     public SearchConfig() {
 
@@ -66,16 +65,11 @@ public final class SearchConfig extends AbstractConfig {
             ("waf.search.intermedia.raw_content_weight",
              Parameter.REQUIRED,
              new Integer(1));
-		m_stemming = new BooleanParameter
-					("waf.search.intermedia.stemming", 
-					 Parameter.REQUIRED, 
-					 Boolean.FALSE);
 
         register(m_indexer);
         register(m_lazyUpdates);
         register(m_xmlContentWeight);
         register(m_rawContentWeight);
-        register(m_stemming);
 
         loadInfo();
     }
@@ -136,23 +130,6 @@ public final class SearchConfig extends AbstractConfig {
      */
     public ContentType[] getContent() {
         return getIndexerType().getContent();
-    }
-    /**
-     * If intermedia is used, applies stemming operator to each 
-     * individual word in the contains clause. So for example a search
-     * for guitars will return documents containing guitar. Search 
-     * for ran returns documents containing run.
-     * 
-     * The stemming operator is not applied to compound phrases
-     * (included in quotes by the user) as assume that user wants
-     * exact phrase. Also allows user to override stemming by 
-     * including single word in quotes
-     * 
-     * @return
-     */
-    public boolean includeStemming() {
-    	return ((Boolean)get(m_stemming)).booleanValue();
-    	
     }
 
     /**

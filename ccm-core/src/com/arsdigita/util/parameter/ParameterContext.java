@@ -31,10 +31,6 @@ package com.arsdigita.util.parameter;
  * @version $Id: ParameterContext.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface ParameterContext {
-    public final static String versionId =
-        "$Id: ParameterContext.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Returns all the parameters registered on the parameter context.

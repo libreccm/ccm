@@ -47,10 +47,8 @@ import java.util.TimerTask;
 class DigestQueueManager extends TimerTask
     implements NotificationConstants
 {
-    public static final String versionId = "$Id: DigestQueueManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $,  $Date: 2004/08/16 $";
 
-    private static final Logger log =
-        Logger.getLogger(DigestQueueManager.class);
+    private static final Logger log = Logger.getLogger(DigestQueueManager.class);
 
     // String catalog for digest message.  Should be globalized.
 
@@ -60,7 +58,6 @@ class DigestQueueManager extends TimerTask
     /**
      * Processes one sweep of the DigestQueueManager.
      */
-
     public void run() {
         log.info("processing current requests");
 
@@ -74,11 +71,9 @@ class DigestQueueManager extends TimerTask
 
         try {
 
-            /**
-             * Retrieve all digests to be processed during this run.
-             * Store all notifications in double hash map using
-             * digestID and partyTo as key.
-             */
+            // Retrieve all digests to be processed during this run.
+            // Store all notifications in double hash map using
+            // digestID and partyTo as key.
 
             DataQuery query = session.retrieveQuery(GET_DIGEST_QUEUED_NOTIFICATIONS);
 

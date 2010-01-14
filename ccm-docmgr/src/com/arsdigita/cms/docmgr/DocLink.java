@@ -33,7 +33,7 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
-import com.arsdigita.search.Searchable;
+import com.arsdigita.search.intermedia.Searchable;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 

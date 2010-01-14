@@ -30,8 +30,6 @@ import java.util.StringTokenizer;
 
 public class SearchFormatter {
 
-    public static final String versionId = "$Id: SearchFormatter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     /**
      * A list of all the special characters which will
      * be filtered out
@@ -111,7 +109,7 @@ public class SearchFormatter {
      *   and to the left of each keyword
      */
     public static String createIntermediaClause(
-                                                String words, String joinClause, String wildcard
+                             String words, String joinClause, String wildcard
                                                 ) {
 
         StringTokenizer tokenizer = new StringTokenizer(words, SPECIAL_CHARS);

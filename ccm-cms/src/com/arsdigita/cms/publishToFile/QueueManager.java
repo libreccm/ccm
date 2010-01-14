@@ -65,8 +65,7 @@ import java.io.File;
 public class QueueManager implements Runnable {
 
     // Creates a s_logging category with name = to the full name of class
-    private static Logger s_log =
-            Logger.getLogger(QueueManager.class);
+    private static Logger s_log = Logger.getLogger(QueueManager.class);
 
     // Should probably use these constants.  Are hardcoded for now because
     // matches DataQuery suffex.
@@ -91,6 +90,15 @@ public class QueueManager implements Runnable {
     // Class implementing methods run when publishing or unpublishing to file.
     private static PublishToFileListener s_publishListener = null;
 
+    ////////////////////////////////////////////////////////////////////
+    // Constructor related code.
+    //
+
+    /**
+     * 
+     * @param startupDelay
+     * @param pollDelay
+     */
     private QueueManager(int startupDelay, int pollDelay) {
         m_startupDelay = startupDelay;
         m_pollDelay = pollDelay;
@@ -445,15 +453,19 @@ public class QueueManager implements Runnable {
 
     /**
      * Stop watching and processing the queue. The background thread that
-     * processes the queue will terminate after this method has been called.
-     * Termination is not immediate, since the queue may be in the middle of
-     * processing a block of entries.
+     * processes the queue will terminate after this method has been
+     * called. Termination is not immediate, since the queue may be in the
+     * middle of processing a block of entries.
      */
     public static void stopWatchingQueue() {
         if (s_log.isInfoEnabled()) {
-            s_log.info("Going to stop queue processing.");
+            s_log.info("Sending signal to stop queue processing.");
         }
         s_keepWatchingQueue = false;
+
+        s_log.debug("Going to sleep.");
+        sleep(45);
+        s_log.debug("Resume processing.");
     }
 
 
@@ -470,7 +482,7 @@ public class QueueManager implements Runnable {
         HashSet failedItems = new HashSet();
 
         while ( sleep(m_pollDelay) && s_keepWatchingQueue ) {
-//      synchronized( Scheduler.class ) {
+//          synchronized( Scheduler.class ) {
             //while there are more entries in queue process them.HashSet
             //is used to store the failed items and for checking that
             //they do not get processed again.
@@ -479,8 +491,9 @@ public class QueueManager implements Runnable {
 
             // clear failed items
             failedItems.clear();
+//          }
         }
-//    }
+        s_log.info("Start polling queue in " + m_startupDelay + "s.");
     }
 
     /***

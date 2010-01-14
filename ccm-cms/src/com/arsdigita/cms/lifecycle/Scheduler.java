@@ -44,17 +44,16 @@ import org.apache.log4j.Logger;
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: Scheduler.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $
  */
 public class Scheduler {
-
-    public static final String versionId = "$Id: Scheduler.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String CYCLE_ID = "cycleId";
     private static final String PHASE_ID = "phaseId";
 
     // Time in milliseconds
-    protected static long s_timerDelay;
-    protected static long s_timerFrequency;
+    private static long s_timerDelay;
+    private static long s_timerFrequency;
 
     // For storing timer which runs a method periodically to fire
     // begin and end events
@@ -62,8 +61,7 @@ public class Scheduler {
     private static boolean s_running = false;
 
     // Creates a s_logging category with name = to the full name of class
-    private static Logger s_log =
-        Logger.getLogger( Scheduler.class.getName() );
+    private static Logger s_log = Logger.getLogger( Scheduler.class.getName() );
 
     // A noop listener used when the listener in the DB is null. This ensures
     // that lifecycles and phases with no listener are still properly marked
@@ -73,6 +71,22 @@ public class Scheduler {
             public void begin(LifecycleEvent e) { }
             public void end(LifecycleEvent e) { }
         };
+
+    /**
+     * Sets timer startup delay to <i>delay</i> seconds.
+     */
+    public static void setTimerDelay(int delay) {
+        s_timerDelay = delay * 1000;  // Timer measures in milliseconds!
+        s_log.debug( "s_timerDelay set to " + s_timerDelay  + " ms.");
+    }
+
+    /**
+     * Sets timer frequency to <i>freq</i> seconds.
+     */
+    public static void setTimerFrequency(int freq) {
+        s_timerFrequency = freq * 1000;
+        s_log.debug( "s_timerFrequency set to " + s_timerFrequency  + " ms.");
+    }
 
     /**
      * startTimer - starts the timer
@@ -115,12 +129,12 @@ public class Scheduler {
 
             txn = SessionManager.getSession().getTransactionContext();
 
-            // Notes: loop through the query and add the objects to the LinkedList
-            //  then for each object in the LinkedList:
-            //    begin the transaction,
-            //    perform any operations from the listener,
-            //    update the hasBegun or hasEnded column, and
-            //    close the transaction (or abort if there are any errors)
+            // Notes: loop through the query and add the objects to the
+            // LinkedList then for each object in the LinkedList:
+            // -  begin the transaction,
+            // -  perform any operations from the listener,
+            // -  update the hasBegun or hasEnded column, and
+            // -  close the transaction (or abort if there are any errors)
 
             // Lifecycle Start Events
             txn.beginTxn();
@@ -273,7 +287,7 @@ public class Scheduler {
      * Returns an iterator of pending events.
      */
     private static synchronized Iterator getPendingEvents(
-                                                          DataQuery query, int eventType, String idColumn
+                                DataQuery query, int eventType, String idColumn
                                                           ) {
         try {
             LinkedList rowList = new LinkedList();
@@ -320,7 +334,10 @@ public class Scheduler {
                 cycle = new Lifecycle(id);
             } catch (DataObjectNotFoundException e) {
                 txn.abortTxn();
-                throw new UncheckedWrapperException( (String) GlobalizationUtil.globalize("cms.lifecycle.could_not_fetch_lifecycle").localize() + id, e);
+                throw new UncheckedWrapperException(
+                        (String) GlobalizationUtil.globalize(
+                            "cms.lifecycle.could_not_fetch_lifecycle").localize()
+                            + id, e);
             }
 
             try {
@@ -333,10 +350,11 @@ public class Scheduler {
                     listener.end(event);
                     cycle.stop();
                     if (ContentSection.getConfig().deleteFinishedLifecycles()) {
-                    	// this seems to be the best place to do this - after any other 
-                    	// activities associated with the end of the cycle have been 
-                    	// completed
-                    	s_log.debug("Lifecycle " + cycle.getID() + " has ended - now deleting it");
+                    	// this seems to be the best place to do this - after 
+                    	// any other activities associated with the end of the
+                    	// cycle have been completed
+                    	s_log.debug("Lifecycle " + cycle.getID() +
+                                    " has ended - now deleting it");
                     	cycle.delete();
                     }
                 }
@@ -348,8 +366,8 @@ public class Scheduler {
                 txn.commitTxn();
             } catch (Exception e) {
                 txn.abortTxn();
-                // TODO: Shouldn't this re-throw? The transaction is aborted, so some other error
-                // will occur...
+                // TODO: Shouldn't this re-throw? The transaction is aborted,
+                // so some other error will occur...
                 s_log.error( "Error in LifecycleEvent: " + e.getMessage(), e);
             }
         }
@@ -379,7 +397,10 @@ public class Scheduler {
                 phase = new Phase(phaseID);
             } catch (DataObjectNotFoundException e) {
                 txn.abortTxn();
-                throw new UncheckedWrapperException( (String) GlobalizationUtil.globalize("cms.lifecycle.could_not_fetch_phase").localize() + phaseID, e);
+                throw new UncheckedWrapperException(
+                        (String) GlobalizationUtil.globalize(
+                        "cms.lifecycle.could_not_fetch_phase").localize()
+                        + phaseID, e);
             }
 
             try {
@@ -394,8 +415,8 @@ public class Scheduler {
                 txn.commitTxn();
             } catch (Exception e) {
                 txn.abortTxn();
-                // TODO: Shouldn't this re-throw? The transaction is aborted, so some other error
-                // will occur...
+                // TODO: Shouldn't this re-throw? The transaction is aborted,
+                // so some other error will occur...
                 s_log.error("Error in LifecycleEvent: " + e.getMessage(), e);
             }
         }

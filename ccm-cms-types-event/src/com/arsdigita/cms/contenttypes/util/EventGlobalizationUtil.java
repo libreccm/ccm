@@ -22,7 +22,6 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 /**
  * <p>
- * .
  * Contains methods to simplify globalizing keys
  * </p>
  *
