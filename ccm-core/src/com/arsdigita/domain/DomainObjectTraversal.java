@@ -253,6 +253,13 @@ public abstract class DomainObjectTraversal {
         walk(adapter, obj, "/object", context, null);
     }
 
+    // Changed from private to protected because I needed to have access to
+    // the class ContentBundle from package com.arsdigita.cms. The problem was
+    // to change RelatedLinks and therefore Link to always link to the corresponding
+    // ContentBundle instead of the content item. To get the corresponding
+    // content item during XML generation, I have to test for ContentBundle and
+    // negotiate the language version. This is not possible in com.arsdigita.ccm.
+
     protected void walk(final DomainObjectTraversalAdapter adapter,
                       final DomainObject obj,
                       final String path,
@@ -272,6 +279,7 @@ public abstract class DomainObjectTraversal {
             m_visited.add(visitedKey);
         }
 
+        // If needed, open a surrounding tag
         beginObject(obj, path);
 
         if (linkObject != null) {
@@ -286,6 +294,7 @@ public abstract class DomainObjectTraversal {
 
         ObjectType type = obj.getObjectType();
 
+        // Test all properties against the traversal xml
         for (Iterator i = type.getProperties(); i.hasNext(); ) {
             Property prop = (Property) i.next();
             String propName = prop.getName();
@@ -314,6 +323,8 @@ public abstract class DomainObjectTraversal {
 
             if (prop.isAttribute()) {
                 handleAttribute(obj, path, prop);
+
+            // Property is a DataObject, so start recursion
             } else if (propValue instanceof DataObject) {
                 if( s_log.isDebugEnabled() ) {
                     s_log.debug( prop.getName() + " is a DataObject" );
@@ -387,6 +398,7 @@ public abstract class DomainObjectTraversal {
             }
         }
 
+        // If needed, close a surrounding tag
         endObject(obj, path);
     }
 
