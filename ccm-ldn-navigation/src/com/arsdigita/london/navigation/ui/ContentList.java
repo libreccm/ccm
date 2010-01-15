@@ -25,7 +25,7 @@ import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
@@ -198,7 +198,7 @@ public class ContentList extends AbstractComponent {
         // output the XML
         ContentItem item;
         Element itemElement;
-        DomainObjectXMLRenderer renderer;
+        ContentItemXMLRenderer renderer;
         String itemIdString;
         Iterator classes = items.keySet().iterator();
         String className;
@@ -229,7 +229,7 @@ public class ContentList extends AbstractComponent {
                 itemElement.addAttribute("sortKey", ""+sortKeys.get(item.getID().toString()));
                 
                 
-                renderer = new DomainObjectXMLRenderer(itemElement);
+                renderer = new ContentItemXMLRenderer(itemElement);
                 // not sure these are necessary
                 renderer.setWrapAttributes(true);
                 renderer.setWrapRoot(false);

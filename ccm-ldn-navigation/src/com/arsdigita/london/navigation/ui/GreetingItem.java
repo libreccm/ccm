@@ -26,9 +26,9 @@ import org.apache.log4j.Logger;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -105,8 +105,8 @@ public class GreetingItem extends AbstractComponent {
         Element itemEl = content.newChildElement("cms:item",
                 CMS.CMS_XML_NS);
         
-        DomainObjectXMLRenderer renderer =
-                new DomainObjectXMLRenderer(itemEl);
+        ContentItemXMLRenderer renderer =
+                new ContentItemXMLRenderer(itemEl);
         
         renderer.setWrapAttributes( true );
         renderer.setWrapRoot( false );

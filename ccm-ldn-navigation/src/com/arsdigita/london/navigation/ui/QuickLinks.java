@@ -23,7 +23,6 @@ import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
@@ -43,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 
 public class QuickLinks extends AbstractComponent {
 
@@ -94,7 +94,7 @@ public class QuickLinks extends AbstractComponent {
         while (links.next()) {
             Element objEl = Navigation.newElement("quickLink");
 
-            DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(objEl);
+            ContentItemXMLRenderer xr = new ContentItemXMLRenderer(objEl);
             xr.setNamespace(Navigation.NAV_PREFIX,
                             Navigation.NAV_NS);
             xr.setWrapRoot(false);

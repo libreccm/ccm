@@ -21,10 +21,9 @@ package com.arsdigita.london.navigation.ui;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.london.navigation.Navigation;
-import com.arsdigita.london.navigation.ui.AbstractComponent;
 import com.arsdigita.xml.Element;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +74,7 @@ public class NavigationRootIndexItem extends AbstractComponent {
             }
             indexItem = indexItem.getLiveVersion();
             Element itemElement = parentElement.newChildElement(TAG_ITEM, CMS.CMS_XML_NS);
-            DomainObjectXMLRenderer renderer = new DomainObjectXMLRenderer(itemElement);
+            ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(itemElement);
             // not sure these are necessary
             renderer.setWrapAttributes(true);
             renderer.setWrapRoot(false);
