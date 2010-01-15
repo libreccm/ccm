@@ -279,12 +279,6 @@ public  class Runtime extends CompoundInitializer {
 
         s_log.info("Shutting down WAF runtime using defaults");
 
-        // DbHelper.setDatabase
-        //     (DbHelper.getDatabaseFromURL(RuntimeConfig.
-        //                                  getConfig().getJDBCURL()));
-        // s_log.info("Going to collect list of Initializers.");
-        // addRuntimeInitializers();
-
         s_log.debug("Going to execute MetadataRoot.getMetadataRoot().");
         final MetadataRoot root = MetadataRoot.getMetadataRoot();
         // XXX It shouldn't be necessary to do this until the legacy
@@ -293,7 +287,7 @@ public  class Runtime extends CompoundInitializer {
         s_log.debug("Going to execute session().");
         final Session session = session("default", root);
 
-        s_log.info("Going to execute shutdown worker method.");
+        s_log.debug("Going to execute shutdown worker method.");
         shutdown(session, this, evt);
 
 
@@ -318,21 +312,22 @@ public  class Runtime extends CompoundInitializer {
         Assert.exists(session, Session.class);
         Assert.exists(init, Initializer.class);
 
-        // s_hasRun = true;
         if (s_hasRun == true) {
 
-            // final PDLCompiler compiler = new PDLCompiler();
             final MetadataRoot root = session.getMetadataRoot();
-
             Assert.exists(root, MetadataRoot.class);
 
-            // init.init(new DataInitEvent(compiler));
-            // compiler.emit(root);
-            // init.init(new DomainInitEvent(new DomainObjectFactory()));
-            // init.init(new LegacyInitEvent(session));
-
-            s_log.info("Going to call CompoundInitializer.destroy()");
+            s_log.debug("Going to call CompoundInitializer.close()");
             init.close(evt);
+
+            // Pausieren von ca. 1 Min. / 60 sek. um das Ende von laufenden Threads
+            // abzuwarten.
+            s_log.info("Waiting for background threads to terminate");
+            try {
+                Thread.currentThread().sleep(60000);
+            } catch( InterruptedException e) {
+                // do nothing
+            }
         } else {
             s_log.warn("Shutdown must only be run AFTER startup. Skipped.");
         }
@@ -370,14 +365,14 @@ public  class Runtime extends CompoundInitializer {
 
         Collection names = getRuntimeInitializerNames();
 
-        s_log.info("Converting DataCollection names to StringArray inits. ");
+        s_log.debug("Converting DataCollection names to StringArray inits. ");
         String[] inits = (String[]) names.toArray(new String[0]);
-        s_log.info("Create MetadataRoot  mroot. ");
+        s_log.debug("Create MetadataRoot  mroot. ");
         MetadataRoot mroot = root();
-        s_log.info("Going to sort Stringarray inits. ");
+        s_log.debug("Going to sort Stringarray inits. ");
         sort(inits, session("initializer", mroot), mroot);
         
-        s_log.info("Going to process StringArray inits.");
+        s_log.debug("Going to process StringArray inits.");
         for (int i = 0; i < inits.length; i++) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("adding: " + inits[i]);
@@ -387,10 +382,10 @@ public  class Runtime extends CompoundInitializer {
             add((Initializer) Classes.newInstance(inits[i]));
         }
 
-        s_log.info("Going to call addWafInitializer()");
+        s_log.debug("Going to call addWafInitializer()");
         addWafInitializer();
 
-        s_log.info("Method addRuntimeInitializers completed.");
+        s_log.debug("Method addRuntimeInitializers completed.");
     }
 
     /**

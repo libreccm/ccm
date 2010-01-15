@@ -177,7 +177,7 @@ public class CompoundInitializer implements Initializer {
                 m_log.info("Closing " + init.getClass() +
                            " (" + i + " out of " + m_inits.size() + ")");
             }
-            init.close(null);
+            init.close(evt);
         }
         s_log.info("CompoundInitializer.close(ContextCloseEvent) completed");
     }

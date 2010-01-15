@@ -83,8 +83,8 @@ public class QueueManager implements Runnable {
     static Integer s_maximumFailCount = new Integer(-1);
 
     // Following true if should keep watching queue
-
     static private boolean s_keepWatchingQueue =  true;
+
     static private Thread s_queueThread = null;
 
     // Class implementing methods run when publishing or unpublishing to file.
@@ -462,10 +462,6 @@ public class QueueManager implements Runnable {
             s_log.info("Sending signal to stop queue processing.");
         }
         s_keepWatchingQueue = false;
-
-        s_log.debug("Going to sleep.");
-        sleep(45);
-        s_log.debug("Resume processing.");
     }
 
 
