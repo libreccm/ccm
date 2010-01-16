@@ -162,19 +162,20 @@ public class Workspace extends Application {
      * @return
      */
     public static Workspace createWorkspace(String url, String title,
-			PageLayout layout, Application parent, boolean isPublic) {
-		if (s_log.isDebugEnabled()) {
-			s_log.debug("Creating group workspace, isPublic:" + isPublic
-					+ " on " + url + " with parent "
-					+ (parent == null ? "none" : parent.getOID().toString()));
-		}
+                                            PageLayout layout, Application parent,
+                                            boolean isPublic) {
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Creating group workspace, isPublic:" + isPublic
+                       + " on " + url + " with parent "
+                       + (parent == null ? "none" : parent.getOID().toString()));
+        }
 
-		Workspace workspace = (Workspace) Application.createApplication(
-				BASE_DATA_OBJECT_TYPE, url, title, parent);
-		workspace.setupGroups(title, isPublic);
-		workspace.setDefaultLayout(layout);
-		return workspace;
-	}
+        Workspace workspace = (Workspace) Application.createApplication(
+                              BASE_DATA_OBJECT_TYPE, url, title, parent);
+        workspace.setupGroups(title, isPublic);
+        workspace.setDefaultLayout(layout);
+        return workspace;
+    }
 
 	/**
      * Does the real work to create a workspace in the storage (db)
@@ -199,44 +200,44 @@ public class Workspace extends Application {
 		workspace.setParty(owner);
 		workspace.setDefaultLayout(layout);
 		return workspace;
-	}
+    }
 
-	/**
-	 * 
-	 * retrieve the workspace that is created during loading of the
-	 * ccm-ldn-portal application and is set as the defaultworkspace for the
-	 * site.
-	 * 
-	 * Returns null if there are no workspaces (though presumably if that is the
-	 * case, ccm-ldn-portal hasn't been loaded and so I don't know how you are
-	 * invoking this method!)
-	 * 
-	 * @return
-	 */
-	public static Workspace getDefaultHomepageWorkspace() {
-		if (null == defaultHomepageWorkspace) {
-			// default homepage workspace is created during
-			// com.arsdigita.london.portal.Loader
-			// it's attributes are all load variables that are lost as soon as
-			// the application
-			// is loaded. So, finding the default homepage workspace is a bit
-			// tricky - can't filter on name
-			// or anything else that is site specific - best bet is to assume
-			// that it is the first workspace created (a reasonable assumption
-			// at the moment because
-			// it is created straight after the Workspace application type is
-			// created.
-			WorkspaceCollection workspaces = Workspace.retrieveAll();
-			workspaces.addOrder(Application.TIMESTAMP);
-			if (workspaces.next()) {
-				defaultHomepageWorkspace = workspaces.getWorkspace();
-			}
-			workspaces.close();
+    /**
+     *
+     * retrieve the workspace that is created during loading of the
+     * ccm-ldn-portal application and is set as the defaultworkspace for the
+     * site.
+     *
+     * Returns null if there are no workspaces (though presumably if that is the
+     * case, ccm-ldn-portal hasn't been loaded and so I don't know how you are
+     * invoking this method!)
+     *
+     * @return
+     */
+    public static Workspace getDefaultHomepageWorkspace() {
 
-		}
-		return defaultHomepageWorkspace;
+        if (null == defaultHomepageWorkspace) {
+            // default homepage workspace is created during
+            // com.arsdigita.london.portal.Loader
+            // it's attributes are all load variables that are lost as soon as
+            // the application
+            // is loaded. So, finding the default homepage workspace is a bit
+            // tricky - can't filter on name
+            // or anything else that is site specific - best bet is to assume
+            // that it is the first workspace created (a reasonable assumption
+            // at the moment because
+            // it is created straight after the Workspace application type is
+            // created.
+            WorkspaceCollection workspaces = Workspace.retrieveAll();
+            workspaces.addOrder(Application.TIMESTAMP);
+            if (workspaces.next()) {
+                defaultHomepageWorkspace = workspaces.getWorkspace();
+            }
+            workspaces.close();
+        }
+        return defaultHomepageWorkspace;
 
-	}
+    }
 
 	public void beforeSave() {
 		// If no permissions are configured, then setup empty groups

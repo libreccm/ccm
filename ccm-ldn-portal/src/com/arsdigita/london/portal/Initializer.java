@@ -72,12 +72,12 @@ public class Initializer extends CompoundInitializer {
      * 
      */
     public Initializer() {
-		final String url = RuntimeConfig.getConfig().getJDBCURL();
-		final int database = DbHelper.getDatabaseFromURL(url);
+        final String url = RuntimeConfig.getConfig().getJDBCURL();
+        final int database = DbHelper.getDatabaseFromURL(url);
 
-		add(new PDLInitializer(new ManifestSource("ccm-ldn-portal.pdl.mf",
-				new NameFilter(DbHelper.getDatabaseSuffix(database),
-                                "pdl"))));
+        add(new PDLInitializer(new ManifestSource("ccm-ldn-portal.pdl.mf",
+                               new NameFilter(DbHelper.getDatabaseSuffix(database),
+                               "pdl"))));
     }
 
     /**

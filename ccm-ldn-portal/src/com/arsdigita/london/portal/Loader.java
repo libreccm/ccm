@@ -58,8 +58,8 @@ import com.arsdigita.web.ApplicationType;
 public class Loader extends PackageLoader {
     // versionID no longer used as a system variable. version information is
     // kept as part of java doc.
-	// public final static String versionId = "$Id: Loader.java 1718 2008-07-16 14:08:38Z terry $"
-	//		+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
+    // public final static String versionId = "$Id: Loader.java 1718 2008-07-16 14:08:38Z terry $"
+    //		+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
 
 	private static final Logger s_log = Logger.getLogger(Loader.class);
 
@@ -75,41 +75,44 @@ public class Loader extends PackageLoader {
 			"com.arsdigita.london.portal.default_is_public",
 			Parameter.REQUIRED, Boolean.TRUE);
 
-	/**
+    /**
      * Standard constructor. 
      */
     public Loader() {
 		register(m_isPublic);
 		register(m_url);
 		register(m_title);
-	}
+    }
 
-	/**
+    /**
      * Run script invoked by the loader script.
      *
      * @param ctx
      */
     public void run(final ScriptContext ctx) {
-		new KernelExcursion() {
-			public void excurse() {
-				setEffectiveParty(Kernel.getSystemParty());
-				createApplication((String) get(m_url),
-						(Boolean) get(m_isPublic), (String) get(m_title));
 
-				setupWorkspacePageType();
-				loadTimeOfDayPortlet();
-				loadContentDirectoryPortlet();
-				loadRSSFeedPortlet();
-				loadFreeformHTMLPortlet();
-				loadLoginPortlet();
-				loadApplicationDirectoryPortlet();
-				loadWorkspaceDirectoryPortlet();
+        new KernelExcursion() {
+            public void excurse() {
+                setEffectiveParty(Kernel.getSystemParty());
+
+                createApplication((String) get(m_url),
+                                  (Boolean) get(m_isPublic),
+                                  (String) get(m_title));
+                setupWorkspacePageType();
+
+                loadTimeOfDayPortlet();
+                loadContentDirectoryPortlet();
+                loadRSSFeedPortlet();
+                loadFreeformHTMLPortlet();
+                loadLoginPortlet();
+                loadApplicationDirectoryPortlet();
+                loadWorkspaceDirectoryPortlet();
                 NavigationDirectoryPortlet.loadPortletType();
-			}
-		}.run();
-	}
+            }
+        }.run();
+    }
 
-	/**
+    /**
      * 
      * @param url
      * @param isPublic
@@ -117,38 +120,38 @@ public class Loader extends PackageLoader {
      */
     private void createApplication(String url, Boolean isPublic, String title) {
 
-		ApplicationType type = setupWorkspaceType();
+        ApplicationType type = setupWorkspaceType();
 
-		if (url != null) {
+        if (url != null) {
 
             // check weather the url parameter is properly formatted
-			s_log.debug("process url " + url);
-			Assert.isTrue(url.startsWith("/"), "url starts with /");
-			Assert.isTrue(url.endsWith("/"), "url ends with /");
-			Assert.isTrue(!url.equals("/"), "url is not /");
+            s_log.debug("process url " + url);
+            Assert.isTrue(url.startsWith("/"), "url starts with /");
+            Assert.isTrue(url.endsWith("/"), "url ends with /");
+            Assert.isTrue(!url.equals("/"), "url is not /");
 
-			int last = url.lastIndexOf("/", url.length() - 2);
-			s_log.debug("last slash at " + last);
-			Application parent = null;
-			String name = null;
-			if (last > 0) {
-				String base = url.substring(0, last + 1);
-				s_log.debug("Finding parent at " + base);
-				parent = Application.retrieveApplicationForPath(base);
-				name = url.substring(last + 1, url.length() - 1);
-			} else {
-				name = url.substring(1, url.length() - 1);
-			}
-			s_log.debug("node name is " + name);
+            int last = url.lastIndexOf("/", url.length() - 2);
+            s_log.debug("last slash at " + last);
+            Application parent = null;
+            String name = null;
+            if (last > 0) {
+                String base = url.substring(0, last + 1);
+                s_log.debug("Finding parent at " + base);
+                parent = Application.retrieveApplicationForPath(base);
+                name = url.substring(last + 1, url.length() - 1);
+            } else {
+                name = url.substring(1, url.length() - 1);
+            }
+            s_log.debug("node name is " + name);
 
-			// set up the portal node
-			Workspace workspace = Workspace.createWorkspace(name, title,
+            // set up the portal node
+            Workspace workspace = Workspace.createWorkspace(name, title,
 					parent, Boolean.TRUE.equals(isPublic));
 			
-		}
-	}
+        }
+    }
 
-	/**
+    /**
      * Creates a workspace application type as a legacy-compatible application
      * type.
      *
@@ -159,27 +162,35 @@ public class Loader extends PackageLoader {
     private ApplicationType setupWorkspaceType() {
         // The first string is a key parameter used to create a
         // legacy package type to back the new application type.
-		ApplicationType type = ApplicationType.createApplicationType(
-				"workspace", "Portal Workspace",
-				Workspace.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Portal based collaborative workspaces");
-		type.createGroup();
-		return type;
-	}
+        ApplicationType type = ApplicationType.createApplicationType(
+                                               "workspace", "Portal Workspace",
+                                               Workspace.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Portal based collaborative workspaces");
+        type.createGroup();
+        return type;
+    }
 
-	private ResourceType setupWorkspacePageType() {
-		ResourceType type = ResourceType.createResourceType(
-				"Portal Workspace Page", WorkspacePage.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Pages for the portal workspaces");
-		return type;
-	}
+    /**
+     *
+     * @return
+     */
+    private ResourceType setupWorkspacePageType() {
+        ResourceType type = ResourceType.createResourceType(
+                                         "Portal Workspace Page",
+                                         WorkspacePage.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Pages for the portal workspaces");
+        return type;
+    }
 
-	private void loadTimeOfDayPortlet() {
+    /**
+     *
+     */
+    private void loadTimeOfDayPortlet() {
 		PortletType type = PortletType.createPortletType("Time of Day",
 				PortletType.WIDE_PROFILE,
 				TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE);
 		type.setDescription("Displays the current date and time");
-	}
+    }
 
 	private void loadContentDirectoryPortlet() {
 		PortletType type = PortletType.createPortletType("Content Directory",
