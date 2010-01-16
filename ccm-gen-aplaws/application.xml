@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
   name="ccm-gen-aplaws"
-  prettyName="APLAWS"
+  prettyName="Generic APLAWS"
   version="6.6.0"
   release="1"
   webapp="ROOT">

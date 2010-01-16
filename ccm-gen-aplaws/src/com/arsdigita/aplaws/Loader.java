@@ -64,10 +64,6 @@ import java.util.Set;
  * @version $Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/03/25 09:34:39 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
@@ -211,12 +207,14 @@ public class Loader extends PackageLoader {
      * TODO: make configurable without recompiling!
      */
     public void registerNavigationTemplates() {
+
         Template template ;
 
+    /*  Werden bereits in navigation erstellt.
         template = Template.create(
-            "AtoZ paginator",
-            "AtoZ paginator index page",
-            "/packages/navigation/templates/atoz.jsp");
+            "Generic AtoZ paginator",
+            "Generic AtoZ paginator index page",
+            "/packages/navigation/templates/gen-atoz.jsp");
 
         template = Template.create(
             "Default",
@@ -227,12 +225,11 @@ public class Loader extends PackageLoader {
             "Recent",
             "reverse order page",
             "/packages/navigation/templates/recent.jsp");
-
+      */
         template = Template.create(
             "Welcome Page",
             "Welcome Page for navigation",
             "/packages/navigation/templates/welcome.jsp");
-
     
     }
 
