@@ -4,28 +4,17 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.KernelExcursion;
-import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.persistence.PersistenceException;
-import com.arsdigita.persistence.SessionManager;
 //import com.arsdigita.search.Searchable;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.util.StringUtils;
-import com.arsdigita.xml.Element;
 
 import java.math.BigDecimal;
 import java.net.URL;
