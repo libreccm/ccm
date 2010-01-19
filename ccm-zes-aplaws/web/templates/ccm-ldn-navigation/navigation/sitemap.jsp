@@ -11,9 +11,13 @@
 
   <define:page name="sitemapPage" application="navigation"
     title="APLAWS" cache="true">
+ 
+    <jsp:scriptlet>
+      sitemapPage.setClassAttr("sitemapPage");
+    </jsp:scriptlet>
 
     <define:component name="categoryNav"
-      classname="com.arsdigita.london.navigation.ui.category.Hierarchy">
+                      classname="com.arsdigita.london.navigation.ui.category.Hierarchy">
       <jsp:scriptlet>
         ((com.arsdigita.london.navigation.ui.category.Hierarchy) categoryNav).setShowItems(false);
       </jsp:scriptlet>
