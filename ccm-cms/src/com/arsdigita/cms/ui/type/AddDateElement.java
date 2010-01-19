@@ -57,13 +57,15 @@ public class AddDateElement extends ElementAddForm {
     public AddDateElement(ACSObjectSelectionModel types) {
         super("ContentTypeAddDateElement", "Add a Date Element", types);
 
+/*
         add(new Label(GlobalizationUtil.globalize
                       ("cms.ui.type.element.value_required")));
         m_valReq = new CheckboxGroup("AddDateElementValReq");
         // XXX fix l18n wrt request
         m_valReq.addOption(new Option(lz("cms.ui.no"), lz("cms.ui.yes")));
         add(m_valReq);
-
+*/
+        
         add(new Label(GlobalizationUtil.globalize
                       ("cms.ui.type.default_date")));
         m_date = new Date("elementdate");
@@ -101,7 +103,10 @@ public class AddDateElement extends ElementAddForm {
         throws FormProcessException {
 
         java.util.Date date = (java.util.Date) m_date.getValue(state);
-        String[] valReq = (String[]) m_valReq.getValue(state);
+//        String[] valReq = (String[]) m_valReq.getValue(state);
+        // Quasimodo
+        // Disable the value requierd feature
+        String[] valReq = null;
 
         if (valReq == null) {
             dot.addOptionalAttribute(label, MetadataRoot.DATE);

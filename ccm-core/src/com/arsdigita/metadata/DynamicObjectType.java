@@ -38,6 +38,7 @@ import com.redhat.persistence.metadata.JoinTo;
 import com.redhat.persistence.metadata.Model;
 import com.redhat.persistence.metadata.ObjectMap;
 import com.redhat.persistence.metadata.ObjectType;
+import com.redhat.persistence.metadata.Property;
 import com.redhat.persistence.metadata.Role;
 import com.redhat.persistence.metadata.Root;
 import com.redhat.persistence.metadata.Table;
@@ -573,8 +574,8 @@ public class DynamicObjectType extends DynamicElement {
      *             in is not an Attribute that can be removed
      */
     public void removeAttribute(String name) {
-	throw new UnsupportedOperationException();
-        /*// XXX: set a flag here to say that save() needs to regenerate all
+//	throw new UnsupportedOperationException();
+        // XXX: set a flag here to say that save() needs to regenerate all
 	// subtypes as well
         Property property = m_objectType.getDeclaredProperty(name);
         if (property == null) {
@@ -590,8 +591,8 @@ public class DynamicObjectType extends DynamicElement {
 		     "is not a property of this DynamicObjectType");
             }
         } else {
-            m_objectType.removeProperty(property);
-	    }*/
+            m_objectType.removeProperty(name);
+	    }
     }
 
     /**

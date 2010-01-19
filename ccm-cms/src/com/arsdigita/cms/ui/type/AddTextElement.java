@@ -75,12 +75,14 @@ public class AddTextElement extends ElementAddForm {
         m_dataEntry.addOption(new Option( TEXT_AREA, "Text Area"));
         add(m_dataEntry);
 
+/*
         add(new Label(GlobalizationUtil.globalize
                       ("cms.ui.type.element.value_required")));
         m_valReq = new CheckboxGroup("AddTextElementValReq");
         m_valReq.addOption(new Option("yes", "Yes"));
         add(m_valReq);
-
+*/
+        
         add(m_buttons, ColumnPanel.FULL_WIDTH|ColumnPanel.CENTER);
     }
 
@@ -90,7 +92,10 @@ public class AddTextElement extends ElementAddForm {
         throws FormProcessException {
 
         Integer length = (Integer) m_length.getValue(state);
-        String[] valReq = (String[]) m_valReq.getValue(state);
+//        String[] valReq = (String[]) m_valReq.getValue(state);
+        // Quasimodo
+        // Disable the value requierd feature
+        String[] valReq = null;
 
         if (length == null) {
             length = new Integer(4000);

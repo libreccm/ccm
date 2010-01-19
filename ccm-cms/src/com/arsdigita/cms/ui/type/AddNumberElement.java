@@ -51,11 +51,13 @@ public class AddNumberElement extends ElementAddForm {
     public AddNumberElement(ACSObjectSelectionModel types) {
         super("ContentTypeAddNumberElement", "Add a Number Element", types);
 
+/*
         add(new Label(GlobalizationUtil.globalize("cms.ui.type.element.value_required")));
         m_valReq = new CheckboxGroup("AddNumberElementValReq");
         m_valReq.addOption(new Option("yes", "Yes"));
         add(m_valReq);
-
+*/
+        
         add(m_buttons, ColumnPanel.FULL_WIDTH|ColumnPanel.CENTER);
     }
 
@@ -63,7 +65,10 @@ public class AddNumberElement extends ElementAddForm {
                                       PageState state)
         throws FormProcessException {
 
-        String[] valReq = (String[]) m_valReq.getValue(state);
+//        String[] valReq = (String[]) m_valReq.getValue(state);
+        // Quasimodo
+        // Disable the value requierd feature
+        String[] valReq = null;
 
         if (valReq == null) {
             dot.addOptionalAttribute(label, MetadataRoot.BIGDECIMAL);

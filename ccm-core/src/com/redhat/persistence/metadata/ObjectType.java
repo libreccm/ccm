@@ -129,6 +129,13 @@ public class ObjectType extends Element {
         }
     }
 
+    public void removeProperty(String name) {
+        if ((m_properties.get(name)) instanceof Role) {
+            m_roles.remove((m_properties.get(name)));
+        }
+        m_properties.remove((m_properties.get(name)));
+    }
+
     public Collection getDeclaredProperties() {
         return m_properties;
     }

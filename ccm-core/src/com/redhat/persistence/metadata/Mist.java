@@ -97,7 +97,21 @@ class Mist extends AbstractList {
     public boolean remove(Object o) {
 	Object key = check(o);
 	Element child = (Element) o;
+
+        // Quasimodo: BEGIN
+        // Diabled because it prevents to delete item from the list.
+        // The result is always false because child.getParent() gets
+        // the parent of the Class. It doesn't say anything about the
+        // membership to this List.
+        /*
 	if (!this.equals(child.getParent())) {
+	    throw new IllegalArgumentException
+		("child does not belong to this parent");
+	}
+        */
+        // Qusimodo: END
+
+	if (!this.containsKey(key)) {
 	    throw new IllegalArgumentException
 		("child does not belong to this parent");
 	}
