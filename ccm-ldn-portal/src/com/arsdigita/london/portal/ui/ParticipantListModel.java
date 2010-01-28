@@ -15,14 +15,14 @@
 
 package com.arsdigita.london.portal.ui;
 
-import com.arsdigita.bebop.*;
-import com.arsdigita.bebop.event.*;
-import com.arsdigita.bebop.form.*;
+// import com.arsdigita.bebop.*;
+// import com.arsdigita.bebop.event.*;
+// import com.arsdigita.bebop.form.*;
 import com.arsdigita.bebop.list.ListModel;
-import com.arsdigita.bebop.parameters.StringParameter;
+// import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.kernel.*;
-import com.arsdigita.kernel.permissions.*;
-import com.arsdigita.london.portal.util.GlobalizationUtil; 
+// import com.arsdigita.kernel.permissions.*;
+// import com.arsdigita.london.portal.util.GlobalizationUtil;
 import com.arsdigita.london.portal.Workspace;
 
 import org.apache.log4j.Category;
@@ -32,6 +32,7 @@ import org.apache.log4j.Category;
  *
  * @author dennis (2003/08/15)
  * @version $Id: com/arsdigita/portalserver/ui/PortalParticipants.java $
+ */
 public class ParticipantListModel implements ListModel {
 
     private static Category s_log = Category.getInstance

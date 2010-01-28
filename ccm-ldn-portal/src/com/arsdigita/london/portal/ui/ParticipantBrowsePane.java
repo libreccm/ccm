@@ -50,7 +50,7 @@ import org.apache.log4j.Category;
  *
  * @author ashah (2003/08/15)
  * @version $Id: //portalserver/src/com/arsdigita/portalserver/ui/ParticipantBrowsePane.java#7 $
- +/
+ */
 public class ParticipantBrowsePane {
 
     private static Category s_log = Category.getInstance
@@ -93,7 +93,8 @@ public class ParticipantBrowsePane {
                 }
             };
         initialsList.setLayout(List.HORIZONTAL);
-        initialsList.setEmptyView(new Label(GlobalizationUtil.globalize("cw.workspace.ui.no_participants")));
+        initialsList.setEmptyView(new Label(GlobalizationUtil.globalize(
+                                      "cw.workspace.ui.no_participants")));
         initialsList.setModelBuilder(new AbstractListModelBuilder() {
                 public ListModel makeModel(List l, PageState ps) {
                     Workspace workspace = (Workspace) workspaceRL.get(ps);
@@ -385,7 +386,8 @@ public class ParticipantBrowsePane {
         result.add(bottomHalf);
 
         userSearch.add(
-                       new Label(GlobalizationUtil.globalize("cw.workspace.ui.enter_first_name_last_name_andor_email_address")));
+                   new Label(GlobalizationUtil.globalize(
+                   "cw.workspace.ui.enter_first_name_last_name_andor_email_address")));
         final TextField query = new TextField("query");
         userSearch.add(query);
         userSearch.add(new Label(""));
@@ -406,7 +408,9 @@ public class ParticipantBrowsePane {
                     long count = parties.size();
                     if (count == 0) {
                         bottomHalf.setVisibleComponent(ps, searchRedoLabel);
-                        searchRedoLabel.setLabel( (String) GlobalizationUtil.globalize("cw.workspace.ui.no_matches_found").localize() , ps);
+                        searchRedoLabel.setLabel( 
+                                (String) GlobalizationUtil.globalize(
+                                "cw.workspace.ui.no_matches_found").localize() , ps);
                     } else if (count > 100) {
                         bottomHalf.setVisibleComponent(ps, searchRedoLabel);
                         searchRedoLabel.setLabel(
@@ -419,7 +423,8 @@ public class ParticipantBrowsePane {
                 }
             });
 
-        userAdd.add(new Label(GlobalizationUtil.globalize("cw.workspace.ui.select_user_or_group_to_add")));
+        userAdd.add(new Label(GlobalizationUtil.globalize(
+                        "cw.workspace.ui.select_user_or_group_to_add")));
         final RadioGroup users = new RadioGroup("users");
         users.setLayout(RadioGroup.VERTICAL);
 

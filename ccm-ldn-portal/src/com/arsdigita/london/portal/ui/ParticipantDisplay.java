@@ -16,12 +16,12 @@
 package com.arsdigita.london.portal.ui;
 
 import com.arsdigita.bebop.*;
-import com.arsdigita.bebop.event.*;
-import com.arsdigita.bebop.form.*;
-import com.arsdigita.bebop.list.ListModel;
-import com.arsdigita.bebop.parameters.StringParameter;
+// import com.arsdigita.bebop.event.*;
+// import com.arsdigita.bebop.form.*;
+// import com.arsdigita.bebop.list.ListModel;
+// import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.kernel.*;
-import com.arsdigita.kernel.permissions.*;
+// import com.arsdigita.kernel.permissions.*;
 import com.arsdigita.london.portal.util.GlobalizationUtil; 
 import com.arsdigita.london.portal.Workspace;
 
@@ -31,7 +31,9 @@ import org.apache.log4j.Category;
  * ParticipantDisplay.
  *
  * @author dennis (2003/08/15)
- * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/PortalParticipants.java#3 $
+ * Reimplementation using code from the Arsdigita portalserver
+ * @version $Id: com.arsdigita.portalserver.ui.PortalParticipants.java $
+ */
 public class ParticipantDisplay extends CompoundComponent {
 
     private static Category s_log = Category.getInstance
@@ -42,7 +44,8 @@ public class ParticipantDisplay extends CompoundComponent {
                               final RequestLocal participantRL) {
         super(container);
 
-        Label header = new Label(GlobalizationUtil.globalize("cw.workspace.ui.participant_info"));
+        Label header = new Label(GlobalizationUtil.globalize(
+                                 "cw.workspace.ui.participant_info"));
         header.setFontWeight(Label.BOLD);
         add(header);
 

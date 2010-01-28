@@ -16,12 +16,12 @@
 package com.arsdigita.london.portal.ui;
 
 import com.arsdigita.bebop.*;
-import com.arsdigita.bebop.event.*;
-import com.arsdigita.bebop.form.*;
-import com.arsdigita.bebop.list.ListModel;
-import com.arsdigita.bebop.parameters.StringParameter;
+// import com.arsdigita.bebop.event.*;
+// import com.arsdigita.bebop.form.*;
+// import com.arsdigita.bebop.list.ListModel;
+// import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.kernel.*;
-import com.arsdigita.kernel.permissions.*;
+// import com.arsdigita.kernel.permissions.*;
 import com.arsdigita.london.portal.util.GlobalizationUtil; 
 import com.arsdigita.london.portal.Workspace;
 import com.arsdigita.globalization.GlobalizedMessage;
@@ -34,6 +34,7 @@ import org.apache.log4j.Category;
  * Reimplementation using original arsdigita portalserver code. 
  * @author dennis (2003/08/15)
  * @version $Id: com/arsdigita/portalserver/ui/PortalParticipants.java $
+ */
 public class ParticipantModel implements PropertySheetModel {
 
     private static Category s_log = Category.getInstance
