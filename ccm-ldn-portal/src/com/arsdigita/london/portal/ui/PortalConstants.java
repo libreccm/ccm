@@ -24,7 +24,6 @@ package com.arsdigita.london.portal.ui;
  * @version $Id: PortalConstants.java 1174 2006-06-14 14:14:15Z fabrice $
  */
 public class PortalConstants {
-	public static final String versionId = "$Id: PortalConstants.java 1174 2006-06-14 14:14:15Z fabrice $ by $Author: fabrice $, $DateTime: 2002/10/23 08:48:40 $";
 
 	public static final String PORTAL_XML_NS = "http://www.uk.arsdigita.com/portal/1.0";
 

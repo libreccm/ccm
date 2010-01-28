@@ -20,8 +20,12 @@ import com.arsdigita.london.portal.ui.portlet.RSSFeedPortletRenderer;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.Portlet;
 
+/** 
+ * RSSFeedPortlet
+ *
+ * @version $Id: RSSFeedPortlet.java 1174 2006-06-14 14:14:15Z fabrice $
+ */ 
 public class RSSFeedPortlet extends Portlet {
-	public static final String versionId = "$Id: RSSFeedPortlet.java 1174 2006-06-14 14:14:15Z fabrice $ by $Author: fabrice $, $DateTime: 2003/08/08 05:59:54 $";
 
 	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.portal.portlet.RSSFeedPortlet";
 

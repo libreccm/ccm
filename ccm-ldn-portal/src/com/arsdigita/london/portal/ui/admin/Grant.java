@@ -25,11 +25,13 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Grant.
+ *
+ * Reimplementation using Ardigita portal server code.
+ * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/Grant.java#3 $
+ */
 class Grant {
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/Grant.java#3 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2003/08/15 13:46:34 $";
 
     private static Logger s_log = Logger.getLogger(Grant.class.getName());
 

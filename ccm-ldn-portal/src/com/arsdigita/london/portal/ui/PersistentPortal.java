@@ -78,7 +78,7 @@ import org.apache.log4j.Logger;
 
 // XXX this class is disgusting
 /**
- * PersitentPortals are able to have more than one column, and the constructor
+ * PersistentPortals are able to have more than one column, and the constructor
  * for PersitentPortal takes in an integer argument for number of columns.
  * 
  * HomepagePortals defined on the jsp page each construct instances of this

@@ -42,8 +42,12 @@ import com.arsdigita.util.LockableImpl;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
 
+/** 
+ * CategoryComponent.
+ * 
+ * @version $Id: CategoryComponent.java 1174 2006-06-14 14:14:15Z fabrice $
+ */ 
 public class CategoryComponent extends SimpleContainer {
-	public static final String versionId = "$Id: CategoryComponent.java 1174 2006-06-14 14:14:15Z fabrice $ $Author: fabrice $, $DateTime: 2004/02/27 11:39:08 $";
 
 	private static final Logger s_log = Logger
 			.getLogger(CategoryComponent.class);

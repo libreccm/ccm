@@ -42,12 +42,13 @@ import java.util.Iterator;
 
 import org.apache.log4j.Category;
 
+/**
+ * GrantsTable.
+ *
+ * @author dennis (2003/08/15)
+ * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/GrantsTable.java#2 $
+ */ 
 abstract class GrantsTable extends Table {
-
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/GrantsTable.java#2 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2003/08/15 13:46:34 $";
 
     private static Category s_log = Category.getInstance
         (GrantsTable.class.getName());

@@ -28,12 +28,13 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 import org.apache.log4j.Category;
 
+/**
+ * ParticipantModel.
+ *
+ * Reimplementation using original arsdigita portalserver code. 
+ * @author dennis (2003/08/15)
+ * @version $Id: com/arsdigita/portalserver/ui/PortalParticipants.java $
 public class ParticipantModel implements PropertySheetModel {
-
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/PortalParticipants.java#3 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2003/08/15 13:46:34 $";
 
     private static Category s_log = Category.getInstance
         (ParticipantModel.class.getName());

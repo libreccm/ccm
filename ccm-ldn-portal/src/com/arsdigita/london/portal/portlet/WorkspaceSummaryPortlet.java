@@ -34,9 +34,14 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 
+/**
+ * WorkspaceSummaryPortlet
+ *
+ *
+ * @author dennis (2003/08/15)
+ * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/WorkspaceSummaryPortlet.java $
+ */
 public class WorkspaceSummaryPortlet extends AppPortlet {
-
-    public static final String versionId = "$Id: //portalserver/dev/src/com/arsdigita/portalserver/WorkspaceSummaryPortlet.java#7 $ by $Author: dennis $, $DateTime: 2003/08/15 13:46:34 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.london.portal.portlet.WorkspaceSummaryPortlet";

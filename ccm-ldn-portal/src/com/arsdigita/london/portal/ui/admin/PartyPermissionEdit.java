@@ -31,12 +31,13 @@ import java.util.List;
 
 import org.apache.log4j.Category;
 
+/**
+ * PartyPermissionEdit.
+ *
+ * @author dennis (2003/08/15)
+ * @version $Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/PartyPermissionEdit.java#2 $
+ */ 
 public class PartyPermissionEdit extends CompoundComponent {
-
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/permissions/PartyPermissionEdit.java#2 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2003/08/15 13:46:34 $";
 
     private static Category s_log = Category.getInstance
         (PartyPermissionEdit.class.getName());

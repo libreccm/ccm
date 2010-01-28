@@ -27,12 +27,12 @@ import com.arsdigita.london.portal.Workspace;
 
 import org.apache.log4j.Category;
 
+/**
+ * ParticipantListModel
+ *
+ * @author dennis (2003/08/15)
+ * @version $Id: com/arsdigita/portalserver/ui/PortalParticipants.java $
 public class ParticipantListModel implements ListModel {
-
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/PortalParticipants.java#3 $" +
-        "$Author: dennis $" +
-        "$DateTime: 2003/08/15 13:46:34 $";
 
     private static Category s_log = Category.getInstance
         (ParticipantListModel.class.getName());

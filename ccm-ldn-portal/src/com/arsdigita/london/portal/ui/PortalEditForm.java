@@ -34,14 +34,15 @@ import com.arsdigita.london.portal.WorkspacePage;
 import com.arsdigita.util.Assert;
 
 /**
+ * PortalEditForm.
  * <p>
  * <strong>Experimental</strong>
  * </p>
+ * 
+ * @version $Id: PortalEditForm.java 1174 2006-06-14 14:14:15Z fabrice $
  */
 public class PortalEditForm extends Form implements FormProcessListener,
 		FormInitListener {
-
-	public static final String versionId = "$Id: PortalEditForm.java 1174 2006-06-14 14:14:15Z fabrice $ by $Author: fabrice $, $DateTime: 2004/03/02 06:33:42 $";
 
 	private WorkspaceSelectionModel m_workspace;
 

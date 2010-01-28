@@ -45,12 +45,13 @@ import java.util.Iterator;
 
 import org.apache.log4j.Category;
 
+/**
+ * ParticipantBrowsePane.
+ *
+ * @author ashah (2003/08/15)
+ * @version $Id: //portalserver/src/com/arsdigita/portalserver/ui/ParticipantBrowsePane.java#7 $
+ +/
 public class ParticipantBrowsePane {
-
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/ParticipantBrowsePane.java#7 $" +
-        "$Author: ashah $" +
-        "$DateTime: 2003/08/15 15:50:10 $";
 
     private static Category s_log = Category.getInstance
         (ParticipantBrowsePane.class.getName());

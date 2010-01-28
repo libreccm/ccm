@@ -38,16 +38,13 @@ import java.util.Iterator;
 import org.apache.log4j.Category;
 
 /**
+ * ParticipantEdit.
  *
- *
+ * @author ashah (2003/08/15)
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
+ * @version $Id: com/arsdigita/portalserver/ui/ParticipantEdit.java $
  */
 public class ParticipantEdit extends CompoundComponent {
-
-    public static final String versionId =
-        "$Id: //portalserver/dev/src/com/arsdigita/portalserver/ui/ParticipantEdit.java#5 $" +
-        "$Author: ashah $" +
-        "$DateTime: 2003/08/15 15:50:10 $";
 
     private static Category s_log = Category.getInstance
         (ParticipantEdit.class.getName());

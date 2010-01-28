@@ -20,20 +20,39 @@ import com.arsdigita.london.portal.ui.portlet.LoginPortletRenderer;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.Portlet;
 
+/**
+ * 
+ * @version $Id: LoginPortlet.java 1174 2006-06-14 14:14:15Z fabrice $
+ */
 public class LoginPortlet extends Portlet {
-	public static final String versionId = "$Id: LoginPortlet.java 1174 2006-06-14 14:14:15Z fabrice $ by $Author: fabrice $, $DateTime: 2003/08/08 05:59:54 $";
 
-	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.portal.portlet.LoginPortlet";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.london.portal.portlet.LoginPortlet";
 
-	public LoginPortlet(DataObject dataObject) {
-		super(dataObject);
-	}
+    
+    /**
+     * Constructor
+     *
+     * @param dataObject
+     */
+    public LoginPortlet(DataObject dataObject) {
+        super(dataObject);
+    }
 
-	protected String getBaseDataObjectType() {
-		return BASE_DATA_OBJECT_TYPE;
-	}
+    /**
+     * Retrieve Base Data Object Type
+     *
+     * @return String BaseDataObjectType
+     */
+    protected String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
+    }
 
-	protected AbstractPortletRenderer doGetPortletRenderer() {
-		return new LoginPortletRenderer(this);
-	}
+    /**
+     * 
+     * @return
+     */
+    protected AbstractPortletRenderer doGetPortletRenderer() {
+        return new LoginPortletRenderer(this);
+    }
 }
