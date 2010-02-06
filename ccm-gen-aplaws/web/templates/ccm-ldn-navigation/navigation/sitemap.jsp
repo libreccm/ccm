@@ -14,6 +14,10 @@
   <define:page name="sitemapPage" application="navigation"
     title="APLAWS" cache="true">
 
+    <jsp:scriptlet>
+      sitemapPage.setClassAttr("sitemapPage");
+    </jsp:scriptlet>
+
     <define:component name="categoryPath"
       classname="com.arsdigita.london.navigation.ui.category.Path"/>
     <define:component name="categoryMenu"

@@ -19,12 +19,14 @@
 package com.arsdigita.aplaws;
 
 import com.arsdigita.categorization.Categorization;
-import com.arsdigita.london.terms.TermCategoryListener;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.templating.PatternStylesheetResolver;
+
+import com.arsdigita.london.terms.TermCategoryListener;
+
 import org.apache.log4j.Logger;
 
-import com.arsdigita.templating.PatternStylesheetResolver;
 
 /**
  * The APLAWS initializer.

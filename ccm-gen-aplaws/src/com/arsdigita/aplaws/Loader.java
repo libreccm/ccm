@@ -210,26 +210,32 @@ public class Loader extends PackageLoader {
 
         Template template ;
 
-    /*  Werden bereits in navigation erstellt.
+    /*  In navigation werden bereits Grund-Templates erstellt.
+    */
         template = Template.create(
             "Generic AtoZ paginator",
             "Generic AtoZ paginator index page",
             "/packages/navigation/templates/gen-atoz.jsp");
 
         template = Template.create(
-            "Default",
-            "default index page",
-            "/packages/navigation/templates/default.jsp");
+            "Generic Default",
+            "Generic default index page",
+            "/packages/navigation/templates/gen-default.jsp");
 
         template = Template.create(
-            "Recent",
-            "reverse order page",
-            "/packages/navigation/templates/recent.jsp");
-      */
+            "Generic Portalseite",
+            "Generic Portal Page",
+            "/packages/navigation/templates/gen-portal.jsp");
+
         template = Template.create(
-            "Welcome Page",
-            "Welcome Page for navigation",
-            "/packages/navigation/templates/welcome.jsp");
+            "Generic Recent",
+            "Generic reverse order page",
+            "/packages/navigation/templates/gen-recent.jsp");
+
+        template = Template.create(
+            "Generic Welcome Page",
+            "Generic Welcome Page for navigation",
+            "/packages/navigation/templates/gen-welcome.jsp");
     
     }
 
