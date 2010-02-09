@@ -42,14 +42,6 @@ import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.xml.Element;
 
 /**
- * Class PostForm
- *
- * @author Jon Orris (jorris@arsdigita.com)
- *
- * @version $Revision #1 $DateTime: 2004/08/17 23:26:27 $
- * 
- * rewritten Chris Gilbert.
- * 
  * Abstract form for behaviour shared by all types of post. Different types of
  * post (new or reply) have different text screens, retrieved using
  * the abstract getTextStep method and also may behave
@@ -58,13 +50,13 @@ import com.arsdigita.xml.Element;
  * 
  * They all share the remainder of the steps (currently add files, add images and preview)
  * and processing relating to shared behaviour
+ *
+ * @author Jon Orris (jorris@arsdigita.com)
+ * @author rewritten by Chris Gilbert 
+ * @version $Revision #1 $DateTime: 2004/08/17 23:26:27 $
+ * @version $Id: PostForm.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public abstract class PostForm extends Wizard implements Constants {
-
-    public static final String versionId =
-		"$Id: PostForm.java 1628 2007-09-17 08:10:40Z chrisg23 $"
-			+ "$Author: chrisg23 $"
-			+ "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(PostForm.class);
 

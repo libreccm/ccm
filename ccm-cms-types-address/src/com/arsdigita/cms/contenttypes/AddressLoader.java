@@ -30,10 +30,6 @@ import org.apache.log4j.Logger;
  * @version $Id: AddressLoader.java 1597 2007-07-10 16:27:26Z p_boy $
  */
 public class AddressLoader extends AbstractContentTypeLoader {
-    public final static String versionId =
-        "$Id: AddressLoader.java 1597 2007-07-10 16:27:26Z p_boy $" +
-        "$Author: p_boy $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(AddressLoader.class);
 

@@ -33,17 +33,13 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
- * @version $Id: ForumServlet.java 1628 2007-09-17 08:10:40Z chrisg23 $
  * 
  * Updated chris.gilbert@westsussex.gov.uk to make use of PageFactory and to enable 
  * disablement of client/middleware caching
+ * @version $Id: ForumServlet.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public class ForumServlet extends BebopApplicationServlet
         implements Constants {
-    public static final String versionId =
-        "$Id: ForumServlet.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(ForumServlet.class);
 

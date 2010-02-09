@@ -28,10 +28,10 @@ import com.arsdigita.util.UncheckedWrapperException;
 /**
  *
  * @version $Revision: 1.1 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: RemoveUnattachedAssetsTask.java,v 1.1 2006/07/13 10:19:28 cgyg9330 Exp $
  **/
 class RemoveUnattachedAssetsTask extends TimerTask {
 
-    public static final String versionId = "$Id: RemoveUnattachedAssetsTask.java,v 1.1 2006/07/13 10:19:28 cgyg9330 Exp $ by $Author: cgyg9330 $, $DateTime: 2004/08/17 23:15:09 $";
     private static final Logger s_log = Logger.getLogger(RemoveUnattachedAssetsTask.class);
     public void run() {
             RemoveUnattachedAssetsScheduler.run();

@@ -25,11 +25,10 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @version $Id: EventLoader.java 1595 2007-07-10 16:14:44Z p_boy $
  **/
 
 public class EventLoader extends AbstractContentTypeLoader {
-
-    public final static String versionId = "$Id: EventLoader.java 1595 2007-07-10 16:14:44Z p_boy $ by $Author: p_boy $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Event.xml"

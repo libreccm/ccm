@@ -39,8 +39,6 @@ import com.arsdigita.london.navigation.Navigation;
  */
 public class CategoryTree extends Tree {
 
-    public static final String versionId = "$Id: CategoryTree.java 1695 2008-03-18 11:47:59Z terry $ by $Author: terry $, $DateTime: 2004/01/21 09:04:39 $";
-
     /**
      * Construct a new CategoryTree
      */

@@ -40,13 +40,11 @@ import org.apache.log4j.Logger;
 /**
  * @see com.arsdigita.forum.Post.java 
  * @see com.arsdigita.forum.EditPostForm.java 
+ * @author rewritten by Chris Gilbert
+ * @version $Id: RootPostForm.java,v 1.3 2006/07/13 10:19:28 cgyg9330 Exp $
  */
 
 class RootPostForm extends PostForm {
-	public static final String versionId =
-		"$Id: RootPostForm.java,v 1.3 2006/07/13 10:19:28 cgyg9330 Exp $"
-			+ "$Author: cgyg9330 $"
-			+ "$DateTime: 2004/08/17 23:26:27 $";
 
 	private static final Logger s_log = Logger.getLogger(RootPostForm.class);
 

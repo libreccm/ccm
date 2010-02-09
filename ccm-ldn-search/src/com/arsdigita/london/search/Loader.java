@@ -31,16 +31,12 @@ import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 
 /**
- * Loader.
+ * Loader (initial setup executed once at installation time).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 758 2005-09-02 14:26:56Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 758 2005-09-02 14:26:56Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2003/10/28 14:25:13 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 

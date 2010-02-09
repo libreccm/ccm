@@ -48,13 +48,11 @@ import org.apache.log4j.Logger;
  * parent category. temporary hack for testing purposes
  *
  * @author <a href=mailto:sarah@arsdigita.com>Sarah Barwig</a>
+ * @author rewritten by Chris Gilbert
  * @version $Revision: 1.2 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
+ * @version $Id: CategoryAddForm.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public class CategoryAddForm extends Form {
-    public static final String versionId =
-        "$Id: CategoryAddForm.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger
         (CategoryAddForm.class);

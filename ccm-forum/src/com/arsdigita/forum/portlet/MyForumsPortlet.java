@@ -42,14 +42,14 @@ import com.arsdigita.portal.Portlet;
 import com.arsdigita.portal.apportlet.AppPortlet;
 
 /**
+ * portlet with no attributes that displays links to all forums that user has 
+ * read access to
+ * 
  * 
  * @author chris.gilbert@westsussex.gov.uk
- * 
- * portlet with no attributes that displays links to all forums that user has read access to
- *
+ * @version $Id: MyForumsPortlet.java,v 1.4 2006/07/13 10:19:28 cgyg9330 Exp $
  */
 public class MyForumsPortlet extends Portlet {
-    public static final String versionId = "$Id: MyForumsPortlet.java,v 1.4 2006/07/13 10:19:28 cgyg9330 Exp $ by $Author: cgyg9330 $, $DateTime: 2004/08/17 23:26:27 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.forum.MyForumsPortlet";

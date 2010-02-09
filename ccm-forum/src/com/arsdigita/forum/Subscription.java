@@ -39,12 +39,10 @@ import com.arsdigita.web.URL;
  * should override sendNotification() to alter this behavior.
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
+ * @author chrisg23
+ * @version $Id: Subscription.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public abstract class Subscription extends BaseSubscription {
-    public static final String versionId =
-        "$Id: Subscription.java 1628 2007-09-17 08:10:40Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Subscription.class);
 

@@ -52,17 +52,15 @@ import com.arsdigita.web.Application;
  * The Forum class represents a discussion forum.
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
- *
- * @version $Revision: 1.7 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
+ * @author chrisg23
+ * @version $Revision: $
+ * @version $Id: Forum.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 
 public class Forum extends Application {
-	public static final String THREAD_SUBSCRIPTION_GROUPS_NAME = "Thread Subscription Groups";
-    public static final String versionId =
-		"$Id: Forum.java 1628 2007-09-17 08:10:40Z chrisg23 $"
-			+ "$Author: chrisg23 $"
-			+ "$DateTime: 2004/08/17 23:26:27 $";
 
+	public static final String THREAD_SUBSCRIPTION_GROUPS_NAME = "Thread Subscription Groups";
+ 
     private static ForumConfig s_config = new ForumConfig();
 
     static {

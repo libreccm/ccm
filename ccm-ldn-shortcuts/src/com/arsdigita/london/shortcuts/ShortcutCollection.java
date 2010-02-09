@@ -28,7 +28,6 @@ import java.math.BigDecimal;
  * @version $Id: ShortcutCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ShortcutCollection extends DomainCollection {
-    public static final String versionId = "$Id: ShortcutCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2003/10/22 07:27:00 $";
 
     protected ShortcutCollection(DataCollection dataCollection) {
         super(dataCollection);

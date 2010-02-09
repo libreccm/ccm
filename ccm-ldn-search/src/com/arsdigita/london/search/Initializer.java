@@ -22,11 +22,11 @@ import com.arsdigita.cms.search.VersionFilterType;
 import com.arsdigita.cms.search.LuceneQueryEngine;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.pdl.ManifestSource;
-import com.arsdigita.runtime.PDLInitializer;
-import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.persistence.pdl.NameFilter;
-import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.search.IndexerType;
 import com.arsdigita.search.FilterType;
 import com.arsdigita.search.QueryEngineRegistry;
@@ -41,10 +41,6 @@ import com.arsdigita.london.search.HostFilterType;
  * @version $Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();

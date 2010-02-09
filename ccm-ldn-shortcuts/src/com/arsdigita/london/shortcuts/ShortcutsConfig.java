@@ -36,11 +36,6 @@ import org.apache.log4j.Logger;
  */
 public final class ShortcutsConfig extends AbstractConfig {
 
-    public static final String versionId =
-        "$Id: ShortcutsConfig.java 796 2005-09-12 15:06:53Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2003/10/28 14:25:41 $";
-
     private static final Logger s_log = Logger.getLogger(ShortcutsConfig.class);
 
     public ShortcutsConfig() {

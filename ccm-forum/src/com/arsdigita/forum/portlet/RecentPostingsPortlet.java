@@ -35,9 +35,12 @@ import com.arsdigita.web.ParameterMap;
 import com.arsdigita.portal.apportlet.AppPortlet;
 
 
-public class RecentPostingsPortlet extends AppPortlet {
-    public static final String versionId = "$Id: RecentPostingsPortlet.java 1628 2007-09-17 08:10:40Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:26:27 $";
-
+/**
+ *
+ * @version $Id: RecentPostingsPortlet.java 1628 2007-09-17 08:10:40Z chrisg23 $   
+ */
+  public class RecentPostingsPortlet extends AppPortlet {
+ 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.forum.RecentPostingsPortlet";
 

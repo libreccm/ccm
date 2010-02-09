@@ -32,13 +32,9 @@ import org.apache.log4j.Logger;
 /* Class to store configuration parameters for Webpage
  *
  * @author Crag Wolfe
+ * @version $Id: WebpageConfig.java,v 1.2 2004/03/05 04:32:56 tzumainn Exp $
  */ 
 public final class WebpageConfig extends AbstractConfig {
-
-    public static final String versionId =
-        "$Id: WebpageConfig.java,v 1.2 2004/03/05 04:32:56 tzumainn Exp $" +
-        "$Author: tzumainn $" +
-        "$DateTime: 2004/01/14 15:24:15 $";
 
     private static final Logger s_log = Logger.getLogger(WebpageConfig.class);
 

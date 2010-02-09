@@ -38,10 +38,9 @@ import org.apache.log4j.Logger;
  * &lt;define:component name="navRootIndex" classname="com.arsdigita.navigation.ui.NavigationRootIndexItem" /&gt;
  *
  * @version $Revision: $ $Date: $
+ * @version $Id: $
  */
 public class NavigationRootIndexItem extends AbstractComponent {
-    
-    public static final String versionId = "$Id: $";
     
     private static Logger log = Logger.getLogger(NavigationRootIndexItem.class);;
     
