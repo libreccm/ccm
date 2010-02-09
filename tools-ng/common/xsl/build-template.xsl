@@ -1139,7 +1139,7 @@
 			-->
           </fileset>
         </copy>
-		<!-- system.jar no longer needed nor supported. See related comment above.
+        <!-- system.jar no longer needed nor supported. See related comment above.
              Preserved here just in case the mechanism will be needed for another
              purpose
         <copy todir="${{deploy.system.jars.dir}}" preservelastmodified="true">
@@ -1147,7 +1147,7 @@
             <include name="{$name}-{$version}-system.jar"/>
           </fileset>
         </copy>
-		-->
+        -->
         <copy todir="${{deploy.external.lib.dir.{$name}}}" preservelastmodified="true">
           <fileset dir="${{apps.{$name}.location}}">
             <include name="{$name}-{$version}/**"/>

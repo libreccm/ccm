@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--    project.xml -IAW- containing only those modules used for IAW    -->
+<!--    project.xml -Oxford Handbook - containing only those modules used for it    -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="aplaws-iaw" 
+                    name="aplaws-handbook" 
               prettyName="APLAWS plus" 
                  version="1-0-9" 
                  release="rc-4" 
@@ -28,23 +28,18 @@
 
 <!--   Content Types   -->
 <!--   - - - - - - -    -->
-<!--    <ccm:application name="ccm-cms-types-address"/>              -->
+        <ccm:application name="ccm-cms-types-address"/>
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
         <ccm:application name="ccm-cms-types-article"/>
-        <ccm:application name="ccm-cms-types-baseAddress"/>
-        <ccm:application name="ccm-cms-types-baseContact"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
-<!--    <ccm:application name="ccm-cms-types-contact"/>              -->
+        <ccm:application name="ccm-cms-types-contact"/>
 <!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
-        <ccm:application name="ccm-cms-types-event"/>
-<!--         faqitem not needed by IAW              -->
-<!--    <ccm:application name="ccm-cms-types-faqitem"/>              -->
+<!--    <ccm:application name="ccm-cms-types-event"/>                -->
+        <ccm:application name="ccm-cms-types-faqitem"/>              
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
-        <ccm:application name="ccm-cms-types-genericorganization"/>
-<!--         glossaryitem not needed by IAW, too              -->
-<!--    <ccm:application name="ccm-cms-types-glossaryitem"/>         -->
+        <ccm:application name="ccm-cms-types-glossaryitem"/>         
 <!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
 <!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
 <!--    <ccm:application name="ccm-cms-types-job"/>                  -->
@@ -56,22 +51,18 @@
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
-        <ccm:application name="ccm-cms-types-organizationalunit"/>               
-        <ccm:application name="ccm-cms-types-person"/>               
-        <ccm:application name="ccm-cms-types-siteproxy"/>               
-        <ccm:application name="ccm-cms-types-researchnetwork"/>               
-<!--         xmlfeed is not needed by IAW, too                   -->
+<!--    <ccm:application name="ccm-cms-types-siteproxy"/>            -->   
 <!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->      
 
 <!--  Applications   -->
 <!--  - - - - -  -   -->
 <!--    <ccm:application name="ccm-auth-http"/>                      -->
 <!--    <ccm:application name="ccm-bookmarks"/>                      -->
-<!--    temporarily excluded, produces errors in the build process
-        <ccm:application name="ccm-docmngr"/>                        -->
+<!--    had been temporarily excluded, produces errors in the build process   -->
+        <ccm:application name="ccm-docmgr"/>                            
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
-        <ccm:application name="ccm-simplesurvey"/>
+<!--    <ccm:application name="ccm-simplesurvey"/>                   -->
         <ccm:application name="ccm-user-preferences"/>
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
@@ -96,9 +87,9 @@
         <ccm:application name="ccm-ldn-util"/>
 
 
-<!--  IAW extension  -->
+<!--  gen integration layer  -->
 <!--  - - - - - - -  -->
-        <ccm:application name="ccm-iaw-aplaws"/>
+        <ccm:application name="ccm-gen-aplaws"/>
 
 
 
