@@ -8,7 +8,7 @@
   xmlns:nav="http://ccm.redhat.com/london/navigation"
   version="1.0">
 
-  <xsl:import href="../../../../ROOT/__ccm__/themes/aplaws/navigation-index.xsl"/>
+  <xsl:import href="../../themes/aplaws-generic/navigation-index.xsl"/>
   
   <xsl:template name="pageContent">
     <a class="intLink" name="top" />
