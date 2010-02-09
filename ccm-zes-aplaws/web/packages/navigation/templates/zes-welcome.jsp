@@ -4,7 +4,7 @@
   xmlns:show="/WEB-INF/bebop-show.tld"
   version="1.2">
 
-  <%-- JSP template for the ZeS welcome / start page using navigation --%>
+  <!-- JSP template for the ZeS welcome / start page using navigation -->
 
   <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
   <jsp:directive.page import="com.arsdigita.bebop.parameters.BigDecimalParameter"/>

@@ -1,4 +1,4 @@
-jsp files replace  files provided by ccm-ldn-protal.
+jsp files replace  files provided by ccm-ldn-portal.
 
 goal: Make the portal homepage read-only and cached for 15min. EXPERIMENTAL
 

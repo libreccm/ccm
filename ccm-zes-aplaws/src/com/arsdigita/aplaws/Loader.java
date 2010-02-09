@@ -64,10 +64,6 @@ import java.util.Set;
  * @version $Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/03/25 09:34:39 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
@@ -211,8 +207,11 @@ public class Loader extends PackageLoader {
      * TODO: make configurable without recompiling!
      */
     public void registerNavigationTemplates() {
+
         Template template ;
 
+    /*  In navigation werden bereits Grund-Templates erstellt.
+    */
         template = Template.create(
             "ZeS AtoZ paginator",
             "ZeS AtoZ paginator index page",
