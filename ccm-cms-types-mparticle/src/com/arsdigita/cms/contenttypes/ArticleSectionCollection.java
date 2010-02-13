@@ -27,14 +27,13 @@ import com.arsdigita.persistence.PersistenceException;
 /**
  * This class contains a collection of ArticleSections.
  *
- * @author <a href="mailto:hbrock@redhat.com">Hugh Brock</a>
- *  
  * @see DomainCollection
  * @see DataCollection
+ *
+ * @author <a href="mailto:hbrock@redhat.com">Hugh Brock</a>
+ * @version $Id: ArticleSectionCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ArticleSectionCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: ArticleSectionCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

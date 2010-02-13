@@ -32,13 +32,14 @@ import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 
 /**
- * @author cgyg9330
- *
  * Implementation of URLFinder for a specific ArticleSection
  * 
+ * @author cgyg9330
+ *
  */
 public class MultiPartArticleSectionURLFinder implements URLFinder {
-    public static final String FIND_PAGE_FOR_SECTION_QUERY = "com.arsdigita.cms.contenttypes.PageNumberForArticleSection";
+    public static final String FIND_PAGE_FOR_SECTION_QUERY =
+                  "com.arsdigita.cms.contenttypes.PageNumberForArticleSection";
     
     /**
      * 
@@ -59,7 +60,8 @@ public class MultiPartArticleSectionURLFinder implements URLFinder {
         
         Integer sectionNumber = thisSection.getRank();
         if (sectionNumber.intValue() != 1) {
-            DataQuery pageNumber = SessionManager.getSession().retrieveQuery(FIND_PAGE_FOR_SECTION_QUERY);
+            DataQuery pageNumber = SessionManager.getSession().
+                                   retrieveQuery(FIND_PAGE_FOR_SECTION_QUERY);
             pageNumber.setParameter("section", thisSection.getID());
             while (pageNumber.next()) {
                 // just in case there are existing parameters on the url
@@ -77,8 +79,9 @@ public class MultiPartArticleSectionURLFinder implements URLFinder {
     }
 
     /**
-     * We are redirected to the correct page to edit the multipart article, ignoring the section.
-     * This is the current default behaviour for live links to unpublished Multi-part articles
+     * We are redirected to the correct page to edit the multipart article, 
+     * ignoring the section. This is the current default behaviour for live links
+     * to unpublished Multi-part articles.
      */
     public String find(OID oid, String context) throws NoValidURLException {
     	if(!"draft".equals(context)) {
@@ -93,14 +96,17 @@ public class MultiPartArticleSectionURLFinder implements URLFinder {
 			ContentSection contentSection = thisSection.getContentSection();
 			ItemResolver resolver = contentSection.getItemResolver();
 
-			String url = resolver.generateItemURL(null, article, contentSection, context);
+			String url = resolver.generateItemURL(null, article, 
+                                                              contentSection,
+                                                              context);
 			final int sep = url.indexOf('?');
 			URL destination = null;
         
 			if (sep == -1) {
 				destination = URL.there(url, null);
 			} else {
-				final ParameterMap params = ParameterMap.fromString(url.substring(sep + 1));
+				final ParameterMap params = ParameterMap.fromString(
+                                                            url.substring(sep + 1));
 				destination = URL.there(url.substring(0, sep), params);
 			}
 			return  destination.toString();

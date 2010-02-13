@@ -28,16 +28,13 @@ import com.arsdigita.domain.DomainObject;
  * provides a more meaningful title for a multipart article section
  *
  * @author Chris Gilbert
+ * @version $Id: ArticleSectionMetadataProvider.java,v 1.2 2006/05/16 15:23:21 cgyg9330 Exp $
  */
 public class ArticleSectionMetadataProvider 
 extends ContentPageMetadataProvider {
 
     private static final Logger s_log =
         Logger.getLogger(ArticleSectionMetadataProvider.class);
-
-    public final static String versionId =
-        "$Id: ArticleSectionMetadataProvider.java,v 1.2 2006/05/16 15:23:21 cgyg9330 Exp $"
-            + " by $Author: cgyg9330 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public String getTitle(DomainObject dobj) {
         ArticleSection section = (ArticleSection)dobj;

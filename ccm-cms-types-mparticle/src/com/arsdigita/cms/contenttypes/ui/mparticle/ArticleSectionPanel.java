@@ -53,6 +53,7 @@ import org.apache.log4j.Logger;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @version $Id: ArticleSectionPanel.java 1167 2006-06-14 12:27:28Z fabrice $
  */
 public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGenerator {
 
@@ -62,8 +63,6 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
     private boolean m_showAllSections = false;
 
     public static final String PAGE_NUMBER_PARAM = "page";
-
-    public static final String versionId = "$Id: ArticleSectionPanel.java 1167 2006-06-14 12:27:28Z fabrice $ by $Author: fabrice $, $DateTime: 2004/08/17 23:15:09 $";
 
     public ArticleSectionPanel() {
         super();

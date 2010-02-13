@@ -30,17 +30,12 @@ import java.io.InputStream;
 import org.apache.log4j.Logger;
 
 /**
- * Loader.
+ * MultiPartArticle Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: MultiPartArticleLoader.java 1561 2007-04-16 15:37:21Z apevec $
  */
 public class MultiPartArticleLoader extends AbstractContentTypeLoader {
-
-    public final static String versionId =
-        "$Id: MultiPartArticleLoader.java 1561 2007-04-16 15:37:21Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(MultiPartArticleLoader.class);
 
@@ -48,21 +43,25 @@ public class MultiPartArticleLoader extends AbstractContentTypeLoader {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/MultiPartArticle.xml"
     };
 
-    public String[] getTypes() {
-        return TYPES;
-    }
-
     private ResourceParameter m_template;
 
+
+    /**
+     * MultiPartArticleLoader Constructor
+     */
     public MultiPartArticleLoader() {
 
         m_template = new ResourceParameter
             ("com.arsdigita.cms.contenttypes.mparticle.template",
              Parameter.REQUIRED,
              "/WEB-INF/content-types/com/arsdigita/cms/contenttypes" +
-                         "/mparticle-item.jsp");
+             "/mparticle-item.jsp");
 
         register(m_template);
+    }
+
+    public String[] getTypes() {
+        return TYPES;
     }
 
     @Override

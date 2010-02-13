@@ -26,17 +26,16 @@ import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.search.MetadataProviderRegistry;
 
 /**
- * The CMS initializer.
+ * The MultiPartArticle initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: MultiPartArticleInitializer.java 1500 2007-03-20 09:25:45Z chrisgilbert23 $
  */
 public class MultiPartArticleInitializer extends ContentTypeInitializer {
-    public final static String versionId =
-        "$Id: MultiPartArticleInitializer.java 1500 2007-03-20 09:25:45Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
+    /**
+     * MultiPartArticleInitializer  Constructor
+     */
     public MultiPartArticleInitializer() {
         super("ccm-cms-types-mparticle.pdl.mf", MultiPartArticle.BASE_DATA_OBJECT_TYPE);
     }

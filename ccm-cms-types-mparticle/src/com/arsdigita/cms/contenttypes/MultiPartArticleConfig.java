@@ -26,12 +26,9 @@ import com.arsdigita.util.parameter.Parameter;
  * A set of configuration parameters for multipart articles.
  *
  * @author Chris Gilbert &lt;chris.gilbert@westsussex.gov.uk&gt;
+ * @version $Id: MultiPartArticleConfig.java,v 1.3 2006/03/28 07:40:17 cgyg9330 Exp $
  */
 public class MultiPartArticleConfig extends AbstractConfig {
-    public final static String versionId =
-        "$Id: MultiPartArticleConfig.java,v 1.3 2006/03/28 07:40:17 cgyg9330 Exp $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     public static final String SHORT_TITLE = "short";
     public static final String PAGE_TOP_TITLE = "page_top";
