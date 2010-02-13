@@ -68,13 +68,9 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #15 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: CoreLoader.java 1841 2009-03-05 07:52:42Z terry $
+ */
 public class CoreLoader extends PackageLoader {
-
-    public final static String versionId = 
-            "$Id: CoreLoader.java 1841 2009-03-05 07:52:42Z terry $" +
-            "  by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(CoreLoader.class);
 

@@ -36,10 +36,6 @@ import org.apache.commons.beanutils.Converter;
  * @version $Id: Converters.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Converters {
-    public final static String versionId =
-        "$Id: Converters.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static Map s_converters = Collections.synchronizedMap
         (new HashMap());

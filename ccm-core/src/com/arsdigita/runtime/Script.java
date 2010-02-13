@@ -30,12 +30,10 @@ import com.arsdigita.util.parameter.ParameterContext;
  * extend the {@link AbstractScript} class.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: Script.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public interface Script extends ParameterContext {
-
-    public final static String versionId = "$Id: Script.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * This method is invoked in order to execute the script. The

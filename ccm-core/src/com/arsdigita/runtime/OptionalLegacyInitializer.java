@@ -24,10 +24,9 @@ import java.io.InputStream;
  * The OptionalLegacyInitializer behaves like LegacyInitializer,
  * except that it won't break if the configuration file cannot
  * be found.
+ * @version $Id: OptionalLegacyInitializer.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 public class OptionalLegacyInitializer extends LegacyInitializer {
-
-    public static final String versionId = "$Id: OptionalLegacyInitializer.java 738 2005-09-01 12:36:52Z sskracic $";
 
     public OptionalLegacyInitializer(String init, ClassLoader loader) {
         super(init, loader);

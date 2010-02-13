@@ -49,10 +49,6 @@ import org.apache.commons.cli.ParseException;
  * @version $Id: ParameterPrinter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 final class ParameterPrinter {
-    public final static String versionId =
-        "$Id: ParameterPrinter.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (ParameterPrinter.class);

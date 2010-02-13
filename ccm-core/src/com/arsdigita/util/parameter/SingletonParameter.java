@@ -22,9 +22,9 @@ import com.arsdigita.util.Classes;
 import com.arsdigita.util.UncheckedWrapperException;
 
 /**
- * Subject to change.
- *
  * A parameter representing an instance of a Java class.
+ *
+ * Subject to change.
  *
  * @see Parameter
  * @author Justin Ross &lt;jross@redhat.com&gt;

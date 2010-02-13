@@ -31,10 +31,6 @@ import org.apache.commons.beanutils.converters.BooleanConverter;
  * @version $Id: BooleanParameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class BooleanParameter extends AbstractParameter {
-    public final static String versionId =
-        "$Id: BooleanParameter.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     static {
         Converters.set(Boolean.class, new BooleanConverter());

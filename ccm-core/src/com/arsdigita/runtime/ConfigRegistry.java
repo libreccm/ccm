@@ -75,15 +75,11 @@ import org.apache.log4j.Logger;
  * mappings are then used by the ConfigRegistry instance to load config objects.
  * 
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #15 $ $Date: 2004/08/16 $
+ * @version $Id: ConfigRegistry.java 736 2005-09-01 10:46:05Z sskracic $
  **/
 
 public class ConfigRegistry {
 
-    public final static String versionId = 
-            "$Id: ConfigRegistry.java 736 2005-09-01 10:46:05Z sskracic $ " + 
-            "by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(ConfigRegistry.class);
 
     private URL m_url;

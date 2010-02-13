@@ -82,10 +82,6 @@ package com.arsdigita.util.parameter;
  * @version $Id: Parameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface Parameter {
-    public final static String versionId =
-        "$Id: Parameter.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Flag to indicate the parameter value is nullable.

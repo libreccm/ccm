@@ -32,10 +32,6 @@ import java.net.URL;
  * @version $Id: URLParameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class URLParameter extends StringParameter {
-    public final static String versionId =
-        "$Id: URLParameter.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     public URLParameter(final String name) {
         super(name);

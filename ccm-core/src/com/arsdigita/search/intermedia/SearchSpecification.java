@@ -112,9 +112,9 @@ import java.util.Iterator;
  *
  * @author Jeff Teeters
  * @version 1.0
- **/
+ * @version $Id: SearchSpecification.java 287 2005-02-22 00:29:02Z sskracic $ 
+ */
 public class SearchSpecification {
-    public static final String versionId = "$Id: SearchSpecification.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     // Default values
     final private static int DEFAULT_MAXROWS = 1000;
     final private static int DEFAULT_ROWSPERPAGE = 100;

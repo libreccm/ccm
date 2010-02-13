@@ -38,14 +38,9 @@ import org.apache.log4j.Logger;
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt; using code by
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: InteractiveParameterReader.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public final class InteractiveParameterReader implements ParameterReader {
-
-    public final static String versionId = 
-            "$Id: InteractiveParameterReader.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " + 
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (InteractiveParameterReader.class);

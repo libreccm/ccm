@@ -63,8 +63,6 @@ import org.apache.log4j.Logger;
  * @version $Id: CCMResourceManager.java 751 2005-09-02 12:52:23Z sskracic $
  */
 public final class CCMResourceManager {
-    public final static String versionId =
-        "$Id: CCMResourceManager.java 1393 2006-11-28 09:12:32Z sskracic $" ;
 
     private static final Logger s_log = Logger.getLogger(CCMResourceManager.class);
 

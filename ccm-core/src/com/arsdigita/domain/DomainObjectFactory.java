@@ -69,11 +69,10 @@ import org.apache.log4j.Logger;
  *
  * @author Oumi Mehrotra
  * @version 1.0
+ * @version $Id: DomainObjectFactory.java 738 2005-09-01 12:36:52Z sskracic $
  *
  **/
 public class DomainObjectFactory {
-
-    public static final String versionId = "$Id: DomainObjectFactory.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // map of registered instantiators, keyed by data object type.
     private static Map s_instantiators = new HashMap();

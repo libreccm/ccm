@@ -32,10 +32,6 @@ import org.apache.log4j.Logger;
  * @version $Id: RuntimeConfig.java 1393 2006-11-28 09:12:32Z sskracic $
  */
 public final class RuntimeConfig extends AbstractConfig {
-    public final static String versionId =
-        "$Id: RuntimeConfig.java 1393 2006-11-28 09:12:32Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(RuntimeConfig.class);
 

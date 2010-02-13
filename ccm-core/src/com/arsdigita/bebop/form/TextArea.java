@@ -45,7 +45,8 @@ public class TextArea extends Widget implements BebopConstants {
      * Constant for specifying <tt>OFF</tt> value for the
      * <tt>WRAP</tt> attribute of this image input.  See <a
      * href="http://developer.netscape.com/docs/manuals/htmlguid/tags10.htm#1340340">here</a>
-     * for a description of what this attribute does.  */
+     * for a description of what this attribute does.
+     */
     public static final int OFF = 0;
 
     /**

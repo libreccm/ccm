@@ -37,7 +37,7 @@ import java.net.URL;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: RegistryConfig.java 287 2005-02-22 00:29:02Z sskracic $
- **/
+ */
 public class RegistryConfig extends AbstractConfig {
 
     private static String[] array(String str) {

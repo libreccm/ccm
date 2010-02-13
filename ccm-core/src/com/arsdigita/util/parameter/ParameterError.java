@@ -34,10 +34,6 @@ import com.arsdigita.util.Assert;
  * @version $Id: ParameterError.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class ParameterError {
-    public final static String versionId =
-        "$Id: ParameterError.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private final Parameter m_param;
     private final String m_message;

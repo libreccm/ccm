@@ -49,16 +49,10 @@ import com.arsdigita.util.parameter.ParameterReader;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: PackageLoader.java 1840 2009-03-05 07:51:20Z terry $
- **/
-
+ */
 public abstract class PackageLoader extends AbstractScript {
 
     public final static Logger s_log = Logger.getLogger(PackageLoader.class);
-
- // public final static String versionId =
- //         "$Id: PackageLoader.java 1840 2009-03-05 07:51:20Z terry $" +
- //         " by $Author: terry $, " +
- //         "$DateTime: 2004/08/16 18:10:38 $";
 
     public static boolean exists(Connection conn, String table) {
         try {

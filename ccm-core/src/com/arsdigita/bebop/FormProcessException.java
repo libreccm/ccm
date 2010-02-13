@@ -32,11 +32,12 @@ import javax.servlet.ServletException;
  * <code>doGet</code> methods do not need to explicitly catch
  * instances of this class.  However, they may wish to do so for
  * special error reporting to the user, or to notify the webmaster via
- * e-mail of the problem. */
+ * e-mail of the problem.
+ *
+ * @version $Id: FormProcessException.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public class FormProcessException extends ServletException {
-
-    public static final String versionId = "$Id: FormProcessException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public FormProcessException(String message) {
         super(message);

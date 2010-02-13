@@ -33,10 +33,6 @@ import org.apache.oro.text.perl.Perl5Util;
  * @version $Id: EmailParameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class EmailParameter extends StringParameter {
-    public final static String versionId =
-        "$Id: EmailParameter.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Perl5Util s_perl = new Perl5Util();
     private static final String s_regex =

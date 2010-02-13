@@ -74,11 +74,9 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:randyg@alum.mit.edu">randyg@alum.mit.edu</a>
  * @version $Revision: #24 $ $Date: 2004/08/16 $
+ * @version $Id: DynamicObjectType.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
-
 public class DynamicObjectType extends DynamicElement {
-
-    public static final String versionId = "$Id: DynamicObjectType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final int COLLECTION =
 	com.arsdigita.persistence.metadata.Property.COLLECTION;
