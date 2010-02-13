@@ -21,7 +21,7 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * The CMS initializer.
+ * The CMS SiteProxy initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: SiteProxyInitializer.java 757 2005-09-02 14:12:21Z sskracic $
@@ -30,6 +30,9 @@ public class SiteProxyInitializer extends ContentTypeInitializer {
 
     private static final Logger s_log = Logger.getLogger(SiteProxyInitializer.class);
 
+    /**
+     * SiteProxyInitialize Constructor
+     */
     public SiteProxyInitializer() {
         super("ccm-cms-types-siteproxy.pdl.mf",
               SiteProxy.BASE_DATA_OBJECT_TYPE);

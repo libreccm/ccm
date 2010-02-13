@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type label="Site Proxy"
-    description="A Proxy item for a page on an external site"
-    objectType="com.arsdigita.cms.contenttypes.SiteProxy"
-    classname="com.arsdigita.cms.contenttypes.SiteProxy">
+              description="A Proxy item for a page on an external site"
+               objectType="com.arsdigita.cms.contenttypes.SiteProxy"
+                classname="com.arsdigita.cms.contenttypes.SiteProxy">
 
     <ctd:authoring-kit
         createComponent="com.arsdigita.cms.ui.authoring.PageCreate">

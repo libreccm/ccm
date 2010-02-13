@@ -37,10 +37,6 @@ import java.io.InputStream;
  * @version $Id: SiteProxyLoader.java 1561 2007-04-16 15:37:21Z apevec $
  */
 public class SiteProxyLoader extends AbstractContentTypeLoader {
-    public final static String versionId =
-        "$Id: SiteProxyLoader.java 1561 2007-04-16 15:37:21Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SiteProxy.xml"
@@ -48,6 +44,10 @@ public class SiteProxyLoader extends AbstractContentTypeLoader {
 
     private ResourceParameter m_template;
 
+
+    /**
+     * SiteProxyLoader Constructor
+     */
     public SiteProxyLoader() {
         m_template = new ResourceParameter
             ("com.arsdigita.cms.contenttypes.siteproxy.defaulttemplate", 
