@@ -170,7 +170,9 @@ public class SectionInitializer extends com.arsdigita.kernel.BaseInitializer {
         try {
             node = SiteNode.getSiteNode("/" + name);
         } catch (DataObjectNotFoundException ex) {
-            throw new InitializationException( (String) GlobalizationUtil.globalize("cms.installer.root_site_node_missing").localize(),  ex);
+            throw new InitializationException( 
+                (String) GlobalizationUtil.globalize(
+                    "cms.installer.root_site_node_missing").localize(),  ex);
         }
         ContentSection section = null;
         if ( rootNodeID.equals(node.getID()) ) {
@@ -180,7 +182,10 @@ public class SectionInitializer extends com.arsdigita.kernel.BaseInitializer {
             try {
                 section = ContentSection.getSectionFromNode(node);
             } catch (DataObjectNotFoundException de) {
-                throw new InitializationException( (String) GlobalizationUtil.globalize("cms.installer.could_not_load_section", new Object[] {name}).localize(), de);
+                throw new InitializationException(
+                    (String) GlobalizationUtil.globalize(
+                        "cms.installer.could_not_load_section",
+                        new Object[] {name}).localize(), de);
             }
         }
         return section;

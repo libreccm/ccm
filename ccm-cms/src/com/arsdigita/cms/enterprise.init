@@ -87,6 +87,11 @@ init com.arsdigita.cms.installer.SectionInitializer {
   // Name of the content section. This is used as the URL
   // so it must contain only characters that are allowed in URLs e.g.,
   // no spaces.
+  // If you modify the name you must adjust:
+  // - Parameter m_defaultSection in c.ad.cms.ContentSectionConfig.java
+  // - Parameter waf.pagemap.login_redirect=content/content-center-redirect.jsp
+  //   in integrations.properties of the respective bundle
+  // - registerDomain(navigationKey, "/content/", null); in ldn.aplaws.Loader
   name = "content";
 
   // List of roles to create. First field is role name,
@@ -123,6 +128,16 @@ init com.arsdigita.cms.installer.SectionInitializer {
   };
 
   // List of content types to register
+
+  // Example:
+  //      {
+  //       "com.arsdigita.cms.contenttypes.Address",
+  //       "com.arsdigita.cms.contenttypes.Article",
+  //       "com.arsdigita.cms.contenttypes.Contact"
+  //      }
+  // The types are registered when the content-section is created. Later
+  // modifications have no effect.
+
   types = {
   };
 

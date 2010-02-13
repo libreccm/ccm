@@ -26,15 +26,13 @@ import com.arsdigita.persistence.DataCollection;
  * This class contains a collection of {@link
  * com.arsdigita.cms.ContentSection content sections}.
  *
- * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ContentSectionCollection.java 287 2005-02-22 00:29:02Z sskracic $
- *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
- **/
+ *
+ * @author Stanislav Freidin (sfreidin@arsdigita.com)
+ * @version $Id: ContentSectionCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class ContentSectionCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: ContentSectionCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

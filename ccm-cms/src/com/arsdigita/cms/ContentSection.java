@@ -27,7 +27,7 @@ import com.arsdigita.cms.dispatcher.ResourceMapping;
 import com.arsdigita.cms.dispatcher.ResourceType;
 import com.arsdigita.cms.dispatcher.TemplateResolver;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
-import com.arsdigita.cms.ContentSectionConfig;
+// import com.arsdigita.cms.ContentSectionConfig;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -89,12 +89,9 @@ import java.math.BigDecimal;
  * @author <a href="mailto:pihman@arsdigita.com">Michael Pih</a>
  * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
  * @version $Revision: #37 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ContentSection.java 1308 2006-09-01 11:00:05Z sskracic $
  */
 public class ContentSection extends Application {
-    public static final String versionId =
-        "$Id: ContentSection.java 1308 2006-09-01 11:00:05Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(ContentSection.class);
 

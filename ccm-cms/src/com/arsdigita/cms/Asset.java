@@ -34,10 +34,9 @@ import java.io.IOException;
  * @author Jack Chung
  *
  * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: Asset.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class Asset extends ContentItem {
-
-    public static final String versionId = "$Id: Asset.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.Asset";

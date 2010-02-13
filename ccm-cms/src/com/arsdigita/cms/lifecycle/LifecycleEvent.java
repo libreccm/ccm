@@ -29,11 +29,11 @@ import java.util.Date;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: LifecycleEvent.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class LifecycleEvent {
 
-    public static final String versionId = "$Id: LifecycleEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     private int m_eventType;
     private Date m_startDateTime, m_endDateTime;
     private OID m_oid;

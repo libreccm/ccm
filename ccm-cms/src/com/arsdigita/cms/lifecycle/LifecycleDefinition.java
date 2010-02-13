@@ -39,12 +39,9 @@ import java.util.Date;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #14 $ $Date: 2004/08/17 $
+ * @version $Id: LifecycleDefinition.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class LifecycleDefinition extends ACSObject {
-    public static final String versionId =
-        "$Id: LifecycleDefinition.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(LifecycleDefinition.class);
 

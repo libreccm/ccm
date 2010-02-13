@@ -24,16 +24,14 @@ import com.arsdigita.persistence.DataCollection;
 
 /**
  * This class contains a collection fo Lifecycle Definition
+ * @see DomainCollection
+ * @see DataCollection
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #8 $ $Date: 2004/08/17 $
- *
- * @see DomainCollection
- * @see DataCollection
+ * @version $Id: LifecycleDefinitionCollection.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class LifecycleDefinitionCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: LifecycleDefinitionCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

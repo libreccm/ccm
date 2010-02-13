@@ -37,8 +37,9 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.MultilingualItemResolver;
 import com.arsdigita.cms.dispatcher.TemplateResolver;
 import com.arsdigita.cms.lifecycle.PublishLifecycleListener;
-import com.arsdigita.cms.publishToFile.PublishToFile;
-import com.arsdigita.cms.publishToFile.PublishToFileListener;
+// import com.arsdigita.cms.publishToFile.PublishToFile;
+import com.arsdigita.cms.publishToFile.PublishToFileConfig;
+// import com.arsdigita.cms.publishToFile.PublishToFileListener;
 import com.arsdigita.cms.ui.authoring.ItemCategoryExtension;
 import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 import com.arsdigita.runtime.AbstractConfig;
@@ -47,16 +48,17 @@ import com.arsdigita.runtime.AbstractConfig;
 // import com.arsdigita.util.UncheckedWrapperException;
 // URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.BooleanParameter;
-import com.arsdigita.util.parameter.ClassParameter;
+// import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-import com.arsdigita.util.parameter.ParameterError;
+// import com.arsdigita.util.parameter.ParameterError;
 // URL resource: protocol handler removal: START
 // new: import:
 import com.arsdigita.util.parameter.ResourceParameter;
 // URL resource: protocol handler removal: END
+import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
 // URL resource: protocol handler removal: START
@@ -86,8 +88,8 @@ import org.apache.log4j.Logger;
 /**
  * A record containing server-session scoped configuration properties.
  *
- * Accessors of this class may return null.  Developers should take
- * care to trap null return values in their code.
+ * Accessors of this class may return null.  Developers should take care
+ * to trap null return values in their code.
  *
  * @see ContentSection#getConfig()
  *
@@ -108,7 +110,6 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_languages;
     private final Parameter m_defaultItemResolverClass;
     private final Parameter m_defaultTemplateResolverClass;
-    private final Parameter m_disableItemPfs;
     private final Parameter m_useSectionCategories;
     private final Parameter m_itemAdapters;
     private final Parameter m_useStreamlinedCreation;
@@ -119,13 +120,12 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_hideAdminTabs;
     private final Parameter m_hideTimezone;
     private final Parameter m_hideLaunchDate;
-    private final Parameter m_requireLaunchDate;
     private final Parameter m_hideUDCTUI;
     private final Parameter m_hideFolderIndexCheckbox;
     private final Parameter m_defaultNotificationTime;
-    private final Parameter m_publishLifecycleListenerClass;
-    private final Parameter m_publishToFileClass;
     private final Parameter m_notifyAuthorOnLifecycle;
+    private final Parameter m_publishLifecycleListenerClass;
+    private final Parameter m_requireLaunchDate;
     private final Parameter m_saveTextCleansWordTags;
     private final Parameter m_hideAdditionalResourceFields;
     private final Parameter m_disableFileAssetExtraction;
@@ -149,6 +149,14 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_categoryTreeOrdering;
     private final Parameter m_hideTextAssetUploadFile;
     private final Parameter m_allowContentCreateInSectionListing;
+
+    // ///////////////////////////////////////////
+    // publishToFile package related parameter
+    // ///////////////////////////////////////////
+
+    // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
+    // private final Parameter m_disableItemPfs;
+    // private final Parameter m_publishToFileClass;
     
     /**
      * Do not instantiate this class directly.
@@ -246,10 +254,10 @@ public final class ContentSectionConfig extends AbstractConfig {
              Parameter.OPTIONAL,
              null);
 
-	    m_dhtmlEditorHiddenButtons = new StringArrayParameter
-	        ("com.arsdigita.cms.dhtml_editor_hidden_buttons",
-	         Parameter.OPTIONAL,
-	         null);
+        m_dhtmlEditorHiddenButtons = new StringArrayParameter
+            ("com.arsdigita.cms.dhtml_editor_hidden_buttons",
+             Parameter.OPTIONAL,
+             null);
 					
         m_hideTemplatesTab = new BooleanParameter
             ("com.arsdigita.cms.hide_templates_tab",
@@ -326,11 +334,11 @@ public final class ContentSectionConfig extends AbstractConfig {
              ItemCategoryExtension.class,
              ItemCategoryExtension.class);
 
- 	    m_hideResetLifecycleLink = new BooleanParameter
+        m_hideResetLifecycleLink = new BooleanParameter
             ("com.arsdigita.cms.hide_reset_lifecycle_link",
              Parameter.OPTIONAL, new Boolean(true));
 
-	    m_keywordWeight = new IntegerParameter
+        m_keywordWeight = new IntegerParameter
             ("com.arsdigita.cms.search.intermedia.keyword_weight",
              Parameter.OPTIONAL,
              new Integer(1));
@@ -339,6 +347,7 @@ public final class ContentSectionConfig extends AbstractConfig {
             ("com.arsdigita.cms.search.intermedia.title_weight",
              Parameter.OPTIONAL,
              new Integer(1));
+
         m_scoreTitleAndKeywords = new BooleanParameter
             ("com.arsdigita.cms.search.score_title_and_keywords",
              Parameter.OPTIONAL,
@@ -346,10 +355,10 @@ public final class ContentSectionConfig extends AbstractConfig {
 
     /**
      * each entry in the list is a : separated pair. The first string
-	 * is the className for the type (refer to classname column in contenttypes table
-	 * eg com.arsdigita.cms.contenttypes.MultiPartArticle
-	 * Second string is the name of the bebop step component
-	 * eg com.arsdigita.cms.contenttypes.ui.ImageStep 
+     * is the className for the type (refer to classname column in contenttypes table
+     * eg com.arsdigita.cms.contenttypes.MultiPartArticle
+     * Second string is the name of the bebop step component
+     * eg com.arsdigita.cms.contenttypes.ui.ImageStep
      */
 	m_skipAssetSteps = new StringArrayParameter
 	    ("com.arsdigita.cms.skip_asset_steps",
@@ -357,67 +366,68 @@ public final class ContentSectionConfig extends AbstractConfig {
 	    null);
                               
 	m_mandatoryDescriptions = new BooleanParameter
-		    	("com.arsdigita.cms.mandatory_descriptions",
-		    	Parameter.OPTIONAL, new Boolean(false));
+            ("com.arsdigita.cms.mandatory_descriptions",
+             Parameter.OPTIONAL, new Boolean(false));
 	
-	m_deleteExpiryNotificationsWhenSent = new BooleanParameter
-	("com.arsdigita.cms.delete_expiry_notification_when_sent",
-			Parameter.OPTIONAL, new Boolean(false));
+        m_deleteExpiryNotificationsWhenSent = new BooleanParameter
+            ("com.arsdigita.cms.delete_expiry_notification_when_sent",
+             Parameter.OPTIONAL, new Boolean(false));
 
 	m_deleteWorkflowNotificationsWhenSent = new BooleanParameter
-	("com.arsdigita.cms.delete_workflow_notification_when_sent",
-			Parameter.OPTIONAL, new Boolean(false));
+            ("com.arsdigita.cms.delete_workflow_notification_when_sent",
+             Parameter.OPTIONAL, new Boolean(false));
 	
 	m_categoryTreeOrdering = new EnumerationParameter 
-		("com.arsdigita.cms.category_tree_order", 
-				Parameter.OPTIONAL, Category.SORT_KEY );
+            ("com.arsdigita.cms.category_tree_order",
+             Parameter.OPTIONAL, Category.SORT_KEY );
 	
-	// 2 valid values at the moment - enumeration used rather than boolean in case other 
-	// possible orders are deemed valid
+	// 2 valid values at the moment - enumeration used rather than boolean 
+	// in case other possible orders are deemed valid
 	((EnumerationParameter)m_categoryTreeOrdering).put("SortKey", Category.SORT_KEY ); 
 	((EnumerationParameter)m_categoryTreeOrdering).put("Alphabetical", Category.NAME);	
 
         m_hasContactsAuthoringStep = new BooleanParameter
-        ("com.arsdigita.cms.has_contacts_authoring_step",
-                Parameter.REQUIRED, new Boolean(false));
+            ("com.arsdigita.cms.has_contacts_authoring_step",
+             Parameter.REQUIRED, new Boolean(false));
         
-        m_hideTextAssetUploadFile = new BooleanParameter(
-    			"com.arsdigita.cms.hide_text_asset_upload_file",
-    			Parameter.REQUIRED,
-    			new Boolean(false));
+        m_hideTextAssetUploadFile = new BooleanParameter
+            ("com.arsdigita.cms.hide_text_asset_upload_file",
+             Parameter.REQUIRED,
+             new Boolean(false));
         
-        m_allowContentCreateInSectionListing = new BooleanParameter(
-        		"com.arsdigita.cms.allow_content_create_in_section_listing",
-        		Parameter.REQUIRED,
-        		new Boolean(true));
+        m_allowContentCreateInSectionListing = new BooleanParameter
+            ("com.arsdigita.cms.allow_content_create_in_section_listing",
+             Parameter.REQUIRED,
+             new Boolean(true));
 
         // Lifecycle package
 
 	m_deleteLifecycleWhenComplete = new BooleanParameter
-		("com.arsdigita.cms.delete_lifecycle_when_complete",
-				Parameter.OPTIONAL, new Boolean(false));
+            ("com.arsdigita.cms.delete_lifecycle_when_complete",
+             Parameter.OPTIONAL, new Boolean(false));
 
-        // PublishToFile package
-        m_publishToFileClass = new SpecificClassParameter
-            ("com.arsdigita.cms.publish_to_file_class",
-             Parameter.REQUIRED,
-             PublishToFile.class,
-             PublishToFileListener.class);
+        // ///////////////////////////////////////////
+        // publishToFile package related parameter
+        // ///////////////////////////////////////////
 
         // XXX: temporary parameter. will be removed when MapParameter
         // works and the p2fs initializer is converted away from the
         // legacy init
-        m_disableItemPfs = new BooleanParameter
-            ("com.arsdigita.cms.disable_item_pfs",
-             Parameter.REQUIRED, new Boolean(false));
-
+        // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
+        // m_disableItemPfs = new BooleanParameter
+        //     ("com.arsdigita.cms.disable_item_pfs",
+        //      Parameter.REQUIRED, new Boolean(false));
+        //
+        // m_publishToFileClass = new SpecificClassParameter
+        //     ("com.arsdigita.cms.publish_to_file_class",
+        //      Parameter.REQUIRED,
+        //      PublishToFile.class,
+        //      PublishToFileListener.class);
 
         register(m_templateRootPath);
         register(m_defaultItemTemplatePath);
         register(m_defaultFolderTemplatePath);
         register(m_languages);
-        register(m_publishToFileClass);
-        register(m_disableItemPfs);
         register(m_defaultItemResolverClass);
         register(m_defaultTemplateResolverClass);
         register(m_categoryAuthoringAddForm);
@@ -448,8 +458,8 @@ public final class ContentSectionConfig extends AbstractConfig {
         register(m_unpublishedNotFound);
         register(m_linksOnlyInSameSubsite);
         register(m_categoryAuthoringExtension);
-	    register(m_hideResetLifecycleLink);
-	    register(m_keywordWeight);
+        register(m_hideResetLifecycleLink);
+        register(m_keywordWeight);
         register(m_titleWeight);
         register(m_scoreTitleAndKeywords);
         register(m_skipAssetSteps);
@@ -458,9 +468,14 @@ public final class ContentSectionConfig extends AbstractConfig {
         register(m_deleteExpiryNotificationsWhenSent);
         register(m_deleteWorkflowNotificationsWhenSent);
         register(m_categoryTreeOrdering);
-		register(m_hasContactsAuthoringStep);
-		register(m_hideTextAssetUploadFile);
-		register(m_allowContentCreateInSectionListing);
+        register(m_hasContactsAuthoringStep);
+        register(m_hideTextAssetUploadFile);
+        register(m_allowContentCreateInSectionListing);
+
+        // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
+        // register(m_disableItemPfs);
+        // register(m_publishToFileClass);
+
         loadInfo();
     }
 
@@ -478,14 +493,6 @@ public final class ContentSectionConfig extends AbstractConfig {
 
     public final String getLanguages() {
         return (String) get(m_languages);
-    }
-
-    public final Class getPublishToFileClass() {
-        return (Class) get(m_publishToFileClass);
-    }
-
-    public final boolean getDisableItemPfs() {
-        return ((Boolean) get(m_disableItemPfs)).booleanValue();
     }
 
     public final Class getDefaultItemResolverClass() {
@@ -532,9 +539,9 @@ public final class ContentSectionConfig extends AbstractConfig {
         return (String[])get(m_dhtmlEditorPlugins);
     }
 
-	public final String[] getDHTMLEditorHiddenButtons() {
-		   return (String[])get(m_dhtmlEditorHiddenButtons);
-	 }
+    public final String[] getDHTMLEditorHiddenButtons() {
+        return (String[])get(m_dhtmlEditorHiddenButtons);
+    }
 	   
     public final boolean getHideTemplatesTab() {
         return ((Boolean) get(m_hideTemplatesTab)).booleanValue();
@@ -616,33 +623,26 @@ public final class ContentSectionConfig extends AbstractConfig {
         return (Class) get(m_categoryAuthoringExtension);    
     }
 
-    private class SpecificClassParameter extends ClassParameter {
+    // ///////////////////////////////////////////
+    // publishToFile package related configuration
+    // ///////////////////////////////////////////
 
-        private Class m_requiredClass;
-
-        public SpecificClassParameter(final String name,
-                                      final int multiplicity,
-                                      final Object defaultObj,
-                                      final Class requiredClass) {
-            super(name, multiplicity, defaultObj);
-            m_requiredClass = requiredClass;
-        }
-
-        // value != null
-        @Override
-        protected Object unmarshal(String value, ErrorList errors) {
-            Class theClass = (Class) super.unmarshal(value,errors);
-            if (theClass != null) {
-                if (!m_requiredClass.isAssignableFrom(theClass)) {
-                    errors.add(new ParameterError(this, "class " + value + 
-                                                  "  must implement : " + 
-                                                  m_requiredClass.getName()));
-                }
-            }
-
-            return theClass;
-        }
+    // Moved to publishToFile.PublishToFileConfig! Temporarily retained here
+    // for backwards compatibility
+    public final boolean getDisableItemPfs() {
+        // return ((Boolean) get(m_disableItemPfs)).booleanValue();
+        return PublishToFileConfig.getConfig().isItemPfsDisabled();
     }
+
+    public final Class getPublishToFileClass() {
+        // return (Class) get(m_publishToFileClass);
+        return PublishToFileConfig.getConfig().getPublishListenerClass();
+    }
+
+
+
+
+
 
     private class DHTMLEditorConfigParameter extends StringParameter {
         public DHTMLEditorConfigParameter(final String name,
@@ -714,7 +714,7 @@ public final class ContentSectionConfig extends AbstractConfig {
      
     /**
      * for the given content type, returns a collection of 
-     * step that are deemed irrelevant for the type.
+     * steps that are deemed irrelevant for the type.
      * 
      * If no irrelevant steps, an empty set is returned.
      * 

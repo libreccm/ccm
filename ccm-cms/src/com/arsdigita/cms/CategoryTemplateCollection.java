@@ -24,15 +24,13 @@ import com.arsdigita.persistence.DataCollection;
 /**
  * This class contains a collection of {@link CategoryTemplateMapping}s
  *
- * @version $Id: CategoryTemplateCollection.java 754 2005-09-02 13:26:17Z sskracic $
- *
  * @see DomainCollection
  * @see DataCollection
  * @see ItemTemplateCollection
+ *
+ * @version $Id: CategoryTemplateCollection.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class CategoryTemplateCollection extends TemplateCollection {
-
-    public static final String versionId = "$Id: CategoryTemplateCollection.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
   /** 
    * Constructor.

@@ -67,6 +67,7 @@ public class PublishToFile implements PublishToFileListener {
         Logger.getLogger(PublishToFile.class);
 
     // Queue entry timeout
+    // TODO: pickup value from configuration file as a single source!
     private static int s_timeout = DEFAULT_TIMEOUT;
     private static Map s_destinations = new HashMap();
 

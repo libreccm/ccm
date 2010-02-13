@@ -35,6 +35,8 @@ import com.arsdigita.persistence.metadata.MetadataRoot;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.runtime.CCMResourceManager;
 
+import com.arsdigita.util.UncheckedWrapperException;
+
 import org.apache.log4j.Logger;
 
 
@@ -141,9 +143,10 @@ public class LegacyInitializer implements com.arsdigita.initializer.Initializer 
         TransactionContext txn =
             SessionManager.getSession().getTransactionContext();
         txn.beginTxn();
+
         setupPublishToFileSystem();
 
-        QueueManager.requeueMissingFiles();
+        // QueueManager.requeueMissingFiles();
 
         txn.commitTxn();
     }
@@ -157,6 +160,7 @@ public class LegacyInitializer implements com.arsdigita.initializer.Initializer 
      * initialize source and destinations for publishing to the file system
      */
     private void setupPublishToFileSystem() throws InitializationException {
+        
         DomainObjectInstantiator inst = new DomainObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dobj) {
                     return new PublishedFile(dobj);
@@ -166,19 +170,37 @@ public class LegacyInitializer implements com.arsdigita.initializer.Initializer 
             PublishedFile.BASE_DATA_OBJECT_TYPE,
             inst);
 
+        // PublishToFileConfig ptfConf = PublishToFileConfig.getConfig();
 
-        processDestination((List) m_conf.getParameter(PUBLISH_DESTINATIONS));
 
-        PublishToFile.setRequestTimeout(getInteger(REQUEST_TIMEOUT).intValue());
+        // processDestination((List) m_conf.getParameter(PUBLISH_DESTINATIONS));
+        // processDestination((List) ptfConf.getPublishDestinations());
+        // setupQueueManager();
 
-        QueueManager.setRetryDelay(getInteger(RETRY_DELAY));
-        QueueManager.setBlockSize(getInteger(BLOCK_SIZE));
-        QueueManager.setBlockSelectMethod(getString(BLOCK_SELECT_METHOD));
-        QueueManager.setMaximumFailCount(getInteger(MAXIMUM_FAIL_COUNT));
+    }
+
+    /**
+     * Prepare Queuemanager and start Queue processing.
+     */
+    private void setupQueueManager(){
+
+        PublishToFileConfig ptfConf = PublishToFileConfig.getConfig();
+        
+        // PublishToFile.setRequestTimeout(getInteger(REQUEST_TIMEOUT).intValue());
+        PublishToFile.setRequestTimeout(ptfConf.getRequestTimeout());
+
+        // QueueManager.setRetryDelay(getInteger(RETRY_DELAY));
+        QueueManager.setRetryDelay(ptfConf.getRetryDelay());
+        // QueueManager.setBlockSize(getInteger(BLOCK_SIZE));
+        QueueManager.setBlockSize(ptfConf.getBlockSize());
+        // QueueManager.setBlockSelectMethod(getString(BLOCK_SELECT_METHOD));
+        QueueManager.setBlockSelectMethod(ptfConf.getBlockSelectMethod());
+        // QueueManager.setMaximumFailCount(getInteger(MAXIMUM_FAIL_COUNT));
+        QueueManager.setMaximumFailCount(ptfConf.getMaximumFailCount());
 
 
         // setup listener if specified
-        String listenerName = getString( PUBLISH_TO_FILE_LISTENER );
+/*      String listenerName = getString( PUBLISH_TO_FILE_LISTENER );
         if (listenerName != null) {
             PublishToFileListener listener = null;
             Class listenerClass = null;
@@ -202,13 +224,30 @@ public class LegacyInitializer implements com.arsdigita.initializer.Initializer 
             }
             QueueManager.setListener(listener);
         }
+*/
+        // Just set the class implementing methods run when for publishing
+        // or unpublishing to file. No initialisation of the class here.
+        try {
+            QueueManager.setListener((PublishToFileListener)
+                                     ptfConf.getpublishListenerClass()
+                                     .newInstance());
+        } catch (InstantiationException ex) {
+            throw new UncheckedWrapperException
+                ("Failed to instantiate the listener class", ex);
+        } catch (IllegalAccessException ex) {
+            throw new UncheckedWrapperException
+                ("Couldn't access the listener class", ex);
+        }
+
 
         // start thread for monitoring queue
-        int startupDelay = getInteger(QUEUE_POLL_STARTUP_DELAY).intValue();
-        int pollDelay = getInteger(QUEUE_POLL_DELAY).intValue();
+        // int startupDelay = getInteger(QUEUE_POLL_STARTUP_DELAY).intValue();
+        int startupDelay = ptfConf.getStartupDelay();
+        // int pollDelay = getInteger(QUEUE_POLL_DELAY).intValue();
+        int pollDelay = ptfConf.getPollDelay();
         QueueManager.startWatchingQueue(startupDelay, pollDelay);
-    }
 
+    }
     //
     // Process publishing destinations
     //

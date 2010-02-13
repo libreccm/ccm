@@ -23,23 +23,21 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 
 /**
- * This class contains contains a collection of
- * ArticleImageAssociations, each of which points to an image, and
- * each of which has a caption. Ideally it should be constructed with
- * a DataCollection of ArticleImageAssociations which has been
- * filtered on isDeleted=0, or there will be deleted associations in
- * the collection. It extends ImageAssetCollection because we need to
- * pass it off as an ImageAssetCollection at various places in the UI
- * code.
- *
- * @author Hugh Brock .
+ * This class contains contains a collection of ArticleImageAssociations, each
+ * of which points to an image, and each of which has a caption. Ideally it
+ * should be constructed with a DataCollection of ArticleImageAssociations
+ * which has been filtered on isDeleted=0, or there will be deleted associations
+ * in the collection. It extends ImageAssetCollection because we need to pass
+ * it off as an ImageAssetCollection at various places in the UI code.
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
+ *
+ *
+ * @author Hugh Brock .
+ * @version $Id: ArticleImageAssnCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ArticleImageAssnCollection extends ImageAssetCollection {
-
-    public static final String versionId = "$Id: ArticleImageAssnCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor. Should only be called from Article.getImages()

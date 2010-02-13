@@ -25,12 +25,12 @@ package com.arsdigita.cms.lifecycle;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #7 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: LifecycleListener.java 287 2005-02-22 00:29:02Z sskracic $  
  */
 
 
 public interface LifecycleListener {
 
-    public static final String versionId = "$Id: LifecycleListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     /**
      * Invoked when an lifecycle or phase begins.  If any runtime exception is
      * thrown, the transaction will be aborted.

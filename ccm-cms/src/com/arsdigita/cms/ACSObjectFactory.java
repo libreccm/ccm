@@ -40,13 +40,11 @@ import java.util.Iterator;
  * Provides static methods to instantiate proper subclasses of {@link
  * com.arsdigita.kernel.ACSObject} domain objects, based on the object
  * type and the Java class name.
+ * @see com.arsdigita.kernel.ACSObject
  *
  * @version $Id: ACSObjectFactory.java 287 2005-02-22 00:29:02Z sskracic $
- * @see com.arsdigita.kernel.ACSObject
  */
 public class ACSObjectFactory extends DomainService {
-
-    public static final String versionId = "$Id: ACSObjectFactory.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(ACSObjectFactory.class);

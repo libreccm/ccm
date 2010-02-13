@@ -201,10 +201,6 @@ import java.util.Set;
  * @version $Id: ContentItem.java 1621 2007-09-13 12:43:12Z chrisg23 $
  */
 public class ContentItem extends VersionedACSObject implements CustomCopy {
-    public static final String versionId =
-        "$Id: ContentItem.java 1621 2007-09-13 12:43:12Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger(ContentItem.class);
     private static final Logger s_logDenorm = Logger.getLogger(ContentItem.class.getName() + ".Denorm");

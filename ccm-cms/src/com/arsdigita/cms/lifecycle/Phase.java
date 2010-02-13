@@ -38,11 +38,10 @@ import java.util.Date;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: 1.1 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: Phase.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $
  */
 
 public class Phase extends ACSObject {
-
-    public static final String versionId = "$Id: Phase.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.Phase";

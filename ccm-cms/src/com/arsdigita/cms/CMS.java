@@ -29,12 +29,9 @@ import org.apache.log4j.Logger;
  *
  * @author Daniel Berrange
  * @see com.arsdigita.kernel.Kernel
+ * @version $Id: CMS.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class CMS {
-    public static final String versionId =
-        "$Id: CMS.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * The CMS XML namespace.

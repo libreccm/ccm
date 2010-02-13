@@ -3,7 +3,7 @@
   name="ccm-cms"
   prettyName="Red Hat CCM Content Management System"
   version="6.6.0"
-  release="1"
+  release="2"
   webapp="ROOT">
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
@@ -14,6 +14,6 @@
   </ccm:contacts>
   <ccm:description>
     The CMS applications provides a flexible Content Management
-System for the CCM platform.
+    System for the CCM platform.
   </ccm:description>
 </ccm:application>

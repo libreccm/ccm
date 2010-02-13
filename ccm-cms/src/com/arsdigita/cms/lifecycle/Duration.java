@@ -25,12 +25,9 @@ import com.arsdigita.util.Assert;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #11 $ $Date: 2004/08/17 $
+ * @version $Id: Duration.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Duration {
-
-    public static final String versionId =
-        "$Id: Duration.java 287 2005-02-22 00:29:02Z sskracic $" +
-        " by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * A convenience wrapper around {@link #formatDuration(int)}.

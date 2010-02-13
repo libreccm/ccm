@@ -200,11 +200,13 @@ public final class ContentSectionSetup {
         }
         if (templateResolverClass != null && templateResolverClass.length()>0) {
             m_section.setTemplateResolverClass(templateResolverClass);
-            s_log.info("Registering " + templateResolverClass + " as the template resolver class");
+            s_log.info("Registering " + templateResolverClass +
+                       " as the template resolver class");
         } else {
             m_section.setTemplateResolverClass
                 (ContentSection.getConfig().getDefaultTemplateResolverClass().getName());
-            s_log.info("Registering " + templateResolverClass + " as the template resolver class");            
+            s_log.info("Registering " + templateResolverClass +
+                       " as the template resolver class");
         }
 
         m_section.save();
@@ -215,12 +217,14 @@ public final class ContentSectionSetup {
 
         // The 3-step production workflow.
         WorkflowTemplate wf = new WorkflowTemplate();
-        wf.setLabel( (String) GlobalizationUtil.globalize("cms.installer.production_workflow").localize());
+        wf.setLabel( (String) GlobalizationUtil.globalize(
+                     "cms.installer.production_workflow").localize());
         wf.setDescription("A process that involves creating and approving content.");
         wf.save();
 
         CMSTask authoring = new CMSTask();
-        authoring.setLabel((String) GlobalizationUtil.globalize("cms.installer.authoring").localize());
+        authoring.setLabel((String) GlobalizationUtil.globalize(
+                           "cms.installer.authoring").localize());
         authoring.setDescription("Create content.");
         authoring.save();
 
@@ -233,7 +237,8 @@ public final class ContentSectionSetup {
         authoring.save();
 
         CMSTask approval = new CMSTask();
-        approval.setLabel( (String) GlobalizationUtil.globalize("cms.installer.approval").localize());
+        approval.setLabel( (String) GlobalizationUtil.globalize(
+                           "cms.installer.approval").localize());
         approval.setDescription("Approve content.");
         approval.save();
         approval.addDependency(authoring);
@@ -248,7 +253,8 @@ public final class ContentSectionSetup {
 
 
         CMSTask deploy = new CMSTask();
-        deploy.setLabel((String) GlobalizationUtil.globalize("cms.installer.deploy").localize());
+        deploy.setLabel((String) GlobalizationUtil.globalize(
+                                 "cms.installer.deploy").localize());
         deploy.setDescription("Deploy content.");
         deploy.save();
         deploy.addDependency(approval);
@@ -281,11 +287,14 @@ public final class ContentSectionSetup {
                 PrivilegeDescriptor.get("cms_read_item"));
 
 
-        String email = Boolean.TRUE.equals(pub) ? "public@nullhost" : "registered@nullhost";
+        String email = Boolean.TRUE.equals(pub) ? "public@nullhost"
+                                                : "registered@nullhost";
 
         Party viewer = retrieveParty(email);
         if (viewer == null)
-            throw new InitializationException( (String) GlobalizationUtil.globalize("cms.installer.cannot_find_group_for_email").localize() + email);
+            throw new InitializationException( 
+                (String) GlobalizationUtil.globalize(
+                "cms.installer.cannot_find_group_for_email").localize() + email);
 
         s_log.info("Adding " + email + " to viewers role");
         viewers.getGroup().addMemberOrSubgroup(viewer);
@@ -333,18 +342,22 @@ public final class ContentSectionSetup {
         try {
             type = ContentType.findByAssociatedObjectType(name);
         } catch (DataObjectNotFoundException ex) {
-            throw new UncheckedWrapperException( (String) GlobalizationUtil.globalize("cms.installer.cannot_find_content_type").localize() + name, ex);
+            throw new UncheckedWrapperException( 
+                (String) GlobalizationUtil.globalize(
+                "cms.installer.cannot_find_content_type").localize() + name, ex);
         }
 
         s_log.info("Adding type " + name + " to " + m_section.getDisplayName());
         m_section.addContentType(type);
 
-        s_log.info("Setting the default lifecycle for " + name + " to " + m_lcd.getLabel());
+        s_log.info("Setting the default lifecycle for " +
+                   name + " to " + m_lcd.getLabel());
         ContentTypeLifecycleDefinition.
                 updateLifecycleDefinition(m_section, type, m_lcd);
         m_lcd.save();
 
-        s_log.info("Setting the default workflow template for " + name + " to " + m_wf.getLabel());
+        s_log.info("Setting the default workflow template for " + name +
+                   " to " + m_wf.getLabel());
         ContentTypeWorkflowTemplate.updateWorkflowTemplate(m_section, type, m_wf);
         m_wf.save();
 
@@ -392,7 +405,9 @@ public final class ContentSectionSetup {
             try {
                 line = input.readLine();
             } catch (IOException ex) {
-                throw new UncheckedWrapperException( (String) GlobalizationUtil.globalize("cms.installer.cannot_read_line_of_data").localize(),  ex);
+                throw new UncheckedWrapperException( 
+                    (String) GlobalizationUtil.globalize(
+                    "cms.installer.cannot_read_line_of_data").localize(),  ex);
             }
             if (line == null)
                 break;
@@ -418,7 +433,8 @@ public final class ContentSectionSetup {
 
         // The feature lifecycle.
         LifecycleDefinition lcd = new LifecycleDefinition();
-        lcd.setLabel( (String) GlobalizationUtil.globalize("cms.installer.simple_publication").localize());
+        lcd.setLabel( (String) GlobalizationUtil.globalize(
+                      "cms.installer.simple_publication").localize());
         lcd.setDescription("A one-phase lifecycle for items.");
         lcd.save();
 
@@ -549,20 +565,24 @@ public final class ContentSectionSetup {
         }
     }
 
-    public Timer startNotifierTask(Boolean sendOverdue, Integer duration, Integer alertInterval, Integer max) {
+    public Timer startNotifierTask(Boolean sendOverdue, Integer duration,
+                                   Integer alertInterval, Integer max) {
         Timer unfinished = null;
         if (sendOverdue.booleanValue()) {
             if (duration == null || alertInterval == null || max == null) {
-                s_log.info("Not sending overdue task alerts, required initialization parameters were not specified");
+                s_log.info("Not sending overdue task alerts, " +
+                           "required initialization parameters were not specified");
                 return null;
             }
             // start the Timer as a daemon, so it doesn't keep the JVM from exiting
             unfinished = new Timer(true);
-            UnfinishedTaskNotifier notifier = new UnfinishedTaskNotifier(m_section, duration.intValue(),
+            UnfinishedTaskNotifier notifier = new UnfinishedTaskNotifier(
+                                                  m_section, duration.intValue(),
                     alertInterval.intValue(), max.intValue());
             // schedule the Task to start in 5 minutes, at 1 hour intervals
             unfinished.schedule(notifier, 5L * 60 * 1000, 60L * 60 * 1000);
-            s_log.info("Sending overdue alerts for tasks greater than " + duration + " hours old");
+            s_log.info("Sending overdue alerts for tasks greater than " +
+                       duration + " hours old");
         } else {
             s_log.info("Not sending overdue task alerts");
         }

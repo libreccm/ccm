@@ -44,11 +44,10 @@ import java.util.Date;
  * @author Jack Chung
  * @author Michael Pih
  * @version $Revision: 1.1 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: Lifecycle.java 1585 2007-05-29 13:12:44Z chrisgilbert23 $ 
  */
 
 public class Lifecycle extends ACSObject {
-
-    public static final String versionId = "$Id: Lifecycle.java 1585 2007-05-29 13:12:44Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public final static String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.Lifecycle";

@@ -25,7 +25,6 @@ import javax.servlet.ServletException;
 import org.apache.log4j.Logger;
 
 /**
- *
  * A CMS excursion is a way of making your code execute under an
  * alternative environment (context). Override the excurse method to
  * create a CMSExcursion. For example:
@@ -42,16 +41,13 @@ import org.apache.log4j.Logger;
  *
  *      excursion.run();
  * </pre>
- *
- * @author Daniel Berrange
  * @see com.arsdigita.cms.CMS
  * @see com.arsdigita.kernel.KernelExcursion
+ *
+ * @author Daniel Berrange
+ * @version $Id: CMSExcursion.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class CMSExcursion {
-    public static final String versionId =
-        "$Id: CMSExcursion.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(CMSExcursion.class);
 

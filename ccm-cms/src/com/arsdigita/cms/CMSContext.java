@@ -35,16 +35,14 @@ import org.apache.log4j.Logger;
  * not null. If the caller wants to handle the case where an item is
  * null explicitly, then use the hasContentItem and hasContentSection
  * methods first.
- *
- * @author Daniel Berrange
+ * 
  * @see com.arsdigita.kernel.KernelContext
  * @see com.arsdigita.cms.CMS
+ *
+ * @author Daniel Berrange
+ * @version $Id: CMSContext.java 778 2005-09-12 14:55:36Z fabrice $
  */
 public final class CMSContext {
-    public static final String versionId =
-        "$Id: CMSContext.java 778 2005-09-12 14:55:36Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(CMSContext.class);
 

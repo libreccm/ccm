@@ -36,10 +36,10 @@ import java.math.BigDecimal;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #17 $ $Date: 2004/08/17 $
+ * @version $Id: ArticleImageAssociation.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ArticleImageAssociation extends ContentItem {
 
-    public static final String versionId = "$Id: ArticleImageAssociation.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.ArticleImageAssociation";
 
@@ -58,9 +58,9 @@ public class ArticleImageAssociation extends ContentItem {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>oid</i>.
+     * Constructor retrieved the contained <code>DataObject</code> from the
+     * persistent storage mechanism with an <code>OID</code> specified by
+     * <i>oid</i>.
      *
      * @param oid The <code>OID</code> for the retrieved
      * <code>DataObject</code>.

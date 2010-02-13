@@ -28,14 +28,12 @@ import com.arsdigita.persistence.DataObject;
  * class should always instantiate the right subclass of {@link
  * com.arsdigita.cms.ContentItem} automatically.
  *
- * @deprecated Use {@link com.arsdigita.kernel.ACSObjectInstantiator}
- * instead
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
  * @version $Id: ContentItemInstantiator.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated Use {@link com.arsdigita.kernel.ACSObjectInstantiator}
+ * instead
  */
 public class ContentItemInstantiator extends DomainObjectInstantiator {
-
-    public static final String versionId = "$Id: ContentItemInstantiator.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Construct a {@link ContentItem} given a data object.  Called from

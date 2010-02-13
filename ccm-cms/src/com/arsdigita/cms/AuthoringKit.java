@@ -36,10 +36,9 @@ import java.math.BigDecimal;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Revision: #17 $ $Date: 2004/08/17 $
+ * @version $Id: AuthoringKit.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AuthoringKit extends ACSObject {
-
-    public static final String versionId = "$Id: AuthoringKit.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.AuthoringKit";
