@@ -28,11 +28,9 @@ import java.util.HashMap;
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
  **/
-
 class Mist extends AbstractList {
 
     public final static String versionId = "$Id: Mist.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private Object m_parent = null;
     private ArrayList m_children = new ArrayList();
     private HashMap m_childrenMap = new HashMap();
@@ -43,38 +41,33 @@ class Mist extends AbstractList {
 
     private Object check(Object o) {
         if (o == null) {
-            throw new IllegalArgumentException
-                ("null child");
+            throw new IllegalArgumentException("null child");
         }
 
         if (!(o instanceof Element)) {
-            throw new IllegalArgumentException
-                ("not an element");
+            throw new IllegalArgumentException("not an element");
         }
 
         Element child = (Element) o;
         Object key = child.getElementKey();
 
         if (key == null) {
-            throw new IllegalArgumentException
-                ("null key");
+            throw new IllegalArgumentException("null key");
         }
 
-	return key;
+        return key;
     }
 
     public void add(int index, Object o) {
-	Object key = check(o);
-	Element child = (Element) o;
+        Object key = check(o);
+        Element child = (Element) o;
 
         if (child.getParent() != null) {
-            throw new IllegalArgumentException
-                ("child is already contained");
+            throw new IllegalArgumentException("child is already contained");
         }
 
         if (m_childrenMap.containsKey(key)) {
-            throw new IllegalArgumentException
-                ("duplicate key: " + key);
+            throw new IllegalArgumentException("duplicate key: " + key);
         }
 
         m_children.add(index, child);
@@ -95,8 +88,8 @@ class Mist extends AbstractList {
     }
 
     public boolean remove(Object o) {
-	Object key = check(o);
-	Element child = (Element) o;
+        Object key = check(o);
+        Element child = (Element) o;
 
         // Quasimodo: BEGIN
         // Diabled because it prevents to delete item from the list.
@@ -104,21 +97,21 @@ class Mist extends AbstractList {
         // the parent of the Class. It doesn't say anything about the
         // membership to this List.
         /*
-	if (!this.equals(child.getParent())) {
-	    throw new IllegalArgumentException
-		("child does not belong to this parent");
-	}
-        */
+        if (!this.equals(child.getParent())) {
+        throw new IllegalArgumentException
+        ("child does not belong to this parent");
+        }
+         */
         // Qusimodo: END
 
-	if (!this.containsKey(key)) {
-	    throw new IllegalArgumentException
-		("child does not belong to this parent");
-	}
+        if (!this.containsKey(key)) {
+            throw new IllegalArgumentException("child does not belong to this parent");
+        }
+        
         m_children.remove(o);
-	m_childrenMap.remove(key);
-	child.setParent(null);
-	return true;
+        m_childrenMap.remove(key);
+        child.setParent(null);
+        return true;
     }
 
     public Object[] toArray() {
@@ -140,5 +133,4 @@ class Mist extends AbstractList {
     public String toString() {
         return m_children.toString();
     }
-
 }

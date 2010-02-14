@@ -216,7 +216,10 @@ public class PageCreateDynamic extends FormSection
         if (m_parentComponent != null ) {
 
             super.add(m_parentComponent);
-            addWidgets();
+            // Quasimodo BEGIN
+            // see comment for the addWidget method
+            // addWidgets();
+            // Quasimodo END
             getSaveCancelSection().getSaveButton().setButtonLabel("Create");
             
             //Form internalForm = getForm();
@@ -240,6 +243,12 @@ public class PageCreateDynamic extends FormSection
      * the persistent widgets stored in the persistent form
      * associated with this content item
      */
+
+    /* Quasimodo BEGIN
+     * disabled to get an ordinary create step. This method will ask
+     * for ALL additional fields of a UDCT regardless if it is mandatory or not.
+     * So, to prevent this I have modified the UDCT-Widgets to allway be optional
+     * as the hardcoded content types and this method becomes obsolete.
     protected void addWidgets() {
         PersistentForm pForm = null;
         try {
@@ -317,7 +326,8 @@ public class PageCreateDynamic extends FormSection
         }
         add(thisSection, ColumnPanel.FULL_WIDTH);
     }
-
+    * Quasimodo END
+    */
 
     /**
      * @return the item selection model used in this form
