@@ -42,8 +42,6 @@ import java.math.BigDecimal;
  */
 public class ItemTemplateMapping extends TemplateMapping {
 
-    public static final String versionId = "$Id: ItemTemplateMapping.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.ItemTemplateMapping";
 
@@ -94,7 +92,7 @@ public class ItemTemplateMapping extends TemplateMapping {
     }
 
     public final void setContentItem(ContentItem item) {
-        Assert.assertNotNull(item);
+        Assert.exists(item);
         setAssociation(ITEM, item);
     }
 
