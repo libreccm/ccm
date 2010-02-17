@@ -37,10 +37,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Loader.java 759 2005-09-02 15:25:32Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 759 2005-09-02 15:25:32Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 

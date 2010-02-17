@@ -81,7 +81,7 @@ public class SimpleSurvey extends Application {
     public String getServletPath() {
         // sufficient if installed into its own web appl. context (ccm-simplesurvey)
         // return "/files";
-        return "/simplesurvey/files";
+        return "/ccm-simplesurvey/files";
     }
 
 }
