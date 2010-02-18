@@ -1,0 +1,18 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_surveys"/>
+    <table name="ct_surveys_responses"/>
+    <table name="ct_surveys_answers"/>
+    <initializer class="com.arsdigita.cms.contenttypes.SurveyInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-types-survey"/>
+    <data class="com.arsdigita.cms.contenttypes.SurveyLoader"/>
+  </scripts>
+</load>
