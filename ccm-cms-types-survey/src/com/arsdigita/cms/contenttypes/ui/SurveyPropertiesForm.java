@@ -18,178 +18,124 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-
-import com.arsdigita.cms.contenttypes.util.SurveyGlobalizationUtil ;
+import com.arsdigita.cms.contenttypes.util.SurveyGlobalizationUtil;
 
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormInitListener;
 
-import com.arsdigita.bebop.parameters.NotWhiteSpaceValidationListener;
-import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.BlockStylable;
-import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.form.Date;
-import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.Option;
 
-import com.arsdigita.formbuilder.PersistentForm;
 
+import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
+import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Survey;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.lang.Boolean;
+import com.arsdigita.cms.ui.authoring.BasicPageForm;
 
-public class SurveyPropertiesForm extends Form {
-    
-    private SurveySelectionModel m_survey;
-    private Class m_type;
+public class SurveyPropertiesForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
+    private SurveyPropertiesStep m_step;
+    public static final String DESCRIPTION = Survey.DESCRIPTION;
+//    public static final String START_DATE = Survey.START_DATE;
+//    public static final String END_DATE = Survey.END_DATE;
+    public static final String RESPONSES_PUBLIC = Survey.RESPONSES_PUBLIC;
+    /**
+     * ID of the form
+     */
+    public static final String ID = "Survey_edit";
 
-    private TextField m_surveyName;
-    private TextArea m_description;
-    private Date m_startDate;
-    private Date m_endDate;
-    private RadioGroup m_responsesPublic;
-    private RadioGroup m_quizType;
-
-    public PropertiesForm(SurveySelectionModel survey,
-			  Class type) {
-
-	super("properties" + type.getName());
-	
-	m_survey = survey;
-	m_type = type;
-
-        m_surveyName = new TextField("surveyName");
-	m_surveyName.addValidationListener(new NotWhiteSpaceValidationListener());
-        m_description = new TextArea("description");
-
-        
-        m_startDate = new Date("startDate");
-        m_endDate = new Date("endDate");
-
-        add(new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.name")));
-        add(m_surveyName);
-	
-	add(new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.description")));
-        m_description.setRows(20);
-        m_description.setCols(60);
-        add(m_description);
-
-        add(new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.start_date")));
-        add(m_startDate);
-
-        add(new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.end_date")));
-        add(m_endDate);
-
-
-	
-	add(new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.should_quiz_responses_be_public")));
-	m_responsesPublic = new RadioGroup("responsesPublic");
-	Option o1 = new Option("true", new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.Yes")));
-        Option o2 = new Option("false", new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.No")));
-	m_responsesPublic.addOption(o1);
-	m_responsesPublic.addOption(o2);
-       	add(m_responsesPublic);				      
-	
-	// There can be 2 kinds of quizzes: the knowledge test kind of quiz and the personality assessment kind
-	add(new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.what_type_of_quiz_is_this")));
-	m_quizType = new RadioGroup("quizType");
-	Option o3 = new Option("knowledge_test", new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.knowledge_test_quiz")));
-        Option o4 = new Option("personal_assessment", new Label(GlobalizationUtil.globalize("simplesurvey.ui.admin.personal_assessment_quiz")));
-	m_quizType.addOption(o3);
-	m_quizType.addOption(o4);
-       	add(m_quizType);				      
-
-	add(new Submit("submit"), BlockStylable.CENTER);
-        addInitListener(new SurveyInitListener());
-        addProcessListener(new PropertiesFormProcessListener());
-
-    }
-    
-    private class SurveyInitListener implements FormInitListener {
-	public void init(FormSectionEvent e) 
-	    throws FormProcessException {
-	    PageState state = e.getPageState();
-	    
-	    if (m_survey.isSelected(state)) {
-		Survey survey = m_survey.getSelectedSurvey(state);
-		PersistentForm form = survey.getForm();
-		
-		m_surveyName.setValue(state, form.getAdminName());
-		m_description.setValue(state, form.getDescription());
-		m_startDate.setValue(state, survey.getStartDate());
-		m_endDate.setValue(state, survey.getEndDate());
-	        m_quizType.setValue(state, survey.getQuizType());
-		if ( survey.responsesArePublic() ) {
-		    m_responsesPublic.setValue(state, "true");
-		} else {
-		    m_responsesPublic.setValue(state,"false");
-		}
-	    } else {
-		m_surveyName.setValue(state, "");
-		m_description.setValue(state, "");
-
-		Calendar startCalendar = new GregorianCalendar();
-		startCalendar.add(Calendar.DATE, 0);
-		java.util.Date startDate = startCalendar.getTime();
-		Calendar endCalendar = new GregorianCalendar();        
-		endCalendar.add(Calendar.DATE, 15);
-		java.util.Date endDate = endCalendar.getTime();
-		
-		m_startDate.setValue(state, startDate);
-		m_endDate.setValue(state, endDate);
-		m_responsesPublic.setValue(state, "true");
-		m_quizType.setValue(state, "knowledge_test");
-	    }
-	}
+    /**
+     * Constrctor taking an ItemSelectionModel
+     *
+     * @param itemModel
+     */
+    public SurveyPropertiesForm(ItemSelectionModel itemModel) {
+        this(itemModel, null);
     }
 
-    private class PropertiesFormProcessListener implements FormProcessListener {
-	public void process(FormSectionEvent e) 
-	    throws FormProcessException {
-	    PageState state = e.getPageState();
-	    
-	    Survey survey;
-	    PersistentForm form;
-	    
-	    if (m_survey.isSelected(state)) {
-		survey = m_survey.getSelectedSurvey(state);
-		form = survey.getForm();
-	    } else {
-		survey = m_type.equals(Survey.class) ? new Survey() : new Poll();
-		survey.setPackageInstance(SimpleSurveyUtil.getPackageInstance(state));
-		form = new PersistentForm();
-		survey.setForm(form);
-	    }
-	    
-	    form.setAdminName((String)m_surveyName.getValue(state));
-	    form.setHTMLName(getHTMLName((String)m_surveyName.getValue(state)));
-	    form.setDescription((String)m_description.getValue(state));
-	    form.save();
-	    
-	    survey.setStartDate((java.util.Date)m_startDate.getValue(state));
-	    survey.setEndDate((java.util.Date)m_endDate.getValue(state));
-	    survey.setResponsesPublic(new Boolean((String) m_responsesPublic.getValue(state)));
-	    survey.setQuizType((String) m_quizType.getValue(state));
-       	    survey.save();
-	}
+    /**
+     * Constrctor taking an ItemSelectionModel and an instance of BaseContactPropertiesStep.
+     *
+     * @param itemModel
+     * @param step
+     */
+    public SurveyPropertiesForm(ItemSelectionModel itemModel, SurveyPropertiesStep step) {
+        super(ID, itemModel);
+        m_step = step;
+        addSubmissionListener(this);
+    }
 
-	private String getHTMLName(String surveyName) {
-	    
-	    String htmlName = surveyName.trim().toLowerCase();
-	    
-	    htmlName = htmlName.replace(' ', '_');
-	    
-	    return htmlName;
-	}
+    @Override
+    public void addWidgets() {
+        super.addWidgets();
 
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.admin.description").localize()));
+        ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
+        descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 4000));
+        TextArea description = new TextArea(descriptionParam);
+        description.setRows(20);
+        description.setCols(60);
+        add(description);
+
+//        add(new Label(SurveyGlobalizationUtil.globalize("simplesurvey.ui.admin.start_date")));
+//        add(m_startDate);
+//
+//        add(new Label(SurveyGlobalizationUtil.globalize("simplesurvey.ui.admin.end_date")));
+//        add(m_endDate);
+
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.admin.should_quiz_responses_be_public").localize()));
+        RadioGroup responsesPublic = new RadioGroup("responsesPublic");
+        Option rp1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.Yes").localize()));
+        Option rp2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.No").localize()));
+        responsesPublic.addOption(rp1);
+        responsesPublic.addOption(rp2);
+        add(responsesPublic);
+
+    }
+
+    @Override
+    public void init(FormSectionEvent e) throws FormProcessException {
+        FormData data = e.getFormData();
+        Survey survey = (Survey) super.initBasicWidgets(e);
+
+        data.put(DESCRIPTION, survey.getDescription());
+//        data.put(START_DATE, survey.getStartDate());
+//        data.put(END_DATE, survey.getEndDate());
+        data.put(RESPONSES_PUBLIC, survey.getResponsesPublic());
+    }
+
+    @Override
+    public void process(FormSectionEvent e) throws FormProcessException {
+        FormData data = e.getFormData();
+
+        Survey survey = (Survey) super.processBasicWidgets(e);
+
+        if ((survey != null) && (getSaveCancelSection().getSaveButton().isSelected(e.getPageState()))) {
+            survey.setDescription((String) data.get(DESCRIPTION));
+//            survey.setStartDate((String)data.get(START_DATE));
+//            survey.setEndDate((String)data.get(END_DATE));
+            survey.setResponsesPublic((Boolean) data.get(RESPONSES_PUBLIC));
+
+            survey.save();
+        }
+
+        if (m_step != null) {
+            m_step.maybeForwardToNextStep(e.getPageState());
+        }
+    }
+
+    public void submitted(FormSectionEvent e) throws FormProcessException {
+        if ((m_step != null) && (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
+            m_step.cancelStreamlinedCreation(e.getPageState());
+        }
     }
 }

@@ -16,14 +16,14 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.simplesurvey.ui;
+package com.arsdigita.cms.contenttypes.ui;
 
 
 import com.arsdigita.bebop.PageState;
 
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 
-import com.arsdigita.simplesurvey.Survey;
+import com.arsdigita.cms.contenttypes.Survey;
 
 import com.arsdigita.toolbox.ui.ACSObjectSelectionModel;
 

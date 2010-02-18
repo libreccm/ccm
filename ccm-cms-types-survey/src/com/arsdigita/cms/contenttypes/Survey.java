@@ -11,7 +11,6 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 
 import com.arsdigita.formbuilder.PersistentForm;
 
-
 import com.arsdigita.util.Assert;
 
 /**
@@ -31,7 +30,6 @@ public class Survey extends ContentPage {
 //    public static final String END_DATE = "endDate";    
     /**  PDL property name for responsesPublic */
     public static final String RESPONSES_PUBLIC = "responsesPublic";
-
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.simplesurvey.Survey";
 
@@ -55,7 +53,7 @@ public class Survey extends ContentPage {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-        /**
+    /**
      * Constructor. The contained <code>DataObject</code> is retrieved
      * from the persistent storage mechanism with an <code>OID</code>
      * specified by <i>id</i>.
@@ -111,24 +109,23 @@ public class Survey extends ContentPage {
 
     /*
     public void setStartDate(Date startDate) {
-        set(START_DATE, startDate);
+    set(START_DATE, startDate);
     }
 
     public Date getStartDate() {
-        return (Date)get(START_DATE);
+    return (Date)get(START_DATE);
     }
 
     public void setEndDate(Date endDate) {
-        set(END_DATE, endDate);
+    set(END_DATE, endDate);
     }
 
     public Date getEndDate() {
-        return (Date)get(END_DATE);
+    return (Date)get(END_DATE);
     }
-    */
-
-    public boolean responsesArePublic() {
-        return ((Boolean) get(RESPONSES_PUBLIC)).booleanValue();
+     */
+    public boolean getResponsesPublic() {
+        return ((Boolean) get(RESPONSES_PUBLIC));
     }
 
     public void setResponsesPublic(Boolean responsesPublic) {
@@ -136,7 +133,6 @@ public class Survey extends ContentPage {
     }
 
     /* Class methods *********************************************************/
-
     public static Survey retrieve(BigDecimal id)
             throws DataObjectNotFoundException {
 
@@ -150,25 +146,25 @@ public class Survey extends ContentPage {
 
         return survey;
     }
-/*
+    /*
     public SurveyResponseCollection getResponses() {
-        return SurveyResponse.retrieveBySurvey(this);
+    return SurveyResponse.retrieveBySurvey(this);
     }
 
     public SurveyResponseCollection getUserResponses(User user) {
-        return SurveyResponse.retrieveBySurvey(this, user);
+    return SurveyResponse.retrieveBySurvey(this, user);
     }
 
     public boolean hasUserResponded(User user) {
-        SurveyResponseCollection responses = getUserResponses(user);
+    SurveyResponseCollection responses = getUserResponses(user);
 
-        if (responses.next()) {
-            responses.close();
-            return true;
-        }
-        return false;
+    if (responses.next()) {
+    responses.close();
+    return true;
     }
-*/
+    return false;
+    }
+     */
 
     /*
     public DataQuery getLabelDataQuery() {

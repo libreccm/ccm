@@ -7,7 +7,6 @@ import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.simplesurvey.Survey;
 import java.math.BigDecimal;
 import java.util.Date;
 

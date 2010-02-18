@@ -1,14 +1,12 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.db.Sequences;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.formbuilder.PersistentLabel;
 import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
@@ -22,8 +20,6 @@ import java.math.BigDecimal;
  */
 public class SurveyAnswer extends ContentItem {
 
-    /** PDL property name for id */
-    public static final String ID = "id";
     /** PDL property name for label */
     public static final String LABEL = "label";
     /** PDL property name for widget */
@@ -90,11 +86,8 @@ public class SurveyAnswer extends ContentItem {
     }
 
     /* accessors *****************************************************/
-    public BigDecimal getID() {
-        return (BigDecimal) get(ID);
-    }
 
-/* Class methods ********/
+    /* Class methods ********/
     public static SurveyAnswer create(PersistentLabel label,
             PersistentWidget widget,
             String value) {
@@ -115,5 +108,4 @@ public class SurveyAnswer extends ContentItem {
         set(WIDGET, widget);
         set(VALUE, value);
     }
-
 }

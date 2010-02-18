@@ -7,7 +7,7 @@ object type Survey extends ContentPage {
                                                 to bebop_form_sections.form_section_id;
 //    Date[0..1] startDate = ct_surveys.start_date DATE;
 //    Date[0..1] endDate = ct_surveys.end_date DATE;
-    Boolean[0..1] responsesPublic = ct_surveys.responses_public CHAR(1);
+    Boolean[0..1] responsesPublic = ct_surveys.responses_public BOOLEAN;
     reference key ( ct_surveys.survey_id );
 }
 

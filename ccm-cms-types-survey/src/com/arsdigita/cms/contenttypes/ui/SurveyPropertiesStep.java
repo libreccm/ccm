@@ -14,7 +14,6 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.cms.contenttypes.Survey;
 import com.arsdigita.cms.contenttypes.util.SurveyGlobalizationUtil;
 
 import java.text.DateFormat;
@@ -26,7 +25,6 @@ import org.apache.log4j.Logger;
 public class SurveyPropertiesStep extends SimpleEditStep {
 
     private static final Logger logger = Logger.getLogger(SurveyPropertiesStep.class);
-    
     /**
      * Name of the this edit sheet (Don't know if this this really needed.
      * It has the same value in almost all PropertiesStep classes)
@@ -44,70 +42,58 @@ public class SurveyPropertiesStep extends SimpleEditStep {
 
         /* Use a Segmented Panel for the multiple parts of data */
         SegmentedPanel segmentedPanel = new SegmentedPanel();
-        
+
         setDefaultEditKey(EDIT_BASIC_SHEET_NAME);
 
         /* The different parts of information are displayed in seperated segments each containing a SimpleEditStep */
         /* Well, not so simple anymore... */
-        
+
         /* A new SimpleEditStep */
         SimpleEditStep basicProperties = new SimpleEditStep(itemModel, parent, EDIT_BASIC_SHEET_NAME);
-        
+
         /* Create the edit component for this SimpleEditStep and the corresponding link */
-        BasicPageForm editBasicSheet = new SurveyPropertyForm(itemModel, this);
-        basicProperties.add(EDIT_BASIC_SHEET_NAME, (String)SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
-        
+        BasicPageForm editBasicSheet = new SurveyPropertiesForm(itemModel, this);
+        basicProperties.add(EDIT_BASIC_SHEET_NAME, (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
+
         /* Set the displayComponent for this step */
-        basicProperties.setDisplayComponent(getSurveyPropertySheet(itemModel));
+        basicProperties.setDisplayComponent(getSurveyPropertiesSheet(itemModel));
 
         /* Add the SimpleEditStep to the segmented panel */
-        segmentedPanel.addSegment(new Label((String)SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.basic_properties").localize()), basicProperties);
+        segmentedPanel.addSegment(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.basic_properties").localize()), basicProperties);
 
-        // If not disabled via registry, add the ui for attaching a person
-        if(!Survey.getConfig().getHidePerson()) {
-            SurveyPersonPropertiesStep personProperties = new SurveyPersonPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String)SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.person").localize()), personProperties);
-        }
-        
-        // If not disabled via registry, add the ui for attaching a baseAddress
-        if(!Survey.getConfig().getHideAddress()) {
-            SurveyAddressPropertiesStep addressProperties = new SurveyAddressPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String)SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.address").localize()), addressProperties);
-        }
+        // Add the ui for attaching a FormSection
+//        SurveyPersonPropertiesStep personProperties = new SurveyPersonPropertiesStep(itemModel, parent);
+//        segmentedPanel.addSegment(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.person").localize()), personProperties);
 
-        SurveyEntriesPropertiesStep surveyEntries = new SurveyEntriesPropertiesStep(itemModel, parent);
-        segmentedPanel.addSegment(new Label((String)SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.contactEntry").localize()), surveyEntries);
-        
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);
     }
 
     /**
      * Creates and returns the sheet for editing the basic properties
-     * of an organization. (@see SurveyPropertyForm).
+     * of a survey. (@see SurveyPropertiesForm).
      * 
      * @param itemModel
      * @return The sheet for editing the properties of the organization.
      */
-    public static Component getSurveyPropertySheet(ItemSelectionModel itemModel) {
-        
+    public static Component getSurveyPropertiesSheet(ItemSelectionModel itemModel) {
+
 
         /* The DisplayComponent for the Basic Properties */
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),"name");
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),"title");
-  
-        if(!ContentSection.getConfig().getHideLaunchDate()) {
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), "title");
+
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {
 
                 public String format(DomainObject obj, String attribute, PageState state) {
-                    ContentPage page = (ContentPage)obj;
-                    if(page.getLaunchDate() != null) {
+                    ContentPage page = (ContentPage) obj;
+                    if (page.getLaunchDate() != null) {
                         return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                    }
-                    else {
-                        return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                    } else {
+                        return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
                     }
                 }
             });
@@ -115,5 +101,4 @@ public class SurveyPropertiesStep extends SimpleEditStep {
 
         return sheet;
     }
-    
 }
