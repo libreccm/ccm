@@ -14,6 +14,7 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SegmentedPanel;
+import com.arsdigita.cms.contenttypes.Survey;
 import com.arsdigita.cms.contenttypes.util.SurveyGlobalizationUtil;
 
 import java.text.DateFormat;
@@ -56,7 +57,7 @@ public class SurveyPropertiesStep extends SimpleEditStep {
         basicProperties.add(EDIT_BASIC_SHEET_NAME, (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
-        basicProperties.setDisplayComponent(getSurveyPropertiesSheet(itemModel));
+            basicProperties.setDisplayComponent(SurveyPropertiesStep.getSurveyPropertiesSheet(itemModel));
 
         /* Add the SimpleEditStep to the segmented panel */
         segmentedPanel.addSegment(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.basic_properties").localize()), basicProperties);
@@ -84,6 +85,22 @@ public class SurveyPropertiesStep extends SimpleEditStep {
 
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
         sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), "title");
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.description"), ContentPage.DESCRIPTION);
+        sheet.add(SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_public"), Survey.RESPONSES_PUBLIC, new DomainObjectPropertySheet.AttributeFormatter() {
+
+                public String format(DomainObject obj, String attribute, PageState state) {
+                    Survey survey = (Survey) obj;
+                    if (survey.getResponsesPublic() != null) {
+                        if(survey.getResponsesPublic().booleanValue() == true) {
+                            return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize();
+                        } else{
+                            return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize();
+                        }
+                    } else {
+                        return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                    }
+                }
+            });
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {

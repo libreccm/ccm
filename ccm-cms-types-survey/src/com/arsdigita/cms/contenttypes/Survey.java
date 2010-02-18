@@ -31,7 +31,7 @@ public class Survey extends ContentPage {
     /**  PDL property name for responsesPublic */
     public static final String RESPONSES_PUBLIC = "responsesPublic";
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.simplesurvey.Survey";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Survey";
 
     /**
      * Default constructor. This creates a new (empty) Survey.
@@ -124,8 +124,8 @@ public class Survey extends ContentPage {
     return (Date)get(END_DATE);
     }
      */
-    public boolean getResponsesPublic() {
-        return ((Boolean) get(RESPONSES_PUBLIC));
+    public Boolean getResponsesPublic() {
+        return (Boolean) get(RESPONSES_PUBLIC);
     }
 
     public void setResponsesPublic(Boolean responsesPublic) {

@@ -18,7 +18,7 @@
 	  labelBundle="com.arsdigita.cms.ui.CMSResources"
 	  descriptionKey="cms.contenttypes.shared.basic_properties.description" 
 	  descriptionBundle="com.arsdigita.cms.ui.CMSResources"
-	  component="com.arsdigita.cms.contenttypes.ui.BaseContactPropertiesStep" 
+	  component="com.arsdigita.cms.contenttypes.ui.SurveyPropertiesStep"
 	  ordering="1"/>
       
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>

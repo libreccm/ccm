@@ -94,6 +94,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
 
         add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.admin.should_quiz_responses_be_public").localize()));
         RadioGroup responsesPublic = new RadioGroup("responsesPublic");
+// NotNullValidationListener
         Option rp1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.Yes").localize()));
         Option rp2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.No").localize()));
         responsesPublic.addOption(rp1);
@@ -110,7 +111,9 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         data.put(DESCRIPTION, survey.getDescription());
 //        data.put(START_DATE, survey.getStartDate());
 //        data.put(END_DATE, survey.getEndDate());
-        data.put(RESPONSES_PUBLIC, survey.getResponsesPublic());
+        if(survey.getResponsesPublic() != null) {
+            data.put(RESPONSES_PUBLIC, survey.getResponsesPublic().booleanValue());
+        }
     }
 
     @Override
@@ -123,7 +126,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
             survey.setDescription((String) data.get(DESCRIPTION));
 //            survey.setStartDate((String)data.get(START_DATE));
 //            survey.setEndDate((String)data.get(END_DATE));
-            survey.setResponsesPublic((Boolean) data.get(RESPONSES_PUBLIC));
+            survey.setResponsesPublic(new Boolean((String)data.get(RESPONSES_PUBLIC)));
 
             survey.save();
         }
