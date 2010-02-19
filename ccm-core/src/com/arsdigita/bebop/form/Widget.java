@@ -180,6 +180,19 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     }
 
     /**
+     * Test for existens of a particular type of ValidationListener
+     * 
+     * @param listener Subtype of ParameterListern which is tested for
+     * @return true if subtype is in the list
+     */
+    public boolean hasValidationListener(ParameterListener listener) {
+        Assert.assertNotNull(listener, "ParameterListener");
+        return this.getParameterModel().hasParameterListener(listener);
+        
+//        return (m_listeners.getListenerCount(listener.getClass()) > 0);
+    }
+
+    /**
      * Adds a print listener for this widget. Only one print listener can be
      * set for a widget, since the <code>PrintListener</code> is expected to
      * modify the target of the <code>PrintEvent</code>.

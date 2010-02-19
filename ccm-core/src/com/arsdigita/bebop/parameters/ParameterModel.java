@@ -46,26 +46,21 @@ public abstract class ParameterModel implements Lockable {
      * exception if the specified name is null
      */
     protected String m_name;
-
     /**
      * The default value of this ParameterModel. This value is used when
      * the request is not a submission, and the transformValue returns
      * null.
      */
     protected Object m_defaultValue;
-
     /**
      * A List of Listeners to validate this parameter.
      */
     protected List m_parameterListeners;
-
     /**
      * A boolean indicating if this ParameterModel is locked, as per the
      * Lockable interface
      */
     protected boolean m_locked;
-
-
     /**
      * <code>true</code> if the parameter value in a request should be set
      * to the default value when it would ordinarily be set
@@ -77,11 +72,9 @@ public abstract class ParameterModel implements Lockable {
      * This defaults to <code>true</code>.
      */
     private boolean m_defaultOverridesNull = false;
-
     private boolean m_passIn = true;
-
     private static final Logger s_log =
-        Logger.getLogger(ParameterModel.class.getName());
+            Logger.getLogger(ParameterModel.class.getName());
 
     /**
      * Construct an unlocked ParameterModel
@@ -160,7 +153,7 @@ public abstract class ParameterModel implements Lockable {
      * @see #isPassIn()
      * @param v <code>true</code> if this parameter is a pass in parameter.
      */
-    public void setPassIn(boolean  v) {
+    public void setPassIn(boolean v) {
         Assert.assertNotLocked(this);
         m_passIn = v;
     }
@@ -196,7 +189,7 @@ public abstract class ParameterModel implements Lockable {
      */
     public void setName(String name) {
         Assert.assertNotLocked(this);
-        m_name=name;
+        m_name = name;
     }
 
     /**
@@ -250,8 +243,7 @@ public abstract class ParameterModel implements Lockable {
      * error transforming form/URL variables to an object.
      */
     public abstract Object transformValue(HttpServletRequest request)
-        throws IllegalArgumentException;
-
+            throws IllegalArgumentException;
 
     /**
      * Helper method for implementing {@link #transformValue
@@ -274,9 +266,8 @@ public abstract class ParameterModel implements Lockable {
     }
 
     public ParameterData createParameterData(HttpServletRequest request) {
-        return createParameterData(request,null,false);
+        return createParameterData(request, null, false);
     }
-
 
     /**
      * Create a ParameterData for this ParameterModel with the supplied
@@ -295,7 +286,7 @@ public abstract class ParameterModel implements Lockable {
      * null values from the submission.
      */
     public ParameterData createParameterData(HttpServletRequest request,
-                                             boolean isSubmission) {
+            boolean isSubmission) {
         return createParameterData(request, null, isSubmission);
     }
 
@@ -320,8 +311,8 @@ public abstract class ParameterModel implements Lockable {
      * null values from the submission.
      */
     public ParameterData createParameterData(HttpServletRequest request,
-                                             Object defaultValue,
-                                             boolean isSubmission) {
+            Object defaultValue,
+            boolean isSubmission) {
         // This method can work in one of two modes, which influences how
         // default values are used.
         // (0) if transformValue() returns null, we *always* try
@@ -342,18 +333,17 @@ public abstract class ParameterModel implements Lockable {
         // logic, to make defaults work right.
         //isSubmission = isSubmission || isPassIn();
 
-        if ( isSubmission ) {
+        if (isSubmission) {
             try {
                 result.setValue(transformValue(request));
                 if (result.getValue() == null && defaultValue != null) {
                     result.setValue(defaultValue);
                 }
-                if ( getDefaultOverridesNull()
-                     && result.getValue() == null ) {
+                if (getDefaultOverridesNull() && result.getValue() == null) {
                     result.setValue(getDefaultValue());
                 }
             } catch (IllegalArgumentException e) {
-                if ( getDefaultOverridesNull() ) {
+                if (getDefaultOverridesNull()) {
                     result.setValue(getDefaultValue());
                 } else {
                     result.setValue(null);
@@ -370,7 +360,7 @@ public abstract class ParameterModel implements Lockable {
                 if (result.getValue() == null && defaultValue != null) {
                     result.setValue(defaultValue);
                 }
-                if ( result.getValue() == null ) {
+                if (result.getValue() == null) {
                     result.setValue(getDefaultValue());
                 }
             } catch (IllegalArgumentException e) {
@@ -410,13 +400,13 @@ public abstract class ParameterModel implements Lockable {
      * the value and errors of this parameter
      */
     public void validate(ParameterData data)
-        throws FormProcessException {
+            throws FormProcessException {
         Assert.assertLocked(this);
 
         ParameterEvent e = null;
 
-        for (Iterator i = m_parameterListeners.iterator(); i.hasNext(); ) {
-            if ( e == null ) {
+        for (Iterator i = m_parameterListeners.iterator(); i.hasNext();) {
+            if (e == null) {
                 e = new ParameterEvent(this, data);
             }
             ((ParameterListener) i.next()).validate(e);
@@ -433,7 +423,7 @@ public abstract class ParameterModel implements Lockable {
      * @return the value as a readable string, may be <code>null</code>
      */
     public String marshal(Object value) {
-        return ( value == null ) ? null : value.toString();
+        return (value == null) ? null : value.toString();
     }
 
     /**
@@ -452,8 +442,7 @@ public abstract class ParameterModel implements Lockable {
      * @pre encoded != null
      */
     public Object unmarshal(String encoded) {
-        throw new UnsupportedOperationException("Not implemented. "
-                                                + "This method needs to be implemented by the specific subclasses.");
+        throw new UnsupportedOperationException("Not implemented. " + "This method needs to be implemented by the specific subclasses.");
     }
 
     /**
@@ -475,5 +464,23 @@ public abstract class ParameterModel implements Lockable {
      */
     public boolean isLocked() {
         return m_locked;
+    }
+
+    /**
+     * Test m_parameterKisteners for member of a given subtype
+     *
+     * @param listener Subtype of the ParameterListener
+     * @return true if a ParameterListener of given type is in the list
+     */
+    public boolean hasParameterListener(ParameterListener listener) {
+        Iterator lListIter = m_parameterListeners.iterator();
+
+        while (lListIter.hasNext()) {
+            ParameterListener pl = (ParameterListener) lListIter.next();
+            if (pl.getClass().equals(listener.getClass())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

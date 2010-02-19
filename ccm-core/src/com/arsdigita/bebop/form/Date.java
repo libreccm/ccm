@@ -33,6 +33,7 @@ import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.kernel.Kernel;
 // This interface contains the XML element name of this class
 // in a constant which is used when generating XML
@@ -229,6 +230,10 @@ public class Date extends Widget implements BebopConstants {
         m_month.generateXML(ps, date);
         m_day  .generateXML(ps, date);
         m_year .generateXML(ps, date);
+
+        if (!hasValidationListener(new NotNullValidationListener())) {
+            date.newChildElement("NoDate");
+        }
     }
 
     public void setDisabled() {
@@ -279,4 +284,7 @@ public class Date extends Widget implements BebopConstants {
         m_day.setClassAttr(at);
         super.setClassAttr(at);
     }
+
+    // Don't lock
+    public void lock() {}
 }
