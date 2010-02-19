@@ -1,41 +1,32 @@
-<!DOCTYPE stylesheet [
-<!ENTITY nbsp   "&#160;" ><!-- no-break space = non-breaking space, U+00A0 ISOnum -->
-]>
-
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+<?xml version="1.0"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
-                version="1.0">
+                xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
+                exclude-result-prefixes="cms bebop">
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.BaseContact']" mode="cms:CT_graphics"
-    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_BaseContact">
-    <table width="435" border="0" cellspacing="0" cellpadding="0">
-      <tr>
-        <td class="contentTitle" align="left" valign="top">
-          <xsl:value-of select="./title"/>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <xsl:if test="./address">
-              <tr>
-                <th>Address:</th>
-                <td class="contentText" valign="top" align="left"><xsl:value-of select="./address"/></td>
-              </tr>
-            </xsl:if>
-          </table>
-        </td>
-      </tr>
-    </table>
+  <xsl:import href="../../../../../../packages/formbuilder/xsl/formbuilder.xsl"/>
+
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Survey']" mode="cms:CT_text"
+    name="cms:CT_text_com_arsdigita_cms_contenttypes_Survey">
+    <xsl:apply-templates select="." mode="cms:CT_graphics"/>
+    <xsl:apply-templates select="form"/>
   </xsl:template>
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.BaseContact']" mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_cms_contenttypes_BaseContact">
-    <h1 class="title"><xsl:value-of select="./title"/></h1>
-    <xsl:if test="./address">
-      <span class="subtitle">Address</span>
-      <span class="text"><xsl:value-of select="./address"/></span><br/>
-    </xsl:if>
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Survey']" mode="cms:CT_graphics"
+    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_Survey">
+    <h1><xsl:value-of select="title"/></h1>
+    <div class="description">
+      <xsl:value-of select="form/description"/>
+    </div>
+    <div>
+      <xsl:if test="css">
+        <xsl:attribute name="class">
+          <xsl:value-of select="css"/>
+        </xsl:attribute>
+      </xsl:if>
+
+      <xsl:apply-templates select="form"/>
+    </div>
   </xsl:template>
 
 </xsl:stylesheet>

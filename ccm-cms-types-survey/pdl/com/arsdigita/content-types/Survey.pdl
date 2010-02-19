@@ -5,39 +5,38 @@ import com.arsdigita.formbuilder.*;
 import com.arsdigita.kernel.User;
 
 object type Survey extends ContentPage {
-    component FormSection[0..1] formSection = join ct_surveys.form_id
-                                                to bebop_form_sections.form_section_id;
-//    Date[0..1] startDate = ct_surveys.start_date DATE;
-//    Date[0..1] endDate = ct_surveys.end_date DATE;
-    Boolean[0..1] responsesPublic = ct_surveys.responses_public CHAR(1);
+    Date[0..1]             startDate = ct_surveys.start_date       DATE;
+    Date[0..1]               endDate = ct_surveys.end_date         DATE;
+    Boolean[0..1]    responsesPublic = ct_surveys.responses_public;
+    component FormSection[1..1] form = join ct_surveys.form_id
+                                         to bebop_form_sections.form_section_id;
     reference key ( ct_surveys.survey_id );
 }
 
 object type SurveyResponse extends ContentItem {
 
-    Survey[1..1] survey = join ct_surveys_responses.survey_id 
-                            to ct_surveys.survey_id;
-    User[1..1] user = join ct_surveys_responses.user_id
-                        to users.user_id;
-    Date[1..1] entryDate = ct_surveys_responses.entry_date DATE;
-
+    Date[1..1]                 entryDate = ct_surveys_responses.entry_date       DATE;
+    Survey[1..1]                  survey = join ct_surveys_responses.survey_id
+                                             to ct_surveys.survey_id;
+    User[1..1]                      user = join ct_surveys_responses.user_id
+                                             to users.user_id;
     component SurveyAnswer[1..n] answers = join ct_surveys_responses.response_id
                                              to ct_surveys_answers.response_id;
 
     // XXX hack to allow us to filter a data query
-    BigDecimal[1..1] surveyID = ct_surveys_responses.survey_id INTEGER;
-    BigDecimal[1..1] userID = ct_surveys_responses.user_id INTEGER;
+    BigDecimal[1..1]            surveyID = ct_surveys_responses.survey_id        INTEGER;
+    BigDecimal[1..1]              userID = ct_surveys_responses.user_id          INTEGER;
 
     reference key (ct_surveys_responses.response_id);
 }
 
-object type SurveyAnswer extends ContentItem{
+object type SurveyAnswer extends ContentItem {
 
-    Component[1..1] label = join ct_surveys_answers.label_id
-                              to bebop_components.component_id;
+    Component[1..1]  label = join ct_surveys_answers.label_id
+                               to bebop_components.component_id;
     Component[1..1] widget = join ct_surveys_answers.widget_id
-                              to bebop_components.component_id;
-    String[0..1] value = ct_surveys_answers.value VARCHAR(4000);
+                               to bebop_components.component_id;
+    String[0..1]     value = ct_surveys_answers.value           VARCHAR(4000);
 
     reference key (ct_surveys_answers.answer_id);
 }

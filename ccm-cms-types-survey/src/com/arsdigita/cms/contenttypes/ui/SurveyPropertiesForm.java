@@ -28,11 +28,16 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.Date;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.Option;
 
 
+import com.arsdigita.bebop.parameters.BooleanParameter;
+import com.arsdigita.bebop.parameters.DateParameter;
+import com.arsdigita.bebop.parameters.DateParameter;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -45,8 +50,8 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
 
     private SurveyPropertiesStep m_step;
     public static final String DESCRIPTION = Survey.DESCRIPTION;
-//    public static final String START_DATE = Survey.START_DATE;
-//    public static final String END_DATE = Survey.END_DATE;
+    public static final String START_DATE = Survey.START_DATE;
+    public static final String END_DATE = Survey.END_DATE;
     public static final String RESPONSES_PUBLIC = Survey.RESPONSES_PUBLIC;
     /**
      * ID of the form
@@ -78,7 +83,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
     public void addWidgets() {
         super.addWidgets();
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.admin.description").localize()));
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.description").localize()));
         ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
         descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 4000));
         TextArea description = new TextArea(descriptionParam);
@@ -86,17 +91,20 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         description.setCols(60);
         add(description);
 
-//        add(new Label(SurveyGlobalizationUtil.globalize("simplesurvey.ui.admin.start_date")));
-//        add(m_startDate);
-//
-//        add(new Label(SurveyGlobalizationUtil.globalize("simplesurvey.ui.admin.end_date")));
-//        add(m_endDate);
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.start_date").localize()));
+        Date startDate = new Date(START_DATE);
+        add(startDate);
 
-        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.admin.should_quiz_responses_be_public").localize()));
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.end_date").localize()));
+        Date endDate = new Date(END_DATE);
+        add(endDate);
+
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_public").localize()));
+        ParameterModel responsesPublicParam = new BooleanParameter(RESPONSES_PUBLIC);
+        responsesPublicParam.addParameterListener(new NotNullValidationListener());
         RadioGroup responsesPublic = new RadioGroup("responsesPublic");
-// NotNullValidationListener
-        Option rp1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.Yes").localize()));
-        Option rp2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.survey.ui.No").localize()));
+        Option rp1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
+        Option rp2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
         responsesPublic.addOption(rp1);
         responsesPublic.addOption(rp2);
         add(responsesPublic);
@@ -109,9 +117,9 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         Survey survey = (Survey) super.initBasicWidgets(e);
 
         data.put(DESCRIPTION, survey.getDescription());
-//        data.put(START_DATE, survey.getStartDate());
-//        data.put(END_DATE, survey.getEndDate());
-        if(survey.getResponsesPublic() != null) {
+        data.put(START_DATE, survey.getStartDate());
+        data.put(END_DATE, survey.getEndDate());
+        if (survey.getResponsesPublic() != null) {
             data.put(RESPONSES_PUBLIC, survey.getResponsesPublic().booleanValue());
         }
     }
@@ -124,9 +132,9 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
 
         if ((survey != null) && (getSaveCancelSection().getSaveButton().isSelected(e.getPageState()))) {
             survey.setDescription((String) data.get(DESCRIPTION));
-//            survey.setStartDate((String)data.get(START_DATE));
-//            survey.setEndDate((String)data.get(END_DATE));
-            survey.setResponsesPublic(new Boolean((String)data.get(RESPONSES_PUBLIC)));
+            survey.setStartDate((java.util.Date) data.get(START_DATE));
+            survey.setEndDate((java.util.Date) data.get(END_DATE));
+            survey.setResponsesPublic(new Boolean((String) data.get(RESPONSES_PUBLIC)));
 
             survey.save();
         }

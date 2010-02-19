@@ -1,7 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -11,7 +10,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 
 import com.arsdigita.formbuilder.PersistentForm;
 
-import com.arsdigita.util.Assert;
+import java.util.Date;
 
 /**
  * A survey content type that represents a survey. This is
@@ -23,16 +22,28 @@ import com.arsdigita.util.Assert;
 public class Survey extends ContentPage {
 
     /**  PDL property name for formSection */
-    public static final String FORM_SECTION = "formSection";
+    public static final String FORM = "form";
     /**  PDL property name for startDate */
-//    public static final String START_DATE = "startDate";
+    public static final String START_DATE = "startDate";
     /**  PDL property name for endDate */
-//    public static final String END_DATE = "endDate";    
+    public static final String END_DATE = "endDate";
     /**  PDL property name for responsesPublic */
     public static final String RESPONSES_PUBLIC = "responsesPublic";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Survey";
 
+/*
+    private static final SurveyConfig s_config = new SurveyConfig();
+    static {
+	    s_config.load();
+    }
+
+    public static final SurveyConfig getConfig()
+    {
+	    return s_config;
+    }
+*/
+    
     /**
      * Default constructor. This creates a new (empty) Survey.
      **/
@@ -91,39 +102,62 @@ public class Survey extends ContentPage {
      * For new content items, sets the associated content type if it
      * has not been already set.
      */
-    @Override
+    /*    @Override
     public void beforeSave() {
-        super.beforeSave();
+    super.beforeSave();
 
-        Assert.exists(getContentType(), ContentType.class);
+    Assert.exists(getContentType(), ContentType.class);
+    }
+     */
+    /**
+     * This will handle the mandatory FormSection. If there is no
+     * FormSection set it will create an empty new form and assign it
+     * to keep the db happy.
+     */
+    @Override
+    protected void beforeSave() {
+        if (isNew()) {
+            if (get(FORM) == null) {
+                PersistentForm form = new PersistentForm();
+                form.setHTMLName(getName());
+                form.setAdminName(getName());
+                setAssociation(FORM, form);
+            }
+            /*
+            if (getResponsesPublic() == null) {
+            setResponsesPublic(false);
+            }
+             */
+        }
+
+        super.beforeSave();
     }
 
     /* accessors *****************************************************/
     public void setForm(PersistentForm persistentForm) {
-        set(FORM_SECTION, persistentForm);
+        set(FORM, persistentForm);
     }
 
     public PersistentForm getForm() {
-        return new PersistentForm((DataObject) get(FORM_SECTION));
+        return new PersistentForm((DataObject) get(FORM));
     }
 
-    /*
     public void setStartDate(Date startDate) {
-    set(START_DATE, startDate);
+        set(START_DATE, startDate);
     }
 
     public Date getStartDate() {
-    return (Date)get(START_DATE);
+        return (Date) get(START_DATE);
     }
 
     public void setEndDate(Date endDate) {
-    set(END_DATE, endDate);
+        set(END_DATE, endDate);
     }
 
     public Date getEndDate() {
-    return (Date)get(END_DATE);
+        return (Date) get(END_DATE);
     }
-     */
+
     public Boolean getResponsesPublic() {
         return (Boolean) get(RESPONSES_PUBLIC);
     }

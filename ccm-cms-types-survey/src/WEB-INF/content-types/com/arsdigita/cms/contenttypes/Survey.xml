@@ -21,7 +21,14 @@
 	  component="com.arsdigita.cms.contenttypes.ui.SurveyPropertiesStep"
 	  ordering="1"/>
       
-      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+      <ctd:authoring-step
+        labelKey="form_item.authoring.controls.title"
+        labelBundle="com.arsdigita.cms.formbuilder.FormItemResources"
+        descriptionKey="form_item.authoring.controls.description"
+        descriptionBundle="com.arsdigita.cms.formbuilder.FormItemResources"
+        component="com.arsdigita.cms.contenttypes.ui.SurveyControls"/>
+
+      <ctd:include href="/WEB-INF/content-types/shared.xml"/>
     </ctd:authoring-kit>
     
   </ctd:content-type>
