@@ -69,19 +69,16 @@ import org.apache.log4j.Logger;
  * the XmlFeed object.
  * </p>
  *
- * @author <a href="mailto:miles@runtime-collective.com">Miles Barr</a>
- * @version $Id: RetrieveListener.java 755 2005-09-02 13:42:47Z sskracic $
- * @since 05-03-2003
- *
  * @see XmlFeed
+ * @author <a href="mailto:miles@runtime-collective.com">Miles Barr</a>
+ * @since 05-03-2003
+ * @version $Id: RetrieveListener.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class RetrieveListener implements FormProcessListener{
 
     private static final Logger s_log = Logger.getLogger(RetrieveListener.class);
 
     // ===== Constants ======================================================= //
-    public static final String versionId =
-            "$Id: RetrieveListener.java 755 2005-09-02 13:42:47Z sskracic $";
     
     /** The key that the results are stored in the request under. */
     public static final String REQUEST_RESULTS_KEY = "XML Feed Results";

@@ -21,7 +21,12 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * The CMS SiteProxy initializer.
+ * Initializes the SiteProxy content type.
+ *
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: SiteProxyInitializer.java 757 2005-09-02 14:12:21Z sskracic $
@@ -31,13 +36,21 @@ public class SiteProxyInitializer extends ContentTypeInitializer {
     private static final Logger s_log = Logger.getLogger(SiteProxyInitializer.class);
 
     /**
-     * SiteProxyInitialize Constructor
+     * SiteProxyInitialize Constructor, sets the PDL manifest file and
+     * object type string.
      */
     public SiteProxyInitializer() {
         super("ccm-cms-types-siteproxy.pdl.mf",
               SiteProxy.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value for use by the parent class worker
+     * methods.
+     *
+     * @return complete path info string
+     */
      public String[] getStylesheets() {
         return new String[] {
             "/static/content-types/com/arsdigita/cms/contenttypes/SiteProxy.xsl"

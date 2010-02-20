@@ -51,10 +51,9 @@ import com.arsdigita.xml.Element;
  * portal.
  *
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
+ * @version $Id: RecentUpdatedDocsPortlet.java,v 1.5 2005/12/08 14:46:55 pkopunec Exp $
  */
 public class RecentUpdatedDocsPortlet extends AppPortlet {
-	public static final String versionId = "$Id: RecentUpdatedDocsPortlet.java,v 1.5 2005/12/08 14:46:55 pkopunec Exp $" + "$Author: pkopunec $"
-			+ "$DateTime: 2003/12/12 20:18:12 $";
 
 	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet";
 

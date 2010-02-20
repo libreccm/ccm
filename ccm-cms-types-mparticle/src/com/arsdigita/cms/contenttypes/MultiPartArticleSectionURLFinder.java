@@ -97,8 +97,8 @@ public class MultiPartArticleSectionURLFinder implements URLFinder {
 			ItemResolver resolver = contentSection.getItemResolver();
 
 			String url = resolver.generateItemURL(null, article, 
-                                                              contentSection,
-                                                              context);
+                                                  contentSection,
+                                                  context);
 			final int sep = url.indexOf('?');
 			URL destination = null;
         

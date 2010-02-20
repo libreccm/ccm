@@ -31,9 +31,7 @@ import java.math.BigDecimal;
  * Domain object class to represent <code>ESDService</code> content type.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: ESDService.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ESDService extends TextPage {
 

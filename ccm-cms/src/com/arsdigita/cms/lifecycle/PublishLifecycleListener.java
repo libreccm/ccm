@@ -33,10 +33,6 @@ import org.apache.log4j.Logger;
  * @version $Id: PublishLifecycleListener.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class PublishLifecycleListener implements LifecycleListener {
-    public static final String versionId =
-        "$Id: PublishLifecycleListener.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (PublishLifecycleListener.class);

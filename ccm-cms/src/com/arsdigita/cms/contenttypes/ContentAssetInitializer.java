@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.PDLInitializer;
+import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.db.DbHelper;
@@ -31,9 +32,25 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import org.apache.log4j.Logger;
 
 
+/**
+ * Provides basic functions required by any specific content asset initialization.
+ *
+ * The initializer of each content type will extend this class and
+ * <li>delegate to this constructor providing its own manifest file </li>
+ * <li>Overwrite the abstract methods providing its own data</li>
+ * </ul>
+ *
+ */
 public abstract class ContentAssetInitializer extends CompoundInitializer {
+
+    /** Logger object for this class  */
     private static Logger s_log = Logger.getLogger(ContentAssetInitializer.class);
 
+    /**
+     * Constructor, sets specific manifest file and initializes PDL.
+     *
+     * @param manifestFile
+     */
     protected ContentAssetInitializer(final String manifestFile) {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -44,7 +61,39 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
-    public void init(LegacyInitEvent evt) {
+    /**
+     * Initializes content asset by parsing traversal xml file and registering
+     * the specified steps in a transient storage which may be modified during
+     * operation and has to be re-initialized each system startup).
+     * Essential part of initializing the systems domain coupling machinery.
+     *
+     * @param evt Type of initialization
+     */
+    public void init(DomainInitEvent evt) {
+        super.init(evt);
+
+        final String traversal = getTraversalXML();
+        XML.parseResource
+            (traversal,
+             new ContentAssetTraversalHandler(getProperty()));
+
+        AuthoringKitWizard.registerAssetStep(
+            getBaseType(),
+            getAuthoringStep(),
+            getAuthoringStepLabel(),
+            getAuthoringStepDescription(),
+            getAuthoringStepSortKey()
+        );
+    }
+
+    // Up to version 6.5 ContentAssetInitilizer used init(LegacyInitEvent) for
+    // initialization, even though it actually initializes the domain coupling
+    // machinery which is the domain of init(DomainInitEvent). It even didn't
+    // use any of the legacy initialization features (enterprise.init file).
+    // Switched to domain init because legacy init is deprecated and we will get
+    // rid of it. Retained here commented out for documentation purpose during
+    // transition of contributed content types.
+/*  public void init(LegacyInitEvent evt) {
         super.init(evt);
 
         final String traversal = getTraversalXML();
@@ -59,26 +108,26 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
             getAuthoringStepDescription(),
             getAuthoringStepSortKey()
         );
-    }
+    }  */
+
     
     /**
      * The base type against which the asset is defined,
      * typically com.arsdigita.cms.ContentPage
      */
     public abstract String getBaseType();
-
     
     /**
      * Returns the path to the XML file defintions for the
      * asset, eg /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
     public abstract String getTraversalXML();
+
     /**
      * The name of the association between the item
      * and the asset, eg 'fileAttachments'.
      */
     public abstract String getProperty();
-
     
     /**
      * The class of the authoring kit step
@@ -89,10 +138,12 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
      * The label for the authoring step
      */
     public abstract GlobalizedMessage getAuthoringStepLabel();
+    
     /**
      * The description for the authoring step
      */
     public abstract GlobalizedMessage getAuthoringStepDescription();
+
     /**
      * The sort key for the authoring step
      */

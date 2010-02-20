@@ -61,10 +61,6 @@ import com.arsdigita.versioning.Versions;
 public class FileUploadForm extends Form
         implements FormInitListener, FormValidationListener,
                    FormProcessListener, DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/FileUploadForm.java#5 $" +
-        "$Author: cwolfe $" +
-        "$DateTime: 2003/08/13 14:35:17 $";
 
     private static final Logger s_log = Logger.getLogger(FileUploadForm.class);
 

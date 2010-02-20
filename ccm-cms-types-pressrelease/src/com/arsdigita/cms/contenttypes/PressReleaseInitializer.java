@@ -25,20 +25,30 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @version $Id: PressReleaseInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  **/
 
 public class PressReleaseInitializer extends ContentTypeInitializer {
 
-    public final static String versionId = "$Id: PressReleaseInitializer.java 757 2005-09-02 14:12:21Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     private static final Logger s_log = Logger.getLogger(PressReleaseInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public PressReleaseInitializer() {
         super("ccm-cms-types-pressrelease.pdl.mf", PressRelease.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value for use by the parent class worker
+     * methods.
+     *
+     * @return complete path info string
+     */
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/PressRelease.xsl" };
+        return new String[] {
+            "/static/content-types/com/arsdigita/cms/contenttypes/PressRelease.xsl" };
     }
 
 }

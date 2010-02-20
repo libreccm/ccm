@@ -29,11 +29,6 @@ import com.arsdigita.util.parameter.StringParameter;
  */ 
 public final class DocMgrConfig extends AbstractConfig {
 
-    public static final String versionId =
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/DocMgrConfig.java#4 $" +
-        "$Author: cwolfe $" +
-        "$DateTime: 2004/01/14 15:24:15 $";
-
     private static final Logger s_log = Logger.getLogger(DocMgrConfig.class);
 
     private Parameter m_contentSection;

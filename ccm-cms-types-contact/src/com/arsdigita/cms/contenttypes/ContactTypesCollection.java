@@ -26,19 +26,17 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 
 /**
- * 
  * Class which represents a collection of ContactTypes.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: ContactTypesCollection.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ContactTypesCollection extends DomainCollection {
 
   /** Retrieve the collection of ContactTypes. */
   public static ContactTypesCollection getContactTypesCollection(){
-    DataCollection typesColl = SessionManager.getSession().retrieve(ContactType.BASE_DATA_OBJECT_TYPE);
+    DataCollection typesColl = SessionManager.getSession().
+                                   retrieve(ContactType.BASE_DATA_OBJECT_TYPE);
     return new ContactTypesCollection(typesColl);
   }
 

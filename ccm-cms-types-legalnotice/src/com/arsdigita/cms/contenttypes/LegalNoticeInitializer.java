@@ -21,24 +21,38 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * Initializer
+ * Initializes the Legal Notice content type.
+ *
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @version $Id: LegalNoticeInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  **/
 
 public class LegalNoticeInitializer extends ContentTypeInitializer {
 
-    public final static String versionId = "$Id: LegalNoticeInitializer.java 757 2005-09-02 14:12:21Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     private static final Logger s_log = Logger.getLogger(LegalNoticeInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public LegalNoticeInitializer() {
-       super("ccm-cms-types-legalnotice.pdl.mf", LegalNotice.BASE_DATA_OBJECT_TYPE);
+        super("ccm-cms-types-legalnotice.pdl.mf", LegalNotice.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value for use by the parent class worker
+     * methods.
+     * @return
+     */
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/LegalNotice.xsl" };
+        return new String[] {
+            "/static/content-types/com/arsdigita/cms/contenttypes/LegalNotice.xsl" };
     }
 
 }

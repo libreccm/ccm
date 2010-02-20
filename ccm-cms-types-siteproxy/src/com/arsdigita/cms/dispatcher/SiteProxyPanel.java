@@ -46,10 +46,9 @@ import java.io.*;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @version $Id: SiteProxyPanel.java 1048 2005-12-11 20:46:12Z apevec $
  */
 public class SiteProxyPanel extends ContentPanel {
-
-    public static final String versionId = "$Id: SiteProxyPanel.java 1048 2005-12-11 20:46:12Z apevec $ by $Author: apevec $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(SiteProxyPanel.class);
 

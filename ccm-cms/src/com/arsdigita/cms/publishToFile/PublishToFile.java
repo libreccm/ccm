@@ -253,10 +253,10 @@ public class PublishToFile implements PublishToFileListener {
     public void transactionEnd() {
     }
 
-    /***
+    /**
      * Process move task (for moving an item or folder to another folder).
      * @param qe QueueEntry for move task.
-     ***/
+     */
     protected boolean move(QueueEntry qe) {
         ContentItem liveItem = qe.getItem();
         ContentItem dstFolder= Utilities.getContentItemOrNull(
@@ -460,11 +460,11 @@ public class PublishToFile implements PublishToFileListener {
     }
 
 
-    /***
+    /**
      * Read the content of a page from a url.
      * @param location url to get the page from
      * @return Body (content) and content-type of page at the url.
-     ***/
+     */
     private RetrievedFile readHTML(String location) {
         return m_provider.fetchHTML(location);
     }
@@ -571,9 +571,9 @@ public class PublishToFile implements PublishToFileListener {
         return true;
     }
 
-    /***
+    /**
      * publish asset (such as an image) to file system.
-     ***/
+     */
     private void  writeAsset(Asset asset, PublishedFile f) {
         Assert.assertTrue(ContentItem.LIVE.equals(asset.getVersion()));
 

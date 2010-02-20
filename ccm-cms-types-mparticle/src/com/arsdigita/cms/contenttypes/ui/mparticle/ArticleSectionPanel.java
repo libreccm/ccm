@@ -316,8 +316,6 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
     // the position in the list of sections, or the string 'all'
     private class PageParameter extends ParameterModel {
         
-        public static final String versionId = "$Id: ArticleSectionPanel.java 1167 2006-06-14 12:27:28Z fabrice $ by $Author: fabrice $, $DateTime: 2004/08/17 23:15:09 $";
-        
         public PageParameter(String name) {
             super(name);
         }

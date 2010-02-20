@@ -23,11 +23,10 @@ package com.arsdigita.cms.contenttypes;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @version $Id: JobInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  **/
 
 public class JobInitializer extends ContentTypeInitializer {
-
-    public final static String versionId = "$Id: JobInitializer.java 757 2005-09-02 14:12:21Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
 
     public JobInitializer() {

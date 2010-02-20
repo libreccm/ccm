@@ -51,8 +51,6 @@ import com.arsdigita.web.Web;
  */
 public class CategoryItemsBrowser extends DataTable implements DMConstants {
 
-    public static final String versionId = "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/CategoryItemsBrowser.java#7 $ by $Author: cwolfe $, $DateTime: 2003/09/19 15:46:00 $";
-
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(CategoryItemsBrowser.class);
 

@@ -39,12 +39,9 @@ import com.arsdigita.xml.Element;
  * file in tabular form.
  *
  * @author StefanDeusch@computer.org, ddao@arsdigita.com
+ * @version $Id: FilePropertiesPanel.java,v 1.4 2004/12/09 14:46:39 pkopunec Exp $
  */
 class FilePropertiesPanel extends SimpleComponent implements DMConstants {
-    public static final String versionId =
-        "$Id: FilePropertiesPanel.java,v 1.4 2004/12/09 14:46:39 pkopunec Exp $" +
-        "$Author: pkopunec $" +
-        "$DateTime: 2003/09/19 15:46:00 $";
 
     private static final Logger s_log = Logger.getLogger
         (FilePropertiesPanel.class);

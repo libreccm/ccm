@@ -34,15 +34,14 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
+
+
 /**
- * 
  * <code>DomainObject</code> class to represent Contact <code>ContentType</code>
  * objects.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: Contact.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class Contact extends ContentPage {
 
@@ -71,7 +70,8 @@ public class Contact extends ContentPage {
     private static final Logger s_log = Logger.getLogger(Contact.class);
 
   /** data object type for this domain object */
-	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Contact";
+	public static final String BASE_DATA_OBJECT_TYPE =
+                                   "com.arsdigita.cms.contenttypes.Contact";
 
   /** Default constructor. */
   public Contact() {
@@ -96,7 +96,7 @@ public class Contact extends ContentPage {
 	DataOperation operation = SessionManager
 	    .getSession()
 	    .retrieveDataOperation(
-				   "com.arsdigita.cms.contenttypes.removeContactFromContentItemAssociation");
+            "com.arsdigita.cms.contenttypes.removeContactFromContentItemAssociation");
 	operation.setParameter("itemID", new Integer(item.getID().intValue()));
 	operation.execute();
     }
@@ -108,14 +108,16 @@ public class Contact extends ContentPage {
     private void removeItemMappings() {
 	DataOperation operation = SessionManager
 	    .getSession()
-	    .retrieveDataOperation("com.arsdigita.cms.contenttypes.removeContactFromAllAssociations");
+	    .retrieveDataOperation(
+                "com.arsdigita.cms.contenttypes.removeContactFromAllAssociations");
 	operation.setParameter("contactID", new Integer(this.getID().intValue()));
 	operation.execute();
     }
     
     
     /**
-     * Gets the DataAssociation that holds the mapping between this contact and any content items.
+     * Gets the DataAssociation that holds the mapping between this contact
+     * and any content items.
      * @return
      */
     public DataAssociation getItemsForContact() {
@@ -131,7 +133,7 @@ public class Contact extends ContentPage {
     public static Contact getContactForItem(ContentItem item) {
 	s_log.debug("getting contact for item " + item);
 	DataQuery query = SessionManager.getSession().retrieveQuery(
-								    "com.arsdigita.cms.contenttypes.getContactForItem");
+                          "com.arsdigita.cms.contenttypes.getContactForItem");
 	query.setParameter("itemID", item.getID());
 	BigDecimal contactID;
 	Contact contact = null;

@@ -27,10 +27,6 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  * @version $Id: FAQItemLoader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FAQItemLoader extends AbstractContentTypeLoader {
-    public final static String versionId =
-        "$Id: FAQItemLoader.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/FAQItem.xml"

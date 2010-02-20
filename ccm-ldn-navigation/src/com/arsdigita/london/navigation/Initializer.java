@@ -78,7 +78,8 @@ import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.xml.XML;
 
 /**
- * The CMS initializer.
+ * Initializer for ccm-ldn-navigation.
+ * Executes recursivly at each system startup.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $

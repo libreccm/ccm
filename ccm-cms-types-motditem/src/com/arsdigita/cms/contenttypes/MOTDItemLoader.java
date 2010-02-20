@@ -28,10 +28,6 @@ import com.arsdigita.loader.PackageLoader;
  * @version $Id: MOTDItemLoader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class MOTDItemLoader extends PackageLoader {
-    public final static String versionId =
-        "$Id: MOTDItemLoader.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
     
     public void run(final ScriptContext ctx) {
         // XXX content type definition

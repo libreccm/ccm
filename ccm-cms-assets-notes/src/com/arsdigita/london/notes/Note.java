@@ -34,6 +34,10 @@ import com.arsdigita.util.Assert;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * 
+ */
 public class Note extends ACSObject {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.london.notes.Note";

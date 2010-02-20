@@ -20,8 +20,10 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentSectionConfig;
 import com.arsdigita.cms.contenttypes.ui.mparticle.ArticleSectionPanel;
-import com.arsdigita.cms.search.ContentPageMetadataProvider;
+//Unused import
+// import com.arsdigita.cms.search.ContentPageMetadataProvider;
 import com.arsdigita.kernel.URLService;
+import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.search.MetadataProviderRegistry;
 
@@ -52,7 +54,9 @@ public class MultiPartArticleInitializer extends ContentTypeInitializer {
         };
     }
 
-    public void init(LegacyInitEvent evt) {
+    // Previously used LegacyInitEvent, allthough no legacy init functionality
+    // is used here. Wondering.
+    public void init(DomainInitEvent evt) {
         super.init(evt);
 
         MetadataProviderRegistry.registerAdapter(

@@ -27,24 +27,22 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
- /***
-  * Static methods that can be used to include a password with
-  * requests to the local host.  These methods can be used to increase
-  * the security of the requests to the local host that publishToFile
-  * makes to get the html pages to publish.  Method
-  * setLocalRequestPassword sets the password (cookie) before making
-  * the request to the localhost.  Code that processes the request
-  * would use method validLocalRequest to check for the cookie
-  * (password) value.
-  *
-  * @author Jeff Teeters
-  *
-  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
-  ***/
-
+/**
+ * Static methods that can be used to include a password with
+ * requests to the local host.  These methods can be used to increase
+ * the security of the requests to the local host that publishToFile
+ * makes to get the html pages to publish.  Method
+ * setLocalRequestPassword sets the password (cookie) before making
+ * the request to the localhost.  Code that processes the request
+ * would use method validLocalRequest to check for the cookie
+ * (password) value.
+ *
+ * @author Jeff Teeters
+ *
+ * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
+ * @ version $Id
+ */
 public class LocalRequestPassword {
-
-    public static final String versionId = "$Id";
 
     private static Logger s_log =
         Logger.getLogger(LocalRequestPassword.class);
@@ -54,11 +52,11 @@ public class LocalRequestPassword {
     public static String m_localRequestPassword = null;
 
 
-    /***
+    /**
      * Get a password for use in making a cookie used for server requests to itself.
      * This can be used to increase the security of the system because it allows for a check
      * to make sure the request is from the server.
-     ***/
+     */
      static private String getLocalRequestPassword() {
          if (m_localRequestPassword == null) {
              // not set, initialize to random number

@@ -22,7 +22,12 @@ import org.apache.log4j.Logger;
 
 
 /**
- * The CMS initializer.
+ * Initializes the Form Item content type.
+ *
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: GlossaryItemInitializer.java 757 2005-09-02 14:12:21Z sskracic $
@@ -31,11 +36,20 @@ public class GlossaryItemInitializer extends ContentTypeInitializer {
 
     private static final Logger s_log = Logger.getLogger(GlossaryItemInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public GlossaryItemInitializer() {
         super("ccm-cms-types-glossaryitem.pdl.mf",
               GlossaryItem.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value for use by the parent class worker
+     * methods.
+     * @return
+     */
      public String[] getStylesheets() {
         return new String[] {
             "/static/content-types/com/arsdigita/cms/contenttypes/GlossaryItem.xsl"

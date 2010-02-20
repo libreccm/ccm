@@ -22,11 +22,11 @@ import com.arsdigita.loader.PackageLoader;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #2 $ $Date: 2004/03/30 $
+ * @version $Id: RelatedLinkLoader.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class RelatedLinkLoader extends PackageLoader {
 
-    public final static String versionId = "$Id: RelatedLinkLoader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/03/30 18:21:14 $";
     public void run(final ScriptContext ctx) {
         // nada
     }

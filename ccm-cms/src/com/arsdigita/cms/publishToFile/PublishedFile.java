@@ -49,8 +49,6 @@ import java.math.BigDecimal;
  **/
 class PublishedFile extends DomainObject {
   
-    public static final String versionId = "$Id";
-  
     public static final String BASE_DATA_OBJECT_TYPE = 
         "com.arsdigita.cms.publishToFile.PublishedFile";
 

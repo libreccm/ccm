@@ -21,17 +21,13 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 
 /**
- * Loader
+ * Loader. Just sets content type specific properties for use of the parent class.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/17 $
- **/
-
+ * @version $Id: AgendaLoader.java 1596 2007-07-10 16:25:57Z p_boy $
+ */
 public class AgendaLoader extends AbstractContentTypeLoader {
-
-    public final static String versionId = 
-        "$Id: AgendaLoader.java 1596 2007-07-10 16:25:57Z p_boy $ by " + 
-        "$Author: p_boy $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Agenda.xml"

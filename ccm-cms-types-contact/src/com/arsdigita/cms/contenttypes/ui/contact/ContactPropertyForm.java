@@ -41,9 +41,7 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
  * <code>ContactPropertiesStep</code> authoring kit step.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- * 
  * @version $Id: ContactPropertyForm.java 287 2005-02-22 00:29:02Z sskracic $
- *  
  */
 public class ContactPropertyForm extends BasicPageForm {
 

@@ -31,7 +31,8 @@ import com.arsdigita.web.ApplicationType;
 import org.apache.log4j.Logger;
 
 /**
- * Loader.
+ * Initial load (non-resurring) at install time for ccm-simplesurvey. Creates
+ * application type in database.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 759 2005-09-02 15:25:32Z sskracic $
@@ -40,6 +41,10 @@ public class Loader extends PackageLoader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+    /** 
+     * 
+     * @param ctx
+     */
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
             public void excurse() {
@@ -49,13 +54,19 @@ public class Loader extends PackageLoader {
         }.run();
     }
 
+    /**
+     * Helper method which does the actual work of preparing an application
+     * type and stores it in the database.
+     */
     private void setupSimpleSurveyPackage() {
+
         ApplicationSetup setup = new ApplicationSetup(s_log);
         
         setup.setApplicationObjectType(SimpleSurvey.BASE_DATA_OBJECT_TYPE);
         setup.setKey("simplesurvey");
         setup.setTitle("Simple Survey");
-        setup.setDescription("Simple Survey");
+        // setup.setDescription("Simple Survey");
+        setup.setDescription("A simple survey application.");
         setup.setInstantiator(new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new SimpleSurvey(dataObject);

@@ -27,6 +27,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.london.notes.ui.NotesStep;
 import com.arsdigita.london.notes.ui.NotesSummary;
 import com.arsdigita.runtime.LegacyInitEvent;
+import com.arsdigita.runtime.DomainInitEvent;
 
 public class NotesInitializer extends ContentAssetInitializer {
     public NotesInitializer() {
@@ -67,7 +68,8 @@ public class NotesInitializer extends ContentAssetInitializer {
         return 3;
     }
 
-    public void init( LegacyInitEvent ev ) {
+    // public void init( LegacyInitEvent ev ) {
+    public void init( DomainInitEvent ev ) {
         super.init( ev );
 
         ContentType.registerXSLFile( null, "/__ccm__/assets/notes/index.xsl" );

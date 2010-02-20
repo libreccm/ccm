@@ -61,10 +61,6 @@ import com.arsdigita.web.Web;
  * @version $Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/dispatcher/MultilingualDocumentResolver.java#1 $
  */
 public class MultilingualDocumentResolver extends AbstractItemResolver implements ItemResolver {
-    public static final String versionId =
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/dispatcher/MultilingualDocumentResolver.java#1 $" +
-        "$Author: cwolfe $" +
-        "$DateTime: 2003/11/26 14:30:10 $";
 
     private static final Logger s_log = Logger.getLogger
         (MultilingualDocumentResolver.class);

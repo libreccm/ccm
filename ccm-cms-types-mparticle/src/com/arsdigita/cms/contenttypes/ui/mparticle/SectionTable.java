@@ -55,12 +55,8 @@ import java.math.BigDecimal;
  */
 public class SectionTable extends Table
 {
-    /**
-     *  The class has already a logger (s_log), so I removed this.
-     *  Jens Pelzetter 2009-05-29
-     */
-    /*private static final Logger log =
-        Logger.getLogger(SectionTable.class.getName());*/
+    private static final Logger log =
+        Logger.getLogger(SectionTable.class.getName());
 
     // column headings
     public static final String COL_TITLE  = "Section";

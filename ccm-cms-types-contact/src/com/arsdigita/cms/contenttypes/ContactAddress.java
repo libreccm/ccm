@@ -30,9 +30,7 @@ import com.arsdigita.persistence.OID;
  * These objects are associated with Contact objects in this package.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: ContactAddress.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ContactAddress extends ContentItem {
 

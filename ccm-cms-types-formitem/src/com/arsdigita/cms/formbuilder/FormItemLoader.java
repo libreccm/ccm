@@ -30,11 +30,10 @@ import java.util.List;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #9 $ $Date: 2004/08/17 $
+ * @version $Id: FormItemLoader.java 755 2005-09-02 13:42:47Z sskracic $
  **/
 
 public class FormItemLoader extends AbstractContentTypeLoader {
-
-    public final static String versionId = "$Id: FormItemLoader.java 755 2005-09-02 13:42:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final Parameter m_contentSections = new StringParameter
         ("com.arsdigita.cms.formbuilder.FormItem.sections",

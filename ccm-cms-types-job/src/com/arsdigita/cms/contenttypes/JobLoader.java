@@ -25,11 +25,10 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #5 $ $Date: 2004/08/17 $
+ * @version $Id: JobLoader.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class JobLoader extends AbstractContentTypeLoader {
-
-    public final static String versionId = "$Id: JobLoader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Job.xml"

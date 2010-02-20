@@ -31,7 +31,6 @@ import com.arsdigita.util.Assert;
  * @version $Id: ResponseCollection.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class ResponseCollection extends DomainCollection {
-    public static final String versionId = "$Id: ResponseCollection.java 755 2005-09-02 13:42:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:26:27 $";
 
     protected ResponseCollection(DataCollection dataCollection) {
         super(dataCollection);

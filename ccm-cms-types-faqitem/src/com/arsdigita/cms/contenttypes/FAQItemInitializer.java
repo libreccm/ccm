@@ -21,23 +21,31 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * The CMS initializer.
+ * Initializer class to initialize <code>ContentType FAQ</code>.
+ *
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: FAQItemInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  */
 public class FAQItemInitializer extends ContentTypeInitializer {
-    public final static String versionId =
-        "$Id: FAQItemInitializer.java 757 2005-09-02 14:12:21Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(FAQItemInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest and the object type string
+     */
     public FAQItemInitializer() {
         super("ccm-cms-types-faqitem.pdl.mf",
               FAQItem.BASE_DATA_OBJECT_TYPE);
     }
+
+    /**
+     * Retrieve location of the assoziated stylesheet.
+     * @return
+     */
     public String[] getStylesheets() {
         return new String[] {
              "/static/content-types/com/arsdigita/cms/contenttypes/FAQItem.xsl"

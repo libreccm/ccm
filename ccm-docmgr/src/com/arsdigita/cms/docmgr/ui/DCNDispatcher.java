@@ -27,10 +27,6 @@ import com.arsdigita.bebop.TabbedPane;
  */
 
 public class DCNDispatcher extends DMDispatcher implements DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/DCNDispatcher.java#2 $" +
-        "$Author: cwolfe $" +
-        "$DateTime: 2003/08/14 12:28:36 $";
 
     private static Category s_log = Category.getInstance
         (DCNDispatcher.class.getName());

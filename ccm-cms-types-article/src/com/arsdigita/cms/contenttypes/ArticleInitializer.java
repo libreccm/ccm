@@ -21,7 +21,10 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * The CMS initializer.
+ * Initializes the Article content type.
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: ArticleInitializer.java 757 2005-09-02 14:12:21Z sskracic $
@@ -36,6 +39,7 @@ public class ArticleInitializer extends ContentTypeInitializer {
 
 
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/Article.xsl" };
+        return new String[]
+            { "/static/content-types/com/arsdigita/cms/contenttypes/Article.xsl" };
     }
 }

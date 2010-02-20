@@ -31,10 +31,7 @@ import java.util.List;
  * @version $Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public class Loader extends AbstractContentTypeLoader {
-    public final static String versionId =
-        "$Id: Loader.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/02/06 11:50:22 $";
+
     private final Parameter m_contentSections = new StringParameter
         ("com.arsdigita.cms.contenttypes.xmlfeed.sections",
          Parameter.REQUIRED, "forms");

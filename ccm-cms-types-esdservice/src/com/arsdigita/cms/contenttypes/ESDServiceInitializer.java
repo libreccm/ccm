@@ -18,11 +18,13 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- * Initializer class to initialize <code>ContentType <code>ESDService</code>.
- * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
+ * Initializer class to initialize <code>ContentType ESDService</code>.
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map).
  *
+ * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * @version $Id: ESDServiceInitializer.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ESDServiceInitializer extends ContentTypeInitializer {
 

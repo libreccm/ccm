@@ -19,22 +19,33 @@
 package com.arsdigita.cms.contenttypes;
 
 /**
- * The CMS initializer.
+ * Initializes the MOTD content type.
+ *
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: MOTDItemInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  */
 public class MOTDItemInitializer extends ContentTypeInitializer {
-    public final static String versionId =
-        "$Id: MOTDItemInitializer.java 757 2005-09-02 14:12:21Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public MOTDItemInitializer() {
         super("ccm-cms-types-motditem.pdl.mf",
               MOTDItem.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value for use by the parent class worker
+     * methods.
+     *
+     * @return complete path info string
+     */
     public String[] getStylesheets() {
         return new String[] { };
     }

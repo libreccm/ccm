@@ -23,7 +23,11 @@ import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
 import org.apache.log4j.Logger;
 
 /**
- * Initializer
+ * Initializes the Form Item content type.
+ *
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/17 $
@@ -34,16 +38,28 @@ public class FormItemInitializer extends ContentTypeInitializer {
     private static final Logger s_log = 
         Logger.getLogger(FormItemInitializer.class);
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public FormItemInitializer() {
         super("ccm-cms-types-formitem.pdl.mf",
               FormItem.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of traversal adapter
+     * @return
+     */
     public String getTraversalXML() {
         return "WEB-INF/traversal-adapters/com/arsdigita/" +
             "cms/formbuilder/FormItem.xml";
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value.
+     * @return
+     */
     public String[] getStylesheets() {
         return new String[] { 
             "/static/content-types/com/arsdigita/" + 

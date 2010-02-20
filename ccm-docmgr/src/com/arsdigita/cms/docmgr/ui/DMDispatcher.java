@@ -54,13 +54,10 @@ import com.arsdigita.web.Web;
  * Dispatcher for document manager application.
  *
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
+ * @version $Id: DMDispatcher.java,v 1.2 2005/01/18 08:37:08 pkopunec Exp $
  */
 
 public class DMDispatcher extends BebopMapDispatcher implements DMConstants {
-    public static final String versionId =
-        "$Id: DMDispatcher.java,v 1.2 2005/01/18 08:37:08 pkopunec Exp $" +
-        "$Author: pkopunec $" +
-        "$DateTime: 2003/10/27 15:42:01 $";
 
     private static Category s_log = Category.getInstance
         (DMDispatcher.class.getName());

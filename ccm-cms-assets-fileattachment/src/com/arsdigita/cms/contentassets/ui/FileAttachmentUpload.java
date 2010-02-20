@@ -42,11 +42,10 @@ import org.apache.log4j.Logger;
  *
  * @author Scott Seago (sseago@redhat.com)
  * @version $Revision: #2 $ $DateTime: 2004/03/30 18:21:14 $
+ * @version $Id: FileAttachmentUpload.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FileAttachmentUpload extends Form
     implements FormInitListener, FormProcessListener {
-
-    public static final String versionId = "$Id: FileAttachmentUpload.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/03/30 18:21:14 $";
 
     private static final Logger s_log = Logger.getLogger(FileAttachmentUpload.class);
 
@@ -90,6 +89,7 @@ public class FileAttachmentUpload extends Form
     public ItemSelectionModel getItemSelectionModel() {
         return m_itemModel;
     }
+
     /**
      * @return the save/cancel section for this form
      */
@@ -101,7 +101,6 @@ public class FileAttachmentUpload extends Form
      * @param state The page state
      * @return the currently selected item
      */
-
     public ContentItem getContentItem(PageState state) {
         return (ContentItem)m_itemModel.getSelectedObject(state);
     }
@@ -113,12 +112,12 @@ public class FileAttachmentUpload extends Form
      * @param state The page state
      * @param asset The image asset
      */
-    // this may not be needed at all -- it was in the medqic code for some reason. we should remove if possible
+    // this may not be needed at all -- it was in the medqic code for some reason.
+    // we should remove if possible
     public void setFileAttachment(PageState state) {
         ContentItem item = getContentItem(state);
         // Force the item to reload, since the assets query is cached ?
         // ?
-
     }
 
     // Add the widgets

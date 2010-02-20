@@ -26,7 +26,7 @@ import com.arsdigita.runtime.DomainInitEvent;
 import org.apache.log4j.Logger;
 
 /**
- * The CMS initializer.
+ * Initializes the  Address content type.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: AddressInitializer.java 1597 2007-07-10 16:27:26Z p_boy $
@@ -35,11 +35,18 @@ public class AddressInitializer extends ContentTypeInitializer {
 
     private static final Logger s_log = Logger.getLogger(AddressInitializer.class);
 
+    /**
+     * Constructor
+     */
     public AddressInitializer() {
         super("ccm-cms-types-address.pdl.mf",
               Address.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Initializer
+     * @param evt
+     */
     public void init(DomainInitEvent evt) {
         super.init(evt);
         
@@ -59,7 +66,12 @@ public class AddressInitializer extends ContentTypeInitializer {
         );
     }
 
+    /**
+     * Provides location of the stylesheets assoziated with this content type.
+     * @return
+     */
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/Address.xsl" };
+        return new String[] {
+            "/static/content-types/com/arsdigita/cms/contenttypes/Address.xsl" };
     }
 }

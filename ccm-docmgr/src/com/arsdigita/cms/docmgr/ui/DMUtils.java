@@ -48,10 +48,6 @@ import com.arsdigita.web.Web;
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
  */
 public class DMUtils implements DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/DMUtils.java#3 $" +
-        "$Author: sshinde $" +
-        "$DateTime: 2003/12/12 20:18:12 $";
 
     private static final Logger s_log = Logger.getLogger(DMUtils.class);
 

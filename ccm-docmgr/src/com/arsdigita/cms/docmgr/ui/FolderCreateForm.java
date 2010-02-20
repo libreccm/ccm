@@ -52,10 +52,6 @@ import com.arsdigita.kernel.permissions.PermissionService;
  */
 class FolderCreateForm extends Form   
         implements FormInitListener, FormValidationListener, FormProcessListener, DMConstants {
-    public static final String versionId = 
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/FolderCreateForm.java#2 $" +
-        "$Author: cwolfe $" +
-        "$DateTime: 2003/08/05 10:40:23 $";
 
     private StringParameter m_FolderName;
     private StringParameter m_FolderDesc;

@@ -24,17 +24,16 @@ import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.contenttypes.ui.contact.AddContactPropertiesStep;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
-import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
+// import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.runtime.LegacyInitEvent;
+import com.arsdigita.runtime.DomainInitEvent;
+// import com.arsdigita.runtime.LegacyInitEvent;
 
 /**
- * Initializer class to initialize <code>ContentType <code>Contact</code>.
+ * Initializer class to initialize <code>ContentType Contact</code>.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: ContactInitializer.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ContactInitializer extends ContentTypeInitializer {
 
@@ -69,25 +68,29 @@ public class ContactInitializer extends ContentTypeInitializer {
 	return phoneTypesList;
     }
     
-    public void init(LegacyInitEvent evt) {
+    // public void init(LegacyInitEvent evt) {
+    public void init(DomainInitEvent evt) {
 	super.init(evt);
 	
 	if (ContentSection.getConfig().getHasContactsAuthoringStep()) {
 
 	    // Add the "Contact"authoring step
-	    AuthoringKitWizard.registerAssetStep(getBaseType(),
-						 getAuthoringStep(), getAuthoringStepLabel(),
-						 getAuthoringStepDescription(), getAuthoringStepSortKey());
+	    AuthoringKitWizard.registerAssetStep(
+                    getBaseType(),
+                    getAuthoringStep(), getAuthoringStepLabel(),
+                    getAuthoringStepDescription(), getAuthoringStepSortKey());
 	    
-	    // and sort out the display	- at the moment this is just the basic properties, addresses and phones		
-	    ContentItemTraversalAdapter associatedContactTraversalAdapter = new ContentItemTraversalAdapter();
+	    // and sort out the display	- at the moment this is just the
+            // basic properties, addresses and phones
+	    ContentItemTraversalAdapter associatedContactTraversalAdapter =
+                                        new ContentItemTraversalAdapter();
 	    associatedContactTraversalAdapter.addAssociationProperty("/object/phones");
 	    associatedContactTraversalAdapter.addAssociationProperty("/object/contactAddress");
 	    
 	    ContentItemTraversalAdapter.registerAssetAdapter(
-							     "associatedContactForItem",
-							     associatedContactTraversalAdapter, 
-							     "com.arsdigita.cms.dispatcher.SimpleXMLGenerator"); 
+                    "associatedContactForItem",
+                    associatedContactTraversalAdapter,
+                    "com.arsdigita.cms.dispatcher.SimpleXMLGenerator");
 	}
 	
     }
@@ -99,14 +102,14 @@ public class ContactInitializer extends ContentTypeInitializer {
     
     private GlobalizedMessage getAuthoringStepDescription() {
 	return new GlobalizedMessage(
-				     "com.arsdigita.cms.contenttypes.contact_authoring_step_description",
-				     "com.arsdigita.cms.contenttypes.ContactResources");
+            "com.arsdigita.cms.contenttypes.contact_authoring_step_description",
+            "com.arsdigita.cms.contenttypes.ContactResources");
     }
     
     private GlobalizedMessage getAuthoringStepLabel() {
 	return new GlobalizedMessage(
-				     "com.arsdigita.cms.contenttypes.contact_authoring_step_label",
-				     "com.arsdigita.cms.contenttypes.ContactResources");
+                "com.arsdigita.cms.contenttypes.contact_authoring_step_label",
+                "com.arsdigita.cms.contenttypes.ContactResources");
     }
     
     private Class getAuthoringStep() {

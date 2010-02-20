@@ -25,13 +25,10 @@ import com.arsdigita.globalization.ChainedResourceBundle;
 import com.arsdigita.cms.CMSGlobalized;
 
 /**
- * 
  * Resource Bundle used in UI for Contact ContentType.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: ContactResourceBundle.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ContactResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
   

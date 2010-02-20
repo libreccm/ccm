@@ -15,7 +15,10 @@ public class DocumentInitializer extends ContentTypeInitializer {
     private static Category s_log = 
         Category.getInstance(DocumentInitializer.class);
 
-    // using the whole module's mf
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     * Using the whole module's mf here
+     */
     public DocumentInitializer() {
         super("ccm-docmgr.pdl.mf", Document.BASE_DATA_OBJECT_TYPE);
     }
@@ -24,7 +27,15 @@ public class DocumentInitializer extends ContentTypeInitializer {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/docmgr/Document.xml";
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value for use by the parent class worker
+     * methods.
+     *
+     * @return fully qualified path info string reltive to document (context) root
+     */
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/docmgr/Document.xsl" };
+        return new String[] {
+            "/static/content-types/com/arsdigita/cms/docmgr/Document.xsl" };
     }
 }

@@ -31,11 +31,11 @@ import java.net.URLConnection;
  *
  * @author Jeff Teeters (teeters@arsdigita.com)
  * @version $Revision: #7 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SetLocalRequestPassword.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 
 public interface SetLocalRequestPassword {
-    public static final String versionId = "$Id: SetLocalRequestPassword.java 287 2005-02-22 00:29:02Z sskracic $";
 
   /**
    * Sets one or more passwords (cookies) on a connection that is the

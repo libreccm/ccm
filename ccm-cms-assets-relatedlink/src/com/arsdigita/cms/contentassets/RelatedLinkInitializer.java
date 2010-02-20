@@ -24,21 +24,31 @@ import com.arsdigita.globalization.GlobalizedMessage;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #4 $ $Date: 2004/03/30 $
+ * @version $Id: RelatedLinkInitializer.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class RelatedLinkInitializer extends ContentAssetInitializer {
 
-    public final static String versionId = "$Id: RelatedLinkInitializer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/03/30 18:21:14 $";
-
+    /**
+     * 
+     */
     public RelatedLinkInitializer() {
         super("ccm-cms-assets-relatedlink.pdl.mf");
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/" + 
             "cms/contentassets/RelatedLink.xml";
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getProperty() {
         return "links";
     }

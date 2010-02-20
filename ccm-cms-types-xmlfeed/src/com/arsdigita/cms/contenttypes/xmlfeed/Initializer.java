@@ -21,21 +21,32 @@ package com.arsdigita.cms.contenttypes.xmlfeed;
 import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
 
 /**
- * The XML Feed initializer.
+ * Initializes the XML Feed content type.
+ *
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map). This is done by runtimeRuntime startup method which runs the init()
+ * methods of all initializers (this one just using the parent implementation).
  *
  * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Initializer extends ContentTypeInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/02/06 11:50:22 $";
 
+    /**
+     * Constructor, sets the PDL manifest file and object type string.
+     */
     public Initializer() {
         super("ccm-cms-types-xmlfeed.pdl.mf",
               XMLFeed.BASE_DATA_OBJECT_TYPE);
     }
 
+    /**
+     * Retrieve location of this content types stylesheet. Overwrites parent
+     * method with FormItem specific value for use by the parent class worker
+     * methods.
+     *
+     * @return complete path info string
+     */
     public String[] getStylesheets() {
         return new String[] { "/static/content-types/com/" + 
                               "arsdigita/cms/contenttypes/XMLFeed.xsl" };

@@ -39,10 +39,6 @@ import com.arsdigita.xml.Element;
  */
 public class LegacyCategoryDocsNavigatorPortlet extends AppPortlet 
     implements DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/LegacyCategoryDocsNavigatorPortlet.java#1 $" +
-        "$Author: cwolfe $" +
-        "$DateTime: 2004/01/14 15:24:15 $";
 
     protected static org.apache.log4j.Category s_log = 
         org.apache.log4j.Category.getInstance

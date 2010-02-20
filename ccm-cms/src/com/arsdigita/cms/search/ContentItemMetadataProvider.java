@@ -41,14 +41,11 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:berrange@redhat.com">Daniel Berrange</a>
  * @version $Revision: 1.1.2.1 $ $Date: 2005/10/04 12:09:55 $
+ * @version $Id: ContentItemMetadataProvider.java 1263 2006-07-17 08:18:47Z cgyg9330 $
  */
 public abstract class ContentItemMetadataProvider implements MetadataProvider {
     private static final Logger s_log = 
         Logger.getLogger(ContentItemMetadataProvider.class);
-
-    public final static String versionId =
-        "$Id: ContentItemMetadataProvider.java 1263 2006-07-17 08:18:47Z cgyg9330 $"
-        + " by $Author: cgyg9330 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public String getTypeSpecificInfo(DomainObject dobj) {
         ContentItem item = (ContentItem) dobj;

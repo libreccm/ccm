@@ -14,30 +14,17 @@
  */
 package com.arsdigita.cms.contentassets.ui;
 
-import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.Form;
-import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SaveCancelSection;
-import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.event.FormInitListener;
-import com.arsdigita.bebop.event.FormProcessListener;
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.event.FormValidationListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Submit;
-import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.FileAttachment;
 import com.arsdigita.cms.ui.CMSContainer;
@@ -45,7 +32,6 @@ import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedContainer;
-import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Classes;
 
@@ -54,10 +40,10 @@ import com.arsdigita.util.Classes;
  *
  * @author Scott Seago (sseago@redhat.com)
  * @version $Revision: #2 $ $DateTime: 2004/03/30 18:21:14 $
+ * @version $Id: FileAttachmentsStep.java 1116 2006-04-20 13:55:17Z apevec $
  */
 public class FileAttachmentsStep extends SecurityPropertyEditor {
 
-    public static final String versionId = "$Id: FileAttachmentsStep.java 1116 2006-04-20 13:55:17Z apevec $";
     private final ItemSelectionModel m_item;
     private final AuthoringKitWizard m_parent;
 
@@ -66,11 +52,18 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
     private FileAttachmentUpload m_uploadForm;
 
     private BigDecimalParameter m_fileParam = new BigDecimalParameter("fa");
-    private FileAttachmentSelectionModel m_fileModel = new FileAttachmentSelectionModel(m_fileParam);
+    private FileAttachmentSelectionModel m_fileModel =
+                    new FileAttachmentSelectionModel(m_fileParam);
     private Submit m_cancel;
     private Form m_dcForm;
 
-    public FileAttachmentsStep(ItemSelectionModel itemModel,AuthoringKitWizard parent) {
+    /**
+     *
+     * @param itemModel
+     * @param parent
+     */
+    public FileAttachmentsStep(ItemSelectionModel itemModel,
+                               AuthoringKitWizard parent) {
         m_parent = parent;
         m_item = itemModel;
 
@@ -87,7 +80,8 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
                         DataCollection files = FileAttachment.getAttachments(item);
                         Label mainTarget = (Label) event.getTarget();
                         if (files.isEmpty()) {
-                            mainTarget.setLabel("This item does not have any associated files.");
+                            mainTarget.setLabel(
+                                "This item does not have any associated files.");
                         } else {
                             mainTarget.setLabel("");
                         }

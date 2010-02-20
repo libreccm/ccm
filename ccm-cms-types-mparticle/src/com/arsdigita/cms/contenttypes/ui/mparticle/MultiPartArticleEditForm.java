@@ -100,5 +100,4 @@ public class MultiPartArticleEditForm extends MultiPartArticleForm
         return (Folder) parent;
     }
 
-    
 }

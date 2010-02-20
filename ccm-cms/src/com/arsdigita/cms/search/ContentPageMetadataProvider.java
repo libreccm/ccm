@@ -32,6 +32,7 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:berrange@redhat.com">Daniel Berrange</a>
  * @version $Revision: #5 $ $Date: 2004/08/17 $
+ * @version $Id: ContentPageMetadataProvider.java 1166 2006-06-14 11:45:15Z fabrice $
  */
 public class ContentPageMetadataProvider extends ContentItemMetadataProvider {
 
@@ -40,10 +41,6 @@ public class ContentPageMetadataProvider extends ContentItemMetadataProvider {
     
     private static final Logger s_log = 
         Logger.getLogger(ContentPageMetadataProvider.class);
-
-    public final static String versionId =
-        "$Id: ContentPageMetadataProvider.java 1166 2006-06-14 11:45:15Z fabrice $"
-        + " by $Author: fabrice $, $DateTime: 2004/08/17 23:15:09 $";
 
     public String getTitle(DomainObject dobj) {
         if (dobj instanceof ContentPage) {

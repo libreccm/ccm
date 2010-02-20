@@ -25,15 +25,14 @@ import com.arsdigita.persistence.DataCollection;
 /**
  * This class contains a collection fo Phase Definitions
  *
- * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #8 $ $Date: 2004/08/17 $
- *
  * @see DomainCollection
  * @see DataCollection
+ *
+ * @author Michael Pih (pihman@arsdigita.com)
+ * @version $Revision: #8 $ $Date: 2004/08/17 $
+ * @version $Id: PhaseDefinitionCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PhaseDefinitionCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: PhaseDefinitionCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

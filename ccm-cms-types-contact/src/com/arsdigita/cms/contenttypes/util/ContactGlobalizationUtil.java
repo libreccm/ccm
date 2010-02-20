@@ -27,28 +27,26 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * </p>
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- *
  * @version $Id: ContactGlobalizationUtil.java 287 2005-02-22 00:29:02Z sskracic $
- * 
  */
 public class ContactGlobalizationUtil {
 
-	final public static String BUNDLE_NAME =
+    final public static String BUNDLE_NAME =
 		"com.arsdigita.cms.contenttypes.util.ContactResourceBundle";
 
-	/**
-	 *  This returns a globalized message using the type specific bundle,
-	 *  BUNDLE_NAME
-	 */
-	public static GlobalizedMessage globalize(String key) {
-		return new GlobalizedMessage(key, BUNDLE_NAME);
-	}
+    /**
+     *  This returns a globalized message using the type specific bundle,
+     *  BUNDLE_NAME
+     */
+    public static GlobalizedMessage globalize(String key) {
+        return new GlobalizedMessage(key, BUNDLE_NAME);
+    }
 
-	/**
-	 *  This returns a globalized message using the type specific bundle,
-	 *  BUNDLE_NAME
-	 */
-	public static GlobalizedMessage globalize(String key, Object[] args) {
-		return new GlobalizedMessage(key, BUNDLE_NAME, args);
-	}
+    /**
+     *  This returns a globalized message using the type specific bundle,
+     *  BUNDLE_NAME
+     */
+    public static GlobalizedMessage globalize(String key, Object[] args) {
+        return new GlobalizedMessage(key, BUNDLE_NAME, args);
+    }
 }

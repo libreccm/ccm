@@ -21,15 +21,17 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * Initializer
+ * Initializes the NewsItem content type.
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @version $Id: NewsItemInitializer.java 1594 2007-07-10 10:56:11Z p_boy $
  **/
 
 public class NewsItemInitializer extends ContentTypeInitializer {
-
-    public final static String versionId = "$Id: NewsItemInitializer.java 1594 2007-07-10 10:56:11Z p_boy $ by $Author: p_boy $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(NewsItemInitializer.class);
 
@@ -38,11 +40,13 @@ public class NewsItemInitializer extends ContentTypeInitializer {
     }
 
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/NewsItem.xml";
+        return
+            "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/NewsItem.xml";
     }
 
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/NewsItem.xsl" };
+        return new String[]
+           { "/static/content-types/com/arsdigita/cms/contenttypes/NewsItem.xsl" };
     }
 
 }

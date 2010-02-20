@@ -25,11 +25,10 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @version $Id: MinutesLoader.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class MinutesLoader extends AbstractContentTypeLoader {
-
-    public final static String versionId = "$Id: MinutesLoader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Minutes.xml"

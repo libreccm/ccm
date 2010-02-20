@@ -45,8 +45,6 @@ import com.arsdigita.util.Assert;
  */
 public class DocumentAssetPage extends CMSPage {
 
-    public static final String versionId = "$Id: //cms/6.0/src/com/arsdigita/cms/dispatcher/DocumentAssetPage.java#1 $ by $Author: dennis $, $DateTime: 2003/08/18 23:54:14 $";
-
     private static final Logger s_log =
         Logger.getLogger(DocumentAssetPage.class);
 

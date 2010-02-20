@@ -30,12 +30,10 @@ import com.arsdigita.xml.XML;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: 1.1 $ $Date: 2004/12/15 15:37:51 $
+ * @version $Id: FileAttachmentInitializer.java 1262 2006-07-17 08:15:45Z cgyg9330 $
  **/
 
 public class FileAttachmentInitializer extends ContentAssetInitializer {
-
-	public final static String versionId =
-		"$Id: FileAttachmentInitializer.java 1262 2006-07-17 08:15:45Z cgyg9330 $ by $Author: cgyg9330 $, $DateTime: 2004/03/30 18:21:14 $";
 
     public FileAttachmentInitializer() {
         super("ccm-cms-assets-fileattachment.pdl.mf");
@@ -74,29 +72,33 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
         return 2; // XXX config param please
     }
 
-    public void init(LegacyInitEvent evt) {
+    // public void init(LegacyInitEvent evt) {
+    public void init(DomainInitEvent evt) {
         super.init(evt);
                                                                                 
         URLService.registerFinder(
             FileAttachment.BASE_DATA_OBJECT_TYPE,
             new FileAttachmentURLFinder());
         
-		/*
-			 * cms registers AssetMetadataProvider for type FileAsset and provides adapter for that 
-			 * context. We register a more specific metadataprovider for FileAttachment that provides useful information
-			 * about the owner. Because we are using a new metadataprovider, we need to register
-			 * adapter for that context. Note this is not the same as the adapters registered by the 
-			 * ContentAssetInitializer, because those are used specifically when traversing a content item
-			 * that delegates assets to their specific adapters
-			 * 
-			 * chris.gilbert@westsussex.gov.uk 
-			 */
-		MetadataProviderRegistry.registerAdapter(
+        /*
+         * cms registers AssetMetadataProvider for type FileAsset and provides
+         * adapter for that context. We register a more specific metadataprovider
+         * for FileAttachment that provides useful information about the owner.
+         * Because we are using a new metadataprovider, we need to register
+         * adapter for that context. Note this is not the same as the adapters
+         * registered by the ContentAssetInitializer, because those are used
+         * specifically when traversing a content item that delegates assets to
+         * their specific adapters
+         *
+         * chris.gilbert@westsussex.gov.uk
+	 */
+        MetadataProviderRegistry.registerAdapter(
 			FileAttachment.BASE_DATA_OBJECT_TYPE,
 			new FileAttachmentMetadataProvider());
-		XML.parseResource(
-			"/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachment-search.xml",
-                new TraversalHandler());
+        XML.parseResource(
+            "/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/"
+             + "FileAttachment-search.xml",
+            new TraversalHandler());
     }
 
 }

@@ -27,13 +27,16 @@ import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 
 /**
- * The CMS initializer.
+ * Initializes ccm-simplesurvey at each system startup.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Initializer.java 759 2005-09-02 15:25:32Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
 
+    /**
+     * Constructor. Delegates to the old initializer system.
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);

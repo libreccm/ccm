@@ -90,8 +90,6 @@ public final class XMLFeed extends FormItem {
     private static Logger s_log = Logger.getLogger(XMLFeed.class);
 
     // ===== Constants ======================================================= //
-    public static final String versionID =
-            "$Id: XMLFeed.java 755 2005-09-02 13:42:47Z sskracic $";
 
     /**
      * The fully qualified model name of the underlying data object, which in

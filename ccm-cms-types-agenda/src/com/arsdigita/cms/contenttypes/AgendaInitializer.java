@@ -21,30 +21,35 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * Initializer
+ * Initializes the Agenda content type.
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map).
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #8 $ $Date: 2004/08/17 $
+ * @version $Id: AgendaInitializer.java 1596 2007-07-10 16:25:57Z p_boy $
  **/
 
 public class AgendaInitializer extends ContentTypeInitializer {
 
-    public final static String versionId = 
-        "$Id: AgendaInitializer.java 1596 2007-07-10 16:25:57Z p_boy $ by " + 
-        "$Author: p_boy $, $DateTime: 2004/08/17 23:15:09 $";
-
     private static final Logger s_log = Logger.getLogger(AgendaInitializer.class);
 
+    /**
+     * Constructor
+     */
     public AgendaInitializer() {
         super("ccm-cms-types-agenda.pdl.mf", Agenda.BASE_DATA_OBJECT_TYPE);
     }
 
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Agenda.xml";
+        return
+            "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Agenda.xml";
     }
 
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/Agenda.xsl" };
+        return new String[] {
+            "/static/content-types/com/arsdigita/cms/contenttypes/Agenda.xsl" };
     }
 
 }

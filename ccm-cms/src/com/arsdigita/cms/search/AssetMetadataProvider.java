@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:berrange@redhat.com">Daniel Berrange</a>
  * @version $Revision: #5 $ $Date: 2004/08/17 $
+ * @version $Id: AssetMetadataProvider.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AssetMetadataProvider extends ContentItemMetadataProvider {
 
@@ -38,10 +39,6 @@ public class AssetMetadataProvider extends ContentItemMetadataProvider {
     
     private static final Logger s_log = 
         Logger.getLogger(AssetMetadataProvider.class);
-
-    public final static String versionId =
-        "$Id: AssetMetadataProvider.java 287 2005-02-22 00:29:02Z sskracic $"
-        + " by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public String getTitle(DomainObject dobj) {
         Asset item = (Asset)dobj;

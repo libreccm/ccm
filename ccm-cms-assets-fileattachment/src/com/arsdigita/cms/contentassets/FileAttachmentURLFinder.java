@@ -30,12 +30,12 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 
 /**
- * @author cgyg9330
- * @author mbooth@redhat.com
- *
  * A URLFinder for FileAttachments. In the draft context (ie, in CMS
  * backend search) it will return the draft url for the containing item.
  * Otherwise it will delegate to an AssetURLFinder.
+ *
+ * @author mbooth@redhat.com
+ * @author cgyg9330
  */
 public class FileAttachmentURLFinder implements URLFinder {
 

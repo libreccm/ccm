@@ -40,7 +40,6 @@ import java.sql.SQLException;
  * @version 1.0
  **/
 class PublishedLink extends DomainObject {
-    public static final String versionId = "$Id";
 
     public static final String BASE_DATA_OBJECT_TYPE =
       "com.arsdigita.cms.publishToFile.PublishedLink";

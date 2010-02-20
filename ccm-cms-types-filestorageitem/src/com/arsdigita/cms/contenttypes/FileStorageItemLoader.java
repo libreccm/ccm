@@ -27,10 +27,6 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  * @version $Id: FileStorageItemLoader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FileStorageItemLoader extends AbstractContentTypeLoader {
-    public final static String versionId =
-        "$Id: FileStorageItemLoader.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/FileStorageItem.xml"

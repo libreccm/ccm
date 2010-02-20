@@ -21,16 +21,15 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * The CMS initializer.
+ * Initializes the Bookmark content type.
+ * Defines the content type specific properties and just uses the super class
+ * methods to register the content type with the (transient) content type store
+ * (map).
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: BookmarkInitializer.java 757 2005-09-02 14:12:21Z sskracic $
  */
 public class BookmarkInitializer extends ContentTypeInitializer {
-    public final static String versionId =
-        "$Id: BookmarkInitializer.java 757 2005-09-02 14:12:21Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(BookmarkInitializer.class);
 

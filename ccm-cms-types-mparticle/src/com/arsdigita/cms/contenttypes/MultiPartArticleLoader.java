@@ -45,7 +45,6 @@ public class MultiPartArticleLoader extends AbstractContentTypeLoader {
 
     private ResourceParameter m_template;
 
-
     /**
      * MultiPartArticleLoader Constructor
      */

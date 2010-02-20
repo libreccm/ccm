@@ -35,10 +35,9 @@ import com.arsdigita.xml.Element;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #10 $ $Date: 2004/08/17 $
+ * @version $Id: ContentPanel.java 1848 2009-03-10 03:17:42Z terry $
  */
 public class ContentPanel extends SimpleComponent {
-
-    public static final String versionId = "$Id: ContentPanel.java 1848 2009-03-10 03:17:42Z terry $ by $Author: terry $, $DateTime: 2004/08/17 23:15:09 $";
 
     public ContentPanel() {
         super();

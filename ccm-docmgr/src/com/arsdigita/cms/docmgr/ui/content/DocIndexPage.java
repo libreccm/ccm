@@ -58,10 +58,6 @@ import com.arsdigita.persistence.SessionManager;
  * @version $Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/content/DocIndexPage.java#1 $
  */
 public class DocIndexPage extends CMSPage implements RequestListener {
-    public static final String versionId =
-        "$Id: //apps/docmgr-cms/dev/src/com/arsdigita/cms/docmgr/ui/content/DocIndexPage.java#1 $" +
-        "$Author: cwolfe $" +
-        "$DateTime: 2003/11/26 14:30:10 $";
 
     private static final Logger s_log = Logger.getLogger(DocIndexPage.class);
 

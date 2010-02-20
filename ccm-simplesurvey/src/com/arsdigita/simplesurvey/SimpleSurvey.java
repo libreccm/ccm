@@ -79,8 +79,8 @@ public class SimpleSurvey extends Application {
      * @return path name to the applications servlet/JSP
      */
     public String getServletPath() {
-        // sufficient if installed into its own web appl. context (ccm-simplesurvey)
-        // return "/files";
+        // If installed into its own web appl. context (ccm-simplesurvey)
+        // return "/files"; is sufficient.
         return "/ccm-simplesurvey/files";
     }
 

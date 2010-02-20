@@ -36,11 +36,8 @@ import com.arsdigita.util.Assert;
  *
  * @author <a href="mailto:pmarklun@arsdigita.com">Peter Marklund</a>
  * @version $Id: AdminSurveyTableModel.java 755 2005-09-02 13:42:47Z sskracic $
- *
  */
 public class AdminSurveyTableModel implements TableModel {
-
-    public static final String versionId = "$Id: AdminSurveyTableModel.java 755 2005-09-02 13:42:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:26:27 $";
 
     private SurveyCollection m_surveys;
     private Survey m_survey;

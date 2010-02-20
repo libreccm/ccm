@@ -24,11 +24,15 @@ import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.util.parameter.StringParameter;
 
 import java.io.InputStream;
-import java.io.IOException;
+// import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
 
+/**
+ * 
+ * 
+ */
 public class TermsConfig extends AbstractConfig {
     private static final Logger s_log = 
         Logger.getLogger(TermsConfig.class);
@@ -52,14 +56,26 @@ public class TermsConfig extends AbstractConfig {
         loadInfo();
     }
 
+    /**
+     * 
+     * @return
+     */
     InputStream getTraversalAdapters() {
         return (InputStream) get(m_adapters);
     }
     
+    /**
+     * 
+     * @return
+     */
     public String getDefaultDomainKey() {
         return (String)get(m_defaultDomain);
     }
     
+    /**
+     * 
+     * @return
+     */
     public Domain getDefaultDomain() {
         return Domain.retrieve(getDefaultDomainKey());
     }
