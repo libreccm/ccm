@@ -10,11 +10,12 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 
 import com.arsdigita.formbuilder.PersistentForm;
 
+import com.arsdigita.kernel.User;
 import java.util.Date;
 
 /**
- * A survey content type that represents a survey. This is
- * based on the simplesurvey application.
+ * A survey content type that represents a survey. This is partially based on
+ * the simplesurvey application and CT FormItem.
  *
  * @author Sören Bernstein
  * 
@@ -23,6 +24,8 @@ public class Survey extends ContentPage {
 
     /**  PDL property name for formSection */
     public static final String FORM = "form";
+    /**  PDL property name for surveyResponses */
+    public static final String RESPONSES = "responses";
     /**  PDL property name for startDate */
     public static final String START_DATE = "startDate";
     /**  PDL property name for endDate */
@@ -32,18 +35,17 @@ public class Survey extends ContentPage {
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Survey";
 
-/*
+    /*
     private static final SurveyConfig s_config = new SurveyConfig();
     static {
-	    s_config.load();
+    s_config.load();
     }
 
     public static final SurveyConfig getConfig()
     {
-	    return s_config;
+    return s_config;
     }
-*/
-    
+     */
     /**
      * Default constructor. This creates a new (empty) Survey.
      **/
@@ -99,17 +101,6 @@ public class Survey extends ContentPage {
     }
 
     /**
-     * For new content items, sets the associated content type if it
-     * has not been already set.
-     */
-    /*    @Override
-    public void beforeSave() {
-    super.beforeSave();
-
-    Assert.exists(getContentType(), ContentType.class);
-    }
-     */
-    /**
      * This will handle the mandatory FormSection. If there is no
      * FormSection set it will create an empty new form and assign it
      * to keep the db happy.
@@ -123,11 +114,13 @@ public class Survey extends ContentPage {
                 form.setAdminName(getName());
                 setAssociation(FORM, form);
             }
+
             /*
+            // Preset the responsesPublic
             if (getResponsesPublic() == null) {
-            setResponsesPublic(false);
+                setResponsesPublic(false);
             }
-             */
+            */
         }
 
         super.beforeSave();
@@ -166,39 +159,31 @@ public class Survey extends ContentPage {
         set(RESPONSES_PUBLIC, responsesPublic);
     }
 
-    /* Class methods *********************************************************/
-    public static Survey retrieve(BigDecimal id)
-            throws DataObjectNotFoundException {
-
-        Survey survey = new Survey(id);
-
-        return survey;
+    public SurveyResponse addResponse() {
+        SurveyResponse surveyResponse =  new SurveyResponse();
+        addResponse(surveyResponse);
+        return surveyResponse;
+    }
+    
+    protected void addResponse(SurveyResponse surveyResponse) {
+        add(RESPONSES, surveyResponse);
     }
 
-    public static Survey retrieve(DataObject obj) {
-        Survey survey = new Survey(obj);
-
-        return survey;
-    }
-    /*
     public SurveyResponseCollection getResponses() {
-    return SurveyResponse.retrieveBySurvey(this);
+        return new SurveyResponseCollection ((DataCollection) get(RESPONSES));
     }
 
-    public SurveyResponseCollection getUserResponses(User user) {
-    return SurveyResponse.retrieveBySurvey(this, user);
+    public SurveyResponseCollection getResponses(User user) {
+        return new SurveyResponseCollection ((DataCollection) get(RESPONSES), user);
     }
 
-    public boolean hasUserResponded(User user) {
-    SurveyResponseCollection responses = getUserResponses(user);
+    public boolean hasResponses() {
+        return !this.getResponses().isEmpty();
+    }
 
-    if (responses.next()) {
-    responses.close();
-    return true;
+    public boolean hasResponses(User user) {
+        return !this.getResponses(user).isEmpty();
     }
-    return false;
-    }
-     */
 
     /*
     public DataQuery getLabelDataQuery() {

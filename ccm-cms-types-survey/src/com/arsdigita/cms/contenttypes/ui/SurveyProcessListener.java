@@ -1,21 +1,3 @@
-/*
- * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
- */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.event.FormProcessListener;
@@ -46,6 +28,7 @@ import java.util.Iterator;
 
 import com.arsdigita.formbuilder.util.FormBuilderUtil;
 
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 
 import java.math.BigDecimal;
@@ -53,18 +36,18 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
- * The process lister that processes a survey response entered by a user.
+ * A process listener to save the responses from a user to the database.
  *
+ * @author Sören Bernstein
  */
-public class SurveyProcessListener
-        implements FormProcessListener {
+public class SurveyProcessListener implements FormProcessListener {
 
-    public static final String SURVEY_ID_NAME = "__ss_survey_id__";
-    public static final String RESPONSE_ID = "__ss_response_id__";
-    public static final BigDecimal THE_PUBLIC_USER = new BigDecimal(-200);
-    private static final String KNOWLEDGE_TEST = "knowledge_test";
-    protected RequestLocal m_persistentForm = new RequestLocal();
-    private RequestLocal m_nameQuestionMap = new RequestLocal();
+    public static final String SURVEY_ID = "SurveyID";
+//    public static final String RESPONSE_ID = "__ss_response_id__";
+//    public static final BigDecimal THE_PUBLIC_USER = new BigDecimal(-200);
+//    private static final String KNOWLEDGE_TEST = "knowledge_test";
+//    protected RequestLocal m_persistentForm = new RequestLocal();
+//    private RequestLocal m_nameQuestionMap = new RequestLocal();
     private RequestLocal m_response;
     private static org.apache.log4j.Logger s_log =
             Logger.getLogger(SurveyProcessListener.class.getName());
@@ -79,159 +62,147 @@ public class SurveyProcessListener
 
     public void process(FormSectionEvent event) {
 
+        Survey survey = null;
+        SurveyResponse surveyResponse = null;
+
+        // Get the form data
         FormData formData = event.getFormData();
-        PageState ps = event.getPageState();
 
-        BigDecimal surveyID = (BigDecimal) formData.get(SURVEY_ID_NAME);
-        BigDecimal responseID = (BigDecimal) formData.get(RESPONSE_ID);
-        m_response.set(ps, responseID);
+        // Read the needed information to create a new response and create
+        // a new instance of SurveyResponse to store this information
+        BigDecimal surveyID = (BigDecimal) formData.get(formData.getParameter(SURVEY_ID));
 
-        Survey survey = (Survey) FormBuilderUtil.instantiateObjectOneArg(Survey.class.getName(), surveyID);
-        SurveyResponse response = null;
         try {
-            response = (SurveyResponse) DomainObjectFactory.newInstance(new OID(SurveyResponse.class.getName(), responseID));
-        } catch (DataObjectNotFoundException ex) {
-            //	s_log.warn("Can't create this object" + responseID);
-        }
 
-        //Let's not save the data twice in the case of a double-click
-        if (response.questionsAnswered()) {
+            // Try to get the corresponding Survey object
+            survey = new Survey(surveyID);
+
+        } catch (DataObjectNotFoundException ex) {
+
+            // Strange, there is no survey with this id. Someone is messing aroound
+            s_log.warn("Can't find survey object with ID " + surveyID + ". Someone is messing around.");
+
+            // Abort processing
             return;
         }
 
-        m_persistentForm.set(ps, survey.getForm());
+        // Get the user
+        User user = (User) Kernel.getContext().getParty();
 
-        // Get the responding user
-        User user = KernelHelper.getCurrentUser(ps.getRequest());
+        // Create the new SurveyResponse object
+        surveyResponse = survey.addResponse();
 
-        // Use the generic user "The Public" if the user is not registered
-        if (user == null) {
-            try {
-                user = User.retrieve(THE_PUBLIC_USER);
-            } catch (DataObjectNotFoundException e) {
-                s_log.error("Public User does not exist.");
-            }
+
+
+        // Process the answers by iteration over the form widget parameters
+        Iterator parameterIterator = formData.getParameters().iterator();
+        while (parameterIterator.hasNext()) {
+
+            ParameterData parameterData = (ParameterData) parameterIterator.next();
+            addAnswer(surveyResponse, parameterData.getName(), parameterData.getValue());
+
         }
-
-        // Iterate over the widget parameters and insert the answers to the survey response
-        Iterator parameterIter = formData.getParameters().iterator();
-        while (parameterIter.hasNext()) {
-            s_log.warn("Found some formData");
-            ParameterData parameterData = (ParameterData) parameterIter.next();
-
-            String parameterName = (String) parameterData.getName();
-
-            Object parameterValue = parameterData.getValue();
-            if (parameterValue instanceof java.lang.String[]) {
-                // This is a multi-answer question - iterate over the
-                // answer values and add them one by one
-                String[] valueArray = (String[]) parameterValue;
-                for (int i = 0; i < valueArray.length; ++i) {
-//                    addAnswer(response, ps, valueArray[i], parameterName);
-
-                }
-            } else {
-                // Single answer question
-
-//                addAnswer(response, ps, parameterValue, parameterName);
-            }
-        }
-        // Save the survey response to the database
-        response.save();
-//        saveScore(survey, response);
     }
 
-/*
-    private void saveScore(Survey survey, SurveyResponse response) {
+    private void addAnswer(SurveyResponse surveyResponse, Object name, Object value) {
 
-        String query;
-        if (survey.getQuizType().equals(KNOWLEDGE_TEST)) {
-            query = "com.arsdigita.simplesurvey.saveScore";
+        // Test if value is a string array
+        if(value instanceof String[]) {
+            // This is a multi-answer question, so iterate over the answers
+            for (int i = 0; i < ((String[]) value).length; i++) {
+                addAnswer(surveyResponse, name, ((String[]) value)[i]);
+            }
         } else {
-            query = "com.arsdigita.simplesurvey.saveAssessmentScore";
+            // Create new SurveyAnswer object
+//            surveyResponse.addAnswer(,, (String) value);
         }
-        DataOperation dao = SessionManager.getSession().retrieveDataOperation(query);
-        dao.setParameter("responseID", response.getID());
-        dao.execute();
     }
-*/
-/*
+
+    /*
+    PageState ps = event.getPageState();
+
+    BigDecimal responseID = (BigDecimal) formData.get(RESPONSE_ID);
+    m_response.set(ps, responseID);
+
+    m_persistentForm.set(ps, survey.getForm());
+
+     */
+    /*
     private void addAnswer(SurveyResponse surveyResponse,
-            PageState ps,
-            Object parameterValue,
-            String parameterName) {
+    PageState ps,
+    Object parameterValue,
+    String parameterName) {
 
-        s_log.debug("formData name " + parameterName + " value " + parameterValue);
+    s_log.debug("formData name " + parameterName + " value " + parameterValue);
 
-        Question question = getQuestion(ps, parameterName);
+    Question question = getQuestion(ps, parameterName);
 
-        if (question != null) {
+    if (question != null) {
 
-            PersistentLabel persistentLabel = question.getLabel();
-            PersistentWidget persistentWidget = question.getWidget();
+    PersistentLabel persistentLabel = question.getLabel();
+    PersistentWidget persistentWidget = question.getWidget();
 
-            surveyResponse.addAnswer(persistentLabel, persistentWidget, getStringValue(parameterValue));
-        }
+    surveyResponse.addAnswer(persistentLabel, persistentWidget, getStringValue(parameterValue));
     }
-*/
-/*
+    }
+     */
+    /*
     private String getStringValue(Object parameterValue) {
 
-        return parameterValue == null ? "" : parameterValue.toString();
+    return parameterValue == null ? "" : parameterValue.toString();
     }
-*/
-/*
+     */
+    /*
     protected Question getQuestion(PageState ps, String parameterName) {
 
-        if (m_nameQuestionMap.get(ps) == null) {
+    if (m_nameQuestionMap.get(ps) == null) {
 
-            // Populate the parameter name label id map
-            synchronized (this) {
+    // Populate the parameter name label id map
+    synchronized (this) {
 
-                Map nameQuestionMap = new HashMap();
+    Map nameQuestionMap = new HashMap();
 
-                s_log.debug("initializing the parameter name persistent label map");
+    s_log.debug("initializing the parameter name persistent label map");
 
-                PersistentForm persistentForm = (PersistentForm) m_persistentForm.get(ps);
-                DataAssociationCursor componentCursor = persistentForm.getComponents();
-                PersistentLabel lastPersistentLabel = null;
-                while (componentCursor.next()) {
+    PersistentForm persistentForm = (PersistentForm) m_persistentForm.get(ps);
+    DataAssociationCursor componentCursor = persistentForm.getComponents();
+    PersistentLabel lastPersistentLabel = null;
+    while (componentCursor.next()) {
 
-                    PersistentComponent factory = (PersistentComponent) DomainObjectFactory.newInstance(componentCursor.getDataObject());
+    PersistentComponent factory = (PersistentComponent) DomainObjectFactory.newInstance(componentCursor.getDataObject());
 
-                    s_log.debug("iterating, component " + factory.toString());
+    s_log.debug("iterating, component " + factory.toString());
 
-                    // If this is a PersistentLabel save its id
-                    if (factory instanceof com.arsdigita.formbuilder.PersistentLabel) {
+    // If this is a PersistentLabel save its id
+    if (factory instanceof com.arsdigita.formbuilder.PersistentLabel) {
 
-                        lastPersistentLabel = (PersistentLabel) factory;
-                    }
-
-                    // Add the previous label id if this is a PersistentWidget
-                    if (factory instanceof com.arsdigita.formbuilder.PersistentWidget) {
-
-                        s_log.debug("adding to map " + ((PersistentWidget) factory).getParameterName() +
-                                " mapped to " + lastPersistentLabel);
-
-                        Question question = new Question(lastPersistentLabel,
-                                (PersistentWidget) factory);
-
-                        nameQuestionMap.put(((PersistentWidget) factory).getParameterName(), question);
-                    }
-                }
-
-                m_nameQuestionMap.set(ps, nameQuestionMap);
-            }
-        }
-
-        s_log.debug("fetching label for parameter name " + parameterName);
-
-        Question question = (Question) ((Map) m_nameQuestionMap.get(ps)).get(parameterName);
-
-        s_log.debug("returning " + question);
-
-        return question;
+    lastPersistentLabel = (PersistentLabel) factory;
     }
- */
 
+    // Add the previous label id if this is a PersistentWidget
+    if (factory instanceof com.arsdigita.formbuilder.PersistentWidget) {
+
+    s_log.debug("adding to map " + ((PersistentWidget) factory).getParameterName() +
+    " mapped to " + lastPersistentLabel);
+
+    Question question = new Question(lastPersistentLabel,
+    (PersistentWidget) factory);
+
+    nameQuestionMap.put(((PersistentWidget) factory).getParameterName(), question);
+    }
+    }
+
+    m_nameQuestionMap.set(ps, nameQuestionMap);
+    }
+    }
+
+    s_log.debug("fetching label for parameter name " + parameterName);
+
+    Question question = (Question) ((Map) m_nameQuestionMap.get(ps)).get(parameterName);
+
+    s_log.debug("returning " + question);
+
+    return question;
+    }
+     */
 }

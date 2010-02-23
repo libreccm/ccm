@@ -5,6 +5,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.formbuilder.PersistentLabel;
 import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.kernel.User;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
@@ -33,17 +34,28 @@ public class SurveyResponse extends ContentItem {
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.SurveyResponse";
 
     /**
-     * Default constructor. This creates a new (empty) Survey.
+     * Default constructor. This creates a new SurveyResponse. There can't be a
+     * SurveyResponse without a proper Survey object
+     *
+     * @param survey The <code>survey</code> for this SurveyResponse.
      **/
     public SurveyResponse() {
         this(BASE_DATA_OBJECT_TYPE);
+
+        // Save the date
+        setEntryDate();
+
+        // Save the corresponding survey
+//        setSurvey(survey);
+
+        // XXX hack - see pdl file
+//        set(USER + "ID", user.getID());
     }
 
     /**
      * Constructor. The contained <code>DataObject</code> is retrieved
      * from the persistent storage mechanism with an <code>OID</code>
-     * specified by <i>id</i> and
-     * <code>Address.BASE_DATA_OBJECT_TYPE</code>.
+     * specified by <i>id</i>.
      *
      * @param id The <code>id</code> for the retrieved
      * <code>DataObject</code>.
@@ -87,35 +99,37 @@ public class SurveyResponse extends ContentItem {
     }
 
     /* accessors *****************************************************/
-    public void addAnswer(PersistentLabel label, PersistentWidget widget, String value) {
-
-        SurveyAnswer answer = SurveyAnswer.create(label, widget, value);
-        add(ANSWERS, answer);
+    private void setEntryDate() {
+        set(ENTRY_DATE, new Date());
     }
 
     public Date getEntryDate() {
         return (Date) get(ENTRY_DATE);
     }
 
-    /* Class methods **********************************************************/
-    public static SurveyResponse create(Survey survey, User user) {
-        SurveyResponse response = new SurveyResponse();
-        response.setup(survey, user);
-        return response;
-    }
-
-    protected void setup(Survey survey, User user) {
-        set(ENTRY_DATE, new Date());
-
-        // XXX hack - see pdl file
-        set(USER + "ID", user.getID());
+    private void setSurvey(Survey survey) {
+//        set(SURVEY, survey);
         set(SURVEY + "ID", survey.getID());
     }
 
-    public static SurveyResponse retrieve(DataObject obj) {
-        return new SurveyResponse(obj);
+    public Survey getSurvey() {
+        return (Survey) get(SURVEY);
     }
 
+    public void addAnswer(PersistentLabel label, PersistentWidget widget, String value) {
+        SurveyAnswer answer = SurveyAnswer.create(label, widget, value);
+        add(ANSWERS, answer);
+    }
+
+    public SurveyAnswerCollection getAnswers() {
+        return new SurveyAnswerCollection ((DataCollection) get(ANSWERS));
+    }
+
+    public boolean hasAnswers() {
+        return !this.getAnswers().isEmpty();
+    }
+
+    /* Class methods **********************************************************/
     /*
     public static SurveyResponseCollection retrieveBySurvey(Survey survey) {
         DataCollection responses =
