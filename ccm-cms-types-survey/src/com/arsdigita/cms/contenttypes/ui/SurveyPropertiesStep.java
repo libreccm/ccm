@@ -62,10 +62,6 @@ public class SurveyPropertiesStep extends SimpleEditStep {
         /* Add the SimpleEditStep to the segmented panel */
         segmentedPanel.addSegment(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.basic_properties").localize()), basicProperties);
 
-        // Add the ui for attaching a FormSection
-//        SurveyPersonPropertiesStep personProperties = new SurveyPersonPropertiesStep(itemModel, parent);
-//        segmentedPanel.addSegment(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.person").localize()), personProperties);
-
         /* Sets the composed segmentedPanel as display component */
         setDisplayComponent(segmentedPanel);
     }
@@ -97,6 +93,23 @@ public class SurveyPropertiesStep extends SimpleEditStep {
                 Survey survey = (Survey) obj;
                 if (survey.getResponsesPublic() != null) {
                     if (survey.getResponsesPublic().booleanValue() == true) {
+                        return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize();
+                    } else {
+                        return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize();
+                    }
+                } else {
+                    return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                }
+            }
+        });
+
+        /* Display the Status of ResponsesPublic in localized form */
+        sheet.add(SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_anonym"), Survey.RESPONSES_ANONYM, new DomainObjectPropertySheet.AttributeFormatter() {
+
+            public String format(DomainObject obj, String attribute, PageState state) {
+                Survey survey = (Survey) obj;
+                if (survey.getResponsesAnonym() != null) {
+                    if (survey.getResponsesAnonym().booleanValue() == true) {
                         return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize();
                     } else {
                         return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize();

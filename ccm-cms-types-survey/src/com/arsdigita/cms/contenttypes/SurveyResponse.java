@@ -2,8 +2,6 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.formbuilder.PersistentLabel;
-import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -39,17 +37,14 @@ public class SurveyResponse extends ContentItem {
      *
      * @param survey The <code>survey</code> for this SurveyResponse.
      **/
-    public SurveyResponse() {
+    public SurveyResponse(User user) {
         this(BASE_DATA_OBJECT_TYPE);
 
         // Save the date
         setEntryDate();
 
-        // Save the corresponding survey
-//        setSurvey(survey);
-
-        // XXX hack - see pdl file
-//        set(USER + "ID", user.getID());
+        // Save the user, if any
+        setUser(user);
     }
 
     /**
@@ -107,63 +102,33 @@ public class SurveyResponse extends ContentItem {
         return (Date) get(ENTRY_DATE);
     }
 
-    private void setSurvey(Survey survey) {
-//        set(SURVEY, survey);
-        set(SURVEY + "ID", survey.getID());
+    private void setUser(User user) {
+        set(USER, user);
     }
 
+    public User getUser() {
+        return (User) get(USER);
+    }
+
+//    private void setSurvey(Survey survey) {
+//        set(SURVEY, survey);
+//        set(SURVEY + "ID", survey.getID());
+//    }
     public Survey getSurvey() {
         return (Survey) get(SURVEY);
     }
 
-    public void addAnswer(PersistentLabel label, PersistentWidget widget, String value) {
-        SurveyAnswer answer = SurveyAnswer.create(label, widget, value);
+    public void addAnswer(int order, String key, String value) {
+        SurveyAnswer answer = new SurveyAnswer(order, key, value);
         add(ANSWERS, answer);
     }
 
     public SurveyAnswerCollection getAnswers() {
-        return new SurveyAnswerCollection ((DataCollection) get(ANSWERS));
+        return new SurveyAnswerCollection((DataCollection) get(ANSWERS));
     }
 
+    /* Methods **************************************************/
     public boolean hasAnswers() {
         return !this.getAnswers().isEmpty();
-    }
-
-    /* Class methods **********************************************************/
-    /*
-    public static SurveyResponseCollection retrieveBySurvey(Survey survey) {
-        DataCollection responses =
-                SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
-
-        responses.addEqualsFilter(SURVEY + "ID",
-                survey.getID());
-
-        return new SurveyResponseCollection(responses);
-    }
-
-    public static SurveyResponseCollection retrieveBySurvey(Survey survey, User user) {
-        SurveyResponseCollection responses = retrieveBySurvey(survey);
-
-        responses.addEqualsFilter(USER + "ID",
-                user.getID());
-
-        return responses;
-    }
-*/
-
-    public boolean questionsAnswered() {
-
-        // Returns true of questions have been answered on this response
-        BigDecimal responseID = this.getID();
-//        DataQuery dq = SessionManager.getSession().retrieveQuery("com.arsdigita.simplesurvey.questionsAnswered");
-//        dq.setParameter("responseID", responseID);
-//        dq.next();
-//        Boolean questionsAnswered = (Boolean) dq.get(QUESTIONS_ANSWERED);
-//        dq.close();
-//        return questionsAnswered.booleanValue();
-
-// HACK: Brauche ich diese Funktion?
-        return true;
-
     }
 }

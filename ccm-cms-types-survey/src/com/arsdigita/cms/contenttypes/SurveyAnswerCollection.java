@@ -16,17 +16,17 @@ public class SurveyAnswerCollection extends DomainCollection {
     public SurveyAnswerCollection(DataCollection dataCollection) {
         super(dataCollection);
 
-//        m_dataCollection.addOrder(ORDER);
+        m_dataCollection.addOrder(SurveyAnswer.QUESTION_NUMBER);
     }
 
-    // Get the label
-    public String getLabel() {
-        return (String) m_dataCollection.get(SurveyAnswer.LABEL);
+    // Get the order
+    public int getOrder() {
+        return ((Integer) m_dataCollection.get(SurveyAnswer.QUESTION_NUMBER)).intValue();
     }
 
-    // Get the widget
-    public String getWidget() {
-        return (String) m_dataCollection.get(SurveyAnswer.WIDGET);
+    // Get the key
+    public String getKey() {
+        return (String) m_dataCollection.get(SurveyAnswer.KEY);
     }
 
     // Get the value

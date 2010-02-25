@@ -8,6 +8,7 @@ object type Survey extends ContentPage {
     Date[0..1]                     startDate = ct_surveys.start_date       DATE;
     Date[0..1]                       endDate = ct_surveys.end_date         DATE;
     Boolean[0..1]            responsesPublic = ct_surveys.responses_public;
+    Boolean[0..1]            responsesAnonym = ct_surveys.responses_anonym;
     component FormSection[1..1]         form = join ct_surveys.form_id
                                                  to bebop_form_sections.form_section_id;
     component SurveyResponse[0..n] responses = join ct_surveys.survey_id
@@ -32,11 +33,9 @@ object type SurveyResponse extends ContentItem {
 
 object type SurveyAnswer extends ContentItem {
 
-    Component[1..1]  label = join ct_surveys_answers.label_id
-                               to bebop_components.component_id;
-    Component[1..1] widget = join ct_surveys_answers.widget_id
-                               to bebop_components.component_id;
-    String[0..1]     value = ct_surveys_answers.value           VARCHAR(4000);
+    BigDecimal[1..1] questionNumber = ct_surveys_answers.question_number INTEGER;
+    String[1..1]                key = ct_surveys_answers.key             VARCHAR(4000);
+    String[0..1]              value = ct_surveys_answers.value           VARCHAR(4000);
 
     reference key (ct_surveys_answers.answer_id);
 }

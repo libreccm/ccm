@@ -21,21 +21,24 @@ import java.math.BigDecimal;
 public class SurveyAnswer extends ContentItem {
 
     /** PDL property name for label */
-    public static final String LABEL = "label";
+    public static final String QUESTION_NUMBER = "questionNumber";
     /** PDL property name for widget */
-    public static final String WIDGET = "widget";
+    public static final String KEY = "key";
     /** PDL property name for value */
     public static final String VALUE = "value";
-    /** PDL property name for response */
-    public static final String RESPONSE = "response";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.SurveyAnswer";
 
     /**
      * Default constructor. This creates a new (empty) Survey.
      **/
-    public SurveyAnswer() {
+    public SurveyAnswer(int order, String key, String value) {
         this(BASE_DATA_OBJECT_TYPE);
+
+        // Set the data
+        setOrder(order);
+        setKey(key);
+        setValue(value);
     }
 
     /**
@@ -86,26 +89,28 @@ public class SurveyAnswer extends ContentItem {
     }
 
     /* accessors *****************************************************/
-
-    /* Class methods ********/
-    public static SurveyAnswer create(PersistentLabel label,
-            PersistentWidget widget,
-            String value) {
-        SurveyAnswer answer = new SurveyAnswer();
-        answer.setup(label, widget, value);
-        return answer;
+    private void setOrder(int order) {
+        set(QUESTION_NUMBER, order);
     }
 
-    protected void setup(PersistentLabel label,
-            PersistentWidget widget,
-            String value) {
-        try {
-            set(ID, Sequences.getNextValue("ss_answers_seq"));
-        } catch (java.sql.SQLException e) {
-            throw new com.arsdigita.util.UncheckedWrapperException(e);
-        }
-        set(LABEL, label);
-        set(WIDGET, widget);
+    public int getOrder() {
+        return ((Integer) get(QUESTION_NUMBER)).intValue();
+    }
+
+    private void setKey(String key) {
+        set(KEY, key);
+    }
+
+    public String getKey() {
+        return (String) get(KEY);
+    }
+
+    private void setValue(String value) {
         set(VALUE, value);
     }
+
+    public String getValue() {
+        return (String) get(VALUE);
+    }
+    
 }

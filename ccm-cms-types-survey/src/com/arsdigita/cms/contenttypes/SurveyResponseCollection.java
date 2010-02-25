@@ -24,7 +24,7 @@ public class SurveyResponseCollection extends DomainCollection {
     public SurveyResponseCollection(DataCollection dataCollection, User user) {
         this(dataCollection);
 
-//        m_dataCollection.addFilter(SurveyResponse.USER);
+        m_dataCollection.addEqualsFilter(SurveyResponse.USER, user);
     }
 
     // Get the entry date

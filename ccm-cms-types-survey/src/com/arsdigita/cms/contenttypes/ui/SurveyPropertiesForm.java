@@ -35,8 +35,6 @@ import com.arsdigita.bebop.form.Option;
 
 
 import com.arsdigita.bebop.parameters.BooleanParameter;
-import com.arsdigita.bebop.parameters.DateParameter;
-import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
@@ -53,6 +51,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
     public static final String START_DATE = Survey.START_DATE;
     public static final String END_DATE = Survey.END_DATE;
     public static final String RESPONSES_PUBLIC = Survey.RESPONSES_PUBLIC;
+    public static final String RESPONSES_ANONYM = Survey.RESPONSES_ANONYM;
     /**
      * ID of the form
      */
@@ -109,6 +108,16 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         responsesPublic.addOption(rp2);
         add(responsesPublic);
 
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_anonym").localize()));
+        ParameterModel responsesAnonymParam = new BooleanParameter(RESPONSES_ANONYM);
+        responsesAnonymParam.addParameterListener(new NotNullValidationListener());
+        RadioGroup responsesAnonym = new RadioGroup("responsesAnonym");
+        Option ra1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
+        Option ra2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
+        responsesAnonym.addOption(ra1);
+        responsesAnonym.addOption(ra2);
+        add(responsesAnonym);
+
     }
 
     @Override
@@ -135,6 +144,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
             survey.setStartDate((java.util.Date) data.get(START_DATE));
             survey.setEndDate((java.util.Date) data.get(END_DATE));
             survey.setResponsesPublic(new Boolean((String) data.get(RESPONSES_PUBLIC)));
+            survey.setResponsesAnonym(new Boolean((String) data.get(RESPONSES_ANONYM)));
 
             survey.save();
         }

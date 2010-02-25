@@ -1,6 +1,9 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.contenttypes.ui.SurveyPersistentProcessListener;
+import com.arsdigita.cms.contenttypes.ui.SurveyProcessListener;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
@@ -10,6 +13,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 
 import com.arsdigita.formbuilder.PersistentForm;
 
+import com.arsdigita.formbuilder.PersistentHidden;
 import com.arsdigita.kernel.User;
 import java.util.Date;
 
@@ -23,6 +27,8 @@ import java.util.Date;
 public class Survey extends ContentPage {
 
     /**  PDL property name for formSection */
+    public static final String SURVEY_ID = "survey_id";
+    /**  PDL property name for formSection */
     public static final String FORM = "form";
     /**  PDL property name for surveyResponses */
     public static final String RESPONSES = "responses";
@@ -32,6 +38,8 @@ public class Survey extends ContentPage {
     public static final String END_DATE = "endDate";
     /**  PDL property name for responsesPublic */
     public static final String RESPONSES_PUBLIC = "responsesPublic";
+    /**  PDL property name for responsesAnonym */
+    public static final String RESPONSES_ANONYM = "responsesAnonym";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Survey";
 
@@ -121,6 +129,12 @@ public class Survey extends ContentPage {
                 setResponsesPublic(false);
             }
             */
+            /*
+            // Preset the responsesAnonym
+            if (getResponsesAnonym() == null) {
+                setResponsesAnonym(false);
+            }
+            */
         }
 
         super.beforeSave();
@@ -128,11 +142,19 @@ public class Survey extends ContentPage {
 
     /* accessors *****************************************************/
     public void setForm(PersistentForm persistentForm) {
+//        persistentForm.addProcessListener(new SurveyPersistentProcessListener());
+//        PersistentHidden survey_id = PersistentHidden.create(SURVEY_ID);
+//        survey_id.setDefaultValue(getSurveyID());
+//        persistentForm.addComponent(survey_id);
         set(FORM, persistentForm);
     }
 
     public PersistentForm getForm() {
         return new PersistentForm((DataObject) get(FORM));
+    }
+
+    public BigDecimal getSurveyID() {
+        return (BigDecimal) get(SURVEY_ID);
     }
 
     public void setStartDate(Date startDate) {
@@ -159,8 +181,16 @@ public class Survey extends ContentPage {
         set(RESPONSES_PUBLIC, responsesPublic);
     }
 
-    public SurveyResponse addResponse() {
-        SurveyResponse surveyResponse =  new SurveyResponse();
+    public Boolean getResponsesAnonym() {
+        return (Boolean) get(RESPONSES_ANONYM);
+    }
+
+    public void setResponsesAnonym(Boolean responsesAnonym) {
+        set(RESPONSES_ANONYM, responsesAnonym);
+    }
+
+    public SurveyResponse addResponse(User user) {
+        SurveyResponse surveyResponse =  new SurveyResponse(user);
         addResponse(surveyResponse);
         return surveyResponse;
     }
@@ -177,6 +207,7 @@ public class Survey extends ContentPage {
         return new SurveyResponseCollection ((DataCollection) get(RESPONSES), user);
     }
 
+    /* methods ****************************************************************/
     public boolean hasResponses() {
         return !this.getResponses().isEmpty();
     }
@@ -185,23 +216,11 @@ public class Survey extends ContentPage {
         return !this.getResponses(user).isEmpty();
     }
 
-    /*
-    public DataQuery getLabelDataQuery() {
-    String queryName = "com.arsdigita.simplesurvey.GetFormLabels";
-    DataQuery dataQuery =
-    SessionManager.getSession().retrieveQuery(queryName);
-    dataQuery.setParameter("surveyID", getID());
-
-    return dataQuery;
+    public boolean isActive() {
+        Date currentDate = new Date();
+        return currentDate.compareTo(getStartDate()) > 0 && currentDate.compareTo(getEndDate()) > 0;
     }
 
-    public boolean isLive() {
-    Date currentDate = new Date();
-
-    return getStartDate().compareTo(currentDate) < 0 &&
-    getEndDate().compareTo(currentDate) > 0;
-    }
-     */
     /*
      * Retrieves most recent survey that isn't completed
      */
