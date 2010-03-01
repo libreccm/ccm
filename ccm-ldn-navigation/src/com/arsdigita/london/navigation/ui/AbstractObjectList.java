@@ -19,6 +19,7 @@
 
 package com.arsdigita.london.navigation.ui;
 
+import com.arsdigita.categorization.Category;
 import com.arsdigita.london.navigation.DataCollectionDefinition;
 import com.arsdigita.london.navigation.DataCollectionRenderer;
 
@@ -96,6 +97,14 @@ public abstract class AbstractObjectList
         // Limit list to objects in the negotiated language
         if (objects != null && objects.size() > 0) {
             String locale = com.arsdigita.dispatcher.DispatcherHelper.getRequestContext().getLocale().getLanguage();
+
+            // if supported lang doesn't contain locale
+            if(!Category.getConfig().hasLanguage(locale)) {
+
+                // use default language instead
+                locale = Category.getConfig().getDefaultLanguage();
+            }
+
             objects.addEqualsFilter("language", locale);
         }
         // Quasimodo: End
