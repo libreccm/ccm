@@ -1,10 +1,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.db.Sequences;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.formbuilder.PersistentLabel;
-import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
@@ -32,11 +29,14 @@ public class SurveyAnswer extends ContentItem {
     /**
      * Default constructor. This creates a new (empty) Survey.
      **/
-    public SurveyAnswer(int order, String key, String value) {
+    public SurveyAnswer(BigDecimal surveyResponseID, int questNum, String key, String value) {
         this(BASE_DATA_OBJECT_TYPE);
 
+        // Set unneeded but mandatory fields from content item
+        setName("SurveyAnswer-for-SurveyRepsonse-" + surveyResponseID);
+
         // Set the data
-        setOrder(order);
+        setQuestionNumber(questNum);
         setKey(key);
         setValue(value);
     }
@@ -89,11 +89,11 @@ public class SurveyAnswer extends ContentItem {
     }
 
     /* accessors *****************************************************/
-    private void setOrder(int order) {
-        set(QUESTION_NUMBER, order);
+    private void setQuestionNumber(int questNum) {
+        set(QUESTION_NUMBER, questNum);
     }
 
-    public int getOrder() {
+    public int getQuestionNumber() {
         return ((Integer) get(QUESTION_NUMBER)).intValue();
     }
 
@@ -112,5 +112,4 @@ public class SurveyAnswer extends ContentItem {
     public String getValue() {
         return (String) get(VALUE);
     }
-    
 }

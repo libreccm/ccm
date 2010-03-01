@@ -21,7 +21,7 @@ object type SurveyResponse extends ContentItem {
     Date[1..1]                 entryDate = ct_surveys_responses.entry_date       DATE;
     User[0..1]                      user = join ct_surveys_responses.user_id
                                              to users.user_id;
-    component SurveyAnswer[1..n] answers = join ct_surveys_responses.response_id
+    component SurveyAnswer[0..n] answers = join ct_surveys_responses.response_id
                                              to ct_surveys_answers.response_id;
 
     // XXX hack to allow us to filter a data query
@@ -33,9 +33,9 @@ object type SurveyResponse extends ContentItem {
 
 object type SurveyAnswer extends ContentItem {
 
-    BigDecimal[1..1] questionNumber = ct_surveys_answers.question_number INTEGER;
-    String[1..1]                key = ct_surveys_answers.key             VARCHAR(4000);
-    String[0..1]              value = ct_surveys_answers.value           VARCHAR(4000);
+    Integer[1..1] questionNumber = ct_surveys_answers.question_number INTEGER;
+    String[1..1]             key = ct_surveys_answers.key             VARCHAR(4000);
+    String[0..1]           value = ct_surveys_answers.value           VARCHAR(4000);
 
     reference key (ct_surveys_answers.answer_id);
 }

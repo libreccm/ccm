@@ -20,8 +20,6 @@ import java.util.Date;
  */
 public class SurveyResponse extends ContentItem {
 
-    /** PDL property name for survey */
-    public static final String SURVEY = "survey";
     /** PDL property name for user */
     public static final String USER = "user";
     /** PDL property name for entryDate */
@@ -37,14 +35,22 @@ public class SurveyResponse extends ContentItem {
      *
      * @param survey The <code>survey</code> for this SurveyResponse.
      **/
-    public SurveyResponse(User user) {
+    public SurveyResponse(BigDecimal surveyID, User user) {
         this(BASE_DATA_OBJECT_TYPE);
+
+        // Set unneeded but manadatory fields from ContentItem
+        setName("SurveyResponse-for-Survey-" + surveyID);
 
         // Save the date
         setEntryDate();
 
         // Save the user, if any
         setUser(user);
+
+        // Save, so I can add answers afterwards. If I don't save here, the
+        // persistence can't save this and the SurveyAnswers because of missing
+        // arguments.
+        save();
     }
 
     /**
@@ -94,6 +100,10 @@ public class SurveyResponse extends ContentItem {
     }
 
     /* accessors *****************************************************/
+    public BigDecimal getSurveyResponseID() {
+        return getID();
+    }
+
     private void setEntryDate() {
         set(ENTRY_DATE, new Date());
     }
@@ -110,16 +120,8 @@ public class SurveyResponse extends ContentItem {
         return (User) get(USER);
     }
 
-//    private void setSurvey(Survey survey) {
-//        set(SURVEY, survey);
-//        set(SURVEY + "ID", survey.getID());
-//    }
-    public Survey getSurvey() {
-        return (Survey) get(SURVEY);
-    }
-
     public void addAnswer(int order, String key, String value) {
-        SurveyAnswer answer = new SurveyAnswer(order, key, value);
+        SurveyAnswer answer = new SurveyAnswer(getSurveyResponseID(), order, key, value);
         add(ANSWERS, answer);
     }
 

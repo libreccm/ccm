@@ -55,7 +55,7 @@ public class SurveyProcessListener implements FormProcessListener {
 
         // Read the needed information to create a new response and create
         // a new instance of SurveyResponse to store this information
-        BigDecimal surveyID = (BigDecimal) formData.get(formData.getParameter(SURVEY_ID));
+        BigDecimal surveyID = new BigDecimal((String) formData.getParameter(SURVEY_ID).getValue());
 
         try {
 
@@ -72,7 +72,7 @@ public class SurveyProcessListener implements FormProcessListener {
         }
 
         // If this survey isn't anonymous
-        if(!survey.getResponsesAnonym()) {
+        if (!survey.getResponsesAnonym()) {
 
             // Get the current user
             user = (User) Kernel.getContext().getParty();
@@ -81,29 +81,36 @@ public class SurveyProcessListener implements FormProcessListener {
         // Create the new SurveyResponse object
         surveyResponse = survey.addResponse(user);
 
-
-
         // Process the answers by iteration over the form widget parameters
         Iterator parameterIterator = formData.getParameters().iterator();
         while (parameterIterator.hasNext()) {
 
             ParameterData parameterData = (ParameterData) parameterIterator.next();
-            addAnswer(surveyResponse, ++numQuestions, parameterData.getName(), parameterData.getValue());
+            String parameterName = parameterData.getName().toString();
+
+            // Skip some unneeded Parameters, p.ex. submit button, survey_id
+            if (parameterName.startsWith("submit") ||
+                    parameterName.startsWith(SURVEY_ID) ||
+                    parameterName.startsWith("form.")) {
+                continue;
+            }
+
+            addAnswer(surveyResponse, ++numQuestions, parameterName, parameterData.getValue());
 
         }
     }
 
-    private void addAnswer(SurveyResponse surveyResponse, int questionNumber, Object name, Object value) {
+    private void addAnswer(SurveyResponse surveyResponse, int questionNumber, String name, Object value) {
 
         // Test if value is a string array
-        if(value instanceof String[]) {
+        if (value instanceof String[]) {
             // This is a multi-answer question, so iterate over the answers
             for (int i = 0; i < ((String[]) value).length; i++) {
                 addAnswer(surveyResponse, questionNumber, name, ((String[]) value)[i]);
             }
         } else {
             // Create new SurveyAnswer object
-            surveyResponse.addAnswer(questionNumber, (String) name, (String) value);
+            surveyResponse.addAnswer(questionNumber, name, (String) value);
         }
     }
 }
