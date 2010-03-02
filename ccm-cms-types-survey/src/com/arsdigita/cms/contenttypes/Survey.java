@@ -12,8 +12,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.CustomCopy;
 import com.arsdigita.cms.ItemCopier;
-import com.arsdigita.cms.contenttypes.ui.SurveyPersistentProcessListener;
-import com.arsdigita.cms.contenttypes.ui.SurveyPersistentProcessListener;
+
 import com.arsdigita.cms.contenttypes.ui.SurveyProcessListener;
 import com.arsdigita.cms.contenttypes.ui.SurveyProcessListener;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
@@ -68,18 +67,18 @@ public class Survey extends ContentPage implements XMLGenerator {
     public static final String RESPONSES_ANONYM = "responsesAnonym";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Survey";
-
-    /*
+    
+    /* Config */
     private static final SurveyConfig s_config = new SurveyConfig();
+
     static {
-    s_config.load();
+        s_config.load();
     }
 
-    public static final SurveyConfig getConfig()
-    {
-    return s_config;
+    public static final SurveyConfig getConfig() {
+        return s_config;
     }
-     */
+
     /**
      * Default constructor. This creates a new (empty) Survey.
      **/
@@ -136,7 +135,7 @@ public class Survey extends ContentPage implements XMLGenerator {
 
     /**
      * This will handle the mandatory FormSection. If there is no
-     * FormSection set it will create an empty new form and assign it
+     * FormSection set it will create an empty new pForm and assign it
      * to keep the db happy.
      */
     @Override
@@ -151,11 +150,11 @@ public class Survey extends ContentPage implements XMLGenerator {
 
             // Preset the responsesPublic
             if (getResponsesPublic() == null) {
-                setResponsesPublic(false);
+                setResponsesPublic(getConfig().getShowResultsPublic());
             }
             // Preset the responsesAnonym
             if (getResponsesAnonym() == null) {
-                setResponsesAnonym(false);
+                setResponsesAnonym(getConfig().getAnonymSurvey());
             }
         }
 
@@ -168,9 +167,10 @@ public class Survey extends ContentPage implements XMLGenerator {
             Property property,
             ItemCopier copier) {
         if (property.getName().equals(FORM)) {
-            PersistentForm pForm = ((Survey) src).getForm();
+//            PersistentForm pForm = ((Survey) src).getForm();
+            PersistentForm pForm = (new FormCopier()).copyForm(((Survey) src).getForm());
 
-            // Add hideden field with survey id
+            // Add hidden field with survey id
             PersistentHidden survey_id = PersistentHidden.create(SURVEY_ID);
             survey_id.setDefaultValue(((Survey) src).getSurveyID().toString());
             pForm.addComponent(survey_id);
@@ -178,7 +178,7 @@ public class Survey extends ContentPage implements XMLGenerator {
             // Add a submit button
             PersistentSubmit submit = PersistentSubmit.create("submit");
             pForm.addComponent(submit);
-            setAssociation(FORM, (new FormCopier()).copyForm(pForm));
+            setAssociation(FORM, pForm);
             return true;
         }
 
@@ -260,8 +260,8 @@ public class Survey extends ContentPage implements XMLGenerator {
 
     public void generateXML(PageState state, Element parent, String useContext) {
 
-        PersistentForm form = getForm();
-        Component c = instantiateForm(form, "itemAdminSummary".equals(useContext));
+        PersistentForm pForm = getForm();
+        Component c = instantiateForm(pForm, "itemAdminSummary".equals(useContext));
 
         // Fake the page context for the item, since we
         // have no access to the real page context.
@@ -277,7 +277,7 @@ public class Survey extends ContentPage implements XMLGenerator {
 //                        state.getRequest()), state.getResponse());
 //            } else {
             // Really serving the user page, so need the params when
-            // processing the form
+            // processing the pForm
             fake = p.process(state.getRequest(), state.getResponse());
 //            }
         } catch (Exception e) {
@@ -290,8 +290,8 @@ public class Survey extends ContentPage implements XMLGenerator {
 
         // Simply embed the bebop xml as a child of the cms:item tag
         Element element = parent.newChildElement("cms:item", CMS.CMS_XML_NS);
-//        generateXMLBody(fake, element, form);
-        String action = form.getAction();
+//        generateXMLBody(fake, element, pForm);
+        String action = pForm.getAction();
         if (action == null) {
             final URL requestURL = Web.getContext().getRequestURL();
 
@@ -313,7 +313,7 @@ public class Survey extends ContentPage implements XMLGenerator {
 
         renderer.walk(this, SimpleXMLGenerator.ADAPTER_CONTEXT);
 
-        // then, if the component is actually a form, we need
+        // then, if the component is actually a pForm, we need
         // to print out any possible errors
         // Ideally we could do this as part of the "walk" but for now
         // that does not work because we don't pass in the page state
@@ -330,9 +330,9 @@ public class Survey extends ContentPage implements XMLGenerator {
 //            infoTraversal.preorder(f);
 //        }
 
-        // we need to generate the state so that it can be part of the form
-        // and correctly included when the form is submitted.  We could
-        // do this by iterating through the form data but it does not
+        // we need to generate the state so that it can be part of the pForm
+        // and correctly included when the pForm is submitted.  We could
+        // do this by iterating through the pForm data but it does not
         // seem like a good idea to just cut and paste the code out
         // of the PageState class
         fake.setControlEvent(c);
