@@ -195,7 +195,7 @@ public class VersioningMetadata {
                 return ((ObjectTypeNd) parent).getQualifiedName();
             }
 
-            Assert.truth(parent instanceof AssociationNd,
+            Assert.isTrue(parent instanceof AssociationNd,
                          "parent instanceof AssociationNd");
             AssociationNd assoc = (AssociationNd) parent;
 

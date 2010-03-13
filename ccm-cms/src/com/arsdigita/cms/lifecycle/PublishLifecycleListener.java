@@ -51,7 +51,7 @@ public class PublishLifecycleListener implements LifecycleListener {
         final ContentItem item = getContentItem(event.getOID());
 
         if (Assert.isEnabled()) {
-            Assert.falsity(item instanceof ContentBundle,
+            Assert.isFalse(item instanceof ContentBundle,
                            "Content bundles cannot be published");
         }
 
@@ -66,7 +66,7 @@ public class PublishLifecycleListener implements LifecycleListener {
             pending = master.getPublicVersion();
 
             if (Assert.isEnabled()) {
-                Assert.equal(ContentItem.PENDING, pending.getVersion());
+                Assert.isEqual(ContentItem.PENDING, pending.getVersion());
             }
         } else {
             // Item is already live or is pending.
@@ -74,8 +74,8 @@ public class PublishLifecycleListener implements LifecycleListener {
             pending = item;
             master = pending.getDraftVersion();
 
-            Assert.unequal(master, pending);
-            Assert.equal(ContentItem.DRAFT, master.getVersion());
+            Assert.isNotEqual(master, pending);
+            Assert.isEqual(ContentItem.DRAFT, master.getVersion());
         }
 
         master.promotePendingVersion(pending);

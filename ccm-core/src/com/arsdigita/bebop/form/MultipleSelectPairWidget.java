@@ -512,7 +512,7 @@ public class MultipleSelectPairWidget extends FormStep {
             String[] addOptionsForHidden = EMPTY_STRING_ARRAY;
             String[] removeOptionsForHidden = EMPTY_STRING_ARRAY;
 
-            Assert.assertNotNull(m_addSelectDataSource,
+            Assert.exists(m_addSelectDataSource,
                                  "You must provide some options for the " +
                                  "user to choose!");
 

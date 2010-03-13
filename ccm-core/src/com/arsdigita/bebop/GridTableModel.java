@@ -35,11 +35,11 @@ import java.util.ArrayList;
  *
  * The extraneous cells in the table are filled
  * with <code>GridTableModel.PLACEHOLDER</code>.
+ *
+ * @version $Id: GridTableModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class GridTableModel implements TableModel {
-
-    public static final String versionId = "$Id: GridTableModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ListModel m_items;
     private int m_colHeight, m_cols, m_size, m_index;

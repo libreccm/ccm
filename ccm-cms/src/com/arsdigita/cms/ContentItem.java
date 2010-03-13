@@ -1054,7 +1054,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
 
         if (Assert.isEnabled()) {
-            Assert.truth(version == null || LIVE.equals(version.getVersion()),
+            Assert.isTrue(version == null || LIVE.equals(version.getVersion()),
                          "Item version " + version + " must be null or " +
                          "the live version");
         }
@@ -1195,7 +1195,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
 
         if (Assert.isEnabled()) {
             Assert.exists(pending, ContentItem.class);
-            Assert.truth(PENDING.equals(pending.getVersion()) ||
+            Assert.isTrue(PENDING.equals(pending.getVersion()) ||
                          LIVE.equals(pending.getVersion()),
                          "The new pending item must be pending or live; " +
                          "instead it is " + pending.getVersion());
@@ -1273,7 +1273,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         applyTag( "Republished" );
         Versions.suspendVersioning();
 
-        Assert.truth( isLive(), "Attempt to republish non live item " + getOID() );
+        Assert.isTrue( isLive(), "Attempt to republish non live item " + getOID() );
 
         Lifecycle cycle = getLifecycle();
         Assert.exists( cycle, Lifecycle.class );
@@ -1936,21 +1936,21 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * Assert that this item is a draft version
      */
     public final void assertDraft() {
-        Assert.equal(DRAFT, getVersion());
+        Assert.isEqual(DRAFT, getVersion());
     }
 
     /**
      * Assert that this item is a pending version
      */
     public final void assertPending() {
-        Assert.equal(PENDING, getVersion());
+        Assert.isEqual(PENDING, getVersion());
     }
 
     /**
      * Assert that this item is a live version
      */
     public final void assertLive() {
-        Assert.equal(LIVE, getVersion());
+        Assert.isEqual(LIVE, getVersion());
     }
 
     //
@@ -1962,7 +1962,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      * @deprecated with no replacement
      */
     public final void assertMaster() {
-        Assert.truth(isMaster(), "Item " + getOID() + " is a top-level item");
+        Assert.isTrue(isMaster(), "Item " + getOID() + " is a top-level item");
     }
 
     //
@@ -1986,7 +1986,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         }
 
         ContentItem get() {
-            Assert.truth(m_cached);
+            Assert.isTrue(m_cached);
 
             return m_version;
         }

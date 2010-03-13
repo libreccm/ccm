@@ -73,9 +73,9 @@ public class ACSObjectCache {
      * @post obj.equals(getRequestCache(req, obj.getID()))
      */
     public static void set(ServletRequest req, ACSObject obj) {
-        Assert.assertNotNull(req);
-        Assert.assertNotNull(obj);
-        Assert.assertNotNull(obj.getID());
+        Assert.exists(req);
+        Assert.exists(obj);
+        Assert.exists(obj.getID());
         req.setAttribute(attributeName(obj.getID()), obj);
     }
 

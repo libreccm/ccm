@@ -104,7 +104,7 @@ public class SponsoredLink extends ACSObject {
      * @return An {@link ACSObjectCollection} of SponsoredLinks that match the given term.
      **/
     public static ACSObjectCollection retrieveLinksForTerm(String term) {
-        Assert.truth(term != null && term.length() > 0);
+        Assert.isTrue(term != null && term.length() > 0);
         ACSObjectCollection coll = retrieveAll();
         coll.addEqualsFilter(SponsoredLink.TERM, term);
 
@@ -142,7 +142,7 @@ public class SponsoredLink extends ACSObject {
      * @param title The new title.
      **/
     public void setTitle(String title) {
-        Assert.truth(title != null && title.length() > 0);
+        Assert.isTrue(title != null && title.length() > 0);
         set(TITLE, title);
     }
     
@@ -161,7 +161,7 @@ public class SponsoredLink extends ACSObject {
      * @param term The new term.
      **/
     public void setTerm(String term) {
-        Assert.truth(term != null && term.length() > 0);
+        Assert.isTrue(term != null && term.length() > 0);
         set(TERM, term);
     }
 
@@ -180,7 +180,7 @@ public class SponsoredLink extends ACSObject {
      * @param The new URL.
      **/
     public void setURL(String url) {
-        Assert.truth(url != null && url.length() > 0);
+        Assert.isTrue(url != null && url.length() > 0);
         set(URL, url);
     }
 }

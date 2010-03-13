@@ -84,7 +84,7 @@ public class Utilities {
      ***/
 
     static String getItemURL(ContentItem item) {
-        Assert.assertNotNull(item);
+        Assert.exists(item);
 
         ContentSection section = item.getContentSection();
         ContentItem working = item.getWorkingVersion();
@@ -127,7 +127,7 @@ public class Utilities {
      */
     public static boolean moveItem( Folder dstFolder, Folder srcFolder, ContentItem item ) {
         if (Assert.isEnabled()) {
-            Assert.assertTrue(item != null && srcFolder != null && dstFolder != null);
+            Assert.isTrue(item != null && srcFolder != null && dstFolder != null);
         }
 
         final Host host = Host.retrieve(Web.getConfig().getHost());
@@ -136,7 +136,7 @@ public class Utilities {
         // into PublishedFile [lutter]
         String dst = validateLocation(dstFolder, true);
         if ( item instanceof ContentBundle ) {
-            Assert.assertTrue(!Folder.INDEX.equals(item.getName()), "don't pass ContentBundle as Index Item, better to pass Folder");
+            Assert.isTrue(!Folder.INDEX.equals(item.getName()), "don't pass ContentBundle as Index Item, better to pass Folder");
             moveBundle((ContentBundle)item, dst, host);
         } else {
             String path = item.getPath();
@@ -144,9 +144,9 @@ public class Utilities {
                 return false;
 
             ContentSection section = item.getContentSection();
-            Assert.assertNotNull(section);
+            Assert.exists(section);
             path = PublishToFile.stripSourceBase(section.getURL() + path);
-            Assert.assertTrue(path != null && path.length() > 0);
+            Assert.isTrue(path != null && path.length() > 0);
             
             File root = PublishToFile.getDestination(item.getSpecificObjectType()).getFile();
             String src = new File(root, path).getAbsolutePath();
@@ -183,7 +183,7 @@ public class Utilities {
     private static void moveItem(ContentItem item, 
                                  String dstPath,
                                  Host host) {
-        Assert.assertTrue(ContentItem.LIVE.equals(item.getVersion()), "ContentItem item = " + item + " is not a live version");
+        Assert.isTrue(ContentItem.LIVE.equals(item.getVersion()), "ContentItem item = " + item + " is not a live version");
         String docRoot = PublishToFile.getDestination(item.getSpecificObjectType()).getFile().getAbsolutePath();
 
         DataQuery query = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.publishToFile.getRelatedFiles");
@@ -191,7 +191,7 @@ public class Utilities {
         query.setParameter("hostId", host.getID());
         while ( query.next() ) {
             String fileName = (String)query.get("fileName");
-            Assert.assertNotNull(fileName);
+            Assert.exists(fileName);
             fileName = docRoot + fileName;
             String cmd = "/bin/mv -f " + fileName + " " + dstPath;
             // s_log.debug("Moving item: source " + fileName + ", destination " + dstPath);
@@ -211,7 +211,7 @@ public class Utilities {
                                          Folder srcFolder, 
                                          Folder dstFolder,
                                          Host host) {
-        Assert.assertTrue(ContentItem.LIVE.equals(item.getVersion()) &&
+        Assert.isTrue(ContentItem.LIVE.equals(item.getVersion()) &&
                 ContentItem.LIVE.equals(srcFolder.getVersion()) &&
                 ContentItem.LIVE.equals(dstFolder.getVersion()) );
 
@@ -273,7 +273,7 @@ public class Utilities {
      * @return validated folder path if successed, othervise returns empty string
      */
     private static String validateLocation(Folder folder, boolean makeNew) {
-        Assert.assertNotNull(folder);
+        Assert.exists(folder);
         String fullPath = getItemFullPath(folder);
         try {
             File file = new File(fullPath);
@@ -308,9 +308,9 @@ public class Utilities {
         if (path == null || path.equals(""))  return;
 
         ContentSection section = item.getContentSection();
-        Assert.assertNotNull(section);
+        Assert.exists(section);
         path = PublishToFile.stripSourceBase(section.getURL() + path);
-        Assert.assertTrue(path != null && path.length() > 0);
+        Assert.isTrue(path != null && path.length() > 0);
         path = '/' + path;
 
         DataOperation operation = SessionManager.getSession().
@@ -337,12 +337,12 @@ public class Utilities {
      * @return Full path of an items on FS
      */
     public static String getItemFullPath(ContentItem item) {
-        Assert.assertNotNull(item);
+        Assert.exists(item);
         File root = PublishToFile.getDestination(item.getSpecificObjectType()).getFile();
         String location = getItemLocation(item);
 
-        Assert.assertNotNull(location);
-        Assert.assertTrue(location.startsWith("/"));
+        Assert.exists(location);
+        Assert.isTrue(location.startsWith("/"));
 
         return new File(root, location).getAbsolutePath();
     }
@@ -375,7 +375,7 @@ public class Utilities {
      * @return The corresponding content item.
      ***/
     public static ContentItem getContentItem(BigDecimal itemID) {
-        Assert.assertNotNull(itemID, "You passed null as Item ID");
+        Assert.exists(itemID, "You passed null as Item ID");
         ContentItem item;
         OID oid = new OID(ContentItem.BASE_DATA_OBJECT_TYPE, itemID);
         try {
@@ -477,8 +477,8 @@ public class Utilities {
      */
     // FIXME: This should be done in the MoveItemCommand [lutter]
     public static void updateContentSection(ContentItem item, ContentSection newSection) {
-        Assert.assertNotNull(item);
-        Assert.assertNotNull(newSection);
+        Assert.exists(item);
+        Assert.exists(newSection);
 
         ContentSection oldSection = item.getContentSection();
 

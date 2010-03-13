@@ -487,7 +487,7 @@ public abstract class DomainObjectTraversal {
 
     protected String nameFromPath(String path) {
         int index = path.lastIndexOf("/");
-        Assert.truth(index >= 0, "Path starts with /");
+        Assert.isTrue(index >= 0, "Path starts with /");
 
         if (path.endsWith("+")) {
             return path.substring(index + 1, path.length() - 1);
@@ -498,7 +498,7 @@ public abstract class DomainObjectTraversal {
 
     protected String parentFromPath(String path) {
         int index = path.lastIndexOf("/");
-        Assert.truth(index >= 0, "Path starts with /");
+        Assert.isTrue(index >= 0, "Path starts with /");
 
         if (index == 0) {
             return null;

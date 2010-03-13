@@ -70,7 +70,7 @@ class PhaseTableModelBuilder extends LockableImpl
         }
 
         public final Object getElementAt(int column) {
-            Assert.assertNotNull(m_phase, "PhaseDefinition m_phase");
+            Assert.exists(m_phase, "PhaseDefinition m_phase");
 
             switch (column) {
             case 0:

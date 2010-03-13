@@ -36,8 +36,6 @@ import com.arsdigita.util.Lockable;
 public abstract class AbstractSingleSelectionModel
     implements SingleSelectionModel, Lockable {
 
-    public static final String versionId = "$Id: AbstractSingleSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private EventListenerList m_listeners;
     private boolean m_locked;
 
@@ -69,12 +67,12 @@ public abstract class AbstractSingleSelectionModel
     // Selection change events
 
     public void addChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.add(ChangeListener.class, l);
     }
 
     public void removeChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.remove(ChangeListener.class, l);
     }
 

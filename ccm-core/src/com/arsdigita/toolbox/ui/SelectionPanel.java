@@ -104,7 +104,7 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
         if (Assert.isEnabled()) {
             Assert.exists(title, Component.class);
             Assert.exists(selector, Component.class);
-            Assert.truth(selector instanceof Tree || selector instanceof List);
+            Assert.isTrue(selector instanceof Tree || selector instanceof List);
         }
 
         // Making up now for some untoward modeling in Bebop.
@@ -220,9 +220,9 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
 
     public final void setAdd(final ActionLink addLink,
                              final Form form) {
-        Assert.assertNotNull(addLink, "ActionLink addLink");
-        Assert.assertNotNull(form, "Form form");
-        Assert.assertNotLocked(this);
+        Assert.exists(addLink, "ActionLink addLink");
+        Assert.exists(form, "Form form");
+        Assert.isUnlocked(this);
 
         m_addForm = form;
         m_body.add(m_addForm);
@@ -247,9 +247,9 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
 
     public final void setEdit(final ActionLink editLink,
                               final Form form) {
-        Assert.assertNotNull(editLink, "ActionLink editLink");
-        Assert.assertNotNull(form, "Form form");
-        Assert.assertNotLocked(this);
+        Assert.exists(editLink, "ActionLink editLink");
+        Assert.exists(form, "Form form");
+        Assert.isUnlocked(this);
 
         m_editForm = form;
         m_body.add(m_editForm);
@@ -275,9 +275,9 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
 
     public final void setDelete(final ActionLink deleteLink,
                                 final Form form) {
-        Assert.assertNotNull(deleteLink, "ActionLink deleteLink");
-        Assert.assertNotNull(form, "Form form");
-        Assert.assertNotLocked(this);
+        Assert.exists(deleteLink, "ActionLink deleteLink");
+        Assert.exists(form, "Form form");
+        Assert.isUnlocked(this);
 
         m_deleteForm = form;
         m_body.add(m_deleteForm);
@@ -297,7 +297,7 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
 
     public final void setIntroPane(final Component pane) {
         Assert.exists(pane, Component.class);
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
 
         m_introPane = pane;
         m_body.add(m_introPane);
@@ -309,8 +309,8 @@ public class SelectionPanel extends LayoutPanel implements Resettable {
     }
 
     public final void setItemPane(final Component pane) {
-        Assert.assertNotNull(pane, "Component pane");
-        Assert.assertNotLocked(this);
+        Assert.exists(pane, "Component pane");
+        Assert.isUnlocked(this);
 
         m_itemPane = pane;
         m_body.add(m_itemPane);

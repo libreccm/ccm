@@ -80,7 +80,7 @@ public class AddTask extends Form
                     Label t = (Label) e.getTarget();
                     PageState s = e.getPageState();
                     // FIXME: name of template comes from DB
-                    Assert.assertTrue(m_processes.isSelected(s));
+                    Assert.isTrue(m_processes.isSelected(s));
                     Process inner_p =
                         SampleProcesses.getProcess(m_processes.getSelectedKey(s));
                     t.setLabel("Add a new Task to " + inner_p.getName());

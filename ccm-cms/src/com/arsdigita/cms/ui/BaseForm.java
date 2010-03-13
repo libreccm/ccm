@@ -153,7 +153,7 @@ public abstract class BaseForm extends Form
                            final int maxLength,
                            final boolean isRequired) {
             super(new TrimmedStringParameter(key));
-            Assert.truth(maxLength > 0, "Max length cannot be negative");
+            Assert.isTrue(maxLength > 0, "Max length cannot be negative");
 
             if (isRequired) {
                 addValidationListener(NotNullValidationListener.DEFAULT);

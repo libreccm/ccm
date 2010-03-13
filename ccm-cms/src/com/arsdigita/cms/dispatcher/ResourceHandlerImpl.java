@@ -64,7 +64,7 @@ public abstract class ResourceHandlerImpl implements ResourceHandler {
     public ContentSection getContentSection(HttpServletRequest request) {
         // resets all content sections associations
         ContentSection section = CMSDispatcher.getContentSection(request);
-        Assert.assertNotNull(section);
+        Assert.exists(section);
         return section;
     }
 

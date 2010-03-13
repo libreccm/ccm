@@ -204,7 +204,7 @@ public class IndexItemSelectionForm extends CMSForm {
      */
     protected Category getCategory(PageState state) {
         Category category = m_category.getCategory(state);
-        Assert.assertNotNull(category);
+        Assert.exists(category);
         return category;
     }
 

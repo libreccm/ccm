@@ -109,35 +109,38 @@ public class BookmarkEditPane extends DynamicListWizard {
 
 
 
-    public BookmarkEditPane()
-    {
-        super("Current Bookmarks",
-              new ListModelBuilder() {
-                  public ListModel makeModel(List l, PageState ps) {
-                      return new BmrkListModel(ps);
-                  }
-                  public void lock() {}
-                  public boolean isLocked() { return true; }
-              },
-              "Add a new Bookmark",
-              new Label(GlobalizationUtil.globalize("bookmarks.ui.select_a_bookmark_for_editing")));
+    /**
+     * Constructor
+     * 
+     */
+    public BookmarkEditPane() {
+        super("Current Bookmarks", new ListModelBuilder() {
+            public ListModel makeModel(List l, PageState ps) {
+                return new BmrkListModel(ps);
+            }
+            public void lock() {}
+            public boolean isLocked() { return true; }
+        },
+        "Add a new Bookmark",
+        new Label(GlobalizationUtil.globalize(
+                                    "bookmarks.ui.select_a_bookmark_for_editing")));
 
         final DynamicListWizard dlw = this;
 
-        m_prtlRL = new RequestLocal()
-            {
-                protected Object initialValue(PageState ps)
-                {
-                    return (BookmarkApplication)Application.getCurrentApplication(ps.getRequest());
-                }
-            };
+        m_prtlRL = new RequestLocal() {
+            protected Object initialValue(PageState ps) {
+                return (BookmarkApplication)Application.getCurrentApplication(
+                                                        ps.getRequest());
+            }
+        };
 
 
 
         // FORM FOR ADDING NEW Bookmarks
         Form addForm = new Form("addBookmark", new GridPanel(2));
 
-        addForm.add(new Label(GlobalizationUtil.globalize("bookmarks.ui.name_of_new_bookmark")));
+        addForm.add(new Label(GlobalizationUtil.globalize(
+                              "bookmarks.ui.name_of_new_bookmark")));
 
         final TextField newBmrkName = new TextField("name");
         newBmrkName.getParameterModel().addParameterListener
@@ -205,7 +208,7 @@ public class BookmarkEditPane extends DynamicListWizard {
                     		newBmrk.save();
                     	}}.run();
 
-                    dlw.getList()
+                    dlw.getListOfComponents()
                         .getSelectionModel()
                         .setSelectedKey(ps, newBmrk.getID().toString());
                 }
@@ -222,7 +225,9 @@ public class BookmarkEditPane extends DynamicListWizard {
 
         m_mainDisplay.add(m_editBmrkForm);
 
-        ActionLink deleteLink = new ActionLink( (String) GlobalizationUtil.globalize("bookmarks.ui.delete_this_bookmark").localize());
+        ActionLink deleteLink = new ActionLink( 
+                                (String) GlobalizationUtil.globalize(
+                                "bookmarks.ui.delete_this_bookmark").localize());
 
         deleteLink.setClassAttr("actionLink");
         deleteLink.addActionListener(new DeleteLinkListener());
@@ -247,7 +252,8 @@ public class BookmarkEditPane extends DynamicListWizard {
             public Component getComponent(List list, PageState state,
                     Object value, String key, int index, boolean isSelected) {
 
-                BookmarkApplication app = (BookmarkApplication) Web.getContext().getApplication();
+                BookmarkApplication app = (BookmarkApplication) Web.getContext()
+                                                                .getApplication();
                 BookmarkCollection bColl = app.getBookmarks();
                 final long size = bColl.size();
                 bColl.close();
@@ -339,65 +345,72 @@ public class BookmarkEditPane extends DynamicListWizard {
         public EditBookmarkForm(GridPanel gp)
         {
             super("editbookmarkform",gp);
-            instruction = new Label(GlobalizationUtil.globalize("bookmarks.ui.edit_fields_and_click_save_button"));
+            instruction = new Label(GlobalizationUtil.globalize(
+                              "bookmarks.ui.edit_fields_and_click_save_button"));
             blank = new Label(" ");
-            instruction1 = new Label(GlobalizationUtil.globalize("bookmarks.ui.bookmark_name"));
-            instruction2 = new Label(GlobalizationUtil.globalize("bookmarks.ui.bookmark_url"));
-            instruction3 = new Label(GlobalizationUtil.globalize("bookmarks.ui.bookmark_description"));
+            instruction1 = new Label(GlobalizationUtil.globalize(
+                               "bookmarks.ui.bookmark_name"));
+            instruction2 = new Label(GlobalizationUtil.globalize(
+                               "bookmarks.ui.bookmark_url"));
+            instruction3 = new Label(GlobalizationUtil.globalize(
+                               "bookmarks.ui.bookmark_description"));
             blank1 = new Label("");
             blank2 = new Label("");
             blank3 = new Label("");
             blank4 = new Label("");
-            creationDateLabel = new Label(GlobalizationUtil.globalize("bookmarks.ui.creation_date"));
-            modDateLabel = new Label(GlobalizationUtil.globalize("bookmarks.ui.last_modified_date"));
-            authorLabel = new Label(GlobalizationUtil.globalize("bookmarks.ui.created_by"));
-            visitsLabel = new Label(GlobalizationUtil.globalize("bookmarks.ui.number_of_visits"));
+            creationDateLabel = new Label(GlobalizationUtil.globalize(
+                                    "bookmarks.ui.creation_date"));
+            modDateLabel = new Label(GlobalizationUtil.globalize(
+                               "bookmarks.ui.last_modified_date"));
+            authorLabel = new Label(GlobalizationUtil.globalize(
+                              "bookmarks.ui.created_by"));
+            visitsLabel = new Label(GlobalizationUtil.globalize(
+                              "bookmarks.ui.number_of_visits"));
             bookmarkName = new TextField("BookmarkName");
             bookmarkName.setDefaultValue("");
-            bookmarkName.addValidationListener(new NotNullValidationListener("Every Bookmark must have a name!"));
+            bookmarkName.addValidationListener(new NotNullValidationListener(
+                                               "Every Bookmark must have a name!"));
 
-            newWindowLabel = new Label(GlobalizationUtil.globalize("bookmarks.ui.bookmark_in_new_window"));
+            newWindowLabel = new Label(GlobalizationUtil.globalize(
+                                 "bookmarks.ui.bookmark_in_new_window"));
             newWindow = new RadioGroup("newWin");
             newWindow.addOption(new Option("true", "Yes"));
             newWindow.addOption(new Option("false", "No"));
             try {
             	newWindow.addPrintListener( new PrintListener() {
-                        public void prepare(PrintEvent e) {
-                            PageState s = e.getPageState();
-                            if(getSelectionModel().isSelected(s))
-                                {
-                                    BigDecimal bd =
-                                        new BigDecimal((String) getSelectionModel().getSelectedKey(s));
-                                    Bookmark bmrk = Bookmark.retrieveBookmark(bd);
-                                    RadioGroup group = (RadioGroup)e.getTarget();
-                                    group.setValue(s,String.valueOf(bmrk.getNewWindow()));
-                                }
+                    public void prepare(PrintEvent e) {
+                        PageState s = e.getPageState();
+                        if(getSelectionModel().isSelected(s)) {
+                            BigDecimal bd = new BigDecimal((String)
+                                       getSelectionModel().getSelectedKey(s));
+                            Bookmark bmrk = Bookmark.retrieveBookmark(bd);
+                            RadioGroup group = (RadioGroup)e.getTarget();
+                            group.setValue(s,String.valueOf(bmrk.getNewWindow()));
                         }
-                    });
+                    }
+                });
             } catch(java.util.TooManyListenersException e) { }
 
 
             try {
-                bookmarkName.addPrintListener( new PrintListener()
-                    {
-                        public void prepare(PrintEvent e)
-                        {
-                            PageState s = e.getPageState();
-                            if(getSelectionModel().isSelected(s))
-                                {
-                                    BigDecimal bd =
-                                        new BigDecimal((String) getSelectionModel().getSelectedKey(s));
-                                    Bookmark bmrk = Bookmark.retrieveBookmark(bd);
-                                    TextField tf = (TextField)e.getTarget();
-                                    tf.setValue(s,bmrk.getName());
-                                }
+                bookmarkName.addPrintListener( new PrintListener() {
+                    public void prepare(PrintEvent e) {
+                        PageState s = e.getPageState();
+                        if(getSelectionModel().isSelected(s)) {
+                            BigDecimal bd = new BigDecimal((String)
+                                            getSelectionModel().getSelectedKey(s));
+                            Bookmark bmrk = Bookmark.retrieveBookmark(bd);
+                            TextField tf = (TextField)e.getTarget();
+                            tf.setValue(s,bmrk.getName());
                         }
-                    });
+                    }
+                });
             } catch(java.util.TooManyListenersException e) { }
 
             bookmarkURL = new TextField("BookmarkURL");
             bookmarkURL.setDefaultValue("");
-            bookmarkURL.addValidationListener(new NotEmptyValidationListener("White space is not allowed in URLs!"));
+            bookmarkURL.addValidationListener(new NotEmptyValidationListener(
+                                              "White space is not allowed in URLs!"));
 
 
             try {

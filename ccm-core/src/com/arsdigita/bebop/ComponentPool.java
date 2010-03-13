@@ -44,10 +44,6 @@ import java.util.Map;
 
 public class ComponentPool {
 
-    public static final String versionId = "$Author: sskracic $" +
-        " - $Date: 2004/08/16 $ " +  
-        "$Id: ComponentPool.java 287 2005-02-22 00:29:02Z sskracic $";
-
     private static final Logger s_cat = Logger.getLogger(ComponentPool.class.getName());
 
     private static class _pool {
@@ -70,8 +66,8 @@ public class ComponentPool {
                     Component p = (Component)m_class.newInstance();
 
                     // At this point, the OnBuildPage method is called on the
-                    // page to give it a chance to build its own specific page layout
-                    // before putting it into the pool
+                    // page to give it a chance to build its own specific page
+                    // layout before putting it into the pool
 
                     //p.OnBuildPage();
                     m_availComponents.add(p);

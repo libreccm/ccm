@@ -50,7 +50,7 @@ public class DbHelper {
      * constants specified in this file.
      */
     public static void setDatabase(int database) {
-        Assert.assertTrue((database >= DB_DEFAULT) &&
+        Assert.isTrue((database >= DB_DEFAULT) &&
                           (database <= DB_MAX));
 
         s_database = database;
@@ -112,7 +112,7 @@ public class DbHelper {
      * files
      */
     public static String getDatabaseDirectory(int database) {
-        Assert.assertTrue((database >= DB_DEFAULT) &&
+        Assert.isTrue((database >= DB_DEFAULT) &&
                           (database <= DB_MAX));
 
         switch (database) {
@@ -194,7 +194,7 @@ public class DbHelper {
      * identifier.
      */
     public static String getDatabaseName(int database) {
-        Assert.assertTrue((database >= DB_DEFAULT) &&
+        Assert.isTrue((database >= DB_DEFAULT) &&
                           (database <= DB_MAX));
 
         switch (database) {

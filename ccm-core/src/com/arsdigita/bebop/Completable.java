@@ -34,12 +34,11 @@ import org.apache.log4j.Logger;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: Completable.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public abstract class Completable implements Component {
     private final static Logger s_log = Logger.getLogger(Completable.class);
-
-    public final static String versionId = "$Id: Completable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public Completable() {
         if ( s_log.isDebugEnabled() ) {
@@ -50,7 +49,7 @@ public abstract class Completable implements Component {
     private ArrayList m_completionListeners = new ArrayList();
 
     public void addCompletionListener(ActionListener listener) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_completionListeners.add(listener);
     }
 

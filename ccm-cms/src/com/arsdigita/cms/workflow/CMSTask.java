@@ -252,7 +252,7 @@ public class CMSTask extends UserTask {
 
     protected Message generateMessage(String operation, Party sender) {
         ContentItem item = getItem();
-        Assert.assertNotNull(item, "item associated with this CMSTask");
+        Assert.exists(item, "item associated with this CMSTask");
         
         String authoringURL = getAuthoringURL(item);
         String fullURL = getTaskType().getURLGenerator(operation, item).generateURL(item.getID(), getID());

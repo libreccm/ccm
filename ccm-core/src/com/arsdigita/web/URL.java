@@ -183,29 +183,29 @@ public class URL {
         m_url = new StringBuffer(96);
         m_params = params;
 
-        if (Assert.isAssertEnabled()) {
-            Assert.assertNotNull(scheme, "String scheme");
-            Assert.assertTrue(!scheme.equals(""),
+        if (Assert.isEnabled()) {
+            Assert.exists(scheme, "String scheme");
+            Assert.isTrue(!scheme.equals(""),
                               "The scheme cannot be an empty string");
 
-            Assert.assertNotNull(serverName, "String serverName");
-            Assert.assertTrue(serverPort > 0,
+            Assert.exists(serverName, "String serverName");
+            Assert.isTrue(serverPort > 0,
                               "The serverPort must be greater than 0; " +
                               "I got " + serverPort);
 
-            Assert.assertNotNull(contextPath, "String contextPath");
+            Assert.exists(contextPath, "String contextPath");
 
             if (contextPath.startsWith("/")) {
-                Assert.assertTrue
+                Assert.isTrue
                     (!contextPath.endsWith("/"),
                      "A contextPath starting with '/' must not end in '/'; " +
                      "I got '" + contextPath + "'");
             }
 
-            Assert.assertNotNull(servletPath, "String servletPath");
+            Assert.exists(servletPath, "String servletPath");
 
             if (pathInfo != null) {
-                Assert.assertTrue(pathInfo.startsWith("/"),
+                Assert.isTrue(pathInfo.startsWith("/"),
                                   "I expected a pathInfo starting with '/' " +
                                   "and got '" + pathInfo + "' instead");
             }
@@ -242,12 +242,12 @@ public class URL {
             m_url.append(pathInfo);
         }
 
-        if (Assert.isAssertEnabled()) {
-            Assert.assertTrue(m_schemeEnd > -1);
-            Assert.assertTrue(m_serverNameEnd > -1);
-            Assert.assertTrue(m_serverPortEnd > -1);
-            Assert.assertTrue(m_contextPathEnd > -1);
-            Assert.assertTrue(m_servletPathEnd > -1);
+        if (Assert.isEnabled()) {
+            Assert.isTrue(m_schemeEnd > -1);
+            Assert.isTrue(m_serverNameEnd > -1);
+            Assert.isTrue(m_serverPortEnd > -1);
+            Assert.isTrue(m_contextPathEnd > -1);
+            Assert.isTrue(m_servletPathEnd > -1);
         }
     }
 
@@ -671,8 +671,8 @@ public class URL {
                                   final ParameterMap params) {
         final WebConfig config = Web.getConfig();
 
-        Assert.assertNotNull(sreq, "HttpServletRequest sreq");
-        Assert.assertNotNull(config, "WebConfig config");
+        Assert.exists(sreq, "HttpServletRequest sreq");
+        Assert.exists(config, "WebConfig config");
 
         if (params != null) {
             params.runListeners(sreq);
@@ -712,8 +712,8 @@ public class URL {
             return there(sreq, path, params);
         }
 
-        Assert.assertNotNull(sreq, "HttpServletRequest sreq");
-        Assert.assertNotNull(config, "WebConfig config");
+        Assert.exists(sreq, "HttpServletRequest sreq");
+        Assert.exists(config, "WebConfig config");
 
         if (params != null) {
             params.runListeners(sreq);
@@ -746,8 +746,8 @@ public class URL {
                                   final String path) {
         final WebConfig config = Web.getConfig();
 
-        Assert.assertNotNull(sreq, "HttpServletRequest sreq");
-        Assert.assertNotNull(config, "WebConfig config");
+        Assert.exists(sreq, "HttpServletRequest sreq");
+        Assert.exists(config, "WebConfig config");
 
         final HttpHost host = new HttpHost(sreq);
 
@@ -779,8 +779,8 @@ public class URL {
                                   final Application app,
                                   final String pathInfo,
                                   final ParameterMap params) {
-        if (Assert.isAssertEnabled() && pathInfo != null) {
-            Assert.assertTrue(pathInfo.startsWith("/"),
+        if (Assert.isEnabled() && pathInfo != null) {
+            Assert.isTrue(pathInfo.startsWith("/"),
                               "pathInfo, if not null, must " +
                               "start with a slash");
         }
@@ -806,8 +806,8 @@ public class URL {
     public static final URL there(final HttpServletRequest sreq,
                                   final Application app,
                                   final String pathInfo) {
-        if (Assert.isAssertEnabled() && pathInfo != null) {
-            Assert.assertTrue(pathInfo.startsWith("/"),
+        if (Assert.isEnabled() && pathInfo != null) {
+            Assert.isTrue(pathInfo.startsWith("/"),
                               "pathInfo, if not null, must " +
                               "start with a slash");
         }
@@ -859,7 +859,7 @@ public class URL {
                                  final ParameterMap params) {
         final Application app = Web.getContext().getApplication();
 
-        Assert.assertNotNull(app, "Application app");
+        Assert.exists(app, "Application app");
 
         return URL.there(sreq, app, pathInfo, params);
     }
@@ -868,7 +868,7 @@ public class URL {
                                  final String pathInfo) {
         final Application app = Web.getContext().getApplication();
 
-        Assert.assertNotNull(app, "Application app");
+        Assert.exists(app, "Application app");
 
         return URL.there(sreq, app, pathInfo);
     }

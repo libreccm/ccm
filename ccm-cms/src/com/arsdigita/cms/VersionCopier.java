@@ -88,15 +88,15 @@ class VersionCopier extends ObjectCopier {
         }
 
         if (Assert.isEnabled()) {
-            //Assert.falsity(item instanceof ContentBundle);
-            //Assert.falsity(item instanceof Folder);
-            Assert.falsity(m_once);
+            //Assert.isFalse(item instanceof ContentBundle);
+            //Assert.isFalse(item instanceof Folder);
+            Assert.isFalse(m_once);
             m_once = true;
         }
 
 	m_topLevelSourceOID = item.getOID();
         final ContentItem version = createVersion(item);
-	//Assert.truth(m_topLevelSourceOID == null, 
+	//Assert.isTrue(m_topLevelSourceOID == null,
 	//	     "CopyItem should be called only once for a given copier instance");
 
         if (m_lifecycle != null) {

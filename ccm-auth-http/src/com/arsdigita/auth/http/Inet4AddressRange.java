@@ -248,32 +248,32 @@ public class Inet4AddressRange
     String addrStr = inetAddressToString (addr);
     String addr2Str = inetAddressToString (addr2);
     System.out.println ("addr = " + addrStr + "; addr2 = " + addr2Str);
-    Assert.truth (addrStr.equals (addr2Str));
+    Assert.isTrue (addrStr.equals (addr2Str));
 
     // Test makeNetmask.
     addr = makeNetmask (0);
     System.out.println ("makeNetmask(0) = " + addr);
-    Assert.truth (inetAddressToString (addr).equals ("0.0.0.0"));
+    Assert.isTrue (inetAddressToString (addr).equals ("0.0.0.0"));
 
     addr = makeNetmask (8);
     System.out.println ("makeNetmask(8) = " + addr);
-    Assert.truth (inetAddressToString (addr).equals ("255.0.0.0"));
+    Assert.isTrue (inetAddressToString (addr).equals ("255.0.0.0"));
 
     addr = makeNetmask (16);
     System.out.println ("makeNetmask(16) = " + addr);
-    Assert.truth (inetAddressToString (addr).equals ("255.255.0.0"));
+    Assert.isTrue (inetAddressToString (addr).equals ("255.255.0.0"));
 
     addr = makeNetmask (24);
     System.out.println ("makeNetmask(24) = " + addr);
-    Assert.truth (inetAddressToString (addr).equals ("255.255.255.0"));
+    Assert.isTrue (inetAddressToString (addr).equals ("255.255.255.0"));
 
     addr = makeNetmask (28);
     System.out.println ("makeNetmask(28) = " + addr);
-    Assert.truth (inetAddressToString (addr).equals ("255.255.255.240"));
+    Assert.isTrue (inetAddressToString (addr).equals ("255.255.255.240"));
 
     addr = makeNetmask (32);
     System.out.println ("makeNetmask(32) = " + addr);
-    Assert.truth (inetAddressToString (addr).equals ("255.255.255.255"));
+    Assert.isTrue (inetAddressToString (addr).equals ("255.255.255.255"));
 
     // Test getByName.
     Inet4AddressRange range
@@ -284,7 +284,7 @@ public class Inet4AddressRange
       = Inet4AddressRange.getByName ("192.168.0.0/255.255.0.0");
     System.out.println ("range = " + range.toString ());
     // Test equals.
-    Assert.truth (range.equals (range2));
+    Assert.isTrue (range.equals (range2));
 
     range = Inet4AddressRange.getByName ("192.168.0.99");
     System.out.println ("range = " + range.toString ());
@@ -292,19 +292,19 @@ public class Inet4AddressRange
     // Test inRange.
     range = Inet4AddressRange.getByName ("192.168.0.0/16");
     addr = InetAddress.getByName ("192.168.0.99");
-    Assert.truth (range.inRange (addr));
+    Assert.isTrue (range.inRange (addr));
 
     range = Inet4AddressRange.getByName ("192.168.0.0/24");
     addr = InetAddress.getByName ("192.168.2.99");
-    Assert.truth (! range.inRange (addr));
+    Assert.isTrue (! range.inRange (addr));
 
     range = Inet4AddressRange.getByName ("192.168.0.99");
     addr = InetAddress.getByName ("192.168.0.99");
-    Assert.truth (range.inRange (addr));
+    Assert.isTrue (range.inRange (addr));
 
     range = Inet4AddressRange.getByName ("192.168.0.99");
     addr = InetAddress.getByName ("192.168.3.99");
-    Assert.truth (! range.inRange (addr));
+    Assert.isTrue (! range.inRange (addr));
 
     System.out.println ("All test completed OK.");
   }

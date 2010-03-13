@@ -101,7 +101,7 @@ public class StatementProfiler implements RDBMSProfiler {
 
     public void start() {
         if (Assert.isEnabled()) {
-            Assert.truth(m_out == null);
+            Assert.isTrue(m_out == null);
         }
 
         try {

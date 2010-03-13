@@ -22,7 +22,7 @@ public class WorkspaceThemeCollection extends DomainCollection {
 	public BigDecimal getID() {
 		BigDecimal id = (BigDecimal) m_dataCollection.get("id");
 
-		Assert.assertNotNull(id);
+		Assert.exists(id);
 
 		return id;
 	}
@@ -35,7 +35,7 @@ public class WorkspaceThemeCollection extends DomainCollection {
 	public DomainObject getDomainObject() {
 		DomainObject domainObject = getWorkspaceTheme();
 
-		Assert.assertNotNull(domainObject);
+		Assert.exists(domainObject);
 
 		return domainObject;
 	}
@@ -51,7 +51,7 @@ public class WorkspaceThemeCollection extends DomainCollection {
 		WorkspaceTheme workspaceTheme = WorkspaceTheme
 				.retrieveWorkspaceTheme(dataObject);
 
-		Assert.assertNotNull(workspaceTheme);
+		Assert.exists(workspaceTheme);
 
 		return workspaceTheme;
 	}
@@ -64,7 +64,7 @@ public class WorkspaceThemeCollection extends DomainCollection {
 	public String getName() {
 		String name = (String) m_dataCollection.get("theme_name");
 
-		Assert.assertNotNull(name);
+		Assert.exists(name);
 
 		return name;
 	}

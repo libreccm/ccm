@@ -127,7 +127,7 @@ public class Repository extends Application {
             KernelExcursion excursion = new KernelExcursion() {
                     protected void excurse() {
                         setParty(Kernel.getSystemParty());
-                        Assert.assertNotNull(m_root, "Folder m_root");
+                        Assert.exists(m_root, "Folder m_root");
 			if (s_repositoryRoot == null) {
 			    m_root.setParent(cs.getRootFolder());
 			    s_log.debug("typical repository (no legacy folder)");
@@ -177,7 +177,7 @@ public class Repository extends Application {
                      protected void excurse() {
                          setParty(Kernel.getSystemParty());
 
-                         Assert.assertNotNull(m_root, "Folder m_root");
+                         Assert.exists(m_root, "Folder m_root");
 
                          PermissionService.setContext(m_root, rep);
                          s_log.debug("set context for "+m_root.getTitle());

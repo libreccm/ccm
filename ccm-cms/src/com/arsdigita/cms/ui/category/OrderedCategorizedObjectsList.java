@@ -104,7 +104,7 @@ public class OrderedCategorizedObjectsList extends CategorizedObjectsList {
             item.addAttribute("configure", "true");
 
             String key = m.getKey();
-            Assert.assertNotNull(key);
+            Assert.exists(key);
 
             // Converting both keys to String for comparison
             // since ListModel.getKey returns a String

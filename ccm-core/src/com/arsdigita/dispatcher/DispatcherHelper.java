@@ -44,12 +44,12 @@ import javax.servlet.jsp.PageContext;
 import org.apache.log4j.Logger;
 
 /**
- * Class static helper methods for
- * request dispatching. Contains various generally useful procedural
- * abstractions.
+ * Class static helper methods for request dispatching.
+ * Contains various generally useful procedural abstractions.
  *
  * @author Bill Schneider
  * @version ACS 4.5
+ * @version $Id: DispatcherHelper.java 311 2005-02-28 11:10:00Z mbooth $
  * @since 4.5 */
 public final class DispatcherHelper implements DispatcherConstants {
     private static final Logger s_log = Logger.getLogger
@@ -89,11 +89,16 @@ public final class DispatcherHelper implements DispatcherConstants {
      */
     private static ThreadLocal s_request = new ThreadLocal();
 
-    public static final String versionId = "$Id: DispatcherHelper.java 311 2005-02-28 11:10:00Z mbooth $ by $Author: mbooth $, $DateTime: 2004/08/16 18:10:38 $";
-
     /** null constructor, private so no one can instantiate! */
     private DispatcherHelper() { }
 
+    /**
+     * Return default cache expiry.
+     * Default is specified in the configuration file (registry) if not 
+     * otherweise set.
+     * 
+     * @return default cache expiry
+     */
     public static int getDefaultCacheExpiry() {
         init();
         return s_defaultExpiry;
@@ -323,14 +328,13 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * <b><font color="red">Unsupported</font></b>
-     *
-     * Given the name of a resource in the file system that is missing
-     * an extension, picks an extension that matches.  Serves a file
+     * Given the name of a resource in the file system that is missing an
+     * extension, picks an extension that matches.  Serves a file
      * with a <code>.jsp</code> extension first, if available.
-     * Otherwise picks any file
-     * that matches.  For directories, it tacks on the "index"
-     * filename plus the extension.
+     * Otherwise picks any file that matches.  For directories, it tacks on
+     * the "index" filename plus the extension.
+     *
+     * <b><font color="red">Unsupported</font></b>
      *
      * @param abstractFile the extensionless file
      * @param actx the current application context
@@ -430,11 +434,10 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * If the given servlet request is wrapped in one of our own
-     * classes, returns the original (unwrapped) request object and
-     * stores a reference to the request wrapper in the request
-     * attributes of the returned request.  Otherwise just returns the
-     * request object.
+     * If the given servlet request is wrapped in one of our own classes, returns
+     * the original (unwrapped) request object and stores a reference
+     * to the request wrapper in the request attributes of the returned request.
+     * Otherwise just returns the request object.
      *
      * @param req the servlet request
      * @return the original servlet request object, as created by
@@ -455,10 +458,11 @@ public final class DispatcherHelper implements DispatcherConstants {
      * If we've stored a reference to a request wrapper as a request
      * attribute to the current servlet request, returns the wrapper object.
      * Otherwise, returns the request object.
+     *
      * @param req the current servlet request
      * @return the previously created wrapper around the current servlet
-     * request, if any;
-     * otherwise returns the request object.
+     *         request, if any;
+     *         otherwise returns the request object.
      */
     public static HttpServletRequest restoreRequestWrapper
         (HttpServletRequest req) {
@@ -473,9 +477,8 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * This method will optionally wrap the request if it 
-     * is a multipart POST, or restore the original wrapper
-     * if it was already wrapped
+     * This method will optionally wrap the request if it  is a multipart POST,
+     * or restore the original wrapper if it was already wrapped.
      */
     public static HttpServletRequest maybeWrapRequest(HttpServletRequest sreq) 
         throws IOException, ServletException {
@@ -585,7 +588,7 @@ public final class DispatcherHelper implements DispatcherConstants {
             // (i.e. index file in current directory)
             // works properly when running in Apache.
             // DEE 3/13/01 the original apache redirect-fix string of "?"
-            // has been replaced with ".", becuase
+            // has been replaced with ".", because
             // IE will reload the current page if redirected to "?".
             url = ".";
         }
@@ -638,11 +641,10 @@ public final class DispatcherHelper implements DispatcherConstants {
 
     /**
      * Adds a <code>ParameterProvider</code> to the URLRewriter engine.
-     * <code>ParameterProvider</code>s are used
-     * when <code>encodeRedirectURL</code> and <code>encodeURL</code>
-     * are called.  They add global state parameters
-     * like the session ID (for cookieless login) to URLs for links and
-     * redirects.
+     * <code>ParameterProvider</code>s are used when
+     * <code>encodeRedirectURL</code> and <code>encodeURL</code> are
+     * called. They add global state parameters like the session ID (for
+     * cookieless login) to URLs for links and redirects.
      *
      * @param provider the parameter provider to add
      * @see com.arsdigita.util.URLRewriter#addParameterProvider
@@ -720,12 +722,12 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * Returns a global URL prefix for referencing static assets (images,
-     * CSS, etc.) on disk in href attributes.  This can be on the same
-     * server ("/STATIC/") or a different server/port
-     * ("http://server:port/dir/").  The return value is guaranteed to
-     * end with a trailing slash.  Usage example:
+     * Returns a global URL prefix for referencing static assets (images, CSS,
+     * etc.) on disk in href attributes. This can be on the same server
+     * ("/STATIC/") or a different server/port ("http://server:port/dir/").
+     * The return value is guaranteed to end with a trailing slash.
      *
+     * Usage example:
      * <pre>
      * String pathToImage = DispatcherHelper.getStaticURL() + "images/pic.gif";
      * Image img = new Image(pathToImage);
@@ -739,8 +741,8 @@ public final class DispatcherHelper implements DispatcherConstants {
     }
 
     /**
-     * sets the  global URL prefix for referencing static assets
-     * (images, CSS, etc.) from user-agents in href attributes.
+     * sets the  global URL prefix for referencing static assets (images, CSS,
+     * etc.) from user-agents in href attributes.
      * Package visibility is intentional.
      *
      * @param s the static asset URL
@@ -763,8 +765,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * the value of s_webappContext will be set when there is a request.
      * Package visibility is intentional.
      *
-     * @param webappCtx the webappContext specified in enterprise.init.  Normally this would
-     * be "/".
+     * @param webappCtx the webappContext specified in enterprise.init. 
+     *        Normally this wouldbe "/".
      */
     static void setWebappContext(String webappCtx) {
         init();
@@ -803,10 +805,10 @@ public final class DispatcherHelper implements DispatcherConstants {
                 }
                 if ( !s_webappCtx.equals(webappCtx) ) {
                     s_log.warn(
-                               "webappContext changed. Expected='" + s_webappCtx +
-                               "' found='" + webappCtx + "'.\nPerhaps the enterprise.init " +
-                               "com.arsdigita.dispatcher.Initializer webappContext " +
-                               "parameter is wrong.");
+                          "webappContext changed. Expected='" + s_webappCtx +
+                          "' found='" + webappCtx + "'.\nPerhaps the enterprise.init " +
+                          "com.arsdigita.dispatcher.Initializer webappContext " +
+                          "parameter is wrong.");
                     // Save the webappCtx from the request for future use.
                     s_webappCtx = webappCtx;
                 }
@@ -880,7 +882,8 @@ public final class DispatcherHelper implements DispatcherConstants {
         if (!s_cachingActive)
             return;
 
-        // Assert.assertTrue(!response.containsHeader("Cache-Control"), "Caching headers have already been set");
+        // Assert.isTrue(!response.containsHeader("Cache-Control"),
+        //                   "Caching headers have already been set");
         // XXX Probably need to assert here if isCommitted() returns true.
         // But first need to figure out what is setting Cache-Control.
         if (response.containsHeader("Cache-Control"))
@@ -955,7 +958,8 @@ public final class DispatcherHelper implements DispatcherConstants {
         if (!s_cachingActive)
             return;
 
-        Assert.assertTrue(!response.containsHeader("Cache-Control"), "Caching headers have already been set");
+        Assert.isTrue(!response.containsHeader("Cache-Control"),
+                      "Caching headers have already been set");
 
         s_log.info("Setting cache control to user");
 
@@ -1039,8 +1043,8 @@ public final class DispatcherHelper implements DispatcherConstants {
         if (!s_cachingActive)
             return;
 
-        Assert.assertTrue(!response.containsHeader("Cache-Control"),
-                          "Caching headers have already been set");
+        Assert.isTrue(!response.containsHeader("Cache-Control"),
+                      "Caching headers have already been set");
 
         Calendar expires = Calendar.getInstance();
         expires.add( Calendar.SECOND, maxage );

@@ -73,7 +73,7 @@ public class ApplicationTypeCollection extends ResourceTypeCollection {
     public ApplicationType getApplicationType() {
         DataObject dataObject = m_dataCollection.getDataObject();
 
-        Assert.assertNotNull(dataObject, "dataObject");
+        Assert.exists(dataObject, "dataObject");
 
         ApplicationType applicationType =
             ApplicationType.retrieveApplicationType(dataObject);

@@ -20,6 +20,11 @@ package com.arsdigita.bebop;
 
 import javax.servlet.ServletException;
 
+/**
+ * 
+ * 
+ * @version $Id: SessionExpiredException.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class SessionExpiredException extends ServletException {
-    public static final String versionId = "$Id: SessionExpiredException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
 }

@@ -121,7 +121,7 @@ public class TextPageBody extends TextAssetBody {
      */
     protected void updateTextAsset(PageState s, TextAsset a) {
         TextPage t = getTextPage(s);
-        Assert.assertNotNull(t);
+        Assert.exists(t);
         // no need - cg. Text doesn't need a security context,
         // and ownership of text is recorded in text_pages
         
@@ -154,7 +154,7 @@ public class TextPageBody extends TextAssetBody {
                         TextPage t = (TextPage)
                             ((ItemSelectionModel)getSingleSelectionModel())
                             .getSelectedObject(s);
-                        Assert.assertNotNull(t);
+                        Assert.exists(t);
                         return t.getTextAsset();
                     }
                 };

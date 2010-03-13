@@ -99,7 +99,7 @@ public class ContentItemDispatcher implements Dispatcher {
             final ContentSection section =
                 (ContentSection) Web.getContext().getApplication();
 
-            Assert.assertNotNull(item);
+            Assert.exists(item);
 
             //get the item's template
             final String sTemplateURL = getTemplatePath(item, request, actx);

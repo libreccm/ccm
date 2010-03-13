@@ -50,20 +50,20 @@ public class MyWorkspacesPortlet extends AppPortlet {
     }
 
     protected DataQuery getMyPortalsDataQuery(Party party) {
-        Assert.assertTrue
+        Assert.isTrue
             (!isNew(),
              "You must save this portlet before you call " +
              "getMyPortalsDataQuery(User) on it.");
 
         DataQuery query = SessionManager.getSession().retrieveQuery
             ("com.arsdigita.london.portal.portlet.MyWorkspaces");
-        Assert.assertNotNull(query, "query");
+        Assert.exists(query, "query");
 
         query.setParameter("userID", party.getID());
 
         //Application parent = getParentApplication();
         Application parent = Workspace.getCurrentlySelectedWorkspace();
-        Assert.assertNotNull(parent, "parent");
+        Assert.exists(parent, "parent");
         query.setParameter
             ("personalWorkspaceID", parent.getID());
 
@@ -81,7 +81,7 @@ class MyWorkspacesPortletRenderer extends AbstractPortletRenderer {
     protected void generateBodyXML(PageState pageState, Element parent) {
         Party party = Kernel.getContext().getParty();
 
-        Assert.assertNotNull(party, "party");
+        Assert.exists(party, "party");
 
         DataQuery query = m_portlet.getMyPortalsDataQuery(party);
 
@@ -98,8 +98,8 @@ class MyWorkspacesPortletRenderer extends AbstractPortletRenderer {
             title = (String) query.get("title");
             primaryURL = (String) query.get("primaryURL");
 
-            Assert.assertNotNull(title, "title");
-            Assert.assertNotNull(primaryURL, "primaryURL");
+            Assert.exists(title, "title");
+            Assert.exists(primaryURL, "primaryURL");
 
             panel.add(new Link(title, primaryURL));
         }

@@ -41,8 +41,6 @@ import com.arsdigita.util.Lockable;
 public class MapComponentSelectionModel
     implements ComponentSelectionModel, Lockable {
 
-    public static final String versionId = "$Id: MapComponentSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private SingleSelectionModel m_selModel;
     private Map m_components;
     private boolean m_locked;
@@ -115,7 +113,7 @@ public class MapComponentSelectionModel
      * @param c the component for the mapping
      */
     public void add(Object key, Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_components.put(key, c);
     }
 
@@ -172,7 +170,7 @@ public class MapComponentSelectionModel
      * @param l a listener to notify when the selected key changes
      */
     public void addChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_selModel.addChangeListener(l);
     }
 
@@ -182,7 +180,7 @@ public class MapComponentSelectionModel
      * @param l the listener to remove
      */
     public void removeChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_selModel.removeChangeListener(l);
     }
 

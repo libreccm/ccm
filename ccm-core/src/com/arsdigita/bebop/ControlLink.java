@@ -66,8 +66,6 @@ import com.arsdigita.xml.Element;
  * @version $Id: ControlLink.java 287 2005-02-22 00:29:02Z sskracic $ */
 public class ControlLink extends BaseLink {
 
-    public static final String versionId = "$Id: ControlLink.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * The XML type attribute for a {@link ControlLink}.
      */
@@ -109,7 +107,7 @@ public class ControlLink extends BaseLink {
      * @see #respond respond
      */
     public void addActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_actionListeners == null ) {
             m_actionListeners = new ArrayList();
         }
@@ -122,7 +120,7 @@ public class ControlLink extends BaseLink {
      * @see #addActionListener addActionListener
      */
     public void removeActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_actionListeners == null ) {
             return;
         }

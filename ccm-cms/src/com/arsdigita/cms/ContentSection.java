@@ -243,7 +243,7 @@ public class ContentSection extends Application {
      */
 //    public PackageInstance getPackageInstance() {
 //        DataObject pkg = (DataObject) get(PACKAGE);
-//        Assert.assertNotNull(pkg, "package instance");
+//        Assert.exists(pkg, "package instance");
 //        return new PackageInstance(pkg);
 //    }
 
@@ -254,7 +254,7 @@ public class ContentSection extends Application {
      * @pre ( pkg != null )
      */
 //    protected void setPackageInstance(PackageInstance pkg) {
-//        Assert.assertNotNull(pkg, "package instance");
+//        Assert.exists(pkg, "package instance");
 //        setAssociation(PACKAGE, pkg);
 //    }
 
@@ -309,8 +309,8 @@ public class ContentSection extends Application {
 //    public final String getPath() {
 //        final String path = getSiteNode().getURL();
 //
-//        if (Assert.isAssertEnabled()) {
-//            Assert.assertTrue(path.endsWith("/"));
+//        if (Assert.isEnabled()) {
+//            Assert.isTrue(path.endsWith("/"));
 //        }
 //
 //        return path.substring(0, path.length() - 1);
@@ -328,7 +328,7 @@ public class ContentSection extends Application {
      */
     public Folder getRootFolder() {
         DataObject folder = (DataObject) get(ROOT_FOLDER);
-        Assert.assertNotNull(folder, "root folder");
+        Assert.exists(folder, "root folder");
         return new Folder(folder);
     }
 
@@ -338,7 +338,7 @@ public class ContentSection extends Application {
      * @param root The root folder
      */
     public void setRootFolder(Folder root) {
-        Assert.assertNotNull(root, "root folder");
+        Assert.exists(root, "root folder");
 
         // Update the content section of the old and new root folders.
         // This is necessary because the content section is used to determine
@@ -397,7 +397,7 @@ public class ContentSection extends Application {
     public Category getRootCategory() {
         Category category = Category.getRootForObject(this);
 
-        Assert.assertNotNull(category, "root category");
+        Assert.exists(category, "root category");
 
         return category;
     }
@@ -411,7 +411,7 @@ public class ContentSection extends Application {
      * @pre  ( root != null )
      */
     public void setRootCategory(Category root) {
-        Assert.assertNotNull(root, "root category");
+        Assert.exists(root, "root category");
         Category.setRootForObject(this, root);
     }
 
@@ -423,7 +423,7 @@ public class ContentSection extends Application {
      */
     public Group getStaffGroup() {
         DataObject group = (DataObject) get(STAFF_GROUP);
-        Assert.assertNotNull(group, "staff group");
+        Assert.exists(group, "staff group");
         return new Group(group);
     }
 
@@ -434,7 +434,7 @@ public class ContentSection extends Application {
      * @pre ( group != null )
      */
     public void setStaffGroup(Group group) {
-        Assert.assertNotNull(group, "staff group");
+        Assert.exists(group, "staff group");
         setAssociation(STAFF_GROUP, group);
     }
 
@@ -446,7 +446,7 @@ public class ContentSection extends Application {
      */
     public Group getViewersGroup() {
         DataObject group = (DataObject) get(VIEWERS_GROUP);
-        Assert.assertNotNull(group, "viewers group");
+        Assert.exists(group, "viewers group");
         return new Group(group);
     }
 
@@ -457,7 +457,7 @@ public class ContentSection extends Application {
      * @pre ( group != null )
      */
     public void setViewersGroup(Group group) {
-        Assert.assertNotNull(group, "viewers group");
+        Assert.exists(group, "viewers group");
         setAssociation(VIEWERS_GROUP, group);
     }
 
@@ -469,7 +469,7 @@ public class ContentSection extends Application {
      */
     public String getPageResolverClass() {
         String prc = (String) get(PAGE_RESOLVER_CLASS);
-        Assert.assertNotNull(prc, "Page Resolver class");
+        Assert.exists(prc, "Page Resolver class");
         return prc;
     }
 
@@ -526,7 +526,7 @@ public class ContentSection extends Application {
      */
     public String getItemResolverClass() {
         String irc = (String) get(ITEM_RESOLVER_CLASS);
-        Assert.assertNotNull(irc, "Content Item Resolver class");
+        Assert.exists(irc, "Content Item Resolver class");
         s_log.debug("Content Item Resolver Class is " + irc);
         return irc;
     }
@@ -573,7 +573,7 @@ public class ContentSection extends Application {
      */
     public String getTemplateResolverClass() {
         String trc = (String) get(TEMPLATE_RESOLVER_CLASS);
-        Assert.assertNotNull(trc, "Template Resolver class");
+        Assert.exists(trc, "Template Resolver class");
         return trc;
     }
 
@@ -618,7 +618,7 @@ public class ContentSection extends Application {
      */
     public String getXMLGeneratorClass() {
         String xgc = (String) get(XML_GENERATOR_CLASS);
-        Assert.assertNotNull(xgc, "XML Generator class");
+        Assert.exists(xgc, "XML Generator class");
         return xgc;
     }
 

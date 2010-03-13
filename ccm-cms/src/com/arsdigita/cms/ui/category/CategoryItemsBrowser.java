@@ -114,7 +114,7 @@ public class CategoryItemsBrowser extends Grid {
      *   {@link com.arsdigita.cms.ContentItem#DRAFT} or {@link com.arsdigita.cms.ContentItem#LIVE}
      */
     public void setContext(String context) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_context = context;
     }
 
@@ -167,7 +167,7 @@ public class CategoryItemsBrowser extends Grid {
 
             DomainObject d = DomainObjectFactory.newInstance((DataObject)value);
 
-            Assert.assertTrue(d instanceof ContentPage);
+            Assert.isTrue(d instanceof ContentPage);
             ContentPage p = (ContentPage)d;
 
             CMSContainer box = new CMSContainer();

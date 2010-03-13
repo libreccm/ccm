@@ -41,7 +41,7 @@ public class MetaObjectCollection extends DomainCollection {
     public BigDecimal getID() {
         BigDecimal id = (BigDecimal)m_dataCollection.get("id");
 
-        Assert.assertNotNull(id);
+        Assert.exists(id);
 
         return id;
     }
@@ -55,7 +55,7 @@ public class MetaObjectCollection extends DomainCollection {
     public DomainObject getDomainObject() {
         DomainObject domainObject = getMetaObject();
 
-        Assert.assertNotNull(domainObject);
+        Assert.exists(domainObject);
 
         return domainObject;
     }
@@ -71,7 +71,7 @@ public class MetaObjectCollection extends DomainCollection {
 
         MetaObject obj = MetaObject.retrieve(dataObject);
 
-        Assert.assertNotNull(obj);
+        Assert.exists(obj);
 
         return obj;
     }

@@ -665,7 +665,7 @@ public class Application extends Resource {
      * 
      */
     public void createGroup() {
-	Assert.equal(getGroup(), null,
+	Assert.isEqual(getGroup(), null,
 			"Group has already been created for Application " + getTitle());
 
 	Group group = new Group();

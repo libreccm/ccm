@@ -67,12 +67,12 @@ public class DefaultTableColumnModel implements TableColumnModel {
     }
 
     public void add(TableColumn column) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_columns.add(column);
     }
 
     public void add(int columnIndex, TableColumn column) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_columns.add(columnIndex, column);
     }
 
@@ -106,7 +106,7 @@ public class DefaultTableColumnModel implements TableColumnModel {
     }
 
     public void remove(TableColumn column) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_columns.remove(column);
     }
 
@@ -115,7 +115,7 @@ public class DefaultTableColumnModel implements TableColumnModel {
     }
 
     public void setSelectionModel(SingleSelectionModel model) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_selection = model;
     }
 

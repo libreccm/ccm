@@ -26,10 +26,11 @@ import com.arsdigita.bebop.event.PrintListener;
  *
  * <p>See {@link BaseLink} for a description
  * of all Bebop Link classes.
- **/
+ *
+ * @version $Id: ExternalLink.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class ExternalLink extends Link {
 
-    public static final String versionId = "$Id: ExternalLink.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public ExternalLink(Component child, String url) {
         super(child, url);
     }

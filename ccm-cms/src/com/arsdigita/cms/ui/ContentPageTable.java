@@ -132,7 +132,7 @@ public class ContentPageTable extends DataTable {
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      */
     public void setContext(String context) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_context = context;
     }
 
@@ -144,7 +144,7 @@ public class ContentPageTable extends DataTable {
      *   will be shown
      */
     public void setContentType(ContentType c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_type = c;
     }
 

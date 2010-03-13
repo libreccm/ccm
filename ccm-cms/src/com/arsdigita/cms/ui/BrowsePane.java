@@ -166,7 +166,7 @@ public class BrowsePane extends LayoutPanel implements Resettable {
             final PageState state = e.getPageState();
 
             if (Assert.isEnabled()) {
-                Assert.truth(m_model.isSelected(state));
+                Assert.isTrue(m_model.isSelected(state));
             }
 
             final Folder root = CMS.getContext().getContentSection

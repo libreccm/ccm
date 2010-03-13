@@ -42,8 +42,6 @@ public class BoxPanel extends SimpleContainer
     implements BebopConstants
 {
 
-    public static final String versionId = "$Id: BoxPanel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Specifies that components should be laid out left to right.
      */
@@ -137,19 +135,19 @@ public class BoxPanel extends SimpleContainer
         setAttribute(WIDTH_ATTR, w);
     }
 
-    /**
-     * Sets whether a border should be drawn.
-     * 
-     * @param isBorder <code>true</code> if a border should be drawn
-     * @deprecated Use {@link #setBorder(int border)} instead.
-     */
-    public void setBorder(boolean isBorder) {
-        if (isBorder) {
-            setAttribute(BORDER_ATTR, "1");
-        } else {
-            setAttribute(BORDER_ATTR, "0");
-        }
-    }
+//  /**
+//   * Sets whether a border should be drawn.
+//   *
+//   * @param isBorder <code>true</code> if a border should be drawn
+//   * @deprecated Use {@link #setBorder(int border)} instead.
+//   */
+//  public void setBorder(boolean isBorder) {
+//      if (isBorder) {
+//          setAttribute(BORDER_ATTR, "1");
+//      } else {
+//          setAttribute(BORDER_ATTR, "0");
+//      }
+//  }
 
     /**
      * 

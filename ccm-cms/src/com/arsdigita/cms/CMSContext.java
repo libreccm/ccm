@@ -88,7 +88,7 @@ public final class CMSContext {
      */
     public final ContentSection getContentSection() {
         // removing this which is not true when viewing category pages
-        //Assert.assertNotNull(m_section, "section");
+        //Assert.exists(m_section, "section");
         return m_section;
     }
 
@@ -119,7 +119,7 @@ public final class CMSContext {
      */
     public final ContentItem getContentItem() {
         // removing this which is necessarily true in ContentList
-        //Assert.assertNotNull(m_item, "item");
+        //Assert.exists(m_item, "item");
         if (s_log.isDebugEnabled() && m_item == null) {
             s_log.debug("Content item is null");
         }

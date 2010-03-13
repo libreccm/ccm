@@ -83,7 +83,7 @@ public class DocumentAssetPage extends CMSPage {
             throw new ServletException(e.getMessage());
         }
 
-        Assert.truth(doc instanceof Document,
+        Assert.isTrue(doc instanceof Document,
                      "document is not a document" +
                      doc.getID().toString());
 

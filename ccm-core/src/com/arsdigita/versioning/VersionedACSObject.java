@@ -216,10 +216,10 @@ public class VersionedACSObject extends ACSObject implements Audited {
      * @deprecated
      */
     public void setMaster(VersionedACSObject master) {
-        Assert.assertNotNull(master, "master object");
-        Assert.assertTrue
+        Assert.exists(master, "master object");
+        Assert.isTrue
             (!isRolledBack(), "Object " + getID() + " is rolled back");
-        Assert.assertTrue
+        Assert.isTrue
             (!master.isRolledBack(),
              "Master Object " + master.getID() + " is rolled back");
 
@@ -334,7 +334,7 @@ public class VersionedACSObject extends ACSObject implements Audited {
         if (s_properType == null) {
             s_properType = SessionManager.getSession().getMetadataRoot().
                 getObjectType(BASE_DATA_OBJECT_TYPE);
-            Assert.assertNotNull
+            Assert.exists
                 (s_properType, "Object type " + BASE_DATA_OBJECT_TYPE);
         }
         return subType.isSubtypeOf(s_properType);

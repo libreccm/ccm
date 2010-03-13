@@ -49,10 +49,11 @@ import com.arsdigita.bebop.event.ChangeListener;
  * In addition, the wizard overrides the default pane behavior.
  * If no step is selected, the wizard automatically selects the default
  * step. The default step may be changed with
+ *
+ *
+ * @version $Id: MapWizard.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class MapWizard extends SplitWizard {
-
-    public static final String versionId = "$Id: MapWizard.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * The name of the state parameter which stores the current selection
@@ -98,30 +99,30 @@ public class MapWizard extends SplitWizard {
 
         // Ensure consistency
         s.addChangeListener(new ChangeListener() {
-                public void stateChanged(ChangeEvent e) {
-                    PageState state = e.getPageState();
-                    Object key = getCurrentStepKey(state);
+            public void stateChanged(ChangeEvent e) {
+                PageState state = e.getPageState();
+                Object key = getCurrentStepKey(state);
 
-                    if (key == null) {
-                        return;
-                    }
-
-                    if (!m_panels.containsKey(key)) {
-                        throw new IllegalArgumentException (
-                                                            "Key " + key + " is not in the wizard"
-                                                            );
-                    }
-
-                    int i = m_panels.findKey(key);
-                    int prog = getProgress(state);
-                    if (i > prog) {
-                        throw new IllegalArgumentException (
-                                                            "Key " + key + " identifies the component at index " + i +
-                                                            ", but the highest enabled step is " + prog
-                                                            );
-                    }
+                if (key == null) {
+                    return;
                 }
-            });
+
+                if (!m_panels.containsKey(key)) {
+                    throw new IllegalArgumentException ("Key " + key +
+                                                        " is not in the wizard"
+                                                       );
+                }
+
+                int i = m_panels.findKey(key);
+                int prog = getProgress(state);
+                if (i > prog) {
+                    throw new IllegalArgumentException ("Key " + key +
+                                      " identifies the component at index " + i +
+                                      ", but the highest enabled step is " + prog
+                                                       );
+                }
+            }
+        });
 
         MapComponentSelectionModel sel =
             new MapComponentSelectionModel(s, m_panels);

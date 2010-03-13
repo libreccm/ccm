@@ -8,7 +8,7 @@
                     name="aplaws-handbook" 
               prettyName="APLAWS plus" 
                  version="1-0-9" 
-                 release="rc-4" 
+                 release="rc-5" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">

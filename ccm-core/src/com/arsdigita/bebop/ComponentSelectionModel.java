@@ -34,8 +34,6 @@ package com.arsdigita.bebop;
  */
 public interface ComponentSelectionModel extends SingleSelectionModel {
 
-    public static final String versionId = "$Id: ComponentSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
 
     /**
      * Returns the component that should be used to output the currently

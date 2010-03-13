@@ -29,9 +29,9 @@ import java.util.Date;
  *
  * @author Joseph Bank
  * @version 1.0
+ * @version $Id: Audited.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public interface Audited {
-    public static final String versionId = "$Id: Audited.java 287 2005-02-22 00:29:02Z sskracic $";
 
     /**
      * Gets the user who created the object. May be null.

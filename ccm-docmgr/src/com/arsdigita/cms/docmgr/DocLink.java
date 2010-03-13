@@ -180,7 +180,7 @@ public class DocLink extends ContentPage implements Resource, Searchable {
             int suffixLen = suffix.length();
             docName = docName.substring(0,(200 - suffixLen));
             docName = docName + suffix;
-            Assert.truth(docName.length() < 201 , "Actual Length is: " + docName.length());
+            Assert.isTrue(docName.length() < 201 , "Actual Length is: " + docName.length());
             return docName;
         } else{
             return buf.toString();

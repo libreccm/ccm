@@ -53,7 +53,7 @@ import org.apache.log4j.Logger;
  *     ...
  *
  *     public CancelListener(final FormSection form) {
- *         Assert.assertNotNull(form, "FormSection form");
+ *         Assert.exists(form, "FormSection form");
  *
  *         if (form instanceof Cancellable) {
  *             m_cancellable = (Cancellable) form;

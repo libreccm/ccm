@@ -37,7 +37,7 @@ public class BookmarkCollection extends DomainCollection {
     public BigDecimal getID() {
         BigDecimal id = (BigDecimal)m_dataCollection.get("id");
 
-        Assert.assertNotNull(id);
+        Assert.exists(id);
 
         return id;
     }
@@ -51,7 +51,7 @@ public class BookmarkCollection extends DomainCollection {
     public DomainObject getDomainObject() {
         DomainObject domainObject = getBookmark();
 
-        Assert.assertNotNull(domainObject);
+        Assert.exists(domainObject);
 
         return domainObject;
     }
@@ -67,7 +67,7 @@ public class BookmarkCollection extends DomainCollection {
 
         Bookmark bookmark = Bookmark.retrieveBookmark(dataObject);
 
-        Assert.assertNotNull(bookmark);
+        Assert.exists(bookmark);
 
         return bookmark;
     }
@@ -81,7 +81,7 @@ public class BookmarkCollection extends DomainCollection {
     public String getName() {
         String name = (String)m_dataCollection.get("bookmark_name");
 
-        Assert.assertNotNull(name);
+        Assert.exists(name);
 
         return name;
     }
@@ -95,7 +95,7 @@ public class BookmarkCollection extends DomainCollection {
     public String getURL() {
         String url = (String)m_dataCollection.get("bookmark_url");
 
-        Assert.assertNotNull(url);
+        Assert.exists(url);
 
         return url;
     }

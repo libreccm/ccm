@@ -299,7 +299,7 @@ public abstract class ItemTemplatesListing extends TemplatesListing {
 
             ContentSection sec = CMS.getContext().getContentSection();
             ContentItem item = m_itemSel.getSelectedItem(state);
-            Assert.assertNotNull(item, "item");
+            Assert.exists(item, "item");
 
             ItemResolver res = sec.getItemResolver();
             String url = res.generateItemURL(state, item, sec,

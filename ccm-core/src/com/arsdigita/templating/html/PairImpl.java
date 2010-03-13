@@ -46,12 +46,12 @@ final class PairImpl implements AttributeMap.Pair {
     }
 
     public void setName(String qName) {
-        Assert.assertNotNull(qName, "qName");
+        Assert.exists(qName, "qName");
         m_qName = qName;
     }
 
     public void setValue(String value) {
-        Assert.assertNotNull(value, "value");
+        Assert.exists(value, "value");
         m_value = value;
     }
 }

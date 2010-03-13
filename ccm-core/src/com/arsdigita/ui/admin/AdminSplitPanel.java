@@ -67,7 +67,7 @@ class AdminSplitPanel extends BoxPanel implements ChangeListener {
      */
 
     public void addTab (Label label, Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_componentList.add(c);
         c.setClassAttr("main");
         add(c);
@@ -75,7 +75,7 @@ class AdminSplitPanel extends BoxPanel implements ChangeListener {
     }
 
     public void register(Page p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         m_list = new List(new GlobalizedTabModelBuilder());
         m_list.addChangeListener(this);

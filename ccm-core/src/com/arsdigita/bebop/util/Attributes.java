@@ -51,7 +51,7 @@ public class Attributes implements Lockable, Cloneable {
     }
 
     /**
-     * Clone the attributes. The clone is not locked and has its own set of
+     * Clone the attributes. The clone is not isLocked and has its own set of
      * attributes and values.
      * @post ! ((Attributes) return).isLocked()
      */
@@ -75,7 +75,7 @@ public class Attributes implements Lockable, Cloneable {
      * @param value The value to assign the named attribute
      */
     public void setAttribute(String name, String value) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         name = name.toLowerCase();
         m_attributes.put(name, value);
     }

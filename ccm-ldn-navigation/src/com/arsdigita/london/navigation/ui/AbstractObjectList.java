@@ -40,12 +40,12 @@ public abstract class AbstractObjectList
     private DataCollectionDefinition m_definition = new DataCollectionDefinition();
 
     public final void setDefinition(DataCollectionDefinition definition) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_definition = definition;
     }
 
     public final void setRenderer(DataCollectionRenderer renderer) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_renderer = renderer;
     }
 
@@ -75,7 +75,7 @@ public abstract class AbstractObjectList
 
     public Element generateObjectListXML(HttpServletRequest request,
                                          HttpServletResponse response) {
-        Assert.locked(this);
+        Assert.isLocked(this);
         
         String pageNumberValue = request.getParameter("pageNumber");
         Integer pageNumber = null;

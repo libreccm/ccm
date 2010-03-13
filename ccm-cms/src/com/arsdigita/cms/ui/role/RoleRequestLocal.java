@@ -32,7 +32,7 @@ public abstract class RoleRequestLocal extends RequestLocal {
     public final Role getRole(final PageState state) {
         final Role role = (Role) get(state);
 
-        Assert.assertNotNull(role, "Role role");
+        Assert.exists(role, "Role role");
 
         return role;
     }

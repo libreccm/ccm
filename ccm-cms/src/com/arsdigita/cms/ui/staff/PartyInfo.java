@@ -131,7 +131,7 @@ public class PartyInfo extends SimpleContainer {
      * @pre ( state != null )
      */
     protected BigDecimal getPartyId(PageState state) {
-        Assert.truth(m_parties.isSelected(state));
+        Assert.isTrue(m_parties.isSelected(state));
         String partyId = (String) m_parties.getSelectedKey(state);
         return new BigDecimal(partyId);
     }

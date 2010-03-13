@@ -104,7 +104,7 @@ public class DefaultImageBrowserModelBuilder extends LockableImpl
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      */
     public void setContext(String context) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_context = context;
     }
 

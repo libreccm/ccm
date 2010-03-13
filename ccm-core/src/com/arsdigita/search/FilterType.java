@@ -64,7 +64,7 @@ public abstract class FilterType {
     
     /**
      * Two filter type objects compare
-     * equal if they have the same filter
+     * isEqual if they have the same filter
      * key
      */
     public boolean equals(Object o) {

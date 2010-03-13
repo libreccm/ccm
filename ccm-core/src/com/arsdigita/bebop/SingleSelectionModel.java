@@ -43,8 +43,6 @@ import com.arsdigita.bebop.parameters.ParameterModel;
  */
 public interface SingleSelectionModel {
 
-    public static final String versionId = "$Id: SingleSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Returns <code>true</code> if there is a selected element.
      *

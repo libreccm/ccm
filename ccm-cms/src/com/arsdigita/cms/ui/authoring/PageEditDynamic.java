@@ -82,10 +82,9 @@ import org.apache.log4j.Logger;
  *
  * @author Xixi D'Moon (xdmoon@arsdigita.com)
  * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: PageEditDynamic.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PageEditDynamic extends SecurityPropertyEditor {
-
-    public static final String versionId = "$Id: PageEditDynamic.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(PageEditDynamic.class.getName());
@@ -588,7 +587,7 @@ public class PageEditDynamic extends SecurityPropertyEditor {
 
             ContentItem item =
                 (ContentItem) this.getItemSelectionModel().getSelectedObject(state);
-            Assert.assertNotNull(item);
+            Assert.exists(item);
 
             if (m_isPrimaryStep) {
                 String newName = (String) data.get(BasicPageForm.NAME);

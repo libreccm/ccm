@@ -103,7 +103,6 @@ import com.arsdigita.xml.Element;
  * @version $Id: GridPanel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class GridPanel extends SimpleContainer implements BebopConstants {
-    public static final String versionId = "$Id: GridPanel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final ChildConstraint DEFAULT_CONSTRAINT
         = new ChildConstraint();
@@ -168,7 +167,7 @@ public class GridPanel extends SimpleContainer implements BebopConstants {
      *
      */
     public void setInserted(boolean isInserted) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_isInserted = isInserted;
     }
 

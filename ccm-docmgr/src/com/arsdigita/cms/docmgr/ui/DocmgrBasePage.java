@@ -189,7 +189,8 @@ public class DocmgrBasePage extends Page implements DMConstants {
     }
 
     protected void buildGlobal(Container global) {
-        Link link = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.sign_out")),  "/register/logout");
+        Link link = new Link( new Label(GlobalizationUtil.globalize("cw.workspace.sign_out")),
+                              "/register/logout");
 
         link.setClassAttr("signoutLink");
 
@@ -303,7 +304,7 @@ public class DocmgrBasePage extends Page implements DMConstants {
      * @param pc the component to be added
      */
     public void add(Component pc) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_body.add(pc);
     }
 

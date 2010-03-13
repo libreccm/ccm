@@ -1107,7 +1107,7 @@ public class Category extends ACSObject {
             addMapping((Category) acsObj, relationType);
             return;
         }
-        Assert.falsity(isAbstract(),
+        Assert.isFalse(isAbstract(),
                        "You cannot categorize an object " +
                        "within an abstract category.  If you are " +
                        "seeing this message then your UI is " +
@@ -1662,7 +1662,7 @@ public class Category extends ACSObject {
      * @pre relation == Category.CHILD || relation == Category.RELATED || relation == Category.PREFERRED
      */
     public DataAssociationCursor getRelatedCategories(String relation) {
-        Assert.truth(relation.equals(CHILD) || relation.equals(RELATED)
+        Assert.isTrue(relation.equals(CHILD) || relation.equals(RELATED)
                 || relation.equals(PREFERRED),
                      " invalid relation {" + relation + "}");
         DataAssociationCursor cursor =

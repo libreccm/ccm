@@ -110,7 +110,7 @@ public class Utilities {
             uc.filter(KernelHelper.getSystemAdministratorEmailAddress());
             uc.next();
             User sysadmin = uc.getUser();
-            Assert.assertNotNull(sysadmin);
+            Assert.exists(sysadmin);
             uc.close();
     
             return sysadmin;

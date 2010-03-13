@@ -42,7 +42,7 @@ public class BasePage extends Page {
                     String id) {
         super(title, new SimpleContainer());
         
-        Assert.assertNotNull(application, "application name");
+        Assert.exists(application, "application name");
         setAttribute("application", application);
 
         if (id != null) {

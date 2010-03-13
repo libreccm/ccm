@@ -118,8 +118,8 @@ public class StringInRangeValidationListener extends GlobalizedParameterListener
      * @param maxLength
      */
     private static void validateRange(int minLength, int maxLength) {
-        Assert.truth(minLength >= 0, "Minimum length cannot be negative!");
-        Assert.truth(maxLength > minLength, "Maximum length must be greater than minimum!");
+        Assert.isTrue(minLength >= 0, "Minimum length cannot be negative!");
+        Assert.isTrue(maxLength > minLength, "Maximum length must be greater than minimum!");
     }
 
 

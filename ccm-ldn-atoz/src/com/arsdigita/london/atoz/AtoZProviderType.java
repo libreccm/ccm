@@ -39,11 +39,11 @@ public class AtoZProviderType {
                             Class provider,
                             Class providerCreate,
                             Class providerAdmin) {
-        Assert.truth(AtoZProvider.class.isAssignableFrom(provider),
+        Assert.isTrue(AtoZProvider.class.isAssignableFrom(provider),
                      "provider is a subclass of AtoZProvider");
-        Assert.truth(ProviderAdmin.class.isAssignableFrom(providerAdmin),
+        Assert.isTrue(ProviderAdmin.class.isAssignableFrom(providerAdmin),
                      "providerAdmin is a subclass of ProviderAdmin");
-        Assert.truth(ProviderForm.class.isAssignableFrom(providerCreate),
+        Assert.isTrue(ProviderForm.class.isAssignableFrom(providerCreate),
                      "providerCreate is a subclass of ProviderForm");
 
         m_title = title;

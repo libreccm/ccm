@@ -64,17 +64,17 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     public void addAttribute(String name) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_attributes.add(name);
     }
 
     public void addProperty(DataCollectionPropertyRenderer pr) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_properties.add(pr);
     }
 
     public void setPageSize(int pageSize) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_pageSize = pageSize;
     }
 
@@ -88,12 +88,12 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     public void setSpecializeObjects(boolean specializeObjects) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_specializeObjects = specializeObjects;
     }
 
     public void setWrapAttributes(boolean wrapAttributes) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_wrapAttributes = wrapAttributes;
     }
 
@@ -106,7 +106,7 @@ public class DataCollectionRenderer extends LockableImpl {
      */
     public Element generateXML(DataCollection objects,
                                int pageNumber) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         // Quasimodo: Begin
         // If objects is empty, do not insert objectList-element but do insert noContent-element

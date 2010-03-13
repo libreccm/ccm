@@ -132,7 +132,7 @@ public class ThemeFile extends DomainObject {
     }
 
     public void setVersion(String version) {
-        Assert.assertTrue(LIVE.equals(version) || DRAFT.equals(version), "The version must be either " + LIVE + " or " + DRAFT + " but was actually " + version);
+        Assert.isTrue(LIVE.equals(version) || DRAFT.equals(version), "The version must be either " + LIVE + " or " + DRAFT + " but was actually " + version);
         set(VERSION, version);
     }
 

@@ -191,7 +191,7 @@ public class PartySearchSelect
          * @pre basePartyCollection.get() instanceof PartyCollection
          **/
         public Search (RequestLocal basePartyCollection) {
-            Assert.assertTrue(basePartyCollection != null);
+            Assert.isTrue(basePartyCollection != null);
 
             m_partyQuery = basePartyCollection;
 

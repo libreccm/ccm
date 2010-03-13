@@ -416,13 +416,13 @@ public class ArticleImage extends SimpleContainer implements AuthoringStepCompon
 
         private ImageAsset getImageAsset(PageState state) {
             ImageAsset image = (ImageAsset) m_assetsWithImage.getSelectedObject(state);
-            Assert.assertNotNull(image, "Image asset");
+            Assert.exists(image, "Image asset");
             return image;
         }
 
         private Article getArticle(PageState state) {
             Article article = (Article) m_articleWithImage.getSelectedObject(state);
-            Assert.assertNotNull(article, "Article");
+            Assert.exists(article, "Article");
             return article;
         }
 

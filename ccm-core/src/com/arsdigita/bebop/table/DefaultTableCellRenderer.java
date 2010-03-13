@@ -113,7 +113,7 @@ public class DefaultTableCellRenderer extends LockableImpl
      * @pre ! isLocked()
      */
     public void setActive(boolean v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_active = v;
     }
 

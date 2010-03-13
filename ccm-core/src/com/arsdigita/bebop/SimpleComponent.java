@@ -40,21 +40,20 @@ import com.arsdigita.xml.Element;
 public class SimpleComponent extends Completable
     implements Component, Cloneable {
 
-    public static final String versionId = "$Id: SimpleComponent.java 1498 2007-03-19 16:22:15Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
     private boolean m_locked;
 
     /**
      * The Attribute object is protected to make
      * it easier for the Form Builder service to persist the SimpleComponent.
-     * Locking violation is not a problem since if the SimpleComponent is locked
-     * then the Attribute object will also be locked.
+     * Locking violation is not a problem since if the SimpleComponent is isLocked
+     * then the Attribute object will also be isLocked.
      */
     protected Attributes m_attr;
 
     private String m_key = null;        // name mangling key
 
     /**
-     * Clones a component. The clone is not locked and has its own set of
+     * Clones a component. The clone is not isLocked and has its own set of
      * attributes.
      * @return the clone of a component.
      * @post ! ((SimpleComponent) return).isLocked()
@@ -109,7 +108,7 @@ public class SimpleComponent extends Completable
     /**
      * Unlocks this component.  Package visibility is intentional; the
      * only time a component should be unlocked is when it's pooled and
-     * gets locked because it's put into a page.  It needs to be unlocked
+     * gets isLocked because it's put into a page.  It needs to be unlocked
      * when the instance is recycled.
      */
     void unlock() {
@@ -133,7 +132,7 @@ public class SimpleComponent extends Completable
      * href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Name">XML name</a>
      */
     public void setClassAttr(String theClass) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(CLASS, theClass);
     }
 
@@ -156,7 +155,7 @@ public class SimpleComponent extends Completable
      * @see <a href="#standard">Standard Attributes</a>
      */
     public void setStyleAttr(String style) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(STYLE, style);
     }
 
@@ -181,7 +180,7 @@ public class SimpleComponent extends Completable
      * @see <a href="#standard">Standard Attributes</a>
      */
     public void setIdAttr(String id) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(ID, id);
     }
 
@@ -199,7 +198,7 @@ public class SimpleComponent extends Completable
      * @param value new attribute value
      */
     final protected void setAttribute(String name, String value) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if (m_attr == null) {
             m_attr = new Attributes();
         }
@@ -269,7 +268,7 @@ public class SimpleComponent extends Completable
      * @param key the key to mangle
      */
     public Component setKey(String key) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if (key.charAt(0) >= 0 && key.charAt(0) <= 9) //TODO: be more strict.
             throw new IllegalArgumentException
                 ("key \"" + key + "\" must not start with a digit.");

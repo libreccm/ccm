@@ -72,7 +72,7 @@ public abstract class Subscription extends BaseSubscription {
      * @return a header to insert at the top of the alert.
      */
     public String getHeader(ThreadedMessage msg) {
-        Assert.truth(msg instanceof Post,
+        Assert.isTrue(msg instanceof Post,
                      "Parameter msg should be a Post");
 
         Post post = (Post)msg;

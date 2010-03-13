@@ -172,7 +172,7 @@ public class HomepageWorkspaceSelectionModel {
             Workspace custom = null;
             try {
                 custom = global.retrieveSubworkspaceForParty(party);
-                Assert.truth(custom.getParty() != null && 
+                Assert.isTrue(custom.getParty() != null &&
                              custom.getParty().equals(party),
                              "party is not null and not admin");
                 s_log.debug("Found exsting personal workspce");

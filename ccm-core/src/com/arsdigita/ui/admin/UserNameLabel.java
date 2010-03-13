@@ -24,6 +24,7 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.User;
+// import com.arsdigita.ui.admin.AdminConstants;
 import java.math.BigDecimal;
 
 /**
@@ -33,8 +34,6 @@ import java.math.BigDecimal;
  */
 
 public class UserNameLabel extends Label {
-
-    public static final String versionId = "$Id: UserNameLabel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public UserNameLabel() {
 
@@ -48,7 +47,9 @@ public class UserNameLabel extends Label {
 
                     User user;
                     try {
+                        // Deprecated, use getValue instead
                         BigDecimal id = (BigDecimal) s.getGlobalValue("user_id");
+//                      BigDecimal id = (BigDecimal) s.getValue(USER_ID_PARAM);
                         user = User.retrieve(id);
                         t.setLabel(user.getName());
                     } catch (DataObjectNotFoundException ex) {

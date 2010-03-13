@@ -674,7 +674,7 @@ public class StringUtils {
     /**
      * Strip extra white space from a string.  This replaces any white space
      * character or consecutive white space characters with a single space.
-     * It is useful when comparing strings that should be equal except for
+     * It is useful when comparing strings that should be isEqual except for
      * possible differences in white space.  Example:  input = "I  \ndo\tsee".
      * Output = "I do see".
      * @param s string that may contain extra white space

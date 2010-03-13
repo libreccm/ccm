@@ -505,9 +505,9 @@ public class Workspace extends Application {
      * @param initial Single-character string, must be uppercase
      **/
     public PartyCollection getParticipantsWithInitial(String initial) {
-        Assert.assertNotNull(initial);
-        Assert.assertTrue(initial.length() == 1, "Initial needs length 1");
-        Assert.assertTrue(initial.equals(initial.toUpperCase()),
+        Assert.exists(initial);
+        Assert.isTrue(initial.length() == 1, "Initial needs length 1");
+        Assert.isTrue(initial.equals(initial.toUpperCase()),
                           "Initial must be uppercase");
 
         //DataAssociationCursor dac =

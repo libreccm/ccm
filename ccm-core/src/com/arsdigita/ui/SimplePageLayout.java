@@ -56,7 +56,7 @@ class SimplePageLayout {
         Assert.exists(component, Class.class);
         Assert.exists(tag, String.class);
         
-        Assert.truth(SimpleComponent.class.isAssignableFrom(component),
+        Assert.isTrue(SimpleComponent.class.isAssignableFrom(component),
                      "component is a subclass of SimpleComponent");
         
         List list = (List)m_tags.get(tag);

@@ -151,7 +151,7 @@ public class FileUploadForm extends Form
         if (fpath != null && fpath.length() > 0) {
             HttpServletRequest mreq = e.getPageState().getRequest();
 
-            Assert.assertTrue(mreq instanceof MultipartHttpServletRequest,
+            Assert.isTrue(mreq instanceof MultipartHttpServletRequest,
                               "I got a " + mreq + " when I was " +
                               "expecting a MultipartHttpServletRequest");
 

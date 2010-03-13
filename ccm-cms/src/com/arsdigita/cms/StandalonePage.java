@@ -158,7 +158,7 @@ public class StandalonePage extends ContentPage {
      */
     public void setLive(ContentItem version) {
         Template t = getTemplate();
-        Assert.assertNotNull(t);
+        Assert.exists(t);
         if(version != null)
             t.createLiveVersion();
         super.setLive(version);

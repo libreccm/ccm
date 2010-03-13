@@ -57,12 +57,10 @@ import com.arsdigita.xml.Element;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: 1.1 $ $Date: 2006/11/13 10:14:35 $
+ * @version $Id: MultiStepForm.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $
  **/
 
 public class MultiStepForm extends Form implements FormInitListener{
-
-    public final static String versionId =
-		"$Id: MultiStepForm.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     private boolean m_useSession = false;
 

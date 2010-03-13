@@ -29,17 +29,14 @@ import org.apache.log4j.Logger;
  * A modal container is a container that manages visibility for a set of
  * components. It allows only one of its children to be visible. One of its
  * children can be selected as the default visible component. If none is
- * selected the child with index equal to zero is used. The modal container
+ * selected the child with index isEqual to zero is used. The modal container
  * sets the appropriate default and PageState-based visibility for its
  * children.
  *
  * @author Archit Shah
+ * @version $Id: ModalContainer.java 1414 2006-12-07 14:24:10Z chrisgilbert23 $
  **/
 public class ModalContainer extends SimpleContainer implements Resettable {
-    public static final String versionId =
-        "$Id: ModalContainer.java 1414 2006-12-07 14:24:10Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(ModalContainer.class);
 
@@ -57,7 +54,7 @@ public class ModalContainer extends SimpleContainer implements Resettable {
     }
 
     public void register(Page p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         Iterator it = children();
         while (it.hasNext()) {
@@ -70,7 +67,7 @@ public class ModalContainer extends SimpleContainer implements Resettable {
     }
 
     public void setDefaultComponent(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (!contains(c)) {
             add(c);
@@ -162,7 +159,7 @@ public class ModalContainer extends SimpleContainer implements Resettable {
      * (i.e., visible component) is changed using setVisibleComponent().
      **/
     public void addModeChangeListener(ChangeListener cl) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         m_changeListeners.add(cl);
     }

@@ -32,13 +32,13 @@ import com.arsdigita.initializer.InitializationException;
  *
  * @author Joseph Bank 
  * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class Initializer
     implements com.arsdigita.initializer.Initializer
 {
 
-    public static final String versionId = "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     // configuration
 
     private Configuration m_conf = new Configuration();

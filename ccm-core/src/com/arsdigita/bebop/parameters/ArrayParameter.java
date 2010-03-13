@@ -102,7 +102,7 @@ public class ArrayParameter extends ParameterModel {
      * @param v the parameter model for entries in the array.
      */
     public final void setElementParameter(ParameterModel  v) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_element = v;
         setName(v.getName());
     }

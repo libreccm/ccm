@@ -130,7 +130,7 @@ public class PageCreate extends BasicPageForm
     // Validate: ensure name uniqueness
     public void validate(FormSectionEvent e) throws FormProcessException {
         Folder f = m_parent.getFolder(e.getPageState());
-        Assert.assertNotNull(f);
+        Assert.exists(f);
         validateNameUniqueness(f, e);
     }
 

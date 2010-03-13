@@ -26,7 +26,7 @@ import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.bebop.util.BebopConstants;
 
 /**
- *   An abstract implementation of {@link Portlet} that captures
+ * An abstract implementation of {@link Portlet} that captures
  * default behavior for portlets defined by users of the {@link
  * com.arsdigita.bebop.portal.Portal} component.
  *
@@ -46,7 +46,6 @@ import com.arsdigita.bebop.util.BebopConstants;
  */
 public abstract class AbstractPortlet implements Portlet, BebopConstants {
 
-    public static final String versionId = "$Id: AbstractPortlet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private String m_title = "";
     private int m_cellNumber = 1;
     private int m_sortKey = 0;

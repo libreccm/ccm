@@ -45,52 +45,55 @@ import org.apache.log4j.Logger;
  * @version $Id: ResourceTypeConfig.java 1270 2006-07-18 13:34:55Z cgyg9330 $
  */
 public class ResourceTypeConfig {
-    public static final String versionId =
-        "$Id: ResourceTypeConfig.java 1270 2006-07-18 13:34:55Z cgyg9330 $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
+    /** The logging object for this class. */
     private static final Logger s_log = Logger.getLogger
         (ResourceTypeConfig.class);
 
     /**
-	 * optionally set - prevents create/modify form being rendered unless user has 
-	 * this privilege on the appropriate object (parent application in the case of create,
-	 * application in the case of modify
-	 */
-	private PrivilegeDescriptor m_createModifyPrivilege = null;
-	/**
-	 * optionally set - allows components that list applications to filter on the basis
-	 * of this privilege - see com.arsdigita.london.portal.ui.PersistantPortal
-	 * and com.arsdigita.london.portal.ui.ApplicationSelector
-	 */
-	private PrivilegeDescriptor m_viewPrivilege = null;
+     * optionally set - prevents create/modify form being rendered unless user
+     * has this privilege on the appropriate object (parent application in the
+     * case of create, application in the case of modify
+     */
+    private PrivilegeDescriptor m_createModifyPrivilege = null;
+    /**
+     * optionally set - allows components that list applications to filter on the
+     * basis of this privilege - see com.arsdigita.london.portal.ui.PersistantPortal
+     * and com.arsdigita.london.portal.ui.ApplicationSelector
+     */
+    private PrivilegeDescriptor m_viewPrivilege = null;
 	
     /**
-     * For use in generating default config components when
-     * Resource authors don't specify their own.  Should only be
-     * used by PortletType.
+     * For use in generating default config components when Resource authors
+     * don't specify their own. 
+     * Should only be used by PortletType!
      */
     protected ResourceTypeConfig() {
         // Empty
     }
 
+    /**
+     * 
+     * @param resourceObjectType
+     */
     public ResourceTypeConfig(String resourceObjectType) {
-		this(resourceObjectType, null, null);
-	}
+        this(resourceObjectType, null, null);
+    }
 
-	/**
-	 * constructor that allows the resource create and modify forms to be conditionally 
-	 * displayed according to the accessPrivilege. 
-	 * 
-	 * On creation, a permission check is carried out on the parent resource while
-	 * on modification, a permission check is carried out on the resource being modified.
-	 * 
-	 *  
-	 * @param resourceObjectType
-	 * @param accessPrivilege
-	 */
-    public ResourceTypeConfig(String resourceObjectType, PrivilegeDescriptor createModifyPrivilege, PrivilegeDescriptor viewPrivilege) {
+    /**
+     * constructor that allows the resource create and modify forms to be
+     * conditionally displayed according to the accessPrivilege.
+     *
+     * On creation, a permission check is carried out on the parent resource while
+     * on modification, a permission check is carried out on the resource being modified.
+     *
+     *
+     * @param resourceObjectType
+     * @param accessPrivilege
+     */
+    public ResourceTypeConfig(String resourceObjectType, 
+                              PrivilegeDescriptor createModifyPrivilege,
+                              PrivilegeDescriptor viewPrivilege) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Registering " + this + " to object type " +
                         resourceObjectType);
@@ -98,7 +101,8 @@ public class ResourceTypeConfig {
         m_createModifyPrivilege = createModifyPrivilege;
         m_viewPrivilege = viewPrivilege;
         
-        s_log.debug("create/modify privilege is " + m_createModifyPrivilege + ". View privilege is " + m_viewPrivilege);
+        s_log.debug("create/modify privilege is " + m_createModifyPrivilege +
+                    ". View privilege is " + m_viewPrivilege);
         
         
 
@@ -106,6 +110,12 @@ public class ResourceTypeConfig {
             (resourceObjectType, this);
     }
 
+    /**
+     * 
+     * @param resType
+     * @param parentResRL
+     * @return
+     */
     public ResourceConfigFormSection getCreateFormSection
             (final ResourceType resType, final RequestLocal parentResRL) {
         final BasicResourceConfigFormSection config =
@@ -118,6 +128,11 @@ public class ResourceTypeConfig {
         return config;
     }
 
+    /**
+     * 
+     * @param application
+     * @return
+     */
     public ResourceConfigFormSection getModifyFormSection
             (final RequestLocal application) {
         final BasicResourceConfigFormSection config =
@@ -127,9 +142,9 @@ public class ResourceTypeConfig {
     }
 
     /**
-     * Retrieves the component for creating an instance of a
-     * ResourceType. The component should fire a completion
-     * event when it has finished processing.
+     * Retrieves the component for creating an instance of a ResourceType.
+     * The component should fire a completion event when it has finished
+     * processing.
      * @see com.arsdigita.bebop.Completable#fireCompletionEvent(PageState)
      */
     public ResourceConfigComponent getCreateComponent
@@ -141,9 +156,9 @@ public class ResourceTypeConfig {
     }
 
     /**
-     * Retrieves the component for modifying an instance of a
-     * ResourceType. The component should fire a completion
-     * event when it has finished processing.
+     * Retrieves the component for modifying an instance of a ResourceType.
+     * The component should fire a completion event when it has finished
+     * processing.
      * @see com.arsdigita.bebop.Completable#fireCompletionEvent(PageState)
      */
     public ResourceConfigComponent getModifyComponent
@@ -154,6 +169,10 @@ public class ResourceTypeConfig {
         return new ResourceConfigWrapperComponent(section, resource);
     }
 
+    /**
+     * 
+     * @param resource
+     */
     public void configureResource(Resource resource) {
         // Empty
     }
@@ -162,9 +181,10 @@ public class ResourceTypeConfig {
      * Retrieve privilege required for user to see an instance of the resource type. 
      * Privilege may be specified in constructor, or this method may be overridden.
      * 
-     * Privilege must be specified by overriding this method if the privilege is retrieved with 
-     * PrivilegeDescriptor.get, which relies on a map populated during legacy init event
-     * and so may not be populated when the ResourceTypeConfig is created.
+     * Privilege must be specified by overriding this method if the privilege is
+     * retrieved with  PrivilegeDescriptor.get, which relies on a map populated
+     * during legacy init event and so may not be populated when the
+     * ResourceTypeConfig is created.
      * 
      * If no privilege specified, null is returned
      * @return
@@ -172,26 +192,35 @@ public class ResourceTypeConfig {
     public PrivilegeDescriptor getViewPrivilege() {
     	return m_viewPrivilege;
     }
-	/**
-		 * Retrieve privilege required for user to create or modify an instance of the resource type. 
-		 * Privilege may be specified in constructor, or this method may be overridden.
-		 * 
-		 * Privilege must be specified by overriding this method if the privilege is retrieved with 
-		 * PrivilegeDescriptor.get, which relies on a map populated during legacy init event
-		 * and so may not be populated when the ResourceTypeConfig is created
-		 * 
-		 * If privilege is specified, view/modify form may not be displayed if user has insufficient 
-		 * privileges.
-		 * @return
-		 */
-	public PrivilegeDescriptor getCreateModifyPrivilege() {
-			return m_createModifyPrivilege;
-		}
+
+    /**
+     * Retrieve privilege required for user to create or modify an instance of
+     * the resource type.
+     * Privilege may be specified in constructor, or this method may be overridden.
+     *
+     * Privilege must be specified by overriding this method if the privilege is
+     * retrieved with PrivilegeDescriptor.get, which relies on a map populated
+     * during legacy init event and so may not be populated when the
+     * ResourceTypeConfig is created.
+     *
+     * If privilege is specified, view/modify form may not be displayed if user
+     * has insufficient privileges.
+     *
+     * @return
+     */
+    public PrivilegeDescriptor getCreateModifyPrivilege() {
+        return m_createModifyPrivilege;
+    }
     
 
+    /**
+     * 
+     */
     private class ResourceConfigWrapperComponent
             extends ResourceConfigComponent {
-        // on creation, check privilege against parent resource. On modification, check privilege against resource
+
+        // on creation, check privilege against parent resource. On modification,
+        // check privilege against resource
         private RequestLocal m_accessCheckRes;
         private ResourceConfigFormSection m_section;
         private SaveCancelSection m_buttons;
@@ -225,27 +254,35 @@ public class ResourceTypeConfig {
                         fireCompletionEvent(state);
                     }
                 });
-			if (m_createModifyPrivilege != null && m_accessCheckRes != null) {
-				s_log.debug("creating resource create/modify wrapper form with access check");
-				SecurityContainer sc = new SecurityContainer(form) {
+            if (m_createModifyPrivilege != null && m_accessCheckRes != null) {
+                    s_log.debug("" +
+                        "creating resource create/modify wrapper form with access check");
+                    SecurityContainer sc = new SecurityContainer(form) {
+                        protected boolean canAccess(Party party, PageState state) {
+                            Resource resource = (Resource)m_accessCheckRes.get(state);
+                            s_log.debug("check permission on " + resource +
+                                        " for " + party.getPrimaryEmail().getEmailAddress());
+                            PermissionDescriptor access =
+                                new PermissionDescriptor(m_createModifyPrivilege,
+                                                         resource, party);
+                            return PermissionService.checkPermission(access);
+                            }};
+                    add(sc);
+            } else {
+                s_log.debug(
+                    "creating resource create/modify wrapper form without access check");
 
-					protected boolean canAccess(Party party, PageState state) {
-						Resource resource = (Resource)m_accessCheckRes.get(state);
-						s_log.debug("check permission on " + resource + " for " + party.getPrimaryEmail().getEmailAddress());
-						PermissionDescriptor access = new PermissionDescriptor(m_createModifyPrivilege, resource, party);
-						return PermissionService.checkPermission(access);
-					}};
-            	add(sc);
-			} else {
-				s_log.debug("creating resource create/modify wrapper form without access check");
-
-            add(form);
+                add(form);
+            }
         }
-        }
 
+        /**
+         * 
+         * @param state
+         * @return
+         */
         public Resource createResource(PageState state) {
             Resource resource = null;
-
 
             // when either save is selected, or nothing is selected
             // (e.g. when pressing enter in IE)        

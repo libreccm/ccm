@@ -262,7 +262,7 @@ class PublishedLink extends DomainObject {
             if (target != null) {
                 ObjectType ot = src.getObjectType();
                 Property prop = ot.getProperty(propertyName);
-                Assert.assertNotNull(prop, propertyName + " for type " + ot.getQualifiedName() + ", ID: " + src.get("id"));
+                Assert.exists(prop, propertyName + " for type " + ot.getQualifiedName() + ", ID: " + src.get("id"));
                 if (prop.isCollection()) {
                     DataAssociation da = (DataAssociation) src.get(propertyName);
                     da.add(target);

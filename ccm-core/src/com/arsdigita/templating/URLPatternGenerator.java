@@ -135,7 +135,7 @@ public class URLPatternGenerator implements PatternGenerator {
             s_log.debug("Base is " + base + " url is " + url);
         }
         
-        Assert.truth(url.startsWith(base), "URL " + url + " starts with " + base);
+        Assert.isTrue(url.startsWith(base), "URL " + url + " starts with " + base);
         
         return url.substring(base.length()-1);
     }

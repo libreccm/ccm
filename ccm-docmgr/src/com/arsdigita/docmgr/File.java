@@ -139,7 +139,7 @@ public class File extends ResourceImpl implements Constants {
 	 }
 
     public static File retrieveFile(DataObject dataObject) {
-        Assert.assertNotNull(dataObject);
+        Assert.exists(dataObject);
 
         return new File(dataObject);
     }

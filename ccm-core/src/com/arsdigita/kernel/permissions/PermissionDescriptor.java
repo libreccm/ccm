@@ -66,7 +66,7 @@ public class PermissionDescriptor {
      **/
     public PermissionDescriptor(PrivilegeDescriptor privilege,
                                 ACSObject acsObject, Party party) {
-        Assert.assertNotNull(acsObject, "ACSObject acsObject");
+        Assert.exists(acsObject, "ACSObject acsObject");
 
         if (party != null) {
             m_partyOID = party.getOID();
@@ -74,7 +74,7 @@ public class PermissionDescriptor {
             m_partyOID = null;
         }
         m_acsObjectOID = acsObject.getOID();
-        Assert.assertNotNull(privilege, "privilege");
+        Assert.exists(privilege, "privilege");
         m_privilege = privilege;
     }
 
@@ -126,7 +126,7 @@ public class PermissionDescriptor {
         }
         m_acsObjectOID = acsObjectOID;
 
-        Assert.assertNotNull(privilege, "privilege");
+        Assert.exists(privilege, "privilege");
         m_privilege = privilege;
     }
 

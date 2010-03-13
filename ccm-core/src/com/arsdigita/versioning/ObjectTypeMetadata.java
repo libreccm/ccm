@@ -326,7 +326,7 @@ final class ObjectTypeMetadata {
         }
 
         GraphNode node = GraphNode.getInstance((ObjectType) prop.getContainer());
-        Assert.truth(m_dependenceGraph.hasNode(node),
+        Assert.isTrue(m_dependenceGraph.hasNode(node),
                      "dependence graph has " + prop.getContainer());
 
         Graph.Edge edge = getPropertyEdge(node, prop);
@@ -342,7 +342,7 @@ final class ObjectTypeMetadata {
     synchronized void addVersionedProperty(Property prop) {
         Assert.exists(prop, Property.class);
         m_versionedProperties.add(prop);
-        Assert.falsity(prop.getType().isSimple(), "property is simple: " + prop);
+        Assert.isFalse(prop.getType().isSimple(), "property is simple: " + prop);
 
         GraphNode tail = GraphNode.getInstance((ObjectType) prop.getContainer());
 

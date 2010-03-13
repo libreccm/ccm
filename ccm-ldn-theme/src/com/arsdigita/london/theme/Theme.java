@@ -108,7 +108,7 @@ public class Theme extends ACSObject {
             DataObject obj = themes.getDataObject();
             if (themes.next()) {
                 themes.close();
-                Assert.truth(false, "url is unique");
+                Assert.isTrue(false, "url is unique");
             }
             return retrieve(obj);
         }

@@ -46,7 +46,7 @@ public class DomainObjectSelectionModel extends AbstractSingleSelectionModel
     }
     
     public void setSelectedKey(PageState state, Object key) {
-        Assert.truth(key == null ||
+        Assert.isTrue(key == null ||
                      key.getClass().equals(OID.class), 
                      "key must be an OID");
 

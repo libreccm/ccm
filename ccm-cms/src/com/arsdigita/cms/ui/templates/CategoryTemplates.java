@@ -132,7 +132,7 @@ public class CategoryTemplates extends CMSContainer {
                     PageState s = e.getPageState();
                     Label targetLabel = (Label)e.getTarget();
                     Category category = m_category.getCategory(s);
-                    Assert.assertNotNull(category, "category");
+                    Assert.exists(category, "category");
                     targetLabel.setLabel("Assign a template to " + category.getName());
                 }
             });
@@ -254,11 +254,11 @@ public class CategoryTemplates extends CMSContainer {
          */
         protected TemplateCollection getTemplateCollection(PageState s) {
             ContentSection sec = ContentSectionDispatcher.getContentSection(s.getRequest());
-            Assert.assertNotNull(sec, "content section");
+            Assert.exists(sec, "content section");
 
             /*
               ContentItem item = m_category.getSelectedItem(s);
-              Assert.assertNotNull(item, "item");
+              Assert.exists(item, "item");
             */
 
             ContentType type = getContentType(s);
@@ -277,7 +277,7 @@ public class CategoryTemplates extends CMSContainer {
          */
         protected ContentType getContentType(PageState s) {
             ContentType type = (ContentType)m_type.getSelectedObject(s);
-            Assert.assertNotNull(type, "content type");
+            Assert.exists(type, "content type");
             return type;
         }
 

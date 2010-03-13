@@ -30,7 +30,8 @@ import java.util.ArrayList;
 
 /**
  *
- * <p>This class is a convenience class for easily initializing a Portlet.</p>
+ * <p>This class is a convenience class for easily initializing a Portlet
+ * wrapping {@link PortletType} class.</p>
  * <p>
  * The usage pattern for this class is:
  * <ul>
@@ -47,10 +48,6 @@ import java.util.ArrayList;
  * @version $Id: PortletSetup.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PortletSetup {
-
-    // public static final String versionId =
-    //     "$Id: PortletSetup.java 287 2005-02-22 00:29:02Z sskracic $" +
-    //     "by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected String m_profile;
     protected String m_key = null;
@@ -106,7 +103,7 @@ public class PortletSetup {
             ApplicationType.retrieveApplicationTypeForApplication
             (applicationObjectType);
 
-        Assert.assertNotNull(provider, "provider");
+        Assert.exists(provider, "provider");
 
         setProviderApplicationType(provider);
     }

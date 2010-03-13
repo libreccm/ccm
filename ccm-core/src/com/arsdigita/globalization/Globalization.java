@@ -106,7 +106,7 @@ public class Globalization {
                 Locale localeObject = new Locale(locales.getDataObject());
                 java.util.Locale locale = localeObject.toJavaLocale();
                 Charset defaultCharset = localeObject.getDefaultCharset();
-                Assert.assertNotNull(defaultCharset,
+                Assert.exists(defaultCharset,
                                      "DefaultCharset for locale \""
                                      + locale + "\" (" + localeObject + ")");
                 String charset = defaultCharset.getCharset();

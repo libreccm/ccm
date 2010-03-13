@@ -77,7 +77,7 @@ public class ArticleImageDisplay extends ImageDisplay {
      */
     protected Article getArticle(PageState state) {
         Article article = (Article) m_article.getSelectedObject(state);
-        Assert.assertNotNull(article, "Article");
+        Assert.exists(article, "Article");
         return article;
     }
 

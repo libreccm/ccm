@@ -368,7 +368,7 @@ public class CategoryPurpose extends ACSObject {
      */
     public static Category getRootCategory(String key) {
 
-        Assert.assertTrue(purposeExists(key));
+        Assert.isTrue(purposeExists(key));
 
         // get the purpose according to the key
         Session ssn = SessionManager.getSession();
@@ -377,22 +377,22 @@ public class CategoryPurpose extends ACSObject {
         keyFilter.set("key", key);
 
         // there should be exactly one purpose for this key
-        Assert.assertTrue(allPurposes.next());
+        Assert.isTrue(allPurposes.next());
         CategoryPurpose purpose = (CategoryPurpose)
             DomainObjectFactory.newInstance(allPurposes.getDataObject());
-        Assert.assertTrue(!allPurposes.next());
+        Assert.isTrue(!allPurposes.next());
 
         // now need to figure out the root category out of all the categories
         // mapped to this purpose....  (no good way to do this...)  I'll do it
         // by looking for the category that has no parents...
 
         Collection categories = purpose.getCategories();
-        Assert.assertTrue(!categories.isEmpty(),
+        Assert.isTrue(!categories.isEmpty(),
                           "Categories collection is empty");
         Iterator categoriesIterator = categories.iterator();
         Category category;
 
-        Assert.assertTrue(categoriesIterator.hasNext(),
+        Assert.isTrue(categoriesIterator.hasNext(),
                           "can't find core categories");
         do {
             category = (Category)categoriesIterator.next();

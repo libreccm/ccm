@@ -194,18 +194,18 @@ public class BaseQueryEngine extends LockableImpl implements QueryEngine {
 
     protected void addColumn(String field,
                              String propName) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_columns.put(field, propName);
     }
 
     protected void addTable(String table,
                            String alias) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_tables.put(table, alias);
     }
 
     protected void addCondition(String condition) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_conditions.add(condition);
     }
 
@@ -220,7 +220,7 @@ public class BaseQueryEngine extends LockableImpl implements QueryEngine {
      
     protected void addFilters(DataQuery query,
                               FilterSpecification[] filters) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         for (int i = 0 ; i < filters.length ; i++) {
             s_log.debug("adding filter " + filters[i]);
@@ -230,7 +230,7 @@ public class BaseQueryEngine extends LockableImpl implements QueryEngine {
 
     protected void addFilter(DataQuery query,
                              FilterSpecification filter) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         FilterType type = filter.getType();
 
@@ -248,7 +248,7 @@ public class BaseQueryEngine extends LockableImpl implements QueryEngine {
 
     protected void addPermissionFilter(DataQuery query,
                                        PermissionFilterSpecification filter) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         PermissionService.filterQuery(query,
                                       "object_id",
@@ -258,7 +258,7 @@ public class BaseQueryEngine extends LockableImpl implements QueryEngine {
 
     protected void addObjectTypeFilter(DataQuery query,
                                        ObjectTypeFilterSpecification filter) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         List l = new ArrayList();
         ObjectType[] types = filter.getTypes();
@@ -281,7 +281,7 @@ public class BaseQueryEngine extends LockableImpl implements QueryEngine {
 
     protected void addCategoryFilter(DataQuery query,
                                      CategoryFilterSpecification filter) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         Category[] categories = filter.getCategories();
         if (categories != null && categories.length > 0) {
@@ -302,7 +302,7 @@ public class BaseQueryEngine extends LockableImpl implements QueryEngine {
 
     protected void addContentSectionFilter(DataQuery query,
                                            ContentSectionFilterSpecification filter) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         Object[] contentSections = filter.getSections();
         s_log.debug("there are " + contentSections.length + " contentSections");

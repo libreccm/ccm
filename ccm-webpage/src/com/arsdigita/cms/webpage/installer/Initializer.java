@@ -117,7 +117,7 @@ public class Initializer extends CompoundInitializer {
 
         //String section = (String) m_conf.getParameter(CONTENT_SECTION);
         String section = config.getContentSection();
-        Assert.truth(section != null, "contentSection is null");
+        Assert.isTrue(section != null, "contentSection is null");
         config.setContentSection(section);
 
 

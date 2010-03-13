@@ -73,7 +73,7 @@ public class Bookmark extends ACSObject {
      *
      */
     public static Bookmark retrieveBookmark(BigDecimal bmrkID) {
-        Assert.assertNotNull(bmrkID);
+        Assert.exists(bmrkID);
 
         return Bookmark.retrieveBookmark(new OID(BASE_DATA_OBJECT_TYPE, bmrkID));
     }
@@ -87,7 +87,7 @@ public class Bookmark extends ACSObject {
      * @pre dataObject != null
      */
     public static Bookmark retrieveBookmark(DataObject dataObject) {
-        Assert.assertNotNull(dataObject);
+        Assert.exists(dataObject);
 
         return new Bookmark(dataObject);
     }
@@ -99,7 +99,7 @@ public class Bookmark extends ACSObject {
      * @pre oid != null
      */
     public static Bookmark retrieveBookmark(OID oid) {
-        Assert.assertNotNull(oid);
+        Assert.exists(oid);
 
         DataObject dataObject = SessionManager.getSession().retrieve(oid);
 
@@ -143,7 +143,7 @@ public class Bookmark extends ACSObject {
     public String getName() {
         String name = (String)get("bookmark_name");
 
-        Assert.assertNotNull(name);
+        Assert.exists(name);
 
         return name;
     }
@@ -155,7 +155,7 @@ public class Bookmark extends ACSObject {
     public String getURL() {
         String url = (String)get("bookmark_url");
 
-        Assert.assertNotNull(url);
+        Assert.exists(url);
 
         return url;
     }
@@ -167,7 +167,7 @@ public class Bookmark extends ACSObject {
     public String getDescription() {
         String description = (String)get("bookmark_desc");
 
-        Assert.assertNotNull(description);
+        Assert.exists(description);
 
         return description;
     }
@@ -242,7 +242,7 @@ public class Bookmark extends ACSObject {
      *
      */
     public void setName(String name) {
-        Assert.assertNotNull(name);
+        Assert.exists(name);
 
         set("bookmark_name", name);
     }
@@ -252,7 +252,7 @@ public class Bookmark extends ACSObject {
      *
      */
     public void setURL(String url) {
-        Assert.assertNotNull(url);
+        Assert.exists(url);
 
         if(url.startsWith("http://"))
             set("bookmark_url", url);
@@ -277,7 +277,7 @@ public class Bookmark extends ACSObject {
      *
      */
     public void setDescription(String desc) {
-        //Assert.assertNotNull(desc);
+        //Assert.exists(desc);
 
         set("bookmark_desc",desc);
     }

@@ -101,7 +101,7 @@ public final class WebContext extends Record {
     }
 
     final void setRequestURL(final URL url) {
-        Assert.assertNotNull(url, "URL url");
+        Assert.exists(url, "URL url");
 
         m_requestURL = url;
 

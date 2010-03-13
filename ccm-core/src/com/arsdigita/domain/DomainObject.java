@@ -35,18 +35,16 @@ import org.apache.log4j.Logger;
 
 
 /**
- * This is the base class that all other persistent classes would
- * extend. It provides methods that delegate to a contained
- * DataObject.
+ * This is the base class that all other persistent classes would extend.
+ * It provides methods that delegate to a contained DataObject.
+ * @see com.arsdigita.persistence.DataObject
  *
  * @version 1.0
- *
- * @see com.arsdigita.persistence.DataObject
+ * @version $Id: DomainObject.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 public abstract class DomainObject {
 
-    public static final String versionId = "$Id: DomainObject.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
+    /** The logging object for this class. */
     private static final Logger s_log =
         Logger.getLogger(DomainObject.class);
 
@@ -54,19 +52,19 @@ public abstract class DomainObject {
     private boolean m_initialized = false;
 
     /**
-     * Constructor. The contained <code>DataObject</code> is
-     * initialized with a new <code>DataObject</code> with an
-     * <code>ObjectType</code> specified by the string
-     * <i>typeName</i>.
-     *
-     * @param typeName The name of the <code>ObjectType</code> of the
-     * new instance.
+     * Constructor. The contained <code>DataObject</code> is initialized with
+     * a new <code>DataObject</code> with an <code>ObjectType</code>
+     * specified by the string <i>typeName</i>.
      *
      * @see com.arsdigita.persistence.Session#create(String)
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.metadata.ObjectType
+     *
+     * @param typeName The name of the <code>ObjectType</code> of the
+     *        new instance.
      **/
     public DomainObject(String typeName) {
+
         Session s = SessionManager.getSession();
         if (s == null) {
             throw new RuntimeException("Could not retrieve a session from " +
@@ -80,15 +78,15 @@ public abstract class DomainObject {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is
-     * initialized with a new <code>DataObject</code> with an
-     * <code>ObjectType</code> specified by <i>type</i>.
-     *
-     * @param type The <code>ObjectType</code> of the new instance.
+     * The contained <code>DataObject</code> is initialized with a new
+     * <code>DataObject</code> with an <code>ObjectType</code>
+     * specified by <i>type</i>.
      *
      * @see com.arsdigita.persistence.Session#create(ObjectType)
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.metadata.ObjectType
+     *
+     * @param type The <code>ObjectType</code> of the new instance.
      **/
     public DomainObject(ObjectType type) {
         Session s = SessionManager.getSession();
@@ -105,19 +103,18 @@ public abstract class DomainObject {
     }
 
     /**
-     * Constructor. The contained <code>DataObject</code> is retrieved
-     * from the persistent storage mechanism with an OID specified by
-     * <i>oid</i>.
+     * The contained <code>DataObject</code> is retrieved from the
+     * persistent storage mechanism with an OID specified by <i>oid</i>.
+     *
+     * @see com.arsdigita.persistence.Session#retrieve(OID)
+     * @see com.arsdigita.persistence.DataObject
+     * @see com.arsdigita.persistence.OID
      *
      * @param oid The <code>OID</code> for the retrieved
      * <code>DataObject</code>.
      *
      * @exception DataObjectNotFoundException Thrown if we cannot
-     * retrieve a data object for the specified OID
-     *
-     * @see com.arsdigita.persistence.Session#retrieve(OID)
-     * @see com.arsdigita.persistence.DataObject
-     * @see com.arsdigita.persistence.OID
+     *            retrieve a data object for the specified OID
      **/
     public DomainObject(OID oid) throws DataObjectNotFoundException {
         Session s = SessionManager.getSession();
@@ -138,12 +135,11 @@ public abstract class DomainObject {
     }
 
     /**
-     * Constructor. Creates a new DomainObject instance to encapsulate a given
-     * data object.
+     * Creates a new DomainObject instance to encapsulate a given data object.
+     * @see com.arsdigita.persistence.Session#retrieve(String)
      *
      * @param dataObject The data object to encapsulate in the new domain
      * object.
-     * @see com.arsdigita.persistence.Session#retrieve(String)
      **/
     public DomainObject(DataObject dataObject) {
         m_dataObject = dataObject;
@@ -157,9 +153,9 @@ public abstract class DomainObject {
      * only work if their primary data object is of a certain base type.
      *
      * @return The fully qualified name ("modelName.typeName") of the base
-     * data object type for this domain object class,
-     * or null if there is no restriction on the data object type for
-     * the primary data object encapsulated by this class.
+     * data object type for this domain object class, or null if there is
+     * no restriction on the data object type for the primary data object
+     * encapsulated by this class.
      **/
     protected String getBaseDataObjectType() {
         return null;
@@ -190,6 +186,9 @@ public abstract class DomainObject {
         ObjectType.verifySubtype(baseTypeName, m_dataObject.getObjectType());
     }
 
+    /**
+     * 
+     */
     private void postInitialization() {
         if (!m_initialized) {
             StringWriter sw = new StringWriter();
@@ -296,18 +295,17 @@ public abstract class DomainObject {
     }
 
     /**
-     * Persists any changes made to this object. Note that a data
-     * object can be saved without a call to its corresponding domain
-     * object's save() method. This means that save() is not
-     * guaranteed to be called when saves are cascaded due to
-     * associations. For instance, suppose a Folder contains numerous
-     * File objects. Adding Files to that Folder and calling
-     * Folder.save() will implicitly save all the files without
-     * calling the File's DomainObject.save() method.
+     * Persists any changes made to this object. Note that a data object can
+     * be saved <b>without</b> a call to its corresponding domain object's save()
+     * method. This means that save() is not guaranteed to be called when
+     * saves are cascaded due to associations. For instance, suppose a Folder
+     * contains numerous File objects. Adding Files to that Folder and calling
+     * Folder.save() will implicitly save all the files without calling the
+     * File's DomainObject.save() method.
      *
-     * Do not override the save() method under any circumstances. Use
-     * beforeSave and afterSave instead. This method is not declared
-     * final for backwards compatibility.
+     * Do <b>not override</b> the save() method under any circumstances. Use
+     * beforeSave and afterSave instead. This method is not declared final for
+     * backwards compatibility.
      *
      * @see com.arsdigita.persistence.DataObject#save()
      * @see #beforeSave()

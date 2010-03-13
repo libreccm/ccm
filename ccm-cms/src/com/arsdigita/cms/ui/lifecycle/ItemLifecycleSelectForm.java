@@ -389,7 +389,7 @@ class ItemLifecycleSelectForm extends BaseForm {
 
             final BigDecimal defID = (BigDecimal) m_cycleSelect.getValue
                 (state);
-            Assert.assertNotNull(defID);
+            Assert.exists(defID);
             final LifecycleDefinition cycleDef = new LifecycleDefinition
                 (defID);
 

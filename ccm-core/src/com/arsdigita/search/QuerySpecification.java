@@ -111,7 +111,7 @@ public class QuerySpecification {
     }
     
     /**
-     * Two query specifications compare equal if they
+     * Two query specifications compare isEqual if they
      * have the same search term, have the same setting
      * for partial matches and contain the same set of
      * filter specifications.

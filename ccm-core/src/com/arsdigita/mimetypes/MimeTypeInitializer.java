@@ -124,7 +124,7 @@ public class MimeTypeInitializer extends BaseInitializer {
             return;
         }
 
-        Assert.truth(DbHelper.getDatabase() == DbHelper.DB_ORACLE,
+        Assert.isTrue(DbHelper.getDatabase() == DbHelper.DB_ORACLE,
                      "Testing INSO filter on non Oracle DB! Shouldn't happen!");
 
         s_log.info("Starting INSO filter test.  If server hangs here,\n" +

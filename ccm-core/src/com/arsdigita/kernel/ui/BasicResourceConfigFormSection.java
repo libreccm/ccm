@@ -56,8 +56,8 @@ public class BasicResourceConfigFormSection
      **/
     public BasicResourceConfigFormSection(ResourceType resType,
                                           RequestLocal parentResourceRL) {
-        Assert.assertNotNull(resType, "resType may not be null");
-        Assert.assertNotNull(parentResourceRL, "parentResourceRL may not be null");
+        Assert.exists(resType, "resType may not be null");
+        Assert.exists(parentResourceRL, "parentResourceRL may not be null");
         m_resourceRL = null;
 
         setup();
@@ -71,7 +71,7 @@ public class BasicResourceConfigFormSection
      * Constructs form section for application modification
      **/
     public BasicResourceConfigFormSection(RequestLocal resource) {
-        Assert.assertNotNull(resource);
+        Assert.exists(resource);
         m_resourceRL = resource;
 
         setup();
@@ -117,9 +117,9 @@ public class BasicResourceConfigFormSection
     }
 
     public Resource createResource(PageState ps) {
-        Assert.assertNotNull(m_resourceTypeID,
+        Assert.exists(m_resourceTypeID,
                              "BigDecimal m_resourceTypeID");
-        Assert.assertNotNull(m_parentResourceRL,
+        Assert.exists(m_parentResourceRL,
                              "RequestLocal m_parentResourceRL");
 
         ResourceType at =

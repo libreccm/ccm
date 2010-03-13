@@ -47,7 +47,8 @@ public class DocFolder extends Folder implements Resource {
         try {
             setContentType(ContentType.findByAssociatedObjectType(BASE_DATA_OBJECT_TYPE));
         } catch(DataObjectNotFoundException e) {
-            throw new UncheckedWrapperException( (String) GlobalizationUtil.globalize("cms.contenttypes.event_type_not_registered").localize(),  e);
+            throw new UncheckedWrapperException( (String) GlobalizationUtil.globalize(
+                      "cms.contenttypes.event_type_not_registered").localize(),  e);
         }
     }
 

@@ -268,7 +268,7 @@ class BuildIndex {
     }
 
     private static boolean shouldSyncAgain( IndexingTime it) {
-        Assert.truth(it.getJobStatus().equals("finished"));
+        Assert.isTrue(it.getJobStatus().equals("finished"));
 
         final long timeLastChange = ContentChangeTime.getContentChangeTime();
 

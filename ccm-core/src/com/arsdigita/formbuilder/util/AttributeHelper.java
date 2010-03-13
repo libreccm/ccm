@@ -117,7 +117,7 @@ public class AttributeHelper {
             String attributeName = (String)attributeNameIterator.next();
             String attributeValue = (String)attributeMap.get(attributeName);
             
-            Assert.assertTrue(perl.match("/^\\w+$/",
+            Assert.isTrue(perl.match("/^\\w+$/",
                                          attributeName));            
             attributeValue = StringUtils.quoteHtml(attributeValue);
 

@@ -269,7 +269,7 @@ public class Form extends FormSection implements BebopConstants {
      * value for this flag is false.</p>
      */
     public void setRedirecting(boolean isRedirecting) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_isRedirecting = isRedirecting;
     }
 
@@ -301,7 +301,7 @@ public class Form extends FormSection implements BebopConstants {
      * @pre ! isLocked()
      */
     public void setName(String name) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(NAME, name);
     }
 
@@ -323,7 +323,7 @@ public class Form extends FormSection implements BebopConstants {
      * @pre ! isLocked()
      */
     public void setEncType(String encType) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute("enctype", encType);
     }
 
@@ -337,7 +337,7 @@ public class Form extends FormSection implements BebopConstants {
      * @pre ! isLocked()
      */
     public void setOnSubmit(String javascriptCode) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute("onSubmit", javascriptCode);
     }
 
@@ -351,7 +351,7 @@ public class Form extends FormSection implements BebopConstants {
      * @pre ! isLocked()
      */
     public void setOnReset(String javascriptCode) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute("onReset", javascriptCode);
     }
 
@@ -362,7 +362,7 @@ public class Form extends FormSection implements BebopConstants {
      * @pre ! isLocked()
      */
     public void setMethod(String method) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(METHOD, method);
     }
 
@@ -404,7 +404,7 @@ public class Form extends FormSection implements BebopConstants {
      * @param action the URL to submit this form to
      * @pre ! isLocked() */
     public void setAction(String action) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_action = action;
     }
 
@@ -433,7 +433,7 @@ public class Form extends FormSection implements BebopConstants {
      * @post return != null
      */
     public FormData process(PageState state) throws FormProcessException {
-        Assert.assertNotNull(state, "PageState");
+        Assert.exists(state, "PageState");
         FormData result =  new FormData(getModel(), state.getRequest());
         setFormData(state, result);
 

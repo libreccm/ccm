@@ -97,7 +97,7 @@ public abstract class TemplateMapping extends ACSObject {
      * Set the new template for this mapping
      */
     public void setTemplate(Template t) {
-        Assert.assertNotNull(t);
+        Assert.exists(t);
         setAssociation(TEMPLATE, t);
     }
 
@@ -112,7 +112,7 @@ public abstract class TemplateMapping extends ACSObject {
      * Set the use context for this mapping
      */
     public void setUseContext(String context) {
-        Assert.assertNotNull(context);
+        Assert.exists(context);
         set(USE_CONTEXT, context);
     }
 

@@ -172,7 +172,7 @@ s_log.warn ( "Created bundled Item: " + getName() + "  " + m_item );
             clone.save();
             cloneBundle.save();
         }
-        Assert.assertNotNull(clone);
+        Assert.exists(clone);
         return clone;
     }
 }

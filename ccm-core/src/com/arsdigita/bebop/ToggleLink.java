@@ -37,10 +37,6 @@ import org.apache.log4j.Logger;
  * @version $Id: ToggleLink.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ToggleLink extends ControlLink {
-    public static final String versionId =
-        "$Id: ToggleLink.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(ToggleLink.class);
 
@@ -196,7 +192,7 @@ public class ToggleLink extends ControlLink {
      * @pre ! isLocked()
      */
     public void setSelectedComponent(Component  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         m_selectedComponent = v;
     }

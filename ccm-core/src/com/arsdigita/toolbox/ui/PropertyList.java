@@ -76,7 +76,7 @@ public abstract class PropertyList extends SimpleComponent {
         public Property(final String title, final String value) {
             super();
 
-            Assert.assertNotNull(title, "String title");
+            Assert.exists(title, "String title");
 
             m_title = title;
             m_value = value;

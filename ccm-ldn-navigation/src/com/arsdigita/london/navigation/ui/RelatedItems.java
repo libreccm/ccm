@@ -49,13 +49,13 @@ public class RelatedItems extends AbstractComponent {
     private int m_howMany = 15;
     
     public void setHowMany(int howMany) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_howMany = howMany;
     }
     
     public Element generateXML(HttpServletRequest request,
             HttpServletResponse response) {
-        Assert.locked(this);
+        Assert.isLocked(this);
         
         NavigationModel model = getModel();
         ACSObject obj = model.getObject();

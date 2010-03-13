@@ -163,7 +163,7 @@ public class DemoTagHandler implements ContentHandler {
     }
 
     public boolean isValid(String qName) {
-        Assert.assertNotNull(qName, "element");
+        Assert.exists(qName, "element");
         return m_handlers.containsKey(qName);
     }
 
@@ -338,9 +338,9 @@ public class DemoTagHandler implements ContentHandler {
         private int m_level;
 
         public HeaderTag(String tagName) {
-            Assert.assertNotNull(tagName, "tagName");
+            Assert.exists(tagName, "tagName");
             m_tagName = tagName.toLowerCase();
-            Assert.assertTrue
+            Assert.isTrue
                 (H0_TAG.equals(tagName) || H1_TAG.equals(tagName)
                  || H2_TAG.equals(tagName) || H3_TAG.equals(tagName),
                  tagName + " is not a supported header tag.");
@@ -352,7 +352,7 @@ public class DemoTagHandler implements ContentHandler {
          * to h1 is -1.
          **/
         public int distanceTo(HeaderTag tag) {
-            Assert.assertNotNull(tag, "tag");
+            Assert.exists(tag, "tag");
             return tag.m_level - m_level;
         }
 

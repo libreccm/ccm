@@ -135,7 +135,7 @@ public class ArticleImageAssociation extends ContentItem {
      */
     public static boolean imageHasAssociation
         (ImageAsset image) {
-        Assert.assertNotNull(image);
+        Assert.exists(image);
         boolean returnValue = imageHasDirectAssociation(image.getID());
         if (!returnValue) {
             if (!image.getVersion().equals(ContentItem.DRAFT)) {

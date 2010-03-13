@@ -50,8 +50,8 @@ public class PrefixerServlet extends HttpServlet {
 
         m_prefix = config.getInitParameter(PREFIX_PARAMETER);
 
-        Assert.assertNotNull(m_prefix, "String m_prefix");
-        Assert.assertTrue(m_prefix.startsWith("/"),
+        Assert.exists(m_prefix, "String m_prefix");
+        Assert.isTrue(m_prefix.startsWith("/"),
                           "The target prefix must start with a '/'");
     }
 

@@ -236,8 +236,8 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
 
         final AuthoringStepCollection steps = m_kit.getSteps();
 
-        if (Assert.isAssertEnabled()) {
-            Assert.assertTrue(!steps.isEmpty(),
+        if (Assert.isEnabled()) {
+            Assert.isTrue(!steps.isEmpty(),
                               "The authoring kit for " + type.getID() + " " +
                               "(java class " + type.getClassName() + ") " +
                               "has no steps.");

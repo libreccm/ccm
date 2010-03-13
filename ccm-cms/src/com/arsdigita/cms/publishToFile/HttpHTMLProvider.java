@@ -42,7 +42,7 @@ class HttpHTMLProvider
     private final int m_timeout;
 
     HttpHTMLProvider(final int timeout) {
-        Assert.truth(timeout > 0, "Timeout must be > than 0.");
+        Assert.isTrue(timeout > 0, "Timeout must be > than 0.");
         m_timeout = timeout;
     }
 

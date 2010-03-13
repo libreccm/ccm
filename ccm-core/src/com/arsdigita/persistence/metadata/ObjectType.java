@@ -32,11 +32,10 @@ import java.util.Iterator;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #19 $ $Date: 2004/08/16 $
+ * @version $Id: ObjectType.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class ObjectType extends CompoundType {
-
-    public final static String versionId = "$Id: ObjectType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static ObjectType
 	wrap(com.redhat.persistence.metadata.ObjectType type) {
@@ -242,9 +241,8 @@ public class ObjectType extends CompoundType {
 
 
     /**
-     * Checks if the <code>ObjectType</code> specified by
-     * <code>extendedType</code> is a subtype of the <code>ObjectType</code>
-     * specified by <code>baseType</code>.
+     * Checks if the <code>ObjectType</code> specified by <code>extendedType</code>
+     * is a subtype of the <code>ObjectType</code> specified by <code>baseType</code>.
      *
      * @param baseType The base object type.
      * @param extendedType The extended object type.
@@ -276,7 +274,7 @@ public class ObjectType extends CompoundType {
                                      ObjectType extendedType) {
         ObjectType baseObjectType =
 	    MetadataRoot.getMetadataRoot().getObjectType(baseType);
-        Assert.assertTrue(baseObjectType != null,
+        Assert.isTrue(baseObjectType != null,
 			  "Could not find the ObjectType for the " +
                           "base type.  The base type was: " + baseType + ".");
         verifySubtype(baseObjectType, extendedType);

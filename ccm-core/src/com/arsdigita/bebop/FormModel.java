@@ -66,10 +66,6 @@ import org.apache.log4j.Logger;
  * @version $Id: FormModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FormModel implements Lockable {
-    public static final String versionId =
-        "$Id: FormModel.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(FormModel.class);
 
@@ -113,7 +109,7 @@ public class FormModel implements Lockable {
      * <code>null</code> ordinarily.
      */
     FormModel(String name, boolean defaultOverridesNull) {
-        Assert.assertNotNull(name, "Name");
+        Assert.exists(name, "Name");
         m_parameterModels = new LinkedList();
         m_parametersToExclude = new LinkedList();
         m_listenerList = new EventListenerList();
@@ -147,8 +143,8 @@ public class FormModel implements Lockable {
      * @param parameter a parameter model object
      * */
     public final void addFormParam(ParameterModel parameter) {
-        Assert.assertNotNull(parameter, "Parameter");
-        Assert.assertNotLocked(this);
+        Assert.exists(parameter, "Parameter");
+        Assert.isUnlocked(this);
         parameter.setDefaultOverridesNull(m_defaultOverridesNull);
         m_parameterModels.add(parameter);
 
@@ -170,8 +166,8 @@ public class FormModel implements Lockable {
      * @param parameter a parameter model object
      * */
     public final void excludeFormParameterFromExport(ParameterModel parameter) {
-        Assert.assertNotNull(parameter, "Parameter");
-        Assert.assertNotLocked(this);
+        Assert.exists(parameter, "Parameter");
+        Assert.isUnlocked(this);
         m_parametersToExclude.add(parameter);
     }
 
@@ -184,7 +180,7 @@ public class FormModel implements Lockable {
      * parameter model; <code>false</code> otherwise.
      */
     public final boolean containsFormParam(ParameterModel p) {
-        Assert.assertNotNull(p, "Parameter");
+        Assert.exists(p, "Parameter");
         return m_parameterModels.contains(p);
     }
 
@@ -222,7 +218,7 @@ public class FormModel implements Lockable {
      * @param listener a <code>FormSubmissionListener</code> value
      */
     public void addSubmissionListener(FormSubmissionListener listener) {
-        Assert.assertNotNull(listener, "Submission Listener");
+        Assert.exists(listener, "Submission Listener");
         m_listenerList.add(FormSubmissionListener.class, listener);
     }
 
@@ -235,8 +231,8 @@ public class FormModel implements Lockable {
      * <code>FormValidationListener</code> interface
      * */
     public void addValidationListener(FormValidationListener listener) {
-        Assert.assertNotNull(listener, "FormValidationListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "FormValidationListener");
+        Assert.isUnlocked(this);
         m_listenerList.add(FormValidationListener.class, listener);
     }
 
@@ -252,8 +248,8 @@ public class FormModel implements Lockable {
      * <code>FormInitListener</code> interface
      * */
     public void addInitListener(FormInitListener listener) {
-        Assert.assertNotNull(listener, "FormInitListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "FormInitListener");
+        Assert.isUnlocked(this);
         m_listenerList.add(FormInitListener.class, listener);
     }
 
@@ -269,8 +265,8 @@ public class FormModel implements Lockable {
      * <code>FormProcessListener</code> interface
      * */
     public void addProcessListener(FormProcessListener listener) {
-        Assert.assertNotNull(listener, "FormProcessListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "FormProcessListener");
+        Assert.isUnlocked(this);
         m_listenerList.add(FormProcessListener.class, listener);
     }
 
@@ -285,7 +281,7 @@ public class FormModel implements Lockable {
      * @return a FormData object.
      * */
     public FormData process(PageState state) throws FormProcessException {
-        Assert.assertLocked(this);
+        Assert.isLocked(this);
         boolean isSubmission =
             state.getRequest().getParameter(getMagicTagName()) != null;
         return process(state, isSubmission);
@@ -304,7 +300,7 @@ public class FormModel implements Lockable {
      */
     public FormData process(PageState state, boolean isSubmission)
         throws FormProcessException {
-        Assert.assertLocked(this);
+        Assert.isLocked(this);
         FormData data = new FormData(this, state.getRequest(), isSubmission);
         try {
             DeveloperSupport.startStage("Bebop Form Model Process");
@@ -409,8 +405,8 @@ public class FormModel implements Lockable {
 
     protected void fireSubmitted(FormSectionEvent e)
         throws FormProcessException {
-        Assert.assertNotNull(e.getFormData(), "FormData");
-        Assert.assertLocked(this);
+        Assert.exists(e.getFormData(), "FormData");
+        Assert.isLocked(this);
         FormProcessException delayedException = null;
 
         Iterator i = m_listenerList.getListenerIterator(FormSubmissionListener.class);
@@ -432,8 +428,8 @@ public class FormModel implements Lockable {
      * @param e a FormSectionEvent originating from the form
      */
     protected void fireFormInit(FormSectionEvent e) throws FormProcessException {
-        Assert.assertNotNull(e.getFormData(), "FormData");
-        Assert.assertLocked(this);
+        Assert.exists(e.getFormData(), "FormData");
+        Assert.isLocked(this);
         Iterator i = m_listenerList.getListenerIterator(FormInitListener.class);
         while (i.hasNext()) {
             ((FormInitListener) i.next()).init(e);
@@ -449,7 +445,7 @@ public class FormModel implements Lockable {
      * */
     protected void fireParameterValidation(FormSectionEvent e) {
         FormData data = e.getFormData();
-        Assert.assertNotNull(data, "FormData");
+        Assert.exists(data, "FormData");
         Iterator parameters = getParameters();
         ParameterModel parameterModel;
         ParameterData parameterData;
@@ -475,7 +471,7 @@ public class FormModel implements Lockable {
      * */
     private void fireFormValidation(FormSectionEvent e) {
         FormData data = e.getFormData();
-        Assert.assertNotNull(data, "FormData");
+        Assert.exists(data, "FormData");
         Iterator i = m_listenerList.getListenerIterator(FormValidationListener.class);
         while (i.hasNext()) {
             try {
@@ -494,7 +490,7 @@ public class FormModel implements Lockable {
      * */
     private void fireFormProcess(FormSectionEvent e)
         throws FormProcessException {
-        Assert.assertNotNull(e.getFormData(), "FormData");
+        Assert.exists(e.getFormData(), "FormData");
         if (!e.getFormData().isValid()) {
             throw new IllegalStateException("Request data must be valid " + "prior to running processing filters.");
         }
@@ -535,7 +531,7 @@ public class FormModel implements Lockable {
      * @pre data != null
      * */
     void validate(PageState state, FormData data) {
-        Assert.assertNotNull(data, "FormData");
+        Assert.exists(data, "FormData");
         if (!data.isTransformed()) {
             throw new IllegalStateException("Request data must be transformed " + "prior to running validation filters.");
         }
@@ -551,8 +547,8 @@ public class FormModel implements Lockable {
      * @param m The FormModel to be merged into this FormModel
      * */
     void mergeModel(FormModel m) {
-        Assert.assertNotLocked(this);
-        Assert.assertNotNull(m, "FormSection's FormModel");
+        Assert.isUnlocked(this);
+        Assert.exists(m, "FormSection's FormModel");
         m_parameterModels.addAll(m.m_parameterModels);
         m_listenerList.addAll(m.m_listenerList);
     }
@@ -568,9 +564,9 @@ public class FormModel implements Lockable {
     }
 
     /**
-     * Checks whether this FormModel is locked.
+     * Checks whether this FormModel is isLocked.
      *
-     * @return <code>true</code> if this FormModel is locked;
+     * @return <code>true</code> if this FormModel is isLocked;
      * <code>false</code> otherwise.
      * */
     public final boolean isLocked() {

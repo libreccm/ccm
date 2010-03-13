@@ -62,7 +62,7 @@ public abstract class ComponentMap extends SimpleComponent
     }
 
     public final void put(final Object key, final Component component) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         Assert.exists(key, Object.class);
 
         m_components.put(key, component);

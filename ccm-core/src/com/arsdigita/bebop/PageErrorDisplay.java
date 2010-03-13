@@ -31,12 +31,10 @@ import java.util.Iterator;
  * Displays validation errors for the page. These might have occured due to validation
  * listeners on some state parameters within the page.
  *
- *    @author Stanislav Freidin 
- *    @version $Id: PageErrorDisplay.java 287 2005-02-22 00:29:02Z sskracic $
+ * @author Stanislav Freidin 
+ * @version $Id: PageErrorDisplay.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PageErrorDisplay extends List  {
-
-    public static final String versionId = "$Id: PageErrorDisplay.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final String COLOR = "color";
 

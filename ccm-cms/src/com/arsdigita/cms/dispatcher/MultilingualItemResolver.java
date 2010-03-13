@@ -114,7 +114,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
                 
                 // We allow for returning null, so the root folder may
                 // not be live.
-                //Assert.assertTrue(rootFolder.isLive(),
+                //Assert.isTrue(rootFolder.isLive(),
                 //    "live context - root folder of secion must be live");
                 
                 // If the context is 'live', we need the live item.
@@ -659,7 +659,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         
         pos++;                  // skip the "="
         
-        // ID is the string between the equal (at pos) and the next separator
+        // ID is the string between the isEqual (at pos) and the next separator
         int i = item_id.indexOf(SEPARATOR);
         item_id = item_id.substring(pos, Math.min(i, item_id.length() -1));
         

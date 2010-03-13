@@ -169,7 +169,7 @@ public class TransactionContext {
      * before the transaction
      */
     private void fireBeforeCommitEvent() {
-        Assert.assertTrue
+        Assert.isTrue
 	    (inTxn(), "The beforeCommit event was fired outside of " +
 	     "the transaction");
 
@@ -190,7 +190,7 @@ public class TransactionContext {
      * after the transaction
      */
     private void fireCommitEvent() {
-        Assert.assertTrue
+        Assert.isTrue
 	    (!inTxn(), "transaction commit event fired during transaction");
 
         Object listeners[] = m_listeners.toArray();
@@ -204,7 +204,7 @@ public class TransactionContext {
             listener.afterCommit(this);
         }
 
-        Assert.assertTrue
+        Assert.isTrue
 	    (!inTxn(), "transaction commit listener didn't close transaction");
     }
 
@@ -214,7 +214,7 @@ public class TransactionContext {
      * before the transaction
      */
     private void fireBeforeAbortEvent() {
-        Assert.assertTrue
+        Assert.isTrue
 	    (inTxn(), "The beforeAbort event was fired outside of " +
 	     "the transaction");
 
@@ -234,7 +234,7 @@ public class TransactionContext {
      * after the transaction
      */
     private void fireAbortEvent() {
-        Assert.assertTrue
+        Assert.isTrue
 	    (!inTxn(), "transaction abort event fired during transaction");
 
         Object listeners[] = m_listeners.toArray();
@@ -248,7 +248,7 @@ public class TransactionContext {
             listener.afterAbort(this);
         }
 
-        Assert.assertTrue
+        Assert.isTrue
 	    (!inTxn(), "transaction abort listener didn't close transaction");
     }
 

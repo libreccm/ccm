@@ -47,7 +47,7 @@ public class ForumPageFactory {
 	}
 	
 	public static Page getPage(String pageType) {
-		Assert.truth(pageBuilders.containsKey(pageType), "Requested page type (" + pageType + ") does not have a builder registered" );
+		Assert.isTrue(pageBuilders.containsKey(pageType), "Requested page type (" + pageType + ") does not have a builder registered" );
 		PageBuilder builder = (PageBuilder)pageBuilders.get(pageType);
 		Page page =  builder.buildPage();
 		page.lock();

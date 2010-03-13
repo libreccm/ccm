@@ -157,9 +157,9 @@ public class Debug {
                                          String fieldName)
         throws SecurityException {
 
-        Assert.assertNotNull(klass, "klass");
-        Assert.assertNotNull(obj, "obj");
-        Assert.assertNotNull(fieldName, "fieldName");
+        Assert.exists(klass, "klass");
+        Assert.exists(obj, "obj");
+        Assert.exists(fieldName, "fieldName");
 
         try {
             Field field = klass.getDeclaredField(fieldName);

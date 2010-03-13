@@ -80,7 +80,7 @@ public class UserCSVEntry {
     }
 
     public static synchronized UserCSVEntry nextEntry() {
-        Assert.truth(hasMore(), "has more entries");
+        Assert.isTrue(hasMore(), "has more entries");
 
         UserCSVEntry entry = new UserCSVEntry();
         s_log.debug("Starting entry");

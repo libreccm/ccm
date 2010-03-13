@@ -40,7 +40,7 @@ public class SimpleRSSItemCollection implements RSSItemCollection {
     }
 
     public RSSItem getItem() {
-        Assert.truth(m_position >= 0 && m_position < m_items.length,
+        Assert.isTrue(m_position >= 0 && m_position < m_items.length,
                      "position out of bounds");
         
         return m_items[m_position];

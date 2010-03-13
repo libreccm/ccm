@@ -27,11 +27,10 @@ import com.arsdigita.bebop.form.Submit;
  * A form section with two buttons (Save and Cancel) aligned to
  * the right.
  *
- * @author Stanislav Freidin 
+ * @author Stanislav Freidin
+ * @version $Id: SaveCancelSection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SaveCancelSection extends FormSection {
-
-    public static final String versionId = "$Id: SaveCancelSection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Submit m_saveWidget, m_cancelWidget;
 

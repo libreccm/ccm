@@ -120,7 +120,7 @@ public class PersistentParameterListener extends ACSObject {
 
     protected void beforeSave() {
         if (m_attributeChanged) {
-            Assert.assertNotNull(m_attributes, "Attribute map");
+            Assert.exists(m_attributes, "Attribute map");
             set("attributeString",
                 AttributeHelper.getAttributeString(m_attributes));
             m_attributeChanged = false;

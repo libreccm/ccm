@@ -71,7 +71,7 @@ public class WebpagePreviewPage extends CMSPage {
 			}
 		}
 		Assert.exists(webpage, Webpage.class);
-		Assert.truth(webpage.getContentSection().equals(section), "content section doesn't match!");
+		Assert.isTrue(webpage.getContentSection().equals(section), "content section doesn't match!");
 		
 		return webpage;
 	}

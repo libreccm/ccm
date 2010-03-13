@@ -145,7 +145,7 @@ public final class SQLDebugger {
      **/
     public static void startNewFile(String prefix) {
         Assert.exists(prefix, String.class);
-        Assert.truth(prefix.length() > 2,
+        Assert.isTrue(prefix.length() > 2,
                      "'" + prefix + "' is at least 3 characters long.");
 
         if ( debugger().m_writer != null ) {
@@ -167,7 +167,7 @@ public final class SQLDebugger {
             tmpDir = "/tmp";
         }
         File result = new File(tmpDir);
-        Assert.truth(result.isDirectory(), tmpDir + " is a directory");
+        Assert.isTrue(result.isDirectory(), tmpDir + " is a directory");
         return result;
     }
 

@@ -252,10 +252,10 @@ public interface DMConstants {
      */
 
     Label DESTINATION_FOLDER_PANEL_HEADER = new Label(
-                                                      new GlobalizedMessage("ui.folder.destination.list.header", BUNDLE_NAME));
+          new GlobalizedMessage("ui.folder.destination.list.header", BUNDLE_NAME));
 
     Label FOLDER_EMPTY_LABEL = new Label(
-                                         new GlobalizedMessage("ui.folder.empty", BUNDLE_NAME));
+          new GlobalizedMessage("ui.folder.empty", BUNDLE_NAME));
 
     GlobalizedMessage  FOLDER_NEW_FOLDER_LINK =
         new GlobalizedMessage("ui.action.newfolder", BUNDLE_NAME);
@@ -269,22 +269,22 @@ public interface DMConstants {
         new GlobalizedMessage("ui.link.action.newdoclink", BUNDLE_NAME);
 
     Label ACTION_CUT_LABEL = new Label(
-                                       new GlobalizedMessage("ui.action.edit.cut",  BUNDLE_NAME));
+          new GlobalizedMessage("ui.action.edit.cut",  BUNDLE_NAME));
 
     Label ACTION_COPY_LABEL = new Label(
-                                        new GlobalizedMessage("ui.action.edit.copy",  BUNDLE_NAME));
+          new GlobalizedMessage("ui.action.edit.copy",  BUNDLE_NAME));
 
     Label ACTION_DELETE_LABEL = new Label(
-                                          new GlobalizedMessage("ui.action.edit.delete", BUNDLE_NAME));
+          new GlobalizedMessage("ui.action.edit.delete", BUNDLE_NAME));
 
     GlobalizedMessage ACTION_DELETE_CONFIRM =
         new GlobalizedMessage("ui.action.delete.confirm", BUNDLE_NAME);
 
     Label ACTION_ERROR_LABEL = new Label(
-                                         new GlobalizedMessage("ui.action.error", BUNDLE_NAME));
+          new GlobalizedMessage("ui.action.error", BUNDLE_NAME));
 
     Label ACTION_ERROR_CONTINUE = new Label(
-                                            new GlobalizedMessage("ui.action.error.continue", BUNDLE_NAME));
+          new GlobalizedMessage("ui.action.error.continue", BUNDLE_NAME));
 
     String ACTION_CUT_VALUE = "resource-cut";
     String ACTION_COPY_VALUE = "resource-copy";
@@ -421,10 +421,10 @@ public interface DMConstants {
     String FOLDER_DESCRIPTION = "folder-description";
 
     Label FOLDER_NAME_LABEL = new  Label(
-                                         new GlobalizedMessage("ui.folder.name", BUNDLE_NAME));
+          new GlobalizedMessage("ui.folder.name", BUNDLE_NAME));
 
     Label FOLDER_DESCRIPTION_LABEL = new  Label(
-                                                new GlobalizedMessage("ui.folder.description", BUNDLE_NAME));
+          new GlobalizedMessage("ui.folder.description", BUNDLE_NAME));
 
     GlobalizedMessage FOLDER_SAVE =
         new GlobalizedMessage("ui.folder.save", BUNDLE_NAME);
@@ -440,13 +440,13 @@ public interface DMConstants {
      */
 
     Label SEND_FRIEND_FORM_EMAIL_SUBJECT = new Label(
-                                                     new GlobalizedMessage("ui.send.friend.email.subject", BUNDLE_NAME));
+          new GlobalizedMessage("ui.send.friend.email.subject", BUNDLE_NAME));
 
     Label SEND_FRIEND_FORM_EMAIL_LIST = new Label(
-                                                  new GlobalizedMessage("ui.send.friend.email.list", BUNDLE_NAME));
+          new GlobalizedMessage("ui.send.friend.email.list", BUNDLE_NAME));
 
     Label SEND_FRIEND_FORM_DESCRIPTION = new Label(
-                                                   new GlobalizedMessage("ui.send.friend.description", BUNDLE_NAME));
+          new GlobalizedMessage("ui.send.friend.description", BUNDLE_NAME));
 
     GlobalizedMessage SEND_FRIEND_FORM_SUBMIT =
         new GlobalizedMessage("ui.send.friend.submit", BUNDLE_NAME);

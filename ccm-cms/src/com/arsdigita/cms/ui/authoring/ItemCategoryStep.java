@@ -82,7 +82,7 @@ public class ItemCategoryStep extends SimpleContainer
         m_extensionForms = extension.getForm();
         int nSummaries = m_extensionSummaries.length;
         int nForms= m_extensionForms.length;
-        Assert.truth(nSummaries==nForms, "invalid CategoryStep extension");
+        Assert.isTrue(nSummaries==nForms, "invalid CategoryStep extension");
         m_extensionsCount = nForms;
         for (int i=0;i<m_extensionsCount;i++) {
             m_extensionSummaries[i].addCompletionListener(new ExtensionListener(i));

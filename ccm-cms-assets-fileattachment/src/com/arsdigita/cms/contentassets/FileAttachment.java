@@ -129,7 +129,7 @@ public class FileAttachment extends FileAsset {
     }
 
     public void setFileOwner(ContentItem fileOwner) {
-        Assert.assertNotNull(fileOwner);
+        Assert.exists(fileOwner);
         this.setMaster(fileOwner);
         setAssociation(FILE_OWNER, fileOwner);
 
@@ -227,11 +227,11 @@ public class FileAttachment extends FileAsset {
      */
     public void swapKeys(boolean swapNext) {
 
-        Assert.assertTrue(!isNew(), "swapKeys() cannot be called on an " +
+        Assert.isTrue(!isNew(), "swapKeys() cannot be called on an " +
                           "object that is new");
 
         ContentItem fileOwner = getFileOwner();
-        Assert.assertNotNull(fileOwner, "fileOwner must be set for swapKeys() to work");
+        Assert.exists(fileOwner, "fileOwner must be set for swapKeys() to work");
 
         Integer currentKey = getFileOrder();
         // if the current item is not already ordered, alphabetize

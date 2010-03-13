@@ -141,7 +141,7 @@ public class PageEdit extends SimpleEditStep {
 
             ContentItem item =
                 (ContentItem) getItemSelectionModel().getSelectedObject(state);
-            Assert.assertNotNull(item);
+            Assert.exists(item);
 
             String newName = (String) data.get(BasicPageForm.NAME);
             String oldName = item.getName();

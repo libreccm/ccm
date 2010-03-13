@@ -107,7 +107,7 @@ public class AddContactPropertiesStep extends ResettableContainer {
 				protected Object initialValue(PageState s) {
 					ContentItem item = (ContentItem) ((ItemSelectionModel) getSingleSelectionModel())
 							.getSelectedObject(s);
-					Assert.assertNotNull(item);
+					Assert.exists(item);
 					return Contact.getContactForItem(item);
 
 				}

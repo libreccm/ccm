@@ -38,7 +38,7 @@ public class SimpleContainer extends AbstractContainer {
                            String xmlns) {
         Assert.exists(name, String.class);
         Assert.exists(xmlns, String.class);
-        Assert.truth(name.indexOf(":") != -1, "name is qualfied");
+        Assert.isTrue(name.indexOf(":") != -1, "name is qualfied");
 
         m_name = name;
         m_xmlns = xmlns;

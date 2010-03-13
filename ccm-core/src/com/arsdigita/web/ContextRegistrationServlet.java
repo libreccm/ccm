@@ -62,8 +62,8 @@ public class ContextRegistrationServlet extends HttpServlet {
     public void init(final ServletConfig sconfig) throws ServletException {
         m_uri = sconfig.getInitParameter("uri");
         Assert.exists(m_uri, String.class);
-        Assert.truth(m_uri.startsWith("/"), "uri starts with /");
-        Assert.truth(m_uri.endsWith("/"), "uri ends with /");
+        Assert.isTrue(m_uri.startsWith("/"), "uri starts with /");
+        Assert.isTrue(m_uri.endsWith("/"), "uri ends with /");
 
         Web.registerServletContext(m_uri,
                                    sconfig.getServletContext());

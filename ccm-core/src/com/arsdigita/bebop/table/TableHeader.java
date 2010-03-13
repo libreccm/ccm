@@ -87,7 +87,7 @@ public class TableHeader extends SimpleComponent {
      * @param l the {@link TableActionListener} to add
      */
     public void addTableActionListener(TableActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.add(TableActionListener.class, l);
     }
 
@@ -97,7 +97,7 @@ public class TableHeader extends SimpleComponent {
      *@param l the {@link TableActionListener} to remove
      */
     public void removeTableActionListener(TableActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.remove(TableActionListener.class, l);
     }
 
@@ -161,7 +161,7 @@ public class TableHeader extends SimpleComponent {
      * @param v the parent table
      */
     public void setTable(Table  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_table = v;
     }
 
@@ -178,7 +178,7 @@ public class TableHeader extends SimpleComponent {
      * @param v the new {@link TableColumnModel}
      */
     public void setColumnModel(TableColumnModel  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_columnModel = v;
     }
 
@@ -197,7 +197,7 @@ public class TableHeader extends SimpleComponent {
      * @param v the new default renderer
      */
     public void setDefaultRenderer(TableCellRenderer  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_defaultRenderer = v;
     }
 

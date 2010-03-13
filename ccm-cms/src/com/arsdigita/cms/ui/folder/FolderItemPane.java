@@ -296,7 +296,7 @@ public class FolderItemPane extends SegmentedPanel
     private void showHideSegments(PageState state) {
         SecurityManager sm = Utilities.getSecurityManager(state);
         Folder folder = (Folder) m_folderSel.getSelectedObject(state);
-        Assert.assertNotNull(folder);
+        Assert.exists(folder);
 
         // MP: This should be checked on the current folder instead of just
         //     the content section.

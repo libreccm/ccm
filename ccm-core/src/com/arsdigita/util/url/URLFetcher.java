@@ -68,7 +68,7 @@ public class URLFetcher {
     */
 
     public static void registerService(String key, URLPool pool, URLCache cache, boolean cacheFailedRetrievals) {
-        Assert.assertTrue(!StringUtils.emptyString(key), "Key must not be empty!");
+        Assert.isTrue(!StringUtils.emptyString(key), "Key must not be empty!");
         CacheService cs = new CacheService(pool, cache, cacheFailedRetrievals);
         s_services.put(key, cs);
     };
@@ -95,7 +95,7 @@ public class URLFetcher {
      * the cache.Returns the data for the page, or null if the fetch failed.
     */
     public static URLData fetchURLData(String url, String key) {
-        Assert.assertTrue(!StringUtils.emptyString(url), 
+        Assert.isTrue(!StringUtils.emptyString(url),
                           "URL must not be empty!");
 
         CacheService cs = getService(key);
@@ -122,7 +122,7 @@ public class URLFetcher {
      * Purges the specified URL from the cache.
      */
     public static void purgeURL(String url, String key) {
-        Assert.assertTrue(!StringUtils.emptyString(url), "URL must not be null!");
+        Assert.isTrue(!StringUtils.emptyString(url), "URL must not be null!");
         CacheService cs = getService(key);
         cs.cache.purge(url);
     };
@@ -132,7 +132,7 @@ public class URLFetcher {
     }
 
     private static CacheService getService(String key) {
-        Assert.assertTrue(!StringUtils.emptyString(key), "Key must not be empty!");
+        Assert.isTrue(!StringUtils.emptyString(key), "Key must not be empty!");
         CacheService cs = (CacheService) s_services.get(key);
         return cs;
     }
@@ -145,8 +145,8 @@ public class URLFetcher {
         final boolean cacheFailedRetrievals;
 
         CacheService (URLPool pool, URLCache cache, boolean cacheFailedRetrievals) {
-            Assert.assertNotNull(pool, "URLPool cannot be null!");
-            Assert.assertNotNull(cache, "URLCache cannot be null!");
+            Assert.exists(pool, "URLPool cannot be null!");
+            Assert.exists(cache, "URLCache cannot be null!");
 
             this.pool = pool;
             this.cache = cache;

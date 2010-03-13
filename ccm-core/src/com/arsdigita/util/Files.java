@@ -253,7 +253,7 @@ public final class Files {
                                             Collection files,
                                             String prefix) {
         // TODO: there has to be a better way to do this...
-        Assert.truth(baseDirectory.isDirectory(),
+        Assert.isTrue(baseDirectory.isDirectory(),
                      "Base Directory must be a directory but is actually a file.");
         if (prefix != null && prefix.trim().length() == 0) {
             prefix = null;

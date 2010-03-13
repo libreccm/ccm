@@ -104,7 +104,7 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
             m_post.setSelectedObject(state, post);
             m_threadComponent.makeEditFormVisible(state);
         } else if (ACTION_DELETE.equals(key)) {
-            Assert.truth(ctx.canAdminister(), "can administer forums");
+            Assert.isTrue(ctx.canAdminister(), "can administer forums");
 
             MessageThread thread = ctx.getMessageThread();
             ThreadedMessage root = thread.getRootMessage();

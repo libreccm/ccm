@@ -36,7 +36,7 @@ public abstract class AbstractContainer extends AbstractComponent {
     
     public void add(Component child) {
         Assert.exists(child, Component.class);
-        Assert.truth(!m_children.contains(child));
+        Assert.isTrue(!m_children.contains(child));
 
         m_children.add(child);
     }

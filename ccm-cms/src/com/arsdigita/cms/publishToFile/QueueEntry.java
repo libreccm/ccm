@@ -190,7 +190,7 @@ public class QueueEntry extends DomainObject {
         ContentItem result = Utilities.getContentItemOrNull(getItemId());
         // FIXME: We need to exempt move tasks from the ContainerItem
         // assertion, since moves can have anything as the item [lutter]
-        Assert.assertTrue(TASK_MOVE.equals(getTask())
+        Assert.isTrue(TASK_MOVE.equals(getTask())
                           || ! (result instanceof ContentBundle),
                           "The item for a task must not be a ContentBundle");
         return result;
@@ -221,7 +221,7 @@ public class QueueEntry extends DomainObject {
      */
     public ContentItem getParent() {
         ContentItem result = Utilities.getContentItemOrNull(getParentId());
-        Assert.assertTrue(result == null || (result instanceof ContentBundle) );
+        Assert.isTrue(result == null || (result instanceof ContentBundle) );
         return result;
     }        
 

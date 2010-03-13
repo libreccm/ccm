@@ -57,7 +57,7 @@ public class HttpHost {
     public HttpHost(final String name, final int port) {
         if (Assert.isEnabled()) {
             Assert.exists(name, String.class);
-            Assert.truth(port > 0,
+            Assert.isTrue(port > 0,
                          "The port must be greater than 0; " +
                          "I got " + port);
         }

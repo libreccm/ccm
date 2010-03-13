@@ -55,7 +55,7 @@ public class ReturnSignal extends RedirectSignal {
 
         final String returnURL = sreq.getParameter("return_url");
 
-        Assert.assertNotNull(returnURL, "String returnURL");
+        Assert.exists(returnURL, "String returnURL");
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Redirecting to URL '" + returnURL + "'");
@@ -68,7 +68,7 @@ public class ReturnSignal extends RedirectSignal {
                                        final String fallback) {
         s_log.debug("Fetching the return URL to redirect to");
 
-        Assert.assertNotNull(fallback, "String fallback");
+        Assert.exists(fallback, "String fallback");
 
         final String returnURL = sreq.getParameter("return_url");
 

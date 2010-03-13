@@ -54,36 +54,36 @@ public final class AppPortletType extends PortletType {
 
 
     public static AppPortletType retrieveAppPortletType(BigDecimal id) {
-        Assert.assertNotNull(id, "id");
+        Assert.exists(id, "id");
 
         return AppPortletType.retrieveAppPortletType
             (new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
     public static AppPortletType retrieveAppPortletType(OID oid) {
-        Assert.assertNotNull(oid, "oid");
+        Assert.exists(oid, "oid");
 
         DataObject dataObject = SessionManager.getSession().retrieve(oid);
 
-        Assert.assertNotNull(dataObject);
+        Assert.exists(dataObject);
 
         return AppPortletType.retrieveAppPortletType(dataObject);
     }
 
     public static AppPortletType retrieveAppPortletType(DataObject dataObject) {
-        Assert.assertNotNull(dataObject, "dataObject");
+        Assert.exists(dataObject, "dataObject");
 
         return new AppPortletType(dataObject);
     }
 
     public static AppPortletType retrieveAppPortletTypeForAppPortlet
         (String portletObjectType) {
-        Assert.assertNotNull(portletObjectType, "portletObjectType");
+        Assert.exists(portletObjectType, "portletObjectType");
 
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
-        Assert.assertNotNull(collection, "collection");
+        Assert.exists(collection, "collection");
 
         collection.addEqualsFilter("objectType", portletObjectType);
 
@@ -117,7 +117,7 @@ public final class AppPortletType extends PortletType {
         Boolean isPortalApplication =
             (Boolean) get(IS_PORTAL_APPLICATION);
 
-        Assert.assertNotNull(isPortalApplication, IS_PORTAL_APPLICATION);
+        Assert.exists(isPortalApplication, IS_PORTAL_APPLICATION);
 
         return isPortalApplication.booleanValue();
     }

@@ -44,13 +44,13 @@ public abstract class CachePolicy {
     public final void implement(final HttpServletRequest sreq,
                                 final HttpServletResponse sresp) {
         if (Assert.isEnabled()) {
-            Assert.truth(!sresp.isCommitted());
+            Assert.isTrue(!sresp.isCommitted());
         }
 
         doImplement(sreq, sresp);
 
         if (Assert.isEnabled()) {
-            Assert.truth(!sresp.isCommitted());
+            Assert.isTrue(!sresp.isCommitted());
         }
     }
 

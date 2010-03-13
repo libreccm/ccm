@@ -318,7 +318,7 @@ public class DateTime extends Widget implements BebopConstants {
     }
 
     public void setYearRange(int startYear, int endYear) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_year.clearOptions();
         for (int j= startYear; j<=endYear; j+=1) {
             m_year.addOption(new Option(String.valueOf(j)));
@@ -416,7 +416,7 @@ public class DateTime extends Widget implements BebopConstants {
     }
 
     private Object getFragmentValue(PageState ps, int field) {
-        Assert.assertNotNull(ps, "PageState");
+        Assert.exists(ps, "PageState");
         FormData f = getForm().getFormData(ps);
         if (f != null) {
             java.util.Date value = (java.util.Date)f.get(getName());

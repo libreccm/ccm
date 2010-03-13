@@ -51,12 +51,12 @@ public final class UserFactory {
                                String uri,
                                EmailAddress additionalEmail) {
 
-        Assert.assertNotNull(primaryEmail, "primaryEmail");
-        Assert.assertNotNull(givenName, "givenName");
-        Assert.assertNotNull(familyName, "familyName");
-        Assert.assertNotNull(password, "password");
-        Assert.assertNotNull(passwordQuestion, "passwordQuestion");
-        Assert.assertNotNull(passwordAnswer, "passwordAnswer");
+        Assert.exists(primaryEmail, "primaryEmail");
+        Assert.exists(givenName, "givenName");
+        Assert.exists(familyName, "familyName");
+        Assert.exists(password, "password");
+        Assert.exists(passwordQuestion, "passwordQuestion");
+        Assert.exists(passwordAnswer, "passwordAnswer");
 
         User user = new User();
         user.setPrimaryEmail(primaryEmail);

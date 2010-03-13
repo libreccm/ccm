@@ -86,7 +86,7 @@ public class SectionTemplateMapping extends TemplateMapping {
     }
 
     public final void setContentSection(ContentSection sec) {
-        Assert.assertNotNull(sec);
+        Assert.exists(sec);
         setAssociation(SECTION, sec);
     }
 
@@ -100,7 +100,7 @@ public class SectionTemplateMapping extends TemplateMapping {
     }
 
     public final void setContentType(ContentType t) {
-        Assert.assertNotNull(t);
+        Assert.exists(t);
         setAssociation(CONTENT_TYPE, t);
     }
 
@@ -117,7 +117,7 @@ public class SectionTemplateMapping extends TemplateMapping {
      * context
      */
     public void setDefault(Boolean b) {
-        Assert.assertNotNull(b);
+        Assert.exists(b);
         set(IS_DEFAULT, b);
     }
 
@@ -148,7 +148,7 @@ public class SectionTemplateMapping extends TemplateMapping {
         }
         if(!c.next()) return null;
         SectionTemplateMapping m = (SectionTemplateMapping)c.getDomainObject();
-        Assert.assertTrue(!c.next());
+        Assert.isTrue(!c.next());
         c.close();
         return m;
     }
@@ -169,7 +169,7 @@ public class SectionTemplateMapping extends TemplateMapping {
         if(!c.next()) return null;
         SectionTemplateMapping m = (SectionTemplateMapping)c.getDomainObject();
         // FIXME: There HAS to be a better way to enforce uniqueness here...
-        Assert.assertTrue(!c.next());
+        Assert.isTrue(!c.next());
         c.close();
         return m.getTemplate();
     }
@@ -187,7 +187,7 @@ public class SectionTemplateMapping extends TemplateMapping {
         if(!c.next()) return null;
         SectionTemplateMapping m = (SectionTemplateMapping)c.getDomainObject();
         // FIXME: There HAS to be a better way to enforce uniqueness here...
-        Assert.assertTrue(!c.next());
+        Assert.isTrue(!c.next());
         c.close();
         return m.getTemplate();
     }

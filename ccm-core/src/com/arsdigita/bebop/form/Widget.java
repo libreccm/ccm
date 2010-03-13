@@ -137,7 +137,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     }
 
     public void setValidateInvisible(boolean value) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_validateInvisible = value;
     }
 
@@ -147,7 +147,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
 
     protected void fireValidation(ParameterEvent evt)
         throws FormProcessException {
-        Assert.assertLocked(this);
+        Assert.isLocked(this);
 
         PageState ps = evt.getPageState();
 
@@ -164,8 +164,8 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     }
 
     public void addValidationListener(ParameterListener listener) {
-        Assert.assertNotNull(listener, "ParameterListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "ParameterListener");
+        Assert.isUnlocked(this);
         if (m_forwardParameter == null) {
             m_forwardParameter = createParameterListener();
             m_parameterModel.addParameterListener(m_forwardParameter);
@@ -174,8 +174,8 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     }
 
     public void removeValidationListener(ParameterListener listener) {
-        Assert.assertNotNull(listener, "ParameterListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "ParameterListener");
+        Assert.isUnlocked(this);
         m_listeners.remove(ParameterListener.class, listener);
     }
 
@@ -186,7 +186,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * @return true if subtype is in the list
      */
     public boolean hasValidationListener(ParameterListener listener) {
-        Assert.assertNotNull(listener, "ParameterListener");
+        Assert.exists(listener, "ParameterListener");
         return this.getParameterModel().hasParameterListener(listener);
         
 //        return (m_listeners.getListenerCount(listener.getClass()) > 0);
@@ -361,7 +361,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * This method can only be called on unlocked widgets.
      */
     public void setReadOnly() {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute("readonly", "readonly");
     }
 
@@ -373,7 +373,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * on unlocked widgets.
      */
     public void setDisabled() {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute("disabled", "disabled");
     }
 
@@ -381,7 +381,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * Sets a popup hint for the widget
      */
     public void setHint(String hint) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute("title", hint);
     }
 
@@ -429,7 +429,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * @param v <code>true</code> if this parameter is a pass in parameter.
      */
     public final void setPassIn(boolean  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         getParameterModel().setPassIn(v);
     }
 
@@ -439,7 +439,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * listeners will be lost.
      */
     public final void setParameterModel(ParameterModel parameterModel) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_parameterModel = parameterModel;
     }
 
@@ -596,7 +596,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      */
     public void setValue(PageState ps, Object value)
         throws IllegalStateException {
-        Assert.assertNotNull(ps, "PageState");
+        Assert.exists(ps, "PageState");
         ParameterData p = getParameterData(ps);
         // set value in session if it is being held - allows 
         // updates in wizard forms where init is not called each 
@@ -617,7 +617,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
     }
 
     protected Iterator getErrors(PageState ps) {
-        Assert.assertNotNull(ps, "PageState");
+        Assert.exists(ps, "PageState");
         FormData f = getForm().getFormData(ps);
         if (f!=null) {
             return f.getErrors(getName());
@@ -630,7 +630,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * @post returns null if the FormData are missing
      */
     protected ParameterData getParameterData(PageState ps) {
-        Assert.assertNotNull(ps, "PageState");
+        Assert.exists(ps, "PageState");
         FormData fd = getForm().getFormData(ps);
         if (fd != null) {
             return fd.getParameter(getName());
@@ -665,7 +665,7 @@ public abstract class Widget extends BlockStylable implements Cloneable, BebopCo
      * @param guard the Widget.ValidationGuard.
      */
     public void setValidationGuard(ValidationGuard guard) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_guard = guard;
     }
 

@@ -279,7 +279,7 @@ public class UserTask extends Task implements Assignable {
      * Marks the task as finished. (persistent operation)
      * <P>This operation is only valid if the
      * task is enabled.
-     * Only the user who previously locked the task can call this
+     * Only the user who previously isLocked the task can call this
      * method.
      *
      * @param user the user who checks off the task
@@ -484,7 +484,7 @@ public class UserTask extends Task implements Assignable {
 
     /**
      * Releases the lock on the task if it is currently
-     * locked. (persistent operation)
+     * isLocked. (persistent operation)
      *
      * @param user the user who is unlocking the task
      *
@@ -497,8 +497,8 @@ public class UserTask extends Task implements Assignable {
 
 
     /**
-     * Checks whether the task is locked by a user.
-     * @return <code>true</code> if the  task is locked
+     * Checks whether the task is isLocked by a user.
+     * @return <code>true</code> if the  task is isLocked
      * by a user; <code>false</code> otherwise.
 
      *
@@ -509,8 +509,8 @@ public class UserTask extends Task implements Assignable {
 
 
     /**
-     * Retrieves the user who locked the process.
-     * @return  the user who locked the process.
+     * Retrieves the user who isLocked the process.
+     * @return  the user who isLocked the process.
      *
      */
     public User getLockedUser() {
@@ -897,7 +897,7 @@ public class UserTask extends Task implements Assignable {
                 m_notificationSender = (Party) DomainObjectFactory.newInstance
                     (new OID(Party.BASE_DATA_OBJECT_TYPE,senderID));
 
-                Assert.assertNotNull
+                Assert.exists
                     (m_notificationSender, "Party m_notificationSender");
             } catch (DataObjectNotFoundException e) {
                 throw new UncheckedWrapperException("Error restoring notification sender",

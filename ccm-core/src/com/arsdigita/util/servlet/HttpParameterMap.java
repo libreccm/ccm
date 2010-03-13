@@ -94,9 +94,9 @@ public class HttpParameterMap {
 
     private void validateName(final String name) {
         Assert.exists(name, String.class);
-        Assert.truth(!name.equals(""),
+        Assert.isTrue(!name.equals(""),
                      "The name must not be the empty string");
-        Assert.truth(name.indexOf(" ") == -1,
+        Assert.isTrue(name.indexOf(" ") == -1,
                      "The name must not contain any spaces: '" +
                      name + "'");
     }
@@ -168,8 +168,8 @@ public class HttpParameterMap {
                                          final String[] values) {
         if (Assert.isEnabled()) {
             validateName(name);
-            Assert.assertNotNull(values, "String[] values");
-            Assert.assertTrue(values.length > 0,
+            Assert.exists(values, "String[] values");
+            Assert.isTrue(values.length > 0,
                               "The values array must have at least one value");
         }
 
@@ -229,14 +229,14 @@ public class HttpParameterMap {
             final String[] values = (String[]) entry.getValue();
 
             if (Assert.isEnabled()) {
-                Assert.truth(key.indexOf('%') == -1,
+                Assert.isTrue(key.indexOf('%') == -1,
                              "The key '" + key + "' has already been " +
                              "encoded");
             }
 
             if (values != null) {
                 if (Assert.isEnabled()) {
-                    Assert.truth(values.toString().indexOf('%') == -1,
+                    Assert.isTrue(values.toString().indexOf('%') == -1,
                                  "One of the values " +
                                  Arrays.asList(values) + " has " +
                                  "already been encoded");
@@ -297,9 +297,9 @@ public class HttpParameterMap {
                                 final int end) {
         final int sep = query.indexOf('=', start);
 
-        if (Assert.isAssertEnabled()) {
-            Assert.assertTrue(start > -1);
-            Assert.assertTrue(end > -1);
+        if (Assert.isEnabled()) {
+            Assert.isTrue(start > -1);
+            Assert.isTrue(end > -1);
         }
 
         if (sep > -1) {

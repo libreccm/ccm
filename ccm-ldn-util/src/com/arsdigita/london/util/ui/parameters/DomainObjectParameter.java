@@ -52,7 +52,7 @@ public class DomainObjectParameter extends ParameterModel {
 
         ObjectType type = MetadataRoot.getMetadataRoot()
             .getObjectType(objectType);
-        Assert.truth(type.isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE),
+        Assert.isTrue(type.isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE),
                      objectType + " is a subtype of " + 
                      ACSObject.BASE_DATA_OBJECT_TYPE);
     }
@@ -74,7 +74,7 @@ public class DomainObjectParameter extends ParameterModel {
             return dobj.getOID().toString();
         } else {
             ACSObject dobj = (ACSObject)value;
-            Assert.truth(
+            Assert.isTrue(
                 m_objectType.equals(dobj.getOID()
                                     .getObjectType()
                                     .getQualifiedName()),

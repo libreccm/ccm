@@ -26,7 +26,7 @@ import com.arsdigita.util.Assert;
 
 /**
  *  Verifies that the
- * string length is less than or equal to the specified value
+ * string length is less than or isEqual to the specified value
  *
  * @author Stanislav Freidin 
  * @version $Revision: #10 $ $Author: sskracic $ $DateTime: 2004/08/16 18:10:38 $
@@ -43,7 +43,7 @@ public class StringLengthValidationListener implements ParameterListener {
     public static final StringLengthValidationListener FOUR_K = new StringLengthValidationListener(4000);
 
     public StringLengthValidationListener(final int maxLength) {
-        Assert.truth(maxLength > 0, "Max length must be greater than 0");
+        Assert.isTrue(maxLength > 0, "Max length must be greater than 0");
         m_maxLength = maxLength;
         m_errHead = "The following strings are longer than " + maxLength +
             " characters: ";

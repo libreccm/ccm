@@ -87,7 +87,7 @@ public class WorkspaceTheme extends ACSObject implements WorkspaceThemes {
 	 */
 	public static WorkspaceTheme retrieveWorkspaceTheme(
 			BigDecimal WorkspaceThemeID) {
-		Assert.assertNotNull(WorkspaceThemeID);
+		Assert.exists(WorkspaceThemeID);
 
 		return WorkspaceTheme.retrieveWorkspaceTheme(new OID(
 				BASE_DATA_OBJECT_TYPE, WorkspaceThemeID));
@@ -102,7 +102,7 @@ public class WorkspaceTheme extends ACSObject implements WorkspaceThemes {
 	 *         null if no WorkspaceTheme data object for this ID exists.
 	 */
 	public static WorkspaceTheme retrieveWorkspaceTheme(DataObject dataObject) {
-		Assert.assertNotNull(dataObject);
+		Assert.exists(dataObject);
 
 		return new WorkspaceTheme(dataObject);
 	}
@@ -114,7 +114,7 @@ public class WorkspaceTheme extends ACSObject implements WorkspaceThemes {
 	 *            the OID of the WorkspaceTheme to retrieve.
 	 */
 	public static WorkspaceTheme retrieveWorkspaceTheme(OID oid) {
-		Assert.assertNotNull(oid);
+		Assert.exists(oid);
 
 		DataObject dataObject = SessionManager.getSession().retrieve(oid);
 
@@ -143,7 +143,7 @@ public class WorkspaceTheme extends ACSObject implements WorkspaceThemes {
 	public String getName() {
 		String name = (String) get("theme_name");
 
-		Assert.assertNotNull(name);
+		Assert.exists(name);
 
 		return name;
 	}
@@ -153,7 +153,7 @@ public class WorkspaceTheme extends ACSObject implements WorkspaceThemes {
 	 * 
 	 */
 	public void setName(String name) {
-		Assert.assertNotNull(name);
+		Assert.exists(name);
 
 		set("theme_name", name);
 	}
@@ -165,7 +165,7 @@ public class WorkspaceTheme extends ACSObject implements WorkspaceThemes {
 	public String getDescription() {
 		String description = (String) get("theme_desc");
 
-		Assert.assertNotNull(description);
+		Assert.exists(description);
 
 		return description;
 	}
@@ -175,7 +175,7 @@ public class WorkspaceTheme extends ACSObject implements WorkspaceThemes {
 	 * 
 	 */
 	public void setDescription(String desc) {
-		// Assert.assertNotNull(desc);
+		// Assert.exists(desc);
 
 		set("theme_desc", desc);
 	}

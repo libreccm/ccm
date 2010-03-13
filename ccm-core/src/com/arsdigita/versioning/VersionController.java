@@ -57,7 +57,7 @@ class VersionController {
      */
     protected static void autoPropagateMaster
         (VersionedACSObject obj, VersionedACSObject master) {
-        Assert.assertTrue
+        Assert.isTrue
             (master.isMaster(),
              "Object " + master.getOID() + " is the master object");
 

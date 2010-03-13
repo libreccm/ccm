@@ -204,7 +204,7 @@ public class FolderManipulator extends SimpleContainer
             }
 
             final ContentItem newItem = item.copy(target, true);
-            Assert.equal(target, newItem.getParent());
+            Assert.isEqual(target, newItem.getParent());
         }
     }
 

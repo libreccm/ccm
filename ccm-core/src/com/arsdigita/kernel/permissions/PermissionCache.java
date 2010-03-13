@@ -247,7 +247,7 @@ public final class PermissionCache {
             TransactionContext txn =
                 SessionManager.getSession().getTransactionContext();
             Assert.exists(txn, txn.getClass());
-            Assert.truth(txn.inTxn(), "Not in a transaction");
+            Assert.isTrue(txn.inTxn(), "Not in a transaction");
             return txn;
         }
     }

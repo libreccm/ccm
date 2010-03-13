@@ -30,7 +30,7 @@ public class PopulateAppPair {
     private List m_args;
     
     public PopulateAppPair(List popAppPair) {
-        Assert.assertTrue(popAppPair.size() == 2);
+        Assert.isTrue(popAppPair.size() == 2);
         m_popApp = (PopulateApp)popAppPair.get(0);
         m_args = (List)popAppPair.get(1);
     }

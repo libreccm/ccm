@@ -88,7 +88,7 @@ public class AddContentItemElement extends ElementAddForm {
             (BigDecimal) m_itemTypeSelect.getValue(state);
 
         ContentType itemType = null;
-        Assert.assertNotNull(itemTypeID, "itemTypeID");
+        Assert.exists(itemTypeID, "itemTypeID");
         try {
             itemType = new ContentType(itemTypeID);
         } catch (DataObjectNotFoundException ex) {

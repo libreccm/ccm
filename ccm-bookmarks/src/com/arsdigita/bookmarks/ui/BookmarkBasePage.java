@@ -146,7 +146,7 @@ public class BookmarkBasePage extends Page {
                 Application application = Application.getCurrentApplication
                     (pageState.getRequest());
 
-                Assert.assertNotNull(application, "application");
+                Assert.exists(application, "application");
 
                 targetLabel.setLabel
                     (application.getTitle() + " Administration");
@@ -287,7 +287,7 @@ public class BookmarkBasePage extends Page {
      * @param pc the component to be added
      */
     public void add(Component pc) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_body.add(pc);
     }
 
@@ -319,7 +319,7 @@ public class BookmarkBasePage extends Page {
             Application app = Application.getCurrentApplication
                 (pageState.getRequest());
 
-            Assert.assertNotNull(app, "Application app");
+            Assert.exists(app, "Application app");
 
             link.setChild(new Label(app.getTitle()));
             link.setTarget(app.getPrimaryURL());
@@ -338,7 +338,7 @@ public class BookmarkBasePage extends Page {
             Application app = Application.getCurrentApplication
                 (pageState.getRequest());
 
-            Assert.assertNotNull(app, "Application app");
+            Assert.exists(app, "Application app");
 
             Application parent = app.getParentApplication();
 
@@ -359,7 +359,7 @@ public class BookmarkBasePage extends Page {
             Application app = Application.getCurrentApplication
                 (pageState.getRequest());
 
-            Assert.assertNotNull(app, "Application app");
+            Assert.exists(app, "Application app");
 
             label.setLabel(app.getTitle());
         }

@@ -71,7 +71,7 @@ final class CategoryAddForm extends BaseCategoryForm {
 	    final String url = (String) m_url.getValue(state);
 	    final String isAbstract = (String) m_isAbstract.getValue(state);
 
-            Assert.assertNotNull(parent, "Category parent");
+            Assert.exists(parent, "Category parent");
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Using parent category " + parent + " to " +

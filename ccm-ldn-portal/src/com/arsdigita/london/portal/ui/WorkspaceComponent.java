@@ -174,7 +174,7 @@ public class WorkspaceComponent extends SimpleContainer {
 	}
 
 	public void setMultiPortal(boolean val) {
-		Assert.unlocked(this);
+		Assert.isUnlocked(this);
 		m_multiPortal = val;
 	}
 

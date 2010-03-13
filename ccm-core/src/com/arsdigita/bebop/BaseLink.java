@@ -69,11 +69,10 @@ import com.arsdigita.util.UncheckedWrapperException;
  * </tr>
  * </table>
  *
+ * @version $Id: BaseLink.java 998 2005-11-15 22:27:13Z sskracic $
  */
 public abstract class BaseLink extends TextStylable
         implements Cloneable {
-
-    public static final String versionId = "$Id: BaseLink.java 998 2005-11-15 22:27:13Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * The name of the attribute used in XML to indicate which type of link
@@ -193,7 +192,7 @@ public abstract class BaseLink extends TextStylable
     }
 
     public void setChild(Component child) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_child = child;
     }
 
@@ -202,7 +201,7 @@ public abstract class BaseLink extends TextStylable
     }
 
     public final void setTarget(String url) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         m_url = url;
     }
@@ -213,7 +212,7 @@ public abstract class BaseLink extends TextStylable
      * @param t the type of link
      */
     protected void setTypeAttr(String t) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(TYPE_ATTR, t);
     }
 
@@ -333,7 +332,7 @@ public abstract class BaseLink extends TextStylable
         //should not use this method to set confirmation messages--should
         //use setConfirmation() instead, or else the javascript will break
         if (value != null) {
-            Assert.assertTrue(!value.toLowerCase().startsWith("return confirm("),
+            Assert.isTrue(!value.toLowerCase().startsWith("return confirm("),
                     "Do not use setOnClick() to set confirmation messages. " +
                     "Use setCofirmation() instead.");
         }
@@ -361,9 +360,9 @@ public abstract class BaseLink extends TextStylable
         //make sure that the message doesn't have any apostrophe's
         //or back slashes
 
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             final boolean isGoodMessage = message.indexOf("'") == -1 && message.indexOf("\\") == -1;
-            Assert.assertTrue(isGoodMessage,
+            Assert.isTrue(isGoodMessage,
                               "confirmation message cannot contain apostrophe or back slash");
         }
 
@@ -376,7 +375,7 @@ public abstract class BaseLink extends TextStylable
     }
 
     public final void setNoJavascriptTarget(String sURL) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_noJavascriptURL = sURL;
     }
 

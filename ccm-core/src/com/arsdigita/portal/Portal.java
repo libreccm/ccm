@@ -281,7 +281,7 @@ public class Portal extends Resource {
      *
      * @param portlet the portlet instance to add.
      * @param cellNumber the cell in which to place this portlet.  cellNumber's
-     * value must be greater than or equal to 1.
+     * value must be greater than or isEqual to 1.
      * @pre portlet != null
      * @pre cellNumber >= 1
      */
@@ -397,7 +397,7 @@ public class Portal extends Resource {
         LinkedList portletList = getPortletListForCell(portlet.getCellNumber());
         int currentIndex = portletList.indexOf(portlet);
 
-        Assert.truth(currentIndex != -1, "Portlet not found.");
+        Assert.isTrue(currentIndex != -1, "Portlet not found.");
 
         synchronized (portletList) {
             portletList.remove(currentIndex);

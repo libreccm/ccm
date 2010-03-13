@@ -112,7 +112,7 @@ final class OrderingComparator implements Comparator, Cloneable {
             }
 
             if (Assert.isEnabled() && result == 0) {
-                Assert.truth(o1.equals(o2));
+                Assert.isTrue(o1.equals(o2));
             }
 
             return result;

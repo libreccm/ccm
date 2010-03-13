@@ -55,11 +55,10 @@ import com.arsdigita.xml.Element;
  * @author Rory Solomon 
  * @author Uday Mathur 
  *
- * @version $Id: SimpleContainer.java 287 2005-02-22 00:29:02Z sskracic $*/
+ * @version $Id: SimpleContainer.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public class SimpleContainer extends BlockStylable implements Container {
-
-    public static final String versionId = "$Id: SimpleContainer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private List m_components;
     private String m_tag, m_ns;
@@ -92,7 +91,7 @@ public class SimpleContainer extends BlockStylable implements Container {
      * @param pc the component to be added
      */
     public void add(Component pc) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         Assert.exists(pc);
         m_components.add(pc);
     }
@@ -172,7 +171,7 @@ public class SimpleContainer extends BlockStylable implements Container {
      *   in any manner.
      */
     protected final void setTag(String tag) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_tag = tag;
     }
 
@@ -183,7 +182,7 @@ public class SimpleContainer extends BlockStylable implements Container {
      * @param ns the XML namespace
      */
     protected final void setNamespace(String ns) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_ns = ns;
     }
 

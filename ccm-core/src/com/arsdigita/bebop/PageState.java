@@ -158,15 +158,10 @@ import org.apache.log4j.Logger;
  */
 public class PageState {
 
-    public static final String versionId =
-        "$Id: PageState.java 975 2005-11-07 09:27:08Z clasohm $ " +
-        "by $Author: clasohm $, $DateTime: 2004/08/16 18:10:38 $";
-
+    /** Class specific logger instance. */
     private static final Logger s_log = Logger.getLogger(PageState.class);
 
-    /**
-     * The underlying Page object.
-     */
+    /** The underlying Page object. */
     private Page m_page;
 
     /**
@@ -542,35 +537,35 @@ public class PageState {
      * <code>PageState</code> is alive, typically only for the duration of
      * the request.
      *
-     * @deprecated Use either <code>setAttribute</code> on {@link
+//   * @deprecated Use either <code>setAttribute</code> on {@link
      * HttpServletRequest the HTTP request object}, or, preferrably, use a
      * {@link RequestLocal request local} variable. Will be removed on
      * 2001-06-13.
      *
      */
-    public void setAttribute(Object key, Object value) {
-        if ( m_attributes == null ) {
-            m_attributes = new HashMap();
-        }
-        m_attributes.put(key, value);
-    }
+//  public void setAttribute(Object key, Object value) {
+//      if ( m_attributes == null ) {
+//          m_attributes = new HashMap();
+//      }
+//      m_attributes.put(key, value);
+//  }
 
     /**
      * Get the value of an attribute stored with the same key with {@link
      * #setAttribute setAttribute}.
      *
-     * @deprecated Use either <code>getAttribute</code> on {@link
+//   * @deprecated Use either <code>getAttribute</code> on {@link
      * HttpServletRequest the HTTP request object}, or, preferrably, use a
      * {@link RequestLocal request local} variable. Will be removed on
      * 2001-06-13.
      *
      */
-    public Object getAttribute(Object key) {
-        if ( m_attributes == null ) {
-            return null;
-        }
-        return m_attributes.get(key);
-    }
+//  public Object getAttribute(Object key) {
+//      if ( m_attributes == null ) {
+//          return null;
+//      }
+//      return m_attributes.get(key);
+//  }
 
     /**
      * Set the value of the state parameter <code>p</code>. The concrete
@@ -637,15 +632,15 @@ public class PageState {
     /**
      * Change the value of a global parameter
      *
-     * @deprecated Use {@link #setValue(ParameterModel m, Object o)}
+//   * @deprecated Use {@link #setValue(ParameterModel m, Object o)}
      * instead. If you don't have a reference to the parameter model, you
      * should not be calling this method. Instead, the component that
      * registered the parameter should provide methods to manipulate
      * it. Will be removed 2001-06-20.
      */
-    public void setGlobalValue(String name, Object value) {
-        m_pageState.put(m_page.parameterName(name), value);
-    }
+//  public void setGlobalValue(String name, Object value) {
+//      m_pageState.put(m_page.parameterName(name), value);
+//  }
 
     // Handling the control event
 

@@ -94,7 +94,7 @@ public class ParameterMap implements Cloneable {
     }
 
     public static final ParameterMap fromString(final String query) {
-        Assert.assertNotNull(query, "String query");
+        Assert.exists(query, "String query");
 
         if (query.startsWith("?")) {
             return new ParameterMap(query.substring(1));
@@ -161,9 +161,9 @@ public class ParameterMap implements Cloneable {
                                 final int end)  throws DecoderException {
         final int sep = query.indexOf('=', start);
 
-        if (Assert.isAssertEnabled()) {
-            Assert.assertTrue(start > -1);
-            Assert.assertTrue(end > -1);
+        if (Assert.isEnabled()) {
+            Assert.isTrue(start > -1);
+            Assert.isTrue(end > -1);
         }        
 
         if (sep > -1) {
@@ -195,10 +195,10 @@ public class ParameterMap implements Cloneable {
     }
 
     private void validateName(final String name) {
-        Assert.assertNotNull(name, "String name");
-        Assert.assertTrue(!name.equals(""),
+        Assert.exists(name, "String name");
+        Assert.isTrue(!name.equals(""),
                           "The name must not be the empty string");
-        Assert.assertTrue(name.indexOf(" ") == -1,
+        Assert.isTrue(name.indexOf(" ") == -1,
                           "The name must not contain any spaces: '" +
                           name + "'");
     }
@@ -232,7 +232,7 @@ public class ParameterMap implements Cloneable {
      * @pre name != null && !name.trim().equals("")
      */
     public final void setParameter(final String name, final String value) {
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             validateName(name);
         }
 
@@ -267,10 +267,10 @@ public class ParameterMap implements Cloneable {
 
     public final void setParameterValues(final String name,
                                          final String[] values) {
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             validateName(name);
-            Assert.assertNotNull(values, "String[] values");
-            Assert.assertTrue(values.length > 0,
+            Assert.exists(values, "String[] values");
+            Assert.isTrue(values.length > 0,
                               "The values array must have at least one value");
         }
 
@@ -278,7 +278,7 @@ public class ParameterMap implements Cloneable {
     }
 
     public final void clearParameter(final String name) {
-        if (Assert.isAssertEnabled()) {
+        if (Assert.isEnabled()) {
             validateName(name);
         }
         
@@ -325,15 +325,15 @@ public class ParameterMap implements Cloneable {
             final String key = (String) entry.getKey();
             final String[] values = (String[]) entry.getValue();
 
-            if (Assert.isAssertEnabled()) {
-                Assert.assertTrue(key.indexOf('%') == -1,
+            if (Assert.isEnabled()) {
+                Assert.isTrue(key.indexOf('%') == -1,
                                   "The key '" + key + "' has already been " +
                                   "encoded");
             }
 
             if (values != null) {
-                if (Assert.isAssertEnabled()) {
-                    Assert.assertTrue(values.toString().indexOf('%') == -1,
+                if (Assert.isEnabled()) {
+                    Assert.isTrue(values.toString().indexOf('%') == -1,
                                       "One of the values " +
                                       Arrays.asList(values) + " has " +
                                       "already been encoded");

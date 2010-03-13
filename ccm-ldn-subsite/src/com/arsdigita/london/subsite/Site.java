@@ -130,7 +130,7 @@ public class Site extends ACSObject {
             DataObject obj = sites.getDataObject();
             if (sites.next()) {
                 sites.close();
-                Assert.truth(false, "hostname is unique");
+                Assert.isTrue(false, "hostname is unique");
             }
             return retrieve(obj);
         }

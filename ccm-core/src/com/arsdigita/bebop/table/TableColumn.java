@@ -116,7 +116,7 @@ public class TableColumn extends SimpleComponent
 
     /**
      * Creates a new table column with <code>modelIndex</code> 0 and header
-     * value and key equal to <code>null</code>.
+     * value and key isEqual to <code>null</code>.
      */
     public TableColumn() {
         this(0);
@@ -124,7 +124,7 @@ public class TableColumn extends SimpleComponent
 
     /**
      * Creates a new table column with the given <code>modelIndex</code> and
-     * header value and key equal to <code>null</code>.
+     * header value and key isEqual to <code>null</code>.
      *
      * @param modelIndex the index of the column in the table model from
      * which to retrieve values
@@ -136,7 +136,7 @@ public class TableColumn extends SimpleComponent
 
     /**
      * Creates a new table column with the given <code>modelIndex</code> and
-     * header value. The header key is equal to <code>null</code>.
+     * header value. The header key is isEqual to <code>null</code>.
      *
      * @param modelIndex the index of the column in the table model from
      * which to retrieve values.
@@ -188,7 +188,7 @@ public class TableColumn extends SimpleComponent
      * @see #getCellRenderer
      */
     public void setHeaderRenderer(TableCellRenderer  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_headerRenderer = v;
     }
 
@@ -212,7 +212,7 @@ public class TableColumn extends SimpleComponent
      * @see #getHeaderRenderer
      */
     public void setCellRenderer(TableCellRenderer  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_cellRenderer = v;
     }
 
@@ -234,7 +234,7 @@ public class TableColumn extends SimpleComponent
      * @see #getHeaderValue
      */
     public void setHeaderValue(Object value) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_headerValue = value;
     }
 
@@ -256,7 +256,7 @@ public class TableColumn extends SimpleComponent
      * @see #getHeaderKey
      */
     public void setHeaderKey(Object key) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_headerKey = key;
     }
 
@@ -280,7 +280,7 @@ public class TableColumn extends SimpleComponent
      * take values.
      */
     public void setModelIndex(int  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_modelIndex = v;
     }
 
@@ -301,7 +301,7 @@ public class TableColumn extends SimpleComponent
      * @param v the width of this column
      */
     public void setWidth(String  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(WIDTH_ATTR, v);
     }
 
@@ -312,7 +312,7 @@ public class TableColumn extends SimpleComponent
      * @param v the width of this column
      */
     public void setAlign(String  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_cellAttrs.setAttribute(ALIGN_ATTR, v);
     }
 
@@ -324,7 +324,7 @@ public class TableColumn extends SimpleComponent
      *
      * @param v the width of this column */
     public void setHeadAlign(String v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(ALIGN_ATTR, v);
     }
 
@@ -335,7 +335,7 @@ public class TableColumn extends SimpleComponent
      * @param v the width of this column
      */
     public void setVAlign(String  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_cellAttrs.setAttribute(VALIGN_ATTR, v);
     }
 
@@ -346,7 +346,7 @@ public class TableColumn extends SimpleComponent
      *
      * @param v the width of this column */
     public void setHeadVAlign(String  v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(VALIGN_ATTR, v);
     }
 
@@ -362,7 +362,7 @@ public class TableColumn extends SimpleComponent
      *   <tt>style</tt> attribute of an HTML tag
      * @see <a href="#standard">Standard Attributes</a> */
     public void setStyleAttr(String style) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_cellAttrs.setAttribute(STYLE, style);
     }
 
@@ -377,7 +377,7 @@ public class TableColumn extends SimpleComponent
      *   <tt>style</tt> attribute of an HTML tag
      * @see <a href="#standard">Standard Attributes</a> */
     public void setHeadStyleAttr(String style) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(STYLE, style);
     }
 
@@ -392,7 +392,7 @@ public class TableColumn extends SimpleComponent
      *   <tt>style</tt> attribute of an HTML tag
      * @see <a href="#standard">Standard Attributes</a> */
     public void setClassAttr(String c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_cellAttrs.setAttribute(CLASS, c);
     }
 
@@ -408,7 +408,7 @@ public class TableColumn extends SimpleComponent
      *   <tt>style</tt> attribute of an HTML tag
      * @see <a href="#standard">Standard Attributes</a> */
     public void setHeadClassAttr(String c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(CLASS, c);
     }
 

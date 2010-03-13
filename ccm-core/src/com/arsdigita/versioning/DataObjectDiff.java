@@ -324,7 +324,7 @@ final class DataObjectDiff implements Constants {
     private void createDataObject() {
         m_listener.onCreate(getOID());
         m_dataObject = SessionManager.getSession().create(getOID());
-        Assert.truth(m_dataObject.isNew(), getOID() + " is new");
+        Assert.isTrue(m_dataObject.isNew(), getOID() + " is new");
     }
 
     /**
@@ -694,7 +694,7 @@ final class DataObjectDiff implements Constants {
         }
 
         public void add(Attribute attr) throws CollectionAttributeException {
-            Assert.truth(attr.isCompound(), "attr.isCompound(): " + attr);
+            Assert.isTrue(attr.isCompound(), "attr.isCompound(): " + attr);
             OID oid = (OID) attr.getValue();
             if ( m_added.containsKey(oid) ) {
                 throw new CollectionAttributeException(attr);
@@ -712,7 +712,7 @@ final class DataObjectDiff implements Constants {
         }
 
         public void remove(Attribute attr) throws CollectionAttributeException {
-            Assert.truth(attr.isCompound(), "attr.isCompound(): " + attr);
+            Assert.isTrue(attr.isCompound(), "attr.isCompound(): " + attr);
             OID oid = (OID) attr.getValue();
             if ( m_removed.containsKey(oid) ) {
                 throw new CollectionAttributeException(attr);

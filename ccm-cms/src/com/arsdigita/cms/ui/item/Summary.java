@@ -328,7 +328,7 @@ public class Summary extends CMSContainer {
      */
     protected ContentItem getContentItem(PageState state) {
         ContentItem item = (ContentItem) m_item.getSelectedObject(state);
-        Assert.assertNotNull(item);
+        Assert.exists(item);
         return item;
     }
 

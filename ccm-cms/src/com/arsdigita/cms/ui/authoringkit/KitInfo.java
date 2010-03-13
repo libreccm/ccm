@@ -80,7 +80,7 @@ public class KitInfo extends CMSContainer {
      * Sets the m_authoringKit RequestLocal variable.
      */
     private void initializeAuthoringKit(PageState state) {
-        Assert.assertTrue(m_types.isSelected(state));
+        Assert.isTrue(m_types.isSelected(state));
 
         BigDecimal typeId = new BigDecimal(m_types.getSelectedKey(state).toString());
         ContentType type = new ContentType(typeId);
@@ -137,7 +137,7 @@ public class KitInfo extends CMSContainer {
                 private boolean m_locked;
 
                 public TableModel makeModel(final Table t, final PageState s) {
-                    Assert.assertTrue(m_types.isSelected(s));
+                    Assert.isTrue(m_types.isSelected(s));
 
                     return new TableModel() {
 

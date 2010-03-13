@@ -35,8 +35,6 @@ import com.arsdigita.xml.Element;
  */
 public class Label extends BlockStylable implements Cloneable {
 
-    public static final String versionId = "$Id: Label.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final String NO_LABEL = "";
 
     public static final String BOLD = "b";
@@ -239,7 +237,7 @@ public class Label extends BlockStylable implements Cloneable {
      */
     public void setLabel(GlobalizedMessage label, PageState state) {
         if (state == null) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
             m_label = label;
         } else {
             m_requestLabel.set(state, label);
@@ -273,7 +271,7 @@ public class Label extends BlockStylable implements Cloneable {
     }
 
     public void setFontWeight(String fontWeight) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_fontWeight = fontWeight;
     }
 

@@ -130,7 +130,7 @@ public abstract class PersistentComponent extends AuditedACSObject {
      */
     protected void beforeSave() {
         if (m_attributeChanged) {
-            Assert.assertNotNull(m_attributes, "Attribute map");
+            Assert.exists(m_attributes, "Attribute map");
             set(ATTRIBUTE_STRING,
                 AttributeHelper.getAttributeString(m_attributes));
             m_attributeChanged = false;

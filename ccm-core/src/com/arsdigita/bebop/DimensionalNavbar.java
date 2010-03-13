@@ -31,10 +31,9 @@ import java.util.Iterator;
  *
  * @author Michael Pih 
  * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: DimensionalNavbar.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DimensionalNavbar extends SimpleContainer {
-
-    public static final String versionId = "$Id: DimensionalNavbar.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final static String BEBOP_XML_NS = "http://www.arsdigita.com/bebop/1.0";
 

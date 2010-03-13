@@ -61,7 +61,7 @@ final class EdgeLabel {
      * @post isVersioned()
      **/
     public void setVersioned() {
-        Assert.truth(m_state == UNMARKED, "is unmarked");
+        Assert.isTrue(m_state == UNMARKED, "is unmarked");
         m_state = VERSIONED;
     }
 
@@ -73,7 +73,7 @@ final class EdgeLabel {
      * @post isUnversioned()
      **/
     public void setUnversioned() {
-        Assert.truth(m_state == UNMARKED, "is unmarked");
+        Assert.isTrue(m_state == UNMARKED, "is unmarked");
         m_state = UNVERSIONED;
     }
 

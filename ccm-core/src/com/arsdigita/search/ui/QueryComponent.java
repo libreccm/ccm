@@ -56,7 +56,7 @@ public abstract class QueryComponent extends SimpleContainer
      * Returns the current query specification
      */
     public QuerySpecification getQuerySpecification(PageState state) {
-        Assert.truth(hasQuery(state));
+        Assert.isTrue(hasQuery(state));
 
         String terms = getTerms(state);
         

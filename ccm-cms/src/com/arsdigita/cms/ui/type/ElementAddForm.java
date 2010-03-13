@@ -216,7 +216,7 @@ public abstract class ElementAddForm extends CMSForm {
     protected ContentType getContentType(PageState state) {
 
         ContentType t = (ContentType)m_types.getSelectedObject(state);
-        Assert.assertNotNull(t, "content type");
+        Assert.exists(t, "content type");
         return t;
     }
 

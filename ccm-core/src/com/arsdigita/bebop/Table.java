@@ -84,13 +84,13 @@ import javax.servlet.ServletException;
  * selected row is identified by a string key and the selected column
  * is identified by an integer.
  *
+ * @see TableModel
+ * @see TableColumnModel
+ *
  * @author David Lutterkort 
  * @version $Id: Table.java 1638 2007-09-17 11:48:34Z chrisg23 $
- * @see TableModel
- * @see TableColumnModel */
+ */
 public class Table extends BlockStylable implements BebopConstants {
-
-    public static final String versionId = "$Id: Table.java 1638 2007-09-17 11:48:34Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Names for HTML Attributes
     private static final String WIDTH = "width";
@@ -199,7 +199,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param l the {@link TableActionListener} to be added
      */
     public void addTableActionListener(TableActionListener l) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         if ( m_headerForward == null ) {
             m_headerForward = createTableActionListener();
             if ( m_header != null ) {
@@ -216,7 +216,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param l the {@link TableActionListener} to be removed
      */
     public void removeTableActionListener(TableActionListener l) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_listeners.remove(TableActionListener.class, l);
     }
 
@@ -294,7 +294,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param v the new {@link TableColumnModel}
      */
     public void setColumnModel(TableColumnModel v) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_columnModel = v;
     }
 
@@ -311,7 +311,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param v the new {@link TableModelBuilder}
      */
     public void setModelBuilder(TableModelBuilder  v) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_modelBuilder = v;
     }
 
@@ -330,7 +330,7 @@ public class Table extends BlockStylable implements BebopConstants {
      *   hidden.
      */
     public void setHeader(TableHeader  v) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         if ( m_headerForward != null ) {
             if ( m_header != null ) {
                 m_header.removeTableActionListener(m_headerForward);
@@ -380,7 +380,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param v a {@link SingleSelectionModel}
      */
     public void setRowSelectionModel(SingleSelectionModel  v) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_rowSelectionModel = v;
     }
 
@@ -400,7 +400,7 @@ public class Table extends BlockStylable implements BebopConstants {
      * @param v a {@link SingleSelectionModel}
      */
     public void setColumnSelectionModel(SingleSelectionModel  v) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         // TODO: make sure table gets notified of changes
         getColumnModel().setSelectionModel(v);
     }

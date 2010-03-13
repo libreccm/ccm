@@ -71,7 +71,7 @@ class RolePartyAddForm extends PartyAddForm {
     }
 
     protected DataQuery makeQuery(PageState s) {
-        Assert.truth(m_roles.isSelected(s));
+        Assert.isTrue(m_roles.isSelected(s));
 
         Session session = SessionManager.getSession();
 
@@ -107,7 +107,7 @@ class RolePartyAddForm extends PartyAddForm {
     public void process(FormSectionEvent event) throws FormProcessException {
         FormData data = event.getFormData();
         PageState state = event.getPageState();
-        Assert.truth(m_roles.isSelected(state));
+        Assert.isTrue(m_roles.isSelected(state));
 
         String[] parties = (String[]) data.get("parties");
         s_log.debug("PARTIES = " + parties);

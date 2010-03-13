@@ -80,7 +80,7 @@ public abstract class ACSObjectCategorySummary extends SimpleComponent {
     public void respond(PageState state) throws ServletException {
         super.respond(state);
 
-        Assert.truth(canEdit(state), "User can edit object");
+        Assert.isTrue(canEdit(state), "User can edit object");
 
         String name = state.getControlEventName();
         ActionListener listener = (ActionListener)m_listeners.get(name);

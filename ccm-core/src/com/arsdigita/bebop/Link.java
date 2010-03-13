@@ -44,13 +44,11 @@ import org.apache.log4j.Logger;
  * <p> The target of the link above will be rendered in HTML as:
  * <tt>href="path/to/target/?foo=1"</tt>
  * If either the link text or the URL needs to be changed for a link
- * within a locked page, a {@link PrintListener} should be used.
+ * within a isLocked page, a {@link PrintListener} should be used.
+ *
+ * @version $Id: Link.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Link extends BaseLink {
-    public static final String versionId =
-        "$Id: Link.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(ParameterMap.class);
 
@@ -106,7 +104,7 @@ public class Link extends BaseLink {
      * the Link, without the need to make a separate call to
      * the <tt>addPrintListener</tt> method. PrintListeners
      * are a convenient way to alter underlying Link attributes
-     * such as Link text or target URL within a locked page
+     * such as Link text or target URL within a isLocked page
      * on a per request basis.
      */
     public Link(Component child, PrintListener l) {
@@ -190,18 +188,19 @@ public class Link extends BaseLink {
      * @pre name != null
      */
     public void setVar(String name, String value) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         m_params.setParameter(name, value);
     }
 
-    /**
-     * Set a query variable and its value
-     * @deprecated use {@link #setVar setVar}
-     */
-    public void addURLVars(String name, String value) {
-        setVar(name, value);
-    }
+//  No longer used anywhere in the code base
+//  /**
+//   * Set a query variable and its value
+//   * @deprecated use {@link #setVar setVar}
+//   */
+//  public void addURLVars(String name, String value) {
+//      setVar(name, value);
+//  }
 
     public String getURLVarString() {
         return m_params.toString();

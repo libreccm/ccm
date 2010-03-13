@@ -125,7 +125,7 @@ public class Repository extends Application implements Constants {
                     protected void excurse() {
                         setParty(Kernel.getSystemParty());
 
-                        Assert.assertNotNull(m_root, "Folder m_root");
+                        Assert.exists(m_root, "Folder m_root");
 
                         PermissionService.setContext(m_root, Repository.this);
                     }

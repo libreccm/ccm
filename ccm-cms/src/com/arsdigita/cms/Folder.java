@@ -240,7 +240,7 @@ public class Folder extends ContentItem {
 
         DataQueryDataCollectionAdapter adapter = new DataQueryDataCollectionAdapter(ITEMS_QUERY, ITEM);
         adapter.setParameter(PARENT, getID());
-        Assert.unequal(PENDING, getVersion());
+        Assert.isNotEqual(PENDING, getVersion());
         adapter.setParameter(VERSION, getVersion());
 
         return new ItemCollection(adapter, bSort);
@@ -268,7 +268,7 @@ public class Folder extends ContentItem {
             (PRIMARY_INSTANCES_QUERY);
         query.setParameter(PARENT, getID());
 
-        Assert.unequal(PENDING, getVersion());
+        Assert.isNotEqual(PENDING, getVersion());
 
         query.setParameter(VERSION, getVersion());
 
@@ -431,7 +431,7 @@ public class Folder extends ContentItem {
     }
 
     public void removePendingVersion(final ContentItem version) {
-        Assert.unequal(PENDING, version.getVersion());
+        Assert.isNotEqual(PENDING, version.getVersion());
 
         return;
     }

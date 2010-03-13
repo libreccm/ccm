@@ -144,7 +144,7 @@ public class DomainObjectRenderer extends SimpleContainer {
      * the generated XML will be.
      */
     public void setDepth(int depth) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_depth = depth;
     }
 
@@ -160,7 +160,7 @@ public class DomainObjectRenderer extends SimpleContainer {
      * @pre model != null
      */
     public void setSelectionModel(DomainObjectSelectionModel model) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_model = model;
     }
 

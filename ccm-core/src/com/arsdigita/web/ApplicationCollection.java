@@ -99,7 +99,7 @@ public class ApplicationCollection extends ACSObjectCollection {
         Application application =
             Application.retrieveApplication(dataObject);
 
-        Assert.assertNotNull(application, "application");
+        Assert.exists(application, "application");
 
         return application;
     }
@@ -113,7 +113,7 @@ public class ApplicationCollection extends ACSObjectCollection {
     public String getTitle() {
         String title = (String)m_dataCollection.get("title");
 
-        Assert.assertNotNull(title, "title");
+        Assert.exists(title, "title");
 
         return title;
     }
@@ -140,7 +140,7 @@ public class ApplicationCollection extends ACSObjectCollection {
     public String getPrimaryURL() {
         String primaryURL = (String)m_dataCollection.get("primaryURL");
 
-        Assert.assertNotNull(primaryURL, "primaryURL");
+        Assert.exists(primaryURL, "primaryURL");
 
         return primaryURL;
     }

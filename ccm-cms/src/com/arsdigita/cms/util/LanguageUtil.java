@@ -69,7 +69,7 @@ public class LanguageUtil {
     
     /** Get the comma separated list of all supported languages */
     public static String getSupportedLanguages() {
-        Assert.assertNotNull(s_languages , "supported languages not set");
+        Assert.exists(s_languages , "supported languages not set");
         return s_languages;
     }
     

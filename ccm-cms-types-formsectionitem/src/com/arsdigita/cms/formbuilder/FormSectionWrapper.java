@@ -95,7 +95,7 @@ public class FormSectionWrapper extends PersistentComponent
     }
 
     public void setFormSectionItem(FormSectionItem item) {
-        Assert.truth(ContentItem.DRAFT.equals(item.getVersion()),
+        Assert.isTrue(ContentItem.DRAFT.equals(item.getVersion()),
                      "item is draft");
 
         setAssociation(FORM_SECTION_ITEM, item);

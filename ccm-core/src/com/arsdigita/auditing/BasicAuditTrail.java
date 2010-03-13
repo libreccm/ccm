@@ -39,10 +39,10 @@ import org.apache.log4j.Logger;
  *
  * @author Joseph Bank 
  * @version 1.0
+ * @version $Id: BasicAuditTrail.java 1547 2007-03-29 14:24:57Z chrisgilbert23 $
  **/
 public class BasicAuditTrail extends DomainObject implements Audited {
 
-    public static final String versionId = "$Id: BasicAuditTrail.java 1547 2007-03-29 14:24:57Z chrisgilbert23 $";
     private static final Logger s_cat =
         Logger.getLogger(BasicAuditTrail.class.getName());
 

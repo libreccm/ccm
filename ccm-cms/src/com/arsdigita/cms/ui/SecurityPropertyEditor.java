@@ -72,7 +72,7 @@ public class SecurityPropertyEditor extends PropertyEditor {
     /**
      * Construct a new, empty <code>PropertyEditor</code>.  The {@link
      * #setDisplayComponent(Component)} method must be called before this
-     * component is locked.
+     * component is isLocked.
      */
     public SecurityPropertyEditor() {
         this(null);
@@ -130,10 +130,10 @@ public class SecurityPropertyEditor extends PropertyEditor {
      * @pre access.getComponent() == m_forms.get(key)
      */
     public void setComponentAccess(String key, ComponentAccess access) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         Component c = getComponent(key);
-        Assert.assertNotNull(c, "the specified component");
-        Assert.assertTrue(access.getComponent().equals(c),
+        Assert.exists(c, "the specified component");
+        Assert.isTrue(access.getComponent().equals(c),
                           "The specified component does not match the component that" +
                           " id already in the PropertyEditor");
         m_accessChecks.put(key, access);

@@ -459,7 +459,7 @@ public class SecurityManager implements Security, SecurityConstants {
      */
     private boolean hasPermission(Party party, String privilege) {
         PrivilegeDescriptor pd = PrivilegeDescriptor.get(privilege);
-        Assert.assertNotNull(pd, "PrivilegeDescriptor.get(\"" + privilege + "\")");
+        Assert.exists(pd, "PrivilegeDescriptor.get(\"" + privilege + "\")");
         return hasPermission(party, pd);
     }
 
@@ -477,7 +477,7 @@ public class SecurityManager implements Security, SecurityConstants {
     private boolean hasPermission(Party party, String privilege,
                                   ContentItem item) {
         PrivilegeDescriptor pd = PrivilegeDescriptor.get(privilege);
-        Assert.assertNotNull(pd, "PrivilegeDescriptor.get(\"" + privilege + "\")");
+        Assert.exists(pd, "PrivilegeDescriptor.get(\"" + privilege + "\")");
         return hasPermission(party, pd, item);
     }
 
@@ -487,7 +487,7 @@ public class SecurityManager implements Security, SecurityConstants {
      */
     private boolean hasPermission(Party party, PrivilegeDescriptor pd,
                                   ContentItem item) {
-        Assert.assertNotNull(pd, "PrivilegeDescriptor");
+        Assert.exists(pd, "PrivilegeDescriptor");
         PermissionDescriptor perm = new PermissionDescriptor(pd, item, party);
         return (PermissionService.checkPermission(perm));
     }

@@ -44,7 +44,7 @@ public abstract class AbstractComponent
     private NavigationModel m_model = Navigation.getConfig().getDefaultModel();
 
     public void setModel(NavigationModel model) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_model = model;
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractComponent
 
     public final void generateXML(PageState state,
                                   Element parent) {
-        Assert.locked(this);
+        Assert.isLocked(this);
         
         Element content = generateXML(state.getRequest(),
                                       state.getResponse());

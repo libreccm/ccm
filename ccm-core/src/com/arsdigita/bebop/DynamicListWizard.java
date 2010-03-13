@@ -39,10 +39,9 @@ import com.arsdigita.bebop.event.ChangeListener;
  * "add" pane will add a new item to the list. The "add" pane
  * will be visible only when the user clicks on the "add" link.
  *
+ * @version $Id: DynamicListWizard.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DynamicListWizard extends SplitWizard implements Resettable {
-
-    public static final String versionId = "$Id: DynamicListWizard.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Label m_listLabel;
     private ToggleLink m_addLink;
@@ -212,13 +211,19 @@ public class DynamicListWizard extends SplitWizard implements Resettable {
     }
 
     /**
-     * Return the <code>List</code> of items in the left pane
-     * @deprecated use getListingComponent instead
+     * Convenient method for {Link getListingComponent } to return the
+     * <code>List</code> of items in the left pane as List.
      */
-    public List getList() {
+    // Had been 
+    //   * @deprecated use getListingComponent instead (not a 1:1 replacement,
+    //   *             different return type!
+    // Currently still used in ccm-bookmarks ui BookmarkEditPane
+    // public List getList() {
+    public List getListOfComponents() {
         Component c = getListingComponent();
-        Assert.assertTrue(c instanceof List,
-                          "The listing component is not a List, but " + c.getClass().getName());
+        Assert.isTrue(c instanceof List,
+                          "The listing component is not a List, but " +
+                          c.getClass().getName());
         return (List)c;
     }
 
@@ -248,7 +253,7 @@ public class DynamicListWizard extends SplitWizard implements Resettable {
      *   selected
      */
     public void setAddPane(Component c) {
-        Assert.assertTrue(m_addPane == null, "Add pane has already been set");
+        Assert.isTrue(m_addPane == null, "Add pane has already been set");
 
         if(!super.contains(c)) {
             super.add(c);
@@ -275,7 +280,7 @@ public class DynamicListWizard extends SplitWizard implements Resettable {
      *   is selected
      */
     public void setEditPane(Component c) {
-        Assert.assertTrue(m_editPane == null, "Edit pane has already been set");
+        Assert.isTrue(m_editPane == null, "Edit pane has already been set");
 
         if(!super.contains(c)) {
             super.add(c);

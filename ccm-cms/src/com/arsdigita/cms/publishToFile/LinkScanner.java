@@ -117,7 +117,7 @@ class LinkScanner {
   private TagRef[] m_tags;
 
   public LinkScanner(String html) {
-    Assert.assertNotNull(html);
+    Assert.exists(html);
     m_content = html;
     m_tags = parse();
   }

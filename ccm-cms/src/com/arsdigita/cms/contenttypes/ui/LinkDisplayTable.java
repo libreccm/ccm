@@ -111,7 +111,7 @@ public class LinkDisplayTable extends LinkTable {
 
         private Link getLink(TableActionEvent e) {
             String id = (String)e.getRowKey();
-            Assert.assertNotNull(id);
+            Assert.exists(id);
             Link link;
             try {
                 link = new Link(new BigDecimal(id));

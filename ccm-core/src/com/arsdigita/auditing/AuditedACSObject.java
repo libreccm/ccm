@@ -39,11 +39,10 @@ import java.util.Date;
  *
  * @author Joseph Bank 
  * @version 1.0
+ * @version $Id: AuditedACSObject.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public abstract class AuditedACSObject extends ACSObject implements Audited {
-
-    public static final String versionId = "$Id: AuditedACSObject.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Audit trail.

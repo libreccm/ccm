@@ -36,7 +36,7 @@ public class Duration {
      * @pre minutes != null
      */
     public static String formatDuration(Integer minutes) {
-        Assert.assertNotNull(minutes, "minutes");
+        Assert.exists(minutes, "minutes");
         return formatDuration(minutes.intValue());
     }
 
@@ -105,7 +105,7 @@ public class Duration {
     }
 
     private static Integer[] copyArray(int[] from) {
-        Assert.assertNotNull(from, "from");
+        Assert.exists(from, "from");
         Integer[] to = new Integer[from.length];
         for (int ii=0; ii<from.length; ii++) {
             to[ii] = new Integer(from[ii]);

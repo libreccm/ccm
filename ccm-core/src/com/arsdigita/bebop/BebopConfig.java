@@ -34,12 +34,9 @@ import org.apache.log4j.Logger;
 /**
  * @author Justin Ross
  * @see com.arsdigita.bebop.Bebop
+ * @version $Id: BebopConfig.java 1498 2007-03-19 16:22:15Z apevec $
  */
 public final class BebopConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: BebopConfig.java 1498 2007-03-19 16:22:15Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(BebopConfig.class);
 

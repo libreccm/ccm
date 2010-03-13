@@ -35,11 +35,11 @@ import org.apache.log4j.Logger;
  *
  * @author Joseph Bank 
  * @version 1.0
+ * @version $Id: AuditingObserver.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class AuditingObserver implements DomainObjectObserver {
 public static final Logger s_log = Logger.getLogger(AuditingObserver.class);
-    public static final String versionId = "$Id: AuditingObserver.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private BasicAuditTrail m_audit_trail;
     private AuditingSaveInfo m_save_info = null;

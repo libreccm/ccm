@@ -52,7 +52,7 @@ public class JspWrapperException extends RuntimeException {
      */
     public JspWrapperException (String s, Throwable rootCause) {
         super(s);
-        Assert.assertNotNull(rootCause);
+        Assert.exists(rootCause);
         this.m_rootCause = rootCause;
     }
 

@@ -49,38 +49,26 @@ import org.apache.log4j.Logger;
  * @version $Id: ApplicationType.java 1520 2007-03-22 13:36:04Z chrisgilbert23 $
  */
 public class ApplicationType extends ResourceType {
- // public static final String versionId =
- //     "$Id: ApplicationType.java 1520 2007-03-22 13:36:04Z chrisgilbert23 $" +
- //     "$Author: chrisgilbert23 $" +
- //     "$DateTime: 2004/08/16 18:10:38 $";
 
+    /** The logging object for this class. */
     private static final Logger s_log = Logger.getLogger
         (ApplicationType.class);
 
+    /**
+     * The fully qualified model name of the underlying data object, which in
+     * this case is the same as the Java type.
+     */
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.web.ApplicationType";
-
-    protected String getBaseDataObjectType() {
-        return BASE_DATA_OBJECT_TYPE;
-    }
 
     private PackageType m_packageType;
     boolean m_legacyFree = false;
 
-    // ensure legacy free instance variable is set correctly 
-    // previously only set on creation of application type 
-    // (to be honest I can't remember the problem that was 
-    // causing, but it did cause a problem in some 
-    // circumstances)   
-    public void initialize() {
-        super.initialize();
-        s_log.debug("initialising application type "); 
-        if (!isNew() && getPackageType() == null) {
-            s_log.debug("legacy free type");
-            m_legacyFree = true;
-            
-        }
-    }
+    /**
+     * Constructor.
+     * 
+     * @param dataObject
+     */
     public ApplicationType(DataObject dataObject) {
         super(dataObject);
     }
@@ -95,7 +83,7 @@ public class ApplicationType extends ResourceType {
         this(objectType, title, applicationObjectType, false);
 
    }
-    
+
     protected ApplicationType(final String objectType,
 			      final String title,
 			      final String applicationObjectType,
@@ -114,6 +102,26 @@ public class ApplicationType extends ResourceType {
 	}
         m_legacyFree = true;
     }
+
+    protected String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
+    }
+
+    // ensure legacy free instance variable is set correctly 
+    // previously only set on creation of application type 
+    // (to be honest I can't remember the problem that was 
+    // causing, but it did cause a problem in some 
+    // circumstances)   
+    public void initialize() {
+        super.initialize();
+        s_log.debug("initialising application type "); 
+        if (!isNew() && getPackageType() == null) {
+            s_log.debug("legacy free type");
+            m_legacyFree = true;
+            
+        }
+    }
+
 
     private void setDefaults() {
         // Defaults for standalone applications.
@@ -154,9 +162,9 @@ public class ApplicationType extends ResourceType {
 			      boolean createContainerGroup) {
         this(dataObjectType);
 
-        Assert.assertNotNull(title, "title");
-        Assert.assertNotNull(applicationObjectType, "applicationObjectType");
-        Assert.assertNotNull(packageType, "packageType");
+        Assert.exists(title, "title");
+        Assert.exists(applicationObjectType, "applicationObjectType");
+        Assert.exists(packageType, "packageType");
 
         m_packageType = packageType;
         setPackageType(m_packageType);
@@ -195,8 +203,8 @@ public class ApplicationType extends ResourceType {
     private static final PackageType makePackageType(String key, String title) {
         PackageType packageType = new PackageType();
 
-        Assert.assertNotNull(key, "key");
-        Assert.assertNotNull(title, "title");
+        Assert.exists(key, "key");
+        Assert.exists(title, "title");
 
         packageType.setKey(key);
         packageType.setDisplayName(title);
@@ -242,7 +250,7 @@ public class ApplicationType extends ResourceType {
     }
     // Param
     public static ApplicationType retrieveApplicationType(BigDecimal id) {
-        Assert.assertNotNull(id, "id");
+        Assert.exists(id, "id");
 
         return ApplicationType.retrieveApplicationType
             (new OID(ApplicationType.BASE_DATA_OBJECT_TYPE, id));
@@ -250,11 +258,11 @@ public class ApplicationType extends ResourceType {
 
     // Param oid cannot be null.
     public static ApplicationType retrieveApplicationType(OID oid) {
-        Assert.assertNotNull(oid, "oid");
+        Assert.exists(oid, "oid");
 
         DataObject dataObject = SessionManager.getSession().retrieve(oid);
 
-        Assert.assertNotNull(dataObject);
+        Assert.exists(dataObject);
 
         return ApplicationType.retrieveApplicationType(dataObject);
     }
@@ -262,7 +270,7 @@ public class ApplicationType extends ResourceType {
     // Param dataObject cannot be null.  Can return null?
     public static ApplicationType retrieveApplicationType
         (DataObject dataObject) {
-        Assert.assertNotNull(dataObject, "dataObject");
+        Assert.exists(dataObject, "dataObject");
 
         return new ApplicationType(dataObject);
     }
@@ -270,7 +278,7 @@ public class ApplicationType extends ResourceType {
     // Can return null.
     public static ApplicationType retrieveApplicationTypeForApplication
         (String applicationObjectType) {
-        Assert.assertNotNull(applicationObjectType, "applicationObjectType");
+        Assert.exists(applicationObjectType, "applicationObjectType");
 
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
@@ -293,7 +301,7 @@ public class ApplicationType extends ResourceType {
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
-        Assert.assertNotNull(collection, "collection");
+        Assert.exists(collection, "collection");
 
         collection.addEqualsFilter("hasFullPageView", Boolean.TRUE);
 
@@ -332,8 +340,7 @@ public class ApplicationType extends ResourceType {
                 ("This method is only supported for legacy application types");
         }
 
-        Assert.assertNotNull(packageType, "packageType");
-
+        Assert.exists(packageType, "packageType");
         setAssociation("packageType", packageType);
     }
 
@@ -382,13 +389,13 @@ public class ApplicationType extends ResourceType {
     public String getTitle() {
         String title = (String) get("title");
 
-        Assert.assertNotNull(title, "title");
+        Assert.exists(title, "title");
 
         return title;
     }
 
     public void setTitle(String title) {
-        Assert.assertNotNull(title, "title");
+        Assert.exists(title, "title");
 
         set("title", title);
     }
@@ -408,7 +415,7 @@ public class ApplicationType extends ResourceType {
     public boolean isWorkspaceApplication() {
         final Boolean result = (Boolean) get("isWorkspaceApplication");
 
-        Assert.assertNotNull(result, "Boolean result");
+        Assert.exists(result, "Boolean result");
 
         return result.booleanValue();
     }
@@ -431,7 +438,7 @@ public class ApplicationType extends ResourceType {
     public boolean hasFullPageView() {
         final Boolean result = (Boolean) get("hasFullPageView");
 
-        Assert.assertNotNull(result, "Boolean result");
+        Assert.exists(result, "Boolean result");
 
         return result.booleanValue();
     }
@@ -454,7 +461,7 @@ public class ApplicationType extends ResourceType {
     public boolean hasEmbeddedView() {
         final Boolean result = (Boolean) get("hasEmbeddedView");
 
-        Assert.assertNotNull(result, "Boolean result");
+        Assert.exists(result, "Boolean result");
 
         return result.booleanValue();
     }
@@ -491,8 +498,7 @@ public class ApplicationType extends ResourceType {
      * <p>Get the list of relevant privileges for this
      * ApplicationType.</p>
      *
-     * @return A Collection of {@link PrivilegeDescriptor
-     * PrivilegeDescriptors}
+     * @return A Collection of {@link PrivilegeDescriptor PrivilegeDescriptors}
      */
     public Collection getRelevantPrivileges() {
         LinkedList result = new LinkedList();
@@ -550,13 +556,13 @@ public class ApplicationType extends ResourceType {
     public String getApplicationObjectType() {
         String objectType = (String)get("objectType");
 
-        Assert.assertNotNull(objectType);
+        Assert.exists(objectType);
 
         return objectType;
     }
 
     protected void setApplicationObjectType(String objectType) {
-        Assert.assertNotNull(objectType);
+        Assert.exists(objectType);
 
         set("objectType", objectType);
     }
@@ -585,7 +591,7 @@ public class ApplicationType extends ResourceType {
     public boolean isSingleton() {
         final Boolean result = (Boolean) get("isSingleton");
 
-        Assert.assertNotNull(result, "Boolean result");
+        Assert.exists(result, "Boolean result");
 
         return result.booleanValue();
     }
@@ -598,7 +604,7 @@ public class ApplicationType extends ResourceType {
     public BigDecimal getID() {
         BigDecimal id = (BigDecimal)get("id");
 
-        Assert.assertNotNull(id, "id");
+        Assert.exists(id, "id");
 
         return id;
     }
@@ -627,7 +633,8 @@ public class ApplicationType extends ResourceType {
     }
     
     public void createGroup () {
-    	Assert.equal(getGroup(), null, "Group has already been created for Application Type " + getTitle());
+    	Assert.isEqual(getGroup(), null, "Group has already been created for " +
+                     "Application Type " + getTitle());
     	Group group = new Group();
     	group.setName(getTitle() + " Groups");
 	setAssociation("containerGroup", group);

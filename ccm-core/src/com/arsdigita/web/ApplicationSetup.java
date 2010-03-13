@@ -213,7 +213,7 @@ public class ApplicationSetup {
         notice("Done validating.");
 
         ApplicationType applicationType = process();
-        Assert.assertNotNull(applicationType, "applicationType is not null");
+        Assert.exists(applicationType, "applicationType is not null");
         applicationType.save();
 
         return applicationType;
@@ -252,7 +252,7 @@ public class ApplicationSetup {
             // ApplicationType exists.
 
             if (m_key != null && !packageTypeIsInstalled(m_key)) {
-                Assert.assertTrue(m_packageType == null);
+                Assert.isTrue(m_packageType == null);
 
                 m_category.warn
                     ("ApplicationType " + m_typeName + " did not have " +

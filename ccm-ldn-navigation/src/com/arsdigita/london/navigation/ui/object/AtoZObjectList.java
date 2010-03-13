@@ -51,7 +51,7 @@ public class AtoZObjectList extends AbstractObjectList {
     private String m_titleProperty = ACSObject.DISPLAY_NAME;
 
     public void setTitleProperty(String property) {
-        Assert.locked(this);
+        Assert.isLocked(this);
         m_titleProperty = property;
     }
 

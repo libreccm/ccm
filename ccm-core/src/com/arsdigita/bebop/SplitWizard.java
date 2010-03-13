@@ -18,13 +18,8 @@
  */
 package com.arsdigita.bebop;
 
-
 import com.arsdigita.bebop.util.GlobalizationUtil ; 
-
-
 import com.arsdigita.util.Assert;
-import com.arsdigita.util.Assert;
-
 import com.arsdigita.xml.Element;
 
 /**
@@ -60,11 +55,10 @@ import com.arsdigita.xml.Element;
  * Both the selector and the model <b>must</b> be supplied
  * before the wizard can be displayed.
  *
+ * @version $Id: SplitWizard.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class SplitWizard extends SplitPanel {
-
-    public static final String versionId = "$Id: SplitWizard.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ComponentSelectionModel m_sel;
     private Component m_defaultPane;
@@ -82,9 +76,8 @@ public class SplitWizard extends SplitPanel {
      * @param defaultPane the component that will be shown if there is no
      *   selected component. Usually, this parameter is a simple label.
      */
-    public SplitWizard (
-                        Component header, ComponentSelectionModel model, Component defaultPane
-                        ) {
+    public SplitWizard (Component header, ComponentSelectionModel model, 
+                        Component defaultPane ) {
         this(model, defaultPane);
         setHeader(header);
     }
@@ -98,9 +91,7 @@ public class SplitWizard extends SplitPanel {
      * @param defaultPane the component that will be shown if there is no
      *   selected component. Usually, this parameter is a simple label.
      */
-    public SplitWizard (
-                        ComponentSelectionModel model, Component defaultPane
-                        ) {
+    public SplitWizard (ComponentSelectionModel model, Component defaultPane) {
         super();
         m_defaultPane = defaultPane;
         if(m_defaultPane != null)
@@ -119,7 +110,8 @@ public class SplitWizard extends SplitPanel {
      *                 selector
      */
     public SplitWizard(ComponentSelectionModel model) {
-        this(model, new Label(GlobalizationUtil.globalize("bebop.please_select_choice_from_the_list_on_the_left")));
+        this(model, new Label(GlobalizationUtil.globalize(
+                        "bebop.please_select_choice_from_the_list_on_the_left")));
     }
 
     /**
@@ -140,7 +132,8 @@ public class SplitWizard extends SplitPanel {
      *                 selector
      */
     public SplitWizard() {
-        this(null, new Label(GlobalizationUtil.globalize("bebop.please_select_choice_from_the_list_on_the_left")));
+        this(null, new Label(GlobalizationUtil.globalize(
+                       "bebop.please_select_choice_from_the_list_on_the_left")));
     }
 
     /**
@@ -174,7 +167,7 @@ public class SplitWizard extends SplitPanel {
      *   component
      */
     public void setSelectionModel(ComponentSelectionModel model) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_sel = model;
     }
 
@@ -192,7 +185,7 @@ public class SplitWizard extends SplitPanel {
      * @param the component to use as the default pane
      */
     public void setDefaultPane(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if(m_defaultPane != null) {
             throw new IllegalStateException("Default pane has already been set");
@@ -262,7 +255,7 @@ public class SplitWizard extends SplitPanel {
          */
         public HeaderPanel(String label, Component c) {
             super(VERTICAL);
-            setBorder(false);
+            setBorder(0);
 
             m_label = new Label(label);
             m_label.setFontWeight(Label.BOLD);

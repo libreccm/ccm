@@ -94,11 +94,11 @@ import com.arsdigita.bebop.util.Traversal;
  *
  * Also, allow to jump to a specific step (useful for providing quick
  * links on a confirmation step in a wizard with several steps)
+ *
+ * @version $Id: Wizard.java 1414 2006-12-07 14:24:10Z chrisgilbert23 $
  **/
 
 public class Wizard extends MultiStepForm {
-
-    public final static String versionId = "$Id: Wizard.java 1414 2006-12-07 14:24:10Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log = Logger.getLogger(Wizard.class);
     private ModalContainer m_steps = new ModalContainer();
@@ -198,18 +198,17 @@ public class Wizard extends MultiStepForm {
         if (!m_quickFinish) {
 	    p.setVisibleDefault(m_finish, false);
         }
-         Traversal trav = new Traversal () {
-                 protected void act(Component c) {
-                    if (c instanceof Widget) {
-                        ((Widget) c).setValidationGuard(
-                                                        new Widget.ValidationGuard() {
-                                                            public boolean shouldValidate(PageState ps) {
-                                                                return m_back.isSelected(ps);
-                                                            }
-                                                        });
-                    }
+        Traversal trav = new Traversal () {
+            protected void act(Component c) {
+                if (c instanceof Widget) {
+                    ((Widget) c).setValidationGuard(new Widget.ValidationGuard() {
+                        public boolean shouldValidate(PageState ps) {
+                            return m_back.isSelected(ps);
+                        }
+                    });
                 }
-            };
+            }
+        };
 
         trav.preorder(this);
     }
@@ -336,8 +335,9 @@ public class Wizard extends MultiStepForm {
     private class SkipStepListener implements ChangeListener {
 	public void stateChanged(ChangeEvent e) {
             PageState state = e.getPageState();
-            s_log.debug("state of underlying modal container changed - new visible component is "
-                                       + m_steps.indexOf(m_steps.getVisibleComponent(state)));
+            s_log.debug("state of underlying modal container changed - " + 
+                        "new visible component is " +
+                        m_steps.indexOf(m_steps.getVisibleComponent(state)));
             Component newComponent = m_steps.getVisibleComponent(state);
             if (((Set) m_hiddenSteps.get(state)).contains(newComponent)) {
                 s_log.debug("I'm going to skip this step");

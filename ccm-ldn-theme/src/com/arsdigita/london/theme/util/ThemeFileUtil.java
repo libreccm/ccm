@@ -69,7 +69,7 @@ public class ThemeFileUtil {
                                            String serverSpecificPath,
                                            boolean overwriteNewerFiles,
                                            String fileType) {
-        Assert.assertTrue(ThemeFile.LIVE.equals(fileType) ||
+        Assert.isTrue(ThemeFile.LIVE.equals(fileType) ||
                           ThemeFile.DRAFT.equals(fileType));
         HashMap themeFiles = new HashMap();
         ThemeFileCollection collection = null;

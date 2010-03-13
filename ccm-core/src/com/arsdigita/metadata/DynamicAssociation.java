@@ -239,8 +239,8 @@ public class DynamicAssociation extends DynamicElement {
 
             Property p2 = type1.getProperty(m_prop2.getName());
             Property p1 = type2.getProperty(m_prop1.getName());
-            Assert.assertTrue(p2==null || p2==m_prop2);
-            Assert.assertTrue(p1==null || p1==m_prop1);
+            Assert.isTrue(p2==null || p2==m_prop2);
+            Assert.isTrue(p1==null || p1==m_prop1);
             if (p2 == null) {
                 type1.addProperty(m_prop2);
             }

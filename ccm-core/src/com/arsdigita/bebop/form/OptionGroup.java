@@ -121,7 +121,7 @@ public abstract class OptionGroup extends Widget
     }
 
     public void clearOptions() {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_options = new ArrayList();
     }
 
@@ -152,7 +152,7 @@ public abstract class OptionGroup extends Widget
     public void addOption(Option opt, PageState ps) {
         ArrayList list = m_options;
         if (ps == null) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
         } else {
             list = (ArrayList)m_requestOptions.get(ps);
         }
@@ -164,7 +164,7 @@ public abstract class OptionGroup extends Widget
     public void removeOption(Option opt, PageState ps) {
         ArrayList list = m_options;
         if (ps == null) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
         } else {
             list = (ArrayList)m_requestOptions.get(ps);
         }
@@ -176,7 +176,7 @@ public abstract class OptionGroup extends Widget
     }
 
     /**
-     * Removes the first option whose key is equal
+     * Removes the first option whose key is isEqual
      * to the key that is passed in.
      */
     public void removeOption(String key, PageState ps) {
@@ -184,7 +184,7 @@ public abstract class OptionGroup extends Widget
         // efficient solution is to switch to using a HashMap.
         ArrayList list = m_options;
         if (ps == null) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
         } else {
             list = (ArrayList)m_requestOptions.get(ps);
         }
@@ -210,7 +210,7 @@ public abstract class OptionGroup extends Widget
      *  this is 1 then a TextField is used. Otherwise a TextArea is used.
      */
     public void addOtherOption( String label, int width, int height ) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         Option otherOption = new Option( OTHER_OPTION, label );
         addOption( otherOption );
@@ -283,11 +283,11 @@ public abstract class OptionGroup extends Widget
      *  @param value the value of the option to be added to the
      *  by-default-selected set.  */
     public void setOptionSelected(String value) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if (!isMultiple()) {
             // only one option may be selected
             // to this selected list better be empty
-            Assert.assertTrue(m_selected.size() == 0, TOO_MANY_OPTIONS_SELECTED);
+            Assert.isTrue(m_selected.size() == 0, TOO_MANY_OPTIONS_SELECTED);
             m_selected.add(value);
             getParameterModel().setDefaultValue( value );
         } else {

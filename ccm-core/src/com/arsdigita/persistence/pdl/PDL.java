@@ -400,7 +400,7 @@ public class PDL {
             return;
         }
 
-        Assert.assertTrue(base.isDirectory(), "directory " + base +
+        Assert.isTrue(base.isDirectory(), "directory " + base +
                           " is directory");
 
         final String suffix = DbHelper.getDatabaseSuffix();

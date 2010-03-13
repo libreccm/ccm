@@ -186,7 +186,7 @@ public abstract class WidgetForm extends PropertiesForm {
      *  This can only be called after calling addWidgets()
      */
     protected void automaticallySetName(ParameterModel model) {
-        Assert.assertNotNull(m_name);
+        Assert.exists(m_name);
         m_name.setOnFocus("defaulting = false");
         m_name.setOnBlur(
             "if (this.value == '') " +

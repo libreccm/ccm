@@ -110,7 +110,7 @@ public class ACSObjectInvariantCheck extends Program {
 
         com.redhat.persistence.metadata.ObjectType protoType =
             root.getRoot().getObjectType(type.getQualifiedName());
-        Assert.truth(protoType != null,
+        Assert.isTrue(protoType != null,
                      "null proto type for " + type.getQualifiedName());
 
         final ObjectMap objectMap = root.getRoot().getObjectMap(protoType);

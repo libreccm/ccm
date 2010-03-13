@@ -55,7 +55,8 @@ import com.arsdigita.xml.Element;
  */
 public class RecentUpdatedDocsPortlet extends AppPortlet {
 
-	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet";
+	public static final String BASE_DATA_OBJECT_TYPE =
+                         "com.arsdigita.cms.docmgr.ui.RecentUpdatedDocsPortlet";
 
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
@@ -89,7 +90,8 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 		// Table with 6 columns
 		String[] tableHeaders = { "File", "Type", "Size", "Author", "Date", "" };
 
-		DataQuery files = SessionManager.getSession().retrieveQuery("com.arsdigita.cms.docmgr.ui.RecentUpdatedDocs");
+		DataQuery files = SessionManager.getSession().retrieveQuery(
+                                  "com.arsdigita.cms.docmgr.ui.RecentUpdatedDocs");
 		files.setParameter("ancestors", "%/" + rep.getRoot().getID().toString() + "/%");
 		files.setParameter("maxRows", new Integer(10));
 
@@ -98,7 +100,9 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 		while (files.next()) {
 			Object[] tableRow = new Object[6];
 
-			Resource res = (Resource) DomainObjectFactory.newInstance(new OID((String) files.get("objectType"), files.get("docID")));
+			Resource res = (Resource) DomainObjectFactory.newInstance(
+                                    new OID((String) files.get("objectType"),
+                                                     files.get("docID")));
 			Document document = null;
 			DocLink docLink = null;
 			boolean isExternalLink = false;
@@ -113,7 +117,9 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 				document = (Document) res;
 			}
 			if (isExternalLink) {
-				tableRow[0] = new ExternalLink(res.getTitle(), docLink.getExternalURL());
+				tableRow[0] = new ExternalLink(
+                                                  res.getTitle(),
+                                                  docLink.getExternalURL());
 				tableRow[1] = "Link";
 				tableRow[2] = "";
 				tableRow[3] = "";
@@ -125,11 +131,16 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 				else {
 					tableRow[4] = "";
 				}
-				tableRow[5] = new ExternalLink("download", docLink.getExternalURL());
+				tableRow[5] = new ExternalLink(
+                                                  "download",
+                                                  docLink.getExternalURL());
 			}
 			else {
 				// File name column.
-				tableRow[0] = new Link(document.getTitle(), fileURL + "/?" + FILE_ID_PARAM_NAME + "=" + document.getID());
+				tableRow[0] = new Link(
+                                              document.getTitle(),
+                                              fileURL + "/?" + FILE_ID_PARAM_NAME +
+                                              "=" + document.getID());
 				tableRow[1] = document.getPrettyMimeType();
 
 				long fileSize = document.getSize().longValue();
@@ -146,7 +157,10 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 					tableRow[4] = "";
 				}
 				// Download column
-				Link link = new Link("Download", fileURL + "/download/?" + FILE_ID_PARAM_NAME + "=" + document.getID().toString());
+				Link link = new Link("Download", fileURL +
+                                                     "/download/?" +
+                                                     FILE_ID_PARAM_NAME + "=" +
+                                                     document.getID().toString());
 				//+ resource.getResourceID());
 				link.setClassAttr("downloadLink");
 				tableRow[5] = link;
@@ -159,12 +173,14 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 		GridPanel panel = new GridPanel(1);
 		addResourceLinks(panel, rep);
 		if (tableDataList.isEmpty()) {
-			panel.add(new Label(REPOSITORY_RECENTDOCS_EMPTY.localize(req).toString()));
+			panel.add(new Label(REPOSITORY_RECENTDOCS_EMPTY.
+                                            localize(req).toString()));
             panel.generateXML(pageState, parentElement);
             return;
         }
 		else {
-			Object[][] tableData = (Object[][]) tableDataList.toArray(new Object[0][0]);
+			Object[][] tableData = (Object[][]) tableDataList.
+                                                toArray(new Object[0][0]);
 			Table table = new Table(tableData, tableHeaders);
         panel.add(table, GridPanel.FULL_WIDTH);
         panel.generateXML(pageState, parentElement);
@@ -174,19 +190,24 @@ class RecentUpdatedDocsPortletRenderer extends AbstractPortletRenderer implement
 	private void addResourceLinks(GridPanel panel, Repository rep) {
         User user = Web.getContext().getUser();
 
-		if (!PermissionService.checkPermission(new PermissionDescriptor(PrivilegeDescriptor.CREATE, rep, user))) {
+		if (!PermissionService.checkPermission(new PermissionDescriptor(
+                             PrivilegeDescriptor.CREATE, rep, user))) {
 			// don't show resource links
             return;
         }
 		// new document
-		Link addResourceLink = new Link(new Label(ROOT_ADD_RESOURCE_LINK), m_portlet.getParentApplication().getPath() + "?"
+		Link addResourceLink = new Link(new Label(ROOT_ADD_RESOURCE_LINK),
+                                m_portlet.getParentApplication().getPath() + "?"
 				+ ROOT_ADD_DOC_PARAM.getName() + "=t");
         addResourceLink.setClassAttr("actionLink");
 
 		panel.add(addResourceLink, GridPanel.FULL_WIDTH | GridPanel.RIGHT | GridPanel.BOTTOM);
 
 		// new doclink
-		addResourceLink = new Link(new Label(ROOT_ADD_DOCLINK_LINK), m_portlet.getParentApplication().getPath() + "?" + PARAM_ROOT_ADD_DOC_LINK + "=");
+		addResourceLink = new Link(new Label(
+                                      ROOT_ADD_DOCLINK_LINK),
+                                      m_portlet.getParentApplication().getPath()
+                                      + "?" + PARAM_ROOT_ADD_DOC_LINK + "=");
 		addResourceLink.setClassAttr("actionLink");
 
 		panel.add(addResourceLink, GridPanel.FULL_WIDTH | GridPanel.RIGHT | GridPanel.BOTTOM);

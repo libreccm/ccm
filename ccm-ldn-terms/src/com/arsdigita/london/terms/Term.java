@@ -270,7 +270,7 @@ public class Term extends ACSObject {
     public void addNarrowerTerm(Term term,
                                 boolean isDefault,
                                 boolean isPreferred) {
-        //Assert.truth(term.getDomain().equals(getDomain()),
+        //Assert.isTrue(term.getDomain().equals(getDomain()),
         //             "narrower term is in this domain");
 
         if (s_log.isDebugEnabled()) {

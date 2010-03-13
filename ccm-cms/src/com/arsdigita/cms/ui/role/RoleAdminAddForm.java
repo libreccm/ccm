@@ -73,7 +73,7 @@ class RoleAdminAddForm extends UserAddForm {
     }
 
     protected DataQuery makeQuery(PageState s) {
-        Assert.truth(m_roles.isSelected(s));
+        Assert.isTrue(m_roles.isSelected(s));
 
         Session session = SessionManager.getSession();
 
@@ -107,7 +107,7 @@ class RoleAdminAddForm extends UserAddForm {
     public void process(FormSectionEvent event) throws FormProcessException {
         FormData data = event.getFormData();
         PageState state = event.getPageState();
-        Assert.truth(m_roles.isSelected(state));
+        Assert.isTrue(m_roles.isSelected(state));
 
         String[] users = (String[]) data.get("users");
         if ( users != null ) {

@@ -48,29 +48,44 @@ import com.arsdigita.web.Web;
  */
 public class PortletType extends ResourceType {
 
+    /** The logging object for this class. */
     private static final Logger s_cat =
         Logger.getLogger(PortletType.class.getName());
 
-    // PortletType uses the data object type of ApplicationType.
+    /**
+     * The fully qualified model name of the underlying data object, which in
+     * this case is the same as the Java type.
+     * PortletType uses the data object type of ApplicationType.
+     */
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.portal.PortletType";
-
-
-    protected String getBaseDataObjectType() {
-        return BASE_DATA_OBJECT_TYPE;
-    }
 
     public static final String WIDE_PROFILE = "wide";
     public static final String NARROW_PROFILE = "narrow";
 
+    // ===== Constructors ==================================================== //
+
+    /**
+     * Creates a new PortletType object instance to encapsulate a given data object.
+     * Do not instantiate directly, use createPortletType(...) instead!
+     * @param dataObject
+     */
     protected PortletType(DataObject dataObject) {
         super(dataObject);
     }
 
-    // Create from packageType.
-    protected PortletType
-        (String dataObjectType, String title, String profile,
-         String portletObjectType) {
+    /**
+     * Create  a new Portlet from packageType.
+     * Do not instantiate directly, use createPortletType(...) instead!
+     * @param dataObjectType
+     * @param title
+     * @param profile
+     * @param portletObjectType
+     */
+    protected PortletType(String dataObjectType,
+                          String title, String profile,
+                          String portletObjectType) {
+
         super(dataObjectType);
 
         Assert.exists(title, "title");
@@ -85,9 +100,7 @@ public class PortletType extends ResourceType {
             String message =
                 "The PackageType 'portal' is not installed.  It must be " +
                 "installed in order to create a new PortletType.";
-
             s_cat.error(message);
-
             throw new IllegalStateException(message);
         }
 
@@ -100,8 +113,12 @@ public class PortletType extends ResourceType {
         setEmbeddedView(true);
     }
 
-    public static PortletType createPortletType
-        (String title, String profile, String portletObjectType) {
+    protected String getBaseDataObjectType() {
+        return BASE_DATA_OBJECT_TYPE;
+    }
+
+    public static PortletType createPortletType(String title, String profile,
+                                                String portletObjectType) {
         return new PortletType
             (BASE_DATA_OBJECT_TYPE, title, profile, portletObjectType);
     }
@@ -229,100 +246,111 @@ public class PortletType extends ResourceType {
     private static Set s_xsl = new HashSet();
 
     /**
-	 * 
-	 * NB - Based on ccm-cms/com.arsdigita.cms.ContentType
-	 * interface is liable to change.
-	 * 
-	 * Registers an XSL file against a portlet type. 
-	 * @param portletType the portlet's base data object type
-	 * @param path the path relative to the server root
-	 */
-	public static void registerXSLFile(String portletType, String path) {
-		s_cat.debug("registering xsl file " + path + " to portlet type "
-				+ portletType);
+     * Registers an XSL file against a portlet type.
+     *
+     * NB - Based on ccm-cms/com.arsdigita.cms.ContentType
+     * interface is liable to change.
+     *
+     * @param portletType the portlet's base data object type
+     * @param path the path relative to the server root
+     */
+    public static void registerXSLFile(String portletType, String path) {
 
-		s_xsl.add(new XSLEntry(portletType, path));
-	}
+        s_cat.debug("registering xsl file " + path + " to portlet type "
+                    + portletType);
 
-	/**
-	 * NB this interface is liable to change.
-	 * 
-	 * Unregisters an XSL file against a content type. 
-	 * @param type the content type
-	 * @param path the path relative to the server root
-	 */
-	public static void unregisterXSLFile(String portletType, String path) {
-		s_xsl.remove(new XSLEntry(portletType, path));
-	}
+        s_xsl.add(new XSLEntry(portletType, path));
+    }
 
-	/**
-	 * Gets an iterator of java.net.URL objects for
-	 * all registered XSL files
-	 */
-	public static Iterator getXSLFileURLs() {
-		s_cat.debug("getXSLFileURLs - returningan iterator over "
-				+ s_xsl.size() + " entries");
-		return new EntryIterator(s_xsl.iterator());
-	}
+    /**
+     * Unregisters an XSL file against a content type.
+     *
+     * NB this interface is liable to change.
+     *
+     * @param type the content type
+     * @param path the path relative to the server root
+     */
+    public static void unregisterXSLFile(String portletType, String path) {
+        s_xsl.remove(new XSLEntry(portletType, path));
+    }
 
-	private static class EntryIterator implements Iterator {
-		private Iterator m_inner;
+    /**
+     * Gets an iterator of java.net.URL objects for
+     * all registered XSL files
+     */
+    public static Iterator getXSLFileURLs() {
+        s_cat.debug("getXSLFileURLs - returningan iterator over "
+                    + s_xsl.size() + " entries");
+        return new EntryIterator(s_xsl.iterator());
+    }
 
-		public EntryIterator(Iterator inner) {
-			m_inner = inner;
-		}
+    /** 
+     * 
+     */
+    private static class EntryIterator implements Iterator {
 
-		public boolean hasNext() {
-			return m_inner.hasNext();
-		}
+        private Iterator m_inner;
 
-		public Object next() {
-			XSLEntry entry = (XSLEntry) m_inner.next();
-			String path = entry.getPath();
+        public EntryIterator(Iterator inner) {
+            m_inner = inner;
+        }
 
-			try {
-				return new URL(Web.getConfig().getDefaultScheme(), Web
-						.getConfig().getHost().getName(), Web.getConfig()
-						.getHost().getPort(), path);
-			} catch (MalformedURLException ex) {
-				throw new UncheckedWrapperException("path malformed" + path, ex);
-			}
-		}
+        public boolean hasNext() {
+            return m_inner.hasNext();
+        }
 
-		public void remove() {
-			m_inner.remove();
-		}
-	}
+        public Object next() {
 
-	private static class XSLEntry {
-		private String m_type;
+            XSLEntry entry = (XSLEntry) m_inner.next();
+            String path = entry.getPath();
 
-		private String m_path;
+            try {
+                return new URL(Web.getConfig().getDefaultScheme(),
+                               Web.getConfig().getHost().getName(),
+                               Web.getConfig().getHost().getPort(), path);
+            } catch (MalformedURLException ex) {
+                throw new UncheckedWrapperException("path malformed" + path, ex);
+            }
+        }
 
-		public XSLEntry(String portletType, String path) {
-			m_type = portletType;
-			m_path = path;
-		}
+        public void remove() {
+            m_inner.remove();
+        }
+    }
 
-		public PortletType getType() {
-			return PortletType.retrievePortletTypeForPortlet(m_type);
-		}
+    /**
+     * 
+     */
+    private static class XSLEntry {
 
-		public String getPath() {
-			return m_path;
-		}
+        private String m_type;
 
-		public boolean equals(Object o) {
-			if (!(o instanceof XSLEntry)) {
-				return false;
-			}
-			XSLEntry e = (XSLEntry) o;
-			return m_path.equals(e.m_path) && m_type.equals(e.m_type);
-		}
+        private String m_path;
 
-		public int hashCode() {
-			return m_path.hashCode() + m_type.hashCode();
-		}
-	}
+        public XSLEntry(String portletType, String path) {
+            m_type = portletType;
+            m_path = path;
+        }
+
+        public PortletType getType() {
+            return PortletType.retrievePortletTypeForPortlet(m_type);
+        }
+
+        public String getPath() {
+            return m_path;
+        }
+
+        public boolean equals(Object o) {
+            if (!(o instanceof XSLEntry)) {
+                return false;
+            }
+            XSLEntry e = (XSLEntry) o;
+            return m_path.equals(e.m_path) && m_type.equals(e.m_type);
+        }
+
+        public int hashCode() {
+            return m_path.hashCode() + m_type.hashCode();
+        }
+    }
 
 }

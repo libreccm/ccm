@@ -70,7 +70,7 @@ public abstract class FolderForm extends BasicItemForm{
      */
     public void validate(FormSectionEvent e) throws FormProcessException {
         Folder folder = (Folder) m_currentFolder.getSelectedObject(e.getPageState());
-        Assert.assertNotNull(folder);
+        Assert.exists(folder);
         validateNameUniqueness(folder, e);
     }
 

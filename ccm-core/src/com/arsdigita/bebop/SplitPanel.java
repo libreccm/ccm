@@ -34,14 +34,13 @@ import com.arsdigita.xml.Element;
  *
  * This container contains three components: "left", "right" and "header".
  * All three components must be present (non-null) before <code>SplitPanel</code>
- * is locked. An exception will be thrown if this is not the case.
+ * is isLocked. An exception will be thrown if this is not the case.
  *
  * @author Stanislav Freidin 
  * @version $Id: SplitPanel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class SplitPanel extends SimpleContainer {
-    public static final String versionId = "$Id: SplitPanel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Component m_left, m_right, m_header;
     private int m_divider;
@@ -96,7 +95,7 @@ public class SplitPanel extends SimpleContainer {
      * @param divider the position of the divider
      */
     public void setDivider(int divider) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (divider < 0 || divider > 100) {
             throw new IllegalArgumentException("Divider must be in range 0..100");
@@ -171,7 +170,7 @@ public class SplitPanel extends SimpleContainer {
      * @param c the new component to be put in the header
      */
     public void setHeader(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (!super.contains(c)) {
             super.add(c);
@@ -187,7 +186,7 @@ public class SplitPanel extends SimpleContainer {
      * @param c the new component to be put in the left slot
      */
     public void setLeftComponent(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (!super.contains(c)) {
             super.add(c);
@@ -203,7 +202,7 @@ public class SplitPanel extends SimpleContainer {
      * @param c the new component to be put in the right slot
      */
     public void setRightComponent(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (!super.contains(c)) {
             super.add(c);
@@ -246,9 +245,9 @@ public class SplitPanel extends SimpleContainer {
      * Verifies that the header, left, and right components exist.
      */
     public void lock() {
-        Assert.assertNotNull(getHeader(), "Header");
-        Assert.assertNotNull(getLeftComponent(), "Left Component");
-        Assert.assertNotNull(getRightComponent(), "Right Component");
+        Assert.exists(getHeader(), "Header");
+        Assert.exists(getLeftComponent(), "Left Component");
+        Assert.exists(getRightComponent(), "Right Component");
         super.lock();
     }
 }

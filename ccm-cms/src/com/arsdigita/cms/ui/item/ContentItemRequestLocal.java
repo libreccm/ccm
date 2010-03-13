@@ -36,7 +36,7 @@ public abstract class ContentItemRequestLocal extends RequestLocal {
     public final ContentItem getContentItem(final PageState state) {
         final ContentItem item = (ContentItem) get(state);
 
-        Assert.assertNotNull(item, "ContentItem item");
+        Assert.exists(item, "ContentItem item");
 
         return item;
     }

@@ -57,7 +57,6 @@ import org.apache.log4j.Logger;
  * @version $Id: TabbedPane.java 1137 2006-05-10 19:21:49Z apevec $
  */
 public class TabbedPane extends SimpleContainer {
-    public static final String versionId = "$Id: TabbedPane.java 1137 2006-05-10 19:21:49Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final String CURRENT_PANE = "pane";
     /**
@@ -87,7 +86,7 @@ public class TabbedPane extends SimpleContainer {
      * @pre p != null
      */
     public void register(Page p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         p.addComponentStateParam(this, m_currentPaneParam);
         // if there is no default pane, then set it to the first one
@@ -135,7 +134,7 @@ public class TabbedPane extends SimpleContainer {
      * @pre label != null && c != null
      */
     public void addTab(Component label, Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         super.add(new Pane(label, c));
     }
 
@@ -161,7 +160,7 @@ public class TabbedPane extends SimpleContainer {
      * @see #respond respond
      */
     public void addActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_actionListeners == null ) {
             m_actionListeners = new ArrayList();
         }
@@ -174,7 +173,7 @@ public class TabbedPane extends SimpleContainer {
      * @see #addActionListener addActionListener
      */
     public void removeActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_actionListeners == null ) {
             return;
         }
@@ -221,7 +220,7 @@ public class TabbedPane extends SimpleContainer {
      */
     public void setDefaultPane(Component pane)
         throws IllegalArgumentException {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         setDefaultPaneIndex(findPaneSafe(pane));
     }

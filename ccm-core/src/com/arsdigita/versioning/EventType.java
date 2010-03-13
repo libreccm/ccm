@@ -105,7 +105,7 @@ final class EventType {
 
     static EventType getEventType(DataObject ev) {
         BigInteger id = (BigInteger) ev.get("id");
-        Assert.truth(s_types.containsKey(id), "s_types.contains(id)");
+        Assert.isTrue(s_types.containsKey(id), "s_types.contains(id)");
         return (EventType) s_types.get(id);
     }
 

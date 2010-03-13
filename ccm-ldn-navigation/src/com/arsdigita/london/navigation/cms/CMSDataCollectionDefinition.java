@@ -43,17 +43,17 @@ public class CMSDataCollectionDefinition extends DataCollectionDefinition {
     private String m_filterVersion = ContentItem.LIVE;
 
     protected void validateObjectType(ObjectType type) {
-        Assert.truth(type.isSubtypeOf(ContentItem.BASE_DATA_OBJECT_TYPE),
+        Assert.isTrue(type.isSubtypeOf(ContentItem.BASE_DATA_OBJECT_TYPE),
                      "object type is a content item");
     }
 
     public final void setFilterSection(boolean filterSection) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_filterSection = filterSection;
     }
     
     public final void setFilterVersion(String version) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_filterVersion = version;
     }
 

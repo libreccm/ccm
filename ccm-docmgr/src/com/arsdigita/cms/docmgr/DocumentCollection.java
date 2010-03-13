@@ -46,7 +46,7 @@ public class DocumentCollection extends DomainCollection {
     public DomainObject getDomainObject() {
         DomainObject domainObject = getDocument();
 
-        Assert.assertNotNull(domainObject);
+        Assert.exists(domainObject);
 
         return domainObject;
     }
@@ -61,7 +61,7 @@ public class DocumentCollection extends DomainCollection {
 
         Document doc = Document.retrieveDocument(dataObject);
 
-        Assert.assertNotNull(doc);
+        Assert.exists(doc);
 
         return doc;
     }

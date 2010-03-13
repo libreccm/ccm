@@ -105,7 +105,7 @@ public class ContentSectionDispatcher implements Dispatcher {
             // Fetch the current site node from the request context;
             SiteNode sn = actx.getSiteNode();
             ContentSection section = ContentSection.getSectionFromNode(sn);
-            Assert.assertNotNull(section);
+            Assert.exists(section);
 
             request.setAttribute(CONTENT_SECTION, section);
 

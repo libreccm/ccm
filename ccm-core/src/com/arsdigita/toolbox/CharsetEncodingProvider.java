@@ -61,7 +61,7 @@ public class CharsetEncodingProvider implements ParameterProvider {
 
         Locale locale = Kernel.getContext().getLocale();
         
-        Assert.assertNotNull(locale, "Locale locale");
+        Assert.exists(locale, "Locale locale");
 
         ParameterData pd = new ParameterData
             (s_encodingParam, Globalization.getDefaultCharset(locale));

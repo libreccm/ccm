@@ -60,7 +60,7 @@ public class URLData {
      * @pre url != null
      */
     public URLData(String url, Map headers, byte[] content) {
-        Assert.assertNotNull(url);
+        Assert.exists(url);
         m_url = null;
         setHeaders(headers);
         setContent(content);

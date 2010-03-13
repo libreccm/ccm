@@ -88,7 +88,7 @@ public class LegacyAdapterServlet extends BaseApplicationServlet {
             s_log.debug("Using package type '" + type.getKey() + "'");
         }
 
-        Assert.assertNotNull(type, "PackageType type");
+        Assert.exists(type, "PackageType type");
 
         String jsp = "/packages/" + type.getKey() + "/www" + sreq.getPathInfo();
         File file = new File(getServletContext().getRealPath(jsp));
@@ -98,18 +98,18 @@ public class LegacyAdapterServlet extends BaseApplicationServlet {
 
             RequestDispatcher rd = sreq.getRequestDispatcher(jsp);
 
-            Assert.assertNotNull(rd, "RequestDispatcher rd");
+            Assert.exists(rd, "RequestDispatcher rd");
 
             rd.forward(sreq, sresp);
         } else {
             try {
                 RequestContext rc = DispatcherHelper.getRequestContext();
 
-                Assert.assertNotNull(rc, "RequestContext rc");
+                Assert.exists(rc, "RequestContext rc");
 
                 Dispatcher dispatcher = type.getDispatcher();
 
-                Assert.assertNotNull(dispatcher, "Dispatcher dispatcher");
+                Assert.exists(dispatcher, "Dispatcher dispatcher");
 
                 if (s_log.isDebugEnabled()) {
                     s_log.debug

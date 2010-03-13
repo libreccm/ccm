@@ -54,7 +54,6 @@ import com.arsdigita.xml.Element;
  */
 public class List extends SimpleComponent implements BebopConstants {
 
-    public static final String versionId = "$Id: List.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * The name of the StringParameter that the list uses to keep track of
      * which item is selected.
@@ -194,7 +193,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @pre ! isLocked()
      */
     public void register(Page p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_selection.getStateParameter() != null ) {
             p.addComponentStateParam(this, m_selection.getStateParameter());
         }
@@ -283,7 +282,7 @@ public class List extends SimpleComponent implements BebopConstants {
                 Element item = list.newChildElement(BEBOP_CELL, BEBOP_XML_NS);
 
                 String key = m.getKey();
-                Assert.assertNotNull(key);
+                Assert.exists(key);
 
                 // Converting both keys to String for comparison
                 // since ListModel.getKey returns a String
@@ -334,8 +333,8 @@ public class List extends SimpleComponent implements BebopConstants {
      * @param layout New layout value, must be List.VERTICAL or List.HORIZONTAL
      **/
     public void setLayout(int layout) {
-        Assert.assertNotLocked(this);
-        Assert.assertTrue((layout == VERTICAL) || (layout == HORIZONTAL),
+        Assert.isUnlocked(this);
+        Assert.isTrue((layout == VERTICAL) || (layout == HORIZONTAL),
                           "Invalid layout code passed to setLayout");
         m_layout = layout;
     }
@@ -378,7 +377,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @see com.arsdigita.bebop.list.ListCellRenderer
      */
     public final void setCellRenderer(ListCellRenderer r) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_renderer = r;
     }
 
@@ -403,7 +402,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @see ListModelBuilder
      */
     public final void setModelBuilder(ListModelBuilder b) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_modelBuilder = b;
     }
 
@@ -415,7 +414,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @param c the new empty view component
      */
     public final void setEmptyView(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_emptyView = c;
     }
 
@@ -465,7 +464,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @pre ! isLocked()
      */
     public void setListData(Object[] values) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_modelBuilder = new ArrayListModelBuilder(values);
     }
 
@@ -483,7 +482,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @pre ! isLocked()
      */
     public void setListData(Map map) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_modelBuilder = new MapListModelBuilder(map);
     }
 
@@ -508,7 +507,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @pre ! isLocked()
      */
     public final void setSelectionModel(SingleSelectionModel m) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_changeListener != null ) {
             // Transfer the change listener
             m_selection.removeChangeListener(m_changeListener);
@@ -591,7 +590,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @pre ! isLocked()
      */
     public void addChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_changeListener == null ) {
             m_changeListener = createChangeListener();
             m_selection.addChangeListener(m_changeListener);
@@ -608,7 +607,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @param l the change listener to remove from the list
      */
     public void removeChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.remove(ChangeListener.class, l);
     }
 
@@ -644,7 +643,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @see #respond respond
      */
     public void addActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.add(ActionListener.class, l);
     }
 
@@ -655,7 +654,7 @@ public class List extends SimpleComponent implements BebopConstants {
      * @see #addActionListener addActionListener
      */
     public void removeActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.remove(ActionListener.class, l);
     }
 

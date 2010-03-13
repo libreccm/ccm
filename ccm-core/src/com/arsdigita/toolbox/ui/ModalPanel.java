@@ -105,7 +105,7 @@ public class ModalPanel extends ComponentMap {
     }
 
     public final void add(final Component component) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         Assert.exists(component, Component.class);
 
         put(component, component);
@@ -126,7 +126,7 @@ public class ModalPanel extends ComponentMap {
     public final void push(final PageState state, final Component pushed) {
         if (Assert.isEnabled()) {
             Assert.exists(pushed, Component.class);
-            Assert.truth(containsKey(pushed),
+            Assert.isTrue(containsKey(pushed),
                          "Component " + pushed + " is not a child " +
                          "of this container");
         }
@@ -166,9 +166,9 @@ public class ModalPanel extends ComponentMap {
 
     public final void setDefault(final Component defaalt) {
         if (Assert.isEnabled()) {
-            Assert.unlocked(this);
+            Assert.isUnlocked(this);
             Assert.exists(defaalt, Component.class);
-            Assert.truth(containsValue(defaalt),
+            Assert.isTrue(containsValue(defaalt),
                          defaalt + " is not one of my children");
         }
 
@@ -312,7 +312,7 @@ public class ModalPanel extends ComponentMap {
 
         public TableNavigationListener(final int column,
                                        final Component target) {
-            Assert.assertNotNull(target, "Component target");
+            Assert.exists(target, "Component target");
 
             m_column = column;
             m_target = target;
@@ -330,7 +330,7 @@ public class ModalPanel extends ComponentMap {
         private final Component m_target;
 
         public FormNavigationListener(final Component target) {
-            Assert.assertNotNull(target, "Component target");
+            Assert.exists(target, "Component target");
 
             m_target = target;
         }
@@ -350,9 +350,9 @@ public class ModalPanel extends ComponentMap {
         public WidgetNavigationListener(final Widget widget,
                                         final Object value,
                                         final Component target) {
-            Assert.assertNotNull(widget, "Widget widget");
-            Assert.assertNotNull(value, "String value");
-            Assert.assertNotNull(target, "Component target");
+            Assert.exists(widget, "Widget widget");
+            Assert.exists(value, "String value");
+            Assert.exists(target, "Component target");
 
             m_widget = widget;
             m_value = value;
@@ -374,7 +374,7 @@ public class ModalPanel extends ComponentMap {
         private SingleSelectionModel m_model;
 
         public CancelListener(final FormSection form) {
-            Assert.assertNotNull(form, "FormSection form");
+            Assert.exists(form, "FormSection form");
 
             if (form instanceof Cancellable) {
                 m_cancellable = (Cancellable) form;
@@ -391,7 +391,7 @@ public class ModalPanel extends ComponentMap {
                               final SingleSelectionModel model) {
             this(form);
 
-            Assert.assertNotNull(model, "SingleSelectionModel model");
+            Assert.exists(model, "SingleSelectionModel model");
 
             m_model = model;
         }

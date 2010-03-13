@@ -57,7 +57,7 @@ public class ResourceTypeCollection extends DomainCollection {
     public ResourceType getResourceType() {
         DataObject dataObject = m_dataCollection.getDataObject();
 
-        Assert.assertNotNull(dataObject, "dataObject");
+        Assert.exists(dataObject, "dataObject");
 
         ResourceType resourceType =
             ResourceType.retrieveResourceType(dataObject);

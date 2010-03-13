@@ -88,7 +88,7 @@ public class ParameterSingleSelectionModel
 
         if (Assert.isEnabled()) {
             final FormModel model = state.getPage().getStateModel();
-            Assert.truth(model.containsFormParam(m_parameter));
+            Assert.isTrue(model.containsFormParam(m_parameter));
         }
 
         state.setValue(m_parameter, newKey);

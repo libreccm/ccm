@@ -66,14 +66,13 @@ import com.arsdigita.bebop.util.BebopConstants;
  * &lt;/bebop:segmentedPanel&gt;
  * </code></pre></blockquote>
  *
- * @author Michael Pih 
- * @version $Revision: #11 $ $Date: 2004/08/16 $
  * @see #generateXML(PageState, Element)
+ *
+ * @author Michael Pih 
+ * @version $Id: SegmentedPanel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SegmentedPanel extends SimpleContainer
     implements BebopConstants {
-
-    public static final String versionId = "$Id: SegmentedPanel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String HEADER_CLASS = "seg-header";
 
@@ -204,7 +203,7 @@ public class SegmentedPanel extends SimpleContainer
          * @param c an additional header component
          */
         public void addHeader(Component c) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
             if(m_header == null) {
                 m_header = new SimpleContainer(BEBOP_SEG_HEADER, BEBOP_XML_NS);
                 super.add(m_header);
@@ -216,7 +215,7 @@ public class SegmentedPanel extends SimpleContainer
          * Add a component to the body of this segment
          */
         public void add(Component c) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
             if(m_body == null) {
                 m_body = new SimpleContainer(BEBOP_SEG_BODY, BEBOP_XML_NS);
                 super.add(m_body);

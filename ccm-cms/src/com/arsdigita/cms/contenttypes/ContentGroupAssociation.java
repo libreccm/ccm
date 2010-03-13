@@ -98,7 +98,7 @@ public class ContentGroupAssociation extends ContentItem {
      *  Sets the content item for this association
      */
     public void setContentItem(ContentItem item) {
-        //Assert.assertTrue(item != null, "The ConentItem must not be null");
+        //Assert.isTrue(item != null, "The ConentItem must not be null");
         set(CONTENT_ITEM, item);
     }
 
@@ -107,7 +107,7 @@ public class ContentGroupAssociation extends ContentItem {
      *  @pre group != null
      */
     protected void setContentGroup(ContentGroup group) {
-        Assert.assertTrue(group != null, "The ContentGroup must not be null");
+        Assert.isTrue(group != null, "The ContentGroup must not be null");
         set(CONTENT_GROUP, group);
     }
 
@@ -180,11 +180,11 @@ public class ContentGroupAssociation extends ContentItem {
             methodName = "swapWithPrevious";
         }
 
-        Assert.assertTrue(!isNew(), methodName + " cannot be called on an " +
+        Assert.isTrue(!isNew(), methodName + " cannot be called on an " +
                           "object that is new");
 
         Integer currentKey = (Integer)get(SORT_KEY);
-        Assert.assertTrue(currentKey != null, methodName + " cannot be " +
+        Assert.isTrue(currentKey != null, methodName + " cannot be " +
                           "called on an object that is not currently in the " +
                           "list");
 

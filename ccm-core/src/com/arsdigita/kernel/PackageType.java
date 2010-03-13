@@ -18,7 +18,6 @@
  */
 package com.arsdigita.kernel;
 
-// For Id.
 import com.arsdigita.db.Sequences;
 import com.arsdigita.dispatcher.Dispatcher;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -30,6 +29,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
@@ -37,18 +37,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import org.apache.log4j.Logger;
 
 /**
  * Represents a package type.
  *
+ * @since ACS 5.0
  * @deprecated Use {@link com.arsdigita.web.ApplicationType} instead.
  * @version $Revision: #15 $, $Date: 2004/08/16 $
- * @since ACS 5.0
+ * @version $Id: PackageType.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class PackageType extends com.arsdigita.domain.DomainObject {
-    public static final String versionId = "$Id: PackageType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
+    /** The logging object for this class. */
     private static final Logger s_log =
         Logger.getLogger(PackageType.class.getName());
 

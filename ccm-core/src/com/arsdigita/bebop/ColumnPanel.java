@@ -96,8 +96,6 @@ import com.arsdigita.xml.Element;
  * */
 public class ColumnPanel extends SimpleContainer {
 
-    public static final String versionId = "$Id: ColumnPanel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
 
     /**
      * An empty constraint corresponding to the default
@@ -180,7 +178,7 @@ public class ColumnPanel extends SimpleContainer {
      * inside a <code>ColumnPanel</code> with the same number of columns
      */
     public void setInserted(boolean inserted) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_inserted = inserted;
     }
 
@@ -457,7 +455,7 @@ public class ColumnPanel extends SimpleContainer {
      * @param constraints the constraints to add
      */
     public void setConstraint(Component c, int constraints) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_constraints.put(c, new Constraint(constraints));
     }
 

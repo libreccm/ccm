@@ -70,7 +70,7 @@ public class UnfinishedTaskNotifier extends TimerTask {
                                   int notificationInterval,
                                   int maxNotifications) {
         super();
-        Assert.assertNotNull(section, "the ContentSection to send notifications for");
+        Assert.exists(section, "the ContentSection to send notifications for");
         m_sectionID = section.getID();
         m_unfinishedInterval = (long) unfinishedInterval * 60 * 60 * 1000;
         m_notificationInterval = (long) notificationInterval * 60 * 60 * 1000;

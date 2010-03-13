@@ -51,13 +51,14 @@ import org.apache.log4j.Logger;
  * @version $Id: ResourceType.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ResourceType extends DomainObject {
-    public static final String versionId =
-        "$Id: ResourceType.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
+    /** The logging object for this class. */
     private static final Logger s_log = Logger.getLogger(ResourceType.class);
 
+    // ===== Constants ======================================================= //
+
+    /** The fully qualified model name of the underlying data object, which in
+     *  this case is the same as the Java type. */
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.kernel.ResourceType";
 
@@ -68,6 +69,13 @@ public class ResourceType extends DomainObject {
     protected static ResourceTypeConfig s_defaultConfig =
         new ResourceTypeConfig();
 
+    // ===== Constructors ==================================================== //
+
+    /**
+     * Creates a new ResourceObject instance to encapsulate a given data object.
+     * 
+     * @param dataObject
+     */
     protected ResourceType(DataObject dataObject) {
         super(dataObject);
     }
@@ -78,19 +86,20 @@ public class ResourceType extends DomainObject {
         setID(generateID());
     }
 
-    protected ResourceType
-        (String dataObjectType, String title,
-         String resourceObjectType) {
+    protected ResourceType(String dataObjectType,
+                           String title,
+                           String resourceObjectType) {
         this(dataObjectType);
 
-        Assert.assertNotNull(title, "title");
-        Assert.assertNotNull(resourceObjectType, "resourceObjectType");
-
+        Assert.exists(title, "title");
+        Assert.exists(resourceObjectType, "resourceObjectType");
 
         setTitle(title);
         setResourceObjectType(resourceObjectType);
 
     }
+
+    // ===== Class Methods =================================================== //
 
     public static ResourceType createResourceType
         (String title, String resourceObjectType) {
@@ -98,13 +107,11 @@ public class ResourceType extends DomainObject {
             (BASE_DATA_OBJECT_TYPE, title, resourceObjectType);
     }
 
-
-
     // No null params.
 
     // Param
     public static ResourceType retrieveResourceType(BigDecimal id) {
-        Assert.assertNotNull(id, "id");
+        Assert.exists(id, "id");
 
         return ResourceType.retrieveResourceType
             (new OID(ResourceType.BASE_DATA_OBJECT_TYPE, id));
@@ -112,11 +119,11 @@ public class ResourceType extends DomainObject {
 
     // Param oid cannot be null.
     public static ResourceType retrieveResourceType(OID oid) {
-        Assert.assertNotNull(oid, "oid");
+        Assert.exists(oid, "oid");
 
         DataObject dataObject = SessionManager.getSession().retrieve(oid);
 
-        Assert.assertNotNull(dataObject);
+        Assert.exists(dataObject);
 
         return ResourceType.retrieveResourceType(dataObject);
     }
@@ -124,7 +131,7 @@ public class ResourceType extends DomainObject {
     // Param dataObject cannot be null.  Can return null?
     public static ResourceType retrieveResourceType
         (DataObject dataObject) {
-        Assert.assertNotNull(dataObject, "dataObject");
+        Assert.exists(dataObject, "dataObject");
 
         return new ResourceType(dataObject);
     }
@@ -132,7 +139,7 @@ public class ResourceType extends DomainObject {
     // Can return null.
     public static ResourceType retrieveResourceTypeForResource
         (String resourceObjectType) {
-        Assert.assertNotNull(resourceObjectType, "resourceObjectType");
+        Assert.exists(resourceObjectType, "resourceObjectType");
 
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
@@ -155,7 +162,7 @@ public class ResourceType extends DomainObject {
         DataCollection collection =
             SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
 
-        Assert.assertNotNull(collection, "collection");
+        Assert.exists(collection, "collection");
 
         return new ResourceTypeCollection(collection);
     }
@@ -172,13 +179,13 @@ public class ResourceType extends DomainObject {
     public String getTitle() {
         String title = (String) get("title");
 
-        Assert.assertNotNull(title, "title");
+        Assert.exists(title, "title");
 
         return title;
     }
 
     public void setTitle(String title) {
-        Assert.assertNotNull(title, "title");
+        Assert.exists(title, "title");
 
         set("title", title);
     }
@@ -258,13 +265,13 @@ public class ResourceType extends DomainObject {
     public String getResourceObjectType() {
         String objectType = (String)get("objectType");
 
-        Assert.assertNotNull(objectType);
+        Assert.exists(objectType);
 
         return objectType;
     }
 
     protected void setResourceObjectType(String objectType) {
-        Assert.assertNotNull(objectType);
+        Assert.exists(objectType);
 
         set("objectType", objectType);
     }
@@ -277,7 +284,7 @@ public class ResourceType extends DomainObject {
     public BigDecimal getID() {
         BigDecimal id = (BigDecimal)get("id");
 
-        Assert.assertNotNull(id, "id");
+        Assert.exists(id, "id");
 
         return id;
     }
@@ -290,7 +297,7 @@ public class ResourceType extends DomainObject {
      * @return the value that the ID property is set to.
      */
     private BigDecimal setID(BigDecimal id) {
-        Assert.assertNotNull(id, "id");
+        Assert.exists(id, "id");
 
         if (isNew() && get("id") == null) {
             set("id", id);

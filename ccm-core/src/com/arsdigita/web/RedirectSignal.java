@@ -63,9 +63,9 @@ public class RedirectSignal extends TransactionSignal {
     public RedirectSignal(final String url, final boolean isCommitRequested) {
         super(isCommitRequested);
 
-        if (Assert.isAssertEnabled()) {
-            Assert.assertNotNull(url, "String url");
-            Assert.assertTrue(url.startsWith("http") || url.startsWith("/"),
+        if (Assert.isEnabled()) {
+            Assert.exists(url, "String url");
+            Assert.isTrue(url.startsWith("http") || url.startsWith("/"),
                               "The URL is relative and won't dispatch " +
                               "correctly under some servlet containers; " +
                               "the URL is '" + url + "'");

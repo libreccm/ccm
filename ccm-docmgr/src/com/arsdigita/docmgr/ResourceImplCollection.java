@@ -45,7 +45,7 @@ public class ResourceImplCollection extends DomainCollection {
     public DomainObject getDomainObject() {
         DomainObject domainObject = getResourceImpl();
 
-        Assert.assertNotNull(domainObject);
+        Assert.exists(domainObject);
 
         return domainObject;
     }
@@ -60,7 +60,7 @@ public class ResourceImplCollection extends DomainCollection {
 
         File rimpl = File.retrieveFile(dataObject);
 
-        Assert.assertNotNull(rimpl);
+        Assert.exists(rimpl);
 
         return rimpl;
     }

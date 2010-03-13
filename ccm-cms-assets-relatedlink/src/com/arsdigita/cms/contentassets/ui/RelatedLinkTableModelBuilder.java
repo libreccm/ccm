@@ -58,7 +58,7 @@ public class RelatedLinkTableModelBuilder
      * @return The DataCollection of RelatedLinks
      */
     public DataCollection getLinks(PageState s) {
-        Assert.truth(m_itemModel.isSelected(s), "item selected");
+        Assert.isTrue(m_itemModel.isSelected(s), "item selected");
         ContentItem item = m_itemModel.getSelectedItem(s);
         s_log.debug("Getting related links for " + item.getName());
         return RelatedLink.getRelatedLinks(item);

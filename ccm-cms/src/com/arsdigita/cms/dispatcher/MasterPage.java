@@ -56,7 +56,7 @@ public class MasterPage extends CMSPage {
     public ContentSection getContentSection(HttpServletRequest request) {
         // Resets all content sections associations.
         ContentSection section = super.getContentSection(request);
-        Assert.assertNotNull(section);
+        Assert.exists(section);
         return section;
     }
 

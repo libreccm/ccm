@@ -56,10 +56,6 @@ import com.arsdigita.web.ApplicationType;
  * @version $Id: Loader.java 1718 2008-07-16 14:08:38Z terry $
  */
 public class Loader extends PackageLoader {
-    // versionID no longer used as a system variable. version information is
-    // kept as part of java doc.
-    // public final static String versionId = "$Id: Loader.java 1718 2008-07-16 14:08:38Z terry $"
-    //		+ "$Author: terry $" + "$DateTime: 2004/03/02 06:33:42 $";
 
 	private static final Logger s_log = Logger.getLogger(Loader.class);
 

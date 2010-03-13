@@ -139,7 +139,7 @@ public final class LoggingProxyFactory implements LoggerConfigurator {
                                   boolean configurable) {
 
         Assert.exists(iface, Class.class);
-        Assert.truth(iface.isInstance(proxiedObject),
+        Assert.isTrue(iface.isInstance(proxiedObject),
                      "proxiedObject is instance of iface");
 
         Class[] ifaces = configurable ?

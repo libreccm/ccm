@@ -82,13 +82,9 @@ import org.apache.log4j.Logger;
  */
 public class Page extends BlockStylable implements Container {
 
-    public static final String versionId =
-            "$Id: Page.java 1270 2006-07-18 13:34:55Z cgyg9330 $" +
-            "by $Author: cgyg9330 $, $DateTime: 2004/08/16 18:10:38 $";
+    /** Class specific logger instance. */
     private static final Logger s_log = Logger.getLogger(Page.class);
-    /**
-     * The delimiter character for components naming
-     */
+    /** The delimiter character for components naming */
     private static final String DELIMITER = ".";
     /**
      * The prefix that gets prepended to all state variables. Components must
@@ -454,7 +450,7 @@ public class Page extends BlockStylable implements Container {
      * @param title title for this page
      */
     public void setTitle(String title) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setTitle(new Label(title));
     }
 
@@ -464,7 +460,7 @@ public class Page extends BlockStylable implements Container {
      * @param title title for this page
      */
     public void setTitle(Label title) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_title = title;
     }
 
@@ -481,7 +477,7 @@ public class Page extends BlockStylable implements Container {
      * in the current <code>PageState</code>
      */
     public final void setErrorDisplay(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_errorDisplay = c;
     }
 
@@ -501,29 +497,29 @@ public class Page extends BlockStylable implements Container {
         return m_errorDisplay;
     }
 
-    /**
-     * Sets a stylesheet that should be used in HTML output. To use
-     * a CSS stylesheet, call something like
-     * <code>setStyleSheet("style.css", "text/css")</code>.
-     * <p>
-     * These values will ultimately wind up in a <tt>&lt;link&gt;</tt> tag in
-     * the head of the HTML page.
-     * <p>
-     * Note that the stylesheet set with this call has nothing to do with the
-     * XSLT stylesheet (transformer) that is applied to the XML generated
-     * from this page.
-     *
-     * @param styleSheetURI the location of the stylesheet
-     * @param styleSheetType the MIME type of the stylesheet, usually
-     *                       <tt>text/css</tt>
-     * @pre ! isLocked()
-     * @deprecated Use {@link #addClientStylesheet addClientStylesheet}
-     * instead. Will be removed on 2001-05-31.
-     */
-    public void setStyleSheet(String styleSheetURI, String styleSheetType) {
-        Assert.assertNotLocked(this);
-        addClientStylesheet(styleSheetURI, styleSheetType);
-    }
+//  /**
+//   * Sets a stylesheet that should be used in HTML output. To use
+//   * a CSS stylesheet, call something like
+//   * <code>setStyleSheet("style.css", "text/css")</code>.
+//   * <p>
+//   * These values will ultimately wind up in a <tt>&lt;link&gt;</tt> tag in
+//   * the head of the HTML page.
+//   * <p>
+//   * Note that the stylesheet set with this call has nothing to do with the
+//   * XSLT stylesheet (transformer) that is applied to the XML generated
+//   * from this page.
+//   *
+//   * @param styleSheetURI the location of the stylesheet
+//   * @param styleSheetType the MIME type of the stylesheet, usually
+//   *                       <tt>text/css</tt>
+//   * @pre ! isLocked()
+//   * @deprecated Use {@link #addClientStylesheet addClientStylesheet}
+//   * instead. Will be removed on 2001-05-31.
+//   */
+//  public void setStyleSheet(String styleSheetURI, String styleSheetType) {
+//      Assert.isUnlocked(this);
+//      addClientStylesheet(styleSheetURI, styleSheetType);
+//  }
 
     /**
      * Adds a client-side stylesheet that should be used in HTML
@@ -565,7 +561,7 @@ public class Page extends BlockStylable implements Container {
      * @pre parameter != null
      */
     public void addGlobalStateParam(ParameterModel p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         p.setName(unmangle(p.getName()));
         m_stateModel.addFormParam(p);
     }
@@ -591,7 +587,7 @@ public class Page extends BlockStylable implements Container {
      * @pre isLocked()
      */
     protected Element generateXMLHelper(PageState ps, Document parent) {
-        Assert.assertLocked(this);
+        Assert.isLocked(this);
 
         Element page = parent.createRootElement("bebop:page", BEBOP_XML_NS);
         exportAttributes(page);
@@ -687,7 +683,7 @@ public class Page extends BlockStylable implements Container {
      * component.
      */
     public void process(PageState state) throws ServletException {
-        Assert.assertLocked(this);
+        Assert.isLocked(this);
         try {
             DeveloperSupport.startStage("Bebop Request Event");
             fireRequestEvent(state);
@@ -715,20 +711,19 @@ public class Page extends BlockStylable implements Container {
         }
     }
 
-    /**
-     * Does all the servicing of a request except output generation.
-     * This includes most of the common duties of buildDocument and print.
-     *
-     * @deprecated Use {@link
-     * #process(HttpServletRequest,HttpServletResponse)} instead.
-     */
-    protected PageState prepare(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException {
-
-        Assert.assertLocked(this);
-        PageState state = process(req, res);
-        return state;
-    }
+//  /**
+//   * Does all the servicing of a request except output generation.
+//   * This includes most of the common duties of buildDocument and print.
+//   *
+//   * @deprecated Use {@link
+//   * #process(HttpServletRequest,HttpServletResponse)} instead.
+//   */
+//  protected PageState prepare(HttpServletRequest req, HttpServletResponse res)
+//          throws ServletException {
+//       Assert.isLocked(this);
+//       PageState state = process(req, res);
+//     return state;
+//  }
 
     /**
      * Builds a DOM Document from the current request state by
@@ -777,7 +772,7 @@ public class Page extends BlockStylable implements Container {
      */
     private void finish() {
         if (!m_finished) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
 
             Traversal componentRegistrar = new Traversal() {
 
@@ -833,7 +828,7 @@ public class Page extends BlockStylable implements Container {
      * @pre ! isLocked()
      */
     public void addActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_actionListeners.add(l);
     }
 
@@ -843,7 +838,7 @@ public class Page extends BlockStylable implements Container {
      * @pre ! isLocked()
      */
     public void removeActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_actionListeners.remove(l);
     }
 
@@ -854,7 +849,7 @@ public class Page extends BlockStylable implements Container {
      * @pre ! isLocked()
      */
     public void addRequestListener(RequestListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_requestListeners.add(l);
     }
 
@@ -865,7 +860,7 @@ public class Page extends BlockStylable implements Container {
      * @pre ! isLocked()
      */
     public void removeRequestListener(RequestListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_requestListeners.remove(l);
     }
 
@@ -947,7 +942,7 @@ public class Page extends BlockStylable implements Container {
      * @deprecated This method will become private in ACS 5.0.
      */
     public void addComponent(Component c) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (!stateContains(c)) {
             if (c == null) {
@@ -960,8 +955,9 @@ public class Page extends BlockStylable implements Container {
                 key = Integer.toString(m_components.size());
             }
             if (m_componentMap.get(key) != null) {
-                throw new IllegalArgumentException("Component key must not be duplicated.  The key " +
-                        key + " is shared by more than one component.");
+                throw new IllegalArgumentException(
+                          "Component key must not be duplicated.  The key " +
+                          key + " is shared by more than one component.");
             }
             m_componentMap.put(key, c);
             m_components.add(c);
@@ -986,7 +982,7 @@ public class Page extends BlockStylable implements Container {
      * @pre p != null
      */
     public void addComponentStateParam(Component c, ParameterModel p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (!stateContains(c)) {
             throw new IllegalArgumentException("Component must be registered in Page");
@@ -1093,7 +1089,7 @@ public class Page extends BlockStylable implements Container {
      * @see Component#setVisible  Component.setVisible
      */
     public boolean isVisibleDefault(Component c) {
-        Assert.assertTrue(stateContains(c));
+        Assert.isTrue(stateContains(c));
 
         return !m_invisible.get(stateIndex(c));
     }
@@ -1114,7 +1110,7 @@ public class Page extends BlockStylable implements Container {
      * @see Component#register Component.register
      */
     public void setVisibleDefault(Component c, boolean v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         addComponent(c);
         int i = stateIndex(c);

@@ -54,7 +54,7 @@ public class StringTemplate {
      * placeholder, i.e., it is equivalent to <code>"foo$bar"</code>. </p>
      **/
     public StringTemplate(String htmlFragment) {
-        Assert.assertNotNull(htmlFragment, "htmlFragment");
+        Assert.exists(htmlFragment, "htmlFragment");
         
         m_fragments = new ArrayList();
         m_bindVars  = new ArrayList();

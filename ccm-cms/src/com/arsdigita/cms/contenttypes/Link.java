@@ -165,7 +165,7 @@ public class Link extends ACSObject  {
      * Link.INTERNAL_LINK
      */
     public void setTargetType(String type) {
-        Assert.assertTrue(type != null &&
+        Assert.isTrue(type != null &&
                           (type.equals(EXTERNAL_LINK)||type.equals(INTERNAL_LINK)));
         set(TARGET_TYPE, type);
     }
@@ -276,7 +276,7 @@ public class Link extends ACSObject  {
      * @param order the link order
      */
     public void setOrder(Integer order) {
-        Assert.assertNotNull(order);
+        Assert.exists(order);
         set(ORDER, order);
     }
 
@@ -433,7 +433,7 @@ public class Link extends ACSObject  {
             methodName = "swapWithPrevious";
         }
 
-        Assert.assertTrue(!isNew(), methodName + " cannot be called on an " +
+        Assert.isTrue(!isNew(), methodName + " cannot be called on an " +
                           "object that is new");
 
         Integer currentKey = (Integer)get(ORDER);
@@ -444,7 +444,7 @@ public class Link extends ACSObject  {
             alphabetize();
             return;
         }
-        Assert.assertTrue(currentKey != null, methodName + " cannot be " +
+        Assert.isTrue(currentKey != null, methodName + " cannot be " +
                           "called on an object that is not currently in the " +
                           "list");
 

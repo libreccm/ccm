@@ -181,7 +181,7 @@ public class PublishToFile implements PublishToFileListener {
     public static URL getSource(final String path) {
         if (Assert.isEnabled()) {
             Assert.exists(path, String.class);
-            Assert.truth(path.startsWith("/"), "Path starts with '/'");
+            Assert.isTrue(path.startsWith("/"), "Path starts with '/'");
         }
 
         final WebConfig config = Web.getConfig();
@@ -279,7 +279,7 @@ public class PublishToFile implements PublishToFileListener {
             s_log.warn( "Item to publish no longer exists. ID = " + qe.getItemId() );
             return false;
         }
-        Assert.assertTrue( !(item instanceof ContentBundle) );
+        Assert.isTrue( !(item instanceof ContentBundle) );
 
         if ( item instanceof Template ) {
             Template template = (Template) item;
@@ -298,7 +298,7 @@ public class PublishToFile implements PublishToFileListener {
                 // 'destination' for the Template object type, so we must
                 // strip it off here, otherwise it gets double appended
                 String templateRoot = ContentSection.getConfig().getTemplateRoot();
-                Assert.truth(fileName.startsWith(templateRoot),
+                Assert.isTrue(fileName.startsWith(templateRoot),
                                            "filename starts with templateRoot");
 
                 PublishedFile f = PublishedFile.loadOrCreate(
@@ -575,7 +575,7 @@ public class PublishToFile implements PublishToFileListener {
      * publish asset (such as an image) to file system.
      */
     private void  writeAsset(Asset asset, PublishedFile f) {
-        Assert.assertTrue(ContentItem.LIVE.equals(asset.getVersion()));
+        Assert.isTrue(ContentItem.LIVE.equals(asset.getVersion()));
 
         File fsf = f.getFile();
         try {
@@ -603,7 +603,7 @@ public class PublishToFile implements PublishToFileListener {
         } else {
             itemPath = Utilities.getItemLocation(target);
         }
-        Assert.truth(itemPath.startsWith("/"), "item path starts with /");
+        Assert.isTrue(itemPath.startsWith("/"), "item path starts with /");
 
         DestinationStub stub = PublishToFile.getDestination(target.getSpecificObjectType());
         String stubURL = stub.getURLStub();

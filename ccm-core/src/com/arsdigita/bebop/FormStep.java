@@ -45,13 +45,11 @@ import com.arsdigita.xml.Element;
  * @see MultiStepForm
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: FormStep.java 1414 2006-12-07 14:24:10Z chrisgilbert23 $
  **/
 
 public class FormStep extends FormSection {
     private final static Logger s_log = Logger.getLogger(FormStep.class);
-
-    public final static String versionId = "$Id: FormStep.java 1414 2006-12-07 14:24:10Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Form m_form = null;
 

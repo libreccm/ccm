@@ -88,7 +88,7 @@ public class DocumentObserver implements com.arsdigita.search.DocumentObserver {
                                                            ContentType.TEXT);
             StringBuffer buf = new StringBuffer("");
             for (int i = 0 ; i < content.length ; i++) {
-                Assert.truth(content[i].getType().equals(ContentType.TEXT),
+                Assert.isTrue(content[i].getType().equals(ContentType.TEXT),
                              "content is text");
                 buf.append(new String(content[i].getBytes()));
             }

@@ -58,7 +58,7 @@ public class PartySearchForm extends BaseForm {
     public final void register(final Page page) {
         super.register(page);
 
-        Assert.assertTrue(page.stateContains(this));
+        Assert.isTrue(page.stateContains(this));
     }
 
     public TextField getSearchWidget() {

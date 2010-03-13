@@ -70,7 +70,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
                              final Page page) {
         Assert.exists(pathInfo, String.class);
         Assert.exists(page, Page.class);
-        Assert.truth(pathInfo.startsWith("/"), "path starts with '/'");
+        Assert.isTrue(pathInfo.startsWith("/"), "path starts with '/'");
 
         m_pages.put(pathInfo, page);
     }
@@ -81,7 +81,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
      */
     protected final void disableClientCaching(String pathInfo) {
         Assert.exists(pathInfo, String.class);
-	Assert.truth(m_pages.containsKey(pathInfo), "Page " + pathInfo + " has not been put in servlet");
+	Assert.isTrue(m_pages.containsKey(pathInfo), "Page " + pathInfo + " has not been put in servlet");
    	m_clientCacheDisabledPages.add(pathInfo);
     }
 
@@ -91,7 +91,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
             throws ServletException, IOException {
         final String pathInfo = sreq.getPathInfo();
 
-        Assert.assertNotNull(pathInfo, "String pathInfo");
+        Assert.exists(pathInfo, "String pathInfo");
 
         final Page page = (Page) m_pages.get(pathInfo);
 

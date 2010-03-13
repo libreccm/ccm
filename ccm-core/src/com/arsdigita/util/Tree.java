@@ -128,8 +128,8 @@ public class Tree {
      * @pre subtree != null && subtree.getParent() == 0
      **/
     public void addSubtree(Tree subtree, Object edge) {
-        Assert.assertNotNull(subtree, "subtree");
-        Assert.assertTrue(subtree.getParent() == null, "parent must be null");
+        Assert.exists(subtree, "subtree");
+        Assert.isTrue(subtree.getParent() == null, "parent must be null");
         subtree.m_parent = this;
         m_children.add(new EdgeTreePair(edge, subtree));
     }
@@ -248,7 +248,7 @@ public class Tree {
      * @pre trees != null
      **/
     public static List treesToNodes(List trees) {
-        Assert.assertNotNull(trees, "trees");
+        Assert.exists(trees, "trees");
         List result = new ArrayList();
         for (Iterator ii=trees.iterator(); ii.hasNext(); ) {
             result.add(((Tree) ii.next()).getRoot());

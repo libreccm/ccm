@@ -186,7 +186,7 @@ public class FolderBrowser extends Table {
         
         setEmptyView(new Label(globalize("cms.ui.folder.no_items")));
         
-        Assert.assertNotNull( m_currentFolder.getStateParameter() );
+        Assert.exists( m_currentFolder.getStateParameter() );
     }
     
     public void register(Page p) {
@@ -209,7 +209,7 @@ public class FolderBrowser extends Table {
     private void showHideFolderActions(PageState state) {
         SecurityManager sm = Utilities.getSecurityManager(state);
         Folder folder = (Folder) m_currentFolder.getSelectedObject(state);
-        Assert.assertNotNull(folder);
+        Assert.exists(folder);
         
         boolean canDelete =
                 sm.canAccess(state.getRequest(), SecurityManager.DELETE_ITEM, folder);

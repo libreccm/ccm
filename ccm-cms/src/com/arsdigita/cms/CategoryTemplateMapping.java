@@ -136,7 +136,7 @@ public class CategoryTemplateMapping extends TemplateMapping {
      * @param sec The ContentSection for which this mapping should be valid.
      **/
     public final void setContentSection(ContentSection sec) {
-        Assert.assertNotNull(sec);
+        Assert.exists(sec);
         setAssociation(SECTION, sec);
     }
 
@@ -158,7 +158,7 @@ public class CategoryTemplateMapping extends TemplateMapping {
      * @param cat The Category for which this mapping should be valid.
      **/
     public void setCategory(Category cat) {
-        Assert.assertNotNull(cat);
+        Assert.exists(cat);
         setAssociation(CATEGORY, cat);
     }
 
@@ -192,7 +192,7 @@ public class CategoryTemplateMapping extends TemplateMapping {
      * @param t The ContentType for which this mapping should be valid.
      **/
     public void setContentType(ContentType t) {
-        Assert.assertNotNull(t);
+        Assert.exists(t);
         setAssociation(CONTENT_TYPE, t);
     }
 
@@ -213,7 +213,7 @@ public class CategoryTemplateMapping extends TemplateMapping {
      * @param b whether the template is the default within its context.
      */
     public void setDefault(Boolean b) {
-        Assert.assertNotNull(b);
+        Assert.exists(b);
         set(IS_DEFAULT, b);
     }
 
@@ -237,7 +237,7 @@ public class CategoryTemplateMapping extends TemplateMapping {
         c.addEqualsFilter(TEMPLATE + "." + ACSObject.ID, template.getID());
         if(!c.next()) return null;
         CategoryTemplateMapping m = (CategoryTemplateMapping)c.getDomainObject();
-        Assert.assertTrue(!c.next());
+        Assert.isTrue(!c.next());
         c.close();
         return m;
     }
@@ -260,7 +260,7 @@ public class CategoryTemplateMapping extends TemplateMapping {
         if(!c.next()) return null;
         CategoryTemplateMapping m = (CategoryTemplateMapping)c.getDomainObject();
         // FIXME: There HAS to be a better way to enforce uniqueness here...
-        Assert.assertTrue(!c.next());
+        Assert.isTrue(!c.next());
         c.close();
         return m.getTemplate();
     }

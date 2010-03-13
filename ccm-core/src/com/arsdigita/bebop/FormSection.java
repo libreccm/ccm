@@ -61,10 +61,6 @@ import org.apache.log4j.Logger;
  * @see FormModel
  */
 public class FormSection extends SimpleComponent implements Container {
-    public static final String versionId =
-        "$Id: FormSection.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(FormSection.class);
 
@@ -151,8 +147,8 @@ public class FormSection extends SimpleComponent implements Container {
                         this);
         }
 
-        Assert.assertNotNull(listener, "Submission Listener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "Submission Listener");
+        Assert.isUnlocked(this);
         forwardSubmission();
         m_listeners.add(FormSubmissionListener.class, listener);
     }
@@ -169,8 +165,8 @@ public class FormSection extends SimpleComponent implements Container {
                         this);
         }
 
-        Assert.assertNotNull(listener, "Submission Listener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "Submission Listener");
+        Assert.isUnlocked(this);
         m_listeners.remove(FormSubmissionListener.class, listener);
     }
 
@@ -184,7 +180,7 @@ public class FormSection extends SimpleComponent implements Container {
      */
     protected void fireSubmitted(FormSectionEvent e)
         throws FormProcessException {
-        Assert.assertNotNull(e.getFormData(), "FormData");
+        Assert.exists(e.getFormData(), "FormData");
         FormProcessException delayedException = null;
 
         Iterator i = m_listeners.getListenerIterator(FormSubmissionListener
@@ -248,8 +244,8 @@ public class FormSection extends SimpleComponent implements Container {
             s_log.debug("Adding init listener " + listener + " to " + this);
         }
 
-        Assert.assertNotNull(listener, "FormInitListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "FormInitListener");
+        Assert.isUnlocked(this);
         forwardInit();
         m_listeners.add(FormInitListener.class, listener);
     }
@@ -266,8 +262,8 @@ public class FormSection extends SimpleComponent implements Container {
                         this);
         }
 
-        Assert.assertNotNull(listener, "Init Listener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "Init Listener");
+        Assert.isUnlocked(this);
         m_listeners.remove(FormInitListener.class, listener);
     }
 
@@ -280,8 +276,8 @@ public class FormSection extends SimpleComponent implements Container {
      * exception.
      */
     protected void fireInit(FormSectionEvent e) throws FormProcessException {
-        Assert.assertNotNull(e.getFormData(), "FormData");
-        Assert.assertLocked(this);
+        Assert.exists(e.getFormData(), "FormData");
+        Assert.isLocked(this);
         Iterator i = m_listeners.getListenerIterator(FormInitListener.class);
         while (i.hasNext()) {
             final FormInitListener listener = (FormInitListener) i.next();
@@ -334,8 +330,8 @@ public class FormSection extends SimpleComponent implements Container {
                         this);
         }
 
-        Assert.assertNotNull(listener, "FormValidationListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "FormValidationListener");
+        Assert.isUnlocked(this);
         forwardValidation();
         m_listeners.add(FormValidationListener.class, listener);
     }
@@ -352,8 +348,8 @@ public class FormSection extends SimpleComponent implements Container {
                         this);
         }
 
-        Assert.assertNotNull(listener, "Validation Listener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "Validation Listener");
+        Assert.isUnlocked(this);
         m_listeners.remove(FormValidationListener.class, listener);
     }
 
@@ -365,7 +361,7 @@ public class FormSection extends SimpleComponent implements Container {
      */
     protected void fireValidate(FormSectionEvent e) {
         FormData data = e.getFormData();
-        Assert.assertNotNull(data, "FormData");
+        Assert.exists(data, "FormData");
         Iterator i = m_listeners.getListenerIterator(FormValidationListener
                                                      .class);
         while (i.hasNext()) {
@@ -426,8 +422,8 @@ public class FormSection extends SimpleComponent implements Container {
             s_log.debug("Adding process listener " + listener + " to " + this);
         }
 
-        Assert.assertNotNull(listener, "FormProcessListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "FormProcessListener");
+        Assert.isUnlocked(this);
 
         forwardProcess();
         m_listeners.add(FormProcessListener.class, listener);
@@ -445,8 +441,8 @@ public class FormSection extends SimpleComponent implements Container {
                         this);
         }
 
-        Assert.assertNotNull(listener, "Process Listener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "Process Listener");
+        Assert.isUnlocked(this);
 
         m_listeners.remove(FormProcessListener.class, listener);
     }
@@ -481,7 +477,7 @@ public class FormSection extends SimpleComponent implements Container {
      */
     protected void fireProcess(FormSectionEvent e)
         throws FormProcessException {
-        Assert.assertNotNull(e.getFormData(), "FormData");
+        Assert.exists(e.getFormData(), "FormData");
         Iterator i = m_listeners.getListenerIterator(FormProcessListener.class);
         while (i.hasNext()) {
             final FormProcessListener listener = (FormProcessListener) i.next();
@@ -520,8 +516,8 @@ public class FormSection extends SimpleComponent implements Container {
             s_log.debug("Adding cancel listener " + listener + " to " + this);
         }
 
-        Assert.assertNotNull(listener, "FormCancelListener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "FormCancelListener");
+        Assert.isUnlocked(this);
         m_listeners.add(FormCancelListener.class, listener);
     }
 
@@ -537,8 +533,8 @@ public class FormSection extends SimpleComponent implements Container {
                         this);
         }
 
-        Assert.assertNotNull(listener, "Cancel Listener");
-        Assert.assertNotLocked(this);
+        Assert.exists(listener, "Cancel Listener");
+        Assert.isUnlocked(this);
         m_listeners.remove(FormCancelListener.class, listener);
     }
 
@@ -552,7 +548,7 @@ public class FormSection extends SimpleComponent implements Container {
      */
     protected void fireCancel(FormSectionEvent e)
         throws FormProcessException {
-        Assert.assertNotNull(e.getFormData(), "FormData");
+        Assert.exists(e.getFormData(), "FormData");
         Iterator i = m_listeners.getListenerIterator(FormCancelListener.class);
         while (i.hasNext()) {
             final FormCancelListener listener = (FormCancelListener) i.next();

@@ -147,7 +147,7 @@ class PublishedFile extends DomainObject {
         File path = new File(fileName).getParentFile();
         File p = f.getParentFile();
         do {
-            Assert.assertTrue(p.isDirectory());
+            Assert.isTrue(p.isDirectory());
             DataCollection coll = SessionManager.getSession()
                 .retrieve(BASE_DATA_OBJECT_TYPE);
             coll.addEqualsFilter(HOST + "." + Host.ID, host.getID());
@@ -177,10 +177,10 @@ class PublishedFile extends DomainObject {
     public static PublishedFile create(ContentItem item,
                                        String fileName,
                                        Host host) {
-        Assert.truth(item != null, "item is not null");
-        Assert.truth(item.isLive(), "item is live");
-        Assert.truth(fileName != null, "fileName is not null");
-        Assert.truth(host != null, "host is not null");
+        Assert.isTrue(item != null, "item is not null");
+        Assert.isTrue(item.isLive(), "item is live");
+        Assert.isTrue(fileName != null, "fileName is not null");
+        Assert.isTrue(host != null, "host is not null");
         
         if (s_log.isDebugEnabled()) {
             s_log.debug("creating published file with item " + item.getOID() + 
@@ -209,10 +209,10 @@ class PublishedFile extends DomainObject {
     static PublishedFile loadOrCreate(ContentItem item,
                                       String fileName, 
                                       Host host) {
-        Assert.truth(item != null, "item is not null");
-        Assert.truth(item.isLive(), "item is live");
-        Assert.truth(fileName != null, "fileName is not null");
-        Assert.truth(host != null, "host is not null");
+        Assert.isTrue(item != null, "item is not null");
+        Assert.isTrue(item.isLive(), "item is live");
+        Assert.isTrue(fileName != null, "fileName is not null");
+        Assert.isTrue(host != null, "host is not null");
 
         PublishedFile f = findByFileName(fileName, host);
         if (f == null) {

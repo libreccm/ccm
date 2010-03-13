@@ -157,7 +157,7 @@ public class Graphs {
      * @pre graph.hasNode(start)
      **/
     public static Graph nodesReachableFrom(Graph graph, Object start) {
-        Assert.assertTrue(graph.hasNode(start));
+        Assert.isTrue(graph.hasNode(start));
         Graph result = new GraphSet();
         result.addNode(start);
         Set processedTails = new HashSet();
@@ -208,9 +208,9 @@ public class Graphs {
     public static void printTree(Tree tree, GraphFormatter fmtr,
                                  PrintWriter writer) {
 
-        Assert.assertNotNull(tree, "tree");
-        Assert.assertNotNull(fmtr, "formatter");
-        Assert.assertNotNull(writer, "writer");
+        Assert.exists(tree, "tree");
+        Assert.exists(fmtr, "formatter");
+        Assert.exists(writer, "writer");
 
         writer.println("digraph " + tree.getLabel() + " {");
         printTreeRecurse(tree, fmtr, writer);
@@ -245,9 +245,9 @@ public class Graphs {
     public static void printGraph(Graph graph, GraphFormatter fmtr,
                                   PrintWriter writer) {
 
-        Assert.assertNotNull(graph, "tree");
-        Assert.assertNotNull(fmtr, "formatter");
-        Assert.assertNotNull(writer, "writer");
+        Assert.exists(graph, "tree");
+        Assert.exists(fmtr, "formatter");
+        Assert.exists(writer, "writer");
 
         writer.println("digraph " + graph.getLabel() + " {");
         String graphAttrs = fmtr.graphAttributes(graph);

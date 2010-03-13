@@ -269,7 +269,7 @@ public class  URLCache {
 
     private synchronized void addToCache(String url, URLData data, long expiry) {
         final long dataSize = data.getContent().length + url.length();
-        Assert.assertTrue(m_curSize + dataSize <= m_maxSize);
+        Assert.isTrue(m_curSize + dataSize <= m_maxSize);
         Entry e = new Entry(data, System.currentTimeMillis(), expiry);
         m_cache.put(url, e);
         m_curSize += dataSize;

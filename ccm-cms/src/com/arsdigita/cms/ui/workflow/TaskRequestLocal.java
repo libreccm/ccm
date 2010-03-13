@@ -32,7 +32,7 @@ public abstract class TaskRequestLocal extends RequestLocal {
     public final CMSTask getTask(final PageState state) {
         final CMSTask task = (CMSTask) get(state);
 
-        Assert.assertNotNull(task, "CMSTask task");
+        Assert.exists(task, "CMSTask task");
 
         return task;
     }

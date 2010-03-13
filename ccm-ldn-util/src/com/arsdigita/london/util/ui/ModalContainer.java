@@ -58,7 +58,7 @@ public class ModalContainer extends SimpleContainer implements Resettable {
 
     public void setDefaultMode(String name) {
         Assert.exists(name, String.class);
-        Assert.truth(m_modes.containsKey(name), 
+        Assert.isTrue(m_modes.containsKey(name),
                      "Mode " + name + " has been registered");
 
         m_defaultMode = name;

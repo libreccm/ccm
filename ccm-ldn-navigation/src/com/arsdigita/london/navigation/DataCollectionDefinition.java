@@ -67,13 +67,13 @@ public class DataCollectionDefinition extends LockableImpl {
     private String m_dateAttribute = null;
 
     public final void setObjectType(String objectType) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         validateObjectType(objectType);
         m_objectType = objectType;
     }
 
     public final void setSpecificObjectType(String specificObjectType) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
 
         if (specificObjectType != null) { 
             validateObjectType(specificObjectType);
@@ -82,7 +82,7 @@ public class DataCollectionDefinition extends LockableImpl {
     }
 
     public final void excludeSpecificObjectType( String specificObjectType ) {
-        Assert.unlocked( this );
+        Assert.isUnlocked( this );
 
         m_excludedTypes.add( specificObjectType );
     }
@@ -131,22 +131,22 @@ public class DataCollectionDefinition extends LockableImpl {
     }
     
     public final void setFilterCategory(boolean filterCategory) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_filterCategory = filterCategory;
     }
     
     public final void setDescendCategories(boolean descendCategories) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_descendCategories = descendCategories;
     }
     
     public final void setExcludeIndexObjects(boolean excludeIndexObjects) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_excludeIndexObjects = excludeIndexObjects;
     }
     
     public final void setCheckPermissions(boolean checkPermissions) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_checkPermissions = checkPermissions;
     }
 
@@ -155,22 +155,22 @@ public class DataCollectionDefinition extends LockableImpl {
      * in the AtoZ module.
      */
     public void setBlackListTypes(boolean blackListTypes) {
-    	Assert.unlocked(this);
+    	Assert.isUnlocked(this);
     	m_blackListTypes = blackListTypes;
     }
     
     public final void addOrder(String order) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_ordering.add(order);
     }
 
     public final void addProperty( DataCollectionProperty property ) {
-        Assert.unlocked( this );
+        Assert.isUnlocked( this );
         m_properties.add( property );
     }
     
     public final DataCollection getDataCollection(NavigationModel model) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         DataCollection objects = SessionManager.getSession()
             .retrieve(m_objectType);

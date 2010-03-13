@@ -210,7 +210,7 @@ public class SQLRegressionGenerator {
 
         com.redhat.persistence.metadata.ObjectType protoType =
             root.getRoot().getObjectType(type.getQualifiedName());
-        Assert.truth(protoType != null,
+        Assert.isTrue(protoType != null,
                      "null proto type for " + type.getQualifiedName());
 
         Column key;

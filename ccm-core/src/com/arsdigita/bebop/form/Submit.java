@@ -151,7 +151,7 @@ public class Submit extends Widget {
      * @param buttonLabel The label that shows up on the button.
      */
     public void setButtonLabel(GlobalizedMessage buttonLabel) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_buttonLabel = buttonLabel;
     }
 

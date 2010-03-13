@@ -29,6 +29,8 @@ import javax.servlet.ServletException;
  * position of a slave page subtree inside another page's component
  * tree.  Its generateXML method does nothing but call generateXML on
  * the input page.
+ *
+ * @version $Id: SlaveComponent.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SlaveComponent extends SimpleComponent {
 
@@ -37,8 +39,9 @@ public class SlaveComponent extends SimpleComponent {
 
     private Page m_slavePage;
 
-    public final static String versionId = "$Id: SlaveComponent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
+    /**
+     * Constructor.
+     */
     public SlaveComponent() {
         super();
     }
@@ -59,8 +62,11 @@ public class SlaveComponent extends SimpleComponent {
         // then re-importing the created notes into a new document
         try {
             Document doc = new Document();
+            // prepare is deprecated
+            // PageState slaveState =
+            //     m_slavePage.prepare(ps.getRequest(), ps.getResponse());
             PageState slaveState =
-                m_slavePage.prepare(ps.getRequest(), ps.getResponse());
+                m_slavePage.process(ps.getRequest(), ps.getResponse());
             m_slavePage.generateXML(slaveState, doc);
             parent.addContent(doc.getRootElement());
         } catch (ParserConfigurationException pce) {

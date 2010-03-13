@@ -503,7 +503,7 @@ public class Post extends ThreadedMessage {
     }
 
     public void setStatus(String status) {
-        Assert.truth(
+        Assert.isTrue(
             (status.equals(APPROVED)
              || status.equals(REJECTED)
              || status.equals(REAPPROVE)

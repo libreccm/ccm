@@ -15,71 +15,6 @@ init com.arsdigita.cms.installer.xml.ContentTypeInitializer {
     };
 }
 
-//-- init com.arsdigita.cms.publishToFile.LegacyInitializer {
-    // List of publish destinations for content types 
-    // Each element is a four-element list in the format 
-    // '{ "content type", "root directory", "shared storage",  
-    // "url stub" }'. 
-    // "Content type" is the object type of the content type. 
-    // "Root directory" must be a path to a writable directory, relative 
-    // to the file-system root.
-    // (pboy): "Root directory here is relative to application base!
-    // "Shared storage" must be _true_ if the root
-    // directory is shared NFS storage, _false_ otherwise. "URL stub"
-    // must be the path component of the URL from which the live server 
-    // will serve from this directory.
-//--     destination = {
-//--       { "com.arsdigita.cms.ContentItem",
-//--         "p2fs",
-//--         false,
-//--         "/p2fs" },
-    // (pboy): starting with webapps refers to the CCM_HOME env variable which
-    // points to the installation root of the servlet container. This is not
-    // used anymore, all specifications are relative to webapplication base.
-    // So the following may have to be changed to "packages/content-section/templates"
-    // if someone tries to use p2fs
-//--       { "com.arsdigita.cms.Template",
-//-- 	    // "webapps/ROOT/packages/content-section/templates",
-//-- 	    "packages/content-section/templates",
-//--         false,
-//--         "/templates" }
-//--     };
-
-    // Class which implements PublishToFileListener used to perform
-    // additional actions when publishing or unpublishing to the file system.
-//--     publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
-
-    // Queue management parameters.
-
-    // Set startupDelay to 0 to disable the processing of the queue
-    // Time (seconds) before starting to monitor the
-    // queue after a server start
-//--     startupDelay = 30;
-
-    // Time (in seconds) between checking if there are entries in the
-    // publishToFile queue.
-    // A value <= 0 disables processing the queue on this server.
-//--     pollDelay = 5;
-
-    // Time to wait (seconds) before retrying
-    // to process a failed entry
-//--     retryDelay = 120;
-
-    // Number of queue entries to process at once.
-//--     blockSize = 40;
-    // Number of times a failed queue entry will be
-    // reprocessed. If processing has failed more than
-    // that number of times, the entry will be
-    // ignored.
-//--     maximumFailCount = 10;
-
-    // Method used to select entries for processing.
-    // 'QueuedOrder'-in  queued order.
-    // 'GroupByParent'-group entries according to parent when selecting items
-    //  (allows optimizations if a listener task required for all elements in a folder
-    //   can be done only once for the folder).
-//--     blockSelectMethod = "GroupByParent";
-//-- }
 
 
 init com.arsdigita.cms.installer.SectionInitializer {
@@ -92,7 +27,8 @@ init com.arsdigita.cms.installer.SectionInitializer {
   // - Parameter waf.pagemap.login_redirect=content/content-center-redirect.jsp
   //   in integrations.properties of the respective bundle
   // - registerDomain(navigationKey, "/content/", null); in ldn.aplaws.Loader
-  name = "content";
+//--  name = "content";
+  name = "intern";
 
   // List of roles to create. First field is role name,
   // second is the description, third is a list of
@@ -138,14 +74,20 @@ init com.arsdigita.cms.installer.SectionInitializer {
   // The types are registered when the content-section is created. Later
   // modifications have no effect.
 
+//--  types = {
+//--  };
   types = {
+           "com.arsdigita.cms.contenttypes.Address",
+           "com.arsdigita.cms.contenttypes.Article",
+           "com.arsdigita.cms.contenttypes.Contact"
   };
 
   // Category tree to load
   categories = { "/WEB-INF/resources/article-categories.xml", "/WEB-INF/resources/navigation-categories.xml" };
 
   // Wether to make content viewable to 'The Public', ie non-registered users
-  public = true;
+//--  public = true;
+  public = false;
 
   // When to generate email alerts: by default, generate email alerts
   // on enable, finish, and rollback (happens on rejection)
@@ -279,6 +221,147 @@ init com.arsdigita.formbuilder.installer.Initializer {
 }
 
 
+//Used when running CMS in conjunction with a Portal
+init com.arsdigita.cms.installer.portlet.Initializer {}
+
+
+
+// //////////////////////////////////////////////////////////
+//
+//    Initializer replaced by new initialization system
+//
+// //////////////////////////////////////////////////////////
+
+
+// No longer needed, refactored as a sub-initializer of ccm initializer
+// (following the new initializer system)
+
+// init com.arsdigita.cms.publishToFile.LegacyInitializer {
+//     // List of publish destinations for content types
+//     // Each element is a four-element list in the format
+//     // '{ "content type", "root directory", "shared storage",
+//     // "url stub" }'.
+//     // "Content type" is the object type of the content type.
+//     // "Root directory" must be a path to a writable directory, relative
+//     // to the file-system root.
+//     // (pboy): "Root directory here is relative to application base!
+//     // "Shared storage" must be _true_ if the root
+//     // directory is shared NFS storage, _false_ otherwise. "URL stub"
+//     // must be the path component of the URL from which the live server
+//     // will serve from this directory.
+//     destination = {
+//         { "com.arsdigita.cms.ContentItem",
+//           "p2fs",
+//           false,
+//           "/p2fs" },
+//     // (pboy): starting with webapps refers to the CCM_HOME env variable which
+//     // points to the installation root of the servlet container. This is not
+//     // used anymore, all specifications are relative to webapplication base.
+//     // So the following may have to be changed to "packages/content-section/templates"
+//     // if someone tries to use p2fs
+//         { "com.arsdigita.cms.Template",
+//   	     // "webapps/ROOT/packages/content-section/templates",
+//   	     "packages/content-section/templates",
+//           false,
+//           "/templates" }
+//     };
+//
+//     // Class which implements PublishToFileListener used to perform
+//     // additional actions when publishing or unpublishing to the file system.
+//     publishListener = "com.arsdigita.cms.publishToFile.PublishToFile";
+//
+//     // Queue management parameters.
+//
+//     // Set startupDelay to 0 to disable the processing of the queue
+//     // Time (seconds) before starting to monitor the
+//     // queue after a server start
+//     startupDelay = 30;
+//
+//     // Time (in seconds) between checking if there are entries in the
+//     // publishToFile queue.
+//     // A value <= 0 disables processing the queue on this server.
+//     pollDelay = 5;
+//
+//     // Time to wait (seconds) before retrying
+//     // to process a failed entry
+//     retryDelay = 120;
+//
+//     // Number of queue entries to process at once.
+//     blockSize = 40;
+//     // Number of times a failed queue entry will be
+//     // reprocessed. If processing has failed more than
+//     // that number of times, the entry will be
+//     // ignored.
+//     maximumFailCount = 10;
+//
+//     // Method used to select entries for processing.
+//     // 'QueuedOrder'-in  queued order.
+//     // 'GroupByParent'-group entries according to parent when selecting items
+//     //  (allows optimizations if a listener task required for all elements in a folder
+//     //   can be done only once for the folder).
+//     blockSelectMethod = "GroupByParent";
+// }
+
+
+// No longer needed, refactored as a sub-initializer of ccm initializer
+// (following the new initializer system)
+//
+// init com.arsdigita.cms.lifecycle.LegacyInitializer {
+//   // How long do we wait (in seconds) after system startup
+//   // before we start processing lifecycles?
+//   delay     = 60;
+//   // How often (in seconds) does the system look for pending
+//   // items to make live and live items to expire
+//   frequency = 600;
+// }
+
+
+// This is no longer needed. Item adapters are now set via standard
+// initializers. Legacy initializer is still available if you need
+// to register multiple adapter files.
+//init com.arsdigita.domain.installer.DomainObjectTraversalInitializer {
+//  adapters = {
+//    "/WEB-INF/resources/cms-item-adapters.xml"
+//  };
+//
+//}
+
+// This is no longer needed.
+// Initializer com.arsdigita.cms.populate.Initializer no longer part of the
+// source code nor exist a package com.arsdigita.cms.populate anymore.
+// Had been commented out in rev. 8 (in 2004)
+
+//populates the database with CMS Content Items and
+//other, CMS-related data
+//<NOTE>
+//You should disable the PublishToFile initializers
+//while running this population initializer or set its delay
+//long enough so that it won't run until this initializer
+//has finished.  Also, the content items created by this
+//initializer won't be live until the lifeCycle initializers
+//have completed running on them.
+//</NOTE>
+// init com.arsdigita.cms.populate.Initializer {
+//     contentSection = "content";
+//     //total folders created = numTopLevelFolders * folderDepth
+//     numTopLevelFolders = 3;
+//     folderDepth = 2;
+//     numContentItems = 5;
+//     createContentTypes =
+// 	{"com.arsdigita.cms.populate.CreateArticle",
+// 	 "com.arsdigita.cms.populate.CreateTextArticle",
+// 	 "com.arsdigita.cms.populate.CreateMultiPartArticle",
+// 	 "com.arsdigita.cms.populate.CreateTextMultiPartArticle"
+// 	};
+//     numUsers = 10;
+// }
+
+
+// This is mot needed for a longtime.
+// It has been commented out since revision 473 (Aug. 2005) or earlier
+// Had been active in initial aplaws checkin (at rev. 8 about 2004)
+// Modified in r473 as a svn:merge of 319-431
+
 //init com.arsdigita.cms.installer.SectionInitializer {
 //  // Name of the content section (used to form URL)
 //  name = "forms";
@@ -360,64 +443,3 @@ init com.arsdigita.formbuilder.installer.Initializer {
 //  maxAlerts = 5;
 //
 //}
-
-//Used when running CMS in conjunction with a Portal
-init com.arsdigita.cms.installer.portlet.Initializer {}
-
-//populates the database with CMS Content Items and
-//other, CMS-related data
-//<NOTE>
-//You should disable the PublishToFile initializers
-//while running this population initializer or set its delay
-//long enough so that it won't run until this initializer
-//has finished.  Also, the content items created by this
-//initializer won't be live until the lifeCycle initializers
-//have completed running on them.
-//</NOTE>
-// init com.arsdigita.cms.populate.Initializer {
-//     contentSection = "content";
-//     //total folders created = numTopLevelFolders * folderDepth
-//     numTopLevelFolders = 3;
-//     folderDepth = 2;
-//     numContentItems = 5;
-//     createContentTypes =
-// 	{"com.arsdigita.cms.populate.CreateArticle",
-// 	 "com.arsdigita.cms.populate.CreateTextArticle",
-// 	 "com.arsdigita.cms.populate.CreateMultiPartArticle",
-// 	 "com.arsdigita.cms.populate.CreateTextMultiPartArticle"
-// 	};
-//     numUsers = 10;
-// }
-
-
-
-// //////////////////////////////////////////////////////////
-//
-//    Initializer replaced by new initialization system
-//
-// //////////////////////////////////////////////////////////
-
-
-// No longer needed, refactored as a sub-initializer of ccm initializer
-// (following the new initializer system)
-//
-// init com.arsdigita.cms.lifecycle.LegacyInitializer {
-//   // How long do we wait (in seconds) after system startup
-//   // before we start processing lifecycles?
-//   delay     = 60;
-//   // How often (in seconds) does the system look for pending
-//   // items to make live and live items to expire
-//   frequency = 600;
-// }
-
-
-// This is no longer needed. Item adapters are now set via standard
-// initializers. Legacy initializer is still available if you need
-// to register multiple adapter files.
-//init com.arsdigita.domain.installer.DomainObjectTraversalInitializer {
-//  adapters = {
-//    "/WEB-INF/resources/cms-item-adapters.xml"
-//  };
-//
-//}
-

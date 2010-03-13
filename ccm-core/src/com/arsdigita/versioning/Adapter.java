@@ -106,7 +106,7 @@ final class Adapter {
             });
         s_converters.put(Types.CHARACTER, new SimpleConverter() {
                 public Object deserialize(String str) {
-                    Assert.truth(str.length() == 1, "str.length() == 1");
+                    Assert.isTrue(str.length() == 1, "str.length() == 1");
                     return new Character(str.charAt(0));
                 }
             });
@@ -122,7 +122,7 @@ final class Adapter {
 
                 public Object deserialize(String str) {
                     int idx = str.indexOf(s_dateDelim);
-                    Assert.truth(idx>=0, "idx>0");
+                    Assert.isTrue(idx>=0, "idx>0");
                     return new Date(Long.parseLong(str.substring(0, idx)));
                 }
             });
@@ -180,10 +180,10 @@ final class Adapter {
 
                 public Object deserialize(String str) {
                     int mIdx = str.indexOf(s_tstampDelim);
-                    Assert.truth(mIdx>=0, "mIdx>0");
+                    Assert.isTrue(mIdx>=0, "mIdx>0");
                     long millis = Long.parseLong(str.substring(0, mIdx));
                     int nIdx = str.indexOf(s_dateDelim, mIdx);
-                    Assert.truth(nIdx>=0, "nIdx>0");
+                    Assert.isTrue(nIdx>=0, "nIdx>0");
                     int nanos = Integer.parseInt(str.substring(mIdx+1, nIdx));
                     Timestamp result = new Timestamp(millis);
                     result.setNanos(nanos);
@@ -221,7 +221,7 @@ final class Adapter {
             keyValuePairs.add(packed.toString());
         }
 
-        Assert.truth(keyValuePairs.size()>0,
+        Assert.isTrue(keyValuePairs.size()>0,
                      "oid has at least one property");
         if ( keyValuePairs.size() > 1 ) Collections.sort(keyValuePairs);
 
@@ -237,18 +237,18 @@ final class Adapter {
 
     private static OID deserializeOID(String str) {
         final StringTokenizer st = new StringTokenizer(str, s_oidDelim);
-        Assert.truth(st.hasMoreTokens(), str);
+        Assert.isTrue(st.hasMoreTokens(), str);
         OID oid = new OID(st.nextToken());
 
         while (st.hasMoreTokens() ) {
             final String token = st.nextToken();
             final StringTokenizer tuple = new StringTokenizer(token, ":");
 
-            Assert.truth(tuple.hasMoreTokens(), token);
+            Assert.isTrue(tuple.hasMoreTokens(), token);
             String pName = tuple.nextToken();
-            Assert.truth(tuple.hasMoreTokens(), token);
+            Assert.isTrue(tuple.hasMoreTokens(), token);
             String pType = tuple.nextToken();
-            Assert.truth(tuple.hasMoreTokens(), token);
+            Assert.isTrue(tuple.hasMoreTokens(), token);
             String pValue = token.substring(pName.length() + pType.length() + 2);
             oid.set(pName, deserialize(pValue,
                                        Types.getType(new BigInteger(pType))));

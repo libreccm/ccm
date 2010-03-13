@@ -197,7 +197,7 @@ public class ContentBundle extends ContentItem {
     public final void setDefaultLanguage(final String language) {
         if (Assert.isEnabled()) {
             Assert.exists(language, String.class);
-            Assert.truth(language.length() == 2,
+            Assert.isTrue(language.length() == 2,
                     language + " is not an ISO639 language code");
         }
         
@@ -224,7 +224,7 @@ public class ContentBundle extends ContentItem {
         
         if (Assert.isEnabled()) {
             Assert.exists(instance, ContentItem.class);
-            Assert.falsity(hasInstance(instance.getLanguage()),
+            Assert.isFalse(hasInstance(instance.getLanguage()),
                     "The bundle already contains an instance " +
                     "for the language " + instance.getLanguage());
         }
@@ -233,7 +233,7 @@ public class ContentBundle extends ContentItem {
         instance.setContentSection(getContentSection());
         
         if (Assert.isEnabled()) {
-            Assert.equal(this, instance.getParent());
+            Assert.isEqual(this, instance.getParent());
         }
     }
     
@@ -252,14 +252,14 @@ public class ContentBundle extends ContentItem {
     public void removeInstance(final ContentItem instance) {
         if (Assert.isEnabled()) {
             Assert.exists(instance, ContentItem.class);
-            Assert.equal(this, instance.getParent());
-            Assert.unequal(instance, getPrimaryInstance());
+            Assert.isEqual(this, instance.getParent());
+            Assert.isNotEqual(instance, getPrimaryInstance());
         }
         
         instance.setParent(null);
         
         if (Assert.isEnabled()) {
-            Assert.truth(instance.getParent() == null);
+            Assert.isTrue(instance.getParent() == null);
         }
     }
     
@@ -301,7 +301,7 @@ public class ContentBundle extends ContentItem {
     public final ContentItem getInstance(final String language) {
         if (Assert.isEnabled()) {
             Assert.exists(language, String.class);
-            Assert.truth(language.length() == 2,
+            Assert.isTrue(language.length() == 2,
                     language + " does not look like a valid language " +
                     "code");
         }
@@ -315,7 +315,7 @@ public class ContentBundle extends ContentItem {
             final DataObject data = instances.getDataObject();
             
             if (Assert.isEnabled()) {
-                //Assert.falsity(instances.next(),
+                //Assert.isFalse(instances.next(),
                 //               "There is more than one instance with the " +
                 //               "same language");
             }
@@ -357,7 +357,7 @@ public class ContentBundle extends ContentItem {
     public final boolean hasInstance(final String language) {
         if (Assert.isEnabled()) {
             Assert.exists(language, String.class);
-            Assert.truth(language.length() == 2,
+            Assert.isTrue(language.length() == 2,
                     language + " is not an ISO639 language code");
         }
         
@@ -390,7 +390,7 @@ public class ContentBundle extends ContentItem {
         items.close();
         
         if (Assert.isEnabled()) {
-            Assert.truth(!list.isEmpty() || getInstances().isEmpty());
+            Assert.isTrue(!list.isEmpty() || getInstances().isEmpty());
         }
         
         return list;
@@ -407,7 +407,7 @@ public class ContentBundle extends ContentItem {
      * @pre locales != null
      */
     public ContentItem negotiate(Locale[] locales) {
-        Assert.assertNotNull(locales);
+        Assert.exists(locales);
         DataAssociationCursor instancesCursor = instances();
         DataObject dataObject = null;
         int bestMatch = 0;
@@ -462,7 +462,7 @@ public class ContentBundle extends ContentItem {
      * @pre locales != null
      */
     public ContentItem negotiate(Enumeration locales) {
-        Assert.assertNotNull(locales);
+        Assert.exists(locales);
         /* copy "locales" enumeration, since we have to iterate
          * over it several times
          */

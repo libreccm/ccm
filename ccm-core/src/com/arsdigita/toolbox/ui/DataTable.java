@@ -233,7 +233,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * @param attribute the default attribute to sort by
      */
     public void setDefaultOrder(String attribute) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         getOrderSelectionModel().getStateParameter()
             .setDefaultValue(attribute);
     }
@@ -364,7 +364,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * @param builder the new {@link DataQueryBuilder} for this table
      */
     public void setDataQueryBuilder(DataQueryBuilder builder) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_builder = builder;
     }
 
@@ -375,7 +375,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * @param orderModel The new model
      */
     public void setOrderSelectionModel(SingleSelectionModel orderModel) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_orderModel = orderModel;
     }
 
@@ -393,7 +393,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * @param l the new query listener
      */
     public void addQueryListener(QueryListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_queryListeners.add(QueryListener.class, l);
     }
 
@@ -403,7 +403,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * @param l the new query listener
      */
     public void removeQueryListener(QueryListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_queryListeners.remove(QueryListener.class, l);
     }
 
@@ -462,7 +462,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      *   should be sorted; either ASCENDING or DESCENDING
      */
     public void setOrderDirection(PageState s, String dir) {
-        Assert.assertTrue(ASCENDING.equals(dir) || DESCENDING.equals(dir));
+        Assert.isTrue(ASCENDING.equals(dir) || DESCENDING.equals(dir));
         s.setValue(m_dirParam, dir);
     }
 
@@ -526,7 +526,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * if the table should not be paginated.
      */
     public final void setPaginator(Paginator p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_paginator = p;
     }
 
@@ -579,7 +579,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
      * or null if no globalization is needed
      */
     public void setResourceBundle(String bundle) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_resourceBundle = bundle;
     }
 
@@ -616,7 +616,7 @@ public class DataTable extends Table implements PaginationModelBuilder {
          * @param isSortable if true, the column will be sortable
          */
         public void setSortable(boolean isSortable) {
-            Assert.assertNotLocked(this);
+            Assert.isUnlocked(this);
             m_sortable = isSortable;
             setHeaderRenderer(new GlobalizedHeaderCellRenderer(isSortable));
         }

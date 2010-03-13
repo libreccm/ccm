@@ -286,7 +286,7 @@ public class DocmgrBasePage extends Page {
      * @param pc the component to be added
      */
     public void add(Component pc) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_body.add(pc);
     }
 

@@ -74,7 +74,7 @@ public class Initializer extends BaseInitializer {
 		int iSize = popAppsList.size();
 		for (int i = 0; i < iSize; i++) {
 			List popAppParam = (List) popAppsList.get(i);
-			Assert.assertTrue(popAppParam.size() == 2);
+			Assert.isTrue(popAppParam.size() == 2);
 
 			String sPopApp = (String) popAppParam.get(0);
 			s_log.debug("PopulateApp is " + sPopApp);

@@ -75,7 +75,7 @@ public abstract class ContextBar extends SimpleComponent {
         public Entry(final String title, final String href) {
             super();
 
-            Assert.assertNotNull(title, "String title");
+            Assert.exists(title, "String title");
 
             m_title = title;
             m_href = href;

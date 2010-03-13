@@ -50,16 +50,16 @@ public class ActionGroup extends ComponentSet {
     public static final String RETURN = "return";
 
     public final void setSubject(final Component subject) {
-        Assert.assertNotNull(subject, "Component subject");
-        Assert.assertNotLocked(this);
+        Assert.exists(subject, "Component subject");
+        Assert.isUnlocked(this);
 
         m_subject = subject;
         add(m_subject);
     }
 
     public final void addAction(final Component action, final String clacc) {
-        Assert.assertNotNull(action, "Component action");
-        Assert.assertNotLocked(this);
+        Assert.exists(action, "Component action");
+        Assert.isUnlocked(this);
 
         m_actions.add(new Object[] {action, clacc});
         add(action);

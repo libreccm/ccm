@@ -171,7 +171,7 @@ public class SiteNodeDispatcher extends KernelDispatcherServlet
 
         DispatcherHelper.setRequest(req);
 
-        Assert.assertNotNull(rc, "rc");
+        Assert.exists(rc, "rc");
 
         SiteNode sn = getSiteNode(req, rc);
 

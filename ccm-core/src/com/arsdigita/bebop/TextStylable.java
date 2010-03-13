@@ -28,8 +28,6 @@ import com.arsdigita.bebop.util.Color;
  * */
 abstract public class TextStylable extends SimpleComponent {
 
-    public static final String versionId = "$Id: TextStylable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Sets a component's foreground or text color.
      *

@@ -20,8 +20,11 @@ package com.arsdigita.bebop;
 
 import com.arsdigita.persistence.DataQuery;
 
+/**
+ * 
+ * @version $Id: RowSequenceBuilder.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public interface RowSequenceBuilder {
 
-    public static final String versionId = "$Id: RowSequenceBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     DataQuery makeRowSequence(PageState state);
 }

@@ -202,7 +202,7 @@ public class ContentItemHelper {
             save();
         }
 
-        Assert.assertNotNull(m_item);
+        Assert.exists(m_item);
         s_log.debug ( "Successfully created content item");
         return m_item;
     }
@@ -242,15 +242,15 @@ public class ContentItemHelper {
             throw new UncheckedWrapperException (e);
         }
 
-        Assert.assertNotNull ( l_item );
+        Assert.exists ( l_item );
         return l_item;
     }
 
 
     /* Only call this method after create() has been called. */
     public void set(String methodName, String argClass, String value) {
-        Assert.assertNotNull(m_item);
-        Assert.assertNotNull(m_contentTypeClass);
+        Assert.exists(m_item);
+        Assert.exists(m_contentTypeClass);
         if (methodName != null ) {
             s_log.debug("setting property with : " + methodName );
         }
@@ -267,7 +267,7 @@ public class ContentItemHelper {
         if (methodName != null || argClass != null
             || value != null ) {
             try {
-                Assert.assertNotNull(argClass);
+                Assert.exists(argClass);
                 Class[] args = {Class.forName(argClass)};
                 s_log.debug("npe2?");
                 Method method = m_contentTypeClass.getMethod(methodName, args);
@@ -319,7 +319,7 @@ public class ContentItemHelper {
      * Look for ContentItems with the same name
      */
     protected ContentItem getContentItemByName(String name, Folder parent) {
-        Assert.assertNotNull(parent);
+        Assert.exists(parent);
         // Also check that there aren't any duplicates
         ContentItem item = null;
         ItemCollection items = parent.getItems();
@@ -349,7 +349,7 @@ public class ContentItemHelper {
     }
 
     protected ContentItem cloneItem(int count, Folder parent, boolean save) {
-        Assert.assertNotNull(m_item);
+        Assert.exists(m_item);
         final String name = m_item.getName() + "_" + count;
 
         return cloneItem(name, parent, save);
@@ -366,7 +366,7 @@ public class ContentItemHelper {
         if (save) {
             clone.save();
         }
-        Assert.assertNotNull(clone);
+        Assert.exists(clone);
         return clone;
 
     }
@@ -394,7 +394,7 @@ public class ContentItemHelper {
      * the ContentItem and the parameter <code>count</code></P>
      */
     public String cloneName ( int count ) {
-        Assert.assertNotNull(m_item);
+        Assert.exists(m_item);
         return m_item.getName() + "_" + count;
     }
 }

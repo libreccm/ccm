@@ -67,7 +67,7 @@ public class GraphSet implements Graph {
     }
 
     public void setLabel(String label) {
-        Assert.assertTrue(label !=null, "label is not null");
+        Assert.isTrue(label !=null, "label is not null");
         m_label = label;
     }
 
@@ -161,17 +161,17 @@ public class GraphSet implements Graph {
     }
 
     public List getOutgoingEdges(Object node) {
-        Assert.assertTrue(hasNode(node), objToString(node));
+        Assert.isTrue(hasNode(node), objToString(node));
         return new ArrayList(outgoingEdges(node));
     }
 
     public int outgoingEdgeCount(Object node) {
-        Assert.assertTrue(hasNode(node), objToString(node));
+        Assert.isTrue(hasNode(node), objToString(node));
         return outgoingEdges(node).size();
     }
 
     public int incomingEdgeCount(Object node) {
-        Assert.assertTrue(hasNode(node), objToString(node));
+        Assert.isTrue(hasNode(node), objToString(node));
         return incomingEdges(node).size();
     }
 
@@ -185,7 +185,7 @@ public class GraphSet implements Graph {
     }
 
     public List getIncomingEdges(Object node) {
-        Assert.assertTrue(hasNode(node), objToString(node));
+        Assert.isTrue(hasNode(node), objToString(node));
         return new ArrayList(incomingEdges(node));
     }
 

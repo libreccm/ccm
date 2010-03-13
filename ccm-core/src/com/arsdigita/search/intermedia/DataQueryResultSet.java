@@ -109,7 +109,7 @@ class DataQueryResultSet implements ResultSet {
         }
         
         public Object next() {
-            Assert.truth(m_hasNext, "hasNext");
+            Assert.isTrue(m_hasNext, "hasNext");
 
             BaseDocument result = m_current;
             peekNext();

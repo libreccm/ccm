@@ -155,7 +155,7 @@ public class CallTracer {
      * @return The file listing where the method was called from
      */
     public static String getCaller(final int level) {
-        Assert.truth(level > 0, "Level must be greater than zero!");
+        Assert.isTrue(level > 0, "Level must be greater than zero!");
         final List trace = StringUtils.getStackList(new Throwable());
         return getCallerFromTrace(level, trace);
     }

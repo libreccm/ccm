@@ -63,7 +63,7 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
     }
 
     public void respond(PageState state) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         String name = state.getControlEventName();
         String value = state.getControlEventValue();
@@ -99,7 +99,7 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
     }
     
     protected void fireDomainObjectActionEvent(DomainObjectActionEvent ev) {
-        Assert.locked(this);
+        Assert.isLocked(this);
         
         EventListenerList listeners = 
             (EventListenerList)m_actions.get(ev.getAction());
@@ -112,7 +112,7 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
     }
 
     protected void registerDomainObjectAction(String action) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
 
         if (m_actions.containsKey(action)) {
             throw new RuntimeException("Action " + action + " already registered");
@@ -142,7 +142,7 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
 	}
     public void addDomainObjectActionListener(String action,
                                               DomainObjectActionListener listener) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
 
         if (!m_actions.containsKey(action)) {
             throw new RuntimeException("Action " + action + " not registered");
@@ -155,7 +155,7 @@ public abstract class AbstractDomainObjectComponent extends SimpleContainer {
     protected String getDomainObjectActionLink(PageState state,
                                                DomainObject dobj,
                                                String action) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         String url = null;
         state.setControlEvent(this, action, dobj.getOID().toString());

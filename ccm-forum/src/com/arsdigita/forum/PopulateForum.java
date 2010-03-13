@@ -55,8 +55,8 @@ public class PopulateForum extends AbstractPopulateApp implements PopulateApp {
         int iThreads = ((Integer)args.get(0)).intValue();
         int iMsgs = ((Integer)args.get(1)).intValue();
 
-        Assert.truth(iThreads >= 0, "iThreads must be >= 0");
-        Assert.truth(iMsgs > 0, "iMsgs must be > 0");
+        Assert.isTrue(iThreads >= 0, "iThreads must be >= 0");
+        Assert.isTrue(iMsgs > 0, "iMsgs must be > 0");
 
         //get users to make posts
         List users = Utilities.getUsersIDs(10);

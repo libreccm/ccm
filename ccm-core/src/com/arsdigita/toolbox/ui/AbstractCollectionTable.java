@@ -121,7 +121,7 @@ public abstract class AbstractCollectionTable extends Table
      *  @pre ASCENDING.equals(direction) || DESCENDING.equals(direction)
      */
     public void setDefaultOrderDirection(String direction) {
-        Assert.assertTrue(ASCENDING.equals(direction) ||
+        Assert.isTrue(ASCENDING.equals(direction) ||
                           DESCENDING.equals(direction), "The order must " +
                           "be either ascending or descending");
         m_dirParam.setDefaultValue(direction);
@@ -146,7 +146,7 @@ public abstract class AbstractCollectionTable extends Table
      *   should be sorted; either ASCENDING or DESCENDING
      */
     public void setOrderDirection(PageState s, String dir) {
-        Assert.assertTrue(ASCENDING.equals(dir) || DESCENDING.equals(dir));
+        Assert.isTrue(ASCENDING.equals(dir) || DESCENDING.equals(dir));
         s.setValue(m_dirParam, dir);
     }
 
@@ -174,8 +174,8 @@ public abstract class AbstractCollectionTable extends Table
      * @param attribute the default attribute to sort by
      */
     public void setDefaultOrder(String attribute) {
-        Assert.assertNotLocked(this);
-        Assert.assertTrue(m_columnOrder.contains(attribute),
+        Assert.isUnlocked(this);
+        Assert.isTrue(m_columnOrder.contains(attribute),
                           "The passed in attribute '" + attribute +
                           "' is not the name of a column.");
         getColumnSelectionModel().getStateParameter()

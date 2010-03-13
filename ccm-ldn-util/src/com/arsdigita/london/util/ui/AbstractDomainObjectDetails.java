@@ -106,7 +106,7 @@ public abstract class AbstractDomainObjectDetails
 	    if (party == null) {
 		party = Kernel.getPublicUser();
 	    }
-	    Assert.truth(dobj.getObjectType().isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE),
+	    Assert.isTrue(dobj.getObjectType().isSubtypeOf(ACSObject.BASE_DATA_OBJECT_TYPE),
 				"I can only check permissions on ACS Objects - this domain Object is not a subtype of ACSObject ");
 	    PermissionDescriptor permission =	new PermissionDescriptor(privilege,(ACSObject) dobj,party);
 	    actionVisible = PermissionService.checkPermission(permission);

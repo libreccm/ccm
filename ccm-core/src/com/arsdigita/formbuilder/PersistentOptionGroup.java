@@ -165,7 +165,7 @@ public abstract class PersistentOptionGroup extends PersistentWidget {
         if (!isMultiple()) {
             // only one option may be selected
             // to this selected list better be empty
-            Assert.assertTrue(getSelectedOptions().size() == 0, TOO_MANY_OPTIONS_SELECTED);
+            Assert.isTrue(getSelectedOptions().size() == 0, TOO_MANY_OPTIONS_SELECTED);
         }
 
         m_container.setComponentSelected(option, selected);

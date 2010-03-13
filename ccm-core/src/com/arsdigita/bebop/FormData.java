@@ -257,9 +257,9 @@ public class FormData implements Map, Cloneable {
                     FormData fallback)
         throws FormProcessException {
 
-        Assert.assertNotNull(model, "FormModel");
-        Assert.assertNotNull(request, "HttpServletRequest");
-        Assert.assertNotNull(locale, "Locale");
+        Assert.exists(model, "FormModel");
+        Assert.exists(request, "HttpServletRequest");
+        Assert.exists(locale, "Locale");
 
         m_locale = locale;
         m_model = model;
@@ -622,7 +622,7 @@ public class FormData implements Map, Cloneable {
                 parameterModel.createParameterData(request,
                                                    defaultValue,
                                                    isSubmission());
-            Assert.assertNotNull(parameterData);
+            Assert.exists(parameterData);
             setParameter(parameterModel.getName(), parameterData);
         }
         m_isTransformed=true;

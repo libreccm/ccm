@@ -111,7 +111,7 @@ public class ImageDisplay extends SimpleComponent {
 
     protected ImageAsset getImageAsset(PageState state) {
         ImageAsset image = (ImageAsset) m_item.getSelectedObject(state);
-        Assert.assertNotNull(image, "Image asset");
+        Assert.exists(image, "Image asset");
         return image;
     }
 

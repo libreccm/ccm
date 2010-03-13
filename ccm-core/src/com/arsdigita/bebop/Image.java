@@ -35,7 +35,6 @@ import com.arsdigita.bebop.event.PrintEvent;
 
 public class Image extends BlockStylable  {
 
-    public static final String versionId = "$Id: Image.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private final String IMAGE_URL = "src";
     private final String ALT       = "alt";
     private final String HEIGHT    = "height";
@@ -66,12 +65,12 @@ public class Image extends BlockStylable  {
     }
 
     public void setImageURL(String imageURL) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(IMAGE_URL, imageURL);
     }
 
     public void setAlt(String alt) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(ALT, alt);
     }
     /**
@@ -79,7 +78,7 @@ public class Image extends BlockStylable  {
      *
      */
     public void setHeight(String height) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(HEIGHT, height);
     }
 
@@ -88,7 +87,7 @@ public class Image extends BlockStylable  {
      *
      */
     public void setWidth(String width) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(WIDTH, width);
     }
 
@@ -97,7 +96,7 @@ public class Image extends BlockStylable  {
      *
      */
     public void setBorder(String border) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         setAttribute(BORDER, border);
     }
 

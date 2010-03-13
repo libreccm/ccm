@@ -416,7 +416,7 @@ public class TasksPanel extends CMSContainer {
 
         protected BigDecimal getRootFolderID(PageState s) {
             ContentSection sec = (ContentSection) m_sectionSel.getSelectedObject(s);
-            Assert.assertNotNull(sec);
+            Assert.exists(sec);
 
            User user = Web.getContext().getUser();
             if ( user != null ) {
@@ -656,7 +656,7 @@ public class TasksPanel extends CMSContainer {
                             if (taskType.equals(CMSTaskType.DEPLOY) ) {
                                 tabNumber = ContentItemPage.PUBLISHING_TAB;
                             } else {
-                                // see if item is locked; if not, lock
+                                // see if item is isLocked; if not, lock
                                 if ( !task.isLocked() ) {
                                     task.lock(user);
                                 }

@@ -23,8 +23,7 @@ import com.arsdigita.xml.Element;
 import com.arsdigita.persistence.DataQuery;
 
 /**
- * .  A
- * container that outputs its components repeatedly for each row in a
+ * A container that outputs its components repeatedly for each row in a
  * RowSequence.
  *
  * @author Christian Brechb&uuml;hler (christian@arsdigita.com)
@@ -34,7 +33,6 @@ import com.arsdigita.persistence.DataQuery;
 public class Multiple extends SimpleContainer
 {
 
-    public static final String versionId = "$Id: Multiple.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private RequestLocal m_rows;        // a RowSequence
     private RowSequenceBuilder m_builder = null;
 

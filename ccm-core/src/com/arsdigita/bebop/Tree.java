@@ -53,10 +53,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Tree.java 1326 2006-09-22 08:26:24Z sskracic $
  */
 public class Tree extends SimpleComponent implements Resettable {
-    public static final String versionId =
-        "$Id: Tree.java 1326 2006-09-22 08:26:24Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(Tree.class);
@@ -141,7 +137,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * Registers the two parameters to the page.
      */
     public void register(Page p) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         p.addComponent(this);
         p.addComponentStateParam(this, m_currentState);
@@ -190,7 +186,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @param b the new {@link TreeModelBuilder} for the tree
      */
     public void setModelBuilder(TreeModelBuilder b) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_builder = b;
     }
 
@@ -202,7 +198,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @see TreeModel
      */
     public void setTreeModel(TreeModel m) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_tree = m;
     }
 
@@ -214,7 +210,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @param m the new selection model
      */
     public void setSelectionModel(SingleSelectionModel m) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_selection = m;
         s_log.debug("New model: " + m);
     }
@@ -317,7 +313,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @pre ! isLocked()
      */
     public void addChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         if ( m_changeListener == null ) {
             m_changeListener = createChangeListener();
 
@@ -339,7 +335,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @param l the change listener to remove from the tree
      */
     public void removeChangeListener(ChangeListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
 
         if (s_log.isDebugEnabled()) {
             s_log.debug("Removing listener " + l + " from " + this);
@@ -378,7 +374,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @pre ! isLocked()
      */
     public void addActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.add(ActionListener.class, l);
     }
 
@@ -387,7 +383,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @see #addActionListener addActionListener
      */
     public void removeActionListener(ActionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.remove(ActionListener.class, l);
     }
 
@@ -420,7 +416,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @pre ! isLocked()
      */
     public void addTreeExpansionListener(TreeExpansionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.add(TreeExpansionListener.class, l);
     }
 
@@ -431,7 +427,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @see #addTreeExpansionListener addTreeExpansionListener
      */
     public void removeTreeExpansionListener(TreeExpansionListener l) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_listeners.remove(TreeExpansionListener.class, l);
     }
 
@@ -532,8 +528,8 @@ public class Tree extends SimpleComponent implements Resettable {
      * @pre data != null
      */
     public void collapse(String nodeKey, PageState data) {
-        Assert.assertNotNull(nodeKey);
-        Assert.assertNotNull(data);
+        Assert.exists(nodeKey);
+        Assert.exists(data);
 
         StringBuffer newCurrentState = new StringBuffer("");
         String stateString = (String) data.getValue(m_currentState);
@@ -568,8 +564,8 @@ public class Tree extends SimpleComponent implements Resettable {
      * @pre data != null
      */
     public void expand(String nodeKey, PageState data) {
-        Assert.assertNotNull(nodeKey);
-        Assert.assertNotNull(data);
+        Assert.exists(nodeKey);
+        Assert.exists(data);
 
         String stateString = (String) data.getValue(m_currentState);
         String spaceId = " " + nodeKey + " ";
@@ -615,7 +611,7 @@ public class Tree extends SimpleComponent implements Resettable {
      * @param r a <code>TreeCellRenderer</code> value
      */
     public void setCellRenderer(TreeCellRenderer r) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_renderer = r;
     }
 

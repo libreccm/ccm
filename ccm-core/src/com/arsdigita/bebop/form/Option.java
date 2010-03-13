@@ -97,7 +97,7 @@ public class Option extends BlockStylable {
     }
 
     public final void setComponent(Component component) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_component = component;
     }
 
@@ -106,8 +106,8 @@ public class Option extends BlockStylable {
     }
 
     public final void setGroup(OptionGroup group) {
-        Assert.assertNotLocked(this);
-        Assert.assertNotNull(group);
+        Assert.isUnlocked(this);
+        Assert.exists(group);
         m_group = group;
         m_isSelectOption =
             BebopConstants.BEBOP_OPTION.equals(m_group.m_xmlElement);

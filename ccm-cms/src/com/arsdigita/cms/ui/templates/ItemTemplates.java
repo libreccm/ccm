@@ -90,7 +90,7 @@ public class ItemTemplates extends SecurityPropertyEditor {
                     PageState s = e.getPageState();
                     Label targetLabel = (Label)e.getTarget();
                     ContentPage item = (ContentPage)m_itemModel.getSelectedItem(s);
-                    Assert.assertNotNull(item, "item");
+                    Assert.exists(item, "item");
                     targetLabel.setLabel( (String) GlobalizationUtil.globalize("cms.ui.templates.assign_a_template_to").localize() + item.getTitle());
                 }
             });
@@ -190,10 +190,10 @@ public class ItemTemplates extends SecurityPropertyEditor {
             ContentSection sec = CMS.getContext().getContentSection();
 
             ContentItem item = m_itemModel.getSelectedItem(s);
-            Assert.assertNotNull(item, "item");
+            Assert.exists(item, "item");
 
             ContentType type = item.getContentType();
-            Assert.assertNotNull(type, "content type");
+            Assert.exists(type, "content type");
 
             MimeType mimeType = getMimeType(s);
             TemplateCollection c = 
@@ -215,7 +215,7 @@ public class ItemTemplates extends SecurityPropertyEditor {
          */
         protected String getUseContext(PageState s) {
             String c = (String)m_contextModel.getSelectedKey(s);
-            Assert.assertNotNull(c, "use context");
+            Assert.exists(c, "use context");
             return ItemTemplatesListing.getUseContextFromKey(c);
         }
 
@@ -229,7 +229,7 @@ public class ItemTemplates extends SecurityPropertyEditor {
          */
         public void assignTemplate(PageState s, Template t) {
             ContentItem item = m_itemModel.getSelectedItem(s);
-            Assert.assertNotNull(item, "item");
+            Assert.exists(item, "item");
 
             TemplateManagerFactory.getInstance()
                 .addTemplate(item, t, getUseContext(s));

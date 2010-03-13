@@ -51,26 +51,26 @@ public class ItemEditor extends ModalContainer {
 
     public final void setSummary(final Label heading,
                                   final Component summary) {
-        Assert.assertNotNull(heading, "Label heading");
-        Assert.assertNotNull(summary, "Component summary");
-        Assert.assertNotLocked(this);
+        Assert.exists(heading, "Label heading");
+        Assert.exists(summary, "Component summary");
+        Assert.isUnlocked(this);
 
         m_heading = heading;
         m_summary = summary;
     }
 
     public final void setDetails(final Component details) {
-        Assert.assertNotNull(details, "Component details");
-        Assert.assertNotLocked(this);
+        Assert.exists(details, "Component details");
+        Assert.isUnlocked(this);
 
         m_details = details;
     }
 
     public final void setEdit(final ActionLink editLink,
                               final Form edit) {
-        Assert.assertNotNull(editLink, "ActionLink editLink");
-        Assert.assertNotNull(edit, "Form edit");
-        Assert.assertNotLocked(this);
+        Assert.exists(editLink, "ActionLink editLink");
+        Assert.exists(edit, "Form edit");
+        Assert.isUnlocked(this);
 
         m_editLink = editLink;
         m_edit = edit;
@@ -78,24 +78,24 @@ public class ItemEditor extends ModalContainer {
 
     public final void setDelete(final ActionLink deleteLink,
                                 final Form delete) {
-        Assert.assertNotNull(deleteLink, "ActionLink deleteLink");
-        Assert.assertNotNull(delete, "Form delete");
-        Assert.assertNotLocked(this);
+        Assert.exists(deleteLink, "ActionLink deleteLink");
+        Assert.exists(delete, "Form delete");
+        Assert.isUnlocked(this);
 
         m_deleteLink = deleteLink;
         m_delete = delete;
     }
 
     public final void setReturn(final ActionLink returnLink) {
-        Assert.assertNotNull(returnLink, "ActionLink returnLink");
-        Assert.assertNotLocked(this);
+        Assert.exists(returnLink, "ActionLink returnLink");
+        Assert.isUnlocked(this);
 
         m_returnLink = returnLink;
     }
 
     public void register(final Page page) {
-        Assert.assertNotNull(m_heading, "Label m_heading");
-        Assert.assertNotNull(m_summary, "Component m_summary");
+        Assert.exists(m_heading, "Label m_heading");
+        Assert.exists(m_summary, "Component m_summary");
 
         final SimpleContainer info = new SimpleContainer();
         super.setDefaultComponent(info);

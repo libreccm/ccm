@@ -136,7 +136,7 @@ public class ItemTemplateMapping extends TemplateMapping {
         if(!c.next()) return null;
         ItemTemplateMapping m = (ItemTemplateMapping)c.getDomainObject();
         // FIXME: There HAS to be a better way to enforce uniqueness here...
-        Assert.assertTrue(!c.next());
+        Assert.isTrue(!c.next());
         c.close();
         return m;
     }

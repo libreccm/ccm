@@ -140,10 +140,9 @@ import com.arsdigita.xml.Element;
  * @author Stanislav Freidin 
  * @author Rory Solomon 
  *
- * @version $Id: Component.java 287 2005-02-22 00:29:02Z sskracic $ */
+ * @version $Id: Component.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public interface Component extends Lockable {
-
-    public static final String versionId = "$Id: Component.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * The XML namespace used by all the Bebop components.

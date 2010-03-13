@@ -52,7 +52,7 @@ public abstract class FilterSpecification {
                                   FilterType type) {
         Assert.exists(values, Object.class);
         Assert.exists(type, FilterType.class);
-        Assert.truth(values.length % 2 == 0, "length of value list is even");
+        Assert.isTrue(values.length % 2 == 0, "length of value list is even");
 
         m_values = new HashMap();
         for (int i = 0 ; i < (values.length / 2) ; i++) {
@@ -90,7 +90,7 @@ public abstract class FilterSpecification {
     }
     
     /**
-     * Two filter specifications are considered equal
+     * Two filter specifications are considered isEqual
      * if they refer to the same filter type
      * and their parameter sets contain the same
      * (key, value) pairs

@@ -49,7 +49,7 @@ class GlobalizationParameterListener implements ParameterListener {
         if (value == null) {
             final Locale locale = Kernel.getContext().getLocale();
 
-            Assert.assertNotNull(locale, "Locale locale");
+            Assert.exists(locale, "Locale locale");
 
             map.setParameter(Globalization.ENCODING_PARAM_NAME,
                              Globalization.getDefaultCharset(locale));

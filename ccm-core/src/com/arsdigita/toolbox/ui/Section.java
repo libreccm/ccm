@@ -74,8 +74,8 @@ public class Section extends SimpleComponent {
     }
 
     public final void setHeading(final Component heading) {
-        Assert.assertNotNull(heading, "Component header");
-        Assert.assertNotLocked(this);
+        Assert.exists(heading, "Component header");
+        Assert.isUnlocked(this);
 
         m_heading = heading;
     }
@@ -85,8 +85,8 @@ public class Section extends SimpleComponent {
     }
 
     public final void setBody(final Component body) {
-        Assert.assertNotNull(body, "Component body");
-        Assert.assertNotLocked(this);
+        Assert.exists(body, "Component body");
+        Assert.isUnlocked(this);
 
         m_body = body;
     }

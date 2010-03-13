@@ -56,10 +56,16 @@ import org.apache.log4j.Logger;
 public final class NavigationConfig extends AbstractConfig {
     private static final Logger s_log = Logger.getLogger(NavigationConfig.class);
 
+    /** The cache lifetime for category index pages in seconds. Default 1 hour */
     private final Parameter m_indexPageCacheLifetime;
+    /** Generate full item URLs instead of going via search redirector. Default true */
     private final Parameter m_generateItemURL;
+    /** The default category template. Default: /packages/navigation/templates/default.jsp */
     private final Parameter m_defaultTemplate;
+    /** If no template for category, should it get template from parent, or
+     * fall back on default? Default: true */
     private final Parameter m_inheritTemplates;
+    /** The URL of the default content section. Default:  /content/ */
     private final Parameter m_defaultContentSectionURL;
     private final Parameter m_relatedItemsContext;
     private final Parameter m_defaultModelClass;
@@ -75,6 +81,8 @@ public final class NavigationConfig extends AbstractConfig {
     // Quasimodo: End
     private final Parameter m_dateOrderCategories;
     private final Parameter m_topLevelDateOrderCategories;
+    /** Class that provides categories included in menu for any categories that
+     * do not have an alternative provider registered */
     private final Parameter m_defaultMenuCatProvider;	
 	
     private static Set s_fixedDateOrderCats = null;
@@ -181,7 +189,8 @@ public final class NavigationConfig extends AbstractConfig {
         if( param.equals("false") || param.equals("adaptive") || param.equals("true")) {
             set(m_categoryMenuShowGrandChildren, param);
         } else {
-            s_log.error("com.arsdigita.london.navigation.category_menu_show_grand_children: Invalid setting " + param + ". Falling back to false.");
+            s_log.error("com.arsdigita.london.navigation.category_menu_show_grand_children: "+
+                        "Invalid setting " + param + ". Falling back to false.");
             set(m_categoryMenuShowGrandChildren, "false");            
         }
         // Quasimodo: End
@@ -328,13 +337,14 @@ public final class NavigationConfig extends AbstractConfig {
 		// non existent category id specified in configuration. Output warning to 
 		// logs and continue
 		s_log.warn("Category with id " + topLevelCats[i] + 
-		" specified in configuration as a top level date order category, but the category" +
-                "does not exist");
+		" specified in configuration as a top level date order category, " +
+                "but the category does not exist");
 	    } catch (NumberFormatException e) {
 		// non number specified in configuration. Output warning to 
 		// logs and continue
 		s_log.warn("Category with id " + topLevelCats[i] + 
-		" specified in configuration as a top level date order category, but this is not a valid number");
+		" specified in configuration as a top level date order category, "+
+                "but this is not a valid number");
 	    }
 
 	}
@@ -369,7 +379,8 @@ public final class NavigationConfig extends AbstractConfig {
 		// non number specified in configuration. Output warning to 
 		// logs and continue
 		s_log.warn("Category with id " + catArray[i] + 
-		" specified in configuration as a date ordered category, but this is not a valid number");
+		" specified in configuration as a date ordered category, "+
+                "but this is not a valid number");
 	    }
 	    s_fixedDateOrderCats.add(catArray[i]);
 	}

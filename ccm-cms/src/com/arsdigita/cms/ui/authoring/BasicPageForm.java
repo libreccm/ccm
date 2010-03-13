@@ -110,7 +110,7 @@ public abstract class BasicPageForm extends BasicItemForm {
      *   ItemSelectionModel
      */
     public ContentPage initBasicWidgets(FormSectionEvent e) {
-        Assert.assertNotNull(getItemSelectionModel());
+        Assert.exists(getItemSelectionModel());
 
         FormData data = e.getFormData();
         PageState state = e.getPageState();
@@ -142,7 +142,7 @@ public abstract class BasicPageForm extends BasicItemForm {
      *    process listener
      */
     public ContentPage processBasicWidgets(FormSectionEvent e) {
-        Assert.assertNotNull(getItemSelectionModel());
+        Assert.exists(getItemSelectionModel());
 
         FormData data = e.getFormData();
         PageState state = e.getPageState();
@@ -176,7 +176,7 @@ public abstract class BasicPageForm extends BasicItemForm {
           throws FormProcessException {
 
         ItemSelectionModel m = getItemSelectionModel();
-        Assert.assertNotNull(m);
+        Assert.exists(m);
 
         ContentPage item = null;
 

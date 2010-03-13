@@ -36,14 +36,10 @@ import org.apache.log4j.Logger;
  * @version $Id: Assert.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Assert {
-    public static final String versionId =
-        "$Id: Assert.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
-    private static final Logger s_log = Logger.getLogger
-        (Assert.class);
-
+    /** Class specific logger instance. */
+    private static final Logger s_log = Logger.getLogger(Assert.class);
+        
     private static final String DEFAULT_MESSAGE = "Assertion failure";
 
     /**
@@ -137,29 +133,6 @@ public class Assert {
      * false.
      *
      * @param condition The condition asserted
-     * @param message An error message
-     * @throws AssertionError if the condition is false
-     * @deprecated use Assert.isTrue(condition, message) instead
-     *             (we will follow the standard naming scheme)
-     */
-    public static final void truth(final boolean condition,
-                                   final String message) {
-        Assert.isTrue(condition, message);
-
-
-        // if (!condition) {
-        //     error(message);
-        //
-        //     throw new AssertionError(message);
-        // }
-    }
-
-    /**
-     * Asserts that an arbitrary condition is true and throws an
-     * error with message <code>message</code> if the condition is
-     * false.
-     *
-     * @param condition The condition asserted
      * @throws AssertionError if the condition is false
      */
     public static final void isTrue(final boolean condition) {
@@ -171,26 +144,6 @@ public class Assert {
     }
 
     /**
-     * Asserts that an arbitrary condition is true and throws an
-     * error with message <code>message</code> if the condition is
-     * false.
-     *
-     * @param condition The condition asserted
-     * @throws AssertionError if the condition is false
-     * @deprecated use Assert.isTrue(final boolean condition) instead
-     *             (we will follow the standard naming scheme)
-     */
-    public static final void truth(final boolean condition) {
-        Assert.isTrue(condition);
-
-        // if (!condition) {
-        //     error(DEFAULT_MESSAGE);
-        //
-        //    throw new AssertionError(DEFAULT_MESSAGE);
-        // }
-    }
-
-    /**
      * Asserts that an arbitrary condition is false and throws an
      * error if the condition is true.
      *
@@ -198,7 +151,7 @@ public class Assert {
      * @param message An error message
      * @throws AssertionError if the condition is false
      */
-    public static final void falsity(final boolean condition,
+    public static final void isFalse(final boolean condition,
                                      final String message) {
         if (condition) {
             error(message);
@@ -214,7 +167,7 @@ public class Assert {
      * @param condition The condition asserted
      * @throws AssertionError if the condition is false
      */
-    public static final void falsity(final boolean condition) {
+    public static final void isFalse(final boolean condition) {
         if (condition) {
             error(DEFAULT_MESSAGE);
 
@@ -284,9 +237,10 @@ public class Assert {
      * @param lockable The object that must be locked
      * @see com.arsdigita.util.Lockable
      */
-    public static final void locked(final Lockable lockable) {
+    public static final void isLocked(final Lockable lockable) {
         if (lockable != null && !lockable.isLocked()) {
-            final String message = lockable + " is not locked";
+            final String message = "Illegal access: " + lockable +
+                                   " is not locked";
 
             error(message);
 
@@ -298,12 +252,12 @@ public class Assert {
      * Verifies that <code>lockable</code> is <em>not</em> locked and
      * throws an error if it is.
      *
-     * @param lockable The object that must not be locked
+     * @param lockable The object that must not be isLocked
      * @see com.arsdigita.util.Lockable
      */
-    public static final void unlocked(final Lockable lockable) {
+    public static final void isUnlocked(final Lockable lockable) {
         if (lockable != null && lockable.isLocked()) {
-            final String message = lockable + " is locked";
+            final String message = "Illegal access: " + lockable + " is locked.";
 
             error(message);
 
@@ -312,15 +266,15 @@ public class Assert {
     }
 
     /**
-     * Verifies that two values are equal (according to their equals
+     * Verifies that two values are isEqual (according to their equals
      * method, unless <code>value1</code> is null, then according to
      * <code>==</code>).
      *
      * @param value1 The first value to be compared
      * @param value2 The second
-     * @throws AssertionError if the arguments are unequal
+     * @throws AssertionError if the arguments are isNotEqual
      */
-    public static final void equal(final Object value1,
+    public static final void isEqual(final Object value1,
                                    final Object value2) {
         if (value1 == null) {
             if (value1 != value2) {
@@ -342,15 +296,15 @@ public class Assert {
     }
 
     /**
-     * Verifies that two values are equal (according to their equals
+     * Verifies that two values are isEqual (according to their equals
      * method, unless <code>value1</code> is null, then according to
      * <code>==</code>).
      *
      * @param value1 The first value to be compared
      * @param value2 The second
-     * @throws AssertionError if the arguments are unequal
+     * @throws AssertionError if the arguments are isNotEqual
      */
-    public static final void equal(final Object value1,
+    public static final void isEqual(final Object value1,
                                    final Object value2,
                                    final String message) {
         if (value1 == null) {
@@ -369,15 +323,15 @@ public class Assert {
     }
 
     /**
-     * Verifies that two values are not equal (according to their
+     * Verifies that two values are not isEqual (according to their
      * equals method, unless <code>value1</code> is null, then
      * according to <code>==</code>).
      *
      * @param value1 The first value to be compared
      * @param value2 The second
-     * @throws AssertionError if the arguments are unequal
+     * @throws AssertionError if the arguments are isNotEqual
      */
-    public static final void unequal(final Object value1,
+    public static final void isNotEqual(final Object value1,
                                      final Object value2) {
         if (value1 == null) {
             if (value1 == value2) {
@@ -396,6 +350,14 @@ public class Assert {
                 throw new AssertionError(message);
             }
         }
+    }
+    
+    // Utility methods
+
+    private static void error(final String message) {
+        // Log the stack trace too, since we still have code that
+        // manages to hide exceptions.
+        s_log.error(message, new AssertionError(message));
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -422,15 +384,15 @@ public class Assert {
     //     return isEnabled();
     // }
 
-    /**
-     * Tells whether asserts are turned on.  Use this to wrap code
-     * that should be optimized away if asserts are disabled.
-     *
-     * @deprecated Use {@link #isEnabled()} instead
-     */
-    public static final boolean isAssertEnabled() {
-        return isEnabled();
-    }
+//  /**
+//   * Tells whether asserts are turned on.  Use this to wrap code
+//   * that should be optimized away if asserts are disabled.
+//   *
+//   * @deprecated Use {@link #isEnabled()} instead
+//   */
+//  public static final boolean isAssertEnabled() {
+//      return isEnabled();
+//  }
 
     /**
      * Assert that an arbitrary condition is true, and throw an
@@ -440,10 +402,10 @@ public class Assert {
      * @throws java.lang.IllegalStateException condition was false
      * @deprecated Use {@link #truth(boolean, String)} instead
      */
-    public static final void assertTrue(boolean cond) {
-        assertTrue(cond, "");
+/*  public static final void isTrue(boolean cond) {
+        isTrue(cond, "");
     }
-
+*/
     /**
      * Assert that an arbitrary condition is true, and throw an
      * exception with message <code>msg</code> if the condition is
@@ -454,46 +416,124 @@ public class Assert {
      * @throws java.lang.IllegalStateException condition was false
      * @deprecated Use {@link #truth(boolean,String)} instead
      */
-    public static final void assertTrue(boolean cond, String msg) {
+/*  public static final void assertTrue(boolean cond, String msg) {
         if (!cond) {
             error(msg);
 
             throw new IllegalStateException(msg);
         }
     }
+*/
+    /**
+     * Asserts that an arbitrary condition is true and throws an
+     * error with message <code>message</code> if the condition is
+     * false.
+     *
+     * @param condition The condition asserted
+     * @param message An error message
+     * @throws AssertionError if the condition is false
+     * @deprecated use Assert.isTrue(condition, message) instead
+     *             (we will follow the standard naming scheme)
+     */
+/*  public static final void truth(final boolean condition,
+                                   final String message) {
+        Assert.isTrue(condition, message);
 
+
+        // if (!condition) {
+        //     error(message);
+        //
+        //     throw new AssertionError(message);
+        // }
+    }
+*/
+
+        /**
+     * Asserts that an arbitrary condition is true and throws an
+     * error with message <code>message</code> if the condition is
+     * false.
+     *
+     * @param condition The condition asserted
+     * @throws AssertionError if the condition is false
+     * @deprecated use Assert.isTrue(final boolean condition) instead
+     *             (we will follow the standard naming scheme)
+     */
+/*  public static final void truth(final boolean condition) {
+        Assert.isTrue(condition);
+
+        // if (!condition) {
+        //     error(DEFAULT_MESSAGE);
+        //
+        //    throw new AssertionError(DEFAULT_MESSAGE);
+        // }
+    }
+*/
+
+    /**
+     * Asserts that an arbitrary condition is false and throws an
+     * error if the condition is true.
+     *
+     * @param condition The condition asserted
+     * @param message An error message
+     * @throws AssertionError if the condition is false
+     */
+/*  public static final void falsity(final boolean condition,
+                                     final String message) {
+        if (condition) {
+            error(message);
+
+            throw new AssertionError(message);
+        }
+    }
+*/
+
+    /**
+     * Asserts that an arbitrary condition is false and throws an
+     * error if the condition is true.
+     *
+     * @param condition The condition asserted
+     * @throws AssertionError if the condition is false
+     */
+/*  public static final void falsity(final boolean condition) {
+        if (condition) {
+            error(DEFAULT_MESSAGE);
+
+            throw new AssertionError(DEFAULT_MESSAGE);
+        }
+    }
+*/
     /**
      * Verify that a parameter is not null and throw a runtime
      * exception if so.
      *
      * @deprecated Use {@link #exists(Object)} instead
      */
-    public static final void assertNotNull(Object o) {
+/*  public static final void assertNotNull(Object o) {
         assertNotNull(o, "");
     }
-
+*/
     /**
      * Verify that a parameter is not null and throw a runtime
      * exception if so.
      *
      * @deprecated Use {@link #exists(Object,String)} instead
      */
-    public static final void assertNotNull(Object o, String label) {
+/*  public static final void assertNotNull(Object o, String label) {
         if (isEnabled()) {
-            assertTrue(o != null, "Value of " + label + " is null.");
+            isTrue(o != null, "Value of " + label + " is null.");
         }
     }
-
-    /**
-     * Verify that a string is not empty and throw a runtime exception
-     * if so.  A parameter is considered empty if it is null, or if it
-     * does not contain any characters that are non-whitespace.
-     *
-     * @deprecated with no replacement
-     */
-    public static final void assertNotEmpty(String s) {
-        assertNotEmpty(s, "");
-    }
+*/
+//  /**
+//   * Verify that a string is not empty and throw a runtime exception
+//   * if so.  A parameter is considered empty if it is null, or if it
+//   * does not contain any characters that are non-whitespace.
+//   *
+//   * @deprecated with no replacement
+//   */
+//  public static final void assertNotEmpty(String s) {
+//      assertNotEmpty(s, "");
+//  }
 
     /**
      * Verify that a string is not empty and throw a runtime exception
@@ -504,26 +544,26 @@ public class Assert {
      */
     public static final void assertNotEmpty(String s, String label) {
         if (isEnabled()) {
-            assertTrue(s != null && s.trim().length() > 0,
+            isTrue(s != null && s.trim().length() > 0,
                        "Value of " + label + " is empty.");
         }
     }
 
     /**
-     * Verify that two values are equal (according to their equals method,
+     * Verify that two values are isEqual (according to their equals method,
      * unless expected is null, then according to ==).
      *
      * @param expected Expected value.
      * @param actual Actual value.
      * @throws java.lang.IllegalStateException condition was false
-     * @deprecated Use {@link #equal(Object,Object)} instead
+     * @deprecated Use {@link #isEqual(Object,Object)} instead
      */
     public static final void assertEquals(Object expected, Object actual) {
         assertEquals(expected, actual, "expected", "actual");
     }
 
     /**
-     * Verify that two values are equal (according to their equals method,
+     * Verify that two values are isEqual (according to their equals method,
      * unless expected is null, then according to ==).
      *
      * @param expected Expected value.
@@ -537,12 +577,12 @@ public class Assert {
                                           String actualLabel) {
         if (isEnabled()) {
             if (expected == null) {
-                assertTrue(expected == actual,
+                isTrue(expected == actual,
                            "Values not equal, " +
                            expectedLabel + " '" + expected + "', " +
                            actualLabel + " '" + actual + "'");
             } else {
-                assertTrue(expected.equals(actual),
+                isTrue(expected.equals(actual),
                            "Values not equal, " +
                            expectedLabel + " '" + expected + "', " +
                            actualLabel + " '" + actual + "'");
@@ -551,7 +591,7 @@ public class Assert {
     }
 
     /**
-     * Verify that two values are equal.
+     * Verify that two values are isEqual.
      *
      * @param expected Expected value.
      * @param actual Actual value.
@@ -563,7 +603,7 @@ public class Assert {
     }
 
     /**
-     * Verify that two values are equal.
+     * Verify that two values are isEqual.
      *
      * @param expected Expected value.
      * @param actual Actual value.
@@ -576,7 +616,7 @@ public class Assert {
                                           String expectedLabel,
                                           String actualLabel) {
         if (isEnabled()) {
-            assertTrue(expected == actual,
+            isTrue(expected == actual,
                        "Values not equal, " +
                        expectedLabel + " '" + expected + "', " +
                        actualLabel + " '" + actual + "'");
@@ -587,35 +627,48 @@ public class Assert {
      * Verify that the model is locked and throw a runtime exception
      * if it is not locked.
      *
-     * @deprecated Use {@link #locked(Lockable)} instead
+     * @deprecated Use {@link #isLocked(Lockable)} instead
      */
-    public static void assertLocked(Lockable l) {
+/*  public static void assertLocked(Lockable l) {
         if (isEnabled()) {
-            assertTrue(l.isLocked(),
+            isTrue(l.isLocked(),
                        "Illegal access to an unlocked " +
                        l.getClass().getName());
         }
     }
-
+*/
     /**
-     * Verify that the model is locked and throw a runtime exception
-     * if it is locked.
+     * Verify that the model is isLocked and throw a runtime exception
+     * if it is isLocked.
      *
-     * @deprecated Use {@link #unlocked(Lockable)} instead
+//   * @deprecated Use {@link #isUnlocked(Lockable)} instead
      */
-    public static void assertNotLocked(Lockable l) {
+/*  public static void assertUnlocked(Lockable l) {
         if (isEnabled()) {
-            assertTrue(!l.isLocked(),
-                       "Illegal access to a locked " +
+            isTrue(!l.isLocked(),
+                       "Illegal access to a isLocked " +
                        l.getClass().getName());
         }
     }
+*/
+    /**
+     * Verifies that <code>lockable</code> is <em>not</em> isLocked and
+     * throws an error if it is.
+     *
+     * @param lockable The object that must not be isLocked
+     * @see com.arsdigita.util.Lockable
+//   * @deprecated  use isUnlocked(Lockable) instead
+     */
+/*  public static final void unlocked(final Lockable lockable) {
+        if (lockable != null && lockable.isLocked()) {
+            final String message = "Illegal access: " + lockable + " is isLocked.";
 
-    // Utility methods
+            error(message);
 
-    private static void error(final String message) {
-        // Log the stack trace too, since we still have code that
-        // manages to hide exceptions.
-        s_log.error(message, new AssertionError(message));
+            throw new AssertionError(message);
+        }
     }
+*/
+
+
 }

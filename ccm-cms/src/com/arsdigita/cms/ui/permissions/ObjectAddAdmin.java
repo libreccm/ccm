@@ -64,7 +64,7 @@ public class ObjectAddAdmin extends UserAddForm {
     }
 
     protected DataQuery makeQuery(PageState s) {
-        Assert.truth(m_object.isSelected(s));
+        Assert.isTrue(m_object.isSelected(s));
 
         DataQuery query = SessionManager.getSession().retrieveQuery
             ("com.arsdigita.cms.objectAdminUserSearch");
@@ -96,7 +96,7 @@ public class ObjectAddAdmin extends UserAddForm {
     public void process(FormSectionEvent event) throws FormProcessException {
         FormData data = event.getFormData();
         PageState state = event.getPageState();
-        Assert.truth(m_object.isSelected(state));
+        Assert.isTrue(m_object.isSelected(state));
 
         SecurityManager sm = Utilities.getSecurityManager(state);
         boolean isAdmin =

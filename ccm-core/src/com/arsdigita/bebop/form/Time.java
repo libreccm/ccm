@@ -289,7 +289,7 @@ public class Time extends Widget implements BebopConstants
     }
 
     private Object getFragmentValue(PageState ps, int field) {
-        Assert.assertNotNull(ps, "PageState");
+        Assert.exists(ps, "PageState");
         FormData f = getForm().getFormData(ps);
         if (f != null) {
             java.util.Date value = (java.util.Date)f.get(getName());

@@ -33,10 +33,10 @@ import com.arsdigita.util.LockableImpl;
 /**
  * Displays a {@link ListModel} as a grid (that is, a  {@link Table})
  * of given width.
+ *
+ * @version $Id: Grid.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Grid extends Table {
-
-    public static final String versionId = "$Id: Grid.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private int m_cols;
 

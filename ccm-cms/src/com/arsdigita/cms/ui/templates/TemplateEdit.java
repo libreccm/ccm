@@ -152,7 +152,7 @@ public class TemplateEdit extends SimpleEditStep {
         public Template getTemplate(PageState state) {
             Template t =
                 (Template) getItemSelectionModel().getSelectedObject(state);
-            Assert.assertNotNull(t);
+            Assert.exists(t);
             return t;
         }
     }

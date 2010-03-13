@@ -39,7 +39,7 @@ public class URLComponent extends AbstractComponent {
     
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         Element content = Navigation.newElement("url");
         

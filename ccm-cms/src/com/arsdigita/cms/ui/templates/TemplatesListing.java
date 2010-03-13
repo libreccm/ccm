@@ -165,8 +165,8 @@ abstract class TemplatesListing extends DataTable {
      * The "remove" column will contain the current template as the value.
      */
     protected final void addRemoveColumn() {
-        Assert.assertNotLocked(this);
-        Assert.assertTrue(m_removeCol == null,
+        Assert.isUnlocked(this);
+        Assert.isTrue(m_removeCol == null,
                           "The \"remove\" column already exists");
 
         m_removeCol = addColumn("Remove", TemplateCollection.TEMPLATE, false,

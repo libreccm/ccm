@@ -62,7 +62,7 @@ public class ComponentSet extends SimpleComponent
     }
 
     public final void add(final Component component) {
-        Assert.assertNotNull(component, "Component component");
+        Assert.exists(component, "Component component");
 
         synchronized (m_components) {
             final int index = m_components.indexOf(component);

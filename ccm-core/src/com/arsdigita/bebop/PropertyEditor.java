@@ -156,7 +156,7 @@ public class PropertyEditor extends SimpleContainer {
     /**
      * Constructs a new, empty <code>PropertyEditor</code>.
      * The {@link #setDisplayComponent(Component)} method must be called before
-     * this component is locked.
+     * this component is isLocked.
      */
     public PropertyEditor() {
         this(null);
@@ -239,7 +239,7 @@ public class PropertyEditor extends SimpleContainer {
     // Set the display component visible by default, and the
     // form(s) invisible by default
     public void register(Page p) {
-        Assert.assertNotNull(m_display, "display component");
+        Assert.exists(m_display, "display component");
 
         p.setVisibleDefault(m_displayPane, true);
 
@@ -525,7 +525,7 @@ public class PropertyEditor extends SimpleContainer {
      * @param b the property editor model builder
      */
     protected final void setModelBuilder(PropertyEditorModelBuilder b) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_builder = b;
         m_list.setModelBuilder(new BuilderAdapter(this));
     }
@@ -641,14 +641,14 @@ public class PropertyEditor extends SimpleContainer {
         }
 
         public Component getComponent() {
-            Assert.assertNotNull(m_entry);
+            Assert.exists(m_entry);
             ControlLink l = new ControlLink(new Label((String)m_entry.getValue()));
             l.setClassAttr("actionLink");
             return l;
         }
 
         public Object getKey() {
-            Assert.assertNotNull(m_entry);
+            Assert.exists(m_entry);
             return m_entry.getKey();
         }
     }

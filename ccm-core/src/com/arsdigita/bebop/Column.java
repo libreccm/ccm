@@ -30,9 +30,10 @@ import com.arsdigita.xml.Element;
  * */
 public class Column extends SimpleComponent  {
 
-    public static final String versionId = "$Id: Column.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-    private Multiple m_parent;          // parent holding RowSequence
-    private String m_name;          // name of the column to output
+    /** Parent holding RowSequence */
+    private Multiple m_parent;
+    /** name of the column to output */
+    private String m_name;
 
     /* Create a column.
      * @param parent indicates in to which {@link Multiple} this

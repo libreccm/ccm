@@ -157,7 +157,7 @@ public class ProcessDisplay extends BoxPanel
                 private boolean m_locked;
 
                 public TableModel makeModel(final Table t, final PageState s) {
-                    Assert.assertTrue(m_processes.isSelected(s));
+                    Assert.isTrue(m_processes.isSelected(s));
 
                     return new TableModel() {
                             private Process p =
@@ -221,7 +221,7 @@ public class ProcessDisplay extends BoxPanel
                 public void prepare(PrintEvent e) {
                     Label t = (Label) e.getTarget();
                     PageState s = e.getPageState();
-                    Assert.assertTrue(m_processes.isSelected(s));
+                    Assert.isTrue(m_processes.isSelected(s));
                     Process p =
                         SampleProcesses.getProcess(m_processes.getSelectedKey(s));
                     t.setLabel("<h4>Details for "

@@ -253,7 +253,7 @@ class DataQueryImpl implements DataQuery {
         if (requiresFetching) {
             m_signature.addPath(path);
         } else {
-            Assert.truth(m_signature.exists(path));
+            Assert.isTrue(m_signature.exists(path));
         }
     }
 

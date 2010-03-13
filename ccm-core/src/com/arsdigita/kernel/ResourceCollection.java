@@ -77,7 +77,7 @@ public class ResourceCollection extends ACSObjectCollection {
         Resource resource =
             Resource.retrieveResource(dataObject);
 
-        Assert.assertNotNull(resource, "resource");
+        Assert.exists(resource, "resource");
 
         return resource;
     }
@@ -91,7 +91,7 @@ public class ResourceCollection extends ACSObjectCollection {
     public String getTitle() {
         String title = (String)m_dataCollection.get("title");
 
-        Assert.assertNotNull(title, "title");
+        Assert.exists(title, "title");
 
         return title;
     }

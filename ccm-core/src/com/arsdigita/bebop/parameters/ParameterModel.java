@@ -57,7 +57,7 @@ public abstract class ParameterModel implements Lockable {
      */
     protected List m_parameterListeners;
     /**
-     * A boolean indicating if this ParameterModel is locked, as per the
+     * A boolean indicating if this ParameterModel is isLocked, as per the
      * Lockable interface
      */
     protected boolean m_locked;
@@ -93,8 +93,8 @@ public abstract class ParameterModel implements Lockable {
      */
     protected ParameterModel(String name) {
         this();
-        Assert.assertNotLocked(this);
-        Assert.assertNotNull(name, "Name");
+        Assert.isUnlocked(this);
+        Assert.exists(name, "Name");
         Assert.assertNotEmpty(name, "Name");
         m_name = name;
     }
@@ -120,7 +120,7 @@ public abstract class ParameterModel implements Lockable {
      * @see #setDefaultValue
      */
     public void setDefaultOverridesNull(boolean v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_defaultOverridesNull = v;
     }
 
@@ -154,7 +154,7 @@ public abstract class ParameterModel implements Lockable {
      * @param v <code>true</code> if this parameter is a pass in parameter.
      */
     public void setPassIn(boolean v) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_passIn = v;
     }
 
@@ -183,12 +183,12 @@ public abstract class ParameterModel implements Lockable {
 
     /**
      * Sets the name of this ParmeterModel.
-     * Asserts that this ParameterModel is not locked.
+     * Asserts that this ParameterModel is not isLocked.
      *
      * @param name The name of this parameter model.
      */
     public void setName(String name) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_name = name;
     }
 
@@ -196,13 +196,13 @@ public abstract class ParameterModel implements Lockable {
      * Adds a validation listener, implementing a custom validation
      * check that applies to this Parameter.  Useful for checks that
      * require examination of the values of only this parameter.
-     * Asserts that this ParameterModel is not locked.
+     * Asserts that this ParameterModel is not isLocked.
      *
      * @param listener An instance of a class that implements the
      * <code>FormValidationListener</code> interface.
      */
     public void addParameterListener(ParameterListener listener) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_parameterListeners.add(listener);
     }
 
@@ -210,14 +210,14 @@ public abstract class ParameterModel implements Lockable {
      * Sets a default value for this parameter. This default value is
      * superceded by values set in the initialization listeners and in
      * the request object.
-     * Asserts that this ParameterModel is not locked.
+     * Asserts that this ParameterModel is not isLocked.
      *
      * @param defaultValue a default value for this parameter that
      * appears if there is no value in the request or specified by an
      * initialization listener
      */
     public void setDefaultValue(Object defaultValue) {
-        Assert.assertNotLocked(this);
+        Assert.isUnlocked(this);
         m_defaultValue = defaultValue;
     }
 
@@ -382,7 +382,7 @@ public abstract class ParameterModel implements Lockable {
 
     /**
      * Lock the model, blocking any further modifications.  Cached form
-     * models should always be locked to ensure that they remain
+     * models should always be isLocked to ensure that they remain
      * unchanged across requests.
      */
     public synchronized void lock() {
@@ -401,7 +401,7 @@ public abstract class ParameterModel implements Lockable {
      */
     public void validate(ParameterData data)
             throws FormProcessException {
-        Assert.assertLocked(this);
+        Assert.isLocked(this);
 
         ParameterEvent e = null;
 
@@ -459,7 +459,7 @@ public abstract class ParameterModel implements Lockable {
     }
 
     /**
-     * @return true if this ParameterModel is locked to prevent
+     * @return true if this ParameterModel is isLocked to prevent
      * modification.
      */
     public boolean isLocked() {

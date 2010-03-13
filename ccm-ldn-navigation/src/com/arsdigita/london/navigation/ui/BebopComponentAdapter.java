@@ -37,7 +37,7 @@ public class BebopComponentAdapter extends SimpleComponent {
     }
 
     public void setComponent(Component component) {
-        Assert.unlocked(this);
+        Assert.isUnlocked(this);
         m_component = component;
     }
 
@@ -48,7 +48,7 @@ public class BebopComponentAdapter extends SimpleComponent {
 
     public void generateXML(PageState state,
                             Element parent) {
-        Assert.locked(this);
+        Assert.isLocked(this);
 
         Element content = m_component.generateXML(state.getRequest(),
                                                   state.getResponse());

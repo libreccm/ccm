@@ -195,7 +195,7 @@ public class MessageThread extends ACSObject {
      * @pre msg.getThread().equals(this)
      */
     void updateForNewMessage(ThreadedMessage msg) {
-        Assert.assertTrue(msg.getThread().equals(this));
+        Assert.isTrue(msg.getThread().equals(this));
         setLatestUpdateDate(msg.getSentDate());
         incrNumberOfReplies();
     }
@@ -210,7 +210,7 @@ public class MessageThread extends ACSObject {
      * @pre msg.getThread().equals(this)
      */
     void removeMessage(ThreadedMessage msg) {
-        Assert.assertTrue(msg.getThread().equals(this));
+        Assert.isTrue(msg.getThread().equals(this));
         decrNumberOfReplies();
     }
 
