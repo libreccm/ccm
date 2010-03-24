@@ -68,6 +68,10 @@ public class NewAction extends Form {
                                     m_selection.getStateParameter());
     }
 
+    /**
+     * Loads the PersistenProcessListener from database using the preselected
+     * object by application. The preselection is made in enterprise.init
+     */
     protected void loadComponents(String app) {
         try {
             MetaObjectCollection objects = MetaObject.getWidgets(app,
