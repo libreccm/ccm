@@ -25,6 +25,7 @@ import com.arsdigita.util.parameter.BooleanParameter;
 public class SurveyConfig extends AbstractConfig {
     
     private final Parameter m_showResultsPublic;
+    private final Parameter m_showResultsDuringSurvey;
     private final Parameter m_anonymSurvey;
 
     public SurveyConfig() {
@@ -32,7 +33,12 @@ public class SurveyConfig extends AbstractConfig {
 			"com.arsdigita.cms.contenttypes.survey.show_results_public",
 			Parameter.REQUIRED,
 			new Boolean(true));
-	
+
+        m_showResultsDuringSurvey = new BooleanParameter(
+			"com.arsdigita.cms.contenttypes.survey.show_results_during_survey",
+			Parameter.REQUIRED,
+			new Boolean(true));
+
 	m_anonymSurvey = new BooleanParameter(
 			"com.arsdigita.cms.contenttypes.survey.anonym_survey",
 			Parameter.REQUIRED,
@@ -40,6 +46,7 @@ public class SurveyConfig extends AbstractConfig {
 	
 	
         register(m_showResultsPublic);
+        register(m_showResultsDuringSurvey);
 	register(m_anonymSurvey);
 
         loadInfo();
@@ -48,6 +55,11 @@ public class SurveyConfig extends AbstractConfig {
     public final boolean getShowResultsPublic() {
 	    return ((Boolean) get(m_showResultsPublic)).booleanValue();
     }
+
+    public final boolean getShowResultsDuringSurvey() {
+	    return ((Boolean) get(m_showResultsDuringSurvey)).booleanValue();
+    }
+
     public final boolean getAnonymSurvey() {
 	    return ((Boolean) get(m_anonymSurvey)).booleanValue();
     }

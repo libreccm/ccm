@@ -103,7 +103,24 @@ public class SurveyPropertiesStep extends SimpleEditStep {
             }
         });
 
-        /* Display the Status of ResponsesPublic in localized form */
+        /* Display the Status of ResultsDuringSurvey in localized form */
+        sheet.add(SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.show_results_during_survey"), Survey.RESULTS_DURING_SURVEY, new DomainObjectPropertySheet.AttributeFormatter() {
+
+            public String format(DomainObject obj, String attribute, PageState state) {
+                Survey survey = (Survey) obj;
+                if (survey.getResultsDuringSurvey() != null) {
+                    if (survey.getResultsDuringSurvey().booleanValue() == true) {
+                        return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize();
+                    } else {
+                        return (String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize();
+                    }
+                } else {
+                    return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                }
+            }
+        });
+
+        /* Display the Status of ResponsesAnonym in localized form */
         sheet.add(SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_anonym"), Survey.RESPONSES_ANONYM, new DomainObjectPropertySheet.AttributeFormatter() {
 
             public String format(DomainObject obj, String attribute, PageState state) {

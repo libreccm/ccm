@@ -26,7 +26,7 @@ public class SurveyControls extends ControlEditor {
     private ItemSelectionModel m_itemModel;
 
     public SurveyControls(ItemSelectionModel item, AuthoringKitWizard parent) {
-        super("forms-cms", new SurveySingleSelectionModel(item), true);
+        super("ct_survey", new SurveySingleSelectionModel(item), true);
 
         m_itemModel = item;
 

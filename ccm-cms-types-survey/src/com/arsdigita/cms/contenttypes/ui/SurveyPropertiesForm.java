@@ -52,6 +52,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
     public static final String END_DATE = Survey.END_DATE;
     public static final String RESPONSES_PUBLIC = Survey.RESPONSES_PUBLIC;
     public static final String RESPONSES_ANONYM = Survey.RESPONSES_ANONYM;
+    public static final String RESULTS_DURING_SURVEY = Survey.RESULTS_DURING_SURVEY;
     /**
      * ID of the form
      */
@@ -108,6 +109,16 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         responsesPublic.addOption(rp2);
         add(responsesPublic);
 
+        add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.show_results_during_survey").localize()));
+        ParameterModel resultsDuringSurveyParam = new BooleanParameter(RESULTS_DURING_SURVEY);
+        resultsDuringSurveyParam.addParameterListener(new NotNullValidationListener());
+        RadioGroup resultsDuringSurvey = new RadioGroup("resultsDuringSurvey");
+        Option rds1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
+        Option rds2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
+        resultsDuringSurvey.addOption(rp1);
+        resultsDuringSurvey.addOption(rp2);
+        add(resultsDuringSurvey);
+
         add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_anonym").localize()));
         ParameterModel responsesAnonymParam = new BooleanParameter(RESPONSES_ANONYM);
         responsesAnonymParam.addParameterListener(new NotNullValidationListener());
@@ -131,6 +142,12 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         if (survey.getResponsesPublic() != null) {
             data.put(RESPONSES_PUBLIC, survey.getResponsesPublic().booleanValue());
         }
+        if (survey.getResultsDuringSurvey() != null) {
+            data.put(RESULTS_DURING_SURVEY, survey.getResultsDuringSurvey().booleanValue());
+        }
+        if (survey.getResponsesAnonym() != null) {
+            data.put(RESPONSES_ANONYM, survey.getResponsesAnonym().booleanValue());
+        }
     }
 
     @Override
@@ -144,6 +161,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
             survey.setStartDate((java.util.Date) data.get(START_DATE));
             survey.setEndDate((java.util.Date) data.get(END_DATE));
             survey.setResponsesPublic(new Boolean((String) data.get(RESPONSES_PUBLIC)));
+            survey.setResultsDuringSurvey(new Boolean((String) data.get(RESULTS_DURING_SURVEY)));
             survey.setResponsesAnonym(new Boolean((String) data.get(RESPONSES_ANONYM)));
 
             survey.save();

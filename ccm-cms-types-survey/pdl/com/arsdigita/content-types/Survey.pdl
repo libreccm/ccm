@@ -9,6 +9,7 @@ object type Survey extends ContentPage {
     Date[0..1]                       endDate = ct_surveys.end_date         DATE;
     Boolean[0..1]            responsesPublic = ct_surveys.responses_public;
     Boolean[0..1]            responsesAnonym = ct_surveys.responses_anonym;
+    Boolean[0..1]    showResultsDuringSurvey = ct_surveys.results_during_survey;
     component FormSection[1..1]         form = join ct_surveys.form_id
                                                  to bebop_form_sections.form_section_id;
     component SurveyResponse[0..n] responses = join ct_surveys.survey_id

@@ -28,6 +28,12 @@
         descriptionBundle="com.arsdigita.cms.formbuilder.FormItemResources"
         component="com.arsdigita.cms.contenttypes.ui.SurveyControls"/>
 
+      <ctd:authoring-step
+        labelKey="form_item.authoring.actions.title"
+        labelBundle="com.arsdigita.cms.formbuilder.FormItemResources"
+        descriptionKey="form_item.authoring.actions.description"
+        descriptionBundle="com.arsdigita.cms.formbuilder.FormItemResources"
+        component="com.arsdigita.cms.contenttypes.ui.SurveyActions"/>
       <ctd:include href="/WEB-INF/content-types/shared.xml"/>
     </ctd:authoring-kit>
     
