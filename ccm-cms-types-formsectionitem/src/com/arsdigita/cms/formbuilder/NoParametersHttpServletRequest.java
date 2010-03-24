@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
 import java.util.Map;
 
-class NoParametersHttpServletRequest extends HttpServletRequestWrapper {
+public class NoParametersHttpServletRequest extends HttpServletRequestWrapper {
     public NoParametersHttpServletRequest(HttpServletRequest request) {
         super(request);
     }
