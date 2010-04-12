@@ -42,13 +42,9 @@ import java.util.Iterator;
  * Recursively copies a domain object.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: DomainObjectCopier.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: DomainObjectCopier.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class DomainObjectCopier extends DomainService {
-    public static final String versionId =
-        "$Id: DomainObjectCopier.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/03/01 09:31:36 $";
 
     private static Logger s_log = Logger.getLogger(DomainObjectCopier.class);
 

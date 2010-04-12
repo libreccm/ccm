@@ -28,7 +28,7 @@ import com.arsdigita.tools.junit.framework.PackageTestSuite;
  *
  *
  * @author Joseph A. Bank (jbank@alum.mit.edu)
- * @version "$Id: TermsSuite.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version "$Id: TermsSuite.java 1963 2009-08-16 19:15:12Z pboy $
  **/
 public class TermsSuite extends PackageTestSuite {
     public TermsSuite() {

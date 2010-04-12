@@ -44,6 +44,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Terms;
+import com.arsdigita.london.terms.Util;
 import com.arsdigita.london.util.ui.parameters.DomainObjectParameter;
 import com.arsdigita.util.UncheckedWrapperException;
 
@@ -146,7 +147,7 @@ public class TermForm extends Form {
 
             if (term == null) {
                 Domain domain = (Domain)state.getValue(m_domain);
-				m_uniqueid.setValue(state, null);
+                m_uniqueid.setValue(state, Util.getNextTermID(domain));
                 m_name.setValue(state, null);
                 m_desc.setValue(state, null);
                 m_shortcut.setValue(state, null);

@@ -26,17 +26,13 @@ import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.domain.DomainObjectFactory;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
-import com.arsdigita.cms.lifecycle.Phase;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.OptionBuilder;
@@ -168,10 +164,6 @@ public class BulkPublish extends Program {
             }
         }.run();
         
-        final int expiryNotification = ContentSection.
-        getConfig().getDefaultNotificationTime();
-        
-        
         final Iterator items = toPublish.iterator();
         while (items.hasNext()) {
             final OID oid = (OID) items.next();
@@ -201,31 +193,7 @@ public class BulkPublish extends Program {
                         return;
                     }
 
-                    ContentItem pending = item.publish(def, new Date());
-                    final Lifecycle lifecycle = pending.getLifecycle();
-                    Date endDate = lifecycle.getEndDate();
-                    if (expiryNotification > 0) {
-                    	
-                    	if (endDate != null) {
-                            
-	                        Date notificationDate = new Date(endDate.getTime() - (long)expiryNotification * 3600000L);
-	                    	
-	                        Phase expirationImminentPhase =
-	                            lifecycle.addCustomPhase("expirationImminent",
-	                                                     new Long(notificationDate.getTime()),
-	                                                     new Long(endDate.getTime()));
-	                        expirationImminentPhase.
-	                            setListenerClassName("com.arsdigita.cms.lifecycle.NotifyLifecycleListener");
-	                        expirationImminentPhase.save();
-                    	}
-                    }
-                    if (ContentSection.getConfig().getDeleteWorkflowAfterPublication()) {
-                    	Workflow workflow = Workflow.getObjectWorkflow(item);
-                    	if (workflow != null) {
-                    		workflow.delete();
-                    	}
-                    }
-                    
+                    item.publish(def, new Date());
                 }
               };
             try {

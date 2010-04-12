@@ -31,13 +31,9 @@ import org.apache.log4j.Logger;
  * The CMS initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Initializer.java 758 2005-09-02 14:26:56Z sskracic $
+ * @version $Id: Initializer.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 758 2005-09-02 14:26:56Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/01/31 11:58:22 $";
 
     private static final Logger s_log = Logger.getLogger
         (Initializer.class);

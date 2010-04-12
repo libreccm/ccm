@@ -28,7 +28,7 @@ import com.arsdigita.web.ApplicationType;
  * Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Loader.java 1878 2009-04-21 13:56:23Z terry $
  */
 public class Loader extends PackageLoader {
     public void run(final ScriptContext ctx) {

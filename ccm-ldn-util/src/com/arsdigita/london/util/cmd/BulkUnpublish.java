@@ -45,10 +45,12 @@ public class BulkUnpublish extends Program {
 
     private static final Logger s_log = Logger.getLogger(BulkUnpublish.class);
 
-    public BulkUnpublish() {
-        super("Bulk Unpublish",
-              "1.0.0",
-              "");
+    private int folderId;
+    private String[] types;
+    private boolean ignoreErrors;
+
+    public BulkUnpublish(String name, String version) {
+        super(name, version, "");
 
         Options options = getOptions();
 
@@ -56,15 +58,15 @@ public class BulkUnpublish extends Program {
             OptionBuilder
             .hasArgs()
             .withLongOpt( "types" )
-            .withDescription( "Restrict unpublishing to items of the specified content types" )
+            .withDescription( "Restrict operation to items of the specified content types" )
             .create( "t" ) );
         options.addOption(
-  			  OptionBuilder
-  			  .hasArg()
-  			  .withLongOpt( "restrictToFolderId" )
-  			  .withDescription( "Restrict publishing to items within the folder with the specified id" )
-  			  .create( "f" ) );
-        
+           OptionBuilder
+           .hasArg()
+           .withLongOpt( "restrictToFolderId" )
+           .withDescription( "Restrict operation to items within the folder with the specified id" )
+           .create( "f" ) );
+
         options.addOption
             (OptionBuilder
              .hasArg(false)
@@ -74,49 +76,57 @@ public class BulkUnpublish extends Program {
     }
 
     protected void doRun(CommandLine cmdLine) {
-    	final int folderId;
-        final String[] types;
-        final boolean ignoreErrors = cmdLine.hasOption("i");
+        this.ignoreErrors = cmdLine.hasOption("i");
 
         if( cmdLine.hasOption( "t" ) ) {
-            types = cmdLine.getOptionValues( "t" );
+            this.types = cmdLine.getOptionValues( "t" );
 
             System.out.println( "Unpublishing live items of types:" );
-            for( int i = 0; i < types.length; i++ ) {
-                System.out.println( types[i] );
+            for( int i = 0; i < this.types.length; i++ ) {
+                System.out.println( this.types[i] );
             }
         } else {
-            types = null;
+            this.types = null;
             System.out.println( "Unpublishing all live items" );
         }
         if (cmdLine.hasOption("f")) {
-            folderId = Integer.parseInt(cmdLine.getOptionValue("f"));
-            Folder folder = new Folder(new OID(Folder.BASE_DATA_OBJECT_TYPE, folderId));
+            this.folderId = Integer.parseInt(cmdLine.getOptionValue("f"));
+            Folder folder = new Folder(new OID(Folder.BASE_DATA_OBJECT_TYPE, this.folderId));
             	System.out.println( "Unpublishing items in folder: " + folder.getDisplayName());
         } else {
-        	folderId = -1;
+        	this.folderId = -1;
         }
 
-        final List toUnpublish = new ArrayList();
+        final List toProcess = getListToProcess(true);
+        unpublish(toProcess);
+    }
+
+    public static void main(String[] args) {
+        new BulkUnpublish("Bulk Unpublish","1.0.0").run(args);
+    }
+
+    protected List getListToProcess(boolean liveOnly) {
+        final List toProcess = new ArrayList();
+
         new Transaction() {
             public void doRun() {
                 DataCollection items = SessionManager.getSession()
                     .retrieve(ContentPage.BASE_DATA_OBJECT_TYPE);
                 items.addNotEqualsFilter("type.id", null);
-                items.addEqualsFilter("version", ContentItem.LIVE);
+                if(liveOnly) items.addEqualsFilter("version", ContentItem.LIVE);
                 items.addOrder("title");
 
                 FilterFactory filterFactory = items.getFilterFactory();
 
-                if (folderId >= 0) {
-        		    Filter filter = filterFactory.simple(" ancestors like '%/" + folderId + "/%'");
-        		    items.addFilter(filter);
-        		}
-                if( null != types ) {
+                if (this.folderId >= 0) {
+                Filter filter = filterFactory.simple(" ancestors like '%/" + this.folderId + "/%'");
+                items.addFilter(filter);
+            }
+                if( null != this.types ) {
                     CompoundFilter or = filterFactory.or();
 
-                    for( int i = 0; i < types.length; i++ ) {
-                        or.addFilter( filterFactory.equals( "objectType", types[i] ) );
+                    for( int i = 0; i < this.types.length; i++ ) {
+                        or.addFilter( filterFactory.equals( "objectType", this.types[i] ) );
                     }
 
                     items.addFilter( or );
@@ -124,14 +134,23 @@ public class BulkUnpublish extends Program {
 
                 while (items.next()) {
                     ContentPage page = (ContentPage) DomainObjectFactory.newInstance(items.getDataObject());
-                    toUnpublish.add(page.getDraftVersion().getOID());
+                    toProcess.add(page.getDraftVersion().getOID());
                 }
             }
         }.run();
 
-        final Iterator items = toUnpublish.iterator();
+        return toProcess;
+    }
+
+    protected void unpublish(List toProcess) {
+        final Iterator items = toProcess.iterator();
         while (items.hasNext()) {
             final OID oid = (OID) items.next();
+            unpublish(oid);
+        }
+    }
+
+    protected void unpublish(OID oid) {
             Transaction txn = new Transaction() {
                       public void doRun() {
                           ContentPage item = (ContentPage)
@@ -146,15 +165,9 @@ public class BulkUnpublish extends Program {
                 txn.run();
             } catch (Throwable ex) {
                 s_log.error("Cannot unpublish " + oid, ex);
-                if (!ignoreErrors) {
+                if (!this.ignoreErrors) {
                     return;
                 }
             }
-        }
     }
-
-    public static void main(String[] args) {
-        new BulkUnpublish().run(args);
-    }
-
 }

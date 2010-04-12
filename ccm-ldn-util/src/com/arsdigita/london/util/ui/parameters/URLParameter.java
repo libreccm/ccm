@@ -28,10 +28,10 @@ import javax.servlet.http.HttpServletRequest;
  * Bebop URLParameter is useless because it merely
  * check URL form, doesn't actually return a
  * java.net.URL object.
+ *
+ * @version $Id: URLParameter.java 755 2005-09-02 13:42:47Z sskracic $  
  */
 public class URLParameter extends ParameterModel {
-
-    public static final String versionId = "$Id: URLParameter.java 755 2005-09-02 13:42:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/05/10 14:49:43 $";
 
     public URLParameter(String name) {
         super(name);
