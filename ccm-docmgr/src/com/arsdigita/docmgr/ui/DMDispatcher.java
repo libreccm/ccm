@@ -47,10 +47,6 @@ import com.arsdigita.web.Web;
  */
 
 public class DMDispatcher extends BebopMapDispatcher implements DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr/dev/src/com/arsdigita/docmgr/ui/DMDispatcher.java#4 $" +
-        "$Author: jparsons $" +
-        "$DateTime: 2003/07/17 20:42:41 $";
 
     private static Category s_log = Category.getInstance
         (DMDispatcher.class.getName());

@@ -38,10 +38,6 @@ import com.arsdigita.xml.Element;
  * @author StefanDeusch@computer.org, ddao@arsdigita.com
  */
 class FilePropertiesPanel extends SimpleComponent implements DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr/dev/src/com/arsdigita/docmgr/ui/FilePropertiesPanel.java#3 $" +
-        "$Author: jparsons $" +
-        "$DateTime: 2003/04/23 17:06:19 $";
 
     private static final Logger s_log = Logger.getLogger
         (FilePropertiesPanel.class);

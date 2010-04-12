@@ -64,10 +64,6 @@ import com.arsdigita.web.Web;
 public class FileUploadForm extends Form
         implements FormInitListener, FormValidationListener,
                    FormProcessListener, DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr/dev/src/com/arsdigita/docmgr/ui/FileUploadForm.java#6 $" +
-        "$Author: jparsons $" +
-        "$DateTime: 2003/07/17 20:23:56 $";
 
     private static final Logger s_log = Logger.getLogger(FileUploadForm.class);
 

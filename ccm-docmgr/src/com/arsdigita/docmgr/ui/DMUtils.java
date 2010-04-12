@@ -47,10 +47,6 @@ import com.arsdigita.web.Web;
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
  */
 public class DMUtils implements DMConstants {
-    public static final String versionId =
-        "$Id: //apps/docmgr/dev/src/com/arsdigita/docmgr/ui/DMUtils.java#3 $" +
-        "$Author: jorris $" +
-        "$DateTime: 2003/05/23 13:52:45 $";
 
     private static final Logger s_log = Logger.getLogger(DMUtils.class);
 

@@ -66,10 +66,6 @@ import com.arsdigita.web.Web;
  */
 public abstract class ResourceImpl extends VersionedACSObject
     implements Resource, Constants {
-    public static final String versionId =
-        "$Id: //apps/docmgr/dev/src/com/arsdigita/docmgr/ResourceImpl.java#13 $" +
-        "$Author: jparsons $" +
-        "$DateTime: 2003/07/11 15:26:21 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
             "com.arsdigita.docs.ResourceImpl";

@@ -44,10 +44,6 @@ import com.arsdigita.xml.Element;
  * @author <mailto href="StefanDeusch@computer.org">Stefan Deusch</a>
  */
 public class RecentUpdatedDocsPortlet extends AppPortlet {
-    public static final String versionId =
-        "$Id: //apps/docmgr/dev/src/com/arsdigita/docmgr/ui/RecentUpdatedDocsPortlet.java#6 $" +
-        "$Author: jparsons $" +
-        "$DateTime: 2003/07/11 17:45:09 $";
 
     private static Category s_log = Category.getInstance
         (RecentUpdatedDocsPortlet.class.getName());

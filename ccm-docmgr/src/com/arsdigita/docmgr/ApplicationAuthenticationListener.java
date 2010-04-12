@@ -43,10 +43,6 @@ import com.arsdigita.web.Web;
  */
 public class ApplicationAuthenticationListener
         extends UserAuthenticationListener implements RequestListener {
-    public static final String versionId =
-        "$Id: //apps/docmgr/dev/src/com/arsdigita/docmgr/ApplicationAuthenticationListener.java#2 $" +
-        "$Author: jorris $" +
-        "$DateTime: 2003/05/23 13:52:45 $";
 
     private static final Logger s_log = Logger.getLogger
         (ApplicationAuthenticationListener.class);
