@@ -32,10 +32,10 @@ import org.apache.log4j.Logger;
  * preparing search query strings and, well, not much else.
  *
  * @author Kevin Scaldeferri 
+ * @version $Id: Utilities.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 final class Utilities {
-    public static final String versionId = "$Id: Utilities.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Utilities.class);
     /**

@@ -31,7 +31,6 @@ import com.arsdigita.persistence.DataObject;
 
 public class DomainServiceInterfaceExposer extends DomainService {
 
-    public static final String versionId = "$Id: DomainServiceInterfaceExposer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      *
      * Get a property of the specified domain object.

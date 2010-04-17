@@ -34,12 +34,10 @@ import org.apache.log4j.Logger;
  * set of registered <code>ParameterProviders</code>.  This makes
  * cookieless login possible, by re-writing URLs to include a session
  * ID parameter.
+ *
+ * @version $Id: URLRewriter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class URLRewriter {
-    public static final String versionId =
-        "$Id: URLRewriter.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(URLRewriter.class);

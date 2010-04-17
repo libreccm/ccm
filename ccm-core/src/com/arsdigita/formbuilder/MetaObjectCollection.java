@@ -25,8 +25,11 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
+/** 
+ * 
+ * @version $Id: MetaObjectCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class MetaObjectCollection extends DomainCollection {
-    public static final String versionId = "$Id: MetaObjectCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected MetaObjectCollection(DataCollection dataCollection) {
         super(dataCollection);

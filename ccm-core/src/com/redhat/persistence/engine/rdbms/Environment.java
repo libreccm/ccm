@@ -34,12 +34,10 @@ import java.util.HashMap;
  * Environment
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: Environment.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 class Environment {
-
-    public final static String versionId = "$Id: Environment.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private RDBMSEngine m_engine;
     private ObjectMap m_om;

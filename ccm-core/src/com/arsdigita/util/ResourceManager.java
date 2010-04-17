@@ -34,8 +34,9 @@ import org.apache.log4j.Logger;
  * Handles a very similiar scope of tasks as c.ad.runtime.CCM. Both should be
  * integrated into a single class, e.g. CCMResourceManager to simplify and
  * clean-up of the API!
+ *
+ * @version $Id: ResourceManager.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 public class ResourceManager {
 
     private final static String CONFIGURE_MESSAGE =
@@ -49,11 +50,6 @@ public class ResourceManager {
 
     private File m_webappRoot;
     private ServletContext m_servletContext;
-
-    public static final String versionId = 
-            "$Id: ResourceManager.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Empty constructor, which we make private to enforce the singleton

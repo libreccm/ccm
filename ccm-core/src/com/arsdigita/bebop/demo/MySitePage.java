@@ -34,10 +34,7 @@ import org.apache.log4j.Logger;
  * main content area.
  */
 public class MySitePage extends Page {
-    public static final String versionId =
-        "$Id: MySitePage.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
+    
 
     private static final Logger s_log = Logger.getLogger(MySitePage.class);
 

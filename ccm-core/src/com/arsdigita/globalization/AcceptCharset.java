@@ -26,10 +26,9 @@ import java.util.Locale;
  * header.
  * </p>
  *
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: AcceptCharset.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AcceptCharset extends AcceptField {
-    public final static String versionId = "$Id: AcceptCharset.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final static String DEFAULT_CHARSET = "ISO-8859-1";
 

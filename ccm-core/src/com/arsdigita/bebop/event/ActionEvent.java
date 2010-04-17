@@ -27,17 +27,15 @@ import com.arsdigita.bebop.PageState;
  * the click in a user's submission, for example, a form might use an
  * <code>ActionEvent</code> to signal that it has been submitted.
  *
+ * @see ActionListener
+ * @see java.awt.event.ActionEvent
+ *
  * @author David Lutterkort 
  *
  * @version $Id: ActionEvent.java 287 2005-02-22 00:29:02Z sskracic $
- *
- * @see ActionListener
- * @see java.awt.event.ActionEvent
  */
 
 public class ActionEvent extends PageEvent {
-
-    public static final String versionId = "$Id: ActionEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Construct an <code>ActionEvent</code>.

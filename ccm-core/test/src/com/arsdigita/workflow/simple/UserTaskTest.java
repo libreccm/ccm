@@ -43,11 +43,10 @@ import org.apache.log4j.Logger;
  *
  *
  * @author Stefan Deusch
- *
+ * @version $Id: UserTaskTest.java 741 2005-09-02 10:21:19Z sskracic $
  */
 public class UserTaskTest extends WorkflowTestCase {
 
-    public static final String versionId = "$Id: UserTaskTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static Logger s_cat =
         Logger.getLogger(UserTaskTest.class.getName());
 

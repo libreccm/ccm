@@ -37,8 +37,6 @@ import com.arsdigita.bebop.util.BebopConstants;
  *    @version $Id: CheckboxGroup.java 738 2005-09-01 12:36:52Z sskracic $ */
 public class CheckboxGroup extends OptionGroup implements BebopConstants {
 
-    public static final String versionId = "$Id: CheckboxGroup.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public CheckboxGroup(String name) {
         this(new ArrayParameter(name));
     }

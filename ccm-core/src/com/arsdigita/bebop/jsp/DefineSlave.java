@@ -26,9 +26,9 @@ import javax.servlet.jsp.JspException;
  * Tag to indicate where the generated XML from a slave page
  * should be nested within the XML generated from the master page
  * that contains it.
+ * @version $Id: DefineSlave.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefineSlave extends DefineComponent {
-    public static final String versionId = "$Id: DefineSlave.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private SlaveComponent m_slave;
 

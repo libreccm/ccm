@@ -44,12 +44,10 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @author Randy Graebner &lt;randyg@alum.mit.edu&gt;
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: Files.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 
 public final class Files {
-
-    public final static String versionId = "$Id: Files.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(Files.class);

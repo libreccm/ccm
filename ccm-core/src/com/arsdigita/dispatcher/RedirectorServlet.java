@@ -29,11 +29,11 @@ import org.apache.log4j.Logger;
 /**
  * A servlet that redirects. It takes parameter a servlet parameter "target"
  * that is used for the destination of the redirect.
- **/
+ * 
+ * @version $Id: RedirectorServlet.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public class RedirectorServlet extends HttpServlet {
-
-    public final static String versionId = "$Id: RedirectorServlet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(
         RedirectorServlet.class);

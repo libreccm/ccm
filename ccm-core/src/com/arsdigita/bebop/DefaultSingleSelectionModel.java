@@ -26,7 +26,8 @@ import com.arsdigita.bebop.parameters.ParameterModel;
  * @version $Id: DefaultSingleSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefaultSingleSelectionModel
-     extends AbstractSingleSelectionModel {
+    extends AbstractSingleSelectionModel {
+
 
     private RequestLocal m_key;
 

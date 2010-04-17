@@ -21,12 +21,10 @@ package com.arsdigita.domain;
 /**
  * DomainException
  *
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: DomainException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class DomainException extends Exception {
-
-    public final static String versionId = "$Id: DomainException.java 287 2005-02-22 00:29:02Z sskracic $";
 
     public DomainException(String message) {
         super(message);

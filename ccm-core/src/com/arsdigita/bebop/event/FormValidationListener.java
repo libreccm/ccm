@@ -32,8 +32,6 @@ import java.util.EventListener;
 
 public interface FormValidationListener extends EventListener {
 
-    public static final String versionId = "$Id: FormValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Performs a validation check on the specified <tt>FormData</tt>
      * object, involving any number of parameters.

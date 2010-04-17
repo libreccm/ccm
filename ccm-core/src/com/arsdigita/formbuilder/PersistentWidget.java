@@ -52,8 +52,6 @@ import com.arsdigita.util.UncheckedWrapperException;
  */
 public abstract class PersistentWidget extends PersistentComponent {
 
-    public static final String versionId = "$Id: PersistentWidget.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger s_log =
         Logger.getLogger(PersistentWidget.class.getName());
 

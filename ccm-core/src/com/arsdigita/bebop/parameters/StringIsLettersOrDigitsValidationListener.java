@@ -28,12 +28,10 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * parameter's value contains only letters and/or digits.
  *
  * @author Dennis Gregorovic 
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: StringIsLettersOrDigitsValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class StringIsLettersOrDigitsValidationListener extends GlobalizedParameterListener {
-
-    public static final String versionId = "$Id: StringIsLettersOrDigitsValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public StringIsLettersOrDigitsValidationListener(String title) {
         setError(new GlobalizedMessage(title, getBundleBaseName()));

@@ -45,8 +45,6 @@ import com.arsdigita.bebop.form.Option;
  */
 public class PersistentOption extends PersistentComponent {
 
-    public static final String versionId = "$Id: PersistentOption.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * The fully qualified name of the underlying DataObject of this class.
      */

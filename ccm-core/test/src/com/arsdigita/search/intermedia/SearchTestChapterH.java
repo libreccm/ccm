@@ -33,10 +33,10 @@ import java.math.BigDecimal;
  * for related objects.
  *
  * @author Jeff Teeters
+ * @version $Id: SearchTestChapterH.java 746 2005-09-02 10:56:35Z sskracic $
  **/
 public class SearchTestChapterH extends ACSObject
     implements SearchIndexHelpCustomize {
-    public static final String versionId = "$Id: SearchTestChapterH.java 746 2005-09-02 10:56:35Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.search.intermedia.SearchTestChapterH";

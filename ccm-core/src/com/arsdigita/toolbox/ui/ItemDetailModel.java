@@ -28,7 +28,6 @@ import java.util.Iterator;
  * @version $Id: ItemDetailModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface ItemDetailModel {
-    public static final String versionId = "$Id: ItemDetailModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public String getTitle(PageState pageState);
 

@@ -95,10 +95,6 @@ import java.util.Iterator;
  * @author James Parsons
  * @version $Id: Portal.java 287 2005-02-22 00:29:02Z sskracic $ */
 public class Portal extends SimpleContainer implements BebopConstants {
-    public static final String versionId =
-        "$Id: Portal.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(Portal.class.getName());

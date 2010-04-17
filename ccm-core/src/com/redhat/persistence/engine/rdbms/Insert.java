@@ -24,12 +24,10 @@ import com.redhat.persistence.metadata.Table;
  * Insert
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: Insert.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 class Insert extends DML {
-
-    public final static String versionId = "$Id: Insert.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public Insert(RDBMSEngine engine, Table table) {
         super(engine, table);

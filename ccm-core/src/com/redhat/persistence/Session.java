@@ -59,12 +59,10 @@ import org.apache.log4j.Logger;
  * with persistent objects.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #18 $ $Date: 2004/08/16 $
+ * @version $Id: Session.java 1393 2006-11-28 09:12:32Z sskracic $
  **/
 
 public class Session {
-
-    public final static String versionId = "$Id: Session.java 1393 2006-11-28 09:12:32Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static final Logger LOG = Logger.getLogger(Session.class);
 

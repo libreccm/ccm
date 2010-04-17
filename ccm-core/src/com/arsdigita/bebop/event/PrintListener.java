@@ -62,8 +62,6 @@ import java.util.EventListener;
 
 public interface PrintListener extends EventListener {
 
-    public static final String versionId = "$Id: PrintListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Prepare the target component returned by {@link PrintEvent#getTarget
      * e.getTarget()} for output. The target component is an unlocked clone

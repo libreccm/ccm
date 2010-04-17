@@ -36,8 +36,6 @@ public abstract class DefineComponent extends BodyTagSupport {
     private final static String CONTAINER_ERROR =
         "define:component must be contained within a container definition.";
 
-    public static final String versionId = "$Id: DefineComponent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public int doStartTag() throws JspException {
         if (getName() != null) {
             pageContext.setAttribute(getName(), getComponent());

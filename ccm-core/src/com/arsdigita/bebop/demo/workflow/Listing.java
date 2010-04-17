@@ -33,10 +33,12 @@ import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import java.util.NoSuchElementException;
 
+/**
+ *
+ * @version $Id: Listing.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class Listing extends BoxPanel
     implements ChangeListener, ActionListener {
-
-    public static final String versionId = "$Id: Listing.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private List m_list;
 

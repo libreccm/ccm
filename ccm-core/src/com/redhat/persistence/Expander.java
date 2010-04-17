@@ -36,10 +36,9 @@ import java.util.Map;
  * it to expand the requested event. The expander prepares the events, but
  * does not activate any of them. If expansion fails, the session is not left
  * in an inconsistent state.
+ * @version $Id: Expander.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class Expander extends Event.Switch {
-
-    public final static String versionId = "$Id: Expander.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     final private Session m_ssn;
     final private Collection m_deleting = new HashSet();

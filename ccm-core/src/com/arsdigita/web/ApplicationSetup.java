@@ -62,10 +62,6 @@ import org.apache.log4j.Category;
  * @version $Id: ApplicationSetup.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ApplicationSetup {
-    public static final String versionId =
-        "$Id: ApplicationSetup.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     protected Category m_category;
     protected String m_title = null;

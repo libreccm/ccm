@@ -26,11 +26,11 @@ import com.arsdigita.persistence.DataQuery;
 /**
  * An abstract class that implements DataQueryBuilder, allowing on the fly
  * implementations of DataQueryBuilder.
+ * 
+ * @version $Id: AbstractDataQueryBuilder.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class AbstractDataQueryBuilder extends LockableImpl
     implements DataQueryBuilder {
-
-    public static final String versionId = "$Id: AbstractDataQueryBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Perform all neccessary database operations and return

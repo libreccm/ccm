@@ -42,8 +42,6 @@ import org.apache.log4j.Logger;
  */
 public class UncheckedWrapperException extends RuntimeException {
 
-    public static final String versionId = "$Id: UncheckedWrapperException.java 287 2005-02-22 00:29:02Z sskracic $";
-
     static {
         Exceptions.registerUnwrapper(
             UncheckedWrapperException.class,

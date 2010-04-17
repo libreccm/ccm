@@ -33,13 +33,11 @@ import javax.servlet.ServletContext;
  * of the URL.
  *
  * @author Bill Schneider 
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: RequestContext.java 287 2005-02-22 00:29:02Z sskracic $
  * @since 4.5 */
 
 public interface RequestContext {
 
-    public static final String versionId =
-        "$Id: RequestContext.java 287 2005-02-22 00:29:02Z sskracic $";
 
     /**
      * Gets the portion of the URL that has not been used by

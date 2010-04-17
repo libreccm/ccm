@@ -53,15 +53,14 @@ import org.apache.log4j.Logger;
  *
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #16 $ $Date: 2004/08/16 $ */
-
+ * @version $Id: OID.java 1591 2007-06-15 12:52:55Z steve_p $
+ */
 public class OID {
-    public final static String versionId = "$Id: OID.java 1591 2007-06-15 12:52:55Z steve_p $ by $Author: steve_p $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ObjectType m_type;
     private Map m_values = new HashMap();
 
-    /** some shorthand names for common content-types */
+    /** some shorthand names for common content-types  */
     private final static String[][] TYPE_SHORTHAND = {
     	{"Article", "com.arsdigita.cms.contenttypes.Article"},
     	{"MultiPartArticle", "com.arsdigita.cms.contenttypes.MultiPartArticle"},
@@ -78,17 +77,12 @@ public class OID {
     /** the separator character to be used in the new OID formatting scheme */
     private final static char OID_SEPARATOR_CHAR = '-';
 
-    /**
-     * A Format used for formatting/parsing OIDs
-     */
+    /** A Format used for formatting/parsing OIDs */
     private static MessageFormat m_format_old = new MessageFormat("[{0}:{1}]");
     private static MessageFormat m_format_new = new MessageFormat("{0}" + OID_SEPARATOR_CHAR + "{1}");
 
-    /**
-     *  used to log errors
-     */
-    private static final Logger m_log =
-        Logger.getLogger(OID.class);
+    /** used to log errors  */
+    private static final Logger m_log = Logger.getLogger(OID.class);
 
 
     /**
@@ -113,7 +107,8 @@ public class OID {
      *
      *  @param type The ObjectType
      *
-     *  @pre type != null */
+     *  @pre type != null 
+     */
     public OID(ObjectType type) {
         m_type = type;
     }
@@ -286,7 +281,8 @@ public class OID {
      *             != 1</code>).
      *
      *  @pre type != null
-     *  @pre type.getObjectMap().getObjectKey().getCount() == 1 */
+     *  @pre type.getObjectMap().getObjectKey().getCount() == 1
+     */
     public OID(ObjectType type, int value) {
         this(type, new BigDecimal(value));
     }

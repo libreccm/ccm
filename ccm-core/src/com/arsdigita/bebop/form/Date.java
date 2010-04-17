@@ -52,8 +52,6 @@ import java.util.Locale;
  */
 public class Date extends Widget implements BebopConstants {
 
-    public static final String versionId = "$Id: Date.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     protected OptionGroup m_year;
     protected OptionGroup m_month;
     protected TextField   m_day;

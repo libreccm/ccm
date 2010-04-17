@@ -39,11 +39,9 @@ import com.arsdigita.persistence.OID;
  *
  * @author Stefan Deusch
  * @author Khy Huang
+ * @version $Id: UserTaskDefinitionTest.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class UserTaskDefinitionTest extends WorkflowTestCase {
-
-    public static final String versionId = "$Id: UserTaskDefinitionTest.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
 
     // initialize reference material
     static final String label = "My UserTaskDefinition Label";

@@ -46,21 +46,26 @@ public abstract class ParameterModel implements Lockable {
      * exception if the specified name is null
      */
     protected String m_name;
+
     /**
      * The default value of this ParameterModel. This value is used when
      * the request is not a submission, and the transformValue returns
      * null.
      */
     protected Object m_defaultValue;
+
     /**
      * A List of Listeners to validate this parameter.
      */
     protected List m_parameterListeners;
+
     /**
-     * A boolean indicating if this ParameterModel is isLocked, as per the
+     * A boolean indicating if this ParameterModel is locked, as per the
      * Lockable interface
      */
     protected boolean m_locked;
+
+
     /**
      * <code>true</code> if the parameter value in a request should be set
      * to the default value when it would ordinarily be set
@@ -72,9 +77,11 @@ public abstract class ParameterModel implements Lockable {
      * This defaults to <code>true</code>.
      */
     private boolean m_defaultOverridesNull = false;
+
     private boolean m_passIn = true;
+
     private static final Logger s_log =
-            Logger.getLogger(ParameterModel.class.getName());
+        Logger.getLogger(ParameterModel.class.getName());
 
     /**
      * Construct an unlocked ParameterModel
@@ -183,7 +190,7 @@ public abstract class ParameterModel implements Lockable {
 
     /**
      * Sets the name of this ParmeterModel.
-     * Asserts that this ParameterModel is not isLocked.
+     * Asserts that this ParameterModel is not locked.
      *
      * @param name The name of this parameter model.
      */
@@ -196,7 +203,7 @@ public abstract class ParameterModel implements Lockable {
      * Adds a validation listener, implementing a custom validation
      * check that applies to this Parameter.  Useful for checks that
      * require examination of the values of only this parameter.
-     * Asserts that this ParameterModel is not isLocked.
+     * Asserts that this ParameterModel is not locked.
      *
      * @param listener An instance of a class that implements the
      * <code>FormValidationListener</code> interface.
@@ -210,7 +217,7 @@ public abstract class ParameterModel implements Lockable {
      * Sets a default value for this parameter. This default value is
      * superceded by values set in the initialization listeners and in
      * the request object.
-     * Asserts that this ParameterModel is not isLocked.
+     * Asserts that this ParameterModel is not locked.
      *
      * @param defaultValue a default value for this parameter that
      * appears if there is no value in the request or specified by an
@@ -269,6 +276,7 @@ public abstract class ParameterModel implements Lockable {
         return createParameterData(request, null, false);
     }
 
+
     /**
      * Create a ParameterData for this ParameterModel with the supplied
      * request If this tranformation throws an exception, mark the
@@ -311,8 +319,8 @@ public abstract class ParameterModel implements Lockable {
      * null values from the submission.
      */
     public ParameterData createParameterData(HttpServletRequest request,
-            Object defaultValue,
-            boolean isSubmission) {
+                                             Object defaultValue,
+                                             boolean isSubmission) {
         // This method can work in one of two modes, which influences how
         // default values are used.
         // (0) if transformValue() returns null, we *always* try
@@ -382,7 +390,7 @@ public abstract class ParameterModel implements Lockable {
 
     /**
      * Lock the model, blocking any further modifications.  Cached form
-     * models should always be isLocked to ensure that they remain
+     * models should always be locked to ensure that they remain
      * unchanged across requests.
      */
     public synchronized void lock() {
@@ -442,7 +450,8 @@ public abstract class ParameterModel implements Lockable {
      * @pre encoded != null
      */
     public Object unmarshal(String encoded) {
-        throw new UnsupportedOperationException("Not implemented. " + "This method needs to be implemented by the specific subclasses.");
+        throw new UnsupportedOperationException("Not implemented. "
+                                                + "This method needs to be implemented by the specific subclasses.");
     }
 
     /**
@@ -459,7 +468,7 @@ public abstract class ParameterModel implements Lockable {
     }
 
     /**
-     * @return true if this ParameterModel is isLocked to prevent
+     * @return true if this ParameterModel is locked to prevent
      * modification.
      */
     public boolean isLocked() {

@@ -29,10 +29,9 @@ import java.util.Iterator;
  *
  *
  * @author Uday Mathur
- *
+ * @version $Id: PersistenceTest.java 741 2005-09-02 10:21:19Z sskracic $
  */
 public class PersistenceTest extends BaseTestCase {
-    public static final String versionId = "$Id: PersistenceTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public PersistenceTest(String name) {
         super(name);

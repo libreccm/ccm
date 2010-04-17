@@ -22,12 +22,10 @@ package com.redhat.persistence;
  * NoRowException
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: NoRowException.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class NoRowException extends CursorException {
-
-    public final static String versionId = "$Id: NoRowException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     NoRowException(Cursor c) {
 	super(c, "cursor is not currently on a row");

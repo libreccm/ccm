@@ -47,7 +47,6 @@ import com.arsdigita.xml.Element;
  * @version $Id: Portlet.java 287 2005-02-22 00:29:02Z sskracic $ */
 public interface Portlet {
 
-    public static final String versionId = "$Id: Portlet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Builds an XML fragment and attaches it to this component's parent.
      * Someone implementing a TimeOfDayPortlet could, for instance,

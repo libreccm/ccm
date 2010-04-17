@@ -43,12 +43,10 @@ import com.arsdigita.bebop.SegmentedPanel;
 /**
  *
  * @author David Dao
- *
+ * @version $Id: UserSummaryPane.java 1486 2007-03-18 16:47:26Z apevec $
  */
 class UserSummaryPane extends SegmentedPanel implements AdminConstants,
                                                         Resettable {
-
-    public static final String versionId = "$Id: UserSummaryPane.java 1486 2007-03-18 16:47:26Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
     private UserSummaryBodyPane m_body;
 

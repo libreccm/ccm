@@ -35,12 +35,10 @@ import org.apache.log4j.Logger;
  * Signature
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #14 $ $Date: 2004/08/16 $
+ * @version $Id: Signature.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 
 public class Signature {
-
-    public final static String versionId = "$Id: Signature.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Signature.class);
 

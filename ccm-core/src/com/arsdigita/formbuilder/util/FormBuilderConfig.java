@@ -26,14 +26,11 @@ import org.apache.log4j.Logger;
 
 
 /**
- * @author Justin Ross
  * @see com.arsdigita.bebop.Bebop
+ * @author Justin Ross
+ * @version $Id: FormBuilderConfig.java 1498 2007-03-19 16:22:15Z apevec $
  */
 public final class FormBuilderConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: FormBuilderConfig.java 1498 2007-03-19 16:22:15Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger(FormBuilderConfig.class);
 

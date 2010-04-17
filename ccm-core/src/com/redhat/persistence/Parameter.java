@@ -25,12 +25,10 @@ import com.redhat.persistence.metadata.ObjectType;
  * Parameter
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: Parameter.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class Parameter {
-
-    public final static String versionId = "$Id: Parameter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ObjectType m_type;
     private Path m_path;

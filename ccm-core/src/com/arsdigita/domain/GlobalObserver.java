@@ -28,13 +28,10 @@ package com.arsdigita.domain;
  * robust.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #7 $ $Date: 2004/08/16 $
- **/
+ * @version $Id: GlobalObserver.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public interface GlobalObserver extends DomainObjectObserver {
-
-    public final static String versionId = "$Id: GlobalObserver.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
 
     /**
      * This method should return a value indicating whether or not this

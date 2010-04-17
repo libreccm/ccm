@@ -28,12 +28,12 @@ import com.arsdigita.xml.Element;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
 
+/** 
+ * 
+ * @version $Id: ComponentMap.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class ComponentMap extends SimpleComponent
         implements Resettable {
-    public static final String versionId =
-        "$Id: ComponentMap.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(ComponentMap.class);
 

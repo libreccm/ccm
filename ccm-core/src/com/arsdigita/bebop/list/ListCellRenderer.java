@@ -52,8 +52,6 @@ import com.arsdigita.bebop.Component;
  * @version $Id: ListCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $ */
 public interface ListCellRenderer {
 
-    public static final String versionId = "$Id: ListCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Return a component that has been configured to display the specified
      * value. That component's <code>generateXML</code> or <code>print</code>

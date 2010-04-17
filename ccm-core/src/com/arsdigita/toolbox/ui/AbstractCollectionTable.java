@@ -57,6 +57,7 @@ import java.util.ArrayList;
  *
  * @author Randy Graebner
  * @version $Revision: #12 $ $Date: 2004/08/16 $
+ * @version $Id:  $
  */
 
 public abstract class AbstractCollectionTable extends Table

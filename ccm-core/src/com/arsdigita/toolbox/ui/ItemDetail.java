@@ -31,7 +31,6 @@ import java.util.Iterator;
  * @version $Id: ItemDetail.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ItemDetail extends SimpleComponent {
-    public static final String versionId = "$Id: ItemDetail.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ItemDetailModelBuilder m_builder;
 

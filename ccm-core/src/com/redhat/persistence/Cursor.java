@@ -27,12 +27,10 @@ import org.apache.log4j.Logger;
  * Cursor
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: Cursor.java 1393 2006-11-28 09:12:32Z sskracic $
  **/
 
 public class Cursor {
-
-    public final static String versionId = "$Id: Cursor.java 1393 2006-11-28 09:12:32Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Cursor.class);
 

@@ -564,9 +564,9 @@ public class FormModel implements Lockable {
     }
 
     /**
-     * Checks whether this FormModel is isLocked.
+     * Checks whether this FormModel is locked.
      *
-     * @return <code>true</code> if this FormModel is isLocked;
+     * @return <code>true</code> if this FormModel is locked;
      * <code>false</code> otherwise.
      * */
     public final boolean isLocked() {

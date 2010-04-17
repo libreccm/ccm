@@ -27,10 +27,9 @@ import junit.framework.Test;
  * MetadataSuite - Suite of tests for persistence.metadata
  *
  * @author Jon Orris
- * @version $Revision: #12 $ $Date: 2004/08/16 $
+ * @version $Id: MetadataxSuite.java 745 2005-09-02 10:50:34Z sskracic $
  */
 public class MetadataxSuite extends PackageTestSuite {
-    public final static String versionId = "$Id: MetadataxSuite.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static Test suite() {
         MetadataxSuite suite = new MetadataxSuite();

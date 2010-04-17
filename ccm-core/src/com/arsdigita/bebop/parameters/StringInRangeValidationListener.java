@@ -30,11 +30,9 @@ import com.arsdigita.util.Assert;
  * Check that a string's length falls into a particular range.
  * </p>
  *
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: StringInRangeValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class StringInRangeValidationListener extends GlobalizedParameterListener {
-
-    public static final String versionId = "$Id: StringInRangeValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final int m_minLength;
     private final int m_maxLength;

@@ -133,6 +133,29 @@ public class Assert {
      * false.
      *
      * @param condition The condition asserted
+     * @param message An error message
+     * @throws AssertionError if the condition is false
+     * @deprecated use Assert.isTrue(condition, message) instead
+     *             (we will follow the standard naming scheme)
+     */
+    public static final void truth(final boolean condition,
+                                   final String message) {
+        Assert.isTrue(condition, message);
+
+
+        // if (!condition) {
+        //     error(message);
+        //
+        //     throw new AssertionError(message);
+        // }
+    }
+
+    /**
+     * Asserts that an arbitrary condition is true and throws an
+     * error with message <code>message</code> if the condition is
+     * false.
+     *
+     * @param condition The condition asserted
      * @throws AssertionError if the condition is false
      */
     public static final void isTrue(final boolean condition) {
@@ -141,6 +164,26 @@ public class Assert {
 
             throw new AssertionError(DEFAULT_MESSAGE);
         }
+    }
+
+    /**
+     * Asserts that an arbitrary condition is true and throws an
+     * error with message <code>message</code> if the condition is
+     * false.
+     *
+     * @param condition The condition asserted
+     * @throws AssertionError if the condition is false
+     * @deprecated use Assert.isTrue(final boolean condition) instead
+     *             (we will follow the standard naming scheme)
+     */
+    public static final void truth(final boolean condition) {
+        Assert.isTrue(condition);
+
+        // if (!condition) {
+        //     error(DEFAULT_MESSAGE);
+        //
+        //    throw new AssertionError(DEFAULT_MESSAGE);
+        // }
     }
 
     /**
@@ -252,7 +295,7 @@ public class Assert {
      * Verifies that <code>lockable</code> is <em>not</em> locked and
      * throws an error if it is.
      *
-     * @param lockable The object that must not be isLocked
+     * @param lockable The object that must not be locked
      * @see com.arsdigita.util.Lockable
      */
     public static final void isUnlocked(final Lockable lockable) {
@@ -266,13 +309,13 @@ public class Assert {
     }
 
     /**
-     * Verifies that two values are isEqual (according to their equals
+     * Verifies that two values are equal (according to their equals
      * method, unless <code>value1</code> is null, then according to
      * <code>==</code>).
      *
      * @param value1 The first value to be compared
      * @param value2 The second
-     * @throws AssertionError if the arguments are isNotEqual
+     * @throws AssertionError if the arguments are unequal
      */
     public static final void isEqual(final Object value1,
                                    final Object value2) {
@@ -296,13 +339,13 @@ public class Assert {
     }
 
     /**
-     * Verifies that two values are isEqual (according to their equals
+     * Verifies that two values are equal (according to their equals
      * method, unless <code>value1</code> is null, then according to
      * <code>==</code>).
      *
      * @param value1 The first value to be compared
      * @param value2 The second
-     * @throws AssertionError if the arguments are isNotEqual
+     * @throws AssertionError if the arguments are unequal
      */
     public static final void isEqual(final Object value1,
                                    final Object value2,
@@ -323,7 +366,7 @@ public class Assert {
     }
 
     /**
-     * Verifies that two values are not isEqual (according to their
+     * Verifies that two values are not equal (according to their
      * equals method, unless <code>value1</code> is null, then
      * according to <code>==</code>).
      *
@@ -439,7 +482,6 @@ public class Assert {
                                    final String message) {
         Assert.isTrue(condition, message);
 
-
         // if (!condition) {
         //     error(message);
         //
@@ -550,7 +592,7 @@ public class Assert {
     }
 
     /**
-     * Verify that two values are isEqual (according to their equals method,
+     * Verify that two values are equal (according to their equals method,
      * unless expected is null, then according to ==).
      *
      * @param expected Expected value.
@@ -563,7 +605,7 @@ public class Assert {
     }
 
     /**
-     * Verify that two values are isEqual (according to their equals method,
+     * Verify that two values are equal (according to their equals method,
      * unless expected is null, then according to ==).
      *
      * @param expected Expected value.
@@ -591,7 +633,7 @@ public class Assert {
     }
 
     /**
-     * Verify that two values are isEqual.
+     * Verify that two values are equal.
      *
      * @param expected Expected value.
      * @param actual Actual value.
@@ -603,7 +645,7 @@ public class Assert {
     }
 
     /**
-     * Verify that two values are isEqual.
+     * Verify that two values are equal.
      *
      * @param expected Expected value.
      * @param actual Actual value.
@@ -638,8 +680,8 @@ public class Assert {
     }
 */
     /**
-     * Verify that the model is isLocked and throw a runtime exception
-     * if it is isLocked.
+     * Verify that the model is locked and throw a runtime exception
+     * if it is locked.
      *
 //   * @deprecated Use {@link #isUnlocked(Lockable)} instead
      */

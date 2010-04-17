@@ -30,15 +30,13 @@ import java.util.Map;
  * This is the base class that all other domain query classes
  * would extend. It provides a facade on to a contained <code>DataQuery</code>.
  *
+ * @see com.arsdigita.persistence.DataQuery
+ *
  * @author Oumi Mehrotra
  * @author Matthew Booth
- * @version 1.0
- *
- * @see com.arsdigita.persistence.DataQuery
- **/
+ * @version $Id: DomainQuery.java 1045 2005-12-09 13:41:22Z sskracic $
+ */
 public abstract class DomainQuery implements DataQuery {
-
-    public static final String versionId = "$Id: DomainQuery.java 1045 2005-12-09 13:41:22Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected final DataQuery m_dataQuery;
 

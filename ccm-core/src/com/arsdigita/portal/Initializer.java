@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
  * @version $Id: Initializer.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public class Initializer implements com.arsdigita.initializer.Initializer {
-    
+
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
     private Configuration m_conf = new Configuration();

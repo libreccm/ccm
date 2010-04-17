@@ -24,19 +24,16 @@ import com.arsdigita.persistence.metadata.ObjectType;
  * Defines the public methods of Data Objects.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #13 $ $Date: 2004/08/16 $
+ * @version $Id: DataObject.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public interface DataObject {
-
-    String versionId = "$Id: DataObject.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Returns the type of this persistent object.
      *
      * @return The type of this persistent object.
      **/
-
     ObjectType getObjectType();
 
     /**
@@ -44,7 +41,6 @@ public interface DataObject {
      *
      * @return The id of this object.
      **/
-
     OID getOID();
 
     /**
@@ -54,7 +50,6 @@ public interface DataObject {
      *
      * @return The property value.
      **/
-
     Object get(String propertyName);
 
     /**
@@ -63,7 +58,6 @@ public interface DataObject {
      * @param propertyName The property name.
      * @param value The desired value.
      **/
-
     void set(String propertyName, Object value);
 
     /**
@@ -72,7 +66,6 @@ public interface DataObject {
      *
      * @return This object's Session.
      **/
-
     Session getSession();
 
     /**
@@ -80,7 +73,6 @@ public interface DataObject {
      *
      * @return True if the object is newly created.
      **/
-
     boolean isNew();
 
     /**
@@ -89,7 +81,6 @@ public interface DataObject {
      *
      * @return True if the object has been deleted
      **/
-
     boolean isDeleted();
 
     /**
@@ -99,7 +90,6 @@ public interface DataObject {
      *
      * @return True if the object exists in a committed state in the database.
      **/
-
     boolean isCommitted();
 
     /**
@@ -110,7 +100,6 @@ public interface DataObject {
      *
      * @return True if the object has been disconnected
      **/
-
     boolean isDisconnected();
 
     /**
@@ -119,7 +108,6 @@ public interface DataObject {
      *
      * @see #isDisconnected()
      **/
-
     void disconnect();
 
     /**
@@ -128,7 +116,6 @@ public interface DataObject {
      *
      * @return True if the object has been modified, false otherwise.
      **/
-
     boolean isModified();
 
     /**
@@ -137,7 +124,6 @@ public interface DataObject {
      *
      * @return True if the property has been modified, false otherwise.
      **/
-
     boolean isPropertyModified(String name);
 
     /**
@@ -147,7 +133,6 @@ public interface DataObject {
      *
      * @return True if the object has been modified, false otherwise.
      **/
-
     boolean isValid();
 
     /**
@@ -155,7 +140,6 @@ public interface DataObject {
      *
      * @post isDeleted()
      **/
-
     void delete();
 
 
@@ -169,7 +153,6 @@ public interface DataObject {
      *
      * @post subtype.equals(getObjectType())
      **/
-
     void specialize(ObjectType subtype);
 
     /**
@@ -181,7 +164,6 @@ public interface DataObject {
      *
      * @pre SessionManager.getMetadataRoot().getObjectType(subtypeName) != null
      **/
-
     void specialize(String subtypeName);
 
     /**
@@ -189,7 +171,6 @@ public interface DataObject {
      *
      * @post !(isNew() || isModified())
      **/
-
     void save();
 
 
@@ -198,7 +179,6 @@ public interface DataObject {
      *
      * @param observer The observer to add to this DataObject.
      **/
-
     void addObserver(DataObserver observer);
 
 

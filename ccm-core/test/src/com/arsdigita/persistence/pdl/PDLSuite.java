@@ -27,10 +27,9 @@ import junit.framework.Test;
  * PDLSuite
  *
  * @author Jon Orris
- * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: PDLSuite.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PDLSuite extends PackageTestSuite {
-    public final static String versionId = "$Id: PDLSuite.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static Test suite() {
         PDLSuite suite = new PDLSuite();

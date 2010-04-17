@@ -33,13 +33,9 @@ import com.arsdigita.globalization.GlobalizedMessage;
  *    @author Stas Freidin 
  *    @author Rory Solomon 
  *    @author Bill Schneider 
+ * @version $Id: NotEmptyValidationListener.java 1502 2007-03-20 11:38:53Z chrisgilbert23 $
  */
 public class NotEmptyValidationListener extends GlobalizedParameterListener {
-
-    public static final String versionId = 
-            "$Id: NotEmptyValidationListener.java 1502 2007-03-20 11:38:53Z chrisgilbert23 $" +
-            "by $Author: chrisgilbert23 $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     public NotEmptyValidationListener(String label) {
         setError(new GlobalizedMessage(label, getBundleBaseName()));

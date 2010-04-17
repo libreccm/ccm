@@ -35,8 +35,6 @@ import com.arsdigita.bebop.FormProcessException;
  */
 public interface FormSubmissionListener extends EventListener {
 
-    public static final String versionId = "$Id: FormSubmissionListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * This method gets called as soon as the <code>FormData</code> for a
      * form has been filled with the request parameters. The values in the

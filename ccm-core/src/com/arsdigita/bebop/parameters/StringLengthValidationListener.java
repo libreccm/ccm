@@ -26,16 +26,12 @@ import com.arsdigita.util.Assert;
 
 /**
  *  Verifies that the
- * string length is less than or isEqual to the specified value
+ * string length is less than or equal to the specified value
  *
  * @author Stanislav Freidin 
- * @version $Revision: #10 $ $Author: sskracic $ $DateTime: 2004/08/16 18:10:38 $
+ * @version $Id: StringLengthValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class StringLengthValidationListener implements ParameterListener {
-    public final static String versionId =
-        "$Id: StringLengthValidationListener.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private final int m_maxLength;
     private final String m_errHead;

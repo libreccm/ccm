@@ -34,7 +34,6 @@ import java.util.Collection;
  */
 public class Attributes implements Lockable, Cloneable {
 
-    public static final String versionId = "$Id: Attributes.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Map of attributes.
      */
@@ -51,7 +50,7 @@ public class Attributes implements Lockable, Cloneable {
     }
 
     /**
-     * Clone the attributes. The clone is not isLocked and has its own set of
+     * Clone the attributes. The clone is not locked and has its own set of
      * attributes and values.
      * @post ! ((Attributes) return).isLocked()
      */

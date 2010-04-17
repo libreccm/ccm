@@ -29,12 +29,9 @@ import org.apache.log4j.Logger;
  *
  * @deprecated use {@link com.arsdigita.util.SequentialMap} instead
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @version $Id: OrderedMap.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class OrderedMap extends TreeMap {
-    public static final String versionId =
-        "$Id: OrderedMap.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(OrderedMap.class);
 

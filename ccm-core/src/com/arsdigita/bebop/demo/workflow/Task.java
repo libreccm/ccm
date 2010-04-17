@@ -38,8 +38,6 @@ import java.util.Iterator;
  */
 public class Task {
 
-    public static final String versionId = "$Id: Task.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static int s_seq = 1;
 
     private String m_key;

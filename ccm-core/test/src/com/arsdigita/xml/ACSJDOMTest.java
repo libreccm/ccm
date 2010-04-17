@@ -28,9 +28,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+/** 
+ * 
+ * @version $Id: ACSJDOMTest.java 750 2005-09-02 12:38:44Z sskracic $
+ */
 public class ACSJDOMTest extends TestCase {
-
-    public static final String versionId = "$Id: ACSJDOMTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BEBOP_XML_NS =
         "http://www.arsdigita.com/bebop/1.0";

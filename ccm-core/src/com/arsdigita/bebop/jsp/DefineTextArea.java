@@ -25,6 +25,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import javax.servlet.jsp.JspException;
 
+/** 
+ * 
+ * @version $Id: DefineTextArea.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DefineTextArea extends DefineComponent {
 
     private TextArea m_textArea;
@@ -42,7 +46,6 @@ public class DefineTextArea extends DefineComponent {
     private final static String s_wrapErrorMessage =
         "wrap must be soft, hard, or off";
 
-    public static final String versionId = "$Id: DefineTextArea.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public int doStartTag() throws JspException {
         ParameterModel pm = null;

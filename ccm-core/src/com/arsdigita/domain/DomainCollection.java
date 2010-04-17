@@ -26,14 +26,12 @@ import com.arsdigita.persistence.DataCollection;
  * would extend. It provides navigation methods that delegate to a
  * contained <code>DataCollection</code>.
  *
- * @author Phong Nguyen
- * @version 1.0
- *
  * @see com.arsdigita.persistence.DataCollection
- **/
+ *
+ * @author Phong Nguyen
+ * @version $Id: DomainCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DomainCollection extends DomainQuery {
-
-    public static final String versionId = "$Id: DomainCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected final DataCollection m_dataCollection;
 

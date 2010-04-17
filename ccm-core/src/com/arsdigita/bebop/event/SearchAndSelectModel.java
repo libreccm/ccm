@@ -29,7 +29,6 @@ package com.arsdigita.bebop.event;
  * @since 4.5 */
 public interface SearchAndSelectModel {
 
-    public static final String versionId = "$Id: SearchAndSelectModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Specify the user's search and restrict the result set to those queries
      * that match.  An empty string should return all results.

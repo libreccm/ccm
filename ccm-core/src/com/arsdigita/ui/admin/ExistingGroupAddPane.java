@@ -21,10 +21,9 @@ import com.arsdigita.ui.admin.GroupAdministrationTab;
 /**
  * Series of screens required for adding existing groups as subgroups - 
  * based on existing functionality for adding permissions to a folder in content/admin
+ * @version $Id: ExistingGroupAddPane.java,v 1.4 2004/06/21 11:34:03 cgyg9330 Exp $ by $Author: cgyg9330 $
  */
 public class ExistingGroupAddPane extends SimpleContainer implements AdminConstants  {
-	public static final String versionId =
-		"$Id: ExistingGroupAddPane.java,v 1.4 2004/06/21 11:34:03 cgyg9330 Exp $ by $Author: cgyg9330 $, $DateTime: 2003/01/09 06:28:37 $";
 
 	private static final Logger s_log = Logger.getLogger(ExistingGroupAddPane.class);
 	

@@ -128,7 +128,7 @@ public class Category extends ACSObject {
         s_config.load();
     }
     // Quasimodo: End
-    
+
     public static final String ROOT_CATEGORY = "rootCategory";
     public static final String USE_CONTEXT   = "useContext";
     public static final String CATEGORY_OWNER = "categoryOwner";
@@ -175,7 +175,7 @@ public class Category extends ACSObject {
     public final static String CHILD_OBJECTS = "childObjects";
     public final static String RELATED_CATEGORIES = RELATED;
     public final static String CATEGORIES = "categories";
-    
+
     public static final String LOCALIZATIONS = "localizations";
 
     // some named queries in the pdl files
@@ -190,7 +190,7 @@ public class Category extends ACSObject {
     // Save the localized parts of category
     private CategoryLocalizationCollection m_categoryLocalizationCollection;
     // Quasimodo: End
-    
+
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -357,7 +357,7 @@ public class Category extends ACSObject {
     public static CategorizationConfig getConfig() {
         return s_config;
     }
-    
+
     /**
      * @see com.arsdigita.domain.DomainObject#initialize()
      */
@@ -376,13 +376,13 @@ public class Category extends ACSObject {
             setAbstract(false);
             //by default do not ignore the parent index item
             setIgnoreParentIndexItem(false);
-            
+
         }
-        
+
         m_hierarchy = new HierarchyDenormalization
             ("com.arsdigita.categorization.updateCategoryDescendants", this,
              DEFAULT_ANCESTORS) {};
-             
+
         m_categoryLocalizationCollection = new CategoryLocalizationCollection(this);
 
     }
@@ -673,7 +673,7 @@ public class Category extends ACSObject {
 
     }
 
-    
+
     /**
      * Sets the URL component of the category.
      *
@@ -2200,7 +2200,7 @@ public class Category extends ACSObject {
             (new PermissionDescriptor(PrivilegeDescriptor.ADMIN, this,
                                       Kernel.getContext().getParty()));
     }
-    
+
     // Quasimodo: Begin
     /**
      * Getting the negotiated locale from requestContext

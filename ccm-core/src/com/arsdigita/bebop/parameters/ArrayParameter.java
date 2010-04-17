@@ -55,7 +55,6 @@ public class ArrayParameter extends ParameterModel {
     // Used to escape SEP_CHAR and ESCAPE_CHAR in the marshalled form.
     private static final char ESCAPE_CHAR = '.';
 
-    public static final String versionId = "$Id: ArrayParameter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected int maxCount=Integer.MAX_VALUE;
     protected int minCount=0;

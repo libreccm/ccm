@@ -30,12 +30,10 @@ import java.util.Map;
  * C
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: C.java 287 2005-02-22 00:29:02Z sskracic $ 
  **/
 
 final class C {
-
-    public final static String versionId = "$Id: C.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final com.redhat.persistence.metadata.ObjectType type
         (Root root, String qname) {

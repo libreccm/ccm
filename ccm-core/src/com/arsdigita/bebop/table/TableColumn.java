@@ -60,9 +60,8 @@ import com.arsdigita.xml.Element;
  *
  * @version $Id: TableColumn.java 287 2005-02-22 00:29:02Z sskracic $ */
 public class TableColumn extends SimpleComponent
-    implements Lockable {
+                         implements Lockable {
 
-    public static final String versionId = "$Id: TableColumn.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * The name of the width attribute used in the XML.
@@ -116,7 +115,7 @@ public class TableColumn extends SimpleComponent
 
     /**
      * Creates a new table column with <code>modelIndex</code> 0 and header
-     * value and key isEqual to <code>null</code>.
+     * value and key equal to <code>null</code>.
      */
     public TableColumn() {
         this(0);
@@ -124,7 +123,7 @@ public class TableColumn extends SimpleComponent
 
     /**
      * Creates a new table column with the given <code>modelIndex</code> and
-     * header value and key isEqual to <code>null</code>.
+     * header value and key equal to <code>null</code>.
      *
      * @param modelIndex the index of the column in the table model from
      * which to retrieve values
@@ -136,10 +135,10 @@ public class TableColumn extends SimpleComponent
 
     /**
      * Creates a new table column with the given <code>modelIndex</code> and
-     * header value. The header key is isEqual to <code>null</code>.
+     * header value. The header key is equal to <code>null</code>.
      *
      * @param modelIndex the index of the column in the table model from
-     * which to retrieve values.
+     *        which to retrieve values.
      * @param value the value for the column header.
      * @pre modelIndex >= 0
      */
@@ -152,7 +151,7 @@ public class TableColumn extends SimpleComponent
      * header value and key.
      *
      * @param modelIndex the index of the column in the table model from
-     * which to retrieve values.
+     *        which to retrieve values.
      * @param value the value for the column header.
      * @param key the key for the column header.
      * @pre modelIndex >= 0

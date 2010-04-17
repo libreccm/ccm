@@ -25,12 +25,10 @@ import com.arsdigita.util.UncheckedWrapperException;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @author <a href="mailto:randyg@alum.mit.edu">randyg@alum.mit.edu</a>
- * @version $Revision: #14 $ $Date: 2004/08/16 $
+ * @version $Id: PersistenceException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class PersistenceException extends UncheckedWrapperException {
-
-    public final static String versionId = "$Id: PersistenceException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Constructor for a PersistenceException which does not wrap

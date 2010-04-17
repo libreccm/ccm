@@ -61,12 +61,10 @@ import org.xml.sax.helpers.DefaultHandler;
  * QuerySuite
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #4 $ $Date: 2004/08/16 $
+ * @version $Id: QuerySuite.java 750 2005-09-02 12:38:44Z sskracic $
  **/
 
 public class QuerySuite extends TestSuite {
-
-    public final static String versionId = "$Id: QuerySuite.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public QuerySuite() {}
 

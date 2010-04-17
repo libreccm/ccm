@@ -28,12 +28,10 @@ import org.apache.log4j.Logger;
  * ResultCycle
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #13 $ $Date: 2004/08/16 $
+ * @version $Id: ResultCycle.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 class ResultCycle {
-
-    public final static String versionId = "$Id: ResultCycle.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger LOG = Logger.getLogger(ResultCycle.class);
 

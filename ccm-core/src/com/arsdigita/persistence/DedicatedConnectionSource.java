@@ -25,12 +25,10 @@ import java.sql.Connection;
  * DedicatedConnectionSource
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: DedicatedConnectionSource.java 813 2005-09-15 08:50:20Z sskracic $
  **/
 
 public class DedicatedConnectionSource implements ConnectionSource {
-
-    public final static String versionId = "$Id: DedicatedConnectionSource.java 813 2005-09-15 08:50:20Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_url;
     private ThreadLocal m_connections = new ThreadLocal() {

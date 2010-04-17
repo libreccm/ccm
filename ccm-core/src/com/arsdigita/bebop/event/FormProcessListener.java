@@ -32,8 +32,6 @@ import java.util.EventListener;
 
 public interface FormProcessListener extends EventListener {
 
-    public static final String versionId = "$Id: FormProcessListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Performs a processing step on the data in the
      * <code>FormData</code> object.

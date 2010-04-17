@@ -41,12 +41,10 @@ import java.util.HashMap;
  * TraversalHandler
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: TraversalHandler.java 1534 2007-03-23 12:08:00Z chrisgilbert23 $
  **/
 
 public class TraversalHandler extends DefaultHandler {
-
-    public final static String versionId = "$Id: TraversalHandler.java 1534 2007-03-23 12:08:00Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(TraversalHandler.class);

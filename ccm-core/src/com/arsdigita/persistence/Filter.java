@@ -81,12 +81,10 @@ import java.util.Map;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @author <a href="mailto:randyg@alum.mit.edu">randyg@alum.mit.edu</a>
- * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: Filter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public interface Filter {
-
-    String versionId = "$Id: Filter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // this string is used as the namespace for the bind variables
     String FILTER = "__FILTERPARAMS__";

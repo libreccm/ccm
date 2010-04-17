@@ -36,12 +36,10 @@ import org.apache.log4j.Logger;
  *  Dummy ServletContext object for unit testing of form methods that
  *  include requests in their signatures.
  *
- * @version $Revision: #11 $ $Date: 2004/08/16 $
+ * @version $Id: DummyServletContext.java 750 2005-09-02 12:38:44Z sskracic $
  */
 
 public class DummyServletContext implements ServletContext {
-
-    public static final String versionId = "$Id: DummyServletContext.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private HashMap m_attributes = new HashMap();
     private HashMap m_dispachers = new HashMap();

@@ -34,9 +34,10 @@ import com.arsdigita.bebop.PageState;
  * @see PortletRenderer
  * @see AbstractPortletRenderer
  * @author Justin Ross
- * @author James Parsons */
+ * @author James Parsons
+ * @version $Id: PortalModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public interface PortalModelBuilder {
-    public static final String versionId = "$Id: PortalModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Build a {@link PortalModel} for the current request.

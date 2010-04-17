@@ -54,8 +54,6 @@ import org.apache.log4j.Logger;
  */
 public class PersistentForm extends PersistentFormSection {
 
-    public static final String versionId = "$Id: PersistentForm.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger s_log =
         Logger.getLogger(PersistentForm.class.getName());
 

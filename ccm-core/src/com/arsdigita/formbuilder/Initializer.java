@@ -40,8 +40,8 @@ import org.apache.log4j.Logger;
  * that is mounted under formbuilder (this is done only once).
  *
  * @author Peter Marklund
- * @version $Revision: #10 $ $Date: 2004/08/16 $ */
-
+ * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class Initializer
 
     implements com.arsdigita.initializer.Initializer {
@@ -50,8 +50,6 @@ public class Initializer
 
     private static final Logger log =
         Logger.getLogger(Initializer.class);
-
-    public final static String versionId = "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $";
 
     public Initializer() throws InitializationException {
 

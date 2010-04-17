@@ -31,11 +31,10 @@ import javax.servlet.http.HttpServlet;
  * calling the initializers in the enterprise.init file.
  *
  * @author Raphael Schloming (rhs@mit.edu)
- * @version $Revision: #15 $ $Date: 2004/08/16 $ */
+ * @version $Id: InitializerServlet.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public class InitializerServlet extends HttpServlet {
-
-    public final static String versionId = "$Id: InitializerServlet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Script m_ini = null;
     private static boolean loaded = false;

@@ -62,8 +62,6 @@ import java.util.HashMap;
  **/
 public class RequestValue {
 
-    public static final String versionId = "$Id: RequestValue.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final String ATTRIBUTE_KEY =
         "com.arsdigita.dispatcher.RequestValue";
 

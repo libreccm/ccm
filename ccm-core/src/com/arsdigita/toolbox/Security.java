@@ -24,11 +24,9 @@ import com.arsdigita.kernel.Party;
  * <p>An interface for making access checks.</p>
  *
  * @author Michael Pih 
- * @version $Revision: #8 $ $DateTime: 2004/08/16 18:10:38 $
+ * @version $Id: Security.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface Security {
-
-    public static final String versionId = "$Id: Security.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Determine whether a party has access to a particular action.

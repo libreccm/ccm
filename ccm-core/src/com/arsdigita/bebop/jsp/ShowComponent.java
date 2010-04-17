@@ -39,10 +39,10 @@ import org.w3c.dom.traversal.TreeWalker;
  * This will have the effect of finding an element in the XML
  * document whose name attribute is "bebopComponent" and copying
  * the subtree rooted at this element into the result document.
+ * 
+ * @version $Id: ShowComponent.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ShowComponent extends BodyTagSupport implements JSPConstants {
-
-    public static final String versionId = "$Id: ShowComponent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_name;
 

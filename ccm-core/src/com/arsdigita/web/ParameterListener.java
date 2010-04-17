@@ -25,10 +25,7 @@ import javax.servlet.http.HttpServletRequest;
  * @version $Id: ParameterListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface ParameterListener {
-    static final String versionId =
-        "$Id: ParameterListener.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     void run(HttpServletRequest sreq, ParameterMap map);
+
 }

@@ -32,7 +32,6 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 public interface PropertySheetModel {
 
-    public static final String versionId = "$Id: PropertySheetModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Advances to the next property, if possible.

@@ -48,7 +48,6 @@ import com.arsdigita.xml.Element;
  * @author James Parsons
  * @version $Id: PortletRenderer.java 902 2005-09-22 04:57:12Z apevec $ */
 public interface PortletRenderer {
-    public static final String versionId = "$Id: PortletRenderer.java 902 2005-09-22 04:57:12Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Build an XML fragment and attach it to this component's parent.

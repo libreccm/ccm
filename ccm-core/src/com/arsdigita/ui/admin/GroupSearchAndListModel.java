@@ -33,8 +33,6 @@ import java.math.BigDecimal;
 
 class GroupSearchAndListModel implements SearchAndListModel {
 
-    public static final String versionId = "$Id: GroupSearchAndListModel.java 1508 2007-03-22 00:04:22Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * A DataQuery used to perform the search
      */

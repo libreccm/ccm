@@ -34,8 +34,6 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 public class ContextBar extends BoxPanel implements AdminConstants {
 
-    public static final String versionId = "$Id: ContextBar.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     // String catalog
     private static final GlobalizedMessage WORKSPACE =
         new GlobalizedMessage("ui.admin.contextBar.workspace", BUNDLE_NAME);

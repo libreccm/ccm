@@ -27,11 +27,10 @@ import org.w3c.dom.traversal.TreeWalker;
  * JSP tag handler to show columns from a model-backed Table row.
  * @see com.arsdigita.bebop.jsp.ShowTable
  * @see com.arsdigita.bebop.jsp.ShowTableBody
+ * @version $Id: ShowTableRow.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class ShowTableRow extends ShowCellList {
-
-    public static final String versionId = "$Id: ShowTableRow.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Returns a TreeWalker to pick out cells in the bebop:thead

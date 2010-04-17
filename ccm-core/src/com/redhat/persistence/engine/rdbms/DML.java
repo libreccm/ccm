@@ -28,12 +28,10 @@ import java.util.HashMap;
  * DML
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: DML.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 abstract class DML extends Operation {
-
-    public final static String versionId = "$Id: DML.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Table m_table;
     private HashMap m_bindings = new HashMap();

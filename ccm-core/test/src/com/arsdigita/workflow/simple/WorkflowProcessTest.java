@@ -42,11 +42,9 @@ import java.util.Iterator;
  * @author Richard Li
  * @author Stefan Deusch
  * @author Khy Huang
- *
+ * @version $Id: WorkflowProcessTest.java 750 2005-09-02 12:38:44Z sskracic $
  */
 public class WorkflowProcessTest extends WorkflowProcessTestHarness {
-
-    public static final String versionId = "$Id: WorkflowProcessTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static int taskDefId;
     // Arrays for WorkflowProcess Pattern below

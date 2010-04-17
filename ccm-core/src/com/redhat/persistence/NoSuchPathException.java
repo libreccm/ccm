@@ -24,12 +24,10 @@ import com.redhat.persistence.common.Path;
  * NoSuchPathException
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $$Id: NoSuchPathException.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class NoSuchPathException extends ProtoException {
-
-    public final static String versionId = "$Id: NoSuchPathException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Path m_path;
 

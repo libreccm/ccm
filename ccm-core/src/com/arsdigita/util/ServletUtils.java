@@ -28,11 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * A (static) class of generally-useful Java servlet utilities.
  * @author Bill Schneider
+ *
+ * @version $Id: ServletUtils.java 610 2005-06-23 15:50:05Z sskracic $
  */
 
 public class ServletUtils {
-
-    public static final String versionId = "$Id: ServletUtils.java 610 2005-06-23 15:50:05Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ServletUtils() { }
 

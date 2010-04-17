@@ -31,12 +31,10 @@ import org.apache.log4j.Logger;
  * AssociationMetadataTest
  *
  * @author <a href="mailto:ashah@redhat.com">ashah@redhat.com</a>
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: AssociationMetadataTest.java 745 2005-09-02 10:50:34Z sskracic $
  **/
 
 public class AssociationMetadataTest extends TestCase {
-
-    public final static String versionId = "$Id: AssociationMetadataTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log =
         Logger.getLogger(AssociationMetadataTest.class);

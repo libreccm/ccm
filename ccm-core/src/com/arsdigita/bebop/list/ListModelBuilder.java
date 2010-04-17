@@ -43,8 +43,6 @@ import com.arsdigita.bebop.List;
  * @version $Id: ListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ */
 public interface ListModelBuilder extends Lockable {
 
-    public static final String versionId = "$Id: ListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      *  Produce a {@link
      * ListModel} for the request specified by <code>state</code>. This

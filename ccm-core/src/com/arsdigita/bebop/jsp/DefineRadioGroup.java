@@ -29,10 +29,10 @@ import com.arsdigita.bebop.form.RadioGroup;
  *    &lt;define:option name="label" value="value"/>
  *  &lt;/define:radioGroup>
  * </pre>
+ *
+ * @version $Id: DefineRadioGroup.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefineRadioGroup extends DefineOptionGroup {
-
-    public static final String versionId = "$Id: DefineRadioGroup.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     OptionGroup createOptionGroup() {
         return new RadioGroup(getName());

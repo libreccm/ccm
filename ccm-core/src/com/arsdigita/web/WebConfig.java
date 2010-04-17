@@ -47,10 +47,6 @@ import org.apache.log4j.Logger;
  * @version $Id: WebConfig.java 1548 2007-03-29 14:49:49Z chrisgilbert23 $
  */
 public final class WebConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: WebConfig.java 1548 2007-03-29 14:49:49Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(WebConfig.class);
 

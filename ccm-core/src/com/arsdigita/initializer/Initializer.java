@@ -69,30 +69,25 @@ package com.arsdigita.initializer;
  *  </pre></blockquote>
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public interface Initializer {
 
-    public static final String versionId = "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Returns the configuration object used by this initializer.
-     **/
-
+     */
     Configuration getConfiguration();
 
     /**
      * Called on startup.
-     **/
-
+     */
     void startup() throws InitializationException;
 
     /**
      * Called on shutdown. It's probably not a good idea to depend on this
      * being called.
-     **/
-
+     */
     void shutdown()throws InitializationException;
 
 }

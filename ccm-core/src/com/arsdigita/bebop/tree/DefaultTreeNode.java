@@ -29,7 +29,6 @@ package com.arsdigita.bebop.tree;
  * @version $Id: DefaultTreeNode.java 287 2005-02-22 00:29:02Z sskracic $ */
 public class DefaultTreeNode implements TreeNode {
 
-    public static final String versionId = "$Id: DefaultTreeNode.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private Object m_key;
     private Object m_element;
 

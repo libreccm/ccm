@@ -71,8 +71,6 @@ import org.apache.oro.text.perl.Perl5Util;
 
 public class SortKey {
 
-    public static final String versionId = "$Id: SortKey.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * A character array for storing the key.
      */

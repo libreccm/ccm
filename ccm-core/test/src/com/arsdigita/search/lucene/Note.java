@@ -27,12 +27,10 @@ import java.math.BigDecimal;
  * Note
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #4 $ $Date: 2004/08/16 $
+ * @version $Id: Note.java 741 2005-09-02 10:21:19Z sskracic $
  **/
 
 class Note extends ACSObject {
-
-    public final static String versionId = "$Id: Note.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.search.lucene.Note";

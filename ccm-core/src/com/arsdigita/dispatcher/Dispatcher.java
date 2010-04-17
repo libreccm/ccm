@@ -43,12 +43,11 @@ import javax.servlet.http.HttpServletResponse;
  * then it is also an entry point for the entire web application.
  *
  * @author Bill Schneider 
- * @version ACS 4.5
- * @since 4.5 */
+ * @version $Id: Dispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public interface Dispatcher {
 
-    public static final String versionId = "$Id: Dispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Dispatches this request.

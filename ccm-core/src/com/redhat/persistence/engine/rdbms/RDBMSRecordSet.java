@@ -32,12 +32,10 @@ import org.apache.log4j.Logger;
  * RDBMSRecordSet
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #11 $ $Date: 2004/08/16 $
+ * @version $Id: RDBMSRecordSet.java 1299 2006-08-29 13:26:32Z sskracic $
  **/
 
 class RDBMSRecordSet extends RecordSet {
-
-    public final static String versionId = "$Id: RDBMSRecordSet.java 1299 2006-08-29 13:26:32Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(RDBMSRecordSet.class);
 

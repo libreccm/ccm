@@ -22,9 +22,12 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.List;
 import javax.servlet.jsp.JspException;
 
+/** 
+ * 
+ * @version $Id: DefineList.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DefineList extends DefineComponent {
 
-    public static final String versionId = "$Id: DefineList.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private List m_list;
 
     public int doStartTag() throws JspException {

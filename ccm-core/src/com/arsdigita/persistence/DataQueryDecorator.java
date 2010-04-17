@@ -30,8 +30,6 @@ import java.util.Map;
  */
 public class DataQueryDecorator implements DataQuery {
 
-    String versionId = "$Id: DataQueryDecorator.java 1045 2005-12-09 13:41:22Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private DataQuery m_dq;
 
     /**

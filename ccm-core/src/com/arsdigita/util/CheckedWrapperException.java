@@ -39,7 +39,6 @@ package com.arsdigita.util;
  */
 public class CheckedWrapperException extends Exception {
 
-    public static final String versionId = "$Id: CheckedWrapperException.java 287 2005-02-22 00:29:02Z sskracic $";
     private static final String NEW_LINE = System.getProperty("line.separator");
     Throwable m_rootCause;
 

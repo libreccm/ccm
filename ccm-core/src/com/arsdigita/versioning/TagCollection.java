@@ -28,12 +28,10 @@ import com.arsdigita.persistence.OID;
  * TagCollection
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: TagCollection.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class TagCollection extends DomainQuery {
-
-    public final static String versionId = "$Id: TagCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     static final String TAGGED = "taggedOID";
     static final String DESC = "tag";

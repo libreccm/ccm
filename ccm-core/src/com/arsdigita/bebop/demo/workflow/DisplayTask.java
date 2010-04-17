@@ -47,10 +47,12 @@ import com.arsdigita.util.UncheckedWrapperException;
 import java.util.Iterator;
 import java.util.TooManyListenersException;
 
+/**
+ *
+ * @version $Id: DisplayTask.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DisplayTask extends Form
     implements FormProcessListener, FormSubmissionListener {
-
-    public static final String versionId = "$Id: DisplayTask.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private SingleSelectionModel m_tasks;
 

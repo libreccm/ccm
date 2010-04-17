@@ -29,11 +29,11 @@ import com.arsdigita.bebop.event.ParameterEvent;
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
  *    @author Stas Freidin 
- *    @author Rory Solomon  */
+ *    @author Rory Solomon
+ * @version  $Id: EnumerationValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public class EnumerationValidationListener implements ParameterListener {
-
-    public static final String versionId = "$Id: EnumerationValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final String[] m_allowedValues;
     private final boolean m_caseSensitive;

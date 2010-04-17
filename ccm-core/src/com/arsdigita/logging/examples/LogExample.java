@@ -30,12 +30,9 @@ import org.apache.log4j.RollingFileAppender;
  * This is an example class that uses the secure logging api.
  * </p>
  *
- * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: LogExample.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class LogExample {
-    public final static String versionId = 
-            "$Id: LogExample.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // get the logger named the same as this class
     static final Logger cat = Logger.getLogger(LogExample.class);

@@ -134,8 +134,6 @@ import org.apache.log4j.Logger;
  */
 public class DataTable extends Table implements PaginationModelBuilder {
 
-    public static final String versionId = "$Id: DataTable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger s_log =
         Logger.getLogger(DataTable.class.getName());
 

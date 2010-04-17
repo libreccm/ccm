@@ -33,12 +33,10 @@ import org.apache.log4j.Logger;
  * CoreInitializer
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: CoreInitializer.java 750 2005-09-02 12:38:44Z sskracic $
  **/
 
 public class CoreInitializer extends CompoundInitializer {
-
-    public final static String versionId = "$Id: CoreInitializer.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (CoreInitializer.class);

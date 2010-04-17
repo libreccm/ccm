@@ -30,11 +30,10 @@ import java.sql.SQLException;
  * appropriate to a given database
  *
  * @author Kevin Scaldeferri
+ * @version $Id: SequenceImpl.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public abstract class SequenceImpl {
-
-    public static final String versionId = "$Id: SequenceImpl.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public abstract BigDecimal getCurrentValue(Connection conn)
         throws SQLException;

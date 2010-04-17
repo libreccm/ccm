@@ -38,11 +38,13 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 
 
+/**
+ *
+ * @version $Id: AddProcess.java 287 2005-02-22 00:29:02Z sskracic $ 
+ */
 public class AddProcess extends Form
     implements FormProcessListener, FormInitListener,
                FormSubmissionListener {
-
-    public static final String versionId = "$Id: AddProcess.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private SingleSelectionModel m_processes;
     private ToggleLink m_addLink;

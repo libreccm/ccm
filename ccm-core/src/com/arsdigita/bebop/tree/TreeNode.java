@@ -33,7 +33,6 @@ package com.arsdigita.bebop.tree;
  * @version $Id: TreeNode.java 287 2005-02-22 00:29:02Z sskracic $ */
 public interface TreeNode {
 
-    public static final String versionId = "$Id: TreeNode.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Obtain a unique ID representing the node

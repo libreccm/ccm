@@ -30,12 +30,11 @@ import java.util.HashMap;
  * DeveloperSupportProfiler
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: DeveloperSupportProfiler.java 1498 2007-03-19 16:22:15Z apevec $
  **/
 
 public class DeveloperSupportProfiler implements RDBMSProfiler {
 
-    public final static String versionId = "$Id: DeveloperSupportProfiler.java 1498 2007-03-19 16:22:15Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
     public DeveloperSupportProfiler() {}
 

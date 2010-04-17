@@ -21,9 +21,12 @@ package com.arsdigita.xml;
 // This class exists to expose a protected method to a white box test
 // for validation.
 
+/**
+ * 
+ * @version $Id: TagTestElement.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class TagTestElement {
 
-    public static final String versionId = "$Id: TagTestElement.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public static org.w3c.dom.Element getInternalElementForTesting(Element e) {
         return e.getInternalElement();
     }

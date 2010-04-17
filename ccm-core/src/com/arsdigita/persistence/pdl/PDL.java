@@ -61,12 +61,10 @@ import org.apache.log4j.Logger;
  * a single XML file (the first command line argument).
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #33 $ $Date: 2004/08/16 $
+ * @version $Id: PDL.java 738 2005-09-01 12:36:52Z sskracic $
  */
 
 public class PDL {
-
-    public final static String versionId = "$Id: PDL.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(PDL.class);
     private static boolean s_quiet = false;

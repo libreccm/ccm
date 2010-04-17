@@ -43,10 +43,10 @@ import javax.servlet.jsp.JspException;
  * &lt;define:submit name="mySubmit" label="Submit form now!"/>
  * </pre>
  *
- * @see com.arsdigita.bebop.form.Submit */
+ * @see com.arsdigita.bebop.form.Submit
+ * @version $Id: DefineSubmit.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DefineSubmit extends DefineComponent {
-
-    public static final String versionId = "$Id: DefineSubmit.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Submit m_submit;
     private String m_label;

@@ -26,12 +26,10 @@ import java.util.Map;
  * Engine
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: Engine.java 1045 2005-12-09 13:41:22Z sskracic $
  **/
 
 public abstract class Engine {
-
-    public final static String versionId = "$Id: Engine.java 1045 2005-12-09 13:41:22Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Session m_ssn;
 

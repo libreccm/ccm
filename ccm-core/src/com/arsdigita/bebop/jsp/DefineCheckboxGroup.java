@@ -29,12 +29,12 @@ import com.arsdigita.bebop.form.OptionGroup;
  *    &lt;define:option name="label" value="value"/>
  *  &lt;/define:checkboxGroup>
  * </pre>
+ * 
+ * @version $Id: DefineCheckboxGroup.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class DefineCheckboxGroup extends DefineOptionGroup {
 
     private boolean m_vertical;
-
-    public static final String versionId = "$Id: DefineCheckboxGroup.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     OptionGroup createOptionGroup() {
         OptionGroup og = new CheckboxGroup(getName());

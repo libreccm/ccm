@@ -25,13 +25,11 @@ import com.redhat.persistence.ProtoException;
  * DataAssociationImpl
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #21 $ $Date: 2004/08/16 $
+ * @version $Id: DataAssociationImpl.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 class DataAssociationImpl extends DataAssociationCursorImpl
     implements DataAssociation {
-
-    public final static String versionId = "$Id: DataAssociationImpl.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private com.redhat.persistence.Session m_pssn;
     private DataObject m_data;

@@ -32,10 +32,11 @@ import org.apache.log4j.Logger;
  * This instantiator is primarily intended for other instantiators
  * (such as ACSObjectInstantiator) to provide the default behavior
  * of instiating a domain class using reflection.
- **/
+ * 
+ * @version $Id: ReflectionInstantiator.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class ReflectionInstantiator extends DomainObjectInstantiator {
 
-    public static final String versionId = "$Id: ReflectionInstantiator.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static Logger s_log = Logger.getLogger(ReflectionInstantiator.class);
 
     private Constructor m_constructor;

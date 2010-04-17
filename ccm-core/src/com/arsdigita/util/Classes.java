@@ -29,12 +29,9 @@ import java.util.Arrays;
  * classes.
  *
  * @author Justin Ross
+ * @version $Id: Classes.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class Classes {
-    public static final String versionId =
-        "$Id: Classes.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Classes.class);
 

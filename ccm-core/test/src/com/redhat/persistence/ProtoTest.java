@@ -41,12 +41,10 @@ import junit.framework.TestCase;
  * ProtoTest
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: ProtoTest.java 740 2005-09-02 10:13:54Z sskracic $
  **/
 
 public class ProtoTest extends TestCase {
-
-    public final static String versionId = "$Id: ProtoTest.java 740 2005-09-02 10:13:54Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
 
     public ProtoTest(String name) {

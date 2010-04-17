@@ -28,10 +28,6 @@ package com.arsdigita.dispatcher;
  * @version $Id: ObjectNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ObjectNotFoundException extends RuntimeException {
-    public final static String versionId =
-        "$Id: ObjectNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     // The default error detail message.
     private final static String ERROR_MSG = "The object requested cannot be found";

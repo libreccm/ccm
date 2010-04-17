@@ -20,6 +20,7 @@ package com.arsdigita.bebop;
 
 import com.arsdigita.bebop.util.GlobalizationUtil ; 
 import com.arsdigita.util.Assert;
+import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
 
 /**

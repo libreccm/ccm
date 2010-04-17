@@ -84,10 +84,10 @@ import org.xml.sax.helpers.DefaultHandler;
  * <tr><td>/map/ <td>  serve file /packages/map-app/www/index.jsp
  * </table>
  *
- * @author Bill Schneider  */
+ * @author Bill Schneider
+ * @version $Id: MapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class MapDispatcher implements Dispatcher {
-
-    public static final String versionId = "$Id: MapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Map m_map = new HashMap();
     // accesses to m_map must be synchronized

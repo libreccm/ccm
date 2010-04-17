@@ -26,12 +26,10 @@ import junit.framework.TestCase;
  * DDLDiffTest
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: DDLDiffTest.java 750 2005-09-02 12:38:44Z sskracic $
  **/
 
 public class DDLDiffTest extends TestCase {
-
-    public final static String versionId = "$Id: DDLDiffTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public DDLDiffTest(String name) {
         super(name);

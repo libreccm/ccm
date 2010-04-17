@@ -39,10 +39,6 @@ import org.apache.log4j.Logger;
  * @version $Id: HttpParameterMap.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public class HttpParameterMap {
-    public static final String versionId =
-        "$Id: HttpParameterMap.java 738 2005-09-01 12:36:52Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (HttpParameterMap.class);

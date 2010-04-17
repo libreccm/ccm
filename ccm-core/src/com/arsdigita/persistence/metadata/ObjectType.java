@@ -33,8 +33,7 @@ import java.util.Iterator;
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Revision: #19 $ $Date: 2004/08/16 $
  * @version $Id: ObjectType.java 287 2005-02-22 00:29:02Z sskracic $
- **/
-
+ */
 public class ObjectType extends CompoundType {
 
     static ObjectType

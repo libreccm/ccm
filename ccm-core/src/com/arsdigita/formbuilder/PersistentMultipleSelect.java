@@ -46,8 +46,6 @@ import com.arsdigita.domain.DataObjectNotFoundException;
  */
 public class PersistentMultipleSelect extends PersistentSelect {
 
-    public static final String versionId = "$Id: PersistentMultipleSelect.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
 
     /**
      * BASE_DATA_OBJECT_TYPE represents the full name of the

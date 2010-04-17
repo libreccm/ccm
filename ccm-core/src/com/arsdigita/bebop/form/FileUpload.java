@@ -40,8 +40,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class FileUpload extends Widget {
 
-    public static final String versionId = "$Id: FileUpload.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public FileUpload(String name) {
         this(name, true);
     }

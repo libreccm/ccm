@@ -22,12 +22,10 @@ package com.arsdigita.persistence;
  * FilterFactoryImpl actually hands out the requested filters
  *
  * @author <a href="mailto:randyg@alum.mit.edu">randyg@alum.mit.edu</a>
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: FilterFactoryImpl.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 class FilterFactoryImpl implements FilterFactory {
-
-    public final static String versionId = "$Id: FilterFactoryImpl.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Session m_ssn;
 

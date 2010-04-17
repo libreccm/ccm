@@ -55,12 +55,9 @@ import org.apache.log4j.Logger;
  * @author Uday Mathur
  * @author Khy Huang
  * @author Stefan Deusch
+ * @version $Id: UserTask.java 1564 2007-04-18 16:15:27Z apevec $
  **/
 public class UserTask extends Task implements Assignable {
-    public static final String versionId = 
-            "$Id: UserTask.java 1564 2007-04-18 16:15:27Z apevec $" +
-            " by $Author: apevec $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static WorkflowConfig CONFIG;
 
@@ -279,7 +276,7 @@ public class UserTask extends Task implements Assignable {
      * Marks the task as finished. (persistent operation)
      * <P>This operation is only valid if the
      * task is enabled.
-     * Only the user who previously isLocked the task can call this
+     * Only the user who previously locked the task can call this
      * method.
      *
      * @param user the user who checks off the task
@@ -484,7 +481,7 @@ public class UserTask extends Task implements Assignable {
 
     /**
      * Releases the lock on the task if it is currently
-     * isLocked. (persistent operation)
+     * locked. (persistent operation)
      *
      * @param user the user who is unlocking the task
      *
@@ -497,8 +494,8 @@ public class UserTask extends Task implements Assignable {
 
 
     /**
-     * Checks whether the task is isLocked by a user.
-     * @return <code>true</code> if the  task is isLocked
+     * Checks whether the task is locked by a user.
+     * @return <code>true</code> if the  task is locked
      * by a user; <code>false</code> otherwise.
 
      *
@@ -509,8 +506,8 @@ public class UserTask extends Task implements Assignable {
 
 
     /**
-     * Retrieves the user who isLocked the process.
-     * @return  the user who isLocked the process.
+     * Retrieves the user who locked the process.
+     * @return  the user who locked the process.
      *
      */
     public User getLockedUser() {

@@ -46,12 +46,10 @@ import org.apache.log4j.Logger;
  * QueryTest
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #27 $ $Date: 2004/08/16 $
+ * @version $Id: QueryTest.java 745 2005-09-02 10:50:34Z sskracic $
  **/
 
 public class QueryTest extends PersistenceTestCase {
-
-    public final static String versionId = "$Id: QueryTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(QueryTest.class);

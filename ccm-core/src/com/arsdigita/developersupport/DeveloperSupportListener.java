@@ -23,10 +23,9 @@ import java.util.HashMap;
 /**
  *
  * @author Joseph A. Bank (jbank@alum.mit.edu)
- * @version 1.0
+ * @version $Id: DeveloperSupportListener.java 1460 2007-03-02 14:36:38Z sskracic $
  **/
 public abstract class DeveloperSupportListener {
-    public static final String versionId = "$Id: DeveloperSupportListener.java 1460 2007-03-02 14:36:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * requestStart

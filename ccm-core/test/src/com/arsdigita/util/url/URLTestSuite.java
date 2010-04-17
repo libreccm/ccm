@@ -25,10 +25,9 @@ import junit.framework.Test;
 
 /**
  * URLTestSuite
- *
+ * @version $Id: URLTestSuite.java 750 2005-09-02 12:38:44Z sskracic $
  */
 public class URLTestSuite extends PackageTestSuite {
-    public final static String versionId = "$Id: URLTestSuite.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public URLTestSuite() {
         super();

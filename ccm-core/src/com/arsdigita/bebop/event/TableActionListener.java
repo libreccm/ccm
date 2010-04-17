@@ -33,7 +33,6 @@ import java.util.EventListener;
  */
 public interface TableActionListener extends EventListener {
 
-    public static final String versionId = "$Id: TableActionListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * An event handler for actions on a particular cell or a set of
      * cells.

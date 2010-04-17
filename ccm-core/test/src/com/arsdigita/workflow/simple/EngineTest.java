@@ -34,11 +34,9 @@ import org.apache.log4j.Logger;
  *  The Junit test for Engine class
  *
  *  Testing each of the methods, which are essentially reports
- *
+ * @version $Id: EngineTest.java 741 2005-09-02 10:21:19Z sskracic $
  */
 public class EngineTest extends WorkflowTestCase {
-
-    public static final String versionId = "$Id: EngineTest.java 741 2005-09-02 10:21:19Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(EngineTest.class);

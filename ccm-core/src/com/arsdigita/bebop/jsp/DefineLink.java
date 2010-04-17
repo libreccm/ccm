@@ -24,14 +24,14 @@ import javax.servlet.jsp.JspException;
 
 /**
  * Tag handler for definining a Link.
+ *
+ * @version $Id: DefineLink.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class DefineLink extends DefineComponent {
 
     private Link m_link;
     private String m_url;
     private String m_label;
-
-    public static final String versionId = "$Id: DefineLink.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // must override this method because we're not adding the
     // link to the page until the *end* of the tag.  (Otherwise we

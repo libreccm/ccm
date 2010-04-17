@@ -29,12 +29,10 @@ import java.util.List;
  * PropertyData
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: PropertyData.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 class PropertyData {
-
-    public final static String versionId = "$Id: PropertyData.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     final private ObjectData m_odata;
     final private Property m_prop;

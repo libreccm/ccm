@@ -20,9 +20,10 @@ package com.arsdigita.bebop.jsp;
 
 /**
  * Interface class for JSP constants.
+ * 
+ * @version $Id: JSPConstants.java 287 2005-02-22 00:29:02Z sskracic $
  */
 interface JSPConstants {
-    public static final String versionId = "$Id: JSPConstants.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     final static String BEBOP_XMLNS =
         "http://www.arsdigita.com/bebop/1.0";

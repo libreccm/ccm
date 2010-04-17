@@ -25,12 +25,11 @@ import com.arsdigita.bebop.parameters.EnumerationValidationListener;
  *
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
- *
+ * @version $Id: EnumerationParameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class EnumerationParameter extends StringParameter {
 
-    public static final String versionId = "$Id: EnumerationParameter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public EnumerationParameter(String name, String[] allowedValues) {
         super(name);
         addParameterListener(new EnumerationValidationListener(allowedValues));

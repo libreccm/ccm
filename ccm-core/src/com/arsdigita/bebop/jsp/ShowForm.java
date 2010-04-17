@@ -29,10 +29,11 @@ import org.w3c.dom.traversal.TreeWalker;
  * A Bebop form is a special case of a container because we need to
  * preserve the pageState children which will later turn into
  * &lt;input type=hidden>.
+ * 
+ * @version $Id: ShowForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ShowForm extends ShowContainer {
 
-    public static final String versionId = "$Id: ShowForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private Node m_oldOutputContext;
     private Node m_formResult;
 

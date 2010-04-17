@@ -27,13 +27,11 @@ import com.redhat.persistence.metadata.ObjectType;
  * DataAssociationCursorImpl
  *
  * @author Archit Shah &lt;ashah@mit.edu&gt;
- * @version $Revision: #18 $ $Date: 2004/08/16 $
+ * @version $Id: DataAssociationCursorImpl.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 
 class DataAssociationCursorImpl extends DataCollectionImpl
     implements DataAssociationCursor {
-
-    public final static String versionId = "$Id: DataAssociationCursorImpl.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private DataAssociationImpl m_assn;
 

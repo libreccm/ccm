@@ -48,6 +48,8 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
+
+
 /**
  * abstract class for displaying the categories assigned to an object under one or 
  * more root nodes. Subclasses should retrieve the object to be assigned and 

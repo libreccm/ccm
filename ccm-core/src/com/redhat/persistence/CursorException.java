@@ -22,12 +22,10 @@ package com.redhat.persistence;
  * CursorException
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: CursorException.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class CursorException extends ProtoException {
-
-    public final static String versionId = "$Id: CursorException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Cursor m_cursor;
 

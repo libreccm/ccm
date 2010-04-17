@@ -77,10 +77,6 @@ import org.apache.log4j.Logger;
  * @version $Id: DispatcherServlet.java 738 2005-09-01 12:36:52Z sskracic $
  */
 public class DispatcherServlet extends BaseServlet {
-    public static final String versionId =
-        "$Id: DispatcherServlet.java 738 2005-09-01 12:36:52Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log = Logger.getLogger(DispatcherServlet.class);
 

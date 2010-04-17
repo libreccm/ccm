@@ -28,12 +28,10 @@ import javax.servlet.http.HttpServletRequest;
  *  Dummy RequestContext object for unit testing of form methods that
  *  include requests in their signatures.
  *
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: DummyRequestContext.java 750 2005-09-02 12:38:44Z sskracic $
  */
 
 public class DummyRequestContext implements RequestContext {
-
-    public static final String versionId = "$Id: DummyRequestContext.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ServletContext m_servletContext;
     private HttpServletRequest m_request;

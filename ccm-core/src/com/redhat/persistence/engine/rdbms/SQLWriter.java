@@ -48,14 +48,10 @@ import java.util.List;
  * SQLWriter
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #17 $ $Date: 2004/08/16 $
+ * @version $Id: SQLWriter.java 735 2005-09-01 06:42:59Z sskracic $
  **/
 
 public abstract class SQLWriter {
-
-    public final static String versionId = 
-            "$Id: SQLWriter.java 735 2005-09-01 06:42:59Z sskracic $" +
-            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private RDBMSEngine m_engine;
     private Operation m_op = null;

@@ -24,11 +24,10 @@ package com.arsdigita.dispatcher;
  * slash.
  *
  * @author Bill Schneider
- * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: RedirectException.java 287 2005-02-22 00:29:02Z sskracic $
  * @since 4.5 */
 public class RedirectException extends Exception {
 
-    public static final String versionId = "$Id: RedirectException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public RedirectException(String s) {
         super(s);
     }

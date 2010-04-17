@@ -30,10 +30,10 @@ import com.arsdigita.bebop.event.ParameterEvent;
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
  *    @author Stas Freidin 
- *    @author Rory Solomon  */
+ *    @author Rory Solomon
+ * @version $Id: NumberInRangeValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class NumberInRangeValidationListener implements ParameterListener {
-
-    public static final String versionId = "$Id: NumberInRangeValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final double m_lowerBound;
     private final double m_upperBound;

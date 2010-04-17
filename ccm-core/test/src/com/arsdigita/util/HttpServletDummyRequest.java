@@ -41,7 +41,6 @@ import org.apache.cactus.ServletURL;
  */
 
 public class HttpServletDummyRequest implements HttpServletRequest {
-    public static final String versionId = "$Id: HttpServletDummyRequest.java 747 2005-09-02 11:02:24Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private HashMap parameters = new HashMap();
     private HashMap attributes = new HashMap();

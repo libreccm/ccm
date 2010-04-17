@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.bebop.jsp;
 
+package com.arsdigita.bebop.jsp;
 
 
 /**
@@ -52,10 +52,10 @@ package com.arsdigita.bebop.jsp;
  * Note that a Bebop Table isn't really a Container, but from the JSP's
  * perspective of manipulating Bebop XML output, and not the components
  *  themselves, the behavior is container-like.
+ * 
+ * @version $Id: ShowTable.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ShowTable extends ShowContainer {
-
-    public static final String versionId = "$Id: ShowTable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // maybe this is just a synonym for ShowContainer?
     // ShowContainer sets up our input context...

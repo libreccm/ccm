@@ -35,12 +35,10 @@ import org.xml.sax.helpers.DefaultHandler;
  * pattern.  This class may be used directly by applications, or it
  * may be subclassed to be coded with a specific map or to override
  * the map lookup for certain sets of URLs.
+ *
+ * @version $Id: BebopMapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class BebopMapDispatcher extends MapDispatcher {
-    public static final String versionId = 
-        "$Id: BebopMapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private PresentationManager m_presManager;
 

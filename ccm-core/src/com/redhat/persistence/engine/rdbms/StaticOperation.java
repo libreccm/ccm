@@ -26,12 +26,9 @@ import java.util.Iterator;
  * StaticOperation
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: StaticOperation.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 class StaticOperation extends Operation {
-
-    public final static String versionId = "$Id: StaticOperation.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private SQLBlock m_sql;
 

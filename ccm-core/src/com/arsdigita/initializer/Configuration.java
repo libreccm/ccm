@@ -59,12 +59,10 @@ import java.util.Set;
  *  </pre></blockquote>
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: Configuration.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class Configuration {
-
-    public final static String versionId = "$Id: Configuration.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     Map m_parameters = new HashMap();
     Map m_types = new HashMap();

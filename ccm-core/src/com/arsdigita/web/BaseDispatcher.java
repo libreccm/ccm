@@ -48,10 +48,6 @@ import org.apache.log4j.Logger;
  * @version $Id: BaseDispatcher.java 562 2005-06-12 23:53:19Z apevec $
  */
 class BaseDispatcher {
-    public static final String versionId =
-        "$Id: BaseDispatcher.java 562 2005-06-12 23:53:19Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log = Logger.getLogger(BaseDispatcher.class);
 

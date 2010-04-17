@@ -41,10 +41,10 @@ import org.w3c.dom.Node;
  *
  * This has the effect of locally-styling the list contents in the JSP,
  * while globally styling the individual item inside the list.
+ * 
+ * @version $Id: ShowListItem.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ShowListItem extends ShowComponent {
-
-    public static final String versionId = "$Id: ShowListItem.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public int doEndTag() {
         // we don't have a named component, but we find our parent

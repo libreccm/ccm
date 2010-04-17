@@ -23,12 +23,10 @@ package com.arsdigita.persistence;
  * Utilities
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: Utilities.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class Utilities {
-
-    public final static String versionId = "$Id: Utilities.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public final static String LINE_BREAK =
         System.getProperty("line.separator", "\n\r");

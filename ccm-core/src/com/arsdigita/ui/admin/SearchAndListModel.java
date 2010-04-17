@@ -24,11 +24,10 @@ import com.arsdigita.bebop.list.ListModel;
  *
  *
  * @author David Dao
+ * @version $Id: SearchAndListModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public interface SearchAndListModel extends ListModel {
-
-    public static final String versionId = "$Id: SearchAndListModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Specify the user's search.

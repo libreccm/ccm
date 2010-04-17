@@ -28,11 +28,9 @@ import java.util.Map;
  * </p>
  *
  * @author David Lutterkort
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: Pair.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Pair implements Map.Entry, Cloneable {
-
-    public final static String versionId = "$Id: Pair.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Object m_key;
     private Object m_value;

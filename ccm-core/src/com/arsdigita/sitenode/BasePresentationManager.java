@@ -78,10 +78,6 @@ import org.apache.log4j.Logger;
  * @version $Id: BasePresentationManager.java 562 2005-06-12 23:53:19Z apevec $
  */
 public class BasePresentationManager implements PresentationManager {
-    public static final String versionId =
-        "$Id: BasePresentationManager.java 562 2005-06-12 23:53:19Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (BasePresentationManager.class);

@@ -25,10 +25,10 @@ import javax.servlet.jsp.JspException;
 /**
  * Class for defining a tabbed pane inside a Bebop page, defined
  * via JSP tags.
+ *
+ * @version $Id: DefineTabbedPane.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefineTabbedPane extends DefineContainer {
-
-    public static final String versionId = "$Id: DefineTabbedPane.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private TabbedPane m_tabbedPane;
 

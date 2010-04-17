@@ -27,10 +27,9 @@ import java.math.BigDecimal;
  * OtherType
  *
  * @author <a href="mailto:jorris@redhat.com">Jon Orris</a>
- *
+ * @version $Id: OtherType.java 746 2005-09-02 10:56:35Z sskracic $
  */
 public class OtherType extends ACSObject {
-    public final static String versionId = "$Id: OtherType.java 746 2005-09-02 10:56:35Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.search.lucene.OtherType";

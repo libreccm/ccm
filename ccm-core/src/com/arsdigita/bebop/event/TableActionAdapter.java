@@ -30,8 +30,6 @@ package com.arsdigita.bebop.event;
  */
 public class TableActionAdapter implements TableActionListener {
 
-    public static final String versionId = "$Id: TableActionAdapter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * A no-op implementation of {@link
      * TableActionListener#cellSelected(TableActionEvent)}.

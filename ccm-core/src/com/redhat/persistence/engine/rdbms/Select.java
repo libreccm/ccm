@@ -26,14 +26,10 @@ import com.redhat.persistence.oql.Query;
  * Select
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: Select.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 
 class Select extends Operation {
-
-    public final static String versionId = 
-            "$Id: Select.java 738 2005-09-01 12:36:52Z sskracic $" +
-            " by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Query m_query;
     private Signature m_sig ;

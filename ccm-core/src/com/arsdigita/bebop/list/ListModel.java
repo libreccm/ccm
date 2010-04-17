@@ -62,8 +62,6 @@ package com.arsdigita.bebop.list;
  * @version $Id: ListModel.java 287 2005-02-22 00:29:02Z sskracic $ */
 public interface ListModel {
 
-    public static final String versionId = "$Id: ListModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Move to the next list item. If there is no next list
      * item, return <code>false</code>. The item's key and element can be

@@ -30,12 +30,10 @@ import com.redhat.persistence.metadata.UniqueKey;
  * DynamicElement
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: DynamicElement.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 abstract class DynamicElement {
-
-    public final static String versionId = "$Id: DynamicElement.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * This takes an ObjectType name and model, and generates a unique

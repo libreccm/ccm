@@ -34,7 +34,6 @@ import java.util.EventObject;
  */
 public class PageEvent extends EventObject {
 
-    public static final String versionId = "$Id: PageEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private transient PageState _state;
 
     /**

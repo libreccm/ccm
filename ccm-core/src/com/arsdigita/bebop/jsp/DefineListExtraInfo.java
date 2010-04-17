@@ -22,9 +22,12 @@ import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.VariableInfo;
 
+/** 
+ * 
+ * @version $Id: DefineListExtraInfo.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DefineListExtraInfo extends TagExtraInfo {
 
-    public static final String versionId = "$Id: DefineListExtraInfo.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public VariableInfo[] getVariableInfo(TagData data) {
         return new VariableInfo[] {
             new VariableInfo(data.getAttributeString("name"),

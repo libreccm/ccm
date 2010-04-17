@@ -50,11 +50,10 @@ import junit.framework.TestSuite;
  *  the framework will look here. test.testpath must be the fully qualified path name.
  *
  * @author Jon Orris
- * @version $Revision: #13 $ $Date: 2004/08/16 $
+ * @version $Id: PackageTestSuite.java 1720 2008-07-21 13:59:13Z terry $
  */
 
 public class PackageTestSuite extends TestSuite {
-    public final static String versionId = "$Id: PackageTestSuite.java 1720 2008-07-21 13:59:13Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
 
     public PackageTestSuite() {
         super();

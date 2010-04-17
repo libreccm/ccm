@@ -24,12 +24,10 @@ import com.redhat.persistence.oql.Expression;
  * DataSet
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: DataSet.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 
 public class DataSet {
-
-    public final static String versionId = "$Id: DataSet.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Session m_ssn;
     private Signature m_sig;

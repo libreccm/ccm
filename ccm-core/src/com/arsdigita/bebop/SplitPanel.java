@@ -34,7 +34,7 @@ import com.arsdigita.xml.Element;
  *
  * This container contains three components: "left", "right" and "header".
  * All three components must be present (non-null) before <code>SplitPanel</code>
- * is isLocked. An exception will be thrown if this is not the case.
+ * is locked. An exception will be thrown if this is not the case.
  *
  * @author Stanislav Freidin 
  * @version $Id: SplitPanel.java 287 2005-02-22 00:29:02Z sskracic $

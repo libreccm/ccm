@@ -27,11 +27,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @see RequestListener
  * @author Bill Schneider
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: RequestEvent.java 287 2005-02-22 00:29:02Z sskracic $
  * @since 4.5 */
 public class RequestEvent  {
 
-    public static final String versionId = "$Id: RequestEvent.java 287 2005-02-22 00:29:02Z sskracic $";
 
     private HttpServletRequest m_req;
     private HttpServletResponse m_resp;

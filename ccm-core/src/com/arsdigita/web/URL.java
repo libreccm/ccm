@@ -131,10 +131,6 @@ import org.apache.log4j.Logger;
  * @version $Id: URL.java 800 2005-09-12 15:11:00Z fabrice $
  */
 public class URL {
-    public static final String versionId =
-        "$Id: URL.java 800 2005-09-12 15:11:00Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(URL.class);
 

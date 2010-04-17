@@ -124,14 +124,14 @@ public class Initializer extends BaseInitializer {
     }
 
     public BebopObjectType getObjectType(String name,
-            Class type) {
+                                         Class type) {
         BebopObjectType objectType = null;
         try {
             objectType = BebopObjectType.findByClass(name,
-                    type);
+                                                     type);
         } catch (DataObjectNotFoundException ex) {
             objectType = BebopObjectType.create(name,
-                    type);
+                                                type);
             objectType.save();
         }
         return objectType;

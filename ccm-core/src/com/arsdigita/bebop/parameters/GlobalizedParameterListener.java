@@ -27,12 +27,10 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * Abstract class to be extended by globalized parameters.
  * </p>
  *
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: GlobalizedParameterListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class GlobalizedParameterListener
     implements Globalized, ParameterListener {
-
-    public final static String versionId = "$Id: GlobalizedParameterListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final static String BUNDLE_NAME =
         "com.arsdigita.bebop.parameters.ParameterResources";

@@ -21,7 +21,7 @@ package com.arsdigita.bebop.event;
 import java.util.EventListener;
 
 /**
- *  Analogous to Widget
+ * Analogous to Widget
  * PrintListeners, this is called when the widget is displayed (or
  * validated) to get the dataset.  The dataset should be created
  * dynamically so it can vary according to form variables.
@@ -34,6 +34,5 @@ import java.util.EventListener;
  * @since 4.5 */
 public interface SearchAndSelectListener extends EventListener {
 
-    public static final String versionId = "$Id: SearchAndSelectListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     SearchAndSelectModel getModel( PageEvent e );
 }

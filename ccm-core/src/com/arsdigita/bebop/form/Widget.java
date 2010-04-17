@@ -71,10 +71,6 @@ import com.arsdigita.xml.Element;
  * @version $Id: Widget.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $
  */
 public abstract class Widget extends BlockStylable implements Cloneable, BebopConstants {
-    public static final String versionId =
-        "$Id: Widget.java 1537 2007-03-23 15:33:34Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Widget.class);
 

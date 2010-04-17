@@ -138,11 +138,9 @@ import java.util.Map;
  * <p>
  *
  * @author Stanislav Freidin
- * @version $Revision: #13 $ $DateTime: 2004/08/16 18:10:38 $
+ * @version $Id: PropertyEditor.java 1638 2007-09-17 11:48:34Z chrisg23 $
  */
 public class PropertyEditor extends SimpleContainer {
-
-    public static final String versionId = "$Id: PropertyEditor.java 1638 2007-09-17 11:48:34Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     private SequentialMap m_forms;
     private SequentialMap m_labels;
@@ -156,7 +154,7 @@ public class PropertyEditor extends SimpleContainer {
     /**
      * Constructs a new, empty <code>PropertyEditor</code>.
      * The {@link #setDisplayComponent(Component)} method must be called before
-     * this component is isLocked.
+     * this component is locked.
      */
     public PropertyEditor() {
         this(null);

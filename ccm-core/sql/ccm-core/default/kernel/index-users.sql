@@ -15,7 +15,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: index-users.sql 287 2005-02-22 00:29:02Z sskracic $
+-- $Id: index-users.sql 1980 2009-09-27 10:41:52Z pboy $
 -- $DateTime: 2004/08/16 18:10:38 $
 
 create unique index users_name_id_idx on users(name_id);

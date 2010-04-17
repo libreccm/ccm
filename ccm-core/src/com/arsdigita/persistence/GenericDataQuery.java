@@ -35,12 +35,10 @@ import java.util.Collections;
  * GenericDataQuery
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #16 $ $Date: 2004/08/16 $
+ * @version $Id: GenericDataQuery.java 738 2005-09-01 12:36:52Z sskracic $
  */
 
 public class GenericDataQuery extends DataQueryImpl {
-
-    public final static String versionId = "$Id: GenericDataQuery.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public GenericDataQuery(Session s, String sql, String[] columns) {
         super(s, ds(s, sql, columns));

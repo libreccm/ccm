@@ -33,13 +33,9 @@ import org.apache.log4j.Logger;
  * A dispatcher that looks for "buildPage*" methods, invokes them,
  * and constructs an index page with links automatically.
  *
- * */
+ * @version $Id: AutoDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class AutoDispatcher extends BebopMapDispatcher {
-
-    public static final String versionId = 
-            "$Id: AutoDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(AutoDispatcher.class);

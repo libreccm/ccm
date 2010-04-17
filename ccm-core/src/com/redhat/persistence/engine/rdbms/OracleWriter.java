@@ -24,12 +24,9 @@ import java.sql.Types;
  * OracleWriter
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: OracleWriter.java 738 2005-09-01 12:36:52Z sskracic $
+ */
 public class OracleWriter extends ANSIWriter {
-
-    public final static String versionId = "$Id: OracleWriter.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public void write(Select select) {
         write(select.getQuery().generate

@@ -30,10 +30,9 @@ import java.util.HashMap;
  * for this information.
  *
  * @author Joseph A. Bank (jbank@alum.mit.edu)
- * @version 1.0
+ * @version $Id: DeveloperSupport.java 1460 2007-03-02 14:36:38Z sskracic $
  **/
 public class DeveloperSupport {
-    public static final String versionId = "$Id: DeveloperSupport.java 1460 2007-03-02 14:36:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private DeveloperSupport() { } //you can't create me!
 

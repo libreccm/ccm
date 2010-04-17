@@ -23,12 +23,9 @@ package com.arsdigita.domain;
  * cannot be found.
  *
  * @author Oumi Mehrota
+ * @version $Id: DataObjectNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DataObjectNotFoundException extends RuntimeException {
-    public static final String versionId =
-        "$Id: DataObjectNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     public DataObjectNotFoundException(final String message) {
         super(message);

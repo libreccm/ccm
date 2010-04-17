@@ -22,9 +22,12 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import javax.servlet.jsp.JspException;
 
+/** 
+ *
+ * @version Id: DefineForm.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DefineForm extends DefineContainer {
 
-    public static final String versionId = "$Id: DefineForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private Form m_form;
     private String m_encType;
     private String m_onSubmit;

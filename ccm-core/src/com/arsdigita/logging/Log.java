@@ -25,10 +25,9 @@ package com.arsdigita.logging;
  * </p>
  *
  * @author Yon Feldman 
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: Log.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Log {
-    public final static String versionId = "$Id: Log.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // this variable will hold the secure state for this class on a per thread
     // basis.

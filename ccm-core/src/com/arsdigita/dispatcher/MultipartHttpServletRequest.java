@@ -57,14 +57,10 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @author Karl Goldstein
  * @author Michael Pih
  * @author Uday Mathur
- * @version $Revision: #19 $ $Date: 2004/08/16 $
+ * @version $Id: MultipartHttpServletRequest.java 1512 2007-03-22 02:36:06Z apevec $
  * @since 4.5
  */
 public class MultipartHttpServletRequest implements HttpServletRequest {
-    public static final String versionId =
-        "$Id: MultipartHttpServletRequest.java 1512 2007-03-22 02:36:06Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Category s_log = Category.getInstance
         (MultipartHttpServletRequest.class);

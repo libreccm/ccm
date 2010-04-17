@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
  *
  * @version 1.0
  * @version $Id: DomainObject.java 738 2005-09-01 12:36:52Z sskracic $
- **/
+ */
 public abstract class DomainObject {
 
     /** The logging object for this class. */
@@ -62,7 +62,7 @@ public abstract class DomainObject {
      *
      * @param typeName The name of the <code>ObjectType</code> of the
      *        new instance.
-     **/
+     */
     public DomainObject(String typeName) {
 
         Session s = SessionManager.getSession();
@@ -87,7 +87,7 @@ public abstract class DomainObject {
      * @see com.arsdigita.persistence.metadata.ObjectType
      *
      * @param type The <code>ObjectType</code> of the new instance.
-     **/
+     */
     public DomainObject(ObjectType type) {
         Session s = SessionManager.getSession();
         if (s == null) {
@@ -115,7 +115,7 @@ public abstract class DomainObject {
      *
      * @exception DataObjectNotFoundException Thrown if we cannot
      *            retrieve a data object for the specified OID
-     **/
+     */
     public DomainObject(OID oid) throws DataObjectNotFoundException {
         Session s = SessionManager.getSession();
         if (s == null) {

@@ -31,11 +31,11 @@ import org.w3c.dom.traversal.TreeWalker;
  *
  * @see com.arsdigita.bebop.jsp.ShowTable
  * @see com.arsdigita.bebop.jsp.ShowList
+ * 
+ * @version $Id: ShowCellList.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public abstract class ShowCellList extends ShowContainer {
-
-    public static final String versionId = "$Id: ShowCellList.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private TreeWalker m_walker;
     private Node m_currentCell;

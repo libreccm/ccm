@@ -25,13 +25,9 @@ package com.arsdigita.persistence;
  * and turn them into soft deletes under certain circumstances.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #8 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: DataHandler.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class DataHandler {
-
-    public final static String versionId = "$Id: DataHandler.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
 
     /**
      * This method is called in order to delete a data object. By default this

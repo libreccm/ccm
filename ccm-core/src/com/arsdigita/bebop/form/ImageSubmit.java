@@ -31,8 +31,6 @@ import com.arsdigita.bebop.parameters.ParameterModel;
  */
 public class ImageSubmit extends Widget {
 
-    public static final String versionId = "$Id: ImageSubmit.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      *      Constant for specifying LEFT alignment of this image input.
      *      See <a href="http://www.w3.org/TR/html4/present/graphics.html#alignment">here</a>

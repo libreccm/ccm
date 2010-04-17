@@ -39,12 +39,10 @@ import org.apache.log4j.Logger;
  * PooledConnectionSource
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: PooledConnectionSource.java 885 2005-09-20 15:54:06Z sskracic $
  **/
 
 public class PooledConnectionSource implements ConnectionSource {
-
-    public final static String versionId = "$Id: PooledConnectionSource.java 885 2005-09-20 15:54:06Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(PooledConnectionSource.class);

@@ -57,11 +57,11 @@ import org.w3c.dom.Node;
  * &lt;bebop:page>
  *   ... contents from nested JSP content + tags ...
  * &lt;/bebop:page>
+ * 
+ * @version $Id: ShowPage.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class ShowPage extends ShowContainer {
-
-    public static final String versionId = "$Id: ShowPage.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private com.arsdigita.xml.Document m_resultDoc;
     private com.arsdigita.xml.Document m_inputDoc;

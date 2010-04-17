@@ -36,12 +36,10 @@ import java.util.Map;
  * for filtering the stream down to the set of events that are of interest.
  *
  * @author <a href="mailto:ashah@redhat.com">Archit Shah</a>
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: EventStream.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 class EventStream {
-
-    public final static String versionId = "$Id: EventStream.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // all events
     private final LinkedList m_events = new LinkedList();

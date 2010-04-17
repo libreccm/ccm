@@ -38,8 +38,6 @@ import com.arsdigita.util.LockableImpl;
 public abstract class AbstractTableModelBuilder extends LockableImpl
     implements TableModelBuilder {
 
-    public static final String versionId = "$Id: AbstractTableModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Return a table model for the request represented by
      * <code>s</code>. The table model contains all the data that is to be

@@ -31,8 +31,6 @@ import com.arsdigita.bebop.PageState;
  */
 public class TreeExpansionEvent extends ActionEvent {
 
-    public static final String versionId = "$Id: TreeExpansionEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private Object m_nodeKey;
 
     public TreeExpansionEvent(Component source, PageState s, Object nodeKey) {

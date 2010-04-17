@@ -36,8 +36,6 @@ import org.apache.log4j.Logger;
  */
 public class DataOperation {
 
-    public static final String versionId = "$Id: DataOperation.java 562 2005-06-12 23:53:19Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger s_cat =
         Logger.getLogger(DataOperation.class);
 

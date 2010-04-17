@@ -28,11 +28,9 @@ import org.apache.log4j.spi.LoggingEvent;
  * </p>
  *
  * @author Yon Feldman 
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: SecureLogFilter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SecureLogFilter extends Filter {
-
-    public static final String versionId = "$Id: SecureLogFilter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Decides whether to let this log message go through.
      *

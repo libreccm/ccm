@@ -36,10 +36,9 @@ import javax.servlet.http.HttpServletRequest;
  * request.
  * </p>
  *
- * @version $Revision: #12 $ $Date: 2004/08/16 $
+ * @version $Id: CharsetEncodingProvider.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class CharsetEncodingProvider implements ParameterProvider {
-    public final static String versionId = "$Id: CharsetEncodingProvider.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static StringParameter s_encodingParam =
         new StringParameter(Globalization.ENCODING_PARAM_NAME);

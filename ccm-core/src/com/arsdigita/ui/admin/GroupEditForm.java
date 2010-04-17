@@ -38,7 +38,6 @@ import com.arsdigita.bebop.FormProcessException;
 class GroupEditForm extends GroupForm implements AdminConstants,
                                                  FormInitListener,
                                                  FormProcessListener {
-    public static final String versionId = "$Id: GroupEditForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private GroupAdministrationTab m_parent;
 

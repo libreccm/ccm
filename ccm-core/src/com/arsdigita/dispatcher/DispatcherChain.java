@@ -42,9 +42,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * <p>The dispatcher chain tries each dispatcher in the dispatcher
  * chain successively in the order in which they were added to the chain.
+ *
+ * @version $Id: DispatcherChain.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DispatcherChain implements Dispatcher {
-    public final static String versionId = "$Id: DispatcherChain.java 287 2005-02-22 00:29:02Z sskracic $";
 
     private LinkedList m_dispatcherChain = new LinkedList();
 

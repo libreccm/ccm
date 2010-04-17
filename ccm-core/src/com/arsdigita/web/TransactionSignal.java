@@ -32,10 +32,6 @@ import org.apache.log4j.Logger;
  * @version $Id: TransactionSignal.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class TransactionSignal extends Error {
-    public static final String versionId =
-        "$Id: TransactionSignal.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log = Logger.getLogger(TransactionSignal.class);
 

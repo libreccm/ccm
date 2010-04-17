@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
  * can be controlled using the various setWrapXXX methods detailed
  * below.
  *
- * @version $Id: DomainObjectXMLRenderer.java 1534 2007-03-23 12:08:00Z chrisgilbert23 $
+ * @version $Id: DomainObjectXMLRenderer.java 2071 2010-01-28 18:24:06Z pboy $
  */
 public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 

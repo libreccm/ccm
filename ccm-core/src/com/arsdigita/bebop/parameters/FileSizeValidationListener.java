@@ -40,13 +40,9 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * and so it may still be possible to bring your server down with an enormous file upload.
  * but this validation listener can prevent end users being faced with excessively 
  * large downloads
- * @version $Revision: 1.1 $ $Author: cgyg9330 $ $DateTime: 2004/08/16 18:10:38 $
+ * @version $Id: FileSizeValidationListener.java,v 1.1 2006/02/21 14:43:47 cgyg9330 Exp $
  */
 public class FileSizeValidationListener extends GlobalizedParameterListener {
-	public final static String versionId =
-		"$Id: FileSizeValidationListener.java,v 1.1 2006/02/21 14:43:47 cgyg9330 Exp $"
-			+ "$Author: cgyg9330 $"
-			+ "$DateTime: 2004/08/16 18:10:38 $";
 
 	private final long m_maxLength;
 

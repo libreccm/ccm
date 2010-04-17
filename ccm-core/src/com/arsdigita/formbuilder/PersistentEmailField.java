@@ -34,14 +34,12 @@ import org.apache.log4j.Logger;
  * is saved with the save() method. To resurrect the TextField, use the constructor
  * taking the id of the saved TextField and then invoke createComponent().
  *
- *  @author Shubham nagar 
- *  @company Infoaxon Technology
- *  @date 13-12-2004
- *
+ * @author Shubham nagar 
+ * @company Infoaxon Technology
+ * @date 13-12-2004
+ * @version $Id: PersistentEmailField.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PersistentEmailField extends PersistentWidget {
-
-    public static final String versionId = "$Id: PersistentEmailField.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(PersistentEmailField.class.getName());

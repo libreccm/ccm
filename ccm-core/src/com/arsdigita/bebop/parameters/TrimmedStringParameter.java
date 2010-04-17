@@ -28,10 +28,9 @@ import javax.servlet.http.HttpServletRequest;
  *
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
- *    @version $Id: TrimmedStringParameter.java 287 2005-02-22 00:29:02Z sskracic $ */
+ *    @version $Id: TrimmedStringParameter.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class TrimmedStringParameter extends StringParameter {
-
-    public static final String versionId = "$Id: TrimmedStringParameter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public TrimmedStringParameter(String name) {
         super(name);

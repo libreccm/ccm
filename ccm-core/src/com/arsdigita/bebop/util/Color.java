@@ -47,7 +47,6 @@ package com.arsdigita.bebop.util;
 
 public class Color {
 
-    public static final String versionId = "$Id: Color.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private int m_red = 255;
     private int m_green = 255;
     private int m_blue = 255;

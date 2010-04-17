@@ -28,12 +28,10 @@ import java.util.Collections;
  * RDBMSStatement
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: RDBMSStatement.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class RDBMSStatement {
-
-    public final static String versionId = "$Id: RDBMSStatement.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final String m_text;
     private final ArrayList m_events = new ArrayList();

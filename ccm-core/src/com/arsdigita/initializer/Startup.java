@@ -33,13 +33,11 @@ import java.util.Set;
  *
  * @author Michael Bryzek
  * @author Dennis Gregorovic
- * @version $Revision: #12 $ $Date: 2004/08/16 $
+ * @version $Id: Startup.java 738 2005-09-01 12:36:52Z sskracic $
  * @since ACS 4.7
  *
  **/
 public class Startup {
-
-    public static final String versionId = "$Id: Startup.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /** The name of the property containing the web app root **/
     public static final String WEB_APP_ROOT = "webAppRoot";

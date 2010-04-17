@@ -61,8 +61,6 @@ import org.apache.log4j.Logger;
  */
 public abstract class PersistentComponent extends AuditedACSObject {
 
-    public static final String versionId = "$Id: PersistentComponent.java 317 2005-03-11 19:04:37Z mbooth $ by $Author: mbooth $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger s_log =
         Logger.getLogger(PersistentComponent.class.getName());
 

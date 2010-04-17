@@ -62,10 +62,10 @@ import org.apache.log4j.Logger;
  * <p><b>Note on Bebop static/dynamic split</b>: You should not assume
  * that any code inside define:page will be executed more than once.
  * The created Page object may be cached.
+ * 
+ * @version $Id: DefinePage.java 1498 2007-03-19 16:22:15Z apevec $
  */
 public class DefinePage extends DefineContainer implements JSPConstants {
-
-    public static final String versionId = "$Id: DefinePage.java 1498 2007-03-19 16:22:15Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Page m_page;
     private String m_title;

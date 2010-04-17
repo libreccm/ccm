@@ -41,12 +41,9 @@ import org.apache.log4j.Logger;
  * Stores the configuration record for the Categorization functionality.
  *
  * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @version $Id: CategorizationConfig.java 1169 2008-06-05 16:08:25Z quasimodo $
  */
 public final class CategorizationConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: CategorizationConfig.java 1169 2008-06-05 16:08:25Z quasimodo $" +
-        "$Author: quasimodo $" +
-        "$DateTime: 2008/06/05 16:08:25 $";
     
     private static Logger s_log = Logger.getLogger(CategorizationConfig.class);
 

@@ -28,7 +28,6 @@ import com.arsdigita.bebop.PageState;
  * @version $Id: ItemDetailModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface ItemDetailModelBuilder extends Lockable {
-    public static final String versionId = "$Id: ItemDetailModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public ItemDetailModel buildModel(PageState pageState);
 }

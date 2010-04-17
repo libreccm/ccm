@@ -27,18 +27,13 @@ import com.arsdigita.bebop.PageState;
  * should be created. However, if object creation is a time consuming process, then we 
  * may not want the user to be hit by this and so a listener can replace the entry when 
  * it has been invalidated from another node.
- * 
- * @author Chris Gilbert chris.gilbert@westsussex.gov.uk
- *
- * @version $Id: CacheEntryRemovalEvent 285 2005-02-22 00:29:02Z cgyg9330 $
  *
  * @see CacheEntryRemovalListener
  * 
+ * @author Chris Gilbert chris.gilbert@westsussex.gov.uk
+ * @version $Id: CacheEntryRemovalEvent 285 2005-02-22 00:29:02Z cgyg9330 $
  */
-
 public class CacheEntryRemovalEvent  {
-
-    public static final String versionId = "$Id: CacheEntryRemovalEvent.java 285 2005-02-22 00:29:02Z cgyg9330 $ by $Author: cgyg9330 $, $DateTime: 2004/08/16 18:10:38 $";
 
 	public static final String STALE_ENTRY = "stale";
 	public static final String INVALIDATED_ENTRY = "invalid";

@@ -24,10 +24,9 @@ import java.util.NoSuchElementException;
 /**
  * Convenience extensions to {@link javax.swing.event.EventListenerList
  * Swing's <code>EventListenerList</code>}.
- * */
+ * @version $Id: EventListenerList.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class EventListenerList extends javax.swing.event.EventListenerList {
-
-    public static final String versionId = "$Id: EventListenerList.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Append all the event listeners from <code>l</code>.

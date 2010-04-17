@@ -58,12 +58,9 @@ import org.apache.log4j.Logger;
  * DataQueryImpl
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #42 $ $Date: 2004/08/16 $
- **/
-
+ * @version $Id: DataQueryImpl.java 1304 2006-08-31 13:12:47Z sskracic $
+ */
 class DataQueryImpl implements DataQuery {
-
-    public final static String versionId = "$Id: DataQueryImpl.java 1304 2006-08-31 13:12:47Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(DataQueryImpl.class);
 

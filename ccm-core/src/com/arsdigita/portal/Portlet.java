@@ -59,10 +59,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Portlet.java 1549 2007-03-29 14:58:55Z chrisgilbert23 $
  */
 public class Portlet extends Resource {
-    public static final String versionId =
-        "$Id: Portlet.java 1549 2007-03-29 14:58:55Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.portal.Portlet";

@@ -25,11 +25,10 @@ package com.arsdigita.util;
  * preformatted text.
  *
  * @author Kevin Scaldeferri 
+ * @version $Id: TypedText.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class TypedText {
-
-    public static final String versionId = "$Id: TypedText.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final String TEXT_HTML = "text/html";
     public static final String TEXT_PLAIN = "text/plain";

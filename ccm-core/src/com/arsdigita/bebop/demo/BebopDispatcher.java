@@ -34,10 +34,10 @@ import javax.servlet.http.HttpServletResponse;
  * Serves one page on all urls, notifying visitors about the merging
  * of demo-bebop into bebop-demo.
  *
- * */
+ * @version $Id: BebopDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class BebopDispatcher implements Dispatcher {
 
-    public static final String versionId = "$Id: BebopDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static Page s_moved = buildPageMoved();
 
     public void dispatch(HttpServletRequest req,

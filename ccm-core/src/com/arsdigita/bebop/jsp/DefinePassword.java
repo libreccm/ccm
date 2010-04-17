@@ -22,9 +22,11 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.form.Password;
 import javax.servlet.jsp.JspException;
 
+/**
+ * 
+ * @version $Id: DefinePassword.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DefinePassword extends DefineComponent {
-
-    public static final String versionId = "$Id: DefinePassword.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Password m_password;
     private int m_maxLength;

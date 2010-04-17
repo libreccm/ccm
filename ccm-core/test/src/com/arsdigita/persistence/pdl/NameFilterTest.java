@@ -30,12 +30,10 @@ import junit.framework.TestCase;
  * NameFilterTest
  *
  * @author <a href="mailto:ashah@redhat.com">ashah@redhat.com</a>
- * @version $Revision: #4 $ $Date: 2004/08/16 $
+ * @version $Id: NameFilterTest.java 750 2005-09-02 12:38:44Z sskracic $
  **/
 
 public class NameFilterTest extends TestCase {
-
-    public final static String versionId = "$Id: NameFilterTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public NameFilterTest(String name) {
         super(name);

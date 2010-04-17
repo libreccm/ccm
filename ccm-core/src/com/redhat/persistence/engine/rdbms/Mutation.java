@@ -25,12 +25,10 @@ import com.redhat.persistence.metadata.Table;
  * Mutation
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: Mutation.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 abstract class Mutation extends DML {
-
-    public final static String versionId = "$Id: Mutation.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Condition m_condition;
 

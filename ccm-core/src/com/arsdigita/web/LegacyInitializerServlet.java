@@ -26,13 +26,9 @@ import javax.servlet.ServletException;
 
 /**
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: LegacyInitializerServlet.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class LegacyInitializerServlet extends BaseServlet {
-    public final static String versionId =
-        "$Id: LegacyInitializerServlet.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private Script m_initializer = null;
 

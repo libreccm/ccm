@@ -37,8 +37,6 @@ import org.apache.log4j.Logger;
  */
 public class TestProcessListener implements FormProcessListener {
 
-    public static final String versionId = "$Id: TestProcessListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     // Logging
     private static final Logger s_log =
         Logger.getLogger(TestProcessListener.class);

@@ -25,12 +25,10 @@ import com.arsdigita.persistence.PersistenceException;
  * it is unable to find an instantiator for a given <code>DataObject</code>.
  *
  * @author Stanislav Freidin 
- * @version $Revision: #8 $
+ * @version $Id: InstantiatorNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class InstantiatorNotFoundException extends PersistenceException {
-
-    public final static String versionId = "$Id: InstantiatorNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Constructor for an InstantiatorNotFoundException which does not wrap

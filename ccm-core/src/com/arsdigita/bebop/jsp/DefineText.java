@@ -25,6 +25,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import javax.servlet.jsp.JspException;
 
+/** 
+ * 
+ * @version $Id: DefineText.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class DefineText extends DefineComponent {
 
     private TextField m_text;
@@ -38,7 +42,6 @@ public class DefineText extends DefineComponent {
     private final static String s_errorMsg =
         "type must be an instance of ParameterModel";
 
-    public static final String versionId = "$Id: DefineText.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public int doStartTag() throws JspException {
         ParameterModel pm = null;

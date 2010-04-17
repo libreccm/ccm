@@ -37,18 +37,14 @@ import org.apache.log4j.Logger;
  * application is "mounted".  JSPApplicationDispatcher can assume that
  * the RequestContext argument it receives is an
  * SiteNodeRequestContext.
- *
- * @deprecated Use {@link com.arsdigita.web.WebContext} instead.
- * @author Bill Schneider
- * @version $Revision: #14 $ $Date: 2004/08/16 $
- * @since 4.5
  * @see com.arsdigita.dispatcher.JSPApplicationDispatcher
+ *
+ * @author Bill Schneider
+ * @since 4.5
+ * @version $Id: SiteNodeRequestContext.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated Use {@link com.arsdigita.web.WebContext} instead.
  */
 public class SiteNodeRequestContext extends KernelRequestContext {
-    public static final String versionId =
-        "$Id: SiteNodeRequestContext.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (SiteNodeRequestContext.class);

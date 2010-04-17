@@ -37,8 +37,6 @@ import com.arsdigita.bebop.util.BebopConstants;
  *    @version $Id: RadioGroup.java 738 2005-09-01 12:36:52Z sskracic $ */
 public class RadioGroup extends OptionGroup implements BebopConstants {
 
-    public static final String versionId = "$Id: RadioGroup.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     // xml attribute for layout
     private final static String AXIS = "axis";
 

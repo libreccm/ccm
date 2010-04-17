@@ -35,12 +35,10 @@ import org.apache.log4j.Logger;
  * PDLTest
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: PDLTest.java 745 2005-09-02 10:50:34Z sskracic $
  */
 
 public class PDLTest extends TestCase {
-
-    public final static String versionId = "$Id: PDLTest.java 745 2005-09-02 10:50:34Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log =
         Logger.getLogger(PDLTest.class.getName());

@@ -26,12 +26,10 @@ import java.io.PrintWriter;
  * PropertyEvent
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: PropertyEvent.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public abstract class PropertyEvent extends Event {
-
-    public final static String versionId = "$Id: PropertyEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     final private Property m_prop;
     final private Object m_arg;

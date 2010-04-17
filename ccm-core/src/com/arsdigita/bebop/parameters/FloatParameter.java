@@ -29,8 +29,6 @@ package com.arsdigita.bebop.parameters;
 
 public class FloatParameter extends NumberParameter {
 
-    public static final String versionId = "$Id: FloatParameter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public FloatParameter(String name) {
         super(name);
     }

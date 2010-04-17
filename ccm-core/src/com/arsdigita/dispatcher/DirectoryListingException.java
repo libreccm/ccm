@@ -23,12 +23,11 @@ package com.arsdigita.dispatcher;
  * code that lists the contents of a directory may want to be triggered.
  *
  * @author Bill Schneider
- * @version $Revision: #9 $ $Date: 2004/08/16 $
- * @since 4.5 */
+ * @version $Id: DirectoryListingException.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public class DirectoryListingException extends Exception {
 
-    public static final String versionId = "$Id: DirectoryListingException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public DirectoryListingException() {
         super();
     }

@@ -30,10 +30,10 @@ import javax.servlet.jsp.JspException;
  * the tag.  The define:tab tag is a special case because we have to
  * call <code>addTab(String label, Component)</code> to add tabs to the
  * tabbed pane, not just<code>add(Component)</code>.
+ * 
+ * @version $Id: DefineTab.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefineTab extends DefineContainer {
-
-    public static final String versionId = "$Id: DefineTab.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Component m_child;
     private String m_label;

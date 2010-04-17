@@ -40,6 +40,7 @@ import java.util.Map;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.xml.Element;
 
 import org.apache.oro.text.perl.Perl5Util;
 
@@ -54,8 +55,6 @@ import org.apache.oro.text.perl.Perl5Util;
  *
  */
 public class AttributeHelper {
-
-    public static final String versionId = "$Id: AttributeHelper.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // Used during SAX parsing by the DefaultHandler to set the
     // attributes that it finds.
@@ -99,8 +98,8 @@ public class AttributeHelper {
 
         // This is a contrived way of retrieving the attributes but the upside
         // is that I am not modifying the Bebop code in any way
-        ExtendedElement componentElement =
-            new ExtendedElement("ignore", "ignore");
+        Element componentElement =
+            new Element("ignore", "ignore");
 
         // Export the attributes to the element
         attributes.exportAttributes(componentElement);

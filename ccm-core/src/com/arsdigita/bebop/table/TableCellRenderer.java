@@ -74,8 +74,6 @@ import com.arsdigita.bebop.Table;
  */
 public interface TableCellRenderer {
 
-    public static final String versionId = "$Id: TableCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Return a component with the visual representation for the passed in
      * <code>key</code> and <code>value</code>.

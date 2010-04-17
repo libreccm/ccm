@@ -44,7 +44,6 @@ import com.arsdigita.xml.Element;
  */
 public class TableHeader extends SimpleComponent {
 
-    public static final String versionId = "$Id: TableHeader.java 1638 2007-09-17 11:48:34Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * The control event when the user clicks on a column header.

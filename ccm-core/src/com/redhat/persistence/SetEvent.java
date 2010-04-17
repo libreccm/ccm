@@ -24,12 +24,10 @@ import com.redhat.persistence.metadata.Property;
  * SetEvent
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: SetEvent.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class SetEvent extends PropertyEvent {
-
-    public final static String versionId = "$Id: SetEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Object m_oldValue;
 

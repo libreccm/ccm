@@ -32,11 +32,9 @@ import org.apache.oro.text.perl.Perl5Util;
  *    Note: An empty string will pass the validation tests.
  *
  *    @author Michael Pih 
- *    @version $Revision: #9 $ $DateTime: 2004/08/16 18:10:38 $
+ *    @version $Id: URLTokenValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class URLTokenValidationListener implements ParameterListener {
-
-    public static final String versionId = "$Id: URLTokenValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // match 1 or more instances of a non-alpha-numeric character
     private static final String NON_KEYWORD_PATTERN = "/[^a-zA-Z_0-9\\-]+/";

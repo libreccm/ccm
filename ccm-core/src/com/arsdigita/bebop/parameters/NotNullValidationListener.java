@@ -30,10 +30,9 @@ import com.arsdigita.globalization.GlobalizedMessage;
  *    @author Uday Mathur 
  *    @author Stas Freidin 
  *    @author Rory Solomon 
+ * @version $Id: NotNullValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class NotNullValidationListener extends GlobalizedParameterListener {
-
-    public static final String versionId = "$Id: NotNullValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public static final NotNullValidationListener DEFAULT = new NotNullValidationListener();
 

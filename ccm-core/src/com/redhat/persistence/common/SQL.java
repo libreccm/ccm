@@ -25,12 +25,10 @@ import java.util.List;
  * SQL
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: SQL.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class SQL {
-
-    public final static String versionId = "$Id: SQL.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private SQLToken m_first;
     private SQLToken m_last;

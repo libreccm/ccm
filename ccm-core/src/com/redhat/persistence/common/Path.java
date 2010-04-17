@@ -24,12 +24,10 @@ import com.arsdigita.util.ConcurrentDict;
  * Path
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #15 $ $Date: 2004/08/16 $
+ * @version $Id: Path.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class Path {
-
-    public final static String versionId = "$Id: Path.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     //special case the id path since it shows up so often
     private static final Path ID_PATH = new Path("id");

@@ -26,12 +26,10 @@ import java.util.Iterator;
  * DeleteEvent
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: DeleteEvent.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class DeleteEvent extends ObjectEvent {
-
-    public final static String versionId = "$Id: DeleteEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     DeleteEvent(Session ssn, Object obj) {
         super(ssn, obj);

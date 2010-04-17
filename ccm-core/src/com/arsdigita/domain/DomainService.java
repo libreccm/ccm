@@ -27,13 +27,12 @@ import com.arsdigita.persistence.DataCollection;
  * need privileged access to the DataObject encapsulated by a
  * DomainObject or the DataCollection encapsulated by a DomainCollection.
  *
- * @author Oumi Mehrotra
- * @version 1.0
- *
  * @see com.arsdigita.persistence.DataObject
- **/
+ *
+ * @author Oumi Mehrotra
+ * @version $Id: DomainService.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class DomainService {
-    public static final String versionId = "$Id: DomainService.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      *

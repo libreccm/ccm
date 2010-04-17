@@ -54,12 +54,9 @@ import org.apache.log4j.Logger;
  * @author Dan Berrange
  * @see <a href="http://www.tuxedo.org/~esr/jargon/html/entry/guru-meditation.html">
  *         http://www.tuxedo.org/~esr/jargon/html/entry/guru-meditation.html</a>
+ * @version $Id: ErrorReport.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ErrorReport {
-    public static final String versionId =
-        "$Id: ErrorReport.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     // We generate ACS Error Reports in homage of Guru Meditation.
 

@@ -110,10 +110,9 @@ class Foo extends Label implements PrintListener {
  * Demonstration dispatcher class.  Shows how you would build pages to
  * display dynamic data from the database using Bebop components.
  *
+ * @version $Id: DemoDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DemoDispatcher extends AutoDispatcher implements BebopConstants {
-
-    public static final String versionId = "$Id: DemoDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
 
     private static final Logger s_log =

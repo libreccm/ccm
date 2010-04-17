@@ -78,13 +78,10 @@ import org.xml.sax.helpers.DefaultHandler;
  * </ul>
  *
  * @author Bill Schneider
- * @version ACS 4.5
- * @since 4.5
- **/
+ * @version $Id: BaseDispatcherServlet.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class BaseDispatcherServlet extends HttpServlet
         implements Dispatcher, DispatcherConstants {
-    public static final String versionId =
-        "$Id: BaseDispatcherServlet.java 287 2005-02-22 00:29:02Z sskracic $";
 
     private static final Logger s_log = Logger.getLogger
         (BaseDispatcherServlet.class);

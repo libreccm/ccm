@@ -34,12 +34,10 @@ import org.apache.log4j.Logger;
 /**
  * Class for dispatching a single Bebop page object.  Generates the
  * XML output for a Bebop page and renders it with an XSL template.
+ * 
+ * @version $Id: PageDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PageDispatcher implements Dispatcher {
-    public static final String versionId =
-        "$Id: PageDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(PageDispatcher.class);
 

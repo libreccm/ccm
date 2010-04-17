@@ -35,7 +35,6 @@ import java.util.Iterator;
  * @version $Id: PortalModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface PortalModel {
-    public static final String versionId = "$Id: PortalModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Get the {@link Portlet}s of this PortalModel.  Users of the

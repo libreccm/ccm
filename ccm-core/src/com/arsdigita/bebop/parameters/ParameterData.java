@@ -34,8 +34,6 @@ import com.arsdigita.globalization.GlobalizedMessage;
  */
 public final class ParameterData implements Map.Entry, Cloneable {
 
-    public static final String versionId = "$Id: ParameterData.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Value associated with this ParameterData. This value is null if
      * ParameterModel.transformValue() fails.

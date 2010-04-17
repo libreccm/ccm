@@ -31,12 +31,9 @@ import org.apache.log4j.Logger;
  * be combined and manipulated to create complex queries.
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #19 $ $Date: 2004/08/16 $
+ * @version $Id: FilterImpl.java 738 2005-09-01 12:36:52Z sskracic $
  */
-
 abstract class FilterImpl implements Filter {
-
-    public final static String versionId = "$Id: FilterImpl.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger m_log =
         Logger.getLogger(Filter.class.getName());

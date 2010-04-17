@@ -48,7 +48,7 @@ import com.arsdigita.util.parameter.ParameterReader;
  * PackageLoader
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Id: PackageLoader.java 1840 2009-03-05 07:51:20Z terry $
+ * @version $Id: PackageLoader.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public abstract class PackageLoader extends AbstractScript {
 

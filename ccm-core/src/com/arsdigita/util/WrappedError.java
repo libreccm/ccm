@@ -35,8 +35,6 @@ import org.apache.log4j.Logger;
  */
 public class WrappedError extends Error {
 
-    public static final String versionId = "$Id: WrappedError.java 287 2005-02-22 00:29:02Z sskracic $";
-
     static {
         Exceptions.registerUnwrapper(
             WrappedError.class,

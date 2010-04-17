@@ -29,10 +29,11 @@ import com.arsdigita.globalization.GlobalizedMessage;
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
  *    @author Stas Freidin 
- *    @author Rory Solomon  */
+ *    @author Rory Solomon
+ * @version $Id: TypeCheckValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ 
+ */
 public class TypeCheckValidationListener extends GlobalizedParameterListener {
 
-    public static final String versionId = "$Id: TypeCheckValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private Class m_type;
 
     public TypeCheckValidationListener(Class type) {

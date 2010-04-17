@@ -27,10 +27,6 @@ package com.arsdigita.bebop.util;
  * @version $Id: BebopConstants.java 1224 2006-06-18 22:28:30Z apevec $
  */
 public interface BebopConstants {
-    public static final String versionId = 
-        "$Id: BebopConstants.java 1224 2006-06-18 22:28:30Z apevec $" +
-        " by $Author: apevec $, " +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     String BEBOP_CHECKBOXGROUP = "bebop:checkboxGroup";
     String BEBOP_CHECKBOX      = "bebop:checkbox";

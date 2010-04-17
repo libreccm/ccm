@@ -59,13 +59,10 @@ import org.apache.log4j.Logger;
  * EventSwitch
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: EventSwitch.java 737 2005-09-01 12:27:29Z sskracic $
  **/
 
 class EventSwitch extends Event.Switch {
-
-    public final static String versionId = "$Id: EventSwitch.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger LOG = Logger.getLogger(EventSwitch.class);
 
     private static final Path KEY = Path.get("__key__");

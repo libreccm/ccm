@@ -73,10 +73,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Application.java 1520 2007-03-22 13:36:04Z chrisgilbert23 $
  */
 public class Application extends Resource {
-    public static final String versionId =
-		"$Id: Application.java 1520 2007-03-22 13:36:04Z chrisgilbert23 $"
-			+ "$Author: chrisgilbert23 $"
-			+ "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Application.class);
     public static final String PRIMARY_URL = "primaryURL";

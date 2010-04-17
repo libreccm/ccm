@@ -69,7 +69,6 @@ import com.arsdigita.util.URLRewriter;
 
 public class FormData implements Map, Cloneable {
 
-    public static final String versionId = "$Id: FormData.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private HashMap m_parameterDataValues = new HashMap();
     private LinkedList m_formErrors;

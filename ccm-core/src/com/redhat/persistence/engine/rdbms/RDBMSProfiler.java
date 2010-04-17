@@ -24,12 +24,10 @@ import java.sql.Connection;
  * RDBMSProfiler
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #6 $ $Date: 2004/08/16 $
+ * @version $Id: RDBMSProfiler.java 817 2005-09-15 14:25:13Z sskracic $
  **/
 
 public interface RDBMSProfiler {
-
-    public final static String versionId = "$Id: RDBMSProfiler.java 817 2005-09-15 14:25:13Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     StatementLifecycle getLifecycle(Connection conn, RDBMSStatement stmt);
 

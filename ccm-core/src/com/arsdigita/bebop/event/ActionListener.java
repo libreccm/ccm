@@ -27,16 +27,15 @@ import java.util.EventListener;
  * the component's addActionListener method. When the action event occurs,
  * that object's actionPerformed method is invoked.
  *
+ * @see ActionEvent
+ * @see java.awt.event.ActionListener
+ *
  * @author David Lutterkort 
  *
  * @version $Id: ActionListener.java 287 2005-02-22 00:29:02Z sskracic $
- *
- * @see ActionEvent
- * @see java.awt.event.ActionListener
  */
 public interface ActionListener extends EventListener {
 
-    public static final String versionId = "$Id: ActionListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Invoked when an action has been performed.
      *

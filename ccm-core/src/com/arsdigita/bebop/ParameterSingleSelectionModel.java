@@ -38,11 +38,11 @@ import com.arsdigita.util.Assert;
  * }</code></pre></blockquote>
  *
  * @author Stanislav Freidin
+ * @version $Id: ParameterSingleSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ParameterSingleSelectionModel
     extends AbstractSingleSelectionModel {
 
-    public static final String versionId = "$Id: ParameterSingleSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private ParameterModel m_parameter;
 

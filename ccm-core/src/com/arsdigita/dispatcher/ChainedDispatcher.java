@@ -54,13 +54,11 @@ import javax.servlet.http.HttpServletResponse;
  * applications.
  *
  * @author Bill Schneider
- * @version $Revision: #10 $ $Date: 2004/08/16 $
- * @since 4.6.6
+ * @version $Id: ChainedDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public interface ChainedDispatcher {
 
-    public final static String versionId = "$Id: ChainedDispatcher.java 287 2005-02-22 00:29:02Z sskracic $";
     public final static int DISPATCH_BREAK = 0;
     public final static int DISPATCH_CONTINUE = 1;
 

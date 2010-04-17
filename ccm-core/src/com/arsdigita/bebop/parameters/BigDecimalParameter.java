@@ -23,10 +23,9 @@ import java.math.BigDecimal;
 
 /**
  * A class which represents a BigDecimal
+ * @version $Id: BigDecimalParameter.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class BigDecimalParameter extends ParameterModel {
-
-    public static final String versionId = "$Id: BigDecimalParameter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public BigDecimalParameter(String name) {
         super(name);

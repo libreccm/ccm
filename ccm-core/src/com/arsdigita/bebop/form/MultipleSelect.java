@@ -34,8 +34,6 @@ import com.arsdigita.bebop.util.BebopConstants;
  *    @version $Id: MultipleSelect.java 287 2005-02-22 00:29:02Z sskracic $ */
 public class MultipleSelect extends Select implements BebopConstants {
 
-    public static final String versionId = "$Id: MultipleSelect.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     public MultipleSelect(String name) {
         super(new ArrayParameter(name));
     }

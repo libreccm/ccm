@@ -42,12 +42,10 @@ import org.apache.log4j.Logger;
  * SessionSuite
  *
  * @author <a href="mailto:ashah@redhat.com">ashah@redhat.com</a>
- * @version $Revision: #9 $ $Date: 2004/08/16 $
+ * @version $Id: SessionSuite.java 740 2005-09-02 10:13:54Z sskracic $
  **/
 
 public class SessionSuite extends PackageTestSuite {
-
-    public final static String versionId = "$Id: SessionSuite.java 740 2005-09-02 10:13:54Z sskracic $";
 
     private static final Logger s_log = Logger.getLogger(SessionSuite.class);
 

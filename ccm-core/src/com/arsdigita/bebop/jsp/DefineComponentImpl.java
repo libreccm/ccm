@@ -32,10 +32,11 @@ import javax.servlet.jsp.JspException;
  * <pre>&lt;define:component classname="component.class.name"> ...
  * ...
  * &lt;/define:component></pre>
+ * 
+ * @version $Id: DefineComponentImpl.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class DefineComponentImpl extends DefineContainer {
-    public static final String versionId = "$Id: DefineComponentImpl.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_className;
     private Component m_component;

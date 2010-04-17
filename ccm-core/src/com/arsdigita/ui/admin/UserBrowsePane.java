@@ -78,6 +78,7 @@ import org.apache.log4j.Logger;
  *
  * @author David Dao
  * @author Ron Henderson
+ * @version $Id: UserBrowsePane.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $
  */
 
 class UserBrowsePane extends SegmentedPanel
@@ -87,10 +88,6 @@ class UserBrowsePane extends SegmentedPanel
                    ActionListener,
                    AdminConstants,
                    ChangeListener {
-    public static final String versionId =
-        "$Id: UserBrowsePane.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(UserBrowsePane.class);
 

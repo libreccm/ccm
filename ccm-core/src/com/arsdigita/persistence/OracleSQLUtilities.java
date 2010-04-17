@@ -25,12 +25,9 @@ package com.arsdigita.persistence;
  * value of null with "is null" or "is not null"
  *
  * @author <a href="mailto:randyg@alum.mit.edu">randyg@alum.mit.edu</a>
- * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: OracleSQLUtilities.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 class OracleSQLUtilities implements SQLUtilities  {
-
-    String versionId = "$Id: OracleSQLUtilities.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      *  This method takes a comparator (e.g. =, <=, >=, !=, <>)

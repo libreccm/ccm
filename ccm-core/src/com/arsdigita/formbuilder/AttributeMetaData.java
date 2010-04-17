@@ -33,7 +33,6 @@ import com.arsdigita.formbuilder.util.FormBuilderUtil;
  */
 public class AttributeMetaData {
 
-    public static final String versionId = "$Id: AttributeMetaData.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_parameterName;
     private String m_label;

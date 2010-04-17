@@ -23,7 +23,6 @@ import junit.framework.Test;
 
 public class SiteNodeSuite extends PackageTestSuite {
 
-    public static final String versionId = "$Id: SiteNodeSuite.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public static Test suite() {
         SiteNodeSuite suite = new SiteNodeSuite();
         populateSuite(suite);

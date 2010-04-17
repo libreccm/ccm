@@ -79,7 +79,7 @@ import org.apache.log4j.Logger;
  * <p>
  *
  * @author Bill Schneider
- * @version $Revision: #43 $ $Date: 2004/08/16 $
+ * @version $Id: SiteNodeDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  * @since 4.5
  * @deprecated Use {@link com.arsdigita.web.DispatcherServlet} instead.
  * Pboy (2009-08-06):
@@ -93,10 +93,6 @@ import org.apache.log4j.Logger;
  */
 public class SiteNodeDispatcher extends KernelDispatcherServlet
         implements Dispatcher {
-    public static final String versionId =
-        "$Id: SiteNodeDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(SiteNodeDispatcher.class.getName());

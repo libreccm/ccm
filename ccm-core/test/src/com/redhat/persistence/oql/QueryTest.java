@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
  * QueryTest
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #4 $ $Date: 2004/08/16 $
+ * @version $Id: QueryTest.java 750 2005-09-02 12:38:44Z sskracic $
  **/
 
 public class QueryTest extends TestCase {
@@ -50,8 +50,6 @@ public class QueryTest extends TestCase {
     // junit task does to report the test name depends on the test
     // being an instance of TestCase. Later versions of ant don't
     // suffer from this problem.
-
-    public final static String versionId = "$Id: QueryTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(QueryTest.class);
 

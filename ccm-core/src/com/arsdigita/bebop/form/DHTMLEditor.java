@@ -47,9 +47,6 @@ import com.arsdigita.xml.Element;
  */
 public class DHTMLEditor extends TextArea {
 
-    public static final String versionId = 
-        "$Id: DHTMLEditor.java 1543 2007-03-27 09:11:02Z chrisgilbert23 $";
-
     /**
      * Constant for specifying <tt>OFF</tt> value for the <tt>WRAP</tt> attribute
      * of this image input.  

@@ -45,15 +45,15 @@ public class SimpleComponent extends Completable
     /**
      * The Attribute object is protected to make
      * it easier for the Form Builder service to persist the SimpleComponent.
-     * Locking violation is not a problem since if the SimpleComponent is isLocked
-     * then the Attribute object will also be isLocked.
+     * Locking violation is not a problem since if the SimpleComponent is locked
+     * then the Attribute object will also be locked.
      */
     protected Attributes m_attr;
 
     private String m_key = null;        // name mangling key
 
     /**
-     * Clones a component. The clone is not isLocked and has its own set of
+     * Clones a component. The clone is not locked and has its own set of
      * attributes.
      * @return the clone of a component.
      * @post ! ((SimpleComponent) return).isLocked()
@@ -108,7 +108,7 @@ public class SimpleComponent extends Completable
     /**
      * Unlocks this component.  Package visibility is intentional; the
      * only time a component should be unlocked is when it's pooled and
-     * gets isLocked because it's put into a page.  It needs to be unlocked
+     * gets locked because it's put into a page.  It needs to be unlocked
      * when the instance is recycled.
      */
     void unlock() {

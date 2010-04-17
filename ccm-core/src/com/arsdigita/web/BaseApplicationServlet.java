@@ -52,13 +52,11 @@ import org.apache.log4j.Logger;
  * @see com.arsdigita.web.BaseServlet
  * @see com.arsdigita.web.DispatcherServlet
  * @see com.arsdigita.web.RedirectSignal
+ *
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
+ * @version $Id: BaseApplicationServlet.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class BaseApplicationServlet extends BaseServlet {
-    public static final String versionId =
-        "$Id: BaseApplicationServlet.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static Logger s_log = Logger.getLogger
         (BaseApplicationServlet.class);

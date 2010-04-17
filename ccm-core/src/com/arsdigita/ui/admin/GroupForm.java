@@ -35,7 +35,6 @@ import com.arsdigita.bebop.ColumnPanel;
  * @version $Id: GroupForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class GroupForm extends Form implements AdminConstants {
-    public static final String versionId = "$Id: GroupForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected TextField m_name;
     protected TextField m_email;

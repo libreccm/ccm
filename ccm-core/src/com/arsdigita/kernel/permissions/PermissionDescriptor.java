@@ -31,15 +31,13 @@ import com.arsdigita.util.UncheckedWrapperException;
  * A PermissionDescriptor is used with the PermissionService to check,
  * grant, and revoke permissions.
  *
- * @author Oumi Mehrotra
- * @version 1.0
- *
  * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
  * @see com.arsdigita.kernel.permissions.PermissionService
+ *
+ * @author Oumi Mehrotra
+ * @version $Id: PermissionDescriptor.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class PermissionDescriptor {
-
-    public static final String versionId = "$Id: PermissionDescriptor.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private OID m_partyOID;
     private OID m_acsObjectOID;

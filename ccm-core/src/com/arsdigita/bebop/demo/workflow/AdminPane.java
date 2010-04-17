@@ -29,10 +29,12 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 
+/**
+ *
+ * @version $Id: AdminPane.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class AdminPane extends SimpleContainer
     implements ActionListener {
-
-    public static final String versionId = "$Id: AdminPane.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private SingleSelectionModel m_processes;
     private ToggleLink m_addLink;

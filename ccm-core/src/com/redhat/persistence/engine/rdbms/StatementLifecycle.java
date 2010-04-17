@@ -24,12 +24,10 @@ import java.sql.SQLException;
  * StatementLifecycle
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: StatementLifecycle.java 737 2005-09-01 12:27:29Z sskracic $
  **/
 
 public interface StatementLifecycle {
-
-    public final static String versionId = "$Id: StatementLifecycle.java 737 2005-09-01 12:27:29Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     void beginPrepare();
     void endPrepare();

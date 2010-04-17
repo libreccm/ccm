@@ -34,8 +34,6 @@ import com.arsdigita.bebop.PageState;
  * @version $Id: DefaultListCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $ */
 public class DefaultListCellRenderer implements ListCellRenderer {
 
-    public static final String versionId = "$Id: DefaultListCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     /**
      * Return a component that has been configured to display
      * the specified value. If <code>isSelected</code> is true, returns a

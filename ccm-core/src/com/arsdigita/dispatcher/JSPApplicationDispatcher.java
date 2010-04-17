@@ -59,14 +59,10 @@ import org.apache.log4j.Logger;
  * </tr>
  * </table>
  * @author Bill Schneider 
- * @version $Version$, $Date: 2004/08/16 $ 
+ * @version $Id: JSPApplicationDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class JSPApplicationDispatcher extends BaseDispatcherServlet
         implements Dispatcher  {
-    public static final String versionId = 
-        "$Id: JSPApplicationDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (JSPApplicationDispatcher.class);

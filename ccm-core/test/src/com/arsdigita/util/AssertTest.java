@@ -20,11 +20,10 @@ package com.arsdigita.util;
 
 import junit.framework.TestCase;
 
+/** 
+ * @version $Id: AssertTest.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class AssertTest extends TestCase {
-    public static final String versionId =
-        "$Id: AssertTest.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     public AssertTest(String name) {
         super(name);

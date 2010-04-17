@@ -26,12 +26,10 @@ import com.redhat.persistence.metadata.ObjectType;
  * IdentityAdapter
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #4 $ $Date: 2004/08/16 $
+ * @version $Id: IdentityAdapter.java 740 2005-09-02 10:13:54Z sskracic $
  **/
 
 public class IdentityAdapter extends Adapter {
-
-    public final static String versionId = "$Id: IdentityAdapter.java 740 2005-09-02 10:13:54Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public Object getObject(ObjectType basetype, PropertyMap props) {
         return props;

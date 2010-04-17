@@ -26,11 +26,10 @@ import javax.servlet.http.HttpServletRequest;
  * whenever the current user does not have access to the requested resources.
  *
  * @author Michael Pih 
- * @version $Revision: #9 $ $DateTime: 2004/08/16 18:10:38 $
+ * @version $Id: AccessDeniedException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AccessDeniedException extends RuntimeException {
 
-    public final static String versionId = "$Id: AccessDeniedException.java 287 2005-02-22 00:29:02Z sskracic $ $Author: sskracic $ $DateTime";
 
     public final static String ACCESS_DENIED =
         "com.arsdigita.cms.dispatcher.AccessDeniedException";

@@ -37,8 +37,6 @@ import java.util.ArrayList;
  */
 public class Process {
 
-    public static final String versionId = "$Id: Process.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private String m_key;
     private String m_name;
     private String m_description;

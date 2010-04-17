@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
  * A modal container is a container that manages visibility for a set of
  * components. It allows only one of its children to be visible. One of its
  * children can be selected as the default visible component. If none is
- * selected the child with index isEqual to zero is used. The modal container
+ * selected the child with index equal to zero is used. The modal container
  * sets the appropriate default and PageState-based visibility for its
  * children.
  *

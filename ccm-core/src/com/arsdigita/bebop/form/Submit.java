@@ -43,8 +43,6 @@ import com.arsdigita.xml.Element;
  */
 public class Submit extends Widget {
 
-    public static final String versionId = "$Id: Submit.java 998 2005-11-15 22:27:13Z sskracic $ by $Author: sskracic $, $DateTime: $";
-
     private GlobalizedMessage m_buttonLabel;
 
     /**

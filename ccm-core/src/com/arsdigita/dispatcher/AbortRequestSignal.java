@@ -26,7 +26,6 @@ package com.arsdigita.dispatcher;
  */
 
 public class AbortRequestSignal extends Error {
-    public static final String versionId = "$Id: AbortRequestSignal.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // extending error is a bit of a misnomer but it's what
     // we want: an unchecked exception that won't get caught

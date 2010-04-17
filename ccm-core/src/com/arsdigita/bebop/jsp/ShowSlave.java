@@ -27,10 +27,11 @@ import org.w3c.dom.NodeList;
 /**
  * tag for including the contents of a slave page within the
  * result page's current output context.
+ * 
+ * @version $Id: ShowSlave.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ShowSlave extends ShowComponent {
 
-    public static final String versionId = "$Id: ShowSlave.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public int doEndTag() throws JspException {
         com.arsdigita.xml.Document wrapper =
             (com.arsdigita.xml.Document)pageContext.getRequest()

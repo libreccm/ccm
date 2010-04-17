@@ -32,8 +32,6 @@ import com.arsdigita.util.Assert;
  */
 public class JspWrapperException extends RuntimeException {
 
-    public static final String versionId = "$Id: JspWrapperException.java 287 2005-02-22 00:29:02Z sskracic $";
-
     Throwable m_rootCause;
 
     /**

@@ -46,11 +46,9 @@ import org.apache.log4j.Logger;
  * classname="com.arsdigita.ui.NowDateTime" /&gt;
  * </ul>
  *
- * @version $Revision: 1.2 $ $Date: 2005/01/07 18:48:45 $
+ * @version $Id: NowDateTime.java 469 2005-03-20 23:12:44Z mbooth $
  */
 public class NowDateTime extends SimpleComponent {
-
-    public static final String versionId = "$Id: NowDateTime.java 469 2005-03-20 23:12:44Z mbooth $";
 
     private static Logger log = Logger.getLogger(NowDateTime.class);;
     

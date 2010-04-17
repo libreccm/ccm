@@ -22,12 +22,10 @@ package com.redhat.persistence.common;
  * CompoundKey
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: CompoundKey.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public final class CompoundKey {
-
-    public final static String versionId = "$Id: CompoundKey.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Object m_one;
     private Object m_two;

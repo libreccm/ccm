@@ -31,12 +31,11 @@ import org.apache.log4j.Logger;
  * LuceneSuite
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: LuceneSuite.java 746 2005-09-02 10:56:35Z sskracic $
  **/
 
 public class LuceneSuite extends PackageTestSuite {
 
-    public final static String versionId = "$Id: LuceneSuite.java 746 2005-09-02 10:56:35Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(LuceneSuite.class);
 
     public LuceneSuite() {}

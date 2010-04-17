@@ -44,10 +44,6 @@ import com.arsdigita.xml.Element;
 
 public class Portlet extends SimpleContainer
     implements PortletRenderer, BebopConstants {
-    public static final String versionId =
-        "$Id: Portlet.java 902 2005-09-22 04:57:12Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private String m_title = "";
     private int m_cellNumber = 1;

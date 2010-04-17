@@ -49,10 +49,6 @@ import org.apache.log4j.Logger;
  * chris gilbert - allow BebopApplicationServlet pages to disable client/middleware
  */
 public class BebopApplicationServlet extends BaseApplicationServlet {
-    public static final String versionId =
-        "$Id: BebopApplicationServlet.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (BebopApplicationServlet.class);

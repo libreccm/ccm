@@ -39,11 +39,10 @@ import javax.servlet.jsp.tagext.Tag;
  *    &lt;define:option name="msg.key" bundle="com.arsdigita.MyBundleName"
  value="value"/>
  * </pre>
+ * 
+ * @version $Id: DefineOption.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 public class DefineOption extends DefineComponent {
-
-    public static final String versionId = "$Id: DefineOption.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Option m_option;
     private String m_value;

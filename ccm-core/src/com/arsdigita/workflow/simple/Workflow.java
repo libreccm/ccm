@@ -51,13 +51,10 @@ import org.apache.log4j.Logger;
  * @author Stefan Deusch
  * @author Uday Mathur
  * @author Karl Goldstein
+ * @version $Id: Workflow.java 1278 2006-07-27 09:09:51Z cgyg9330 $
  *
  **/
 public class Workflow extends Task {
-    public static final String versionId =
-        "$Id: Workflow.java 1278 2006-07-27 09:09:51Z cgyg9330 $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.workflow.simple.Workflow";

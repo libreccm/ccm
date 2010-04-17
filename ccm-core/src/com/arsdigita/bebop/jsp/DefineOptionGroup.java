@@ -31,9 +31,9 @@ import javax.servlet.jsp.JspException;
  * we need.
  *
  * @author Bill Schneider
+ * @version $Id: DefineOptionGroup.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class DefineOptionGroup extends DefineContainer {
-    public static final String versionId = "$Id: DefineOptionGroup.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private OptionGroup m_optionGroup;
     private String m_onSelect;

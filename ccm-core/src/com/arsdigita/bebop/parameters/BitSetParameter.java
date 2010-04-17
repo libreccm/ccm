@@ -46,8 +46,6 @@ import java.util.BitSet;
  */
 public class BitSetParameter extends ParameterModel {
 
-    public static final String versionId = "$Id: BitSetParameter.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: $";
-
     /**
      * The radix used to encode/decode the bitset into a BigInteger
      */

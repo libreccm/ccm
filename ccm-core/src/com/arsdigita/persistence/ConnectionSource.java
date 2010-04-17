@@ -24,12 +24,10 @@ import java.sql.Connection;
  * ConnectionSource
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #4 $ $Date: 2004/08/16 $
+ * @version $Id: ConnectionSource.java 813 2005-09-15 08:50:20Z sskracic $
  **/
 
 public interface ConnectionSource {
-
-    public final static String versionId = "$Id: ConnectionSource.java 813 2005-09-15 08:50:20Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     Connection acquire();
 

@@ -21,9 +21,12 @@ package com.arsdigita.util;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ *
+ * @version$Id: ParameterProvider.java 287 2005-02-22 00:29:02Z sskracic $ 
+ */
 public interface ParameterProvider {
 
-    public static final String versionId = "$Id: ParameterProvider.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Return the set of bebop ParameterModels that this provides.
      **/

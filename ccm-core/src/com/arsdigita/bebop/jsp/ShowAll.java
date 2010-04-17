@@ -35,13 +35,13 @@ import org.apache.log4j.Logger;
  * having to put a &lt;show:component&gt; tag for every
  * &lt;define:component&gt; tag, you simply need a single
  * &lt;show:all&gt; tag.
+ * 
+ * @version $Id: ShowAll.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class ShowAll extends ShowContainer {
 
     public static final Logger s_log = Logger.getLogger(ShowAll.class);
-
-    public static final String versionId = "$Id: ShowAll.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private com.arsdigita.xml.Document m_resultDoc;
     private com.arsdigita.xml.Document m_inputDoc;

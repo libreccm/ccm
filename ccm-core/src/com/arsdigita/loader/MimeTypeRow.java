@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #5 $ $Date: 2004/08/16 $
- * @version $Id: MimeTypeRow.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: MimeTypeRow.java 2070 2010-01-28 08:47:41Z pboy $
  */
 class MimeTypeRow extends AbstractConfig {
 

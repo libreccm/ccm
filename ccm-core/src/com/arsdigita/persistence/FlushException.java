@@ -21,10 +21,10 @@ package com.arsdigita.persistence;
 /**
  * An exception representing the inability to write all changes to the
  * database. It is caused by some required properties being set to null.
+ * 
+ * @version $Id: FlushException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FlushException extends PersistenceException {
-
-    public static final String versionId = "$Id: FlushException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * No public constructor.

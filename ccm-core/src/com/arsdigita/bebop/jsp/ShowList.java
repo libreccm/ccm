@@ -44,10 +44,10 @@ import org.w3c.dom.traversal.TreeWalker;
  * Note that a Bebop List isn't really a Container, but from the JSP's
  * perspective of manipulating Bebop XML output, and not the components
  *  themselves, the behavior is container-like.
+ * 
+ * @version $Id: ShowList.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ShowList extends ShowCellList {
-
-    public static final String versionId = "$Id: ShowList.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * set up the input context as our parent class would except

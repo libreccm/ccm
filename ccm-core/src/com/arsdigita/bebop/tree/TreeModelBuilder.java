@@ -31,7 +31,6 @@ import com.arsdigita.util.Lockable;
  * @version $Id: TreeModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ */
 public interface TreeModelBuilder extends Lockable {
 
-    public static final String versionId = "$Id: TreeModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Builds a {@link TreeModel} to be used in the current request

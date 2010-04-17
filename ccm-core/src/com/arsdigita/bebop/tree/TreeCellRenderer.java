@@ -35,7 +35,6 @@ import com.arsdigita.bebop.Tree;
  * @version $Id: TreeCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $ */
 public interface TreeCellRenderer {
 
-    public static final String versionId = "$Id: TreeCellRenderer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Returns node component to be displayed.  The component's
      * <code>generateXML</code> or <code>print</code> is called

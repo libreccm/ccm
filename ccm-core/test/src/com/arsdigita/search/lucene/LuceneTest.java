@@ -24,12 +24,11 @@ import org.apache.log4j.Logger;
  * LuceneTest
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
- * @version $Revision: #5 $ $Date: 2004/08/16 $
+ * @version $Id: LuceneTest.java 1708 2008-07-12 03:08:52Z terry $
  **/
 
 public class LuceneTest extends LuceneTestCase {
 
-    public final static String versionId = "$Id: LuceneTest.java 1708 2008-07-12 03:08:52Z terry $ by $Author: terry $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log = Logger.getLogger(LuceneTest.class);
     private static final String NAME =
         "This is a note.";

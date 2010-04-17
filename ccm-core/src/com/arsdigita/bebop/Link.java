@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
  * <p> The target of the link above will be rendered in HTML as:
  * <tt>href="path/to/target/?foo=1"</tt>
  * If either the link text or the URL needs to be changed for a link
- * within a isLocked page, a {@link PrintListener} should be used.
+ * within a locked page, a {@link PrintListener} should be used.
  *
  * @version $Id: Link.java 287 2005-02-22 00:29:02Z sskracic $
  */
@@ -104,7 +104,7 @@ public class Link extends BaseLink {
      * the Link, without the need to make a separate call to
      * the <tt>addPrintListener</tt> method. PrintListeners
      * are a convenient way to alter underlying Link attributes
-     * such as Link text or target URL within a isLocked page
+     * such as Link text or target URL within a locked page
      * on a per request basis.
      */
     public Link(Component child, PrintListener l) {

@@ -51,8 +51,6 @@ import org.apache.log4j.Logger;
  */
 public class PersistentSubmit extends PersistentWidget {
 
-    public static final String versionId = "$Id: PersistentSubmit.java 317 2005-03-11 19:04:37Z mbooth $ by $Author: mbooth $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger s_log =
         Logger.getLogger(PersistentSubmit.class.getName());
 

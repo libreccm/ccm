@@ -36,11 +36,9 @@ import org.apache.log4j.Logger;
  * </p>
  *
  * @author <a href="mailto:randyg@alum.mit.edu">Randy Graebner</a>
- * @version $Revision: #14 $ $Date: 2004/08/16 $
+ * @version $Id: HierarchyDenormalization.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class HierarchyDenormalization {
-
-    public final static String versionId = "$Id: HierarchyDenormalization.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final static Logger s_log =
         Logger.getLogger(HierarchyDenormalization.class);

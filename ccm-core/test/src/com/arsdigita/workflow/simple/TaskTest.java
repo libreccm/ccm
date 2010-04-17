@@ -39,7 +39,6 @@ import java.util.Iterator;
  *
  */
 public class TaskTest extends WorkflowTestCase {
-    public static final String versionId = "$Id: TaskTest.java 750 2005-09-02 12:38:44Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public TaskTest(String name) {
         super(name);

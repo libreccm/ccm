@@ -23,9 +23,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 
+/**
+ * 
+ * $Id: ShowContainer.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class ShowContainer extends ShowComponent {
-
-    public static final String versionId = "$Id: ShowContainer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Node m_inputContext;
     private Node m_outputContext;
