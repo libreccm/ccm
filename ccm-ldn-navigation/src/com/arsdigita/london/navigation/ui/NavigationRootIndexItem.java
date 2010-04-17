@@ -41,7 +41,7 @@ import org.apache.log4j.Logger;
  * @version $Id: $
  */
 public class NavigationRootIndexItem extends AbstractComponent {
-    
+
     private static Logger log = Logger.getLogger(NavigationRootIndexItem.class);;
     
     private static final String TAG_PARENT = "navrootindex";

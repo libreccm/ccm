@@ -30,7 +30,7 @@ import com.arsdigita.london.navigation.ui.portlet.ItemListPortletRenderer;
  * The items can be selected / restricted by base type and filtered by a
  * category or category tree. Ordering and length of the list can be configured.
  *
- * @version $Id: $
+ * @version $Id: ItemListPortlet.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class ItemListPortlet extends ObjectListPortlet {
     

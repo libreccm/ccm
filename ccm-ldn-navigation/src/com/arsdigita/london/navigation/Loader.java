@@ -52,7 +52,7 @@ import org.apache.log4j.Logger;
  * Loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Loader.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Loader extends PackageLoader {
 

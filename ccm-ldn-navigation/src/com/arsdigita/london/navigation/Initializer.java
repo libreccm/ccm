@@ -82,7 +82,7 @@ import com.arsdigita.xml.XML;
  * Executes recursivly at each system startup.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Initializer.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

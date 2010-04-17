@@ -38,7 +38,7 @@ import org.apache.log4j.Logger;
  * model generates a component that contains related items.
  *
  * @author <a href="mailto:tzumainn@arsdigita.com">Tzu-Mainn Chen</a>
- * @version $Id: RelatedItems.java 755 2005-09-02 13:42:47Z sskracic $
+ * @version $Id: RelatedItems.java 2011 2009-10-04 01:03:56Z pboy $
  *
  */
 

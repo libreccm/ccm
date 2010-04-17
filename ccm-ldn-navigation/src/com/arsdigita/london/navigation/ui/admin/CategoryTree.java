@@ -35,7 +35,7 @@ import com.arsdigita.london.navigation.Navigation;
  * Lists category tree.
  *
  * @author Tri Tran (tri@arsdigita.com)
- * @version $Id: CategoryTree.java 1695 2008-03-18 11:47:59Z terry $
+ * @version $Id: CategoryTree.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class CategoryTree extends Tree {
 

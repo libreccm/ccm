@@ -67,32 +67,30 @@ import org.apache.log4j.Logger;
  * &lt;xsl:include href="../../navigation/xsl/content-lists.xsl" /&gt;
  * </ul>
  *
- * @version $Revision: $ $Date: $
+ * @version $Id: ContentList.java 1173 2006-06-14 13:54:39Z fabrice $
  */
 public class ContentList extends AbstractComponent {
     // extends SimpleComponent
-    
-    public static final String versionId = "$Id: ContentList.java 1173 2006-06-14 13:54:39Z fabrice $";
-    
-    private static Logger log = Logger.getLogger(ContentList.class);;
+ 
+   private static Logger log = Logger.getLogger(ContentList.class);
     
     private static final String TAG_ITEMLISTS = "cms:contentLists";
-    
+
     private static final String TAG_ITEMLIST = "cms:contentList";
     private static final String TAG_ITEMLIST_TYPE = "type";
-    
+
     private static final String TAG_ITEM = "cms:item";
     private static final String TAG_ITEM_ISINDEX = "name";
     private static final String TAG_ITEM_ISINDEX_VALUE = "index";
-    
+
     private static final String NAVIGATION_ROOT_NAME = "Navigation";
     private static final String CATEGORYID_PARAM = "categoryID";
     private static final String CONTENTITEM_CLASS_NAME = ContentItem.class.getName();
-    
+
     public ContentList() {
         super();
     }
-    
+
     /**
      * Generates the XML.
      *

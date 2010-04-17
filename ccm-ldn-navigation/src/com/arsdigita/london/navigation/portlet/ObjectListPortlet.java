@@ -49,7 +49,7 @@ import org.apache.log4j.Logger;
  * The objects can be selected / restricted by object type and filtered by a
  * category or category tree. Ordering and length of the list can be configured.
  * 
- * @version $Id: $
+ * @version $Id: ObjectListPortlet.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class ObjectListPortlet extends Portlet {
     private static final Logger s_log =

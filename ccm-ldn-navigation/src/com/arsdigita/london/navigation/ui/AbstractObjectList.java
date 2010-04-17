@@ -63,7 +63,7 @@ public abstract class AbstractObjectList
     	// attribute so that it can decide whether to order by date for 
     	// a date order category
     	m_definition.setDateAttribute(m_renderer);
-              
+       
         return m_definition.getDataCollection(getModel());
     }
 
