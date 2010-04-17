@@ -22,14 +22,14 @@ import com.arsdigita.portal.Portlet;
 
 /**
  * 
- * @version $Id: LoginPortlet.java 1174 2006-06-14 14:14:15Z fabrice $
+ * @version $Id: LoginPortlet.java 2075 2010-01-28 20:03:59Z pboy $
  */
 public class LoginPortlet extends Portlet {
 
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.london.portal.portlet.LoginPortlet";
 
-    
+
     /**
      * Constructor
      *

@@ -61,7 +61,7 @@ import com.arsdigita.xml.XML;
 /**
  * Initializes the Portal system
  * 
- * @version $Id: Initializer.java 1739 2008-08-15 01:15:21Z terry $
+ * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

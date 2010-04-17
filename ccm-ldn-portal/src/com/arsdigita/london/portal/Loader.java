@@ -53,7 +53,7 @@ import com.arsdigita.web.ApplicationType;
  * a fresh installation of the whole system.
  * 
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 1718 2008-07-16 14:08:38Z terry $
+ * @version $Id: Loader.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Loader extends PackageLoader {
 
