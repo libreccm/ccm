@@ -30,12 +30,9 @@ import java.math.BigDecimal;
  * authoring kit}.
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #13 $ $Date: 2004/08/17 $
+ * @version $Id: AuthoringStep.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AuthoringStep extends ACSObject {
-
-    public static final String versionId = "$Id: AuthoringStep.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.AuthoringStep";

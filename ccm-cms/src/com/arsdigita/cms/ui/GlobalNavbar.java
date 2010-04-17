@@ -28,13 +28,9 @@ import com.arsdigita.kernel.security.Initializer;
  * Delimited dimensional navbar.
  *
  * @author David Lutterkort &lt;dlutter@redhat.com&gt;
- * @version $Id: GlobalNavbar.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: GlobalNavbar.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class GlobalNavbar extends DimensionalNavbar {
-    public static final String versionId = 
-        "$Id: GlobalNavbar.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public GlobalNavbar() {
         super();

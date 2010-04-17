@@ -36,7 +36,7 @@ import com.arsdigita.xml.Element;
  * formats it as an XML document.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: XMLGenerator.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: XMLGenerator.java 1967 2009-08-29 21:05:51Z pboy $
  */
 public interface XMLGenerator {
 

@@ -32,16 +32,14 @@ import com.arsdigita.domain.DomainObject;
 /**
  * Selects a single image for an article.
  *
- * @version $IdS
- * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
- *
  * @see com.arsdigita.cms.ui.authoring.ArticleImage
  * @see com.arsdigita.cms.ui.ArticleImageDisplay
+ *
+ * @version $Id: SingleImageSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
+ * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
  */
 
 public class SingleImageSelectionModel extends ItemSelectionModel {
-
-    public static final String versionId = "$Id: SingleImageSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ItemSelectionModel m_articleModel;
 

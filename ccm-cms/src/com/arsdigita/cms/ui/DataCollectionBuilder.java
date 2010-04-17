@@ -26,12 +26,10 @@ import com.arsdigita.util.Lockable;
 /**
  * This class is used by the {@link DataTable} class in order
  * to construct a {@link DataCollection} during each request
+ * 
+ * @version $Id: DataCollectionBuilder.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface DataCollectionBuilder extends Lockable {
-    public static final String versionId = 
-        "$Id: DataCollectionBuilder.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Perform all neccessary database operations and return

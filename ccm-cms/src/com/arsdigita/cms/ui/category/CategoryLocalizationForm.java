@@ -49,6 +49,7 @@ import com.arsdigita.xml.Element;
  * in order to present forms for managing the multi-language categories.
  *
  * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
+ * @version $Id: $
  */
 public class CategoryLocalizationForm extends BaseForm {
     

@@ -77,10 +77,9 @@ import org.apache.log4j.Logger;
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ArticleImage.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class ArticleImage extends SimpleContainer implements AuthoringStepComponent {
-
-    public static final String versionId = "$Id: ArticleImage.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String IMAGE_ASSET = "image_asset";
 

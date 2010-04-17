@@ -1,6 +1,6 @@
 // CMS initialization file
 //
-// $Id: enterprise.init 1357 2006-11-06 13:02:24Z sskracic $
+// $Id: enterprise.init 2070 2010-01-28 08:47:41Z pboy $
 //
 
 init com.arsdigita.cms.installer.Initializer {
@@ -28,7 +28,6 @@ init com.arsdigita.cms.installer.SectionInitializer {
   //   in integrations.properties of the respective bundle
   // - registerDomain(navigationKey, "/content/", null); in ldn.aplaws.Loader
   name = "content";
-//--  name = "intern";
 
   // List of roles to create. First field is role name,
   // second is the description, third is a list of
@@ -87,7 +86,6 @@ init com.arsdigita.cms.installer.SectionInitializer {
 
   // Wether to make content viewable to 'The Public', ie non-registered users
   public = true;
-//--  public = false;
 
   // When to generate email alerts: by default, generate email alerts
   // on enable, finish, and rollback (happens on rejection)

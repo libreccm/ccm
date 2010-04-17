@@ -33,10 +33,9 @@ import com.arsdigita.util.Assert;
  * @author Jon Orris (jorris@arsdigita.com)
  *
  * @version $Revision #1 $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: FolderForm.java 774 2005-09-12 14:53:47Z fabrice $
  */
 public abstract class FolderForm extends BasicItemForm{
-
-    public static final String versionId = "$Id: FolderForm.java 774 2005-09-12 14:53:47Z fabrice $ by $Author: fabrice $, $DateTime: 2004/08/17 23:15:09 $";
 
     FolderSelectionModel m_currentFolder;
 

@@ -25,10 +25,10 @@ import com.arsdigita.bebop.Label;
 /**
  * A navigation bar. Unlike a tabbed dialog, the navbar is completely
  * static. All of its links lead to other pages.
+ * 
+ * @version $Id: Navbar.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Navbar extends BoxPanel {
-
-    public static final String versionId = "$Id: Navbar.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private String currentLabel;
 

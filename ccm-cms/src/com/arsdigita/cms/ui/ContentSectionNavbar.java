@@ -33,13 +33,9 @@ import com.arsdigita.xml.Element;
  * Bread crumb trail for a content section.
  *
  * @author Michael Pih
- * @version $Id: ContentSectionNavbar.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContentSectionNavbar.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class ContentSectionNavbar extends CMSContainer {
-    public static final String versionId = 
-        "$Id: ContentSectionNavbar.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private DimensionalNavbar m_navbar;
 

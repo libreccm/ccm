@@ -28,12 +28,10 @@ import java.math.BigDecimal;
  * editors, hence this is a separate class and has its own TaskType
  *
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Revision: #10 $ $Date: 2004/08/17 $
+ * @version $Id: EditingTaskURLGenerator.java 287 2005-02-22 00:29:02Z sskracic $
  * */
 
 public class EditingTaskURLGenerator implements TaskURLGenerator {
-
-    public static final String versionId = "$Id: EditingTaskURLGenerator.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public EditingTaskURLGenerator() {}
 

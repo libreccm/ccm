@@ -47,13 +47,9 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ContentTypeItemPane.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ContentTypeItemPane.java 1942 2009-05-29 07:53:23Z terry $
  */
 final class ContentTypeItemPane extends BaseItemPane {
-    public static final String versionId =
-        "$Id: ContentTypeItemPane.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(ContentTypeItemPane.class);
 

@@ -39,11 +39,9 @@ import java.util.Locale;
  * file, such as an image.
  *
  * @author Scott Seago (scott@arsdigita.com)
- * @version $Revision: #15 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: FileAsset.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FileAsset extends BinaryAsset {
-
-    public static final String versionId = "$Id: FileAsset.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.FileAsset";

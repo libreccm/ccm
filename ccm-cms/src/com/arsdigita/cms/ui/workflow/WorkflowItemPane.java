@@ -20,11 +20,11 @@ package com.arsdigita.cms.ui.workflow;
 
 import com.arsdigita.bebop.ActionLink;
 
+/** 
+ *
+ * @version $Id: WorkflowItemPane.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 class WorkflowItemPane extends BaseWorkflowItemPane {
-    public static final String versionId =
-        "$Id: WorkflowItemPane.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public WorkflowItemPane(final WorkflowRequestLocal workflow,
                             final ActionLink editLink,

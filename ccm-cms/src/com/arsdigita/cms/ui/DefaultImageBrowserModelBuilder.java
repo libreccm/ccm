@@ -36,12 +36,10 @@ import com.arsdigita.util.LockableImpl;
  * or null, the builder will return an {@link EmptyImageBrowserModel}
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: DefaultImageBrowserModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: DefaultImageBrowserModelBuilder.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class DefaultImageBrowserModelBuilder extends LockableImpl
     implements ImageBrowserModelBuilder, PaginationModelBuilder {
-
-    public static final String versionId = "$Id: DefaultImageBrowserModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private SingleSelectionModel m_keywordModel;
     private static ImageBrowserModel EMPTY_MODEL =

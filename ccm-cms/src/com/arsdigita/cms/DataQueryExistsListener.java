@@ -35,11 +35,10 @@ import com.arsdigita.persistence.DataQuery;
  *
  * @author Uday Mathur (umathur@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #8 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: DataQueryExistsListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class DataQueryExistsListener 
         implements FormValidationListener {
-    public static final String versionId = "$Id: DataQueryExistsListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     protected String m_errorMsg;
 

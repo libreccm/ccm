@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
  *
  * @author Michael Pih
  * @author Stanislav Freidin
- * @version $Id: PublishLifecycleListener.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: PublishLifecycleListener.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class PublishLifecycleListener implements LifecycleListener {
 

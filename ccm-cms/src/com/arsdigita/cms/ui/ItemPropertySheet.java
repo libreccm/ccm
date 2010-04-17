@@ -42,8 +42,6 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  */
 public class ItemPropertySheet extends PropertySheet {
 
-    public static final String versionId = "$Id: ItemPropertySheet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     private List m_props;
     private ItemSelectionModel m_itemModel;
     private AttributeFormatter m_toStringFormatter;

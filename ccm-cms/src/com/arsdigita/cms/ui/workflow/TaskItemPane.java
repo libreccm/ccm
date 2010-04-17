@@ -59,10 +59,6 @@ import java.util.Collection;
  * @version $Id: TaskItemPane.java 1280 2006-07-27 09:12:09Z cgyg9330 $
  */
 final class TaskItemPane extends BaseItemPane {
-    public static final String versionId =
-        "$Id: TaskItemPane.java 1280 2006-07-27 09:12:09Z cgyg9330 $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/04/07 16:07:11 $";
 
     private final WorkflowRequestLocal m_workflow;
     private final TaskRequestLocal m_task;

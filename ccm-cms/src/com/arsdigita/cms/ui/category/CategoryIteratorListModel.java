@@ -25,10 +25,9 @@ import java.util.Iterator;
 
 /**
  * A {@link ListModel} that iterates over categories via an iterator
+ * @version $Id: CategoryIteratorListModel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class CategoryIteratorListModel implements ListModel {
-
-    public static final String versionId = "$Id: CategoryIteratorListModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private Iterator m_iter;
     private Category m_cat;

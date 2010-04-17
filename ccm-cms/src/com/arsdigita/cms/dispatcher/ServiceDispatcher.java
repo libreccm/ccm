@@ -68,11 +68,9 @@ import java.util.Map;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ServiceDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class ServiceDispatcher extends LockableImpl implements Dispatcher {
-
-    public static final String versionId = "$Id: ServiceDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
 
     /**
      * The path of the file that maps resources.

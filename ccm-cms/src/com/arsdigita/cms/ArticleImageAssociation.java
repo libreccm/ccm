@@ -58,7 +58,7 @@ public class ArticleImageAssociation extends ContentItem {
     }
 
     /**
-     * Constructor retrieved the contained <code>DataObject</code> from the
+     * Constructor retrieves the contained <code>DataObject</code> from the
      * persistent storage mechanism with an <code>OID</code> specified by
      * <i>oid</i>.
      *

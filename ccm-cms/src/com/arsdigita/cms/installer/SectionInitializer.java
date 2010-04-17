@@ -44,18 +44,16 @@ import java.util.Timer;
  * section, the <code>types</code> is a list of content types
  * to register
  *
- * @author Daniel Berrange (berrange@redhat.com)
- * @author Michael Pih
- * @version $Revision: #43 $ $DateTime: 2004/08/17 23:15:09 $
- *
  * XXX As of version 6.5 (pboy):
  * Commented out in cms.enterprise.init since several versions. Not invoked by
  * any other package of trunk. Some Parameters (as ITEM_RESOLVER_CLASS) are
  * configured in ContentSectionConfig.java as a temporary measure.
+ *
+ * @author Daniel Berrange (berrange@redhat.com)
+ * @author Michael Pih
+ * @version $Id: SectionInitializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SectionInitializer extends com.arsdigita.kernel.BaseInitializer {
-
-    public static final String versionId = "$Id: SectionInitializer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(SectionInitializer.class);

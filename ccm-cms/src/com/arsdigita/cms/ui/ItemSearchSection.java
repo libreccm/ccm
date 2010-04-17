@@ -42,12 +42,10 @@ import com.arsdigita.search.QuerySpecification;
  * the search and display the results
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ItemSearchSection.java 1397 2006-11-29 14:10:38Z sskracic $
+ * @version $Id: ItemSearchSection.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ItemSearchSection extends FormSection 
     implements Resettable, QueryGenerator {
-
-    public static final String versionId = "$Id: ItemSearchSection.java 1397 2006-11-29 14:10:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(ItemSearchSection.class);

@@ -25,9 +25,11 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.OptionGroup;
 import com.arsdigita.persistence.DataQuery;
 
+/**
+ *
+ * @version $Id: DataQueryOptionPrintListener.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class DataQueryOptionPrintListener implements PrintListener {
-
-    public static final String versionId = "$Id: DataQueryOptionPrintListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public DataQueryOptionPrintListener() {
     }

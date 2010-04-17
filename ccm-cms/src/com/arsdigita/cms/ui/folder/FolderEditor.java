@@ -32,10 +32,10 @@ import com.arsdigita.cms.Folder;
  * @author Jon Orris (jorris@arsdigita.com)
  *
  * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: FolderEditor.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class FolderEditor extends FolderForm {
-    public static final String versionId = "$Id: FolderEditor.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public FolderEditor(String name, FolderSelectionModel folder) {
         super(name, folder);

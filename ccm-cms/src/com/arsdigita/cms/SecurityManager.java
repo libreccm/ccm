@@ -49,13 +49,9 @@ import org.apache.log4j.Logger;
  * CMS.</p>
  *
  * @author Michael Pih
- * @version $Revision: #24 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SecurityManager.java 1344 2006-10-10 09:41:56Z sskracic $
  */
 public class SecurityManager implements Security, SecurityConstants {
-    public static final String versionId =
-        "$Id: SecurityManager.java 1344 2006-10-10 09:41:56Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (SecurityManager.class);

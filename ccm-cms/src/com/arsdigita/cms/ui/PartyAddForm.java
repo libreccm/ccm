@@ -50,12 +50,10 @@ import java.util.TooManyListenersException;
  * Form for adding multiple parties to a role.
  *
  * @author Scott Seago (scott@arsdigita.com)
- * @version $Revision: #11 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version Id: PartyAddForm.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public abstract class PartyAddForm extends SimpleContainer
     implements FormInitListener, FormProcessListener {
-
-    public static final String versionId = "$Id: PartyAddForm.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static String SEARCH_QUERY = "searchQuery";
     private final static String PARTIES = "parties";

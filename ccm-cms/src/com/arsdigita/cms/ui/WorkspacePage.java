@@ -45,13 +45,9 @@ import com.arsdigita.ui.DebugPanel;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #22 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: WorkspacePage.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class WorkspacePage extends CMSPage implements ActionListener {
-    public static final String versionId =
-        "$Id: WorkspacePage.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final static String XSL_CLASS = "CMS Admin";
 

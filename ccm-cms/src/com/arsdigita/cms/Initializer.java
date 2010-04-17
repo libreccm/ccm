@@ -83,7 +83,7 @@ import com.arsdigita.cms.util.LanguageUtil;
  * The CMS initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Initializer.java 1428 2007-01-24 12:39:56Z sskracic $
+ * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 
@@ -106,6 +106,9 @@ public class Initializer extends CompoundInitializer {
     /**
      * Initializes domain-coupling machinery, usually consisting of
      * registering object instantiators and observers.
+     *
+     * This starts up the search threads according to the values in the
+     * properties file
      */
     public void init(DomainInitEvent e) {
         super.init(e);
@@ -170,6 +173,19 @@ public class Initializer extends CompoundInitializer {
         XML.parse(ContentSection.getConfig().getItemAdapters(),
                   new TraversalHandler());
 
+        // Just set the class implementing methods run when for publishing
+        // or unpublishing to file. No initialisation of the class here.
+        try {
+            QueueManager.setListener((PublishToFileListener)
+                                     ContentSection.getConfig()
+                                     .getPublishToFileClass().newInstance());
+        } catch (InstantiationException ex) {
+            throw new UncheckedWrapperException
+                ("Failed to instantiate the listener class", ex);
+        } catch (IllegalAccessException ex) {
+            throw new UncheckedWrapperException
+                ("Couldn't access the listener class", ex);
+        }
 
         MetadataProviderRegistry.registerAdapter(
             FileAsset.BASE_DATA_OBJECT_TYPE,

@@ -50,10 +50,6 @@ import org.apache.log4j.Logger;
  */
 public abstract class BaseForm extends Form
         implements Cancellable, SecurityConstants {
-    public static final String versionId =
-        "$Id: BaseForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(BaseForm.class);
 

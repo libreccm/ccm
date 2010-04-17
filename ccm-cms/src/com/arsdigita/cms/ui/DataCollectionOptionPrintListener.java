@@ -24,9 +24,11 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataQuery;
 
+/**
+ * 
+ * @version $Id: DataQueryOptionPrintListener.java,v 1.1 2004/12/15 14:27:54 awux7820 Exp $
+ */
 public abstract class DataCollectionOptionPrintListener implements PrintListener {
-
-    public static final String versionId = "$Id: DataQueryOptionPrintListener.java,v 1.1 2004/12/15 14:27:54 awux7820 Exp $ by $Author: awux7820 $, $DateTime: 2004/04/07 16:07:11 $";
 
     public DataCollectionOptionPrintListener() {
     }

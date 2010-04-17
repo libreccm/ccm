@@ -51,12 +51,10 @@ import java.util.TooManyListenersException;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Revision: #19 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: UserAddForm.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public abstract class UserAddForm extends SimpleContainer
     implements FormProcessListener {
-
-    public static final String versionId = "$Id: UserAddForm.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static String SEARCH_QUERY = "searchQuery";
     private final static String USERS = "users";

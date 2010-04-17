@@ -62,12 +62,9 @@ import java.sql.SQLException;
  * @author Xixi D'Moon
  * @author Michael Pih
  * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: AddPhaseForm.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 class AddPhaseForm extends CMSForm {
-    public static final String versionId =
-        "$Id: AddPhaseForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final static String PHASE_ID         = "id";
     private final static String LABEL            = "label";

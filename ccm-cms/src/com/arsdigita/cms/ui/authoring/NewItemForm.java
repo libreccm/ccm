@@ -53,10 +53,9 @@ import java.math.BigDecimal;
  *
  * @author Stanislav Freidin (sfreidin@arsdigtia.com)
  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: NewItemForm.java 1652 2007-09-18 10:35:42Z chrisg23 $ 
  */
 public abstract class NewItemForm extends Form {
-
-    public static final String versionId = "$Id: NewItemForm.java 1652 2007-09-18 10:35:42Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String RESOURCE_BUNDLE =
         "com.arsdigita.cms.ui.authoring.AuthoringResources";

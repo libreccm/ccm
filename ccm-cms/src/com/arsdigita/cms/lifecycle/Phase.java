@@ -38,7 +38,7 @@ import java.util.Date;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: 1.1 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: Phase.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $
+ * @version $Id: Phase.java 2070 2010-01-28 08:47:41Z pboy $
  */
 
 public class Phase extends ACSObject {

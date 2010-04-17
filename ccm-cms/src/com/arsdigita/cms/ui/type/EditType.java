@@ -66,12 +66,11 @@ import java.util.TooManyListenersException;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #14 $ $Date: 2004/08/17 $
+ * @version $Id: EditType.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class EditType extends CMSForm
     implements FormInitListener, FormProcessListener {
 
-    public static final String versionId = "$Id: EditType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     private static final Logger s_log = Logger.getLogger(EditType.class);
 
     private final SingleSelectionModel m_types;

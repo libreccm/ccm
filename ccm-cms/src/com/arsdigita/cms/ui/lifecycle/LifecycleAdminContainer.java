@@ -35,8 +35,6 @@ import com.arsdigita.toolbox.ui.SecurityContainer;
  */
 public class LifecycleAdminContainer extends SecurityContainer {
 
-    public static final String versionId = "$Id: LifecycleAdminContainer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
 
     /**
      * This default constructor should be followed by calls to

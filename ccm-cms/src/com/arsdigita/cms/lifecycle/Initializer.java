@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
  * to the list of initializers to be executed
  *
  * @author Peter Boy (pboy@barkhof.uni-bremen.de)
- * @version $Id: $
+ * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
  *
  */
 public class Initializer extends com.arsdigita.runtime.GenericInitializer {
@@ -78,7 +78,7 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
         }
 
         s_log.debug("lifecycle background processing started");
-     }
+    }
 
     /**
      *

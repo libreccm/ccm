@@ -22,7 +22,7 @@ package com.arsdigita.cms.dispatcher;
  * <p>An interface for caching objects.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: Cache.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Cache.java 1967 2009-08-29 21:05:51Z pboy $
  */
 public interface Cache {
 

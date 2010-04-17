@@ -62,13 +62,12 @@ import org.apache.log4j.Logger;
  *
  * @author Jack Chung
  * @version $Revision: #15 $ $Date: 2004/08/17 $
+ * @version $Id: KitPanel.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class KitPanel extends BoxPanel
     implements ActionListener, TableActionListener {
 
     private static final Logger s_log = Logger.getLogger( KitPanel.class );
-
-    public static final String versionId = "$Id: KitPanel.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public final static Integer EDIT_COLUMN = new Integer(4);
     public final static Integer DELETE_COLUMN = new Integer(5);

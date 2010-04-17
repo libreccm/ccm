@@ -26,10 +26,9 @@ package com.arsdigita.cms;
  *
  * @author Karl Goldstein (karlg@arsdigita.com)
  * @version $Revision: #8 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: TemplateManagerFactory.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class TemplateManagerFactory {
-
-    public static final String versionId = "$Id: TemplateManagerFactory.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static TemplateManager s_templateManager =
         new DefaultTemplateManager();

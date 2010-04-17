@@ -67,8 +67,6 @@ import java.math.BigDecimal;
  */
 public class ItemSearchFolderBrowser extends Table {
 
-    public static final String versionId = "$Id: ItemSearchFolderBrowser.java 1478 2007-03-14 11:59:00Z apevec $ by $Author: apevec $, $DateTime: 2004/08/17 23:15:09 $";
-
     private static final org.apache.log4j.Logger s_log = 
         org.apache.log4j.Logger.getLogger(ItemSearchFolderBrowser.class);
 

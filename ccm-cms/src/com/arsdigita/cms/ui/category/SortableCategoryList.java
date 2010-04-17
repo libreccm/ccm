@@ -49,13 +49,9 @@ import java.math.BigDecimal;
  * This clearly is not a good setup.
  *
  * @author Randy Graebner (randyg@alum.mit.edu)
- * @version $Id: SortableCategoryList.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: SortableCategoryList.java 1942 2009-05-29 07:53:23Z terry $
  */
 abstract class SortableCategoryList extends SortableList {
-    public static final String versionId =
-        "$Id: SortableCategoryList.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (SortableCategoryList.class);

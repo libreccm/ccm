@@ -41,12 +41,9 @@ import javax.servlet.ServletException;
  *
  * @author Randy Graebner (randyg@redhat.com)
  * @version $Revision: #18 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Revision: #18 $Id: CategorizedObjectsList.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class CategorizedObjectsList extends SortableCategoryList {
-    public static final String versionId =
-        "$Id: CategorizedObjectsList.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public final static String CATEGORIZED_OBJECTS = "co";
 

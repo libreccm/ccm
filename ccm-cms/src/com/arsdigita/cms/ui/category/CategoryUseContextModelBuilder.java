@@ -33,13 +33,9 @@ import org.apache.log4j.Logger;
  * content section.
  *
  * @author Scott Seago 
- * @version $Id: CategoryUseContextModelBuilder.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: CategoryUseContextModelBuilder.java 1942 2009-05-29 07:53:23Z terry $
  */
 class CategoryUseContextModelBuilder extends AbstractListModelBuilder {
-    public static final String versionId =
-        "$Id: CategoryUseContextModelBuilder.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public static String DEFAULT_USE_CONTEXT = "<default>";
 

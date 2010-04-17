@@ -37,13 +37,9 @@ import org.apache.log4j.Logger;
 /**
  * @author Stanislav Freidin &lt;sfreidin@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: RevisionTableModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: RevisionTableModelBuilder.java 1942 2009-05-29 07:53:23Z terry $
  */
 class RevisionTableModelBuilder extends AbstractTableModelBuilder {
-    public static final String versionId =
-        "$Id: RevisionTableModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (RevisionTableModelBuilder.class);

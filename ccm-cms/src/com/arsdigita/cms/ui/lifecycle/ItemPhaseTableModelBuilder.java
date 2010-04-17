@@ -33,13 +33,9 @@ import java.text.DateFormat;
  * @author Xixi D'Moon &lt;xdmoon@arsdigita.com&gt;
  * @author Michael Pih
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ItemPhaseTableModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ItemPhaseTableModelBuilder.java 1942 2009-05-29 07:53:23Z terry $
  */
 class ItemPhaseTableModelBuilder extends AbstractTableModelBuilder {
-    public static final String versionId =
-        "$Id: ItemPhaseTableModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final LifecycleRequestLocal m_lifecycle;
 

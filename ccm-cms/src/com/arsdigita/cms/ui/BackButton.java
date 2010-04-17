@@ -34,11 +34,9 @@ import javax.servlet.ServletException;
  * Just override the back(PageState s) method to use.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @version $Id: BackButton.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class BackButton extends ColumnPanel {
-
-    public static final String versionId = "$Id: BackButton.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static String BACK_EVENT = "back";
     private final static String IMAGE_URL =

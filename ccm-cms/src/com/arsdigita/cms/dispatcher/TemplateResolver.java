@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  *
  * @author Karl Goldstein (karlg@arsdigita.com)
- * @version $Id: TemplateResolver.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TemplateResolver.java 1967 2009-08-29 21:05:51Z pboy $
  **/
 public interface TemplateResolver {
 

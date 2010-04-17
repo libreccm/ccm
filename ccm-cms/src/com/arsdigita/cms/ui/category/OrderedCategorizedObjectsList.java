@@ -48,10 +48,9 @@ import javax.servlet.ServletException;
  *
  * @author Randy Graebner (randyg@alum.mit.edu)
  * @version $Revision: #11 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: OrderedCategorizedObjectsList.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class OrderedCategorizedObjectsList extends CategorizedObjectsList {
-
-    public static final String versionId = "$Id: OrderedCategorizedObjectsList.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(OrderedCategorizedObjectsList.class);

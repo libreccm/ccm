@@ -45,10 +45,10 @@ import java.math.BigDecimal;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $ */
+ * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ItemResolver.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public interface ItemResolver {
-
-    public static final String versionId = "$Id: ItemResolver.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Return a content item based on section, url, and use context.

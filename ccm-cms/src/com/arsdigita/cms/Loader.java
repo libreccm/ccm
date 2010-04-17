@@ -26,7 +26,7 @@ import org.apache.log4j.Logger;
  * The CMS loader.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Loader.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: Loader.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Loader extends PackageLoader {
 

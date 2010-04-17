@@ -29,7 +29,7 @@ import com.arsdigita.persistence.DataCollection;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #8 $ $Date: 2004/08/17 $
- * @version $Id: LifecycleDefinitionCollection.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: LifecycleDefinitionCollection.java 2070 2010-01-28 08:47:41Z pboy $ 
  */
 public class LifecycleDefinitionCollection extends DomainCollection {
 

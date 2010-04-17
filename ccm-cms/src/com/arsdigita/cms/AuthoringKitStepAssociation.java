@@ -31,12 +31,9 @@ import java.math.BigDecimal;
  * authoring steps} in a particular order.
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #11 $ $Date: 2004/08/17 $
+ * @version $Id: AuthoringKitStepAssociation.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class AuthoringKitStepAssociation extends DomainObject {
-
-    public static final String versionId = "$Id: AuthoringKitStepAssociation.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.AuthoringKitStepAssociation";

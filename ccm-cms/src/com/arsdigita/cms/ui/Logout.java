@@ -36,11 +36,10 @@ import org.apache.log4j.Logger;
  * A page that logs the current user out
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #12 $
+ * @version $Id: Logout.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Logout extends CMSPage {
 
-    public static final String versionId = "$Id: Logout.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     final static String URL_AFTER_LOGOUT = Utilities.getWebappContext() + "/";
 
     private static final Logger s_log = Logger.getLogger(Logout.class);

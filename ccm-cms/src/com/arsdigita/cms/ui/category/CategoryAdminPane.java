@@ -66,10 +66,6 @@ import org.apache.log4j.Logger;
  * @version $Id: CategoryAdminPane.java 1795 2009-02-07 10:47:32Z pboy $
  */
 public final class CategoryAdminPane extends BaseAdminPane {
-    public static final String versionId =
-        "$Id: CategoryAdminPane.java 1795 2009-02-07 10:47:32Z pboy $" +
-        "$Author: pboy $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public static final String CONTEXT_SELECTED="sel_context";
     private static final String DEFAULT_USE_CONTEXT =

@@ -88,10 +88,6 @@ import com.arsdigita.workflow.simple.WorkflowTemplate;
  * @version $Id: ItemLifecycleSelectForm.java 1643 2007-09-17 14:19:06Z chrisg23 $
  */
 class ItemLifecycleSelectForm extends BaseForm {
-    public static final String versionId =
-        "$Id: ItemLifecycleSelectForm.java 1643 2007-09-17 14:19:06Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger
         (ItemLifecycleSelectForm.class);

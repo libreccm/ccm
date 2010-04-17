@@ -22,8 +22,6 @@ import com.arsdigita.bebop.Tree;
 
 public class FolderTree extends Tree {
 
-    public static final String versionId = "$Id: FolderTree.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     public FolderTree(FolderSelectionModel folderSel) {
         super(new FolderTreeModelBuilder());
         setSelectionModel(folderSel);

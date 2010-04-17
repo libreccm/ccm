@@ -49,13 +49,9 @@ import org.apache.log4j.Logger;
  * @author Jack Chung
  * @author Stanislav Freidin
  *
- * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ImageAsset.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ImageAsset extends BinaryAsset {
-    public static final String versionId =
-        "$Id: ImageAsset.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.ImageAsset";

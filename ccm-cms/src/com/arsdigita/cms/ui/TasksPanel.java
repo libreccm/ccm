@@ -80,9 +80,11 @@ import com.arsdigita.workflow.simple.Engine;
 import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.xml.Element;
 
+/**
+ *
+ * @version $Id: TasksPanel.java 1280 2006-07-27 09:12:09Z cgyg9330 $
+ */
 public class TasksPanel extends CMSContainer {
-
-    public static final String versionId = "$Id: TasksPanel.java 1280 2006-07-27 09:12:09Z cgyg9330 $ by $Author: cgyg9330 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(TasksPanel.class);
@@ -656,7 +658,7 @@ public class TasksPanel extends CMSContainer {
                             if (taskType.equals(CMSTaskType.DEPLOY) ) {
                                 tabNumber = ContentItemPage.PUBLISHING_TAB;
                             } else {
-                                // see if item is isLocked; if not, lock
+                                // see if item is locked; if not, lock
                                 if ( !task.isLocked() ) {
                                     task.lock(user);
                                 }

@@ -32,12 +32,10 @@ import com.arsdigita.search.ui.QueryGenerator;
  * the form section in a form.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ItemSearch.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ItemSearch.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ItemSearch extends Form 
     implements Resettable, QueryGenerator {
-
-    public static final String versionId = "$Id: ItemSearch.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final org.apache.log4j.Logger s_log = 
         org.apache.log4j.Logger.getLogger(ItemSearch.class);

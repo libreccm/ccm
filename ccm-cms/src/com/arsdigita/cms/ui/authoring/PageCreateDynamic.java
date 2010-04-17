@@ -236,19 +236,20 @@ public class PageCreateDynamic extends FormSection
 
     }
 
-    /**
+    /*  *  (no Javadoc here!)
      * Add various widgets to the form. Child classes should override
      * this method to perform all their widget-adding needs
      * adds both the name and titlle widgets and
      * the persistent widgets stored in the persistent form
      * associated with this content item
-     */
-
-    /* Quasimodo BEGIN
+     *
+     * Quasimodo BEGIN
+     * ===============
      * disabled to get an ordinary create step. This method will ask
      * for ALL additional fields of a UDCT regardless if it is mandatory or not.
      * So, to prevent this I have modified the UDCT-Widgets to allway be optional
      * as the hardcoded content types and this method becomes obsolete.
+     *
     protected void addWidgets() {
         PersistentForm pForm = null;
         try {

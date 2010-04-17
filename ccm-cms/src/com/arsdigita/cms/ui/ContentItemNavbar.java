@@ -34,10 +34,9 @@ import com.arsdigita.xml.Element;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #12 $ $Date: 2004/08/17 $
+ * @version $Id: ContentItemNavbar.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class ContentItemNavbar extends CMSContainer {
-
-    public static final String versionId = "$Id: ContentItemNavbar.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(ContentItemNavbar.class);

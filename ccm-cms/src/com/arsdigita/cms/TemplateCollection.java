@@ -30,15 +30,13 @@ import com.arsdigita.mimetypes.MimeType;
  * link attributes.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TemplateCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TemplateCollection.java 1940 2009-05-29 07:15:05Z terry $
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
  * @see com.arsdigita.cms.ItemTemplateCollection
  */
 public abstract class TemplateCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: TemplateCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String USE_CONTEXT  = "useContext";
     public static final String IS_DEFAULT   = "isDefault";

@@ -44,10 +44,6 @@ import java.util.TooManyListenersException;
  * @version $Id: BaseRoleForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class BaseRoleForm extends BaseForm {
-    public static final String versionId =
-        "$Id: BaseRoleForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(BaseRoleForm.class);
 

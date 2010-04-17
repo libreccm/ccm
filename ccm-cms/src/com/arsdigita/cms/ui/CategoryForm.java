@@ -70,7 +70,7 @@ import java.util.TreeMap;
 /**
  * This is an abstract class which displays the category assignment UI.
  *
- *  Displays two listboxes for assigning categories to items, with two
+ * Displays two listboxes for assigning categories to items, with two
  * submit buttons to move categories back and forth. The left
  * listbox displays all available categories which have not been
  * assigned to the current item. The right listbox displays all categories
@@ -84,8 +84,6 @@ import java.util.TreeMap;
 public abstract class CategoryForm extends Form
     implements FormProcessListener, FormValidationListener {
 
-
-    public static final String versionId = "$Id: CategoryForm.java 903 2005-09-22 05:39:04Z apevec $ by $Author: apevec $, $DateTime: 2004/08/17 23:15:09 $";
 
     private RequestLocal m_assigned;
     private Submit m_assign, m_remove;

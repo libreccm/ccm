@@ -48,7 +48,7 @@ import java.util.StringTokenizer;
  * Created Mon Jan 20 14:30:03 2003.
  *
  * @author <a href="mailto:mhanisch@redhat.com">Michael Hanisch</a>
- * @version $Id: MultilingualItemResolver.java 1795 2009-02-07 10:47:32Z pboy $
+ * @version $Id: MultilingualItemResolver.java 2026 2009-11-02 10:04:34Z pboy $
  */
 public class MultilingualItemResolver extends AbstractItemResolver implements ItemResolver {
     
@@ -57,7 +57,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
     
     private static MasterPage s_masterP = null;
     private static final String ADMIN_PREFIX = "admin";
-    
+
     /**
      * The string identifying an item's ID in the query string of a
      * URL.
@@ -659,7 +659,7 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
         
         pos++;                  // skip the "="
         
-        // ID is the string between the isEqual (at pos) and the next separator
+        // ID is the string between the equal (at pos) and the next separator
         int i = item_id.indexOf(SEPARATOR);
         item_id = item_id.substring(pos, Math.min(i, item_id.length() -1));
         
@@ -691,48 +691,48 @@ public class MultilingualItemResolver extends AbstractItemResolver implements It
             Folder parentFolder) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Resolving the item for live URL " + url +
-                    " and parent folder " + parentFolder);
+                        " and parent folder " + parentFolder);
         }
-        
+
         if (parentFolder == null || url == null || url.equals("")) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("The url is null or parent folder was null " +
-                        "or something else is wrong, so just return " +
-                        "the parent folder");
+                            "or something else is wrong, so just return " +
+                            "the parent folder");
             }
-            
+
             return parentFolder;
         }
-        
+
         int len = url.length();
         int index = url.indexOf('/');
-        
+
         if (index >= 0) {
             s_log.debug("The URL starts with a slash; paring off the first " +
-                    "URL element and recursing");
-            
+                        "URL element and recursing");
+
             // If we got first slash (index == 0), ignore it and go
             // on, sample '/foo/bar/item.html.en', in next recursion
             // will have deal with 'foo' folder.
-            
+
             String name = index > 0 ? url.substring(0, index) : "";
             parentFolder = "".equals(name) ? parentFolder
                 : (Folder) parentFolder.getItem(URLEncoder.encode(name), true);
             url = index + 1 < len ? url.substring(index + 1) : "";
-            
+
             return getItemFromLiveURL(url, parentFolder);
         } else {
             s_log.debug("Found a file element in the URL");
-            
-            String[] nameAndLang = getNameAndLangFromURLFrag(url);
+
+	    String[] nameAndLang = getNameAndLangFromURLFrag(url);
             String name = nameAndLang[0];
             String lang = nameAndLang[1];
-            
+
             ContentItem item = parentFolder.getItem(URLEncoder.encode(name), false);
-            return getItemFromLangAndBundle(lang, item);
+	    return getItemFromLangAndBundle(lang, item);
         }
     }
-    
+
     /**
      * Returns an array containing the the item's name and lang based
      * on the URL fragment.

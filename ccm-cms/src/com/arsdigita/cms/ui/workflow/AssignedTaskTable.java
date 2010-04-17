@@ -37,11 +37,11 @@ import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 
+/** 
+ *
+ * @version $Id: AssignedTaskTable.java 1563 2007-04-18 15:58:17Z apevec $
+ */
 public final class AssignedTaskTable extends Table {
-    public static final String versionId =
-        "$Id: AssignedTaskTable.java 1563 2007-04-18 15:58:17Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (AssignedTaskTable.class);

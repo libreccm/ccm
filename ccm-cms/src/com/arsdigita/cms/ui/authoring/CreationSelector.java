@@ -74,13 +74,9 @@ import java.math.BigDecimal;
  *
  * in order to get the current content section.
  *
- * @version $Id: CreationSelector.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: CreationSelector.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class CreationSelector extends MetaForm {
-    public static final String versionId =
-        "$Id: CreationSelector.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(CreationSelector.class);
 

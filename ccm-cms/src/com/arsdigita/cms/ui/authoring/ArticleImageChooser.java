@@ -52,12 +52,11 @@ import java.math.BigDecimal;
  * @author Stanislav Freidin
  * @author Michael Pih
  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ArticleImageChooser.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ArticleImageChooser extends SimpleContainer {
 
     public static final String CHOSEN_IMAGE = "chim";
-
-    public static final String versionId = "$Id: ArticleImageChooser.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(ArticleImageChooser.class);

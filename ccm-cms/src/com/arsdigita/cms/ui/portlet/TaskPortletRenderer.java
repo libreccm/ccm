@@ -50,10 +50,6 @@ import java.util.List;
  * @version $Id: TaskPortletRenderer.java 1280 2006-07-27 09:12:09Z cgyg9330 $
  */
 public class TaskPortletRenderer extends AbstractPortletRenderer {
-    public static final String versionId =
-            "$Id: TaskPortletRenderer.java 1280 2006-07-27 09:12:09Z cgyg9330 $" +
-            "$Author: cgyg9330 $" +
-            "$DateTime: 2004/04/07 16:07:11 $";
 
     private static final Logger s_log = Logger.getLogger
             (TaskPortletRenderer.class);

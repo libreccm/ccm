@@ -51,14 +51,13 @@ import org.apache.log4j.Logger;
  * b). call add() zero or more times
  *
  * @author Stanislav Freidin
+ * @version $Id: SimpleEditStep.java 1638 2007-09-17 11:48:34Z chrisg23 $
  */
 public class SimpleEditStep extends SecurityPropertyEditor 
     implements AuthoringStepComponent, RequestListener {
 
     private static final Logger s_log =
         Logger.getLogger( SimpleEditStep.class );
-
-    public static final String versionId = "$Id: SimpleEditStep.java 1638 2007-09-17 11:48:34Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private AuthoringKitWizard m_parent;
     private ItemSelectionModel m_itemModel;

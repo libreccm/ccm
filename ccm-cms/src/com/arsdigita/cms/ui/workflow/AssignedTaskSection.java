@@ -40,11 +40,11 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ *
+ * @version $Id: AssignedTaskSection.java 1280 2006-07-27 09:12:09Z cgyg9330 $
+ */
 public final class AssignedTaskSection extends Section {
-    public static final String versionId =
-        "$Id: AssignedTaskSection.java 1280 2006-07-27 09:12:09Z cgyg9330 $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (AssignedTaskSection.class);

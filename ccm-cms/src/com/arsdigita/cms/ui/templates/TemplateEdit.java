@@ -47,11 +47,9 @@ import org.apache.log4j.Logger;
  * those properties.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: TemplateEdit.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class TemplateEdit extends SimpleEditStep {
-
-    public static final String versionId = "$Id: TemplateEdit.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(TemplateEdit.class);

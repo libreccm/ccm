@@ -32,12 +32,10 @@ import com.arsdigita.bebop.event.FormSubmissionListener;
  * particular state after a form is processed or submitted.
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @version $Id: ToggleLinkFormListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ToggleLinkFormListener
     implements FormProcessListener, FormSubmissionListener {
-
-    public static final String versionId = "$Id: ToggleLinkFormListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ToggleLink m_toggleLink;
     private boolean m_isSelected;

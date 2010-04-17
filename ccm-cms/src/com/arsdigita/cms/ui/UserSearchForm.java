@@ -31,11 +31,9 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  * Form to search for users to be added to a staff group.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #13 $ $Date: 2004/08/17 $
+ * @version $Id: UserSearchForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class UserSearchForm extends CMSForm {
-
-    public static final String versionId = "$Id: UserSearchForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static String SEARCH_LABEL = "Search";
 

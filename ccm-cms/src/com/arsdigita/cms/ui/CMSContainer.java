@@ -26,11 +26,9 @@ import com.arsdigita.bebop.SimpleContainer;
  * A simple container with XML wrapper tags.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #10 $ $Date: 2004/08/17 $
+ * @version $Id: CMSContainer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class CMSContainer extends SimpleContainer {
-
-    public static final String versionId = "$Id: CMSContainer.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public final static String CMS_XML_NS = "http://www.arsdigita.com/cms/1.0";
 

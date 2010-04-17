@@ -43,10 +43,9 @@ import org.apache.log4j.Logger;
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #16 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ImageUploadForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ImageUploadForm extends BasicImageForm implements FormSubmissionListener {
-
-    public static final String versionId = "$Id: ImageUploadForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(ImageUploadForm.class);
 

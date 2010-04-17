@@ -22,11 +22,11 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.workflow.simple.Workflow;
 
+/** 
+ *
+ * @version $Id: WorkflowRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class WorkflowRequestLocal extends RequestLocal {
-    public static final String versionId =
-        "$Id: WorkflowRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public final Workflow getWorkflow(final PageState state) {
         return (Workflow) get(state);

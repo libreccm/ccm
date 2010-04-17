@@ -23,11 +23,11 @@ import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.kernel.Role;
 import com.arsdigita.util.Assert;
 
+/** 
+ * 
+ * @version $Id: RoleRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class RoleRequestLocal extends RequestLocal {
-    public static final String versionId =
-        "$Id: RoleRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public final Role getRole(final PageState state) {
         final Role role = (Role) get(state);

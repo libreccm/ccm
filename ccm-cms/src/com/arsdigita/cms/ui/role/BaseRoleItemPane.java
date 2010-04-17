@@ -53,10 +53,6 @@ import java.math.BigDecimal;
  * @version $Id: BaseRoleItemPane.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class BaseRoleItemPane extends BaseItemPane {
-    public static final String versionId =
-        "$Id: BaseRoleItemPane.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (BaseRoleItemPane.class);

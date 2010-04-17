@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  * be nice about it.
  *
  * @author Hugh Brock (hbrock@redhat.com)
- * @version $Id: ImageDisplay.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ImageDisplay.java 1967 2009-08-29 21:05:51Z pboy $
  */
 public class ImageDisplay extends SimpleComponent {
 

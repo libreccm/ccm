@@ -26,10 +26,9 @@ import java.util.Map;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SimpleCache.java 287 2005-02-22 00:29:02Z sskracic $  
  */
 public class SimpleCache extends Hashtable{
-
-    public static final String versionId = "$Id: SimpleCache.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public SimpleCache() {
         super();

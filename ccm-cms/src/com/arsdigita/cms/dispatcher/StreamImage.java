@@ -48,10 +48,9 @@ import org.apache.log4j.Logger;
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: StreamImage.java 1571 2007-04-20 15:57:54Z apevec $
  */
 public class StreamImage extends ResourceHandlerImpl {
-
-    public static final String versionId = "$Id: StreamImage.java 1571 2007-04-20 15:57:54Z apevec $ by $Author: apevec $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String IMAGE_ID = "image_id";
     public static final String OID_PARAM = "oid";

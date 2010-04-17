@@ -24,12 +24,10 @@ import com.arsdigita.cms.ImageAsset;
  * An {@link ImageBrowserModel} which is always empty
  *
  * @author Stanislav Freidin
- * @version $Id: EmptyImageBrowserModel.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: EmptyImageBrowserModel.java 1940 2009-05-29 07:15:05Z terry $
  *
  */
 public class EmptyImageBrowserModel implements ImageBrowserModel {
-
-    public static final String versionId = "$Id: EmptyImageBrowserModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Construct a new EmptyImageBrowserModel

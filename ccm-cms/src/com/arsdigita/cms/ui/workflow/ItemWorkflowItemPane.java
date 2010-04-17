@@ -36,10 +36,6 @@ import java.math.BigDecimal;
  * @version $Id: ItemWorkflowItemPane.java 754 2005-09-02 13:26:17Z sskracic $
  */
 final class ItemWorkflowItemPane extends BaseWorkflowItemPane {
-    public static final String versionId =
-        "$Id: ItemWorkflowItemPane.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final AssignedTaskTable m_assigned;
 

@@ -27,12 +27,10 @@ import java.math.BigDecimal;
  * ContentItem and the Task.
  *
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Revision: #6 $ $Date: 2004/08/17 $
+ * @version $Id: PreviewTaskURLGenerator.java 287 2005-02-22 00:29:02Z sskracic $
  * */
 
 public class PreviewTaskURLGenerator extends FinishTaskURLGenerator {
-
-    public static final String versionId = "$Id: PreviewTaskURLGenerator.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public PreviewTaskURLGenerator() {}
     public String generateURL(BigDecimal itemId, BigDecimal taskId) {

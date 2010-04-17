@@ -43,11 +43,11 @@ import java.math.BigDecimal;
  * <p>
  * Essentially, this component is a hack which is used to get around
  * the fact that we cannot instantiate stateful components dynamically.
+ *
+ * @version $Id: WizardSelector.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class WizardSelector extends AuthoringKitSelector
     implements Resettable {
-
-    public static final String versionId = "$Id: WizardSelector.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ItemSelectionModel m_itemSel;
 

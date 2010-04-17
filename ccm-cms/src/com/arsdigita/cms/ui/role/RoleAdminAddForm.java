@@ -49,10 +49,6 @@ import java.math.BigDecimal;
  * @version $Id: RoleAdminAddForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class RoleAdminAddForm extends UserAddForm {
-    public static final String versionId =
-        "$Id: RoleAdminAddForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final SingleSelectionModel m_roles;
 

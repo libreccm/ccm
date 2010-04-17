@@ -75,11 +75,9 @@ import com.arsdigita.xml.Element;
  * to convert content items into XML.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: Summary.java 1295 2006-08-25 18:04:11Z apevec $
+ * @version $Id: Summary.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class Summary extends CMSContainer {
-
-    public static final String versionId = "$Id: Summary.java 1295 2006-08-25 18:04:11Z apevec $ by $Author: apevec $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String SUMMARY = "itemAdminSummary";
     private static final String RESTART_WORKFLOW = "restartWorkflow";

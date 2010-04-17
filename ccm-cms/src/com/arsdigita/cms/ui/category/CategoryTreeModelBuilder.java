@@ -33,7 +33,7 @@ import com.arsdigita.util.LockableImpl;
  * Lists category tree.
  *
  * @author Tri Tran (tri@arsdigita.com)
- * @version $Id: CategoryTreeModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CategoryTreeModelBuilder.java 1942 2009-05-29 07:53:23Z terry $
  */
 class CategoryTreeModelBuilder extends LockableImpl
         implements TreeModelBuilder {
@@ -49,10 +49,6 @@ class CategoryTreeModelBuilder extends LockableImpl
         m_contextModel = contextModel;
     }
 
-    public static final String versionId =
-        "$Id: CategoryTreeModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public final TreeModel makeModel(final Tree tree, final PageState state) {
         final ContentSection section = CMS.getContext().getContentSection();

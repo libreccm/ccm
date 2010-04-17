@@ -44,10 +44,9 @@ import java.math.BigDecimal;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #10 $ $Date: 2004/08/17 $
+ * @version $Id: KitInfo.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class KitInfo extends CMSContainer {
-
-    public static final String versionId = "$Id: KitInfo.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final SingleSelectionModel m_types;
     private final Table m_stepTable;

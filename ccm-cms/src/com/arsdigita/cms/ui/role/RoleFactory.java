@@ -44,10 +44,6 @@ import java.util.List;
  * @version $Id: RoleFactory.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class RoleFactory {
-    public static final String versionId = 
-        "$Id: RoleFactory.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public final static String CMS_ROLE_PRIVILEGES =
         "com.arsdigita.cms.getRolePrivileges";

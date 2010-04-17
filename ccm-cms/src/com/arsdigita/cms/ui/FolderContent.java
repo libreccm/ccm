@@ -55,11 +55,9 @@ import org.apache.log4j.Logger;
  *   &lt;jsp:scriptlet&gt;
  * <p>
  *
- * @version $Revision: 1.2 $ $Date: 2005/01/07 14:59:36 $
+ * @version $Id: FolderContent.java 1166 2006-06-14 11:45:15Z fabrice $
  */
 public class FolderContent extends SimpleComponent {
-
-    public static final String versionId = "$Id: FolderContent.java 1166 2006-06-14 11:45:15Z fabrice $";
 
     private static Logger log = Logger.getLogger(FolderContent.class);;
 

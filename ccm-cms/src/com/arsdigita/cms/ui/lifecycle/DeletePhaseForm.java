@@ -42,14 +42,10 @@ import java.math.BigDecimal;
  * This class handles the deleting of a phase definition.
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #7 $ $Date: 2004/08/17 $
+ * @version $Id: DeletePhaseForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class DeletePhaseForm extends CMSForm
         implements FormProcessListener, FormInitListener {
-    public static final String versionId =
-        "$Id: DeletePhaseForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final PhaseRequestLocal m_phase;
 

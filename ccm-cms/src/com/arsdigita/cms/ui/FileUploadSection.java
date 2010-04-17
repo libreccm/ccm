@@ -43,11 +43,9 @@ import java.io.File;
  * return the mime type.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: FileUploadSection.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: FileUploadSection.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class FileUploadSection extends FormSection {
-
-    public static final String versionId = "$Id: FileUploadSection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private SingleSelect m_mimeWidget;
     private FileUpload m_fileWidget;

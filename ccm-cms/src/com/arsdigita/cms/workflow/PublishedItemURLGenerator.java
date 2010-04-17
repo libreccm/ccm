@@ -39,12 +39,10 @@ import java.math.BigDecimal;
  * introduced by Bristol may have resolved this issue
  *
  * @author Chris Gilbert (chris.gilbert at westsussex.gov.uk)
- * @version $Revision: #10 $ $Date: 2004/08/17 $
+ * @version $Id: DeployTaskURLGenerator.java 285 2005-02-22 00:29:02Z sskracic $
  * */
 
 public class PublishedItemURLGenerator implements TaskURLGenerator {
-
-    public static final String versionId = "$Id: DeployTaskURLGenerator.java 285 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public PublishedItemURLGenerator() {}
 

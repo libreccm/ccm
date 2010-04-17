@@ -58,10 +58,6 @@ import java.util.Iterator;
  * @version $Id: TaskFinishForm.java 1563 2007-04-18 15:58:17Z apevec $
  */
 public final class TaskFinishForm extends CommentAddForm {
-    public static final String versionId =
-        "$Id: TaskFinishForm.java 1563 2007-04-18 15:58:17Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (TaskFinishForm.class);

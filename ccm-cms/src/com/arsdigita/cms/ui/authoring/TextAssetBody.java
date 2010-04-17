@@ -85,12 +85,11 @@ import com.arsdigita.util.UncheckedWrapperException;
  * {@link com.arsdigita.cms.ui.templates.TemplateBody}
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TextAssetBody.java 1478 2007-03-14 11:59:00Z apevec $
+ * @version $Id: TextAssetBody.java 1949 2009-06-25 08:30:50Z terry $
  */
 public abstract class TextAssetBody extends SecurityPropertyEditor
     implements Resettable, AuthoringStepComponent, RequestListener {
 
-    public static final String versionId = "$Id: TextAssetBody.java 1478 2007-03-14 11:59:00Z apevec $ by $Author: apevec $, $DateTime: $";
     private static Logger s_log =
         Logger.getLogger(TextAssetBody.class);
 

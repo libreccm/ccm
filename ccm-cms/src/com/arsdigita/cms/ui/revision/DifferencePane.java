@@ -42,11 +42,11 @@ import com.arsdigita.versioning.Difference;
 import com.arsdigita.versioning.Versions;
 import org.apache.log4j.Logger;
 
+/** 
+ *
+ * @version $Id: DifferencePane.java 777 2005-09-12 14:55:15Z fabrice $
+ */
 final class DifferencePane extends BaseItemPane {
-    public static final String versionId =
-        "$Id: DifferencePane.java 777 2005-09-12 14:55:15Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(DifferencePane.class);
 

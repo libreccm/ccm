@@ -32,7 +32,7 @@ import java.math.BigDecimal;
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: TextPage.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: TextPage.java 2070 2010-01-28 08:47:41Z pboy $
  **/
 public class TextPage extends ContentPage {
 

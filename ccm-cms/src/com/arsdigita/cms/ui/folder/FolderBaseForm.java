@@ -37,13 +37,9 @@ import org.apache.log4j.Logger;
  * folders.
  *
  * @author Jon Orris &lt;jorris@redhat.com&gt;
- * @version $Id: FolderBaseForm.java 543 2005-06-03 23:03:45Z sskracic $
+ * @version $Id: FolderBaseForm.java 1951 2009-06-30 04:35:04Z terry $
  */
 abstract class FolderBaseForm extends CMSForm {
-    public static final String versionId =
-        "$Id: FolderBaseForm.java 543 2005-06-03 23:03:45Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(FolderBaseForm.class);
 

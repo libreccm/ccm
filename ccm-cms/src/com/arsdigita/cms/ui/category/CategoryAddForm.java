@@ -30,13 +30,9 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: CategoryAddForm.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: CategoryAddForm.java 1942 2009-05-29 07:53:23Z terry $
  */
 final class CategoryAddForm extends BaseCategoryForm {
-    public static final String versionId =
-        "$Id: CategoryAddForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (CategoryAddForm.class);

@@ -51,11 +51,10 @@ import java.math.BigDecimal;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #12 $ $Date: 2004/08/17 $
+ * @version $Id: EditKit.java 754 2005-09-02 13:26:17Z sskracic $ 
  */
 public class EditKit extends Form
     implements FormProcessListener, FormInitListener {
-
-    public static final String versionId = "$Id: EditKit.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     protected final ContentTypeRequestLocal m_type;
 

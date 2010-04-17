@@ -30,11 +30,9 @@ import com.arsdigita.mimetypes.MimeType;
  * com.arsdigita.cms.TemplateManager template manager}.
  *
  * @author Karl Goldstein (karlg@arsdigita.com)
- * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: DefaultTemplateManager.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class DefaultTemplateManager implements TemplateManager {
-
-    public static final String versionId = "$Id: DefaultTemplateManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final String SECTION_ID = "sectionID";
     private static final String TYPE_ID = "typeID";

@@ -34,12 +34,10 @@ import java.util.NoSuchElementException;
  * Builds a list of locales registered to a content section.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #8 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: LocalesListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class LocalesListModelBuilder extends LockableImpl
     implements ListModelBuilder {
-
-    public static final String versionId = "$Id: LocalesListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public LocalesListModelBuilder() {
         super();

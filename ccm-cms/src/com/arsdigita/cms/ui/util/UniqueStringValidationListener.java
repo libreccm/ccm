@@ -29,12 +29,10 @@ import com.arsdigita.bebop.form.Widget;
  * Validates that the string value of the widget is unique.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: UniqueStringValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class UniqueStringValidationListener
     implements FormValidationListener {
-
-    public static final String versionId = "$Id: UniqueStringValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static String ERROR_MSG =
         "Unique string value constraint violation.";

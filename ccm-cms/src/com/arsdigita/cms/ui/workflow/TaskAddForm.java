@@ -43,10 +43,6 @@ import java.util.TooManyListenersException;
  * @version $Id: TaskAddForm.java 1280 2006-07-27 09:12:09Z cgyg9330 $
  */
 class TaskAddForm extends BaseTaskForm {
-    public static final String versionId =
-        "$Id: TaskAddForm.java 1280 2006-07-27 09:12:09Z cgyg9330 $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(TaskAddForm.class);
 

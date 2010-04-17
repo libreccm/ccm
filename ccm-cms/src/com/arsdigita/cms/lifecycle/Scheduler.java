@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #20 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: Scheduler.java 1583 2007-05-25 15:32:13Z chrisgilbert23 $
+ * @version $Id: Scheduler.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Scheduler {
 

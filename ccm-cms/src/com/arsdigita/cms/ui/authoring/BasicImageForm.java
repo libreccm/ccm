@@ -41,11 +41,11 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  * A form for modifying a single image asset attached to the article.
  * This is just a convenience class; children should override
  * the addWidgets, init and process methods.
+ *
+ * @version $Id: BasicImageForm.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public abstract class BasicImageForm extends Form
     implements FormInitListener, FormProcessListener {
-
-    public static final String versionId = "$Id: BasicImageForm.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ItemSelectionModel m_itemModel, m_assetModel;
     private SaveCancelSection m_saveCancelSection;

@@ -62,17 +62,16 @@ import java.util.Map;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $ */
+ * @version Id: SecurityPropertyEditor.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class SecurityPropertyEditor extends PropertyEditor {
-
-    public static final String versionId = "$Id: SecurityPropertyEditor.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private HashMap m_accessChecks;
 
     /**
      * Construct a new, empty <code>PropertyEditor</code>.  The {@link
      * #setDisplayComponent(Component)} method must be called before this
-     * component is isLocked.
+     * component is locked.
      */
     public SecurityPropertyEditor() {
         this(null);

@@ -25,7 +25,7 @@ import java.util.StringTokenizer;
  * search queries
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: SearchFormatter.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: SearchFormatter.java 2070 2010-01-28 08:47:41Z pboy $
  */
 
 public class SearchFormatter {

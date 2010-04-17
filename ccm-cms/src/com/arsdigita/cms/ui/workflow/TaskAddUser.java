@@ -48,13 +48,9 @@ import java.math.BigDecimal;
  *
  * @author Uday Mathur
  * @author <a href="mailto:pihman@arsdigita.com">Michael Pih</a>
- * @version $Revision: #8 $ $Date: 2004/08/17 $
+ * @version $Id: TaskAddUser.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class TaskAddUser extends SimpleContainer {
-    public static final String versionId =
-        "$Id: TaskAddUser.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(TaskAddUser.class);
 

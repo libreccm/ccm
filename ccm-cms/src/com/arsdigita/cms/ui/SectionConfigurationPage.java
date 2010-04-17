@@ -67,11 +67,9 @@ import java.util.TooManyListenersException;
  * Contains the entire admin UI for a content section.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SectionConfigurationPage.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SectionConfigurationPage extends CMSPage implements Resettable {
-
-    public static final String versionId = "$Id: SectionConfigurationPage.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private SectionInfo m_sectionInfo;
     private EditSection m_editSection;

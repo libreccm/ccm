@@ -67,8 +67,6 @@ public class ItemSearchBrowsePane extends CMSContainer
     private static final Logger s_log =
         Logger.getLogger( ItemSearchBrowsePane.class );
 
-    public static final String versionId = "$Id: ItemSearchBrowsePane.java 1166 2006-06-14 11:45:15Z fabrice $ by $Author: fabrice $, $DateTime: 2004/08/17 23:15:09 $";
-
     private FolderSelectionModel m_folderSel;
     private Tree m_tree;
     private ItemSearchFolderBrowser m_browser;

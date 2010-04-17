@@ -38,11 +38,9 @@ import org.apache.log4j.Logger;
  * internal templating implementation.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: SectionTemplateMapping.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: SectionTemplateMapping.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class SectionTemplateMapping extends TemplateMapping {
-
-    public static final String versionId = "$Id: SectionTemplateMapping.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.SectionTemplateMapping";

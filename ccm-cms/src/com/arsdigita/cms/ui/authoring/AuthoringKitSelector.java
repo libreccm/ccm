@@ -39,10 +39,10 @@ import java.util.Map;
 /**
  * Selects a component based on content type. Helper class for {@link
  * com.arsdigita.cms.ui.authoring.WizardSelector}.
+ *
+ * @version $Id: AuthoringKitSelector.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public abstract class AuthoringKitSelector extends SimpleContainer {
-
-    public static final String versionId = "$Id: AuthoringKitSelector.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(AuthoringKitSelector.class);

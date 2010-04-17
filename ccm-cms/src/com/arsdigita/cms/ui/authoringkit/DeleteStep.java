@@ -46,11 +46,10 @@ import java.math.BigDecimal;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #11 $ $Date: 2004/08/17 $
+ * @version $Id: DeleteStep.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class DeleteStep extends Form
     implements FormProcessListener, FormSubmissionListener {
-
-    public static final String versionId = "$Id: DeleteStep.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final SingleSelectionModel m_steps;
 

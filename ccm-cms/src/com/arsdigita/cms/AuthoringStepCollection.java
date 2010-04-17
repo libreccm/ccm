@@ -26,15 +26,13 @@ import com.arsdigita.persistence.DataCollection;
  * Describes a set of {@link com.arsdigita.cms.AuthoringStep authoring
  * steps}.
  *
- * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
- * @version 1.0
- *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
+ *
+ * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
+ * @version $Id: AuthoringStepCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AuthoringStepCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: AuthoringStepCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

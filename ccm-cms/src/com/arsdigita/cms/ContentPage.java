@@ -42,7 +42,7 @@ import org.apache.log4j.Logger;
  * @author Uday Mathur
  * @author Jack Chung
  * @author Michael Pih
- * @version $Id: ContentPage.java 1263 2006-07-17 08:18:47Z cgyg9330 $
+ * @version $Id: ContentPage.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class ContentPage extends ContentItem { 
 

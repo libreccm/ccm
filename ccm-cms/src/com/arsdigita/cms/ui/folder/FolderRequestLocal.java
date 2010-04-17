@@ -27,10 +27,6 @@ import org.apache.log4j.Logger;
 import java.math.BigDecimal;
 
 public class FolderRequestLocal extends ACSObjectRequestLocal {
-    public static final String versionId =
-        "$Id: FolderRequestLocal.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (FolderRequestLocal.class);

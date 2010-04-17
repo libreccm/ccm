@@ -44,10 +44,6 @@ import java.math.BigDecimal;
  * @version $Id: ItemWorkflowAdminPane.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ItemWorkflowAdminPane extends BaseItemPane {
-    public static final String versionId =
-        "$Id: ItemWorkflowAdminPane.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final ParameterSingleSelectionModel m_model;
     private final WorkflowRequestLocal m_workflow;

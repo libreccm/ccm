@@ -29,7 +29,7 @@ import java.util.TimerTask;
  * created by Scheduler.  It simply calls the run method of Scheduler.
  *
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Id: SchedulerTask.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: SchedulerTask.java 2070 2010-01-28 08:47:41Z pboy $
  **/
 class SchedulerTask extends TimerTask {
 

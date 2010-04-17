@@ -32,11 +32,11 @@ import org.apache.log4j.Logger;
 
 import java.util.Iterator;
 
+/**
+ * 
+ * @version $Id: AssignedTaskTableModelBuilder.java 1563 2007-04-18 15:58:17Z apevec $
+ */
 class AssignedTaskTableModelBuilder extends AbstractTableModelBuilder {
-    public static final String versionId =
-        "$Id: AssignedTaskTableModelBuilder.java 1563 2007-04-18 15:58:17Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/04/07 16:07:11 $";
 
     private static final Logger s_log = Logger.getLogger
         (AssignedTaskTableModelBuilder.class);

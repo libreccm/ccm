@@ -76,7 +76,7 @@ import javax.servlet.ServletException;
  * separate item selection model is updated.
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
- * @version $Id: FolderBrowser.java 1540 2007-03-26 20:44:49Z apevec $
+ * @version $Id: FolderBrowser.java 2017 2009-10-04 09:03:45Z pboy $
  */
 public class FolderBrowser extends Table {
     

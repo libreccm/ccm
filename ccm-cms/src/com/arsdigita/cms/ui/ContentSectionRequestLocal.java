@@ -24,11 +24,11 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import org.apache.log4j.Logger;
 
+/** 
+ * 
+ * @version $Id: ContentSectionRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public final class ContentSectionRequestLocal extends RequestLocal {
-    public static final String versionId =
-        "$Id: ContentSectionRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (ContentSectionRequestLocal.class);

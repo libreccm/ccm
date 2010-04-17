@@ -36,11 +36,9 @@ import com.arsdigita.persistence.SessionManager;
  *
  *
  * @author chris.gilbert at westsussex.gov.uk
+ * @version $Id: $
  **/
 public class TaskEventURLGenerator extends DomainObject {
-
-	public static final String versionId =
-		"$Id$ by $Author$, $DateTime: 2004/08/17 23:15:09 $";
 
 	public static final String BASE_DATA_OBJECT_TYPE =
 		"com.arsdigita.cms.workflow.TaskEventURLGenerator";

@@ -53,24 +53,24 @@ import org.apache.log4j.Logger;
  *
  * @author Shashin Shinde
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ContentBundle.java 967 2005-10-28 18:08:42Z sskracic $
+ * @version $Id: ContentBundle.java 2017 2009-10-04 09:03:45Z pboy $
  */
 public class ContentBundle extends ContentItem {
     
     private static final Logger s_log = Logger.getLogger(ContentBundle.class);
-    
+
     private static DomainObjectObserver s_instancesObserver =
-            new AbstractDomainObjectObserver() {
-        public void add(DomainObject dom, String name,
-                DataObject dobj) {
-            if (INSTANCES.equals(name)) {
-                if (dobj != null) {
-                    PermissionService.setContext(dobj.getOID(), dom.getOID());
+        new AbstractDomainObjectObserver() {
+            public void add(DomainObject dom, String name,
+                            DataObject dobj) {
+                if (INSTANCES.equals(name)) {
+                    if (dobj != null) {
+                        PermissionService.setContext(dobj.getOID(), dom.getOID());
+                    }
                 }
             }
-        }
-    };
-    
+        };
+
     /**
      * The base data object type of a bundle
      */
@@ -81,19 +81,19 @@ public class ContentBundle extends ContentItem {
      * The primary instances association
      */
     public static final String INSTANCES = "instances";
-    
+
     /**
      * The association to AtoZ aliases
      */
     public static final String ATOZ_ALIASING_PROVIDERS = "atozAliasingProviders";
-    
+
     /**
      * The default language property
      */
     public static final String DEFAULT_LANGUAGE = "defaultLanguage";
-    
+
     private boolean m_wasNew = false;
-    
+
     /**
      * Returns the data object type for this bundle.
      */

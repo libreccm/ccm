@@ -25,10 +25,10 @@ import com.arsdigita.cms.ItemCollection;
 /**
  *  A {@link ListModel} that iterates over the passed in ItemCollection
  *  This is an easy starting place for lists that need to dispaly items.
+ *
+ * @version $Id: ListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ItemListModel implements ListModel {
-    
-    public static final String versionId = "$Id: ItemListModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     
     private ItemCollection m_collection;
     private ContentItem m_item;

@@ -55,10 +55,9 @@ import java.util.StringTokenizer;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #15 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SimpleItemResolver.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SimpleItemResolver extends AbstractItemResolver implements ItemResolver {
-
-    public static final String versionId = "$Id: SimpleItemResolver.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log =
         Logger.getLogger(SimpleItemResolver.class.getName());

@@ -52,12 +52,10 @@ import java.util.TooManyListenersException;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #14 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SelectType.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class SelectType extends CMSForm
     implements PrintListener, FormSubmissionListener, FormProcessListener {
-
-    public static final String versionId = "$Id: SelectType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static String TYPES = "types";
 

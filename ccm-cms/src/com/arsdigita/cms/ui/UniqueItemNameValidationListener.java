@@ -34,13 +34,10 @@ import com.arsdigita.cms.ui.util.UniqueStringValidationListener;
  *
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #8 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: UniqueItemNameValidationListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class UniqueItemNameValidationListener
     extends UniqueStringValidationListener {
-
-    public static final String versionId = "$Id: UniqueItemNameValidationListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
 
     private final static String ERROR_MSG =
         "An item with this name already exists.";

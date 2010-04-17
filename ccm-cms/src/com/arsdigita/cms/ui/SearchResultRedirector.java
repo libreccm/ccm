@@ -40,12 +40,10 @@ import org.apache.log4j.Logger;
  * displayed.
  *
  * @author Jeff Teeters (teeters@arsdigita.com)
- * @version $Revision: #11 $ $Date: 2004/08/17 $
+ * @version $Id: SearchResultRedirector.java 287 2005-02-22 00:29:02Z sskracic $
  *
  */
 public class SearchResultRedirector extends CMSPage /* implements ActionListener */ {
-
-    public static final String versionId = "$Id: SearchResultRedirector.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Names of required parameters passed in the request

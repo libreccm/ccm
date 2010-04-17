@@ -29,13 +29,12 @@ import com.arsdigita.mimetypes.MimeType;
  * com.arsdigita.cms.ItemTemplateMapping item template mappings}.</p>
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ItemTemplateCollection.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ItemTemplateCollection.java 1940 2009-05-29 07:15:05Z terry $
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
  * @see com.arsdigita.cms.ItemTemplateCollection
  */
 class ItemTemplateCollection extends TemplateCollection {
-    public static final String versionId = "$Id: ItemTemplateCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
   /**
    * Constructor.

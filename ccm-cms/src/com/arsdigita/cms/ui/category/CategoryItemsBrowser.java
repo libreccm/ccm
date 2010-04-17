@@ -52,10 +52,9 @@ import com.arsdigita.util.Assert;
  *
  * WARNING: The code to actually list the items is currently a travesty.
  * It needs to be re-written from scratch, by using custom data queries.
+ * @version $Id: CategoryItemsBrowser.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class CategoryItemsBrowser extends Grid {
-
-    public static final String versionId = "$Id: CategoryItemsBrowser.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(CategoryItemsBrowser.class);

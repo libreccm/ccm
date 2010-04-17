@@ -27,15 +27,13 @@ import com.arsdigita.xml.Element;
  * A solid, horizontal line.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #10 $ $Date: 2004/08/17 $
+ * @version $Id: HorizontalLine.java 287 2005-02-22 00:29:02Z sskracic $
  * @deprecated with no replacement
  */
 // FIXME: Could this be done solely in XSL ? Or do some of these attributes
 // come from the DB/user preferences ? It would be cleaner if we could move
 // this completely to XSL.
 public class HorizontalLine extends SimpleComponent {
-
-    public static final String versionId = "$Id: HorizontalLine.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static String CMS_XML_NS = "http://www.arsdigita.com/cms/1.0";
 

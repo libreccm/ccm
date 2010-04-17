@@ -24,12 +24,9 @@ package com.arsdigita.cms;
  *
  * @author Karl Goldstein (karlg at arsdigita dot com)
  *
- * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: PageLocations.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public interface PageLocations {
-
-    public String versionId = "$Id: PageLocations.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     public String SECTION_PAGE = "admin/index.jsp";
     public String ITEM_PAGE = "admin/item.jsp";
 }

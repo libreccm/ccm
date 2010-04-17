@@ -38,11 +38,9 @@ import java.io.OutputStream;
  * @author Jack Chung
  * @author Stanislav Freidin
  *
- * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: BinaryAsset.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public abstract class BinaryAsset extends Asset {
-
-    public static final String versionId = "$Id: BinaryAsset.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     protected BinaryAsset(OID oid) throws DataObjectNotFoundException {
         super(oid);

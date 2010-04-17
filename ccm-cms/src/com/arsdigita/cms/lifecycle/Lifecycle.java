@@ -44,7 +44,7 @@ import java.util.Date;
  * @author Jack Chung
  * @author Michael Pih
  * @version $Revision: 1.1 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: Lifecycle.java 1585 2007-05-29 13:12:44Z chrisgilbert23 $ 
+ * @version $Id: Lifecycle.java 2070 2010-01-28 08:47:41Z pboy $ 
  */
 
 public class Lifecycle extends ACSObject {

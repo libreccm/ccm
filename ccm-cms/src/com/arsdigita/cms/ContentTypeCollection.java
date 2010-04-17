@@ -27,15 +27,13 @@ import com.arsdigita.persistence.Filter;
  * This class contains a collection of {@link
  * com.arsdigita.cms.ContentType content types}.
  *
- * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #11 $ $Date: 2004/08/17 $
- *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
+ *
+ * @author Jack Chung (flattop@arsdigita.com)
+ * @version $Id: ContentTypeCollection.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class ContentTypeCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: ContentTypeCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

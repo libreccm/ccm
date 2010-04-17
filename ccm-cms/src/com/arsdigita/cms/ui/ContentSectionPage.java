@@ -61,10 +61,6 @@ import javax.servlet.http.HttpServletRequest;
  * @version $Id: ContentSectionPage.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class ContentSectionPage extends CMSPage implements ActionListener {
-    public static final String versionId =
-        "$Id: ContentSectionPage.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (ContentSectionPage.class);

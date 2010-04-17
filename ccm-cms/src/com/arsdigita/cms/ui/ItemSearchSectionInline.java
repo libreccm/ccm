@@ -41,11 +41,9 @@ import com.arsdigita.search.ui.ResultsPane;
  * available.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ItemSearchSectionInline.java 1397 2006-11-29 14:10:38Z sskracic $
+ * @version $Id: ItemSearchSectionInline.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ItemSearchSectionInline extends ItemSearchSection {
-
-    public static final String versionId = "$Id: ItemSearchSectionInline.java 1397 2006-11-29 14:10:38Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final org.apache.log4j.Logger s_log = 
         org.apache.log4j.Logger.getLogger(ItemSearchSectionInline.class);

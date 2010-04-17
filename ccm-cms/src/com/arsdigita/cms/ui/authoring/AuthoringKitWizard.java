@@ -86,13 +86,9 @@ import java.util.ArrayList;
  * This constructor will be called when the component is automatically
  * instantiated by the <code>AuthoringKitWizard</code>.</p>
  *
- * @version $Id: AuthoringKitWizard.java 1434 2007-02-07 09:09:58Z chrisgilbert23 $
+ * @version $Id: AuthoringKitWizard.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class AuthoringKitWizard extends LayoutPanel implements Resettable {
-    public static final String versionId =
-        "$Id: AuthoringKitWizard.java 1434 2007-02-07 09:09:58Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (AuthoringKitWizard.class);

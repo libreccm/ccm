@@ -44,11 +44,9 @@ import com.arsdigita.util.Assert;
  * this class.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TextPageBody.java 1621 2007-09-13 12:43:12Z chrisg23 $
+ * @version $Id: TextPageBody.java 1949 2009-06-25 08:30:50Z terry $
  */
 public class TextPageBody extends TextAssetBody {
-
-    public static final String versionId = "$Id: TextPageBody.java 1621 2007-09-13 12:43:12Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private AuthoringKitWizard m_parent;
     private ItemSelectionModel m_itemModel;

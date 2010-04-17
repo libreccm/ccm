@@ -33,10 +33,9 @@ import java.math.BigDecimal;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #7 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ResourceMapping.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class ResourceMapping extends DomainObject {
-
-    public static final String versionId = "$Id: ResourceMapping.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String TYPE = "com.arsdigita.cms.ResourceMapping";
 

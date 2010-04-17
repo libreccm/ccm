@@ -38,11 +38,9 @@ import java.math.BigDecimal;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ImageDisplay.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ImageDisplay extends SimpleComponent {
-
-    public static final String versionId = "$Id: ImageDisplay.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final ItemSelectionModel m_item;
 

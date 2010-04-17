@@ -43,13 +43,10 @@ import org.apache.log4j.Logger;
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #21 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: PageCreate.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PageCreate extends BasicPageForm
         implements FormSubmissionListener, CreationComponent {
-    public static final String versionId =
-        "$Id: PageCreate.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(PageCreate.class);
 

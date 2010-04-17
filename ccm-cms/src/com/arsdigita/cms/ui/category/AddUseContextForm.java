@@ -40,13 +40,9 @@ import org.apache.log4j.Logger;
 
 /**
  * @author Scott Seago
- * @version $Id: AddUseContextForm.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: AddUseContextForm.java 1942 2009-05-29 07:53:23Z terry $
  */
 class AddUseContextForm extends BaseForm {
-    public static final String versionId =
-        "$Id: AddUseContextForm.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(AddUseContextForm.class);
 

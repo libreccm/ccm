@@ -47,8 +47,6 @@ import java.math.BigDecimal;
  */
 public class ItemSelectionModel extends ACSObjectSelectionModel {
 
-    public static final String versionId = "$Id: ItemSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
     private BigDecimal m_typeId;
 
     private static final Logger s_log =

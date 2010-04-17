@@ -38,7 +38,7 @@ import java.math.BigDecimal;
  * internal templating implementation.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ItemTemplateMapping.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ItemTemplateMapping.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ItemTemplateMapping extends TemplateMapping {
 

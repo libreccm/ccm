@@ -70,10 +70,9 @@ import java.util.Set;
  *
  *
  * @author Uday Mathur (umathu
+ * @version $Id: CMSTask.java 1637 2007-09-17 10:14:27Z chrisg23 $
  **/
 public class CMSTask extends UserTask {
-
-    public static final String versionId = "$Id: CMSTask.java 1637 2007-09-17 10:14:27Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.workflow.CMSTask";

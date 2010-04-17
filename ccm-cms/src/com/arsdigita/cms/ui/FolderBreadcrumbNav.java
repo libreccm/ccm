@@ -35,10 +35,9 @@ import org.apache.log4j.Logger;
  * section root folder.
  *
  * @author Crag Wolfe
+ * @version $Id: FolderBreadcrumbNav.java,v 1.2 2003/12/18 18:33:55 cwolfe Exp $
  */
 public class FolderBreadcrumbNav extends SimpleComponent {
-
-    public static final String versionId = "$Id: FolderBreadcrumbNav.java,v 1.2 2003/12/18 18:33:55 cwolfe Exp $ by $Author: cwolfe $, $DateTime: 2003/08/18 23:54:14 $";
 
     private static Logger s_log =
         Logger.getLogger(FolderBreadcrumbNav.class);

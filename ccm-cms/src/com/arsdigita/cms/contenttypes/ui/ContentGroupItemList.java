@@ -50,11 +50,10 @@ import java.math.BigDecimal;
 /**
  * This displays a sortable list of items within a given content group
  *
- * @version $Id: ContentGroupItemList.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: ContentGroupItemList.java 1967 2009-08-29 21:05:51Z pboy $ 
  */
 class ContentGroupItemList extends SortableList {
 
- 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(ContentGroupItemList.class);
 

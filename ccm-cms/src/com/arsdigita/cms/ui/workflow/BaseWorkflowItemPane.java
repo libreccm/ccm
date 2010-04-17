@@ -45,11 +45,11 @@ import com.arsdigita.workflow.simple.Workflow;
 
 import java.math.BigDecimal;
 
+/**
+ *
+ * @version $Id: BaseWorkflowItemPane.java 1338 2006-10-05 19:17:29Z sskracic $
+ */
 abstract class BaseWorkflowItemPane extends BaseItemPane {
-    public static final String versionId =
-        "$Id: BaseWorkflowItemPane.java 1338 2006-10-05 19:17:29Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     final WorkflowRequestLocal m_workflow;
     final TaskRequestLocal m_task;

@@ -49,11 +49,9 @@ import java.math.BigDecimal;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Uday Mathur (umathur@arsdigita.com)
- * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ObjectAddAdmin.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ObjectAddAdmin extends UserAddForm {
-
-    public static final String versionId = "$Id: ObjectAddAdmin.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ACSObjectSelectionModel m_object;
     private static final String NAME_FILTER = "upper(firstName || lastName || email) like '%' || upper(:search) || '%'";

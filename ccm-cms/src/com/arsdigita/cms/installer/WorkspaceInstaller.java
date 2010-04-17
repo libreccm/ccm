@@ -34,10 +34,9 @@ import com.arsdigita.kernel.Stylesheet;
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: WorkspaceInstaller.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class WorkspaceInstaller implements PackageEventListener {
-
-    public static final String versionId = "$Id: WorkspaceInstaller.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public static final String PACKAGE_KEY   = "content-center";
     private static final String INSTANCE_NAME = "Content Center";

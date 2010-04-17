@@ -35,11 +35,9 @@ import com.arsdigita.xml.Element;
  * them to a staff role for the content section.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ObjectAddSearchAdmin.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ObjectAddSearchAdmin extends SimpleContainer {
-
-    public static final String versionId = "$Id: ObjectAddSearchAdmin.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ACSObjectSelectionModel m_object;
 

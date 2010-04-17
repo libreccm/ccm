@@ -72,7 +72,7 @@ import org.apache.log4j.Logger;
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
- * @version $Id: CategoryItemPane.java 1329 2006-09-27 11:47:05Z sskracic $
+ * @version $Id: CategoryItemPane.java 1967 2009-08-29 21:05:51Z pboy $
  */
 class CategoryItemPane extends BaseItemPane {
     
@@ -81,23 +81,23 @@ class CategoryItemPane extends BaseItemPane {
     
     private final SingleSelectionModel m_model;
     private final CategoryRequestLocal m_category;
-    
+
     private final SimpleContainer m_detailPane;
-    
+
     public CategoryItemPane(final SingleSelectionModel model,
-            final CategoryRequestLocal category,
-            final ActionLink addLink,
-            final ActionLink editLink,
-            final ActionLink deleteLink) {
+                            final CategoryRequestLocal category,
+                            final ActionLink addLink,
+                            final ActionLink editLink,
+                            final ActionLink deleteLink) {
         m_model = model;
         m_category = category;
-        
+
         // Details
-        
+
         m_detailPane = new SimpleContainer();
         add(m_detailPane);
         setDefault(m_detailPane);
-        
+
         final ActionLink orderItemsLink = new ActionLink(new Label(
                                    gz("cms.ui.category.categorized_objects"))) {
             public boolean isVisible(PageState state) {
@@ -113,24 +113,24 @@ class CategoryItemPane extends BaseItemPane {
                 return canOrder;
             }
         };
-        
-        
+
+
         final Form orderItemsForm = new OrderItemsForm(m_category);
         final Form orderItemsForm2 = new OrderItemsForm(m_category);
         add(orderItemsForm);
         add(orderItemsForm2);
-        
+
         // Change index item
         final ActionLink indexLink = new ActionLink(new Label(gz(
                                          "cms.ui.category.change_index_item")));
         final Form indexForm = new IndexItemSelectionForm(m_category);
         add(indexForm);
-        
+
         ViewItemLink viewIndexLink = new ViewItemLink(new Label(gz(
                                         "cms.ui.category.view_index_item")),"");
         EditItemLink editIndexLink = new EditItemLink(new Label(gz(
                                         "cms.ui.category.edit_index_item")),"");
-        
+
         // Summary
         m_detailPane.add(new SummarySection(editLink, deleteLink, indexLink,
                                  viewIndexLink, editIndexLink, orderItemsLink));
@@ -166,89 +166,89 @@ class CategoryItemPane extends BaseItemPane {
         
         // Subcategories
         m_detailPane.add(new SubcategorySection(addLink));
-        
+
         // Linked categories
         final ActionLink linkAddLink = new ActionLink
-                (new Label(gz("cms.ui.category.linked.add")));
-        
+              (new Label(gz("cms.ui.category.linked.add")));
+
         final Form linkForm = new LinkForm(m_category);
         add(linkForm);
-        
+
         linkAddLink.addActionListener(new NavigationListener(linkForm));
         linkForm.addSubmissionListener(new CancelListener(linkForm));
-        
+
         m_detailPane.add(new LinkedCategorySection(linkAddLink));
-        
+
         // Templates
         m_detailPane.add(new AdminVisible(new CategoryTemplateSection()));
-        
+
         // Permissions
         m_detailPane.add(new PermissionsSection());
-        
+
         connect(indexLink, indexForm);
         connect(indexForm);
-        
+
         connect(orderItemsLink, orderItemsForm);
         connect(orderItemsForm);
-        
+
     }
-    
+
     private class EditVisible extends VisibilityComponent {
         EditVisible(final Component child) {
             super(child, null);
         }
-        
+
         public boolean hasPermission(PageState ps) {
             return m_category.getCategory(ps).canEdit();
         }
     }
-    
+
     private class AdminVisible extends VisibilityComponent {
         AdminVisible(final Component child) {
             super(child, null);
         }
-        
+
         public boolean hasPermission(PageState ps) {
             return m_category.getCategory(ps).canAdmin();
         }
     }
-    
+
     private class SummarySection extends Section {
-        
+
         SummarySection(final ActionLink editLink,
-                final ActionLink deleteLink,
-                final ActionLink indexLink,
-                final ActionLink orderItemsLink) {
+                       final ActionLink deleteLink,
+                       final ActionLink indexLink,
+                       final ActionLink orderItemsLink) {
             setHeading(new Label(gz("cms.ui.category.details")));
-            
+
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            
+
             group.setSubject(new Properties());
-            
+
             group.addAction(new EditVisible(editLink), ActionGroup.EDIT);
             group.addAction(new EditVisible(orderItemsLink));
             group.addAction(new EditVisible(indexLink));
             group.addAction(new AdminVisible(deleteLink), ActionGroup.DELETE);
         }
-        
+
         /*
          * This alternative constructor sets two additional links, allowing
          * the user to view and edit the content index item.
          */
         SummarySection(final ActionLink editLink,
-                final ActionLink deleteLink,
-                final ActionLink indexLink,
-                final BaseLink viewIndexItem,
-                final BaseLink editIndexItem,
-                final ActionLink orderItemsLink) {
+                       final ActionLink deleteLink,
+                       final ActionLink indexLink,
+                       final BaseLink viewIndexItem,
+                       final BaseLink editIndexItem,
+                       final ActionLink orderItemsLink) {
             setHeading(new Label(gz("cms.ui.category.details")));
-            
+
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            
+
             group.setSubject(new Properties());
-            
+
             group.addAction(new EditVisible(editLink), ActionGroup.EDIT);
             group.addAction(new EditVisible(orderItemsLink));
             group.addAction(new EditVisible(indexLink));
@@ -256,33 +256,33 @@ class CategoryItemPane extends BaseItemPane {
             group.addAction(new EditVisible(editIndexItem));
             group.addAction(new AdminVisible(deleteLink), ActionGroup.DELETE);
         }
-        
+
         private class Properties extends PropertyList {
             protected final java.util.List properties(final PageState state) {
                 final java.util.List props = super.properties(state);
                 final Category category = m_category.getCategory(state);
                 final ACSObject item = category.getDirectIndexObject();
-                
+
                 String itemTitle = "None";
-                
+
                 if (item != null) {
                     itemTitle = item.getDisplayName();
-                } else if (!category.ignoreParentIndexItem()  
-                                   && category.getParentCategoryCount() > 0)  
-                { 
-                        Category ancestor = findParentCategoryWithNonInheritedIndexItem(category); 
-                        if (ancestor != null) { 
-                                if (ancestor.getIndexObject() != null) { 
-                                        itemTitle = ancestor.getIndexObject().getDisplayName(); 
-                                } 
-                                itemTitle += " (Inherited from "  
-                                      + ancestor.getDisplayName() + ")"; 
-                        } else { 
-                                // The complete hierarchy is set to inherit. 
-                                // Just leave the itemTitle as None. 
+                } else if (!category.ignoreParentIndexItem() 
+                		   && category.getParentCategoryCount() > 0) 
+                {
+                	Category ancestor = findParentCategoryWithNonInheritedIndexItem(category);
+                	if (ancestor != null) {
+                		if (ancestor.getIndexObject() != null) {
+                			itemTitle = ancestor.getIndexObject().getDisplayName();
+                		}
+                		itemTitle += " (Inherited from " 
+              		              + ancestor.getDisplayName() + ")";
+                	} else {
+                		// The complete hierarchy is set to inherit.
+                		// Just leave the itemTitle as None.
                 	}
                 }
-                
+
                 props.add(new Property(gz("cms.ui.name"),
                         category.getName("")));
                 props.add(new Property(gz("cms.ui.description"),
@@ -290,21 +290,21 @@ class CategoryItemPane extends BaseItemPane {
                 props.add(new Property(gz("cms.ui.category.url"),
                         category.getURL("")));
                 props.add(new Property(gz("cms.ui.category.is_not_abstract"),
-                        category.isAbstract() ?
-                            gz("cms.ui.no") :
-                            gz("cms.ui.yes")));
+                                       category.isAbstract() ?
+                                       gz("cms.ui.no") :
+                                       gz("cms.ui.yes")));
                 props.add(new Property(gz("cms.ui.category.is_enabled"),
                         category.isEnabled("") ?
-                            gz("cms.ui.yes") :
-                            gz("cms.ui.no")));
+                                       gz("cms.ui.yes") :
+                                       gz("cms.ui.no")));
                 props.add(new Property(gz("cms.ui.category.index_item"),
-                        itemTitle));
-                
+                                       itemTitle));
+
                 return props;
             }
         }
-    } 
-     
+    }
+    
     // Loop over the parents and recurse up the hierarchy the find the first
     // parent with an explicit index item ignoreParentIndexItem is true.
     private Category findParentCategoryWithNonInheritedIndexItem(Category c) {
@@ -339,83 +339,83 @@ class CategoryItemPane extends BaseItemPane {
             group.addAction(new AdminVisible(addLink), ActionGroup.ADD);
         }
     }
-    
+
     private class SubcategorySection extends Section {
         SubcategorySection(final ActionLink addLink) {
             setHeading(new Label(gz("cms.ui.category.subcategories")));
-            
+
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            
+
             group.setSubject(new SubcategoryList(m_category, m_model));
             group.addAction(new AdminVisible(addLink), ActionGroup.ADD);
         }
     }
-    
+
     private class LinkedCategorySection extends Section {
         LinkedCategorySection(final ActionLink linkAddLink) {
             setHeading(new Label(gz("cms.ui.category.linked")));
-            
+
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            
+
             group.setSubject(new CategoryLinks(m_category, m_model));
             group.addAction(new EditVisible(linkAddLink), ActionGroup.EDIT);
         }
-        
+
         public final boolean isVisible(final PageState state) {
             return !m_category.getCategory(state).isRoot();
         }
     }
-    
+
     private class CategoryTemplateSection extends Section {
         CategoryTemplateSection() {
             setHeading(new Label(gz("cms.ui.category.templates")));
-            
+
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            
+
             group.setSubject(new CategoryTemplates(m_category));
             // XXX secvis
             //group.addAction(link);
         }
     }
-    
+
     private class PermissionsSection extends Section {
         public boolean isVisible(PageState ps) {
             Category cat = m_category.getCategory(ps);
             return !cat.isRoot() && cat.canAdmin();
         }
-        
+
         PermissionsSection() {
             setHeading(new Label(gz("cms.ui.permissions")));
-            
+
             final ActionGroup group = new ActionGroup();
             setBody(group);
-            
+
             PrivilegeDescriptor[] privs = new PrivilegeDescriptor[] {
                 PrivilegeDescriptor.EDIT,
                 Category.MAP_DESCRIPTOR,
                 PrivilegeDescriptor.DELETE,
                 PrivilegeDescriptor.ADMIN
             };
-            
+
             HashMap privMap = new HashMap();
             privMap.put("edit", "Edit");
             privMap.put("delete", "Delete");
             privMap.put(Category.MAP_DESCRIPTOR.getName(), "Categorize Items");
             privMap.put("admin", "Admin");
-            
+
             final CMSPermissionsPane permPane = new CMSPermissionsPane
-                    (privs, privMap, new ACSObjectSelectionModel(m_model)) {
+                (privs, privMap, new ACSObjectSelectionModel(m_model)) {
                 public void showAdmin(PageState ps) {
                     Assert.exists(m_model.getSelectedKey(ps));
-                    
+
                     super.showAdmin(ps);
                     getAdminListingPanel().setVisible(ps, false);
                 }
             };
-            
+
             final ActionLink restoreDefault = new ActionLink(new Label(gz(
                                        "cms.ui.restore_default_permissions"))) {
                 public boolean isVisible(PageState ps) {
@@ -423,7 +423,7 @@ class CategoryItemPane extends BaseItemPane {
                     return PermissionService.getContext(cat) == null;
                 }
             };
-            
+
             final ActionLink useCustom = new ActionLink(new Label(gz(
                                            "cms.ui.use_custom_permissions"))) {
                 public boolean isVisible(PageState ps) {
@@ -431,7 +431,7 @@ class CategoryItemPane extends BaseItemPane {
                     return PermissionService.getContext(cat) != null;
                 }
             };
-            
+
             ActionListener al = new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     PageState state = event.getPageState();
@@ -450,18 +450,18 @@ class CategoryItemPane extends BaseItemPane {
                             parent = cat.getDefaultParentCategory();
                         } catch (CategoryNotFoundException ce) {
                             throw new IllegalStateException(
-                                    "link shouldn't exist for root categories");
+                                "link shouldn't exist for root categories");
                         }
                         PermissionService.setContext(cat, parent);
-                        
+
                         // revoke all direct permissions so category will only
                         // have inherited permissions
                         ObjectPermissionCollection perms =
-                                PermissionService.getDirectGrantedPermissions(
+                            PermissionService.getDirectGrantedPermissions(
                                 cat.getOID());
                         while (perms.next()) {
                             PermissionService.revokePermission(
-                                    new PermissionDescriptor(
+                                new PermissionDescriptor(
                                     perms.getPrivilege(), cat.getOID(),
                                     perms.getGranteeOID()));
                         }
@@ -469,17 +469,17 @@ class CategoryItemPane extends BaseItemPane {
                     permPane.reset(state);
                 }
             };
-            
+
             restoreDefault.addActionListener(al);
             useCustom.addActionListener(al);
-            
+
             SimpleContainer links = new SimpleContainer();
             links.add(restoreDefault);
             links.add(useCustom);
-            
+
             group.setSubject(permPane);
             group.addAction(links);
-            
+
             m_model.addChangeListener(new ChangeListener() {
                 public void stateChanged(ChangeEvent e) {
                     PageState ps = e.getPageState();
@@ -487,22 +487,22 @@ class CategoryItemPane extends BaseItemPane {
             });
         }
     }
-    
+
     private static class OrderItemsForm extends CMSForm {
-        
+
         public OrderItemsForm(CategoryRequestLocal category) {
             super("orderItems", new SimpleContainer());
             Label header = new Label(gz("cms.ui.category.categorized_objects"));
             header.setFontWeight(Label.BOLD);
             add(header);
             add(new CategorizedObjectsList(category));
-            
+
             add(new Submit("Done"));
-            
+
         }
-        
+
     }
-    
+
     /*
      * This private class creates a link to the index item for a category.
      */
@@ -510,11 +510,11 @@ class CategoryItemPane extends BaseItemPane {
         ViewItemLink(Component c, String s) {
             super(c,s);
         }
-        
+
         // Build the preview link.  This uses a standard redirect link to find 
         // the content. The prepareURL method is called by the printwriter
         protected String prepareURL(final PageState state, String location) {
-            
+
             ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state)
                                                                .getDirectIndexObject()))
                                                                .getPrimaryInstance();
@@ -524,7 +524,7 @@ class CategoryItemPane extends BaseItemPane {
                 return "/redirect/?oid=" + URLEncoder.encode(indexItem.getOID().toString());
             }
         }
-        
+
         // We only show this link when an index item exists for this category
         public boolean isVisible(PageState state) {
             if (!super.isVisible(state)) {
@@ -538,7 +538,7 @@ class CategoryItemPane extends BaseItemPane {
             }
         }
     };
-    
+
     private class EditItemLink extends Link {
         EditItemLink(Component c, String s) {
             super(c,s);

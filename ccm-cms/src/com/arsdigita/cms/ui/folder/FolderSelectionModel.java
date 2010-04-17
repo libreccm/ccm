@@ -34,12 +34,10 @@ import java.math.BigDecimal;
  * com.arsdigita.cms.Folder}.
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
- * @version $Id: FolderSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: FolderSelectionModel.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class FolderSelectionModel
     extends ItemSelectionModel {
-
-    public static final String versionId = "$Id: FolderSelectionModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     public FolderSelectionModel(String name) {
         super(Folder.BASE_DATA_OBJECT_TYPE, Folder.BASE_DATA_OBJECT_TYPE, name);

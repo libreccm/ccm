@@ -51,11 +51,9 @@ import java.math.BigDecimal;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Michael Bryzek (mbryzek@arsdigita.com)
- * @version $Revision: #16 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: PartyInfo.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class PartyInfo extends SimpleContainer {
-
-    public static final String versionId = "$Id: PartyInfo.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final SingleSelectionModel m_parties;
 

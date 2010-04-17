@@ -54,15 +54,13 @@ import org.apache.log4j.Logger;
  * @author <a href="mailto:tri@arsdigita.com">Tri Tran</a>
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
  *
- * @version $Id: FolderTreeModelBuilder.java 1313 2006-09-06 12:40:30Z sskracic $
+ * @version $Id: FolderTreeModelBuilder.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 public class FolderTreeModelBuilder extends LockableImpl
     implements TreeModelBuilder {
 
     private static final Logger s_log = Logger.getLogger(FolderTreeModelBuilder.class);
-
-    public static final String versionId = "$Id: FolderTreeModelBuilder.java 1313 2006-09-06 12:40:30Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private PrivilegeDescriptor TREE_DESCRIPTOR =
         SecurityManager.CMS_PREVIEW_ITEM_DESCRIPTOR;

@@ -47,9 +47,6 @@ import java.math.BigDecimal;
  * @version $Id: RolePartyAddForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class RolePartyAddForm extends PartyAddForm {
-    public static final String versionId =
-        "$Id: RolePartyAddForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        " by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger
         (RolePartyAddForm.class);

@@ -60,10 +60,9 @@ import com.arsdigita.mimetypes.MimeType;
  * @author Karl Goldstein (karlg@arsdigita.com)
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: TemplateManager.java 287 2005-02-22 00:29:02Z sskracic $ 
  **/
 public interface TemplateManager {
-
-    public static final String versionId = "$Id: TemplateManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * The default use context for templates

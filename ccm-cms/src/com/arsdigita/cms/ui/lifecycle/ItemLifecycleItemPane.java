@@ -60,13 +60,9 @@ import com.arsdigita.xml.Element;
  * @author Jack Chung
  * @author Xixi D'Moon &lt;xdmoon@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ItemLifecycleItemPane.java 1563 2007-04-18 15:58:17Z apevec $
+ * @version $Id: ItemLifecycleItemPane.java 1942 2009-05-29 07:53:23Z terry $
  */
 class ItemLifecycleItemPane extends BaseItemPane {
-    public static final String versionId =
-        "$Id: ItemLifecycleItemPane.java 1563 2007-04-18 15:58:17Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (ItemLifecycleItemPane.class);

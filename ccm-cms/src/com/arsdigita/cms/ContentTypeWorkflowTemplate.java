@@ -37,13 +37,9 @@ import org.apache.log4j.Logger;
  * com.arsdigita.cms.ContentSection content section}.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: ContentTypeWorkflowTemplate.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ContentTypeWorkflowTemplate.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class ContentTypeWorkflowTemplate extends DomainObject {
-    public static final String versionId =
-        "$Id: ContentTypeWorkflowTemplate.java 287 2005-02-22 00:29:02Z sskracic $" + 
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (ContentTypeWorkflowTemplate.class);

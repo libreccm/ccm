@@ -45,11 +45,9 @@ import java.io.IOException;
  * n is the number of items in the list.  This clearly is not a good setup.
  *
  * @author Randy Graebner (randyg@alum.mit.edu)
- * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SortableList.java 1618 2007-09-13 12:14:51Z chrisg23 $
  */
 public abstract class SortableList extends List {
-
-    public static final String versionId = "$Id: SortableList.java 1618 2007-09-13 12:14:51Z chrisg23 $ by $Author: chrisg23 $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static final org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(SortableList.class);

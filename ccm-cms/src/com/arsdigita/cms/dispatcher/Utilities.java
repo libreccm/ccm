@@ -50,7 +50,7 @@ import java.util.Map;
  * System.</p>
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Id: Utilities.java 1546 2007-03-28 14:28:57Z chrisgilbert23 $
+ * @version $Id: Utilities.java 1967 2009-08-29 21:05:51Z pboy $
  */
 public class Utilities {
 

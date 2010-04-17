@@ -41,11 +41,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: ResourceHandlerImpl.java 287 2005-02-22 00:29:02Z sskracic $  
  **/
 public abstract class ResourceHandlerImpl implements ResourceHandler {
-
-    public static final String versionId = "$Id: ResourceHandlerImpl.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
-
 
     /**
      * This method is called by the {@link com.arsdigita.dispatcher.Dispatcher}

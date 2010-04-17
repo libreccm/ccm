@@ -28,10 +28,10 @@ import com.arsdigita.xml.Element;
 
 /**
  * Show ContentSection info in generated xml.
+ * 
+ * @version $Id: ContentSectionComponent.java,v 1.1 2003/09/26 20:49:24 cwolfe Exp $ by $  
  */
 public class ContentSectionComponent extends SimpleComponent {
-
-    public static final String versionId = "$Id: ContentSectionComponent.java,v 1.1 2003/09/26 20:49:24 cwolfe Exp $ by $Author: cwolfe $, $DateTime: 2003/08/18 23:54:14 $";
 
     public ContentSectionComponent() {
         super();

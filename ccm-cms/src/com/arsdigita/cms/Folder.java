@@ -70,10 +70,6 @@ import java.util.Iterator;
  * @version $Id: Folder.java 1639 2007-09-17 13:20:13Z chrisg23 $
  */
 public class Folder extends ContentItem {
-    public static final String versionId =
-        "$Id: Folder.java 1639 2007-09-17 13:20:13Z chrisg23 $" +
-        "$Author: chrisg23 $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(Folder.class);
 

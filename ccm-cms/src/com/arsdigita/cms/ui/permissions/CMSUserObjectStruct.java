@@ -42,13 +42,9 @@ import java.math.BigDecimal;
  * the party_id and the corresponding entity.
  *
  * @author Stefan Deusch (sdeusch@arsdigita.com)
- * @version $id$
+ * @version $Id: CMSUserObjectStruct.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class CMSUserObjectStruct implements CMSPermissionsConstants {
-    public static final String versionId =
-        "$Id: CMSUserObjectStruct.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (CMSUserObjectStruct.class);

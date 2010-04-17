@@ -29,13 +29,9 @@ import com.arsdigita.util.Assert;
  * Form to search for parties to be added to a staff group.
  *
  * @author Scott Seago &lt;sseago@redhat.com&gt;
- * @version $Id: PartySearchForm.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: PartySearchForm.java 1942 2009-05-29 07:53:23Z terry $
  */
 public class PartySearchForm extends BaseForm {
-    public static final String versionId =
-        "$Id: PartySearchForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final static String SEARCH_LABEL = "Search";
 

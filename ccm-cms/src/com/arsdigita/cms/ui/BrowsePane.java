@@ -52,10 +52,6 @@ import org.apache.log4j.Logger;
  * @version $Id: BrowsePane.java 1325 2006-09-22 08:11:33Z sskracic $
  */
 public class BrowsePane extends LayoutPanel implements Resettable {
-    public static final String versionId =
-        "$Id: BrowsePane.java 1325 2006-09-22 08:11:33Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger(BrowsePane.class);
 

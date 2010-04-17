@@ -38,12 +38,10 @@ import java.util.Set;
  * or care about this class.
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
- * @version $Id: VersionUpdater.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: VersionUpdater.java 1940 2009-05-29 07:15:05Z terry $
  */
 
 class VersionUpdater extends DomainService {
-
-    public static final String versionId = "$Id: VersionUpdater.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(VersionUpdater.class);

@@ -28,15 +28,13 @@ import com.arsdigita.persistence.DataCollection;
  * This class contains a collection of Locales associated with a
  * {@link com.arsdigita.cms.ContentSection}.
  *
- * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #8 $ $DateTime: 2004/08/17 23:15:09 $
- *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
+ *
+ * @author Michael Pih (pihman@arsdigita.com)
+ * @version $Id: SectionLocaleCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SectionLocaleCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: SectionLocaleCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

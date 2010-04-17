@@ -94,7 +94,7 @@ import org.apache.log4j.Logger;
  * @see ContentSection#getConfig()
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ContentSectionConfig.java 1689 2007-10-26 11:06:23Z chrisg23 $
+ * @version $Id: ContentSectionConfig.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public final class ContentSectionConfig extends AbstractConfig {
 
@@ -641,9 +641,6 @@ public final class ContentSectionConfig extends AbstractConfig {
 
 
 
-
-
-
     private class DHTMLEditorConfigParameter extends StringParameter {
         public DHTMLEditorConfigParameter(final String name,
                                           final int multiplicity,
@@ -819,9 +816,9 @@ public final class ContentSectionConfig extends AbstractConfig {
      *
      * @return
      */
-    public boolean getHasContactsAuthoringStep() {
-	return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
-    }
+	public boolean getHasContactsAuthoringStep() {
+		return ((Boolean) get(m_hasContactsAuthoringStep)).booleanValue();
+	}
 	
 	public final boolean getHideTextAssetUploadFile() {
 	    return ((Boolean) get(m_hideTextAssetUploadFile)).booleanValue();

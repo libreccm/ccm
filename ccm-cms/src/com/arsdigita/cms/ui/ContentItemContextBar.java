@@ -39,10 +39,6 @@ import java.util.List;
  * @version $Id: ContentItemContextBar.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class ContentItemContextBar extends ContentSectionContextBar {
-    public static final String versionId =
-        "$Id: ContentItemContextBar.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final Logger s_log = Logger.getLogger
         (ContentItemContextBar.class);

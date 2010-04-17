@@ -46,7 +46,7 @@ import org.apache.log4j.Logger;
  * @author Michael Pih
  * @author Stanislav Freidin &lt;sfreidin@redhat.com&gt;
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: BaseCategoryForm.java 543 2005-06-03 23:03:45Z sskracic $
+ * @version $Id: BaseCategoryForm.java 1951 2009-06-30 04:35:04Z terry $
  */
 class BaseCategoryForm extends BaseForm {
     private static final Logger s_log = Logger.getLogger

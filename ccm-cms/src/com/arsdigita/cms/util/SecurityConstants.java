@@ -26,12 +26,9 @@ package com.arsdigita.cms.util;
  *
  * @author Michael Pih
  * @version $Revision: #7 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: SecurityConstants.java 1280 2006-07-27 09:12:09Z cgyg9330 $
  */
 public interface SecurityConstants {
-    public static final String versionId =
-        "$Id: SecurityConstants.java 1280 2006-07-27 09:12:09Z cgyg9330 $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     // CMS Actions
     public final static String STAFF_ADMIN = "staff_admin";

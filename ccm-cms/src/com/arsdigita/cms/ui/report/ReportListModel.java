@@ -23,7 +23,7 @@ import java.util.List;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.util.Assert;
 
-/**
+/** 
  * ListModel for Reports.
  * 
  * @author <a href="https://sourceforge.net/users/thomas-buckel/">thomas-buckel</a>

@@ -27,15 +27,14 @@ import com.arsdigita.persistence.PersistenceException;
 /**
  * This class contains a collection of images.
  *
- * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
- * @version 1.0
- *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
+ *
+ * @author <a href="mailto:flattop@arsdigita.com">Jack Chung</a>
+ * @version 1.0
+ * @version $Id: ImageAssetCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ImageAssetCollection extends DomainCollection {
-
-    public static final String versionId = "$Id: ImageAssetCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Constructor.

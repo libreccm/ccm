@@ -52,13 +52,9 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author Jack Chung
  * @author Xixi D'Moon
  * @author Michael Pih
- * @version $Revision: #9 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: EditPhaseForm.java 287 2005-02-22 00:29:02Z sskracic $
  */
 class EditPhaseForm extends CMSForm {
-    public static final String versionId =
-        "$Id: EditPhaseForm.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private final static String PHASE_ID         = "id";
     private final static String LABEL            = "label";

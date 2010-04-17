@@ -28,10 +28,6 @@ import com.arsdigita.cms.Folder;
 import org.apache.log4j.Logger;
 
 class FolderEditForm extends FolderBaseForm {
-    public static final String versionId =
-        "$Id: FolderEditForm.java 774 2005-09-12 14:53:47Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(FolderEditForm.class);
 

@@ -37,14 +37,10 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @author Jack Chung (flattop@arsdigita.com)
- * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: LifecycleListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public final class LifecycleListModelBuilder extends LockableImpl
         implements ListModelBuilder {
-    public static final String versionId =
-        "$Id: LifecycleListModelBuilder.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public final ListModel makeModel(final List l, final PageState state) {
         return new Model(state);

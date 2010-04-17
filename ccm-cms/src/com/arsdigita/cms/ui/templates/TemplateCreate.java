@@ -67,10 +67,6 @@ import java.util.TooManyListenersException;
  * @version $Id: TemplateCreate.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class TemplateCreate extends BasicItemForm {
-    public static final String versionId =
-        "$Id: TemplateCreate.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(TemplateCreate.class);
 

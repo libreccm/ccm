@@ -23,11 +23,11 @@ import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.util.Assert;
 
+/**
+ *
+ * @version $Id: TaskRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class TaskRequestLocal extends RequestLocal {
-    public static final String versionId =
-        "$Id: TaskRequestLocal.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     public final CMSTask getTask(final PageState state) {
         final CMSTask task = (CMSTask) get(state);

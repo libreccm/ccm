@@ -50,11 +50,9 @@ import com.arsdigita.xml.Element;
  * A pane for managing {@com.arsdigita.cms.Folder} properties.
  *
  * @author Michael Pih (pihman@arsdigita.com)
- * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version $Id: FolderProperties.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FolderProperties extends CMSContainer {
-
-    public static final String versionId = "$Id: FolderProperties.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private FolderInfo m_folderInfo;
     private EditFolder m_editFolder;

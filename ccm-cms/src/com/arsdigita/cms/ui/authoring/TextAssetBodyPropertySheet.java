@@ -40,10 +40,9 @@ import com.arsdigita.bebop.Table;
 /**
  *  This extends DomainObjectPropertySheet and has a lot of duplicate
  *  code from it because it uses so many private inner classes
+ * @version $Id: TextAssetBodyPropertySheet.java 754 2005-09-02 13:26:17Z sskracic $ 
  */
 public class TextAssetBodyPropertySheet extends DomainObjectPropertySheet {
-
-    public static final String versionId = "$Id: TextAssetBodyPropertySheet.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Construct a new TextAssetBodyPropertySheet

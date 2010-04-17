@@ -28,10 +28,10 @@ import com.arsdigita.cms.dispatcher.Utilities;
 /**
  * Creates a {@link ToggleLink} with a button-looking image
  * as a child
+ * 
+ * @version $Id: ControlButton.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class ControlButton extends ControlLink {
-
-    public static final String versionId = "$Id: ControlButton.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * The URL of an "Edit" button

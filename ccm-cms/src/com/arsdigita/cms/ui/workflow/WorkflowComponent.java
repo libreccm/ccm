@@ -25,9 +25,12 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.workflow.simple.Workflow;
 import com.arsdigita.xml.Element;
 
+/** 
+ *
+ * @version $Id: WorkflowComponent.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class WorkflowComponent extends SimpleComponent {
 
-    public static final String versionId = "$Id: WorkflowComponent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     Workflow m_workflow;
     public WorkflowComponent(Workflow w) {
         m_workflow = w;

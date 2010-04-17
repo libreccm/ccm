@@ -87,13 +87,11 @@ import java.util.Arrays;
  * (move/copy/delete).
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
- * @version $Id: FolderManipulator.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: FolderManipulator.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class FolderManipulator extends SimpleContainer
     implements FormProcessListener, FormValidationListener,
                FormSubmissionListener, Resettable {
-
-    public static final String versionId = "$Id: FolderManipulator.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(FolderManipulator.class);

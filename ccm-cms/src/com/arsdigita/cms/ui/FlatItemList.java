@@ -82,15 +82,11 @@ import java.util.Map;
  * item listing. Also contains a new item form.
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
- * @version $Revision: $ $DateTime: $
+ * @version $Id: FlatItemList.java 1538 2007-03-23 16:26:36Z apevec $
  */
 public class FlatItemList extends SegmentedPanel
         implements FormProcessListener, ChangeListener, FormSubmissionListener,
                    Resettable, ActionListener {
-    public static final String versionId =
-        "$Id: FlatItemList.java 1538 2007-03-23 16:26:36Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: $";
 
     private static final String CONTENT_TYPE_ID = "ct";
     private static final String CMS_PRIVILEGES = "com.arsdigita.cms.getPrivileges";

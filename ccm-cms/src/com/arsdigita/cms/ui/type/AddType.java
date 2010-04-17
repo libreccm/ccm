@@ -66,11 +66,10 @@ import java.util.TooManyListenersException;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #15 $ $Date: 2004/08/17 $
+ * @version $Id: AddType.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AddType extends CMSForm
     implements PrintListener, FormProcessListener, FormInitListener {
-
-    public static final String versionId = "$Id: AddType.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private final static Logger s_log =
         Logger.getLogger(AddType.class.getName());

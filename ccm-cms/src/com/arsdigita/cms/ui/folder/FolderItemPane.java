@@ -73,14 +73,11 @@ import java.util.Map;
 2 *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
  * @version $Revision: #6 $ $DateTime: 2004/08/17 23:15:09 $
+ * @version Id: FolderItemPane.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class FolderItemPane extends SegmentedPanel
         implements FormProcessListener, ChangeListener, FormSubmissionListener,
                    Resettable, ActionListener {
-    public static final String versionId =
-        "$Id: FolderItemPane.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static final String CONTENT_TYPE_ID = "ct";
     private static final String CMS_PRIVILEGES = "com.arsdigita.cms.getPrivileges";

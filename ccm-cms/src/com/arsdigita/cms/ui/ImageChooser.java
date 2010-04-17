@@ -47,11 +47,9 @@ import com.arsdigita.cms.util.GlobalizationUtil;
  * search images by keyword
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: ImageChooser.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ImageChooser.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ImageChooser extends BoxPanel {
-
-    public static final String versionId = "$Id: ImageChooser.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ImageKeywordForm m_form;
     private ImageBrowser m_browser;

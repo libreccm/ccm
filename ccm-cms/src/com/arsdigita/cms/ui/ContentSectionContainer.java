@@ -73,12 +73,9 @@ import com.arsdigita.web.Web;
  * form. The same form is reused in every row of the table.
  *
  * @author <a href="mailto:mbryzek@arsdigita.com">Michael Bryzek</a>
- * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
- **/
+ * @version $Id: ContentSectionContainer.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class ContentSectionContainer extends CMSContainer {
-
-    public static final String versionID =
-        "$Id: ContentSectionContainer.java 287 2005-02-22 00:29:02Z sskracic $";
 
     private ContentSectionTable m_table;
     private FormContainer m_formContainer;

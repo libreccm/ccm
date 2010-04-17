@@ -69,8 +69,6 @@ import java.math.BigDecimal;
  * @version $Id: ContentPageTable.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ContentPageTable extends DataTable {
-    public static final String versionId = 
-        "$Id: ContentPageTable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private ContentType m_type;
     private String m_queryName;

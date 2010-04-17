@@ -30,11 +30,10 @@ import com.arsdigita.util.LockableImpl;
  * to the item itself.
  *
  * @author <a href="mailto:lutter@arsdigita.com">David Lutterkort</a>
- * @version $Id: ItemPath.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: ItemPath.java 1940 2009-05-29 07:15:05Z terry $
  */
 public class ItemPath extends List {
 
-    public static final String versionId = "$Id: ItemPath.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
     public ItemPath(ItemSelectionModel folderSel) {
         super(new ListModelBuilder(folderSel));
         setAttribute("type", "item-path");

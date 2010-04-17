@@ -23,11 +23,11 @@ import com.arsdigita.cms.ImageAsset;
 /**
  * The <code>ImageBrowserModel</code> is an abstraction used by the
  * {@link ImageBrowser} class in order to display a table of images.
+ *
+ * @version $Id: ImageBrowserModel.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 
 public interface ImageBrowserModel {
-
-    public static final String versionId = "$Id: ImageBrowserModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     /**
      * Advance to the next row, if possible

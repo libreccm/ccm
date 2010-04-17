@@ -52,15 +52,11 @@ import org.apache.log4j.Logger;
  * <p>
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
- * @version $Id: ObjectCopier.java 754 2005-09-02 13:26:17Z sskracic $
+ * @version $Id: ObjectCopier.java 1942 2009-05-29 07:53:23Z terry $
  * @see ContentItem
  * @see ContentItem#copyProperty(ContentItem, String, ItemCopier)
  */
 class ObjectCopier extends DomainCopier implements ItemCopier {
-    public static final String versionId =
-        "$Id: ObjectCopier.java 754 2005-09-02 13:26:17Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log = Logger.getLogger(ObjectCopier.class);
 

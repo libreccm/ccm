@@ -56,11 +56,10 @@ import java.sql.SQLException;
  *
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Revision: #13 $ $Date: 2004/08/17 $
+ * @version $Id: AddStep.java 754 2005-09-02 13:26:17Z sskracic $
  */
 public class AddStep extends Form
     implements FormProcessListener, FormInitListener {
-
-    public static final String versionId = "$Id: AddStep.java 754 2005-09-02 13:26:17Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/17 23:15:09 $";
 
     private static Logger s_log =
         Logger.getLogger(AddStep.class.getName());
