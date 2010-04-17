@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
  * Loader.
  *
  * @author Randy Graebner &lt;randyg@redhat.com&gt;
- * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Loader.java 2004 2009-10-03 22:23:08Z pboy $
  */
 public class Loader extends PackageLoader implements ThemeConstants {
 

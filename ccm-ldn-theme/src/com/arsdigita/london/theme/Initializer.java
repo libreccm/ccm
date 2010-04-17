@@ -44,7 +44,7 @@ import org.apache.log4j.Logger;
  * The Theme Directory initializer.
  *
  * @author Randy Graebner &lt;randyg@redhat.com&gt;
- * @version $Id: Initializer.java 758 2005-09-02 14:26:56Z sskracic $
+ * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

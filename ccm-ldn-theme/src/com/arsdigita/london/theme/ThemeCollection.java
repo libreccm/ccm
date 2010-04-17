@@ -30,7 +30,7 @@ import java.util.Date;
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
- * @version $Id: ThemeCollection.java 755 2005-09-02 13:42:47Z sskracic $ 
+ * @version $Id: ThemeCollection.java 2004 2009-10-03 22:23:08Z pboy $ 
  */
 public class ThemeCollection extends ACSObjectCollection {
 

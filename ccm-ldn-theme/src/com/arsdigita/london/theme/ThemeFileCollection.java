@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @see com.arsdigita.domain.DomainCollection
  * @see com.arsdigita.persistence.DataCollection
- * @version $Id: ThemeFileCollection.java 990 2005-11-09 17:10:48Z sskracic $
+ * @version $Id: ThemeFileCollection.java 2004 2009-10-03 22:23:08Z pboy $
  */
 public class ThemeFileCollection extends DomainCollection {
 
