@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
  * The CMS initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: Initializer.java 1942 2009-05-29 07:53:23Z terry $
+ * @version $Id: Initializer.java 2086 2010-04-12 09:55:35Z pboy $
  */
 public class Initializer extends CompoundInitializer {
 

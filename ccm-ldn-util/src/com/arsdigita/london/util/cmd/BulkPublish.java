@@ -89,6 +89,10 @@ public class BulkPublish extends Program {
 
     }
     
+    /**
+     * 
+     * @param cmdLine
+     */
     protected void doRun(CommandLine cmdLine) {
         final String[] types;
 	final String[] exceptions;

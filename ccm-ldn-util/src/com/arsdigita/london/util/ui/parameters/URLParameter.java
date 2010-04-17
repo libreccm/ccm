@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
  * check URL form, doesn't actually return a
  * java.net.URL object.
  *
- * @version $Id: URLParameter.java 755 2005-09-02 13:42:47Z sskracic $  
+ * @version $Id: URLParameter.java 2086 2010-04-12 09:55:35Z pboy $  
  */
 public class URLParameter extends ParameterModel {
 
