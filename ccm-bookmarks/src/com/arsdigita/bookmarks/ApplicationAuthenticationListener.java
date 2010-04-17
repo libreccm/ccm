@@ -48,13 +48,11 @@ import org.apache.log4j.Logger;
  * @param privilegeName a String that represents the privlege name for the
  *                 privilege a user must have to see the page.
  *
+ * @author jorris
+ * @version $Id: ApplicationAuthenticationListener.java#2 2003/04/01 16:53:21 $
  */
 public class ApplicationAuthenticationListener
         extends UserAuthenticationListener implements RequestListener {
-    public static final String versionId =
-        "$Id: //apps/bookmarks/dev/src/com/arsdigita/bookmarks/ApplicationAuthenticationListener.java#2 $" +
-        "$Author: jorris $" +
-        "$DateTime: 2003/04/01 16:53:21 $";
 
     private static final Logger s_log = Logger.getLogger
         (ApplicationAuthenticationListener.class);

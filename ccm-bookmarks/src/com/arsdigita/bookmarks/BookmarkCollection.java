@@ -22,6 +22,11 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
+
+/**
+ *
+ *
+ */
 public class BookmarkCollection extends DomainCollection {
 
     protected BookmarkCollection(DataCollection dataCollection) {

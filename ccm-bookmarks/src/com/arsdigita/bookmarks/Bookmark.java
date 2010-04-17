@@ -33,7 +33,6 @@ import java.math.BigDecimal;
  * @author Jim Parsons
  *
  */
-
 public class Bookmark extends ACSObject {
 
     private static final int SORT_KEY_JUMP = 10;

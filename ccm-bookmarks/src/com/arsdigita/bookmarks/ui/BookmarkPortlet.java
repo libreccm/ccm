@@ -36,11 +36,13 @@ import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
+
+/** 
+ * 
+ * $Author: jparsons $
+ * @version $Id: BookmarkPortlet.java#5 2003/05/28 17:31:24 $
+ */
 public class BookmarkPortlet extends AppPortlet {
-    public static final String versionId =
-        "$Id: //apps/bookmarks/dev/src/com/arsdigita/bookmarks/ui/BookmarkPortlet.java#5 $" +
-        "$Author: jparsons $" +
-        "$DateTime: 2003/05/28 17:31:24 $";
 
     private static final Logger s_log = Logger.getLogger(BookmarkPortlet.class);
 
