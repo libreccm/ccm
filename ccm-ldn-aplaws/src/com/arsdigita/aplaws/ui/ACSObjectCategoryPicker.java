@@ -19,14 +19,14 @@
 package com.arsdigita.aplaws.ui;
 
 import com.arsdigita.aplaws.Aplaws;
-import com.arsdigita.bebop.Label;
+// import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.form.Widget;
+// import com.arsdigita.bebop.form.Widget;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.domain.DomainCollection;
@@ -72,8 +72,8 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
      
     protected abstract ACSObject getObject(PageState state);
   
-    
-    
+   
+ 
     
     private class ItemCategoryFormCompletion implements ActionListener {
         public void actionPerformed(ActionEvent ev) {
