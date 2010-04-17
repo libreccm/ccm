@@ -41,7 +41,7 @@ import com.arsdigita.util.Assert;
  * objects.
  * 
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
- * @version $Id: Contact.java 287 2005-02-22 00:29:02Z sskracic $
+ * @version $Id: Contact.java 1689 2007-10-26 11:06:23Z chrisg23 $
  */
 public class Contact extends ContentPage {
 
@@ -65,9 +65,9 @@ public class Contact extends ContentPage {
   public static final String CONTACT_ADDRESS = "contactAddress";
   public static final String PHONES = "phones";
 
-    public static final String ITEMS = "associatedContentItemsForContact";
-    
-    private static final Logger s_log = Logger.getLogger(Contact.class);
+	public static final String ITEMS = "associatedContentItemsForContact";
+
+	private static final Logger s_log = Logger.getLogger(Contact.class);
 
   /** data object type for this domain object */
 	public static final String BASE_DATA_OBJECT_TYPE =

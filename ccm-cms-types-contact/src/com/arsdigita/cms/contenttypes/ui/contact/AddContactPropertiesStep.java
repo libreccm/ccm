@@ -23,6 +23,9 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.util.Assert;
 
+/** 
+ *
+ */
 public class AddContactPropertiesStep extends ResettableContainer {
 
 	private static final Logger s_log = Logger
