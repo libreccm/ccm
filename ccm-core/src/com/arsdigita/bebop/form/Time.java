@@ -21,6 +21,7 @@ package com.arsdigita.bebop.form;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.TimeParameter;
 import com.arsdigita.bebop.parameters.NumberInRangeValidationListener;
 import com.arsdigita.bebop.parameters.ParameterData;
@@ -32,16 +33,15 @@ import com.arsdigita.xml.Element;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
-
 /**
  * A class representing a time field in an HTML form.
  *
  * @see com.arsdigita.bebop.form.DateTime
  * @author Dave Turner
- * @version $Id: Time.java 287 2005-02-22 00:29:02Z sskracic $
+ * @author Sören Bernstein
+ * @version $Id: Time.java 288 2010-02-20 07:29:00Z sbernstein $
  */
-public class Time extends Widget implements BebopConstants
-{
+public class Time extends Widget implements BebopConstants {
 
     private TextField m_hour;
     private TextField m_minute;
@@ -50,7 +50,6 @@ public class Time extends Widget implements BebopConstants
     private boolean m_showSeconds;
     private static final String ZERO = "0";
 
-
     private class HourFragment extends TextField {
 
         private Time parent;
@@ -58,8 +57,10 @@ public class Time extends Widget implements BebopConstants
         public HourFragment(String name, Time parent) {
             super(name);
             this.parent = parent;
-            this.addValidationListener(new NumberInRangeValidationListener(1,12));        }
+            this.addValidationListener(new NumberInRangeValidationListener(1, 12));
+        }
 
+        @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
             if (value == null) {
@@ -68,8 +69,11 @@ public class Time extends Widget implements BebopConstants
             return new ParameterData(getParameterModel(), value);
         }
 
+        @Override
         public Object getValue(PageState ps) {
-            return parent.getFragmentValue(ps, Calendar.HOUR);
+            // Depending on locale we need to differ between 12 hour and 24 hout format
+//            return parent.getFragmentValue(ps, Calendar.HOUR);
+            return parent.getFragmentValue(ps, Calendar.HOUR_OF_DAY);
         }
     }
 
@@ -80,8 +84,10 @@ public class Time extends Widget implements BebopConstants
         public MinuteFragment(String name, Time parent) {
             super(name);
             this.parent = parent;
-            this.addValidationListener(new NumberInRangeValidationListener(0,59));        }
+            this.addValidationListener(new NumberInRangeValidationListener(0, 59));
+        }
 
+        @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
             if (value == null) {
@@ -90,12 +96,13 @@ public class Time extends Widget implements BebopConstants
             return new ParameterData(getParameterModel(), value);
         }
 
+        @Override
         public Object getValue(PageState ps) {
             Integer min = (Integer) parent.getFragmentValue(ps, Calendar.MINUTE);
             if (min == null) {
                 return null;
             }
-            if ( min.intValue() < 10 ) {
+            if (min.intValue() < 10) {
                 return ZERO + min.toString();
             } else {
                 return min.toString();
@@ -110,8 +117,10 @@ public class Time extends Widget implements BebopConstants
         public SecondFragment(String name, Time parent) {
             super(name);
             this.parent = parent;
-            this.addValidationListener(new NumberInRangeValidationListener(0,59));        }
+            this.addValidationListener(new NumberInRangeValidationListener(0, 59));
+        }
 
+        @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
             if (value == null) {
@@ -120,12 +129,13 @@ public class Time extends Widget implements BebopConstants
             return new ParameterData(getParameterModel(), value);
         }
 
+        @Override
         public Object getValue(PageState ps) {
             Integer sec = (Integer) parent.getFragmentValue(ps, Calendar.SECOND);
             if (sec == null) {
                 return null;
             }
-            if ( sec.intValue() < 10 ) {
+            if (sec.intValue() < 10) {
                 return ZERO + sec.toString();
             } else {
                 return sec.toString();
@@ -142,6 +152,7 @@ public class Time extends Widget implements BebopConstants
             this.parent = parent;
         }
 
+        @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
             if (value == null) {
@@ -150,26 +161,25 @@ public class Time extends Widget implements BebopConstants
             return new ParameterData(getParameterModel(), value);
         }
 
+        @Override
         public Object getValue(PageState ps) {
             return parent.getFragmentValue(ps, Calendar.AM_PM);
         }
-
     }
 
-
     /** Constructor. */
-    public Time ( ParameterModel model ) {
+    public Time(ParameterModel model) {
         this(model, false);
     }
 
     /** Constructor. */
-    public Time ( ParameterModel model, boolean showSeconds ) {
+    public Time(ParameterModel model, boolean showSeconds) {
         super(model);
 
-        if ( ! (model instanceof TimeParameter)) {
-            throw new IllegalArgumentException (
-                                                "The Time widget " + model.getName() +
-                                                " must be backed by a TimeParameter parameter model");
+        if (!(model instanceof TimeParameter)) {
+            throw new IllegalArgumentException(
+                    "The Time widget " + model.getName() +
+                    " must be backed by a TimeParameter parameter model");
         }
 
 
@@ -184,7 +194,7 @@ public class Time extends Widget implements BebopConstants
         m_hour = new HourFragment(nameHour, this);
         m_minute = new MinuteFragment(nameMinute, this);
         m_showSeconds = showSeconds;
-        if ( m_showSeconds ) {
+        if (m_showSeconds) {
             m_second = new SecondFragment(nameSecond, this);
         } else {
             m_second = null;
@@ -200,20 +210,19 @@ public class Time extends Widget implements BebopConstants
             m_second.setSize(2);
         }
 
-        String [] amPmStrings = dfs.getAmPmStrings();
-        for ( int i = 0 ; i < amPmStrings.length ; i++ ) {
+        String[] amPmStrings = dfs.getAmPmStrings();
+        for (int i = 0; i < amPmStrings.length; i++) {
             m_amOrPm.addOption(new Option(String.valueOf(i), amPmStrings[i]));
         }
 
     }
 
-
-    public Time ( String name ) {
+    public Time(String name) {
         this(new TimeParameter(name));
     }
 
     /** Returns a string naming the type of this widget. */
-    public String getType () {
+    public String getType() {
         return "time";
     }
 
@@ -221,53 +230,65 @@ public class Time extends Widget implements BebopConstants
      * Sets the <tt>MAXLENGTH</tt> attributes for the <tt>INPUT</tt> tag
      * used to render this form element.
      */
-    public void setMaxLength ( int length ) {
+    public void setMaxLength(int length) {
         setAttribute("MAXLENGTH", String.valueOf(length));
     }
 
-    public boolean isCompound () {
+    public boolean isCompound() {
         return true;
     }
 
     /** The XML tag for this derived class of Widget. */
-    protected String getElementTag () {
-        return "bebop:time";
+    @Override
+    protected String getElementTag() {
+        return "BEBOP_TIME";
     }
 
-    public void generateWidget ( PageState ps, Element parent ) {
+    @Override
+    public void generateWidget(PageState ps, Element parent) {
 
-        if ( ! isVisible(ps) ) {
+        if (!isVisible(ps)) {
             return;
         }
 
         Element time = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
         time.addAttribute("name", getParameterModel().getName());
-        m_hour  .generateXML(ps, time);
+        generateLocalizedWidget(ps, time);
+
+        // If Element could be null insert a extra widget to clear entry
+        if (!hasValidationListener(new NotNullValidationListener())) {
+            time.newChildElement("NoTime");
+        }
+    }
+
+    public void generateLocalizedWidget(PageState ps, Element time) {
+        m_hour.generateXML(ps, time);
         m_minute.generateXML(ps, time);
-        if ( m_showSeconds ) {
+        if (m_showSeconds) {
             m_second.generateXML(ps, time);
         }
         m_amOrPm.generateXML(ps, time);
     }
 
-    public void setDisabled () {
+    @Override
+    public void setDisabled() {
         m_hour.setDisabled();
         m_minute.setDisabled();
-        if ( m_showSeconds ) {
+        if (m_showSeconds) {
             m_second.setDisabled();
         }
         m_amOrPm.setDisabled();
     }
 
-    public void setReadOnly () {
+    @Override
+    public void setReadOnly() {
         m_hour.setReadOnly();
         m_minute.setReadOnly();
-        if ( m_showSeconds ) {
+        if (m_showSeconds) {
             m_second.setReadOnly();
         }
         m_amOrPm.setReadOnly();
     }
-
 
     /**
      * Sets the Form Object for this Widget. This method will throw an
@@ -278,8 +299,9 @@ public class Time extends Widget implements BebopConstants
      * @param the <code>Form</code> Object for this Widget.
      * @exception IllegalStateException if form already set.
      */
+    @Override
     public void setForm(Form f) {
-        super   .setForm(f);
+        super.setForm(f);
         m_hour.setForm(f);
         m_minute.setForm(f);
         if (m_showSeconds) {
@@ -292,19 +314,17 @@ public class Time extends Widget implements BebopConstants
         Assert.exists(ps, "PageState");
         FormData f = getForm().getFormData(ps);
         if (f != null) {
-            java.util.Date value = (java.util.Date)f.get(getName());
+            java.util.Date value = (java.util.Date) f.get(getName());
             if (value != null) {
                 Calendar c = Calendar.getInstance();
                 c.setTime(value);
-		int intVal = c.get(field);
-		if (field == Calendar.HOUR && intVal == 0) {
-		    intVal = 12;
-		}
+                int intVal = c.get(field);
+                if (field == Calendar.HOUR && intVal == 0) {
+                    intVal = 12;
+                }
                 return new Integer(intVal);
             }
         }
         return null;
     }
-
-
 }

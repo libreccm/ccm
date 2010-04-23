@@ -29,7 +29,6 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
-import com.arsdigita.bebop.util.BebopConstants;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
@@ -40,6 +39,7 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.bebop.util.BebopConstants;
 
 import com.arsdigita.xml.Element;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
@@ -47,8 +47,9 @@ import java.util.Locale;
  *
  *    @author Karl Goldstein 
  *    @author Uday Mathur 
- *    @author Michael Pih 
- *    @version $Id: Date.java 287 2005-02-22 00:29:02Z sskracic $
+ *    @author Michael Pih
+ *    @author Sören Bernstein
+ *    @version $Id: Date.java 288 2010-02-20 07:29:00Z sbernstein $
  */
 public class Date extends Widget implements BebopConstants {
 
@@ -66,6 +67,7 @@ public class Date extends Widget implements BebopConstants {
             this.parent = parent;
         }
 
+        @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
             if (value == null) {
@@ -74,6 +76,7 @@ public class Date extends Widget implements BebopConstants {
             return new ParameterData(getParameterModel(), value);
         }
 
+        @Override
         public Object getValue(PageState ps) {
             Object value =  parent.getFragmentValue(ps, Calendar.YEAR);
 	    if (value == null) {
@@ -95,6 +98,7 @@ public class Date extends Widget implements BebopConstants {
             this.parent = parent;
         }
 
+        @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
             if (value == null) {
@@ -103,6 +107,7 @@ public class Date extends Widget implements BebopConstants {
             return new ParameterData(getParameterModel(), value);
         }
 
+        @Override
         public Object getValue(PageState ps) {
             return parent.getFragmentValue(ps, Calendar.MONTH);
         }
@@ -118,6 +123,7 @@ public class Date extends Widget implements BebopConstants {
             this.parent = parent;
         }
 
+        @Override
         protected ParameterData getParameterData(PageState ps) {
             Object value = getValue(ps);
             if (value == null) {
@@ -126,6 +132,7 @@ public class Date extends Widget implements BebopConstants {
             return new ParameterData(getParameterModel(), value);
         }
 
+        @Override
         public Object getValue(PageState ps) {
             return parent.getFragmentValue(ps, Calendar.DATE);
         }
@@ -211,10 +218,12 @@ public class Date extends Widget implements BebopConstants {
 
     /** The XML tag for this derived class of Widget.
      */
+    @Override
     protected String getElementTag() {
         return BEBOP_DATE;
     }
 
+    @Override
     public void generateWidget(PageState ps, Element parent) {
 
         if ( ! isVisible(ps) ) {
@@ -222,24 +231,37 @@ public class Date extends Widget implements BebopConstants {
         }
 
         Element date = parent.newChildElement(getElementTag(), BEBOP_XML_NS);
-        //        parent.addContent(date);
         date.addAttribute("name", getParameterModel().getName());
         exportAttributes(date);
-        m_month.generateXML(ps, date);
-        m_day  .generateXML(ps, date);
-        m_year .generateXML(ps, date);
+        generateLocalizedWidget(ps, date);
 
+        // If Element could be null insert an extra widget to clear entry
         if (!hasValidationListener(new NotNullValidationListener())) {
             date.newChildElement("NoDate");
         }
     }
 
+    // Resepct the localized
+    public void generateLocalizedWidget(PageState ps, Element date) {
+
+        // Get the current Pattern
+//        String format = new SimpleDateFormat(SimpleDateFormat.SHORT, Kernel.getContext().getLocale()).toPattern();
+        String format = new SimpleDateFormat().toPattern();
+
+        m_month.generateXML(ps, date);
+        m_day.generateXML(ps, date);
+        m_year.generateXML(ps, date);
+        
+    }
+
+    @Override
     public void setDisabled() {
         m_month.setDisabled();
         m_day.setDisabled();
         m_year.setDisabled();
     }
 
+    @Override
     public void setReadOnly() {
         m_month.setReadOnly();
         m_day.setReadOnly();
@@ -255,6 +277,7 @@ public class Date extends Widget implements BebopConstants {
      * @param the <code>Form</code> Object for this Widget.
      * @exception IllegalStateException if form already set.
      */
+    @Override
     public void setForm(Form f) {
         super   .setForm(f);
         m_year .setForm(f);
@@ -276,6 +299,7 @@ public class Date extends Widget implements BebopConstants {
         return null;
     }
 
+    @Override
     public void setClassAttr(String at) {
         m_month.setClassAttr(at);
         m_year.setClassAttr(at);
@@ -284,5 +308,6 @@ public class Date extends Widget implements BebopConstants {
     }
 
     // Don't lock
+    @Override
     public void lock() {}
 }
