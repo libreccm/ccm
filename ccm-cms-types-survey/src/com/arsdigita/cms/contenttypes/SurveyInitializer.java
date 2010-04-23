@@ -36,11 +36,16 @@ public class SurveyInitializer extends ContentTypeInitializer {
 
     @Override
     public void init(DomainInitEvent evt) {
+        
+        super.init(evt);
 
         List widgets = Arrays.asList(
                 Arrays.asList("ct_survey", "Checkbox group", "Checkbox groups",
                 "com.arsdigita.formbuilder.PersistentCheckboxGroup",
                 "com.arsdigita.formbuilder.ui.editors.CheckboxGroupEditor"),
+                Arrays.asList("ct_survey", "Scale", "Scales",
+                "com.arsdigita.cms.contenttypes.PersistentScale",
+                "com.arsdigita.cms.contenttypes.ui.editors.ScaleEditor"),
                 Arrays.asList("ct_survey", "Date field", "Date fields",
                 "com.arsdigita.formbuilder.PersistentDate",
                 "com.arsdigita.formbuilder.ui.editors.DateForm"),

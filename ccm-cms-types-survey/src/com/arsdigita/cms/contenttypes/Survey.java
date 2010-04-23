@@ -268,7 +268,8 @@ public class Survey extends ContentPage implements XMLGenerator {
     }
 
     public boolean isActive() {
-        return hasStarted() && !hasEnded();
+        return true;
+//        return hasStarted() && !hasEnded();
     }
 
     public void generateXML(PageState state, Element parent, String useContext) {

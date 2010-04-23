@@ -4,7 +4,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.dispatcher.*;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.Label;
@@ -14,6 +13,7 @@ import com.arsdigita.bebop.form.Widget;
 import com.arsdigita.bebop.util.Traversal;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.contenttypes.ui.SurveyProcessListener;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.cms.formbuilder.FormUnavailableException;
 import com.arsdigita.cms.formbuilder.NoParametersHttpServletRequest;
 import com.arsdigita.formbuilder.PersistentForm;
@@ -32,6 +32,8 @@ import com.arsdigita.xml.Element;
  * @author quasi
  */
 public class SurveyXMLGenerator extends SimpleXMLGenerator {
+
+    public static final String ADAPTER_CONTEXT = SurveyXMLGenerator.class.getName();
 
     @Override
     public void generateXML(PageState state, Element parent, String useContext) {

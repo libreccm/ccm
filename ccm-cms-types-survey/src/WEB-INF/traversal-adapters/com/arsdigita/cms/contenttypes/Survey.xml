@@ -4,8 +4,10 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
 
-  <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
-    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Survey" extends="com.arsdigita.cms.ContentPage" traversalClass="com.arsdigita.cms.contenttypes.SurveyTraversalAdapter">
+  <xrd:context name="com.arsdigita.cms.contenttypes.SurveyXMLGenerator">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Survey" 
+                 extends="com.arsdigita.cms.ContentPage"
+                 traversalClass="com.arsdigita.cms.contenttypes.SurveyTraversalAdapter">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/form/id"/>
         <xrd:property name="/object/form/defaultDomainClass"/>

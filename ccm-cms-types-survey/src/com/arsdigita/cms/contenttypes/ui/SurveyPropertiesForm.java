@@ -102,7 +102,7 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_public").localize()));
         ParameterModel responsesPublicParam = new BooleanParameter(RESPONSES_PUBLIC);
         responsesPublicParam.addParameterListener(new NotNullValidationListener());
-        RadioGroup responsesPublic = new RadioGroup("responsesPublic");
+        RadioGroup responsesPublic = new RadioGroup(responsesPublicParam);
         Option rp1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
         Option rp2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
         responsesPublic.addOption(rp1);
@@ -112,17 +112,17 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
         add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.show_results_during_survey").localize()));
         ParameterModel resultsDuringSurveyParam = new BooleanParameter(RESULTS_DURING_SURVEY);
         resultsDuringSurveyParam.addParameterListener(new NotNullValidationListener());
-        RadioGroup resultsDuringSurvey = new RadioGroup("resultsDuringSurvey");
+        RadioGroup resultsDuringSurvey = new RadioGroup(resultsDuringSurveyParam);
         Option rds1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
         Option rds2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
-        resultsDuringSurvey.addOption(rp1);
-        resultsDuringSurvey.addOption(rp2);
+        resultsDuringSurvey.addOption(rds1);
+        resultsDuringSurvey.addOption(rds2);
         add(resultsDuringSurvey);
 
         add(new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.should_quiz_responses_be_anonym").localize()));
         ParameterModel responsesAnonymParam = new BooleanParameter(RESPONSES_ANONYM);
         responsesAnonymParam.addParameterListener(new NotNullValidationListener());
-        RadioGroup responsesAnonym = new RadioGroup("responsesAnonym");
+        RadioGroup responsesAnonym = new RadioGroup(responsesAnonymParam);
         Option ra1 = new Option("true", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.Yes").localize()));
         Option ra2 = new Option("false", new Label((String) SurveyGlobalizationUtil.globalize("cms.contenttypes.ui.survey.No").localize()));
         responsesAnonym.addOption(ra1);
@@ -160,9 +160,9 @@ public class SurveyPropertiesForm extends BasicPageForm implements FormProcessLi
             survey.setDescription((String) data.get(DESCRIPTION));
             survey.setStartDate((java.util.Date) data.get(START_DATE));
             survey.setEndDate((java.util.Date) data.get(END_DATE));
-            survey.setResponsesPublic(new Boolean((String) data.get(RESPONSES_PUBLIC)));
-            survey.setResultsDuringSurvey(new Boolean((String) data.get(RESULTS_DURING_SURVEY)));
-            survey.setResponsesAnonym(new Boolean((String) data.get(RESPONSES_ANONYM)));
+            survey.setResponsesPublic((Boolean) data.get(RESPONSES_PUBLIC));
+            survey.setResultsDuringSurvey((Boolean) data.get(RESULTS_DURING_SURVEY));
+            survey.setResponsesAnonym((Boolean) data.get(RESPONSES_ANONYM));
 
             survey.save();
         }
