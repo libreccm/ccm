@@ -18,8 +18,13 @@
 
 package com.arsdigita.london.rss;
 
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.loader.PackageLoader;
+import com.arsdigita.portal.PortletType;
 import com.arsdigita.runtime.ScriptContext;
+import com.arsdigita.london.rss.portlet.WorkspaceDirectoryPortlet;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -29,14 +34,26 @@ import org.apache.log4j.Logger;
  * @version $Id: Loader.java 758 2005-09-02 14:26:56Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 758 2005-09-02 14:26:56Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2003/10/28 14:24:00 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     public void run(final ScriptContext ctx) {
-        // Nada yet
+
+        new KernelExcursion() {
+            public void excurse() {
+                setEffectiveParty(Kernel.getSystemParty());
+
+               loadWorkspaceDirectoryPortlet();
+            }
+        }.run();
+       // Nada yet
     }
+
+	private void loadWorkspaceDirectoryPortlet() {
+		PortletType type = PortletType.createPortletType("Workspace Directory",
+				PortletType.WIDE_PROFILE,
+				WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
+		type.setDescription("Displays a list of workspaces");
+	}
+
 }
