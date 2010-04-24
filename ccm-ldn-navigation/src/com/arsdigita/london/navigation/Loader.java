@@ -37,6 +37,7 @@ import com.arsdigita.web.ApplicationType;
 
 import com.arsdigita.london.navigation.portlet.ObjectListPortlet;
 import com.arsdigita.london.navigation.portlet.ItemListPortlet;
+import com.arsdigita.london.navigation.portlet.NavigationTreePortlet;
 
 import com.arsdigita.portal.PortletType;
 
@@ -74,6 +75,8 @@ public class Loader extends PackageLoader {
                 setupNavigation();
                 Loader.loadObjectListPortlet();
                 Loader.loadItemListPortlet();
+                NavigationTreePortlet.loadPortletType();
+
 
                 try {
                     setupTemplates();
@@ -156,7 +159,7 @@ public class Loader extends PackageLoader {
     
     public static void loadItemListPortlet() {
         PortletType type = PortletType
-            .createPortletType("Object List", 
+            .createPortletType("Navigation Object List",
                                PortletType.WIDE_PROFILE,
                                ObjectListPortlet.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Displays a list of objects");
@@ -164,7 +167,7 @@ public class Loader extends PackageLoader {
     
     public static void loadObjectListPortlet() {
         PortletType type = PortletType
-            .createPortletType("Content Item List", 
+            .createPortletType("Navigation Content Item List",
                                PortletType.WIDE_PROFILE,
                                ItemListPortlet.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Displays a list of content items");

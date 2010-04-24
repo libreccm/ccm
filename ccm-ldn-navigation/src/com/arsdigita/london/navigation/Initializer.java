@@ -58,6 +58,7 @@ import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.kernel.ui.ResourceConfigFormSection;
 import com.arsdigita.bebop.RequestLocal;
 
+import com.arsdigita.london.navigation.portlet.NavigationTreePortlet;
 import com.arsdigita.london.navigation.portlet.ObjectListPortlet;
 import com.arsdigita.london.navigation.portlet.ItemListPortlet;
 
@@ -132,6 +133,9 @@ public class Initializer extends CompoundInitializer {
                      return new Navigation(dataObject);
                  }
              });
+
+        NavigationTreePortlet.registerInstantiator();
+        NavigationTreePortlet.registerResourceTypeConfig();
 
         e.getFactory().registerInstantiator
             (ItemListPortlet.BASE_DATA_OBJECT_TYPE,
