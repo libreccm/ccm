@@ -12,7 +12,10 @@
 		name="cms:CT_graphics_com_arsdigita_cms_contenttypes_Person">
     <!-- <xsl:if test="./surname and ./givenName"> -->
       <p>
-        <xsl:value-of select="./titlepre"/>&nbsp;<xsl:value-of select="./givenname"/>&nbsp;<xsl:value-of select="./surname"/>&nbsp;<xsl:value-of select="./titlepost"/>
+        <xsl:value-of select="./titlepre"/>&nbsp;
+        <xsl:value-of select="./givenname"/>&nbsp;
+        <xsl:value-of select="./surname"/>&nbsp;
+        <xsl:value-of select="./titlepost"/>
       </p>      
       <!-- </xsl:if> -->
   </xsl:template>
@@ -21,7 +24,10 @@
 		mode="cms:CT_text"
 		name="cms:CT_text_com_arsdigita_cms_contenttypes_Person">
       <p>
-        <xsl:value-of select="./titlepre"/> <xsl:value-of select="./givenname"/> <xsl:value-of select="./surname"/> <xsl:value-of select="./titlepost"/>
+        <xsl:value-of select="./titlepre"/>
+        <xsl:value-of select="./givenname"/>
+        <xsl:value-of select="./surname"/>
+        <xsl:value-of select="./titlepost"/>
       </p>      
     
   </xsl:template>
