@@ -50,11 +50,15 @@ public class Loader extends PackageLoader implements ThemeConstants {
     }
 
 
+    /** 
+     * Creates theme manager as a legacy-compatible application type.
+     * 
+     */
     private void setupThemeApplication() {
-        ApplicationType type = ApplicationType
-            .createApplicationType("theme",
-                                   "CCM Themes Admin",
-                                   ThemeApplication.BASE_DATA_OBJECT_TYPE);
+        ApplicationType type = ApplicationType.createApplicationType(
+                                               "theme",
+                                               "CCM Themes Admin",
+                                               ThemeApplication.BASE_DATA_OBJECT_TYPE);
         type.setDescription("CCM themes administration");
 
         Application admin = Application.retrieveApplicationForPath("/admin/");
