@@ -526,23 +526,23 @@ public class PageState {
         getPage().reset(this, c);
     }
 
-    /**
-     * Store an attribute keyed on the object <code>key</code>.  The
-     * <code>PageState</code> puts no restrictions on what can be stored as
-     * an attribute or how they are managed.
-     *
-     * To remove an attribute, call <code>setAttribute(key, null)</code>.
-     *
-     * The attributes are only accessible as long as the
-     * <code>PageState</code> is alive, typically only for the duration of
-     * the request.
-     *
+//  /**
+//   * Store an attribute keyed on the object <code>key</code>.  The
+//   * <code>PageState</code> puts no restrictions on what can be stored as
+//   * an attribute or how they are managed.
+//   *
+//   * To remove an attribute, call <code>setAttribute(key, null)</code>.
+//   *
+//   * The attributes are only accessible as long as the
+//   * <code>PageState</code> is alive, typically only for the duration of
+//   * the request.
+//   *
 //   * @deprecated Use either <code>setAttribute</code> on {@link
-     * HttpServletRequest the HTTP request object}, or, preferrably, use a
-     * {@link RequestLocal request local} variable. Will be removed on
-     * 2001-06-13.
-     *
-     */
+//   * HttpServletRequest the HTTP request object}, or, preferrably, use a
+//   * {@link RequestLocal request local} variable. Will be removed on
+//   * 2001-06-13.
+//   *
+//   */
 //  public void setAttribute(Object key, Object value) {
 //      if ( m_attributes == null ) {
 //          m_attributes = new HashMap();
@@ -550,16 +550,16 @@ public class PageState {
 //      m_attributes.put(key, value);
 //  }
 
-    /**
-     * Get the value of an attribute stored with the same key with {@link
-     * #setAttribute setAttribute}.
-     *
+//  /**
+//   * Get the value of an attribute stored with the same key with {@link
+//   * #setAttribute setAttribute}.
+//   *
 //   * @deprecated Use either <code>getAttribute</code> on {@link
-     * HttpServletRequest the HTTP request object}, or, preferrably, use a
-     * {@link RequestLocal request local} variable. Will be removed on
-     * 2001-06-13.
-     *
-     */
+//   * HttpServletRequest the HTTP request object}, or, preferrably, use a
+//   * {@link RequestLocal request local} variable. Will be removed on
+//   * 2001-06-13.
+//   *
+//   */
 //  public Object getAttribute(Object key) {
 //      if ( m_attributes == null ) {
 //          return null;
@@ -629,15 +629,15 @@ public class PageState {
         }
     }
 
-    /**
-     * Change the value of a global parameter
-     *
+//  /**
+//   * Change the value of a global parameter
+//   *
 //   * @deprecated Use {@link #setValue(ParameterModel m, Object o)}
-     * instead. If you don't have a reference to the parameter model, you
-     * should not be calling this method. Instead, the component that
-     * registered the parameter should provide methods to manipulate
-     * it. Will be removed 2001-06-20.
-     */
+//   * instead. If you don't have a reference to the parameter model, you
+//   * should not be calling this method. Instead, the component that
+//   * registered the parameter should provide methods to manipulate
+//   * it. Will be removed 2001-06-20.
+//   */
 //  public void setGlobalValue(String name, Object value) {
 //      m_pageState.put(m_page.parameterName(name), value);
 //  }

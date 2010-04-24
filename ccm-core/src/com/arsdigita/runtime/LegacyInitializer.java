@@ -61,7 +61,10 @@ import java.io.InputStream;
 
 public class LegacyInitializer extends GenericInitializer {
  
+    /** The name of a resource referring to a legacy enterprise.init file.
+     *  (path/filename relative to src root, i.e. /com/arsdigita/.....)    */
     protected String m_init;
+
     protected ConfigRegistry m_reg;
 
     /**

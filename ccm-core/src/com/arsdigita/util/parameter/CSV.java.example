@@ -32,7 +32,7 @@ import javax.mail.internet.InternetAddress;
  * Demonstrates how to use the CSVParameterLoader class.
  *
  * OUTDATED! CSVParameterLoader has become CSVParameterReader
- * see CoreLoader as an example how to use CSVParamegterReader
+ * see CoreLoader as an example how to use CSVParameterReader
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: CSV.java 287 2005-02-22 00:29:02Z sskracic $

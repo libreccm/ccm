@@ -27,10 +27,10 @@ import java.util.HashMap;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
- **/
+ * @version $Id: Mist.java 738 2005-09-01 12:36:52Z sskracic $
+ */
 class Mist extends AbstractList {
 
-    public final static String versionId = "$Id: Mist.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private Object m_parent = null;
     private ArrayList m_children = new ArrayList();
     private HashMap m_childrenMap = new HashMap();
@@ -92,7 +92,7 @@ class Mist extends AbstractList {
         Element child = (Element) o;
 
         // Quasimodo: BEGIN
-        // Diabled because it prevents to delete item from the list.
+        // Disabled because it prevents to delete item from the list.
         // The result is always false because child.getParent() gets
         // the parent of the Class. It doesn't say anything about the
         // membership to this List.
@@ -133,4 +133,5 @@ class Mist extends AbstractList {
     public String toString() {
         return m_children.toString();
     }
+
 }

@@ -75,6 +75,7 @@ import org.apache.log4j.Logger;
  * mappings are then used by the ConfigRegistry instance to load config objects.
  * 
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
+ * @version $Revision: #15 $ $Date: 2004/08/16 $
  * @version $Id: ConfigRegistry.java 736 2005-09-01 10:46:05Z sskracic $
  **/
 
@@ -82,6 +83,11 @@ public class ConfigRegistry {
 
     private static final Logger s_log = Logger.getLogger(ConfigRegistry.class);
 
+    /**
+     * Base url for registry location(s).
+     * (i.e. $CATALINA_HOME/webapps/$context/WEB-INF/conf/registry in a
+     * standard installation)
+     */
     private URL m_url;
     private ClassLoader m_loader;
 
@@ -143,7 +149,13 @@ public class ConfigRegistry {
         this(CCMResourceManager.getConfigURL());
     }
 
+    /**
+     *
+     * @param url  Base url for registry location(s).
+     * @param errs Errorlist
+     */
     private void initialize(URL url, ErrorList errs) {
+
         ClassLoader ldr = new URLClassLoader(new URL[] {url}, null);
 
         RegistryConfig rc = new RegistryConfig();
@@ -283,8 +295,7 @@ public class ConfigRegistry {
      *
      * @return an input stream containing the contents of the resource
      * or null if the resource is not found
-     **/
-
+     */
     public InputStream load(String resource) {
         for (int i = m_loaders.size() - 1; i >= 0; i--) {
             ClassLoader ldr = (ClassLoader) m_loaders.get(i);

@@ -18,7 +18,7 @@
  */
 package com.arsdigita.runtime;
 
-import com.arsdigita.runtime.AbstractConfig;
+// import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.Parameter;

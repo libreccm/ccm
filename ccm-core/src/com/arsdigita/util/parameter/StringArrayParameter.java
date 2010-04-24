@@ -24,9 +24,27 @@ import com.arsdigita.util.StringUtils;
 
 /**
  * StringArrayParameter
+ *
+ * Usage Esample:
+ * <pre>
+ * private static parameter exampleName ;
+ * exampleName = new StringArrayParameter(
+ *                   "com.arsdigita.package.example_name",
+ *                   Parameter.REQUIRED,
+ *                   new String[] {"String Example 01","String Example 02"}
+ *                                       );
+ * </pre>
+ *
+ * @version $Id: $
  */
 public class StringArrayParameter extends StringParameter {
 
+    /**
+     * 
+     * @param name: String literal 
+     * @param multiplicity Indicator wether required (1) or not (0) (nullable)
+     * @param defaalt default value
+     */
     public StringArrayParameter(final String name,
                                 final int multiplicity,
                                 final Object defaalt) {

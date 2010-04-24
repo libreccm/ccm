@@ -37,6 +37,7 @@ import java.util.Set;
  *
  * @author <a href="mailto:rhs@mit.edu">rhs@mit.edu</a>
  * @version $Id: Script.java 738 2005-09-01 12:36:52Z sskracic $
+ * @version $Id: Script.java 738 2005-09-01 12:36:52Z sskracic $
  */
 
 public class Script {

@@ -231,8 +231,10 @@ public class ApplicationType extends ResourceType {
      * parameter is used to create a legacy package type to back the
      * new application type.
      */
-    public static ApplicationType createApplicationType
-		   (String key, String title, String applicationObjectType, boolean createContainerGroup) {
+    public static ApplicationType createApplicationType(
+                                  String key, String title,
+                                  String applicationObjectType,
+                                  boolean createContainerGroup) {
         // See if the package type is already present.
 
         PackageType packageType = null;

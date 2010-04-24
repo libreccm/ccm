@@ -320,9 +320,7 @@ public  class Runtime extends CompoundInitializer {
             s_log.debug("Going to call CompoundInitializer.close()");
             init.close(evt);
 
-            // Pausieren von ca. 1 Min. / 60 sek. um das Ende von laufenden Threads
-            // abzuwarten.
-            s_log.info("Waiting for background threads to terminate");
+            s_log.info("Waiting 60 secs for background threads to terminate");
             try {
                 Thread.currentThread().sleep(60000);
             } catch( InterruptedException e) {

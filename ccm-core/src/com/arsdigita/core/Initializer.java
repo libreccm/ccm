@@ -52,6 +52,8 @@ import com.arsdigita.search.converter.OOConverter;
 import com.arsdigita.search.converter.WordConverter;
 import com.arsdigita.search.converter.TextConverter;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * CoreInitializer
@@ -62,13 +64,17 @@ import com.arsdigita.search.converter.TextConverter;
 
 public class Initializer extends CompoundInitializer {
 
+    private static Logger s_log = Logger.getLogger(Initializer.class);
+
     /**
      * Constructor
      */
     public Initializer() {
+        s_log.info("Instantiating Core Initilizer ...");
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
+        s_log.info("Ading Sub-Initilizers ...");
         add(new com.arsdigita.persistence.Initializer());
 
         add(new PDLInitializer
@@ -87,6 +93,8 @@ public class Initializer extends CompoundInitializer {
 
     public final void init(final DomainInitEvent e) {
         super.init(e);
+
+        s_log.info("Running core init(DomainInitEvent) ...");
 
         e.getFactory().registerInstantiator
             (Host.BASE_DATA_OBJECT_TYPE,
@@ -164,10 +172,14 @@ public class Initializer extends CompoundInitializer {
         converter = new TextConverter();
         ConverterRegistry.registerConverter(converter, 
                                             converter.getMimeTypes());
+
+        s_log.info("Core init(DomainInitEvent) done");
     }
 
     public final void init(final LegacyInitEvent e) {
         super.init(e);
+
+        s_log.info("Running core init(LegacyInitEvent) ...");
 
         Session session = SessionManager.getSession();
         TransactionContext txn = session.getTransactionContext();
@@ -176,5 +188,7 @@ public class Initializer extends CompoundInitializer {
         txn.commitTxn();
 
         FactoriesSetup.setupFactories();
+
+        s_log.info("Core init(LegacyInitEvent) done");
     }
 }

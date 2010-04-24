@@ -19,11 +19,11 @@
 package com.arsdigita.util.parameter;
 
 /**
- * Subject to change.
- *
  * Reads an encoded string value for a parameter from storage.  Any
  * errors encountered while reading are added to an error list.
  * This class is counterpart to <code>ParameterWriter</code>.
+ *
+ * Subject to change.
  *
  * @see Parameter#write(ParameterWriter, Object)
  * @see ErrorList

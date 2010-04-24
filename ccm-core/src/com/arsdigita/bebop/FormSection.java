@@ -49,6 +49,9 @@ import org.apache.log4j.Logger;
  * that are not contained in a <code>Form</code> do not exhibit any useful
  * behavior.
  *
+ * @see Form
+ * @see FormModel
+ *
  * @author Karl Goldstein
  * @author Uday Mathur
  * @author Stas Freidin
@@ -56,9 +59,6 @@ import org.apache.log4j.Logger;
  * @author David Lutterkort
  *
  * @version $Id: FormSection.java 287 2005-02-22 00:29:02Z sskracic $
- *
- * @see Form
- * @see FormModel
  */
 public class FormSection extends SimpleComponent implements Container {
 

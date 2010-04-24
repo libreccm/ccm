@@ -23,7 +23,8 @@ package com.redhat.persistence.oql;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #4 $ $Date: 2004/08/16 $
- **/
+ * @version $Id: Condition.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 
 public abstract class Condition extends Expression {
 

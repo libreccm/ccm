@@ -37,14 +37,10 @@ import java.util.Properties;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #7 $ $Date: 2004/08/16 $
+ * @version $Id: MailConfig.java 1513 2007-03-22 09:09:03Z chrisgilbert23 $
  **/
 
 public final class MailConfig extends AbstractConfig {
-
-    public final static String versionId = 
-        "$Id: MailConfig.java 1513 2007-03-22 09:09:03Z chrisgilbert23 $" +
-        " by $Author: chrisgilbert23 $, "+
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private Properties m_props;
 

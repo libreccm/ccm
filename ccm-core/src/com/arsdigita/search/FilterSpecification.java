@@ -90,7 +90,7 @@ public abstract class FilterSpecification {
     }
     
     /**
-     * Two filter specifications are considered isEqual
+     * Two filter specifications are considered equal
      * if they refer to the same filter type
      * and their parameter sets contain the same
      * (key, value) pairs

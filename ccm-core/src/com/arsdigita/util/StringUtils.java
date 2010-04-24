@@ -63,7 +63,7 @@ public class StringUtils {
      * otherwise <code>false</code>
      */
     public final static boolean emptyString(String s) {
-        boolean expr = (s == null || s.length() == 0);
+        boolean expr = (s == null || s.trim().length() == 0);
         return expr;
     }
 
@@ -169,8 +169,10 @@ public class StringUtils {
      * <li>*text* generates bold <strong>text</strong>
      * <li>/text/ generates italic <em>text</em>
      * <li>=text= generates fixed <code>text</code>
-     * <li>@text(http://www.google.com) generates a titled link <a href="http://www.google.com">text</a>
-     * <li>http://www.google.com generates an untitled link <a href="http://www.google.com">http://www.google.com</a>
+     * <li>@text(http://www.google.com) generates a titled link
+     *     <a href="http://www.google.com">text</a>
+     * <li>http://www.google.com generates an untitled link
+     *     <a href="http://www.google.com">http://www.google.com</a>
      * <li>--- <br/>generates a horizontal line<br/> <hr/>
      * <li>___ <br/>generates a horizontal line<br/> <hr/>
      * <li><p>* my item <br>
@@ -413,7 +415,8 @@ public class StringUtils {
             Integer i = new Integer(m_hash.size());
             s_log.debug("Key: " + i);
             m_hash.put(i, link);
-            String dst = "@\u0002" + i.toString() + "\u0002(\u0002" + i.toString() + "\u0002)";
+            String dst = "@\u0002" + i.toString() + "\u0002(\u0002" +
+                          i.toString() + "\u0002)";
             appendBuffer.append(dst);
             s_log.debug("Encoded Link: " + dst);
         }
@@ -626,10 +629,13 @@ public class StringUtils {
     }
     /**
      * Extract a parameter value from a packed list of parameter values.
-     * Example: input: key="age", sep=',', plist="cost=23,age=27,name=Thom"
-     * output = "27".  This is a simple implementation that is meant
-     * for controlled use in which the key and values are known to
-     * be safe.  Specifically, the equals character must be used to indicate
+     * Example: 
+     *    input: key="age", sep=',',
+     *    plist="cost=23,age=27,name=Thom"
+     *    output = "27".
+     * This is a simple implementation that is meant for controlled use in which
+     * the key and values are known to be safe. 
+     * Specifically, the equals character must be used to indicate
      * parameter assignments.  There is no escape character.  Thus the
      * parameter names and values cannot contain the equals character or the
      * separator character.
@@ -1043,8 +1049,8 @@ public class StringUtils {
     }
 
     /**
-     * Returns true if the String is AlphaNumeric. Obviously, this is not at all globalized and should
-     * only be used with English text.
+     * Returns true if the String is AlphaNumeric. Obviously, this is not at all 
+     * globalized and should only be used with English text.
      *
      * @param value String to check
      * @return true if value is alphanumeric, false otherwise.
@@ -1302,9 +1308,11 @@ public class StringUtils {
     }
 
     /**
-     * Convert a name into a URL form, the java equivalent of "<code>manipulate-input.js</code>"
+     * Convert a name into a URL form, the java equivalent of
+     * "<code>manipulate-input.js</code>"
      *
-     * For example, "<code>Business promotions!</code>" will be converted to "<code>business-promotions</code>".
+     * For example, "<code>Business promotions!</code>" will be converted to
+     *              "<code>business-promotions</code>".
      *
      * @param name
      *            the to be converted into a URL.

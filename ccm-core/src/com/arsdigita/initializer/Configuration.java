@@ -81,7 +81,8 @@ public class Configuration {
                               Class type, Object defaultValue)
         throws InitializationException {
         if (m_parameters.containsKey(name))
-            throw new InitializationException("Parameter " + name + " already defined.");
+            throw new InitializationException("Parameter " + name +
+                                              " already defined.");
         m_types.put(name, type);
         typeCheck(name, defaultValue);
         m_parameters.put(name, defaultValue);
@@ -104,9 +105,9 @@ public class Configuration {
     private void paramCheck(String name) throws InitializationException {
         if (!m_parameters.containsKey(name))
             throw new InitializationException(
-                                              "No such parameter: " + name + ", legal parameters are: " +
-                                              getParameterNames()
-                                              );
+                      "No such parameter: " + name + ", legal parameters are: " +
+                      getParameterNames()
+                      );
     }
 
     private void typeCheck(String name, Object value)
@@ -116,8 +117,8 @@ public class Configuration {
         Class cls = (Class) m_types.get(name);
         if (!cls.isInstance(value))
             throw new InitializationException(
-                                              "Parameter " + name + " must be of type " + cls.getName()
-                                              );
+                      "Parameter " + name + " must be of type " + cls.getName()
+                      );
     }
 
     /**

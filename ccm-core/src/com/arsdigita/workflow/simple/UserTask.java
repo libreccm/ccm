@@ -48,7 +48,7 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * Aser task that is associated with an interface for
+ * User task that is associated with an interface for
  * performing some manual operation.
  *
  * @author Karl Goldstein
