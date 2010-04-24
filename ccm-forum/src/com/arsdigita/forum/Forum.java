@@ -53,14 +53,15 @@ import com.arsdigita.web.Application;
  *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author chrisg23
- * @version $Revision: $
+ * @version $Revision:  1.7 $ 
  * @version $Id: Forum.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 
 public class Forum extends Application {
 
-	public static final String THREAD_SUBSCRIPTION_GROUPS_NAME = "Thread Subscription Groups";
- 
+	public static final String THREAD_SUBSCRIPTION_GROUPS_NAME =
+                                   "Thread Subscription Groups";
+
     private static ForumConfig s_config = new ForumConfig();
 
     static {

@@ -25,7 +25,7 @@ import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 // unused?
-import com.arsdigita.kernel.Party;
+// import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserCollection;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -40,7 +40,12 @@ import org.apache.log4j.Logger;
 
 
 /**
- * Loader.
+ * Loader executes nonrecurring at install time and loads (installs and
+ * initializes) the Forum module.
+ *
+ * It loads an application type into database. Detailed configuration is done
+ * during initialization at each application start using configuration
+ * parameters.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Loader.java 1628 2007-09-17 08:10:40Z chrisg23 $
@@ -64,6 +69,10 @@ public class Loader extends PackageLoader {
         }.run();
     }
 
+    /**
+     * Creates Forum as a legacy-compatible application type.
+     * @return
+     */
     private static ApplicationType setupForumAppType() {
         ApplicationType type = ApplicationType
             .createApplicationType(Forum.PACKAGE_TYPE,
@@ -135,11 +144,18 @@ public class Loader extends PackageLoader {
             Forum.FORUM_MODERATION_PRIVILEGE);
         PrivilegeDescriptor.createPrivilege(
             Forum.CREATE_THREAD_PRIVILEGE);
-		PrivilegeDescriptor.createPrivilege(
-					Forum.RESPOND_TO_THREAD_PRIVILEGE);
-		PrivilegeDescriptor.addChildPrivilege(Forum.FORUM_MODERATION_PRIVILEGE, Forum.CREATE_THREAD_PRIVILEGE);
-		PrivilegeDescriptor.addChildPrivilege(Forum.CREATE_THREAD_PRIVILEGE, Forum.RESPOND_TO_THREAD_PRIVILEGE);
-		PrivilegeDescriptor.addChildPrivilege(Forum.RESPOND_TO_THREAD_PRIVILEGE, PrivilegeDescriptor.READ.getName());
+
+            PrivilegeDescriptor.createPrivilege(
+                                        Forum.RESPOND_TO_THREAD_PRIVILEGE);
+            PrivilegeDescriptor.addChildPrivilege(
+                                        Forum.FORUM_MODERATION_PRIVILEGE,
+                                        Forum.CREATE_THREAD_PRIVILEGE);
+            PrivilegeDescriptor.addChildPrivilege(
+                                        Forum.CREATE_THREAD_PRIVILEGE,
+                                        Forum.RESPOND_TO_THREAD_PRIVILEGE);
+            PrivilegeDescriptor.addChildPrivilege(
+                                        Forum.RESPOND_TO_THREAD_PRIVILEGE,
+                                        PrivilegeDescriptor.READ.getName());
 		
 		
 		
