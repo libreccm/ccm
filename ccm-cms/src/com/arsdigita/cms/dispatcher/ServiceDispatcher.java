@@ -68,25 +68,19 @@ import java.util.Map;
  *
  * @author Michael Pih (pihman@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
- * @version $Id: ServiceDispatcher.java 287 2005-02-22 00:29:02Z sskracic $ 
+ * @version $Id: ServiceDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ServiceDispatcher extends LockableImpl implements Dispatcher {
 
-    /**
-     * The path of the file that maps resources.
-     */
-    private final static String MAP_FILE = "WEB-INF/resources/cms-service-map.xml";
-
-    /**
-     * Error logging.
-     */
+    /** Error logging.  */
     private static Logger s_log =
         Logger.getLogger(ServiceDispatcher.class.getName());
 
-    /**
-     * Mapping between a relative URL and the class name of a
-     * ResourceHandler.
-     */
+
+    /** The path of the file that maps resources. */
+    private final static String MAP_FILE = "WEB-INF/resources/cms-service-map.xml";
+
+    /** Mapping between a relative URL and the class name of a ResourceHandler. */
     private static HashMap s_pageClasses = new HashMap();
 
     /**

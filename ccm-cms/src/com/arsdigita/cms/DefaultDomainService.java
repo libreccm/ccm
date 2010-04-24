@@ -28,5 +28,8 @@ import com.arsdigita.domain.DomainServiceInterfaceExposer;
  */
 public class DefaultDomainService extends DomainServiceInterfaceExposer {
 
+<<<<<<< .mine
+=======
 
+>>>>>>> .r389
 }

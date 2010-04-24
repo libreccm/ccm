@@ -24,6 +24,14 @@ import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.ContentItem;
 
+// From Initializer.java:
+// Update master object if upgrading from old versioning
+// XXX: shouldn't we just gut this section (and
+// VersioningUpgrader)? It is an upgrade fix from 5.1 or
+// earlier, and relying on VersionedACSObject is
+// deprecated
+// (probably written  by Michael Pih (pihman@arsdigita.com) )
+
 /**
  * VersioningUpgrader
  *

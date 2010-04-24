@@ -97,6 +97,9 @@ public class CMSTask extends UserTask {
     
     private boolean m_authorOnly = false;
     
+    /**
+     * Constructor
+     */
     public CMSTask() {
         this(BASE_DATA_OBJECT_TYPE);
     }

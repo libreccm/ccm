@@ -296,11 +296,11 @@ public class ContentSection extends Application {
         return sURL;
     }
 
-     /*
+    /**
+     * Gets the full path of the content section.
      *
-     * Gets the full path of the content section
-     *  @return returns the path of this application including the dispatcher path.  The path
-     * does not end in a slash.  Does not return null
+     * @return returns the path of this application including the dispatcher path.
+     *         The path does not end in a slash.  Does not return null
      */
     public String getFullPath() {
         return URL.getDispatcherPath() + getPath();
@@ -934,7 +934,7 @@ public class ContentSection extends Application {
 //        PackageInstance pkg = node.getPackageInstance();
 //        if ( pkg == null ) {
 //            throw new DataObjectNotFoundException(
-//                                                  "No package instance for node_id=" + node.getID().toString());
+//                  "No package instance for node_id=" + node.getID().toString());
 //        }
 //
 //        return getSectionFromPackage(pkg);
@@ -1078,7 +1078,8 @@ public class ContentSection extends Application {
         // Create template root folder.
         Folder templates = new Folder();
         templates.setName("templates");
-        templates.setLabel( (String) GlobalizationUtil.globalize("cms.templates").localize());
+        templates.setLabel( (String) GlobalizationUtil.globalize(
+                                     "cms.templates").localize());
         templates.save();
 
         //create and initialize the content section application
@@ -1100,15 +1101,12 @@ public class ContentSection extends Application {
     }
 
 
-	/**
-	 * Method create.  Creates a default content section and returns it
-	 * @param name Name of the content section
-	 * @return ContentSection
-	 */
-	public static ContentSection create(final String name) {
-//		KernelExcursion rootExcursion = new KernelExcursion() {
-//			public void excurse() {
-//				setEffectiveParty(Kernel.getSystemParty());
+    /**
+     * Method create.  Creates a default content section and returns it
+     * @param name Name of the content section
+     * @return ContentSection
+     */
+    public static ContentSection create(final String name) {
 
 				Group staff = createStaffGroup(name);
 				Folder folder = createRootFolder(name);
@@ -1132,20 +1130,20 @@ public class ContentSection extends Application {
 						xgc,
 						trc);
 
-				// Set the default context on the root folder to
-				// the content section
-				PermissionService.setContext(folder.getOID(), section.getOID());
-				createDefaultResources(section);
-//			}
-//		};
-//		rootExcursion.run();
+                // Set the default context on the root folder to
+                // the content section
+                PermissionService.setContext(folder.getOID(), section.getOID());
+                createDefaultResources(section);
+//          }
+//      };
+//      rootExcursion.run();
 
         //now retrieve the created content section and return it
-//        return (ContentSection) Application.retrieveApplicationForPath("/" + name + "/");
+//      return (ContentSection) Application.retrieveApplicationForPath("/" + name + "/");
     return section;
-	}
+    }
 
-        /**
+    /**
      * Creates and maps default resources to the content section.
      *
      * @param section The content section
@@ -1156,26 +1154,26 @@ public class ContentSection extends Application {
      */
     protected static void createDefaultResources(ContentSection section) {
 
-            // XML resources
-            ResourceType rt = ResourceType.findResourceType("xml");
-            Resource r =
+        // XML resources
+        ResourceType rt = ResourceType.findResourceType("xml");
+        Resource r =
                 rt.createInstance("com.arsdigita.cms.ui.ContentSectionPage");
-            r.save();
-            ResourceMapping rm = r.createInstance(section, "admin");
-            rm.save();
-            rm = r.createInstance(section, "admin/index");
-            rm.save();
+        r.save();
+        ResourceMapping rm = r.createInstance(section, "admin");
+        rm.save();
+        rm = r.createInstance(section, "admin/index");
+        rm.save();
 
-	    // XXX What's up with this?  The class doesn't exist anymore.
-            //r = rt.createInstance("com.arsdigita.cms.user.ItemIndexPage");
-            //r.save();
-            //rm = r.createInstance(section, "index");
-            //rm.save();
+	// XXX What's up with this?  The class doesn't exist anymore.
+        //r = rt.createInstance("com.arsdigita.cms.user.ItemIndexPage");
+        //r.save();
+        //rm = r.createInstance(section, "index");
+        //rm.save();
 
-            r = rt.createInstance("com.arsdigita.cms.ui.ContentItemPage");
-            r.save();
-            rm = r.createInstance(section, "admin/item");
-            rm.save();
+        r = rt.createInstance("com.arsdigita.cms.ui.ContentItemPage");
+        r.save();
+        rm = r.createInstance(section, "admin/item");
+        rm.save();
 
     }
 
@@ -1202,12 +1200,13 @@ public class ContentSection extends Application {
     protected static Folder createRootFolder(String name) {
         Folder root = new Folder();
         root.setName("/");
-        root.setLabel( (String) GlobalizationUtil.globalize("cms.installer.root_folder").localize());
+        root.setLabel( (String) GlobalizationUtil.globalize(
+                                "cms.installer.root_folder").localize());
         root.save();
         return root;
     }
 
-     /**
+    /**
      * Creates the root category for a content section.
      *
      * @param name The name of the content section

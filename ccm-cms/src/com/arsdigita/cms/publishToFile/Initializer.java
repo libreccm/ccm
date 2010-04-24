@@ -59,9 +59,7 @@ import org.apache.log4j.Logger;
  */
 public class Initializer extends CompoundInitializer {
 
-    /** 
-     * Creates a s_logging category with name = to the full name of class
-     */
+    /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
     private static PublishToFileConfig s_conf= PublishToFileConfig.getConfig();
@@ -70,18 +68,13 @@ public class Initializer extends CompoundInitializer {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
-        // temporary solution for the time LegacyInitializer is not completely
-        // migrated to this Initializer
-        // add(new LegacyInitializer("com/arsdigita/cms/publishToFile/enterprise.init"));
-
-        // s_conf = PublishToFileConfig.getConfig();
     }
 
-    /**
-     * An empty implementation of {@link Initializer#init(DataInitEvent)}.
-     *
-     * @param evt The data init event.
-     */
+//  /**
+//   * An empty implementation of {@link Initializer#init(DataInitEvent)}.
+//   *
+//   * @param evt The data init event.
+//   */
 //  public void init(DataInitEvent evt) {
 //  }
 
@@ -128,11 +121,11 @@ public class Initializer extends CompoundInitializer {
 
     }
 
-    /**
-     * An empty implementation of {@link Initializer#init(LegacyInitEvent)}.
-     *
-     * @param evt The legacy init event.
-     */
+//  /**
+//   * An empty implementation of {@link Initializer#init(LegacyInitEvent)}.
+//   *
+//   * @param evt The legacy init event.
+//   */
 //  An empty implementations prevents this initializer from beiong executed.
 //  A missing implementations causes the super class method to be executed, which
 //  invokes the above added LegacyInitializer.

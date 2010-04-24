@@ -83,7 +83,8 @@ public class WorkspaceInstaller implements PackageEventListener {
 
         // Register a stylesheet to the Content Center package.
         Stylesheet ss =
-            Stylesheet.createStylesheet("/packages/content-section/xsl/content-center.xsl");
+            Stylesheet.createStylesheet(
+                       "/packages/content-section/xsl/content-center.xsl");
         ss.save();
         type.addStylesheet(ss);
 

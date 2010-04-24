@@ -30,6 +30,7 @@ import com.arsdigita.persistence.DataObject;
  *
  * @author <a href="mailto:sfreidin@arsdigita.com">Stanislav Freidin</a>
  * @version $Id: ContentItemInstantiator.java 287 2005-02-22 00:29:02Z sskracic $
+ * 
  * @deprecated Use {@link com.arsdigita.kernel.ACSObjectInstantiator}
  * instead
  */
