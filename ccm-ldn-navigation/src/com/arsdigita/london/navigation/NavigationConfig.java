@@ -39,7 +39,7 @@ import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.web.Application;
 
 import java.io.InputStream;
-import java.io.IOException;
+// import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
