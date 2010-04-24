@@ -42,11 +42,21 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
 
 	private ContentDirectoryPortlet m_portlet;
 
-	public ContentDirectoryPortletRenderer(ContentDirectoryPortlet portlet) {
+	/**
+     * Constructor.
+     * 
+     * @param portlet
+     */
+    public ContentDirectoryPortletRenderer(ContentDirectoryPortlet portlet) {
 		m_portlet = portlet;
 	}
 
-	public void generateBodyXML(PageState state, Element parent) {
+	/**
+     * 
+     * @param state
+     * @param parent
+     */
+    public void generateBodyXML(PageState state, Element parent) {
 		Element element = parent.newChildElement("portlet:contentDirectory",
 				PortalConstants.PORTLET_XML_NS);
 		element.addAttribute("id", getIdAttr());
@@ -82,7 +92,15 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
 		processChildren(element, root, children, 1, m_portlet.getDepth());
 	}
 
-	public void processChildren(Element parent, Category cat, Map children,
+	/**
+     * 
+     * @param parent
+     * @param cat
+     * @param children
+     * @param depth
+     * @param maxDepth
+     */
+    public void processChildren(Element parent, Category cat, Map children,
 			int depth, int maxDepth) {
 		if (depth <= maxDepth) {
 			TreeSet c = (TreeSet) children.get(cat.getID());
@@ -105,7 +123,14 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
 		}
 	}
 
-	public Element generateCategory(Category cat, int depth,
+	/**
+     * 
+     * @param cat
+     * @param depth
+     * @param childSortKey
+     * @return
+     */
+    public Element generateCategory(Category cat, int depth,
 			BigDecimal childSortKey) {
 		Element el = new Element(depth == 1 ? "portlet:contentDirectoryEntry"
 				: "portlet:contentDirectorySubentry",
@@ -120,7 +145,12 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
 		return el;
 	}
 
-	public static String redirectURL(OID oid) {
+	/**
+     * 
+     * @param oid
+     * @return
+     */
+    public static String redirectURL(OID oid) {
 		ParameterMap map = new ParameterMap();
 		map.setParameter("oid", oid.toString());
 
@@ -130,7 +160,10 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
 				.getServerPort(), "", "", "/redirect/", map)).toString();
 	}
 
-	private class CategorySortKeyPair implements Comparable {
+	/**
+     * 
+     */
+    private class CategorySortKeyPair implements Comparable {
 		private Category m_category;
 
 		private BigDecimal m_sortKey;

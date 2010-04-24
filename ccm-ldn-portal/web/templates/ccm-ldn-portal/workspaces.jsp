@@ -4,7 +4,7 @@
     xmlns:show="/WEB-INF/bebop-show.tld"
     version="1.2">
     <%-- This page is used by class in method getChannel(PageState pageState)
-         com.arsdigita.london.portal.ui.WorkspaceDirectoryComponent  --%>
+           com.arsdigita.london.portal.ui.WorkspaceDirectoryComponent              --%>
 
     <jsp:directive.page import="com.arsdigita.dispatcher.DispatcherHelper"/>
 

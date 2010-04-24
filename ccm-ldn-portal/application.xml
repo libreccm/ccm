@@ -11,7 +11,9 @@
     <ccm:requires name="ccm-ldn-subsite" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-forum" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-navigation" version="6.6.0" relation="ge"/>
+    <!--  TEST, workspace portlet relocated
     <ccm:requires name="ccm-ldn-rss" version="6.6.0" relation="ge"/>
+    -->
     <ccm:requires name="ccm-ldn-util" version="6.6.0" relation="ge"/>
   </ccm:dependencies>
   <ccm:contacts>

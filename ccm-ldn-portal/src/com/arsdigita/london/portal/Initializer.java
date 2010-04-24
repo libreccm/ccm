@@ -30,17 +30,17 @@ import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.kernel.ResourceTypeConfig;
 import com.arsdigita.kernel.ui.ResourceConfigComponent;
 import com.arsdigita.kernel.ui.ResourceConfigFormSection;
-import com.arsdigita.london.navigation.ApplicationNavigationModel;
-import com.arsdigita.london.navigation.DefaultNavigationModel;
+// unused import
+// import com.arsdigita.london.navigation.ApplicationNavigationModel;
+// import com.arsdigita.london.navigation.DefaultNavigationModel;
 import com.arsdigita.london.portal.portlet.ApplicationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.ContentDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.FlashPortletInitializer;
 import com.arsdigita.london.portal.portlet.FreeformHTMLPortlet;
 import com.arsdigita.london.portal.portlet.LoginPortlet;
-import com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet;
+// import com.arsdigita.london.navigation.portlet.NavigationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.RSSFeedPortlet;
 import com.arsdigita.london.portal.portlet.TimeOfDayPortlet;
-import com.arsdigita.london.portal.portlet.WorkspaceDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.MyWorkspacesPortlet;
 import com.arsdigita.london.portal.portlet.WorkspaceNavigatorPortlet;
 import com.arsdigita.london.portal.portlet.WorkspaceSummaryPortlet;
@@ -57,6 +57,9 @@ import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.xml.XML;
+
+// import com.arsdigita.london.rss.portlet.WorkspaceDirectoryPortlet;
+
 
 /**
  * Initializes the Portal system
@@ -88,8 +91,8 @@ public class Initializer extends CompoundInitializer {
 
         super.init(e);
 
-	XML.parse(Workspace.getConfig().getTraversalAdapters(),
-                  new TraversalHandler());
+	    XML.parse(Workspace.getConfig().getTraversalAdapters(),
+                           new TraversalHandler());
 
         e.getFactory().registerInstantiator(
                 Workspace.BASE_DATA_OBJECT_TYPE,
@@ -115,6 +118,7 @@ public class Initializer extends CompoundInitializer {
                     }
                 });
 
+
         e.getFactory().registerInstantiator(
 		ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
@@ -132,14 +136,6 @@ public class Initializer extends CompoundInitializer {
                 });
 
         e.getFactory().registerInstantiator(
-                WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
-                new ACSObjectInstantiator() {
-                    public DomainObject doNewInstance(DataObject dataObject) {
-                        return new WorkspaceDirectoryPortlet(dataObject);
-                    }
-                });
-
-        e.getFactory().registerInstantiator(
                 FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
                     public DomainObject doNewInstance(DataObject dataObject) {
@@ -147,7 +143,8 @@ public class Initializer extends CompoundInitializer {
                     }
                 });
 
-        e.getFactory().registerInstantiator(LoginPortlet.BASE_DATA_OBJECT_TYPE,
+        e.getFactory().registerInstantiator(
+                LoginPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
                     public DomainObject doNewInstance(DataObject dataObject) {
                             return new LoginPortlet(dataObject);
@@ -155,11 +152,11 @@ public class Initializer extends CompoundInitializer {
                 });
 
         e.getFactory().registerInstantiator(
-                TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE,
+                MyWorkspacesPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
-                   public DomainObject doNewInstance(DataObject dataObject) {
-                       return new TimeOfDayPortlet(dataObject);
-                   }
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new MyWorkspacesPortlet(dataObject);
+                    }
                 });
 
         e.getFactory().registerInstantiator(
@@ -171,12 +168,21 @@ public class Initializer extends CompoundInitializer {
                 });
 
         e.getFactory().registerInstantiator(
-                MyWorkspacesPortlet.BASE_DATA_OBJECT_TYPE,
+                TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
-                    public DomainObject doNewInstance(DataObject dataObject) {
-                        return new MyWorkspacesPortlet(dataObject);
-                    }
+                   public DomainObject doNewInstance(DataObject dataObject) {
+                       return new TimeOfDayPortlet(dataObject);
+                   }
                 });
+
+//     WorkspaceDirectoryPortlet,  imports ccm-ldn-rss
+//      e.getFactory().registerInstantiator(
+//              WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
+//              new ACSObjectInstantiator() {
+//                  public DomainObject doNewInstance(DataObject dataObject) {
+//                      return new WorkspaceDirectoryPortlet(dataObject);
+//                  }
+//              });
 
         e.getFactory().registerInstantiator(
                 WorkspaceNavigatorPortlet.BASE_DATA_OBJECT_TYPE,
@@ -278,14 +284,14 @@ public class Initializer extends CompoundInitializer {
                 }
         };
 
-        NavigationDirectoryPortlet.registerInstantiator();
-        NavigationDirectoryPortlet.registerResourceTypeConfig();
+//         NavigationDirectoryPortlet.registerInstantiator();
+//         NavigationDirectoryPortlet.registerResourceTypeConfig();
 
         FlashPortletInitializer.initialize();
 
         // import from london.navigation required 
         // causes horizontal dependency between portal and navigation
-        ApplicationNavigationModel.register(Workspace.class.getName(),
-				            new DefaultNavigationModel());
+//      ApplicationNavigationModel.register(Workspace.class.getName(),
+//			            new DefaultNavigationModel());
     }
 }

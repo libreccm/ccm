@@ -26,6 +26,7 @@ import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.portal.PortletConfigFormSection;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
@@ -39,7 +40,8 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.london.portal.portlet.ContentDirectoryPortlet;
-import com.arsdigita.london.portal.ui.PortletConfigFormSection;
+// @deprecated use com.arsdigita.bebop.portal.PortletConfigFormSection
+// import com.arsdigita.london.portal.ui.PortletConfigFormSection;
 import com.arsdigita.london.util.Categorization;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.portal.Portlet;
@@ -47,6 +49,10 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.Web;
 
+/**
+ * 
+ * 
+ */
 public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 
 	private static final Logger s_log = Logger
@@ -58,16 +64,28 @@ public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 
 	private SingleSelect m_depth;
 
-	public ContentDirectoryPortletEditor(ResourceType resType,
+	/**
+     * Constructor
+     * @param resType
+     * @param parentAppRL
+     */
+    public ContentDirectoryPortletEditor(ResourceType resType,
 			RequestLocal parentAppRL) {
 		super(resType, parentAppRL);
 	}
 
-	public ContentDirectoryPortletEditor(RequestLocal application) {
+	/**
+     * 
+     * @param application
+     */
+    public ContentDirectoryPortletEditor(RequestLocal application) {
 		super(application);
 	}
 
-	public void addWidgets() {
+	/**
+     * 
+     */
+    public void addWidgets() {
 		super.addWidgets();
 
 		m_root = new SingleSelect(new BigDecimalParameter("root"));
@@ -95,7 +113,13 @@ public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 		add(m_depth);
 	}
 
-	public void initWidgets(PageState state, Portlet portlet)
+	/**
+     * 
+     * @param state
+     * @param portlet
+     * @throws FormProcessException
+     */
+    public void initWidgets(PageState state, Portlet portlet)
 			throws FormProcessException {
 		super.initWidgets(state, portlet);
 
@@ -108,7 +132,13 @@ public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 		}
 	}
 
-	public void processWidgets(PageState state, Portlet portlet)
+	/**
+     * 
+     * @param state
+     * @param portlet
+     * @throws FormProcessException
+     */
+    public void processWidgets(PageState state, Portlet portlet)
 			throws FormProcessException {
 		super.processWidgets(state, portlet);
 
@@ -127,11 +157,18 @@ public class ContentDirectoryPortletEditor extends PortletConfigFormSection {
 		myportlet.setRoot(root);
 	}
 
-	protected String getUseContext() {
+	/**
+     * 
+     * @return
+     */
+    protected String getUseContext() {
 		return null;
 	}
 
-	private class CategoryPrintListener implements PrintListener {
+	/**
+     * 
+     */
+    private class CategoryPrintListener implements PrintListener {
 		public void prepare(PrintEvent e) {
 			SingleSelect target = (SingleSelect) e.getTarget();
 

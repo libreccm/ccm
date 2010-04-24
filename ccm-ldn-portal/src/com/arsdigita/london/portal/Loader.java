@@ -28,10 +28,9 @@ import com.arsdigita.london.portal.portlet.ApplicationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.ContentDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.FreeformHTMLPortlet;
 import com.arsdigita.london.portal.portlet.LoginPortlet;
-import com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet;
+// import com.arsdigita.london.navigation.portlet.NavigationDirectoryPortlet;
 import com.arsdigita.london.portal.portlet.RSSFeedPortlet;
 import com.arsdigita.london.portal.portlet.TimeOfDayPortlet;
-import com.arsdigita.london.portal.portlet.WorkspaceDirectoryPortlet;
 import com.arsdigita.portal.PortletType;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.util.Assert;
@@ -96,14 +95,13 @@ public class Loader extends PackageLoader {
                                   (String) get(m_title));
                 setupWorkspacePageType();
 
-                loadTimeOfDayPortlet();
+                loadApplicationDirectoryPortlet();
                 loadContentDirectoryPortlet();
-                loadRSSFeedPortlet();
                 loadFreeformHTMLPortlet();
                 loadLoginPortlet();
-                loadApplicationDirectoryPortlet();
-                loadWorkspaceDirectoryPortlet();
-                NavigationDirectoryPortlet.loadPortletType();
+                loadRSSFeedPortlet();
+                loadTimeOfDayPortlet();
+//                NavigationDirectoryPortlet.loadPortletType();
             }
         }.run();
     }
@@ -178,27 +176,22 @@ public class Loader extends PackageLoader {
         return type;
     }
 
-    /**
+
+	/**
      *
      */
-    private void loadTimeOfDayPortlet() {
-		PortletType type = PortletType.createPortletType("Time of Day",
-				PortletType.WIDE_PROFILE,
-				TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays the current date and time");
-    }
+    private void loadApplicationDirectoryPortlet() {
+		PortletType type = PortletType.createPortletType(
+				"Application Directory", PortletType.WIDE_PROFILE,
+				ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
+		type.setDescription("Displays a list of applications");
+	}
 
 	private void loadContentDirectoryPortlet() {
 		PortletType type = PortletType.createPortletType("Content Directory",
 				PortletType.WIDE_PROFILE,
 				ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
 		type.setDescription("Displays the content directory categories");
-	}
-
-	private void loadRSSFeedPortlet() {
-		PortletType type = PortletType.createPortletType("RSS Feed",
-				PortletType.WIDE_PROFILE, RSSFeedPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays an RSS Feed");
 	}
 
 	private void loadFreeformHTMLPortlet() {
@@ -214,17 +207,19 @@ public class Loader extends PackageLoader {
 		type.setDescription("Display a login form or user details");
 	}
 
-	private void loadApplicationDirectoryPortlet() {
-		PortletType type = PortletType.createPortletType(
-				"Application Directory", PortletType.WIDE_PROFILE,
-				ApplicationDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays a list of applications");
+	private void loadRSSFeedPortlet() {
+		PortletType type = PortletType.createPortletType("RSS Feed",
+				PortletType.WIDE_PROFILE, RSSFeedPortlet.BASE_DATA_OBJECT_TYPE);
+		type.setDescription("Displays an RSS Feed");
 	}
 
-	private void loadWorkspaceDirectoryPortlet() {
-		PortletType type = PortletType.createPortletType("Workspace Directory",
+    /**
+     *
+     */
+    private void loadTimeOfDayPortlet() {
+		PortletType type = PortletType.createPortletType("Time of Day",
 				PortletType.WIDE_PROFILE,
-				WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
-		type.setDescription("Displays a list of workspaces");
-	}
+				TimeOfDayPortlet.BASE_DATA_OBJECT_TYPE);
+		type.setDescription("Displays the current date and time");
+    }
 }

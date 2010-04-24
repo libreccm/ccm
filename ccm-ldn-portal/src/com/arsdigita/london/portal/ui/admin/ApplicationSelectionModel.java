@@ -42,30 +42,56 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 	private static final Logger s_log = Logger
 			.getLogger(ApplicationSelectionModel.class);
 
-	public ApplicationSelectionModel(BigDecimalParameter param,
-			boolean hasDefaultValue) {
+	/**
+     * Constructor 
+     * 
+     * @param param
+     * @param hasDefaultValue
+     */
+    public ApplicationSelectionModel(BigDecimalParameter param,
+			                                                     boolean hasDefaultValue) {
 		super(param);
 
 		m_hasDefaultValue = hasDefaultValue;
 	}
 
-	public ApplicationSelectionModel(boolean hasDefaultValue) {
+	/**
+     * 
+     * @param hasDefaultValue
+     */
+    public ApplicationSelectionModel(boolean hasDefaultValue) {
 		this(new BigDecimalParameter(DEFAULT_PARAM_NAME), hasDefaultValue);
 	}
 
-	public ApplicationSelectionModel(String param) {
+	/**
+     * 
+     * @param param
+     */
+    public ApplicationSelectionModel(String param) {
 		this(new BigDecimalParameter(param), false);
 	}
 
-	public ApplicationSelectionModel(String param, boolean hasDefaultValue) {
+	/**
+     * 
+     * @param param
+     * @param hasDefaultValue
+     */
+    public ApplicationSelectionModel(String param, boolean hasDefaultValue) {
 		this(new BigDecimalParameter(param), hasDefaultValue);
 	}
 
-	public ApplicationSelectionModel() {
+	/**
+     * 
+     */
+    public ApplicationSelectionModel() {
 		this(DEFAULT_PARAM_NAME, false);
 	}
 
-	public Application getDefaultApplication() {
+	/**
+     * 
+     * @return
+     */
+    public Application getDefaultApplication() {
 		Application app = Web.getContext().getApplication();
 
 		// XXX just in case
@@ -86,7 +112,6 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 	 * Override ACSObjectSelectionModel methods to default to the default
 	 * Application
 	 */
-
 	public boolean isSelected(PageState state) {
 		if (m_hasDefaultValue && !super.isSelected(state)) {
 			return (getDefaultApplication() != null);
@@ -94,7 +119,12 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 		return super.isSelected(state);
 	}
 
-	public DomainObject getSelectedObject(PageState state) {
+	/**
+     * 
+     * @param state
+     * @return
+     */
+    public DomainObject getSelectedObject(PageState state) {
 		if (m_hasDefaultValue && !super.isSelected(state)) {
 			return getDefaultApplication();
 		}
@@ -102,7 +132,12 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 		return super.getSelectedObject(state);
 	}
 
-	public Object getSelectedKey(PageState state) {
+	/**
+     * 
+     * @param state
+     * @return
+     */
+    public Object getSelectedKey(PageState state) {
 		if (m_hasDefaultValue && !super.isSelected(state)) {
 			return getDefaultApplication();
 		}
@@ -114,7 +149,13 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 		return (Application) getSelectedObject(state);
 	}
 
-	public void setSelectedApplication(PageState state, Application Application) {
+	/**
+     * Utility method
+     * 
+     * @param state
+     * @param Application
+     */
+    public void setSelectedApplication(PageState state, Application Application) {
 		setSelectedObject(state, Application);
 	}
 }

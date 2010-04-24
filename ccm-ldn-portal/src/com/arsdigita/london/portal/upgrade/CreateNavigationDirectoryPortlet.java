@@ -2,7 +2,7 @@ package com.arsdigita.london.portal.upgrade;
 
 import org.apache.commons.cli.CommandLine;
 
-import com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet;
+import com.arsdigita.london.navigation.portlet.NavigationTreePortlet;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.packaging.Program;
 
@@ -27,7 +27,7 @@ public class CreateNavigationDirectoryPortlet extends Program
         {
             protected void doRun()
             {
-                NavigationDirectoryPortlet.loadPortletType();
+                NavigationTreePortlet.loadPortletType();
             }
         }.run();
     }

@@ -28,6 +28,10 @@ import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.london.portal.ui.PortalConstants;
 import com.arsdigita.web.Application;
 
+/**
+ * 
+ * 
+ */
 public class SiteMapPane extends SimpleContainer {
 
 	private ApplicationSelectionModel m_app;
@@ -38,7 +42,10 @@ public class SiteMapPane extends SimpleContainer {
 
 	private static final Logger s_log = Logger.getLogger(SiteMapPane.class);
 
-	public SiteMapPane() {
+	/**
+     * Constructor
+     */
+    public SiteMapPane() {
 		setTag("portal:sitemap");
 		setNamespace(PortalConstants.PORTAL_XML_NS);
 
@@ -52,14 +59,21 @@ public class SiteMapPane extends SimpleContainer {
 		add(m_appPane);
 	}
 
-	public void register(Page p) {
+	/**
+     * 
+     * @param p
+     */
+    public void register(Page p) {
 		super.register(p);
 
 		p.addGlobalStateParam(m_app.getStateParameter());
 		p.setVisibleDefault(m_appPane, false);
 	}
 
-	private class ApplicationEditListener implements ChangeListener {
+	/**
+     * 
+     */
+    private class ApplicationEditListener implements ChangeListener {
 		public void stateChanged(ChangeEvent e) {
 			PageState state = e.getPageState();
 

@@ -33,6 +33,10 @@ import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.xml.Element;
 
+/** 
+ * 
+ * 
+ */
 public class ApplicationList extends SimpleContainer {
 
 	private static final Logger s_log = Logger.getLogger(ApplicationList.class);
@@ -41,13 +45,21 @@ public class ApplicationList extends SimpleContainer {
 
 	private static final String SELECT = "select";
 
-	public ApplicationList(ApplicationSelectionModel app) {
+	/**
+     * 
+     * @param app
+     */
+    public ApplicationList(ApplicationSelectionModel app) {
 		super("portal:applicationList", PortalConstants.PORTAL_XML_NS);
 
 		m_app = app;
 	}
 
-	public void respond(PageState state) {
+	/**
+     * 
+     * @param state
+     */
+    public void respond(PageState state) {
 		String key = state.getControlEventName();
 		String value = state.getControlEventValue();
 
@@ -62,7 +74,12 @@ public class ApplicationList extends SimpleContainer {
 		}
 	}
 
-	public void generateXML(PageState state, Element parent) {
+	/**
+     * 
+     * @param state
+     * @param parent
+     */
+    public void generateXML(PageState state, Element parent) {
 		Element content = generateParent(parent);
 
 		ApplicationCollection apps = Application.retrieveAllApplications();

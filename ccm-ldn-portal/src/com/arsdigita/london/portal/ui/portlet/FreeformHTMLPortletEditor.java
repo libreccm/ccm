@@ -22,6 +22,7 @@ import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.portal.PortletConfigFormSection;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.form.DHTMLEditor;
 import com.arsdigita.bebop.form.TextArea;
@@ -33,7 +34,8 @@ import com.arsdigita.cms.ui.authoring.TextAssetBody.PageTextForm;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.london.portal.Workspace;
 import com.arsdigita.london.portal.portlet.FreeformHTMLPortlet;
-import com.arsdigita.london.portal.ui.PortletConfigFormSection;
+// @deprecated use com.arsdigita.bebop.portal.PortletConfigFormSection
+// import com.arsdigita.london.portal.ui.PortletConfigFormSection;
 import com.arsdigita.portal.Portlet;
 
 public class FreeformHTMLPortletEditor extends PortletConfigFormSection {
