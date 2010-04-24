@@ -27,11 +27,10 @@ import com.arsdigita.util.parameter.StringParameter;
  * AplawsConfig
  *
  * @version $Revision: 1.2 $ $Date: 2005/01/07 19:01:40 $
+ * @version $Id: AplawsConfig.java 1565 2007-04-18 16:46:14Z apevec $
  */
 
 public class AplawsConfig extends AbstractConfig {
-
-    public final static String versionId = "$Id: AplawsConfig.java 1565 2007-04-18 16:46:14Z apevec $";
 
     private final Parameter m_overrideAnavFromLGCLMappings = new BooleanParameter
         ("com.arsdigita.aplaws.override_anav_from_lgcl_mappings", Parameter.OPTIONAL, new Boolean(false));

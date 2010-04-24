@@ -1,40 +1,44 @@
-<xsl:stylesheet xmlns:forum="http://www.arsdigita.com/forum/1.0"
-				xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
-				xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-				xmlns:nav="http://ccm.redhat.com/london/navigation" 
-				xmlns:search="http://rhea.redhat.com/search/1.0" 
-				xmlns:portal="http://www.uk.arsdigita.com/portal/1.0" 				
-				xmlns:cms="http://www.arsdigita.com/cms/1.0" 	
-				exclude-result-prefixes="xsl bebop nav search portal forum cms" 
-				version="1.0">
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet
+	xmlns:forum="http://www.arsdigita.com/forum/1.0"
+	xmlns:bebop="http://www.arsdigita.com/bebop/1.0" 
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+	xmlns:nav="http://ccm.redhat.com/london/navigation" 
+	xmlns:search="http://rhea.redhat.com/search/1.0" 
+	xmlns:portal="http://www.uk.arsdigita.com/portal/1.0" 				
+	xmlns:cms="http://www.arsdigita.com/cms/1.0" 	
+	exclude-result-prefixes="xsl bebop nav search portal forum cms" 
+	version="1.0">
 
   <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
-  <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
-  <xsl:import href="../../../../ROOT/packages/ui/xsl/ui.xsl" />
-  <xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
+	<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
+	<xsl:import href="../../../../ROOT/packages/ui/xsl/ui.xsl" />
+	<xsl:import href="../../../../ROOT/packages/bebop/xsl/bebop.xsl" />
   -->
   <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
   -->
-  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
-  <xsl:import href="../../../packages/ui/xsl/ui.xsl" />
-  <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
+    <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
+    <xsl:import href="../../../packages/ui/xsl/ui.xsl" />
+    <xsl:import href="../../../packages/bebop/xsl/bebop.xsl" />
 
-  <xsl:import href="lib/header.xsl" />
-  <xsl:import href="lib/lib.xsl" />
-  <xsl:import href="lib/leftNav.xsl" />
-  <xsl:import href="forum-categories.xsl"/>
+	<xsl:import href="lib/header.xsl" />
+	<xsl:import href="lib/lib.xsl" />
+	<xsl:import href="lib/leftNav.xsl" />
+	<xsl:import href="forum-categories.xsl"/>
   <!-- IMPORT DEFINITIONS ccm-forum  installed as separate web application
-  <xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
+	<xsl:import href="../../../../ROOT/packages/bebop/xsl/dcp.xsl"/>
   -->
   <!-- IMPORT DEFINITIONS ccm-forum installed into the main CCM webapp
   -->
-  <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
-  
-  <xsl:param name="theme-prefix" />
-  <xsl:param name="context-prefix" />
-  <xsl:param name="dispatcher-prefix" />
+    <xsl:import href="../../../packages/bebop/xsl/dcp.xsl"/>
 
-  <xsl:output method="html" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" doctype-system="http://www.w3.org/TR/html4/loose.dtd" indent="yes" />
+
+	<xsl:param name="theme-prefix" />
+	<xsl:param name="context-prefix" />
+	<xsl:param name="dispatcher-prefix" />
+
+	<xsl:output method="html" doctype-public="-//W3C//DTD HTML 4.01 Transitional//EN" 
+		    doctype-system="http://www.w3.org/TR/html4/loose.dtd" indent="yes" />
 
 <!-- ********************* MAIN PAGE LAYOUT TEMPLATES ********************* -->
 

@@ -20,9 +20,11 @@ package com.arsdigita.aplaws;
 
 import org.apache.log4j.Logger;
 
+/**
+ *
+ * @version "$Id: Aplaws.java 1297 2006-08-25 18:17:50Z apevec $
+ */
 public class Aplaws {
-    public static final String versionId =
-        "$Id: Aplaws.java 1297 2006-08-25 18:17:50Z apevec $";
 
     private static final Logger LOG = Logger.getLogger(Aplaws.class);
 

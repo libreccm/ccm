@@ -11,14 +11,14 @@
   
 	
 	<xsl:import href="login-portlet.xsl"/>
-  <xsl:import href="directory-portlet.xsl"/>
-  <xsl:import href="content-sections-portlet.xsl"/>
-  <xsl:import href="time-of-day-portlet.xsl"/>
-  <xsl:import href="freeform-html-portlet.xsl"/>
-  <xsl:import href="rss-feed-portlet.xsl"/>
-  <xsl:import href="tasklist-portlet.xsl"/>
-  <xsl:import href="application-directory-portlet.xsl"/>
-  <xsl:import href="workspace-directory-portlet.xsl"/>
+        <xsl:import href="directory-portlet.xsl"/>
+        <xsl:import href="content-sections-portlet.xsl"/>
+        <xsl:import href="time-of-day-portlet.xsl"/>
+        <xsl:import href="freeform-html-portlet.xsl"/>
+        <xsl:import href="rss-feed-portlet.xsl"/>
+        <xsl:import href="tasklist-portlet.xsl"/>
+        <xsl:import href="application-directory-portlet.xsl"/>
+        <xsl:import href="workspace-directory-portlet.xsl"/>
 	<xsl:import href="content-item-portlet.xsl"/>
   
 

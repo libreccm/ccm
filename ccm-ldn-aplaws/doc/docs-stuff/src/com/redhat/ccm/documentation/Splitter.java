@@ -7,12 +7,10 @@ import java.util.*;
  * Splitter
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
- * @version $Revision: #1 $ $Date: 2003/09/18 $
+ * @version $Id: Splitter.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 
 public class Splitter {
-
-    public final static String versionId = "$Id: Splitter.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2003/09/18 15:50:41 $";
 
     private static final String BEGIN = "@rhdoc.begin";
     private static final String END = "@rhdoc.end";
