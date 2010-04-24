@@ -26,7 +26,6 @@ import com.arsdigita.bebop.SegmentedPanel;
  *
  * @author David Dao
  */
-
 class CreateUserPane extends SegmentedPanel
     implements AdminConstants,
                Resettable

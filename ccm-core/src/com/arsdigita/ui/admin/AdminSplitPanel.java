@@ -52,7 +52,6 @@ class AdminSplitPanel extends BoxPanel implements ChangeListener {
     /**
      * Constructor
      */
-
     public AdminSplitPanel (GlobalizedMessage title) {
 
         m_title = title;
@@ -65,7 +64,6 @@ class AdminSplitPanel extends BoxPanel implements ChangeListener {
      *
      * @pre label != null && c != null
      */
-
     public void addTab (Label label, Component c) {
         Assert.isUnlocked(this);
         m_componentList.add(c);
@@ -74,6 +72,10 @@ class AdminSplitPanel extends BoxPanel implements ChangeListener {
         m_keys.add(label);
     }
 
+    /**
+     * 
+     * @param p
+     */
     public void register(Page p) {
         Assert.isUnlocked(this);
 

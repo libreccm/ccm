@@ -30,13 +30,13 @@ import com.arsdigita.bebop.list.ListCellRenderer;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.bebop.list.ListModelBuilder;
 import com.arsdigita.util.LockableImpl;
+// import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DataObjectNotFoundException;
+// import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.EmailAddress;
-import com.arsdigita.kernel.EmailAddress;
+// import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.User;
-import java.math.BigDecimal;
+// import java.math.BigDecimal;
 import java.math.BigDecimal;
 import java.util.Iterator;
 
@@ -54,13 +54,22 @@ class EmailList extends List
     /**
      * Constructor
      */
-
     public EmailList() {
         setModelBuilder(new EmailListModelBuilder());
         setCellRenderer(this);
         addActionListener(this);
     }
 
+    /** 
+     * 
+     * @param list
+     * @param state
+     * @param value
+     * @param key
+     * @param index
+     * @param isSelected
+     * @return
+     */
     public Component getComponent(List list,
                                   PageState state,
                                   Object value,
@@ -86,7 +95,6 @@ class EmailList extends List
      * This actionlister is executed when the user clicks the "delete"
      * link next to an email address.
      */
-
     public void actionPerformed (ActionEvent e) {
         PageState ps = e.getPageState();
 
@@ -110,19 +118,34 @@ class EmailList extends List
     }
 }
 
+/**
+ * 
+ * 
+ */
 class EmailListModelBuilder extends LockableImpl
     implements ListModelBuilder,
                AdminConstants
 {
 
+    /**
+     * 
+     */
     private class EmailListModel implements ListModel {
         private Iterator m_emails;
         private EmailAddress m_currentEmail;
 
+        /**
+         * 
+         * @param emails
+         */
         public EmailListModel(Iterator emails) {
             m_emails = emails;
         }
 
+        /**
+         * 
+         * @return
+         */
         public boolean next() {
             if (m_emails.hasNext()) {
                 m_currentEmail = (EmailAddress) m_emails.next();
@@ -132,6 +155,10 @@ class EmailListModelBuilder extends LockableImpl
             }
         }
 
+        /**
+         * 
+         * @return
+         */
         public String getKey() {
             return m_currentEmail.getEmailAddress();
         }
@@ -141,6 +168,12 @@ class EmailListModelBuilder extends LockableImpl
         }
     }
 
+    /**
+     * 
+     * @param l
+     * @param state
+     * @return
+     */
     public ListModel makeModel(List l, PageState state) {
 
         BigDecimal userID = (BigDecimal)state.getValue(USER_ID_PARAM);

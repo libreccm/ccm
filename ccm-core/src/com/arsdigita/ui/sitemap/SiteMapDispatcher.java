@@ -50,12 +50,10 @@ import org.apache.log4j.Logger;
 
 /**
  * Dispatcher for SiteMap Admin functionality
+ *
+ * @version $Id: SiteMapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class SiteMapDispatcher extends BebopMapDispatcher {
-    public static final String versionId =
-        "$Id: SiteMapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(SiteMapDispatcher.class);
@@ -76,6 +74,14 @@ public class SiteMapDispatcher extends BebopMapDispatcher {
         setMap(m);
     }
 
+    /***
+     * 
+     * @param req
+     * @param resp
+     * @param ctx
+     * @throws IOException
+     * @throws javax.servlet.ServletException
+     */
     public void dispatch(HttpServletRequest req,
                          HttpServletResponse resp,
                          RequestContext ctx)
@@ -129,7 +135,6 @@ public class SiteMapDispatcher extends BebopMapDispatcher {
     /**
      * "Access Denied" page for the SiteMap.
      */
-
     private Page buildDeniedPage() {
         Page p = PageFactory.buildPage("admin",
                                  new Label(new GlobalizedMessage
@@ -146,6 +151,10 @@ public class SiteMapDispatcher extends BebopMapDispatcher {
         return p;
     }
 
+    /**
+     * Admin Page for the SiteMap application
+     * @return
+     */
     private Page buildAdminPage() {
         Page p = PageFactory.buildPage("admin", "Sitemap Administration");
 

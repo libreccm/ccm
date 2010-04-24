@@ -31,10 +31,12 @@ import com.arsdigita.bebop.ToggleLink;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ActionEvent;
 
+/** 
+ * 
+ * @version $Id: SiteMapAdminPane.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class SiteMapAdminPane extends SimpleContainer
-    implements ActionListener {
-
-    public static final String versionId = "$Id: SiteMapAdminPane.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+                                                        implements ActionListener {
 
     private SingleSelectionModel m_processes;
     private ToggleLink m_addLink;
@@ -42,12 +44,20 @@ public class SiteMapAdminPane extends SimpleContainer
     private Label m_noSelection;
     private DisplayActions m_displayActions;
     private Label m_cfgSiteMap;
+
+    /**
+     * Constructor
+     *
+     * @param m
+     * @param l
+     */
     public SiteMapAdminPane (SingleSelectionModel m, ToggleLink l) {
         super();
         m_processes = m;
         m_addLink = l;
 
-        m_noSelection = new Label(GlobalizationUtil.globalize("ui.sitemap.h4emselect_sitenode_to_view_detailsemh4"),  false);
+        m_noSelection = new Label(GlobalizationUtil.globalize(
+                    "ui.sitemap.h4emselect_sitenode_to_view_detailsemh4"),  false);
         add(m_noSelection);
 
         m_displayActions = new DisplayActions(m);
@@ -55,10 +65,15 @@ public class SiteMapAdminPane extends SimpleContainer
 
 
         //Have this call a class that outputs the config menu...
-        m_cfgSiteMap = new Label(GlobalizationUtil.globalize("ui.sitemap.configuration_menu_placeholder"));
+        m_cfgSiteMap = new Label(GlobalizationUtil.globalize(
+                    "ui.sitemap.configuration_menu_placeholder"));
         add(m_cfgSiteMap);
     }
 
+    /**
+     * 
+     * @param p
+     */
     public void register(Page p) {
         super.register(p);
         p.setVisibleDefault(m_noSelection, true);
@@ -67,6 +82,10 @@ public class SiteMapAdminPane extends SimpleContainer
         p.addActionListener( this );
     }
 
+    /**
+     * 
+     * @param e
+     */
     public void actionPerformed(ActionEvent e) {
         PageState s = e.getPageState();
         boolean proc = m_processes.isSelected(s);

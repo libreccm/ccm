@@ -55,9 +55,6 @@ import org.apache.log4j.Logger;
  * Tree selection model, and when it detects one, it draws two box panels;
  * one above the other. The Top box panel is for SiteNode info and cfg, and the
  * bottom is for package instance cfg.
-
-
-import com.arsdigita.ui.util.GlobalizationUtil ; 
  *
  * Every time a selection event is heard, this class:
  * <ul>
@@ -65,11 +62,8 @@ import com.arsdigita.ui.util.GlobalizationUtil ;
  * <li>2) creates a site node from the ID
  * <li>3) Extracts the Name of the node
  * <li>4) Builds a title for the top box panel with a call to this.makeTitle()
- * <li>5) Determines if there is a package instance mounted on the node.
-
-
-import com.arsdigita.ui.util.GlobalizationUtil ; 
- *   If there is, the title for the bottom is set with a call to makelowertitle.
+ * <li>5) Determines if there is a package instance mounted on the node.<br />
+ *             If there is, the title for the bottom is set with a call to makelowertitle.
  * <li>6) sets visible the appropriate action links for the node, like this:
  *  <ul>
  *   <li>a) If Node has no instance, and is a leaf node, Offer "AddSubnode",

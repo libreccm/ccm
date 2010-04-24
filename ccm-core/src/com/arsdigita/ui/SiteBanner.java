@@ -24,6 +24,10 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
+/**
+ *  
+ * 
+ */
 public class SiteBanner extends SimpleComponent {
 
     public void generateXML(PageState state,

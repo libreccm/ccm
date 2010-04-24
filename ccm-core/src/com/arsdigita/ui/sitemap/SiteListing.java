@@ -35,10 +35,12 @@ import com.arsdigita.ui.util.GlobalizationUtil;
 import com.arsdigita.util.LockableImpl;
 import org.apache.log4j.Logger;
 
+/** 
+ * 
+ * @version $Id: SiteListing.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class SiteListing extends BoxPanel
     implements ChangeListener, ActionListener {
-
-    public static final String versionId = "$Id: SiteListing.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(SiteListing.class);
@@ -49,6 +51,9 @@ public class SiteListing extends BoxPanel
 
     private ToggleLink m_addLink;
 
+    /**
+     * Constructor, builds a list of ....
+     */
     public SiteListing () {
         super(BoxPanel.VERTICAL, false);
         SiteNode sn;
@@ -72,14 +77,28 @@ public class SiteListing extends BoxPanel
 
     }
 
+    /**
+     * Getter method.
+     * 
+     * @return Returs a list containing the instantiated applications (nodes)
+     */
     public List getList() {
         return m_list;
     }
 
+    /**
+     * Getter method.
+     * 
+     * @return
+     */
     public Tree getTree() {
         return m_tree;
     }
 
+    /**
+     * 
+     * @return
+     */
     public ToggleLink getCFGLink() {
         return m_addLink;
     }

@@ -31,16 +31,10 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 interface AdminConstants {
 
-    /**
-     * The XML namespace used by admin components.
-     */
-
+    /** The XML namespace used by admin components. */
     String ADMIN_XML_NS = "http://www.arsdigita.com/admin-ui/1.0";
 
-    /**
-     * Globalization resource for admin ui.
-     */
-
+    /** Globalization resource for admin ui.   */
     String BUNDLE_NAME = "com.arsdigita.ui.admin.AdminResources";
 
 
@@ -55,31 +49,25 @@ interface AdminConstants {
     //          (new GlobalizedMessage("ui.admin.nav.logout",
     //                                 BUNDLE_NAME));
 
-    /**
-     * Administration page title
-     */
-
+    /** Administration page title */
     Label PAGE_TITLE_LABEL = new Label
         (new GlobalizedMessage("ui.admin.dispatcher.title",
                                BUNDLE_NAME));
 
-    /**
-     * Administration main tab names.
-     */
-
+    /** Administration main tab names. */
     Label USER_TAB_TITLE = new Label
         (new GlobalizedMessage("ui.admin.tab.user.title",
                                BUNDLE_NAME));
+
     Label GROUP_TAB_TITLE = new Label
         (new GlobalizedMessage("ui.admin.tab.group.title",
                                BUNDLE_NAME));
+
     GlobalizedMessage USER_NAVBAR_TITLE =
         new GlobalizedMessage("ui.admin.tab.user.navbartitle",
                               BUNDLE_NAME);
 
-    /**
-     * Tabbed pane indices
-     */
+    /** Tabbed pane indices */
     int USER_TAB_INDEX  = 0;
     int GROUP_TAB_INDEX = 1;
 

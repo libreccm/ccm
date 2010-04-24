@@ -22,9 +22,11 @@ import com.arsdigita.kernel.ui.DataQueryTreeModel;
 import com.arsdigita.kernel.SiteNode;
 
 
+/**
+ * 
+ * @version $Id: SiteNodeTreeModel.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class SiteNodeTreeModel extends DataQueryTreeModel {
-
-    public static final String versionId = "$Id: SiteNodeTreeModel.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public SiteNodeTreeModel (SiteNode rootSiteNode) {
         super(rootSiteNode.getID(),

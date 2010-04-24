@@ -34,14 +34,12 @@ import com.arsdigita.globalization.GlobalizedMessage;
  * @author Ron Henderson 
  * @version $Id: AdminDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */
-
 public class AdminDispatcher extends SubsiteDispatcher
     implements AdminConstants
 {
     /**
      * Constructor.  Instantiates the subsite url/page mapping.
      */
-
     public AdminDispatcher() {
         addPage("", buildAdminIndexPage(), true);
         addPage("denied", buildDeniedPage());

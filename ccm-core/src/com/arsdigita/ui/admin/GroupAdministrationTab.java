@@ -59,7 +59,7 @@ import org.apache.log4j.Logger;
  */
 class GroupAdministrationTab extends BoxPanel
     implements AdminConstants,
-               ChangeListener {
+                       ChangeListener {
 
     private static final Logger s_log =
         Logger.getLogger(GroupAdministrationTab.class);

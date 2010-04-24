@@ -29,6 +29,10 @@ import com.arsdigita.xml.Element;
 import com.arsdigita.ui.util.GlobalizationUtil;
 import com.arsdigita.globalization.GlobalizedMessage;
 
+/**
+ * 
+ * 
+ */
 public class UserBanner extends SimpleComponent {
 
     private static GlobalizedMessage s_help;
@@ -38,6 +42,9 @@ public class UserBanner extends SimpleComponent {
 
     private static boolean initialized = false;
 
+   /**
+    * 
+    */
     static void init() {
         if (initialized) {
             return;
@@ -51,6 +58,11 @@ public class UserBanner extends SimpleComponent {
         initialized = true;
     }
 
+    /**
+     * 
+     * @param state
+     * @param parent
+     */
     public void generateXML(PageState state,
                             Element parent) {
         init();
