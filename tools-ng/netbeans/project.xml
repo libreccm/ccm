@@ -10,12 +10,12 @@
                 <source-folder>
                     <label>webapps</label>
                     <type>doc_root</type>
-                    <location>/var/ccm-devel/web/pb/trunk/webapps</location>
+                    <location>~/ccm-devel/apache-tomcat-6.0.20/webapps</location>
                 </source-folder>
                 <source-folder>
                     <label>WEB-INF</label>
                     <type>web_inf</type>
-                    <location>/var/ccm-devel/web/pb/trunk/webapps/WEB-INF</location>
+                    <location>~/ccm-devel/apache-tomcat-6.0.20/webapps/ROOT/WEB-INF</location>
                 </source-folder>
                 <source-folder>
                     <label>ccm-core (Source)</label>
@@ -58,6 +58,16 @@
                     <location>ccm-cms-types-article/src</location>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-cms-types-baseAddress (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-baseAddress/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-baseContact (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-baseContact/src</location>
+                </source-folder>
+                <source-folder>
                     <label>ccm-cms-types-bookmark (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-bookmark/src</location>
@@ -98,9 +108,19 @@
                     <location>ccm-cms-types-formsectionitem/src</location>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-cms-types-genericorganisation (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-genericorganisation/src</location>
+                </source-folder>
+                <source-folder>
                     <label>ccm-cms-types-glossaryitem (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-glossaryitem/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-healthCareFacility (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-healthCareFacility/src</location>
                 </source-folder>
                 <source-folder>
                     <label>ccm-cms-types-htmlform (Source)</label>
@@ -148,9 +168,29 @@
                     <location>ccm-cms-types-organization/src</location>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-cms-types-organizationalunit (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-organizationalunit/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-person (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-person/src</location>
+                </source-folder>
+                <source-folder>
                     <label>ccm-cms-types-pressrelease (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-pressrelease/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-project (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-project/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-researchnetwork (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-researchnetwork/src</location>
                 </source-folder>
                 <source-folder>
                     <label>ccm-cms-types-service (Source)</label>
@@ -161,6 +201,11 @@
                     <label>ccm-cms-types-siteproxy (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-siteproxy/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-cms-types-survey (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-survey/src</location>
                 </source-folder>
                 <source-folder>
                     <label>ccm-cms-types-xmlfeed (Source)</label>
@@ -291,6 +336,16 @@
                     <label>ccm-ldn-util (Source)</label>
                     <type>java</type>
                     <location>ccm-ldn-util/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-gen-aplaws (Source)</label>
+                    <type>java</type>
+                    <location>ccm-gen-aplaws/src</location>
+                </source-folder>
+                <source-folder>
+                    <label>ccm-gen-aplaws (Web)</label>
+                    <type>java</type>
+                    <location>ccm-gen-aplaws/web</location>
                 </source-folder>
                 <source-folder>
                     <label>ccm-shp-aplaws (Source)</label>
@@ -664,7 +719,7 @@
                 <package-root>ccm-shp-aplaws/web</package-root>
                 <package-root>ccm-zes-aplaws/src</package-root>
                 <package-root>ccm-zes-aplaws/web</package-root>
-                <classpath mode="compile">ccm-core/lib/log4j.jar:/usr/share/java/ccm-servlet-2.3.jar:ccm-core/lib/lucene-1.4.3.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:/usr/share/java/bcel.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/saxon.jar:/usr/share/java/jakarta-commons-digester.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/PDFBox-0.7.2-log4j.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-cms/lib/jai_codec.jar::ccm-cms/lib/jai_core.jar::ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-formbuilder-pdf/lib/fop.jar:/usr/share/java/ojdbc14.jar</classpath>
+                <classpath mode="compile">ccm-core/lib/log4j.jar:ccm-core/lib/mail.jar:ccm-core/lib/commons-beanutils.jar:ccm-core/lib/commons-cli-1.0.jar:ccm-core/lib/commons-collections-3.0.jar:ccm-core/lib/commons-codec-1.3.jar:ccm-core/lib/commons-fileupload-1.1.1.jar:ccm-core/lib/commons-lang-2.1.jar:ccm-core/lib/commons-primitives-1.0.jar:ccm-core/lib/xercesImpl.jar:ccm-core/lib/jakarta-oro-2.0.8.jar:ccm-core/lib/Tidy.jar:ccm-core/lib/jdom.jar:ccm-core/lib/jdxslt.jar:ccm-core/lib/lucene-core-2.4.0.jar:ccm-core/lib/saxon.jar:ccm-core/lib/poi-2.5-final-20040302.jar:ccm-core/lib/PDFBox-0.7.2-log4j.jar:ccm-core/lib/tm-extractors-0.4.jar:ccm-core/lib/bcprov-jdk16-144.jar:ccm-cms/lib/jai_codec.jar:ccm-cms/lib/jai_core.jar:ccm-cms/lib/mlibwrapper_jai.jar:ccm-ldn-search/lib/axis.jar:ccm-ldn-search/lib/jaxrpc.jar:ccm-ldn-search/lib/jobo.jar:ccm-ldn-terms/lib/commons-digester.jar:ccm-ldn-terms/lib/jena.jar:ccm-ldn-terms/lib/snowball.jar:ccm-ldn-terms/lib/weka-3.5.5.jar:ccm-ldn-terms/lib/xstream-1.3.1.jar:ccm-formbuilder-pdf/lib/fop.jar:tools-ng/devel/lib/ccm-servlet-2.3.jar:tools-ng/devel/lib/ojdbc14.jar:tools-ng/devel/lib/postgresql-jdbc.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
