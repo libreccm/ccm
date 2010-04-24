@@ -32,12 +32,10 @@ import org.apache.log4j.Logger;
 
 /**
  * A record containing search configuration properties.
+ *
+ * @version $Id: SearchConfig.java 582 2005-06-16 12:51:16Z fabrice $
  */
 public final class SearchConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: SearchConfig.java 582 2005-06-16 12:51:16Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: $";
 
     private static final Logger s_log = Logger.getLogger(SearchConfig.class);
 
