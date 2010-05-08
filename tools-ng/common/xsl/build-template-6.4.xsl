@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
+<!--  Template used up to ccm version 6.4 / aplaws 1.0..5 to create the build script.  -->
+
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:common="http://exslt.org/common"

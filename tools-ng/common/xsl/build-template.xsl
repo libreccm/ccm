@@ -693,8 +693,13 @@
         <target depends="init" name="copy-src-{$name}">
           <copy todir="{$name}/${{build.classes.dir}}">
             <fileset dir="{$name}/${{src.dir}}">
+              <exclude name="**/overview.html"/>
               <exclude name="**/package.html"/>
               <exclude name="**/*.java"/>
+              <!-- exclude files which are no longer used - during
+                    transation and code clean-up phase only              -->
+              <exclude name="**/*.java.nolongerInUse"/>
+              <exclude name="**/**.nolongerInUse"/>
             </fileset>
           </copy>
         </target>
@@ -704,8 +709,12 @@
 
         <jar destfile="{$name}/${{build.dir}}/${{apps.{$name}.name}}-${{apps.{$name}.version}}.jar"
              update="true">
-          <fileset dir="{$name}/${{build.classes.dir}}"/>
-          <xsl:choose>
+          <fileset dir="{$name}/${{build.classes.dir}}">
+              <!-- exclude demo material to be included in jar (and war) files and war -->
+              <exclude name="**/demo**"/>
+              <exclude name="**/examples**"/>
+            </fileset>
+                        <xsl:choose>
             <xsl:when test="$haspdldir">
               <manifest>
                 <attribute name="Class-Path" 
