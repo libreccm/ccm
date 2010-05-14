@@ -22,6 +22,8 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.StringParameter;
+import java.util.StringTokenizer;
 
 /**
  * @author Justin Ross
@@ -36,6 +38,7 @@ public final class KernelConfig extends AbstractConfig {
     private final Parameter m_SSO;
     private final Parameter m_remember;
     private final Parameter m_secureLogin;
+    private final Parameter m_supportedLanguages;
 
     public KernelConfig() {
         m_debug = new BooleanParameter
@@ -60,12 +63,20 @@ public final class KernelConfig extends AbstractConfig {
         m_secureLogin = new BooleanParameter
         	("waf.kernel.secure_login", Parameter.REQUIRED, Boolean.FALSE);
 
+        /**
+         * String containing the supported languages. The first one is considered
+         * default.
+         */
+        m_supportedLanguages = new StringParameter
+            ("waf.kernel.supported_languages", Parameter.REQUIRED, "en,de,fr,nl,it,pt,es");
+
         register(m_debug);
         register(m_permissions);
         register(m_identifier);
         register(m_SSO);
         register(m_remember);
         register(m_secureLogin);
+        register(m_supportedLanguages);
 
         loadInfo();
     }
@@ -111,4 +122,33 @@ public final class KernelConfig extends AbstractConfig {
     public static final boolean isPermissionCheckEnabled() {
         return Kernel.getConfig().isDataPermissionCheckEnabled();
     }
+
+    /**
+     * Returns the defaultLanguage flag.
+     */
+    public final String getDefaultLanguage() {
+        return ((String) get(m_supportedLanguages)).trim().substring(0, 2);
+    }
+
+    /**
+     * Returns the supportedLanguages as String.
+     */
+    public final String getSupportedLanguages() {
+        return (String) get(m_supportedLanguages);
+    }
+
+    /**
+     * Returns the supportedLanguages as StringTokenizer.
+     */
+    public final StringTokenizer getSupportedLanguagesTokenizer() {
+        return new StringTokenizer(this.getSupportedLanguages(), ",", false);
+    }
+
+    /**
+     * Return true, if language lang is part of supported langs
+     */
+    public final boolean hasLanguage(String lang) {
+        return ((String) get(m_supportedLanguages)).contains(lang);
+    }
+
 }

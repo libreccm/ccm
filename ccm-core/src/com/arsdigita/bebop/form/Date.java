@@ -308,6 +308,6 @@ public class Date extends Widget implements BebopConstants {
     }
 
     // Don't lock
-    @Override
-    public void lock() {}
+//    @Override
+//    public void lock() {}
 }

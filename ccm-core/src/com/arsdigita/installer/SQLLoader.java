@@ -20,7 +20,6 @@ package com.arsdigita.installer;
 
 import com.arsdigita.util.UncheckedWrapperException;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -51,8 +50,12 @@ public abstract class SQLLoader {
 
     public static void load(final Connection conn,
                             final String script) {
-        if (conn == null) throw new IllegalArgumentException();
-        if (script == null) throw new IllegalArgumentException();
+        if (conn == null) {
+            throw new IllegalArgumentException();
+        }
+        if (script == null) {
+            throw new IllegalArgumentException();
+        }
 
         final SQLLoader loader = new SQLLoader(conn) {
                 protected final Reader open(final String name) {

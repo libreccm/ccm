@@ -22,6 +22,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
+import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.domain.AbstractDomainObjectObserver;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObject;
@@ -406,8 +407,12 @@ public class ContentBundle extends ContentItem {
      * <code>locales</code>
      * @pre locales != null
      */
+
+    // Quasimodo:
+    // Is this method ever used? Netbeans couldn't find anything.
     public ContentItem negotiate(Locale[] locales) {
         Assert.exists(locales);
+        String supportedLanguages = LanguageUtil.getSupportedLanguages();
         DataAssociationCursor instancesCursor = instances();
         DataObject dataObject = null;
         int bestMatch = 0;
@@ -416,7 +421,12 @@ public class ContentBundle extends ContentItem {
         while (instancesCursor.next()) {
             dataObject = instancesCursor.getDataObject();
             language = (String) dataObject.get(LANGUAGE);
-            
+
+            // If language is not one of the supported languages, skip this entry
+            if(!supportedLanguages.contains(language)) {
+                continue;
+            }
+
             if (s_log.isDebugEnabled()) {
                 s_log.debug("negotiate: language= " + language);
             }
@@ -462,6 +472,8 @@ public class ContentBundle extends ContentItem {
      * @pre locales != null
      */
     public ContentItem negotiate(Enumeration locales) {
+        String supportedLanguages = LanguageUtil.getSupportedLanguages();
+
         Assert.exists(locales);
         /* copy "locales" enumeration, since we have to iterate
          * over it several times
@@ -470,7 +482,12 @@ public class ContentBundle extends ContentItem {
         List languageCodes = new ArrayList();
         for (int i = 0; locales.hasMoreElements(); i++) {
             loc = (Locale)locales.nextElement();
-            languageCodes.add( loc.getLanguage());
+
+            // Quasimodo:
+            // Only add languages to the List which are supported by cms
+            if(supportedLanguages.contains(loc.getLanguage())) {
+                languageCodes.add( loc.getLanguage());
+            }
             if (s_log.isDebugEnabled()) {
                 s_log.debug("negotiate: pref " + i + ": "+ loc.getLanguage());
             }

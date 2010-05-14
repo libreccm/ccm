@@ -73,6 +73,7 @@ public abstract class OptionGroup extends Widget
 
     // request-local copy of selected elements, options
     private RequestLocal m_requestOptions = new RequestLocal() {
+        @Override
             public Object initialValue(PageState ps) {
                 return new ArrayList();
             }
@@ -233,11 +234,16 @@ public abstract class OptionGroup extends Widget
         if( null != m_form ) {
             m_otherOption.setForm( m_form );
 
-            if( m_isDisabled ) m_otherOption.setDisabled();
-            if( m_isReadOnly ) m_otherOption.setReadOnly();
+            if( m_isDisabled ) {
+                m_otherOption.setDisabled();
+            }
+            if( m_isReadOnly ) {
+                m_otherOption.setReadOnly();
+            }
         }
 
         setParameterModel( new ParameterModelWrapper( model ) {
+            @Override
             public ParameterData createParameterData( final HttpServletRequest request,
                                                       Object defaultValue,
                                                       boolean isSubmission ) {
@@ -251,21 +257,24 @@ public abstract class OptionGroup extends Widget
 
                 if( null != values ) {
                     for( int i = 0; i < values.length; i++ ) {
-                        if( OTHER_OPTION.equals( values[i] ) )
+                        if( OTHER_OPTION.equals( values[i] ) ) {
                             values[i] = other;
+                        }
                     }
                 }
 
                 s_log.debug( "createParameterData in OptionGroup" );
 
                 return super.createParameterData( new HttpServletRequestWrapper( request ) {
+                    @Override
                     public String[] getParameterValues( String key ) {
                         if( s_log.isDebugEnabled() ) {
                             s_log.debug( "Getting values for " + key );
                         }
 
-                        if( model.getName().equals( key ) )
+                        if( model.getName().equals( key ) ) {
                             return values;
+                        }
                         return super.getParameterValues( key );
                     }
                 }, defaultValue, isSubmission );
@@ -301,6 +310,7 @@ public abstract class OptionGroup extends Widget
         setOptionSelected(option.getValue());
     }
 
+    @Override
     public Object clone() throws CloneNotSupportedException {
         OptionGroup cloned = (OptionGroup)super.clone();
         cloned.m_options = (ArrayList) m_options.clone();
@@ -323,25 +333,34 @@ public abstract class OptionGroup extends Widget
         return true;
     }
 
+    @Override
     public void setDisabled() {
         m_isDisabled = true;
 
-        if( null != m_otherOption ) m_otherOption.setDisabled();
+        if( null != m_otherOption ) {
+            m_otherOption.setDisabled();
+        }
 
         super.setDisabled();
     }
 
+    @Override
     public void setReadOnly() {
         m_isReadOnly = true;
 
-        if( null != m_otherOption ) m_otherOption.setReadOnly();
+        if( null != m_otherOption ) {
+            m_otherOption.setReadOnly();
+        }
 
         super.setReadOnly();
     }
 
+    @Override
     public void setForm( Form form ) {
         m_form = form;
-        if( null != m_otherOption ) m_otherOption.setForm( form );
+        if( null != m_otherOption ) {
+            m_otherOption.setForm(form);
+        }
 
         super.setForm( form );
     }
@@ -354,6 +373,7 @@ public abstract class OptionGroup extends Widget
      * ...
      * &lt;/bebop:*select&gt;</code></pre>
      */
+    @Override
     public void generateWidget( PageState state, Element parent ) {
         Element optionGroup =
             parent.newChildElement( getElementTag(), BEBOP_XML_NS );
@@ -368,7 +388,8 @@ public abstract class OptionGroup extends Widget
             o.generateXML( state, optionGroup );
         }
 
-        if( null != m_otherOption )
-            m_otherOption.generateXML( state, optionGroup );
+        if( null != m_otherOption ) {
+            m_otherOption.generateXML(state, optionGroup);
+        }
     }
 }

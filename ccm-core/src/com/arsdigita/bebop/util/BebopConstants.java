@@ -32,6 +32,7 @@ public interface BebopConstants {
     String BEBOP_CHECKBOX      = "bebop:checkbox";
     String BEBOP_DATE          = "bebop:date";
     String BEBOP_DATETIME      = "bebop:datetime";
+    String BEBOP_TIME          = "bebop:time";
     String BEBOP_MULTISELECT   = "bebop:multiSelect";
     String BEBOP_OPTION        = "bebop:option";
     String BEBOP_RADIOGROUP    = "bebop:radioGroup";

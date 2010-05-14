@@ -26,10 +26,11 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.Option;
-import com.arsdigita.categorization.CategorizationConfig;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.dispatcher.AccessDeniedException;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelConfig;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
@@ -78,8 +79,8 @@ public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
                     "cms.ui.select_one").localize())), state);
             
             // all supported languages (by registry entry)
-            CategorizationConfig catConfig = new CategorizationConfig();
-            StringTokenizer strTok = catConfig.getSupportedLanguages();
+            KernelConfig kernelConfig = Kernel.getConfig();
+            StringTokenizer strTok = kernelConfig.getSupportedLanguagesTokenizer();
             
             while(strTok.hasMoreTokens()) {
                 

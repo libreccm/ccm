@@ -18,7 +18,8 @@
  */
 package com.arsdigita.dispatcher;
 
-
+import com.arsdigita.kernel.Kernel;
+import com.arsdigita.kernel.KernelConfig;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.ParameterProvider;
 import com.arsdigita.util.StringUtils;
@@ -33,6 +34,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -56,28 +59,24 @@ import org.apache.log4j.Logger;
  * @version $Id: DispatcherHelper.java 311 2005-02-28 11:10:00Z mbooth $
  * @since 4.5 */
 public final class DispatcherHelper implements DispatcherConstants {
-    private static final Logger s_log = Logger.getLogger
-        (DispatcherHelper.class);
 
+    private static final Logger s_log = Logger.getLogger(DispatcherHelper.class);
     private static String s_webappCtx;
-
     private static String s_staticURL;
     private static boolean s_cachingActive;
     private static int s_defaultExpiry;
-
     private static DispatcherConfig s_config;
-
     public static SimpleDateFormat rfc1123_formatter;
-
     private static boolean initialized = false;
-    
+
     static void init() {
-        if (initialized)
+        if (initialized) {
             return;
-        
+        }
+
         rfc1123_formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
         rfc1123_formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
-  
+
         // set the defaults
         s_config = getConfig();
         s_staticURL = s_config.getStaticURLPrefix();
@@ -86,15 +85,14 @@ public final class DispatcherHelper implements DispatcherConstants {
 
         initialized = true;
     }
-
-
     /**
      * The current HttpServletRequest.
      */
     private static ThreadLocal s_request = new ThreadLocal();
 
     /** null constructor, private so no one can instantiate! */
-    private DispatcherHelper() { }
+    private DispatcherHelper() {
+    }
 
     /**
      * Return default cache expiry.
@@ -132,9 +130,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @return the URL path (relative to the webapp root) for the currently
      * executing resource.
      */
-    public static String getCurrentResourcePath
-        (HttpServletRequest req) {
-        String attr = (String)req.getAttribute(INCLUDE_URI);
+    public static String getCurrentResourcePath(HttpServletRequest req) {
+        String attr = (String) req.getAttribute(INCLUDE_URI);
         String str;
         if (attr == null) {
             str = req.getRequestURI();
@@ -157,23 +154,20 @@ public final class DispatcherHelper implements DispatcherConstants {
      * Gets the application context from the request attributes.
      * @return the application context from the request attributes.
      */
-    public static RequestContext getRequestContext
-        (HttpServletRequest req) {
-        return (RequestContext)req.getAttribute(REQUEST_CONTEXT_ATTR);
+    public static RequestContext getRequestContext(HttpServletRequest req) {
+        return (RequestContext) req.getAttribute(REQUEST_CONTEXT_ATTR);
     }
 
     public static RequestContext getRequestContext() {
         return (RequestContext) getRequest().getAttribute(REQUEST_CONTEXT_ATTR);
     }
 
-
-    public static String getDispatcherPrefix
-        (HttpServletRequest req) {
-        return (String)req.getAttribute(DISPATCHER_PREFIX_ATTR);
+    public static String getDispatcherPrefix(HttpServletRequest req) {
+        return (String) req.getAttribute(DISPATCHER_PREFIX_ATTR);
     }
 
     public static void setDispatcherPrefix(HttpServletRequest req,
-                                      String val) {
+            String val) {
         req.setAttribute(DISPATCHER_PREFIX_ATTR, val);
     }
 
@@ -185,15 +179,14 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param ac the current request context
      * @post DispatcherHelper.getRequestContext(req) == ac
      */
-    public static void setRequestContext
-        (HttpServletRequest req, RequestContext ac) {
+    public static void setRequestContext(HttpServletRequest req, RequestContext ac) {
         req.setAttribute(REQUEST_CONTEXT_ATTR, ac);
     }
 
     private static void forwardHelper(javax.servlet.RequestDispatcher rd,
-                                      HttpServletRequest req,
-                                      HttpServletResponse resp)
-        throws ServletException, IOException {
+            HttpServletRequest req,
+            HttpServletResponse resp)
+            throws ServletException, IOException {
 
         Object attr = req.getAttribute(INCLUDE_URI);
 
@@ -237,10 +230,10 @@ public final class DispatcherHelper implements DispatcherConstants {
      * propagated from target resource
      */
     public static void forwardRequestByPath(String path,
-                                            HttpServletRequest req,
-                                            HttpServletResponse resp,
-                                            ServletContext sctx)
-        throws IOException, ServletException {
+            HttpServletRequest req,
+            HttpServletResponse resp,
+            ServletContext sctx)
+            throws IOException, ServletException {
         RequestDispatcher rd = sctx.getRequestDispatcher(path);
         forwardHelper(rd, req, resp);
     }
@@ -250,11 +243,11 @@ public final class DispatcherHelper implements DispatcherConstants {
      * DispatcherHelper.getRequestContext(req).getServletContext())</code>.
      */
     public static void forwardRequestByPath(String path,
-                                            HttpServletRequest req,
-                                            HttpServletResponse resp)
-        throws IOException, ServletException {
+            HttpServletRequest req,
+            HttpServletResponse resp)
+            throws IOException, ServletException {
         ServletContext sctx =
-            DispatcherHelper.getRequestContext(req).getServletContext();
+                DispatcherHelper.getRequestContext(req).getServletContext();
         forwardRequestByPath(path, req, resp, sctx);
     }
 
@@ -277,8 +270,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * propagated from target resource
      */
     public static void forwardRequestByPath(String path,
-                                            PageContext pageContext)
-        throws IOException, ServletException {
+            PageContext pageContext)
+            throws IOException, ServletException {
 
         ServletRequest req = pageContext.getRequest();
         Object attr = req.getAttribute(INCLUDE_URI);
@@ -311,10 +304,10 @@ public final class DispatcherHelper implements DispatcherConstants {
      * propagated from target resource
      */
     public static void forwardRequestByName(String name,
-                                            HttpServletRequest req,
-                                            HttpServletResponse resp,
-                                            ServletContext sctx)
-        throws IOException, ServletException {
+            HttpServletRequest req,
+            HttpServletResponse resp,
+            ServletContext sctx)
+            throws IOException, ServletException {
         RequestDispatcher rd = sctx.getNamedDispatcher(name);
         forwardHelper(rd, req, resp);
     }
@@ -324,9 +317,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * DispatcherHelper.getRequestContext(req).getServletContext())</code>.
      */
     public static void forwardRequestByName(String name,
-                                            HttpServletRequest req,
-                                            HttpServletResponse resp)
-        throws IOException, ServletException {
+            HttpServletRequest req,
+            HttpServletResponse resp)
+            throws IOException, ServletException {
         ServletContext sc = getRequestContext(req).getServletContext();
         forwardRequestByName(name, req, resp, sc);
     }
@@ -355,12 +348,12 @@ public final class DispatcherHelper implements DispatcherConstants {
      * extensions when your file on disk has an extension.
      */
     public static String resolveAbstractFile(File abstractFile,
-                                             RequestContext actx)
-        throws RedirectException, DirectoryListingException,
-               java.io.FileNotFoundException {
+            RequestContext actx)
+            throws RedirectException, DirectoryListingException,
+            java.io.FileNotFoundException {
         s_log.debug("Resolving abstract file");
 
-        File dirToSearch  = null;
+        File dirToSearch = null;
         String fStr = abstractFile.getAbsolutePath();
         int lastSlash = fStr.lastIndexOf(File.separatorChar);
         String filenameStub = fStr.substring(lastSlash + 1);
@@ -392,13 +385,13 @@ public final class DispatcherHelper implements DispatcherConstants {
             for (int j = 0; j < extensionSearchList.length; j++) {
 
                 File possibleFile =
-                    new File(dirToSearch,
-                             filenameStub + extensionSearchList[j]);
+                        new File(dirToSearch,
+                        filenameStub + extensionSearchList[j]);
 
                 for (int i = 0; i < filesInDir.length; i++) {
                     if (filesInDir[i].equals(possibleFile)) {
                         return (indexPage ? File.separator + "index" : "")
-                            + extensionSearchList[j];
+                                + extensionSearchList[j];
                     }
                 }
             }
@@ -447,11 +440,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @return the original servlet request object, as created by
      * the servlet container. This can be used as a parameter for forward().
      */
-    public static HttpServletRequest restoreOriginalRequest
-        (HttpServletRequest req) {
+    public static HttpServletRequest restoreOriginalRequest(HttpServletRequest req) {
         if (req instanceof MultipartHttpServletRequest) {
-            HttpServletRequest oldReq = (HttpServletRequest)
-                req.getAttribute(ORIGINAL_REQUEST_ATTR);
+            HttpServletRequest oldReq = (HttpServletRequest) req.getAttribute(ORIGINAL_REQUEST_ATTR);
             oldReq.setAttribute(WRAPPED_REQUEST_ATTR, req);
             req = oldReq;
         }
@@ -468,14 +459,13 @@ public final class DispatcherHelper implements DispatcherConstants {
      *         request, if any;
      *         otherwise returns the request object.
      */
-    public static HttpServletRequest restoreRequestWrapper
-        (HttpServletRequest req) {
+    public static HttpServletRequest restoreRequestWrapper(HttpServletRequest req) {
         // switch back wrapped request if we're forwarded
         // from somewhere else.
         Object maybeWrappedReq = req.getAttribute(WRAPPED_REQUEST_ATTR);
-        if (maybeWrappedReq != null &&
-            !(req instanceof MultipartHttpServletRequest)) {
-            req = (HttpServletRequest)maybeWrappedReq;
+        if (maybeWrappedReq != null
+                && !(req instanceof MultipartHttpServletRequest)) {
+            req = (HttpServletRequest) maybeWrappedReq;
         }
         return req;
     }
@@ -484,46 +474,46 @@ public final class DispatcherHelper implements DispatcherConstants {
      * This method will optionally wrap the request if it  is a multipart POST,
      * or restore the original wrapper if it was already wrapped.
      */
-    public static HttpServletRequest maybeWrapRequest(HttpServletRequest sreq) 
-        throws IOException, ServletException {
+    public static HttpServletRequest maybeWrapRequest(HttpServletRequest sreq)
+            throws IOException, ServletException {
         final String type = sreq.getContentType();
 
-        if (sreq.getMethod().toUpperCase().equals("POST") &&
-            type != null && 
-            type.toLowerCase().startsWith("multipart")) {
+        if (sreq.getMethod().toUpperCase().equals("POST")
+                && type != null
+                && type.toLowerCase().startsWith("multipart")) {
             final HttpServletRequest orig = sreq;
 
             final HttpServletRequest previous =
-                DispatcherHelper.restoreRequestWrapper(orig);
-            
+                    DispatcherHelper.restoreRequestWrapper(orig);
+
             if (previous instanceof MultipartHttpServletRequest) {
-                s_log.debug("Build new multipart request from previous " + 
-                            previous + " and current " + orig);
+                s_log.debug("Build new multipart request from previous "
+                        + previous + " and current " + orig);
 
                 MultipartHttpServletRequest previousmp =
-                    (MultipartHttpServletRequest)previous;
-                
+                        (MultipartHttpServletRequest) previous;
+
                 sreq = new MultipartHttpServletRequest(previousmp,
-                                                       orig);
-                
+                        orig);
+
                 DispatcherHelper.saveOriginalRequest(sreq,
-                                                     orig);
-                
+                        orig);
+
                 s_log.debug("The main request is now " + sreq);
             } else {
-                s_log.debug("The request is a new multipart; wrapping the request " +
-                            "object");
+                s_log.debug("The request is a new multipart; wrapping the request "
+                        + "object");
                 try {
                     sreq = new MultipartHttpServletRequest(sreq);
                 } catch (MessagingException me) {
                     throw new ServletException(me);
                 }
-                
+
                 DispatcherHelper.saveOriginalRequest(sreq, orig);
             }
         } else {
-            s_log.debug("The request is not multipart; proceeding " +
-                        "without wrapping the request");
+            s_log.debug("The request is not multipart; proceeding "
+                    + "without wrapping the request");
         }
         return sreq;
     }
@@ -534,7 +524,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param oldReq the original servlet request
      */
     public static void saveOriginalRequest(HttpServletRequest req,
-                                           HttpServletRequest oldReq) {
+            HttpServletRequest oldReq) {
         req.setAttribute(ORIGINAL_REQUEST_ATTR, oldReq);
     }
 
@@ -552,8 +542,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param url the destination URL for redirect
      **/
     public static void sendRedirect(HttpServletResponse resp,
-                                    String url)
-        throws IOException {
+            String url)
+            throws IOException {
         sendExternalRedirect(resp, url);
     }
 
@@ -567,8 +557,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param url the destination URL for redirect
      **/
     public static void sendRedirect(HttpServletRequest req,
-                                    HttpServletResponse resp,
-                                    String url)
+            HttpServletResponse resp,
+            String url)
             throws IOException {
         sendExternalRedirect(resp, url);
     }
@@ -581,7 +571,7 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param url the destination URL for redirect
      **/
     public static void sendExternalRedirect(HttpServletResponse resp,
-                                            String url)
+            String url)
             throws IOException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Redirecting to URL '" + url + "'", new Throwable());
@@ -599,10 +589,9 @@ public final class DispatcherHelper implements DispatcherConstants {
 
         HttpServletRequest req = getRequest();
         Object attr;
-        if (req != null &&
-            (attr = req.getAttribute(REENTRANCE_ATTRIBUTE)) != null) {
-            req.getSession(true).setAttribute
-                (REDIRECT_SEMAPHORE, attr);
+        if (req != null
+                && (attr = req.getAttribute(REENTRANCE_ATTRIBUTE)) != null) {
+            req.getSession(true).setAttribute(REDIRECT_SEMAPHORE, attr);
         }
 
         if (url.startsWith("http")) {
@@ -624,20 +613,19 @@ public final class DispatcherHelper implements DispatcherConstants {
                     s_log.debug("Setting destination to " + destination);
                 }
             } else {
-                final ParameterMap params = ParameterMap.fromString
-                    (url.substring(sep + 1));
+                final ParameterMap params = ParameterMap.fromString(url.substring(sep + 1));
 
                 destination = URL.there(req, url.substring(0, sep), params);
                 if (s_log.isDebugEnabled()) {
-                    s_log.debug("Setting destination with map to " + 
-                                destination);
+                    s_log.debug("Setting destination with map to "
+                            + destination);
                 }
             }
             throw new RedirectSignal(destination, true);
         } else {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Redirecting to URL without using URL.there. " +
-                            "URL is " + url);
+                s_log.debug("Redirecting to URL without using URL.there. "
+                        + "URL is " + url);
             }
             throw new RedirectSignal(url, true);
         }
@@ -720,8 +708,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @see com.arsdigita.util.URLRewriter
      **/
     public static String encodeURL(HttpServletRequest req,
-                                   HttpServletResponse resp,
-                                   String url) {
+            HttpServletResponse resp,
+            String url) {
         return URLRewriter.encodeURL(req, resp, url);
     }
 
@@ -798,27 +786,27 @@ public final class DispatcherHelper implements DispatcherConstants {
         init();
         String webappCtx = null;
         HttpServletRequest request = DispatcherHelper.getRequest();
-        if ( request != null ) {
+        if (request != null) {
             webappCtx = request.getContextPath();
 
             // Safety check to make sure the webappCtx from the request
             // matches the webappCtx from enterprise.init.
-            if ( s_webappCtx != null ) {
-                if ( s_webappCtx.equals("/") ) {
+            if (s_webappCtx != null) {
+                if (s_webappCtx.equals("/")) {
                     s_webappCtx = "";
                 }
-                if ( !s_webappCtx.equals(webappCtx) ) {
+                if (!s_webappCtx.equals(webappCtx)) {
                     s_log.warn(
-                          "webappContext changed. Expected='" + s_webappCtx +
-                          "' found='" + webappCtx + "'.\nPerhaps the enterprise.init " +
-                          "com.arsdigita.dispatcher.Initializer webappContext " +
-                          "parameter is wrong.");
+                            "webappContext changed. Expected='" + s_webappCtx
+                            + "' found='" + webappCtx + "'.\nPerhaps the enterprise.init "
+                            + "com.arsdigita.dispatcher.Initializer webappContext "
+                            + "parameter is wrong.");
                     // Save the webappCtx from the request for future use.
                     s_webappCtx = webappCtx;
                 }
             }
         } else {
-            if ( s_webappCtx != null && s_webappCtx.equals("/") ) {
+            if (s_webappCtx != null && s_webappCtx.equals("/")) {
                 s_webappCtx = "";
             }
             webappCtx = s_webappCtx;
@@ -858,7 +846,6 @@ public final class DispatcherHelper implements DispatcherConstants {
         return (HttpServletRequest) s_request.get();
     }
 
-
     /***************************************************/
     /*        !!! Danger Will Robinson!!!!             */
     /*                                                 */
@@ -868,14 +855,14 @@ public final class DispatcherHelper implements DispatcherConstants {
     /*                                                 */
     /*    -- Daniel Berrange <berrange@redhat.com>     */
     /***************************************************/
-
     /**
      * If no existing cache policy is set, then call
      * cacheDisable to disable all caching of the response.
      */
     public static void maybeCacheDisable(HttpServletResponse response) {
-        if (!response.containsHeader("Cache-Control"))
+        if (!response.containsHeader("Cache-Control")) {
             cacheDisable(response);
+        }
     }
 
     /**
@@ -883,23 +870,26 @@ public final class DispatcherHelper implements DispatcherConstants {
      */
     public static void cacheDisable(HttpServletResponse response) {
         init();
-        if (!s_cachingActive)
+        if (!s_cachingActive) {
             return;
+        }
 
         // Assert.isTrue(!response.containsHeader("Cache-Control"),
         //                   "Caching headers have already been set");
         // XXX Probably need to assert here if isCommitted() returns true.
         // But first need to figure out what is setting Cache-Control.
-        if (response.containsHeader("Cache-Control"))
+        if (response.containsHeader("Cache-Control")) {
             s_log.warn("Cache-Control has already been set. Overwriting.");
+        }
 
         forceCacheDisable(response);
     }
 
     public static void forceCacheDisable(HttpServletResponse response) {
         init();
-        if (!s_cachingActive)
+        if (!s_cachingActive) {
             return;
+        }
 
         s_log.info("Setting cache control to disable");
         // Aggressively defeat caching - works even for HTTP 0.9 proxies/clients!
@@ -913,8 +903,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * call cacheForUser to enable caching for a user
      */
     public static void maybeCacheForUser(HttpServletResponse response) {
-        if (!response.containsHeader("Cache-Control"))
+        if (!response.containsHeader("Cache-Control")) {
             cacheForUser(response);
+        }
     }
 
     /**
@@ -933,9 +924,10 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage the max time in second until this expires
      */
     public static void maybeCacheForUser(HttpServletResponse response,
-                                         int maxage) {
-        if (!response.containsHeader("Cache-Control"))
+            int maxage) {
+        if (!response.containsHeader("Cache-Control")) {
             cacheForUser(response, maxage);
+        }
     }
 
     /**
@@ -945,9 +937,10 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param expiry the time at which to expire
      */
     public static void maybeCacheForUser(HttpServletResponse response,
-                                         Date expiry) {
-        if (!response.containsHeader("Cache-Control"))
+            Date expiry) {
+        if (!response.containsHeader("Cache-Control")) {
             cacheForUser(response, expiry);
+        }
     }
 
     /**
@@ -957,13 +950,14 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage the max life of the response in seconds
      */
     public static void cacheForUser(HttpServletResponse response,
-                                    int maxage) {
+            int maxage) {
         init();
-        if (!s_cachingActive)
+        if (!s_cachingActive) {
             return;
+        }
 
         Assert.isTrue(!response.containsHeader("Cache-Control"),
-                      "Caching headers have already been set");
+                "Caching headers have already been set");
 
         s_log.info("Setting cache control to user");
 
@@ -986,8 +980,8 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param expiry time at which to expire
      */
     public static void cacheForUser(HttpServletResponse response,
-                                    Date expiry) {
-        cacheForUser(response, (int)((expiry.getTime() - (new Date()).getTime()) / 1000l));
+            Date expiry) {
+        cacheForUser(response, (int) ((expiry.getTime() - (new Date()).getTime()) / 1000l));
     }
 
     /**
@@ -997,8 +991,9 @@ public final class DispatcherHelper implements DispatcherConstants {
      * the default age setting
      */
     public static void maybeCacheForWorld(HttpServletResponse response) {
-        if (!response.containsHeader("Cache-Control"))
+        if (!response.containsHeader("Cache-Control")) {
             cacheForWorld(response);
+        }
     }
 
     /**
@@ -1017,11 +1012,11 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage the time in seconds until expiry
      */
     public static void maybeCacheForWorld(HttpServletResponse response,
-                                          int maxage) {
-        if (!response.containsHeader("Cache-Control"))
+            int maxage) {
+        if (!response.containsHeader("Cache-Control")) {
             cacheForWorld(response, maxage);
+        }
     }
-
 
     /**
      * If no existing cache policy is set, then
@@ -1030,9 +1025,10 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param expiry the time at which it will expire
      */
     public static void maybeCacheForWorld(HttpServletResponse response,
-                                          Date expiry) {
-        if (!response.containsHeader("Cache-Control"))
+            Date expiry) {
+        if (!response.containsHeader("Cache-Control")) {
             cacheForWorld(response, expiry);
+        }
     }
 
     /**
@@ -1042,33 +1038,33 @@ public final class DispatcherHelper implements DispatcherConstants {
      * @param maxage time in seconds until this expires
      */
     public static void cacheForWorld(HttpServletResponse response,
-                                     int maxage) {
+            int maxage) {
         init();
-        if (!s_cachingActive)
+        if (!s_cachingActive) {
             return;
+        }
 
         Assert.isTrue(!response.containsHeader("Cache-Control"),
-                      "Caching headers have already been set");
+                "Caching headers have already been set");
 
         Calendar expires = Calendar.getInstance();
-        expires.add( Calendar.SECOND, maxage );
+        expires.add(Calendar.SECOND, maxage);
 
         s_log.info("Setting cache control to world");
         response.setHeader("Cache-Control", "public, max-age=" + maxage);
         response.setHeader("Expires",
-                           rfc1123_formatter.format(expires.getTime()));
+                rfc1123_formatter.format(expires.getTime()));
         response.setHeader("Last-Modified",
-                           rfc1123_formatter.format(new Date()));
+                rfc1123_formatter.format(new Date()));
     }
-
 
     /**
      * Allow caching of this response for anyone in the world.
      * THe response will  expire at the time given.
      */
     public static void cacheForWorld(HttpServletResponse response,
-                                     Date expiry) {
-        cacheForWorld(response, (int)((expiry.getTime() - (new Date()).getTime()) / 1000l));
+            Date expiry) {
+        cacheForWorld(response, (int) ((expiry.getTime() - (new Date()).getTime()) / 1000l));
     }
 
     /**
@@ -1080,5 +1076,49 @@ public final class DispatcherHelper implements DispatcherConstants {
             s_config.load();
         }
         return s_config;
+    }
+
+    /**
+     * This method returns the best matching locate for the request. In contrast to
+     * the other methods available this one will also respect the supported_languages
+     * config entry.
+     *
+     * @return The negotiated locale
+     */
+    public static Locale getNegotiatedLocale() {
+        KernelConfig kernelConfig = Kernel.getConfig();
+
+        // Set the preferedLocale to the default locale (first entry in the config parameter list)
+        Locale preferedLocale = new Locale(kernelConfig.getDefaultLanguage(), "", "");
+
+        // The ACCEPTED_LANGUAGES from the client
+        Enumeration locales = null;
+
+        // Try to get the RequestContext
+        try {
+            locales = ((ServletRequest) DispatcherHelper.getRequest()).getLocales();
+
+            // For everey element in the enumerator
+            while (locales.hasMoreElements()) {
+
+                // Test if the current locale is listed in the supported locales list
+                Locale curLocale = (Locale) locales.nextElement();
+                if (kernelConfig.hasLanguage(curLocale.getLanguage())) {
+                    preferedLocale = curLocale;
+                    break;
+                }
+
+            }
+
+        } catch (NullPointerException ex) {
+
+            // Don't have to do anything because I want to fall back to default language anyway
+            // This case should only appear during setup
+            
+        } finally {
+
+            return preferedLocale;
+
+        }
     }
 }

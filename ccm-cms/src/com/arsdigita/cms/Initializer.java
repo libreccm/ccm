@@ -78,6 +78,7 @@ import com.arsdigita.xml.XML;
 import com.arsdigita.templating.PatternStylesheetResolver;
 
 import com.arsdigita.cms.util.LanguageUtil;
+import com.arsdigita.kernel.Kernel;
 
 /**
  * The CMS initializer.
@@ -110,10 +111,11 @@ public class Initializer extends CompoundInitializer {
      * This starts up the search threads according to the values in the
      * properties file
      */
+    @Override
     public void init(DomainInitEvent e) {
         super.init(e);
         LanguageUtil.setSupportedLanguages(
-            ContentSection.getConfig().getLanguages());
+            Kernel.getConfig().getSupportedLanguages());
 
         URLService.registerFinder(ContentPage.BASE_DATA_OBJECT_TYPE,
                                   new ItemURLFinder());

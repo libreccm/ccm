@@ -32,7 +32,6 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.form.Submit;
-import com.arsdigita.categorization.CategorizationConfig;
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
@@ -46,6 +45,7 @@ import com.arsdigita.cms.ui.VisibilityComponent;
 import com.arsdigita.cms.ui.permissions.CMSPermissionsPane;
 import com.arsdigita.cms.ui.templates.CategoryTemplates;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.ObjectPermissionCollection;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -100,6 +100,7 @@ class CategoryItemPane extends BaseItemPane {
 
         final ActionLink orderItemsLink = new ActionLink(new Label(
                                    gz("cms.ui.category.categorized_objects"))) {
+            @Override
             public boolean isVisible(PageState state) {
                 // update for live items only
                 if (!super.isVisible(state)) {
@@ -139,10 +140,11 @@ class CategoryItemPane extends BaseItemPane {
         // Localizations
         ActionLink addCategoryLocalizationLink = new ActionLink(new Label(gz(
                                          "cms.ui.category.localization.add"))) {
+            @Override
             public boolean isVisible(PageState state) {
                 // Only show addLanguage button, if there are langauges to add
                 int countSupportedLanguages = (
-                        new CategorizationConfig()).getSupportedLanguages()
+                        Kernel.getConfig()).getSupportedLanguagesTokenizer()
                                                    .countTokens();
                 long countLanguages = 
                         m_category.getCategory(state)
@@ -198,6 +200,7 @@ class CategoryItemPane extends BaseItemPane {
             super(child, null);
         }
 
+        @Override
         public boolean hasPermission(PageState ps) {
             return m_category.getCategory(ps).canEdit();
         }
@@ -208,6 +211,7 @@ class CategoryItemPane extends BaseItemPane {
             super(child, null);
         }
 
+        @Override
         public boolean hasPermission(PageState ps) {
             return m_category.getCategory(ps).canAdmin();
         }
@@ -258,6 +262,7 @@ class CategoryItemPane extends BaseItemPane {
         }
 
         private class Properties extends PropertyList {
+            @Override
             protected final java.util.List properties(final PageState state) {
                 final java.util.List props = super.properties(state);
                 final Category category = m_category.getCategory(state);
@@ -363,6 +368,7 @@ class CategoryItemPane extends BaseItemPane {
             group.addAction(new EditVisible(linkAddLink), ActionGroup.EDIT);
         }
 
+        @Override
         public final boolean isVisible(final PageState state) {
             return !m_category.getCategory(state).isRoot();
         }
@@ -382,6 +388,7 @@ class CategoryItemPane extends BaseItemPane {
     }
 
     private class PermissionsSection extends Section {
+        @Override
         public boolean isVisible(PageState ps) {
             Category cat = m_category.getCategory(ps);
             return !cat.isRoot() && cat.canAdmin();
@@ -408,6 +415,7 @@ class CategoryItemPane extends BaseItemPane {
 
             final CMSPermissionsPane permPane = new CMSPermissionsPane
                 (privs, privMap, new ACSObjectSelectionModel(m_model)) {
+                @Override
                 public void showAdmin(PageState ps) {
                     Assert.exists(m_model.getSelectedKey(ps));
 
@@ -418,6 +426,7 @@ class CategoryItemPane extends BaseItemPane {
 
             final ActionLink restoreDefault = new ActionLink(new Label(gz(
                                        "cms.ui.restore_default_permissions"))) {
+                @Override
                 public boolean isVisible(PageState ps) {
                     Category cat = m_category.getCategory(ps);
                     return PermissionService.getContext(cat) == null;
@@ -426,6 +435,7 @@ class CategoryItemPane extends BaseItemPane {
 
             final ActionLink useCustom = new ActionLink(new Label(gz(
                                            "cms.ui.use_custom_permissions"))) {
+                @Override
                 public boolean isVisible(PageState ps) {
                     Category cat = m_category.getCategory(ps);
                     return PermissionService.getContext(cat) != null;
@@ -513,6 +523,7 @@ class CategoryItemPane extends BaseItemPane {
 
         // Build the preview link.  This uses a standard redirect link to find 
         // the content. The prepareURL method is called by the printwriter
+        @Override
         protected String prepareURL(final PageState state, String location) {
 
             ContentItem indexItem = ((ContentBundle)(m_category.getCategory(state)
@@ -526,6 +537,7 @@ class CategoryItemPane extends BaseItemPane {
         }
 
         // We only show this link when an index item exists for this category
+        @Override
         public boolean isVisible(PageState state) {
             if (!super.isVisible(state)) {
                 return false;

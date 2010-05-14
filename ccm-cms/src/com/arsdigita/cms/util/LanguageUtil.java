@@ -64,7 +64,6 @@ public class LanguageUtil {
      */
     public static void setSupportedLanguages(String languages) {
         s_languages = languages;
-        //    initializeLanguageRanks(getSupportedLanguages());
     }
     
     /** Get the comma separated list of all supported languages */

@@ -19,6 +19,7 @@
 package com.arsdigita.categorization;
 
 import com.arsdigita.db.Sequences;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainServiceInterfaceExposer;
 import com.arsdigita.kernel.ACSObject;
@@ -361,6 +362,7 @@ public class Category extends ACSObject {
     /**
      * @see com.arsdigita.domain.DomainObject#initialize()
      */
+    @Override
     protected void initialize() {
         super.initialize();
 
@@ -415,7 +417,7 @@ public class Category extends ACSObject {
      * @return the category name.
      */
     public String getName() {
-        return getName(this.getNegotiatedLocale());
+        return getName(DispatcherHelper.getNegotiatedLocale().getLanguage());
     }
 
     /**
@@ -432,6 +434,7 @@ public class Category extends ACSObject {
      * implementation.
      * @return the category name.
      */
+    @Override
     public String getDisplayName() {
         return getName();
     }
@@ -588,7 +591,7 @@ public class Category extends ACSObject {
      * @return the category name.
      */
     public String getDescription() {
-        return getDescription(this.getNegotiatedLocale());
+        return getDescription(DispatcherHelper.getNegotiatedLocale().getLanguage());
     }
 
     /**
@@ -656,7 +659,7 @@ public class Category extends ACSObject {
      * @return URL component used when browsing categories
      */
     public String getURL() {
-        return getURL(this.getNegotiatedLocale());
+        return getURL(DispatcherHelper.getNegotiatedLocale().getLanguage());
     }
 
 
@@ -730,7 +733,7 @@ public class Category extends ACSObject {
      * otherwise.
      */
     public boolean isEnabled() {
-        return isEnabled(this.getNegotiatedLocale());
+        return isEnabled(DispatcherHelper.getNegotiatedLocale().getLanguage());
     }
 
     /**
@@ -2202,42 +2205,6 @@ public class Category extends ACSObject {
     }
 
     // Quasimodo: Begin
-    /**
-     * Getting the negotiated locale from requestContext
-     * @return the negotiated language string if in supported lang list or default language else
-     */
-    private String getNegotiatedLocale() {
-        
-        String locale = null;
-        
-        try {
-            
-            // Try to get locale from request context
-            locale = com.arsdigita.dispatcher.DispatcherHelper.getRequestContext().getLocale().getLanguage();
-            
-        } catch(NullPointerException ex) {
-            
-            // If there is no request context (ex. during ccm setup) use default language
-            locale = Category.getConfig().getDefaultLanguage();
-            
-        } finally {
-            
-            // if supported lang contains locale
-            if(Category.getConfig().hasLanguage(locale)) {
-                
-                // then return locale
-                return locale;
-                
-            } else {
-                
-                // else return default language
-                return Category.getConfig().getDefaultLanguage();
-            }
-            
-        }
-
-    }
-    
     public CategoryLocalizationCollection getCategoryLocalizationCollection() {
         return m_categoryLocalizationCollection;
     }

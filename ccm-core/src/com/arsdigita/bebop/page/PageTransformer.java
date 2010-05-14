@@ -40,7 +40,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import java.net.URL;
 
 import java.text.SimpleDateFormat;
 
@@ -49,7 +48,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -169,7 +167,7 @@ public class PageTransformer implements PresentationManager {
             ("negotiated-language",
              new XSLParameterGenerator() {
                 public String generateValue(HttpServletRequest request) {
-                    return com.arsdigita.dispatcher.DispatcherHelper.getRequestContext().getLocale().getLanguage();
+                    return DispatcherHelper.getNegotiatedLocale().getLanguage();
                 }
              });
     }

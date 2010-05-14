@@ -37,43 +37,20 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.MultilingualItemResolver;
 import com.arsdigita.cms.dispatcher.TemplateResolver;
 import com.arsdigita.cms.lifecycle.PublishLifecycleListener;
-// import com.arsdigita.cms.publishToFile.PublishToFile;
 import com.arsdigita.cms.publishToFile.PublishToFileConfig;
-// import com.arsdigita.cms.publishToFile.PublishToFileListener;
 import com.arsdigita.cms.ui.authoring.ItemCategoryExtension;
 import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 import com.arsdigita.runtime.AbstractConfig;
-// URL resource: protocol handler removal: START
-// remove
-// import com.arsdigita.util.UncheckedWrapperException;
-// URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.BooleanParameter;
-// import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
-// import com.arsdigita.util.parameter.ParameterError;
-// URL resource: protocol handler removal: START
-// new: import:
 import com.arsdigita.util.parameter.ResourceParameter;
-// URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-// URL resource: protocol handler removal: START
-// remove:
-// import com.arsdigita.util.parameter.URLParameter;
-// new: import:
 import com.arsdigita.util.StringUtils;
-// URL resource: protocol handler removal: END
-
-// URL resource: protocol handler removal: START
-// remove:
-// import java.io.IOException;
-// import java.net.MalformedURLException;
-// import java.net.URL;
-// URL resource: protocol handler removal: END
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -107,7 +84,6 @@ public final class ContentSectionConfig extends AbstractConfig {
     private final Parameter m_defaultItemTemplatePath;
     private final Parameter m_defaultFolderTemplatePath;
     private final Parameter m_defaultSection;
-    private final Parameter m_languages;
     private final Parameter m_defaultItemResolverClass;
     private final Parameter m_defaultTemplateResolverClass;
     private final Parameter m_useSectionCategories;
@@ -171,9 +147,6 @@ public final class ContentSectionConfig extends AbstractConfig {
         m_defaultFolderTemplatePath = new StringParameter
             ("com.arsdigita.cms.default_folder_template_path",
              Parameter.REQUIRED, "/default/folder.jsp");
-        m_languages = new StringParameter
-            ("com.arsdigita.cms.languages",
-             Parameter.REQUIRED, "en,de,fr,nl,it,pt,es");
 
         m_linksOnlyInSameSubsite = new BooleanParameter
             ("com.arsdigita.cms.browse_links_in_same_subsite_only",
@@ -427,7 +400,6 @@ public final class ContentSectionConfig extends AbstractConfig {
         register(m_templateRootPath);
         register(m_defaultItemTemplatePath);
         register(m_defaultFolderTemplatePath);
-        register(m_languages);
         register(m_defaultItemResolverClass);
         register(m_defaultTemplateResolverClass);
         register(m_categoryAuthoringAddForm);
@@ -489,10 +461,6 @@ public final class ContentSectionConfig extends AbstractConfig {
 
     public final String getDefaultFolderTemplatePath() {
         return (String) get(m_defaultFolderTemplatePath);
-    }
-
-    public final String getLanguages() {
-        return (String) get(m_languages);
     }
 
     public final Class getDefaultItemResolverClass() {

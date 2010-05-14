@@ -88,9 +88,11 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
      *
      * @param evt Type of initialization
      */
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
 
+        // Register an optional traversal adapter for the content type
         final String traversal = getTraversalXML();
         if (!StringUtils.emptyString(traversal)) {
             XML.parseResource
@@ -98,6 +100,7 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
                  new TraversalHandler());
         }
 
+        // Load and register stylesheets for the content type
         try {
 
             ContentType type = ContentType.findByAssociatedObjectType(m_objectType);

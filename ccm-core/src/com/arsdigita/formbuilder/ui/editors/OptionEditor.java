@@ -74,6 +74,7 @@ public abstract class OptionEditor extends FormSection {
     // Only create the Option Group once per request
     private RequestLocal m_optionGroup =
         new RequestLocal() {
+        @Override
             public Object initialValue(PageState pageState) {
 
                 BigDecimal control = (BigDecimal)m_control.getSelectedKey(pageState);
