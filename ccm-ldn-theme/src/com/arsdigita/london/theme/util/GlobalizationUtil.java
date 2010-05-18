@@ -33,7 +33,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 public class GlobalizationUtil {
     
     public static final String BUNDLE_NAME = 
-        "com.arsdigita.london.theme.util.ThemeResources";
+        "com.arsdigita.london.theme.ui.ThemeResources";
     
     public static GlobalizedMessage globalize(String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);
