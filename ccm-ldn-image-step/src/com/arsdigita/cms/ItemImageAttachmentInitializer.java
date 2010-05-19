@@ -42,6 +42,9 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
     }
 
     public void init( DomainInitEvent ev ) {
+
+        super.init(ev);
+
         DomainObjectFactory.registerInstantiator(
             ItemImageAttachment.BASE_DATA_OBJECT_TYPE,
             new DomainObjectInstantiator() {
