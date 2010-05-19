@@ -26,7 +26,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.cms.Article;
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ReusableImageAsset;

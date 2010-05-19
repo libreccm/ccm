@@ -22,7 +22,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.cms.Article;
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ImageAssetCollection;
 import com.arsdigita.cms.ItemSelectionModel;

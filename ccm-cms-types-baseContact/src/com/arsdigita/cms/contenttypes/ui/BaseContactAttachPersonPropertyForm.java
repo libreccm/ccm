@@ -23,7 +23,7 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.contenttypes.BaseContact;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ContentType;
@@ -101,7 +101,7 @@ public class BaseContactAttachPersonPropertyForm extends BasicPageForm implement
         BaseContact baseContact = (BaseContact)getItemSelectionModel().getSelectedObject(state);
 
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            baseContact.setPerson((Person)data.get(ITEM_SEARCH));
+            baseContact.setPerson((Member)data.get(ITEM_SEARCH));
         }
         init(fse);
     }

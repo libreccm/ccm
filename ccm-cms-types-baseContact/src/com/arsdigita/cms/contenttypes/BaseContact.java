@@ -93,12 +93,12 @@ public class BaseContact extends ContentPage {
     // accessors
 
     // Get the person for this contact
-    public Person getPerson() {
-        return (Person) DomainObjectFactory.newInstance((DataObject)get(PERSON));
+    public Member getPerson() {
+        return (Member) DomainObjectFactory.newInstance((DataObject)get(PERSON));
     }
     
     // Set the person for this contact
-    public void setPerson(Person person) {
+    public void setPerson(Member person) {
         set(PERSON, person);
     }
     

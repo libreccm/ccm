@@ -1,0 +1,16 @@
+model com.arsdigita.cms.basetypes;
+
+import com.arsdigita.cms.ContentPage;
+
+// Address object
+object type Address extends ContentPage {
+
+    String [0..1] address = cms_addresses.address VARCHAR(1000);
+    String [0..1] postalCode = cms_addresses.postalCode VARCHAR(20);
+    String [0..1] city = cms_addresses.city VARCHAR(200);
+    String [0..1] state = cms_addresses.state VARCHAR(200);
+    String [0..1] isoCountryCode = cms_addresses.isoCountryCode VARCHAR(2);
+
+    reference key ( cms_addresses.address_id );
+}
+

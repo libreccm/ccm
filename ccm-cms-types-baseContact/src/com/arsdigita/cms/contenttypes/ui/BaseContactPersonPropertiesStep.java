@@ -17,8 +17,8 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.cms.contenttypes.Person;
-import com.arsdigita.cms.contenttypes.util.PersonGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.Member;
+import com.arsdigita.cms.contenttypes.util.MemberGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 
 /**
@@ -71,10 +71,10 @@ public class BaseContactPersonPropertiesStep extends SimpleEditStep {
     public static Component getPersonPropertySheet(ItemSelectionModel itemModel) {
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize(), "person." + Person.SURNAME);
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize(), "person." + Person.GIVENNAME);
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize(), "person." + Person.TITLEPRE);
-	sheet.add((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), "person." + Person.TITLEPOST);
+	sheet.add((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize(), "person." + Member.SURNAME);
+	sheet.add((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize(), "person." + Member.GIVENNAME);
+	sheet.add((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize(), "person." + Member.TITLEPRE);
+	sheet.add((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), "person." + Member.TITLEPOST);
 	
 	return sheet;
     }

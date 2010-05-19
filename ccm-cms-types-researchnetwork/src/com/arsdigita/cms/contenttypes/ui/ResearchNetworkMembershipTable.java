@@ -16,7 +16,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.contenttypes.ResearchNetworkGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.ResearchNetworkMembership;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -92,7 +92,7 @@ public class ResearchNetworkMembershipTable extends Table {
 
             String url = membership.getURI(state);
             if (column == m_personCol.getModelIndex()) {
-                Person person = membership.getTargetItem();
+                Member person = membership.getTargetItem();
                 StringBuilder fullNameBuilder = new StringBuilder();
 
                 if (person.getTitlePre() != null) {

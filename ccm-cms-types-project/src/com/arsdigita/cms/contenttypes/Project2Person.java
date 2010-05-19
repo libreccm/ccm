@@ -74,17 +74,17 @@ public class Project2Person extends ACSObject {
         setAssociation(PROJECT, project);
     }
 
-    public Person getTargetItem() {
+    public Member getTargetItem() {
         DataObject obj = (DataObject) get(TARGET_ITEM);
         if (obj == null) {
             return null;
         } else {
-            return (Person) DomainObjectFactory.newInstance(obj);
+            return (Member) DomainObjectFactory.newInstance(obj);
         }
     }
 
-    public void setTargetItem(Person person) {
-        Assert.exists(person, Person.class);
+    public void setTargetItem(Member person) {
+        Assert.exists(person, Member.class);
         setAssociation(TARGET_ITEM, person);
     }
 
@@ -99,7 +99,7 @@ public class Project2Person extends ACSObject {
 
 
     public String getURI(PageState state) {
-        Person person = this.getTargetItem();
+        Member person = this.getTargetItem();
 
         if (person == null) {
             s_log.error(getOID() + " is a link between a Project and a Person, but the associated Person is null");
@@ -113,7 +113,7 @@ public class Project2Person extends ACSObject {
         return URL.there(state.getRequest(), url).toString();
     }
 
-    public static DataCollection getReferingProject2Persons(Person person) {
+    public static DataCollection getReferingProject2Persons(Member person) {
         Session session = SessionManager.getSession();
         DataCollection project2Persons = session.retrieve(BASE_DATA_OBJECT_TYPE);
         Filter filter = project2Persons.addInSubqueryFilter("id", "com.arsdigita.cms.contenttypes.getReferingProject2Persons");

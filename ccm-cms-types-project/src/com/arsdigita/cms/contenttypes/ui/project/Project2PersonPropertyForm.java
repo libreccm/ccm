@@ -17,7 +17,7 @@ import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.contenttypes.Project;
 import com.arsdigita.cms.contenttypes.Project2Person;
 import com.arsdigita.cms.contenttypes.ProjectGlobalizationUtil;
@@ -128,7 +128,7 @@ public class Project2PersonPropertyForm
         PageState state = e.getPageState();
         FormData data = e.getFormData();
 
-        project2Person.setTargetItem((Person) data.get(ITEM_SEARCH));
+        project2Person.setTargetItem((Member) data.get(ITEM_SEARCH));
 
         project2Person.save();
     }

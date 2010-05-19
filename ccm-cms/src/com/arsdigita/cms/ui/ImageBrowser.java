@@ -30,7 +30,7 @@ import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.ArticleImageAssociation;
+import com.arsdigita.cms.basetypes.ArticleImageAssociation;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.Utilities;

@@ -27,7 +27,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.cms.ArticleImageAssociation;
+import com.arsdigita.cms.basetypes.ArticleImageAssociation;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ImageAsset;

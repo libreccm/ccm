@@ -23,7 +23,7 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.cms.Article;
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.ImageDisplay;

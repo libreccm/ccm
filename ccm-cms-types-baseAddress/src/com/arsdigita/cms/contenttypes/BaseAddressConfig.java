@@ -23,33 +23,34 @@ import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.BooleanParameter;
 
 public class BaseAddressConfig extends AbstractConfig {
-    
+
     private final Parameter m_hideCountryCodeSelection;
     private final Parameter m_hidePostalCode;
 
     public BaseAddressConfig() {
         m_hideCountryCodeSelection = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.baseaddress.hide_country_code_selection",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	m_hidePostalCode = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.baseaddress.hide_postal_code",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	
+                "com.arsdigita.cms.contenttypes.baseaddress.hide_country_code_selection",
+                Parameter.REQUIRED,
+                new Boolean(false));
+
+        m_hidePostalCode = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.baseaddress.hide_postal_code",
+                Parameter.REQUIRED,
+                new Boolean(false));
+
+
         register(m_hideCountryCodeSelection);
-	register(m_hidePostalCode);
+        register(m_hidePostalCode);
 
         loadInfo();
     }
-    
+
     public final boolean getHideCountryCodeSelection() {
-	    return ((Boolean) get(m_hideCountryCodeSelection)).booleanValue();
+        return ((Boolean) get(m_hideCountryCodeSelection)).booleanValue();
     }
+
     public final boolean getHidePostalCode() {
-	    return ((Boolean) get(m_hidePostalCode)).booleanValue();
+        return ((Boolean) get(m_hidePostalCode)).booleanValue();
     }
 }
  

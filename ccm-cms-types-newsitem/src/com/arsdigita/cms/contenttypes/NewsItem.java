@@ -19,7 +19,7 @@
 package com.arsdigita.cms.contenttypes;
 
 
-import com.arsdigita.cms.Article;
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;

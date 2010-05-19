@@ -32,7 +32,7 @@ import java.math.BigDecimal;
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  */
-public class Article extends com.arsdigita.cms.Article {
+public class Article extends com.arsdigita.cms.basetypes.Article {
 
 
     private final static org.apache.log4j.Logger s_log =

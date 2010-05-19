@@ -21,7 +21,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.globalization.LocaleNegotiator;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.basetypes.Address;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -42,31 +42,20 @@ import java.util.TreeMap;
  * 
  * @author Sören Bernstein
  **/
-public class BaseAddress extends ContentPage {
-
-    /** PDL property name for address */
-    public static final String ADDRESS = "address";
-    /** PDL property name for postal code */
-    public static final String POSTAL_CODE = "postalCode";
-    /** PDL property name for city */
-    public static final String CITY = "city";
-    /** PDL property name for state */
-    public static final String STATE = "state";
-    /** PDL property name for country iso code */
-    public static final String ISO_COUNTRY_CODE = "isoCountryCode";
+public class BaseAddress extends Address {
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE
         = "com.arsdigita.cms.contenttypes.BaseAddress";
 
     private static final BaseAddressConfig s_config = new BaseAddressConfig();
-    static {
-	    s_config.load();
-    }
-    public static final BaseAddressConfig getConfig()
-    {
-	    return s_config;
-    }
+//    static {
+//	    s_config.load();
+//    }
+//    public static BaseAddressConfig getConfig()
+//    {
+//	    return s_config;
+//    }
 
     /**
      * Default constructor. This creates a new (empty) BaseAddress.
@@ -133,70 +122,4 @@ public class BaseAddress extends ContentPage {
     }
 
     /* accessors *****************************************************/
-    public String getAddress() {
-        return (String) get(ADDRESS);
-    }
-
-    public void setAddress(String address) {
-        set(ADDRESS, address);
-    }
-
-    public String getIsoCountryCode() {
-        return (String) get(ISO_COUNTRY_CODE);
-    }
-
-    public void setIsoCountryCode(String isoCountryCode) {
-        set(ISO_COUNTRY_CODE, isoCountryCode);
-    }
-
-    public String getPostalCode() {
-        return (String) get(POSTAL_CODE);
-    }
-
-    public void setPostalCode(String postalCode) {
-        set(POSTAL_CODE, postalCode);
-    }
-
-    public String getCity() {
-        return (String) get(CITY);
-    }
-
-    public void setCity(String city) {
-        set(CITY, city);
-    }
-
-    public String getState() {
-        return (String) get(STATE);
-    }
-
-    public void setState(String state) {
-        set(STATE, state);
-    }
-
-    // Convert the iso country code to country names using the current locale
-    public static String getCountryNameFromIsoCode(String isoCountryCode) {
-     
-        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "", null);
-        java.util.Locale locale = new java.util.Locale("", isoCountryCode);
-        return locale.getDisplayCountry(negotiatedLocale.getLocale());
-
-    }
-    
-    // Get a sorted list auf all countries
-    public static TreeMap getSortedListOfCountries(Locale inLang) {
-        
-        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "", null);
-        String[] countries = Locale.getISOCountries();
-        TreeMap <String,String> countryNames = new TreeMap<String,String>();
-
-        for(String country : countries) {
-            if(inLang != null) {
-                countryNames.put(new java.util.Locale("", country).getDisplayCountry(inLang), country);
-            } else {
-                countryNames.put(new java.util.Locale("", country).getDisplayCountry(negotiatedLocale.getLocale()), country);
-            }
-        }
-
-        return countryNames;
-    }
 }

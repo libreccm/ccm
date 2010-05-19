@@ -19,7 +19,7 @@
 package com.arsdigita.cms.dispatcher;
 
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.cms.Article;
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ImageAssetCollection;
 import com.arsdigita.cms.util.GlobalizationUtil;

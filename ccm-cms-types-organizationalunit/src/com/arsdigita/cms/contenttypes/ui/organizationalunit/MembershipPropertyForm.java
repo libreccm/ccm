@@ -26,7 +26,7 @@ import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
 import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
-import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -166,7 +166,7 @@ public class MembershipPropertyForm extends FormSection implements FormInitListe
         PageState state = event.getPageState();
         FormData data = event.getFormData();
 
-        membership.setTargetItem((Person) data.get(PERSON_SEARCH));
+        membership.setTargetItem((Member) data.get(PERSON_SEARCH));
 
         MembershipStatus status = new MembershipStatus(new BigDecimal((String) this.m_status.getValue(state)));
         logger.debug("this.m_status.getValues() = " + this.m_status.getValue(state));

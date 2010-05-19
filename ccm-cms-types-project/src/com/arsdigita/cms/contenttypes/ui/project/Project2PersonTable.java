@@ -19,7 +19,7 @@ import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.contenttypes.Project2Person;
 import com.arsdigita.cms.contenttypes.ProjectGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
@@ -121,7 +121,7 @@ public class Project2PersonTable extends Table {
 
             String url = project2Person.getURI(state);
             if (column == m_personCol.getModelIndex()) {
-                Person person = project2Person.getTargetItem();
+                Member person = project2Person.getTargetItem();
                 StringBuilder fullNameBuilder = new StringBuilder();
 
                 if (person.getTitlePre() != null) {

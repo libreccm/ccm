@@ -83,32 +83,32 @@ public class OrganizationalUnit extends ContentPage{
         set(ORGANIZATIONALUNIT_DESCRIPTION, description);
     }
 
-    public Person getDirection() {
+    public Member getDirection() {
         DataObject dobj = (DataObject) get(DIRECTION);
         if (dobj != null) {
-            return (Person) DomainObjectFactory.newInstance(dobj);
+            return (Member) DomainObjectFactory.newInstance(dobj);
         } else {
             return null;
         }
     }
 
-    public void setDirection(Person person) {
+    public void setDirection(Member person) {
         logger.debug("Setting direction...");
-        Assert.exists(person, Person.class);
+        Assert.exists(person, Member.class);
         setAssociation(DIRECTION, person);
     }
 
-    public Person getAssistentDirection() {
+    public Member getAssistentDirection() {
         DataObject dobj = (DataObject) get(ASSISTENT_DIRECTION);
         if (dobj != null) {
-            return (Person) DomainObjectFactory.newInstance(dobj);
+            return (Member) DomainObjectFactory.newInstance(dobj);
         } else {
             return null;
         }
     }
 
-    public void setAssistentDirection(Person person) {
-        Assert.exists(person, Person.class);
+    public void setAssistentDirection(Member person) {
+        Assert.exists(person, Member.class);
         setAssociation(ASSISTENT_DIRECTION, person);
     }
 

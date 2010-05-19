@@ -32,7 +32,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.Article;
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;

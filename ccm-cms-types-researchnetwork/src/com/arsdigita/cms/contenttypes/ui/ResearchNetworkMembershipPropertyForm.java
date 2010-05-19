@@ -18,7 +18,7 @@ import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.contenttypes.ResearchNetwork;
 import com.arsdigita.cms.contenttypes.ResearchNetworkGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.ResearchNetworkMembership;
@@ -124,7 +124,7 @@ public class ResearchNetworkMembershipPropertyForm  extends FormSection implemen
         PageState state = event.getPageState();
         FormData data = event.getFormData();
 
-        membership.setTargetItem((Person) data.get(PERSON_SEARCH));
+        membership.setTargetItem((Member) data.get(PERSON_SEARCH));
 
         membership.save();
     }

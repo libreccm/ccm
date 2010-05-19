@@ -31,6 +31,7 @@
         <ccm:application name="ccm-cms-types-address"/>
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
         <ccm:application name="ccm-cms-types-article"/>
+        <ccm:application name="ccm-cms-types-baseAddress"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
         <ccm:application name="ccm-cms-types-contact"/>
 <!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
@@ -45,6 +46,7 @@
 <!--    <ccm:application name="ccm-cms-types-job"/>                  -->
 <!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
 <!--    <ccm:application name="ccm-cms-types-minutes"/>              -->
+        <ccm:application name="ccm-cms-types-member"/>
 <!--    <ccm:application name="ccm-cms-types-motditem"/>             -->
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>

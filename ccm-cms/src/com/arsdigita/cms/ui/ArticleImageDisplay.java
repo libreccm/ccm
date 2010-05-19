@@ -19,7 +19,7 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.Article;
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.util.Assert;

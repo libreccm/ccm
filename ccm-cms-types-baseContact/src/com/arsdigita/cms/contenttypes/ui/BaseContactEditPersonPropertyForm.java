@@ -24,8 +24,8 @@ import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.contenttypes.BaseContact;
-import com.arsdigita.cms.contenttypes.Person;
-import com.arsdigita.cms.contenttypes.util.PersonGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.Member;
+import com.arsdigita.cms.contenttypes.util.MemberGlobalizationUtil;
 
 import org.apache.log4j.Logger;
 
@@ -39,10 +39,10 @@ public class BaseContactEditPersonPropertyForm extends BasicPageForm implements 
 
     private BaseContactPersonPropertiesStep m_step;
 
-    public static final String SURNAME = Person.SURNAME;
-    public static final String GIVENNAME = Person.GIVENNAME;
-    public static final String TITLEPRE = Person.TITLEPRE;
-    public static final String TITLEPOST = Person.TITLEPOST;
+    public static final String SURNAME = Member.SURNAME;
+    public static final String GIVENNAME = Member.GIVENNAME;
+    public static final String TITLEPRE = Member.TITLEPRE;
+    public static final String TITLEPOST = Member.TITLEPOST;
 
     /**
      * ID of the form
@@ -72,27 +72,27 @@ public class BaseContactEditPersonPropertyForm extends BasicPageForm implements 
 
     @Override
     public void addWidgets() {
-	add(new Label((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
+	add(new Label((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
 	ParameterModel surnameParam = new StringParameter(SURNAME);
         surnameParam.addParameterListener( new NotNullValidationListener( ) );
 	surnameParam.addParameterListener( new StringInRangeValidationListener(0, 1000) );
 	TextField surname = new TextField(surnameParam);
 	add(surname);
 
-	add(new Label((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize()));
+	add(new Label((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize()));
 	ParameterModel givennameParam = new StringParameter(GIVENNAME);
         givennameParam.addParameterListener( new NotNullValidationListener( ) );
 	givennameParam.addParameterListener( new StringInRangeValidationListener(0, 1000) );
 	TextField givenname = new TextField(givennameParam);
 	add(givenname);
 
-    	add(new Label((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
+    	add(new Label((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
 	ParameterModel titlepreParam = new StringParameter(TITLEPRE);
 	titlepreParam.addParameterListener( new StringInRangeValidationListener(0, 1000) );
 	TextField titlepre = new TextField(titlepreParam);
 	add(titlepre);
 
-    	add(new Label((String)PersonGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize()));
+    	add(new Label((String)MemberGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize()));
 	ParameterModel titlepostParam = new StringParameter(TITLEPOST);
 	titlepostParam.addParameterListener( new StringInRangeValidationListener(0, 1000) );
 	TextField titlepost = new TextField(titlepostParam);

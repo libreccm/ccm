@@ -18,6 +18,7 @@
 
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
 import com.arsdigita.cms.contenttypes.ItemImageAttachment;
 import com.arsdigita.cms.contenttypes.ui.ImageStep;

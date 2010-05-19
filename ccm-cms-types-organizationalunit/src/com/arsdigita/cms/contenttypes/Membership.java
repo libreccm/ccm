@@ -120,18 +120,18 @@ public class Membership extends ACSObject {
         setAssociation(MEMBERSHIP_OWNER, ou);        
     }
 
-    public Person getTargetItem() {
+    public Member getTargetItem() {
         DataObject obj = (DataObject) get(TARGET_ITEM);
-        return (Person) DomainObjectFactory.newInstance(obj);
+        return (Member) DomainObjectFactory.newInstance(obj);
     }
 
-    public void setTargetItem(Person person) {
-        Assert.exists(person, Person.class);
+    public void setTargetItem(Member person) {
+        Assert.exists(person, Member.class);
         setAssociation(TARGET_ITEM, person);
     }
 
     public String getURI(PageState state) {
-        Person person = this.getTargetItem();
+        Member person = this.getTargetItem();
 
         if (person == null) {
             logger.error(getOID() + " is a link between a OrganizationalUnit and a Person, but the associated Person is null");
@@ -145,7 +145,7 @@ public class Membership extends ACSObject {
         return URL.there(state.getRequest(), url).toString();
     }
 
-    public static DataCollection getReferingPersons(Person person) {
+    public static DataCollection getReferingPersons(Member person) {
         Session session = SessionManager.getSession();
         DataCollection memberships = session.retrieve(BASE_DATA_OBJECT_TYPE);
         Filter filter = memberships.addInSubqueryFilter("id", "com.arsdigita.cms.contenttypes.getReferingPersons");

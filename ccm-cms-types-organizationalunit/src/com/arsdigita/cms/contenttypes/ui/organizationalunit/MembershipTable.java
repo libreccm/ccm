@@ -19,7 +19,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
 import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
-import com.arsdigita.cms.contenttypes.Person;
+import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -96,7 +96,7 @@ public class MembershipTable extends Table {
 
             String url = membership.getURI(state);
             if (column == m_personCol.getModelIndex()) {
-                Person person = membership.getTargetItem();
+                Member person = membership.getTargetItem();
                 StringBuilder fullNameBuilder = new StringBuilder();
 
                 if(person.getTitlePre() != null) {
