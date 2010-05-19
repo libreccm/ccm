@@ -10,12 +10,12 @@
                 <source-folder>
                     <label>webapps</label>
                     <type>doc_root</type>
-                    <location>~/ccm-devel/apache-tomcat-6.0.20/webapps</location>
+                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.26/webapps</location>
                 </source-folder>
                 <source-folder>
                     <label>WEB-INF</label>
                     <type>web_inf</type>
-                    <location>~/ccm-devel/apache-tomcat-6.0.20/webapps/ROOT/WEB-INF</location>
+                    <location>~/ccm-devel/runtime/apache-tomcat-6.0.26/webapps/ROOT/WEB-INF</location>
                 </source-folder>
                 <source-folder>
                     <label>ccm-core (Source)</label>
@@ -143,6 +143,11 @@
                     <location>ccm-cms-types-legalnotice/src</location>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-cms-types-member (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-types-member/src</location>
+                </source-folder>
+                <source-folder>
                     <label>ccm-cms-types-minutes (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-minutes/src</location>
@@ -171,11 +176,6 @@
                     <label>ccm-cms-types-organizationalunit (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-types-organizationalunit/src</location>
-                </source-folder>
-                <source-folder>
-                    <label>ccm-cms-types-person (Source)</label>
-                    <type>java</type>
-                    <location>ccm-cms-types-person/src</location>
                 </source-folder>
                 <source-folder>
                     <label>ccm-cms-types-pressrelease (Source)</label>
@@ -396,15 +396,15 @@
                 <items>
                     <source-folder style="tree">
                         <label>Web Pages</label>
-                        <location>/var/ccm-devel/web/pb/trunk/webapps</location>
+                        <location>runtime/webapps</location>
                     </source-folder>
                     <source-folder style="tree">
                         <label>WEB-INF Content</label>
-                        <location>/var/ccm-devel/web/pb/trunk/webapps/WEB-INF</location>
+                        <location>runtime/webapps/WEB-INF</location>
                     </source-folder>
                     <source-folder style="tree">
                         <label>Webseiten</label>
-                        <location>../../../web/pb/trunk/webapps</location>
+                        <location>runtime/webapps</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-core (Source)</label>
@@ -439,6 +439,14 @@
                         <location>ccm-cms-types-article/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-cms-types-baseAddress (Source)</label>
+                        <location>ccm-cms-types-baseAddress/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-baseContact (Source)</label>
+                        <location>ccm-cms-types-baseContact/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-cms-types-bookmark (Source)</label>
                         <location>ccm-cms-types-bookmark/src</location>
                     </source-folder>
@@ -471,8 +479,16 @@
                         <location>ccm-cms-types-formsectionitem/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-cms-types-genericOrganisation (Source)</label>
+                        <location>ccm-cms-types-genericOrganisation/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-cms-types-glossaryitem (Source)</label>
                         <location>ccm-cms-types-glossaryitem/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-healthCareFacility (Source)</label>
+                        <location>ccm-cms-types-healthCareFacility/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-types-htmlform (Source)</label>
@@ -489,6 +505,10 @@
                     <source-folder style="packages">
                         <label>ccm-cms-types-legalnotice (Source)</label>
                         <location>ccm-cms-types-legalnotice/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-member (Source)</label>
+                        <location>ccm-cms-types-member/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-types-minutes (Source)</label>
@@ -511,8 +531,20 @@
                         <location>ccm-cms-types-organization/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-cms-types-organizationalunit (Source)</label>
+                        <location>ccm-cms-types-organizationalunit/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-cms-types-pressrelease (Source)</label>
                         <location>ccm-cms-types-pressrelease/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-project (Source)</label>
+                        <location>ccm-cms-types-project/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-researchnetwork (Source)</label>
+                        <location>ccm-cms-types-researchnetwork/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-types-service (Source)</label>
@@ -521,6 +553,10 @@
                     <source-folder style="packages">
                         <label>ccm-cms-types-siteproxy (Source)</label>
                         <location>ccm-cms-types-siteproxy/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-cms-types-survey (Source)</label>
+                        <location>ccm-cms-types-survey/src</location>
                     </source-folder>
                     <source-folder style="packages">
                         <label>ccm-cms-types-xmlfeed (Source)</label>
@@ -627,6 +663,14 @@
                         <location>ccm-ldn-util/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-gen-aplaws (Source)</label>
+                        <location>ccm-gen-aplaws/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
+                        <label>ccm-gen-aplaws (Web)</label>
+                        <location>ccm-gen-aplaws/web</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-shp-aplaws (Source)</label>
                         <location>ccm-shp-aplaws/src</location>
                     </source-folder>
@@ -668,6 +712,8 @@
                 <package-root>ccm-cms-types-address/src</package-root>
                 <package-root>ccm-cms-types-agenda/src</package-root>
                 <package-root>ccm-cms-types-article/src</package-root>
+                <package-root>ccm-cms-types-baseAddress/src</package-root>
+                <package-root>ccm-cms-types-baseContact/src</package-root>
                 <package-root>ccm-cms-types-bookmark/src</package-root>
                 <package-root>ccm-cms-types-contact/src</package-root>
                 <package-root>ccm-cms-types-esdservice/src</package-root>
@@ -676,19 +722,26 @@
                 <package-root>ccm-cms-types-filestorageitem/src</package-root>
                 <package-root>ccm-cms-types-formitem/src</package-root>
                 <package-root>ccm-cms-types-formsectionitem/src</package-root>
+                <package-root>ccm-cms-types-genericOrganisation/src</package-root>
                 <package-root>ccm-cms-types-glossaryitem/src</package-root>
+                <package-root>ccm-cms-types-healthCareFacility/src</package-root>
                 <package-root>ccm-cms-types-htmlform/src</package-root>
                 <package-root>ccm-cms-types-inlinesite/src</package-root>
                 <package-root>ccm-cms-types-job/src</package-root>
                 <package-root>ccm-cms-types-legalnotice/src</package-root>
+                <package-root>ccm-cms-types-member/src</package-root>
                 <package-root>ccm-cms-types-minutes/src</package-root>
                 <package-root>ccm-cms-types-motditem/src</package-root>
                 <package-root>ccm-cms-types-mparticle/src</package-root>
                 <package-root>ccm-cms-types-newsitem/src</package-root>
                 <package-root>ccm-cms-types-organization/src</package-root>
+                <package-root>ccm-cms-types-organizationalunit/src</package-root>
                 <package-root>ccm-cms-types-pressrelease/src</package-root>
+                <package-root>ccm-cms-types-project/src</package-root>
+                <package-root>ccm-cms-types-researchnetwork/src</package-root>
                 <package-root>ccm-cms-types-service/src</package-root>
                 <package-root>ccm-cms-types-siteproxy/src</package-root>
+                <package-root>ccm-cms-types-survey/src</package-root>
                 <package-root>ccm-cms-types-xmlfeed/src</package-root>
                 <package-root>ccm-auth-http/src</package-root>
                 <package-root>ccm-bookmarks/src</package-root>
@@ -715,6 +768,8 @@
                 <package-root>ccm-ldn-terms/src</package-root>
                 <package-root>ccm-ldn-theme/src</package-root>
                 <package-root>ccm-ldn-util/src</package-root>
+                <package-root>ccm-gen-aplaws/src</package-root>
+                <package-root>ccm-gen-aplaws/web</package-root>
                 <package-root>ccm-shp-aplaws/src</package-root>
                 <package-root>ccm-shp-aplaws/web</package-root>
                 <package-root>ccm-zes-aplaws/src</package-root>
@@ -728,7 +783,7 @@
                 <node name="CodeStyle">
                     <property name="usedProfile" value="default"/>
                     <node name="project">
-                        <property name="tab-size" value="8"/>
+                        <property name="tab-size" value="4"/>
                         <property name="text-limit-width" value="80"/>
                     </node>
                 </node>
@@ -743,7 +798,7 @@
         </preferences>
         <web-data xmlns="http://www.netbeans.org/ns/freeform-project-web/1">
             <web-module>
-                <doc-root>/var/ccm-devel/web/pb/trunk/webapps</doc-root>
+                <doc-root>runtime/webapps</doc-root>
                 <classpath>ccm-core/lib/log4j.jar:/usr/share/java/ccm-servlet.jar</classpath>
                 <j2ee-spec-level>1.3</j2ee-spec-level>
             </web-module>
