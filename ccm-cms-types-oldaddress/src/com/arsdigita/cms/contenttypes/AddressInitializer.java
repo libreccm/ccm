@@ -39,7 +39,7 @@ public class AddressInitializer extends ContentTypeInitializer {
      * Constructor
      */
     public AddressInitializer() {
-        super("ccm-cms-types-address.pdl.mf",
+        super("ccm-cms-types-oldaddress.pdl.mf",
               Address.BASE_DATA_OBJECT_TYPE);
     }
 

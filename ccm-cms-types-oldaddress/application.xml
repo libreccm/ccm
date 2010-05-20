@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-cms-types-address"
+  name="ccm-cms-types-oldaddress"
   prettyName="Red Hat CCM Content Types"
   version="6.6.0"
   release="1"
@@ -19,6 +19,6 @@
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
   <ccm:description>
-    The Address Content Type for the Red Hat CCM CMS.
+    The old Address Content Type for the Red Hat CCM CMS.
   </ccm:description>
 </ccm:application>
