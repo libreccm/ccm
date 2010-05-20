@@ -14,7 +14,7 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 */
 
-package com.arsdigita.london.notes.ui;
+package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
@@ -30,7 +30,7 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.xml.Element;
 
-import com.arsdigita.london.notes.Note;
+import com.arsdigita.cms.contentassets.Note;
 
 import java.io.IOException;
 

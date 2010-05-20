@@ -14,7 +14,7 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 */
 
-package com.arsdigita.london.notes.ui;
+package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.PageState;
@@ -32,7 +32,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 
-import com.arsdigita.london.notes.Note;
+import com.arsdigita.cms.contentassets.Note;
 
 public class NotesEdit extends SimpleContainer {
     private Form m_form;

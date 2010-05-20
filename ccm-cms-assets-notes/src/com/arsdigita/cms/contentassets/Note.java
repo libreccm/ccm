@@ -14,7 +14,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.notes;
+package com.arsdigita.cms.contentassets;
 
 import java.util.Date;
 
@@ -40,7 +40,7 @@ import org.apache.log4j.Logger;
  */
 public class Note extends ACSObject {
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.london.notes.Note";
+        "com.arsdigita.cms.contentassets.Note";
 
     private static final Logger s_log = Logger.getLogger( Note.class );
 

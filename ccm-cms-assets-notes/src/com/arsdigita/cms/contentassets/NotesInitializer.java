@@ -14,7 +14,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.notes;
+package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
@@ -24,9 +24,8 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.domain.DomainObjectTraversal;
 import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.london.notes.ui.NotesStep;
-import com.arsdigita.london.notes.ui.NotesSummary;
-import com.arsdigita.runtime.LegacyInitEvent;
+import com.arsdigita.cms.contentassets.ui.NotesStep;
+import com.arsdigita.cms.contentassets.ui.NotesSummary;
 import com.arsdigita.runtime.DomainInitEvent;
 
 public class NotesInitializer extends ContentAssetInitializer {
@@ -52,15 +51,15 @@ public class NotesInitializer extends ContentAssetInitializer {
 
     public GlobalizedMessage getAuthoringStepLabel() {
         return new GlobalizedMessage(
-            "com.arsdigita.london.notes.authoring_step_label",
-            "com.arsdigita.london.notes.NotesResources"
+            "com.arsdigita.cms.contentassets.notes_authoring_step_label",
+            "com.arsdigita.cms.contentassets.NotesResources"
         );
     }
 
     public GlobalizedMessage getAuthoringStepDescription() {
         return new GlobalizedMessage(
-            "com.arsdigita.london.notes.authoring_step_description",
-            "com.arsdigita.london.notes.NotesResources"
+            "com.arsdigita.cms.contentassets.notes_authoring_step_description",
+            "com.arsdigita.cms.contentassets.NotesResources"
         );
     }
 

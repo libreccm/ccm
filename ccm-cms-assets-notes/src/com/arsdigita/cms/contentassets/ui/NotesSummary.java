@@ -1,4 +1,4 @@
-package com.arsdigita.london.notes.ui;
+package com.arsdigita.cms.contentassets.ui;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -17,7 +17,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AdditionalDisplayComponent;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.User;
-import com.arsdigita.london.notes.Note;
+import com.arsdigita.cms.contentassets.Note;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.LockableImpl;
 

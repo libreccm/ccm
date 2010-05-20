@@ -14,7 +14,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.london.notes.ui;
+package com.arsdigita.cms.contentassets.ui;
 
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;

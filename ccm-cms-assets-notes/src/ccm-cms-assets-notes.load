@@ -7,10 +7,10 @@
   </requires>
   <provides>
     <table name="ca_notes"/>
-    <initializer class="com.arsdigita.london.notes.NotesInitializer"/>
+    <initializer class="com.arsdigita.cms.contentassets.NotesInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-cms-assets-notes"/>
-    <data class="com.arsdigita.london.notes.NotesLoader"/>
+    <data class="com.arsdigita.cms.contentassets.NotesLoader"/>
   </scripts>
 </load>

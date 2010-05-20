@@ -15,7 +15,7 @@
  * package com.arsdigita.london.notes;
  */
 
-package com.arsdigita.london.notes;
+package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.loader.PackageLoader;
