@@ -33,7 +33,7 @@ import java.math.BigDecimal;
  * @author Jack Chung (flattop@arsdigita.com)
  * @version $Id: AuthoringKitStepAssociation.java 287 2005-02-22 00:29:02Z sskracic $
  */
-class AuthoringKitStepAssociation extends DomainObject {
+public class AuthoringKitStepAssociation extends DomainObject {
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.AuthoringKitStepAssociation";

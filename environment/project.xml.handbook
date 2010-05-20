@@ -7,8 +7,8 @@
               ccmVersion="6.1" 
                     name="aplaws-handbook" 
               prettyName="APLAWS plus" 
-                 version="1-0-9" 
-                 release="rc-5" 
+                 version="1-1-0" 
+                 release="423" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -23,6 +23,7 @@
 <!--   Content Assets   -->
 <!--   - - - - - - -    -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>
         <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
@@ -76,7 +77,7 @@
 <!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
 <!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
 <!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
-        <ccm:application name="ccm-ldn-image-step"/>
+<!--    <ccm:application name="ccm-ldn-image-step"/>                 -->
 <!--    <ccm:application name="ccm-ldn-importer"/>                   -->
         <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-portal"/>
