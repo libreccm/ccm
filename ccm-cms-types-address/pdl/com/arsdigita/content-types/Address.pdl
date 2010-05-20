@@ -4,8 +4,8 @@ import com.arsdigita.cms.basetypes.Address;
 import com.arsdigita.cms.ContentPage;
 
 // Address object
-object type BaseAddress extends Address {
+object type Address extends com.arsdigita.cms.basetypes.Address {
 
-    reference key ( ct_baseAddresses.address_id );
+    reference key ( ct_addresses.address_id );
 }
 

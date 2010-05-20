@@ -6,11 +6,11 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_baseAddresses"/>
-    <initializer class="com.arsdigita.cms.contenttypes.BaseAddressInitializer"/>
+    <table name="ct_addresses"/>
+    <initializer class="com.arsdigita.cms.contenttypes.AddressInitializer"/>
   </provides>
   <scripts>
-    <schema directory="ccm-cms-types-baseAddress"/>
-    <data class="com.arsdigita.cms.contenttypes.BaseAddressLoader"/>
+    <schema directory="ccm-cms-types-address"/>
+    <data class="com.arsdigita.cms.contenttypes.AddressLoader"/>
   </scripts>
 </load>
