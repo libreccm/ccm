@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.basetypes.ui;
 
 import com.arsdigita.bebop.Component;
@@ -31,22 +30,22 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.cms.basetypes.util.BasetypesGlobalizationUtil;
 
 import com.arsdigita.cms.basetypes.util.BasetypesGlobalizationUtil;
 import java.text.DateFormat;
 
 public class PersonPropertiesStep extends SimpleEditStep {
+
     public static final String EDIT_SHEET_NAME = "edit";
 
     public PersonPropertiesStep(ItemSelectionModel itemModel,
-				AuthoringKitWizard parent) {
-	super(itemModel, parent);
-	
-	setDefaultEditKey(EDIT_SHEET_NAME);
-	createEditSheet(itemModel);
-	
-	setDisplayComponent(getPersonPropertySheet(itemModel));
+            AuthoringKitWizard parent) {
+        super(itemModel, parent);
+
+        setDefaultEditKey(EDIT_SHEET_NAME);
+        createEditSheet(itemModel);
+
+        setDisplayComponent(getPersonPropertySheet(itemModel));
     }
 
     protected void createEditSheet(ItemSelectionModel itemModel) {
@@ -56,31 +55,31 @@ public class PersonPropertiesStep extends SimpleEditStep {
     }
 
     public static Component getPersonPropertySheet(ItemSelectionModel itemModel) {
-	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-	sheet.add((String)BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.surname").localize(), Person.SURNAME);
-	sheet.add((String)BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.givenname").localize(), Person.GIVENNAME);
-	sheet.add((String)BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.titlepre").localize(), Person.TITLEPRE);
-	sheet.add((String)BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.titlepost").localize(), Person.TITLEPOST);
-	
-	if(!ContentSection.getConfig().getHideLaunchDate()) {
-	    sheet.add((String)BasetypesGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),
-		      ContentPage.LAUNCH_DATE,
-		      new DomainObjectPropertySheet.AttributeFormatter() {
-			  public String format(DomainObject item,
-					       String attribute,
-					       PageState state) {
-			      ContentPage page = (ContentPage)item;
-			      if (page.getLaunchDate() != null) {
-				  return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-			      }
-			      else {
-				  return (String)BasetypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
-			      }
-			  }
-		      });
-		      }
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.surname").localize(), Person.SURNAME);
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.givenname").localize(), Person.GIVENNAME);
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.titlepre").localize(), Person.TITLEPRE);
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.person.titlepost").localize(), Person.TITLEPOST);
 
-	return sheet;
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),
+                    ContentPage.LAUNCH_DATE,
+                    new DomainObjectPropertySheet.AttributeFormatter() {
+
+                        public String format(DomainObject item,
+                                String attribute,
+                                PageState state) {
+                            ContentPage page = (ContentPage) item;
+                            if (page.getLaunchDate() != null) {
+                                return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
+                            } else {
+                                return (String) BasetypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                            }
+                        }
+                    });
+        }
+
+        return sheet;
     }
 }

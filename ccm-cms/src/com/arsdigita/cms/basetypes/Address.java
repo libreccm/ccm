@@ -59,7 +59,7 @@ public class Address extends ContentPage {
     public static final String BASE_DATA_OBJECT_TYPE
         = "com.arsdigita.cms.basetypes.Address";
 
-    private static final AddressConfig s_config = new AddressConfig();
+    private static AddressConfig s_config = new AddressConfig();
     static {
 	    s_config.load();
     }
