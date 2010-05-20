@@ -6,8 +6,8 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 version="1.0">
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.BaseAddress']" mode="cms:CT_graphics"
-    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_BaseAddress">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Address']" mode="cms:CT_graphics"
+    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_Address">
     <table width="435" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td class="contentTitle" align="left" valign="top">
@@ -47,8 +47,8 @@
     </table>
   </xsl:template>
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.BaseAddress']" mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_cms_contenttypes_BaseAddress">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Address']" mode="cms:CT_text"
+    name="cms:CT_text_com_arsdigita_cms_contenttypes_Address">
     <h1 class="title"><xsl:value-of select="./title"/></h1>
     <xsl:if test="./address">
       <span class="subtitle">Address</span>
