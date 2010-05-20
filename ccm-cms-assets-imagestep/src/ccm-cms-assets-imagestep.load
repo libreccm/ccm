@@ -1,0 +1,12 @@
+<load>
+  <requires>
+    <table name="cms_items"/>
+  </requires>
+  <provides>
+    <table name="cms_item_image_attachment"/>
+    <initializer class="com.arsdigita.cms.contentassets.ItemImageAttachmentInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-cms-assets-imagestep"/>
+  </scripts>
+</load>
