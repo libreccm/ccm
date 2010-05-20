@@ -36,16 +36,6 @@ public class Member extends Person {
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Member";
-//    private static final MemberConfig s_config = new MemberConfig();
-
-
-//    static {
-//        s_config.load();
-//    }
-
-//    public static final MemberConfig getConfig() {
-//        return s_config;
-//    }
 
     /**
      * Default constructor. This creates a new (empty) Member.

@@ -14,10 +14,10 @@
 	createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
      
       <ctd:authoring-step 
-	  labelKey="baseAddress.authoring.basic_properties.title" 
-	  labelBundle="com.arsdigita.cms.contenttypes.BaseAddressResources"
-	  descriptionKey="baseAddress.authoring.basic_properties.description" 
-	  descriptionBundle="com.arsdigita.cms.contenttypes.BaseAddressResources"
+	  labelKey="address.authoring.basic_properties.title"
+	  labelBundle="com.arsdigita.cms.basetypes.BasetypesResources"
+	  descriptionKey="address.authoring.basic_properties.description"
+	  descriptionBundle="com.arsdigita.cms.basetypes.BasetypesResources"
 	  component="com.arsdigita.cms.contenttypes.ui.BaseAddressPropertiesStep" 
 	  ordering="1"/>
       

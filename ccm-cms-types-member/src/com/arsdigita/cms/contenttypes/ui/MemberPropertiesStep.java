@@ -32,9 +32,6 @@ public class MemberPropertiesStep extends PersonPropertiesStep {
 
     public MemberPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(itemModel, parent);
-//        createEditSheet(itemModel);
-
-//        setDisplayComponent(getMemberPropertySheet(itemModel));
     }
 
     protected void createEditSheet(ItemSelectionModel itemModel) {

@@ -119,11 +119,11 @@ public class ChangeableSingleSelect extends SingleSelect {
     @Override
     @SuppressWarnings("deprecation")
     public void setOptionSelected(String value) {
-        Assert.assertNotLocked(this);
+//        Assert.assertNotLocked(this);
         if (!isMultiple()) {
             // only one option may be selected
             // to this selected list better be empty
-            Assert.assertTrue(m_selected.size() == 0, TOO_MANY_OPTIONS_SELECTED);
+//            Assert.assertTrue(m_selected.size() == 0, TOO_MANY_OPTIONS_SELECTED);
             m_selected.add(value);
             getParameterModel().setDefaultValue(value);
         } else {

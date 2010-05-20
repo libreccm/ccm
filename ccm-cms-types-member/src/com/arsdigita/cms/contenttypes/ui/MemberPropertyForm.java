@@ -66,15 +66,6 @@ public class MemberPropertyForm extends PersonPropertyForm implements FormProces
         Member member = (Member) super.initBasicWidgets(fse);
     }
 
-/*
-    public void submitted(FormSectionEvent fse) {
-        if (m_step != null
-                && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
-            m_step.cancelStreamlinedCreation(fse.getPageState());
-        }
-    }
-*/
-
     public void process(FormSectionEvent fse) {
         super.process(fse);
         FormData data = fse.getFormData();

@@ -126,4 +126,16 @@ public class PersistentRadioGroup extends PersistentOptionGroup {
         return radio;
     }
 
+    // HACK: Quasimodo - Gibt es eine bessere Art, auf diese Methode zuzugreifen?
+    public OptionGroup createOptionGroup(String name) {
+
+        RadioGroup radio = new RadioGroup(name);
+
+        addDataToComponent(radio);
+        copyValuesToWidget(radio);
+
+        return radio;
+
+    }
+
 }

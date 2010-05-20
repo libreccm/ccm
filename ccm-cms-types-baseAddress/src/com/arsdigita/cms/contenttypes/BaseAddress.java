@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
 import com.arsdigita.globalization.LocaleNegotiator;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.basetypes.Address;
@@ -45,18 +44,8 @@ import java.util.TreeMap;
 public class BaseAddress extends Address {
 
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.BaseAddress";
-
-    private static final BaseAddressConfig s_config = new BaseAddressConfig();
-//    static {
-//	    s_config.load();
-//    }
-//    public static BaseAddressConfig getConfig()
-//    {
-//	    return s_config;
-//    }
-
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.BaseAddress";
+    
     /**
      * Default constructor. This creates a new (empty) BaseAddress.
      **/
@@ -117,7 +106,7 @@ public class BaseAddress extends Address {
      */
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 

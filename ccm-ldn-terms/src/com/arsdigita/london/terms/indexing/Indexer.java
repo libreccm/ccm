@@ -39,7 +39,8 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
-import com.ibm.icu.util.Calendar;
+import java.util.Calendar;
+
 
 /**
  * The domain indexer is used for keyphrase extraction of content items.
