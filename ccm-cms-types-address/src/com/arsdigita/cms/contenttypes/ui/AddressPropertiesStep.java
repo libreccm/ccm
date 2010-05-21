@@ -42,7 +42,6 @@ public class AddressPropertiesStep extends com.arsdigita.cms.basetypes.ui.Addres
     }
 
     public static Component getAddressPropertySheet(ItemSelectionModel itemModel) {
-        Component sheet = AddressPropertiesStep.getAddressPropertySheet(itemModel);
-        return sheet;
+        return com.arsdigita.cms.basetypes.ui.AddressPropertiesStep.getAddressPropertySheet(itemModel);
     }
 }

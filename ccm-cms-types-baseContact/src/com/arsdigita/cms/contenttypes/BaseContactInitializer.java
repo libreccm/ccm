@@ -8,10 +8,7 @@ import org.apache.log4j.Logger;
  * @author Sören Bernstein;
  */
 public class BaseContactInitializer extends ContentTypeInitializer {
-    public final static String versionId =
-            "$Id: BaseContactInitializer.java $" +
-            "$Author: quasi $" +
-            "$DateTime: 2009/03/15 $";
+
     private static final Logger s_log = Logger.getLogger(BaseContactInitializer.class);
     
     public BaseContactInitializer() {

@@ -1,29 +1,15 @@
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
-import com.arsdigita.cms.ui.authoring.BasicPageForm;
-import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.domain.DomainObject;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
-import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.SegmentedPanel;
-import com.arsdigita.cms.contenttypes.BaseContact;
-import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
 
-import java.text.DateFormat;
 import org.apache.log4j.Logger;
 
 /**
  * AuthoringStep for the basic properties of a basic contact
  */
-public class BaseContactPropertiesStep extends SimpleEditStep {
+public class BaseContactPropertiesStep extends com.arsdigita.cms.basetypes.ui.ContactPropertiesStep {
 
     private static final Logger logger = Logger.getLogger(BaseContactPropertiesStep.class);
     
@@ -41,45 +27,6 @@ public class BaseContactPropertiesStep extends SimpleEditStep {
      */
     public BaseContactPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(itemModel, parent);
-
-        /* Use a Segmented Panel for the multiple parts of data */
-        SegmentedPanel segmentedPanel = new SegmentedPanel();
-        
-        setDefaultEditKey(EDIT_BASIC_SHEET_NAME);
-
-        /* The different parts of information are displayed in seperated segments each containing a SimpleEditStep */
-        /* Well, not so simple anymore... */
-        
-        /* A new SimpleEditStep */
-        SimpleEditStep basicProperties = new SimpleEditStep(itemModel, parent, EDIT_BASIC_SHEET_NAME);
-        
-        /* Create the edit component for this SimpleEditStep and the corresponding link */
-        BasicPageForm editBasicSheet = new BaseContactPropertyForm(itemModel, this);
-        basicProperties.add(EDIT_BASIC_SHEET_NAME, (String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
-        
-        /* Set the displayComponent for this step */
-        basicProperties.setDisplayComponent(getBaseContactPropertySheet(itemModel));
-
-        /* Add the SimpleEditStep to the segmented panel */
-        segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.basic_properties").localize()), basicProperties);
-
-        // If not disabled via registry, add the ui for attaching a person
-        if(!BaseContact.getConfig().getHidePerson()) {
-            BaseContactPersonPropertiesStep personProperties = new BaseContactPersonPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.person").localize()), personProperties);
-        }
-        
-        // If not disabled via registry, add the ui for attaching a baseAddress
-        if(!BaseContact.getConfig().getHideAddress()) {
-            BaseContactAddressPropertiesStep addressProperties = new BaseContactAddressPropertiesStep(itemModel, parent);
-            segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.address").localize()), addressProperties);
-        }
-
-        BaseContactEntriesPropertiesStep baseContactEntries = new BaseContactEntriesPropertiesStep(itemModel, parent);
-        segmentedPanel.addSegment(new Label((String)BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.baseContact.contactEntry").localize()), baseContactEntries);
-        
-        /* Sets the composed segmentedPanel as display component */
-        setDisplayComponent(segmentedPanel);
     }
 
     /**
@@ -90,30 +37,7 @@ public class BaseContactPropertiesStep extends SimpleEditStep {
      * @return The sheet for editing the properties of the organization.
      */
     public static Component getBaseContactPropertySheet(ItemSelectionModel itemModel) {
-        
-
-        /* The DisplayComponent for the Basic Properties */
-        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
-
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"),"name");
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"),"title");
-  
-        if(!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {
-
-                public String format(DomainObject obj, String attribute, PageState state) {
-                    ContentPage page = (ContentPage)obj;
-                    if(page.getLaunchDate() != null) {
-                        return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                    }
-                    else {
-                        return (String)GlobalizationUtil.globalize("cms.ui.unknown").localize();
-                    }
-                }
-            });
-        }
-
-        return sheet;
+        return com.arsdigita.cms.basetypes.ui.ContactPropertiesStep.getContactPropertySheet(itemModel);
     }
     
 }

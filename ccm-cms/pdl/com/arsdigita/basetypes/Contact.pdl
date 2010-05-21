@@ -1,0 +1,29 @@
+model com.arsdigita.cms.basetypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+// Contact Object
+object type Contact extends ContentPage {
+
+    Person [0..1] person = join cms_contacts.person_id
+                             to cms_persons.person_id;
+
+    Address [0..1] address = join cms_contacts.address_id
+                               to cms_addresses.address_id;
+
+    component ContactEntry [0..n] contactentries = join cms_contacts.contact_id
+                                                     to cms_contactEntries.contact_id;
+
+    reference key ( cms_contacts.contact_id );
+}
+
+object type ContactEntry extends ContentItem {
+
+  String [1..1] key = cms_contactEntries.key VARCHAR(100);
+  String [0..1] description = cms_contactEntries.description VARCHAR(100);
+  String [1..1] value = cms_contactEntries.value VARCHAR(100);
+  
+  reference key ( cms_contactEntries.contactentry_id );
+
+}
