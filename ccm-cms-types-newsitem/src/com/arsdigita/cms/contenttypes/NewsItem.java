@@ -18,8 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
-import com.arsdigita.cms.basetypes.Article;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
@@ -57,26 +55,23 @@ import java.util.Date;
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * @version $Revision: #7 $ $Date: 2004/08/17 $
  **/
-public class NewsItem extends Article {
+public class NewsItem extends com.arsdigita.cms.basetypes.Article {
 
     /** PDL property name for lead */
     public static final String LEAD = "lead";
     /** PDL property name for news date */
     public static final String NEWS_DATE = "newsDate";
     public static final String IS_HOMEPAGE = "isHomepage";
-
-    public static final String RECENT_NEWS = 
-        "com.arsdigita.cms.contenttypes.RecentNews";
-
+    public static final String RECENT_NEWS =
+            "com.arsdigita.cms.contenttypes.RecentNews";
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.NewsItem";
-
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.NewsItem";
     private static final NewsItemConfig s_config = new NewsItemConfig();
+
     static {
         s_config.load();
     }
-    
+
     public static final NewsItemConfig getConfig() {
         return s_config;
     }
@@ -101,17 +96,19 @@ public class NewsItem extends Article {
         super(type);
     }
 
+    @Override
     public void initialize() {
         super.initialize();
-        
+
         if (isNew()) {
             setIsHomepage(Boolean.FALSE);
         }
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
@@ -139,19 +136,19 @@ public class NewsItem extends Article {
 
     public String getDisplayNewsDate() {
         Date d = getNewsDate();
-        return (d != null) ? DateFormat.getDateInstance(DateFormat.LONG)
-            .format(d) : null;
+        return (d != null) ? DateFormat.getDateInstance(DateFormat.LONG).format(d) : null;
     }
 
     public void setNewsDate(Date newsDate) {
         set(NEWS_DATE, newsDate);
     }
-
     public static final int SUMMARY_LENGTH = 200;
+
+    @Override
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getLead(),
-                                                             SUMMARY_LENGTH,
-                                                             true);
+                SUMMARY_LENGTH,
+                true);
     }
 
     /*
