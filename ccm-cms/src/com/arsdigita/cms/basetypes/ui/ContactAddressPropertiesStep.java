@@ -73,17 +73,17 @@ public class ContactAddressPropertiesStep extends SimpleEditStep {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.baseAddress.address").localize(), "address." + Address.ADDRESS);
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.address").localize(), "address." + Address.ADDRESS);
         if (!Contact.getConfig().getHideAddressPostalCode()) {
-            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.baseAddress.postal_code").localize(), "address." + Address.POSTAL_CODE);
+            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.postal_code").localize(), "address." + Address.POSTAL_CODE);
         }
-        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.baseAddress.city").localize(), "address." + Address.CITY);
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.city").localize(), "address." + Address.CITY);
         if (!Contact.getConfig().getHideAddressState()) {
-            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.baseAddress.state").localize(), "address." + Address.STATE);
+            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.state").localize(), "address." + Address.STATE);
         }
 
         if (!Contact.getConfig().getHideAddressCountry()) {
-            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.baseAddress.iso_country_code").localize(),
+            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.iso_country_code").localize(),
                     "address." + Address.ISO_COUNTRY_CODE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 

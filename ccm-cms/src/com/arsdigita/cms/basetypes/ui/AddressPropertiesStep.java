@@ -58,8 +58,8 @@ public class AddressPropertiesStep extends SimpleEditStep {
     public static Component getAddressPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.name").localize(), Address.NAME);
-        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.title").localize(), Address.TITLE);
+        sheet.add((String) GlobalizationUtil.globalize("cms.contenttypes.ui.name").localize(), Address.NAME);
+        sheet.add((String) GlobalizationUtil.globalize("cms.contenttypes.ui.title").localize(), Address.TITLE);
         sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.address").localize(), Address.ADDRESS);
         sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.postal_code").localize(), Address.POSTAL_CODE);
         sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.city").localize(), Address.CITY);

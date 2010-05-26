@@ -57,16 +57,17 @@ import java.net.MalformedURLException;
 public class ContentType extends ACSObject {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.ContentType";
-
-    public static final String OBJECT_TYPE       = "associatedObjectType";
-    public static final String LABEL             = "label";
-    public static final String DESCRIPTION       = "description";
-    public static final String CLASSNAME         = "className";
-    public static final String IS_INTERNAL       = "isInternal";
-    public static final String AUTHORING_KIT     = "authoringKit";
-    public static final String ITEM_FORM_ID      = "itemFormID";
-    public static final String ITEM_FORM         = "itemForm";
+            "com.arsdigita.cms.ContentType";
+    public static final String OBJECT_TYPE = "associatedObjectType";
+    public static final String LABEL = "label";
+    public static final String DESCRIPTION = "description";
+    public static final String CLASSNAME = "className";
+    public static final String IS_INTERNAL = "isInternal";
+    public static final String AUTHORING_KIT = "authoringKit";
+    public static final String ITEM_FORM_ID = "itemFormID";
+    public static final String ITEM_FORM = "itemForm";
+    public static final String ANCESTORS = "ancestors";
+    public static final String SIBLINGS = "siblings";
 
     /**
      * Default constructor. This creates a new folder.
@@ -112,12 +113,14 @@ public class ContentType extends ACSObject {
      * @return the base PDL object type for this item. Child classes should
      *  override this method to return the correct value
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    @Override
     protected void beforeSave() {
-        if ( isInternal() == null ) {
+        if (isInternal() == null) {
             setInternal(false);
         }
         super.beforeSave();
@@ -143,7 +146,6 @@ public class ContentType extends ACSObject {
     public void setAssociatedObjectType(String objType) {
         set(OBJECT_TYPE, objType);
     }
-
 
     /**
      * Fetches the label for the content type.
@@ -229,7 +231,7 @@ public class ContentType extends ACSObject {
      *        false otherwise
      */
     public void setInternal(boolean isInternal) {
-        set(IS_INTERNAL, ( isInternal ? Boolean.TRUE : Boolean.FALSE ));
+        set(IS_INTERNAL, (isInternal ? Boolean.TRUE : Boolean.FALSE));
     }
 
     /**
@@ -265,16 +267,16 @@ public class ContentType extends ACSObject {
      */
     public AuthoringKit createAuthoringKit(String createComponent) {
 
-        if ( getAuthoringKit() == null ) {
+        if (getAuthoringKit() == null) {
             AuthoringKit kit = new AuthoringKit();
             kit.setContentType(this);
-            if ( createComponent != null ) {
+            if (createComponent != null) {
                 kit.setCreateComponent(createComponent);
             }
             return kit;
         } else {
             throw new RuntimeException(
-                                       "An AuthorigKit exists for this ContentType.");
+                    "An AuthorigKit exists for this ContentType.");
         }
     }
 
@@ -317,12 +319,132 @@ public class ContentType extends ACSObject {
 
     }
 
+    /**
+     * Add an ancestor to the list of siblings, if not already in the list
+     * @param newAncestor ID of the ancestor to add
+     */
+    public void addAncestor(BigDecimal newAncestor) {
+        // Get the list of siblings from db
+        String ancestors = (String) get(ANCESTORS);
+
+        // Only add if the newSibling in not yet in the list
+        if (ancestors == null) {
+            ancestors = newAncestor.toString();
+        } else if (!ancestors.contains(newAncestor.toString())) {
+            if (ancestors.length() == 0) {
+                // First entry in list
+                ancestors = newAncestor.toString();
+            } else {
+                // Additional entry in the list
+                ancestors += "/" + newAncestor.toString();
+            }
+        }
+
+        // Write new data back to db
+        set(ANCESTORS, ancestors);
+    }
+
+    /**
+     * Remove an ancestor id from the list of siblings
+     * @param ancestor ID to be removed
+     */
+    public void delAncestor(BigDecimal ancestor) {
+        // Get the list of siblings from db
+        String ancestors = (String) get(ANCESTORS);
+
+        // Only try to remove from a non-empty string
+        if (ancestors != null && ancestors.length() > 0) {
+
+            // Remove ancestor ID from list
+            ancestors.replace(ancestor.toString(), "");
+            // Delete the additional slash
+            ancestors.replace("//", "/");
+
+            // If the list only contains a single slash,
+            // we have just removed the last list entry, so the list is empty
+            if (ancestors.equals("/")) {
+                ancestors = "";
+            }
+        }
+
+        // Write new data back to db
+        set(ANCESTORS, ancestors);
+    }
+
+    /**
+     * Get the list of ancestors
+     * @return
+     */
+    public String getAncestors() {
+        return (String) get(ANCESTORS);
+    }
+
+    /**
+     * Add a sibling to the list of siblings, if not already in list
+     * @param newSibling ID of the sibling to add
+     */
+    public void addSiblings(BigDecimal newSibling) {
+
+        // Get the list of siblings from db
+        String siblings = (String) get(SIBLINGS);
+
+        // Only add if the newSibling in not yet in the list
+        if (siblings == null) {
+            siblings = newSibling.toString();
+        } else if (!siblings.contains(newSibling.toString())) {
+
+            if (siblings.length() == 0) {
+                // First entry in list
+                siblings = newSibling.toString();
+            } else {
+                // Additional entry in the list
+                siblings += "/" + newSibling.toString();
+            }
+        }
+
+        // Write new data back to db
+        set(SIBLINGS, siblings);
+    }
+
+    /**
+     * Get the list of siblings
+     * @return
+     */
+    public String getSiblings() {
+        return (String) get(SIBLINGS);
+    }
+
+    /**
+     * Remove a sibling from the list of siblings
+     * @param sibling ID to be removed
+     */
+    public void delSiblings(BigDecimal sibling) {
+        // Get the list of siblings from db
+        String siblings = (String) get(SIBLINGS);
+
+        // Only try to remove from a non-empty string
+        if (siblings != null && siblings.length() > 0) {
+
+            // Remove ancestor ID from list
+            siblings.replace(sibling.toString(), "");
+            // Delete the additional slash
+            siblings.replace("//", "/");
+
+            // If the list only contains a single slash,
+            // we have just removed the last list entry, so the list is empty
+            if (siblings.equals("/")) {
+                siblings = "";
+            }
+        }
+
+        // Write new data back to db
+        set(SIBLINGS, siblings);
+    }
 
     //////////////////////////////////////
     //
     // Fetching/Finding content types.
     //
-
     /**
      * Find the content type with the associated with the object type.
      *
@@ -330,20 +452,40 @@ public class ContentType extends ACSObject {
      * @return The content type associated with the object type
      */
     public static ContentType findByAssociatedObjectType(String objType)
-        throws DataObjectNotFoundException {
+            throws DataObjectNotFoundException {
 
         ContentTypeCollection types = getAllContentTypes();
         types.addFilter("associatedObjectType = :type").set("type", objType);
 
-        if ( types.next() ) {
+
+
+
+
+        if (types.next()) {
             ContentType type = types.getContentType();
             types.close();
+
+
+
+
             return type;
+
+
+
+
         } else {
             // no match
             types.close();
+
+
+
+
             throw new DataObjectNotFoundException(
-                                                  "No matching content type for object type " + objType);
+                    "No matching content type for object type " + objType);
+
+
+
+
         }
     }
 
@@ -355,6 +497,10 @@ public class ContentType extends ACSObject {
      */
     public static ContentTypeCollection getAllContentTypes() {
         return getAllContentTypes(true);
+
+
+
+
     }
 
     /**
@@ -364,6 +510,10 @@ public class ContentType extends ACSObject {
      */
     public static ContentTypeCollection getUserDefinedContentTypes() {
         return getAllContentTypes(false);
+
+
+
+
     }
 
     /**
@@ -371,13 +521,24 @@ public class ContentType extends ACSObject {
      *    content types. If false, only fetch all user-defined content types.
      */
     private static ContentTypeCollection getAllContentTypes(boolean internal) {
-        DataCollection da = SessionManager.getSession().retrieve
-            (BASE_DATA_OBJECT_TYPE);
+        DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
         ContentTypeCollection types = new ContentTypeCollection(da);
-        if ( !internal ) {
+
+
+
+
+        if (!internal) {
             types.addFilter("isInternal = '0'");
+
+
+
+
         }
         return types;
+
+
+
+
     }
 
     /**
@@ -390,13 +551,18 @@ public class ContentType extends ACSObject {
         final String query = "com.arsdigita.cms.registeredContentTypes";
         DataQuery dq = SessionManager.getSession().retrieveQuery(query);
         DataCollection dc = new DataQueryDataCollectionAdapter(dq, "type");
+
+
+
+
         return new ContentTypeCollection(dc);
+
+
+
+
     }
-
-
     private static List s_xsl = new ArrayList();
-    
-    
+
     /**
      * NB this interface is liable to change.
      * 
@@ -405,8 +571,12 @@ public class ContentType extends ACSObject {
      * @param path the path relative to the server root
      */
     public static void registerXSLFile(ContentType type,
-                                       String path) {
+            String path) {
         s_xsl.add(new XSLEntry(type, path));
+
+
+
+
     }
 
     /**
@@ -417,19 +587,40 @@ public class ContentType extends ACSObject {
      * @param path the path relative to the server root
      */
     public static void unregisterXSLFile(ContentType type,
-                                         String path) {
+            String path) {
         s_xsl.remove(new XSLEntry(type, path));
+
+
+
+
     }
-    
+
     /**
      * Gets an iterator of java.net.URL objects for
      * all registered XSL files
      */
     public static Iterator getXSLFileURLs() {
         return new EntryIterator(s_xsl.iterator());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     private static class EntryIterator implements Iterator {
+
         private Iterator m_inner;
 
         public EntryIterator(Iterator inner) {
@@ -439,53 +630,56 @@ public class ContentType extends ACSObject {
         public boolean hasNext() {
             return m_inner.hasNext();
         }
-        
+
         public Object next() {
-            XSLEntry entry = (XSLEntry)m_inner.next();
+            XSLEntry entry = (XSLEntry) m_inner.next();
             String path = entry.getPath();
-            
+
             try {
                 return new URL(Web.getConfig().getDefaultScheme(),
-                               Web.getConfig().getHost().getName(),
-                               Web.getConfig().getHost().getPort(),
-                               path);
+                        Web.getConfig().getHost().getName(),
+                        Web.getConfig().getHost().getPort(),
+                        path);
             } catch (MalformedURLException ex) {
                 throw new UncheckedWrapperException("path malformed" + path, ex);
             }
         }
-        
+
         public void remove() {
             m_inner.remove();
         }
     }
 
     private static class XSLEntry {
+
         private ContentType m_type;
         private String m_path;
-        
+
         public XSLEntry(ContentType type,
-                        String path) {
+                String path) {
             m_type = type;
             m_path = path;
         }
-        
-        public ContentType getType(){
+
+        public ContentType getType() {
             return m_type;
         }
 
         public String getPath() {
             return m_path;
         }
-        
+
+        @Override
         public boolean equals(Object o) {
             if (!(o instanceof XSLEntry)) {
                 return false;
             }
-            XSLEntry e = (XSLEntry)o;
-            return m_path.equals(e.m_path) &&
-                m_type.equals(e.m_type);
+            XSLEntry e = (XSLEntry) o;
+            return m_path.equals(e.m_path)
+                    && m_type.equals(e.m_type);
         }
-        
+
+        @Override
         public int hashCode() {
             return m_path.hashCode() + m_type.hashCode();
         }

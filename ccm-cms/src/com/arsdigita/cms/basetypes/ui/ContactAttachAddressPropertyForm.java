@@ -79,7 +79,7 @@ public class ContactAttachAddressPropertyForm extends BasicPageForm implements F
     @Override
     public void addWidgets() {
         add(new Label((String)BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.contact.select_address").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.basetypes.BaseAddress"));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.basetypes.Address"));
         add(this.m_itemSearch);       
     }
     

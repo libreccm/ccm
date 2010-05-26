@@ -11,6 +11,10 @@ init com.arsdigita.cms.installer.Initializer {
 
 init com.arsdigita.cms.installer.xml.ContentTypeInitializer {
     contentTypes = {
+        "/WEB-INF/basetypes/Address.xml",
+        "/WEB-INF/basetypes/Article.xml",
+        "/WEB-INF/basetypes/Contact.xml",
+        "/WEB-INF/basetypes/Person.xml",
         "/WEB-INF/content-types/Template.xml"
     };
 }

@@ -387,7 +387,7 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
      *  override this method to return the correct value
      */
     public String getBaseDataObjectType() {
-        return BASE_DATA_OBJECT_TYPE;
+        return this.BASE_DATA_OBJECT_TYPE;
     }
 
     /**
@@ -553,6 +553,18 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
         m_reporter.mutated("contentType");
     }
 
+    public boolean isContentType(ContentType type) {
+
+        try {
+            // Try to cast this contentItem to the desired content type
+            // This will succeed if this ci is of the type or a subclass
+            Class.forName(type.getClassName()).cast(this);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
     /**
      * Returns the content section to which this item belongs.
      * Fetches the denormalized content section of an item.  If one is
@@ -682,14 +694,6 @@ public class ContentItem extends VersionedACSObject implements CustomCopy {
                 collection.addFilter("1=2");
                 return new ItemCollection(collection);
             }
-        }
-
-        //add filter for ancestor check
-        int iLength;
-        if (includeSelf) {
-            iLength = ids.length();
-        } else {
-            iLength = ids.length() - 1;
         }
 
         //add list of ancestors split by "/" character

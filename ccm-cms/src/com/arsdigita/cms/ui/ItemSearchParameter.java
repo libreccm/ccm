@@ -78,6 +78,7 @@ public class ItemSearchParameter extends StringParameter {
      * @throws IllegalArgumentException if the request parameter does not
      * look like a valid email address.
      */
+    @Override
     public Object transformValue(HttpServletRequest request)
         throws IllegalArgumentException {
 
@@ -86,6 +87,7 @@ public class ItemSearchParameter extends StringParameter {
         return unmarshal(itemStr);
     }
 
+    @Override
     public Object unmarshal(String encoded)
         throws IllegalArgumentException {
 
@@ -113,16 +115,13 @@ public class ItemSearchParameter extends StringParameter {
         }
     
 	if (m_contentType != null && 
-	    !contentItem.getContentType().equals(m_contentType)) {
+	    !contentItem.isContentType(m_contentType)) {
 	    return null;
-	    /*
-	    throw new IllegalArgumentException
-		(encoded + " is not a valid " + m_contentType.getLabel());
-	    */
 	}
         return contentItem;
     }
 
+    @Override
     public String marshal(Object value) {
         if (value == null) {
             return null;
@@ -132,6 +131,7 @@ public class ItemSearchParameter extends StringParameter {
         }
     }
         
+    @Override
     public Class getValueClass() {
         return ContentPage.class;
     }

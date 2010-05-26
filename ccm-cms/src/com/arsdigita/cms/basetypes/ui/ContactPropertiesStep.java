@@ -101,8 +101,8 @@ public class ContactPropertiesStep extends SimpleEditStep {
         /* The DisplayComponent for the Basic Properties */
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.basetypes.ui.name"), "name");
-        sheet.add(GlobalizationUtil.globalize("cms.basetypes.ui.title"), "title");
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), "name");
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), "title");
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(GlobalizationUtil.globalize("cms.ui.authoring.page_launch_date"), ContentPage.LAUNCH_DATE, new DomainObjectPropertySheet.AttributeFormatter() {
