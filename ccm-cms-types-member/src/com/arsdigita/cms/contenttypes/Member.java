@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
@@ -67,5 +66,5 @@ public class Member extends Person {
         Assert.exists(getContentType(), ContentType.class);
     }
 
-     /* accessors *****************************************************/
+    /* accessors *****************************************************/
 }

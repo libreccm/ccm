@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" 
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-		   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-  <ctd:content-type
-      label="Member"
-      description="A generic, Member type"
-      objectType="com.arsdigita.cms.contenttypes.Member"
-      classname="com.arsdigita.cms.contenttypes.Member">
-    
-    <ctd:authoring-kit 
-	createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
-     
-      <ctd:authoring-step 
-	  labelKey="member.authoring.basic_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.MemberResources"
-	  descriptionKey="member.authoring.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.MemberResources"
-	  component="com.arsdigita.cms.contenttypes.ui.MemberPropertiesStep"
-	  ordering="1"/>
+    <ctd:content-type
+        label="Member"
+        description="A Member type"
+        objectType="com.arsdigita.cms.contenttypes.Member"
+        classname="com.arsdigita.cms.contenttypes.Member">
 
-      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
-    </ctd:authoring-kit>
-    
-  </ctd:content-type>
+        <ctd:authoring-kit
+            createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+            <ctd:authoring-step
+                labelKey="member.authoring.basic_properties.title"
+                labelBundle="com.arsdigita.cms.basetypes.BasetypesResources"
+                descriptionKey="member.authoring.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.basetypes.BasetypesResources"
+                component="com.arsdigita.cms.contenttypes.ui.MemberPropertiesStep"
+                ordering="1"/>
+
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+        </ctd:authoring-kit>
+
+    </ctd:content-type>
 </ctd:content-types>

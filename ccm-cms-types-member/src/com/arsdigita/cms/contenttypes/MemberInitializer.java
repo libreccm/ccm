@@ -35,13 +35,7 @@ public class MemberInitializer extends ContentTypeInitializer {
     private static final Logger s_log = Logger.getLogger(MemberInitializer.class);
 
     public MemberInitializer() {
-        super("ccm-cms-types-member.pdl.mf",
-                Member.BASE_DATA_OBJECT_TYPE);
-    }
-
-    @Override
-    public void init(DomainInitEvent evt) {
-        super.init(evt);
+        super("ccm-cms-types-member.pdl.mf", Member.BASE_DATA_OBJECT_TYPE);
     }
 
     @Override
