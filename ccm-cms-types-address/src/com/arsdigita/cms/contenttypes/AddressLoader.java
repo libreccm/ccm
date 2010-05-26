@@ -13,5 +13,4 @@ public class AddressLoader extends AbstractContentTypeLoader {
     public String[] getTypes() {
         return TYPES;
     }
-
 }

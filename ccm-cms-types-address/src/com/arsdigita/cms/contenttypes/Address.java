@@ -18,15 +18,12 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.globalization.LocaleNegotiator;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
-import java.util.Locale;
-import java.util.TreeMap;
 
 /**
  * <p><code>DomainObject</code> class to represent address <code>ContentType</code>
@@ -44,7 +41,7 @@ public class Address extends com.arsdigita.cms.basetypes.Address {
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Address";
-    
+
     /**
      * Default constructor. This creates a new (empty) Address.
      **/

@@ -12,14 +12,13 @@ public class AddressInitializer extends ContentTypeInitializer {
 
     public AddressInitializer() {
         super("ccm-cms-types-address.pdl.mf",
-              Address.BASE_DATA_OBJECT_TYPE);
+                Address.BASE_DATA_OBJECT_TYPE);
     }
 
     @Override
     public String[] getStylesheets() {
-        return new String[] {
-            "/static/content-types/com/arsdigita/cms/contenttypes/Address.xsl"
-        };
+        return new String[]{
+                    "/static/content-types/com/arsdigita/cms/contenttypes/Address.xsl"
+                };
     }
-
 }
