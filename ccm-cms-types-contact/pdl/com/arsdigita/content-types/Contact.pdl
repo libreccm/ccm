@@ -1,0 +1,10 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.basetypes.Contact;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+// Contact Object
+object type Contact extends com.arsdigita.cms.basetypes.Contact {
+    reference key ( ct_contacts.contact_id );
+}
