@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.basetypes.Person;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
@@ -83,32 +84,32 @@ public class OrganizationalUnit extends ContentPage{
         set(ORGANIZATIONALUNIT_DESCRIPTION, description);
     }
 
-    public Member getDirection() {
+    public Person getDirection() {
         DataObject dobj = (DataObject) get(DIRECTION);
         if (dobj != null) {
-            return (Member) DomainObjectFactory.newInstance(dobj);
+            return (Person) DomainObjectFactory.newInstance(dobj);
         } else {
             return null;
         }
     }
 
-    public void setDirection(Member person) {
+    public void setDirection(Person person) {
         logger.debug("Setting direction...");
-        Assert.exists(person, Member.class);
+        Assert.exists(person, Person.class);
         setAssociation(DIRECTION, person);
     }
 
-    public Member getAssistentDirection() {
+    public Person getAssistentDirection() {
         DataObject dobj = (DataObject) get(ASSISTENT_DIRECTION);
         if (dobj != null) {
-            return (Member) DomainObjectFactory.newInstance(dobj);
+            return (Person) DomainObjectFactory.newInstance(dobj);
         } else {
             return null;
         }
     }
 
-    public void setAssistentDirection(Member person) {
-        Assert.exists(person, Member.class);
+    public void setAssistentDirection(Person person) {
+        Assert.exists(person, Person.class);
         setAssociation(ASSISTENT_DIRECTION, person);
     }
 

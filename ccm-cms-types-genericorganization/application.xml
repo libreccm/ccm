@@ -8,7 +8,6 @@
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-cms-types-person" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms-types-organizationalunit" version="6.6.0" relation="ge"/>    
   </ccm:dependencies>
   <ccm:directories>

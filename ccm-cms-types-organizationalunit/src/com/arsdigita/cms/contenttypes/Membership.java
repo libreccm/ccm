@@ -2,6 +2,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.basetypes.Person;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
@@ -117,21 +118,21 @@ public class Membership extends ACSObject {
     public void setMembershipOwner(OrganizationalUnit ou) {
         Assert.exists(ou, OrganizationalUnit.class);
         logger.debug("Setting membership owner to " + ou.getOrganizationalUnitName());
-        setAssociation(MEMBERSHIP_OWNER, ou);        
+        setAssociation(MEMBERSHIP_OWNER, ou);
     }
 
-    public Member getTargetItem() {
+    public Person getTargetItem() {
         DataObject obj = (DataObject) get(TARGET_ITEM);
-        return (Member) DomainObjectFactory.newInstance(obj);
+        return (Person) DomainObjectFactory.newInstance(obj);
     }
 
-    public void setTargetItem(Member person) {
-        Assert.exists(person, Member.class);
+    public void setTargetItem(Person person) {
+        Assert.exists(person, Person.class);
         setAssociation(TARGET_ITEM, person);
     }
 
     public String getURI(PageState state) {
-        Member person = this.getTargetItem();
+        Person person = this.getTargetItem();
 
         if (person == null) {
             logger.error(getOID() + " is a link between a OrganizationalUnit and a Person, but the associated Person is null");
@@ -145,7 +146,7 @@ public class Membership extends ACSObject {
         return URL.there(state.getRequest(), url).toString();
     }
 
-    public static DataCollection getReferingPersons(Member person) {
+    public static DataCollection getReferingPersons(Person person) {
         Session session = SessionManager.getSession();
         DataCollection memberships = session.retrieve(BASE_DATA_OBJECT_TYPE);
         Filter filter = memberships.addInSubqueryFilter("id", "com.arsdigita.cms.contenttypes.getReferingPersons");
@@ -159,5 +160,5 @@ public class Membership extends ACSObject {
         DataCollection dc = session.retrieve(BASE_DATA_OBJECT_TYPE);
         dc.addEqualsFilter(MEMBERSHIP_OWNER + ".id", ou.getID());
         return dc;
-    } 
+    }
 }

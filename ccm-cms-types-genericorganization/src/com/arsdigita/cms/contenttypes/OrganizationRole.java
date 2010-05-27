@@ -139,9 +139,9 @@ public class OrganizationRole extends ACSObject {
      *
      * @return The person associated with the role.
      */
-    public Person getTargetItem() {
+    public com.arsdigita.cms.basetypes.Person getTargetItem() {
         DataObject object = (DataObject) get(TARGETITEM);
-        return (Person) DomainObjectFactory.newInstance(object);
+        return (com.arsdigita.cms.basetypes.Person) DomainObjectFactory.newInstance(object);
     }
 
     /**
@@ -149,7 +149,7 @@ public class OrganizationRole extends ACSObject {
      *
      * @param item
      */
-    public void setTargetItem(Person item) {
+    public void setTargetItem(com.arsdigita.cms.basetypes.Person item) {
         setAssociation(TARGETITEM, item);
     }
 
@@ -177,7 +177,7 @@ public class OrganizationRole extends ACSObject {
      * @return The URI of the target item.
      */
     public String getURI(PageState s) {
-        Person item = getTargetItem();
+        com.arsdigita.cms.basetypes.Person item = getTargetItem();
 
         if (item == null) {
             logger.error(getOID() + " is a link between an organization and a person, but the associated person is null");
@@ -196,7 +196,7 @@ public class OrganizationRole extends ACSObject {
      * @param person
      * @return All roles a person is associated with.
      */
-    public static DataCollection getReferingRoles(Person person) {
+    public static DataCollection getReferingRoles(com.arsdigita.cms.basetypes.Person person) {
         Session session = SessionManager.getSession();
         DataCollection roles = session.retrieve(BASE_DATA_OBJECT_TYPE);
         Filter filter = roles.addInSubqueryFilter("id", "com.arsdigita.cms.contenttypes.getRefferingRoles");
@@ -308,9 +308,9 @@ public class OrganizationRole extends ACSObject {
             return;
         }
 
-        Assert.isTrue(currentKey != null, methodName + " cannot be " +
-                "called on an object that is not currently in the " +
-                "list");
+        Assert.isTrue(currentKey != null, methodName + " cannot be "
+                + "called on an object that is not currently in the "
+                + "list");
 
         int key = currentKey.intValue();
         logger.info(String.format("key = %d", key));

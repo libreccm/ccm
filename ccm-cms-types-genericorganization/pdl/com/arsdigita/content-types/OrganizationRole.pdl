@@ -19,10 +19,11 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.basetypes.Person;
 
 object type OrganizationRole extends ACSObject {
        String[1..1] roleName = ct_organizationroles.rolename VARCHAR(150);
-       Person[0..1] targetItem = join ct_organizationroles.target_item_id to ct_persons.person_id;       
+       Person[0..1] targetItem = join ct_organizationroles.target_item_id to cms_persons.person_id;
 
        Integer[0..1] roleOrder = ct_organizationroles.role_order INTEGER;
 

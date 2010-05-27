@@ -6,12 +6,10 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
-import com.arsdigita.cms.contenttypes.MembershipStatusCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.util.Assert;
 import com.arsdigita.util.LockableImpl;
 import org.apache.log4j.Logger;
 

@@ -22,6 +22,7 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.DomainObject;
+import com.arsdigita.cms.basetypes.Person;
 
 object type OrganizationalUnit extends ContentPage {
        String[0..1] organizationalunitName = ct_organizationalunits.organizationalunit_name VARCHAR(512);
@@ -37,12 +38,12 @@ object type OrganizationalUnit extends ContentPage {
 
 
 association {
-	    Person[0..1] direction = join ct_organizationalunits.direction_id to ct_persons.person_id;
-	    OrganizationalUnit[0..n] directedUnit = join ct_persons.person_id to ct_organizationalunits.direction_id;
+	    Person[0..1] direction = join ct_organizationalunits.direction_id to cms_persons.person_id;
+	    OrganizationalUnit[0..n] directedUnit = join cms_persons.person_id to ct_organizationalunits.direction_id;
 }
 
 association {
-	    Person[0..1] assistentDirection = join ct_organizationalunits.assistantDirection_id to ct_persons.person_id;
-	    OrganizationalUnit[0..n] assistenedDirectedUnit = join ct_persons.person_id to ct_organizationalunits.assistantDirection_id;
+	    Person[0..1] assistentDirection = join ct_organizationalunits.assistantDirection_id to cms_persons.person_id;
+	    OrganizationalUnit[0..n] assistenedDirectedUnit = join cms_persons.person_id to ct_organizationalunits.assistantDirection_id;
 }
 

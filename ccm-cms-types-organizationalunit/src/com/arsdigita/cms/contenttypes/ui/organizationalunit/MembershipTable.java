@@ -16,10 +16,10 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.SecurityManager;
 import org.apache.log4j.Logger;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.basetypes.Person;
 import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
 import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
-import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -96,7 +96,7 @@ public class MembershipTable extends Table {
 
             String url = membership.getURI(state);
             if (column == m_personCol.getModelIndex()) {
-                Member person = membership.getTargetItem();
+                Person person = membership.getTargetItem();
                 StringBuilder fullNameBuilder = new StringBuilder();
 
                 if(person.getTitlePre() != null) {

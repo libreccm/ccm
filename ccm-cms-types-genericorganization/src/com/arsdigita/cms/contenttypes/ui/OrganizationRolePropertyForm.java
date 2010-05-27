@@ -22,7 +22,6 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganization;
 import com.arsdigita.cms.contenttypes.GenericOrganizationGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.OrganizationRole;
-import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -88,7 +87,7 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
          * it to the constructor of the ItemSearchWidget. The ItemSearchWidget will only
          * display object of type Person or derivated types.
          */
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Person"));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.basetypes.Person"));
         add(this.m_itemSearch);
     }
 
@@ -182,7 +181,7 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         FormData data = e.getFormData();
 
         role.setRolename((String) m_rolename.getValue(state));
-        role.setTargetItem((Person) data.get(ITEM_SEARCH));
+        role.setTargetItem((com.arsdigita.cms.basetypes.Person) data.get(ITEM_SEARCH));
 
         role.save();
     }
