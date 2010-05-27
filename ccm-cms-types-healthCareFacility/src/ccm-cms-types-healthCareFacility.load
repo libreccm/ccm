@@ -4,13 +4,10 @@
     <table name="acs_objects"/>
     <table name="cms_items"/>
     <table name="ct_genericorganizations"/>
-    <table name="ct_baseAddresses"/>
-    <table name="ct_baseContacts"/>
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_healtCareFacilities"/>
-<!--    <table name="ct_healtCareFacility_baseContact_map"/> -->
+    <table name="ct_healthCareFacilities"/>
     <initializer class="com.arsdigita.cms.contenttypes.HealthCareFacilityInitializer"/>
   </provides>
   <scripts>

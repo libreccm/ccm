@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.*;
 import com.arsdigita.util.parameter.ResourceParameter;
 
 import org.apache.log4j.Logger;

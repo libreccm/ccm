@@ -18,12 +18,9 @@ import org.apache.log4j.Logger;
 public class HealthCareFacilityPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(HealthCareFacilityPropertyForm.class);
-
     private HealthCareFacilityPropertiesStep m_step;
-
     public static final String ADRESS = HealthCareFacility.ADDRESS;
-    public static final String CONTACTS= HealthCareFacility.CONTACTS;
-
+    public static final String CONTACTS = HealthCareFacility.CONTACTS;
     /**
      * ID of the form
      */
@@ -34,7 +31,7 @@ public class HealthCareFacilityPropertyForm extends BasicPageForm implements For
      *
      * @param itemModel
      */
-    public HealthCareFacilityPropertyForm(ItemSelectionModel itemModel)    {
+    public HealthCareFacilityPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
@@ -55,19 +52,19 @@ public class HealthCareFacilityPropertyForm extends BasicPageForm implements For
     public void addWidgets() {
         super.addWidgets();
 
-/*
+        /*
         add(new Label((String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.basic_properties.description").localize())));
         TextArea description = new TextArea(DESCRIPTION);
         description.setRows(5);
         description.setCols(30);
         add(description);
-*/
+         */
     }
 
     @Override
     public void init(FormSectionEvent e) throws FormProcessException {
         FormData data = e.getFormData();
-        HealthCareFacility healthCareFacility = (HealthCareFacility)super.initBasicWidgets(e);
+        HealthCareFacility healthCareFacility = (HealthCareFacility) super.initBasicWidgets(e);
 
 //        data.put(DESCRIPTION, healthCareFacility.getDescription());
     }
@@ -76,21 +73,21 @@ public class HealthCareFacilityPropertyForm extends BasicPageForm implements For
     public void process(FormSectionEvent e) throws FormProcessException {
         FormData data = e.getFormData();
 
-        HealthCareFacility healthCareFacility = (HealthCareFacility)super.processBasicWidgets(e);
+        HealthCareFacility healthCareFacility = (HealthCareFacility) super.processBasicWidgets(e);
 
-        if((healthCareFacility != null) && (getSaveCancelSection().getSaveButton().isSelected(e.getPageState()))) {
+        if ((healthCareFacility != null) && (getSaveCancelSection().getSaveButton().isSelected(e.getPageState()))) {
 //            healthCareFacility.setDescription((String)data.get(DESCRIPTION));
 
             healthCareFacility.save();
         }
 
-        if(m_step != null) {
+        if (m_step != null) {
             m_step.maybeForwardToNextStep(e.getPageState());
         }
     }
 
     public void submitted(FormSectionEvent e) throws FormProcessException {
-        if((m_step != null) && (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
+        if ((m_step != null) && (getSaveCancelSection().getCancelButton().isSelected(e.getPageState()))) {
             m_step.cancelStreamlinedCreation(e.getPageState());
         }
     }

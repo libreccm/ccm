@@ -18,9 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.*;
 import org.apache.log4j.Logger;
-import com.arsdigita.runtime.LegacyInitEvent;
 
 /**
  * Initializer of the HealthCareFacility content type.
@@ -47,16 +45,5 @@ public class HealthCareFacilityInitializer extends ContentTypeInitializer {
      */
     public String getStylesheet() {
         return "static/content-types/com/arsdigita/cms/contenttypes/HealthCareFacility.xsl";
-    }
-
-    /**
-     * Calls the init method of the parent class.
-     *
-     * @param evt The init event. LegacyInitEvent is marked deprecated. What should be used insted?
-     */
-    @Override
-    public void init(LegacyInitEvent evt) {
-        super.init(evt);
-
     }
 }

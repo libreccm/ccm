@@ -6,7 +6,6 @@
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
-
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormProcessException;
@@ -28,7 +27,7 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @author quasi
  */
 public class HealthCareFacilityDeleteAddressForm extends BasicPageForm implements FormProcessListener {
-    
+
     /**
      * ID of the form
      */
@@ -40,39 +39,39 @@ public class HealthCareFacilityDeleteAddressForm extends BasicPageForm implement
     }
 
     public void init(FormSectionEvent fse) {
-       
     }
-    
+
+    @Override
     public void addWidgets() {
-        add(new Label((String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address.label").localize()));
+        add(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address.label").localize()));
     }
-    
+
     /**
      * Creates the section with the save and the cancel button.
      */
+    @Override
     public void addSaveCancelSection() {
         try {
             getSaveCancelSection().getSaveButton().addPrintListener(new PrintListener() {
 
                 public void prepare(PrintEvent e) {
-                    HealthCareFacility healthCareFacility = (HealthCareFacility)getItemSelectionModel().getSelectedObject(e.getPageState());
+                    HealthCareFacility healthCareFacility = (HealthCareFacility) getItemSelectionModel().getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
-                        target.setButtonLabel((String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address.button_label").localize());
+                    target.setButtonLabel((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address.button_label").localize());
                 }
             });
         } catch (Exception ex) {
             throw new UncheckedWrapperException("this cannot happen", ex);
         }
     }
-    
+
     public final void process(final FormSectionEvent fse) throws FormProcessException {
-        
+
         final PageState state = fse.getPageState();
-        final HealthCareFacility healthCareFacility = (HealthCareFacility)getItemSelectionModel().getSelectedObject(state);
-        
+        final HealthCareFacility healthCareFacility = (HealthCareFacility) getItemSelectionModel().getSelectedObject(state);
+
         if (healthCareFacility != null && healthCareFacility.getAddress() != null) {
             healthCareFacility.unsetAddress();
         }
     }
-
 }

@@ -123,12 +123,12 @@ public class HealthCareFacility extends GenericOrganization {
     /* accessors *************************************************/
     
     // Get the address for this contact
-    public BaseAddress getAddress() {
-        return (BaseAddress)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
+    public com.arsdigita.cms.basetypes.Address getAddress() {
+        return (com.arsdigita.cms.basetypes.Address)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
     }
     
     // Set the address for this contact
-    public void setAddress(BaseAddress address) {
+    public void setAddress(com.arsdigita.cms.basetypes.Address address) {
         set(ADDRESS, address);
     }
     
@@ -138,13 +138,13 @@ public class HealthCareFacility extends GenericOrganization {
     }
         
     // Get all contacts for this health care facility
-    public BaseContactCollection getContacts() {
-        return new BaseContactCollection((DataCollection) get(CONTACTS));
+    public HealthCareFacilityContactCollection getContacts() {
+        return new HealthCareFacilityContactCollection((DataCollection) get(CONTACTS));
     }
     
     // Add a contact for this health care facility
-    public void addContact(BaseContact contact, String contactType) {
-        Assert.exists(contact, BaseContact.class);
+    public void addContact(com.arsdigita.cms.basetypes.Contact contact, String contactType) {
+        Assert.exists(contact, com.arsdigita.cms.basetypes.Contact.class);
         
         DataObject link = add(CONTACTS, contact);
         
@@ -156,8 +156,8 @@ public class HealthCareFacility extends GenericOrganization {
     }
     
     // Remove a contect for this health care facility
-    public void removeContactEntry(BaseContact contact) {
-        Assert.exists(contact, BaseContact.class);
+    public void removeContactEntry(com.arsdigita.cms.basetypes.Contact contact) {
+        Assert.exists(contact, com.arsdigita.cms.basetypes.Contact.class);
         remove(CONTACTS, contact);
     }
     

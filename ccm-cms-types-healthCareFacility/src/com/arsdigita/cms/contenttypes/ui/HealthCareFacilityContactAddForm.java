@@ -28,12 +28,11 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.BaseContact;
-import com.arsdigita.cms.contenttypes.util.BaseContactGlobalizationUtil;
+import com.arsdigita.cms.basetypes.util.BasetypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.contenttypes.BaseContactCollection;
+import com.arsdigita.cms.contenttypes.HealthCareFacilityContactCollection;
 import com.arsdigita.cms.contenttypes.HealthCareFacility;
 import com.arsdigita.cms.contenttypes.util.HealthCareFacilityGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
@@ -49,67 +48,67 @@ import org.apache.log4j.Logger;
  *
  * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  */
-public class HealthCareFacilityBaseContactAddForm extends BasicItemForm {
-    private static final Logger s_log = Logger.getLogger(HealthCareFacilityBaseContactAddForm.class);
-    
+public class HealthCareFacilityContactAddForm extends BasicItemForm {
+
+    private static final Logger s_log = Logger.getLogger(HealthCareFacilityContactAddForm.class);
     private HealthCareFacilityAddressPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "healthCareFacilityAddress";
-
     private ItemSelectionModel m_itemModel;
-    
+
     /** Creates a new instance of CategoryLocalizationAddForm */
-    public HealthCareFacilityBaseContactAddForm(ItemSelectionModel itemModel) {
-        
-        super("BaseContactEntryAddForm",itemModel);
+    public HealthCareFacilityContactAddForm(ItemSelectionModel itemModel) {
+
+        super("ContactEntryAddForm", itemModel);
         m_itemModel = itemModel;
-        
+
     }
-    
+
+    @Override
     protected void addWidgets() {
-        
+
         // Attach a Contact object
-        add(new Label((String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_contact").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.BaseContact"));
+        add(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_contact").localize()));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Contact"));
         add(this.m_itemSearch);
-        
+
         // Contact type field
-        add(new Label(BaseContactGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contact.type")));
-        ParameterModel contactTypeParam = new StringParameter(BaseContactCollection.CONTACT_TYPE);
+        add(new Label(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contact.type")));
+        ParameterModel contactTypeParam = new StringParameter(HealthCareFacilityContactCollection.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String)BaseContactGlobalizationUtil.globalize("cms.ui.select_one").localize())));
-        
+        contactType.addOption(new Option("", new Label((String) BasetypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+
         // Add the Options to the SingleSelect widget
         StringTokenizer keyList = HealthCareFacility.getConfig().getContactTypeKeys();
-        while(keyList.hasMoreElements()) {
+        while (keyList.hasMoreElements()) {
             String currentKey = keyList.nextToken();
-            contactType.addOption(new Option(currentKey, ((String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contactType.key." + currentKey).localize())));
+            contactType.addOption(new Option(currentKey, ((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contactType.key." + currentKey).localize())));
         }
-        
+
         add(contactType);
     }
-    
+
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        HealthCareFacility healthCareFacility = (HealthCareFacility)getItemSelectionModel().getSelectedObject(state);
-        
+        HealthCareFacility healthCareFacility = (HealthCareFacility) getItemSelectionModel().getSelectedObject(state);
+
         setVisible(state, true);
     }
-    
+
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        HealthCareFacility healthCareFacility = (HealthCareFacility)getItemSelectionModel().getSelectedObject(state);
-        
+        HealthCareFacility healthCareFacility = (HealthCareFacility) getItemSelectionModel().getSelectedObject(state);
+
         //
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            healthCareFacility.addContact((BaseContact)data.get(ITEM_SEARCH), 
-                                          (String)data.get(BaseContactCollection.CONTACT_TYPE));
+            healthCareFacility.addContact((com.arsdigita.cms.basetypes.Contact) data.get(ITEM_SEARCH),
+                    (String) data.get(HealthCareFacilityContactCollection.CONTACT_TYPE));
         }
-        
+
         init(fse);
     }
 }

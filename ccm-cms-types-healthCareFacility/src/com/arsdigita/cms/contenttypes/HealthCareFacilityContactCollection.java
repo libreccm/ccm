@@ -1,5 +1,5 @@
 /*
- * BaseContactCollection.java
+ * HealthCareFacilityContactCollection.java
  *
  * Created on 26. Juli 2009, 15:30
  *
@@ -17,16 +17,16 @@ import java.math.BigDecimal;
  *
  * @author quasi
  */
-public class BaseContactCollection extends DomainCollection {
+public class HealthCareFacilityContactCollection extends DomainCollection {
     
     public static final String ORDER = "link.contact_order asc";
     public static final String CONTACT_TYPE = "link.contact_type";
     public static final String CONTACT_ORDER = "link.contact_order";
     
     /**
-     * Creates a new instance of BaseContactCollection
+     * Creates a new instance of HealthCareFacilityContactCollection
      */
-    public BaseContactCollection(DataCollection dataCollection) {
+    public HealthCareFacilityContactCollection(DataCollection dataCollection) {
         super(dataCollection);
         
         m_dataCollection.addOrder(ORDER);
@@ -39,7 +39,7 @@ public class BaseContactCollection extends DomainCollection {
     
     // Set the contact type of the link
 //    public void setContactType(String contactType) {
-//        getBaseContact().set(CONTACT_TYPE, contactType);
+//        getContact().set(CONTACT_TYPE, contactType);
 //    }
     
     // Get the contact order of the link
@@ -55,11 +55,11 @@ public class BaseContactCollection extends DomainCollection {
     
     // Set the contact order of the link
 //    public void setContactOrder(long contactOrder) {
-//        getBaseContact().set(CONTACT_ORDER, String.valueOf(contactOrder));
+//        getContact().set(CONTACT_ORDER, String.valueOf(contactOrder));
 //    }
 
-    public BaseContact getBaseContact() {
-        return new BaseContact(m_dataCollection.getDataObject());
+    public com.arsdigita.cms.basetypes.Contact getContact() {
+        return new com.arsdigita.cms.basetypes.Contact(m_dataCollection.getDataObject());
     }
     
 }

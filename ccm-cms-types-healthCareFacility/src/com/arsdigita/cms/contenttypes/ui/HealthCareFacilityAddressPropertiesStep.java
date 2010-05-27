@@ -6,7 +6,6 @@
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
-
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.PageState;
@@ -18,9 +17,8 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.cms.contenttypes.BaseAddress;
 import com.arsdigita.cms.contenttypes.HealthCareFacility;
-import com.arsdigita.cms.contenttypes.util.BaseAddressGlobalizationUtil;
+import com.arsdigita.cms.basetypes.util.BasetypesGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.util.HealthCareFacilityGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 
@@ -29,85 +27,86 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
  * @author quasi
  */
 public class HealthCareFacilityAddressPropertiesStep extends SimpleEditStep {
-    
+
     public static final String ADD_ADDRESS_SHEET_NAME = "addAddress";
     public static final String EDIT_ADDRESS_SHEET_NAME = "editAddress";
     public static final String CHANGE_ADDRESS_SHEET_NAME = "changeAddress";
     public static final String DELETE_ADDRESS_SHEET_NAME = "deleteAddress";
-    
+
     /**
      * Creates a new instance of HealthCareFacilityAddressPropertiesStep
      */
     public HealthCareFacilityAddressPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         this(itemModel, parent, "");
     }
-    
+
     public HealthCareFacilityAddressPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
         super(itemModel, parent, prefix);
-        
+
 //        HealthCareFacility healthCareFacility = (HealthCareFacility)itemModel.getSelectedObject(state);
-        
+
 //XXX
 //        if(/*healthCareFacility.getAddress() == null*/ true) {
         BasicPageForm attachAddressSheet = new HealthCareFacilityAttachAddressPropertyForm(itemModel, this);
-        add(ADD_ADDRESS_SHEET_NAME, (String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.attach_address").localize(), new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
-        
+        add(ADD_ADDRESS_SHEET_NAME, (String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.attach_address").localize(), new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
+
         /* Set the displayComponent for this step */
 //            setDisplayComponent(getEmptyBaseAddressPropertySheet(itemModel));
-        
+
 //        } else {
-        
+
         // editAddress
         BasicPageForm editAddressSheet = new HealthCareFacilityEditAddressPropertyForm(itemModel, this);
-        add(EDIT_ADDRESS_SHEET_NAME, (String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.edit_address").localize(), new WorkflowLockedComponentAccess(editAddressSheet, itemModel), editAddressSheet.getSaveCancelSection().getCancelButton());
-        
+        add(EDIT_ADDRESS_SHEET_NAME, (String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.edit_address").localize(), new WorkflowLockedComponentAccess(editAddressSheet, itemModel), editAddressSheet.getSaveCancelSection().getCancelButton());
+
 //            BasicPageForm attachAddressSheet = new HealthCareFacilityAttachAddressPropertyForm(itemModel, this);
 //            add(CHANGE_ADDRESS_SHEET_NAME, (String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.reattach_address").localize(), new WorkflowLockedComponentAccess(attachAddressSheet, itemModel), attachAddressSheet.getSaveCancelSection().getCancelButton());
-        
+
         BasicPageForm deleteAddressSheet = new HealthCareFacilityDeleteAddressForm(itemModel, this);
-        add(DELETE_ADDRESS_SHEET_NAME, (String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address").localize(), new WorkflowLockedComponentAccess(deleteAddressSheet, itemModel), deleteAddressSheet.getSaveCancelSection().getCancelButton());
-        
+        add(DELETE_ADDRESS_SHEET_NAME, (String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.delete_address").localize(), new WorkflowLockedComponentAccess(deleteAddressSheet, itemModel), deleteAddressSheet.getSaveCancelSection().getCancelButton());
+
         /* Set the displayComponent for this step */
-        setDisplayComponent(getBaseAddressPropertySheet(itemModel));
+        setDisplayComponent(getAddressPropertySheet(itemModel));
 //        }
-        
+
     }
-    
-    public static Component getBaseAddressPropertySheet(ItemSelectionModel itemModel) {
-        
+
+    public static Component getAddressPropertySheet(ItemSelectionModel itemModel) {
+
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
-        
-        sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.address").localize(), "address." + BaseAddress.ADDRESS);
-        if(!HealthCareFacility.getConfig().getHideAddressPostalCode())
-            sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.postal_code").localize(), "address." + BaseAddress.POSTAL_CODE);
-        sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.city").localize(), "address." + BaseAddress.CITY);
-        if(!HealthCareFacility.getConfig().getHideAddressState())
-            sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.state").localize(), "address." + BaseAddress.STATE);
-        
-        if(!HealthCareFacility.getConfig().getHideAddressCountry()) {
-            sheet.add((String)BaseAddressGlobalizationUtil.globalize("cms.contenttypes.ui.baseAddress.iso_country_code").localize(),
-                    "address." + BaseAddress.ISO_COUNTRY_CODE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
-                public String format(DomainObject item,
-                        String attribute,
-                        PageState state) {
-                    BaseAddress baseAddress = ((HealthCareFacility)item).getAddress();
-                    if(baseAddress != null && baseAddress.getIsoCountryCode() != null) {
-                        return BaseAddress.getCountryNameFromIsoCode(baseAddress.getIsoCountryCode());
-                    } else {
-                        return (String)BaseAddressGlobalizationUtil.globalize
-                                ("cms.ui.unknown").localize();
-                    }
-                }
-            });
+
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.address").localize(), "address." + com.arsdigita.cms.basetypes.Address.ADDRESS);
+        if (!HealthCareFacility.getConfig().getHideAddressPostalCode()) {
+            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.postal_code").localize(), "address." + com.arsdigita.cms.basetypes.Address.POSTAL_CODE);
         }
-        
+        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.city").localize(), "address." + com.arsdigita.cms.basetypes.Address.CITY);
+        if (!HealthCareFacility.getConfig().getHideAddressState()) {
+            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.state").localize(), "address." + com.arsdigita.cms.basetypes.Address.STATE);
+        }
+
+        if (!HealthCareFacility.getConfig().getHideAddressCountry()) {
+            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.iso_country_code").localize(),
+                    "address." + com.arsdigita.cms.basetypes.Address.ISO_COUNTRY_CODE,
+                    new DomainObjectPropertySheet.AttributeFormatter() {
+
+                        public String format(DomainObject item,
+                                String attribute,
+                                PageState state) {
+                            com.arsdigita.cms.basetypes.Address address = ((HealthCareFacility) item).getAddress();
+                            if (address != null && address.getIsoCountryCode() != null) {
+                                return com.arsdigita.cms.basetypes.Address.getCountryNameFromIsoCode(address.getIsoCountryCode());
+                            } else {
+                                return (String) BasetypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                            }
+                        }
+                    });
+        }
+
         return sheet;
-        
+
     }
-    
-    public static Component getEmptyBaseAddressPropertySheet(ItemSelectionModel itemModel) {
-        return new Label(((String)HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.emptyAddress").localize()));
+
+    public static Component getEmptyAddressPropertySheet(ItemSelectionModel itemModel) {
+        return new Label(((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.emptyAddress").localize()));
     }
-    
 }

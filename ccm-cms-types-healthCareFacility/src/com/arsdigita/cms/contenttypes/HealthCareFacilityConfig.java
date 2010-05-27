@@ -124,7 +124,9 @@ public final class HealthCareFacilityConfig extends AbstractConfig {
             StringTokenizer keys = getContactTypeKeys();
             while(keys.hasMoreElements()) {
                 index++;
-                if(keys.nextToken().equals(key)) break;
+                if(keys.nextToken().equals(key)) {
+                    break;
+                }
             }
         }
         
