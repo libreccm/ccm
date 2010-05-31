@@ -18,7 +18,7 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.contenttypes.HealthCareFacility;
-import com.arsdigita.cms.basetypes.util.BasetypesGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.contenttypes.util.HealthCareFacilityGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 
@@ -75,28 +75,28 @@ public class HealthCareFacilityAddressPropertiesStep extends SimpleEditStep {
 
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.address").localize(), "address." + com.arsdigita.cms.basetypes.Address.ADDRESS);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.address").localize(), "address." + com.arsdigita.cms.contenttypes.GenericAddress.ADDRESS);
         if (!HealthCareFacility.getConfig().getHideAddressPostalCode()) {
-            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.postal_code").localize(), "address." + com.arsdigita.cms.basetypes.Address.POSTAL_CODE);
+            sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.postal_code").localize(), "address." + com.arsdigita.cms.contenttypes.GenericAddress.POSTAL_CODE);
         }
-        sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.city").localize(), "address." + com.arsdigita.cms.basetypes.Address.CITY);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.city").localize(), "address." + com.arsdigita.cms.contenttypes.GenericAddress.CITY);
         if (!HealthCareFacility.getConfig().getHideAddressState()) {
-            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.state").localize(), "address." + com.arsdigita.cms.basetypes.Address.STATE);
+            sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.state").localize(), "address." + com.arsdigita.cms.contenttypes.GenericAddress.STATE);
         }
 
         if (!HealthCareFacility.getConfig().getHideAddressCountry()) {
-            sheet.add((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.iso_country_code").localize(),
-                    "address." + com.arsdigita.cms.basetypes.Address.ISO_COUNTRY_CODE,
+            sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.iso_country_code").localize(),
+                    "address." + com.arsdigita.cms.contenttypes.GenericAddress.ISO_COUNTRY_CODE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 
                         public String format(DomainObject item,
                                 String attribute,
                                 PageState state) {
-                            com.arsdigita.cms.basetypes.Address address = ((HealthCareFacility) item).getAddress();
+                            com.arsdigita.cms.contenttypes.GenericAddress address = ((HealthCareFacility) item).getAddress();
                             if (address != null && address.getIsoCountryCode() != null) {
-                                return com.arsdigita.cms.basetypes.Address.getCountryNameFromIsoCode(address.getIsoCountryCode());
+                                return com.arsdigita.cms.contenttypes.GenericAddress.getCountryNameFromIsoCode(address.getIsoCountryCode());
                             } else {
-                                return (String) BasetypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                                return (String) ContenttypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
                             }
                         }
                     });

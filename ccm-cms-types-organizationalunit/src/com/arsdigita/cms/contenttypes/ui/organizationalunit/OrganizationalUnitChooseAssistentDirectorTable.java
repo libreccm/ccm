@@ -32,7 +32,7 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.basetypes.Person;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.OrganizationalUnit;
 import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -78,7 +78,7 @@ public class OrganizationalUnitChooseAssistentDirectorTable extends Table implem
 
         public TableModel makeModel(Table t, PageState s) {
             t.getRowSelectionModel().clearSelection(s);
-            DataCollection m_persons = SessionManager.getSession().retrieve(Person.BASE_DATA_OBJECT_TYPE);
+            DataCollection m_persons = SessionManager.getSession().retrieve(GenericPerson.BASE_DATA_OBJECT_TYPE);
             m_persons.addEqualsFilter(ContentItem.VERSION, ContentItem.DRAFT);
             return new OrganizationalUnitChooseAssistentDirectorTableModel(t, m_persons);
         }
@@ -88,7 +88,7 @@ public class OrganizationalUnitChooseAssistentDirectorTable extends Table implem
 
         private Table m_table;
         private DataCollection m_persons;
-        private Person m_person;
+        private GenericPerson m_person;
 
         private OrganizationalUnitChooseAssistentDirectorTableModel(Table t, DataCollection persons) {
             m_table = t;
@@ -101,7 +101,7 @@ public class OrganizationalUnitChooseAssistentDirectorTable extends Table implem
 
         public boolean nextRow() {
             if (m_persons.next()) {
-                m_person = (Person) DomainObjectFactory.newInstance(m_persons.getDataObject());
+                m_person = (GenericPerson) DomainObjectFactory.newInstance(m_persons.getDataObject());
                 return true;
             } else {
                 return false;
@@ -163,7 +163,7 @@ public class OrganizationalUnitChooseAssistentDirectorTable extends Table implem
             m_parent.showDisplayPane(state);
             BigDecimal personID = new BigDecimal (e.getRowKey().toString());
             OrganizationalUnit orgaunit = (OrganizationalUnit) this.m_selOrgaUnit.getSelectedObject(state);
-            Person person = (Person) DomainObjectFactory.newInstance(new OID(Person.BASE_DATA_OBJECT_TYPE, personID));
+            GenericPerson person = (GenericPerson) DomainObjectFactory.newInstance(new OID(GenericPerson.BASE_DATA_OBJECT_TYPE, personID));
             orgaunit.setAssistentDirection(person);
         }
     }

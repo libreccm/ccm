@@ -16,7 +16,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.SecurityManager;
 import org.apache.log4j.Logger;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.basetypes.Person;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Membership;
 import com.arsdigita.cms.contenttypes.MembershipStatus;
 import com.arsdigita.cms.contenttypes.OrganizationalUnitGlobalizationUtil;
@@ -96,7 +96,7 @@ public class MembershipTable extends Table {
 
             String url = membership.getURI(state);
             if (column == m_personCol.getModelIndex()) {
-                Person person = membership.getTargetItem();
+                GenericPerson person = membership.getTargetItem();
                 StringBuilder fullNameBuilder = new StringBuilder();
 
                 if(person.getTitlePre() != null) {

@@ -1,8 +1,8 @@
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.contenttypes.GenricOrganization;
-import com.arsdigita.cms.basetypes.Address;
-import com.arsdigita.cms.basetypes.Contact;
+import com.arsdigita.cms.contenttypes.GenericAddress;
+import com.arsdigita.cms.contenttypes.GenericContact;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
@@ -10,7 +10,7 @@ import com.arsdigita.cms.*;
 // HealthCareFacility Object
 object type HealthCareFacility extends GenericOrganization {
 
-    com.arsdigita.cms.basetypes.Address[0..1] address = join ct_healthCareFacilities.address_id
+    GenericAddress[0..1] address = join ct_healthCareFacilities.address_id
                               to cms_addresses.address_id;
 
     reference key ( ct_healthCareFacilities.hcf_id );
@@ -18,7 +18,7 @@ object type HealthCareFacility extends GenericOrganization {
 
 association {
 
-    com.arsdigita.cms.basetypes.Contact[0..n] contacts = join ct_healthCareFacilities.hcf_id
+    GenericContact[0..n] contacts = join ct_healthCareFacilities.hcf_id
                                to ct_healthCareFacility_contact_map.hcf_id,
                              join ct_healthCareFacility_contact_map.contact_id
                                to cms_contacts.contact_id;

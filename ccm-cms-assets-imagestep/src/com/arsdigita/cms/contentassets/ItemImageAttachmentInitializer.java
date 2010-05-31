@@ -22,7 +22,7 @@ import com.arsdigita.cms.AuthoringKit;
 import com.arsdigita.cms.AuthoringKitStepAssociation;
 import com.arsdigita.cms.AuthoringStep;
 import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.contenttypes.ContentAssetInitializer;
 // import com.arsdigita.cms.contentassets.ItemImageAttachment;
 import com.arsdigita.cms.contentassets.ui.ImageStep;
@@ -75,7 +75,7 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
         DataCollection steps = SessionManager.getSession().retrieve
             ( AuthoringStep.BASE_DATA_OBJECT_TYPE );
 
-        // Don't use defined constant to reduce dependency on Article
+        // Don't use defined constant to reduce dependency on GenericArticle
         steps.addEqualsFilter( "component",
                                "com.arsdigita.cms.ui.authoring.ArticleImage" );
 
@@ -90,14 +90,14 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
                 DataObject kitStep = kits.getDataObject();
                 AuthoringKitStepAssociation kitStepAsso = new AuthoringKitStepAssociation(kitStep);
                 // Check whether the content type is (persistence-wise) subtype
-                // of com.ad.cms.Article.  This is lame, but I couldn't find a better API to do this:
+                // of com.ad.cms.GenericArticle.  This is lame, but I couldn't find a better API to do this:
                 AuthoringKit kit = new AuthoringKit (kitStepAsso.getKitID());
                 try {
-                    ObjectType.verifySubtype(Article.BASE_DATA_OBJECT_TYPE,
+                    ObjectType.verifySubtype(GenericArticle.BASE_DATA_OBJECT_TYPE,
                                              kit.getContentType().getAssociatedObjectType());
                     kitStepAsso.delete();
                 } catch (PersistenceException pe) {
-                    // Do nothing, the content type is not subtyping com.arsdigita.cms.Article
+                    // Do nothing, the content type is not subtyping com.arsdigita.cms.GenericArticle
                 }
             }
 

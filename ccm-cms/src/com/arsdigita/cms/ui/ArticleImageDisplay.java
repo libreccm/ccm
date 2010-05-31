@@ -19,7 +19,7 @@
 package com.arsdigita.cms.ui;
 
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.util.Assert;
@@ -28,7 +28,7 @@ import com.arsdigita.xml.Element;
 
 /**
  * Extends {@link ImageDisplay} to display the first
- * (according to the order attribute) image associated with an {@link Article}
+ * (according to the order attribute) image associated with an {@link GenericArticle}
  * The typical usage for this component is
  * <blockquote><pre><code>ArticleImageDisplay d = new ArticleImageDisplay(myItemSelectionModel, false);</code></pre></blockquote>
  * <p>
@@ -47,7 +47,7 @@ public class ArticleImageDisplay extends ImageDisplay {
      * Construct a new <code>ArticleImageDisplay</code>
      *
      * @param article the {@link ItemSelectionModel} which
-     *   supplies the {@link Article}
+     *   supplies the {@link GenericArticle}
      *
      * @param assets the {@link ItemSelectionModel} which
      *   supplies the {@link ImageAsset} for the article; it is
@@ -74,9 +74,9 @@ public class ArticleImageDisplay extends ImageDisplay {
      * @return the currently selected article
      * @post ( return != null )
      */
-    protected Article getArticle(PageState state) {
-        Article article = (Article) m_article.getSelectedObject(state);
-        Assert.exists(article, "Article");
+    protected GenericArticle getArticle(PageState state) {
+        GenericArticle article = (GenericArticle) m_article.getSelectedObject(state);
+        Assert.exists(article, "GenericArticle");
         return article;
     }
 
@@ -89,7 +89,7 @@ public class ArticleImageDisplay extends ImageDisplay {
 
         super.generateImagePropertiesXML(image, state, element);
 
-        Article article =  getArticle(state);
+        GenericArticle article =  getArticle(state);
         String caption = article.getCaption(image);
         if ( caption != null ) {
             element.addAttribute("caption", caption);

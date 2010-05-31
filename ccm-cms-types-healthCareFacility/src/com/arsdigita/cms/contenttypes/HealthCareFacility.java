@@ -123,12 +123,12 @@ public class HealthCareFacility extends GenericOrganization {
     /* accessors *************************************************/
     
     // Get the address for this contact
-    public com.arsdigita.cms.basetypes.Address getAddress() {
-        return (com.arsdigita.cms.basetypes.Address)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
+    public com.arsdigita.cms.contenttypes.GenericAddress getAddress() {
+        return (com.arsdigita.cms.contenttypes.GenericAddress)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
     }
     
     // Set the address for this contact
-    public void setAddress(com.arsdigita.cms.basetypes.Address address) {
+    public void setAddress(com.arsdigita.cms.contenttypes.GenericAddress address) {
         set(ADDRESS, address);
     }
     
@@ -143,8 +143,8 @@ public class HealthCareFacility extends GenericOrganization {
     }
     
     // Add a contact for this health care facility
-    public void addContact(com.arsdigita.cms.basetypes.Contact contact, String contactType) {
-        Assert.exists(contact, com.arsdigita.cms.basetypes.Contact.class);
+    public void addContact(com.arsdigita.cms.contenttypes.GenericContact contact, String contactType) {
+        Assert.exists(contact, com.arsdigita.cms.contenttypes.GenericContact.class);
         
         DataObject link = add(CONTACTS, contact);
         
@@ -156,8 +156,8 @@ public class HealthCareFacility extends GenericOrganization {
     }
     
     // Remove a contect for this health care facility
-    public void removeContactEntry(com.arsdigita.cms.basetypes.Contact contact) {
-        Assert.exists(contact, com.arsdigita.cms.basetypes.Contact.class);
+    public void removeContactEntry(com.arsdigita.cms.contenttypes.GenericContact contact) {
+        Assert.exists(contact, com.arsdigita.cms.contenttypes.GenericContact.class);
         remove(CONTACTS, contact);
     }
     

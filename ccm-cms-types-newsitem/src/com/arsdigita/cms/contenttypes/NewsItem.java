@@ -55,7 +55,7 @@ import java.util.Date;
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * @version $Revision: #7 $ $Date: 2004/08/17 $
  **/
-public class NewsItem extends com.arsdigita.cms.basetypes.Article {
+public class NewsItem extends GenericArticle {
 
     /** PDL property name for lead */
     public static final String LEAD = "lead";

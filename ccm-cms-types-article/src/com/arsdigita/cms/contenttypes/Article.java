@@ -32,11 +32,11 @@ import java.math.BigDecimal;
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  */
-public class Article extends com.arsdigita.cms.basetypes.Article {
+public class Article extends GenericArticle {
 
 
     private final static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(Article.class);
+        org.apache.log4j.Logger.getLogger(GenericArticle.class);
 
     /** PDL property name for lead */
     public static final String LEAD = "lead";

@@ -32,7 +32,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -125,7 +125,7 @@ public abstract class BasicImageForm extends Form
         FormData data = e.getFormData();
         PageState state = e.getPageState();
 
-        Article item = getArticle(state);
+        GenericArticle item = getArticle(state);
         ImageAsset asset = getImageAsset(state);
 
         if(item != null && asset != null) {
@@ -145,7 +145,7 @@ public abstract class BasicImageForm extends Form
         FormData data = e.getFormData();
         PageState state = e.getPageState();
 
-        Article item = getArticle(state);
+        GenericArticle item = getArticle(state);
         ImageAsset asset = getImageAsset(state);
 
         if(item != null && asset != null) {
@@ -178,8 +178,8 @@ public abstract class BasicImageForm extends Form
      * @param state The page state
      * @return the currently selected item
      */
-    public Article getArticle(PageState state) {
-        return (Article)m_itemModel.getSelectedObject(state);
+    public GenericArticle getArticle(PageState state) {
+        return (GenericArticle)m_itemModel.getSelectedObject(state);
     }
 
     /**

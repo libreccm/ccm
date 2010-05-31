@@ -83,11 +83,11 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
 
         add(new Label(GenericOrganizationGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganization.person")));
         /* Create the ItemSearchWidget. The ContentType.findByAssociatedObjecType
-         * gets the ContentType of com.arsdigita.cms.contenttypes.Person and passes
+         * gets the ContentType of com.arsdigita.cms.contenttypes.GenericPerson and passes
          * it to the constructor of the ItemSearchWidget. The ItemSearchWidget will only
-         * display object of type Person or derivated types.
+         * display object of type GenericPerson or derivated types.
          */
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.basetypes.Person"));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericPerson"));
         add(this.m_itemSearch);
     }
 
@@ -142,8 +142,8 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         return this.m_roleModel;
     }
 
-    /*protected Person getPerson(PageState s) {
-    return (Person) m_itemModel.getSelectedObject(s);
+    /*protected GenericPerson getPerson(PageState s) {
+    return (GenericPerson) m_itemModel.getSelectedObject(s);
     }*/
     /**
      *
@@ -161,7 +161,7 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
      * @return Newly created OrganizationRole.
      */
     protected OrganizationRole createOrganizationRole(PageState s) {
-        //Person person = this.getPerson(s);
+        //GenericPerson person = this.getPerson(s);
         //Assert.exists(person);
         GenericOrganization orga = this.getOrganization(s);
         Assert.exists(orga);
@@ -181,7 +181,7 @@ public class OrganizationRolePropertyForm extends FormSection implements FormIni
         FormData data = e.getFormData();
 
         role.setRolename((String) m_rolename.getValue(state));
-        role.setTargetItem((com.arsdigita.cms.basetypes.Person) data.get(ITEM_SEARCH));
+        role.setTargetItem((com.arsdigita.cms.contenttypes.GenericPerson) data.get(ITEM_SEARCH));
 
         role.save();
     }

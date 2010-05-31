@@ -32,7 +32,7 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import java.util.Iterator;
 import java.util.Map;
 import com.arsdigita.cms.contenttypes.HealthCareFacility;
-import com.arsdigita.cms.basetypes.util.BasetypesGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 
 import org.apache.log4j.Logger;
 
@@ -44,11 +44,11 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
 
     private static final Logger logger = Logger.getLogger(HealthCareFacilityPropertyForm.class);
     private HealthCareFacilityAddressPropertiesStep m_step;
-    public static final String ADDRESS = com.arsdigita.cms.basetypes.Address.ADDRESS;
-    public static final String POSTAL_CODE = com.arsdigita.cms.basetypes.Address.POSTAL_CODE;
-    public static final String CITY = com.arsdigita.cms.basetypes.Address.CITY;
-    public static final String STATE = com.arsdigita.cms.basetypes.Address.STATE;
-    public static final String ISO_COUNTRY_CODE = com.arsdigita.cms.basetypes.Address.ISO_COUNTRY_CODE;
+    public static final String ADDRESS = com.arsdigita.cms.contenttypes.GenericAddress.ADDRESS;
+    public static final String POSTAL_CODE = com.arsdigita.cms.contenttypes.GenericAddress.POSTAL_CODE;
+    public static final String CITY = com.arsdigita.cms.contenttypes.GenericAddress.CITY;
+    public static final String STATE = com.arsdigita.cms.contenttypes.GenericAddress.STATE;
+    public static final String ISO_COUNTRY_CODE = com.arsdigita.cms.contenttypes.GenericAddress.ISO_COUNTRY_CODE;
     /**
      * ID of the form
      */
@@ -77,7 +77,7 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
 
     @Override
     public void addWidgets() {
-        add(new Label((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.address").localize()));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.address").localize()));
         ParameterModel addressParam = new StringParameter(ADDRESS);
         addressParam.addParameterListener(new NotNullValidationListener());
         addressParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
@@ -87,35 +87,35 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
         add(address);
 
         if (!HealthCareFacility.getConfig().getHideAddressPostalCode()) {
-            add(new Label((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.postal_code").localize()));
+            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.postal_code").localize()));
             ParameterModel postalCodeParam = new StringParameter(POSTAL_CODE);
             TextField postalCode = new TextField(postalCodeParam);
             /* XXX NumberListener ?*/
             add(postalCode);
         }
 
-        add(new Label((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.city").localize()));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.city").localize()));
         ParameterModel cityParam = new StringParameter(CITY);
         TextField city = new TextField(cityParam);
         add(city);
 
         if (!HealthCareFacility.getConfig().getHideAddressState()) {
-            add(new Label((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.state").localize()));
+            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.state").localize()));
             ParameterModel stateParam = new StringParameter(STATE);
             TextField state = new TextField(stateParam);
             add(state);
         }
 
         if (!HealthCareFacility.getConfig().getHideAddressCountry()) {
-            add(new Label((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.iso_country_code").localize()));
+            add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.iso_country_code").localize()));
             ParameterModel countryParam = new StringParameter(ISO_COUNTRY_CODE);
             countryParam.addParameterListener(new StringInRangeValidationListener(0, 2));
 
             SingleSelect country = new SingleSelect(countryParam);
 
-            country.addOption(new Option("", new Label((String) BasetypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+            country.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
 
-            Iterator countries = com.arsdigita.cms.basetypes.Address.getSortedListOfCountries(null).entrySet().iterator();
+            Iterator countries = com.arsdigita.cms.contenttypes.GenericAddress.getSortedListOfCountries(null).entrySet().iterator();
             while (countries.hasNext()) {
                 Map.Entry<String, String> elem = (Map.Entry<String, String>) countries.next();
                 country.addOption(new Option(elem.getValue().toString(), elem.getKey().toString()));
@@ -128,7 +128,7 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
                             ParameterData data = e.getParameterData();
                             String isoCode = (String) data.getValue();
                             if (isoCode == null || isoCode.length() == 0) {
-                                data.addError((String) BasetypesGlobalizationUtil.globalize("cms.basetypes.ui.address.error_iso_country").localize());
+                                data.addError((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.address.error_iso_country").localize());
                             }
                         }
                     });
@@ -148,7 +148,7 @@ public class HealthCareFacilityEditAddressPropertyForm extends BasicPageForm imp
             data.put(POSTAL_CODE, healthCareFacility.getAddress().getPostalCode());
             data.put(CITY, healthCareFacility.getAddress().getCity());
             data.put(STATE, healthCareFacility.getAddress().getState());
-            if (!com.arsdigita.cms.basetypes.Address.getConfig().getHideCountryCodeSelection()) {
+            if (!com.arsdigita.cms.contenttypes.GenericAddress.getConfig().getHideCountryCodeSelection()) {
                 data.put(ISO_COUNTRY_CODE, healthCareFacility.getAddress().getIsoCountryCode());
             }
         }

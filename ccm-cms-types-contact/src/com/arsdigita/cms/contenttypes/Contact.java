@@ -27,10 +27,10 @@ import java.math.BigDecimal;
 
 
 /**
- * This content type represents an Contact
+ * This content type represents an GenericContact
  *
  */
-public class Contact extends com.arsdigita.cms.basetypes.Contact {
+public class Contact extends GenericContact {
 
     /** Data object type for tihs domain object */
     public static final String BASE_DATA_OBJECT_TYPE

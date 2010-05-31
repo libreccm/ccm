@@ -19,7 +19,6 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.basetypes.Person;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -31,7 +30,7 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter
  */
-public class Member extends Person {
+public class Member extends GenericPerson {
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Member";

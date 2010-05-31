@@ -22,7 +22,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.ParameterSingleSelectionModel;
 import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ImageAssetCollection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -120,10 +120,10 @@ public class SingleImageSelectionModel extends ItemSelectionModel {
             // Load the object from the item.
             com.arsdigita.cms.ContentItem temp =
                 (com.arsdigita.cms.ContentItem)m_articleModel.getSelectedObject(state);
-            Article item = null;
+            GenericArticle item = null;
             if ( temp != null ) {
                 item =
-                    (Article) com.arsdigita.cms.ACSObjectFactory.castContentItem(temp);
+                    (GenericArticle) com.arsdigita.cms.ACSObjectFactory.castContentItem(temp);
             }
             if ( item != null ) {
                 ImageAssetCollection images = item.getImages();

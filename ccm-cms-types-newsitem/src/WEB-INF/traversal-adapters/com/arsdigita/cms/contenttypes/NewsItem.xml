@@ -10,7 +10,7 @@
   <!-- First off the adapters for ContentItemPanel -->
     <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
         <xrd:adapter objectType="com.arsdigita.cms.contenttypes.NewsItem"
-                     extends="com.arsdigita.cms.basetypes.Article"
+                     extends="com.arsdigita.cms.contenttypes.GenericArticle"
                      traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
             <xrd:formatter property="/object/newsDate"
                            class="com.arsdigita.xml.formatters.DateFormatter"/>

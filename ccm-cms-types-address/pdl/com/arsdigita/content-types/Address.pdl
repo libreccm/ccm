@@ -1,10 +1,9 @@
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.basetypes.Address;
 import com.arsdigita.cms.ContentPage;
 
 // Address object
-object type Address extends com.arsdigita.cms.basetypes.Address {
+object type Address extends GenericAddress {
 
     reference key ( ct_addresses.address_id );
 }

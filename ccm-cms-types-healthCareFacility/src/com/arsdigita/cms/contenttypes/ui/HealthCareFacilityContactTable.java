@@ -106,7 +106,7 @@ public class HealthCareFacilityContactTable extends Table implements TableAction
         final private int MAX_DESC_LENGTH = 25;
         private Table m_table;
         private HealthCareFacilityContactCollection m_contactCollection;
-        private com.arsdigita.cms.basetypes.Contact m_contact;
+        private com.arsdigita.cms.contenttypes.GenericContact m_contact;
 
         private HealthCareFacilityTableModel(Table t, PageState ps, HealthCareFacility healthCareFacility) {
             m_table = t;
@@ -228,9 +228,9 @@ public class HealthCareFacilityContactTable extends Table implements TableAction
 
         PageState state = evt.getPageState();
 
-        // Get selected Contact
-        com.arsdigita.cms.basetypes.Contact contact =
-                new com.arsdigita.cms.basetypes.Contact(new BigDecimal(evt.getRowKey().toString()));
+        // Get selected GenericContact
+        com.arsdigita.cms.contenttypes.GenericContact contact =
+                new com.arsdigita.cms.contenttypes.GenericContact(new BigDecimal(evt.getRowKey().toString()));
 
         // Get HealthCareFacility
         HealthCareFacility healthCareFacility = (HealthCareFacility) m_itemModel.getSelectedObject(state);

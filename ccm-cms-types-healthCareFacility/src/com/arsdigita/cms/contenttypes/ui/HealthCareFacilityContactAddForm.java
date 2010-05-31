@@ -28,7 +28,7 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.basetypes.util.BasetypesGlobalizationUtil;
+import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
@@ -68,17 +68,17 @@ public class HealthCareFacilityContactAddForm extends BasicItemForm {
     @Override
     protected void addWidgets() {
 
-        // Attach a Contact object
+        // Attach a GenericContact object
         add(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_contact").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.Contact"));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericContact"));
         add(this.m_itemSearch);
 
-        // Contact type field
+        // GenericContact type field
         add(new Label(HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(HealthCareFacilityContactCollection.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String) BasetypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
 
         // Add the Options to the SingleSelect widget
         StringTokenizer keyList = HealthCareFacility.getConfig().getContactTypeKeys();
@@ -105,7 +105,7 @@ public class HealthCareFacilityContactAddForm extends BasicItemForm {
 
         //
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            healthCareFacility.addContact((com.arsdigita.cms.basetypes.Contact) data.get(ITEM_SEARCH),
+            healthCareFacility.addContact((com.arsdigita.cms.contenttypes.GenericContact) data.get(ITEM_SEARCH),
                     (String) data.get(HealthCareFacilityContactCollection.CONTACT_TYPE));
         }
 

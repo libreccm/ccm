@@ -27,7 +27,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.cms.basetypes.ArticleImageAssociation;
+import com.arsdigita.cms.contenttypes.GenericArticleImageAssociation;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ImageAsset;
@@ -172,7 +172,7 @@ public class ArticleImageChooser extends SimpleContainer {
             try {
                 ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance
                     (new OID(ImageAsset.BASE_DATA_OBJECT_TYPE,imageId));
-                if (!ArticleImageAssociation.imageHasAssociation(asset)) {
+                if (!GenericArticleImageAssociation.imageHasAssociation(asset)) {
                     asset.setLive(null);
                     ItemCollection pendingVersions = asset.getPendingVersions();
                     while(pendingVersions.next()) {

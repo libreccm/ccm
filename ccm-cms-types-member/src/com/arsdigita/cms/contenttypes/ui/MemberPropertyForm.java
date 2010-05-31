@@ -28,7 +28,6 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.basetypes.ui.PersonPropertyForm;
 import com.arsdigita.cms.contenttypes.Member;
 import com.arsdigita.cms.contenttypes.util.MemberGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
@@ -39,7 +38,7 @@ import org.apache.log4j.Logger;
  *
  * @author: Jens Pelzetter
  */
-public class MemberPropertyForm extends PersonPropertyForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class MemberPropertyForm extends GenericPersonPropertyForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(MemberPropertyForm.class);
     private MemberPropertiesStep m_step;

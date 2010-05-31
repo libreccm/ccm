@@ -19,11 +19,9 @@
 // $DateTime: 2004/08/17 23:15:09 $
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.basetypes.*;
-
 // object type to hold extended attributes of news content type
 
-object type NewsItem extends com.arsdigita.cms.basetypes.Article {
+object type NewsItem extends GenericArticle {
     // The tease/lead paragraph for the news item
     String [0..1] lead        = ct_news.tease_lead VARCHAR(4000);
     // The date for the news item

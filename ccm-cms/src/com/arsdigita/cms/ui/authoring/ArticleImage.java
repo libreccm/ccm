@@ -32,7 +32,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ImageAssetCollection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -180,7 +180,7 @@ public class ArticleImage extends SimpleContainer implements AuthoringStepCompon
                     PageState state = event.getPageState();
 		    // get the image fresh from the db each time this component displays;
 		    // otherwise rollback doesn't appear to work on this pane
-		    Article art = (Article)(m_article.getSelectedObject(state));
+		    GenericArticle art = (GenericArticle)(m_article.getSelectedObject(state));
 		    ImageAssetCollection col = art.getImages();
 		    ImageAsset img = null;
 		    if (col.next()) {
@@ -366,7 +366,7 @@ public class ArticleImage extends SimpleContainer implements AuthoringStepCompon
                     public void actionPerformed(ActionEvent event) {
                         PageState state = event.getPageState();
                         ImageAsset img = getImageAsset(state);
-                        Article articleTarget = getArticle(state);
+                        GenericArticle articleTarget = getArticle(state);
                         articleTarget.removeImage(img);
 			articleTarget.save();
                         m_assetsWithImage.setSelectedObject(state, null);
@@ -419,9 +419,9 @@ public class ArticleImage extends SimpleContainer implements AuthoringStepCompon
             return image;
         }
 
-        private Article getArticle(PageState state) {
-            Article article = (Article) m_articleWithImage.getSelectedObject(state);
-            Assert.exists(article, "Article");
+        private GenericArticle getArticle(PageState state) {
+            GenericArticle article = (GenericArticle) m_articleWithImage.getSelectedObject(state);
+            Assert.exists(article, "GenericArticle");
             return article;
         }
 

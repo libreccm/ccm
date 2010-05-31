@@ -26,7 +26,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ReusableImageAsset;
@@ -117,7 +117,7 @@ public class ImageUploadForm extends BasicImageForm implements FormSubmissionLis
 
         FormData data = event.getFormData();
         PageState state = event.getPageState();
-        Article item = this.getArticle(state);
+        GenericArticle item = this.getArticle(state);
         ImageAsset a = null;
 
         try {

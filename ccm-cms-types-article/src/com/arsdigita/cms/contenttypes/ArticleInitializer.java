@@ -21,7 +21,7 @@ package com.arsdigita.cms.contenttypes;
 import org.apache.log4j.Logger;
 
 /**
- * Initializes the Article content type.
+ * Initializes the GenericArticle content type.
  * Defines the content type specific properties and just uses the super class
  * methods to register the content type with the (transient) content type store
  * (map).
@@ -34,7 +34,7 @@ public class ArticleInitializer extends ContentTypeInitializer {
     private static final Logger s_log = Logger.getLogger(ArticleInitializer.class);
 
     public ArticleInitializer() {
-        super("ccm-cms-types-article.pdl.mf", Article.BASE_DATA_OBJECT_TYPE);
+        super("ccm-cms-types-article.pdl.mf", GenericArticle.BASE_DATA_OBJECT_TYPE);
     }
 
 

@@ -58,8 +58,8 @@ public class HealthCareFacilityContactCollection extends DomainCollection {
 //        getContact().set(CONTACT_ORDER, String.valueOf(contactOrder));
 //    }
 
-    public com.arsdigita.cms.basetypes.Contact getContact() {
-        return new com.arsdigita.cms.basetypes.Contact(m_dataCollection.getDataObject());
+    public com.arsdigita.cms.contenttypes.GenericContact getContact() {
+        return new com.arsdigita.cms.contenttypes.GenericContact(m_dataCollection.getDataObject());
     }
     
 }

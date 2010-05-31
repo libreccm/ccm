@@ -2,7 +2,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.basetypes.Person;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
@@ -121,18 +121,18 @@ public class Membership extends ACSObject {
         setAssociation(MEMBERSHIP_OWNER, ou);
     }
 
-    public Person getTargetItem() {
+    public GenericPerson getTargetItem() {
         DataObject obj = (DataObject) get(TARGET_ITEM);
-        return (Person) DomainObjectFactory.newInstance(obj);
+        return (GenericPerson) DomainObjectFactory.newInstance(obj);
     }
 
-    public void setTargetItem(Person person) {
-        Assert.exists(person, Person.class);
+    public void setTargetItem(GenericPerson person) {
+        Assert.exists(person, GenericPerson.class);
         setAssociation(TARGET_ITEM, person);
     }
 
     public String getURI(PageState state) {
-        Person person = this.getTargetItem();
+        GenericPerson person = this.getTargetItem();
 
         if (person == null) {
             logger.error(getOID() + " is a link between a OrganizationalUnit and a Person, but the associated Person is null");
@@ -146,7 +146,7 @@ public class Membership extends ACSObject {
         return URL.there(state.getRequest(), url).toString();
     }
 
-    public static DataCollection getReferingPersons(Person person) {
+    public static DataCollection getReferingPersons(GenericPerson person) {
         Session session = SessionManager.getSession();
         DataCollection memberships = session.retrieve(BASE_DATA_OBJECT_TYPE);
         Filter filter = memberships.addInSubqueryFilter("id", "com.arsdigita.cms.contenttypes.getReferingPersons");

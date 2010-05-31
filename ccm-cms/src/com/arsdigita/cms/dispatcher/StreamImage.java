@@ -19,7 +19,7 @@
 package com.arsdigita.cms.dispatcher;
 
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ImageAssetCollection;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -121,7 +121,7 @@ public class StreamImage extends ResourceHandlerImpl {
             oid = new OID(ImageAsset.BASE_DATA_OBJECT_TYPE, imageId);
         }
         Transaction transaction = null;
-        Article article = null;
+        GenericArticle article = null;
         // XXX: add back rollback
         /*if (transactionID != null) {
             try {
@@ -129,7 +129,7 @@ public class StreamImage extends ResourceHandlerImpl {
                     new Transaction(transactionID);
                 // we have a transaction so let's see if we have an article
                 if (objectID != null) {
-                    article = new Article(objectID);
+                    article = new GenericArticle(objectID);
                     article.rollBackTo(transaction);
                 }
             } catch (DataObjectNotFoundException e) {

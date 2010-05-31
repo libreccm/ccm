@@ -75,7 +75,7 @@ public class HealthCareFacilityAttachAddressPropertyForm extends BasicPageForm i
     @Override
     public void addWidgets() {
         add(new Label((String) HealthCareFacilityGlobalizationUtil.globalize("cms.contenttypes.ui.healthCareFacility.select_address").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.basetypes.Address"));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericAddress"));
         add(this.m_itemSearch);
     }
 
@@ -97,7 +97,7 @@ public class HealthCareFacilityAttachAddressPropertyForm extends BasicPageForm i
         HealthCareFacility healthCareFacility = (HealthCareFacility) getItemSelectionModel().getSelectedObject(state);
 
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            healthCareFacility.setAddress((com.arsdigita.cms.basetypes.Address) data.get(ITEM_SEARCH));
+            healthCareFacility.setAddress((com.arsdigita.cms.contenttypes.GenericAddress) data.get(ITEM_SEARCH));
         }
         init(fse);
     }

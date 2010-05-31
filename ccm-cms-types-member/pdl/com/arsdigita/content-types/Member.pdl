@@ -19,13 +19,12 @@
 
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.basetypes.*;
 import com.arsdigita.cms.ContentPage;
 
-object type Member extends Person {
+object type Member extends GenericPerson {
 
-//    Address address [0..1] = join Address ct_members.address_id
-//                                              to cms_addresses.address_id;
+//    GenericContact contact [0..1] = join ct_members.contact_id
+//                                      to cms_contacts.contact_id;
 
     reference key (ct_members.member_id);
 }

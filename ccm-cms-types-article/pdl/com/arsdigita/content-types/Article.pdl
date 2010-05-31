@@ -19,9 +19,7 @@
 // $DateTime: 2004/08/17 23:15:09 $
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.basetypes.*;
-
-object type Article extends com.arsdigita.cms.basetypes.Article {
+object type Article extends GenericArticle {
     String [0..1] lead            = ct_articles.lead VARCHAR(1000);
 
     reference key (ct_articles.item_id);

@@ -30,7 +30,7 @@ import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.basetypes.ArticleImageAssociation;
+import com.arsdigita.cms.contenttypes.GenericArticleImageAssociation;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.Utilities;
@@ -208,7 +208,7 @@ public class ImageBrowser extends Table {
                 try {
                     ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance
                         (new OID(ImageAsset.BASE_DATA_OBJECT_TYPE,(BigDecimal) key));
-                    if (!ArticleImageAssociation.imageHasAssociation(asset)) {
+                    if (!GenericArticleImageAssociation.imageHasAssociation(asset)) {
                         canDelete = true;
                     }
                 } catch (DataObjectNotFoundException e) {

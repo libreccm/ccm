@@ -67,7 +67,7 @@ class CompoundFilterImpl extends FilterImpl implements CompoundFilter {
 
 
     /**
-     *  Creates a filter that will AND together all filters passed in to it
+     *  Creates a filter that will OR together all filters passed in to it
      *  For instance, if developers want to combine two filters in to one,
      *  they can write
      *  <pre><code>

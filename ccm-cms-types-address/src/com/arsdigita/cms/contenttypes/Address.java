@@ -37,13 +37,13 @@ import java.math.BigDecimal;
  * 
  * @author Sören Bernstein
  **/
-public class Address extends com.arsdigita.cms.basetypes.Address {
+public class Address extends GenericAddress {
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Address";
 
     /**
-     * Default constructor. This creates a new (empty) Address.
+     * Default constructor. This creates a new (empty) GenericAddress.
      **/
     public Address() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -53,7 +53,7 @@ public class Address extends com.arsdigita.cms.basetypes.Address {
      * Constructor. The contained <code>DataObject</code> is retrieved
      * from the persistent storage mechanism with an <code>OID</code>
      * specified by <i>id</i> and
-     * <code>Address.BASE_DATA_OBJECT_TYPE</code>.
+     * <code>GenericAddress.BASE_DATA_OBJECT_TYPE</code>.
      *
      * @param id The <code>id</code> for the retrieved
      * <code>DataObject</code>.

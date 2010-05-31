@@ -23,7 +23,7 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.cms.basetypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -56,7 +56,7 @@ public class ImagePropertiesForm extends BasicImageForm {
     public void init(FormSectionEvent e) throws FormProcessException {
         FormData data = e.getFormData();
         PageState state = e.getPageState();
-        Article item = this.getArticle(state);
+        GenericArticle item = this.getArticle(state);
         ImageAsset asset = this.getImageAsset(state);
 
         if ( asset == null ) {
@@ -70,7 +70,7 @@ public class ImagePropertiesForm extends BasicImageForm {
     public void process(FormSectionEvent e) throws FormProcessException {
         FormData data = e.getFormData();
         PageState state = e.getPageState();
-        Article item = this.getArticle(state);
+        GenericArticle item = this.getArticle(state);
         ImageAsset asset = this.getImageAsset(state);
 
         if ( asset == null ) {
