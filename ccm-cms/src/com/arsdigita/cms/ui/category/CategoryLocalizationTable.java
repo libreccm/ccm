@@ -70,7 +70,7 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
         
         // if table is empty:
         setEmptyView(new Label(GlobalizationUtil.globalize(
-                                   "cms.ui.category.localization.none")));
+                                   "cms.ui.category.localization_none")));
         TableColumnModel tab_model = getColumnModel();
         
         // define columns
@@ -78,13 +78,13 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
         tab_model.add(new TableColumn(0, GlobalizationUtil.globalize(
             "cms.ui.category.localization.locale").localize(), TABLE_COL_LANG));
         tab_model.add(new TableColumn(1, GlobalizationUtil.globalize(
-            "cms.ui.category.localization.name").localize()));
+            "cms.ui.category.localization_name").localize()));
         tab_model.add(new TableColumn(2, GlobalizationUtil.globalize(
-            "cms.ui.category.localization.description").localize()));
+            "cms.ui.category.localization_description").localize()));
         tab_model.add(new TableColumn(3, GlobalizationUtil.globalize(
-            "cms.ui.category.localization.url").localize()));
+            "cms.ui.category.localization_url").localize()));
         tab_model.add(new TableColumn(4, GlobalizationUtil.globalize(
-            "cms.ui.category.localization.action").localize(), TABLE_COL_DEL));
+            "cms.ui.category.localization_action").localize(), TABLE_COL_DEL));
         
         setModelBuilder(new CategoryLocalizationTableModelBuilder());
         
@@ -237,7 +237,7 @@ public class CategoryLocalizationTable extends Table implements TableActionListe
               if (true) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) GlobalizationUtil.globalize(
-                        "cms.ui.category.localization.confirm_delete").localize());
+                        "cms.ui.category.localization_confirm_delete").localize());
 //                link.setConfirmation("Delete this localization?");
                 return link;
             } else {

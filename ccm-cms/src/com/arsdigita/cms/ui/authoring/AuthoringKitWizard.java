@@ -90,6 +90,7 @@ import java.util.ArrayList;
  */
 public class AuthoringKitWizard extends LayoutPanel implements Resettable {
 
+    /** Private Logger instance for this class */
     private static final Logger s_log = Logger.getLogger
         (AuthoringKitWizard.class);
 
@@ -105,36 +106,6 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
     };
 
     private static final ArrayList s_assets = new ArrayList();
-
-    public static void registerAssetStep(String baseObjectType,
-                                         Class step,
-                                         GlobalizedMessage label,
-                                         GlobalizedMessage description,
-                                         int sortKey) {
-	// cg - allow registered steps to be overridden by registering a step with the same label
-	// this is a bit of a hack used specifically for creating a specialised version of image 
-	// step. There is no straightforward way of preventing the original image step from being
-	// registered, but I needed the image step to use a different step class if the specialised
-	// image step application was loaded. Solution is to ensure initialiser in new project
-	// runs after original ccm-ldn-image-step initializer and override the registered step here
-	s_log.debug(
-	    "registering asset step - label: "
-	    + label.localize()
-	    + " step class: "
-	    + step.getName());
-
-	Iterator assets = s_assets.iterator();
-	while (assets.hasNext()) {
-	    Object[] data = (Object[]) assets.next();
-	    GlobalizedMessage thisLabel = (GlobalizedMessage) data[2];
-	    if (thisLabel.localize().equals(label.localize())) {
-		s_log.debug("registering authoring step with same label as previously registered step");
-		s_assets.remove(data);
-		break;
-	    }
-	}
-        s_assets.add(new Object[] {baseObjectType, step, label, description});
-    }
 
     private final Object[] m_vals;
 
@@ -352,6 +323,9 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
             });
     }
 
+    /** 
+     * 
+     */
     private final class StepListener implements ChangeListener {
         public final void stateChanged(final ChangeEvent e) {
             final PageState state = e.getPageState();
@@ -371,6 +345,9 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
         }
     }
 
+    /** 
+     * 
+     */
     private final class StepCompletionListener implements ActionListener {
         public final void actionPerformed(final ActionEvent e) {
             final PageState state = e.getPageState();
@@ -393,6 +370,11 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
         }
     }
 
+    /** 
+     * 
+     * @param page
+     */
+    @Override
     public final void register(final Page page) {
         super.register(page);
 
@@ -421,12 +403,54 @@ public class AuthoringKitWizard extends LayoutPanel implements Resettable {
     }
 
     /**
+     *
+     * @param baseObjectType
+     * @param step
+     * @param label
+     * @param description
+     * @param sortKey
+     */
+    public static void registerAssetStep(String baseObjectType,
+                                         Class step,
+                                         GlobalizedMessage label,
+                                         GlobalizedMessage description,
+                                         int sortKey) {
+	// cg - allow registered steps to be overridden by registering a step with the same label
+	// this is a bit of a hack used specifically for creating a specialised version of image
+	// step. There is no straightforward way of preventing the original image step from being
+	// registered, but I needed the image step to use a different step class if the specialised
+	// image step application was loaded. Solution is to ensure initialiser in new project
+	// runs after original ccm-ldn-image-step initializer and override the registered step here
+	s_log.debug(
+	    "registering asset step - label: "
+	    + label.localize()
+	    + " step class: "
+	    + step.getName());
+
+	Iterator assets = s_assets.iterator();
+	while (assets.hasNext()) {
+	    Object[] data = (Object[]) assets.next();
+	    GlobalizedMessage thisLabel = (GlobalizedMessage) data[2];
+	    if (thisLabel.localize().equals(label.localize())) {
+		s_log.debug("registering authoring step with same label as previously registered step");
+		s_assets.remove(data);
+		break;
+	    }
+	}
+        s_assets.add(new Object[] {baseObjectType, step, label, description});
+    }
+
+    /**
      * @return The content type handled by this wizard
      */
     public ContentType getContentType() {
         return m_type;
     }
 
+    /**
+     * 
+     * @return
+     */
     public List getList() {
         return m_list;
     }

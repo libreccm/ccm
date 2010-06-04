@@ -53,7 +53,7 @@ public class CategoryLocalizationEditForm extends CategoryLocalizationForm {
             final String locale) {
         
         super("EditCategoryLocalization", gz(
-                   "cms.ui.category.localization.edit"), category);
+                   "cms.ui.category.localization_edit"), category);
         
         // Speichere Locale ab
         m_categoryLocalizationLocale = locale;

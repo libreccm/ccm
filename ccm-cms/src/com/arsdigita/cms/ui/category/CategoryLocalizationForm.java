@@ -96,12 +96,12 @@ public class CategoryLocalizationForm extends BaseForm {
                 if (code == null || code.length() == 0) {
                     data.addError(
                             (String)GlobalizationUtil.globalize(
-                            "cms.ui.category.localization.error_locale").localize());
+                            "cms.ui.category.localization_error_locale").localize());
                 }
             }
         });
         
-        addField(gz("cms.ui.category.localization.locale"), m_locale);
+        addField(gz("cms.ui.category.localization_locale"), m_locale);
         
         m_name = new TextField(new TrimmedStringParameter(NAME));
         addField(gz("cms.ui.name"), m_name);

@@ -34,6 +34,6 @@ public interface CMSGlobalized extends Globalized {
     /*
      * We use one central resource file per language for all of CMS:
    */
-    public static final String BUNDLE_NAME = "com.arsdigita.cms.ui.CMSResources";
+    public static final String BUNDLE_NAME = "com.arsdigita.cms.CMSResources";
    
 }

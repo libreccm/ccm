@@ -70,7 +70,7 @@ public class CategoryLinks extends List {
             });
 
         final Label label = new Label
-            (GlobalizationUtil.globalize("cms.ui.category.linked.none"));
+            (GlobalizationUtil.globalize("cms.ui.category.linked_none"));
         label.setFontWeight(Label.ITALIC);
         setEmptyView(label);
     }

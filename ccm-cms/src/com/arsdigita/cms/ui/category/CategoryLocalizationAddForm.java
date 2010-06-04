@@ -54,7 +54,7 @@ public class CategoryLocalizationAddForm extends CategoryLocalizationForm {
     public CategoryLocalizationAddForm(final CategoryRequestLocal category) {
         
         super("AddCategoryLocalization",
-              gz("cms.ui.category.localization.add"), category);
+              gz("cms.ui.category.localization_add"), category);
         
         addInitListener(new InitListener());
         addProcessListener(new ProcessListener());

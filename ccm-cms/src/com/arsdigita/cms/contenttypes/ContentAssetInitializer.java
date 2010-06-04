@@ -22,7 +22,7 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
+// import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.pdl.ManifestSource;
@@ -69,6 +69,7 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
      *
      * @param evt Type of initialization
      */
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
 
@@ -119,7 +120,8 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
     
     /**
      * Returns the path to the XML file defintions for the
-     * asset, eg /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
+     * asset,
+     * eg /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
     public abstract String getTraversalXML();
 
@@ -134,13 +136,28 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
      */
     public abstract Class getAuthoringStep();
 
+// DEPRECATED - API Change  (pb - 2010-05-23) - will be removed asap
+// Initializer is meant to execute once at startup to set basic features for
+// operation. AuthoringStepLabel and AuthoringStepDescription are part of the UI
+// and have to be localized, i.e. determined each time a user invokes the UI.
+// This is contrary to the concept of an initializer.
+//
+// Accordingly in AuthoringStep setLabel is set deprecated and replaced by
+// setLabelKey to identify an Authoring Step.
+//
+// As an temporary measure Label / Description from FSIglobalize will be used
+// by registerAssetStep method (see above).
+// XXX todo: Replace label by labelKey overall in the appropriate code!
+//
     /**
      * The label for the authoring step
+     * @deprecated   (see above)
      */
     public abstract GlobalizedMessage getAuthoringStepLabel();
-    
+
     /**
      * The description for the authoring step
+     * @deprecated (see above)
      */
     public abstract GlobalizedMessage getAuthoringStepDescription();
 
