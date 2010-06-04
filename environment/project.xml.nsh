@@ -27,6 +27,7 @@
         <ccm:application name="ccm-cms"/>
 
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>
         <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
@@ -66,6 +67,7 @@
 
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
+        <ccm:application name="ccm-forum-categorised"/>
 <!--    <ccm:application name="ccm-simplesurvey"/>                   -->
         <ccm:application name="ccm-user-preferences"/>
 <!--    <ccm:application name="ccm-weblog"/>                         -->
@@ -78,7 +80,7 @@
 <!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
 <!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
 <!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
-        <ccm:application name="ccm-ldn-image-step"/>
+<!--    <ccm:application name="ccm-ldn-image-step"/>                 -->
 <!--    <ccm:application name="ccm-ldn-importer"/>                   -->
         <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-portal"/>

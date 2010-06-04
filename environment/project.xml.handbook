@@ -32,7 +32,6 @@
         <ccm:application name="ccm-cms-types-address"/>
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
         <ccm:application name="ccm-cms-types-article"/>
-        <ccm:application name="ccm-cms-types-baseAddress"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
         <ccm:application name="ccm-cms-types-contact"/>
 <!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
