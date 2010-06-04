@@ -1,0 +1,10 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+  </requires>
+  <provides>
+    <initializer class="com.arsdigita.categorisedforum.Initializer"/>
+  </provides>
+  
+</load>
