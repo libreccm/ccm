@@ -1,8 +1,9 @@
 package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.contentassets.ui.FileDescriptionForm;
+import com.arsdigita.bebop.FormSection;
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.parameter.ClassParameter;
+import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
 
@@ -15,12 +16,11 @@ public class FileAttachmentConfig extends AbstractConfig {
      * Constructor, don't use is directly!
      */
     public FileAttachmentConfig() {
-        editFormClass = new ClassParameter ("com.arsdigita.cms.contentassets.file_edit_form",
+
+        editFormClass = new SpecificClassParameter ("com.arsdigita.cms.contentassets.file_edit_form",
                 Parameter.REQUIRED,
-                FileDescriptionForm.class 
-                // TODO move *private* class ContentSectionConfig.SpecificClassParameter to c.a.util.parameter
-                // so we can use it here.
-                // , FormSection.class
+                FileDescriptionForm.class,
+                FormSection.class
                 ); 
         showAssetID = new BooleanParameter("com.arsdigita.cms.contentassets.file_show_asset_id",
         		Parameter.OPTIONAL,

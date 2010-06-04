@@ -21,7 +21,6 @@ import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.URLService;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.search.MetadataProviderRegistry;
 import com.arsdigita.xml.XML;
 
@@ -32,54 +31,31 @@ import com.arsdigita.xml.XML;
  * @version $Revision: 1.1 $ $Date: 2004/12/15 15:37:51 $
  * @version $Id: FileAttachmentInitializer.java 1262 2006-07-17 08:15:45Z cgyg9330 $
  **/
-
 public class FileAttachmentInitializer extends ContentAssetInitializer {
 
+    /**
+     * Constructor
+     */
     public FileAttachmentInitializer() {
         super("ccm-cms-assets-fileattachment.pdl.mf");
     }
 
-    public String getTraversalXML() {
-		return "/WEB-INF/traversal-adapters/com/arsdigita/"
-			+ "cms/contentassets/FileAttachment.xml";
-    }
+    /**
+     * Initializes content asset by parsing traversal xml file and registering
+     * the specified steps in a transient storage which may be modified during
+     * operation and has to be re-initialized each system startup).
+     * Essential part of initializing the systems domain coupling machinery.
 
-    public String getProperty() {
-        return "fileAttachments";
-    }
-
-    public String getBaseType() {
-        return ContentPage.BASE_DATA_OBJECT_TYPE;
-    }
-
-    public Class getAuthoringStep() {
-        return FileAttachmentsStep.class;
-    }
-
-    public GlobalizedMessage getAuthoringStepLabel() {
-        return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.file_attachment_label",
-            "com.arsdigita.cms.contentassets.FileAttachmentResources");
-    }
-
-    public GlobalizedMessage getAuthoringStepDescription() {
-        return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.file_attachment_description",
-            "com.arsdigita.cms.contentassets.FileAttachmentResources");
-    }
-
-    public int getAuthoringStepSortKey() {
-        return 2; // XXX config param please
-    }
-
-    // public void init(LegacyInitEvent evt) {
+     * @param evt
+     */
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
-                                                                                
+
         URLService.registerFinder(
             FileAttachment.BASE_DATA_OBJECT_TYPE,
             new FileAttachmentURLFinder());
-        
+
         /*
          * cms registers AssetMetadataProvider for type FileAsset and provides
          * adapter for that context. We register a more specific metadataprovider
@@ -91,14 +67,78 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
          * their specific adapters
          *
          * chris.gilbert@westsussex.gov.uk
-	 */
+	     */
         MetadataProviderRegistry.registerAdapter(
 			FileAttachment.BASE_DATA_OBJECT_TYPE,
 			new FileAttachmentMetadataProvider());
+        
         XML.parseResource(
             "/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/"
              + "FileAttachment-search.xml",
             new TraversalHandler());
+    }
+
+
+    /**
+     * The base type against which the asset is defined,
+     * typically com.arsdigita.cms.ContentPage
+     */
+    public String getBaseType() {
+        return ContentPage.BASE_DATA_OBJECT_TYPE;
+    }
+
+    /**
+     * Returns the path to the XML file defintions for the
+     * asset,
+     * eg /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
+     */
+    public String getTraversalXML() {
+		return "/WEB-INF/traversal-adapters/com/arsdigita/"
+			+ "cms/contentassets/FileAttachment.xml";
+    }
+
+    /**
+     * The name of the association between the item
+     * and the asset, eg 'fileAttachments'.
+     */
+    public String getProperty() {
+        return "fileAttachments";
+    }
+
+    /**
+     * The class of the authoring kit step
+     */
+    public Class getAuthoringStep() {
+        return FileAttachmentsStep.class;
+    }
+
+    /**
+     * The label for the authoring step
+     * @deprecated has to be replaced to provide LabelKey, see contgentAssetInitializer
+     */
+    public GlobalizedMessage getAuthoringStepLabel() {
+        return FileAttachmentGlobalize.AuthoringStepLabel();
+    //  return new GlobalizedMessage(
+    //      "com.arsdigita.cms.contentassets.file_attachment_label",
+    //      "com.arsdigita.cms.contentassets.FileAttachmentResources");
+    }
+
+    /**
+     * The description for the authoring step
+     * @deprecated has to be replaced to provide DesciptionKey, see contgentAssetInitializer
+     */
+    public GlobalizedMessage getAuthoringStepDescription() {
+        return FileAttachmentGlobalize.AuthoringStepDescription();
+    //  return new GlobalizedMessage(
+    //      "com.arsdigita.cms.contentassets.file_attachment_description",
+    //      "com.arsdigita.cms.contentassets.FileAttachmentResources");
+    }
+
+    /**
+     * The sort key for the authoring step
+     */
+    public int getAuthoringStepSortKey() {
+        return 2; // XXX config param please
     }
 
 }

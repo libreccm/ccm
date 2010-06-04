@@ -29,6 +29,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.FileAttachment;
+import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
 import com.arsdigita.cms.ui.FileUploadSection;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.mimetypes.ImageMimeType;
@@ -123,7 +124,8 @@ public class FileAttachmentUpload extends Form
     // Add the widgets
     public void addWidgets() {
         m_fileUploadSection =
-            new FileUploadSection("File Type:", "file",
+            new FileUploadSection(FileAttachmentGlobalize.FileTypeLabel(),
+                                  "file",
                                   ImageMimeType.MIME_IMAGE_JPEG);
         m_fileUploadSection.getFileUploadWidget()
             .addValidationListener(new NotNullValidationListener());

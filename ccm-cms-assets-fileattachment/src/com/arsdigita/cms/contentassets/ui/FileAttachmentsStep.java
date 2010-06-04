@@ -27,6 +27,7 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contentassets.FileAttachment;
+import com.arsdigita.cms.contentassets.FileAttachmentGlobalize;
 import com.arsdigita.cms.ui.CMSContainer;
 import com.arsdigita.cms.ui.SecurityPropertyEditor;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -70,7 +71,7 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
         m_fileList = new FileAttachmentsTable(m_item, m_fileModel);
         m_display = new CMSContainer();
         //Main label
-        Label mainLabel = new Label("This item does not have any associated files.");
+        Label mainLabel = new Label(FileAttachmentGlobalize.NoFilesAssociatedMsg());
         mainLabel.setFontWeight(Label.ITALIC);
         mainLabel.addPrintListener( new PrintListener() {
                 public void prepare(PrintEvent event) {
@@ -81,7 +82,7 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
                         Label mainTarget = (Label) event.getTarget();
                         if (files.isEmpty()) {
                             mainTarget.setLabel(
-                                "This item does not have any associated files.");
+                                FileAttachmentGlobalize.NoFilesAssociatedMsg());
                         } else {
                             mainTarget.setLabel("");
                         }
@@ -94,7 +95,11 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
 
         // The upload form.
         m_uploadForm = new FileAttachmentUpload(m_item);
-        add("upload", "Upload a new file",
+        add("upload",
+        // XXX todo: use of tostring() is ugly and not supported API. add method
+        // has to be refactored to accept a GlobalizedMessage as Parameter instead
+        // of a plain string for the Label (2. parameter) !
+            FileAttachmentGlobalize.UploadNewFileLabel().toString(),
             new WorkflowLockedComponentAccess(m_uploadForm, m_item),
             m_uploadForm.getSaveCancelSection().getCancelButton());
 

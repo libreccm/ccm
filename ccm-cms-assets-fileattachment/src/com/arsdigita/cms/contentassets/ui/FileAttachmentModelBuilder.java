@@ -30,7 +30,7 @@ import com.arsdigita.web.URL;
 
 /**
  *
- * Builds a table model of contacts
+ * Builds a table model of ( copy and paste error:) contacts
  *
  * @author Richard Su (richard.su@alum.mit.edu)
  * @version $Id: FileAttachmentModelBuilder.java 1592 2007-06-21 16:48:55Z lbcfrancois $
@@ -40,6 +40,7 @@ public class FileAttachmentModelBuilder extends AbstractTableModelBuilder {
 
     private Table m_table;
     private ItemSelectionModel m_model;
+
     /**
      * Constructor
      **/

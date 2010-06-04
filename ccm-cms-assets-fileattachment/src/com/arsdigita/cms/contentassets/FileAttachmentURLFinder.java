@@ -42,12 +42,11 @@ public class FileAttachmentURLFinder implements URLFinder {
     private static final AssetURLFinder s_assetFinder = new AssetURLFinder();
     
     /**
-      * 
-      * find URL for a file attachment by finding its article
-      * 
-      * @param oid the OID of the file attachment
-      * @param content the context of the search (ie draft/live)
-      */
+     * Find URL for a file attachment by finding its article
+     * 
+     * @param oid the OID of the file attachment
+     * @param content the context of the search (ie draft/live)
+     */
     public String find(OID oid, String context) throws NoValidURLException {
         if (!"draft".equals(context))
             return s_assetFinder.find(oid, context);
@@ -74,13 +73,12 @@ public class FileAttachmentURLFinder implements URLFinder {
     }
 
     /**
-      * 
-      * find URL for the live context of a file attachment. Delegates to
-      * AssetURLFinder.
-      * 
-      * @param oid the OID of the file attachment
-      * 
-      */
+     * Find URL for the live context of a file attachment. Delegates to
+     * AssetURLFinder.
+     * 
+     * @param oid the OID of the file attachment
+     * 
+     */
     public String find(OID oid) throws NoValidURLException {
         return s_assetFinder.find(oid);
     }

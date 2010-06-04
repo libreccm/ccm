@@ -44,9 +44,9 @@ public class FileAttachment extends FileAsset {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.contentassets.FileAttachment";
 
-    public static final String FILE_OWNER                = "fileOwner";
-    public static final String FILE_ATTACHMENTS          = "fileAttachments";
-    public static final String FILE_ORDER                = "fileOrder";
+    public static final String FILE_OWNER        = "fileOwner";
+    public static final String FILE_ATTACHMENTS  = "fileAttachments";
+    public static final String FILE_ORDER        = "fileOrder";
 
     private static final FileAttachmentConfig s_config = new FileAttachmentConfig();
     
