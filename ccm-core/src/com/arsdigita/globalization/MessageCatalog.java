@@ -50,10 +50,10 @@ import org.apache.log4j.Logger;
  * </p>
  *
  * @version $Revision: #14 $ $Date: 2004/08/16 $
+ * @version $Id: MessageCatalog.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class MessageCatalog extends DomainObject implements java.io.Serializable
 {
-    public final static String versionId = "$Id: MessageCatalog.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_cat =
         Logger.getLogger(MessageCatalog.class.getName());

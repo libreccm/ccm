@@ -27,9 +27,9 @@ import java.util.StringTokenizer;
  * </p>
  *
  * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: AcceptHeader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class AcceptHeader {
-    public final static String versionId = "$Id: AcceptHeader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // as passed in by the client browser.
     protected String m_acceptHeader = "";

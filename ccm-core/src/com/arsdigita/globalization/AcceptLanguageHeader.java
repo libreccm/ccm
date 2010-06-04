@@ -24,9 +24,9 @@ package com.arsdigita.globalization;
  * </p>
  *
  * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: AcceptLanguageHeader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AcceptLanguageHeader extends AcceptHeader {
-    public final static String versionId = "$Id: AcceptLanguageHeader.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * <p>

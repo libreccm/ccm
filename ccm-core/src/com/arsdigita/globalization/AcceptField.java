@@ -24,9 +24,9 @@ package com.arsdigita.globalization;
  * </p>
  *
  * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: AcceptField.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class AcceptField implements Comparable {
-    public final static String versionId = "$Id: AcceptField.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     // default quality value
     protected final static int DEFAULT_Q_VALUE = 1;

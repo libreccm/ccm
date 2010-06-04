@@ -49,9 +49,9 @@ import org.apache.log4j.Logger;
  * </p>
  *
  * @version $Revision: #10 $ $Date: 2004/08/16 $
+ * @version $Id: MixedResourceBundle.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public abstract class MixedResourceBundle extends java.util.ResourceBundle {
-    public final static String versionId = "$Id: MixedResourceBundle.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_cat =
         Logger.getLogger(MixedResourceBundle.class.getName());

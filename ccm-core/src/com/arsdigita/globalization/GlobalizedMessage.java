@@ -127,6 +127,10 @@ public class GlobalizedMessage {
         return m_key;
     }
 
+    /**
+     * 
+     * @param key
+     */
     private void setKey(String key) {
         if (key == null || key.length() == 0) {
             throw new IllegalArgumentException("key cannot be empty.");

@@ -37,6 +37,8 @@ import org.apache.log4j.Logger;
 /**
  * Initialize the Globalization package
  *
+ * Old initializer system. Needs LegacyInitializer as glue to invoke.
+ *
  * @version $Revision: #15 $ $Date: 2004/08/16 $
  */
 public class Initializer implements com.arsdigita.initializer.Initializer {

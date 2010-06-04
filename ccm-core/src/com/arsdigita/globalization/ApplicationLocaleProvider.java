@@ -28,9 +28,9 @@ import java.util.Locale;
  * </p>
  *
  * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: ApplicationLocaleProvider.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ApplicationLocaleProvider implements LocaleProvider {
-    public final static String versionId = "$Id: ApplicationLocaleProvider.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private RequestValue m_locale = new RequestValue();
 

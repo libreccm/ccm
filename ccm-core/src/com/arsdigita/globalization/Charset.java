@@ -34,9 +34,9 @@ import java.math.BigDecimal;
  *
  * @author Yon Feldman
  * @version $Revision: #11 $ $Date: 2004/08/16 $
+ * @version $Id: Charset.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Charset extends DomainObject {
-    public final static String versionId = "$Id: Charset.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public final static String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.globalization.Charset";
