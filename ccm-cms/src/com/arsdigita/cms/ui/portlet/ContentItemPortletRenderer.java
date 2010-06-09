@@ -50,7 +50,7 @@ public class ContentItemPortletRenderer extends AbstractPortletRenderer {
     public void generateBodyXML(PageState state,
                                 Element parent) {
         Element content = parent.newChildElement("portlet:contentItem",
-                                       "http://www.arsdigita.com/portlet/1.0");
+                                       "http://www.uk.arsdigita.com/portlet/1.0");
                 
         ContentItem item = m_portlet.getContentItem();
         
