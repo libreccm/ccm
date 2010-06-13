@@ -24,40 +24,43 @@ import com.arsdigita.london.atoz.AtoZCategoryProvider;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 
-import com.arsdigita.aplaws.Aplaws;
-import com.arsdigita.bebop.form.Widget;
+// import com.arsdigita.aplaws.Aplaws;
+// import com.arsdigita.bebop.form.Widget;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.parameters.ArrayParameter;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
+// import com.arsdigita.bebop.parameters.ArrayParameter;
+// import com.arsdigita.bebop.parameters.StringParameter;
+// import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.london.terms.Terms;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
-import com.arsdigita.xml.XML;
+// import com.arsdigita.xml.XML;
 
 import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ContentSection;
+// import com.arsdigita.cms.ContentSection;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
+// import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+// import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
 
 /**
- * Copied from com.arsdigita.aplaws.ui.TermWidget. 
+ * Copied from com.arsdigita.aplaws.ui.TermWidget.
+ * ( com.arsdigita.aplaws.ui.TermWidget relocated to
+ *   com.arsdigita.london.terms.ui.TermWidget   )
  *
  * @author clasohm@redhat.com
  */
-public class TermWidget extends com.arsdigita.aplaws.ui.TermWidget {
+public class TermWidget extends com.arsdigita.london.terms.ui.TermWidget {
 	private static final Logger s_log = Logger.getLogger(TermWidget.class);
 	
 	private ACSObjectSelectionModel m_provider;
@@ -68,6 +71,7 @@ public class TermWidget extends com.arsdigita.aplaws.ui.TermWidget {
 		m_provider = provider;
 	}
     
+    @Override
     protected void generateWidget(PageState state,
                                   Element parent) {
         Domain domain = getDomain(state);
@@ -115,7 +119,7 @@ public class TermWidget extends com.arsdigita.aplaws.ui.TermWidget {
 
         Element el = generateCategory(widget, domain.getModel(), ids, null);
         
-        if (Aplaws.getAplawsConfig().ajaxExpandAllBranches()) {
+        if (Terms.getConfig().ajaxExpandAllBranches()) {
         	// add attribute to the parent node, so that in stylesheet 
         	// we can look for any ancestor with this attribute (can't 
         	// add attribute to categoryWidget element as that is not 
