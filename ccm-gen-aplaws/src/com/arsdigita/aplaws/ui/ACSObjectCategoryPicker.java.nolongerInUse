@@ -18,15 +18,12 @@
 
 package com.arsdigita.aplaws.ui;
 
-import com.arsdigita.aplaws.Aplaws;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.bebop.form.Widget;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.domain.DomainCollection;
@@ -35,9 +32,6 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
-import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.CMS;
-import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 
 import java.util.Collection;
 import java.util.List;
