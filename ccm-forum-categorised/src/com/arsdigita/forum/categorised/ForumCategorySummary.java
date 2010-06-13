@@ -4,7 +4,7 @@
  * To change the template for this generated file go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-package com.arsdigita.categorisedforum;
+package com.arsdigita.forum.categorised;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.categorization.Category;

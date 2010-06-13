@@ -12,14 +12,14 @@
  * governing rights and limitations under the License.
  *
  */
-package com.arsdigita.categorisedforum;
+package com.arsdigita.forum.categorised;
 
 import org.apache.log4j.Logger;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.forum.Forum;
-import com.arsdigita.kernel.Kernel;
+// import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.NoValidURLException;
 import com.arsdigita.kernel.URLFinder;
 import com.arsdigita.persistence.OID;

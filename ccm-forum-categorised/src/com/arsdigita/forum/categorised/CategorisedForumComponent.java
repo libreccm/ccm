@@ -4,9 +4,9 @@
  * To change the template for this generated file go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-package com.arsdigita.categorisedforum;
+package com.arsdigita.forum.categorised;
 
-import javax.servlet.ServletException;
+// import javax.servlet.ServletException;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.forum.Forum;
@@ -21,10 +21,11 @@ import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.xml.Element;
 
 /**
- * @author cgyg9330
- *
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ *
+ * @author cgyg9330
+ * @version $Id: $
  */
 public class CategorisedForumComponent extends ForumComponent {
 

@@ -4,13 +4,13 @@
  * To change the template for this generated file go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-package com.arsdigita.categorisedforum;
+package com.arsdigita.forum.categorised;
 
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.bebop.Label;
+// import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
@@ -19,16 +19,17 @@ import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
+// import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
 import com.arsdigita.categorization.ui.ACSObjectCategorySummary;
 import com.arsdigita.forum.ui.Constants;
 import com.arsdigita.web.RedirectSignal;
 
 /**
- * @author cgyg9330
- *
  * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
+ * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments.
+ *
+ * @author cgyg9330
+ * @version $Id: $
  */
 public class AssignCategoryView extends SimpleContainer implements Constants {
 
@@ -38,6 +39,10 @@ public class AssignCategoryView extends SimpleContainer implements Constants {
     private StringParameter m_mode;
     Logger s_log = Logger.getLogger(AssignCategoryView.class);
 
+    /**
+     * Constructor.
+     * 
+     */
     public AssignCategoryView() {
         super();
 
@@ -59,6 +64,11 @@ public class AssignCategoryView extends SimpleContainer implements Constants {
         add(m_add);
     }
 
+    /**
+     *
+     * @param p
+     */
+    @Override
     public void register(Page p) {
         super.register(p);
         
@@ -68,6 +78,10 @@ public class AssignCategoryView extends SimpleContainer implements Constants {
         p.addGlobalStateParam(m_mode);
     }
 
+    /**
+     * 
+     * @param state
+     */
     public void reset(PageState state) {
         state.setValue(m_root, null);
         state.setValue(m_mode, null);
@@ -76,6 +90,9 @@ public class AssignCategoryView extends SimpleContainer implements Constants {
         m_add.setVisible(state, false);        
     }
 
+    /** 
+     * 
+     */
     private class AddActionListener implements ActionListener {
         private String m_mode;
 
@@ -97,17 +114,16 @@ public class AssignCategoryView extends SimpleContainer implements Constants {
         }
     }
     
+    /** 
+     * 
+     */
     private class ResetListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             PageState state = e.getPageState();
             reset(state);
             throw new RedirectSignal(state.toURL(), true);
         }
-    }/**
-	 * 
-	 */
-	
-
+    }
 	
 
 }

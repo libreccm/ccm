@@ -16,19 +16,24 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package com.arsdigita.categorisedforum;
+package com.arsdigita.forum.categorised;
 
 import org.apache.log4j.Logger;
 
-import com.arsdigita.aplaws.ui.ACSObjectCategoryPicker;
-import com.arsdigita.aplaws.ui.TermWidget;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
 import com.arsdigita.forum.ForumContext;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
+import com.arsdigita.london.terms.ui.TermWidget;
 
+/** 
+ * 
+ * @author Chris Gilbert
+ * @version $Id: $
+ */
 public class ForumTermPicker extends ACSObjectCategoryPicker {
     private static final Logger s_log = Logger.getLogger(ForumTermPicker.class);
 

@@ -20,6 +20,7 @@ package com.arsdigita.london.terms;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.ResourceParameter;
 import com.arsdigita.util.parameter.StringParameter;
 
@@ -39,6 +40,7 @@ public class TermsConfig extends AbstractConfig {
     
     private Parameter m_adapters;
     private Parameter m_defaultDomain;
+    private final Parameter m_ajaxExpandAllBranches;
 
     public TermsConfig() {
         m_adapters = new ResourceParameter
@@ -50,9 +52,17 @@ public class TermsConfig extends AbstractConfig {
             "com.arsdigita.london.terms.default_domain",
             Parameter.REQUIRED,
             "LGCL");
+
+        /** Wether to expand all Subcategories in order to retain behavious prior
+         *  to use AJAX to expand dynamically.                                   */
+        m_ajaxExpandAllBranches = new BooleanParameter(
+            "com.arsdigita.london.terms.ajax_expand_on_all_branches",
+            Parameter.OPTIONAL,
+            Boolean.FALSE);
         
         register(m_adapters);
         register(m_defaultDomain);
+        register(m_ajaxExpandAllBranches);
         loadInfo();
     }
 
@@ -79,4 +89,13 @@ public class TermsConfig extends AbstractConfig {
     public Domain getDefaultDomain() {
         return Domain.retrieve(getDefaultDomainKey());
     }
+
+    /**
+     *
+     * @return
+     */
+    public boolean ajaxExpandAllBranches () {
+    	return ((Boolean)get(m_ajaxExpandAllBranches)).booleanValue();
+    }
+
 }

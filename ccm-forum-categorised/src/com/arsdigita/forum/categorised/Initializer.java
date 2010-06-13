@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.categorisedforum;
+package com.arsdigita.forum.categorised;
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.bebop.RequestLocal;
 
@@ -68,10 +68,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Initializer.java,v 1.1 2006/03/03 10:54:45 cgyg9330 Exp $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java,v 1.1 2006/03/03 10:54:45 cgyg9330 Exp $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/17 23:26:27 $";
 
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 
