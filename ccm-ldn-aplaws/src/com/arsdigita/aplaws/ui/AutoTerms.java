@@ -16,14 +16,25 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.london.terms.Term;
+import com.arsdigita.london.terms.ui.TermWidget;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.xml.Element;
 
+/**
+ * 
+ * @author pb
+ */
 public class AutoTerms extends SimpleComponent {
     
     private static final Logger LOG = Logger.getLogger(AutoTerms.class);
     BigDecimalParameter itemIDparam = new BigDecimalParameter("itemID");
 
+    /**
+     * 
+     * @param state
+     * @param p
+     */
+    @Override
     public void generateXML(PageState state, Element p) {
         try {
             BigDecimal itemID = (BigDecimal) state.getValue(itemIDparam);
@@ -45,6 +56,11 @@ public class AutoTerms extends SimpleComponent {
         }
     }
     
+    /**
+     * 
+     * @param p
+     */
+    @Override
     public void register(Page p) {
         super.register(p);
         p.addGlobalStateParam(itemIDparam);

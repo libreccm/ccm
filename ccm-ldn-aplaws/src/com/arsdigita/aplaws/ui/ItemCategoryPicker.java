@@ -28,6 +28,9 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ui.authoring.*;
 import com.arsdigita.kernel.ACSObject;
+// import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
+import com.arsdigita.london.terms.ui.TermWidget;
+
 
 /**
  * 
@@ -35,8 +38,6 @@ import com.arsdigita.kernel.ACSObject;
  * cms specific Concrete implementation of ACSObjectCategoryPicker 
  * 
  */
-
-
 public class ItemCategoryPicker extends ACSObjectCategoryPicker {
     private static final Logger s_log = Logger.getLogger(ItemCategoryPicker.class);
 

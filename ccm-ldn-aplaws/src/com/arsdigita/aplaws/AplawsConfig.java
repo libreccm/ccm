@@ -37,7 +37,8 @@ public class AplawsConfig extends AbstractConfig {
     private final Parameter m_autocatServiceURL = new StringParameter("com.arsdigita.aplaws.autocat_url", Parameter.OPTIONAL, "http://demo.masprovider.com/searchLightWS/services/textMiner");
     private final Parameter m_autocatServiceUsername = new StringParameter("com.arsdigita.aplaws.autocat_username", Parameter.OPTIONAL, null);
     private final Parameter m_autocatServicePassword = new StringParameter("com.arsdigita.aplaws.autocat_password", Parameter.OPTIONAL, null);
-	private final Parameter m_ajaxExpandAllBranches = new BooleanParameter("com.arsdigita.aplaws.ajax_expand_on_all_branches", Parameter.OPTIONAL, Boolean.FALSE);
+    // moved into c.ad.london.terms.TermsConfig
+    // private final Parameter m_ajaxExpandAllBranches = new BooleanParameter("com.arsdigita.aplaws.ajax_expand_on_all_branches", Parameter.OPTIONAL, Boolean.FALSE);
 	
 
 
@@ -46,7 +47,8 @@ public class AplawsConfig extends AbstractConfig {
         register(m_autocatServiceURL);
         register(m_autocatServiceUsername);
         register(m_autocatServicePassword);
-        register(m_ajaxExpandAllBranches);
+        // moved into c.ad.london.terms.TermsConfig
+        // register(m_ajaxExpandAllBranches);
         loadInfo();
     }
 
@@ -69,7 +71,8 @@ public class AplawsConfig extends AbstractConfig {
         return password;
     }
     
-    public boolean ajaxExpandAllBranches () {
-    	return ((Boolean)get(m_ajaxExpandAllBranches)).booleanValue();
-    }
+//  moved into c.ad.london.terms.TermsConfig
+//  public boolean ajaxExpandAllBranches () {
+//  	return ((Boolean)get(m_ajaxExpandAllBranches)).booleanValue();
+//  }
 }

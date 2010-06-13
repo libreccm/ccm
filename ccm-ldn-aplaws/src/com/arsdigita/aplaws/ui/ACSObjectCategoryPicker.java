@@ -5,12 +5,12 @@
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1 of
  * the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
@@ -18,27 +18,23 @@
 
 package com.arsdigita.aplaws.ui;
 
+
 import com.arsdigita.aplaws.Aplaws;
-// import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.SimpleContainer;
+// import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
 // import com.arsdigita.bebop.form.Widget;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.domain.DomainObjectFactory;
+// import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
+// import com.arsdigita.persistence.SessionManager;
+// import com.arsdigita.persistence.DataCollection;
+// import com.arsdigita.domain.DomainCollection;
+// import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.Domain;
-import com.arsdigita.categorization.ui.ACSObjectCategoryForm;
-// unused imports
-// import com.arsdigita.cms.ContentItem;
-// import com.arsdigita.cms.CMS;
-// import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 
 import java.util.Collection;
 import java.util.List;
@@ -48,36 +44,36 @@ import java.util.Iterator;
 import org.apache.log4j.Logger;
 
 /**
- * abstracted from original version of ItemCategoryPicker r1297
- * chris gilbert
+ * Extends com.arsdigita.london.terms.ui.ACSObjectCategoryPicker and overwrites
+ * the private class ItemCategoryFormCompletion to add functionality to its
+ * lgclSelected() method.
+ * 
  */
-public abstract class ACSObjectCategoryPicker extends SimpleContainer {
+public abstract class ACSObjectCategoryPicker
+                extends com.arsdigita.london.terms.ui.ACSObjectCategoryPicker{
 
     private static final Logger s_log = Logger.getLogger(ACSObjectCategoryPicker.class);
 
-    private ACSObjectCategoryForm m_form;
-    private BigDecimalParameter m_root;
-
+    /**
+     * Constructor
+     * 
+     * @param root
+     * @param mode
+     */
     public ACSObjectCategoryPicker(BigDecimalParameter root,
             StringParameter mode) {
-        
-		m_form = getForm(root, mode);
-        m_root = root;
-
-        add(m_form);
-        m_form.addCompletionListener(new ItemCategoryFormCompletion());
+        super(root,mode);
     }
-    
-    protected abstract ACSObjectCategoryForm getForm(BigDecimalParameter root,   StringParameter mode);
-     
-    protected abstract ACSObject getObject(PageState state);
-  
-   
- 
-    
+
+
+    /**
+     * Overwrites private class of the parent class to add functionality for
+     * processing or mapping from LGCL to APLAWS-NAV in method lgclSelected().
+     */
     private class ItemCategoryFormCompletion implements ActionListener {
+
         public void actionPerformed(ActionEvent ev) {
-	    
+
             PageState state = ev.getPageState();
             Domain domain = getDomain(state);
             String domainKey = domain.getKey();
@@ -87,7 +83,7 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
             }
 
 			ACSObject object = getObject(state);
-            
+
             if ("LGCL".equals(domainKey)) {
                 lgclSelected(domain, object);
             }
@@ -96,9 +92,20 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
                 lgdlSelected(domain, object);
             }
 
-            fireCompletionEvent(state);                                   
+            fireCompletionEvent(state);
         }
 
+        /**
+         * Adds processing or mapping from LGCL to APLAWS-NAV too.
+         *
+         * ANav and the corresponding configuration parameter in module
+         * ccm-ldn-aplaws are highly specific to the needs of British Local
+         * Authorities and should not be used in more general parts of the
+         * code.
+         * 
+         * @param domain
+         * @param object
+         */
         private void lgclSelected(Domain domain, ACSObject object) {
             List lgclTerms = getCurrentCategories(domain, object);
 
@@ -116,7 +123,8 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
 			//assignTerms(lgslTerms, object);
 
             // adding processing or mapping from LGCL to APLAWS-NAV too
-            boolean lgclOverrideAnav = Aplaws.getAplawsConfig().getOverrideAnavFromLGCLMappings().booleanValue();
+            boolean lgclOverrideAnav = Aplaws.getAplawsConfig().
+                                       getOverrideAnavFromLGCLMappings().booleanValue();
             if (lgclOverrideAnav) {
                 Domain aplawsNav = Domain.retrieve("APLAWS-NAV");
                 Collection aplawsNavTerms = getRelatedTerms(lgclTerms, aplawsNav);
@@ -155,126 +163,6 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
             assignTerms(gclTerms, object);
         }
     }
-    
-    protected List getCurrentCategories(Domain domain,
-                                        ACSObject object) {
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Getting terms from " + domain + " to " + object);
-        }
-        DomainCollection terms = domain.getTerms();
-        terms.addEqualsFilter("model.childObjects.id", object.getID());
-        terms.addPath("model.id");
-
-        List current = new LinkedList();
-        while (terms.next()) {
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Got term " + terms.get("model.id"));
-            }
-            current.add(terms.get("model.id"));
-        }
-        return current;
-    }
-
-    // TODO move out of UI code
-    public static Collection getCurrentTerms(Domain domain,
-                                   ACSObject object) {
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Getting terms from " + domain + " to " + object);
-        }
-        Collection current = new LinkedList();
-        DomainCollection terms = domain.getTerms();
-        terms.addEqualsFilter("model.childObjects.id", object.getID());
-        terms.addPath("model.id");
-        while (terms.next()) {
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Got term " + terms.get("model.id"));
-            }
-            current.add(terms.getDomainObject());
-        }
-        return current;
-    }
-
-    // TODO move out of UI code
-    public static Collection getRelatedTerms(Collection src,
-                                   Domain domain) {
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Getting related terms to " + domain);
-	    
-        }
-		if (src.isEmpty()) {
-			// this is a hack, it would be better not to use a completion event listener as 
-			// this is called even when the form is cancelled...
-			return new LinkedList();
-		}
-        DomainCollection terms = domain.getTerms();
-		// these next two lines build the query 
-        terms.addEqualsFilter("model.parents.link.relationType", "related");
-		terms.addFilter("model.parents.id in :ids").set("ids", src);
-	
-        Collection related = new LinkedList();
-        while (terms.next()) {
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Got term " + terms.getDomainObject());
-            }
-            related.add(terms.getDomainObject());
-        }
-        return related;
-    }
-    
-    protected void clearTerms(Domain domain,
-                              ACSObject object) {
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Removing terms from " + domain + " to " + object);
-        }
-        Iterator terms = getCurrentTerms(domain, object).iterator();
-        while (terms.hasNext()) {
-            Term term = (Term)terms.next();
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Removing term " + term + " from " + object);
-            }
-            term.removeObject(object);
-        }
-    }
 
 
-    // TODO move out of UI code
-    public static void assignTerms(Collection terms,
-                               ACSObject object) {
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Assigning terms to " + object);
-        }
-        Iterator i = terms.iterator();
-        while (i.hasNext()) {
-            Term term = (Term)i.next();
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Assigning term " + term + " to " + object);
-            }
-            term.addObject(object);
-        }
-    }
-
-    protected Domain getDomain(PageState state) {
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("Getting domain for " + state.getValue(m_root));
-        }
-
-        DataCollection domains = SessionManager.getSession()
-            .retrieve(Domain.BASE_DATA_OBJECT_TYPE);
-        domains.addEqualsFilter("model.id",
-                                state.getValue(m_root));
-        
-        if (domains.next()) {
-            Domain domain = (Domain)DomainObjectFactory
-                .newInstance(domains.getDataObject());
-            if (s_log.isDebugEnabled()) {
-                s_log.debug("Got domain " + domain);
-            }
-            domains.close();
-            return domain;
-        }
-        if (s_log.isDebugEnabled()) {
-            s_log.debug("No domain found");
-        }
-        return null;
-    }
 }

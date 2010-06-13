@@ -61,6 +61,8 @@ import com.arsdigita.xml.XML;
  * nb - widget applies to allocation of categories to any ACSObject hence
  * xml prefix should be more generic eg bebop rather than cms. cms retained
  * for compatibility with existing stylesheets
+ *
+ * @deprecated  Use c.ad.london.terms.ui.TermWidget  instead!
  */
 public class TermWidget extends Widget {
     private StringParameter m_mode;

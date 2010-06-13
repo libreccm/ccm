@@ -57,6 +57,8 @@ import com.arsdigita.search.ContentType;
 import com.arsdigita.search.MetadataProvider;
 import com.arsdigita.search.MetadataProviderRegistry;
 import com.arsdigita.web.Application;
+
+
 /**
  * Command line tool to automatically assign terms.
  * 
@@ -207,6 +209,7 @@ public class AutoCategorisation extends com.arsdigita.packaging.Program {
         </unformated_data>
       </tags>
  */
+        @Override
         public void endElement(String uri, String localName, String qName)
                 throws SAXException {
             if (isDebug) {
@@ -250,6 +253,7 @@ public class AutoCategorisation extends com.arsdigita.packaging.Program {
             } // if qName
         }
 
+        @Override
         public void endDocument() throws SAXException {
             if (isDebug) {
                 out("endDoc");
