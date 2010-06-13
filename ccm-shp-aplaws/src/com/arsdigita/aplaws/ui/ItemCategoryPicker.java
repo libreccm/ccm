@@ -28,6 +28,8 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ui.authoring.*;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
+import com.arsdigita.london.terms.ui.TermWidget;
 
 /**
  * <p> cms specific Concrete implementation of 
