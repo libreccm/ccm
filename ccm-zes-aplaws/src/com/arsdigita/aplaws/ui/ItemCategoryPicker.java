@@ -28,6 +28,8 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ui.authoring.*;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
+import com.arsdigita.london.terms.ui.TermWidget;
 
 /**
  * <p> cms specific Concrete implementation of 
@@ -58,8 +60,8 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
                          com.arsdigita.bebop.parameters.StringParameter)
      */
     protected ACSObjectCategoryForm getForm(BigDecimalParameter root, StringParameter mode) {
-	s_log.debug("getForm");
-	return new ItemCategoryForm(root, mode, new TermWidget(mode, this));
+        s_log.debug("getForm");
+        return new ItemCategoryForm(root, mode, new TermWidget(mode, this));
     }
 
 
@@ -67,8 +69,8 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
      * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getObject()
      */
     protected ACSObject getObject(PageState state) {
-	ContentItem item = CMS.getContext().getContentItem();
-	return item.getParent();
+        ContentItem item = CMS.getContext().getContentItem();
+        return item.getParent();
 
     }
     
