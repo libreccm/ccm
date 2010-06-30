@@ -25,7 +25,7 @@ import com.arsdigita.cms.CMSGlobalized;
 
 public class ContenttypesResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
     public static final String MEMBER_BUNDLE_NAME =
-	"com.arsdigita.cms.contenttypes.BasetypesResources";
+	"com.arsdigita.cms.contenttypes.ContenttypesResources";
 
     public ContenttypesResourceBundle() {
 	super();

@@ -23,7 +23,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 
 public class ContenttypesGlobalizationUtil {
     final public static String BUNDLE_NAME = 
-	"com.arsdigita.cms.contenttypes.util.BasetypesResourceBundle";
+	"com.arsdigita.cms.contenttypes.util.ContenttypesResourceBundle";
 
     public static GlobalizedMessage globalize (String key) {
 	return new GlobalizedMessage(key, BUNDLE_NAME);

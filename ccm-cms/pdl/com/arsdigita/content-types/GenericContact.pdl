@@ -1,3 +1,22 @@
+//
+// Copyright (C) 2010 Sören Bernstein, for the Center of Social Politics of the University of Bremen
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
 model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.kernel.ACSObject;
@@ -6,24 +25,49 @@ import com.arsdigita.cms.*;
 // Contact Object
 object type GenericContact extends ContentPage {
 
-    GenericPerson [0..1] person = join cms_contacts.person_id
-                             to cms_persons.person_id;
-
     GenericAddress [0..1] address = join cms_contacts.address_id
                                       to cms_addresses.address_id;
 
     component GenericContactEntry [0..n] contactentries = join cms_contacts.contact_id
-                                                     to cms_contactEntries.contact_id;
+                                                            to cms_contactEntries.contact_id;
 
     reference key ( cms_contacts.contact_id );
 }
 
 object type GenericContactEntry extends ContentItem {
 
-  String [1..1] key = cms_contactEntries.key VARCHAR(100);
+  String [1..1] key         = cms_contactEntries.key VARCHAR(100);
   String [0..1] description = cms_contactEntries.description VARCHAR(100);
-  String [1..1] value = cms_contactEntries.value VARCHAR(100);
+  String [1..1] value       = cms_contactEntries.value VARCHAR(100);
   
   reference key ( cms_contactEntries.contactentry_id );
+
+}
+
+object type GenericContactType extends ACSObject {
+    String[1..1]     key      = cms_contacttypes.key VARCHAR(100);
+    String[1..1]     language = cms_contacttypes.language VARCHAR(2);
+    String[1..1]     name     = cms_contacttypes.name VARCHAR(100);
+
+    reference key (cms_contacttypes.contacttypes_id);
+    unique (key, language);
+}
+
+association {
+
+    GenericPerson[0..1] person = join cms_contacts.contact_id
+                                   to cms_person_contact_map.contact_id,
+                                 join cms_person_contact_map.person_id
+                                   to cms_persons.person_id;
+
+    GenericContact[0..n] contacts = join cms_persons.person_id
+                                      to cms_person_contact_map.person_id,
+                                    join cms_person_contact_map.contact_id
+                                      to cms_contacts.contact_id;
+
+    // Link Attribute
+    BigDecimal[1..1] contact_order = cms_person_contact_map.contact_order INTEGER;
+    // Can't use a join statement here because contacttype_id is not unique
+    String[1..1]     contact_type  = cms_person_contact_map.key VARCHAR(100);
 
 }

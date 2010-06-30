@@ -20,14 +20,23 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.contenttypes.GenericContactType;
+import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
+import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.UncheckedWrapperException;
 
 import org.apache.log4j.Logger;
@@ -80,7 +89,25 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
     public void addWidgets() {
         add(new Label((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person").localize()));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericPerson"));
-        add(this.m_itemSearch);       
+        add(this.m_itemSearch);
+
+        // GenericContact type field
+        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact.type")));
+        ParameterModel contactTypeParam = new StringParameter(GenericPersonContactCollection.CONTACT_TYPE);
+        SingleSelect contactType = new SingleSelect(contactTypeParam);
+        contactType.addValidationListener(new NotNullValidationListener());
+        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+
+        // Add the Options to the SingleSelect widget
+        GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
+        contacttypes.filterLanguage(DispatcherHelper.getNegotiatedLocale().getLanguage());
+
+        while (contacttypes.next()) {
+            GenericContactType ct = contacttypes.getContactType();
+            contactType.addOption(new Option(ct.getKey(), ct.getName()));
+        }
+
+        add(contactType);
     }
     
     public void init(FormSectionEvent fse) {

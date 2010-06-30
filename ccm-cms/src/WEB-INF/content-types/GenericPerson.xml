@@ -11,8 +11,7 @@
         classname="com.arsdigita.cms.contenttypes.GenericPerson"
         isInternal="yes">
 
-        <ctd:authoring-kit
-            createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
 
             <ctd:authoring-step
                 labelKey="cms.contenttypes.shared.basic_properties.title"
@@ -21,6 +20,14 @@
                 descriptionBundle="com.arsdigita.cms.ui.CMSResources"
                 component="com.arsdigita.cms.contenttypes.ui.GenericPersonPropertiesStep"
                 ordering="1"/>
+
+            <ctd:authoring-step
+                labelKey="person.authoring.contact_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                descriptionKey="person.authoring.contact_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                component="com.arsdigita.cms.contenttypes.ui.GenericPersonContactPropertiesStep"
+                ordering="2"/>
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
         </ctd:authoring-kit>

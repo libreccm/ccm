@@ -33,7 +33,7 @@ import org.apache.log4j.Logger;
  */
 public class GenericContactEntry extends ContentItem {
     
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.ContactEntry";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericContactEntry";
     private static final String BASE_DATA_OBJECT_PACKAGE = "com.arsdigita.cms.contenttypes";
     
     private static final Logger s_log = Logger.getLogger(GenericContactEntry.class);

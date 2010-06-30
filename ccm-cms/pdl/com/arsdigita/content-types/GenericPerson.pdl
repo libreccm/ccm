@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2009 Jens Pelzetter, for the Center of Social Politics of the University of Bremen
+// Copyright (C) 2010 Sören Bernstein, for the Center of Social Politics of the University of Bremen
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public License
@@ -22,10 +22,12 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentPage;
 
 object type GenericPerson extends ContentPage {
-       String[0..1] surname = cms_persons.surname VARCHAR(512);
-       String[0..1] givenname = cms_persons.givenname VARCHAR(512);
-       String[0..1] titlepre = cms_persons.titlepre VARCHAR(256);
-       String[0..1] titlepost = cms_persons.titlepost VARCHAR(256);
+    String[0..1] surname = cms_persons.surname VARCHAR(512);
+    String[0..1] givenname = cms_persons.givenname VARCHAR(512);
+    String[0..1] titlepre = cms_persons.titlepre VARCHAR(256);
+    String[0..1] titlepost = cms_persons.titlepost VARCHAR(256);
 
-       reference key (cms_persons.person_id);
+    Date[0..1] birthdate = cms_persons.birthdate DATE;
+
+    reference key (cms_persons.person_id);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Jens Pelzetter, for the Center of Social Politics of the University of Bremen
+ * Copyright (C) 2010 Sören Bernstein, for the Center of Social Politics of the University of Bremen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -19,10 +19,10 @@
 
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.*;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
@@ -39,7 +39,11 @@ public class GenericPerson extends ContentPage {
     public static final String SURNAME = "surname";
     public static final String GIVENNAME = "givenname";
     public static final String TITLEPRE = "titlepre";
-    public static final String TITLEPOST = "titlepost";    
+    public static final String TITLEPOST = "titlepost";
+    public static final String BIRTHDATE = "birthdate";
+    public static final String CONTACTS = "contacts";
+    public static final String CONTACT_TYPE = "contact_type";
+    public static final String CONTACT_ORDER = "contact_order";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericPerson";
 
@@ -67,6 +71,7 @@ public class GenericPerson extends ContentPage {
         super(type);
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
 
@@ -101,4 +106,37 @@ public class GenericPerson extends ContentPage {
      public void setTitlePost(String titlePost) {
          set(TITLEPOST, titlePost);
      }     
+
+     public String getBirthdate() {
+         return (String)get(BIRTHDATE);
+     }
+     public void setBirthdate(String birthdate) {
+         set(BIRTHDATE, birthdate);
+     }
+
+    // Get all contacts for this person
+    public GenericPersonContactCollection getContacts() {
+        return new GenericPersonContactCollection((DataCollection) get(CONTACTS));
+    }
+
+    // Add a contact for this person
+    public void addContact(GenericContact contact, String contactType) {
+        Assert.exists(contact, GenericContact.class);
+
+        DataObject link = add(CONTACTS, contact);
+
+        link.set(CONTACT_TYPE, contactType);
+        link.set(CONTACT_ORDER, BigDecimal.valueOf(getContacts().size()));
+    }
+
+    // Remove a contact for this person
+    public void removeContact(GenericContact contact) {
+        Assert.exists(contact, GenericContact.class);
+        remove(CONTACTS, contact);
+    }
+
+    public boolean hasContacts() {
+        return !this.getContacts().isEmpty();
+    }
+
 }
