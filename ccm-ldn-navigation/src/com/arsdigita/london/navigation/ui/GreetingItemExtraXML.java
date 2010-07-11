@@ -19,7 +19,7 @@ import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.ContentSectionConfig;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ExtraXMLGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.london.navigation.Navigation;
@@ -43,7 +43,7 @@ public class GreetingItemExtraXML extends AbstractComponent {
     public void register(Page p) {
         super.register(p);
         
-        for (Iterator i=ContentSectionConfig.getExtraXMLGeneratorsIterator(); i.hasNext(); ) {
+        for (Iterator i=CMSConfig.getExtraXMLGeneratorsIterator(); i.hasNext(); ) {
             Map.Entry e = (Map.Entry) i.next();
             String type = (String) e.getKey();
             List genClasses = (List) e.getValue();

@@ -19,8 +19,6 @@
 
 package com.arsdigita.london.navigation.portlet;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
 import com.arsdigita.domain.DomainObject;
@@ -35,6 +33,8 @@ import com.arsdigita.london.navigation.ui.portlet.NavigationTreePortletRenderer;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.Portlet;
 import com.arsdigita.portal.PortletType;
+
+import org.apache.log4j.Logger;
 
 /**
  * Displays the navigation tree as the navigation application does and provides
@@ -63,8 +63,10 @@ public class NavigationTreePortlet extends Portlet
      */
     public static void loadPortletType()
     {
-        PortletType type = PortletType.createPortletType("Navigation Tree", PortletType.WIDE_PROFILE,
-                NavigationTreePortlet.BASE_DATA_OBJECT_TYPE);
+        PortletType type = PortletType
+                .createPortletType("Navigation Tree",
+                                   PortletType.WIDE_PROFILE,
+                                   NavigationTreePortlet.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Displays a tree of navigation categories");
         s_log.info("Loading portlet type " + type);
     }
@@ -74,7 +76,8 @@ public class NavigationTreePortlet extends Portlet
      */
     public static void registerInstantiator()
     {
-        DomainObjectFactory.registerInstantiator(BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator()
+        DomainObjectFactory.registerInstantiator(BASE_DATA_OBJECT_TYPE,
+                                                 new ACSObjectInstantiator()
         {
             public DomainObject doNewInstance(DataObject dataObject)
             {

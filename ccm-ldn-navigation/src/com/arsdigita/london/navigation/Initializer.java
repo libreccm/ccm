@@ -22,6 +22,7 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.db.DbHelper;
 
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.TemplateContext;
 
 import com.arsdigita.domain.DomainObject;
@@ -111,8 +112,12 @@ public class Initializer extends CompoundInitializer {
      */
     public void init(DomainInitEvent e) {
         super.init(e);
+        // Don't use a private configuration parameter for default content-section!
+        // Use the content-sections configuration directly!
+        // System.setProperty( NavigationConstants.DEFAULT_CONTENT_SECTION_URL,
+        //                     Navigation.getConfig().getDefaultContentSectionURL() );
         System.setProperty( NavigationConstants.DEFAULT_CONTENT_SECTION_URL,
-                            Navigation.getConfig().getDefaultContentSectionURL() );
+                            ContentSection.getConfig().getDefaultContentSection() );
 
         e.getFactory().registerInstantiator
             (Template.BASE_DATA_OBJECT_TYPE,

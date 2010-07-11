@@ -65,8 +65,10 @@ public final class NavigationConfig extends AbstractConfig {
     /** If no template for category, should it get template from parent, or
      * fall back on default? Default: true */
     private final Parameter m_inheritTemplates;
-    /** The URL of the default content section. Default:  /content/ */
-    private final Parameter m_defaultContentSectionURL;
+    // Removed, use content-section config directly instead!
+    // ContentSection.getConfig().getDefaultContentSection()
+    // /** The URL of the default content section. Default:  /content/ */
+    // private final Parameter m_defaultContentSectionURL;
     private final Parameter m_relatedItemsContext;
     private final Parameter m_defaultModelClass;
     private final Parameter m_defaultCatRootPath;
@@ -114,9 +116,11 @@ public final class NavigationConfig extends AbstractConfig {
         m_inheritTemplates = new BooleanParameter
             ("com.arsdigita.london.navigation.inherit_templates",
             Parameter.REQUIRED, new Boolean(true));
-        m_defaultContentSectionURL = new StringParameter
-            ("com.arsdigita.london.navigation.default_content_section_url",
-             Parameter.REQUIRED, "/content/");
+        // Removed, use content-section config directly instead!
+        // ContentSection.getConfig().getDefaultContentSection()
+        // m_defaultContentSectionURL = new StringParameter
+        //     ("com.arsdigita.london.navigation.default_content_section_url",
+        //      Parameter.REQUIRED, "/content/");
         m_relatedItemsContext = new StringParameter
             ("com.arsdigita.london.navigation.related_items_context",
              Parameter.REQUIRED, "subject");
@@ -165,7 +169,9 @@ public final class NavigationConfig extends AbstractConfig {
         register(m_generateItemURL);
         register(m_defaultTemplate);
         register(m_inheritTemplates);
-        register(m_defaultContentSectionURL);
+        // Removed, use content-section config directly instead!
+        // ContentSection.getConfig().getDefaultContentSection()
+        // register(m_defaultContentSectionURL);
         register(m_relatedItemsContext);
         register(m_defaultModelClass);
         register(m_defaultCatRootPath);
@@ -212,9 +218,11 @@ public final class NavigationConfig extends AbstractConfig {
 	return ((Boolean) get(m_inheritTemplates)).booleanValue();
     }
 
-    public final String getDefaultContentSectionURL() {
-        return (String)get(m_defaultContentSectionURL);
-    }
+    // Removed, use content-section config directly instead!
+    // ContentSection.getConfig().getDefaultContentSection()
+//  public final String getDefaultContentSectionURL() {
+//      return (String)get(m_defaultContentSectionURL);
+//  }
 
     public final String getRelatedItemsContext() {
         return (String)get(m_relatedItemsContext);

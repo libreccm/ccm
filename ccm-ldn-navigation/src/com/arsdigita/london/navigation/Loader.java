@@ -57,6 +57,7 @@ import org.apache.log4j.Logger;
  */
 public class Loader extends PackageLoader {
 
+        /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     private StringParameter m_templatesFile = new StringParameter(
@@ -64,14 +65,22 @@ public class Loader extends PackageLoader {
         Parameter.REQUIRED,
         "WEB-INF/navigation/templates.txt");
 
+    /**
+     * Constructor
+     */
     public Loader() {
         register( m_templatesFile );
     }
 
+    /**
+     * 
+     * @param ctx
+     */
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+
                 setupNavigation();
                 Loader.loadObjectListPortlet();
                 Loader.loadItemListPortlet();
