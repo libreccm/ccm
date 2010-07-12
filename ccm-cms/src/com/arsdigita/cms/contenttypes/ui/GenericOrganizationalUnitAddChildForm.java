@@ -33,17 +33,18 @@ public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
     private ItemSelectionModel m_itemModel;
 
     public GenericOrganizationalUnitAddChildForm(ItemSelectionModel itemModel) {
-        super("ChildAddForm", itemModel);
-        m_itemModel = itemModel;
+        super("ChildAddForm", itemModel);        
     }
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.select_child").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.select_child").localize()));       
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
+                findByAssociatedObjectType(
+                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
         add(this.m_itemSearch);
     }
-
 
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
@@ -57,10 +58,12 @@ public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericOrganizationalUnit parent = (GenericOrganizationalUnit) getItemSelectionModel().getSelectedObject(state);
+        GenericOrganizationalUnit parent = (GenericOrganizationalUnit) getItemSelectionModel().
+                getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().isSelected(state))) {
-            parent.addOrgaUnitChildren((GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+            parent.addOrgaUnitChildren((GenericOrganizationalUnit) data.get(
+                    ITEM_SEARCH));
         }
 
         init(fse);
