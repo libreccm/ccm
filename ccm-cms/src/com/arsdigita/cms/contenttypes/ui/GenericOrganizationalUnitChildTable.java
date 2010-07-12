@@ -124,7 +124,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
                 case 0:
                     return m_childCollection.getChildrenOrder();
                 case 1:
-                    return m_child.getOrgaUnitName();
+                    return m_child.getName();
                 case 2:
                     return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:

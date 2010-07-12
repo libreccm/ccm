@@ -40,7 +40,7 @@ public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
     @Override
     protected void addWidgets() {
         add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.select_child").localize()));
-        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(GenericOrganizationalUnit.class.getName()));
+        this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
         add(this.m_itemSearch);
     }
 

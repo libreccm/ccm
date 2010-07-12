@@ -30,7 +30,8 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
 
     private final static Logger s_log = Logger.getLogger(GenericOrganizationalUnitPropertyForm.class);
     private GenericOrganizationalUnitPropertiesStep m_step;
-    public static final String ORGAUNIT_NAME = GenericOrganizationalUnit.ORGAUNIT_NAME;
+    //public static final String NAME = GenericOrganizationalUnit.NAME;
+    //public static final String ORGAUNIT_NAME = GenericOrganizationalUnit.ORGAUNIT_NAME;
     public static final String ADDENDUM = GenericOrganizationalUnit.ADDENDUM;
     public static final String ID = "GenericOrgaUnit_edit";
 
@@ -51,7 +52,7 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
 
         add(new Label(
                 (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganunit.name").localize()));
-        ParameterModel nameParam = new StringParameter(ORGAUNIT_NAME);
+        ParameterModel nameParam = new StringParameter(NAME);
         TextField name = new TextField(nameParam);
         add(name);
 
@@ -76,8 +77,8 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
         GenericOrganizationalUnit orgaunit =
                 (GenericOrganizationalUnit) super.initBasicWidgets(fse);
 
-        data.put(ORGAUNIT_NAME, orgaunit.getOrgaUnitName());
-        data.put(ORGAUNIT_NAME, orgaunit.getAddendum());
+        data.put(NAME, orgaunit.getName());
+        data.put(ADDENDUM, orgaunit.getAddendum());
     }
 
     @Override
@@ -89,7 +90,7 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
 
         if ((orgaunit != null)
                 && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
-            orgaunit.setOrgaUnitName((String) data.get(ORGAUNIT_NAME));
+            orgaunit.setName((String) data.get(NAME));
             orgaunit.setAddendum((String) data.get(ADDENDUM));
 
             orgaunit.save();

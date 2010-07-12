@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataCollection;
@@ -33,13 +32,13 @@ import java.math.BigDecimal;
  */
 public class GenericOrganizationalUnit extends ContentPage {
 
-    public final static String ORGAUNIT_NAME = "ORGAUNIT_NAME";
-    public final static String ADDENDUM = "ORGAUNIT_ADDENDUM";
+    //public final static String ORGAUNIT_NAME = "ORGAUNIT_NAME";
+    public final static String ADDENDUM = "ADDENDUM";
     public final static String CONTACTS = "CONTACTS";
     public final static String CONTACT_TYPE = "CONTACT_TYPE";
     public final static String CONTACT_ORDER = "CONTACT_ORDER";
-    public final static String ORGAUNIT_CHILDREN = "CHILDREN";
-    public final static String CHILDREN_ORDER = "CHILDREN_ORDER";
+    public final static String ORGAUNIT_CHILDREN = "ORGAUNIT_CHILDREN";
+    public final static String ORGAUNIT_CHILDREN_ORDER = "ORGAUNIT_CHILDREN_ORDER";
     public final static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
 
     public GenericOrganizationalUnit() {
@@ -62,20 +61,20 @@ public class GenericOrganizationalUnit extends ContentPage {
         super(type);
     }
 
-    @Override
+    /*@Override
     public void beforeSave() {
         super.beforeSave();
 
         Assert.exists(getContentType(), ContentType.class);
-    }
+    }*/
 
-    public String getOrgaUnitName() {
+    /*public String getOrgaUnitName() {
         return (String) get(ORGAUNIT_NAME);
     }
 
     public void setOrgaUnitName(String orgaUnitName) {
         set(ORGAUNIT_NAME, orgaUnitName);
-    }
+    }*/
 
     public String getAddendum() {
         return (String) get(ADDENDUM);
@@ -116,7 +115,7 @@ public class GenericOrganizationalUnit extends ContentPage {
 
         DataObject link = add(ORGAUNIT_CHILDREN, child);
 
-        link.set(CHILDREN_ORDER, BigDecimal.valueOf(getContacts().size()));
+        link.set(ORGAUNIT_CHILDREN_ORDER, BigDecimal.valueOf(getContacts().size()));
     }
 
     public void removeOrgaUnitChildren(GenericOrganizationalUnit child) {
@@ -127,4 +126,5 @@ public class GenericOrganizationalUnit extends ContentPage {
     public boolean hasOrgaUnitChildren() {
         return !this.getOrgaUnitChildren().isEmpty();
     }
+    
 }
