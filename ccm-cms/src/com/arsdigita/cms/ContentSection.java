@@ -27,7 +27,7 @@ import com.arsdigita.cms.dispatcher.ResourceMapping;
 import com.arsdigita.cms.dispatcher.ResourceType;
 import com.arsdigita.cms.dispatcher.TemplateResolver;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
-// import com.arsdigita.cms.ContentSectionConfig;
+// import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.lifecycle.LifecycleDefinition;
 import com.arsdigita.cms.lifecycle.LifecycleDefinitionCollection;
 import com.arsdigita.cms.util.GlobalizationUtil;
@@ -126,7 +126,7 @@ public class ContentSection extends Application {
     private final static String ITEM_QUERY = "com.arsdigita.cms.ItemsInSection";
     private final static String SECTION_ID = "sectionId";
 
-    private static final ContentSectionConfig s_config = new ContentSectionConfig();
+    private static final CMSConfig s_config = new CMSConfig();
 
     static {
         s_config.load();
@@ -160,7 +160,7 @@ public class ContentSection extends Application {
         super(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public static ContentSectionConfig getConfig() {
+    public static CMSConfig getConfig() {
         return s_config;
     }
 
@@ -1036,15 +1036,16 @@ public class ContentSection extends Application {
                                         String irc,
                                         String xgc) {
         return ContentSection.create(
-	name,
-										folder,
-										category,
-										staff,
-										prc,
-										irc,
-										xgc,
-										"com.arsdigita.cms.dispatcher.DefaultTemplateResolver");
-								}
+                              name,
+                              folder,
+                              category,
+                              staff,
+                              prc,
+                              irc,
+                              xgc,
+                              "com.arsdigita.cms.dispatcher.DefaultTemplateResolver"
+                                    );
+    }
 
     /**
      * Create a new content section. This method is called automatically when a
@@ -1108,19 +1109,17 @@ public class ContentSection extends Application {
      */
     public static ContentSection create(final String name) {
 
-				Group staff = createStaffGroup(name);
-				Folder folder = createRootFolder(name);
-				Category category = createRootCategory(name);
+        Group staff = createStaffGroup(name);
+        Folder folder = createRootFolder(name);
+        Category category = createRootCategory(name);
 
-				// Some default classes for a content section.
-				String prc = "com.arsdigita.cms.dispatcher.SimplePageResolver";
-				String irc = "com.arsdigita.cms.dispatcher.MultilingualItemResolver";
-				String xgc = "com.arsdigita.cms.dispatcher.SimpleXMLGenerator";
-				String trc =
-					"com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
+        // Some default classes for a content section.
+        String prc = "com.arsdigita.cms.dispatcher.SimplePageResolver";
+        String irc = "com.arsdigita.cms.dispatcher.MultilingualItemResolver";
+        String xgc = "com.arsdigita.cms.dispatcher.SimpleXMLGenerator";
+        String trc = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
 
-				ContentSection section =
-					ContentSection.create(
+        ContentSection section = ContentSection.create(
 						name,
 						folder,
 						category,
@@ -1130,17 +1129,17 @@ public class ContentSection extends Application {
 						xgc,
 						trc);
 
-                // Set the default context on the root folder to
-                // the content section
-                PermissionService.setContext(folder.getOID(), section.getOID());
-                createDefaultResources(section);
+        // Set the default context on the root folder to
+        // the content section
+        PermissionService.setContext(folder.getOID(), section.getOID());
+        createDefaultResources(section);
 //          }
 //      };
 //      rootExcursion.run();
 
         //now retrieve the created content section and return it
 //      return (ContentSection) Application.retrieveApplicationForPath("/" + name + "/");
-    return section;
+        return section;
     }
 
     /**

@@ -65,6 +65,7 @@ public interface ContentTypeHelper {
      */
     public void setDescriptionKey(String descriptionKey);        
     public String getDescriptionKey();
+
     public void setObjectType(String objType);       
     public String getObjectType() ;              
     public void setClassName(String classname) ;      

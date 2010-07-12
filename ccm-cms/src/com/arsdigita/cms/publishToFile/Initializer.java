@@ -37,7 +37,7 @@ import com.arsdigita.runtime.ContextInitEvent;
 // import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 // import com.arsdigita.runtime.LegacyInitEvent;
-import com.arsdigita.runtime.LegacyInitializer;
+// import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.util.UncheckedWrapperException;
 

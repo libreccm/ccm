@@ -41,16 +41,36 @@ import com.arsdigita.cms.publishToFile.PublishToFileConfig;
 import com.arsdigita.cms.ui.authoring.ItemCategoryExtension;
 import com.arsdigita.cms.ui.authoring.ItemCategoryForm;
 import com.arsdigita.runtime.AbstractConfig;
+// URL resource: protocol handler removal: START
+// remove
+// import com.arsdigita.util.UncheckedWrapperException;
+// URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.EnumerationParameter;
 import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
+// import com.arsdigita.util.parameter.ParameterError;
+// URL resource: protocol handler removal: START
+// new: import:
 import com.arsdigita.util.parameter.ResourceParameter;
+// URL resource: protocol handler removal: END
 import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
+// URL resource: protocol handler removal: START
+// remove:
+// import com.arsdigita.util.parameter.URLParameter;
+// new: import:
 import com.arsdigita.util.StringUtils;
+// URL resource: protocol handler removal: END
+
+// URL resource: protocol handler removal: START
+// remove:
+// import java.io.IOException;
+// import java.net.MalformedURLException;
+// import java.net.URL;
+// URL resource: protocol handler removal: END
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
@@ -71,11 +91,11 @@ import org.apache.log4j.Logger;
  * @see ContentSection#getConfig()
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
- * @version $Id: ContentSectionConfig.java 2070 2010-01-28 08:47:41Z pboy $
+ * @version $Id: CMSConfig.java 2070 2010-01-28 08:47:41Z pboy $
  */
-public final class ContentSectionConfig extends AbstractConfig {
+public final class CMSConfig extends AbstractConfig {
 
-    private static final Logger s_log = Logger.getLogger(ContentSectionConfig.class);
+    private static final Logger s_log = Logger.getLogger(CMSConfig.class);
 
     private static Map s_skipAssetSteps = null; 
 
@@ -139,7 +159,7 @@ public final class ContentSectionConfig extends AbstractConfig {
      *
      * @see ContentSection#getConfig()
      **/
-    public ContentSectionConfig() {
+    public CMSConfig() {
 
         m_defaultItemTemplatePath = new StringParameter
             ("com.arsdigita.cms.default_item_template_path",

@@ -139,7 +139,7 @@ class CategoryItemPane extends BaseItemPane {
         // Quasimodo: BEGIN
         // Localizations
         ActionLink addCategoryLocalizationLink = new ActionLink(new Label(gz(
-                                         "cms.ui.category.localization.add"))) {
+                                         "cms.ui.category.localization_add"))) {
             @Override
             public boolean isVisible(PageState state) {
                 // Only show addLanguage button, if there are langauges to add
@@ -171,7 +171,7 @@ class CategoryItemPane extends BaseItemPane {
 
         // Linked categories
         final ActionLink linkAddLink = new ActionLink
-              (new Label(gz("cms.ui.category.linked.add")));
+              (new Label(gz("cms.ui.category.linked_add")));
 
         final Form linkForm = new LinkForm(m_category);
         add(linkForm);

@@ -1,0 +1,15 @@
+// CMS initialization file
+//
+// $Id: enterprise.init 2070 2010-01-28 08:47:41Z pboy $
+//
+
+// Migration status: Config parameters in cms/LoaderConfig (these options are to
+// be used only once during installation).
+// Config options in Initializer replaced by the new Config.
+init com.arsdigita.cms.installer.LegacyInitializer {
+    updateMasterObject = false;
+    workspace = "content-center";
+    contentCenterMap = "/WEB-INF/resources/content-center-map.xml";
+}
+
+

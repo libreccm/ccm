@@ -26,7 +26,8 @@ import com.arsdigita.cms.CMSGlobalized;
  * Main ResourceBundle for CMS UI.
  * Can be extended using:
  * - addBundle - to add new keys
- * - putBundle - to override keys already in CMSResources e.g. to customize notification email text
+ * - putBundle - to override keys already in CMSResources e.g. to customize
+ *               notification email text
  **/
 public class CMSResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
     

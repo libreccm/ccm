@@ -43,6 +43,8 @@ import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.runtime.AbstractConfig;
+import com.arsdigita.cms.LoaderConfig;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.ApplicationSetup;
@@ -76,37 +78,57 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public final class ContentSectionSetup {
 
+    private static Logger s_log = Logger.getLogger(ContentSectionSetup.class);
 
     private final static String STYLESHEET = "/packages/content-section/xsl/cms.xsl";
-
-    private static Logger s_log = Logger.getLogger(ContentSectionSetup.class);
     private HashMap m_tasks = new HashMap();
     private LifecycleDefinition m_lcd;
     private WorkflowTemplate m_wf;
     final ContentSection m_section;
+    
+    // Load main CMS configuration file
+    private static final LoaderConfig s_conf = new LoaderConfig();
 
+
+    /**
+     * Constructor
+     * @param section
+     */
     public ContentSectionSetup(ContentSection section) {
         Assert.exists(section, ContentSection.class);
         m_section = section;
     }
 
-    public void run() {
+//  public void run() {
+//
+//      // 4) Mount content sections.
+//
+//  }
 
-        // 4) Mount content sections.
-
-    }
     /**
-     * setup content section app type
+     * Setup content section app type
      */
+    // Nach bisherigen Erkenntnissen: Braucht nur einmal aufgerufen zu werden,
+    // um den Typ in die Datenbank einzutragen, d.h. letztlich den Klassennamen
+    // mit zugehörien Support Klassen zu registrieren. Damit kann die Klasse
+    // noch nicht benutzt oder angesprochen werden. Dazu muss zumindest eine
+    // Instanz des Typs erstellt werden, (d.h. eine content section, z.B. die
+    // default section 'content'. Für einen Typ können im Prinzip mehrere
+    // Instanzen geschaffen werden, die sich vor allem durch den Namen, d.h. die
+    // URL, unter der sie angesprochen werden, unterscheiden.
     public static void setupContentSectionAppType() {
+
+        // Install application type using new application classes
         ApplicationSetup setup = new ApplicationSetup(s_log);
         setup.setApplicationObjectType(ContentSection.BASE_DATA_OBJECT_TYPE);
-        setup.setKey(ContentSection.PACKAGE_TYPE);
+        setup.setKey(ContentSection.PACKAGE_TYPE); // by default: content-section
         setup.setTitle("CMS Content Section");
         setup.setDescription("A CMS Content Section");
         setup.setPortalApplication(false);
         //setup.setDispatcherClass(ContentItemDispatcher.class.getName());
-        setup.setStylesheet(STYLESHEET);
+        setup.setStylesheet(STYLESHEET); // by default: /pack./c-s/xml/cms.xml
+                                         // contains the xsl to generate the page
+
         setup.setInstantiator(new ACSObjectInstantiator() {
             public DomainObject doNewInstance(DataObject dataObject) {
                 return new ContentSection(dataObject);
@@ -117,6 +139,59 @@ public final class ContentSectionSetup {
 
     }
 
+    /**
+     * setup content section app instance
+     */
+    public static void setupContentSectionAppInstance(String name,
+                                                      List categoryFileList,
+                                                      List staffGroup,
+                                                      Boolean isPubliclyViewable) {
+
+        s_log.info("Creating content section on /" + name);
+
+
+        ContentSection section = ContentSection.create(name);
+
+        ContentSectionSetup setup = new ContentSectionSetup(section);
+
+        // Setup the access controls
+
+        // section specific categories, usually not used.
+        // During initial load at install time nor used at all!
+        if (ContentSection.getConfig().getUseSectionCategories()) {
+            // Iterator files = ((List) m_conf.getParameter(CATEGORIES)).iterator();
+            // Iterator files = s_conf.getCategoryFileList().iterator();
+            Iterator files = categoryFileList.iterator();
+            while ( files.hasNext() ) {
+                setup.registerCategories((String) files.next());
+            }
+        }
+
+        setup.registerRoles(staffGroup);
+        // setup.registerViewers((Boolean)m_conf.getParameter(PUBLIC));
+        setup.registerViewers(isPubliclyViewable);
+        setup.registerAlerts();
+        setup.registerPublicationCycles();
+        setup.registerWorkflowTemplates();
+        // setup.registerContentTypes((List)m_conf.getParameter(TYPES));
+        setup.registerContentTypes(s_conf.getContentSectionsContentTypes());
+        // setup.registerResolvers
+        //     ((String) m_conf.getParameter(ITEM_RESOLVER_CLASS),
+        //      (String) m_conf.getParameter(TEMPLATE_RESOLVER_CLASS));
+        setup.registerResolvers
+            (s_conf.getItemResolverClass(),
+             s_conf.getTemplateResolverClass());
+        section.save();
+
+        // return section;
+
+    }
+
+
+    /**
+     * 
+     * @param filename
+     */
     public void registerCategories(String filename) {
 
         if (filename == null) {

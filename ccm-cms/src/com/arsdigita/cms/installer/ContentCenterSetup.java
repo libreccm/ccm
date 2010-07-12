@@ -45,17 +45,18 @@ import org.xml.sax.SAXException;
  */
 
 public final class ContentCenterSetup {
+
+    /** URL to access the CMS Workspace, by default content-center  */
     final String m_workspaceURL;
 
-
-     /**
-     * Map of URL stubs and resource handler classes for
-     * ContentCenterDispatcher to use nasakai@redhat.com
-     */
-
+    /** Map of URL stubs and resource handler classes for ContentCenterDispatcher
+     * to use */
     final String m_contentCenterMap;
 
+    /** Contains mapping of URL (key) to resource handler*/
     private static HashMap s_pageClasses = new HashMap();
+
+    /** Contains mapping of resource(key) to resource handler */
     private static HashMap s_pageURLs = new HashMap();
 
 
@@ -69,22 +70,26 @@ public final class ContentCenterSetup {
 
     private static Logger s_log = Logger.getLogger(ContentSectionSetup.class);
 
-    public ContentCenterSetup(
-                        String workspaceURL,
-                        String contentCenterMap) {
-        m_contentCenterMap = contentCenterMap;
+    /**
+     * Constructor
+     * @param workspaceURL
+     * @param contentCenterMap
+     */
+    public ContentCenterSetup( String workspaceURL,
+                               String contentCenterMap) {
 
+        m_contentCenterMap = contentCenterMap;
         m_workspaceURL = workspaceURL;
     }
 
-    /** Gives you a mappting of URL (key) to resource handler
+    /** Gives you a mapping of URL (key) to resource handler
      *  Use the returned map like so: map.get("search");
      */
     public static HashMap getURLToClassMap() {
         return s_pageClasses;
     }
 
-    /** Gives you a mappting of resource(key) to resource handler
+    /** Gives you a mapping of resource(key) to resource handler
      *  Use the returned map like so: map.get("com.arsdigita.cms.ui.WorkspacePage");
      */
     public static HashMap getClassToURLMap() {

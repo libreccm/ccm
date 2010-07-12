@@ -50,7 +50,7 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.Asset;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.ContentSectionConfig;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.TextAsset;
 import com.arsdigita.cms.ui.CMSDHTMLEditor;
@@ -102,7 +102,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
     private static final String STREAMLINED = "_streamlined";
     private static final String STREAMLINED_DONE = "1";
     
-    private static final ContentSectionConfig s_config = new ContentSectionConfig();
+    private static final CMSConfig s_config = new CMSConfig();
     static {
 	    s_config.load();
     }

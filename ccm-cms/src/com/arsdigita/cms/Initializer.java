@@ -88,6 +88,9 @@ import com.arsdigita.kernel.Kernel;
  */
 public class Initializer extends CompoundInitializer {
 
+    /**
+     * Constructor
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -97,13 +100,30 @@ public class Initializer extends CompoundInitializer {
              ("ccm-cms.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-        // add(new LegacyInitializer("com/arsdigita/cms/publishToFile/enterprise.init"));
+        add(new com.arsdigita.cms.installer.Initializer());
+
+        // Experimental: Moved into c.ad.cms.loader
+        add(new LegacyInitializer("com/arsdigita/cms/contentsection/enterprise.init"));
+        // add(new com.arsdigita.cms.contentsection.Initializer());
 
         add(new com.arsdigita.cms.publishToFile.Initializer());
         add(new com.arsdigita.cms.lifecycle.Initializer());
+        add(new com.arsdigita.cms.portlet.Initializer());
 
+        // add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
+        // Replaced by c.ad.cms.installer.Initializer() (NEW initializer!)
+        //  add(new LegacyInitializer("com/arsdigita/cms/installer/enterprise.init"));
+        
+        // Moved into c.ad.cms.loader
+        // add(new LegacyInitializer("com/arsdigita/cms/installer/xml/enterprise.init"));
+        
+
+        // now used to initialize the forms in ccm-core only!
+        // Can be replaced in ccm after ccm-core is migrated to new initializer.
         add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
     }
+
+
     /**
      * Initializes domain-coupling machinery, usually consisting of
      * registering object instantiators and observers.
@@ -192,10 +212,11 @@ public class Initializer extends CompoundInitializer {
         MetadataProviderRegistry.registerAdapter(
             FileAsset.BASE_DATA_OBJECT_TYPE,
             new AssetMetadataProvider());
-    }
+    }    //  END init(DomainInitEvent e)
+
 
     /**
-     *  Registers stylesheet pattern generators
+     * Helper Method, registers stylesheet pattern generators
      */
     private void registerPatternGenerators() {
         PatternStylesheetResolver.registerPatternGenerator(

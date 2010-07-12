@@ -19,6 +19,7 @@
 package com.arsdigita.cms.installer.xml;
 
 
+import com.arsdigita.cms.LoaderConfig;
 import com.arsdigita.initializer.Configuration;
 import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.kernel.BaseInitializer;
@@ -29,8 +30,11 @@ import com.arsdigita.xml.XML;
 import java.util.Iterator;
 import java.util.List;
 
+//  This initializer loads definitions into the database and is a
+//  LOADER TASK!  (pboy)
 
-/** Parses XML file definition of content types and loads them to the
+/**
+ * Parses XML file definition of content types and loads them to the
  * database.  The XML config looks like the example below, the
  * "parentType" and "name" attributes are optional, and only required
  * for creating User Defined ContentTypes. Label corresponds to
@@ -67,23 +71,28 @@ import java.util.List;
  * @author Nobuko Asakai <nasakai@redhat.com>
  * @see XMLContentTypeHandler
  */
-public class ContentTypeInitializer extends BaseInitializer {
-    public static final String CONTENT_TYPES = "contentTypes";
+public class ContentTypeLegacyInitializer extends BaseInitializer {
 
-    private Configuration m_conf = new Configuration();
     private static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(ContentTypeInitializer.class);
+        org.apache.log4j.Logger.getLogger(ContentTypeLegacyInitializer.class);
 
-    public ContentTypeInitializer() {
+    // Load main CMS configuration file
+    private static final LoaderConfig s_conf = new LoaderConfig();
+
+//  public static final String CONTENT_TYPES = "contentTypes";
+//  private Configuration m_conf = new Configuration();
+
+    public ContentTypeLegacyInitializer() {
         // Could make this a list later...
-        m_conf.initParameter
-            (CONTENT_TYPES,
-             "Path to XML files that contains content type definition",
-             List.class);
+//      m_conf.initParameter
+//          (CONTENT_TYPES,
+//           "Path to XML files that contains content type definition",
+//           List.class);
     }
 
     public Configuration getConfiguration() {
-        return m_conf;
+        // return m_conf;
+        return null;
     }
 
     protected void doShutdown() {
@@ -91,7 +100,8 @@ public class ContentTypeInitializer extends BaseInitializer {
     }
 
     protected void doStartup() throws InitializationException {
-        List contentTypes = (List)m_conf.getParameter(CONTENT_TYPES);
+        // List contentTypes = (List)m_conf.getParameter(CONTENT_TYPES);
+        List contentTypes = s_conf.getCTDefFiles();
         
         if ( contentTypes != null) {            
             Iterator i = contentTypes.iterator();

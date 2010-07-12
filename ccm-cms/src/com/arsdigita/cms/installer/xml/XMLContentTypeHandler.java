@@ -32,7 +32,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Parses XML file definition of content types and loads them to the
+/**
+ * Parses XML file definition of content types and loads them to the
  * database.
  *
  * @see ContentTypeInitializer

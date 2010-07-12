@@ -3,26 +3,48 @@
 // $Id: enterprise.init 2070 2010-01-28 08:47:41Z pboy $
 //
 
-init com.arsdigita.cms.installer.Initializer {
-    updateMasterObject = false;
-    workspace = "content-center";
-    contentCenterMap = "/WEB-INF/resources/content-center-map.xml";
-}
 
-init com.arsdigita.cms.installer.xml.ContentTypeInitializer {
-    contentTypes = {
-        "/WEB-INF/content-types/GenericAddress.xml",
-        "/WEB-INF/content-types/GenericArticle.xml",
-        "/WEB-INF/content-types/GenericContact.xml",
-        "/WEB-INF/content-types/GenericPerson.xml",
-        "/WEB-INF/content-types/Template.xml"
-    };
-}
+// Migration status: Config parameters in cms/LoaderConfig (these options are to
+// be used only once during installation). 
+// Config options in Initializer replaced by the new Config.
+// Invoking the Initializer rewritten to a separate enterprise.init in
+// c.ad.cms.installer and modified in c.ad.cms.initializer
+
+// init com.arsdigita.cms.installer.Initializer {
+//     updateMasterObject = false;
+//     workspace = "content-center";
+//     contentCenterMap = "/WEB-INF/resources/content-center-map.xml";
+// }
 
 
+// Migration status: Config parameter in cms/CoaderConfig (this option is to be
+// used only once during installation).
+// Config option replaced by new Config.
+// Moved into loader because it is a typical loader task (load some configuration
+// parameters into database)
 
-init com.arsdigita.cms.installer.SectionInitializer {
+// init com.arsdigita.cms.installer.xml.ContentTypeInitializer {
+//     contentTypes = {
+//      "/WEB-INF/content-types/GenericAddress.xml",  // added in r450
+//      "/WEB-INF/content-types/GenericArticle.xml",  // added in r450
+//      "/WEB-INF/content-types/GenericContact.xml",  // added in r450
+//      "/WEB-INF/content-types/GenericPerson.xml",   // added in r450
+//         "/WEB-INF/content-types/Template.xml"
+//     };
+// }
 
+
+
+// Migration status: Config parameters in new cms/LoaderConfig for initial (invariant)
+// configuration during installation. See initialization / loading of ccm-ldn-portal.
+//  In parallel options are in new contentsection/ContentSectionConfig for
+//  additional content-sections during a system startup.
+// All config options are replaced by new config
+// Invoking the Initializer rewritten to a separate enterprise.init in
+// c.ad.cms.contentsection and modified in c.ad.cms.initializer
+
+// init com.arsdigita.cms.installer.SectionInitializer {
+//
   // Name of the content section. This is used as the URL
   // so it must contain only characters that are allowed in URLs e.g.,
   // no spaces.
@@ -31,41 +53,41 @@ init com.arsdigita.cms.installer.SectionInitializer {
   // - Parameter waf.pagemap.login_redirect=content/content-center-redirect.jsp
   //   in integrations.properties of the respective bundle
   // - registerDomain(navigationKey, "/content/", null); in ldn.aplaws.Loader
-  name = "content";
-
+//   name = "content";
+//
   // List of roles to create. First field is role name,
   // second is the description, third is a list of
   // privileges, and (optional) fourth is the workflow
   // task to assign to
-  roles = {
-    {
-      "Author", "Creates new content",
-      { "new_item", "read_item", "preview_item", "edit_item",
-        "categorize_items" },
-      "Authoring"
-    },
-    {
-      "Editor", "Approves the author's work",
-      { "edit_item", "new_item", "delete_item", "approve_item",
-        "read_item", "preview_item", "categorize_items" },
-      "Approval"
-    },
-    {
-      "Publisher", "Deploys the content to the web site",
-      { "edit_item", "new_item", "delete_item",
-        "publish", "read_item", "preview_item", "categorize_items" },
-      "Publishing"
-    },
-    {
-      "Manager", "Manages the overall content section",
-      { "delete_item", "edit_item", "new_item", 
-        "staff_admin", "content_type_admin", "lifecycle_admin", 
-        "workflow_admin", "category_admin", "publish", 
-        "read_item", "preview_item", "categorize_items" }
+//   roles = {
+//     {
+//       "Author", "Creates new content",
+//       { "new_item", "read_item", "preview_item", "edit_item",
+//         "categorize_items" },
+//       "Authoring"
+//     },
+//     {
+//       "Editor", "Approves the author's work",
+//       { "edit_item", "new_item", "delete_item", "approve_item",
+//         "read_item", "preview_item", "categorize_items" },
+//       "Approval"
+//     },
+//     {
+//       "Publisher", "Deploys the content to the web site",
+//       { "edit_item", "new_item", "delete_item",
+//         "publish", "read_item", "preview_item", "categorize_items" },
+//       "Publishing"
+//     },
+//     {
+//       "Manager", "Manages the overall content section",
+//       { "delete_item", "edit_item", "new_item",
+//         "staff_admin", "content_type_admin", "lifecycle_admin",
+//         "workflow_admin", "category_admin", "publish",
+//         "read_item", "preview_item", "categorize_items" }
       // NB, manager doesn't have any assigned task for workflow
-    }
-  };
-
+//     }
+//   };
+//
   // List of content types to register
 
   // Example:
@@ -77,8 +99,8 @@ init com.arsdigita.cms.installer.SectionInitializer {
   // The types are registered when the content-section is created. Later
   // modifications have no effect.
 
-  types = {
-  };
+//   types = {
+//   };
 //--  types = {
 //--           "com.arsdigita.cms.contenttypes.Address",
 //--           "com.arsdigita.cms.contenttypes.Article",
@@ -86,10 +108,10 @@ init com.arsdigita.cms.installer.SectionInitializer {
 //--  };
 
   // Category tree to load
-  categories = { "/WEB-INF/resources/article-categories.xml", "/WEB-INF/resources/navigation-categories.xml" };
+//   categories = { "/WEB-INF/resources/article-categories.xml", "/WEB-INF/resources/navigation-categories.xml" };
 
   // Wether to make content viewable to 'The Public', ie non-registered users
-  public = true;
+//   public = true;
 
   // When to generate email alerts: by default, generate email alerts
   // on enable, finish, and rollback (happens on rejection)
@@ -122,10 +144,10 @@ init com.arsdigita.cms.installer.SectionInitializer {
   //                 overdue task (in HOURS)
   // maxAlerts:      The maximum number of alerts to send about any one
   //                 overdue task
-  sendOverdueAlerts = false;
-  taskDuration = 96;
-  alertInterval = 24;
-  maxAlerts = 5;
+//   sendOverdueAlerts = false;
+//   taskDuration = 96;
+//   alertInterval = 24;
+//   maxAlerts = 5;
 
   // default value (site-wide) is handled via the parameter
   // com.arsdigita.cms.default_item_resolver_class.
@@ -140,7 +162,7 @@ init com.arsdigita.cms.installer.SectionInitializer {
   // you are changing from the default for a specific content section
   // Name of the template resolver class. This class must implement com.arsdigita.cms.dispatcher.TemplateResolver.
   //templateResolverClass = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
-}
+// }
 
 
 init com.arsdigita.formbuilder.installer.Initializer {
@@ -224,7 +246,7 @@ init com.arsdigita.formbuilder.installer.Initializer {
 
 
 //Used when running CMS in conjunction with a Portal
-init com.arsdigita.cms.installer.portlet.Initializer {}
+//  init com.arsdigita.cms.installer.portlet.Initializer {}
 
 
 
@@ -359,7 +381,7 @@ init com.arsdigita.cms.installer.portlet.Initializer {}
 // }
 
 
-// This is mot needed for a longtime.
+// This is not needed for a longtime.
 // It has been commented out since revision 473 (Aug. 2005) or earlier
 // Had been active in initial aplaws checkin (at rev. 8 about 2004)
 // Modified in r473 as a svn:merge of 319-431

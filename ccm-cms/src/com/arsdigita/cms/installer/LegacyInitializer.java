@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,27 +16,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.installer;
 
+// unused import com.arsdigita.auditing.BasicAuditTrail;
 import com.arsdigita.cms.LoaderConfig;
-import com.arsdigita.runtime.CompoundInitializer;
-// import com.arsdigita.runtime.DataInitEvent;
-import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.cms.dispatcher.ContentCenterDispatcher;
+import com.arsdigita.cms.dispatcher.ItemDispatcher;
+// unused import com.arsdigita.domain.DomainObject;
+// unused import com.arsdigita.domain.DomainObjectFactory;
+// unused import com.arsdigita.domain.DomainObjectInstantiator;
+import com.arsdigita.initializer.Configuration;
+import com.arsdigita.initializer.InitializationException;
+// unused import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.TransactionContext;
 
 import org.apache.log4j.Logger;
 
-// CURRENT STATUS:
-// (Simple) Migration of the Old Initializer code of this package to the new
-// initializer system. Current goal is a pure replacement with as less code
-// changes as possible.
-// In a second step a restructure of the code will be done.
+
+
 
 /**
- * XXX Reformulate according to the code development!
- * 
- * Initializes the CMS package.
- *
  * <p>The main initializer for the Content Management System.</p>
  *
  * <p>Initializes the Content Management System, including the Content Center
@@ -44,18 +44,26 @@ import org.apache.log4j.Logger;
  * optionally initializes user-defined content types and user-defined content
  * sections.</p>
  *
- *
- * @author Peter Boy (pboy@barkhof.uni-bremen.de)
- * @version $Id: $
- *
+ * @author Michael Pih (pihman@arsdigita.com)
+ * @version $Revision: #47 $ $Date: 2004/08/17 $
+ * @since ACS 5.0
  */
-public class Initializer extends CompoundInitializer {
+public class LegacyInitializer extends com.arsdigita.kernel.BaseInitializer {
 
-
-    /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
-    // private static PublishToFileConfig s_conf= PublishToFileConfig.getConfig();
+    private final static String CACHE_ITEMS        
+        = "cacheItems";
+    private static final String UPDATE_MASTER
+        = "updateMasterObject";
+    private final static String CONTENT_CENTER_MAP
+        = "contentCenterMap";
+    private final static String WORKSPACE            
+        = "workspace";
+    // Init script parameters
+    private Configuration m_conf = new Configuration();
+
+    // Temporär: Einbinden des neuen Parameter Systems
     private static final LoaderConfig s_conf = new LoaderConfig();
 //  LoaderConfig conf = LoaderConfig.getConfig();
 
@@ -66,39 +74,37 @@ public class Initializer extends CompoundInitializer {
 //      s_config.load();
 //  }
 
-    public Initializer() {
-      //final String url = RuntimeConfig.getConfig().getJDBCURL();
-      //final int database = DbHelper.getDatabaseFromURL(url);
 
+
+    public LegacyInitializer() throws InitializationException {
+        m_conf.initParameter
+            (WORKSPACE, "The name of the workspace package instance",
+             String.class);
+        m_conf.initParameter
+            (CACHE_ITEMS, 
+             "Enable caching of content items", 
+             Boolean.class,
+             Boolean.TRUE);
+        m_conf.initParameter
+            (UPDATE_MASTER,
+             "If true, attempts to recursively set the correct master object for " +
+             "all content items within the system.",
+             Boolean.class,
+             Boolean.FALSE);
+        m_conf.initParameter
+            (CONTENT_CENTER_MAP,
+             "XML Mapping of the content center tabs to " +
+             "URLs, see ContentCenterDispatcher",
+             String.class,
+             ContentCenterDispatcher.DEFAULT_MAP_FILE);
     }
 
-//  /**
-//   * An empty implementation of {@link Initializer#init(DataInitEvent)}.
-//   *
-//   * @param evt The data init event.
-//   */
-//  public void init(DataInitEvent evt) {
-//  }
+    public Configuration getConfiguration() {
+        return m_conf;
+    }
+
 
     /**
-     * Initializes domain-coupling machinery, usually consisting of
-     * registering object instantiators and observers.
-     *
-     */
-    public void init(DomainInitEvent evt) {
-        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
-
-        // Recursive invokation of init, is it really necessary??
-        // On the other hand:
-        // An empty implementations prevents this initializer from being executed.
-        // A missing implementations causes the super class method to be executed,
-        // which invokes the above added LegacyInitializer.
-        // If super is not invoked, various other cms sub-initializer may not run.
-        super.init(evt);
-
-    /*
-     * Imported from LegacyInitializer:
-     * TASK: 
      * Check if CMS package type exists. If not, then:
      *
      * <ol>
@@ -107,7 +113,18 @@ public class Initializer extends CompoundInitializer {
      *   <li>create CMS Service package type and instance</li>
      * </ol>
      */
+    protected void doStartup() {
 
+        TransactionContext txn =
+            SessionManager.getSession().getTransactionContext();
+        txn.beginTxn();
+
+        try {
+
+            //final String workspaceURL = (String) m_conf
+            //  .getParameter(WORKSPACE);
+            //final String contentCenterMap = (String)m_conf
+            //    .getParameter(CONTENT_CENTER_MAP);
 
             // Update master object if upgrading from old versioning
             // XXX: shouldn't we just gut this section (and
@@ -124,18 +141,15 @@ public class Initializer extends CompoundInitializer {
             // }
             // pb end
 
-            // From comment in original enterprise.init file:
             // XXX: ItemDispatcher is no longer used. Is the following
             // still a valid enterprise.init parameter? Do we need to
             // set ContentSectionServlet.s_cacheItems instead of the
             // below (which is currently always true), or does this go
             // away entirely?
-            // NB. true is default for ItemDispatcher!
-            // This would be a typical domain init initialization task.
-            // final boolean cacheItems =
-            //     s_conf.
-            // s_log.debug("Set cache items to " + cacheItems);
-            // ItemDispatcher.setCacheItems(cacheItems);
+            final boolean cacheItems = 
+                ((Boolean)m_conf.getParameter(CACHE_ITEMS)).booleanValue();
+            s_log.debug("Set cache items to " + cacheItems);
+            ItemDispatcher.setCacheItems(cacheItems);
 
             final String workspaceURL = s_conf.getWorkspaceURL();
             final String contentCenterMap = s_conf.getContentCenterMap();
@@ -145,7 +159,14 @@ public class Initializer extends CompoundInitializer {
 
             centerSetup.run();
 
+        } finally {
+            txn.commitTxn();
+        }
 
-        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
     }
+
+    protected void doShutdown() {}
+
+    
+    
 }

@@ -1,0 +1,10 @@
+// CMS initialization file
+//
+// $Id: enterprise.init 2070 2010-01-28 08:47:41Z pboy $
+//
+// Migration status: Config parameters in new cms/LoaderConfig for initial (invariant)
+// configuration during installation. See initialization / loading of ccm-ldn-portal.
+//  In parallel options are in new contentsection/ContentSectionConfig for
+//  additional content-sections during a system startup.
+// All config options are replaced by new config
+init com.arsdigita.cms.installer.SectionLegacyInitializer { }

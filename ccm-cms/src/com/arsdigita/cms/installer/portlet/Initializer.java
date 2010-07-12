@@ -52,6 +52,10 @@ public class Initializer
 
     private Configuration m_conf = new Configuration();
 
+    /**
+     * Empty Constructor!
+     * @throws InitializationException
+     */
     public Initializer() throws InitializationException {
     }
 
