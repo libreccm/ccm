@@ -65,6 +65,9 @@ public class Loader extends PackageLoader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
+    // Name of files containing an initial category tree(s).
+    // Files are stored as part of the jar, so classloader can find them.
+    // ToDo: relocate files user accessible outside the jar.
     private static final String[] categoryFiles = new String[] {
         "WEB-INF/aplaws/gen-nav-domain-1.00.xml"
       , "WEB-INF/aplaws/gen-nav-hierarchy-1.00.xml"
@@ -89,6 +92,7 @@ public class Loader extends PackageLoader {
             "com.arsdigita.aplaws.navigation_domain",
             Parameter.REQUIRED,
             "GEN-NAV");
+        // Registers to the context by adding the parameter to a map of parameters
         register(m_navigationDomain);
 
         /*
@@ -129,6 +133,7 @@ public class Loader extends PackageLoader {
         String[] files = categoryFiles;
 
         final Parser parser = new Parser();
+        // for each filename in the array of files containing categories
         for (int i = 0 ; i < files.length ; i++) {
             final String file = files[i];
             if (s_log.isInfoEnabled()) {
@@ -177,7 +182,7 @@ public class Loader extends PackageLoader {
               .retrieveApplicationForPath("/portal/");
         portal.setDefaultLayout(PageLayout
               .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));
-    }
+    }   // run method
 
 //  public void registerServicesTemplate(String appURL) {
 //      Application app = Application.retrieveApplicationForPath(appURL);
