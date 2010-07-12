@@ -117,12 +117,24 @@ public class PortletType extends ResourceType {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    /**
+     * 
+     * @param title
+     * @param profile
+     * @param portletObjectType
+     * @return
+     */
     public static PortletType createPortletType(String title, String profile,
                                                 String portletObjectType) {
         return new PortletType
             (BASE_DATA_OBJECT_TYPE, title, profile, portletObjectType);
     }
 
+    /**
+     * 
+     * @param id
+     * @return
+     */
     public static PortletType retrievePortletType(BigDecimal id) {
         Assert.exists(id, "id");
 
@@ -130,6 +142,12 @@ public class PortletType extends ResourceType {
             (new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
+
+    /**
+     *
+     * @param oid
+     * @return
+     */
     public static PortletType retrievePortletType(OID oid) {
         Assert.exists(oid, "oid");
 

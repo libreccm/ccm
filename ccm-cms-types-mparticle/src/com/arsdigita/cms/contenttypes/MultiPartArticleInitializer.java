@@ -18,7 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentSectionConfig;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.contenttypes.ui.mparticle.ArticleSectionPanel;
 //Unused import
 // import com.arsdigita.cms.search.ContentPageMetadataProvider;
@@ -67,7 +67,7 @@ public class MultiPartArticleInitializer extends ContentTypeInitializer {
             ArticleSection.BASE_DATA_OBJECT_TYPE,
             new MultiPartArticleSectionURLFinder());
 
-        ContentSectionConfig.registerExtraXMLGenerator(MultiPartArticle.class.getName(),
+        CMSConfig.registerExtraXMLGenerator(MultiPartArticle.class.getName(),
                                                        new ArticleSectionPanel());
     }
 }
