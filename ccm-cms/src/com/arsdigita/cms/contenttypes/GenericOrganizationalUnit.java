@@ -33,12 +33,12 @@ import java.math.BigDecimal;
 public class GenericOrganizationalUnit extends ContentPage {
 
     //public final static String ORGAUNIT_NAME = "ORGAUNIT_NAME";
-    public final static String ADDENDUM = "ADDENDUM";
-    public final static String CONTACTS = "CONTACTS";
-    public final static String CONTACT_TYPE = "CONTACT_TYPE";
-    public final static String CONTACT_ORDER = "CONTACT_ORDER";
-    public final static String ORGAUNIT_CHILDREN = "ORGAUNIT_CHILDREN";
-    public final static String ORGAUNIT_CHILDREN_ORDER = "ORGAUNIT_CHILDREN_ORDER";
+    public final static String ADDENDUM = "addendum";
+    public final static String CONTACTS = "contacts";
+    public final static String CONTACT_TYPE = "contact_type";
+    public final static String CONTACT_ORDER = "contact_order";
+    public final static String ORGAUNIT_CHILDREN = "orgaunit_children";
+    public final static String ORGAUNIT_CHILDREN_ORDER = "orgaunit_children_order";
     public final static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
 
     public GenericOrganizationalUnit() {
