@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xrd:adapters
+    xmlns:xrd="http://xmlns.redhat.com/schemas/waf/xml-renderer-rules"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
+    <!--
+    Extend adapter for ContentItemPanel to also output the associated objects.
+    The default properties for BaseContact are left as is and are inherited from ContentPage
+  -->
+    <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Organization" extends="com.arsdigita.cms.ContentPage">
+            <xrd:associations rule="include">
+                <xrd:property name="/object/contacts"/>
+            </xrd:associations>
+        </xrd:adapter>
+    </xrd:context>
+</xrd:adapters>

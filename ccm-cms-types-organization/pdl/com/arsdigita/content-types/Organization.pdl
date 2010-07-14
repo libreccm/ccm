@@ -1,0 +1,8 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type Organization extends GenericOrganizationalUnit {
+    reference key ( ct_organizations.organization_id );
+}

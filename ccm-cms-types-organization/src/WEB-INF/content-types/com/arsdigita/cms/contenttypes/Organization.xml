@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+    <!-- Is internal will be set the yes when testing is finished. -->
+    <ctd:content-type
+        label="Organization"
+        description="A content type of organization."
+        objectType="com.arsdigita.cms.contenttypes.Organization"
+        classname="com.arsdigita.cms.contenttypes.Organization">
+
+        <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+            <ctd:authoring-step
+                    labelKey="cms.contenttypes.shared.basic_properties.title"
+                    labelBundle="cms.contenttypes.cms.ui.CMSResources"
+                    descriptionKey="cms.contenttypes.shared.basic_properties.description"
+                    descriptionBundle="com.arsdigita.cms.ui.CMSResources"
+                    component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitPropertiesStep"
+                    ordering="1"
+                    />
+
+            <ctd:authoring-step
+                     labelKey="genericorgaunit.authoring.contact_properties.title"
+                     labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                     descriptionKey="genericorgaunit.authoring.contact_properties.description"
+                     descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                     component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitContactPropertiesStep"
+                     ordering="2"
+                     />
+
+            <ctd:authoring-step
+                     labelKey="genericorgaunit.authoring.child_properties.title"
+                     labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                     descriptionKey="genericorgaunit.authoring.child_properties.description"
+                     descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                     component="com.arsdigita.cms.contenttypes.ui.OrganizationChildrenPropertiesStep"
+                     ordering="3"
+                     />
+
+
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+        </ctd:authoring-kit>
+
+    </ctd:content-type>
+
+</ctd:content-types>
