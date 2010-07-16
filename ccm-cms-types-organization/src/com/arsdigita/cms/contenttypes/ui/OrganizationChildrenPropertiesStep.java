@@ -5,7 +5,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.Organization;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -43,7 +42,7 @@ public class OrganizationChildrenPropertiesStep extends SimpleEditStep {
             addChildSheet.getSaveCancelSection().getCancelButton());
 
         GenericOrganizationalUnitChildTable childrenTable = new GenericOrganizationalUnitChildTable(
-                (itemModel));
+                itemModel);
         setDisplayComponent(childrenTable);
     }
 }

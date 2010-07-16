@@ -6,13 +6,13 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 version="1.0">
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="cms:CT_graphics"
-    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_Organization">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Department']" mode="cms:CT_graphics"
+    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_Department">
     <p><xsl:value-of select="./name"/></p>
   </xsl:template>
 
-<xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Organization']" mode="cms:CT_text"
-    name="cms:CT_text_com_arsdigita_cms_contenttypes_Organization">
+<xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Department']" mode="cms:CT_text"
+    name="cms:CT_text_com_arsdigita_cms_contenttypes_Department">
     <p><xsl:value-of select="./name"/></p>
   </xsl:template>
 
