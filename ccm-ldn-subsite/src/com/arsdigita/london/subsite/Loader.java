@@ -37,10 +37,6 @@ import org.apache.log4j.Logger;
  * @version $Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Loader extends PackageLoader {
-    public final static String versionId =
-        "$Id: Loader.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/01/23 10:22:44 $";
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
@@ -54,7 +50,7 @@ public class Loader extends PackageLoader {
     }
 
     /**
-     *  This creates an initializes the subsite application
+     *  This creates and initializes the subsite application
      */
     private void createApplication() {
         ApplicationType type = ApplicationType

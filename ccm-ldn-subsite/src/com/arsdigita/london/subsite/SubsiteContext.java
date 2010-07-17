@@ -26,10 +26,9 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.london.subsite.Site;
 
 /**
- *
  * <p>The entry point into all the global state that CCM Subsite code expects to
  * have available to it when running, e.g. the current content section,
- * current item
+ * current item   </p>
  *
  * <p>This is a session object that provides an environment in which
  * code can execute. The SubsiteContext contains all session-specific
@@ -40,23 +39,28 @@ import com.arsdigita.london.subsite.Site;
  * null explicitly, then use the hasContentItem and hasContentSection
  * methods first.
  *
- * @author Daniel Berrange
  * @see com.arsdigita.kernel.KernelContext
  * @see com.arsdigita.cms.Subsite
+ *
+ * @author Daniel Berrange
+ * @version $Id: SubsiteContext.java 755 2005-09-02 13:42:47Z sskracic $
  */
 public final class SubsiteContext {
-    public static final String versionId =
-        "$Id: SubsiteContext.java 755 2005-09-02 13:42:47Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/01/27 16:01:55 $";
 
     private static final Logger s_log = Logger.getLogger(SubsiteContext.class);
 
-    public static final String SITE_REQUEST_ATTRIBUTE 
-        = Site.class.getName();
+    public static final String SITE_REQUEST_ATTRIBUTE  = Site.class.getName();
+       
 
+    /**
+     * 
+     */
     SubsiteContext() {}
-    
+
+    /**
+     *
+     * @return
+     */
     public final String getDebugInfo() {
         String info = "Current state of " + this + ":\n" +
             "           getSite() -> " + getSite() + "\n";

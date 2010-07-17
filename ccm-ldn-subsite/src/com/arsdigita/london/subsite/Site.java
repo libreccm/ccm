@@ -18,19 +18,24 @@
 
 package com.arsdigita.london.subsite;
 
-import com.arsdigita.util.Assert;
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.web.Application;
 import com.arsdigita.categorization.Category;
+import com.arsdigita.cms.TemplateContext;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.cms.TemplateContext;
+import com.arsdigita.util.Assert;
+import com.arsdigita.web.Application;
+
 import java.math.BigDecimal;
 
+/**
+ * Represents a single subsite (as created by the admin interface)
+ *
+ */
 public class Site extends ACSObject {
     
     public static final String BASE_DATA_OBJECT_TYPE = 
@@ -43,10 +48,17 @@ public class Site extends ACSObject {
     public static final String FRONT_PAGE = "frontPage";
     public static final String TEMPLATE_CONTEXT = "templateContext";
 
+    /**
+     * 
+     */
     public Site() {
         this(BASE_DATA_OBJECT_TYPE);
     }
     
+    /** 
+     * Constructor
+     * @param type
+     */
     public Site(String type) {
         super(type);
     }
@@ -71,6 +83,15 @@ public class Site extends ACSObject {
         return site;
     }
 
+    /** 
+     * 
+     * @param title
+     * @param description
+     * @param hostname
+     * @param styleDir
+     * @param root
+     * @param frontPage
+     */
     protected void setup(String title,
                          String description,
                          String hostname,
@@ -119,7 +140,13 @@ public class Site extends ACSObject {
         return (Site)DomainObjectFactory.newInstance(obj);
     }
     
-    public static Site findByHostname(String hostname) 
+    /** 
+     * 
+     * @param hostname
+     * @return
+     * @throws DataObjectNotFoundException
+     */
+    public static Site findByHostname(String hostname)
         throws DataObjectNotFoundException {
         DataCollection sites = SessionManager.getSession()
             .retrieve(BASE_DATA_OBJECT_TYPE);

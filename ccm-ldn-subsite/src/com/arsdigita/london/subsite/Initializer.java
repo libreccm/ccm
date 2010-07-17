@@ -45,10 +45,6 @@ import com.arsdigita.xml.XML;
  * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Initializer extends CompoundInitializer {
-    public final static String versionId =
-        "$Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/01/23 10:22:44 $";
 
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -72,7 +68,7 @@ public class Initializer extends CompoundInitializer {
             });
     }
 
-    // TODO - one the core initializers are ported this should be moved
+    // TODO - once the core initializers are ported this should be moved
     // to be a DomainEvent instead of a LegacyInitEvent
     public void init(LegacyInitEvent evt) {
         super.init(evt);

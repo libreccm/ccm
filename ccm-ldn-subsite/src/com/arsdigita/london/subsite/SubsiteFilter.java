@@ -35,10 +35,30 @@ import com.arsdigita.london.navigation.NavigationContext;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Package's main worker class, SubsiteFilter intercepts each incomming request 
+ * and checks if it matches a configured subsite address (name). 
+ * 
+ * SubsiteFilter class uses the standard servlet filter mechanism (servlet 
+ * specification 2.3 and beyond) so the servlet container ensures its
+ * invocation.   
+ * 
+ * Usage: SubsiteFilter has to be declared in the web.xml application configuration
+ *        file.
+ */
 public class SubsiteFilter extends BaseFilter {
     
     private static final Logger s_log = Logger.getLogger(SubsiteFilter.class);
 
+    /**
+     * Checks an incomming request if its hostname matches an existing subsite.
+     * 
+     * @param sreq
+     * @param sresp
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp,
                              FilterChain chain)
