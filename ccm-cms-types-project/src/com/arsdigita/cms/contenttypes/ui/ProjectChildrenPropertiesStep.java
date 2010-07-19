@@ -9,7 +9,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.cms.ui.authoring.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import org.apache.log4j.Logger;
 
 /**

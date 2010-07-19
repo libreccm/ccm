@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
@@ -19,7 +15,8 @@ import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitChildrenCollection;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
@@ -29,77 +26,75 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitChildTable extends Table implements
-        TableActionListener {
+public class GenericOrganizationalUnitPersonsTable extends Table implements TableActionListener {
 
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private ItemSelectionModel m_itemModel;
 
-    public GenericOrganizationalUnitChildTable(
-            final ItemSelectionModel itemModel) {
+    public  GenericOrganizationalUnitPersonsTable(final ItemSelectionModel itemModel) {
         super();
-        this.m_itemModel = itemModel;
+        m_itemModel = itemModel;
 
-        setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.childs.none")));
+        setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.persons.none")));
         TableColumnModel tabModel = getColumnModel();
 
         tabModel.add(new TableColumn(
                 0,
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.child.order").localize(),
-                TABLE_COL_EDIT));
+                ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.persons.order").localize(),
+                TABLE_COL_EDIT
+                ));
         tabModel.add(new TableColumn(
                 1,
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.child.name").localize()));
+                ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.persons.name").localize()
+                ));
         tabModel.add(new TableColumn(
                 2,
-                ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.child.action").localize(),
-                TABLE_COL_DEL));
+               ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.persons.role").localize()
+                ));
+        tabModel.add(new TableColumn(
+                3,
+               ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.persons.delete").localize()
+                ));
 
-        setModelBuilder(new GenericOrganizationalUnitChildTableModelBuilder(
-                itemModel));
+        setModelBuilder(new GenericOrganizationalUnitTableModelBuilder(itemModel));
 
         tabModel.get(0).setCellRenderer(new EditCellRenderer());
-        tabModel.get(2).setCellRenderer(new DeleteCellRenderer());
-
-        addTableActionListener(this);
+        tabModel.get(3).setCellRenderer(new DeleteCellRenderer());
     }
 
-    private class GenericOrganizationalUnitChildTableModelBuilder extends LockableImpl
+    private class GenericOrganizationalUnitTableModelBuilder
+            extends LockableImpl
             implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
-        public GenericOrganizationalUnitChildTableModelBuilder(
+        public GenericOrganizationalUnitTableModelBuilder(
                 ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
 
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
-                    getSelectedObject(state);
-            return new GenericOrganizationalUnitChildTableModel(table, state,
-                                                                orgaunit);
+            GenericOrganizationalUnit orgaunit =
+                    (GenericOrganizationalUnit) m_itemModel.getSelectedObject(state);
+            return new GenericOrganizationalUnitTableModel(table, state, orgaunit);
         }
     }
 
-    private class GenericOrganizationalUnitChildTableModel implements TableModel {
-
-        final private int MAX_DESC_LENGTH = 25;
+    private class GenericOrganizationalUnitTableModel implements TableModel {
+        private final int MAX_DESC_LENGTH = 25;
         private Table m_table;
-        private GenericOrganizationalUnitChildrenCollection m_childCollection;
-        private GenericOrganizationalUnit m_child;
+        private GenericOrganizationalUnitPersonCollection m_personsCollection;
+        private GenericPerson m_person;        
 
-        private GenericOrganizationalUnitChildTableModel(Table table,
-                                                         PageState state,
-                                                         GenericOrganizationalUnit orgaunit) {
+        private GenericOrganizationalUnitTableModel(
+                Table table,
+                PageState state,
+                GenericOrganizationalUnit orgaunit
+                ) {
             m_table = table;
-            m_childCollection = orgaunit.getOrgaUnitChildren();
+            m_personsCollection = orgaunit.getPersons();
         }
 
         public int getColumnCount() {
@@ -109,8 +104,9 @@ public class GenericOrganizationalUnitChildTable extends Table implements
         public boolean nextRow() {
             boolean ret;
 
-            if ((m_childCollection != null) && m_childCollection.next()) {
-                m_child = m_childCollection.getOrgaUnitChild();
+            if ((m_personsCollection != null)
+                    && m_personsCollection.next()) {
+                m_person = m_personsCollection.getPerson();
                 ret = true;
             } else {
                 ret = false;
@@ -119,26 +115,31 @@ public class GenericOrganizationalUnitChildTable extends Table implements
             return ret;
         }
 
-        public Object getElementAt(int colIndex) {
-            switch (colIndex) {
+        public Object getElementAt(int columnIndex) {
+            switch(columnIndex) {
                 case 0:
-                    return m_childCollection.getChildrenOrder();
+                    return m_personsCollection.getPersonOrder();
                 case 1:
-                    return m_child.getName();
+                    return String.format("%s %s %s %s", 
+                            m_person.getTitlePre(),
+                            m_person.getGivenName(),
+                            m_person.getSurname(),
+                            m_person.getTitlePost());
                 case 2:
+                    return m_personsCollection.getRoleName();
+                case 3:
                     return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:
                     return null;
             }
         }
 
-        public Object getKeyAt(int colIndex) {
-            return m_child.getID();
+        public Object getKeyAt(int columnIndex) {
+            return m_person.getID();
         }
     }
 
-    private class EditCellRenderer extends LockableImpl implements
-            TableCellRenderer {
+    private class EditCellRenderer extends LockableImpl implements TableCellRenderer {
 
         public Component getComponent(
                 Table table,
@@ -150,13 +151,12 @@ public class GenericOrganizationalUnitChildTable extends Table implements
                 int col) {
             com.arsdigita.cms.SecurityManager securityManager = Utilities.
                     getSecurityManager(state);
-            GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
-                    getSelectedObject(state);
+            GenericPerson person = (GenericPerson) m_itemModel.getSelectedObject(
+                    state);
 
-            boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
+            boolean canEdit = securityManager.canAccess(state.getRequest(),
                     com.arsdigita.cms.SecurityManager.EDIT_ITEM,
-                    orgaunit);
+                    person);
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
                 return link;
@@ -166,8 +166,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
         }
     }
 
-    private class DeleteCellRenderer extends LockableImpl implements
-            TableCellRenderer {
+    private class DeleteCellRenderer extends LockableImpl implements TableCellRenderer {
 
         public Component getComponent(
                 Table table,
@@ -179,18 +178,17 @@ public class GenericOrganizationalUnitChildTable extends Table implements
                 int col) {
             com.arsdigita.cms.SecurityManager securityManager = Utilities.
                     getSecurityManager(state);
-            GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
-                    getSelectedObject(state);
+            GenericPerson person = (GenericPerson) m_itemModel.getSelectedObject(
+                    state);
 
-            boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
+            boolean canEdit = securityManager.canAccess(state.getRequest(),
                     com.arsdigita.cms.SecurityManager.DELETE_ITEM,
-                    orgaunit);
+                    person);
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) ContenttypesGlobalizationUtil.
                         globalize(
-                        "cms.contenttypes.ui.genericorgaunit.confirm_delete").
+                        "cms.contenttypes.ui.genericorgaunit.persons.confirm_delete").
                         localize());
                 return link;
             } else {
@@ -203,11 +201,9 @@ public class GenericOrganizationalUnitChildTable extends Table implements
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        GenericOrganizationalUnit child = new GenericOrganizationalUnit(new BigDecimal(event.
-                getRowKey().toString()));
+        GenericPerson person = new GenericPerson(new BigDecimal(event.getRowKey().toString()));
 
-        GenericOrganizationalUnit parent = (GenericOrganizationalUnit) m_itemModel.
-                getSelectedObject(state);
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) m_itemModel.getSelectedObject(state);
 
         TableColumn col = getColumnModel().get(event.getColumn().intValue());
 
@@ -215,9 +211,10 @@ public class GenericOrganizationalUnitChildTable extends Table implements
         }
 
         if (col.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-            parent.removeOrgaUnitChildren(child);
+            orga.removePerson(person);
         }
     }
+
 
     @Override
     public void headSelected(TableActionEvent event) {

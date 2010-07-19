@@ -24,45 +24,64 @@ import com.arsdigita.cms.ContentPage;
 
 //PDL definition for a commons base type for orgnizations, departments, projects etc.
 object type GenericOrganizationalUnit extends ContentPage {
-    //String[0..1] orgaunit_name = cms_organizationalunit.name VARCHAR(256);
+    //String[0..1] orgaunit_name = cms_organizationalunits.name VARCHAR(256);
 
-    String[0..1] addendum = cms_organizationalunit.addendum VARCHAR(512);
+    String[0..1] addendum = cms_organizationalunits.addendum VARCHAR(512);
 
-    reference key (cms_organizationalunit.organizationalunit_id);
+    reference key (cms_organizationalunits.organizationalunit_id);
 }
 
 //Parent <-> child relation organizationalunits to build department structures etc.
 association {
 
-    GenericOrganizationalUnit[0..1] orgaunit_parent = join cms_organizationalunit.organizationalunit_id
-                                               to cms_organizationalunit_organizationalunit_map.orgaunit_children_id,
-                                             join cms_organizationalunit_organizationalunit_map.orgaunit_parent_id
-                                               to cms_organizationalunit.organizationalunit_id;
+    GenericOrganizationalUnit[0..1] orgaunit_parent = join cms_organizationalunits.organizationalunit_id
+                                               to cms_organizationalunits_organizationalunit_map.orgaunit_children_id,
+                                             join cms_organizationalunits_organizationalunit_map.orgaunit_parent_id
+                                               to cms_organizationalunits.organizationalunit_id;
 
-    GenericOrganizationalUnit[0..n] orgaunit_children = join cms_organizationalunit.organizationalunit_id
-                                                 to cms_organizationalunit_organizationalunit_map.orgaunit_parent_id,
-                                               join cms_organizationalunit_organizationalunit_map.orgaunit_children_id
-                                                 to cms_organizationalunit.organizationalunit_id;
+    GenericOrganizationalUnit[0..n] orgaunit_children = join cms_organizationalunits.organizationalunit_id
+                                                 to cms_organizationalunits_organizationalunit_map.orgaunit_parent_id,
+                                               join cms_organizationalunits_organizationalunit_map.orgaunit_children_id
+                                                 to cms_organizationalunits.organizationalunit_id;
 
     //Link attribute, allows it to customize the order which the childs will be shown.
-    BigDecimal[0..1] orgaunit_children_order = cms_organizationalunit_organizationalunit_map.map_order INTEGER;
+    BigDecimal[0..1] orgaunit_children_order = cms_organizationalunits_organizationalunit_map.map_order INTEGER;
 }
 
 //Link for contact points.
 association {
 
     GenericOrganizationalUnit[0..1] organizationalunit = join cms_contacts.contact_id
-                                                           to cms_organizationalunit_contact_map.contact_id,
-                                                         join cms_organizationalunit_contact_map.organizationalunit_id
-                                                           to cms_organizationalunit.organizationalunit_id;
+                                                           to cms_organizationalunits_contact_map.contact_id,
+                                                         join cms_organizationalunits_contact_map.organizationalunit_id
+                                                           to cms_organizationalunits.organizationalunit_id;
 
-    GenericContact[0..n] contacts = join cms_organizationalunit.organizationalunit_id
-                                      to cms_organizationalunit_contact_map.organizationalunit_id,
-                                    join cms_organizationalunit_contact_map.contact_id
+    GenericContact[0..n] contacts = join cms_organizationalunits.organizationalunit_id
+                                      to cms_organizationalunits_contact_map.organizationalunit_id,
+                                    join cms_organizationalunits_contact_map.contact_id
                                       to cms_contacts.contact_id;
 
    //Some link attributes.
-   String contact_type = cms_organizationalunit_contact_map.contact_type VARCHAR(100);
-   BigDecimal contact_order = cms_organizationalunit_contact_map.map_order INTEGER;
+   String contact_type = cms_organizationalunits_contact_map.contact_type VARCHAR(100);
+   BigDecimal contact_order = cms_organizationalunits_contact_map.map_order INTEGER;
+
+}
+
+//Links a organization with persons.
+association {
+
+    GenericOrganizationalUnit[0..1] organizationalunit = join cms_persons.person_id
+                                                           to cms_organizationalunits_person_map.person_id,
+                                                         join cms_organizationalunits_person_map.organizationalunit_id
+                                                           to cms_organizationalunits.organizationalunit_id;
+
+    GenericPerson[0..n] persons = join cms_organizationalunits.organizationalunit_id
+                                    to cms_organizationalunits_person_map.organizationalunit_id,
+                                  join cms_organizationalunits_person_map.person_id
+                                    to cms_persons.person_id;
+
+   //Additional attributes for the association
+   String role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
+   BigDecimal person_order = cms_organizationalunits_person_map.map_order INTEGER;
 
 }

@@ -27,8 +27,11 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
+ * This class provides a base type for building content types which represent organizations,
+ * departments, projects etc.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class GenericOrganizationalUnit extends ContentPage {
 
@@ -39,6 +42,9 @@ public class GenericOrganizationalUnit extends ContentPage {
     public final static String CONTACT_ORDER = "contact_order";
     public final static String ORGAUNIT_CHILDREN = "orgaunit_children";
     public final static String ORGAUNIT_CHILDREN_ORDER = "orgaunit_children_order";
+    public final static String PERSONS = "persons";
+    public final static String ROLE = "role_name";
+    public final static String PERSON_ORDER = "person_order";
     public final static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
 
     public GenericOrganizationalUnit() {
@@ -126,5 +132,25 @@ public class GenericOrganizationalUnit extends ContentPage {
     public boolean hasOrgaUnitChildren() {
         return !this.getOrgaUnitChildren().isEmpty();
     }
-    
+
+    public GenericOrganizationalUnitPersonCollection getPersons() {
+        return new GenericOrganizationalUnitPersonCollection((DataCollection) get(PERSONS));
+    }
+
+    public void addPerson(GenericPerson person) {
+        Assert.exists(person, GenericPerson.class);
+
+        DataObject link = add(PERSONS, person);
+
+        link.set(PERSON_ORDER, BigDecimal.valueOf(getPersons().size()));
+    }
+
+    public void removePerson(GenericPerson person) {
+        Assert.exists(person, GenericPerson.class);
+        remove(PERSONS, person);
+    }
+
+    public boolean hasPersons() {
+        return !this.getPersons().isEmpty();
+    }
 }

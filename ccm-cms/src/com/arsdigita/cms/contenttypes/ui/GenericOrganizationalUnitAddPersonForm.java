@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
@@ -9,6 +13,7 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -16,34 +21,33 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Jens Pelzetter
+ * @author jensp
  */
-public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
+public class GenericOrganizationalUnitAddPersonForm extends BasicItemForm {
 
     private static final Logger s_log = Logger.getLogger(
-            GenericOrganizationalUnitAddChildForm.class);
-    private GenericOrganizationalUnitChildrenPropertiesStep m_step;
+            GenericOrganizationalUnitAddPersonForm.class);
+    private GenericOrganizationalUnitPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
-    private final String ITEM_SEARCH = "orgaunitChild";
+    private final String ITEM_SEARCH = "orgaunitPerson";
     private ItemSelectionModel m_itemModel;
 
-    public GenericOrganizationalUnitAddChildForm(ItemSelectionModel itemModel) {
-        super("ChildAddForm", itemModel);        
+    public GenericOrganizationalUnitAddPersonForm(ItemSelectionModel itemModel) {
+        super("PersonAddForm", itemModel);
     }
 
     @Override
     protected void addWidgets() {
         add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.select_child").localize()));       
+                "cms.contenttypes.ui.genericorgaunit.select_person").localize()));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(
-                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
+                findByAssociatedObjectType(GenericPerson.BASE_DATA_OBJECT_TYPE));
         add(this.m_itemSearch);
     }
 
     @Override
-    public void init(FormSectionEvent fse) throws FormProcessException {
+    public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
 
@@ -54,12 +58,11 @@ public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericOrganizationalUnit parent = (GenericOrganizationalUnit) getItemSelectionModel().
+        GenericOrganizationalUnit orga = (GenericOrganizationalUnit) getItemSelectionModel().
                 getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().isSelected(state))) {
-            parent.addOrgaUnitChildren((GenericOrganizationalUnit) data.get(
-                    ITEM_SEARCH));
+            orga.addPerson((GenericPerson) data.get(ITEM_SEARCH));
         }
 
         init(fse);

@@ -6,8 +6,8 @@
 
     <!-- Is internal will be set the yes when testing is finished. -->
     <ctd:content-type
-        label="Organization"
-        description="A content type of organization."
+        label="Project"
+        description="A content type of project."
         objectType="com.arsdigita.cms.contenttypes.Project"
         classname="com.arsdigita.cms.contenttypes.Project">
 

@@ -41,6 +41,15 @@
                      ordering="3"
                      />
 
+            <ctd:authoring-step
+                     labelKey="genericorgaunit.authoring.persons_properties.title"
+                     labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                     descriptionKey="genericorgaunit.authoring.persons_properties.description"
+                     descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                     component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalPersonPropertiesStep"
+                     ordering="4"
+                     />
+
                      
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
         </ctd:authoring-kit>

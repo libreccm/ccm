@@ -18,23 +18,24 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
     public static final String CONTACT_TYPE = "link.contact_type";
     public static final String CONTACT_ORDER = "link.contact_order";
 
-
-    public GenericOrganizationalUnitContactCollection(DataCollection dataCollection) {
+    public GenericOrganizationalUnitContactCollection(
+            DataCollection dataCollection) {
         super(dataCollection);
 
         m_dataCollection.addOrder(ORDER);
     }
 
-        // Get the contact type of the link
+    // Get the contact type of the link
     public String getContactType() {
         return (String) m_dataCollection.get(CONTACT_TYPE);
     }
 
     // Get the contact order of the link
     public String getContactOrder() {
-        String retVal = ((BigDecimal) m_dataCollection.get(CONTACT_ORDER)).toString();
+        String retVal = ((BigDecimal) m_dataCollection.get(CONTACT_ORDER)).
+                toString();
 
-        if(retVal == null || retVal.isEmpty()) {
+        if (retVal == null || retVal.isEmpty()) {
             retVal = String.valueOf(this.getPosition());
         }
 
@@ -44,5 +45,4 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
     public GenericContact getContact() {
         return new GenericContact(m_dataCollection.getDataObject());
     }
-
 }

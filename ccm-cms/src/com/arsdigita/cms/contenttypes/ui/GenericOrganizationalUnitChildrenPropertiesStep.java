@@ -1,11 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -41,7 +36,7 @@ public class GenericOrganizationalUnitChildrenPropertiesStep extends SimpleEditS
             addChildSheet.getSaveCancelSection().getCancelButton());
 
         GenericOrganizationalUnitChildTable childrenTable = new GenericOrganizationalUnitChildTable(
-                (itemModel));
+                itemModel);
         setDisplayComponent(childrenTable);
     }
 }
