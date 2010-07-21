@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
 public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
         implements FormProcessListener, FormInitListener, FormSubmissionListener {
@@ -61,6 +61,7 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
         ParameterModel addendumParam = new StringParameter(ADDENDUM);
         TextField addendum = new TextField(addendumParam);
         add(addendum);
+                
     }
 
     @Override

@@ -21,14 +21,14 @@ import org.apache.log4j.Logger;
 public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
 
     private static final Logger s_log = Logger.getLogger(
-            GenericOrganizationalUnitAddChildForm.class);
+            GenericOrganizationalUnitChildAddForm.class);
     private GenericOrganizationalUnitChildrenPropertiesStep m_step;
-    private ItemSearchWidget m_itemSearch;
+    private ItemSearchWidget m_itemSGenericOrganizationalUnitAddChildFormearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "orgaunitChild";
     private ItemSelectionModel m_itemModel;
 
-    public GenericOrganizationalUnitAddChildForm(ItemSelectionModel itemModel) {
+    public GenericOrganizationalUnitChildAddForm(ItemSelectionModel itemModel) {
         super("ChildAddForm", itemModel);        
     }
 

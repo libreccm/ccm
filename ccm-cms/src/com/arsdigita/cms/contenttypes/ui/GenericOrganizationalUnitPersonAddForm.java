@@ -21,19 +21,19 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitAddPersonForm extends BasicItemForm {
+public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
 
     private static final Logger s_log = Logger.getLogger(
-            GenericOrganizationalUnitAddPersonForm.class);
+            GenericOrganizationalUnitPersonAddForm.class);
     private GenericOrganizationalUnitPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "orgaunitPerson";
     private ItemSelectionModel m_itemModel;
 
-    public GenericOrganizationalUnitAddPersonForm(ItemSelectionModel itemModel) {
+    public GenericOrganizationalUnitPersonAddForm(ItemSelectionModel itemModel) {
         super("PersonAddForm", itemModel);
     }
 

@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="lib/mlibwrapper_jai.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ccm-core"/>
+	<classpathentry kind="lib" path="/home/jensp/pwi/openccm/ccm/trunk/runtime/apache-tomcat-6.0.26/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/Eclipse"/>
 </classpath>

@@ -27,7 +27,7 @@ public class GenericOrganizationalUnitPersonPropertiesStep extends SimpleEditSte
             String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm addPersonSheet = new GenericOrganizationalUnitAddPersonForm(itemModel);
+        BasicItemForm addPersonSheet = new GenericOrganizationalUnitPersonAddForm(itemModel);
         add(ADD_PERSON_SHEET_NAME,
                 (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.add_person").localize(),

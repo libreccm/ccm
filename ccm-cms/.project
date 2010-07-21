@@ -3,8 +3,34 @@
 	<name>ccm-cms</name>
 	<comment></comment>
 	<projects>
+		<project>ccm-cms-assets-fileattachment</project>
+		<project>ccm-cms-types-article</project>
+		<project>ccm-cms-types-event</project>
+		<project>ccm-cms-types-filestorageitem</project>
+		<project>ccm-cms-types-mparticle</project>
+		<project>ccm-cms-types-newsitem</project>
+		<project>ccm-cms-types-siteproxy</project>
+		<project>ccm-core</project>
+		<project>ccm-forum</project>
+		<project>ccm-ldn-aplaws</project>
+		<project>ccm-ldn-atoz</project>
+		<project>ccm-ldn-dublin</project>
+		<project>ccm-ldn-navigation</project>
+		<project>ccm-ldn-portal</project>
+		<project>ccm-ldn-rss</project>
+		<project>ccm-ldn-search</project>
+		<project>ccm-ldn-shortcuts</project>
+		<project>ccm-ldn-subsite</project>
+		<project>ccm-ldn-terms</project>
+		<project>ccm-ldn-theme</project>
+		<project>ccm-ldn-util</project>
 	</projects>
 	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
 			<arguments>
@@ -13,5 +39,6 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
 </projectDescription>

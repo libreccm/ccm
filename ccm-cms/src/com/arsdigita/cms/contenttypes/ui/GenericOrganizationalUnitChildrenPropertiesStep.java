@@ -27,7 +27,7 @@ public class GenericOrganizationalUnitChildrenPropertiesStep extends SimpleEditS
             String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm addChildSheet = new GenericOrganizationalUnitAddChildForm(
+        BasicItemForm addChildSheet = new GenericOrganizationalUnitChildAddForm(
                 itemModel);
         add(ADD_CHILD_SHEET_NAME,
             (String) ContenttypesGlobalizationUtil.globalize(
