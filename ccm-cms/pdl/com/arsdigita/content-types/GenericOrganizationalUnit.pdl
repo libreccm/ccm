@@ -22,7 +22,7 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-//PDL definition for a commons base type for orgnizations, departments, projects etc.
+// PDL definition for a commons base type for orgnizations, departments, projects etc.
 object type GenericOrganizationalUnit extends ContentPage {
     //String[0..1] orgaunit_name = cms_organizationalunits.name VARCHAR(256);
 
@@ -31,7 +31,7 @@ object type GenericOrganizationalUnit extends ContentPage {
     reference key (cms_organizationalunits.organizationalunit_id);
 }
 
-//Parent <-> child relation organizationalunits to build department structures etc.
+// Parent <-> child relation organizationalunits to build department structures etc.
 association {
 
     GenericOrganizationalUnit[0..1] orgaunit_parent = join cms_organizationalunits.organizationalunit_id
@@ -44,11 +44,11 @@ association {
                                                join cms_organizationalunits_organizationalunit_map.orgaunit_children_id
                                                  to cms_organizationalunits.organizationalunit_id;
 
-    //Link attribute, allows it to customize the order which the childs will be shown.
+    // Link attribute, allows it to customize the order which the childs will be shown.
     BigDecimal[0..1] orgaunit_children_order = cms_organizationalunits_organizationalunit_map.map_order INTEGER;
 }
 
-//Link for contact points.
+// Link for contact points.
 association {
 
     GenericOrganizationalUnit[0..1] organizationalunit = join cms_contacts.contact_id
@@ -61,13 +61,13 @@ association {
                                     join cms_organizationalunits_contact_map.contact_id
                                       to cms_contacts.contact_id;
 
-   //Some link attributes.
+   // Some link attributes.
    String contact_type = cms_organizationalunits_contact_map.contact_type VARCHAR(100);
    BigDecimal contact_order = cms_organizationalunits_contact_map.map_order INTEGER;
 
 }
 
-//Links a organization with persons.
+// Links a organization with persons.
 association {
 
     GenericOrganizationalUnit[0..1] organizationalunit = join cms_persons.person_id
@@ -80,7 +80,7 @@ association {
                                   join cms_organizationalunits_person_map.person_id
                                     to cms_persons.person_id;
 
-   //Additional attributes for the association
+   // Additional attributes for the association
    String role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
    BigDecimal person_order = cms_organizationalunits_person_map.map_order INTEGER;
 

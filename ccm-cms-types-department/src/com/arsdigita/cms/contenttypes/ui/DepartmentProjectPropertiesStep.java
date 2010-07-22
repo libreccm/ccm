@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
@@ -14,30 +15,30 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
-public class OrganizationChildrenPropertiesStep extends SimpleEditStep {
+public class DepartmentProjectPropertiesStep extends SimpleEditStep {
 
-    private static final Logger s_log = Logger.getLogger(OrganizationChildrenPropertiesStep.class);
-    private static String ADD_CHILD_SHEET_NAME = "addChild";
+    private static final Logger s_log =
+            Logger.getLogger(DepartmentProjectPropertiesStep.class);
+    private static String ADD_CHILD_SHEET_NAME = "addProject";
 
-    public OrganizationChildrenPropertiesStep(
+    public DepartmentProjectPropertiesStep(
             ItemSelectionModel itemModel,
             AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
-    public OrganizationChildrenPropertiesStep(
+    public DepartmentProjectPropertiesStep(
             ItemSelectionModel itemModel,
             AuthoringKitWizard parent,
             String prefix) {
         super(itemModel, parent, prefix);
-       
-        BasicItemForm addChildSheet = new OrganizationAddChildForm(
-                itemModel);
+
+        BasicItemForm addChildSheet = new DepartmentProjectAddForm(itemModel);
         add(ADD_CHILD_SHEET_NAME,
             (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.add_child").localize(),
+                "cms.contenttypes.ui.department.add_project").localize(),
             new WorkflowLockedComponentAccess(addChildSheet, itemModel),
             addChildSheet.getSaveCancelSection().getCancelButton());
 

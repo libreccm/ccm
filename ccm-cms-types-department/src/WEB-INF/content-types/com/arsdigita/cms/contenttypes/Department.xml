@@ -6,21 +6,21 @@
 
     <!-- Is internal will be set the yes when testing is finished. -->
     <ctd:content-type
-        label="Organization"
-        description="A content type of organization."
-        objectType="com.arsdigita.cms.contenttypes.Organization"
-        classname="com.arsdigita.cms.contenttypes.Organization">
+        label="Department"
+        description="A content type of Department."
+        objectType="com.arsdigita.cms.contenttypes.Department"
+        classname="com.arsdigita.cms.contenttypes.Department">
 
         <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
 
             <ctd:authoring-step
-                    labelKey="cms.contenttypes.organization_properties.title"
+                    labelKey="cms.contenttypes.department.basic_properties.title"
                     labelBundle="cms.contenttypes.cms.ui.CMSResources"
-                    descriptionKey="cms.contenttypes.organization.basic_properties.description"
+                    descriptionKey="cms.contenttypes.department.basic_properties.description"
                     descriptionBundle="com.arsdigita.cms.ui.CMSResources"
-                    component="com.arsdigita.cms.contenttypes.ui.OrganizationPropertiesStep"
+                    component="com.arsdigita.cms.contenttypes.ui.DepartmentPropertiesStep"
                     ordering="1"
-                    />           
+                    />
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
         </ctd:authoring-kit>

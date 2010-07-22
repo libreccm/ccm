@@ -22,34 +22,6 @@
                     component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitPropertiesStep"
                     ordering="1"
                     />
-
-            <ctd:authoring-step
-                     labelKey="genericorgaunit.authoring.contact_properties.title"
-                     labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                     descriptionKey="genericorgaunit.authoring.contact_properties.description"
-                     descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                     component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitContactPropertiesStep"
-                     ordering="2"
-                     />
-
-            <ctd:authoring-step
-                     labelKey="genericorgaunit.authoring.child_properties.title"
-                     labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                     descriptionKey="genericorgaunit.authoring.child_properties.description"
-                     descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                     component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalUnitChildrenPropertiesStep"
-                     ordering="3"
-                     />
-
-            <ctd:authoring-step
-                     labelKey="genericorgaunit.authoring.persons_properties.title"
-                     labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                     descriptionKey="genericorgaunit.authoring.persons_properties.description"
-                     descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                     component="com.arsdigita.cms.contenttypes.ui.GenericOrganizationalPersonPropertiesStep"
-                     ordering="4"
-                     />
-
                      
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
         </ctd:authoring-kit>

@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2010 Jens Pelzetter,
+ * for the Center of Social Politics of the University of Bremen
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
@@ -15,21 +34,28 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import org.apache.log4j.Logger;
 
 /**
+ * Form for adding a child to an organization. To change the type of childs
+ * allowed, overwrite the {@link getChildDataObjectType()} method.
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
+public class GenericOrganizationalUnitChildAddForm extends BasicItemForm {
 
     private static final Logger s_log = Logger.getLogger(
             GenericOrganizationalUnitChildAddForm.class);
     private GenericOrganizationalUnitChildrenPropertiesStep m_step;
-    private ItemSearchWidget m_itemSGenericOrganizationalUnitAddChildFormearch;
+    private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "orgaunitChild";
     private ItemSelectionModel m_itemModel;
 
     public GenericOrganizationalUnitChildAddForm(ItemSelectionModel itemModel) {
-        super("ChildAddForm", itemModel);        
+        this("ChildAddForm", itemModel);
+    }
+
+    public GenericOrganizationalUnitChildAddForm(String formName,
+            ItemSelectionModel itemModel) {
+        super(formName, itemModel);
     }
 
     @Override
@@ -38,7 +64,7 @@ public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
                 "cms.contenttypes.ui.genericorgaunit.select_child").localize()));       
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
-                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
+                getChildDataObjectType()));
         add(this.m_itemSearch);
     }
 
@@ -63,5 +89,13 @@ public class GenericOrganizationalUnitAddChildForm extends BasicItemForm {
         }
 
         init(fse);
+    }
+
+    /**
+     *
+     * @return The BASE_DATA_OBJECT_TYPE of the childs allowed.
+     */
+    protected String getChildDataObjectType() {
+    	return GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE;
     }
 }

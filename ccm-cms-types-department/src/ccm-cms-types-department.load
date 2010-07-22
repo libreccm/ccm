@@ -7,11 +7,11 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_organizations"/>
-    <initializer class="com.arsdigita.cms.contenttypes.OrganizationInitializer"/>
+    <table name="ct_departemts"/>
+    <initializer class="com.arsdigita.cms.contenttypes.DepartmentInitializer"/>
   </provides>
   <scripts>
-    <schema directory="ccm-cms-types-organization"/>
-    <data class="com.arsdigita.cms.contenttypes.OrganizationLoader"/>
+    <schema directory="ccm-cms-types-department"/>
+    <data class="com.arsdigita.cms.contenttypes.DepartmentLoader"/>
   </scripts>
 </load>

@@ -30,6 +30,11 @@ import java.math.BigDecimal;
  * This class provides a base type for building content types which represent organizations,
  * departments, projects etc.
  *
+ * An item of this content type can be linked with several other content types:
+ * - Contact (0..n)
+ * - Person (0..n)
+ * - GenericOrganizationalUnit (0..n) to build organizations structures.
+ *
  * @author Jens Pelzetter
  * @version $Id$
  */
@@ -66,21 +71,6 @@ public class GenericOrganizationalUnit extends ContentPage {
     public GenericOrganizationalUnit(String type) {
         super(type);
     }
-
-    /*@Override
-    public void beforeSave() {
-        super.beforeSave();
-
-        Assert.exists(getContentType(), ContentType.class);
-    }*/
-
-    /*public String getOrgaUnitName() {
-        return (String) get(ORGAUNIT_NAME);
-    }
-
-    public void setOrgaUnitName(String orgaUnitName) {
-        set(ORGAUNIT_NAME, orgaUnitName);
-    }*/
 
     public String getAddendum() {
         return (String) get(ADDENDUM);

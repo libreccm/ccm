@@ -3,6 +3,6 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
-object type Department extends Organization {
+object type Department extends GenericOrganizationalUnit {
     reference key ( ct_departments.department_id );
 }
