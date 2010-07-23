@@ -88,9 +88,9 @@ class PhaseTableModelBuilder extends LockableImpl
                     return Duration.formatDuration(duration);
                 }
             case 4:
-                return lz("cms.ui.lifecycle.phase.edit");
+                return lz("cms.ui.lifecycle.phase_edit");
             case 5:
-                return lz("cms.ui.lifecycle.phase.delete");
+                return lz("cms.ui.lifecycle.phase_delete");
             default:
                 throw new IllegalStateException();
             }

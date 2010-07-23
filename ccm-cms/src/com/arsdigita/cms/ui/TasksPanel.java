@@ -601,8 +601,8 @@ public class TasksPanel extends CMSContainer {
             String[][] sortableHeaders = 
                 {{SORT_TITLE, "cms.ui.workflow.task.item_title"},
                  {SORT_ACTION, "cms.ui.action"},
-                 {SORT_DATE, "cms.tasks.ui.due_date"},
-                 {SORT_STATUS, "cms.tasks.ui.status_no_colon"},
+                 {SORT_DATE, "cms.ui.tasks_due_date"},
+                 {SORT_STATUS, "cms.ui.tasks_status_no_colon"},
                  {SORT_USER, "cms.ui.workflow.task.locking_user"},
                  {SORT_WORKFLOW, "cms.ui.workflow"}};
             for (int i=0;i<sortableHeaders.length;i++) {

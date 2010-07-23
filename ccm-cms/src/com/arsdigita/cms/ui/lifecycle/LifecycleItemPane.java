@@ -78,7 +78,7 @@ class LifecycleItemPane extends BaseItemPane {
         m_detailPane.add(new SummarySection(editLink, deleteLink));
 
         final ActionLink phaseAddLink = new ActionLink
-            (new Label(gz("cms.ui.lifecycle.phase.add")));
+            (new Label(gz("cms.ui.lifecycle.phase_add")));
 
         m_detailPane.add(new PhaseSection(phaseAddLink));
 
@@ -155,8 +155,8 @@ class LifecycleItemPane extends BaseItemPane {
     private static final String[] s_headers = {
         lz("cms.ui.name"),
         lz("cms.ui.description"),
-        lz("cms.ui.lifecycle.phase.delay"),
-        lz("cms.ui.lifecycle.phase.duration"),
+        lz("cms.ui.lifecycle.phase_delay"),
+        lz("cms.ui.lifecycle.phase_duration"),
         "",
         ""
     };
@@ -165,7 +165,7 @@ class LifecycleItemPane extends BaseItemPane {
         public PhaseTable() {
             super(new PhaseTableModelBuilder(m_cycle), s_headers);
 
-            setEmptyView(new Label(gz("cms.ui.lifecycle.phase.none")));
+            setEmptyView(new Label(gz("cms.ui.lifecycle.phase_none")));
 
             getColumn(4).setCellRenderer
                 (new DefaultTableCellRenderer(true));

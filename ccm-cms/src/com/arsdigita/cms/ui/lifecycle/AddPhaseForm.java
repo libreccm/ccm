@@ -108,7 +108,7 @@ class AddPhaseForm extends CMSForm {
         add(m_id);
         m_id.addValidationListener(new NotNullValidationListener());
 
-        Label heading = new Label(gz("cms.ui.lifecycle.phase.add"));
+        Label heading = new Label(gz("cms.ui.lifecycle.phase_add"));
         heading.setFontWeight(Label.BOLD);
         add(heading, ColumnPanel.FULL_WIDTH);
         add(new FormErrorDisplay(this), ColumnPanel.FULL_WIDTH);
@@ -130,7 +130,7 @@ class AddPhaseForm extends CMSForm {
         add(m_description);
 
         // phase delay
-        add(new Label(gz("cms.ui.lifecycle.phase.start_delay")));
+        add(new Label(gz("cms.ui.lifecycle.phase_start_delay")));
         m_delay_days = new TextField(new IntegerParameter(DELAY_DAYS));
         m_delay_hours = new TextField(new IntegerParameter(DELAY_HOURS));
         m_delay_minutes = new TextField(new IntegerParameter(DELAY_MINUTES));
@@ -150,16 +150,16 @@ class AddPhaseForm extends CMSForm {
         m_delay_minutes.setClassAttr("MinutesField");
 
         SimpleContainer de = new SimpleContainer();
-        de.add(new Label(gz("cms.ui.lifecycle.phase.days")));
+        de.add(new Label(gz("cms.ui.lifecycle.phase_days")));
         de.add(m_delay_days);
-        de.add(new Label(gz("cms.ui.lifecycle.phase.hours")));
+        de.add(new Label(gz("cms.ui.lifecycle.phase_hours")));
         de.add(m_delay_hours);
-        de.add(new Label(gz("cms.ui.lifecycle.phase.mins")));
+        de.add(new Label(gz("cms.ui.lifecycle.phase_mins")));
         de.add(m_delay_minutes);
         add(de);
 
         // phase duration
-        add(new Label(gz("cms.ui.lifecycle.phase.duration")));
+        add(new Label(gz("cms.ui.lifecycle.phase_duration")));
         m_duration_days = new TextField(new IntegerParameter(DURATION_DAYS));
         m_duration_hours =
             new TextField(new IntegerParameter(DURATION_HOURS));
@@ -181,11 +181,11 @@ class AddPhaseForm extends CMSForm {
         m_duration_minutes.setClassAttr("MinutesField");
 
         SimpleContainer du = new SimpleContainer();
-        du.add(new Label(gz("cms.ui.lifecycle.phase.days")));
+        du.add(new Label(gz("cms.ui.lifecycle.phase_days")));
         du.add(m_duration_days);
-        du.add(new Label(gz("cms.ui.lifecycle.phase.hours")));
+        du.add(new Label(gz("cms.ui.lifecycle.phase_hours")));
         du.add(m_duration_hours);
-        du.add(new Label(gz("cms.ui.lifecycle.phase.mins")));
+        du.add(new Label(gz("cms.ui.lifecycle.phase_mins")));
         du.add(m_duration_minutes);
         add(du);
 

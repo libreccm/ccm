@@ -119,13 +119,15 @@ public class PurposeForm extends Form
             };
 
         // Top row
-        m_freeLabel = new Label(GlobalizationUtil.globalize("cms.ui.category.purpose.available"),  false);
+        m_freeLabel = new Label(GlobalizationUtil
+                          .globalize("cms.ui.category.purpose_available"),  false);
         m_freeLabel.setFontWeight(Label.BOLD);
         add(m_freeLabel, ColumnPanel.LEFT);
 
         add(new Label("&nbsp;", false));
 
-        m_assignedLabel = new Label(GlobalizationUtil.globalize("cms.ui.category.purpose.assigned"),  false);
+        m_assignedLabel = new Label(GlobalizationUtil
+                              .globalize("cms.ui.category.purpose_assigned"),  false);
         m_assignedLabel.setFontWeight(Label.BOLD);
         add(m_assignedLabel, ColumnPanel.LEFT);
 
@@ -319,8 +321,9 @@ public class PurposeForm extends Form
 
             // Assign a new category
             try {
-                CategoryPurpose purpose = new CategoryPurpose(
-                                                              new OID(CategoryPurpose.BASE_DATA_OBJECT_TYPE, id));
+                CategoryPurpose purpose =
+                        new CategoryPurpose(
+                                new OID(CategoryPurpose.BASE_DATA_OBJECT_TYPE, id));
                 assignPurpose(state, purpose);
                 // Highlight the item
                 data.put(ASSIGNED, id);
@@ -337,8 +340,9 @@ public class PurposeForm extends Form
 
             // Unassign a category
             try {
-                CategoryPurpose purpose = new CategoryPurpose(
-                                                              new OID(CategoryPurpose.BASE_DATA_OBJECT_TYPE, id));
+                CategoryPurpose purpose =
+                        new CategoryPurpose(
+                                new OID(CategoryPurpose.BASE_DATA_OBJECT_TYPE, id));
                 unassignPurpose(state, purpose);
                 // Highlight the item
                 data.put(FREE, id);

@@ -89,7 +89,7 @@ public class TaskPortletRenderer extends AbstractPortletRenderer {
         if ( currentUser == null ) {
             taskDisplay.add
                     (new Label(GlobalizationUtil.globalize
-                    ("cms.tasks.ui.no_user_logged_in")));
+                    ("cms.ui.portlet.tasks.no_user_logged_in")));
 
             taskDisplay.generateXML(pageState, parentElement);
 
@@ -103,7 +103,7 @@ public class TaskPortletRenderer extends AbstractPortletRenderer {
         if(!it.hasNext()) {
             taskDisplay.add
                     (new Label(GlobalizationUtil.globalize
-                    ("cms.tasks.ui.no_assigned_tasks")));
+                    ("cms.ui.portlet.tasks.no_assigned_tasks")));
             return;
         }
 

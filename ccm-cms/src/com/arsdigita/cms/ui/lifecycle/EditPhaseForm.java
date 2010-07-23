@@ -137,11 +137,11 @@ class EditPhaseForm extends CMSForm {
         add(new Label(GlobalizationUtil.globalize
                       ("cms.ui.lifecycle.start_delay")));
         SimpleContainer de = new SimpleContainer();
-        de.add(new Label(gz("cms.ui.lifecycle.phase.days")));
+        de.add(new Label(gz("cms.ui.lifecycle.phase_days")));
         de.add(m_delayDays);
-        de.add(new Label(gz("cms.ui.lifecycle.phase.hours")));
+        de.add(new Label(gz("cms.ui.lifecycle.phase_hours")));
         de.add(m_delayHours);
-        de.add(new Label(gz("cms.ui.lifecycle.phase.mins")));
+        de.add(new Label(gz("cms.ui.lifecycle.phase_mins")));
         de.add(m_delayMinutes);
         add(de);
 
@@ -168,11 +168,11 @@ class EditPhaseForm extends CMSForm {
 
         add(new Label(gz("cms.ui.lifecycle.duration")));
         SimpleContainer du = new SimpleContainer();
-        du.add(new Label(gz("cms.ui.lifecycle.phase.days")));
+        du.add(new Label(gz("cms.ui.lifecycle.phase_days")));
         du.add(m_durDays);
-        du.add(new Label(gz("cms.ui.lifecycle.phase.hours")));
+        du.add(new Label(gz("cms.ui.lifecycle.phase_hours")));
         du.add(m_durHours);
-        du.add(new Label(gz("cms.ui.lifecycle.phase.mins")));
+        du.add(new Label(gz("cms.ui.lifecycle.phase_mins")));
         du.add(m_durMinutes);
         add(du);
 
@@ -303,7 +303,7 @@ class EditPhaseForm extends CMSForm {
                 if (phaseDef.getLabel().equalsIgnoreCase(newLabel)) {
                     phaseDefs.close();
                     throw new FormProcessException
-                        (lz("cms.ui.lifecycle.phase.name_not_unique"));
+                        (lz("cms.ui.lifecycle.phase_name_not_unique"));
                 }
             }
         }

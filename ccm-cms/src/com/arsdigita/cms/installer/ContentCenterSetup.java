@@ -37,13 +37,13 @@ import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+
 /**
  * Sets up the content section.
  *
  * @author Jon Orris (jorris@redhat.com)
  * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
  */
-
 public final class ContentCenterSetup {
 
     /** URL to access the CMS Workspace, by default content-center  */
@@ -70,16 +70,19 @@ public final class ContentCenterSetup {
 
     private static Logger s_log = Logger.getLogger(ContentSectionSetup.class);
 
+
     /**
      * Constructor
+     * 
      * @param workspaceURL
      * @param contentCenterMap
      */
     public ContentCenterSetup( String workspaceURL,
                                String contentCenterMap) {
 
-        m_contentCenterMap = contentCenterMap;
         m_workspaceURL = workspaceURL;
+        m_contentCenterMap = contentCenterMap;
+
     }
 
     /** Gives you a mapping of URL (key) to resource handler

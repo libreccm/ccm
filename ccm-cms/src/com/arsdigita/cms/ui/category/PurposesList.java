@@ -65,7 +65,7 @@ public class PurposesList extends List {
             });
 
         Label l = new Label(GlobalizationUtil.globalize
-                            ("cms.ui.category.purpose.none"));
+                            ("cms.ui.category.purpose_none"));
         l.setFontWeight(Label.ITALIC);
         setEmptyView(l);
     }
