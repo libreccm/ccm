@@ -59,7 +59,7 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
     private BigDecimalParameter m_root;
 
     public ACSObjectCategoryPicker(BigDecimalParameter root,
-            StringParameter mode) {
+                                   StringParameter mode)     {
         
 		m_form = getForm(root, mode);
         m_root = root;
@@ -68,7 +68,8 @@ public abstract class ACSObjectCategoryPicker extends SimpleContainer {
         m_form.addCompletionListener(new ItemCategoryFormCompletion());
     }
     
-    protected abstract ACSObjectCategoryForm getForm(BigDecimalParameter root,   StringParameter mode);
+    protected abstract ACSObjectCategoryForm getForm(BigDecimalParameter root,
+                                                     StringParameter mode);
      
     protected abstract ACSObject getObject(PageState state);
   

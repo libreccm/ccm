@@ -18,6 +18,10 @@ import com.arsdigita.xml.Element;
 
 /**
  * Generate part of the category tree. Used by Assign Category authoring step.
+ *
+ * Class is directlyx used by JSP page(s), eg. load-cat.jsp
+ * (currently in ~/packages/content-section/www/admin, source in ccm-ldn-aplaws
+ * or corresponding integration module).
  * 
  * @author Alan Pevec
  */
@@ -51,7 +55,8 @@ public class CategorySubtree extends SimpleComponent {
     	String[] pathElements = StringUtils.split(node, "-");
     	
     	 Category root = (Category) DomainObjectFactory.newInstance(new OID(
-                Category.BASE_DATA_OBJECT_TYPE, new BigDecimal(pathElements[pathElements.length - 1])));
+                Category.BASE_DATA_OBJECT_TYPE,
+                new BigDecimal(pathElements[pathElements.length - 1])));
 		s_log.debug("generating subtree for cat " + root.getID());
 		TermWidget.generateSubtree(p, root);
     }

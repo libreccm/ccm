@@ -305,6 +305,12 @@ public class URL {
              params);
     }
 
+    /**
+     * (private) Constructor.
+     * 
+     * @param sreq
+     * @param params
+     */
     private URL(final HttpServletRequest sreq,
                 final ParameterMap params) {
         final String dispatcherPrefix =
@@ -322,7 +328,7 @@ public class URL {
     }
 
     /**
-     * <p>Produce a URL representation of the given request.</p>
+     * <p>Constructor, produce a URL representation of the given request.</p>
      *
      * @param sreq an <code>HttpServletRequest</code> from which to copy
      *
