@@ -28,18 +28,22 @@ public class MemberPropertiesStep extends GenericPersonPropertiesStep {
 
     public static final String EDIT_SHEET_NAME = "edit";
 
-    public MemberPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public MemberPropertiesStep(ItemSelectionModel itemModel,
+                                AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
     protected void createEditSheet(ItemSelectionModel itemModel) {
         BasicPageForm editSheet;
         editSheet = new MemberPropertyForm(itemModel, this);
-        add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
+        add(EDIT_SHEET_NAME, "Edit",
+            new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.
+                getSaveCancelSection().getCancelButton());
     }
 
     public static Component getMemberPropertySheet(ItemSelectionModel itemModel) {
-        Component sheet = GenericPersonPropertiesStep.getPersonPropertySheet(itemModel);
+        Component sheet = GenericPersonPropertiesStep.getGenericPersonPropertySheet(
+                itemModel);
 
         return sheet;
     }

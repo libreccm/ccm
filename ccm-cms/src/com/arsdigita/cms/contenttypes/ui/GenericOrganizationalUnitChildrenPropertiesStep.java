@@ -55,8 +55,8 @@ public class GenericOrganizationalUnitChildrenPropertiesStep extends SimpleEditS
             new WorkflowLockedComponentAccess(addChildSheet, itemModel),
             addChildSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitChildTable childrenTable = new GenericOrganizationalUnitChildTable(
-                itemModel);
+        GenericOrganizationalUnitChildTable childrenTable =
+                new GenericOrganizationalUnitChildTable(itemModel);
         setDisplayComponent(childrenTable);
     }
 }

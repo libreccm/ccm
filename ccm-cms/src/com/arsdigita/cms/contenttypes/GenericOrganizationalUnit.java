@@ -127,11 +127,12 @@ public class GenericOrganizationalUnit extends ContentPage {
         return new GenericOrganizationalUnitPersonCollection((DataCollection) get(PERSONS));
     }
 
-    public void addPerson(GenericPerson person) {
+    public void addPerson(GenericPerson person, String role) {
         Assert.exists(person, GenericPerson.class);
 
         DataObject link = add(PERSONS, person);
 
+        link.set(ROLE, role);
         link.set(PERSON_ORDER, BigDecimal.valueOf(getPersons().size()));
     }
 

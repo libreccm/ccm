@@ -25,9 +25,15 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.SingleSelect;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
+import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
+import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
@@ -60,6 +66,25 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericPerson.BASE_DATA_OBJECT_TYPE));
         add(this.m_itemSearch);
+
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.person.role")));
+        ParameterModel roleParam =
+                       new StringParameter(
+                GenericOrganizationalUnitPersonCollection.PERSON_ROLE);
+        SingleSelect roleSelect = new SingleSelect(roleParam);
+        roleSelect.addValidationListener(new NotNullValidationListener());
+        roleSelect.addOption(
+                new Option("",
+                           new Label((String) ContenttypesGlobalizationUtil.
+                globalize("cms.ui.select_one").localize())));
+
+        roleSelect.addOption(new Option("Dummy", "Dummy"));
+        roleSelect.addOption(new Option("Boss", "Boss"));
+        roleSelect.addOption(new Option("Terrorist", "Terrorist"));
+
+        add(roleSelect);
+
     }
 
     @Override
@@ -78,7 +103,9 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
                 getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().isSelected(state))) {
-            orga.addPerson((GenericPerson) data.get(ITEM_SEARCH));
+            orga.addPerson((GenericPerson) data.get(ITEM_SEARCH),
+                           (String) data.get(
+                    GenericOrganizationalUnitPersonCollection.PERSON_ROLE));
         }
 
         init(fse);

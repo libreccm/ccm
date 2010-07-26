@@ -58,12 +58,12 @@ public class Member extends GenericPerson {
         super(type);
     }
 
-    @Override
+   /* @Override
     public void beforeSave() {
         super.beforeSave();
 
         Assert.exists(getContentType(), ContentType.class);
-    }
+    }*/
 
     /* accessors *****************************************************/
 }

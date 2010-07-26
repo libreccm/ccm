@@ -84,9 +84,10 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                     public String format(DomainObject item,
                             String attribute,
                             PageState state) {
-                        ContentPage page = (ContentPage) item;
-                        if (page.getLaunchDate() != null) {
-                            return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
+                        //ContentPage page = (ContentPage) item;
+                        GenericPerson person = (GenericPerson) item;
+                        if (person.getBirthdate() != null) {
+                            return DateFormat.getDateInstance(DateFormat.LONG).format(person.getBirthdate());
                         } else {
                             return (String) ContenttypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
                         }

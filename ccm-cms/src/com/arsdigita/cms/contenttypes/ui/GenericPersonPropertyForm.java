@@ -32,6 +32,9 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import org.apache.log4j.Logger;
 
 /**
@@ -88,6 +91,8 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.birthdate").localize()));
         ParameterModel birthdateParam = new DateParameter(BIRTHDATE);
         com.arsdigita.bebop.form.Date birthdate = new com.arsdigita.bebop.form.Date(birthdateParam);
+        Calendar today = new GregorianCalendar();
+        birthdate.setYearRange(1900, today.get(Calendar.YEAR));
         add(birthdate);
 
     }
@@ -121,7 +126,8 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
             person.setGivenName((String) data.get(GIVENNAME));
             person.setTitlePre((String) data.get(TITLEPRE));
             person.setTitlePost((String) data.get(TITLEPOST));
-            person.setBirthdate((String) data.get(BIRTHDATE));
+            //Date birthdate = (Date)data.get(BIRTHDATE);
+            person.setBirthdate((Date) data.get(BIRTHDATE));
 
             person.save();
         }

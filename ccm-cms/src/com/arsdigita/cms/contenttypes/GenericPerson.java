@@ -27,6 +27,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * Basic GenericPerson Contenttype for OpenCCM.
@@ -107,10 +108,10 @@ public class GenericPerson extends ContentPage {
          set(TITLEPOST, titlePost);
      }     
 
-     public String getBirthdate() {
-         return (String)get(BIRTHDATE);
+     public Date getBirthdate() {
+         return (Date)get(BIRTHDATE);
      }
-     public void setBirthdate(String birthdate) {
+     public void setBirthdate(Date birthdate) {
          set(BIRTHDATE, birthdate);
      }
 

@@ -29,7 +29,8 @@ import java.math.BigDecimal;
  */
 public class GenericOrganizationalUnitChildrenCollection extends DomainCollection {
 
-    public static final String ORDER = "map_order asc";
+    //public static final String ORDER = "map_order asc";
+    public static final String ORDER = "link.orgaunit_children_order";
     //public static final String CHILDREN_ORDER = "link.children_order";
 
     public GenericOrganizationalUnitChildrenCollection(DataCollection dataCollection) {
