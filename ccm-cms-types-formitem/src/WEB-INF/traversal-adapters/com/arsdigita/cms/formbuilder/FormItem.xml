@@ -13,11 +13,15 @@
         <xrd:property name="/object/form/component"/>
         <xrd:property name="/object/form/component+"/>
         <xrd:property name="/object/form/component/widget"/>
+        <xrd:property name="/object/form/component/widget/component"/>
+        <xrd:property name="/object/form/component/widget/component+"/>
         <xrd:property name="/object/form/component/formSectionItem"/>
         <xrd:property name="/object/form/component/formSectionItem/formSection"/>
         <xrd:property name="/object/form/component/formSectionItem/formSection/component"/>
         <xrd:property name="/object/form/component/formSectionItem/formSection/component+"/>
         <xrd:property name="/object/form/component/formSectionItem/formSection/component/widget"/>
+        <xrd:property name="/object/form/component/formSectionItem/formSection/component/widget/component"/>
+        <xrd:property name="/object/form/component/formSectionItem/formSection/component/widget/component+"/>
       </xrd:associations>
     </xrd:adapter>
   </xrd:context>
