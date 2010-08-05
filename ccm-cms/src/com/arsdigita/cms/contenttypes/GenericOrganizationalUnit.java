@@ -46,17 +46,20 @@ public class GenericOrganizationalUnit extends ContentPage {
     public final static String CONTACT_TYPE = "contact_type";
     public final static String CONTACT_ORDER = "contact_order";
     public final static String ORGAUNIT_CHILDREN = "orgaunit_children";
-    public final static String ORGAUNIT_CHILDREN_ORDER = "orgaunit_children_order";
+    public final static String ORGAUNIT_CHILDREN_ORDER =
+                               "orgaunit_children_order";
     public final static String PERSONS = "persons";
     public final static String ROLE = "role_name";
     public final static String PERSON_ORDER = "person_order";
-    public final static String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
+    public final static String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
 
     public GenericOrganizationalUnit() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public GenericOrganizationalUnit(BigDecimal id) throws DataObjectNotFoundException {
+    public GenericOrganizationalUnit(BigDecimal id) throws
+            DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
@@ -81,7 +84,8 @@ public class GenericOrganizationalUnit extends ContentPage {
     }
 
     public GenericOrganizationalUnitContactCollection getContacts() {
-        return new GenericOrganizationalUnitContactCollection((DataCollection) get(CONTACTS));
+        return new GenericOrganizationalUnitContactCollection((DataCollection) get(
+                CONTACTS));
     }
 
     public void addContact(GenericContact contact, String contactType) {
@@ -103,7 +107,8 @@ public class GenericOrganizationalUnit extends ContentPage {
     }
 
     public GenericOrganizationalUnitChildrenCollection getOrgaUnitChildren() {
-        return new GenericOrganizationalUnitChildrenCollection((DataCollection) get(ORGAUNIT_CHILDREN));
+        return new GenericOrganizationalUnitChildrenCollection((DataCollection) get(
+                ORGAUNIT_CHILDREN));
     }
 
     public void addOrgaUnitChildren(GenericOrganizationalUnit child) {
@@ -111,7 +116,8 @@ public class GenericOrganizationalUnit extends ContentPage {
 
         DataObject link = add(ORGAUNIT_CHILDREN, child);
 
-        link.set(ORGAUNIT_CHILDREN_ORDER, BigDecimal.valueOf(getContacts().size()));
+        link.set(ORGAUNIT_CHILDREN_ORDER, Integer.valueOf((int) getOrgaUnitChildren().
+                size()));        
     }
 
     public void removeOrgaUnitChildren(GenericOrganizationalUnit child) {
@@ -124,7 +130,8 @@ public class GenericOrganizationalUnit extends ContentPage {
     }
 
     public GenericOrganizationalUnitPersonCollection getPersons() {
-        return new GenericOrganizationalUnitPersonCollection((DataCollection) get(PERSONS));
+        return new GenericOrganizationalUnitPersonCollection((DataCollection) get(
+                PERSONS));
     }
 
     public void addPerson(GenericPerson person, String role) {

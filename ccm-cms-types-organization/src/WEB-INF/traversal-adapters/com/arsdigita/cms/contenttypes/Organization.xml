@@ -10,7 +10,11 @@
     <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
         <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Organization" extends="com.arsdigita.cms.ContentPage">
             <xrd:associations rule="include">
-                <xrd:property name="/object/contacts"/>
+                <xrd:property name="/object/addendum"/>
+                <xrd:property name="/object/contacts"/>              
+                <xrd:property name="/object/orgaunit_children"/>
+                <xrd:property name="/object/persons"/>
+                <xrd:property name="/object/persons"/>
             </xrd:associations>
         </xrd:adapter>
     </xrd:context>

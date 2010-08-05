@@ -43,79 +43,100 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import org.apache.log4j.Logger;
 
 /**
  * Table for showing the contacts associated with an organization.
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitContactTable extends Table implements TableActionListener {
+public class GenericOrganizationalUnitContactTable extends Table implements
+        TableActionListener {
 
+    private final static Logger s_log = Logger.getLogger(
+            GenericOrganizationalUnitContactTable.class);
     private final static String TABLE_COL_EDIT = "table_col_edit";
     private final static String TABLE_COL_DEL = "table_col_del";
+    private final static String TABLE_COL_UP = "table_col_up";
+    private final static String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel m_itemModel;
 
-    public GenericOrganizationalUnitContactTable(final ItemSelectionModel itemModel) {
+    public GenericOrganizationalUnitContactTable(
+            final ItemSelectionModel itemModel) {
         super();
         this.m_itemModel = itemModel;
 
-        setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.contacts.none")));
+        setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.contacts.none")));
         TableColumnModel tabModel = getColumnModel();
 
         tabModel.add(new TableColumn(
                 0,
-                ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.contact.order").localize(),
-                TABLE_COL_EDIT));
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.contact.type").localize()));
         tabModel.add(new TableColumn(
                 1,
-                ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.contact.type").localize()));
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.contact.title").localize()));
         tabModel.add(new TableColumn(
                 2,
-                ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.contact.title").localize()));
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.contact.action").localize(),
+                TABLE_COL_DEL));
         tabModel.add(new TableColumn(
                 3,
-                ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.contact.action").localize(),
-                TABLE_COL_DEL));
-        
-        setModelBuilder(new GenericOrganizationalUnitTableModelBuilder(itemModel));
-        
-        tabModel.get(0).setCellRenderer(new EditCellRenderer());
-        tabModel.get(3).setCellRenderer(new DeleteCellRenderer());
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.contact.up").localize(),
+                TABLE_COL_UP));
+        tabModel.add(new TableColumn(
+                4,
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.contact.down").localize(),
+                TABLE_COL_DOWN));
+
+        setModelBuilder(
+                new GenericOrganizationalUnitTableModelBuilder(itemModel));
+
+        tabModel.get(1).setCellRenderer(new EditCellRenderer());
+        tabModel.get(2).setCellRenderer(new DeleteCellRenderer());
+        tabModel.get(3).setCellRenderer(new UpCellRenderer());
+        tabModel.get(3).setCellRenderer(new DownCellRenderer());
     }
-    
-    private class GenericOrganizationalUnitTableModelBuilder 
+
+    private class GenericOrganizationalUnitTableModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
-        
+
         public GenericOrganizationalUnitTableModelBuilder(
                 ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
-        
+
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            GenericOrganizationalUnit orgaunit = 
-                    (GenericOrganizationalUnit) m_itemModel.getSelectedObject(state);
-            return new GenericOrganizationalUnitTableModel(table, state, orgaunit);
-        }    
+            GenericOrganizationalUnit orgaunit =
+                                      (GenericOrganizationalUnit) m_itemModel.
+                    getSelectedObject(state);
+            return new GenericOrganizationalUnitTableModel(table, state,
+                                                           orgaunit);
+        }
     }
 
     private class GenericOrganizationalUnitTableModel implements TableModel {
+
         private final int MAX_DESC_LENGTH = 25;
         private Table m_table;
         private GenericOrganizationalUnitContactCollection m_contactCollection;
         private GenericContact m_contact;
         private GenericContactTypeCollection contacttypes =
-                new GenericContactTypeCollection();
+                                             new GenericContactTypeCollection();
 
         private GenericOrganizationalUnitTableModel(
                 Table table,
                 PageState state,
-                GenericOrganizationalUnit orgaunit
-                ) {
+                GenericOrganizationalUnit orgaunit) {
             m_table = table;
             m_contactCollection = orgaunit.getContacts();
         }
@@ -128,7 +149,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements Tabl
             boolean ret;
 
             if ((m_contactCollection != null)
-                    && m_contactCollection.next()) {
+                && m_contactCollection.next()) {
                 m_contact = m_contactCollection.getContact();
                 ret = true;
             } else {
@@ -139,15 +160,15 @@ public class GenericOrganizationalUnitContactTable extends Table implements Tabl
         }
 
         public Object getElementAt(int columnIndex) {
-            switch(columnIndex) {
+            switch (columnIndex) {
                 case 0:
-                    return m_contactCollection.getContactOrder();
+                    return contacttypes.getContactType(m_contactCollection.
+                            getContactType(),
+                                                       DispatcherHelper.
+                            getNegotiatedLocale().getLanguage());
                 case 1:
-                    return contacttypes.getContactType(m_contactCollection.getContactType(),
-                            DispatcherHelper.getNegotiatedLocale().getLanguage());
-                case 2:
                     return m_contact.getTitle();
-                case 3:
+                case 2:
                     return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:
                     return null;
@@ -162,6 +183,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements Tabl
     private class EditCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
+
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -170,13 +192,15 @@ public class GenericOrganizationalUnitContactTable extends Table implements Tabl
                 Object key,
                 int row,
                 int col) {
-            SecurityManager securityManager = Utilities.getSecurityManager(state);
+            SecurityManager securityManager =
+                            Utilities.getSecurityManager(state);
             GenericOrganizationalUnit orgaunit =
-                    (GenericOrganizationalUnit) m_itemModel.getSelectedObject(state);
+                                      (GenericOrganizationalUnit) m_itemModel.
+                    getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    orgaunit);
+                                                        SecurityManager.EDIT_ITEM,
+                                                        orgaunit);
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
                 return link;
@@ -189,6 +213,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements Tabl
     private class DeleteCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
+
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -197,17 +222,22 @@ public class GenericOrganizationalUnitContactTable extends Table implements Tabl
                 Object key,
                 int row,
                 int col) {
-            SecurityManager securityManager = Utilities.getSecurityManager(state);
+            SecurityManager securityManager =
+                            Utilities.getSecurityManager(state);
             GenericOrganizationalUnit orgaunit =
-                    (GenericOrganizationalUnit) m_itemModel.getSelectedObject(state);
+                                      (GenericOrganizationalUnit) m_itemModel.
+                    getSelectedObject(state);
 
             boolean canDelete = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.DELETE_ITEM,
                     orgaunit);
-            if(canDelete) {
+            if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.confirm_delete").localize());
+                link.setConfirmation((String) ContenttypesGlobalizationUtil.
+                        globalize(
+                        "cms.contenttypes.ui.genericorgaunit.confirm_delete").
+                        localize());
                 return link;
             } else {
                 return new Label(value.toString());
@@ -215,24 +245,84 @@ public class GenericOrganizationalUnitContactTable extends Table implements Tabl
         }
     }
 
+    private class UpCellRenderer extends LockableImpl implements
+            TableCellRenderer {
+
+        @Override
+        public Component getComponent(
+                Table table,
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int col) {
+
+            if (0 == row) {
+                s_log.debug("Row is first row in table, don't show up-link");
+                return new Label("");
+            } else {
+                ControlLink link = new ControlLink("up");
+                return link;
+            }
+
+        }
+    }
+
+    private class DownCellRenderer extends LockableImpl implements
+            TableCellRenderer {
+
+        @Override
+        public Component getComponent(
+                Table table,
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int col) {
+
+            GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
+                    getSelectedObject(state);
+            GenericOrganizationalUnitContactCollection contacts =
+                                                       orgaunit.getContacts();
+
+            if ((contacts.size() - 1) == row) {
+                s_log.debug("Row is last row in table, don't show down-link");
+                return new Label("");
+            } else {
+                ControlLink link = new ControlLink("down");
+                return link;
+            }
+
+        }
+    }
+
     @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        GenericContact contact = 
-                new GenericContact(new BigDecimal(event.getRowKey().toString()));
+        GenericContact contact =
+                       new GenericContact(new BigDecimal(event.getRowKey().
+                toString()));
 
         GenericOrganizationalUnit orgaunit =
-                (GenericOrganizationalUnit) m_itemModel.getSelectedObject(state);
+                                  (GenericOrganizationalUnit) m_itemModel.
+                getSelectedObject(state);
+
+        GenericOrganizationalUnitContactCollection contacts =
+                orgaunit.getContacts();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-
         }
-
-        if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-           orgaunit.removeContact(contact);
+        else if(column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
+            orgaunit.removeContact(contact);
+        } else if(column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
+            contacts.swapWithPrevious(contact);
+        } else if(column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
+            contacts.swapWithNext(contact);
         }
 
     }

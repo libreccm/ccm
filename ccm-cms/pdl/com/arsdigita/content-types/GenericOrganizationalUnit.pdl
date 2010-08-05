@@ -45,7 +45,7 @@ association {
                                                  to cms_organizationalunits.organizationalunit_id;
 
     // Link attribute, allows it to customize the order which the childs will be shown.
-    BigDecimal[0..1] orgaunit_children_order = cms_organizationalunits_organizationalunit_map.map_order INTEGER;
+    Integer[0..1] orgaunit_children_order = cms_organizationalunits_organizationalunit_map.map_order INTEGER;
 }
 
 // Link for contact points.
@@ -63,7 +63,7 @@ association {
 
    // Some link attributes.
    String contact_type = cms_organizationalunits_contact_map.contact_type VARCHAR(100);
-   BigDecimal contact_order = cms_organizationalunits_contact_map.map_order INTEGER;
+   Integer contact_order = cms_organizationalunits_contact_map.map_order INTEGER;
 
 }
 
@@ -82,6 +82,5 @@ association {
 
    // Additional attributes for the association
    String role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
-   BigDecimal person_order = cms_organizationalunits_person_map.map_order INTEGER;
 
 }

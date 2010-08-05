@@ -39,6 +39,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  * Table for showing the childs of an organization.
@@ -53,6 +54,9 @@ public class GenericOrganizationalUnitChildTable extends Table implements
     private final String TABLE_COL_UP = "table_col_up";
     private final String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel m_itemModel;
+    private static final Logger s_log =
+                                Logger.getLogger(
+            GenericOrganizationalUnitChildTable.class);
 
     public GenericOrganizationalUnitChildTable(
             final ItemSelectionModel itemModel) {
@@ -78,16 +82,16 @@ public class GenericOrganizationalUnitChildTable extends Table implements
                 ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.child.action").localize(),
                 TABLE_COL_DEL));
-        /*        tabModel.add(new TableColumn(
-        2,
-        ContenttypesGlobalizationUtil.globalize(
-        "cms.contenttypes.ui.genericorgaunit.child.up").localize(),
-        TABLE_COL_UP));
         tabModel.add(new TableColumn(
-        3,
-        ContenttypesGlobalizationUtil.globalize(
-        "cms.contenttypes.ui.genericorgaunit.child.down").localize(),
-        TABLE_COL_DOWN));*/
+                2,
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.child.up").localize(),
+                TABLE_COL_UP));
+        tabModel.add(new TableColumn(
+                3,
+                ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.child.down").localize(),
+                TABLE_COL_DOWN));
 
 
         setModelBuilder(new GenericOrganizationalUnitChildTableModelBuilder(
@@ -95,10 +99,11 @@ public class GenericOrganizationalUnitChildTable extends Table implements
 
         tabModel.get(0).setCellRenderer(new EditCellRenderer());
         tabModel.get(1).setCellRenderer(new DeleteCellRenderer());
-        //tabModel.get(2).setCellRenderer(new UpCellRenderer());
-        //tabModel.get(3).setCellRenderer(new DownCellRenderer());
+        tabModel.get(2).setCellRenderer(new UpCellRenderer());
+        tabModel.get(3).setCellRenderer(new DownCellRenderer());
 
         addTableActionListener(this);
+
     }
 
     private class GenericOrganizationalUnitChildTableModelBuilder extends LockableImpl
@@ -111,6 +116,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
             m_itemModel = itemModel;
         }
 
+        @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
@@ -134,10 +140,12 @@ public class GenericOrganizationalUnitChildTable extends Table implements
             m_childCollection = orgaunit.getOrgaUnitChildren();
         }
 
+        @Override
         public int getColumnCount() {
             return m_table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
@@ -151,6 +159,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
             return ret;
         }
 
+        @Override
         public Object getElementAt(int colIndex) {
             switch (colIndex) {
                 /*case 0:
@@ -164,6 +173,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
             }
         }
 
+        @Override
         public Object getKeyAt(int colIndex) {
             return m_child.getID();
         }
@@ -172,6 +182,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
     private class EditCellRenderer extends LockableImpl implements
             TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -202,6 +213,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
     private class DeleteCellRenderer extends LockableImpl implements
             TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -235,6 +247,7 @@ public class GenericOrganizationalUnitChildTable extends Table implements
     private class UpCellRenderer extends LockableImpl implements
             TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -248,15 +261,28 @@ public class GenericOrganizationalUnitChildTable extends Table implements
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
             getSelectedObject(state);*/
 
-            ControlLink link = new ControlLink("up");
+            /*GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
+            getSelectedObject(state);
+            GenericOrganizationalUnitChildrenCollection children =
+            orgaunit.getOrgaUnitChildren();*/
 
-            return link;
+            s_log.debug(String.format("row = %d", row));
+            //s_log.debug(String.format("children.size = %d", children.size()));
+
+            if (0 == row) {
+                s_log.debug("row is first row in table, don't show 'up'-link...");
+                return new Label("");
+            } else {
+                ControlLink link = new ControlLink("up");
+                return link;
+            }
         }
     }
 
     private class DownCellRenderer extends LockableImpl implements
             TableCellRenderer {
 
+        @Override
         public Component getComponent(
                 Table table,
                 PageState state,
@@ -270,9 +296,21 @@ public class GenericOrganizationalUnitChildTable extends Table implements
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
             getSelectedObject(state);*/
 
-            ControlLink link = new ControlLink("down");
+            GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
+                    getSelectedObject(state);
+            GenericOrganizationalUnitChildrenCollection children =
+                                                        orgaunit.
+                    getOrgaUnitChildren();
 
-            return link;
+
+            if ((children.size() - 1) == row) {
+                s_log.debug(
+                        "Row is last row of table, don't show 'down'-link...");
+                return new Label("");
+            } else {
+                ControlLink link = new ControlLink("down");
+                return link;
+            }
         }
     }
 
@@ -286,16 +324,18 @@ public class GenericOrganizationalUnitChildTable extends Table implements
         GenericOrganizationalUnit parent = (GenericOrganizationalUnit) m_itemModel.
                 getSelectedObject(state);
 
+        GenericOrganizationalUnitChildrenCollection children =
+                                                    parent.getOrgaUnitChildren();
+
         TableColumn col = getColumnModel().get(event.getColumn().intValue());
 
         if (col.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
         } else if (col.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             parent.removeOrgaUnitChildren(child);
-            /*} else if(col.getHeaderKey().toString().equals(TABLE_COL_UP)) {
-            
-            } else if(col.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
-
-            }*/
+        } else if (col.getHeaderKey().equals(TABLE_COL_UP)) {
+            children.swapWithPrevious(child);
+        } else if (col.getHeaderKey().equals(TABLE_COL_DOWN)) {
+            children.swapWithNext(child);
         }
     }
 

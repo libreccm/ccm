@@ -64,23 +64,18 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.persons.none")));
         TableColumnModel tabModel = getColumnModel();
-
+     
         tabModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.persons.order").localize(),
-                TABLE_COL_EDIT));
-        tabModel.add(new TableColumn(
-                1,
-                ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.persons.name").localize()));
         tabModel.add(new TableColumn(
-                2,
+                1,
                 ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.persons.role").localize()));
         tabModel.add(
                 new TableColumn(
-                3,
+                2,
                 ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.persons.delete").localize()));
 
@@ -88,7 +83,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 new GenericOrganizationalUnitTableModelBuilder(itemModel));
 
         tabModel.get(0).setCellRenderer(new EditCellRenderer());
-        tabModel.get(3).setCellRenderer(new DeleteCellRenderer());
+        tabModel.get(2).setCellRenderer(new DeleteCellRenderer());
     }
 
     private class GenericOrganizationalUnitTableModelBuilder
