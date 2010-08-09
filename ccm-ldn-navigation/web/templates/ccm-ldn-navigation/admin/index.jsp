@@ -14,6 +14,10 @@
   <define:page name="adminPage" application="navigation"
     title="Navigation Admin" cache="true">
     
+    <jsp:scriptlet>
+      adminPage.setClassAttr("admin");
+    </jsp:scriptlet>
+
     <define:component name="templates"
       classname="com.arsdigita.london.navigation.ui.admin.CategoryPanel"/>
 

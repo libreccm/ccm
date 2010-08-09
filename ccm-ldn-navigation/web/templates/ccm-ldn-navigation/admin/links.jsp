@@ -16,6 +16,10 @@
   <define:page name="adminPage" application="navigation"
     title="Navigation Links Admin" cache="true">
 
+    <jsp:scriptlet>
+      adminPage.setClassAttr("admin");
+    </jsp:scriptlet>
+
     <define:component name="quickLinks"
       classname="com.arsdigita.london.navigation.ui.admin.QuickLinkPanel"/>
     <define:component name="categoryPath"
