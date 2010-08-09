@@ -22,7 +22,7 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-// PDL definition for a commons base type for orgnizations, departments, projects etc.
+// PDL definition for a commons base type for organizations, departments, projects etc.
 object type GenericOrganizationalUnit extends ContentPage {
     //String[0..1] orgaunit_name = cms_organizationalunits.name VARCHAR(256);
 

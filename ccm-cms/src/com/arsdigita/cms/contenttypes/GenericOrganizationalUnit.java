@@ -117,7 +117,7 @@ public class GenericOrganizationalUnit extends ContentPage {
         DataObject link = add(ORGAUNIT_CHILDREN, child);
 
         link.set(ORGAUNIT_CHILDREN_ORDER, Integer.valueOf((int) getOrgaUnitChildren().
-                size()));        
+                size()));
     }
 
     public void removeOrgaUnitChildren(GenericOrganizationalUnit child) {

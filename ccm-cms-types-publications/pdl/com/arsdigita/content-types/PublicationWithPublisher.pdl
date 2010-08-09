@@ -1,0 +1,48 @@
+//
+// Copyright (C) 2010 Jens Pelzetter, for the Center of Social Politics (ZeS) of
+// the University of Bremen
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentPage;
+
+// PDL definition for a publication with publisher
+object type PublicationWithPublisher extends Publication {
+       
+       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(13);
+       
+       reference key (ct_publication_with_publisher.publication_with_publisher_id);
+
+}
+
+// Association which links to the publisher (an GenericOrganizationalUnit).
+association {
+	    
+	    PublicationWithPublisher[0..1] publication = join cms_organizationalunits.organizationalunit_id
+	    				                   to ct_publication_publisher.publisher_id,
+							 join ct_publication_publisher.publication_with_publisher_id
+							   to ct_publication_with_publisher.publication_with_publisher_id;
+            GenericOrganizationalUnit[0..n] publisher = join ct_publication_with_publisher.publication_with_publisher_id
+	                                                  to ct_publication_publisher.publication_with_publisher_id,
+							join ct_publication_publisher.publisher_id
+							  to cms_organizationalunits.organizationalunit_id;
+            // Additional attributes
+	    String[0..1] place = ct_publication_publisher.place VARCHAR(256);
+
+}

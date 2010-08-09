@@ -1,0 +1,51 @@
+//
+// Copyright (C) 2010 Jens Pelzetter, for the Center of Social Politics (ZeS) of
+// the University of Bremen
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentPage;
+
+//PDL definition for the basic attributes of publication.
+object type Publication extends ContentPage {
+       
+       Integer[0..1] yearOfPublication = ct_publications.year INTEGER;
+       String[0..1] abstract = ct_publications.abstract VARCHAR(2048);
+       String[0..1] misc = ct_publications.misc VARCHAR(2048);
+
+       reference key (ct_publications.publication_id);
+}
+
+//Assoication for the editors
+association {
+	    
+	    Publication[0..1] publication = join cms_persons.person_id
+	    		      		      to ct_publications_authorship.person_id,
+					    join ct_publications_authorship.publication_id
+					      to ct_publications.publication_id;
+
+            GenericPerson[0..n] persons = join ct_publications.publication_id
+	                                    to ct_publications_authorship.publication_id,
+					  join ct_publications_authorship.person_id
+                                            to cms_persons.person_id;
+
+            // Additional attributes
+	    Boolean[0..1] editor = ct_publications_authorship.editor BIT;
+	    Integer[0..1] authorOrder = ct_publications_authorship.authorship_order INTEGER;
+}
