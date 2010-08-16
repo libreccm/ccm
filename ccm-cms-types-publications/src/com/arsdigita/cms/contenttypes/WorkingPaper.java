@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter, for the Center of Social Politics of the University of Bremen
+ * Copyright (c) 2010 Jens Pelzetter,
+ * for the Center of Social Politics of the University of Bremen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -18,32 +19,36 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.domain.DomainCollection;
-import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
 
 /**
- * Collection class for the GenericOrganizationalUnit -> Person relation.
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitPersonCollection extends DomainCollection {
-    
-    public static final String PERSON_ROLE = "link.role_name";    
+public class WorkingPaper extends UnPublished {
 
-    public GenericOrganizationalUnitPersonCollection(
-            DataCollection dataCollection) {
-        super(dataCollection);
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contenttypes.WorkingPaper";
+
+    public WorkingPaper() {
+        this(BASE_DATA_OBJECT_TYPE);
     }
 
-    /**
-     * Gets the name of the role of this orgaunit-person link
-     */
-    public String getRoleName() {
-        return (String) m_dataCollection.get(PERSON_ROLE);
+    public WorkingPaper(BigDecimal id) {
+        this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public GenericPerson getPerson() {
-        return new GenericPerson(m_dataCollection.getDataObject());
+    public WorkingPaper(OID oid) {
+        super(oid);
+    }
+
+    public WorkingPaper(DataObject dataObject) {
+        super(dataObject);
+    }
+
+    public WorkingPaper(String type) {
+        super(type);
     }
 }

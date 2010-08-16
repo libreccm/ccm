@@ -22,14 +22,13 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-// PDL definition for a publication with publisher
-object type PublicationWithPublisher extends Publication {
-       
-       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(13);
-       component Publisher[0..1] publisher = join ct_publication_with_publisher.publication_with_publisher_id 
-       		 		 	       to ct_publisher.publisher_id;        
+// PDL definition for grey literature
+object type GreyLiterature extends UnPublished {
 
-       reference key (ct_publication_with_publisher.publication_with_publisher_id);
+       Integer[0..1] pagesFrom = ct_grey_literature.pagesFrom INTEGER;
+       Integer[0..1] pagesTo = ct_grey_literature.pagesTo INTEGER;
+       String[0..1] url = ct_grey_literature.url VARCHAR(512);
+
+       reference key (ct_grey_literature.grey_literature_id);
 
 }
-

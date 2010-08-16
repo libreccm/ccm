@@ -27,8 +27,8 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
- * This class provides a base type for building content types which represent organizations,
- * departments, projects etc.
+ * This class provides a base type for building content types which represent 
+ * organizations, departments, projects etc.
  *
  * An item of this content type can be linked with several other content types:
  * - Contact (0..n)
@@ -63,7 +63,8 @@ public class GenericOrganizationalUnit extends ContentPage {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public GenericOrganizationalUnit(OID oid) throws DataObjectNotFoundException {
+    public GenericOrganizationalUnit(OID oid)
+            throws DataObjectNotFoundException {
         super(oid);
     }
 

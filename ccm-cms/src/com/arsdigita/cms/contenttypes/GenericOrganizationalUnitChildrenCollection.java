@@ -21,7 +21,6 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.OID;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,7 +28,8 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitChildrenCollection extends DomainCollection {
+public class GenericOrganizationalUnitChildrenCollection
+        extends DomainCollection {
 
     public static final String ORDER = "link.orgaunit_children_order";
     public static final String CHILDREN_ORDER = "orgaunit_children_order";

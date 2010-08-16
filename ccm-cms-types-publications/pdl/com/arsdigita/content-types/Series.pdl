@@ -37,7 +37,7 @@ association {
 				  join ct_series_editship.series_id
 				    to ct_series.series_id;
 			
-            GenericPerson[0..n] persons = join ct_series.series_id
+            GenericPerson[0..n] editors = join ct_series.series_id
 	    				    to ct_series_editship.series_id,
 					  join ct_series_editship.person_id
 					    to cms_persons.person_id;
@@ -46,6 +46,9 @@ association {
 	    Date[0..1] from = ct_series_editship.from DATE
 	    Date[0..] to = ct_series_editship.to DATE 
 
+	    //Sorting is first done by the period defined by from and to,
+	    //and secondly by the following order attribute
+	    Integer[0..1] editor_order = ct_series_editship.order INTEGER;
 }
 
 //Assoication for the volumes in the series

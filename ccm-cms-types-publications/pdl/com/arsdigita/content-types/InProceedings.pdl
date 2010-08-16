@@ -22,14 +22,18 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-// PDL definition for a publication with publisher
-object type PublicationWithPublisher extends Publication {
+// PDL definition for InProceedings publication
+object type InProceedings extends PublicationWithPublisher {
        
-       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(13);
-       component Publisher[0..1] publisher = join ct_publication_with_publisher.publication_with_publisher_id 
-       		 		 	       to ct_publisher.publisher_id;        
-
-       reference key (ct_publication_with_publisher.publication_with_publisher_id);
+       String[0..1] organizerOfConference = ct_inproceedings.organizer_of_conference VARCHAR(256);
+       String[0..1] nameOfConference = ct_inproceedings.name_of_conference VARCHAR(256);
+       Date[0..1] dateFromOfConference = ct_inproceedings.date_from_of_conference DATE;
+       Date[0..1] dateToOfConference = ct_inproceedings.date_to_of_conference DATE;
+       String[0..1] placeOfConference = ct_inproceedings.place_of_conference VARCHAR(256);
+       Integer volume = ct_inproceedings.volume INTEGER;
+       Integer numberOfVolumes = ct_inproceedings.numberOfVolumes INTEGER;
+       Integer numberOfPages = ct_inproceedings.numberOfPages INTEGER;
+       Integer pagesFrom = ct_inproceedings.pages_from INTEGER;
+       Integer pagesTo = ct_inproceedings.pages_to INTEGER;
 
 }
-

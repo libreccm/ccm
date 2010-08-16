@@ -22,14 +22,27 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-// PDL definition for a publication with publisher
-object type PublicationWithPublisher extends Publication {
-       
-       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(13);
-       component Publisher[0..1] publisher = join ct_publication_with_publisher.publication_with_publisher_id 
-       		 		 	       to ct_publisher.publisher_id;        
+// PDL definition for an expertise
+object type Expertise extends Publication {
 
-       reference key (ct_publication_with_publisher.publication_with_publisher_id);
+       String[0..1] place = ct_expertise.place VARCHAR(256);
+       Integer[0..1] numberOfPages = ct_expertise.number_of_pages INTEGER;
+       String[0..1] url = ct_expertise.url VARCHAR(512);
+                     
+       reference key (ct_expertise.expertise_id);
 
+}
+
+assoication {
+
+	    GenericOrganizationalUnit[0..1] organization = join cms_organizationalunit.organizationalunit_id
+	    				                     to ct_expertise.organization_id;
+
+}
+
+assoication {
+	    
+	    GenericOrganizationalUnit[0..1] orderer = join cms_organizationalunit.organizationalunit_id
+	                                                to ct_expertise.orderer_id;
 }
 

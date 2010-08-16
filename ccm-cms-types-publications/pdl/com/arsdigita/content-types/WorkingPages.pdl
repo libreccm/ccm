@@ -22,14 +22,9 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-// PDL definition for a publication with publisher
-object type PublicationWithPublisher extends Publication {
-       
-       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(13);
-       component Publisher[0..1] publisher = join ct_publication_with_publisher.publication_with_publisher_id 
-       		 		 	       to ct_publisher.publisher_id;        
+// PDL definition for a working paper
+object type WorkingPaper extends UnPublished {
 
-       reference key (ct_publication_with_publisher.publication_with_publisher_id);
+       reference key (ct_working_paper.working_paper_id);
 
 }
-

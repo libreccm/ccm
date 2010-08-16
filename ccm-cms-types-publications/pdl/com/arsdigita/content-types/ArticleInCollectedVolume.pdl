@@ -22,14 +22,13 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-// PDL definition for a publication with publisher
-object type PublicationWithPublisher extends Publication {
-       
-       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(13);
-       component Publisher[0..1] publisher = join ct_publication_with_publisher.publication_with_publisher_id 
-       		 		 	       to ct_publisher.publisher_id;        
+// PDL definition for a collected volume
+object type ArticleInCollectedVolume extends PublicationWithPublisher {
 
-       reference key (ct_publication_with_publisher.publication_with_publisher_id);
+       Integer[0..1] pagesFrom = ct_article_in_collected_volume.pages_from INTEGER;
+       Integer[0..1] pagesTo = ct_article_in_collected_volume.pages_to INTEGER;
+       String[0..1] chapter = ct_article_in_collected_volume.chapter VARCHAR(512);
+       
+       reference key (ct_article_in_collected_volume.article_id);
 
 }
-
