@@ -33,6 +33,11 @@
                     <location>ccm-cms-assets-fileattachment/src</location>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-cms-assets-imagestep (Source)</label>
+                    <type>java</type>
+                    <location>ccm-cms-assets-imagestep/src</location>
+                </source-folder>
+                <source-folder>
                     <label>ccm-cms-assets-notes (Source)</label>
                     <type>java</type>
                     <location>ccm-cms-assets-notes/src</location>
@@ -238,6 +243,11 @@
                     <location>ccm-forum/src</location>
                 </source-folder>
                 <source-folder>
+                    <label>ccm-forum-categorised (Source)</label>
+                    <type>java</type>
+                    <location>ccm-forum-categorised/src</location>
+                </source-folder>
+                <source-folder>
                     <label>ccm-simplesurvey (Source)</label>
                     <type>java</type>
                     <location>ccm-simplesurvey/src</location>
@@ -419,6 +429,10 @@
                         <location>ccm-cms-assets-fileattachment/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-cms-assets-imagestep (Source)</label>
+                        <location>ccm-cms-assets-imagestep/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-cms-assets-notes (Source)</label>
                         <location>ccm-cms-assets-notes/src</location>
                     </source-folder>
@@ -583,6 +597,10 @@
                         <location>ccm-forum/src</location>
                     </source-folder>
                     <source-folder style="packages">
+                        <label>ccm-forum-categorised (Source)</label>
+                        <location>ccm-forum-categorised/src</location>
+                    </source-folder>
+                    <source-folder style="packages">
                         <label>ccm-simplesurvey (Source)</label>
                         <location>ccm-simplesurvey/src</location>
                     </source-folder>
@@ -707,6 +725,7 @@
                 <package-root>ccm-core/src</package-root>
                 <package-root>ccm-cms/src</package-root>
                 <package-root>ccm-cms-assets-fileattachment/src</package-root>
+                <package-root>ccm-cms-assets-imagestep/src</package-root>
                 <package-root>ccm-cms-assets-notes/src</package-root>
                 <package-root>ccm-cms-assets-relatedlink/src</package-root>
                 <package-root>ccm-cms-types-address/src</package-root>
@@ -748,6 +767,7 @@
                 <package-root>ccm-docmgr/src</package-root>
                 <package-root>ccm-formbuilder-pdf/src</package-root>
                 <package-root>ccm-forum/src</package-root>
+                <package-root>ccm-forum-categorised/src</package-root>
                 <package-root>ccm-simplesurvey/src</package-root>
                 <package-root>ccm-user-preferences/src</package-root>
                 <package-root>ccm-weblog/src</package-root>

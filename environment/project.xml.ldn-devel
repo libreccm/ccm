@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <!-- project.xml - (ldn)devel - containing those modules as of aplaws 1.0.5 
-     which are part of ccm-ldn-aplaws devel bundle                               
+     which are part of ccm-ldn-aplaws devel (and standard) bundle                               
      To be synchronized with ccm-ldn-aplaws/bundle/devel/cfg/applications.cfg -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -26,13 +26,16 @@
         <ccm:application name="ccm-cms"/>
 
         <!--  Content assets   -->
+        <ccm:application name="ccm-cms-assets-fileattachment"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
         <ccm:application name="ccm-ldn-dublin"/>
 
         <!--  Content types   -->
         <ccm:application name="ccm-cms-types-article"/>
         <ccm:application name="ccm-cms-types-contact"/>
-<!--    <ccm:application name="ccm-cms-types-esdservice"/>     -->
+        <!-- esdservice needs ccm-cms-types-contact or ccm-ldn-ccm-types-contact 
+             not decided yet which one to choose    
+        <ccm:application name="ccm-cms-types-esdservice"/>     --> 
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
@@ -40,6 +43,7 @@
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
         <ccm:application name="ccm-cms-types-pressrelease"/>
+        <!-- siteproxy is a prerequisite for ccm-ldn-atoz  -->
         <ccm:application name="ccm-cms-types-siteproxy"/>
         <ccm:application name="ccm-cms-types-xmlfeed"/>
 
