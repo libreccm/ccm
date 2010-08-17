@@ -26,13 +26,12 @@ import com.arsdigita.persistence.DataCollection;
  * Represents collection of PackageInstances.
  *
  * @author Bryan Quinn 
- * @version $Revision: #8 $ $Date: 2004/08/16 $
  * @since ACS 5.0
+ * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: PackageInstanceCollection.java 287 2005-02-22 00:29:02Z sskracic $
  */
 
 public class PackageInstanceCollection extends ACSObjectCollection {
-
-    public static final String versionId = "$Id: PackageInstanceCollection.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public PackageInstanceCollection(DataCollection dataCollection) {
         super(dataCollection);

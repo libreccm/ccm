@@ -57,10 +57,9 @@ import org.apache.log4j.Logger;
  * to enable existing clients to retrieve a simple engine using the same static call 
  *
  * @version $Revision: #13 $ $DateTime: 2004/08/16 18:10:38 $
+ * @version $Id: Engine.java 1278 2006-07-27 09:09:51Z cgyg9330 $
  */
 public class Engine {
-
-    public static final String versionId = "$Id: Engine.java 1278 2006-07-27 09:09:51Z cgyg9330 $ by $Author: cgyg9330 $, $DateTime: 2004/08/16 18:10:38 $";
 
 
     private static final Logger s_log =

@@ -36,10 +36,9 @@ import java.util.Map;
  *
  * @author Oumi Mehrotra
  * @version 1.0
+ * @version $Id: PrivilegeDescriptor.java 1311 2006-09-04 10:30:53Z sskracic $
  **/
 public class PrivilegeDescriptor {
-
-    public static final String versionId = "$Id: PrivilegeDescriptor.java 1311 2006-09-04 10:30:53Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final String ADMIN_NAME = "admin";
     private static final String EDIT_NAME = "edit";
