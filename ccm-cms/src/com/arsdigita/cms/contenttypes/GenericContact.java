@@ -23,23 +23,27 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.StringTokenizer;
 
 
 /**
  * This content type represents an basic contact
  *
  */
-public class GenericContact extends ContentPage {
+public class GenericContact extends ContentPage implements RelationAttribute {
 
     /** PDL property names */
     public static final String PERSON = "person";
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
 
+    private static final String RELATION_ATTRIBUTES = "GenericContactType;GenericContactEntryType";
+    
     // Config
     private static final GenericContactConfig s_config = new GenericContactConfig();
     static {
@@ -139,5 +143,15 @@ public class GenericContact extends ContentPage {
     
     public boolean hasContactEntries() {
         return !this.getContactEntries().isEmpty();
+    }
+
+    @Override
+    public boolean hasRelationAttributes() {
+        return !RELATION_ATTRIBUTES.isEmpty();
+    }
+
+    @Override
+    public StringTokenizer getRelationAttributes() {
+        return new StringTokenizer(RELATION_ATTRIBUTES, ";");
     }
 }

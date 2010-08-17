@@ -29,6 +29,7 @@ import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.SecurityManager;
@@ -62,6 +63,7 @@ final class ContentTypeItemPane extends BaseItemPane {
     private final AddElement m_elementAddForm;
 
     private final SectionTemplatesListing m_templates;
+//    private final RelationAttributeSection m_relationAttributes;
 
     ContentTypeItemPane(final ACSObjectSelectionModel model,
                         final ContentTypeRequestLocal type,
@@ -114,6 +116,7 @@ final class ContentTypeItemPane extends BaseItemPane {
         add(itemForm);
 
         m_detailPane.add(new SummarySection(editLink, deleteLink));
+        m_detailPane.add(new RelationAttributeSection());
 
         m_detailPane.add(new TypeSecurityContainer(new ElementSection()));
         m_detailPane.add(new TemplateSection(templateAddLink));
@@ -192,6 +195,7 @@ final class ContentTypeItemPane extends BaseItemPane {
             group.addAction(m_elementAddForm);
         }
 
+        @Override
         public final boolean isVisible(final PageState state) {
             return m_model.isSelected(state) && isDynamicType(state) &&
                 !ContentSection.getConfig().getHideUDCTUI();
@@ -209,11 +213,41 @@ final class ContentTypeItemPane extends BaseItemPane {
             group.addAction(new TypeSecurityContainer(templateAddLink));
         }
 
+        @Override
         public final boolean isVisible(final PageState state) {
             return m_model.isSelected(state) && !isDynamicType(state);
         }
     }
 
+    private class RelationAttributeSection extends Section {
+        RelationAttributeSection(/*final ActionLink attributeEditLink*/) {
+            setHeading(new Label(gz("cms.ui.type.attributes")));
+
+            setBody(new RelationAttributeContainer(m_type));
+//            setBody(new Label("RelationAttributeContainer"));
+        }
+
+        @Override
+        public final boolean isVisible(final PageState state) {
+
+            boolean retVal = false;
+            ContentType ct = (ContentType) m_type.getContentType(state);
+            ContentItem ci = null;
+
+            try {
+                Class<? extends ContentItem> clazz = Class.forName(ct.getClassName()).asSubclass(ContentItem.class);
+                ci = clazz.newInstance();
+                retVal = clazz.cast(ci).hasRelationAttributes();
+                ci.delete();
+            } catch (Exception ex) {
+                //retVal = false;
+            }
+
+            return retVal;
+        }
+    }
+
+    @Override
     public final void register(final Page page) {
         super.register(page);
 
@@ -249,7 +283,7 @@ final class ContentTypeItemPane extends BaseItemPane {
      * Determine if the current user has access to edit the content type
      * XXX domlay
      */
-    protected static final boolean userCanEdit(final PageState state) {
+    protected static boolean userCanEdit(final PageState state) {
         SecurityManager sm = Utilities.getSecurityManager(state);
         return sm.canAccess(state.getRequest(),
                             SecurityManager.CONTENT_TYPE_ADMIN);

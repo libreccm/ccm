@@ -52,6 +52,7 @@ class ContentTypePropertyList extends PropertyList {
         m_type = type;
     }
 
+    @Override
     protected final java.util.List properties(final PageState state) {
         final java.util.List props = super.properties(state);
         final ContentType type = m_type.getContentType(state);

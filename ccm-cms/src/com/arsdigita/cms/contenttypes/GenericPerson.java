@@ -16,25 +16,27 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import java.util.StringTokenizer;
 import java.util.Date;
 
 /**
  * Basic GenericPerson Contenttype for OpenCCM.
  *
+ * @author Sören Bernstein
  * @author Jens Pelzetter
  */
-public class GenericPerson extends ContentPage {
+public class GenericPerson extends ContentPage implements RelationAttribute {
 
     public static final String PERSON = "person";
     public static final String SURNAME = "surname";
@@ -45,9 +47,10 @@ public class GenericPerson extends ContentPage {
     public static final String CONTACTS = "contacts";
     public static final String CONTACT_TYPE = "contact_type";
     public static final String CONTACT_ORDER = "contact_order";
+    private static final String RELATION_ATTRIBUTES = "GenericContactType";
+
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericPerson";
-
 
     /**
      * Default constructor. This creates a new (empty) GenericPerson.
@@ -80,40 +83,43 @@ public class GenericPerson extends ContentPage {
     }
 
     /* accessors *****************************************************/
-     public String getSurname() {
-         return (String)get(SURNAME);
-     }
-     public void setSurname(String surname) {
-         set(SURNAME, surname);
-     }
+    public String getSurname() {
+        return (String) get(SURNAME);
+    }
 
-     public String getGivenName() {
-         return (String)get(GIVENNAME);
-     }
-     public void setGivenName(String givenName) {
-         set(GIVENNAME, givenName);
-     }
+    public void setSurname(String surname) {
+        set(SURNAME, surname);
+    }
 
-     public String getTitlePre() {
-         return (String)get(TITLEPRE);
-     }
-     public void setTitlePre(String titlePre) {
-         set(TITLEPRE, titlePre);
-     }
+    public String getGivenName() {
+        return (String) get(GIVENNAME);
+    }
 
-     public String getTitlePost() {
-         return (String)get(TITLEPOST);
-     }
-     public void setTitlePost(String titlePost) {
-         set(TITLEPOST, titlePost);
-     }     
+    public void setGivenName(String givenName) {
+        set(GIVENNAME, givenName);
+    }
 
+    public String getTitlePre() {
+        return (String) get(TITLEPRE);
+    }
      public Date getBirthdate() {
          return (Date)get(BIRTHDATE);
      }
      public void setBirthdate(Date birthdate) {
          set(BIRTHDATE, birthdate);
      }
+
+    public void setTitlePre(String titlePre) {
+        set(TITLEPRE, titlePre);
+    }
+
+    public String getTitlePost() {
+        return (String) get(TITLEPOST);
+    }
+
+    public void setTitlePost(String titlePost) {
+        set(TITLEPOST, titlePost);
+    }
 
     // Get all contacts for this person
     public GenericPersonContactCollection getContacts() {
@@ -140,4 +146,13 @@ public class GenericPerson extends ContentPage {
         return !this.getContacts().isEmpty();
     }
 
+    @Override
+    public boolean hasRelationAttributes() {
+        return !RELATION_ATTRIBUTES.isEmpty();
+    }
+
+    @Override
+    public StringTokenizer getRelationAttributes() {
+        return new StringTokenizer(RELATION_ATTRIBUTES, ";");
+    }
 }
