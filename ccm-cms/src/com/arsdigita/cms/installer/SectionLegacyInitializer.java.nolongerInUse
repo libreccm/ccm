@@ -36,6 +36,8 @@ import java.util.Iterator;
 // import java.util.List;
 import java.util.Timer;
 
+// import org.apache.log4j.Logger;
+
 /**
  * <p>Initializes a content section, registering a default
  * workflow, lifecycle & roles and adding the content types
@@ -76,10 +78,6 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
 
     // Temporär: Einbinden des neuen Parameter Systems
     private static final LoaderConfig s_conf = new LoaderConfig();
-//  LoaderConfig conf = LoaderConfig.getConfig();
-
-//  As an example
-//  private static final ContentSectionConfig s_config = new ContentSectionConfig();
 
     // Required to actually load the parameter file.
     // Aktuell: wenn man das aktiviert, gibt's einen Fehler: Kontext existiert
@@ -92,6 +90,7 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
     private static Timer s_unfinishedTimer;
 
     public SectionLegacyInitializer() throws InitializationException {
+        s_log.debug("CMS.installer.SectionLegacyInitializer.(Constructor) invoked");
 //      m_conf.initParameter(NAME,
 //              "The name of the content section",
 //              String.class);
@@ -132,6 +131,7 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
 //      m_conf.initParameter(TEMPLATE_RESOLVER_CLASS,
 //              "The TemplateResolver class to use for the section (defaults to DefaultTemplateResolver)",
 //              String.class);
+        s_log.debug("CMS.installer.SectionLegacyInitializer.(Constructor) completed");
     }
 
     // required by parent class.
@@ -142,6 +142,7 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
 
 
     protected void doStartup() {
+        s_log.debug("CMS.installer.SectionLegacyInitializer.doStartup() invoked");
 
         // Create and mount the demo content section if it does not exist.
         // String name = (String) m_conf.getParameter(NAME);
@@ -164,7 +165,9 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
         } else {
             s_log.info("Installing " + name + " at " +
                     sitemapEntry);
-            createSection(name);
+            createSection(name);  // Create a content section, initial
+                                  // creation is a loader task, additional
+                                  // sections may be created during (re)start
         }
 
         ContentSection section = retrieveContentSection(name);
@@ -172,20 +175,31 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
         ContentSectionSetup setup = new ContentSectionSetup(section);
 
         // setup.loadAlertPrefs((List) m_conf.getParameter(TASK_ALERTS));
-        setup.loadAlertPrefs( s_conf.getTaskAlerts());
+        /*
+         * loadAlertPrefs loads a list of workflow tasks and associated events
+         * from configuration file and fills a hashmap. No database operation.
+         * Not a loader task! Moved to contentsection/Initializer
+         */
+//      Moved from LoaderConfig to contentsection/ContentSectionConfig
+//      setup.loadAlertPrefs( s_conf.getTaskAlerts());
 
 //      s_unfinishedTimer = setup.startNotifierTask
 //          ((Boolean) m_conf.getParameter(SEND_OVERDUE_ALERTS),
 //           (Integer) m_conf.getParameter(TASK_DURATION),
 //           (Integer) m_conf.getParameter(OVERDUE_ALERT_INTERVAL),
 //           (Integer) m_conf.getParameter(MAX_ALERTS));
-        s_unfinishedTimer = setup.startNotifierTask
-            (s_conf.getSendOverdueAlerts(),
-             s_conf.getTaskDuration(),
-             s_conf.getOverdueAlertInterval(),
-             s_conf.getMaxAlerts());
+
+//      Commented out in LoadereConfig because not a Loader task.  So commented
+//      out here. If SectionLegacyInitializer should ever be used again, a
+//      defferent config file (section initializer config) should be used here
+   //   s_unfinishedTimer = setup.startNotifierTask
+   //       (s_conf.getSendOverdueAlerts(),
+   //        s_conf.getTaskDuration(),
+   //        s_conf.getOverdueAlertInterval(),
+   //        s_conf.getMaxAlerts());
 
         txn.commitTxn();
+        s_log.debug("CMS.installer.SectionLegacyInitializer.doStartup() completed");
     }
 
     /**
@@ -193,6 +207,11 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
      * @param name
      * @return
      */
+
+    // seems not to be requirred when using new web application functionality
+    // instead of old fashioned PackageType / SiteNode
+    // Not migrated to Loader nor to Initializer.
+
     private ContentSection retrieveContentSection(String name) {
         BigDecimal rootNodeID = SiteNode.getRootSiteNode().getID();
         SiteNode node = null;
@@ -230,6 +249,9 @@ public class SectionLegacyInitializer extends com.arsdigita.kernel.BaseInitializ
     /**
      * Install the CMS Demo.
      */
+
+    // Moved into Loader
+    
     private ContentSection createSection(String name) {
 
         s_log.info("Creating content section on /" + name);

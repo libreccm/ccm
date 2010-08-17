@@ -23,6 +23,7 @@ import com.arsdigita.cms.dispatcher.AssetURLFinder;
 import com.arsdigita.cms.dispatcher.ItemDelegatedURLPatternGenerator;
 import com.arsdigita.cms.dispatcher.ItemTemplatePatternGenerator;
 import com.arsdigita.cms.dispatcher.ItemURLFinder;
+import com.arsdigita.cms.installer.WorkspaceInstaller;
 import com.arsdigita.cms.publishToFile.PublishToFileListener;
 import com.arsdigita.cms.publishToFile.QueueManager;
 import com.arsdigita.cms.search.AssetMetadataProvider;
@@ -48,6 +49,10 @@ import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.NoValidURLException;
+import com.arsdigita.kernel.PackageInstance;
+import com.arsdigita.kernel.PackageInstanceCollection;
+import com.arsdigita.kernel.PackageType;
+import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.URLFinder;
 import com.arsdigita.kernel.URLFinderNotFoundException;
 import com.arsdigita.kernel.URLService;
@@ -57,6 +62,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
+import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
@@ -80,13 +86,22 @@ import com.arsdigita.templating.PatternStylesheetResolver;
 import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.kernel.Kernel;
 
+// For Id.
+import java.math.BigDecimal;
+
+import org.apache.log4j.Logger;
+
 /**
- * The CMS initializer.
+ * The main CMS initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Initializer extends CompoundInitializer {
+
+
+    /** Creates a s_logging category with name = to the full name of class */
+    private static Logger s_log = Logger.getLogger(Initializer.class);
 
     /**
      * Constructor
@@ -95,32 +110,58 @@ public class Initializer extends CompoundInitializer {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 
+        s_log.debug("CMS.Initializer.(Constructor) invoked");
+
         add(new PDLInitializer
             (new ManifestSource
              ("ccm-cms.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
+        // Step 1:
+        // Old type initializer "com.arsdigita.cms.installer.Initializer"
+        // Used to be the first initializer in old enterprise.init
+        //
+        // Replaced by new type initializer com.arsdigita.cms.installer.Initializer()
+        // Simple migration of the old code to the new initializer system with as
+        // less code change as possible.
+        //
+        // Invokes ContentCenterSetup (without any LegacyInitializer)
+        // performs mainly loader tasks and should be migrated to Loader.
         add(new com.arsdigita.cms.installer.Initializer());
 
-        // Experimental: Moved into c.ad.cms.loader
-        add(new LegacyInitializer("com/arsdigita/cms/contentsection/enterprise.init"));
+        // Step 2:
+        // Old type initializer "com.arsdigita.cms.installer.xml.ContentTypeInitializer"
+        // Completely moved into Loader
+
+        // Step 4:
+        // Old type initializer "com.arsdigita.cms.installer.SectionInitializer"
+        // Invoking the Initializer rewritten to a separate enterprise.init in
+        // c.ad.cms.contentsection and modified in c.ad.cms.initializer
+        // Mainly loader tasks, to be moved into c.ad.cms.Loader
+        // 2010-08-16: Moved to Loader, works OK
+//      add(new LegacyInitializer("com/arsdigita/cms/contentsection/enterprise.init"));
+
+        // Step 4a new
+        // Initializer for content section, needed when LegacyInitializer in step 3
+        // has been moved to c.ad.Loader in order to register the application and
+        // optionally to install additional content sections.
         // add(new com.arsdigita.cms.contentsection.Initializer());
 
+        // Used to be step 3 in old enterprise.init migrated to loader/new init.
         add(new com.arsdigita.cms.publishToFile.Initializer());
+        // Used to be step 6 in old enterprise.init migrated to loader/new init.
         add(new com.arsdigita.cms.lifecycle.Initializer());
+        // Used to be step 7 in old enterprise.init migrated to loader/new init.
         add(new com.arsdigita.cms.portlet.Initializer());
 
-        // add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
-        // Replaced by c.ad.cms.installer.Initializer() (NEW initializer!)
-        //  add(new LegacyInitializer("com/arsdigita/cms/installer/enterprise.init"));
-        
-        // Moved into c.ad.cms.loader
-        // add(new LegacyInitializer("com/arsdigita/cms/installer/xml/enterprise.init"));
-        
 
-        // now used to initialize the forms in ccm-core only!
+        // Used to be step 5 in old enterprise.init
+        // Old type initializer "com.arsdigita.formbuilder.installer.Initializer"
+        // Used to initialize CMS forms using the forms in ccm-core
         // Can be replaced in ccm after ccm-core is migrated to new initializer.
         add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
+
+        s_log.debug("CMS.Initializer.(Constructor) completed");
     }
 
 
@@ -133,7 +174,9 @@ public class Initializer extends CompoundInitializer {
      */
     @Override
     public void init(DomainInitEvent e) {
+        s_log.debug("CMS.Initializer.init(DomainInitEvent) invoked");
         super.init(e);
+
         LanguageUtil.setSupportedLanguages(
             Kernel.getConfig().getSupportedLanguages());
 
@@ -212,6 +255,11 @@ public class Initializer extends CompoundInitializer {
         MetadataProviderRegistry.registerAdapter(
             FileAsset.BASE_DATA_OBJECT_TYPE,
             new AssetMetadataProvider());
+
+        // Mount the content-center sidenode
+
+
+        s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
     }    //  END init(DomainInitEvent e)
 
 

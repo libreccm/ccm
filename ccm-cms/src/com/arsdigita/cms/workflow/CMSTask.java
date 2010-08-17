@@ -365,7 +365,7 @@ public class CMSTask extends UserTask {
         typeLabel = typeLabel.trim();
         operation = operation.trim();
         // get the typeLabel -> list-of-operations map for this section
-        Map typeMap = (Map) s_alerts.get(section.getID());
+        Map typeMap = (Map) s_alerts.get(section.getID());  //s_alerts: HashMap
         if (typeMap == null) {
             typeMap = new HashMap(5);
             s_alerts.put(section.getID(), typeMap);

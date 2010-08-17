@@ -34,7 +34,7 @@ package com.arsdigita.cms;
 //import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
-import com.arsdigita.util.parameter.IntegerParameter;
+// import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
@@ -193,6 +193,28 @@ public final class LoaderConfig extends AbstractConfig {
                            Parameter.REQUIRED,
                            true);
 
+    /**
+     * List of content types to register in the given content-section.
+     *
+     * Example:
+     *    {
+     *     "com.arsdigita.cms.contenttypes.Address",
+     *     "com.arsdigita.cms.contenttypes.Article",
+     *     "com.arsdigita.cms.contenttypes.Contact"
+     *    }
+     *
+     * Parameter name "TYPES" in the old initializer code, empty by default in
+     * the former enterprise.init file.
+     * When the list is empty and the first default content section is created,
+     * all installed content types will get registered. This behaviour should
+     * not be altered without very good reasons.
+     */
+    private final Parameter
+            m_contentTypeList = new StringArrayParameter(
+                                    "com.arsdigita.cms.loader.ctypes_include_list",
+                                    Parameter.REQUIRED,
+                               new String[] {}  );
+
     // Page Resolver Class, set autonomously by ContentSection.create() method.
 
     // Item Resolver Class, configurable.
@@ -241,30 +263,6 @@ public final class LoaderConfig extends AbstractConfig {
     // XML Generator Class, set autonomously by ContentSection.create() method.
 
 
-    // Additional Parameters
-
-    /**
-     * List of content types to register in the given content-section.
-     *
-     * Example:
-     *    {
-     *     "com.arsdigita.cms.contenttypes.Address",
-     *     "com.arsdigita.cms.contenttypes.Article",
-     *     "com.arsdigita.cms.contenttypes.Contact"
-     *    }
-     *
-     * Parameter name "TYPES" in the old initializer code, empty by default in
-     * the former enterprise.init file.
-     * When the list is empty and the first default content section is created,
-     * all installed content types will get registered. This behaviour should
-     * not be altered without very good reasons.
-     */
-    private final Parameter 
-            m_contentTypeList = new StringArrayParameter(
-                                    "com.arsdigita.cms.loader.ctypes_include_list",
-                                    Parameter.REQUIRED,
-                               new String[] {}  );
-
     /**
      * Determins weather to use section specific category tree(s). Defaults to
      * false, so standard navigation is used.
@@ -297,86 +295,55 @@ public final class LoaderConfig extends AbstractConfig {
     //          Collections.EMPTY_LIST);
 
 
-    /**
-     * A list of workflow tasks, and the associated events for which alerts
-     * have to be sent.
-     * Parameter name TASK_ALERTS in the old initializer system / enterprise.init
-     * Specifies when to generate email alerts: by default, generate email alerts
-     * on enable, finish, and rollback (happens on rejection) changes.
-     * There are four action types for each task type: enable, disable, finish,
-     * and rollback.
-     * Example:
-     * (Note that the values below are based on the task labels, and as such are
-     * not globalized.)
-     * <pre>
-     * taskAlerts = {
-     *      { "Authoring",
-     *        { "enable", "finish", "rollback" }
-     *      },
-     *      { "Approval",
-     *        { "enable", "finish", "rollback" }
-     *      },
-     *      { "Deploy",
-     *        { "enable", "finish", "rollback" }
-     *      }
-     *  };
-     * </pre>
-     *
-     * Default value (site-wide) is handled via the parameter
-     * <pre>com.arsdigita.cms.default_task_alerts</pre>.
-     * Section-specific override can be added here. Only do so if you are
-     * changing for a good reason from the default for a specific content section.
-     */
-    private final Parameter
-            m_taskAlerts = new StringArrayParameter(
-                               "com.arsdigita.cms.loader.section_task_alerts",
-                               Parameter.REQUIRED,
-                               null  );
-                               // new String[] {}  );
+    // ///////////////////////////////////////////////////////////////////////
+    //
+    // Parameters controlling Overdue Task alerts:
+    //
+    // There seems to be no functionality to store these parameters on a
+    // per section base of to store them in the database at all. So it is
+    // currently not a loader task and commented out here.
+    // ///////////////////////////////////////////////////////////////////////
 
 
-  // Parameters controlling Overdue Task alerts:
+//  /**
+//   * sendOverdueAlerts: Should we send alerts about overdue tasks at all?
+//   */
+//  private final Parameter
+//          m_sendOverdueAlerts = new BooleanParameter(
+//                             "com.arsdigita.cms.loader.send_overdue_alerts",
+//                             Parameter.REQUIRED,
+//                             new Boolean(false)  );
 
+//  /**
+//   * taskDuration: The time between when a task is enabled (it is made
+//   *               available for completion) and when it is
+//   *               considered overdue (in HOURS)
+//   */
+//  private final Parameter
+//          m_taskDuration = new IntegerParameter(
+//                             "com.arsdigita.cms.loader.task_duration",
+//                             Parameter.REQUIRED,
+//                             new Integer(96)  );
 
-    /**
-     * sendOverdueAlerts: Should we send alerts about overdue tasks at all?
-     */
-    private final Parameter
-            m_sendOverdueAlerts = new BooleanParameter(
-                               "com.arsdigita.cms.loader.send_overdue_alerts",
-                               Parameter.REQUIRED,
-                               new Boolean(false)  );
+//  /**
+//   * alertInterval:  The time to wait between sending successive alerts on
+//   *                 the same overdue task (in HOURS)
+//   */
+//  private final Parameter
+//          m_overdueAlertInterval = new IntegerParameter(
+//                             "com.arsdigita.cms.loader.overdue_alert_interval",
+//                             Parameter.REQUIRED,
+//                             new Integer(24)  );
 
-    /**
-     * taskDuration: The time between when a task is enabled (it is made
-     *               available for completion) and when it is
-     *               considered overdue (in HOURS)
-     */
-    private final Parameter
-            m_taskDuration = new IntegerParameter(
-                               "com.arsdigita.cms.loader.task_duration",
-                               Parameter.REQUIRED,
-                               new Integer(96)  );
-
-    /**
-     * alertInterval:  The time to wait between sending successive alerts on
-     *                 the same overdue task (in HOURS)
-     */
-    private final Parameter
-            m_overdueAlertInterval = new IntegerParameter(
-                               "com.arsdigita.cms.loader.overdue_alert_interval",
-                               Parameter.REQUIRED,
-                               new Integer(24)  );
-
-    /**
-     * maxAlerts:    The maximum number of alerts to send about any one
-     *               overdue task
-     */
-    private final Parameter
-            m_maxAlerts = new IntegerParameter(
-                               "com.arsdigita.cms.loader.mas_alerts",
-                               Parameter.REQUIRED,
-                               new Integer(5)  );
+//  /**
+//   * maxAlerts:    The maximum number of alerts to send about any one
+//   *               overdue task
+//   */
+//  private final Parameter
+//          m_maxAlerts = new IntegerParameter(
+//                             "com.arsdigita.cms.loader.mas_alerts",
+//                             Parameter.REQUIRED,
+//                             new Integer(5)  );
 
     /**
      * Standard Constructor. 
@@ -396,13 +363,14 @@ public final class LoaderConfig extends AbstractConfig {
             register(m_contentTypeList);
             register(m_useSectionCategories);
             register(m_categoryFileList);
-            register(m_taskAlerts);
 
             // Parameters controlling Overdue Task alerts:
-            register(m_sendOverdueAlerts);
-            register(m_taskDuration);
-            register(m_overdueAlertInterval);
-            register(m_maxAlerts);
+            // (Currently not a loader task)
+//          register(m_taskAlerts); no Loader task, moved to contentsection/Initializer
+//          register(m_sendOverdueAlerts);
+//          register(m_taskDuration);
+//          register(m_overdueAlertInterval);
+//          register(m_maxAlerts);
 
 
 
@@ -455,7 +423,8 @@ public final class LoaderConfig extends AbstractConfig {
      *
      * In loading step a complete default configuration is persisted in database,
      * immutable at this point.
-     * See contentsection.ContentSectionSetup.registerRoles()
+     * See contentsection.ContentSectio
+nSetup.registerRoles()
      * In enterprise.init: name roles, List of roles to create.
      *
      * Set consists of a set of roles, for each role first field is the role name,
@@ -586,48 +555,41 @@ public final class LoaderConfig extends AbstractConfig {
         return Arrays.asList(taskAlerts);
     }
 
-    /**
-     * Retrieve the list of workflow tasks and events for each tasks which
-     * should receive overdue notification alerts
-     */
-    public List getTaskAlerts() {
-        String[] ctTypes = (String[]) get(m_contentTypeList);
-        return Arrays.asList(ctTypes);
-    }
-
 
   // Parameters controlling Overdue Task alerts:
+  // Currently not a loader task, see above
 
 
-    /**
-     * getSendOverdueAlerts: Retrieve wether we should send alerts about
-     * overdue tasks at all?
-     */
-    public final boolean getSendOverdueAlerts() {
-        return ((Boolean) get(m_sendOverdueAlerts)).booleanValue(); }
+//  /**
+//   * getSendOverdueAlerts: Retrieve wether we should send alerts about
+//   * overdue tasks at all?
+//   */
+//  public final boolean getSendOverdueAlerts() {
+//      return ((Boolean) get(m_sendOverdueAlerts)).booleanValue(); }
 
-    /**
-     * getTaskDuration: Retrieve the time between when a task is enabled
-     * (it is made available for completion) and when it is considered
-     * overdue (in HOURS)
-     */
-    public final Integer getTaskDuration() {
-        return ((Integer) get(m_taskDuration)); }
+//  /**
+//   * getTaskDuration: Retrieve the time between when a task is enabled
+//   * (it is made available for completion) and when it is considered
+//   * overdue (in HOURS)
+//   */
+//  public final Integer getTaskDuration() {
+//      return ((Integer) get(m_taskDuration)); }
 
-    /**
-     * getAlertInterval: Retrieve the time to wait between sending successive
-     * alerts on the same overdue task (in HOURS)
-     */
-    public final Integer getOverdueAlertInterval() {
-        return ((Integer) get(m_overdueAlertInterval)); }
+//  /**
+//   * getAlertInterval: Retrieve the time to wait between sending successive
+//   * alerts on the same overdue task (in HOURS)
+//   */
+//  public final Integer getOverdueAlertInterval() {
+//      return ((Integer) get(m_overdueAlertInterval)); }
 
-    /**
-     * maxAlerts: Retrieve the maximum number of alerts to send about any one
-     * overdue task
-     */
-    public final Integer getMaxAlerts() {
-        return ((Integer) get(m_maxAlerts)); }
+//  /**
+//   * maxAlerts: Retrieve the maximum number of alerts to send about any one
+//   * overdue task
+//   */
+//  public final Integer getMaxAlerts() {
+//      return ((Integer) get(m_maxAlerts)); }
 
+    // End section task alerts
 
 //	InputStream getTraversalAdapters() {
 //		return (InputStream) get(m_adapters);

@@ -26,15 +26,15 @@ import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 //import com.arsdigita.util.parameter.ParameterError;
-//import com.arsdigita.util.parameter.StringArrayParameter;
+import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
 // import com.arsdigita.util.parameter.ResourceParameter;
 // import com.arsdigita.util.parameter.URLParameter;
 //import com.arsdigita.util.StringUtils;
 
 // import java.io.InputStream;
-//import java.util.Arrays;
-//import java.util.List;
+import java.util.Arrays;
+import java.util.List;
 //import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -53,32 +53,44 @@ public final class ContentSectionConfig extends AbstractConfig {
                                 Logger.getLogger(ContentSectionConfig.class);
 
 
-
-// ///////////////////////////////////////////////////////
-//
-// Set of parameters which specify a new content section
-// to be created during next startup of the system. If
-// the section already exists (created during previous
-// startups) parameters are ignored and not processed.
-//
-// ///////////////////////////////////////////////////////
-
-    /**
-     * The name of a new content section to be create during next boot of the
-     * system. During subsequent startups, when the section to be created
-     * already exists, the parameter is ignored and processing skipped.
-     *
-     * Empty by default so no processing will take place.
-     */
-    private final Parameter
-            m_newContentSectionName = new StringParameter(
-                            "com.arsdigita.cms.contentsection.new_section_name",
-                            Parameter.REQUIRED,
-                            null);
-
-
     // Parameters controlling Overdue Task alerts:
 
+    /**
+     * A list of workflow tasks, and the associated events for which alerts
+     * have to be sent.
+     * Parameter name TASK_ALERTS in the old initializer system / enterprise.init
+     * Specifies when to generate email alerts: by default, generate email alerts
+     * on enable, finish, and rollback (happens on rejection) changes.
+     * There are four action types for each task type: enable, disable, finish,
+     * and rollback.
+     * Example:
+     * (Note that the values below are based on the task labels, and as such are
+     * not globalized.)
+     * <pre>
+     * taskAlerts = {
+     *      { "Authoring",
+     *        { "enable", "finish", "rollback" }
+     *      },
+     *      { "Approval",
+     *        { "enable", "finish", "rollback" }
+     *      },
+     *      { "Deploy",
+     *        { "enable", "finish", "rollback" }
+     *      }
+     *  };
+     * </pre>
+     *
+     * Default value (site-wide) is handled via the parameter
+     * <pre>com.arsdigita.cms.default_task_alerts</pre>.
+     * Section-specific override can be added here. Only do so if you are
+     * changing for a good reason from the default for a specific content section.
+     */
+    private final Parameter
+            m_taskAlerts = new StringArrayParameter(
+                               "com.arsdigita.cms.loader.section_task_alerts",
+                               Parameter.REQUIRED,
+                               null  );
+                               // new String[] {}  );
 
     /**
      * Should we send alerts about overdue tasks at all?
@@ -137,48 +149,67 @@ public final class ContentSectionConfig extends AbstractConfig {
                         new Integer(5)  );
 
 
+
+// ///////////////////////////////////////////////////////
+//
+// Set of parameters which specify a new content section
+// to be created during next startup of the system. If
+// the section already exists (created during previous
+// startups) parameters are ignored and not processed.
+//
+// ///////////////////////////////////////////////////////
+
+    /**
+     * The name of a new content section to be create during next boot of the
+     * system. During subsequent startups, when the section to be created
+     * already exists, the parameter is ignored and processing skipped.
+     *
+     * Empty by default so no processing will take place.
+     */
+    private final Parameter
+            m_newContentSectionName = new StringParameter(
+                            "com.arsdigita.cms.contentsection.new_section_name",
+                            Parameter.REQUIRED,
+                            null);
+
+
     /**
      * Constructor, do not instantiate this class directly!
      *
      * @see ContentSection#getConfig()
-     **/
+     */
     public ContentSectionConfig() {
-
-        register(m_newContentSectionName);
         
+        // parameters for alerts (notifications)
+        register(m_taskAlerts);
         register(m_sendOverdueAlerts);
         register(m_taskDuration);
         register(m_alertInterval);
         register(m_maxAlerts);
+
+        // parameters for creation of a new (additional) content section
+        register(m_newContentSectionName);
     }
 
 
-// ///////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////
 //
-// Processing of parameters which specify a new content
-// section to be created during (next) startup of the
-// system. The initializer has to check if it already
-// exists and skip processing.
+// Processing of parameters which handle overdue notification
 //
-// ///////////////////////////////////////////////////////
-
+// //////////////////////////////////////////////////////////
 
     /**
-     * Retrieve the name of a new content-section to create.
+     * Retrieve the list of workflow tasks and events for each tasks which
+     * should receive overdue notification alerts
      *
-     * The initializer has to check if it already exists and skip processing.
+     * XXX wrong implementation !!
+     * Should be moved to CMS or section initializer because may be modified
+     * each startup. Does not store anything in database so not a loader task!
      */
-    public String getNewContentSectionName() {
-            return (String) get(m_newContentSectionName);
-        }
-
-
-// ///////////////////////////////////////////////////////
-//
-// Processing of parameters which handle the timing
-// of overdue notification
-//
-// ///////////////////////////////////////////////////////
+    public List getTaskAlerts() {
+//        String[] m_taskAlerts = (String[]) get(m_contentTypeList);
+        return Arrays.asList(m_taskAlerts);
+    }
 
 
     /**
@@ -210,6 +241,27 @@ public final class ContentSectionConfig extends AbstractConfig {
      */
     public Integer getMaxAlerts() {
             return (Integer) get(m_maxAlerts);
+        }
+
+
+
+// ///////////////////////////////////////////////////////
+//
+// Processing of parameters which specify a new content
+// section to be created during (next) startup of the
+// system. The initializer has to check if it already
+// exists and skip processing.
+//
+// ///////////////////////////////////////////////////////
+
+
+    /**
+     * Retrieve the name of a new content-section to create.
+     *
+     * The initializer has to check if it already exists and skip processing.
+     */
+    public String getNewContentSectionName() {
+            return (String) get(m_newContentSectionName);
         }
 
 }

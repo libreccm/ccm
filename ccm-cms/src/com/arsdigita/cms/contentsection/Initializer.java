@@ -25,13 +25,15 @@ import com.arsdigita.cms.LoaderConfig;
 import com.arsdigita.cms.installer.ContentSectionSetup;
 import com.arsdigita.cms.installer.Util;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.cms.workflow.UnfinishedTaskNotifier;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.ConfigError;
 // import com.arsdigita.runtime.DataInitEvent;
+import com.arsdigita.runtime.ContextInitEvent;
+import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
@@ -49,6 +51,9 @@ import org.apache.log4j.Logger;
 // changes as possible.
 // In a second step a restructure of the code will be done.
 
+// Has to handle in future:
+//  -- configuration of alert tasks
+//  -- creation of additional content sections during restart
 
 /**
  * XXX Reformulate according to the code development!
@@ -71,8 +76,8 @@ public class Initializer extends CompoundInitializer {
     /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
-    /** Local configuration object LoaderConfig containing immutable parameters 
-        after installation.  */
+    /** Local configuration object ContentSectionConfig containing parameters
+        which may be changed each system startup.  */
     //  private static final LoaderConfig s_conf = LoaderConfig.getConfig();
     private static final LoaderConfig s_conf = new LoaderConfig();
 
@@ -92,6 +97,7 @@ public class Initializer extends CompoundInitializer {
 //   */
 //  public void init(DataInitEvent evt) {
 //  }
+
     /**
      * Initializes domain-coupling machinery, usually consisting of
      * registering object instantiators and observers.
@@ -108,119 +114,96 @@ public class Initializer extends CompoundInitializer {
         // If super is not invoked, various other cms sub-initializer may not run.
         super.init(evt);
 
-        // Create and mount the demo content section if it does not exist.
-        // String name = (String) m_conf.getParameter(NAME);
-        String name = s_conf.getContentSectionName();
 
-        TransactionContext txn =
-                SessionManager.getSession().getTransactionContext();
-        txn.beginTxn();
-        ContentSectionSetup.setupContentSectionAppType();
+        /*
+         * loadAlertPrefs loads a list of workflow tasks and associated events
+         * from configuration file and fills a hashmap. No database operation.
+         * Not a loader task!
+         */
+        // XXX Currently in ContenSectionSetup - has to be migrated !!
+        //      setup.loadAlertPrefs((List) s_conf.getTaskAlerts());
 
-        Util.validateURLParameter("name", name);
-
-        String sitemapEntry = "/" +  name + "/";
-        if (Application.isInstalled(ContentSection.BASE_DATA_OBJECT_TYPE,
-                sitemapEntry)) {
-            s_log.info("skipping " + name +
-                    " because it is already installed");
-        } else {
-            s_log.info("Installing " + name + " at " +
-                    sitemapEntry);
-            createSection(name);
-        }
-
-        ContentSection section = retrieveContentSection(name);
-        Assert.exists(section, ContentSection.class);
-        ContentSectionSetup setup = new ContentSectionSetup(section);
-
-        setup.loadAlertPrefs( s_conf.getTaskAlerts());
-
-        s_unfinishedTimer = setup.startNotifierTask
-            (s_conf.getSendOverdueAlerts(),
-             s_conf.getTaskDuration(),
-             s_conf.getOverdueAlertInterval(),
-             s_conf.getMaxAlerts());
-
-        txn.commitTxn();
 
         s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
     }
 
-    
+
     /**
+     * Implementation of the {@link Initializer#init(ContextInitEvent)}
+     * method.
      *
-     * @param name
+     * Initializes the scheduler thread to fire all the events for the
+     * ......   that have just began or ended.
+     *
+     * A delay value of 0 inhibits start of processing.
+     * @param evt The context init event.
+     */
+    public void init(ContextInitEvent evt) {
+        s_log.debug("content section ContextInitEvent started");
+
+        // XXX to be done yet!
+        // Currently we have only one timer, but notification is handled
+        // on a per section base. We have also only one set of timing parameters.
+        // So we have to configure all sections in the same way.
+//      s_unfinishedTimer = setup.startNotifierTask
+//          (s_conf.getSendOverdueAlerts(),
+//           s_conf.getTaskDuration(),
+//           s_conf.getOverdueAlertInterval(),
+//           s_conf.getMaxAlerts());
+
+    
+        s_log.debug("content section ContextInitEvent completed");
+    }
+
+    /**
+     * Implementation of the {@link Initializer#init(ContextCloseEvent)}
+     * method.
+     *
+     */
+    public void close(ContextCloseEvent evt) {
+        s_log.debug("content section ContextCloseEvent started");
+        if (s_unfinishedTimer != null) {
+            s_unfinishedTimer.cancel();
+            s_unfinishedTimer = null;
+        }
+        s_log.debug("content section ContextCloseEvent completed");
+    }
+
+
+    /**
+     * @param section  content section for which notifier should be started
+     * @param sendOverdue
+     * @param duration
+     * @param alertInterval
+     * @param max
      * @return
      */
-    private ContentSection retrieveContentSection(String name) {
-        BigDecimal rootNodeID = SiteNode.getRootSiteNode().getID();
-        SiteNode node = null;
-        try {
-            node = SiteNode.getSiteNode("/" + name);
-        } catch (DataObjectNotFoundException ex) {
-            throw new ConfigError(
-                (String) GlobalizationUtil.globalize(
-                    "cms.installer.root_site_node_missing").localize() + ex );
-        }
-        ContentSection section = null;
-        if ( rootNodeID.equals(node.getID()) ) {
-            // This instance does not exist yet.
-            section = createSection(name);
+    private final Timer startNotifierTask(
+                                   ContentSection section,
+                                   Boolean sendOverdue, Integer duration,
+                                   Integer alertInterval, Integer max) {
+        Timer unfinished = null;
+        if (sendOverdue.booleanValue()) {
+            if (duration == null || alertInterval == null || max == null) {
+                s_log.info("Not sending overdue task alerts, " +
+                           "required initialization parameters were not specified");
+                return null;
+            }
+            // start the Timer as a daemon, so it doesn't keep the JVM from exiting
+            unfinished = new Timer(true);
+            UnfinishedTaskNotifier notifier = 
+                    new UnfinishedTaskNotifier( section, duration.intValue(),
+                                                alertInterval.intValue(),
+                                                max.intValue());
+            // schedule the Task to start in 5 minutes, at 1 hour intervals
+            unfinished.schedule(notifier, 5L * 60 * 1000, 60L * 60 * 1000);
+            s_log.info("Sending overdue alerts for tasks greater than " +
+                       duration + " hours old");
         } else {
-            try {
-                section = ContentSection.getSectionFromNode(node);
-            } catch (DataObjectNotFoundException de) {
-                throw new ConfigError(
-                    (String) GlobalizationUtil.globalize(
-                        "cms.installer.could_not_load_section",
-                        new Object[] {name}).localize() + de );
-            }
-        }
-        return section;
-    }
-    /**
-     * Install the CMS Demo.
-     */
-    private ContentSection createSection(String name) {
-
-        s_log.info("Creating content section on /" + name);
-
-
-        ContentSection section = ContentSection.create(name);
-
-        ContentSectionSetup setup = new ContentSectionSetup(section);
-
-        // Setup the access controls
-
-        // section specific categories, usually not used.
-        // During initial load at install time nor used at all!
-        if (ContentSection.getConfig().getUseSectionCategories()) {
-            // Iterator files = ((List) m_conf.getParameter(CATEGORIES)).iterator();
-            Iterator files = s_conf.getCategoryFileList().iterator();
-            while ( files.hasNext() ) {
-                setup.registerCategories((String) files.next());
-            }
+            s_log.info("Not sending overdue task alerts");
         }
 
-        // setup.registerRoles((List)m_conf.getParameter(ROLES));
-        setup.registerRoles(s_conf.getStuffGroup());
-        // setup.registerViewers((Boolean)m_conf.getParameter(PUBLIC));
-        setup.registerViewers(s_conf.isPubliclyViewable());
-        setup.registerAlerts();
-        setup.registerPublicationCycles();
-        setup.registerWorkflowTemplates();
-        // setup.registerContentTypes((List)m_conf.getParameter(TYPES));
-        setup.registerContentTypes(s_conf.getContentSectionsContentTypes());
-        // setup.registerResolvers
-        //     ((String) m_conf.getParameter(ITEM_RESOLVER_CLASS),
-        //      (String) m_conf.getParameter(TEMPLATE_RESOLVER_CLASS));
-        setup.registerResolvers
-            (s_conf.getItemResolverClass(),
-             s_conf.getTemplateResolverClass());
-        section.save();
-
-        return section;
+        return unfinished;
     }
 
 }

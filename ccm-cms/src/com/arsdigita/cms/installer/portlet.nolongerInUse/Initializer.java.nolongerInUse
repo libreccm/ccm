@@ -41,6 +41,14 @@ import com.arsdigita.portal.PortletType;
 import org.apache.log4j.Logger;
 
 
+// ////////////////////////////////////////////////////////////////////////////
+//
+// Migrated to new initializer system.
+// code moved to c.ad.cms.loader and c.ad.cms.portlet.initializer
+//
+// ////////////////////////////////////////////////////////////////////////////
+
+
 public class Initializer 
     extends BaseInitializer {
 

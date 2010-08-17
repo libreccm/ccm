@@ -77,9 +77,9 @@ public class UnfinishedTaskNotifier extends TimerTask {
         m_maxNotifications = maxNotifications;
         s_log.debug("Created UnfinishedTaskNotifier for section " + section.getName());
         s_log.debug("Sending notifications for tasks over " + m_unfinishedInterval +
-                    " milliseconds old, with repeat notifications every " + m_notificationInterval +
-                    " milliseconds, with a maxmimum of " + m_maxNotifications + " notifications going out for" +
-                    " every task.");
+                    " milliseconds old, with repeat notifications every " + 
+                    m_notificationInterval + " milliseconds, with a maxmimum of " +
+                    m_maxNotifications + " notifications going out for every task.");
 
     }
 
@@ -94,7 +94,8 @@ public class UnfinishedTaskNotifier extends TimerTask {
                 }
             }.run();
         } catch (Throwable t) {
-            s_log.error("Unexpeced error occured in UnfinishedTaskNotifier. Task has been disabled", t);
+            s_log.error("Unexpeced error occured in UnfinishedTaskNotifier." +
+                        "Task has been disabled", t);
             throw new UncheckedWrapperException(t);
         }
     }
@@ -116,7 +117,8 @@ public class UnfinishedTaskNotifier extends TimerTask {
             unfinishedTasks.setParameter("sectionID", m_sectionID);
             // we want to do the Date arithmetic in Java, since we set
             // the Date from Java initially
-            unfinishedTasks.setParameter("overdueDate", new Date(System.currentTimeMillis() - m_unfinishedInterval));
+            unfinishedTasks.setParameter("overdueDate",
+                   new Date(System.currentTimeMillis() - m_unfinishedInterval));
 
             while (unfinishedTasks.next()) {
                 CMSTask task = (CMSTask) DomainObjectFactory
@@ -126,9 +128,11 @@ public class UnfinishedTaskNotifier extends TimerTask {
                 Date lastSentDate = notification.getLastNotificationDate();
                 int numSent = notification.getNumNotifications();
                 if ((lastSentDate == null ||
-                     lastSentDate.before(new Date(System.currentTimeMillis() - m_notificationInterval)))
+                     lastSentDate.before(new Date(System.currentTimeMillis() -
+                                                  m_notificationInterval)))
                     && m_maxNotifications > numSent) {
-                    s_log.debug("Sending unfinished notification for " + task + ", started on " + task.getStartDate());
+                    s_log.debug("Sending unfinished notification for " + task +
+                                ", started on " + task.getStartDate());
                     // make sure we record that we've sent this notification first
                     notification.incrNumNotifications();
                     notification.save();
@@ -138,7 +142,8 @@ public class UnfinishedTaskNotifier extends TimerTask {
 
             txn.commitTxn();
             committedTxn = true;
-            s_log.debug("UnfinishedTaskNotifier completed in " + (System.currentTimeMillis() - startTime) + "ms");
+            s_log.debug("UnfinishedTaskNotifier completed in " +
+                        (System.currentTimeMillis() - startTime) + "ms");
         } finally {
             if (!committedTxn) {
                 txn.abortTxn();

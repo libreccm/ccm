@@ -55,21 +55,20 @@ public class Initializer extends CompoundInitializer {
     /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
-    // private static PublishToFileConfig s_conf= PublishToFileConfig.getConfig();
     private static final LoaderConfig s_conf = new LoaderConfig();
-//  LoaderConfig conf = LoaderConfig.getConfig();
-
-//  As an example
-//  private static final ContentSectionConfig s_config = new ContentSectionConfig();
-
-//  static {
-//      s_config.load();
+//  Verursacht aktuell eine Exception "no such contgext"
+//  static {            // requirred to actually read the config file!
+//     s_conf.load();
 //  }
 
+    /**
+     * Constructor
+     */
     public Initializer() {
       //final String url = RuntimeConfig.getConfig().getJDBCURL();
       //final int database = DbHelper.getDatabaseFromURL(url);
 
+        s_log.debug("CMS.installer.Initializer.(Constructor) completed");
     }
 
 //  /**

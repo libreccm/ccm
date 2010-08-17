@@ -119,22 +119,24 @@ public final class ContentCenterSetup {
 
     /**
      * Creates the CMS package type if it does not already exist.
+     *
+     * Actually: Creates the PackageType contentsection!
      */
     private static void setupCMSPackage() {
-        if ( !PackageType.typeExists(Installer.PACKAGE_KEY) ) {
+        if ( !PackageType.typeExists(Installer.PACKAGE_KEY) ) {  //key = content-section
             s_log.info("Creating the CMS package type...");
 
-            PackageType type = PackageType.create
-                    (PACKAGE_KEY, "Content Management System", "Content Management Systems",
-                            "http://cms-java.arsdigita.com/");
-            type.setDispatcherClass(DISPATCHER_CLASS);
-            //type.addListener(LISTENER_CLASS);
+//          PackageType type = PackageType.create
+//                  (PACKAGE_KEY, "Content Management System", "Content Management Systems",
+//                          "http://cms-java.arsdigita.com/");
+//          type.setDispatcherClass(DISPATCHER_CLASS);
+//          //type.addListener(LISTENER_CLASS);
 
             // Register a stylesheets to the CMS package.
-            Stylesheet ss = Stylesheet.createStylesheet(STYLESHEET);
-            ss.save();
-            type.addStylesheet(ss);
-            type.save();
+//          Stylesheet ss = Stylesheet.createStylesheet(STYLESHEET);
+//          ss.save();
+//          type.addStylesheet(ss);
+//          type.save();
 
             createPrivileges();
 
@@ -186,7 +188,11 @@ public final class ContentCenterSetup {
 
 
     /**
-     * Creates the CMS privileges.
+     * Integrates the CMS privileges into the Core permision system.
+     *
+     * Skips through the CMS specific privileges and integrates those which are
+     * missing in core's acs_privileges into it, so the systems security system
+     * is aware of it.
      */
     private static void createPrivileges() {
 

@@ -72,7 +72,8 @@ public class WorkspaceInstaller implements PackageEventListener {
      *
      * @return The Content Center package type
      */
-    protected PackageType createPackageType()
+//  protected PackageType createPackageType()
+    public PackageType createPackageType()
         throws DataObjectNotFoundException {
 
         PackageType type = PackageType.create
@@ -98,7 +99,8 @@ public class WorkspaceInstaller implements PackageEventListener {
      *
      * @return The Content Center package instance
      */
-    protected PackageInstance createPackageInstance()
+//  protected PackageInstance createPackageInstance()
+    public PackageInstance createPackageInstance()
         throws DataObjectNotFoundException {
 
         PackageType type =
@@ -117,7 +119,8 @@ public class WorkspaceInstaller implements PackageEventListener {
      * @param location The location of the Content Center
      * @return The SiteNode where the Content Center is mounted at
      */
-    protected SiteNode mountPackageInstance(PackageInstance instance,
+//  protected SiteNode mountPackageInstance(PackageInstance instance,
+    public SiteNode mountPackageInstance(PackageInstance instance,
                                             String location) {
         SiteNode node =
             SiteNode.createSiteNode(location, SiteNode.getRootSiteNode());

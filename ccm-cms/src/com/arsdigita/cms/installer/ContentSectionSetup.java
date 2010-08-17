@@ -387,6 +387,10 @@ public final class ContentSectionSetup {
         return null;
     }
 
+    /**
+     * For the content section to be created create a role whose member will 
+     * receive alerts.
+     */
     public void registerAlerts() {
         Role alert = m_section.getStaffGroup().createRole("Alert Recipient");
         alert.setDescription("Receive alerts regarding expiration of pubished content");
@@ -602,6 +606,10 @@ public final class ContentSectionSetup {
         }
     }
 
+    /**
+     * 
+     * @param tasks
+     */
     public void loadAlertPrefs(List tasks) {
         if (tasks == null) {
             // fallback to default com.arsdigita.cms.default_task_alerts registry parameter
