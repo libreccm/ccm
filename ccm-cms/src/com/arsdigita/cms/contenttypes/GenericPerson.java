@@ -48,9 +48,9 @@ public class GenericPerson extends ContentPage implements RelationAttribute {
     public static final String CONTACT_TYPE = "contact_type";
     public static final String CONTACT_ORDER = "contact_order";
     private static final String RELATION_ATTRIBUTES = "GenericContactType";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericPerson";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contenttypes.GenericPerson";
 
     /**
      * Default constructor. This creates a new (empty) GenericPerson.
@@ -102,12 +102,14 @@ public class GenericPerson extends ContentPage implements RelationAttribute {
     public String getTitlePre() {
         return (String) get(TITLEPRE);
     }
-     public Date getBirthdate() {
-         return (Date)get(BIRTHDATE);
-     }
-     public void setBirthdate(Date birthdate) {
-         set(BIRTHDATE, birthdate);
-     }
+
+    public Date getBirthdate() {
+        return (Date) get(BIRTHDATE);
+    }
+
+    public void setBirthdate(Date birthdate) {
+        set(BIRTHDATE, birthdate);
+    }
 
     public void setTitlePre(String titlePre) {
         set(TITLEPRE, titlePre);
@@ -119,6 +121,17 @@ public class GenericPerson extends ContentPage implements RelationAttribute {
 
     public void setTitlePost(String titlePost) {
         set(TITLEPOST, titlePost);
+    }
+
+    /**
+     * A convinient method which combines {@code titlePre}, {@code givenName),
+     * {@code surname} and {@code titlePost}.
+     *
+     * @return {@code titlePre} {@code givenName) {@code surnameName} {@code titlePost}
+     */
+    public String getFullName() {
+        return String.format("%s %s %s %s", getTitlePre(), getGivenName(),
+                             getSurname(), getTitlePost()).trim();
     }
 
     // Get all contacts for this person
