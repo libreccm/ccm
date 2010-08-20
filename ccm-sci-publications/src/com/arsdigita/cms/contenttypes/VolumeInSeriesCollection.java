@@ -33,7 +33,7 @@ public class VolumeInSeriesCollection extends DomainCollection {
     public static final String LINK_VOLUME_OF_SERIES = "link.volumeOfSeries";
     public static final String VOLUME_OF_SERIES = "volumeOfSeries";
     public static final Logger s_log =
-            Logger.getLogger(VolumeInSeriesCollection.class);
+                               Logger.getLogger(VolumeInSeriesCollection.class);
 
     public VolumeInSeriesCollection(DataCollection dataCollection) {
         super(dataCollection);
@@ -59,8 +59,7 @@ public class VolumeInSeriesCollection extends DomainCollection {
      *
      * @return The current data object.
      */
-    public DataObject getPublication() {
-        return m_dataCollection.getDataObject();
+    public Publication getPublication() {
+        return new Publication(m_dataCollection.getDataObject());
     }
-
 }

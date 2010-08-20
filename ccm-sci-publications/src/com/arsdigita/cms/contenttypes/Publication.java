@@ -30,7 +30,7 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter
  */
-public abstract class Publication extends ContentPage {
+public class Publication extends ContentPage {
 
     public final static String YEAR_OF_PUBLICATION = "yearOfPublication";
     public final static String ABSTRACT = "abstract";

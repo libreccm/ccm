@@ -21,8 +21,11 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class PublicationPropertyForm extends BasicPageForm implements
-        FormProcessListener, FormInitListener, FormSubmissionListener {
+public class PublicationPropertyForm
+        extends BasicPageForm
+        implements FormProcessListener,
+                   FormInitListener,
+                   FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(
             PublicationPropertyForm.class);
@@ -92,9 +95,11 @@ public class PublicationPropertyForm extends BasicPageForm implements
         FormData data = fse.getFormData();
         Publication publication = (Publication) super.processBasicWidgets(fse);
 
-        if((publication != null) && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+        if ((publication != null) && getSaveCancelSection().getSaveButton().
+                isSelected(fse.getPageState())) {
             publication.setTitle((String) data.get(Publication.NAME));
-            publication.setYearOfPublication((Integer) data.get(Publication.YEAR_OF_PUBLICATION));
+            publication.setYearOfPublication((Integer) data.get(
+                    Publication.YEAR_OF_PUBLICATION));
             publication.setAbstract((String) data.get(Publication.ABSTRACT));
             publication.setMisc((String) data.get(Publication.MISC));
 
@@ -106,6 +111,7 @@ public class PublicationPropertyForm extends BasicPageForm implements
         }
     }
 
+    @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if ((m_step != null) && getSaveCancelSection().getCancelButton().
                 isSelected(fse.getPageState())) {
