@@ -5,7 +5,10 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
+import com.arsdigita.bebop.event.FormInitListener;
+import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.parameters.BooleanParameter;
@@ -24,13 +27,16 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class PublicationAuthorAddForm extends BasicItemForm {
+public class PublicationAuthorAddForm
+        extends BasicItemForm
+        implements FormProcessListener,
+                   FormInitListener {
 
     private static final Logger s_log = Logger.getLogger(
             PublicationAuthorAddForm.class);
     private PublicationPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
-    private SaveCancelSection m_saveCancelSection;
+    //private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "authors";
     private ItemSelectionModel m_itemModel;
 

@@ -81,6 +81,10 @@ public class PublicationPropertiesStep extends SimpleEditStep {
         return sheet;
     }
 
+    protected SegementedPanel getSegmentedPanel() {
+        return segmentedPanel;
+    }
+
     protected void addBasicProperties(ItemSelectionModel itemModel,
                                       AuthoringKitWizard parent) {
         SimpleEditStep basicProperties = new SimpleEditStep(itemModel,
