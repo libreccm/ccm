@@ -4,11 +4,9 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.parameters.BooleanParameter;
@@ -92,7 +90,8 @@ public class PublicationAuthorAddForm
         Publication publication = (Publication) getItemSelectionModel().
                 getSelectedObject(state);
 
-        if (!(this.getSaveCancelSection().getCancelButton().isSelected(state))) {
+        if (!(this.getSaveCancelSection().getCancelButton().
+              isSelected(state))) {
             publication.addAuthor(
                     (GenericPerson) data.get(ITEM_SEARCH),
                     (Boolean) data.get(AuthorshipCollection.EDITOR));

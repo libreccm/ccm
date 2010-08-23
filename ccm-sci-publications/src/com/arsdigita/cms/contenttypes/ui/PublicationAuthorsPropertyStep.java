@@ -37,6 +37,4 @@ public class PublicationAuthorsPropertyStep extends SimpleEditStep {
                 itemModel);
         setDisplayComponent(authorsTable);
     }
-
-    
 }

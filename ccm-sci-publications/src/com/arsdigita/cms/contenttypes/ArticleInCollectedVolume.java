@@ -77,6 +77,14 @@ public class ArticleInCollectedVolume extends PublicationWithPublisher {
         set(PAGES_TO, pagesTo);
     }
 
+    public String getChapter() {
+        return (String) get(CHAPTER);
+    }
+
+    public void setChapter(String chapter) {
+        set(CHAPTER, chapter);
+    }
+
     public CollectedVolume getCollectedVolume() {
         return (CollectedVolume) get(COLLECTED_VOLUME);
     }
