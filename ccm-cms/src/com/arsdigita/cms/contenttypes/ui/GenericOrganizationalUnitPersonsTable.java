@@ -141,18 +141,16 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         }
 
         public Object getElementAt(int columnIndex) {
-            switch (columnIndex) {
+            switch (columnIndex) {               
                 case 0:
-                    return m_personsCollection.getPersonOrder();
-                case 1:
                     return String.format("%s %s %s %s",
                                          m_person.getTitlePre(),
                                          m_person.getGivenName(),
                                          m_person.getSurname(),
                                          m_person.getTitlePost());
-                case 2:
+                case 1:
                     return m_personsCollection.getRoleName();
-                case 3:
+                case 2:
                     return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:
                     return null;
