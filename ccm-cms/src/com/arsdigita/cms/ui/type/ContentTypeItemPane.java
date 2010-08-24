@@ -223,8 +223,7 @@ final class ContentTypeItemPane extends BaseItemPane {
         RelationAttributeSection(/*final ActionLink attributeEditLink*/) {
             setHeading(new Label(gz("cms.ui.type.attributes")));
 
-            setBody(new RelationAttributeContainer(m_type));
-//            setBody(new Label("RelationAttributeContainer"));
+            setBody(new RelationAttributeList(m_type));
         }
 
         @Override
