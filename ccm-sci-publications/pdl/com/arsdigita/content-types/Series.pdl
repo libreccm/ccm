@@ -48,7 +48,7 @@ association {
 
 	    //Sorting is first done by the period defined by from and to,
 	    //and secondly by the following order attribute
-	    Integer[0..1] editor_order = ct_series_editship.order INTEGER;
+	    Integer[0..1] editor_order = ct_series_editship.editship_order INTEGER;
 }
 
 //Assoication for the volumes in the series

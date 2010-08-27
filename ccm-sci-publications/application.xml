@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-cms-types-organization"
+  name="ccm-sci-publications"
   prettyName="OpenCCM Content Types"
   version="6.6.0"
   release="1"
