@@ -74,7 +74,7 @@ public class InternetArticle extends Publication {
         return (GenericOrganizationalUnit) get(ORGANIZATION);
     }
 
-    public void setOrganziation(GenericOrganizationalUnit orga) {
+    public void setOrganization(GenericOrganizationalUnit orga) {
         set(ORGANIZATION, orga);
     }
 

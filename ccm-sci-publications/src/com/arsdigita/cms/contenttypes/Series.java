@@ -34,8 +34,8 @@ import java.util.Date;
 public class Series extends ContentPage {
 
     public static final String EDITORS = "editors";
-    public static final String EDITOR_FROM = "from";
-    public static final String EDITOR_TO = "to";
+    public static final String EDITOR_FROM = "dateFrom";
+    public static final String EDITOR_TO = "dateTo";
     public static final String EDITOR_ORDER = "editor_order";
     public static final String PUBLICATIONS = "publications";
     public static final String VOLUME_OF_SERIES = "volumeOfSeries";

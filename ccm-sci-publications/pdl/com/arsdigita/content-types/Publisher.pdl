@@ -25,9 +25,9 @@ import com.arsdigita.cms.*;
 // PDL definition for a publisher
 object type Publisher extends GenericOrganizationalUnit {
 
-       String[0..1] place = ct_publisher.place VARCHAR(256)
+       String[0..1] place = ct_publisher.place VARCHAR(256);
        
-       reference key (ct_publisher.publisher_id)
+       reference key (ct_publisher.publisher_id);
 }
 
 

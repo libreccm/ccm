@@ -26,15 +26,10 @@ import com.arsdigita.cms.ContentPage;
 object type UnPublished extends Publication {
 
        String[0..1] place = ct_unpublished.place VARCHAR(256);
+       GenericOrganizationalUnit[0..1] organization = join cms_organizationalunits.organizationalunit_id
+	    				                to ct_internet_article.organization_id;
        String[0..1] number = ct_unpublished.number VARCHAR(128);
        Integer[0..1] numberOfPages = ct_unpublished.number_of_pages INTEGER;
 
        reference key (ct_unpublished.unpublished_id);
-}
-
-assoication {
-
-	    GenericOrganizationalUnit[0..1] organization = join cms_organizationalunit.organizationalunit_id
-	    				                     to ct_internet_article.organization_id;
-
 }

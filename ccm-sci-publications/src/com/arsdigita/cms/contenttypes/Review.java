@@ -76,7 +76,7 @@ public class Review extends Publication {
         return (Integer) get(VOLUME);
     }
 
-    public void setInteger(Integer volume) {
+    public void setVolume(Integer volume) {
         set(VOLUME, volume);
     }
 
@@ -96,7 +96,7 @@ public class Review extends Publication {
         set(PAGES_FROM, pagesFrom);
     }
 
-    public Integer setPagesTo() {
+    public Integer getPagesTo() {
         return (Integer) get(PAGES_TO);
     }
 

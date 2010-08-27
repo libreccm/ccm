@@ -25,7 +25,7 @@ import com.arsdigita.cms.ContentPage;
 // PDL definition for a publication with publisher
 object type PublicationWithPublisher extends Publication {
        
-       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(13);
+       String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(17);
        component Publisher[0..1] publisher = join ct_publication_with_publisher.publication_with_publisher_id 
        		 		 	       to ct_publisher.publisher_id;        
 

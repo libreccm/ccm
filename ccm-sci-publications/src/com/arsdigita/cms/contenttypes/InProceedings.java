@@ -32,7 +32,7 @@ import java.util.Date;
 public class InProceedings extends PublicationWithPublisher {
 
     public static final String ORGANIZER_OF_CONFERENCE =
-            "organizerOfConference";
+                               "organizerOfConference";
     public static final String NAME_OF_CONFERENCE = "nameOfConference";
     public static final String DATE_FROM_OF_CONFERENCE = "dateFromOfConference";
     public static final String DATE_TO_OF_CONFERENCE = "dateToOfConference";
@@ -42,9 +42,8 @@ public class InProceedings extends PublicationWithPublisher {
     public static final String NUMBER_OF_PAGES = "numberOfPages";
     public static final String PAGES_FROM = "pagesFrom";
     public static final String PAGES_TO = "pagesFrom";
-
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.InProceedings";
+                               "com.arsdigita.cms.contenttypes.InProceedings";
 
     public InProceedings() {
         super(BASE_DATA_OBJECT_TYPE);
@@ -54,7 +53,7 @@ public class InProceedings extends PublicationWithPublisher {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public InProceedings(OID oid)  throws DataObjectNotFoundException {
+    public InProceedings(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
@@ -74,7 +73,7 @@ public class InProceedings extends PublicationWithPublisher {
         set(ORGANIZER_OF_CONFERENCE, organizerOfConference);
     }
 
-    public String getNameOfConference(String nameOfConference) {
+    public String getNameOfConference() {
         return (String) get(NAME_OF_CONFERENCE);
     }
 
@@ -98,7 +97,15 @@ public class InProceedings extends PublicationWithPublisher {
         set(DATE_TO_OF_CONFERENCE, dateToOfConference);
     }
 
-     public Integer getVolume() {
+    public String getPlaceOfConference() {
+        return (String) get(PLACE_OF_CONFERENCE);
+    }
+
+    public void setPlaceOfConference(String place) {
+        set(PLACE_OF_CONFERENCE, place);
+    }
+
+    public Integer getVolume() {
         return (Integer) get(VOLUME);
     }
 
@@ -137,5 +144,4 @@ public class InProceedings extends PublicationWithPublisher {
     public void setPagesTo(Integer pagesTo) {
         set(PAGES_TO, pagesTo);
     }
-
 }

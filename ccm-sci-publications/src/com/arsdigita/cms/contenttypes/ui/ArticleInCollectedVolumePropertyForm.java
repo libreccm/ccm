@@ -13,7 +13,6 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,9 +24,6 @@ public class ArticleInCollectedVolumePropertyForm
                    FormInitListener,
                    FormSubmissionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(
-            ArticleInCollectedVolumePropertyForm.class);
     private ArticleInCollectedVolumePropertiesStep m_step;
     public static final String ID = "ArticleInCollectedVolumeEdit";
 
@@ -56,7 +52,7 @@ public class ArticleInCollectedVolumePropertyForm
         add(pagesFrom);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.article_in_collected_volume.pages_from").
+                "publications.ui.article_in_collected_volume.pages_to").
                 localize()));
         ParameterModel toParam = new IntegerParameter(
                 ArticleInCollectedVolume.PAGES_TO);
@@ -73,13 +69,13 @@ public class ArticleInCollectedVolumePropertyForm
     }
 
     @Override
-    public void init(FormSectionEvent fse) throws FormProcessExeception {
+    public void init(FormSectionEvent fse) throws FormProcessException {
         super.init(fse);
 
         FormData data = fse.getFormData();
         ArticleInCollectedVolume article =
-                                 (ArticleInCollectedVolume) super.
-                initBasicWidgets(fse);
+                                 (ArticleInCollectedVolume) initBasicWidgets(
+                fse);
 
         data.put(ArticleInCollectedVolume.PAGES_FROM, article.getPagesFrom());
         data.put(ArticleInCollectedVolume.PAGES_TO, article.getPagesTo());
@@ -92,8 +88,8 @@ public class ArticleInCollectedVolumePropertyForm
 
         FormData data = fse.getFormData();
         ArticleInCollectedVolume article =
-                                 (ArticleInCollectedVolume) super.
-                processBasicWidgets(fse);
+                                 (ArticleInCollectedVolume) processBasicWidgets(
+                fse);
 
         if ((article != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {

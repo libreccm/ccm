@@ -4,7 +4,6 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-    <!-- Is internal will be set the yes when testing is finished. -->
     <ctd:content-type
         label="Organization"
         description="A content type for organizations."

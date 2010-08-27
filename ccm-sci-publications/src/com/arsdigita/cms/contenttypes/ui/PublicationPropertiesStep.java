@@ -81,7 +81,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
         return sheet;
     }
 
-    protected SegementedPanel getSegmentedPanel() {
+    protected SegmentedPanel getSegmentedPanel() {
         return segmentedPanel;
     }
 

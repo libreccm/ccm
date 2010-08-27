@@ -28,7 +28,7 @@ object type CollectedVolume extends PublicationWithPublisher {
        Integer[0..1] volume = ct_collected_volume.volume INTEGER;
        Integer[0..1] numberOfVolumes = ct_collected_volume.number_of_volumes INTEGER;
        Integer[0..1] numberOfPages = ct_collected_volume._number_of_pages INTEGER;
-       String[0..1] editon = ct_collected_volume.editon VARCHAR(256)
+       String[0..1] editon = ct_collected_volume.editon VARCHAR(256);
 
        reference key (ct_collected_volume.collected_volume_id);
 }
@@ -43,7 +43,7 @@ association {
             ArticleInCollectedVolume[0..n] articles = join ct_collected_volume.collected_volume_id
                                                         to ct_collected_volume_article_map.collected_volume_id,
 						      join ct_collected_volume_article_map.article_id
-						        to ct_article_in_collected_volume.article_id
+						        to ct_article_in_collected_volume.article_id;
 
             Integer[0..1] articleOrder = ct_collected_volume_article_map.article_order INTEGER;    
 

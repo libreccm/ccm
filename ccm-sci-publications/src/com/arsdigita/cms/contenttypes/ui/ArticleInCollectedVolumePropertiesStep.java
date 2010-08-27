@@ -14,16 +14,14 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 public class ArticleInCollectedVolumePropertiesStep
         extends PublicationWithPublisherPropertiesStep {
 
-    public ArticleInCollectedVolumePropertiesStep(
-            ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+    public ArticleInCollectedVolumePropertiesStep(ItemSelectionModel itemModel,
+                                                  AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
     @Override
-    protected void addBasicProperties(
-            ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+    protected void addBasicProperties(ItemSelectionModel itemModel,
+                                      AuthoringKitWizard parent) {
         SimpleEditStep basicProperties = new SimpleEditStep(itemModel,
                                                             parent,
                                                             EDIT_SHEET_NAME);
@@ -36,8 +34,8 @@ public class ArticleInCollectedVolumePropertiesStep
                 "publications.ui.article_in_collected_volume.edit_basic_sheet").
                 localize(), new WorkflowLockedComponentAccess(editBasicSheet,
                                                               itemModel),
-                                                              editBasicSheet.
-                getSaveCancelSection().getCancelButton());
+                            editBasicSheet.getSaveCancelSection().
+                getCancelButton());
 
         basicProperties.setDisplayComponent(
                 getPublicationPropertySheet(itemModel));

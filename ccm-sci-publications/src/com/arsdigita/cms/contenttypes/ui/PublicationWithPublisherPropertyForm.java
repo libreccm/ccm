@@ -33,7 +33,7 @@ public class PublicationWithPublisherPropertyForm
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "publisher";
     public static final String ID = "PublicationWithPublisherEdit";
-    private ItemSelectionModel m_itemModel;
+private ItemSelectionModel m_itemModel;
 
     public PublicationWithPublisherPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -77,8 +77,7 @@ public class PublicationWithPublisherPropertyForm
                                  (PublicationWithPublisher) super.
                 initBasicWidgets(fse);
 
-        data.put(ITEM_SEARCH,
-                 publication.getPublisher());
+        data.put(ITEM_SEARCH, publication.getPublisher());
         data.put(PublicationWithPublisher.ISBN, publication.getISBN());
     }
 

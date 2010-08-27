@@ -1,0 +1,58 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_publication"/>
+    <table name="ct_publication_with_publisher"/>
+    <table name="ct_series"/>
+    <table name="ct_publisher"/>
+    <table name="ct_collected_volume"/>
+    <table name="ct_article_in_collected_volume"/>
+    <table name="ct_monograph"/>
+    <table name="ct_inproceedings"/>
+    <table name="ct_internet_article"/>
+    <table name="ct_article_in_journal"/>
+    <table name="ct_unpublished"/>
+    <table name="ct_grey_literature"/>
+    <table name="ct_working_paper"/>
+    <table name="ct_expertise"/>
+    <table name="ct_review"/>
+    <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.PublicationWithPublisherInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.SeriesInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.PublisherInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.CollectedVolumeInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.MonographInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.InProceedingsInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.InternetArticleInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ArticleInJournalInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.UnPublishedInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.GreyLiteratureInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.WorkingPaperInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ExpertiseInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ReviewInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-sci-publications"/>
+    <data class="com.arsdigita.cms.contenttypes.PublicationLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.PublicationWithPublisherLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.SeriesLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.PublisherLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.CollectedVolumeLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.MonographLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.InProceedingsLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.InternetArticleLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.ArticleInJournalLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.UnPublishedLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.GreyLiteratureLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.WorkingPaperLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.ExpertiseLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.ReviewLoader"/>
+  </scripts>
+</load>

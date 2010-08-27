@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.runtime.LegacyInitEvent;
 import org.apache.log4j.Logger;
 
 /**
@@ -27,19 +26,22 @@ import org.apache.log4j.Logger;
  */
 public class OrganizationalUnitInitializer extends ContentTypeInitializer {
 
-    private final static Logger logger = Logger.getLogger(OrganizationalUnitInitializer.class);
+    private final static Logger logger = Logger.getLogger(
+            OrganizationalUnitInitializer.class);
 
     public OrganizationalUnitInitializer() {
-        super("ccm-cms-types-organizationalunit.pdl.mf",  OrganizationalUnit.BASE_DATA_OBJECT_TYPE);
+        super("ccm-cms-types-organizationalunit.pdl.mf",
+              OrganizationalUnit.BASE_DATA_OBJECT_TYPE);
     }
 
     @Override
     public String[] getStylesheets() {
-        return new String[] { "/static/content-types/com/arsdigita/cms/contenttypes/OrganizationalUnit.xsl" };
+        return new String[]{
+                    "/static/content-types/com/arsdigita/cms/contenttypes/OrganizationalUnit.xsl"};
     }
 
     @Override
-     public String getTraversalXML() {
+    public String getTraversalXML() {
         return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/OrganizationalUnit.xml";
     }
 }
