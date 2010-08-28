@@ -20,7 +20,7 @@
 	  component="com.arsdigita.cms.contenttypes.ui.internetArticlePropertiesStep"
 	  ordering="1"/>
 
-      <ctd:include href="/WEB/content-types/assign-categories-step.xml"/>
+      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 
     </ctd:authoring-kit>
 

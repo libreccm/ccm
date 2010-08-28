@@ -8,7 +8,6 @@
   <ccm:dependencies>
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-cms-types-department" version="6.6.0" relation="ge"/>
   </ccm:dependencies>
   <ccm:directories>
     <ccm:directory name="pdl"/>

@@ -6,8 +6,14 @@ package com.arsdigita.cms.contenttypes;
  */
 public class ArticleInJournalInitializer extends ContentTypeInitializer {
 
+    /**
+     * The pdl.mf file used here is empty, since the
+     * {@link PublicationInitializer} loads all things using the pdl.mf file
+     * of the module. Also, it may causes on silly errors in the load-bundle
+     * step if the same pdl.mf file is used in more than one initializer.
+     */
     public ArticleInJournalInitializer() {
-        super("ccm-sci-publications.pdl.mf", ArticleInJournal.BASE_DATA_OBJECT_TYPE);
+        super("empty.pdl.mf", ArticleInJournal.BASE_DATA_OBJECT_TYPE);
     }
 
     @Override
@@ -17,7 +23,7 @@ public class ArticleInJournalInitializer extends ContentTypeInitializer {
 
     @Override
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/ArticleInJournal.xml";
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Publication.xml";
     }
 
 }
