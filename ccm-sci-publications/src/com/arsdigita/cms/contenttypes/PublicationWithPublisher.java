@@ -23,6 +23,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -31,9 +32,11 @@ import java.math.BigDecimal;
 public class PublicationWithPublisher extends Publication {
 
     public final static String ISBN = "isbn";
-    public final static String PUBLISHER = "publisher";    
+    public final static String PUBLISHER = "publisher";
     public final static String BASE_DATA_OBJECT_TYPE =
-                                "com.arsdigita.cms.contenttypes.PublicationWithPublisher";
+                               "com.arsdigita.cms.contenttypes.PublicationWithPublisher";
+    private static final Logger s_log = Logger.getLogger(
+            PublicationWithPublisher.class);
 
     public PublicationWithPublisher() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -66,7 +69,15 @@ public class PublicationWithPublisher extends Publication {
     }
 
     public Publisher getPublisher() {
-        return (Publisher) get(PUBLISHER);
+        DataObject dataObj;
+
+        dataObj = (DataObject) get(PUBLISHER);
+
+        if (dataObj == null) {
+            return null;
+        } else {
+            return new Publisher(dataObj);
+        }
     }
 
     public void setPublisher(Publisher publisher) {

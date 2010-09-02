@@ -132,6 +132,7 @@ public final class LoaderConfig extends AbstractConfig {
                            new String[] {"/WEB-INF/content-types/GenericAddress.xml",
                                          "/WEB-INF/content-types/GenericArticle.xml",
                                          "/WEB-INF/content-types/GenericContact.xml",
+					 "/WEB-INF/content-types/GenericOrganizationalUnit.xml",
                                          "/WEB-INF/content-types/GenericPerson.xml",
                                          "/WEB-INF/content-types/Template.xml"}
                                                    );

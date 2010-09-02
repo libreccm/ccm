@@ -17,7 +17,7 @@
 	  labelBundle="cms.contenttypes.cms.ui.CMSResources"
 	  descriptionKey="cms.contenttypes.internetArticle.basic_properties.description"
 	  descriptionBundle="com.arsdigita.cms.ui.CMSResources"
-	  component="com.arsdigita.cms.contenttypes.ui.internetArticlePropertiesStep"
+	  component="com.arsdigita.cms.contenttypes.ui.InternetArticlePropertiesStep"
 	  ordering="1"/>
 
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>

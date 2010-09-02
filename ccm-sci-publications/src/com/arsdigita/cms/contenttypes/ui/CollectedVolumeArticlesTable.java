@@ -76,6 +76,8 @@ public class CollectedVolumeArticlesTable
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
         colModel.get(2).setCellRenderer(new UpCellRenderer());
         colModel.get(3).setCellRenderer(new DownCellRenderer());
+
+        addTableActionListener(this);
     }
 
     private class CollectedVolumeArticlesTableModelBuilder

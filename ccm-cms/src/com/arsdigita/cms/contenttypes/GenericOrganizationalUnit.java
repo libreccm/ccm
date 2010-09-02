@@ -58,8 +58,8 @@ public class GenericOrganizationalUnit extends ContentPage {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public GenericOrganizationalUnit(BigDecimal id) throws
-            DataObjectNotFoundException {
+    public GenericOrganizationalUnit(BigDecimal id) 
+	throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 

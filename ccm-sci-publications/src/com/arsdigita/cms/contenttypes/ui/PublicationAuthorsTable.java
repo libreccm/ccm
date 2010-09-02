@@ -41,7 +41,7 @@ public class PublicationAuthorsTable
     public PublicationAuthorsTable(ItemSelectionModel itemModel) {
         super();
         m_itemModel = itemModel;
-
+        
         setEmptyView(
                 new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.none")));
@@ -79,6 +79,9 @@ public class PublicationAuthorsTable
         colModel.get(2).setCellRenderer(new DeleteCellRenderer());
         colModel.get(3).setCellRenderer(new UpCellRenderer());
         colModel.get(4).setCellRenderer(new DownCellRenderer());
+
+        s_log.info("Adding table action listener...");
+        addTableActionListener(this);
     }
 
     private class PublicationAuthorsTableModelBuilder
@@ -294,6 +297,8 @@ public class PublicationAuthorsTable
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
+        s_log.info("cellSelected!");
+
         GenericPerson author =
                       new GenericPerson(new BigDecimal(event.getRowKey().
                 toString()));
@@ -309,8 +314,10 @@ public class PublicationAuthorsTable
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             publication.removeAuthor(author);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
+            s_log.info("UP");
             authors.swapWithPrevious(author);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
+            s_log.info("DOWN");
             authors.swapWithNext(author);
         }
     }

@@ -72,7 +72,7 @@ public class Series extends ContentPage {
         DataObject link = add(EDITORS, editor);
         link.set(EDITOR_FROM, from);
         link.set(EDITOR_TO, to);
-        link.set(EDITOR_ORDER, BigDecimal.valueOf(getEditors().size()));
+        link.set(EDITOR_ORDER, Integer.valueOf((int)getEditors().size()));
     }
 
     public void removeEditor(GenericPerson editor) {

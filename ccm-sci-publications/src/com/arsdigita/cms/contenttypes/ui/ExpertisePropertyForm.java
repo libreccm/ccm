@@ -119,10 +119,7 @@ public class ExpertisePropertyForm
                     (GenericOrganizationalUnit) data.get(ITEM_SEARCH_ORDERER));
 
             expertise.save();
-
-            if (m_step != null) {
-                m_step.maybeForwardToNextStep(fse.getPageState());
-            }
+           
         }
     }
 }

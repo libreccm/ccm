@@ -71,7 +71,15 @@ public class InternetArticle extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        return (GenericOrganizationalUnit) get(ORGANIZATION);
+        DataObject dataObj;
+
+        dataObj = (DataObject) get(ORGANIZATION);
+
+        if (dataObj == null) {
+            return null;
+        } else {
+            return new GenericOrganizationalUnit(dataObj);
+        }
     }
 
     public void setOrganization(GenericOrganizationalUnit orga) {

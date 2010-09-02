@@ -71,7 +71,7 @@ public class PublicationPropertyForm
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.misc").localize()));
-        ParameterModel miscParam = new StringParameter(Publication.ABSTRACT);
+        ParameterModel miscParam = new StringParameter(Publication.MISC);
         TextArea misc = new TextArea(miscParam);
         misc.setCols(60);
         misc.setRows(18);
@@ -97,7 +97,7 @@ public class PublicationPropertyForm
 
         if ((publication != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            publication.setTitle((String) data.get(Publication.NAME));
+            publication.setTitle((String) data.get(Publication.NAME));           
             publication.setYearOfPublication((Integer) data.get(
                     Publication.YEAR_OF_PUBLICATION));
             publication.setAbstract((String) data.get(Publication.ABSTRACT));

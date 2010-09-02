@@ -31,10 +31,10 @@ import org.apache.log4j.Logger;
  */
 public class EditshipCollection extends DomainCollection {
 
-    public static final String LINK_FROM = "link.from";
-    public static final String LINK_TO = "link.to";
-    public static final String FROM = "from";
-    public static final String TO = "to";
+    public static final String LINK_FROM = "link.dateFrom";
+    public static final String LINK_TO = "link.dateTo";
+    public static final String FROM = "dateFrom";
+    public static final String TO = "dateTo";
     public static final String LINKORDER = "link.editor_order";
     public static final String ORDER = "editor_order";
     private final static Logger s_log =

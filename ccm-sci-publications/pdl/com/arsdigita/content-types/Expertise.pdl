@@ -26,13 +26,14 @@ import com.arsdigita.cms.ContentPage;
 object type Expertise extends Publication {
 
        String[0..1] place = ct_expertise.place VARCHAR(256);
-       GenericOrganizationalUnit[0..1] organization = join cms_organizationalunits.organizationalunit_id
-	    				                to ct_expertise.organization_id;       
+       component GenericOrganizationalUnit[0..1] organization = join ct_expertise.organization_id
+                                                                  to cms_organizationalunits.organizationalunit_id;
        Integer[0..1] numberOfPages = ct_expertise.number_of_pages INTEGER;
        String[0..1] url = ct_expertise.url VARCHAR(512);
-       GenericOrganizationalUnit[0..1] orderer = join cms_organizationalunits.organizationalunit_id
-	                                           to ct_expertise.orderer_id;
+       component GenericOrganizationalUnit[0..1] orderer = join ct_expertise.orderer_id
+	                                                     to cms_organizationalunits.organizationalunit_id;
                      
        reference key (ct_expertise.expertise_id);
 
 }
+

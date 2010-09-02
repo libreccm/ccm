@@ -30,8 +30,8 @@ import org.apache.log4j.Logger;
  */
 public class ArticleInCollectedVolumeCollection extends DomainCollection {
 
-    public static final String LINKORDER = "link.article_order";
-    public static final String ORDER = "article_order";
+    public static final String LINKORDER = "link.articleOrder";
+    public static final String ORDER = "articleOrder";
     private static final Logger s_log =
                                 Logger.getLogger(
             ArticleInCollectedVolumeCollection.class);

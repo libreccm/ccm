@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2010 Jens Pelzetter,
- for the Center of Social Politics of the University of Bremen
+for the Center of Social Politics of the University of Bremen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -40,10 +40,14 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
-        implements FormProcessListener, FormInitListener, FormSubmissionListener {
+public class GenericOrganizationalUnitPropertyForm
+        extends BasicPageForm
+        implements FormProcessListener,
+                   FormInitListener,
+                   FormSubmissionListener {
 
-    private final static Logger s_log = Logger.getLogger(GenericOrganizationalUnitPropertyForm.class);
+    private final static Logger s_log = Logger.getLogger(
+            GenericOrganizationalUnitPropertyForm.class);
     private GenericOrganizationalUnitPropertiesStep m_step;
     //public static final String NAME = GenericOrganizationalUnit.NAME;
     //public static final String ORGAUNIT_NAME = GenericOrganizationalUnit.ORGAUNIT_NAME;
@@ -55,7 +59,7 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
     }
 
     public GenericOrganizationalUnitPropertyForm(ItemSelectionModel itemModel,
-            GenericOrganizationalUnitPropertiesStep step) {
+                                                 GenericOrganizationalUnitPropertiesStep step) {
         super(ID, itemModel);
         m_step = step;
         addSubmissionListener(this);
@@ -66,23 +70,26 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
         super.addWidgets();
 
         add(new Label(
-                (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorganunit.name").localize()));
+                (String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorganunit.name").localize()));
         ParameterModel nameParam = new StringParameter(NAME);
         TextField name = new TextField(nameParam);
         add(name);
 
         add(new Label(
-                (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.genericorgaunit.addendum").localize()));
+                (String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.addendum").localize()));
         ParameterModel addendumParam = new StringParameter(ADDENDUM);
         TextField addendum = new TextField(addendumParam);
         add(addendum);
-                
+
     }
 
     @Override
     public void submitted(FormSectionEvent fse) throws FormProcessException {
         if ((m_step != null)
-                && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
+            && getSaveCancelSection().getCancelButton().isSelected(fse.
+                getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
     }
@@ -91,7 +98,8 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
     public void init(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         GenericOrganizationalUnit orgaunit =
-                (GenericOrganizationalUnit) super.initBasicWidgets(fse);
+                                  (GenericOrganizationalUnit) super.
+                initBasicWidgets(fse);
 
         data.put(NAME, orgaunit.getName());
         data.put(ADDENDUM, orgaunit.getAddendum());
@@ -102,10 +110,12 @@ public class GenericOrganizationalUnitPropertyForm extends BasicPageForm
         FormData data = fse.getFormData();
 
         GenericOrganizationalUnit orgaunit =
-                (GenericOrganizationalUnit) super.processBasicWidgets(fse);
+                                  (GenericOrganizationalUnit) super.
+                processBasicWidgets(fse);
 
         if ((orgaunit != null)
-                && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+            && getSaveCancelSection().getSaveButton().isSelected(fse.
+                getPageState())) {
             orgaunit.setName((String) data.get(NAME));
             orgaunit.setAddendum((String) data.get(ADDENDUM));
 

@@ -96,10 +96,6 @@ private ItemSelectionModel m_itemModel;
             publication.setISBN((String) data.get(PublicationWithPublisher.ISBN));
 
             publication.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }    
     }
 }

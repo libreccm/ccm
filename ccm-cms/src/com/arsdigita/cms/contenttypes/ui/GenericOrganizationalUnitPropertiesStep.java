@@ -40,7 +40,7 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
 
         segmentedPanel = new SegmentedPanel();
         setDefaultEditKey(EDIT_SHEET_NAME);
-        
+
         addBasicProperties(itemModel, parent);
         addSteps(itemModel, parent);
 
@@ -120,7 +120,7 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
         addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
-                                                                    parent),
+                                                                   parent),
                 "cms.contenttypes.ui.orgaunit.childs");
         addStep(new GenericOrganizationalUnitChildrenPropertiesStep(itemModel,
                                                                     parent),
@@ -140,5 +140,9 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
         segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.
                 globalize(labelKey).localize()),
                                   step);
+    }
+
+    protected SegmentedPanel getSegmentedPanel() {
+        return segmentedPanel;
     }
 }

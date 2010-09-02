@@ -30,10 +30,12 @@ object type InProceedings extends PublicationWithPublisher {
        Date[0..1] dateFromOfConference = ct_inproceedings.date_from_of_conference DATE;
        Date[0..1] dateToOfConference = ct_inproceedings.date_to_of_conference DATE;
        String[0..1] placeOfConference = ct_inproceedings.place_of_conference VARCHAR(256);
-       Integer volume = ct_inproceedings.volume INTEGER;
-       Integer numberOfVolumes = ct_inproceedings.numberOfVolumes INTEGER;
-       Integer numberOfPages = ct_inproceedings.numberOfPages INTEGER;
-       Integer pagesFrom = ct_inproceedings.pages_from INTEGER;
-       Integer pagesTo = ct_inproceedings.pages_to INTEGER;
+       Integer[0..1]  volume = ct_inproceedings.volume INTEGER;
+       Integer[0..1]  numberOfVolumes = ct_inproceedings.numberOfVolumes INTEGER;
+       Integer[0..1]  numberOfPages = ct_inproceedings.numberOfPages INTEGER;
+       Integer[0..1]  pagesFrom = ct_inproceedings.pages_from INTEGER;
+       Integer[0..1]  pagesTo = ct_inproceedings.pages_to INTEGER;
+
+       reference key (ct_inproceedings.inproceedings_id);
 
 }

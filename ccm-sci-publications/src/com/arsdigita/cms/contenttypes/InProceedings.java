@@ -41,7 +41,7 @@ public class InProceedings extends PublicationWithPublisher {
     public static final String NUMBER_OF_VOLUMES = "numberOfVolumes";
     public static final String NUMBER_OF_PAGES = "numberOfPages";
     public static final String PAGES_FROM = "pagesFrom";
-    public static final String PAGES_TO = "pagesFrom";
+    public static final String PAGES_TO = "pagesTo";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.InProceedings";
 

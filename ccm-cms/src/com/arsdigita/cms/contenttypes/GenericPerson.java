@@ -130,13 +130,47 @@ public class GenericPerson extends ContentPage implements RelationAttribute {
      * @return {@code titlePre} {@code givenName) {@code surnameName} {@code titlePost}
      */
     public String getFullName() {
-        return String.format("%s %s %s %s", getTitlePre(), getGivenName(),
-                             getSurname(), getTitlePost()).trim();
+        String titlePre;
+        String titlePost;
+        String givenName;
+        String surname;
+        String fullName = "";
+
+        titlePre = getTitlePre();
+        titlePost = getTitlePost();
+        givenName = getGivenName();
+        surname = getSurname();
+
+        if (titlePre == null) {
+            titlePre = "";
+        }
+        if (titlePost == null) {
+            titlePost = "";
+        }
+        if (givenName == null) {
+            givenName = "";
+        }
+        if (surname == null) {
+            surname = "";
+        }
+
+        if (0 == fullName.length()) {
+            fullName = getTitle();
+        }
+
+        fullName = String.format("%s %s %s %s",
+                                 titlePre,
+                                 givenName,
+                                 surname,
+                                 titlePost).trim();
+
+        return fullName;
     }
 
     // Get all contacts for this person
     public GenericPersonContactCollection getContacts() {
-        return new GenericPersonContactCollection((DataCollection) get(CONTACTS));
+        return new GenericPersonContactCollection(
+                (DataCollection) get(CONTACTS));
     }
 
     // Add a contact for this person

@@ -37,7 +37,7 @@ public class Publication extends ContentPage {
     public final static String MISC = "misc";
     public final static String AUTHORS = "authors";
     public final static String EDITOR = "editor";
-    public final static String AUTHOR_ORDER = "author_order";
+    public final static String AUTHOR_ORDER = "authorOrder";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Publication";
 
@@ -62,11 +62,11 @@ public class Publication extends ContentPage {
         super(type);
     }
 
-    public int getYearOfPublication() {
+    public Integer getYearOfPublication() {
         return (Integer) get(YEAR_OF_PUBLICATION);
     }
 
-    public void setYearOfPublication(int year) {
+    public void setYearOfPublication(Integer year) {
         set(YEAR_OF_PUBLICATION, year);
     }
 

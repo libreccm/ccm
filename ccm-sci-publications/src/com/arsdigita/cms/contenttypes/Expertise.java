@@ -23,6 +23,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -36,7 +37,8 @@ public class Expertise extends Publication {
     public static final String URL = "url";
     public static final String ORDERER = "orderer";
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contentttypes.Expertise";
+                               "com.arsdigita.cms.contenttypes.Expertise";
+    private static final Logger s_log = Logger.getLogger(Expertise.class);
 
     public Expertise() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -67,10 +69,19 @@ public class Expertise extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        return (GenericOrganizationalUnit) get(ORGANIZATION);
+        DataObject dataObj;
+
+        dataObj = (DataObject) get(ORGANIZATION);
+
+        if (dataObj == null) {
+            return null;
+        } else {
+            return new GenericOrganizationalUnit(dataObj);
+        }
     }
 
     public void setOrganization(GenericOrganizationalUnit orga) {
+        s_log.debug(String.format("Setting organization to %s", orga.toString()));
         set(ORGANIZATION, orga);
     }
 
@@ -91,7 +102,15 @@ public class Expertise extends Publication {
     }
 
     public GenericOrganizationalUnit getOrderer() {
-        return (GenericOrganizationalUnit) get(ORDERER);
+        DataObject dataObj;
+
+        dataObj = (DataObject) get(ORDERER);
+
+        if (dataObj == null) {
+            return null;
+        } else {
+            return new GenericOrganizationalUnit(dataObj);
+        }
     }
 
     public void setOrderer(GenericOrganizationalUnit orderer) {

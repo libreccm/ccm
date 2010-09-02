@@ -123,7 +123,7 @@ public class InProceedingsPropertyForm
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.inproceedings.pages_from").localize()));
         ParameterModel pagesToParam =
-                       new IntegerParameter(InProceedings.PAGES_FROM);
+                       new IntegerParameter(InProceedings.PAGES_TO);
         TextField pagesTo = new TextField(pagesToParam);
         add(pagesTo);
     }

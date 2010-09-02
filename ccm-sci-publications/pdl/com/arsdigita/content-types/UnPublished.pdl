@@ -26,8 +26,8 @@ import com.arsdigita.cms.ContentPage;
 object type UnPublished extends Publication {
 
        String[0..1] place = ct_unpublished.place VARCHAR(256);
-       GenericOrganizationalUnit[0..1] organization = join cms_organizationalunits.organizationalunit_id
-	    				                to ct_internet_article.organization_id;
+       component GenericOrganizationalUnit[0..1] organization = join ct_unpublished.organization_id
+	    				                          to cms_organizationalunits.organizationalunit_id;
        String[0..1] number = ct_unpublished.number VARCHAR(128);
        Integer[0..1] numberOfPages = ct_unpublished.number_of_pages INTEGER;
 

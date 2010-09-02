@@ -32,7 +32,7 @@ object type Publication extends ContentPage {
        reference key (ct_publications.publication_id);
 }
 
-//Assoication for the editors
+//Assoication for the authors
 association {
 	    
 	    Publication[0..1] publication = join cms_persons.person_id
@@ -40,7 +40,7 @@ association {
 					    join ct_publications_authorship.publication_id
 					      to ct_publications.publication_id;
 
-            GenericPerson[0..n] persons = join ct_publications.publication_id
+            GenericPerson[0..n] authors = join ct_publications.publication_id
 	                                    to ct_publications_authorship.publication_id,
 					  join ct_publications_authorship.person_id
                                             to cms_persons.person_id;

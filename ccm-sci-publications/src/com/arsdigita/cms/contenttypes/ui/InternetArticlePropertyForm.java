@@ -63,7 +63,7 @@ public class InternetArticlePropertyForm
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH,
                                             ContentType.
                 findByAssociatedObjectType(
-                GenericOrganizationalUnit.class.getName()));
+                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
         add(m_itemSearch);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(

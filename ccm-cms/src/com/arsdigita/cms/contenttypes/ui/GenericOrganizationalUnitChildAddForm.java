@@ -54,18 +54,21 @@ public class GenericOrganizationalUnitChildAddForm extends BasicItemForm {
     }
 
     public GenericOrganizationalUnitChildAddForm(String formName,
-            ItemSelectionModel itemModel) {
+                                                 ItemSelectionModel itemModel) {
         super(formName, itemModel);
     }
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.select_child").localize()));       
+        add(new Label(
+                (String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.select_child").localize()));
+
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(
                 getChildDataObjectType()));
         add(this.m_itemSearch);
+
     }
 
     @Override
@@ -96,6 +99,6 @@ public class GenericOrganizationalUnitChildAddForm extends BasicItemForm {
      * @return The BASE_DATA_OBJECT_TYPE of the childs allowed.
      */
     protected String getChildDataObjectType() {
-    	return GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE;
+        return GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE;
     }
 }

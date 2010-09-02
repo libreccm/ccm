@@ -31,14 +31,15 @@ public class AuthorshipCollection extends DomainCollection {
 
     private final static Logger s_log =
                                 Logger.getLogger(AuthorshipCollection.class);
-    public static final String ORDER = "authorship_order";
-    public static final String LINKORDER = "link.authorship_order";
+    public static final String ORDER = "authorOrder";
+    public static final String LINKORDER = "link.authorOrder";
     public static final String EDITOR = "editor";
     public static final String LINKEDITOR = "link.editor";
 
     public AuthorshipCollection(
             DataCollection dataCollection) {
         super(dataCollection);
+        m_dataCollection.addOrder(LINKORDER);
     }
 
     public Integer getAuthorshipOrder() {
