@@ -107,11 +107,7 @@ public class UnPublishedPropertyForm
             unpublished.setNumberOfPages(
                     (Integer) data.get(UnPublished.NUMBER_OF_PAGES));
 
-            unpublished.save();
-
-            if (m_step != null) {
-                m_step.maybeForwardToNextStep(fse.getPageState());
-            }
+            unpublished.save();        
         }
     }
 }

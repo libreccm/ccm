@@ -138,10 +138,5 @@ public class ReviewPropertyForm
 
             review.save();
         }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
-
     }
 }

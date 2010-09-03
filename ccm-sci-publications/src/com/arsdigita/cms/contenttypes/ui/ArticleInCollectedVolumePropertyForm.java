@@ -102,9 +102,5 @@ public class ArticleInCollectedVolumePropertyForm
 
             article.save();
         }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
     }
 }

@@ -70,11 +70,7 @@ public class SeriesPropertyForm
             series.setTitle((String) data.get(Series.NAME));
 
             series.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }     
     }
 
     @Override

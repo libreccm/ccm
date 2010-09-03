@@ -147,10 +147,6 @@ public class ArticleInJournalPropertyForm
                     (Date) data.get(ArticleInJournal.PUBLICATION_DATE));
 
             article.save();
-
-            if (m_step != null) {
-                m_step.maybeForwardToNextStep(fse.getPageState());
-            }
         }
     }
 }

@@ -71,10 +71,6 @@ public class PublisherPropertyForm
             publisher.setPlace((String) data.get(PLACE));
         }
 
-        publisher.save();
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        publisher.save();       
     }
 }

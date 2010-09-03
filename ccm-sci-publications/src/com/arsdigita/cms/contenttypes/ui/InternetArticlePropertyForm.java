@@ -144,11 +144,7 @@ public class InternetArticlePropertyForm
             article.setPublicationDate(
                     (Date) data.get(InternetArticle.PUBLICATION_DATE));
 
-            article.save();
-
-            if (m_step != null) {
-                m_step.maybeForwardToNextStep(fse.getPageState());
-            }
+            article.save();          
         }
     }
 }

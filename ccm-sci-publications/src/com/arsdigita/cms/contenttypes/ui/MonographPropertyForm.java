@@ -100,10 +100,6 @@ public class MonographPropertyForm
             monograph.setEdition((String) data.get(Monograph.EDITION));
 
             monograph.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }      
     }
 }

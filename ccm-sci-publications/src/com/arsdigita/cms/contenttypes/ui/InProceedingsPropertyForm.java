@@ -64,18 +64,7 @@ public class InProceedingsPropertyForm
 
         Calendar today = new GregorianCalendar();
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inproccedings.date_to_of_conference").
-                localize()));
-        ParameterModel dateToParam =
-                       new DateParameter(InProceedings.DATE_TO_OF_CONFERENCE);
-        com.arsdigita.bebop.form.Date dateTo =
-                                      new com.arsdigita.bebop.form.Date(
-                dateToParam);
-        dateTo.setYearRange(1900, today.get(Calendar.YEAR) + 3);
-        add(dateTo);
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inproceedings.data_form_of_conference").
+                "publications.ui.inproceedings.date_from_of_conference").
                 localize()));
         ParameterModel dateFromParam =
                        new DateParameter(InProceedings.DATE_FROM_OF_CONFERENCE);
@@ -84,6 +73,17 @@ public class InProceedingsPropertyForm
                 dateFromParam);
         dateFrom.setYearRange(1900, today.get(Calendar.YEAR) + 3);
         add(dateFrom);
+        
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.inproceedings.date_to_of_conference").
+                localize()));
+        ParameterModel dateToParam =
+                       new DateParameter(InProceedings.DATE_TO_OF_CONFERENCE);
+        com.arsdigita.bebop.form.Date dateTo =
+                                      new com.arsdigita.bebop.form.Date(
+                dateToParam);
+        dateTo.setYearRange(1900, today.get(Calendar.YEAR) + 3);
+        add(dateTo);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.inproceedings.place_of_conference").
@@ -190,10 +190,6 @@ public class InProceedingsPropertyForm
                     (Integer) data.get(InProceedings.PAGES_TO));
 
             inProceedings.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }     
     }
 }

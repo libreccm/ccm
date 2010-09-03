@@ -67,7 +67,7 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         /* colModel.add(new TableColumn(
         4,
         PublicationGlobalizationUtil.globalize(
-        "publications.ui.series.edithship.up").localize(),
+        "publications.ui.series.editship.up").localize(),
         TABLE_COL_UP));
         colModel.add(new TableColumn(
         5,
@@ -216,7 +216,8 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize("publications.ui.editship.remove.confirm").
+                        globalize(
+                        "publications.ui.series.editship.remove.confirm").
                         localize());
                 return link;
             } else {
@@ -228,67 +229,67 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
 
     /*
     private class UpCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+    extends LockableImpl
+    implements TableCellRenderer {
 
-        @Override
-        public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+    @Override
+    public Component getComponent(
+    Table table,
+    PageState state,
+    Object value,
+    boolean isSelected,
+    Object key,
+    int row,
+    int col) {
 
-            if (0 == row) {
-                s_log.debug("Row is first row in table, don't show up link");
-                Label label = new Label("");
-                return label;
-            } else {
-                ControlLink link = new ControlLink("up");
-                return link;
-            }
-        }
+    if (0 == row) {
+    s_log.debug("Row is first row in table, don't show up link");
+    Label label = new Label("");
+    return label;
+    } else {
+    ControlLink link = new ControlLink("up");
+    return link;
+    }
+    }
     }*/
 
     /*
     private class DownCellRenderer
-            extends LockableImpl
-            implements TableCellRenderer {
+    extends LockableImpl
+    implements TableCellRenderer {
 
-        @Override
-        public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+    @Override
+    public Component getComponent(
+    Table table,
+    PageState state,
+    Object value,
+    boolean isSelected,
+    Object key,
+    int row,
+    int col) {
 
-            Series = (Series) m_itemModel.
-                    getSelectedObject(state);
-            EditshipCollection editors = series.getEditors();
+    Series = (Series) m_itemModel.
+    getSelectedObject(state);
+    EditshipCollection editors = series.getEditors();
 
-            if ((editors.size() - 1)
-                == row) {
-                s_log.debug("Row is last row in table, don't show down link");
-                Label label = new Label("");
-                return label;
-            } else {
-                ControlLink link = new ControlLink("down");
-                return link;
-            }
-        }
+    if ((editors.size() - 1)
+    == row) {
+    s_log.debug("Row is last row in table, don't show down link");
+    Label label = new Label("");
+    return label;
+    } else {
+    ControlLink link = new ControlLink("down");
+    return link;
+    }
+    }
     }*/
-
     @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
         GenericPerson editor =
-                new GenericPerson(new BigDecimal(event.getRowKey().toString()));
+                      new GenericPerson(new BigDecimal(event.getRowKey().
+                toString()));
 
         Series series = (Series) m_itemModel.getSelectedObject(state);
 
@@ -297,15 +298,14 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
-
-        } else if(TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
+        } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             series.removeEditor(editor);
         }
         /*
         else if(TABLE_COL_UP.equals(column.getHeaderKey().toString())) {
         editors.swapWithPrevious(editor);
         } else if(TABLE_COL_DOWN.equals(column.getHeaderKey().toString())) {
-            authors.swapWithNext(editor);
+        authors.swapWithNext(editor);
         }
          */
     }

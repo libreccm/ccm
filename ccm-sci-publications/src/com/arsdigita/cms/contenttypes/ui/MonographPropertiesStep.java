@@ -24,7 +24,8 @@ public class MonographPropertiesStep
 
     public static Component getMonographPropertiesStep(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationWithPublisherPropertiesStep.
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet)
+                PublicationWithPublisherPropertiesStep.
                 getPublicationWithPublisherPropertySheet(itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
@@ -55,7 +56,7 @@ public class MonographPropertiesStep
 
         basicProperties.add(EDIT_SHEET_NAME,
                             (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.monography.edit_basic_sheet").localize(),
+                "publications.ui.monograph.edit_basic_sheet").localize(),
                             new WorkflowLockedComponentAccess(editBasicSheet,
                                                               itemModel),
                             editBasicSheet.getSaveCancelSection().

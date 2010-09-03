@@ -42,7 +42,7 @@ public class SeriesEditshipAddForm extends BasicItemForm {
     @Override
     protected void addWidgets() {
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editorship.selectEditors").localize()));
+                "publications.ui.series.editship.selectEditors").localize()));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(GenericPerson.class.
@@ -50,7 +50,7 @@ public class SeriesEditshipAddForm extends BasicItemForm {
         add(m_itemSearch);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editorship.from").localize()));
+                "publications.ui.series.editship.from").localize()));
         ParameterModel fromParam = new DateParameter(EditshipCollection.FROM);
         com.arsdigita.bebop.form.Date from = new com.arsdigita.bebop.form.Date(
                 fromParam);
@@ -59,7 +59,7 @@ public class SeriesEditshipAddForm extends BasicItemForm {
         add(from);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.editorship.to").localize()));
+                "publications.ui.series.editship.to").localize()));
         ParameterModel toParam = new DateParameter(EditshipCollection.TO);
         com.arsdigita.bebop.form.Date to = new com.arsdigita.bebop.form.Date(
                 toParam);

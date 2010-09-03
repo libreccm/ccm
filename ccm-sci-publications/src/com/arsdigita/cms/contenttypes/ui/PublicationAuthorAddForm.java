@@ -54,7 +54,7 @@ public class PublicationAuthorAddForm
         add(m_itemSearch);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.is_editor").localize()));
+                "publications.ui.authors.author.is_editor").localize()));
         ParameterModel isEditorModel = new BooleanParameter(
                 AuthorshipCollection.EDITOR);
         RadioGroup isEditorGroup = new RadioGroup(isEditorModel);
@@ -62,16 +62,16 @@ public class PublicationAuthorAddForm
         isEditorGroup.setMetaDataAttribute(
                 "label",
                 (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.is_editor_label").
+                "publications.ui.authors.author.is_editor_label").
                 localize());
         isEditorGroup.addOption(
                 new Option(Boolean.FALSE.toString(),
                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.is_editor_false").localize()));
+                "publications.ui.authors.author.is_editor_false").localize()));
         isEditorGroup.addOption(
                 new Option(Boolean.TRUE.toString(),
                            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.authors.is_editor_true").localize()));
+                "publications.ui.authors.author.is_editor_true").localize()));
         add(isEditorGroup);
     }
 

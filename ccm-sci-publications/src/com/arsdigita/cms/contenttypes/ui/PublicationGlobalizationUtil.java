@@ -9,7 +9,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 public class PublicationGlobalizationUtil {
 
     public static final String BUNDLE_NAME =
-                               "com.arsdigita.cms.contenttypes.PublicationBundle";
+                               "com.arsdigita.cms.contenttypes.ui.PublicationResources";
 
     public static GlobalizedMessage globalize(String key) {
         return new GlobalizedMessage(key, BUNDLE_NAME);

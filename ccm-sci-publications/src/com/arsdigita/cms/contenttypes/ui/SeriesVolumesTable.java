@@ -51,7 +51,7 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
         colModel.add(new TableColumn(
                 1,
                 PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.volumes.volumeOfSeries").localize()));
+                "publications.ui.series.volumes.volume_of_series").localize()));
         colModel.add(new TableColumn(
                 2,
                 PublicationGlobalizationUtil.globalize(
@@ -194,7 +194,8 @@ public class SeriesVolumesTable extends Table implements TableActionListener {
             if (canDelete) {
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) PublicationGlobalizationUtil.
-                        globalize("publications.ui.volumes.remove.confirm").
+                        globalize(
+                        "publications.ui.series.volumes.remove.confirm").
                         localize());
                 return link;
             } else {

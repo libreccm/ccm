@@ -146,11 +146,11 @@ public class PublicationAuthorsTable
                 case 1:
                     if (m_authorshipCollection.isEditor()) {
                         return (String) PublicationGlobalizationUtil.globalize(
-                                "publications.ui.authors.author.isEditor").
+                                "publications.ui.authors.author.is_editor").
                                 localize();
                     } else {
                         return PublicationGlobalizationUtil.globalize(
-                                "publications.ui.authors.author.isNotEditor").
+                                "publications.ui.authors.author.is_not_editor").
                                 localize();
                     }
                 case 2:

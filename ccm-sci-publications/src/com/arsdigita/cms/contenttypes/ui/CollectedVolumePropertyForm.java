@@ -114,10 +114,6 @@ public class CollectedVolumePropertyForm
                     CollectedVolume.EDITION));
 
             collectedVolume.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }      
     }
 }

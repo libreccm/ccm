@@ -13,10 +13,10 @@
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       
       <ctd:authoring-step
-	  labelKey="cms.contenttypes.articleInCollectedVolume_properties.title"
-	  labelBundle="cms.contenttypes.cms.ui.CMSResources"
-	  descriptionKey="cms.contenttypes.articleInCollectedVolume.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.ui.CMSResources"
+	  labelKey="publications.ui.articleInCollectedVolume_properties.title"
+	  labelBundle="com.arsdigita.contenttypes.cms.contenttypes.ui.CMSResources"
+	  descriptionKey="publications.ui.articleInCollectedVolume.basic_properties.description"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.CMSResources"
 	  component="com.arsdigita.cms.contenttypes.ui.ArticleInCollectedVolumePropertiesStep"
 	  ordering="1"/>
 

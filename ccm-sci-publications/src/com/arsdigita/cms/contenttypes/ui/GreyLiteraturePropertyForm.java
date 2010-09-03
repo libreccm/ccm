@@ -92,10 +92,6 @@ public class GreyLiteraturePropertyForm
             grey.setUrl((String) data.get(GreyLiterature.URL));
 
             grey.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }       
     }
 }

@@ -54,7 +54,7 @@ public class PublicationPropertyForm
         add(title);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.yearOfPublication").localize()));
+                "publications.ui.publication.year_of_publication").localize()));
         ParameterModel yearOfPublicationParam = new IntegerParameter(
                 Publication.YEAR_OF_PUBLICATION);
         TextField yearOfPublication = new TextField(yearOfPublicationParam);
@@ -104,11 +104,7 @@ public class PublicationPropertyForm
             publication.setMisc((String) data.get(Publication.MISC));
 
             publication.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }       
     }
 
     @Override
