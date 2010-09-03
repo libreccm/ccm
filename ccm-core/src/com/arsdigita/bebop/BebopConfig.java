@@ -42,12 +42,15 @@ public final class BebopConfig extends AbstractConfig {
 
     private final Parameter m_presenter;
     private final Parameter m_page;
+    /** Pointer to JTidy validation listener config file  */
     private final Parameter m_tidy;
     private final Parameter m_fancyErrors;
     private final Parameter m_dcpOnButtons;
     private final Parameter m_dcpOnLinks;
     private final Parameter m_enableTreeSelect;
+    /** List of supported DHTML editors, first one is default (Xinha) */
     private final EnumerationParameter m_dhtmlEditor;
+    /** Path to DHTML editor source file, relativ to document root */
     private final Parameter m_dhtmlEditorSrcFile;
     private final Parameter m_showClassName;
 
@@ -59,6 +62,7 @@ public final class BebopConfig extends AbstractConfig {
         m_page = new ClassParameter
             ("waf.bebop.base_page", Parameter.REQUIRED, SimplePage.class);
 
+        /* Pointer to JTidy validation listener config file  */
         m_tidy = new StringParameter
             ("waf.bebop.tidy_config_file", Parameter.REQUIRED,
              "com/arsdigita/bebop/parameters/tidy.properties");
@@ -73,13 +77,16 @@ public final class BebopConfig extends AbstractConfig {
              Parameter.REQUIRED,
              Boolean.FALSE);
 
-        m_dhtmlEditor = new EnumerationParameter("waf.bebop.dhtml_editor", 
-            Parameter.REQUIRED,BebopConstants.BEBOP_DHTMLEDITOR);
-        // HTMLArea for compatibility with old XSL
-        m_dhtmlEditor.put("HTMLArea", BebopConstants.BEBOP_DHTMLEDITOR); 
-        m_dhtmlEditor.put("FCKeditor", BebopConstants.BEBOP_FCKEDITOR);
+        /** List of supported DHTML editors, first one is default (Xinha) */
+        m_dhtmlEditor = new EnumerationParameter("waf.bebop.dhtml_editor",
+            Parameter.REQUIRED,BebopConstants.BEBOP_XINHAEDITOR);
+//           Parameter.REQUIRED,BebopConstants.BEBOP_DHTMLEDITOR);
         m_dhtmlEditor.put("Xinha", BebopConstants.BEBOP_XINHAEDITOR);
+        m_dhtmlEditor.put("FCKeditor", BebopConstants.BEBOP_FCKEDITOR);
+        // HTMLArea for backwards compatibility with old XSL. to be removed soon!
+        m_dhtmlEditor.put("HTMLArea", BebopConstants.BEBOP_DHTMLEDITOR);
 
+        // Xinha is now default!
         m_dhtmlEditorSrcFile = new StringParameter
             ("waf.bebop.dhtml_editor_src", Parameter.REQUIRED,
              "/assets/xinha/XinhaLoader.js");
@@ -140,10 +147,16 @@ public final class BebopConfig extends AbstractConfig {
         return ((Boolean) get(m_enableTreeSelect)).booleanValue();
     }
 
+    /**
+     * Gets the DHTML editor to use
+     */
     public final String getDHTMLEditor() {
         return (String) get(m_dhtmlEditor);
     }
 
+    /**
+     * Gets the location of DHTML editor's xource file
+     */
     public final String getDHTMLEditorSrcFile() {
         return (String) get(m_dhtmlEditorSrcFile);
     }

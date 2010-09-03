@@ -70,7 +70,7 @@ public class ResourceParameter extends AbstractParameter {
      *
      * Developers note:
      * This makes the trick to use Parameter.java interface rsp AbstractParameter
-     * for other types of parameter as Strint. If you don't overwrite this
+     * for other types of parameter as String. If you don't overwrite this
      * method, you will always get a casting error, because the parameter
      * returns a string instead of the intended object!
      *

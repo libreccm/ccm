@@ -239,8 +239,19 @@ public final class CMSConfig extends AbstractConfig {
 
         m_dhtmlEditorConfig = new DHTMLEditorConfigParameter
             ("com.arsdigita.cms.dhtml_editor_config",
-             Parameter.REQUIRED, 
-             DHTMLEditor.Config.STANDARD);
+             Parameter.REQUIRED,
+             new DHTMLEditor.Config( "XinhaConfig",
+                                     "/assets/xinha/CCMcmsXinhaConfig.js") );
+        //   previous parameter definition:
+        // > DHTMLEditor.Config.STANDARD); <
+        //   didn't work because of broken unmarshalling (cf. similiar problem
+        //   with ResourceParameter and patch provided by Brad). It work for
+        //   HTMLArea, because configuration was hard coded into xsl(!).
+        //   Additionally, we would like to use a specific configuration for cms
+        //   to include cms specific functions (like access to internal .
+        //   content items for links and internal image assets, which may not
+        //   be accessable by other modules which use DHTMLeditor.
+        //   Would be bad style to configure a cms specific parameter in core.
 
         m_dhtmlEditorPlugins = new StringArrayParameter
             ("com.arsdigita.cms.dhtml_editor_plugins",
@@ -629,13 +640,32 @@ public final class CMSConfig extends AbstractConfig {
 
 
 
+    /**
+     * Internal class representing a DHTMLEditor configuration parameter. It 
+     * creates a new DHMTLEditor Config object (internal class in DHTMLEditor).
+     * 
+     * XXX Method unmarshal is broken and currently does not work correctly. It
+     * does not process default values provided by using 
+     * DHTMLEditor.Config.Standard (see parameter m_dhtmlEditorConfig above).
+     * May be a similiar problem as with ResourceParameter and default value,
+     * see patch provided by pbrucha.
+     * Best solution may be to remove this special parameter class and use a
+     * string parameter instead to directly create a DHTMLEditor.Config object.
+     * (pboy, 2010-09-02)
+     */
     private class DHTMLEditorConfigParameter extends StringParameter {
         public DHTMLEditorConfigParameter(final String name,
                                           final int multiplicity,
                                           final Object defaultObj) {
             super(name, multiplicity, defaultObj);
         }
-        
+
+        /**
+         * WARNING: Does not correctly process default values, see above!
+         * @param value
+         * @param errors
+         * @return
+         */
         @Override
         protected Object unmarshal(String value, ErrorList errors) {
             return DHTMLEditor.Config.valueOf(value);

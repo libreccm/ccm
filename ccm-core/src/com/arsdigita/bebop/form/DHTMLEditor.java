@@ -32,11 +32,12 @@ import com.arsdigita.xml.Element;
 /**
  * Displays and manages a WYSIWYG HTML editor that takes advantage of
  * DHTML scripting features.
- * This class can use the HTMLArea <a href="http://women.cs.uiuc.edu/htmlarea/">
- * http://women.cs.uiuc.edu/htmlarea/</a>
- * or FCKeditor <a href="http://www.fckeditor.net">http://www.fckeditor.net</a>.
+ * This class can use:
+ * - <a href="http://www.xonha.org>Xinha</a>
+ * - <a href="http://www.fckeditor.net">FCKeditor</a>
+ * - HTMLarea for backwards compatibility, development discontinued
  * Editor is choosen based on the config parameter waf.bebop.dhtml_editor,
- * default is "HTMLArea" for compatibility reasons.
+ * default is "Xinha", which is the successor of HTNLarea
  *
  * @author Jim Parsons
  * @author Richard Li
@@ -73,9 +74,19 @@ public class DHTMLEditor extends TextArea {
      * for a description of what this attribute does.
      */
     public static final int SOFT = 2;
+
     
+    /**
+     * Config objects for supported DHTMP editors
+     */
     public static class Config {
-        public static final Config STANDARD = new Config("HTMLArea.Config", null);
+
+        // WARNING: Processing of these default values by CMSConfig does NOT
+        // work correctly because of deviciencies in unmarshal method there.
+        
+        public static final Config STANDARD =
+                new Config("Xinha.Config",
+                           "/assets/xinha/CCMcoreXinhaConfig.js");
         
         /** Example FCKEditor configuration. */
         public static final Config FCK_STANDARD =
@@ -85,6 +96,10 @@ public class DHTMLEditor extends TextArea {
         public static final Config FCK_CMSADMIN =
                 new Config("FCKEditor.Config.StyleCMSAdmin",
                            "/assets/fckeditor/config/fckconfigstylecmsadmin.js");
+
+        /** Example old HTMLarea configuration. */
+        public static final Config HTMLAREA = 
+                new Config("HTMLArea.Config", null);
 
         private String m_name;
         private String m_path;
@@ -123,20 +138,34 @@ public class DHTMLEditor extends TextArea {
                 return m_name + "," + m_path;
             }
         }
-    }
+    }  //end config object(s)
 
     private Config m_config;
     private Set m_plugins;
     private Set m_hiddenButtons;
 
+    /**
+     * Constructor
+     * 
+     * @param name
+     */
     public DHTMLEditor(String name) {
         this(new StringParameter(name));
     }
 
+    /**
+     * Constructor
+     * @param model
+     */
     public DHTMLEditor(ParameterModel model) {
         this(model, Config.STANDARD);
     }
 
+    /**
+     * Constructor
+     * @param model
+     * @param config
+     */
     public DHTMLEditor(ParameterModel model,
                        Config config) {
         super(model);
@@ -176,6 +205,7 @@ public class DHTMLEditor extends TextArea {
     public void addPlugin(String name) {
         m_plugins.add(name);
     }
+
     /**
      * Prevent the specified button from being displayed in the editor toolbar.
      * @param name name of the button, as specified in the btnList of the htmlarea.js file
