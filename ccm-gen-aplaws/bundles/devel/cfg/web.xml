@@ -4,8 +4,8 @@
 
 <web-app>
 
-  <display-name>CCM ZeS</display-name> 
-  <description>Content and Collaboration Management</description>
+  <display-name>OpenCCM</display-name> 
+  <description>Community and Content Management</description>
 
   <!-- path and filename of the log4j user accessible config file
        WEB-INF/conf/log4j.properties is the built-in default value -->
@@ -17,14 +17,13 @@
 
   <!-- Require secure connection by redirect to host-port part
        of parameter waf.web.secure_server               
-       NOT USED with ZeS                                        
   <filter>
     <filter-name>secured</filter-name>
     <filter-class>com.arsdigita.web.SecureFilter</filter-class>
   </filter>
   -->
   <!-- Initialize Profiler timers
-       NOT USED with ZeS standard / production                                  
+       NOT USED with standard / production                                  
   <filter>
     <filter-name>profiler</filter-name>
     <filter-class>com.arsdigita.profiler.ProfilerFilter</filter-class>
