@@ -23,7 +23,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
-import com.arsdigita.cms.RelationAttribute;
+import com.arsdigita.cms.RelationAttributeInterface;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
@@ -35,7 +35,7 @@ import java.util.StringTokenizer;
  * This content type represents an basic contact
  *
  */
-public class GenericContact extends ContentPage implements RelationAttribute {
+public class GenericContact extends ContentPage implements RelationAttributeInterface {
 
     /** PDL property names */
     public static final String PERSON = "person";

@@ -220,7 +220,7 @@ final class ContentTypeItemPane extends BaseItemPane {
     }
 
     private class RelationAttributeSection extends Section {
-        RelationAttributeSection(/*final ActionLink attributeEditLink*/) {
+        RelationAttributeSection() {
             setHeading(new Label(gz("cms.ui.type.attributes")));
 
             setBody(new RelationAttributeList(m_type));
@@ -228,7 +228,8 @@ final class ContentTypeItemPane extends BaseItemPane {
 
         @Override
         public final boolean isVisible(final PageState state) {
-
+// ISt es möglich, den folgenden Code nur einmal zu haben?? Kann man auf die isVisible von RelationAttributeList
+            // zurückgreifen??
             boolean retVal = false;
             ContentType ct = (ContentType) m_type.getContentType(state);
             ContentItem ci = null;

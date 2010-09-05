@@ -202,7 +202,7 @@ import java.util.StringTokenizer;
  *
  * @version $Id: ContentItem.java 1621 2007-09-13 12:43:12Z chrisg23 $
  */
-public class ContentItem extends VersionedACSObject implements CustomCopy, RelationAttribute {
+public class ContentItem extends VersionedACSObject implements CustomCopy, RelationAttributeInterface {
 
     private static final Logger s_log = Logger.getLogger(ContentItem.class);
     private static final Logger s_logDenorm = Logger.getLogger(ContentItem.class.getName() + ".Denorm");

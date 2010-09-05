@@ -112,6 +112,7 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                     });
         }
 
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.description").localize(), GenericPerson.DESCRIPTION);
         return sheet;
     }
 }

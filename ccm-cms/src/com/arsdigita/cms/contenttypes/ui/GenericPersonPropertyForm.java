@@ -24,6 +24,7 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
@@ -52,6 +53,7 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
     public static final String TITLEPRE = GenericPerson.TITLEPRE;
     public static final String TITLEPOST = GenericPerson.TITLEPOST;
     public static final String BIRTHDATE = GenericPerson.BIRTHDATE;
+    public static final String DESCRIPTION = GenericPerson.DESCRIPTION;
     public static final String ID = "Person_edit";
 
     public GenericPersonPropertyForm(ItemSelectionModel itemModel) {
@@ -95,6 +97,13 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         birthdate.setYearRange(1900, today.get(Calendar.YEAR));
         add(birthdate);
 
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.description").localize()));
+        ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
+        TextArea description = new TextArea(descriptionParam);
+        description.setCols(50);
+        description.setRows(5);
+        add(description);
+
     }
 
     public void init(FormSectionEvent fse) {
@@ -106,6 +115,7 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         data.put(TITLEPRE, person.getTitlePre());
         data.put(TITLEPOST, person.getTitlePost());
         data.put(BIRTHDATE, person.getBirthdate());
+        data.put(DESCRIPTION, person.getDescription());
     }
 
     public void submitted(FormSectionEvent fse) {
@@ -126,8 +136,8 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
             person.setGivenName((String) data.get(GIVENNAME));
             person.setTitlePre((String) data.get(TITLEPRE));
             person.setTitlePost((String) data.get(TITLEPOST));
-            //Date birthdate = (Date)data.get(BIRTHDATE);
             person.setBirthdate((Date) data.get(BIRTHDATE));
+            person.setDescription((String)data.get(DESCRIPTION));
 
             person.save();
         }

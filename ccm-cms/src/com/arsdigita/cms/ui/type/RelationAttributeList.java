@@ -13,6 +13,7 @@ import com.arsdigita.bebop.list.ListCellRenderer;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.RelationAttributeCollection;
 import java.util.StringTokenizer;
 
 /**
@@ -36,6 +37,8 @@ public class RelationAttributeList extends List {
 
     @Override
     public final boolean isVisible(final PageState state) {
+
+// Mit  getModelBuilder(); den ModelBuilder holen und abfragen,, ob es etwas anzuzeigen gibt?
 
         boolean retVal = false;
         ContentType ct = (ContentType) m_type.getContentType(state);
@@ -82,26 +85,15 @@ public class RelationAttributeList extends List {
                 //retVal = false;
             }
 
-//            final DataCollection folders =
-//                    SessionManager.getSession().retrieve(Folder.BASE_DATA_OBJECT_TYPE);
-//
-//            folders.addEqualsFilter(ContentItem.PARENT, parent.getID());
-//            folders.addOrder("lower(" + ACSObject.DISPLAY_NAME + ")");
-//
-//            return new Model(new ItemCollection(folders));
-
             return new Model(relationAttributeList);
         }
 
         private class Model implements ListModel {
 
-//            private final ItemCollection m_items;
             private final StringTokenizer m_items;
-            private String m_item;
+//            private String m_item;
+            private RelationAttributeCollection m_item;
 
-//            Model(final ItemCollection items) {
-//                m_items = items;
-//            }
             Model(final StringTokenizer items) {
                 m_items = items;
                 m_item = null;
@@ -109,7 +101,8 @@ public class RelationAttributeList extends List {
 
             public final boolean next() {
                 if (m_items.hasMoreTokens()) {
-                    m_item = m_items.nextToken();
+//                    m_item = m_items.nextToken();
+                    m_item = new RelationAttributeCollection(m_items.nextToken());
                     return true;
                 } else {
                     m_item = null;
@@ -119,12 +112,12 @@ public class RelationAttributeList extends List {
 
             // Label
             public final Object getElement() {
-                return m_item;
+                return m_item.getDisplayName();
             }
 
             // URL
             public final String getKey() {
-                return m_item + "/";
+                return m_item+"/";//.getName() + "/";
             }
         }
     }

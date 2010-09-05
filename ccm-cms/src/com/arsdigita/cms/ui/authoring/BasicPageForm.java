@@ -28,9 +28,11 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
+//import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
+//import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -51,6 +53,7 @@ public abstract class BasicPageForm extends BasicItemForm {
 
     private FormSection m_widgetSection;
 
+//    public static final String DESCRIPTION = ContentPage.DESCRIPTION;
     public static final String LAUNCH_DATE = ContentPage.LAUNCH_DATE;
 
     /**
@@ -83,8 +86,17 @@ public abstract class BasicPageForm extends BasicItemForm {
      * Add various widgets to the form. Child classes should override
      * this method to perform all their widget-adding needs
      */
+    @Override
     protected void addWidgets() {
         super.addWidgets();
+
+//        add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_description")));
+//        ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
+//        TextArea description = new TextArea(descriptionParam);
+//        description.setCols(50);
+//        description.setRows(5);
+//        add(description);
+//
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             add(new Label(GlobalizationUtil.
                           globalize("cms.ui.authoring.page_launch_date")));
@@ -121,6 +133,7 @@ public abstract class BasicPageForm extends BasicItemForm {
             // Preset fields
             data.put(NAME, item.getName());
             data.put(TITLE, item.getTitle());
+//            data.put(DESCRIPTION, item.getDescription());
             if (!ContentSection.getConfig().getHideLaunchDate()) {
                 data.put(LAUNCH_DATE, item.getLaunchDate());
                 // if launch date is required, help user by suggesting today's date
@@ -153,6 +166,7 @@ public abstract class BasicPageForm extends BasicItemForm {
             // Update attributes
             item.setName((String)data.get(NAME));
             item.setTitle((String)data.get(TITLE));
+//            item.setDescription((String)data.get(DESCRIPTION));
             if (!ContentSection.getConfig().getHideLaunchDate()) {
                 item.setLaunchDate((Date)data.get(LAUNCH_DATE));
             }
