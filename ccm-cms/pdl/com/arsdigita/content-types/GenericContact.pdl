@@ -45,9 +45,9 @@ object type GenericContactEntry extends ContentItem {
 }
 
 object type GenericContactType extends ACSObject {
-    String[1..1]     key      = cms_contacttypes.key VARCHAR(100);
-    String[1..1]     language = cms_contacttypes.language VARCHAR(2);
-    String[1..1]     name     = cms_contacttypes.name VARCHAR(100);
+    String[1..1] key      = cms_contacttypes.key VARCHAR(100);
+    String[1..1] language = cms_contacttypes.language VARCHAR(2);
+    String[1..1] name     = cms_contacttypes.name VARCHAR(100);
 
     reference key (cms_contacttypes.contacttypes_id);
     unique (key, language);
@@ -55,10 +55,10 @@ object type GenericContactType extends ACSObject {
 
 association {
 
-    GenericPerson[0..1] person = join cms_contacts.contact_id
-                                   to cms_person_contact_map.contact_id,
-                                 join cms_person_contact_map.person_id
-                                   to cms_persons.person_id;
+    GenericPerson[0..1]  person   = join cms_contacts.contact_id
+                                      to cms_person_contact_map.contact_id,
+                                    join cms_person_contact_map.person_id
+                                      to cms_persons.person_id;
 
     GenericContact[0..n] contacts = join cms_persons.person_id
                                       to cms_person_contact_map.person_id,
