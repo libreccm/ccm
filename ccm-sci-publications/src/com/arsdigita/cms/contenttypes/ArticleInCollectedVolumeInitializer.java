@@ -23,7 +23,7 @@ public class ArticleInCollectedVolumeInitializer extends ContentTypeInitializer 
 
     @Override
     public String getTraversalXML() {
-        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/PublicationWithPublisher.xml";
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/ArticleInCollectedVolume.xml";
     }
 
 }
