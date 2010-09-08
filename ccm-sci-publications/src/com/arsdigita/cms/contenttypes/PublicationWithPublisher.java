@@ -26,6 +26,19 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
+ * <p>
+ * This class defines an content type which represents a publication with a
+ * publisher. The content type has three additional properties:
+ * </p>
+ * <ul>
+ * <li>ISBN</li>
+ * <li>URL</li>
+ * <li>Publisher</li>
+ * </ul>
+ * <p>
+ * For more details please refer to the documentation of the getter methods for
+ * these attributes.
+ * </p>
  *
  * @author Jens Pelzetter
  */
@@ -60,14 +73,30 @@ public class PublicationWithPublisher extends Publication {
         super(type);
     }
 
+    /**
+     * Returns the ISBN of the publication.
+     *
+     * @return The ISBN of the publication.
+     */
     public String getISBN() {
         return (String) get(ISBN);
     }
 
+    /**
+     * Sets the ISBN. Attention: This method does not check if the ISBN is 
+     * valid yet!
+     *
+     * @param isbn New ISBN
+     */
     public void setISBN(String isbn) {
         set(ISBN, isbn);
     }
 
+    /**
+     * Retrieves the publisher of the publication.
+     *
+     * @return The publisher of the publication.
+     */
     public Publisher getPublisher() {
         DataObject dataObj;
 
@@ -80,6 +109,11 @@ public class PublicationWithPublisher extends Publication {
         }
     }
 
+    /**
+     * Links a publisher to the publication.
+     *
+     * @param publisher The publisher of the publication.
+     */
     public void setPublisher(Publisher publisher) {
         set(PUBLISHER, publisher);
     }

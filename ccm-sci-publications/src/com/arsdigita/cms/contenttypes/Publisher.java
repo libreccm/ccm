@@ -25,6 +25,8 @@ import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
 
 /**
+ * This class represents a publisher. The class uses the 
+ * {@link GenericOrganizationalUnit} class as base.
  *
  * @author Jens Pelzetter
  */
@@ -32,7 +34,7 @@ public class Publisher extends GenericOrganizationalUnit {
 
     public static final String PLACE = "place";
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.Publisher";
+                               "com.arsdigita.cms.contenttypes.Publisher";
 
     public Publisher() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -54,12 +56,19 @@ public class Publisher extends GenericOrganizationalUnit {
         super(type);
     }
 
+    /**
+     *
+     * @return The place of the publisher.
+     */
     public String getPlace() {
         return (String) get(PLACE);
     }
 
+    /**
+     *
+     * @param place (New) placee of the publisher.
+     */
     public void setPlace(String place) {
         set(PLACE, place);
     }
-
 }

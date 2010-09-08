@@ -27,6 +27,24 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
+ * <p>
+ * This is the base class for all other Publication Contenttypes. The 
+ * following UML class diagram shows an overview of the classes of the 
+ * Publications module. Please note that the UML diagram shown an general 
+ * overview of the classes/object types of the publications module. It shows
+ * the attributes of the contenttypes and theirs assoications among them. Not
+ * all classes shown in the UML have a Java counterpart. These classes are
+ * representing assoications <em>with</em> extra attributes. The associations 
+ * are defined in the PDL files of this module.
+ * </p>
+ * <p>
+ * <img src="doc-files/PublicationsModule.png" width="100%">
+ * </p>
+ * <p>
+ * This class is not a directly usable Contenttype. Its is only used to
+ * define some common attributes needed for all kinds of publications.
+ * </p>
+ *
  *
  * @author Jens Pelzetter
  */
@@ -62,35 +80,78 @@ public class Publication extends ContentPage {
         super(type);
     }
 
+    /**
+     * Gets the year of publications.
+     *
+     * @return Year of publication
+     */
     public Integer getYearOfPublication() {
         return (Integer) get(YEAR_OF_PUBLICATION);
     }
 
+    /**
+     * Sets the year of publication
+     *
+     * @param year The year when the publication was published.
+     */
     public void setYearOfPublication(Integer year) {
         set(YEAR_OF_PUBLICATION, year);
     }
 
+    /**
+     * Retrieves the abstract of the publication.
+     *
+     * @return Abstract of the publication, if any.
+     */
     public String getAbstract() {
         return (String) get(ABSTRACT);
     }
 
+    /**
+     * Sets the abstract of the publication.
+     *
+     * @param theAbstract A string describing the contents of the publication
+     */
     public void setAbstract(String theAbstract) {
         set(ABSTRACT,
             theAbstract);
     }
 
+    /**
+     * Retrieves the contents of the misc field. This field can be used for
+     * all sorts of remarks etc. which do not fit in the other fields.
+     *
+     * @return Contents of the misc field.
+     */
     public String getMisc() {
         return (String) get(MISC);
     }
 
+    /**
+     * Sets teh content of the misc field.
+     *
+     * @param misc The new content of the misc field.
+     */
     public void setMisc(String misc) {
         set(MISC, misc);
     }
 
+    /**
+     * Retrieves a collection of the authors of the publication.
+     *
+     * @return Collection of the authors of the publication.
+     */
     public AuthorshipCollection getAuthors() {
         return new AuthorshipCollection((DataCollection) get(AUTHORS));
     }
 
+    /**
+     * Adds an author to the publication
+     *
+     * @param author The author to add. This can an instance of any content type
+     * which is derivated from the {@link GenericPerson} type.
+     * @param editor Is the author an editor?
+     */
     public void addAuthor(GenericPerson author, Boolean editor) {
         Assert.exists(author, GenericPerson.class);
 
@@ -100,11 +161,22 @@ public class Publication extends ContentPage {
         link.set(AUTHOR_ORDER, Integer.valueOf((int) getAuthors().size()));
     }
 
+    /**
+     * Removes an author.
+     *
+     * @param author The author to remove.
+     */
     public void removeAuthor(GenericPerson author) {
         Assert.exists(author, GenericPerson.class);
         remove(AUTHORS, author);
     }
 
+    /**
+     * Method to check if the publication has authors.
+     *
+     * @return {@code true} if the publications has authors, {@code false}
+     * otherwise.
+     */
     public boolean hasAuthors() {
         return !this.getAuthors().isEmpty();
     }

@@ -27,6 +27,8 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
+ * A collected volume which consists of some {@link ArticleInCollectedVolume} 
+ * instances.
  *
  * @author Jens Pelzetter
  */
