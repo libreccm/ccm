@@ -37,9 +37,8 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import org.apache.log4j.Logger;
 
 /**
- *     A class
- *    representing any widget that contains a list options.
- *
+ * A class representing any widget that contains a list options.
+ *   
  *    @author Karl Goldstein 
  *    @author Uday Mathur    
  *    @author Rory Solomon   
@@ -103,7 +102,7 @@ public abstract class OptionGroup extends Widget
     }
 
     /**
-     *      Returns an Iterator of all the default Options in this group,
+     * Returns an Iterator of all the default Options in this group,
      * plus any request-specific options.
      */
     public Iterator getOptions(PageState ps) {

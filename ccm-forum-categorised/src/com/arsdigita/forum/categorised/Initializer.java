@@ -17,10 +17,10 @@
  *
  */
 package com.arsdigita.forum.categorised;
-import com.arsdigita.db.DbHelper;
-import com.arsdigita.bebop.RequestLocal;
+// import com.arsdigita.db.DbHelper;
+// import com.arsdigita.bebop.RequestLocal;
 
-import com.arsdigita.domain.xml.TraversalHandler;
+// import com.arsdigita.domain.xml.TraversalHandler;
 
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
@@ -62,7 +62,7 @@ import com.arsdigita.web.ui.ApplicationConfigFormSection;
 import org.apache.log4j.Logger;
 
 /**
- * The forum initializer.
+ * The forum-categorized initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Initializer.java,v 1.1 2006/03/03 10:54:45 cgyg9330 Exp $
@@ -71,15 +71,22 @@ public class Initializer extends CompoundInitializer {
 
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 
-       
-	public void init(LegacyInitEvent e) {
-			super.init(e);
-			ForumPageFactory.registerPageBuilder(ForumPageFactory.FORUM_PAGE, new CategorisedForumPageBuilder());
-			ForumPageFactory.registerPageBuilder(ForumPageFactory.THREAD_PAGE, new CategorisedThreadPageBuilder());
-			ForumPageFactory.registerPageBuilder("load-cat.jsp", new CategorySubtreePageBuilder());
-			URLService.registerFinder(Forum.BASE_DATA_OBJECT_TYPE, new ForumURLFinder());
-		
-			
-	}		
-			
+    public void init(LegacyInitEvent e) {
+
+        super.init(e);
+        ForumPageFactory.registerPageBuilder(
+                ForumPageFactory.FORUM_PAGE,
+                new CategorisedForumPageBuilder());
+        ForumPageFactory.registerPageBuilder(
+                ForumPageFactory.THREAD_PAGE,
+                new CategorisedThreadPageBuilder());
+        ForumPageFactory.registerPageBuilder(
+                "load-cat.jsp",
+                new CategorySubtreePageBuilder());
+        URLService.registerFinder(
+                Forum.BASE_DATA_OBJECT_TYPE,
+                new ForumURLFinder());
+
+    }
+
 }

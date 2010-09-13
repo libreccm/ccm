@@ -37,7 +37,7 @@ import java.util.Map;
  * @author Oumi Mehrotra
  * @version 1.0
  * @version $Id: PrivilegeDescriptor.java 1311 2006-09-04 10:30:53Z sskracic $
- **/
+ */
 public class PrivilegeDescriptor {
 
     private static final String ADMIN_NAME = "admin";
@@ -50,7 +50,8 @@ public class PrivilegeDescriptor {
     /**
      * The PrivilegeDescriptor corresponding to the primitive admin privilege
      */
-    public static final PrivilegeDescriptor ADMIN  = new PrivilegeDescriptor(ADMIN_NAME);
+    public static final PrivilegeDescriptor ADMIN  =
+                                            new PrivilegeDescriptor(ADMIN_NAME);
 
     /**
      * The PrivilegeDescriptor corresponding to the read and write privilege
@@ -80,6 +81,7 @@ public class PrivilegeDescriptor {
      * The PrivilegeDescriptor corresponding to the primitive delete privilege
      */
     public static final PrivilegeDescriptor DELETE =
+    //  new PrivilegeDescriptor(DELETE_NAME);
         new PrivilegeDescriptor(DELETE_NAME);
 
     private String m_displayName;

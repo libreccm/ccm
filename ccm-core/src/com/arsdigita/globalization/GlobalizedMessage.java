@@ -162,7 +162,6 @@ public class GlobalizedMessage {
 
     /**
      * <p>
-     * <br>
      * Localize this message. If no message is found the key is returned as
      * the message. This is done so that developers or translators can see the
      * messages that still need localization.
@@ -185,7 +184,6 @@ public class GlobalizedMessage {
 
     /**
      * <p>
-     * <br>
      * Localize this message according the specified request. If no message is
      * found the key is returned as the message. This is done so that
      * developers or translators can see the messages that still need

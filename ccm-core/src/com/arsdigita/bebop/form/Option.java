@@ -49,7 +49,7 @@ public class Option extends BlockStylable {
 
 
     /**
-     *  This creates an Option whose component is a lable consisting of the
+     *  This creates an Option whose component is a label consisting of the
      *  string that is passed in.
      */
     public Option(String value, String label) {
