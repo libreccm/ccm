@@ -23,15 +23,15 @@ import java.util.Iterator;
 import java.util.Map;
 
 import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.parameters.ParameterModel;
+// import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.util.Assert;
 
 /**
- * @author chris.gilbert@westsussex.gov.uk
- *
  * Factory class that enables projects to provide their own page creators. 
  * A reason for doing this is that a particular forum project may wish to 
  * include components on the page that introduce dependencies on other projects
+ *
+ * @author chris.gilbert@westsussex.gov.uk
  */
 public class ForumPageFactory {
 
@@ -46,8 +46,10 @@ public class ForumPageFactory {
 		pageBuilders.put(FORUM_PAGE, new ForumPageBuilder());
 	}
 	
-	public static Page getPage(String pageType) {
-		Assert.isTrue(pageBuilders.containsKey(pageType), "Requested page type (" + pageType + ") does not have a builder registered" );
+    public static Page getPage(String pageType) {
+        Assert.isTrue(pageBuilders.containsKey(pageType),
+                      "Requested page type (" + pageType +
+                      ") does not have a builder registered" );
 		PageBuilder builder = (PageBuilder)pageBuilders.get(pageType);
 		Page page =  builder.buildPage();
 		page.lock();

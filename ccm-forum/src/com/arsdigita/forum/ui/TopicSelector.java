@@ -36,11 +36,24 @@ import com.arsdigita.categorization.Category;
 import java.math.BigDecimal;
 
 
+/** 
+ * Helper Class which generates the XML for a topic selection box.
+ * Used with ThreadsPanel to filter the threads listing by a topic.
+ * 
+ * XXX: Forum knows about <i>threads</i> which groups a set of posts to the same
+ * subject, and <i>topics</i> which group a set of threads about the same general
+ * theme. Currently Forum uses <i>catgegory</i> as synonym for topic, which may be
+ * misleading in some contexts, because there is <i>forum-categorized</i> which
+ * uses category in the usual CMS way, esp. navigation categories.
+ *
+ */
 public class TopicSelector extends SimpleComponent implements Constants {
     
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":topicSelector", 
+        Element content = parent.newChildElement(FORUM_XML_PREFIX +
+                                                 ":topicSelector",
                                                  FORUM_XML_NS);
 
         URL url = URL.request(state.getRequest(), null);
@@ -60,7 +73,8 @@ public class TopicSelector extends SimpleComponent implements Constants {
         
         while (cursor.next()) {
             Category c = new Category(cursor.getDataObject());
-            Element topicEl = content.newChildElement(FORUM_XML_PREFIX + ":topic", FORUM_XML_NS);
+            Element topicEl = content.newChildElement(FORUM_XML_PREFIX +
+                                                      ":topic", FORUM_XML_NS);
             DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(topicEl);
             xr.setWrapRoot(false);
             xr.setWrapAttributes(true);

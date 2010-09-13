@@ -44,11 +44,18 @@ import com.arsdigita.forum.ThreadCollection;
 
 import java.math.BigDecimal;
 
+/** 
+ * Creates a list of existing threads as a GUI component. Currently invoked
+ * by ThreadsPanel only.
+ * A paginator is added to handle a high number of threads.
+ * 
+ */
 public class ThreadList extends SimpleComponent implements Constants {
 
+    /**  */
     private IntegerParameter m_pageNumber =
         new IntegerParameter(PAGINATOR_PARAM);
-    
+    /** Default max number of threads (rows) per page */
     private int m_pageSize = 15;
 
     public void register(Page p) {
@@ -57,7 +64,13 @@ public class ThreadList extends SimpleComponent implements Constants {
         p.addGlobalStateParam(m_pageNumber);
     }
 
+    /**
+     * 
+     * @param state
+     * @return
+     */
     private ThreadCollection getThreads(PageState state) {
+
         ForumContext context = ForumContext.getContext(state);
         Party party = Kernel.getContext().getParty();
         Forum forum = context.getForum();
@@ -75,9 +88,15 @@ public class ThreadList extends SimpleComponent implements Constants {
         return threads;
     }
 
+    /**
+     * Create the xml for this component.
+     * @param state
+     * @param parent
+     */
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":threadList", FORUM_XML_NS);
+        Element content = parent.newChildElement(FORUM_XML_PREFIX +
+                                                 ":threadList", FORUM_XML_NS);
 
         ThreadCollection threads = getThreads(state);
 
@@ -113,7 +132,8 @@ public class ThreadList extends SimpleComponent implements Constants {
         
         while (threads.next()) {
             MessageThread thread = threads.getMessageThread();
-            Element threadEl = content.newChildElement(FORUM_XML_PREFIX + ":thread", FORUM_XML_NS);
+            Element threadEl = content.newChildElement(FORUM_XML_PREFIX +
+                                                       ":thread", FORUM_XML_NS);
             
             ParameterMap map = new ParameterMap();
             map.setParameter(THREAD_PARAM, thread.getID());
@@ -132,6 +152,16 @@ public class ThreadList extends SimpleComponent implements Constants {
         
     }
 
+    /**
+     * Create the paginators xml
+     * @param parent
+     * @param pageNumber
+     * @param pageCount
+     * @param pageSize
+     * @param begin
+     * @param end
+     * @param objectCount
+     */
     protected void generatePaginatorXML(Element parent,
                                         int pageNumber,
                                         int pageCount,
@@ -139,7 +169,8 @@ public class ThreadList extends SimpleComponent implements Constants {
                                         long begin,
                                         long end,
                                         long objectCount) {
-        Element paginator = parent.newChildElement(FORUM_XML_PREFIX + ":paginator", FORUM_XML_NS);
+        Element paginator = parent.newChildElement(FORUM_XML_PREFIX +
+                                                   ":paginator", FORUM_XML_NS);
         
         URL here = Web.getContext().getRequestURL();
         ParameterMap params = new ParameterMap(here.getParameterMap());

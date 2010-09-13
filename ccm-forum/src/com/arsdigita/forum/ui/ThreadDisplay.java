@@ -56,6 +56,13 @@ import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
+/**
+ * Provides List of posts for a thread with links to edit, delete, etc 
+ * according to authorisation.
+ * 
+ * Curently used by ThreadComponent to create the actual list of threads and by
+ * MessageView.
+ */
 public class ThreadDisplay extends SimpleComponent implements Constants {
 
     private static final Logger s_log =

@@ -34,6 +34,10 @@ public class Text {
         return new GlobalizedMessage(key, BUNDLE_NAME);
     }
 
+    public static String gzAsStr(String key) {
+        return (String) new GlobalizedMessage(key, BUNDLE_NAME).localize();
+    }
+
     public static GlobalizedMessage gz(String key, Object[] args) {
         return new GlobalizedMessage(key, BUNDLE_NAME, args);
     }

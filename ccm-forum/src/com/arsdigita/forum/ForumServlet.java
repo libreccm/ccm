@@ -18,24 +18,26 @@
  */
 package com.arsdigita.forum;
 
-import java.util.Iterator;
-// unused import
-//import java.util.Map;
-
-import com.arsdigita.forum.ui.Constants;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.page.BebopApplicationServlet;
 // unused import
 // import com.arsdigita.bebop.parameters.BigDecimalParameter;
+import com.arsdigita.forum.ui.Constants;
+
+import java.util.Iterator;
+// unused import
+//import java.util.Map;
 import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
 
 /**
+ *
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
  * 
- * Updated chris.gilbert@westsussex.gov.uk to make use of PageFactory and to enable 
- * disablement of client/middleware caching
+ * @author Chris Gilbert (chris.gilbert@westsussex.gov.uk) updated to make use of
+ *                       PageFactory and to enable disablement of client/middleware
+ *                       caching
  * @version $Id: ForumServlet.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
 public class ForumServlet extends BebopApplicationServlet

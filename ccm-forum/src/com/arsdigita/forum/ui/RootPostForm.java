@@ -18,22 +18,22 @@
  */
 package com.arsdigita.forum.ui;
 
-import com.arsdigita.bebop.Container;
+// import com.arsdigita.bebop.Container;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.categorization.Category;
+// import com.arsdigita.bebop.parameters.BigDecimalParameter;
+// import com.arsdigita.categorization.Category;
 import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.Post;
-import com.arsdigita.forum.Forum;
-import com.arsdigita.forum.ThreadSubscription;
+// import com.arsdigita.forum.Forum;
+// import com.arsdigita.forum.ThreadSubscription;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
-import com.arsdigita.kernel.User;
+// import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
-import com.arsdigita.web.RedirectSignal;
-import com.arsdigita.web.URL;
+// import com.arsdigita.web.RedirectSignal;
+// import com.arsdigita.web.URL;
 
-import java.math.BigDecimal;
+// import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 

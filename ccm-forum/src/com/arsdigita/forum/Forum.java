@@ -51,6 +51,13 @@ import com.arsdigita.web.Application;
 /**
  * The Forum class represents a discussion forum.
  *
+ * XXX: Forum knows about <i>threads</i> which groups a set of posts to the same
+ * subject, and <i>topics</i> which group a set of threads about the same general
+ * theme. Currently Forum uses <i>catgegory</i> as synonym for topic, which may be
+ * misleading in some contexts, because there is <i>forum-categorized</i> which
+ * uses category in the usual CMS way, esp. navigation categories. Should be
+ * cleaned up in the future.
+ *
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author chrisg23
  * @version $Revision:  1.7 $ 
@@ -62,7 +69,7 @@ public class Forum extends Application {
 	public static final String THREAD_SUBSCRIPTION_GROUPS_NAME =
                                    "Thread Subscription Groups";
 
-    private static ForumConfig s_config = new ForumConfig();
+    private static final ForumConfig s_config = new ForumConfig();
 
     static {
         s_config.load();
@@ -151,7 +158,6 @@ public class Forum extends Application {
 	 * Also sets default values for other forum settings. These can be 
 	 * amended under the setup tab in the ui
      */
-
     public static Forum create(String urlName, String title,
                                Application parent, boolean moderated) {
         s_log.debug("creating forum " + title);
@@ -182,7 +188,6 @@ public class Forum extends Application {
      * @return the Root Category for this forum, or creates a new one
      * does not have a root category, and returns it.
      */
-
     public Category getRootCategory() {
         DataObject category = (DataObject) get(CATEGORY);
         if (category == null) {
@@ -237,7 +242,8 @@ public class Forum extends Application {
         // NPE when trying to retrieve sender's email address, thus stopping any
         // further message processing.
         //   Actually, the only hack involved is making the email address unique.
-        String email = "forum-moderator-" + getID() + "-" + moderators.getID() + "@" + s_config.getReplyHostName();
+        String email = "forum-moderator-" + getID() + "-" +
+                       moderators.getID() + "@" + s_config.getReplyHostName();
         moderators.setPrimaryEmail(new EmailAddress(email));
 
 		// chris.gilbert@westsussex.gov.uk create additional groups for privilege
@@ -272,6 +278,7 @@ public class Forum extends Application {
 		
     }
 
+    @Override
     public void initialize() {
         super.initialize();
 
@@ -290,11 +297,13 @@ public class Forum extends Application {
 
     private boolean m_wasNew;
 
+    @Override
     protected void beforeSave() {
         m_wasNew = isNew();
         super.beforeSave();
     }
 
+    @Override
     protected void afterSave() {
         if (m_wasNew) {
             PermissionService.setContext(getRootCategory(), this);
@@ -462,7 +471,6 @@ public class Forum extends Application {
 		FilterFactory factory = posts.getFilterFactory();
 		Filter pending = factory.equals(Post.STATUS, Post.PENDING);
 		Filter reapprove = factory.equals(Post.STATUS, Post.REAPPROVE);
-		;
 
 		posts.addFilter(factory.or().addFilter(pending).addFilter(reapprove));
 
@@ -471,7 +479,7 @@ public class Forum extends Application {
 
 	/**
 	 * gets all suppressed messages - allows moderators to see which messages
-	 * heve been rejectedrequire their attention
+	 * heve been rejected / require their attention
 	 * @return
 	 */
 	public DataAssociation getSuppressedPosts() {
@@ -963,8 +971,9 @@ public class Forum extends Application {
      *
      * @return path name to the applications servlet/JSP
      */
+    @Override
     public String getServletPath() {
-        // sufficient it installed into its own web appl. context (ccm-forum)
+        // sufficient if installed into its own web appl. context (ccm-forum)
         // return "/main";
         return "/forum-main/main";
     }

@@ -52,6 +52,7 @@ import org.apache.log4j.Logger;
  */
 public class Loader extends PackageLoader {
 
+    /** Private logger instance for debugging purpose. */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     public void run(final ScriptContext ctx) {
@@ -140,22 +141,23 @@ public class Loader extends PackageLoader {
     }
 
     public static void setupPrivileges() {
-        PrivilegeDescriptor.createPrivilege(
-            Forum.FORUM_MODERATION_PRIVILEGE);
-        PrivilegeDescriptor.createPrivilege(
-            Forum.CREATE_THREAD_PRIVILEGE);
 
-            PrivilegeDescriptor.createPrivilege(
-                                        Forum.RESPOND_TO_THREAD_PRIVILEGE);
-            PrivilegeDescriptor.addChildPrivilege(
-                                        Forum.FORUM_MODERATION_PRIVILEGE,
-                                        Forum.CREATE_THREAD_PRIVILEGE);
-            PrivilegeDescriptor.addChildPrivilege(
-                                        Forum.CREATE_THREAD_PRIVILEGE,
-                                        Forum.RESPOND_TO_THREAD_PRIVILEGE);
-            PrivilegeDescriptor.addChildPrivilege(
-                                        Forum.RESPOND_TO_THREAD_PRIVILEGE,
-                                        PrivilegeDescriptor.READ.getName());
+        PrivilegeDescriptor.createPrivilege(
+                Forum.FORUM_MODERATION_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(
+                Forum.CREATE_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.createPrivilege(
+                Forum.RESPOND_TO_THREAD_PRIVILEGE);
+
+        PrivilegeDescriptor.addChildPrivilege(
+                Forum.FORUM_MODERATION_PRIVILEGE,
+                Forum.CREATE_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.addChildPrivilege(
+                Forum.CREATE_THREAD_PRIVILEGE,
+                Forum.RESPOND_TO_THREAD_PRIVILEGE);
+        PrivilegeDescriptor.addChildPrivilege(
+                Forum.RESPOND_TO_THREAD_PRIVILEGE,
+                PrivilegeDescriptor.READ.getName());
 		
 		
 		

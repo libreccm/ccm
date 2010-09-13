@@ -99,7 +99,7 @@ public class ThreadComponent extends ModalContainer implements Constants {
                                                    Constants.FORUM_XML_NS);
 
         // Offer links to return to index or control alerts.
-        Link returnLink = new Link(new Label(Text.gz("forum.ui.threads.viewAll")), 
+        Link returnLink = new Link(new Label(Text.gz("forum.ui.thread.viewAll")), 
                                    "index.jsp");
         returnLink.setClassAttr("actionLink");
         linksPanel.add(returnLink);

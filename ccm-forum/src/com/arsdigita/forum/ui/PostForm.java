@@ -48,8 +48,8 @@ import com.arsdigita.xml.Element;
  * differently in final processing (final meaning on the last step
  * of the wizard) by overriding the processWidgets method.
  * 
- * They all share the remainder of the steps (currently add files, add images and preview)
- * and processing relating to shared behaviour
+ * They all share the remainder of the steps (currently add files, add images
+ * and preview) and processing relating to shared behaviour
  *
  * @author Jon Orris (jorris@arsdigita.com)
  * @author rewritten by Chris Gilbert 

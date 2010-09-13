@@ -51,10 +51,17 @@ import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * 
+ */
 class ForumAlertsView extends SimpleContainer implements Constants {
     private static final Logger s_log = Logger.getLogger
         (ForumAlertsView.class);
 
+    /**
+     * Standard Constructor
+     */
     ForumAlertsView() {
         add(forumAlertsSegment());
         add(threadAlertsSegment());
@@ -78,19 +85,19 @@ class ForumAlertsView extends SimpleContainer implements Constants {
         Form alertsForm = new Form("instantAlerts", new ColumnPanel(2));
 
         final RadioGroup instant = new RadioGroup("instant");
-        instant.addOption(new Option("Yes"));
-        instant.addOption(new Option("No"));
+        instant.addOption(new Option(Text.gzAsStr("forum.ui.yes")));
+        instant.addOption(new Option(Text.gzAsStr("forum.ui.no")));
         alertsForm.add(new Label(Text.gz("forum.ui.receive_instant_alerts")));
         alertsForm.add(instant);
 
         final RadioGroup daily = new RadioGroup("daily");
-        daily.addOption(new Option("Yes"));
-        daily.addOption(new Option("No"));
+        daily.addOption(new Option(Text.gzAsStr("forum.ui.yes")));
+        daily.addOption(new Option(Text.gzAsStr("forum.ui.no")));
         alertsForm.add(new Label(Text.gz("forum.ui.receive_daily_summary")));
         alertsForm.add(daily);
 
         alertsForm.add(new Label(""));
-        alertsForm.add(new Submit("Save"));
+        alertsForm.add(new Submit(Text.gz("forum.ui.save")));
 
         alertsForm.addInitListener(new FormInitListener() {
                 public void init(FormSectionEvent e) {

@@ -19,7 +19,7 @@
 package com.arsdigita.forum;
 
 import com.arsdigita.bebop.Page;
-import com.arsdigita.bebop.parameters.ParameterModel;
+// import com.arsdigita.bebop.parameters.ParameterModel;
 
 /**
  * @author chris.gilbert@westsussex.gov.uk

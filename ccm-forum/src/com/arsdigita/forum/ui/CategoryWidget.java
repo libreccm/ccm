@@ -42,7 +42,6 @@ import java.util.TooManyListenersException;
  *
  * @version $Id: CategoryWidget.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
-
 public class CategoryWidget extends SingleSelect implements Constants {
 
     public CategoryWidget(ParameterModel categoryParameter) {
@@ -57,8 +56,9 @@ public class CategoryWidget extends SingleSelect implements Constants {
                             
                         // Get categories for this forum
                         if (forum.noCategoryPostsAllowed()) {
-				target.addOption(new Option(TOPIC_NONE.toString(), 
-			                        new Label(Text.gz("forum.ui.topic.none"))));
+                            target.addOption(new Option(
+                                    TOPIC_NONE.toString(),
+                                    new Label(Text.gz("forum.ui.topic.none"))));
                         }
                         final Category root = forum.getRootCategory();
                         if (root != null) {

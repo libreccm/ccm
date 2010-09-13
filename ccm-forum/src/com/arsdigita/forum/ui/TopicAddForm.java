@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2006-2007 Chris Gilbert (Westsussex)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -24,7 +25,7 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SaveCancelSection;
+// import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -43,36 +44,40 @@ import org.apache.log4j.Logger;
 
 
 /**
- * <b><font color="red">Experimental</font></b>
- * class to create form to add categories and map them to the forum
- * parent category. temporary hack for testing purposes
+ * Class to create a form for adding new topics.
+ * 
+ * A created topic is mapped to the forum parent category.
  *
  * @author <a href=mailto:sarah@arsdigita.com>Sarah Barwig</a>
  * @author rewritten by Chris Gilbert
- * @version $Revision: 1.2 $ $Author: chrisg23 $ $DateTime: 2004/08/17 23:26:27 $
- * @version $Id: CategoryAddForm.java 1628 2007-09-17 08:10:40Z chrisg23 $
+ * @version $Id: TopicAddForm.java 1628 2007-09-17 08:10:40Z chrisg23 $
  */
-public class CategoryAddForm extends Form {
+public class TopicAddForm extends Form {
 
+    /** Private logger instance for debugging purpose. */
     private static final Logger s_log = Logger.getLogger
-        (CategoryAddForm.class);
+        (TopicAddForm.class);
 
+    /** Input field for name of new topic*/
     private TextField m_name;
+    /** Input field for (short) description of new topic */
     private TextArea m_description;
 
     /**
-     * Builds a form to add a category.
+     * Default Constructor builds a form to add a category.
+     *
      */
-    public CategoryAddForm() {
+    public TopicAddForm() {
+        
         super("categoryAdd");
-        setRedirecting(true);
+        setRedirecting(true);   // clear form and redirect back
 
-        add(new Label(Text.gz("forum.ui.name")));
+        add(new Label(Text.gz("forum.ui.topic.name")));
         m_name = new TextField("name");
         m_name.addValidationListener(new NotNullValidationListener());
         add(m_name);
 
-        add(new Label(Text.gz("forum.ui.description")));
+        add(new Label(Text.gz("forum.ui.topic.description")));
         m_description = new TextArea("description");
         m_description.setRows(5);
         m_description.setCols(60);
@@ -83,52 +88,52 @@ public class CategoryAddForm extends Form {
 	// Would have used a saveCancel section but this would make existing
 	// stylesheets for legacy forums miss the buttons
         Submit submit = new Submit(Text.gz("forum.ui.topic.save"));
-	final Submit cancel = new Submit(Text.gz("forum.ui.cancel"));
+        final Submit cancel = new Submit(Text.gz("forum.ui.cancel"));
         add(submit);
         add(cancel);
-	addSubmissionListener(new FormSubmissionListener(){
-		public void submitted(FormSectionEvent e) throws FormProcessException {
-			PageState state = e.getPageState();
-			if (cancel.isSelected(state)){
-				fireCompletionEvent(state);
-				throw new FormProcessException("cancelled");
-			}								
-		}		
-	});
-			
-		
+        addSubmissionListener(new FormSubmissionListener(){
+            public void submitted(FormSectionEvent e)
+                   throws FormProcessException {
+                PageState state = e.getPageState();
+                if (cancel.isSelected(state)){
+                    fireCompletionEvent(state);
+                    throw new FormProcessException("cancelled");
+                }
+            }
+        });
+
 
         /*
-         * Listener to process form data.  Just adds the categories, then
+         * Listener to process form data.  Just adds the topic, then
          * adds mappings.
          */
         addProcessListener
             (new FormProcessListener() {
-                    public void process( FormSectionEvent e ) {
-                        PageState state = e.getPageState();
-                        
-                        Forum forum = ForumContext.getContext(state).getForum();
+                public void process( FormSectionEvent e ) {
+                    PageState state = e.getPageState();
 
-                        String name = (String)m_name.getValue(state);
-                        String description = (String)m_description.getValue(state);
+                    Forum forum = ForumContext.getContext(state).getForum();
 
-                        Category topic = new Category();
-                        topic.setName(name);
-                        topic.setDescription(description);
-                        topic.save();
+                    String name = (String)m_name.getValue(state);
+                    String description = (String)m_description.getValue(state);
 
-                        Category parent = forum.getRootCategory();
-                        parent.addChild(topic);
-                        parent.save();
-                        topic.setDefaultParentCategory(parent);
-                        topic.save();
+                    Category topic = new Category();
+                    topic.setName(name);
+                    topic.setDescription(description);
+                    topic.save();
 
-                        fireCompletionEvent(state);
-                    }
-                });
+                    Category parent = forum.getRootCategory();
+                    parent.addChild(topic);
+                    parent.save();
+                    topic.setDefaultParentCategory(parent);
+                    topic.save();
+
+                    fireCompletionEvent(state);
+                }
+            });
 
         /*
-         * Generates the object id for the new category
+         * Generates the object id for the new topic (category)
          */
         addInitListener
             (new FormInitListener() {
