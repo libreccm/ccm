@@ -34,7 +34,7 @@ object type GenericOrganizationalUnit extends ContentPage {
 // Parent <-> child relation organizationalunits to build department structures etc.
 association {
 
-    GenericOrganizationalUnit[0..1] orgaunit_parent = join cms_organizationalunits.organizationalunit_id
+    GenericOrganizationalUnit[0..n] orgaunit_parent = join cms_organizationalunits.organizationalunit_id
                                                to cms_organizationalunits_organizationalunit_map.orgaunit_children_id,
                                              join cms_organizationalunits_organizationalunit_map.orgaunit_parent_id
                                                to cms_organizationalunits.organizationalunit_id;
@@ -62,15 +62,15 @@ association {
                                       to cms_contacts.contact_id;
 
    // Some link attributes.
-   String contact_type = cms_organizationalunits_contact_map.contact_type VARCHAR(100);
-   Integer contact_order = cms_organizationalunits_contact_map.map_order INTEGER;
+   String[0..1] contact_type = cms_organizationalunits_contact_map.contact_type VARCHAR(100);
+   Integer[0..1] contact_order = cms_organizationalunits_contact_map.map_order INTEGER;
 
 }
 
 // Links a organization with persons.
 association {
 
-    GenericOrganizationalUnit[0..1] organizationalunit = join cms_persons.person_id
+    GenericOrganizationalUnit[0..n] organizationalunit = join cms_persons.person_id
                                                            to cms_organizationalunits_person_map.person_id,
                                                          join cms_organizationalunits_person_map.organizationalunit_id
                                                            to cms_organizationalunits.organizationalunit_id;

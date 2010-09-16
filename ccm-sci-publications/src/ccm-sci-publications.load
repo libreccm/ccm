@@ -6,7 +6,7 @@
     <initializer class="com.arsdigita.cms.Initializer"/>
   </requires>
   <provides>
-    <table name="ct_publication"/>
+    <table name="ct_publications"/>
     <table name="ct_publication_with_publisher"/>
     <table name="ct_series"/>
     <table name="ct_publisher"/>
@@ -21,6 +21,7 @@
     <table name="ct_working_paper"/>
     <table name="ct_expertise"/>
     <table name="ct_review"/>
+    <table name="ct_publicationlists"/>
     <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.PublicationWithPublisherInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.SeriesInitializer"/>
@@ -36,6 +37,7 @@
     <initializer class="com.arsdigita.cms.contenttypes.WorkingPaperInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.ExpertiseInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.ReviewInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.PublicationListInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-sci-publications"/>
@@ -54,5 +56,6 @@
     <data class="com.arsdigita.cms.contenttypes.WorkingPaperLoader"/>
     <data class="com.arsdigita.cms.contenttypes.ExpertiseLoader"/>
     <data class="com.arsdigita.cms.contenttypes.ReviewLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.PublicationListLoader"/>
   </scripts>
 </load>

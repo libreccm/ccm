@@ -14,9 +14,8 @@ public class PublicationAuthorsPropertyStep extends SimpleEditStep {
 
     private static final String ADD_AUTHOR_SHEET_NAME = "addAuthor";
 
-    public PublicationAuthorsPropertyStep(
-            ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+    public PublicationAuthorsPropertyStep(ItemSelectionModel itemModel,
+                                          AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 

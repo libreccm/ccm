@@ -49,7 +49,7 @@ public class PublicationPropertyForm
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.title").localize()));
-        ParameterModel titleParam = new StringParameter(Publication.NAME);
+        ParameterModel titleParam = new StringParameter(Publication.TITLE);
         TextField title = new TextField(titleParam);
         add(title);
 
@@ -83,7 +83,7 @@ public class PublicationPropertyForm
         FormData data = fse.getFormData();
         Publication publication = (Publication) super.initBasicWidgets(fse);
 
-        data.put(Publication.NAME, publication.getTitle());
+        data.put(Publication.TITLE, publication.getTitle());
         data.put(Publication.YEAR_OF_PUBLICATION, publication.
                 getYearOfPublication());
         data.put(Publication.ABSTRACT, publication.getAbstract());
@@ -97,7 +97,7 @@ public class PublicationPropertyForm
 
         if ((publication != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            publication.setTitle((String) data.get(Publication.NAME));           
+            publication.setTitle((String) data.get(Publication.TITLE));
             publication.setYearOfPublication((Integer) data.get(
                     Publication.YEAR_OF_PUBLICATION));
             publication.setAbstract((String) data.get(Publication.ABSTRACT));

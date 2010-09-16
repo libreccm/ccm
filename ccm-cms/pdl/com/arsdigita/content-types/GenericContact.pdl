@@ -66,8 +66,8 @@ association {
                                       to cms_contacts.contact_id;
 
     // Link Attribute
-    BigDecimal[1..1] contact_order = cms_person_contact_map.contact_order INTEGER;
+    BigDecimal[0..1] contact_order = cms_person_contact_map.contact_order INTEGER;
     // Can't use a join statement here because contacttype_id is not unique
-    String[1..1]     contact_type  = cms_person_contact_map.key VARCHAR(100);
+    String[0..1]     contact_type  = cms_person_contact_map.key VARCHAR(100);
 
 }

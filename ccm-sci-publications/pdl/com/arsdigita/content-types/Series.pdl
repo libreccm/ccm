@@ -32,7 +32,7 @@ object type Series extends ContentPage {
 //Assoication for the editship of a series
 association {
 	    
-	    Series[0..1] series = join cms_persons.person_id
+	    Series[0..n] series = join cms_persons.person_id
 	    		 	    to ct_series_editship.person_id,
 				  join ct_series_editship.series_id
 				    to ct_series.series_id;
@@ -54,7 +54,7 @@ association {
 //Assoication for the volumes in the series
 association {
 	    
-	    Series[0..1] series = join ct_publications.publication_id
+	    Series[0..n] series = join ct_publications.publication_id
 	                            to ct_publications_volume_in_series.publication_id,
 				  join ct_publications_volume_in_series.series_id
 				    to ct_series.series_id;

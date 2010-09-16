@@ -74,7 +74,7 @@ public class GenericOrganizationalUnitChildrenCollection
     public void swapWithNext(GenericOrganizationalUnit child) {
         int currentPos = 0;
         int currentIndex = 0;
-        int nextIndex = 0;        
+        int nextIndex = 0;
 
         s_log.debug("Searching child...");
         this.rewind();
@@ -181,6 +181,7 @@ public class GenericOrganizationalUnitChildrenCollection
      * @return The GenericOrganizationalUnit at the cursors current position.
      */
     public GenericOrganizationalUnit getOrgaUnitChild() {
-        return new GenericOrganizationalUnit(m_dataCollection.getDataObject());
+        return new GenericOrganizationalUnit(
+                m_dataCollection.getDataObject());
     }
 }

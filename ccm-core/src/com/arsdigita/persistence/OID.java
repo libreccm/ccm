@@ -429,7 +429,31 @@ public class OID {
         for(Iterator it = props.keySet().iterator(); it.hasNext(); ) {
         	Object key = it.next();
         	Object value = props.get(key);
-        	sb.append(key.toString() + OID_SEPARATOR_CHAR + value.toString());
+                /*if ((key == null) || (value == null)) {
+                    m_log.warn("key or value in OID.toString() are null");
+                    m_log.warn(String.format("key   = %s", key));
+                    m_log.warn(String.format("value = %s", value));
+                }*/
+                /*
+                 * Changed by Jens Pelzetter 2010-09-14. For unknown reasons
+                 * the value is null for some properties, which causes 
+                 * a NPE in the line below the if. 
+                 */
+                if (null == value) {
+                    m_log.info(String.format("The value for prop \"%s\" " +
+                            "is null. Ignoring.", key));
+                    continue;
+                }
+                /*
+                 * Changed by Jens Pelzetter 2010-09-14.
+                 *
+                 * The old method (see below) is very slow, because of this
+                 * has been changed.
+                 */
+                sb.append(key.toString());
+                sb.append(OID_SEPARATOR_CHAR);
+                sb.append(value.toString());
+        	//sb.append(key.toString() + OID_SEPARATOR_CHAR + value.toString());
         	if (it.hasNext()) {
         		sb.append(OID_SEPARATOR_CHAR);
         	}

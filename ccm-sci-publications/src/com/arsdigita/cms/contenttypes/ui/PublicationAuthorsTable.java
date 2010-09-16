@@ -41,7 +41,7 @@ public class PublicationAuthorsTable
     public PublicationAuthorsTable(ItemSelectionModel itemModel) {
         super();
         m_itemModel = itemModel;
-        
+
         setEmptyView(
                 new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.none")));
@@ -75,7 +75,7 @@ public class PublicationAuthorsTable
         setModelBuilder(
                 new PublicationAuthorsTableModelBuilder(itemModel));
 
-        colModel.get(0).setCellRenderer(new EditCellRenderer());        
+        colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(2).setCellRenderer(new DeleteCellRenderer());
         colModel.get(3).setCellRenderer(new UpCellRenderer());
         colModel.get(4).setCellRenderer(new DownCellRenderer());
@@ -110,10 +110,9 @@ public class PublicationAuthorsTable
         private AuthorshipCollection m_authorshipCollection;
         private GenericPerson m_author;
 
-        private PublicationAuthorsTableModel(
-                Table table,
-                PageState state,
-                Publication publication) {
+        public PublicationAuthorsTableModel(Table table,
+                                            PageState state,
+                                            Publication publication) {
             m_table = table;
             m_authorshipCollection = publication.getAuthors();
         }
@@ -205,14 +204,13 @@ public class PublicationAuthorsTable
             implements TableCellRenderer {
 
         @Override
-        public Component getComponent(
-                Table table,
-                PageState state,
-                Object value,
-                boolean isSelected,
-                Object key,
-                int row,
-                int col) {
+        public Component getComponent(Table table,
+                                      PageState state,
+                                      Object value,
+                                      boolean isSelected,
+                                      Object key,
+                                      int row,
+                                      int col) {
 
             SecurityManager securityManager =
                             Utilities.getSecurityManager(state);

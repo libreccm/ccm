@@ -23,29 +23,23 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentPage;
 
 //PDL definition for the basic attributes of publication.
-object type Publication extends ContentPage {
-       
-       Integer[0..1] yearOfPublication = ct_publications.year INTEGER;
-       String[0..1] abstract = ct_publications.abstract VARCHAR(2048);
-       String[0..1] misc = ct_publications.misc VARCHAR(2048);
+object type PublicationList extends ContentPage {
 
-       reference key (ct_publications.publication_id);
+       String[0..1] description = ct_publicationlists.description VARCHAR(2048);       
+
+       reference key (ct_publicationlists.publicationlist_id);
 }
 
-//Assoication for the authors
+//Association which links the publication list(s) and the publications
 association {
+
+	    PublicationList[0..n] publicationLists = join ct_publications.publication_id
+	    			  		      to ct_publicationlists_map.publication_id,
+ 						    join ct_publicationlists_map.publicationlist_id
+						      to ct_publicationlists.publicationlist_id;
 	    
-	    Publication[0..n] publication = join cms_persons.person_id
-	    		      		      to ct_publications_authorship.person_id,
-					    join ct_publications_authorship.publication_id
+            Publication[0..n] publications = join ct_publicationlists.publicationlist_id
+	    		                      to ct_publicationlists_map.publicationlist_id,
+					    join ct_publicationlists_map.publication_id
 					      to ct_publications.publication_id;
-
-            GenericPerson[0..n] authors = join ct_publications.publication_id
-	                                    to ct_publications_authorship.publication_id,
-					  join ct_publications_authorship.person_id
-                                            to cms_persons.person_id;
-
-            // Additional attributes
-	    Boolean[0..1] editor = ct_publications_authorship.editor BIT;
-	    Integer[0..1] authorOrder = ct_publications_authorship.authorship_order INTEGER;
 }
