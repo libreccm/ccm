@@ -29,20 +29,20 @@ import java.math.BigDecimal;
 
 /**
  * <p>
- * This is the base class for all other Publication Contenttypes. The 
+ * This is the base class for all other Publication Content types. The
  * following UML class diagram shows an overview of the classes of the 
  * Publications module. Please note that the UML diagram shown an general 
  * overview of the classes/object types of the publications module. It shows
- * the attributes of the contenttypes and theirs assoications among them. Not
+ * the attributes of the content types and theirs associations between them. Not
  * all classes shown in the UML have a Java counterpart. These classes are
- * representing assoications <em>with</em> extra attributes. The associations 
+ * representing associations <em>with</em> extra attributes. The associations
  * are defined in the PDL files of this module.
  * </p>
  * <p>
- * <img src="doc-files/PublicationsModule.png" width="100%">
+ * <img src="doc-files/PublicationModule.png" width="100%">
  * </p>
  * <p>
- * This class is not a directly usable Contenttype. Its is only used to
+ * This class is not a directly usable Content type. Its is only used to
  * define some common attributes needed for all kinds of publications.
  * </p>
  *
