@@ -29,34 +29,32 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
  * Supports generically locating a domain object on the site.
  * The URLService can produce the path (relative to the root URL) to a page
  * that displays the domain object identified by a given OID.
  * <P>
- * The service
- * works by delegating to a URLFinder based on the object type of the
- * given OID. A URLFinder must be registered with the URLService for the
- * object type in question or one of its supertypes.  That URLFinder
- * dynamically produces a URL path by a process that potentially involves
- * a few database queries.
+ * The service works by delegating to a <em>URLFinder</em> based on the object
+ * type of the given OID.
+ * A URLFinder must be registered with the URLService for the object type
+ * in question or one of its supertypes.  That URLFinder dynamically produces a
+ * URL path by a process that potentially involves a few database queries.</p>
+ *
  * <p>
  * The URLService is only intended for single-object lookups.  On pages that
- * display many objects (for example, a search results page), the URLs displayed for
- * each object should <em>not</em> be obtained from the URLService (for performance
- * reasons).  Instead, a single "redirector page" should be the target of
- * all those links.  The user clicks on a link,
- * which then uses the URLService to find the object's URL
- * and redirect the user to the resulting URL.  An example of this process
- * is:
+ * display many objects (for example, a search results page), the URLs displayed 
+ * for each object should <em>not</em> be obtained from the URLService (for
+ * performance reasons). Instead, a single "redirector page" should be the target
+ * of all those links. The user clicks on a link, which then uses the
+ * URLService to find the object's URL and redirect the user to the resulting
+ * URL.  An example of this process is:</p>
  * <ol>
- * <li> User searches for objects based on keywords.
+ * <li> User searches for objects based on keywords.</li>
  * <li> Search page displays matching objects, with a link for each
  *      object.  The targets of these links are all the same:
- *          .../display-result?id=:id&object_type=:object_type
- * <li> User clicks on one of those links.
+ *          .../display-result?id=:id&object_type=:object_type</li>
+ * <li> User clicks on one of those links.</li>
  * <li> Display-result page uses the URLService to find the specified
- *      object's URL and redirect the user there.
+ *      object's URL and redirect the user there.</li>
  * </ol>
  *
  * The GenericURLFinder class provides a simple URLFinder that can be
@@ -64,11 +62,10 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @see GenericURLFinder
  *
- * @author Oumi Mehrotra 
+ * @author Oumi Mehrotra
+ * @version $Id: URLService.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class URLService {
-
-    public static final String versionId = "$Id: URLService.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static Map s_finders = new HashMap();
 

@@ -96,8 +96,7 @@ public class PrivilegeDescriptor {
 
 
     /**
-     *
-     * Adds a privilege to the system.
+     * Adds a privilege, identified by a name (string), to the system.
      *
      * @exception PersistenceException when there is a persistence
      * error in saving the new privilege.
@@ -121,9 +120,16 @@ public class PrivilegeDescriptor {
         return desc;
     }
 
-    public static void addChildPrivilege(
-      String privilegeName,
-      String childPrivilegeName) {
+    /**
+     * Sets up a tree structure of privileges, if privilegeName is granted,
+     * it includes child PrivilegeName as well.
+
+     * @param privilegeName  privilege name will include another privilege
+     * @param childPrivilegeName privilege name is included by priv...Name.
+     */
+    public static void addChildPrivilege( String privilegeName,
+                                          String childPrivilegeName) {
+
       DataOperation addOp =
         SessionManager.getSession().retrieveDataOperation(
           "com.arsdigita.kernel.permissions.addChildPrivilege");
@@ -303,9 +309,9 @@ public class PrivilegeDescriptor {
     }
 
     /**
-     *
      * Determine whether or not this privilege is implied by the
      * specified privilege.
+     *
      * @return true if the privilege on which this method is invoked
      * is implied by the specified privilege, false otherwise
      */

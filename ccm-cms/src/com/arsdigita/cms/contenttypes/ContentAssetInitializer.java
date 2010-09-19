@@ -119,9 +119,8 @@ public abstract class ContentAssetInitializer extends CompoundInitializer {
     public abstract String getBaseType();
     
     /**
-     * Returns the path to the XML file defintions for the
-     * asset,
-     * eg /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
+     * Returns the path to the XML file defintions for the asset, eg
+     * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
     public abstract String getTraversalXML();
 

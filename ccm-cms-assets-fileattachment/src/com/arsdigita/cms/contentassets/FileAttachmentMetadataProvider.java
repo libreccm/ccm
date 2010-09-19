@@ -73,7 +73,8 @@ public class FileAttachmentMetadataProvider extends AssetMetadataProvider {
                                      "",
                                      "/redirect/", map ).getURL();
 
-		summary.append("A file attached to <a href=\"" + url + "\">" + title + "</a>");
+		summary.append("A file attached to <a href=\"" + url + "\">" +
+                               title + "</a>");
 
             } else {
                 // draft - don't give a live link because stylesheets

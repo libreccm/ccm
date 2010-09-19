@@ -9,23 +9,33 @@ import com.arsdigita.util.parameter.Parameter;
 
 public class FileAttachmentConfig extends AbstractConfig {
 
+    /**
+     * A form which should be used for editing file asset properties.
+     * Default implementation edits Assets.description property.
+     */
     Parameter editFormClass;
+    /**
+     * Optional parameter if set to TRUE will disply the asset URL instead of
+     * the description on AttachFile Authroing step. Default: FALSE
+     */
     Parameter showAssetID;
     
     /**
-     * Constructor, don't use is directly!
+     * Constructor, don't use it directly!
      */
     public FileAttachmentConfig() {
 
-        editFormClass = new SpecificClassParameter ("com.arsdigita.cms.contentassets.file_edit_form",
-                Parameter.REQUIRED,
-                FileDescriptionForm.class,
-                FormSection.class
-                ); 
-        showAssetID = new BooleanParameter("com.arsdigita.cms.contentassets.file_show_asset_id",
-        		Parameter.OPTIONAL,
-        		Boolean.FALSE
-        		);
+        editFormClass = new SpecificClassParameter(
+                            "com.arsdigita.cms.contentassets.file_edit_form",
+                            Parameter.REQUIRED,
+                            FileDescriptionForm.class,
+                            FormSection.class
+                            );
+        showAssetID = new BooleanParameter(
+                          "com.arsdigita.cms.contentassets.file_show_asset_id",
+        		  Parameter.OPTIONAL,
+        		  Boolean.FALSE
+        		  );
                         
         register(editFormClass);
         register(showAssetID);

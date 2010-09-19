@@ -52,6 +52,11 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
     public void init(DomainInitEvent evt) {
         super.init(evt);
 
+        /*
+         * Register with kernel's URLservice so for an instance of it the
+         * complete path to its location in the sites URL tree, based on its OID,
+         * can be build.
+         */
         URLService.registerFinder(
             FileAttachment.BASE_DATA_OBJECT_TYPE,
             new FileAttachmentURLFinder());
@@ -67,7 +72,7 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
          * their specific adapters
          *
          * chris.gilbert@westsussex.gov.uk
-	     */
+         */
         MetadataProviderRegistry.registerAdapter(
 			FileAttachment.BASE_DATA_OBJECT_TYPE,
 			new FileAttachmentMetadataProvider());
@@ -88,13 +93,12 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
     }
 
     /**
-     * Returns the path to the XML file defintions for the
-     * asset,
-     * eg /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
+     * Returns the path to the XML file defintions for the asset, eg:
+     * /WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/FileAttachments.xml
      */
     public String getTraversalXML() {
-		return "/WEB-INF/traversal-adapters/com/arsdigita/"
-			+ "cms/contentassets/FileAttachment.xml";
+        return "/WEB-INF/traversal-adapters/com/arsdigita/"
+             + "cms/contentassets/FileAttachment.xml";
     }
 
     /**
@@ -114,7 +118,7 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
 
     /**
      * The label for the authoring step
-     * @deprecated has to be replaced to provide LabelKey, see contgentAssetInitializer
+     * @deprecated has to be replaced to provide LabelKey, see ContentAssetInitializer
      */
     public GlobalizedMessage getAuthoringStepLabel() {
         return FileAttachmentGlobalize.AuthoringStepLabel();
@@ -125,7 +129,7 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
 
     /**
      * The description for the authoring step
-     * @deprecated has to be replaced to provide DesciptionKey, see contgentAssetInitializer
+     * @deprecated has to be replaced to provide DesciptionKey, see ContentAssetInitializer
      */
     public GlobalizedMessage getAuthoringStepDescription() {
         return FileAttachmentGlobalize.AuthoringStepDescription();

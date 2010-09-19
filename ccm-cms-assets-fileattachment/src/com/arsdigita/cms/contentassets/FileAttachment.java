@@ -35,7 +35,6 @@ import org.apache.log4j.Logger;
  *
  * @author sseago@redhat.com
  * @version $Id: FileAttachment.java 1112 2006-04-18 14:02:10Z apevec $
- *
  */
 public class FileAttachment extends FileAsset {
 
@@ -160,11 +159,10 @@ public class FileAttachment extends FileAsset {
     }
 
     /**
-     * This method is only used for setting initial sort keys for
-     * attachments which exist without them. This is called by swapKeys
-     * instead of attempting to swap if the key found is
-     * null. This implementation sorts all FileAttachments owned by this
-     * FileAttachment's "fileOwner" by file name.
+     * This method is only used for setting initial sort keys for attachments
+     * which exist without them. This is called by swapKeys instead of
+     * attempting to swap if the key found is null. This implementation sorts all
+     * FileAttachments owned by this FileAttachment's "fileOwner" by file name.
      */
     public void alphabetize() {
         int sortKey = maxOrder();
@@ -263,7 +261,8 @@ public class FileAttachment extends FileAsset {
         }
 
         DataOperation operation = SessionManager.getSession()
-            .retrieveDataOperation("com.arsdigita.cms.contentassets.swapFileAttachmentOrder");
+            .retrieveDataOperation(
+             "com.arsdigita.cms.contentassets.swapFileAttachmentOrder");
         operation.setParameter("ownerID", fileOwner.getID());
         operation.setParameter("fileOrder", currentKey);
         operation.setParameter("nextFileOrder", otherKey);
