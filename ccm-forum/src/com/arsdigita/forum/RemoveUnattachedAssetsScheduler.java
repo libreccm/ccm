@@ -37,8 +37,8 @@ import com.arsdigita.util.UncheckedWrapperException;
  * Scheduler thread to remove any files or images that are more than a day old
  * and haven't been attached to a post.
  * These posts arise if a user starts to create a post and closes their browser 
- * before completing the post. This
- * process gets rid of them on a daily basis to keep them under control
+ * before completing the post. This process gets rid of them on a daily basis
+ * to keep them under control
  * 
  * nb - We can't just delete all unattached assets, as some may be there because 
  * the user is  halfway through making a new post

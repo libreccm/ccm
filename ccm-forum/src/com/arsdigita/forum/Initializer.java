@@ -43,7 +43,7 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
+// import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.search.MetadataProviderRegistry;
@@ -60,6 +60,9 @@ public class Initializer extends CompoundInitializer {
 
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 
+    /**
+     * Default Constructor, cares about the PDLInitializer for forum.
+     */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -70,6 +73,10 @@ public class Initializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
     }
 
+    /**
+     * 
+     * @param e
+     */
     public void init(DomainInitEvent e) {
         super.init(e);
         
@@ -103,8 +110,8 @@ public class Initializer extends CompoundInitializer {
 				return new PostImageAttachment(dataObject);
 			}
 		});
-	e.getFactory().registerInstantiator(
-            "com.arsdigita.forum.Inbox",
+	e.getFactory().registerInstantiator(  // OOPS: inbox commented out in
+            "com.arsdigita.forum.Inbox",      // Forum loader!
             new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new Forum(dataObject);
@@ -208,7 +215,8 @@ public class Initializer extends CompoundInitializer {
 		
     }
 
-    public void init(LegacyInitEvent e) {
+    // public void init(LegacyInitEvent e) {
+    public void init(ContextInitEvent e) {
         super.init(e);
 		
         if (RuntimeConfig.getConfig().runBackGroundTasks()) {
@@ -220,7 +228,9 @@ public class Initializer extends CompoundInitializer {
     public void close(ContextCloseEvent e) {
 
         if (RuntimeConfig.getConfig().runBackGroundTasks()) {
-            RemoveUnattachedAssetsScheduler.startTimer();
+            // Should reyally be a typo!!  TEST IT!
+            // RemoveUnattachedAssetsScheduler.startTimer();
+            RemoveUnattachedAssetsScheduler.stopTimer();
         }
 
     }

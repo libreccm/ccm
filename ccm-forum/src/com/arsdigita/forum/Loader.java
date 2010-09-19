@@ -59,12 +59,14 @@ public class Loader extends PackageLoader {
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
+
                 setupPrivileges();
                 setupForumAppType();
                 //setupInboxAppType();
                 setupRecentPostingsPortletType();
                 setupMyForumsPortletType();
                 setupDigestUser();
+
                 SessionManager.getSession().flushAll();
             }
         }.run();
@@ -84,6 +86,10 @@ public class Loader extends PackageLoader {
     }
 
 
+    /**
+     * 
+     * @return
+     */
     private static ApplicationType setupInboxAppType() {
         ApplicationType type = ApplicationType
             .createApplicationType(Forum.PACKAGE_TYPE,
@@ -93,6 +99,10 @@ public class Loader extends PackageLoader {
         return type;
     }
 
+    /**
+     * 
+     * @return
+     */
     public static AppPortletType setupRecentPostingsPortletType() {
         AppPortletType type = AppPortletType
             .createAppPortletType("Recent Forum Postings",
@@ -105,17 +115,21 @@ public class Loader extends PackageLoader {
         return type;
     }
 
-	public static PortletType setupMyForumsPortletType() {
+    public static PortletType setupMyForumsPortletType() {
 		
-		PortletType type = PortletType
-				   .createPortletType("My Forums", 
-						  PortletType.WIDE_PROFILE,
-		                  MyForumsPortlet.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("Lists forums that user has access to, with last posting date");
+        PortletType type = PortletType.createPortletType(
+                                         "My Forums",
+                                         PortletType.WIDE_PROFILE,
+                                         MyForumsPortlet.BASE_DATA_OBJECT_TYPE);
+        type.setDescription("Lists forums that user has access to, " + "" +
+                "           with last posting date");
 			
         return type;
     }
 
+    /**
+     * 
+     */
     private static void setupDigestUser() {
         s_log.debug("Setting up the digest user");
 
@@ -140,6 +154,9 @@ public class Loader extends PackageLoader {
 		
     }
 
+    /**
+     * 
+     */
     public static void setupPrivileges() {
 
         PrivilegeDescriptor.createPrivilege(
@@ -158,9 +175,6 @@ public class Loader extends PackageLoader {
         PrivilegeDescriptor.addChildPrivilege(
                 Forum.RESPOND_TO_THREAD_PRIVILEGE,
                 PrivilegeDescriptor.READ.getName());
-		
-		
-		
     }
 
 }
