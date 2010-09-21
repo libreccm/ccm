@@ -67,6 +67,12 @@ public class InternetArticlePropertyForm
         add(m_itemSearch);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.internetarticle.url").localize()));
+        ParameterModel urlParam = new StringParameter(InternetArticle.URL);
+        TextField url = new TextField(urlParam);
+        add(url);
+
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number").localize()));
         ParameterModel numberParam =
                        new StringParameter(InternetArticle.NUMBER);
@@ -116,6 +122,7 @@ public class InternetArticlePropertyForm
 
         data.put(InternetArticle.PLACE, article.getPlace());
         data.put(ITEM_SEARCH, article.getOrganization());
+        data.put(InternetArticle.URL, article.getUrl());
         data.put(InternetArticle.NUMBER, article.getNumber());
         data.put(InternetArticle.NUMBER_OF_PAGES, article.getNumberOfPages());
         data.put(InternetArticle.EDITION, article.getEdition());
@@ -136,6 +143,8 @@ public class InternetArticlePropertyForm
             article.setPlace((String) data.get(InternetArticle.PLACE));
             article.setOrganization(
                     (GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+            article.setUrl(
+                    (String) data.get(InternetArticle.URL));
             article.setNumber((String) data.get(InternetArticle.NUMBER));
             article.setNumberOfPages(
                     (Integer) data.get(InternetArticle.NUMBER_OF_PAGES));
@@ -144,7 +153,7 @@ public class InternetArticlePropertyForm
             article.setPublicationDate(
                     (Date) data.get(InternetArticle.PUBLICATION_DATE));
 
-            article.save();          
+            article.save();
         }
     }
 }

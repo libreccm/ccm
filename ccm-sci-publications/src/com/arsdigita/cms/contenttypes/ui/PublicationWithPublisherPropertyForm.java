@@ -33,7 +33,7 @@ public class PublicationWithPublisherPropertyForm
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "publisher";
     public static final String ID = "PublicationWithPublisherEdit";
-private ItemSelectionModel m_itemModel;
+    private ItemSelectionModel m_itemModel;
 
     public PublicationWithPublisherPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -66,6 +66,14 @@ private ItemSelectionModel m_itemModel;
                 PublicationWithPublisher.ISBN);
         TextField isbn = new TextField(isbnParam);
         add(isbn);
+
+
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.url").localize()));
+        ParameterModel urlParam = new StringParameter(
+                PublicationWithPublisher.URL);
+        TextField url = new TextField(urlParam);
+        add(url);
     }
 
     @Override
@@ -79,6 +87,8 @@ private ItemSelectionModel m_itemModel;
 
         data.put(ITEM_SEARCH, publication.getPublisher());
         data.put(PublicationWithPublisher.ISBN, publication.getISBN());
+        data.put(PublicationWithPublisher.URL, publication.getUrl());
+
     }
 
     @Override
@@ -94,8 +104,9 @@ private ItemSelectionModel m_itemModel;
                 isSelected(fse.getPageState())) {
             publication.setPublisher((Publisher) data.get(ITEM_SEARCH));
             publication.setISBN((String) data.get(PublicationWithPublisher.ISBN));
+            publication.setUrl((String) data.get(PublicationWithPublisher.URL));
 
             publication.save();
-        }    
+        }
     }
 }

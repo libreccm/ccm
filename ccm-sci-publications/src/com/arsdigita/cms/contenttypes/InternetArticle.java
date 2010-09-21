@@ -37,10 +37,10 @@ public class InternetArticle extends Publication {
     public static final String NUMBER_OF_PAGES = "numberOfPages";
     public static final String EDITION = "edition";
     public static final String ISSN = "issn";
+    public static final String URL = "url";
     public static final String PUBLICATION_DATE = "publicationDate";
-
     public static final String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.InternetArticle";
+                               "com.arsdigita.cms.contenttypes.InternetArticle";
 
     public InternetArticle() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -126,4 +126,11 @@ public class InternetArticle extends Publication {
         set(PUBLICATION_DATE, pubDate);
     }
 
+     public String getUrl() {
+        return (String) get(URL);
+    }
+
+    public void setUrl(String url) {
+        set(URL, url);
+    }
 }

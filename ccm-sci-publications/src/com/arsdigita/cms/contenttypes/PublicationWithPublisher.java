@@ -45,6 +45,7 @@ import org.apache.log4j.Logger;
 public class PublicationWithPublisher extends Publication {
 
     public final static String ISBN = "isbn";
+    public static final String URL = "url";
     public final static String PUBLISHER = "publisher";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.PublicationWithPublisher";
@@ -90,6 +91,14 @@ public class PublicationWithPublisher extends Publication {
      */
     public void setISBN(String isbn) {
         set(ISBN, isbn);
+    }
+
+    public String getUrl() {
+        return (String) get(URL);
+    }
+
+    public void setUrl(String url) {
+        set(URL, url);
     }
 
     /**

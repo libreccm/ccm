@@ -13,6 +13,10 @@
 	<xrd:property name="/object/publications"/>	
 	<xrd:property name="/object/publications/authors"/>		
 	<xrd:property name="/object/publications/publisher"/>
+	<xrd:property name="/object/publications/series"/>
+	<xrd:property name="/object/publications/series/editors"/>
+	<xrd:property name="/object/publications/articles"/>	
+	<xrd:property name="/object/publications/collectedvolume"/>
       </xrd:associations>
 
     </xrd:adapter>

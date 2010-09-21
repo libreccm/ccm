@@ -11,6 +11,8 @@
       
       <xrd:associations rule="include">
 	<xrd:property name="/object/authors"/>	
+	<xrd:property name="/object/publisher"/>	
+	<xrd:property name="/object/series"/>		
       </xrd:associations>
 
     </xrd:adapter>
