@@ -5,7 +5,7 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type
-      label="InProceedings"
+      label="SciPublications/InProceedings"
       description="Base type for inProceedingss"
       objectType="com.arsdigita.cms.contenttypes.InProceedings"
       classname="com.arsdigita.cms.contenttypes.InProceedings">

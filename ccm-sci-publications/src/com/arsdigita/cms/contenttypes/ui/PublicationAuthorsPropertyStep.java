@@ -19,10 +19,9 @@ public class PublicationAuthorsPropertyStep extends SimpleEditStep {
         this(itemModel, parent, null);
     }
 
-    public PublicationAuthorsPropertyStep(
-            ItemSelectionModel itemModel,
-            AuthoringKitWizard parent,
-            String prefix) {
+    public PublicationAuthorsPropertyStep(ItemSelectionModel itemModel,
+                                          AuthoringKitWizard parent,
+                                          String prefix) {
         super(itemModel, parent, prefix);
 
         BasicItemForm addAuthorSheet =

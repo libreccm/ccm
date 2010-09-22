@@ -5,7 +5,7 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type
-      label="PublicationList"
+      label="SciPublications/PublicationList"
       description="A list of publications"
       objectType="com.arsdigita.cms.contenttypes.PublicationList"
       classname="com.arsdigita.cms.contenttypes.PublicationList">

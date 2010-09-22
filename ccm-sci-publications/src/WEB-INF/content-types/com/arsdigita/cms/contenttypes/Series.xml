@@ -5,7 +5,7 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type
-      label="Series"
+      label="SciPublications/Series"
       description="Base type for seriess"
       objectType="com.arsdigita.cms.contenttypes.Series"
       classname="com.arsdigita.cms.contenttypes.Series">

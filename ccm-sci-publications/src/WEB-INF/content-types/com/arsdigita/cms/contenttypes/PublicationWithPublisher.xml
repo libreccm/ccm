@@ -5,7 +5,7 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type
-      label="PublicationWithPublisher"
+      label="SciPublications/PublicationWithPublisher"
       description="Base type for publications"
       objectType="com.arsdigita.cms.contenttypes.PublicationWithPublisher"
       classname="com.arsdigita.cms.contenttypes.PublicationWithPublisher"
