@@ -48,6 +48,7 @@ class MessageView extends SimpleComponent implements Constants {
         m_post = post;
     }
 
+    @Override
     public void register(Page page) {
         super.register(page);
         if (m_postModel != null) {
@@ -56,6 +57,7 @@ class MessageView extends SimpleComponent implements Constants {
         }
     }
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         Message post = m_post;
@@ -78,7 +80,7 @@ class MessageView extends SimpleComponent implements Constants {
         xr.setWrapAttributes(true);
         xr.setWrapObjects(false);
         
-        xr.walk(post, ThreadDisplay.class.getName());
+        xr.walk(post, DiscussionPostsList.class.getName());
     }
 }
 

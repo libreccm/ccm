@@ -44,7 +44,7 @@ import java.util.Iterator;
  * uses category in the usual CMS way, esp. navigation categories.
  *
  */
-public class TopicList extends SimpleComponent implements Constants {
+public class TopicsList extends SimpleComponent implements Constants {
 
     /** List of properties a topic may have. */
     private final static Set s_catProps;

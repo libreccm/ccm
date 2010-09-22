@@ -47,55 +47,73 @@ import com.arsdigita.messaging.MessageThread;
 import org.apache.log4j.Logger;
 
 /**
- * Display for looking at a single thread and posting new messages and
- * replying to it. Contains MessagesComponent, EditPostForm, and
- * ReplyToPostForm
+ * A Bebop component which provides the dynamic parts of the UI for looking at
+ * a single thread of the forum and posting new messages as well as replying to it.
+ * (The invoking class forum.ThreadPageBuilder creates the static parts as the 
+ * title of the forum and the forum introcuction text).
+ * 
+ * The dynamic part of the discussion page contains three components: 
+ * a MessageList, a ThreadEdit component, and a ThreadReply component.
+ *
+ * Contains MessagesComponent, EditPostForm, and ReplyToPostForm
  * @see com.arsdigita.forum.ui.MessagesComponent
  * @see com.arsdigita.forum.ui.EditPostForm
  * @see com.arsdigita.forum.ui.ReplyToPostForm
  */
 
-public class ThreadComponent extends ModalContainer implements Constants {
+public class DiscussionThreadSimpleView extends ModalContainer implements Constants {
+
+    /** Private logger instance for debugging purpose. */
+    private static final Logger s_log
+        = Logger.getLogger(DiscussionThreadSimpleView.class);
 
     // References to sub-components for event access.
-
-    private Container m_threadView;
+    /** The message list component */
+    private Container m_threadMessagesPanel;
+    /** The post component for a root mesage */
     private PostForm m_rootForm;
+    /** The post component for a reply mesage */
     private PostForm m_replyForm;
+    /** A message component for moderators */
     private Form m_rejectForm;
 
-    private static final Logger s_log 
-        = Logger.getLogger(ThreadComponent.class);
-
+    /** */
     private ACSObjectSelectionModel m_postModel;
 
     /**
-     * The forum page contains three components: a MessageList,
+     * Default Constructor creates the component of the discussio view.
+     * The discussion page contains three components: a MessageList,
      * a ThreadEdit component, and a ThreadReply component.
-     * Creates the component.
+     * 
      */
-    public ThreadComponent() {
+    public DiscussionThreadSimpleView() {
         // Create a modal container: shows only one containee at a time.
         m_postModel = new ACSObjectSelectionModel("post");
 
         initComponents();
     }
 
+    /**
+     * Internal helper method for constructor
+     * Add the thread components to the modal container and maintain
+     * references for event manipulation purposes.
+     */
     private void initComponents() {
-        // Add the thread components to the modal container and maintain
-        // references for event manipulation purposes.
-       s_log.debug("creating edit post form");
+
+        s_log.debug("creating edit post form");
         m_rootForm = new RootPostForm(m_postModel);
-        m_replyForm = new ReplyToPostForm(m_postModel);
         s_log.debug("creating reply to post form");
+        m_replyForm = new ReplyToPostForm(m_postModel);
         s_log.debug("creating reject form");
         m_rejectForm = new RejectionForm(m_postModel);
+        
         addForm(m_rootForm);
         addForm(m_replyForm);
         addForm(m_rejectForm);
 
-        m_threadView = new SimpleContainer();        
-        Container linksPanel = new SimpleContainer(FORUM_XML_PREFIX + ":threadOptions", 
+        m_threadMessagesPanel = new SimpleContainer();
+        Container linksPanel = new SimpleContainer(FORUM_XML_PREFIX +
+                                                   ":threadOptions",
                                                    Constants.FORUM_XML_NS);
 
         // Offer links to return to index or control alerts.
@@ -110,16 +128,16 @@ public class ThreadComponent extends ModalContainer implements Constants {
         linksPanel.add(subLinks);
 
         // Add the panel to the view.
-        m_threadView.add(linksPanel);
-        m_threadView.add(new ThreadDisplay(m_postModel, this));
-        add(m_threadView);
+        m_threadMessagesPanel.add(linksPanel);
+        m_threadMessagesPanel.add(new DiscussionPostsList(m_postModel, this));
+        add(m_threadMessagesPanel);
 
-        // The thread view is the default component.
-        setDefaultComponent(m_threadView);
+        // The threadMessagesPanel is the default component.
+        setDefaultComponent(m_threadMessagesPanel);
     }
 
     public void makeListViewVisible(PageState state) {
-        setVisibleComponent(state, m_threadView);
+        setVisibleComponent(state, m_threadMessagesPanel);
     }
 
     public void makeEditFormVisible(PageState state) {
@@ -208,6 +226,7 @@ public class ThreadComponent extends ModalContainer implements Constants {
     private Component createThreadUnsubscribeLink() {
         ActionLink unsubscribeLink = new ActionLink(
             new Label(Text.gz("forum.ui.thread.unsubscribe"))) {
+                @Override
                 public boolean isVisible(PageState s) {
                     Party party = Kernel.getContext().getParty();
 

@@ -50,7 +50,7 @@ import java.math.BigDecimal;
  * A paginator is added to handle a high number of threads.
  * 
  */
-public class ThreadList extends SimpleComponent implements Constants {
+public class ThreadsList extends SimpleComponent implements Constants {
 
     /**  */
     private IntegerParameter m_pageNumber =
@@ -81,9 +81,8 @@ public class ThreadList extends SimpleComponent implements Constants {
             categoryID = null;
         }
         
-        ThreadCollection threads = forum.getThreads(
-            categoryID,
-            Kernel.getContext().getParty());
+        ThreadCollection threads = forum.getThreads(categoryID,
+                                                    Kernel.getContext().getParty());
         
         return threads;
     }
@@ -95,6 +94,7 @@ public class ThreadList extends SimpleComponent implements Constants {
      */
     public void generateXML(PageState state,
                             Element parent) {
+        // Begin of thread list, XSL constructs (and localizes) the list title bar
         Element content = parent.newChildElement(FORUM_XML_PREFIX +
                                                  ":threadList", FORUM_XML_NS);
 
@@ -130,11 +130,14 @@ public class ThreadList extends SimpleComponent implements Constants {
                              new Integer((int)end+1));
         }
         
-        while (threads.next()) {
+        while (threads.next()) {   // step through ThreadCollections
+
             MessageThread thread = threads.getMessageThread();
             Element threadEl = content.newChildElement(FORUM_XML_PREFIX +
                                                        ":thread", FORUM_XML_NS);
             
+            // create link to a JSP which provide a List of messages for the
+            // thread, i.e. this first message and all its followup messages
             ParameterMap map = new ParameterMap();
             map.setParameter(THREAD_PARAM, thread.getID());
             URL url = URL.there((Application)Kernel.getContext().getResource(),
@@ -147,7 +150,7 @@ public class ThreadList extends SimpleComponent implements Constants {
             xr.setWrapAttributes(true);
             xr.setWrapObjects(false);
             
-            xr.walk(thread, ThreadList.class.getName());
+            xr.walk(thread, ThreadsList.class.getName());
         }
         
     }

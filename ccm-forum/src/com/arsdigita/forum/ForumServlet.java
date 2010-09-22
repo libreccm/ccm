@@ -43,8 +43,14 @@ import org.apache.log4j.Logger;
 public class ForumServlet extends BebopApplicationServlet
         implements Constants {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(ForumServlet.class);
 
+    /**
+     * 
+     * @throws ServletException
+     */
+    @Override
     public void init() throws ServletException {
         super.init();
 		s_log.debug("creating forum page");

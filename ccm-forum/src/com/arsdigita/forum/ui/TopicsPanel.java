@@ -138,7 +138,7 @@ public class TopicsPanel extends SimpleContainer
         topicslist.add(linksPanel);
 
         // create and add topics list
-        topicslist.add(new TopicList());  // separate class
+        topicslist.add(new TopicsList());  // separate class
 
         return topicslist;
     }

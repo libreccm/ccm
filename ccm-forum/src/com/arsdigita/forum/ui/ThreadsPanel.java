@@ -69,7 +69,7 @@ public class ThreadsPanel extends SimpleContainer
     private ModalContainer m_mode;
     /** Bebop Component, list of threads along with some othere elements, will
      * be one child of ModalContainer */
-    private Component m_threadsComponent;
+    private Component m_threadsListing;
     /** Bebop Component, add new post to a thread form. Will be another child of
      * ModalContainer  */
     private PostForm m_postComponent;
@@ -90,13 +90,13 @@ public class ThreadsPanel extends SimpleContainer
         m_mode = new ModalContainer();
         add(m_mode);
 
-        m_threadsComponent = createThreadsComponent();
-        m_postComponent = createPostComponent();
+        m_threadsListing = createThreadsListing();
+        m_postComponent = createNewThreadForm();
 
-        m_mode.add(m_threadsComponent);
+        m_mode.add(m_threadsListing);
         m_mode.add(m_postComponent);
 
-        m_mode.setDefaultComponent(m_threadsComponent);
+        m_mode.setDefaultComponent(m_threadsListing);
 
     }
 
@@ -123,7 +123,7 @@ public class ThreadsPanel extends SimpleContainer
                     m_postComponent.setContext(s, PostForm.NEW_CONTEXT);
                     m_mode.setVisibleComponent(s, m_postComponent);
                 } else {
-                    m_mode.setVisibleComponent(s, m_threadsComponent);
+                    m_mode.setVisibleComponent(s, m_threadsListing);
                 }
             }
         });
@@ -135,7 +135,7 @@ public class ThreadsPanel extends SimpleContainer
      * with author, # of responses, etc. Filtered for approved
      * messages if the forum is moderated.
      */
-    private Component createThreadsComponent() {
+    private Component createThreadsListing() {
 
         Container forums = new SimpleContainer();
 
@@ -166,8 +166,8 @@ public class ThreadsPanel extends SimpleContainer
         TopicSelector topics = new TopicSelector();
         forums.add(topics);
 
-        ThreadList threads
-            = new ThreadList();
+        ThreadsList threads
+            = new ThreadsList();
 
         forums.add(threads);
 
@@ -175,10 +175,14 @@ public class ThreadsPanel extends SimpleContainer
     }
 
     /**
+     * Provides a Form to create a new Thread. It is accomplished by constructing
+     * a RootPostForm to create a new post which contains a subject line and
+     * a selection box for a topic the new thread should be associated to.
      * 
-     * @return
+     * @return a form to create the first post of a new thread which implicitly
+     *         creates a new thread.
      */
-    private PostForm createPostComponent() {
+    private PostForm createNewThreadForm() {
         PostForm editForm = new RootPostForm();
         editForm.addCompletionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

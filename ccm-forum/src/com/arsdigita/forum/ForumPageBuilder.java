@@ -36,7 +36,9 @@ import com.arsdigita.xml.Element;
 
 /**
  * Implementation of com.arsdigita.forum.PageBuilder that creates a
- * basic forum page with read access check
+ * basic forum page with read access check.
+ * Controls forum.ui classes to generate the xml and display the desired
+ * elements (here esp. ForumUserCompactView).
  *
  * @author chris.gilbert@westsussex.gov.uk
  */
@@ -116,6 +118,6 @@ public class ForumPageBuilder implements PageBuilder, Constants {
 
             context.setCategorySelection(
                     (BigDecimal) event.getPageState().getValue(m_categorySelection));
-	}
+        }
     }
 }

@@ -27,46 +27,66 @@ import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.event.RequestEvent;
 import com.arsdigita.bebop.event.RequestListener;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
-import com.arsdigita.bebop.parameters.ParameterModel;
+// import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.forum.ui.Constants;
-import com.arsdigita.forum.ui.ThreadComponent;
+import com.arsdigita.forum.ui.DiscussionThreadSimpleView;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.toolbox.ui.ApplicationAuthenticationListener;
 import com.arsdigita.xml.Element;
 
 /**
- * @author chris.gilbert@westsussex.gov.uk
+ * Implementation of com.arsdigita.forum.PageBuilder that creates a basic
+ * thread page with read access check
  *
- * Implementation of com.arsdigita.forum.PageBuilder that creates a basic thread page with read access check 
+ * @author chris.gilbert@westsussex.gov.uk
  */
 public class ThreadPageBuilder implements PageBuilder, Constants {
 
 	/* (non-Javadoc)
-	 * @see com.arsdigita.forum.PageBuilder#buildPage(com.arsdigita.bebop.parameters.ParameterModel)
+	 * @see com.arsdigita.forum.PageBuilder#buildPage(
+     *          com.arsdigita.bebop.parameters.ParameterModel)
 	 */
-	public Page buildPage() {
-		Page threadPage = PageFactory.buildPage(Constants.FORUM_XML_PREFIX, "Threads", "forumThreadPage");
+	/** 
+     * 
+     * @return
+     */
+    public Page buildPage() {
+		Page threadPage = PageFactory.buildPage(Constants.FORUM_XML_PREFIX,
+                                                "Threads", "forumThreadPage");
 		//Output the title in an easy to find place
 		threadPage.add(new SimpleComponent(){
 			public void generateXML(PageState state, Element parent) {
-				Element nameElement = parent.newChildElement(Constants.FORUM_XML_PREFIX + ":name", Constants.FORUM_XML_NS);
-				nameElement.setText(ForumContext.getContext(state).getForum().getTitle());
-				Element introductionElement = parent.newChildElement(Constants.FORUM_XML_PREFIX + ":introduction", Constants.FORUM_XML_NS);
-				introductionElement.setText(ForumContext.getContext(state).getForum().getIntroduction());									
+				Element nameElement = parent.newChildElement(
+                                           Constants.FORUM_XML_PREFIX + ":name",
+                                           Constants.FORUM_XML_NS);
+				nameElement.setText(ForumContext.getContext(state).getForum().
+                                                                   getTitle());
+				Element introductionElement = parent.newChildElement(
+                                                     Constants.FORUM_XML_PREFIX +
+                                                     ":introduction",
+                                                     Constants.FORUM_XML_NS);
+				introductionElement.setText(ForumContext.getContext(state).
+                                                         getForum().
+                                                         getIntroduction());
 			} 
-		});	
-		threadPage.add(new ThreadComponent());		
+		});
+        // 
+		threadPage.add(new DiscussionThreadSimpleView());
 		// Register the thread id parameter as a global state parameter.
 		BigDecimalParameter threadID =  new BigDecimalParameter(THREAD_PARAM);
 		threadPage.addGlobalStateParam(threadID);
-		threadPage.addRequestListener(new ApplicationAuthenticationListener(PrivilegeDescriptor.READ));
+		threadPage.addRequestListener(
+                new ApplicationAuthenticationListener(PrivilegeDescriptor.READ));
        
 		threadPage.addRequestListener
 			(new ThreadPageRequestListener(threadID));
 		return threadPage;
 	}
 	
-	private static class ThreadPageRequestListener implements RequestListener {
+	/**
+     * 
+     */
+    private static class ThreadPageRequestListener implements RequestListener {
 			private BigDecimalParameter m_threadID;
 
 			public ThreadPageRequestListener(BigDecimalParameter threadID) {

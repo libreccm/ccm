@@ -49,7 +49,7 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
 
 /**
- * The Forum class represents a discussion forum.
+ * Main domain class of a forum application representing a discussion forum.
  *
  * XXX: Forum knows about <i>threads</i> which groups a set of posts to the same
  * subject, and <i>topics</i> which group a set of threads about the same general
@@ -66,11 +66,17 @@ import com.arsdigita.web.Application;
 
 public class Forum extends Application {
 
-	public static final String THREAD_SUBSCRIPTION_GROUPS_NAME =
+    /** Private logger instance for debugging purpose  */
+    private static final Logger s_log = Logger.getLogger(Forum.class);
+
+    public static final String BASE_DATA_OBJECT_TYPE =
+        "com.arsdigita.forum.Forum";
+    public static final String PACKAGE_TYPE = "forum";
+
+    public static final String THREAD_SUBSCRIPTION_GROUPS_NAME =
                                    "Thread Subscription Groups";
 
     private static final ForumConfig s_config = new ForumConfig();
-
     static {
         s_config.load();
     }
@@ -80,12 +86,6 @@ public class Forum extends Application {
     }
 
 
-    private static final Logger s_log = Logger.getLogger(Forum.class);
-
-    public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.forum.Forum";
-
-    public static final String PACKAGE_TYPE = "forum";
 	//////
 	//Forum specific privileges
 	/////
@@ -102,7 +102,11 @@ public class Forum extends Application {
 	// returned for non public posts. This means there is no longer 
 	// any need for a separate forum_read privilege, though it 
 	// does no harm. Now removed
-	// public static final String FORUM_READ_PRIVILEGE = "forum_read";
+    //
+    // pb: Reactivated READ privilege in order to provide forums for different
+    // groups of users for their internal use and to provide private forums
+    // for logged in users only (no public read access).
+	public static final String FORUM_READ_PRIVILEGE = "forum_read";
 
 	///////
 	// pdl forum attribute/association names
@@ -111,24 +115,29 @@ public class Forum extends Application {
     private static final String SUBSCRIPTIONS = "subscriptions";
     private static final String MODERATION = "isModerated";
     private static final String NOTICEBOARD = "isNoticeboard";
+
 	private static final String ADMIN_GROUP = "adminGroup";
     private static final String MODERATION_GROUP = "moderationGroup";
 	private static final String THREAD_CREATE_GROUP = "threadCreateGroup";
 	private static final String THREAD_RESPONDER_GROUP = "threadRespondGroup";
 	private static final String READ_GROUP = "readGroup";
+
     private static final String CATEGORY = "category";
     private static final String EXPIRE_AFTER = "expireAfter";
     private static final String LIFECYCLE_DEFINITION = "lifecycleDefinition";
 	// additional attributes added chris.gilbert@westsussex.gov.uk 
-	private static final String ALLOW_FILE_ATTACHMENTS =
-		"fileAttachmentsAllowed";
+	private static final String ALLOW_FILE_ATTACHMENTS = "fileAttachmentsAllowed";
 	private static final String ALLOW_IMAGE_UPLOADS = "imageUploadsAllowed";
 	private static final String AUTOSUBSCRIBE_THREAD_STARTER =
-		"autoSubscribeThreadStarter";
+                                                   "autoSubscribeThreadStarter";
 	private static final String INTRODUCTION = "introduction";
 	private static final String NO_CATEGORY_POSTS = "noCategoryPostsAllowed";
 	private static final String ANONYMOUS_POSTS = "anonymousPostsAllowed";
 
+    /** 
+     * 
+     * @param data
+     */
     public Forum(DataObject data) {
         super(data);
     }
@@ -226,7 +235,10 @@ public class Forum extends Application {
         return category;
     }
 
-	private void createGroups() {
+	/** 
+     * 
+     */
+    private void createGroups() {
 		Group administrators = new Group();
 		administrators.setName(getTitle() + " Administrators");
 		setAssociation(ADMIN_GROUP, administrators);
@@ -864,8 +876,8 @@ public class Forum extends Application {
 				group));
 	}
 	/**
-	 * method required for upgrade - normally groups are set during forum creation and so 
-	 * creation and so there is no need to invoke a setter
+	 * method required for upgrade - normally groups are set during forum
+     * creation and so creation and so there is no need to invoke a setter
 	 * @author cgyg9330
 	 *
 	 */

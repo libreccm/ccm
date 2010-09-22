@@ -21,7 +21,7 @@ package com.arsdigita.forum.portlet;
 import com.arsdigita.forum.Forum;
 import com.arsdigita.forum.ThreadCollection;
 import com.arsdigita.forum.ui.Constants;
-import com.arsdigita.forum.ui.ThreadList;
+import com.arsdigita.forum.ui.ThreadsList;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.bebop.portal.AbstractPortletRenderer;
 import com.arsdigita.bebop.PageState;
@@ -122,7 +122,7 @@ class RecentPostingsPortletRenderer
             xr.setWrapAttributes(true);
             xr.setWrapObjects(false);
             
-            xr.walk(thread, ThreadList.class.getName());
+            xr.walk(thread, ThreadsList.class.getName());
         }
     }
 

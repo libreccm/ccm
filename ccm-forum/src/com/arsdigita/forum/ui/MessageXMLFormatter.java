@@ -25,8 +25,9 @@ import com.arsdigita.persistence.metadata.Property;
 
 
 public class MessageXMLFormatter 
-    extends SimpleDomainObjectXMLFormatter {
+       extends SimpleDomainObjectXMLFormatter {
     
+    @Override
     public Object format(DomainObject obj,
                          String path,
                          Property prop,
@@ -39,6 +40,7 @@ public class MessageXMLFormatter
         return super.format(obj, path, prop, value);
     }
     
+    @Override
     public boolean isEmpty() {
     	return false;
     }

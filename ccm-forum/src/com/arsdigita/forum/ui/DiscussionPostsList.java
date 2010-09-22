@@ -57,19 +57,21 @@ import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
 /**
- * Provides List of posts for a thread with links to edit, delete, etc 
- * according to authorisation.
- * 
- * Curently used by ThreadComponent to create the actual list of threads and by
+ * Child panel of DiscussionThreadSimpleVew. Provides for the given thread (usually
+ * selected from the list of threads created by ThreadsPanel) a list of its posts
+ * along with a reply link and additionally links to edit, delete, etc (according 
+ * to given authorisation) for each listed post.
+ *
+ * So it creates the actual list of threads for DiscussionThreadSimpleVew and by
  * MessageView.
  */
-public class ThreadDisplay extends SimpleComponent implements Constants {
+public class DiscussionPostsList extends SimpleComponent implements Constants {
 
     private static final Logger s_log =
-        Logger.getLogger(ThreadDisplay.class);
+        Logger.getLogger(DiscussionPostsList.class);
 
     private IntegerParameter m_pageNumber =
-        new IntegerParameter(PAGINATOR_PARAM);
+                                     new IntegerParameter(PAGINATOR_PARAM);
 	private int m_pageSize = Forum.getConfig().getThreadPageSize();
 
     private static final String ACTION_EDIT = "edit";
@@ -78,22 +80,37 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
     private static final String ACTION_APPROVE = "approve";
     private static final String ACTION_REJECT = "reject";
 
-    private ThreadComponent m_threadComponent;
+    private DiscussionThreadSimpleView m_threadMessagesPanel;
     private ACSObjectSelectionModel m_post;
 
-    public ThreadDisplay(ACSObjectSelectionModel post,
-                         ThreadComponent threadComponent) {
-        m_threadComponent = threadComponent;
+    /** 
+     * Defaultg Constructor
+     * 
+     * @param post
+     * @param threadMessagesPanel
+     */
+    public DiscussionPostsList(ACSObjectSelectionModel post,
+                               DiscussionThreadSimpleView threadMessagesPanel) {
+        m_threadMessagesPanel = threadMessagesPanel;
         m_post = post;
     }
 
 
+    /** 
+     * 
+     * @param p
+     */
     public void register(Page p) {
         super.register(p);
 
         p.addGlobalStateParam(m_pageNumber);
     }
 
+    /** 
+     * 
+     * @param state
+     * @throws ServletException
+     */
     public void respond(PageState state)
         throws ServletException {
         super.respond(state);
@@ -109,7 +126,7 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
 
         if (ACTION_EDIT.equals(key)) {
             m_post.setSelectedObject(state, post);
-            m_threadComponent.makeEditFormVisible(state);
+            m_threadMessagesPanel.makeEditFormVisible(state);
         } else if (ACTION_DELETE.equals(key)) {
             Assert.isTrue(ctx.canAdminister(), "can administer forums");
 
@@ -150,14 +167,14 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
             }
         } else if (ACTION_REPLY.equals(key)) {
             m_post.setSelectedObject(state, post);
-            m_threadComponent.makeReplyFormVisible(state);
+            m_threadMessagesPanel.makeReplyFormVisible(state);
         } else if (ACTION_APPROVE.equals(key)) {
             post.setStatus(Post.APPROVED);
             post.save();
             post.sendNotifications(null);
         } else if (ACTION_REJECT.equals(key)) {
             m_post.setSelectedObject(state, post);
-            m_threadComponent.makeRejectFormVisible(state);
+            m_threadMessagesPanel.makeRejectFormVisible(state);
         }
 
         state.clearControlEvent();
@@ -168,6 +185,11 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
         }
     }
 
+    /** 
+     * 
+     * @param state
+     * @return
+     */
     private DomainCollection getMessages(PageState state) {
 
         ForumContext context = ForumContext.getContext(state);
@@ -208,15 +230,23 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
         return new DomainCollection(messages);
     }
 
+    /** 
+     * 
+     * @param state
+     * @param parent
+     */
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
-        Element content = parent.newChildElement(FORUM_XML_PREFIX + ":threadDisplay",
+        Element content = parent.newChildElement(FORUM_XML_PREFIX +
+                                                 ":threadDisplay",
                                                  FORUM_XML_NS);
         exportAttributes(content);
 
         Forum forum = ForumContext.getContext(state).getForum();
         content.addAttribute("forumTitle", forum.getTitle());
-        content.addAttribute("noticeboard", (new Boolean(forum.isNoticeboard())).toString());
+        content.addAttribute("noticeboard", (new Boolean(forum.isNoticeboard())).
+                                                 toString());
         DomainCollection messages = getMessages(state);
 
         Integer page = (Integer)state.getValue(m_pageNumber);
@@ -261,11 +291,17 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
             xr.setWrapAttributes(true);
             xr.setWrapObjects(false);
 
-            xr.walk(message, ThreadDisplay.class.getName());
+            xr.walk(message, DiscussionPostsList.class.getName());
         }
 
     }
 
+    /** 
+     * 
+     * @param state
+     * @param parent
+     * @param post
+     */
     protected void generateActionXML(PageState state,
                                      Element parent,
                                      Post post) {
@@ -301,9 +337,12 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
                                 makeURL(state, ACTION_EDIT, post));
         }
 
-		PermissionDescriptor canRespond = new PermissionDescriptor(PrivilegeDescriptor.get(Forum.RESPOND_TO_THREAD_PRIVILEGE), Kernel.getContext().getResource(), party);
+		PermissionDescriptor canRespond = new PermissionDescriptor(
+                    PrivilegeDescriptor.get(Forum.RESPOND_TO_THREAD_PRIVILEGE),
+                    Kernel.getContext().getResource(), party);
 		
-        if (!ctx.getForum().isNoticeboard() && PermissionService.checkPermission(canRespond)) {
+        if (!ctx.getForum().isNoticeboard() && PermissionService.
+                                               checkPermission(canRespond)) {
             parent.addAttribute("replyURL",
                                 makeURL(state, ACTION_REPLY, post));
         }
@@ -332,7 +371,8 @@ public class ThreadDisplay extends SimpleComponent implements Constants {
                                         long begin,
                                         long end,
                                         long objectCount) {
-        Element paginator = parent.newChildElement(FORUM_XML_PREFIX + ":paginator", FORUM_XML_NS);
+        Element paginator = parent.newChildElement(FORUM_XML_PREFIX +
+                                                   ":paginator", FORUM_XML_NS);
 
         URL here = Web.getContext().getRequestURL();
         ParameterMap params = new ParameterMap(here.getParameterMap());

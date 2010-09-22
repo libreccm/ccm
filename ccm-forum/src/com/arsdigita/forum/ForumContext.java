@@ -46,9 +46,11 @@ import org.apache.log4j.Logger;
  */
 public final class ForumContext {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(ForumContext.class);
 
     private static final RequestLocal s_context = new RequestLocal() {
+        @Override
             public Object initialValue(PageState state) {
                 return new ForumContext();
             }
@@ -63,7 +65,11 @@ public final class ForumContext {
     private boolean m_canAdminister;
     private boolean m_canModerate;
 
+    /**
+     * Default Constructor
+     */
     ForumContext() {
+
         m_forum = (Forum)Kernel.getContext().getResource();
         Assert.exists(m_forum, Forum.class);
         
@@ -135,23 +141,43 @@ public final class ForumContext {
     }
     
     
+    /** 
+     * 
+     * @return
+     */
     public boolean canEdit() {
         return m_canEdit;
     }
     
+    /**
+     * 
+     * @return
+     */
     public boolean canAdminister() {
         return m_canAdminister;
     }
     
+    /**
+     * 
+     * @return
+     */
     public boolean canModerate() {
         return m_canModerate;
     }
     
 
+    /**
+     * 
+     * @return
+     */
     public BigDecimal getCategorySelection() {
         return m_categorySelection;
     }
 
+    /**
+     * 
+     * @param categorySelection
+     */
     public void setCategorySelection(BigDecimal categorySelection) {
         m_categorySelection = categorySelection;
     }

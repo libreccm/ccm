@@ -33,6 +33,7 @@ import com.arsdigita.forum.ForumContext;
 import com.arsdigita.forum.ui.admin.ModerationView;
 import com.arsdigita.forum.ui.admin.PermissionsView;
 import com.arsdigita.forum.ui.admin.SetupView;
+import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -71,7 +72,8 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     public static final String MODE_ALERTS = "alerts";
     /** Denominator of the 'moderation handling' forum mode */
     public static final String MODE_MODERATION = "moderation";
-    /** Denominator of the 'permission administration' forum mode (administrators only) */
+    /** Denominator of the 'permission administration' forum mode
+     *  (administrators only) */
 	public static final String MODE_PERMISSIONS = "permissions";
     /** Denominator of the 'configuration' forum mode (administrators only)*/
 	public static final String MODE_SETUP = "setup";
@@ -167,6 +169,8 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
 		PermissionDescriptor forumAdmin =
 			new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
 
+        PermissionService.assertPermission(forumAdmin);
+        
         if (MODE_TOPICS.equals(mode)) {
 			if (Forum.getConfig().topicCreationByAdminOnly()) {
 				if (party == null) {
@@ -200,6 +204,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
 			PermissionService.assertPermission(forumAdmin);
 			setVisibleComponent(state, m_setupView);
 		} else if (MODE_THREADS.equals(mode)) {
+            PermissionService.assertPermission(forumAdmin);
             setVisibleComponent(state, m_threadsView);
         }
     }
@@ -221,6 +226,7 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
 			"noticeboard",
 			(new Boolean(forum.isNoticeboard())).toString());
 
+        // If visitor not logged in, set user (=party) to publicUser
         Party party = Kernel.getContext().getParty();
 		if (party == null) {
 			party = Kernel.getPublicUser();
@@ -246,27 +252,34 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
 		PermissionDescriptor permission =
 			new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
 
-		// currently thread panel is alwasy shown. If read access should be
-        // bound to logged in users, additional logic is frequired here.
-        generateModeXML(state, content, MODE_THREADS);
+		// currently thread panel is always shown. If read access should be
+        // bound to logged in users, additional logic is required here.
+        generateModeXML(state, content, MODE_THREADS,
+                        Text.gz("forum.ui.modeThreads"));
         // topics panel is always shoen as well if not restricted to admins.
 		if (!Forum.getConfig().topicCreationByAdminOnly()) {
-			generateModeXML(state, content, MODE_TOPICS);
+			generateModeXML(state, content, MODE_TOPICS,
+                            Text.gz("forum.ui.modeTopics"));
 		}
         // alerts panel is always shown as well, no private read access avail.
-		generateModeXML(state, content, MODE_ALERTS);
+		generateModeXML(state, content, MODE_ALERTS,
+                        Text.gz("forum.ui.modeAlerts"));
 
         // admin section
         if (PermissionService.checkPermission(permission)) {
-            generateModeXML(state, content, MODE_MODERATION);
+            generateModeXML(state, content, MODE_MODERATION,
+                            Text.gz("forum.ui.modeAlerts"));
             if (Forum.getConfig().showNewTabs()) {
-                generateModeXML(state, content, MODE_SETUP);
-                generateModeXML(state, content, MODE_PERMISSIONS);
+                generateModeXML(state, content, MODE_SETUP,
+                                Text.gz("forum.ui.modeSetup"));
+                generateModeXML(state, content, MODE_PERMISSIONS,
+                                Text.gz("forum.ui.modePermissions"));
             }
             // In case topic creation is bound to admin (and therefore not
             // created above) we must create xml here.
             if (Forum.getConfig().topicCreationByAdminOnly()) {
-				generateModeXML(state, content, MODE_TOPICS);
+				generateModeXML(state, content, MODE_TOPICS,
+                                Text.gz("forum.ui.modeTopics"));
             }
         }
     }
@@ -280,14 +293,17 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
      * @param parent
      * @param mode forum mode (threadspanel, topicspanel, alertpanel, ...) to
      *             create entry for
+     * @deprecated use generateModeXML(PageState, Element, String,
+     *                                 GlobalizedMessage)  instead
      */
     protected void generateModeXML(PageState state,
                                    Element parent,
                                    String mode) {
-
+        generateModeXML(state, parent, mode, null);
+ /*
         String current = (String)state.getValue(m_mode);
         if (current == null) {
-            current = MODE_THREADS;
+            current = MODE_THREADS;  // used as default mode
         }
 
 		Element content =
@@ -297,20 +313,6 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
 
         content.addAttribute("mode",
                              mode);
-        // add localized label here
-        // content.addAttribute("label",
-        if (MODE_THREADS.equals(mode))
-            content.addAttribute("label",Text.gzAsStr("forum.ui.modeThreads"));
-        else if(MODE_TOPICS.equals(mode))
-            content.addAttribute("label",Text.gzAsStr("forum.ui.modeTopics"));
-        else if(MODE_ALERTS.equals(mode))
-            content.addAttribute("label",Text.gzAsStr("forum.ui.modeAlerts"));
-        else if(MODE_MODERATION.equals(mode))
-            content.addAttribute("label",Text.gzAsStr("forum.ui.modeModeration"));
-        else if(MODE_SETUP.equals(mode))
-            content.addAttribute("label",Text.gzAsStr("forum.ui.modeSetup"));
-        else if(MODE_PERMISSIONS.equals(mode))
-            content.addAttribute("label",Text.gzAsStr("forum.ui.modePermissions"));
 
         try {
             content.addAttribute("url",
@@ -321,7 +323,60 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
         content.addAttribute("selected",
                              current.equals(mode) ? "1" : "0");
         state.clearControlEvent();
+
+  */
     }
+
+    /**
+     * Generates a forum mode selection entry (usually a tab).
+     *
+     *
+     * @param state
+     * @param parent
+     * @param mode forum mode (threadspanel, topicspanel, alertpanel, ...) to
+     *             create entry for
+     * @param label to denominate the mode
+     */
+    protected void generateModeXML(PageState state,
+                                   Element parent,
+                                   String mode,
+                                   GlobalizedMessage label ) {
+
+        String current = (String)state.getValue(m_mode);
+        if (current == null) {
+            current = MODE_THREADS;  // used as default mode
+        }
+
+		Element content =
+			parent.newChildElement(FORUM_XML_PREFIX + ":forumMode", FORUM_XML_NS);
+
+        state.setControlEvent(this, "mode", mode);
+
+        content.addAttribute("mode",
+                             mode);
+
+        // add link to switch to 'mode'
+        try {
+            content.addAttribute("url",
+                                 state.stateAsURL());
+        } catch (IOException ex) {
+            throw new UncheckedWrapperException("cannot create url", ex);
+        }
+        // add localized mode label
+        // if-else should be removed when deprecated method above is removed!
+        if (label == null) {
+            content.addAttribute("label",
+                                 "UNAVAILABLE");
+        } else {
+            content.addAttribute("label",
+                                 (String)label.localize());
+        }
+        // add if current mode is actually selected
+        content.addAttribute("selected",
+                             current.equals(mode) ? "1" : "0");
+        state.clearControlEvent();
+    }
+
 }
 
 
