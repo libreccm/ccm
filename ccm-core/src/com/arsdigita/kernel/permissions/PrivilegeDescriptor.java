@@ -221,6 +221,7 @@ public class PrivilegeDescriptor {
      * Equivalent to getName().
      * @return the privilege name
      */
+    @Override
     public String toString() {
         return getName();
     }

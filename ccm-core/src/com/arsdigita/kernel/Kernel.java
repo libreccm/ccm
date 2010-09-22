@@ -39,18 +39,18 @@ import org.apache.log4j.Logger;
  * @see com.arsdigita.kernel.KernelConfig
  * @see com.arsdigita.kernel.KernelContext
  * @see com.arsdigita.kernel.KernelExcursion
+ *
+ * @version $Id: Kernel.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Kernel {
-    public static final String versionId =
-        "$Id: Kernel.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
+    /** Private logger instance for debugging   */
     private static final Logger s_log = Logger.getLogger(Kernel.class);
 
-    // The ID of the user that represents "the public", i.e. a non-logged-in user.
-    // Created by insert-users.sql.
+    /** The ID of the user that represents "the public", i.e. a non-logged-in
+     *  user. Created by insert-users.sql (during load step)               . */
     private static final BigDecimal PUBLIC_USER_ID = new BigDecimal(-200);
+    /** Public (i.e. a non-logged-in) User object (retrieved by PUBLIC_USER_ID)  */
     private static User s_publicUser;
 
     private static KernelContext s_initialContext;
@@ -138,11 +138,11 @@ public class Kernel {
     public static final User getPublicUser() {
         init();
         if (s_publicUser == null) {
-            // We could synchronize this method, but we don't really care if the User
-            // object gets loaded more than once.
+            // We could synchronize this method, but we don't really care if the
+            // User object gets loaded more than once.
             s_publicUser = User.retrieve(PUBLIC_USER_ID);
-            // Disconnect the object so we can use it across multiple transactions, and
-            // so it cannot be modified/deleted.
+            // Disconnect the object so we can use it across multiple transactions,
+            //  and so it cannot be modified/deleted.
             s_publicUser.disconnect();
         }
 

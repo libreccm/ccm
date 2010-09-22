@@ -41,18 +41,16 @@ import org.apache.log4j.Logger;
 
 /**
  * A utility class for controlling user access to domain/data objects.
+ * @see com.arsdigita.kernel.permissions.PermissionDescriptor
  *
  * @author Oumi Mehrotra
  * @author Michael Bryzek
  * @version 1.0
- * @see com.arsdigita.kernel.permissions.PermissionDescriptor
- **/
+ * @version $Id: PermissionService.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class PermissionService extends DomainService {
-    public static final String versionId =
-        "$Id: PermissionService.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(PermissionService.class);
 
     // Reference to the PermissionManager to use for permissions checks.
@@ -95,8 +93,7 @@ public class PermissionService extends DomainService {
      *
      * @return True if permission checks are currently enabled, false if they
      *         are disabled.
-     **/
-
+     */
     public static final boolean isEnabled() {
         return s_enabled;
     }
@@ -107,8 +104,7 @@ public class PermissionService extends DomainService {
      *
      * @param value If value is false then permission wide system checks are
      *              disabled.
-     **/
-
+     */
     public static final void setEnabled(boolean value) {
         s_enabled = value;
     }
@@ -118,7 +114,7 @@ public class PermissionService extends DomainService {
      * given PermissionDescriptor is false.
      *
      * @param permission the {@link PermissionDescriptor} to check
-     **/
+     */
     public static void assertPermission(PermissionDescriptor permission) {
         if (!isEnabled()) { return; }
         if (!checkPermission(permission)) {
@@ -136,7 +132,7 @@ public class PermissionService extends DomainService {
      *
      * @return <code>true</code> if the PermissionDescriptor's base object has the
      * specified permission; <code>false</code> otherwise.
-     **/
+     */
     public static boolean checkPermission(PermissionDescriptor permission) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("checking " + permission.getPrivilegeDescriptor()
@@ -159,7 +155,7 @@ public class PermissionService extends DomainService {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
-     **/
+     */
     public static void grantPermission(PermissionDescriptor permission) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("granting " + permission.getPrivilegeDescriptor()
@@ -179,7 +175,7 @@ public class PermissionService extends DomainService {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.kernel.permissions.PrivilegeDescriptor
-     **/
+     */
     public static void revokePermission(PermissionDescriptor permission) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("revoking " + permission.getPrivilegeDescriptor()
@@ -203,7 +199,7 @@ public class PermissionService extends DomainService {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     public static DataObject getContext(OID oid) {
         return getPermissionManager().getContext(oid);
     }
@@ -223,7 +219,7 @@ public class PermissionService extends DomainService {
      *
      * @see com.arsdigita.kernel.ACSObject
      * @see com.arsdigita.persistence.OID
-     **/
+     */
     public static DataObject getContext(ACSObject acsObject) {
         return getPermissionManager().getContext(acsObject);
     }
@@ -298,7 +294,6 @@ public class PermissionService extends DomainService {
      *
      * @param acsObject the object whose permission context is being
      * set
-     *
      */
     public static void clonePermissions(ACSObject acsObject)
         throws PersistenceException
@@ -317,7 +312,6 @@ public class PermissionService extends DomainService {
      *
      * @param acsObjectOID the object whose permission context is being
      * set
-     *
      */
     public static void clonePermissions(OID acsObjectOID)
         throws PersistenceException
@@ -356,7 +350,8 @@ public class PermissionService extends DomainService {
      *
      * @return the permissions that have been granted on the specified
      * object (direct permissions followed by inherited
-     * permisions).  */
+     * permisions).
+     */
     public static ObjectPermissionCollection
         getDirectGrantedPermissions(OID acsObjectOID)
     {
@@ -390,7 +385,6 @@ public class PermissionService extends DomainService {
      * a collection of type ACSObject.
      * @param privilege the required privilege
      * @param userOID the OID of the user whose access is being filtered
-     *
      */
     public static void filterObjects(DataCollection dataCollection,
                                      PrivilegeDescriptor privilege,
@@ -408,7 +402,6 @@ public class PermissionService extends DomainService {
      * @param domainCollection the collection to filter
      * @param privilege the required privilege
      * @param userOID the OID of the user whose access is being filtered
-     *
      */
     public static void filterObjects(DomainCollection domainCollection,
                                      PrivilegeDescriptor privilege,
@@ -433,7 +426,6 @@ public class PermissionService extends DomainService {
      * @param privilege the required privilege
      *
      * @param userOID the OID of the user whose access is being filtered
-     *
      */
     public static void filterQuery(DataQuery dataQuery,
                                    String propertyName,
@@ -468,7 +460,6 @@ public class PermissionService extends DomainService {
      * @param privilege the required privilege
      *
      * @param objectOID the OID of the object that the users are trying to access
-     *
      */
     public static void objectFilterQuery(DataQuery dataQuery,
                                          String propertyName,
@@ -500,7 +491,8 @@ public class PermissionService extends DomainService {
      * @param partyOID the OID of the user whose access is being filtered
      *
      * @return a filter which is true if the user has the required permission
-     * on the specified property */
+     * on the specified property
+     */
     public static Filter getFilterQuery(FilterFactory factory,
                                         String propertyName,
                                         PrivilegeDescriptor privilege,
@@ -524,7 +516,7 @@ public class PermissionService extends DomainService {
      *
      * @param object the OID of the specified object
      * @param party the OID of the specified party
-     **/
+     */
     public static Iterator getDirectPrivileges(OID object, OID party) {
         checkType(object, ACSObject.BASE_DATA_OBJECT_TYPE);
         checkType(party, Party.BASE_DATA_OBJECT_TYPE);
@@ -551,7 +543,7 @@ public class PermissionService extends DomainService {
      * @param party the OID of the party that privileges are to be returned for
      *
      * @return an iterator of PrivilegeDescriptors.
-     **/
+     */
     public static Iterator getPrivileges(OID object, OID party) {
         return getPermissionManager().getPrivileges(object, party);
     }
@@ -568,7 +560,7 @@ public class PermissionService extends DomainService {
      * @return an iterator of PrivilegeDescriptors.
      *
      * @see #getPrivileges(OID, OID)
-     **/
+     */
     public static Iterator getImpliedPrivileges(OID object, OID party) {
         return getPermissionManager().getImpliedPrivileges(object, party);
     }
@@ -578,7 +570,7 @@ public class PermissionService extends DomainService {
      * Revoke all permissions belonging to the specified party.
      *
      * @param partyOID OID of the party whose permissions are to be revoked.
-     **/
+     */
     public static void revokePartyPermissions(OID partyOID) {
         DataOperation revoke = getDataOperation("RevokePartyPermissions");
         revoke.setParameter("partyID", partyOID.get("id"));
@@ -592,7 +584,7 @@ public class PermissionService extends DomainService {
      * @param baseTypeName the type the OID is checked for
      * @throws RuntimeException when specified OID is not an instance of the
      * specified type.
-     **/
+     */
     private static void checkType(OID objectOID, String baseTypeName) {
         try {
             ObjectType.verifySubtype(baseTypeName,

@@ -36,14 +36,11 @@ import org.w3c.dom.Attr;
  * <code>org.jdom.Element</code> using <code>org.w3c.dom.Element</code>.
  *
  * @author Patrick McNeill 
- * @version $Revision: #17 $ $Date: 2004/08/16 $
  * @since ACS 4.5a
+ * @version $Revision: #17 $ $Date: 2004/08/16 $
+ * @version $Id: Element.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $
  */
 public class Element {
-    public static final String versionId =
-        "$Id: Element.java 1372 2006-11-13 09:22:54Z chrisgilbert23 $" +
-        "$Author: chrisgilbert23 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (Element.class.getName());
@@ -57,6 +54,7 @@ public class Element {
     private org.w3c.dom.Document m_doc;
 
     private static ThreadLocal s_localDocument = new ThreadLocal() {
+        @Override
             public Object initialValue() {
                 try {
                     DocumentBuilderFactory builder =
@@ -490,57 +488,58 @@ public class Element {
         }
     }
 
-         /**
-         * retrieve an unordered list of strings relating to node tree including
-         * and below the current element. Strings include element names, attribute names,
-         * attribute values, text and CData sections
-         * @return
-         */
-         private List getXMLFragments() {
+    /**
+     * retrieve an unordered list of strings relating to node tree including
+     * and below the current element. Strings include element names, attribute names,
+     * attribute values, text and CData sections
+     * @return
+     */
+    private List getXMLFragments() {
 
-                List unsortedList = new ArrayList();
-                unsortedList.add(getName());
-                unsortedList.add(getText());
-                // CData sections are not included in getChildren()
-                unsortedList.add(getCDATASection());
-                Iterator it = getAttributes().entrySet().iterator();
-                while (it.hasNext()) {
-                        java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
-                        unsortedList.add(entry.getKey());
-                        unsortedList.add(entry.getValue());
-                }
-                Iterator childElements = getChildren().iterator();
-                while (childElements.hasNext()) {
-                        Element el = (Element) childElements.next();
-                        unsortedList.addAll(el.getXMLFragments());
-
-                }
-                return unsortedList;
-
+        List unsortedList = new ArrayList();
+        unsortedList.add(getName());
+        unsortedList.add(getText());
+        // CData sections are not included in getChildren()
+        unsortedList.add(getCDATASection());
+        Iterator it = getAttributes().entrySet().iterator();
+        while (it.hasNext()) {
+            java.util.Map.Entry entry = (java.util.Map.Entry) it.next();
+            unsortedList.add(entry.getKey());
+            unsortedList.add(entry.getValue());
         }
-	 /**
-         * retrieve a string that is an ordered concatenation of all information describing
-         * this node and its subnodes, suitable as the basis of a hashCode or equals
-         * implementation.
-         * @return
-         */
-        protected String getXMLHashString() {
-                // attributes and child nodes are retrieved as HashMap and List
-                // respectively. These make no guarantees about the order of
-                // iteration, and so we sort here to make sure the same element
-                // will return the same XMLHash
-                List sortedList = getXMLFragments();
-                Collections.sort(sortedList);
-                StringBuffer xml = new StringBuffer();
-                Iterator xmlFragments = sortedList.iterator();
-                while (xmlFragments.hasNext()) {
-                        xml.append(xmlFragments.next());
-                }
-                s_log.debug("getXMLHashString: " + xml.toString());
-                return xml.toString();
+        Iterator childElements = getChildren().iterator();
+        while (childElements.hasNext()) {
+            Element el = (Element) childElements.next();
+            unsortedList.addAll(el.getXMLFragments());
         }
+        return unsortedList;
 
-        public int hashCode() {
+    }
+
+    /**
+     * retrieve a string that is an ordered concatenation of all information describing
+     * this node and its subnodes, suitable as the basis of a hashCode or equals
+     * implementation.
+     * @return
+     */
+    protected String getXMLHashString() {
+        // attributes and child nodes are retrieved as HashMap and List
+        // respectively. These make no guarantees about the order of
+        // iteration, and so we sort here to make sure the same element
+        // will return the same XMLHash
+        List sortedList = getXMLFragments();
+        Collections.sort(sortedList);
+        StringBuffer xml = new StringBuffer();
+        Iterator xmlFragments = sortedList.iterator();
+        while (xmlFragments.hasNext()) {
+            xml.append(xmlFragments.next());
+        }
+        s_log.debug("getXMLHashString: " + xml.toString());
+        return xml.toString();
+    }
+
+    @Override
+    public int hashCode() {
                 Date start = new Date();
                 String hashString = getXMLHashString();
                 s_log.debug(
@@ -550,8 +549,9 @@ public class Element {
 
                 return hashString.hashCode();
 
-        }
+    }
 
+    @Override
 	 public boolean equals(Object other) {
                 s_log.debug("equals invoked");
                 Date start = new Date();

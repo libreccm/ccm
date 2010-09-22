@@ -663,7 +663,7 @@ public class PageState {
      * Set the control event. The control event is a <i>delayed</i> event
      * that only gets acted on when another request to this <code>Page</code>
      * is made. It is used to set which component should receive the
-     * submission and lets the component set one comonent-specific name-value
+     * submission and lets the component set one component-specific name-value
      * pair to be used in the submission.
      * <p>
      * After calling this method links and hidden form controls generated
