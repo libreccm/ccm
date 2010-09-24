@@ -386,7 +386,7 @@
  Cannot find danpb on irc&#xD;
  Signoff: lutter (Do</content>
    </textAsset>
-   <imageCaptions oid="[com.arsdigita.cms.ArticleImageAssociation:{id=1742}]">
+   <imageCaptions oid="[com.arsdigita.cms.contenttypes.GenericArticleImageAssociation:{id=1742}]">
       <caption>fsfs</caption>
       <imageAsset oid="[com.arsdigita.cms.ReusableImageAsset:{id=1734}]">
          <name>5.jpg</name>
@@ -400,8 +400,8 @@
          <content file="content-1734-5.jpg"/>
       </imageAsset>
    </imageCaptions>
-   <dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=1710}]">
+<!--   <dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=1710}]">
       <name>sfsdfsdfs-dublin-metadata</name>
       <dcLanguage>en</dcLanguage>
-   </dublinCore>
+   </dublinCore>-->
 </cms:item>

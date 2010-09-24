@@ -185,6 +185,17 @@
 
 <p> Importer can be invoked via standalone command-line tool like this:
 
+<h4>With tools-ng and ecdc</h4>
+<pre>
+  ant -Dccm.classname=com.arsdigita.london.importer.cms.ItemImportTool \
+      -Dccm.parameters="path/to/index/file /path/to/items/dir /path/to/assets/dir content" \
+      ccm-run
+</pre>
+
+<code>content</code> is the content section where the imported should
+be placed.
+
+<h4>With tools-legacy</h4>
 <pre>
   ccm-run com.arsdigita.london.importer.cms.ItemImportTool \
       master-import.xml /dir/with/files/to/include /dir/containing/lobs

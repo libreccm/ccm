@@ -11,7 +11,7 @@
    <textAsset oid="[com.arsdigita.cms.TextAsset:{id=4429}]">
       <content>Edit text here</content>
    </textAsset>
-   <imageCaptions oid="[com.arsdigita.cms.ArticleImageAssociation:{id=4439}]">
+   <imageCaptions oid="[com.arsdigita.cms.contenttypes.GenericArticleImageAssociation:{id=4439}]">
       <caption>sdfdsfs</caption>
       <imageAsset oid="[com.arsdigita.cms.ReusableImageAsset:{id=1734}]">
          <name>5.jpg</name>
@@ -26,8 +26,8 @@
       </imageAsset>
    </imageCaptions>
    <lead>sadfsd</lead>
-   <dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=4413}]">
+   <!--<dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=4413}]">
       <name>eeek-dublin-metadata</name>
       <dcLanguage>en</dcLanguage>
-   </dublinCore>
+   </dublinCore>-->
 </cms:item>

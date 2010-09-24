@@ -5,8 +5,8 @@
    <launchDate>Wed Nov 05 00:00:00 GMT 2003</launchDate>
    <title>mpa-test</title>
    <summary>asdf</summary>
-   <dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=2103}]">
+   <!--<dublinCore oid="[com.arsdigita.london.cms.dublin.DublinCoreItem:{id=2103}]">
       <name>mpa-test-dublin-metadata</name>
       <dcLanguage>en</dcLanguage>
-   </dublinCore>
+   </dublinCore>-->
 </cms:item>
