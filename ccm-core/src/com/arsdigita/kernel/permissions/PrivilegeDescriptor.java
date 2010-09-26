@@ -115,7 +115,10 @@ public class PrivilegeDescriptor {
         priv.set("privilege", name);
         priv.save();
         addChildPrivilege(ADMIN_NAME, name);
-        PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
+        // Constructor PrivilegeDescriptor is deprecated and should be
+        // replace the class method get(name)
+        // PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
+        PrivilegeDescriptor desc = get(name);
         put(desc);
         return desc;
     }
@@ -145,7 +148,6 @@ public class PrivilegeDescriptor {
     }
 
     /**
-     *
      * Given a privilege name, returns a privilege descriptor or null
      * if the privilege does not exist on the system.
      *
@@ -159,19 +161,17 @@ public class PrivilegeDescriptor {
     }
 
     /**
-     *
      * Returns a collection of privilege descriptors for every privilege in
      * the system.
-     * @return a collection of privilege descriptors.
-     *
      * @see #get(String)
+     *
+     * @return a collection of privilege descriptors.
      */
     public static Collection getAll() {
         return s_privs.values();
     }
 
     /**
-     *
      * Deletes the privilege described by this from the system.
      *
      * @exception PersistenceException when there is a persistence
@@ -185,9 +185,9 @@ public class PrivilegeDescriptor {
         OID oid = new OID("com.arsdigita.kernel.permissions.Privilege",
                           m_name);
 
-        DataObject priv = SessionManager.getSession()
-            .retrieve(oid);
+        DataObject priv = SessionManager.getSession().retrieve(oid);
         priv.delete();
+
         s_privs.remove(m_name);
     }
 
@@ -201,14 +201,11 @@ public class PrivilegeDescriptor {
     }
 
     /**
-     * <br>
-     *
      * Returns the display name for the privilege, or just the
      * privilege name if no display name is defined.
      *
      * @return the display name
      */
-
     public String getDisplayName() {
         if (m_displayName != null) {
             return m_displayName;
@@ -261,8 +258,8 @@ public class PrivilegeDescriptor {
      * Create a new privilege descriptor for use with PermissionDescriptor
      * and PermissionService.
      *
-     * @deprecated see #get
      * @param name The name of the privilege.
+     * @deprecated see #get
      **/
     public PrivilegeDescriptor(String name) {
         m_name = name;
@@ -281,9 +278,8 @@ public class PrivilegeDescriptor {
     }
 
     /**
-     *
-     * Puts a privilege descriptor into the internal cache that is
-     * used by the get method.  The put method supports extendibility by allowing
+     * Puts a privilege descriptor into the internal cache that is used by
+     * the get method. The put method supports extendibility by allowing
      * subclasses to be returned by the get method.
      */
     protected static void put(PrivilegeDescriptor privDesc) {
@@ -291,7 +287,6 @@ public class PrivilegeDescriptor {
     }
 
     /**
-     *
      * Returns the list of privilege names that imply this privilege.
      * @return a collection of the privilege names that imply this privilege.
      */
@@ -348,6 +343,5 @@ public class PrivilegeDescriptor {
             }
         privs.close();
     }
-
 
 }

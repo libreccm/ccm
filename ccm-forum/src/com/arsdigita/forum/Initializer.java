@@ -111,7 +111,7 @@ public class Initializer extends CompoundInitializer {
 			}
 		});
 	e.getFactory().registerInstantiator(  // OOPS: inbox commented out in
-            "com.arsdigita.forum.Inbox",      // Forum loader!
+            "com.arsdigita.forum.Inbox",      // Forum loader! see Inbox.pdl
             new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new Forum(dataObject);

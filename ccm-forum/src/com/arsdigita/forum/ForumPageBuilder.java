@@ -77,6 +77,11 @@ public class ForumPageBuilder implements PageBuilder, Constants {
         page.add(forumComp);
         BigDecimalParameter topic = new BigDecimalParameter(TOPIC_PARAM);
         page.addGlobalStateParam(topic);
+        // adds primitive READ descriptor, should be FORUM_READ instead in order
+        // to allow forum specific READ access and forums not accessible to
+        // the public, not logged-in user.
+        // PrivilegeDescriptor.get(RESPOND_TO_THREAD_PRIVILEGE)
+        // PrivilegeDescriptor.get(FORUM_READ_PRIVILEGE)
         page.addRequestListener(
                 new ApplicationAuthenticationListener(PrivilegeDescriptor.READ));
         page.addRequestListener(new ForumPageRequestListener(topic, forumComp));

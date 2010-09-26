@@ -85,6 +85,13 @@ public class Application extends Resource {
         return BASE_DATA_OBJECT_TYPE;
     }
 
+    /**
+     * Creates a new Application instance encapsulating the given data object.
+     * @see com.arsdigita.persistence.Session#retrieve(String)
+     *
+     * @param dataObject The data object to encapsulate in the Forum instance
+     *                   (new domain object).
+     */
     protected Application(DataObject dataObject) {
         super(dataObject);
     }

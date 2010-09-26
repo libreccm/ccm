@@ -81,9 +81,9 @@ import com.arsdigita.util.Assert;
  *        <li> Submitter edits already approved message (notify admin)
  *        status changes to 'reapprove'</li>
  *
- *        <li> -> Admin moderates, change state to 'approve',
- *'supressed', or 'rejected' depending on whether they want to hide
- *the entire thread or just the content of the message.</li>
+ *        <li> -> Admin moderates, change state to 'approve','supressed', or
+ *                'rejected' depending on whether they want to hide the entire
+ *                thread or just the content of the message.</li>
  *
  *        <li> -> APPROVED new version of message goes live</li>
  *
@@ -113,7 +113,6 @@ import com.arsdigita.util.Assert;
  * @author Kevin Scaldeferri (kevin@arsdigita.com)
  * @author Nobuko Asakai (nasakai@redhat.com)
  */
-
 public class Post extends ThreadedMessage {
    private static final Logger s_log = Logger.getLogger(Post.class);
 
@@ -125,15 +124,15 @@ public class Post extends ThreadedMessage {
      * message */
     public static final String MODERATOR = "moderator";
 
-	/**
-	 * 0..n association with PostImageAttachments
-	 */
-	public static final String IMAGE_ATTACHMENTS = "images";
+    /**
+     * 0..n association with PostImageAttachments
+     */
+    public static final String IMAGE_ATTACHMENTS = "images";
 
-	/**
-	 * 0..n association with PostFileAttachments
-	 */
-	public static final String FILE_ATTACHMENTS = "files";
+    /**
+     * 0..n association with PostFileAttachments
+     */
+    public static final String FILE_ATTACHMENTS = "files";
 
     /** The status strings */
     public static final String PENDING = "pending";
@@ -148,14 +147,13 @@ public class Post extends ThreadedMessage {
 
     private Party m_moderator;
 
-	// referred to afterSave method
-	private boolean m_wasNew;
+    // referred to afterSave method
+    private boolean m_wasNew;
 
     /*
      * The base DomainObject is Post which extends ThreadedMessage. In
      * other words, all bboard messages are ThreadedMessages.
      */
-
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.forum.Post";
 
@@ -180,25 +178,29 @@ public class Post extends ThreadedMessage {
     }
 
     /**
-	 * Creates a new Posting in a forum. The post is
-	 * not yet in a fit state to be saved as it needs
-	 * it's status to be set, and the subject and message
-	 * 
+     * Creates a new Posting in a forum. The post is
+     * not yet in a fit state to be saved as it needs
+     * it's status to be set, and the subject and message
+     *
      * @param forum the owner forum
      */
     public static Post create(Forum forum) {
         Post post = new Post();
-		post.setForum(forum);
+        post.setForum(forum);
         return post;
     }
 
+    /**
+     * 
+     * @return
+     */
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
     /**
-	 * overridden version of method in ThreadedMessage
-	 * used to create a reply to an existing post
+     * overridden version of method in ThreadedMessage
+     * used to create a reply to an existing post
      */
     public ThreadedMessage newInstance() {
         return create(getForum());
@@ -209,7 +211,7 @@ public class Post extends ThreadedMessage {
      * before saving.
      */
     protected void beforeSave() {
-		m_wasNew = isNew();
+        m_wasNew = isNew();
         Forum forum = getForum();
         Assert.exists(forum, Forum.class);
 
@@ -224,12 +226,11 @@ public class Post extends ThreadedMessage {
 
     }
 
-	/**
-	 * set permission contexts for this post to the root post, and for the root
-	 * post to the forum. Additionally create a lifecycle if required for a new
-	 * root post
-	 */
-
+    /**
+     * set permission contexts for this post to the root post, and for the root
+     * post to the forum. Additionally create a lifecycle if required for a new
+     * root post
+     */
     protected void afterSave() {
         super.afterSave();
         Forum forum = getForum();
@@ -238,40 +239,40 @@ public class Post extends ThreadedMessage {
 
         s_log.info("Setting context for " + getOID() + " to " + root.getOID());
         PermissionService.setContext(this, root);
-		s_log.info(
-			"Setting context for " + root.getOID() + " to " + 
-                   forum.getOID());
+        s_log.info( "Setting context for " + root.getOID() + " to " +
+                    forum.getOID());
         PermissionService.setContext(root, forum);
-		// originally this was created in beforeSave, but this was when only noticeboard
-		// (reply disabled) forums could have a lifecycle. Now that all forums may 
-		// have a lifecycle on root posts, the method needs to be here in order 
-		// for persistence to work when users are replying to posts chris.gilbert@westsussex.gov.uk
+        // originally this was created in beforeSave, but this was when only
+        // noticeboard (reply disabled) forums could have a lifecycle. Now that
+        // all forums may have a lifecycle on root posts, the method needs to be
+        // here in order for persistence to work when users are replying to
+        // posts (chris.gilbert@westsussex.gov.uk)
 
-		if (m_wasNew) {
-			if (getRoot() == null && forum.getExpireAfter() > 0) {
-				s_log.info("Creating expiration lifecycle for " + getOID());
-				setLifecycle(forum.getLifecycleDefinition());
-			}
-		}
-		m_wasNew = false;
+        if (m_wasNew) {
+            if (getRoot() == null && forum.getExpireAfter() > 0) {
+                s_log.info("Creating expiration lifecycle for " + getOID());
+                           setLifecycle(forum.getLifecycleDefinition());
+            }
+        }
+        m_wasNew = false;
 
-		DataAssociationCursor files = getFiles();
+        DataAssociationCursor files = getFiles();
 
-		// allow attached files to be returned in search results
-		// by setting their status as live
-		while (files.next()) {
-			PostFileAttachment file =
-				(PostFileAttachment) DomainObjectFactory.newInstance(
-					files.getDataObject());
-			if (getStatus().equals(APPROVED)) {
-				file.setLive();
-			} else {
-				file.setDraft();
-			}
+        // allow attached files to be returned in search results
+        // by setting their status as live
+        while (files.next()) {
+            PostFileAttachment file =
+                    (PostFileAttachment) DomainObjectFactory.newInstance(
+                                                         files.getDataObject());
+            if (getStatus().equals(APPROVED)) {
+                file.setLive();
+            } else {
+                file.setDraft();
+            }
 
-		}
+        }
 
-    }
+    }   // Method afterSave()
 
     /**
      * Sends out the notifications for any subscriptions to the forum
@@ -322,7 +323,8 @@ public class Post extends ThreadedMessage {
                         subscriptions.getDataObject());
                 s_log.debug("notification to  " + subscription.getOID());
 
-				subscription.sendNotification(Post.this, Forum.getConfig().deleteNotifications());
+                subscription.sendNotification(Post.this, Forum.getConfig()
+                                                              .deleteNotifications());
             }
 
                 s_log.debug("Sending thread level subsriptions");
@@ -493,13 +495,13 @@ public class Post extends ThreadedMessage {
      * on the forum is not cached.
      */
     public boolean canEdit(Party party) {
-        Party author = getFrom();
-		// cg added - for anonymous posts, don't allow editing, else everyone could edit everyone else's posts
-		return (
-			!author.equals(Kernel.getPublicUser())
-				&& Forum.getConfig().canAuthorEditPosts()
-                && author.equals(party))
-            || getForum().canEdit(party);
+        Party author = getFrom(); //determin sender / author of message
+        // cg added - for anonymous posts, don't allow editing, else everyone
+        // could edit everyone else's posts
+        return ( !author.equals(Kernel.getPublicUser())
+                 && Forum.getConfig().canAuthorEditPosts()
+                 && author.equals(party) )
+               || getForum().canEdit(party);
     }
 
     public void setStatus(String status) {

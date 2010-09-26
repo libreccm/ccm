@@ -62,7 +62,7 @@ public class Loader extends PackageLoader {
 
                 setupPrivileges();
                 setupForumAppType();
-                //setupInboxAppType();
+                //setupInboxAppType(); //TODO: why it is commented out?
                 setupRecentPostingsPortletType();
                 setupMyForumsPortletType();
                 setupDigestUser();
@@ -87,7 +87,7 @@ public class Loader extends PackageLoader {
 
 
     /**
-     * 
+     * TODO: What is it for? Execution is currently commented out.
      * @return
      */
     private static ApplicationType setupInboxAppType() {
@@ -136,11 +136,11 @@ public class Loader extends PackageLoader {
         // Email address corresponding to the digest sender, as
         // specified in the configuration file.
         String email = Forum.getConfig().getDigestUserEmail();
-		UserCollection users = User.retrieveAll();
-		users.addEqualsFilter("primaryEmail", email);
-		if (users.next()) {
-			s_log.debug("user exists");
-		} else {
+        UserCollection users = User.retrieveAll();
+        users.addEqualsFilter("primaryEmail", email);
+        if (users.next()) {
+            s_log.debug("user exists");
+        } else {
             s_log.debug("Creating a user with the email " + email);
             User user = new User();
             user.setPrimaryEmail(new EmailAddress(email));
@@ -148,10 +148,9 @@ public class Loader extends PackageLoader {
             user.getPersonName().setFamilyName("Digest Sender");
             // Fixes a NPE in Loader of ccm-forum if screen_names are being used 
             user.setScreenName("Forum");
-			users.close();
-		}
-		
-		
+            users.close();
+        }
+
     }
 
     /**
@@ -165,7 +164,7 @@ public class Loader extends PackageLoader {
                 Forum.CREATE_THREAD_PRIVILEGE);
         PrivilegeDescriptor.createPrivilege(
                 Forum.RESPOND_TO_THREAD_PRIVILEGE);
-
+        // Establich privilege hierarchie, eg. moderation includes createThread
         PrivilegeDescriptor.addChildPrivilege(
                 Forum.FORUM_MODERATION_PRIVILEGE,
                 Forum.CREATE_THREAD_PRIVILEGE);
@@ -174,7 +173,7 @@ public class Loader extends PackageLoader {
                 Forum.RESPOND_TO_THREAD_PRIVILEGE);
         PrivilegeDescriptor.addChildPrivilege(
                 Forum.RESPOND_TO_THREAD_PRIVILEGE,
-                PrivilegeDescriptor.READ.getName());
+                PrivilegeDescriptor.READ.getName());  // general read privilege
     }
 
 }

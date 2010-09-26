@@ -89,9 +89,9 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     /** Object containing the moderation panel */
     private ModerationView m_moderationView;
     /** Object containing the setup panel */
-	private SetupView m_setupView;
+    private SetupView m_setupView;
     /** Object containing the permission management panel*/
-	private PermissionsView m_permissionsView;
+    private PermissionsView m_permissionsView;
 
     /**
      * Default Constructor. Initializes the forum user interface elements.
@@ -99,26 +99,26 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     public ForumUserCompactView() {
 
         // determine namespace
-		super(FORUM_XML_PREFIX + ":forum", FORUM_XML_NS);
+        super(FORUM_XML_PREFIX + ":forum", FORUM_XML_NS);
 
         m_mode = new StringParameter("mode");
 
-		// setup panels which make up the forum
+        // setup panels which make up the forum
         m_threadsView     = new ThreadsPanel();
         m_topicsView = new TopicsPanel();
         m_alertsView     = new ForumAlertsView();
         // administration section
         m_moderationView = new ModerationView();
         m_setupView = new SetupView();
-		m_permissionsView = new PermissionsView();
+        m_permissionsView = new PermissionsView();
 
         add(m_threadsView);
         add(m_topicsView);
         add(m_alertsView);
         // administration section
         add(m_moderationView);
-		add(m_setupView);
-		add(m_permissionsView);
+        add(m_setupView);
+        add(m_permissionsView);
 
         setDefaultComponent(m_threadsView);
     }
@@ -142,16 +142,16 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
        
         super.respond(state);
 
-		Party party = Kernel.getContext().getParty();
-		Forum forum = ForumContext.getContext(state).getForum();
+        Party party = Kernel.getContext().getParty();
+        Forum forum = ForumContext.getContext(state).getForum();
 
         String mode = (String)state.getControlEventValue();
         state.setValue(m_mode, mode);
 
-		setVisible(state, party, forum, mode);
+        setVisible(state, party, forum, mode);
 	}
 
-	/**
+    /**
      * Checks for the given forum mode (parameter value) whether its prerequisites
      * are given (currently permission, but additional properties may be added here).
      * If positive the panel is set visible, otherwise a login screen is
@@ -166,18 +166,18 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
     protected void setVisible( PageState state, Party party,
                                Forum forum, String mode) {
 
-		PermissionDescriptor forumAdmin =
-			new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
+        PermissionDescriptor forumAdmin =
+                new PermissionDescriptor(PrivilegeDescriptor.ADMIN, forum, party);
 
         PermissionService.assertPermission(forumAdmin);
         
         if (MODE_TOPICS.equals(mode)) {
-			if (Forum.getConfig().topicCreationByAdminOnly()) {
-				if (party == null) {
-					UserContext.redirectToLoginPage(state.getRequest());
-				}
-				PermissionService.assertPermission(forumAdmin);
-			}
+            if (Forum.getConfig().topicCreationByAdminOnly()) {
+                if (party == null) {
+                    UserContext.redirectToLoginPage(state.getRequest());
+                }
+                PermissionService.assertPermission(forumAdmin);
+            }
             setVisibleComponent(state, m_topicsView);
         } else if (MODE_ALERTS.equals(mode)) {
 			if (party == null) {
@@ -188,22 +188,22 @@ public class ForumUserCompactView extends ModalContainer implements Constants {
             if (party == null) {
                 UserContext.redirectToLoginPage(state.getRequest());
             }
-			PermissionService.assertPermission(forumAdmin);
+            PermissionService.assertPermission(forumAdmin);
             setVisibleComponent(state, m_moderationView);
-		} else if (MODE_PERMISSIONS.equals(mode)) {
-			if (party == null) {
-				UserContext.redirectToLoginPage(state.getRequest());
-			}
-			PermissionService.assertPermission(forumAdmin);
+        } else if (MODE_PERMISSIONS.equals(mode)) {
+            if (party == null) {
+                UserContext.redirectToLoginPage(state.getRequest());
+            }
+            PermissionService.assertPermission(forumAdmin);
 
-			setVisibleComponent(state, m_permissionsView);
-		} else if (MODE_SETUP.equals(mode)) {
-			if (party == null) {
-				UserContext.redirectToLoginPage(state.getRequest());
-			}
-			PermissionService.assertPermission(forumAdmin);
-			setVisibleComponent(state, m_setupView);
-		} else if (MODE_THREADS.equals(mode)) {
+            setVisibleComponent(state, m_permissionsView);
+        } else if (MODE_SETUP.equals(mode)) {
+            if (party == null) {
+                UserContext.redirectToLoginPage(state.getRequest());
+            }
+            PermissionService.assertPermission(forumAdmin);
+            setVisibleComponent(state, m_setupView);
+        } else if (MODE_THREADS.equals(mode)) {
             PermissionService.assertPermission(forumAdmin);
             setVisibleComponent(state, m_threadsView);
         }

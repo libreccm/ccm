@@ -42,46 +42,50 @@ import com.arsdigita.xml.Element;
  */
 public class ThreadPageBuilder implements PageBuilder, Constants {
 
-	/* (non-Javadoc)
-	 * @see com.arsdigita.forum.PageBuilder#buildPage(
+    /* (non-Javadoc)
+     * @see com.arsdigita.forum.PageBuilder#buildPage(
      *          com.arsdigita.bebop.parameters.ParameterModel)
-	 */
-	/** 
+     */
+    /**
      * 
      * @return
      */
     public Page buildPage() {
-		Page threadPage = PageFactory.buildPage(Constants.FORUM_XML_PREFIX,
+
+        Page threadPage = PageFactory.buildPage(Constants.FORUM_XML_PREFIX,
                                                 "Threads", "forumThreadPage");
-		//Output the title in an easy to find place
-		threadPage.add(new SimpleComponent(){
-			public void generateXML(PageState state, Element parent) {
-				Element nameElement = parent.newChildElement(
+        //Output the title in an easy to find place
+        threadPage.add(new SimpleComponent(){
+
+                public void generateXML(PageState state, Element parent) {
+                    Element nameElement = parent.newChildElement(
                                            Constants.FORUM_XML_PREFIX + ":name",
                                            Constants.FORUM_XML_NS);
-				nameElement.setText(ForumContext.getContext(state).getForum().
-                                                                   getTitle());
-				Element introductionElement = parent.newChildElement(
+                    nameElement.setText(ForumContext.getContext(state)
+                                                    .getForum().getTitle());
+
+                    Element introductionElement = parent.newChildElement(
                                                      Constants.FORUM_XML_PREFIX +
                                                      ":introduction",
                                                      Constants.FORUM_XML_NS);
-				introductionElement.setText(ForumContext.getContext(state).
+                    introductionElement.setText(ForumContext.getContext(state).
                                                          getForum().
                                                          getIntroduction());
-			} 
-		});
+                }
+        });
         // 
-		threadPage.add(new DiscussionThreadSimpleView());
-		// Register the thread id parameter as a global state parameter.
-		BigDecimalParameter threadID =  new BigDecimalParameter(THREAD_PARAM);
-		threadPage.addGlobalStateParam(threadID);
-		threadPage.addRequestListener(
+        threadPage.add(new DiscussionThreadSimpleView());
+
+        // Register the thread id parameter as a global state parameter.
+        BigDecimalParameter threadID =  new BigDecimalParameter(THREAD_PARAM);
+        threadPage.addGlobalStateParam(threadID);
+        // Basic PrivilegeDescriptor.READ allows general read access to the public
+        // Should be FORUM_READ instead!
+        threadPage.addRequestListener(
                 new ApplicationAuthenticationListener(PrivilegeDescriptor.READ));
-       
-		threadPage.addRequestListener
-			(new ThreadPageRequestListener(threadID));
-		return threadPage;
-	}
+       	threadPage.addRequestListener(new ThreadPageRequestListener(threadID));
+        return threadPage;
+    }
 	
 	/**
      * 
