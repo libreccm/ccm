@@ -27,10 +27,7 @@ public class DepartmentPropertiesStep
                 "cms.contenttypes.ui.orgaunit.contact");
         addStep(new DepartmentSubDepartmentPropertiesStep(itemModel,
                                                           parent),
-                "cms.contenttypes.ui.orgaunit.subdepartments");
-        addStep(new DepartmentProjectPropertiesStep(itemModel,
-                                                    parent),
-                "cms.contenttypes.ui.orgaunit.projects");
+                "cms.contenttypes.ui.orgaunit.subdepartments");        
         addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
                                                                   parent),
                 "cms.contenttypes.ui.orgaunit.persons");

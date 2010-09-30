@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+  <ctd:content-type
+      label="SciDepartment"
+      description="Base type for publications"
+      objectType="com.arsdigita.cms.contenttypes.SciDepartment"
+      classname="com.arsdigita.cms.contenttypes.SciDepartment"
+      isInternal="yes">
+
+    <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+      
+      <ctd:authoring-step
+	  labelKey="publications.ui.publication_properties.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	  descriptionKey="publications.ui.publication_properties.title.description"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	  component="com.arsdigita.cms.contenttypes.ui.SciDepartmentPropertiesStep"
+	  ordering="1"/>
+
+      <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+
+    </ctd:authoring-kit>
+
+  </ctd:content-type>
+ 
+
+</ctd:content-types>

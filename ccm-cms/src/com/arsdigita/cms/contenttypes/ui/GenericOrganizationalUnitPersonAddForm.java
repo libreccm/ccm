@@ -25,8 +25,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.form.SingleSelect;
+import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -72,19 +71,17 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
         ParameterModel roleParam =
                        new StringParameter(
                 GenericOrganizationalUnitPersonCollection.PERSON_ROLE);
-        SingleSelect roleSelect = new SingleSelect(roleParam);
+        /*SingleSelect roleSelect = new SingleSelect(roleParam);
         roleSelect.addValidationListener(new NotNullValidationListener());
         roleSelect.addOption(
                 new Option("",
                            new Label((String) ContenttypesGlobalizationUtil.
                 globalize("cms.ui.select_one").localize())));
 
-        roleSelect.addOption(new Option("Dummy", "Dummy"));
-        roleSelect.addOption(new Option("Boss", "Boss"));
-        roleSelect.addOption(new Option("Terrorist", "Terrorist"));
-
-        add(roleSelect);
-
+        add(roleSelect);*/
+        TextField role = new TextField(roleParam);
+        role.addValidationListener(new NotNullValidationListener());
+        add(role);
     }
 
     @Override

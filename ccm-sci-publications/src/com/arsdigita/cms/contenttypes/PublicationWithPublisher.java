@@ -32,7 +32,10 @@ import org.apache.log4j.Logger;
  * </p>
  * <ul>
  * <li>ISBN</li>
- * <li>URL</li>
+ * <li>volume</li>
+ * <li>numberOfVolumes</li>
+ * <li>numberOfPages</li>
+ * <li>edition</li>
  * <li>Publisher</li>
  * </ul>
  * <p>
@@ -45,7 +48,10 @@ import org.apache.log4j.Logger;
 public class PublicationWithPublisher extends Publication {
 
     public final static String ISBN = "isbn";
-    public static final String URL = "url";
+    public static final String VOLUME = "volume";
+    public static final String NUMBER_OF_VOLUMES = "numberOfVolumes";
+    public static final String NUMBER_OF_PAGES = "numberOfPages";
+    public static final String EDITION = "edition"; 
     public final static String PUBLISHER = "publisher";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.PublicationWithPublisher";
@@ -93,14 +99,38 @@ public class PublicationWithPublisher extends Publication {
         set(ISBN, isbn);
     }
 
-    public String getUrl() {
-        return (String) get(URL);
+      public Integer getVolume() {
+        return (Integer) get(VOLUME);
     }
 
-    public void setUrl(String url) {
-        set(URL, url);
+    public void setVolume(Integer volume) {
+        set(VOLUME, volume);
     }
 
+    public Integer getNumberOfVolumes() {
+        return (Integer) get(NUMBER_OF_VOLUMES);
+    }
+
+    public void setNumberOfVolumes(Integer numberOfVolumes) {
+        set(NUMBER_OF_VOLUMES, numberOfVolumes);
+    }
+
+    public Integer getNumberOfPages() {
+        return (Integer) get(NUMBER_OF_PAGES);
+    }
+
+    public void setNumberOfPages(Integer numberOfPages) {
+        set(NUMBER_OF_PAGES, numberOfPages);
+    }
+
+    public String getEdition() {
+        return (String) get(EDITION);
+    }
+
+    public void setEdition(String edition) {
+        set(EDITION, edition);
+    }
+    
     /**
      * Retrieves the publisher of the publication.
      *

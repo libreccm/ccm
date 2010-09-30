@@ -1,21 +1,31 @@
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
  *
  * @author Jens Pelzetter
  */
-public class ReviewPropertiesStep extends PublicationPropertiesStep {
+public class ReviewPropertiesStep extends ArticleInJournalPropertiesStep {
 
     public ReviewPropertiesStep(ItemSelectionModel itemModel,
                                 AuthoringKitWizard parent) {
         super(itemModel, parent);
+    }
+
+    public static Component getReviewPropertySheet(
+            ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
+                getPublicationPropertySheet(itemModel);
+
+        return sheet;
     }
 
     @Override
@@ -37,7 +47,7 @@ public class ReviewPropertiesStep extends PublicationPropertiesStep {
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getPublicationPropertySheet(itemModel));
+                getReviewPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(

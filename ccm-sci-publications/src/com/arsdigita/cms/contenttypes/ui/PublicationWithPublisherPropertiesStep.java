@@ -32,6 +32,26 @@ public class PublicationWithPublisherPropertiesStep
                 "publications.ui.with_publisher.isbn"),
                   PublicationWithPublisher.ISBN);
 
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.volume"),
+                PublicationWithPublisher.VOLUME);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.number_of_volumes"),
+                PublicationWithPublisher.NUMBER_OF_VOLUMES);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.number_of_pages"),
+                PublicationWithPublisher.NUMBER_OF_PAGES);
+
+         sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.edition"),
+                PublicationWithPublisher.EDITION);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.with_publisher.publisher"),
+                PublicationWithPublisher.PUBLISHER);
+
         return sheet;
     }
 

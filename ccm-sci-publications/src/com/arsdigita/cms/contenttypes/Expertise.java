@@ -33,8 +33,7 @@ public class Expertise extends Publication {
 
     public static final String PLACE = "place";
     public static final String ORGANIZATION = "organization";
-    public static final String NUMBER_OF_PAGES = "numberOfPages";
-    public static final String URL = "url";
+    public static final String NUMBER_OF_PAGES = "numberOfPages";   
     public static final String ORDERER = "orderer";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Expertise";
@@ -91,14 +90,6 @@ public class Expertise extends Publication {
 
     public void setNumberOfPages(Integer numberOfPages) {
         set(NUMBER_OF_PAGES, numberOfPages);
-    }
-
-    public String getUrl() {
-        return (String) get(URL);
-    }
-
-    public void setUrl(String url) {
-        set(URL, url);
     }
 
     public GenericOrganizationalUnit getOrderer() {

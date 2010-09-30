@@ -26,8 +26,7 @@ import com.arsdigita.cms.ContentPage;
 object type GreyLiterature extends UnPublished {
 
        Integer[0..1] pagesFrom = ct_grey_literature.pagesFrom INTEGER;
-       Integer[0..1] pagesTo = ct_grey_literature.pagesTo INTEGER;
-       String[0..1] url = ct_grey_literature.url VARCHAR(512);
+       Integer[0..1] pagesTo = ct_grey_literature.pagesTo INTEGER;      
 
        reference key (ct_grey_literature.grey_literature_id);
 

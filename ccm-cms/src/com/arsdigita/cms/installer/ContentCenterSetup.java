@@ -203,6 +203,7 @@ public final class ContentCenterSetup {
         try {
             while ( dq.next() ) {
                 String privilege = (String) dq.get(PRIVILEGE);
+                s_log.warn(String.format("privilege = %s", privilege));
                 if ( PrivilegeDescriptor.get(privilege) == null ) {
                     PrivilegeDescriptor.createPrivilege(privilege);
                 }

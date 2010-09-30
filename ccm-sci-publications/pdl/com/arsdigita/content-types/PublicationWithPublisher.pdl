@@ -26,7 +26,10 @@ import com.arsdigita.cms.ContentPage;
 object type PublicationWithPublisher extends Publication {
        
        String[0..1] isbn = ct_publication_with_publisher.isbn VARCHAR(17);
-       String[0..1] url = ct_article_in_journal.url VARCHAR(512);
+       Integer[0..1] volume = ct_publication_with_publisher.volume INTEGER;
+       Integer[0..1] numberOfVolumes = ct_publication_with_publisher.number_of_volumes INTEGER;
+       Integer[0..1] numberOfPages = ct_publication_with_publisher._number_of_pages INTEGER;
+       String[0..1] edition = ct_publication_with_publisher.edition VARCHAR(256);
        component Publisher[0..1] publisher = join ct_publication_with_publisher.publisher_id 
        		 		 	       to ct_publisher.publisher_id;                                             
 

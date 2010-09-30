@@ -23,16 +23,8 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentPage;
 
 // PDL definition for InProceedings publication
-object type InProceedings extends PublicationWithPublisher {
+object type InProceedings extends Publication {
        
-       String[0..1] organizerOfConference = ct_inproceedings.organizer_of_conference VARCHAR(256);
-       String[0..1] nameOfConference = ct_inproceedings.name_of_conference VARCHAR(256);
-       Date[0..1] dateFromOfConference = ct_inproceedings.date_from_of_conference DATE;
-       Date[0..1] dateToOfConference = ct_inproceedings.date_to_of_conference DATE;
-       String[0..1] placeOfConference = ct_inproceedings.place_of_conference VARCHAR(256);
-       Integer[0..1]  volume = ct_inproceedings.volume INTEGER;
-       Integer[0..1]  numberOfVolumes = ct_inproceedings.numberOfVolumes INTEGER;
-       Integer[0..1]  numberOfPages = ct_inproceedings.numberOfPages INTEGER;
        Integer[0..1]  pagesFrom = ct_inproceedings.pages_from INTEGER;
        Integer[0..1]  pagesTo = ct_inproceedings.pages_to INTEGER;
 

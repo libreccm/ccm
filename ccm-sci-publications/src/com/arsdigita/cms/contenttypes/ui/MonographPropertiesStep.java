@@ -22,24 +22,11 @@ public class MonographPropertiesStep
         super(itemModel, parent);
     }
 
-    public static Component getMonographPropertiesStep(
+    public static Component getMonographPropertySheet(
             ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet)
                 PublicationWithPublisherPropertiesStep.
-                getPublicationWithPublisherPropertySheet(itemModel);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.monograph.volume"),
-                  Monograph.VOLUME);
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.monograph.numberOfVolumes"),
-                  Monograph.NUMBER_OF_VOLUMES);
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.monograph.numberOfPages"),
-                  Monograph.NUMBER_OF_PAGES);
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.monograph.edition"),
-                  Monograph.EDITION);
+                getPublicationWithPublisherPropertySheet(itemModel);      
 
         return sheet;
     }
@@ -63,7 +50,7 @@ public class MonographPropertiesStep
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getPublicationPropertySheet(itemModel));
+                getMonographPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(

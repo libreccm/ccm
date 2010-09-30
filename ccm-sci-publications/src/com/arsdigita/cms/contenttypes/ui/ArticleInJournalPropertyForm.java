@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 
 /**
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
 public class ArticleInJournalPropertyForm
         extends PublicationPropertyForm
@@ -86,12 +86,6 @@ public class ArticleInJournalPropertyForm
         TextField issn = new TextField(issnParam);
         add(issn);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.url").localize()));
-        ParameterModel urlParam = new StringParameter(ArticleInJournal.URL);
-        TextField url = new TextField(urlParam);
-        add(url);
-
         Calendar today = new GregorianCalendar();
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleinjournal.publicationDate").
@@ -117,8 +111,7 @@ public class ArticleInJournalPropertyForm
         data.put(ArticleInJournal.ISSUE, article.getIssue());
         data.put(ArticleInJournal.PAGES_FROM, article.getPagesFrom());
         data.put(ArticleInJournal.PAGES_TO, article.getPagesTo());
-        data.put(ArticleInJournal.ISSN, article.getISSN());
-        data.put(ArticleInJournal.URL, article.getUrl());
+        data.put(ArticleInJournal.ISSN, article.getISSN());       
         data.put(ArticleInJournal.PUBLICATION_DATE,
                  article.getPublicationDate());
     }
@@ -140,9 +133,7 @@ public class ArticleInJournalPropertyForm
             article.setPagesTo(
                     (Integer) data.get(ArticleInJournal.PAGES_TO));
             article.setISSN(
-                    (String) data.get(ArticleInJournal.ISSN));
-            article.setUrl(
-                    (String) data.get(ArticleInJournal.URL));
+                    (String) data.get(ArticleInJournal.ISSN));           
             article.setPublicationDate(
                     (Date) data.get(ArticleInJournal.PUBLICATION_DATE));
 

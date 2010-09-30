@@ -64,13 +64,7 @@ public class InternetArticlePropertyForm
                                             ContentType.
                 findByAssociatedObjectType(
                 GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
-        add(m_itemSearch);
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.url").localize()));
-        ParameterModel urlParam = new StringParameter(InternetArticle.URL);
-        TextField url = new TextField(urlParam);
-        add(url);
+        add(m_itemSearch);      
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number").localize()));
@@ -121,8 +115,7 @@ public class InternetArticlePropertyForm
         InternetArticle article = (InternetArticle) initBasicWidgets(fse);
 
         data.put(InternetArticle.PLACE, article.getPlace());
-        data.put(ITEM_SEARCH, article.getOrganization());
-        data.put(InternetArticle.URL, article.getUrl());
+        data.put(ITEM_SEARCH, article.getOrganization());     
         data.put(InternetArticle.NUMBER, article.getNumber());
         data.put(InternetArticle.NUMBER_OF_PAGES, article.getNumberOfPages());
         data.put(InternetArticle.EDITION, article.getEdition());
@@ -142,9 +135,7 @@ public class InternetArticlePropertyForm
                 isSelected(fse.getPageState())) {
             article.setPlace((String) data.get(InternetArticle.PLACE));
             article.setOrganization(
-                    (GenericOrganizationalUnit) data.get(ITEM_SEARCH));
-            article.setUrl(
-                    (String) data.get(InternetArticle.URL));
+                    (GenericOrganizationalUnit) data.get(ITEM_SEARCH));            
             article.setNumber((String) data.get(InternetArticle.NUMBER));
             article.setNumberOfPages(
                     (Integer) data.get(InternetArticle.NUMBER_OF_PAGES));

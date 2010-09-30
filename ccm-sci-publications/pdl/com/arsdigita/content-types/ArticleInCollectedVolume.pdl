@@ -23,7 +23,7 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentPage;
 
 // PDL definition for a collected volume
-object type ArticleInCollectedVolume extends PublicationWithPublisher {
+object type ArticleInCollectedVolume extends Publication {
 
        Integer[0..1] pagesFrom = ct_article_in_collected_volume.pages_from INTEGER;
        Integer[0..1] pagesTo = ct_article_in_collected_volume.pages_to INTEGER;

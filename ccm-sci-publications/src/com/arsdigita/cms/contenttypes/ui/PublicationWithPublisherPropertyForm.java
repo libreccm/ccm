@@ -8,6 +8,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextField;
+import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
@@ -67,13 +68,37 @@ public class PublicationWithPublisherPropertyForm
         TextField isbn = new TextField(isbnParam);
         add(isbn);
 
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.collected_volume.volume").localize()));
+        ParameterModel volumeParam = new IntegerParameter(
+                PublicationWithPublisher.VOLUME);
+        TextField volume = new TextField(volumeParam);
+        add(volume);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.url").localize()));
-        ParameterModel urlParam = new StringParameter(
-                PublicationWithPublisher.URL);
-        TextField url = new TextField(urlParam);
-        add(url);
+                "publications.ui.collected_volume.number_of_volumes").
+                localize()));
+        ParameterModel numberOfVolumesParam =
+                       new IntegerParameter(
+                PublicationWithPublisher.NUMBER_OF_VOLUMES);
+        TextField numberOfVolumes = new TextField(numberOfVolumesParam);
+        add(numberOfVolumes);
+
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.collected_volume.number_of_pages").
+                localize()));
+        ParameterModel numberOfPagesParam = new IntegerParameter(
+                PublicationWithPublisher.NUMBER_OF_PAGES);
+        TextField numberOfPages = new TextField(numberOfPagesParam);
+        add(numberOfPages);
+
+        add(new Label((String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.collected_volume.edition").
+                localize()));
+        ParameterModel editionModel = new StringParameter(
+                PublicationWithPublisher.EDITION);
+        TextField edition = new TextField(editionModel);
+        add(edition);
     }
 
     @Override
@@ -87,7 +112,12 @@ public class PublicationWithPublisherPropertyForm
 
         data.put(ITEM_SEARCH, publication.getPublisher());
         data.put(PublicationWithPublisher.ISBN, publication.getISBN());
-        data.put(PublicationWithPublisher.URL, publication.getUrl());
+        data.put(PublicationWithPublisher.VOLUME, publication.getVolume());
+        data.put(PublicationWithPublisher.NUMBER_OF_VOLUMES,
+                 publication.getNumberOfVolumes());
+        data.put(PublicationWithPublisher.NUMBER_OF_PAGES,
+                 publication.getNumberOfPages());
+        data.put(PublicationWithPublisher.EDITION, publication.getEdition());
 
     }
 
@@ -104,7 +134,15 @@ public class PublicationWithPublisherPropertyForm
                 isSelected(fse.getPageState())) {
             publication.setPublisher((Publisher) data.get(ITEM_SEARCH));
             publication.setISBN((String) data.get(PublicationWithPublisher.ISBN));
-            publication.setUrl((String) data.get(PublicationWithPublisher.URL));
+
+            publication.setVolume((Integer) data.get(
+                    PublicationWithPublisher.VOLUME));
+            publication.setNumberOfVolumes((Integer) data.get(
+                    PublicationWithPublisher.NUMBER_OF_VOLUMES));
+            publication.setNumberOfPages((Integer) data.get(
+                    PublicationWithPublisher.NUMBER_OF_PAGES));
+            publication.setEdition((String) data.get(
+                    PublicationWithPublisher.EDITION));
 
             publication.save();
         }

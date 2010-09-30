@@ -13,6 +13,7 @@
     <table name="ct_collected_volume"/>
     <table name="ct_article_in_collected_volume"/>
     <table name="ct_monograph"/>
+    <table name="ct_proceedings"/>
     <table name="ct_inproceedings"/>
     <table name="ct_internet_article"/>
     <table name="ct_article_in_journal"/>
@@ -29,6 +30,7 @@
     <initializer class="com.arsdigita.cms.contenttypes.CollectedVolumeInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.MonographInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.ProceedingsInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.InProceedingsInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.InternetArticleInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.ArticleInJournalInitializer"/>
@@ -48,6 +50,7 @@
     <data class="com.arsdigita.cms.contenttypes.CollectedVolumeLoader"/>
     <data class="com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeLoader"/>
     <data class="com.arsdigita.cms.contenttypes.MonographLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.ProceedingsLoader"/>
     <data class="com.arsdigita.cms.contenttypes.InProceedingsLoader"/>
     <data class="com.arsdigita.cms.contenttypes.InternetArticleLoader"/>
     <data class="com.arsdigita.cms.contenttypes.ArticleInJournalLoader"/>

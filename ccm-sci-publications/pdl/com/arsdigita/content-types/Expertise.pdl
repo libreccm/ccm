@@ -29,7 +29,6 @@ object type Expertise extends Publication {
        component GenericOrganizationalUnit[0..1] organization = join ct_expertise.organization_id
                                                                   to cms_organizationalunits.organizationalunit_id;
        Integer[0..1] numberOfPages = ct_expertise.number_of_pages INTEGER;
-       String[0..1] url = ct_expertise.url VARCHAR(512);
        component GenericOrganizationalUnit[0..1] orderer = join ct_expertise.orderer_id
 	                                                     to cms_organizationalunits.organizationalunit_id;
                      

@@ -1,0 +1,10 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type SciDepartment extends GenericOrganizationalUnit {
+    String[0..1] description = ct_scidepartments.description;
+
+    reference key ( ct_scidepartments.organization_id );
+}

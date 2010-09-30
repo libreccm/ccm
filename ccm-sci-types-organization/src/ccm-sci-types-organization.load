@@ -1,0 +1,22 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_sciorganizatations"/>
+    <table name="ct_scidepartments"/>
+    <table name="ct_sciprojects"/>    
+    <initializer name="com.arsdigita.cms.contenttypes.SciOrganizationInitializer"/>
+    <initializer name="com.arsdigita.cms.contenttypes.SciDepartmentInitializer"/>
+    <initializer name="com.arsdigita.cms.contenttypes.SciProjectInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-sci-types.organization"/>
+    <data class="com.arsdigita.cms.contenttypes.SciOrganizationLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.SciDepartmentLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.SciProjectLoader"/>
+  </scripts>
+</load>

@@ -28,7 +28,6 @@ object type InternetArticle extends Publication {
        String[0..1] place = ct_internet_article.place VARCHAR(256);
        component GenericOrganizationalUnit[0..1] organization = join ct_internet_article.organization_id
 	    				                          to cms_organizationalunits.organizationalunit_id;
-       String[0..1] url = ct_article_in_journal.url VARCHAR(512);
        String[0..1] number = ct_internet_article.number VARCHAR(128);
        Integer[0..1] numberOfPages = ct_internet_article.number_of_pages INTEGER;
        String[0..1] edition = ct_internet_article.edition VARCHAR(256);

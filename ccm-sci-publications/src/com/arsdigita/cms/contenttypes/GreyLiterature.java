@@ -31,8 +31,7 @@ import java.math.BigDecimal;
 public class GreyLiterature extends UnPublished {
 
     public static final String PAGES_FROM = "pagesFrom";
-    public static final String PAGES_TO = "pagesTo";
-    public static final String URL = "url";
+    public static final String PAGES_TO = "pagesTo";   
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GreyLiterature";
 
@@ -71,12 +70,5 @@ public class GreyLiterature extends UnPublished {
     public void setPagesTo(Integer pagesTo) {
         set(PAGES_TO, pagesTo);
     }
-
-    public String getUrl() {
-        return (String) get(URL);
-    }
-
-    public void setUrl(String url) {
-        set(URL, url);
-    }
+    
 }

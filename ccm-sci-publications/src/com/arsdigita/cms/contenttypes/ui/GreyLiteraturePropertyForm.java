@@ -56,14 +56,7 @@ public class GreyLiteraturePropertyForm
         ParameterModel toParam = new IntegerParameter(
                 GreyLiterature.PAGES_TO);
         TextField pagesTo = new TextField(toParam);
-        add(pagesTo);
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.greyliterature.url").localize()));
-        ParameterModel urlParam = new StringParameter(
-                GreyLiterature.URL);
-        TextField url = new TextField(urlParam);
-        add(url);
+        add(pagesTo);    
     }
 
     @Override
@@ -74,8 +67,7 @@ public class GreyLiteraturePropertyForm
         GreyLiterature grey = (GreyLiterature) initBasicWidgets(fse);
 
         data.put(GreyLiterature.PAGES_FROM, grey.getPagesFrom());
-        data.put(GreyLiterature.PAGES_TO, grey.getPagesTo());
-        data.put(GreyLiterature.URL, grey.getUrl());
+        data.put(GreyLiterature.PAGES_TO, grey.getPagesTo());       
     }
 
     @Override
@@ -89,8 +81,7 @@ public class GreyLiteraturePropertyForm
                 getPageState())) {
             grey.setPagesFrom((Integer) data.get(GreyLiterature.PAGES_FROM));
             grey.setPagesTo((Integer) data.get(GreyLiterature.PAGES_TO));
-            grey.setUrl((String) data.get(GreyLiterature.URL));
-
+            
             grey.save();
         }       
     }

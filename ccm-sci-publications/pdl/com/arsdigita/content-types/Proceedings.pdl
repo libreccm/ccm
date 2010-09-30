@@ -1,0 +1,50 @@
+//
+// Copyright (C) 2010 Jens Pelzetter, for the Center of Social Politics (ZeS) of
+// the University of Bremen
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+//
+
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.ContentPage;
+
+// PDL definition for proceedings
+object type Proceedings extends PublicationWithPublisher {
+
+       component GenericOrganizationalUnit[0..1] organizerOfConference = join ct_proceedings.organizer_id
+       		 				 		       	 to cms_organizationalunits.organizationalunit_id;
+       String[0..1] nameOfConference = ct_proceedings.nameOfConference;
+       String[0..1] placeOfConference = ct_proceedings.place_of_conference;
+       Date[0..1] dateFromOfConference = ct_proceedings.date_from_of_conference DATE;
+       Date[0..1] dateToOfConference = ct_proceedings.date_to_of_conference DATE;            
+
+       reference key (ct_proceedings.proceedings_id);
+}
+
+association {
+
+	    Proceedings[0..1]  proceedings = join ct_inproceedings.inproceedings_id
+	    		       		       to ct_proceedings_papers_map.paper_id,
+					     join ct_proceedings_papers_map.proceedings_id
+					       to ct_proceedings.proceedings_id;
+            InProceedings[0..n] papers = join ct_proceedings.proceedings_id
+                                           to ct_proceedings_papers_map.proceedings_id,
+					 join ct_proceedings_papers_map.paper_id
+					   to ct_inproceedings.inproceedings_id;
+
+ 	    Integer[0..1] paperOrder = ct_proceedings_papers_map.paper_order INTEGER;
+}

@@ -1,22 +1,45 @@
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
  *
  * @author Jens Pelzetter
  */
 public class ArticleInCollectedVolumePropertiesStep
-        extends PublicationWithPublisherPropertiesStep {
+        extends PublicationPropertiesStep {
 
     public ArticleInCollectedVolumePropertiesStep(ItemSelectionModel itemModel,
                                                   AuthoringKitWizard parent) {
         super(itemModel, parent);
+    }
+
+    public static Component getArticleInCollectedVolumePropertySheet(
+            ItemSelectionModel itemModel) {
+         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
+                getPublicationPropertySheet(itemModel);
+
+         sheet.add(PublicationGlobalizationUtil.globalize(
+                 "publications.ui.article_in_collected_volume.pages_from"),
+                 ArticleInCollectedVolume.PAGES_FROM);
+
+         sheet.add(PublicationGlobalizationUtil.globalize(
+                 "publications.ui.article_in_collected_volume.pages_to"),
+                 ArticleInCollectedVolume.PAGES_TO);
+
+         sheet.add(PublicationGlobalizationUtil.globalize(
+                 "publications.ui.article_in_collected_volume.chapter"),
+                 ArticleInCollectedVolume.CHAPTER);
+
+         return sheet;
     }
 
     @Override
@@ -38,7 +61,7 @@ public class ArticleInCollectedVolumePropertiesStep
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getPublicationPropertySheet(itemModel));
+                getArticleInCollectedVolumePropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(

@@ -1,0 +1,17 @@
+<load>
+  <requires>
+    <table name="inits"/>
+    <table name="acs_objects"/>
+    <table name="cms_items"/>
+    <!--<table name="cms_organizationalunits"/>-->
+    <initializer class="com.arsdigita.cms.Initializer"/>
+  </requires>
+  <provides>
+    <table name="ct_sciprojects"/>
+    <initializer class="com.arsdigita.cms.contenttypes.SciProjectInitializer"/>
+  </provides>
+  <scripts>
+    <schema directory="ccm-sci-types-sciproject"/>
+    <data class="com.arsdigita.cms.contenttypes.SciProjectLoader"/>
+  </scripts>
+</load>

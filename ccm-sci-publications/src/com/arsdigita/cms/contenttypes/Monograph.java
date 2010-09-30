@@ -29,11 +29,7 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter
  */
 public class Monograph extends PublicationWithPublisher {
-
-    public static final String VOLUME = "volume";
-    public static final String NUMBER_OF_VOLUMES = "numberOfVolumes";
-    public static final String NUMBER_OF_PAGES = "numberOfPages";
-    public static final String EDITION = "edition";
+  
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Monograph";
 
@@ -56,36 +52,5 @@ public class Monograph extends PublicationWithPublisher {
     public Monograph(String type) {
         super(type);
     }
-
-    public Integer getVolume() {
-        return (Integer) get(VOLUME);
-    }
-
-    public void setVolume(Integer volume) {
-        set(VOLUME, volume);
-    }
-
-    public Integer getNumberOfVolumes() {
-        return (Integer) get(NUMBER_OF_VOLUMES);
-    }
-
-    public void setNumberOfVolumes(Integer numberOfVolumes) {
-        set(NUMBER_OF_VOLUMES, numberOfVolumes);
-    }
-
-    public Integer getNumberOfPages() {
-        return (Integer) get(NUMBER_OF_PAGES);
-    }
-
-    public void setNumberOfPages(Integer numberOfPages) {
-        set(NUMBER_OF_PAGES, numberOfPages);
-    }
-
-    public String getEdition() {
-        return (String) get(EDITION);
-    }
-
-    public void setEdition(String edition) {
-        set(EDITION, edition);
-    }
+  
 }

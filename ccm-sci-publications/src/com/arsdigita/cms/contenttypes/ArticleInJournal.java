@@ -18,7 +18,6 @@ public class ArticleInJournal extends Publication {
     public static final String PAGES_FROM = "pagesFrom";
     public static final String PAGES_TO = "pagesTo";
     public static final String ISSN = "issn";
-    public static final String URL = "url";
     public static final String PUBLICATION_DATE = "publicationDate";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.ArticleInJournal";
@@ -89,14 +88,6 @@ public class ArticleInJournal extends Publication {
 
     public void setISSN(String issn) {
         set(ISSN, issn);
-    }
-
-    public String getUrl() {
-        return (String) get(URL);
-    }
-
-    public void setUrl(String url) {
-        set(URL, url);
     }
 
     public Date getPublicationDate() {

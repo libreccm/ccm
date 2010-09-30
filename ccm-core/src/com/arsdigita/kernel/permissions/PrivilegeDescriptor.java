@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  * Describes a privilege that can be granted or checked.
@@ -46,78 +47,70 @@ public class PrivilegeDescriptor {
     private static final String WRITE_NAME = "write";
     private static final String CREATE_NAME = "create";
     private static final String DELETE_NAME = "delete";
-
     /**
      * The PrivilegeDescriptor corresponding to the primitive admin privilege
      */
-    public static final PrivilegeDescriptor ADMIN  =
+    public static final PrivilegeDescriptor ADMIN =
                                             new PrivilegeDescriptor(ADMIN_NAME);
-
     /**
      * The PrivilegeDescriptor corresponding to the read and write privilege
      **/
     public static final PrivilegeDescriptor EDIT =
-        new PrivilegeDescriptor(EDIT_NAME);
-
+                                            new PrivilegeDescriptor(EDIT_NAME);
     /**
      * The PrivilegeDescriptor corresponding to the primitive read privilege
      */
     public static final PrivilegeDescriptor READ =
-        new PrivilegeDescriptor(READ_NAME);
-
+                                            new PrivilegeDescriptor(READ_NAME);
     /**
      * The PrivilegeDescriptor corresponding to the primitive write privilege
      */
     public static final PrivilegeDescriptor WRITE =
-        new PrivilegeDescriptor(WRITE_NAME);
-
+                                            new PrivilegeDescriptor(WRITE_NAME);
     /**
      * The PrivilegeDescriptor corresponding to the primitive create privilege
      */
     public static final PrivilegeDescriptor CREATE =
-        new PrivilegeDescriptor(CREATE_NAME);
-
+                                            new PrivilegeDescriptor(CREATE_NAME);
     /**
      * The PrivilegeDescriptor corresponding to the primitive delete privilege
      */
     public static final PrivilegeDescriptor DELETE =
-    //  new PrivilegeDescriptor(DELETE_NAME);
-        new PrivilegeDescriptor(DELETE_NAME);
-
+                                            //  new PrivilegeDescriptor(DELETE_NAME);
+                                            new PrivilegeDescriptor(DELETE_NAME);
     private String m_displayName;
-
     private static Map s_privs = Collections.synchronizedMap(new HashMap());
-
     private String m_name;
-
     private String m_columnName;
-
     private Collection m_implyingPrivs;
-
+    private static final Logger s_log = Logger.getLogger(
+            PrivilegeDescriptor.class);
 
     /**
      * Adds a privilege, identified by a name (string), to the system.
      *
+     * @param name
+     * @return
      * @exception PersistenceException when there is a persistence
      * error in saving the new privilege.
      *
      * @see #get(String)
      */
     public static PrivilegeDescriptor createPrivilege(String name)
-        throws PersistenceException
-    {
-        if (get(name)!=null) {
-            throw new
-                IllegalArgumentException("Privilege " + name + " already exists");
+            throws PersistenceException {
+        if (get(name) != null) {
+            throw new IllegalArgumentException("Privilege " + name
+                                               + " already exists");
         }
-        DataObject priv = SessionManager.getSession()
-            .create("com.arsdigita.kernel.permissions.Privilege");
+        DataObject priv = SessionManager.getSession().create(
+                "com.arsdigita.kernel.permissions.Privilege");
         priv.set("privilege", name);
         priv.save();
         addChildPrivilege(ADMIN_NAME, name);
+        s_log.warn(String.format("Creating privilege %s...", name));
         // Constructor PrivilegeDescriptor is deprecated and should be
         // replace the class method get(name)
-        // PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
+        //PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
         PrivilegeDescriptor desc = get(name);
         put(desc);
         return desc;
@@ -130,21 +123,21 @@ public class PrivilegeDescriptor {
      * @param privilegeName  privilege name will include another privilege
      * @param childPrivilegeName privilege name is included by priv...Name.
      */
-    public static void addChildPrivilege( String privilegeName,
-                                          String childPrivilegeName) {
+    public static void addChildPrivilege(String privilegeName,
+                                         String childPrivilegeName) {
 
-      DataOperation addOp =
-        SessionManager.getSession().retrieveDataOperation(
-          "com.arsdigita.kernel.permissions.addChildPrivilege");
-      addOp.setParameter("privilege", privilegeName);
-      addOp.setParameter("childPrivilege", childPrivilegeName);
-      addOp.execute();
-      synchronized (s_privs) {
-        s_privs.remove(privilegeName);
-        PrivilegeDescriptor priv = new PrivilegeDescriptor(privilegeName);
-        s_privs.put(privilegeName, priv);
+        DataOperation addOp =
+                      SessionManager.getSession().retrieveDataOperation(
+                "com.arsdigita.kernel.permissions.addChildPrivilege");
+        addOp.setParameter("privilege", privilegeName);
+        addOp.setParameter("childPrivilege", childPrivilegeName);
+        addOp.execute();
+        synchronized (s_privs) {
+            s_privs.remove(privilegeName);
+            PrivilegeDescriptor priv = new PrivilegeDescriptor(privilegeName);
+            s_privs.put(privilegeName, priv);
 
-      }
+        }
     }
 
     /**
@@ -180,8 +173,7 @@ public class PrivilegeDescriptor {
      * @see #get(String)
      */
     public void deletePrivilege()
-        throws PersistenceException
-    {
+            throws PersistenceException {
         OID oid = new OID("com.arsdigita.kernel.permissions.Privilege",
                           m_name);
 
@@ -231,7 +223,6 @@ public class PrivilegeDescriptor {
         return m_columnName;
     }
 
-
     /**
      * Determines whether this PrivilegeDescriptor is equal to some other
      * PrivilegeDescriptor. Equality is based on privilege name.
@@ -239,7 +230,7 @@ public class PrivilegeDescriptor {
      * <code>false</code> otherwise.
      */
     public boolean equals(Object o) {
-        if (! (o instanceof PrivilegeDescriptor))  {
+        if (!(o instanceof PrivilegeDescriptor)) {
             return false;
         }
         if (m_name == null) {
@@ -264,15 +255,15 @@ public class PrivilegeDescriptor {
     public PrivilegeDescriptor(String name) {
         m_name = name;
 
-        DataQuery query = SessionManager.getSession()
-            .retrieveQuery("com.arsdigita.kernel.permissions.PrivilegeColumnNameMap");
+        DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.kernel.permissions.PrivilegeColumnNameMap");
         query.setParameter("privilege", name);
         if (!query.next()) {
-           query.close();
-           throw new
-               RuntimeException("Couldn't find column name for privilege - " + name );
+            query.close();
+            throw new RuntimeException("Couldn't find column name for privilege - "
+                                       + name);
         } else {
-            m_columnName = (String)query.get("columnName");
+            m_columnName = (String) query.get("columnName");
         }
         query.close();
     }
@@ -281,8 +272,12 @@ public class PrivilegeDescriptor {
      * Puts a privilege descriptor into the internal cache that is used by
      * the get method. The put method supports extendibility by allowing
      * subclasses to be returned by the get method.
+     * @param privDesc
      */
     protected static void put(PrivilegeDescriptor privDesc) {
+        if (privDesc == null) {
+            throw new NullPointerException("privDesc is null");
+        }
         s_privs.put(privDesc.getName(), privDesc);
     }
 
@@ -295,11 +290,11 @@ public class PrivilegeDescriptor {
             return m_implyingPrivs;
         }
         m_implyingPrivs = new HashSet();
-        DataQuery query = SessionManager.getSession()
-            .retrieveQuery("com.arsdigita.kernel.permissions.ImpliedPrivilege");
+        DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.kernel.permissions.ImpliedPrivilege");
         query.setParameter("childPrivilege", m_name);
         while (query.next()) {
-            m_implyingPrivs.add((String)query.get("privilege"));
+            m_implyingPrivs.add((String) query.get("privilege"));
         }
         return m_implyingPrivs;
     }
@@ -334,14 +329,13 @@ public class PrivilegeDescriptor {
      * Called from the kernel initializer.
      */
     public static void initialize() {
-        DataCollection privs = SessionManager.getSession()
-            .retrieve("com.arsdigita.kernel.permissions.Privilege");
-            while (privs.next()) {
-                String name = (String) privs.get("privilege");
-                final PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
-                put(desc);
-            }
+        DataCollection privs = SessionManager.getSession().retrieve(
+                "com.arsdigita.kernel.permissions.Privilege");
+        while (privs.next()) {
+            String name = (String) privs.get("privilege");
+            final PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
+            put(desc);
+        }
         privs.close();
     }
-
 }

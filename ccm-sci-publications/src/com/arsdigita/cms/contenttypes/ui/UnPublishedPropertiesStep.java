@@ -1,11 +1,14 @@
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.UnPublished;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 
 /**
@@ -17,6 +20,32 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
     public UnPublishedPropertiesStep(ItemSelectionModel itemModel,
                                      AuthoringKitWizard parent) {
         super(itemModel, parent);
+    }
+
+    public static Component getUnPublishedPropertySheet(
+            ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
+                getPublicationPropertySheet(itemModel);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.unpublished.place"),
+                UnPublished.PLACE);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.unpublished.organization"),
+                UnPublished.ORGANIZATION);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.unpublished.number"),
+                UnPublished.NUMBER);
+
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.unpublished.number_of_pages"),
+                UnPublished.NUMBER_OF_PAGES);
+
+
+
+        return sheet;
     }
 
     @Override
@@ -38,7 +67,7 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getPublicationPropertySheet(itemModel));
+                getUnPublishedPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(

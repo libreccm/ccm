@@ -25,11 +25,6 @@ import com.arsdigita.cms.ContentPage;
 // PDL definition for a monograph
 object type Monograph extends PublicationWithPublisher {
 
-       Integer[0..1] volume = ct_monograph.volume INTEGER;
-       Integer[0..1] numberOfVolumes = ct_monograph.number_of_volumes INTEGER;
-       Integer[0..1] numberOfPages = ct_monograph.number_of_pages INTEGER;
-       String[0..1] edition = ct_monograph.edition VARCHAR(512);
-
        reference key (ct_monograph.monograph_id);
 
 }

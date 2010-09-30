@@ -30,8 +30,7 @@ object type ArticleInJournal extends Publication {
        String[0..1] issue = ct_article_in_journal.issue VARCHAR(512);
        Integer[0..1] pagesFrom = ct_article_in_journal.pages_from INTEGER;
        Integer[0..1] pagesTo = ct_article_in_journal.pages_to INTEGER;
-       String[0..1] issn = ct_article_in_journal.issn VARCHAR(9);
-       String[0..1] url = ct_article_in_journal.url VARCHAR(512);
+       String[0..1] issn = ct_article_in_journal.issn VARCHAR(9);       
        Date[0..1] publicationDate = ct_article_in_journal.publication_date DATE;
 
        reference key (ct_article_in_journal.article_in_journal_id);

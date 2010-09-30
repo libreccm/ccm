@@ -68,14 +68,7 @@ public class ExpertisePropertyForm
         ParameterModel numberOfPagesParam =
                        new IntegerParameter(Expertise.NUMBER_OF_PAGES);
         TextField numberOfPages = new TextField(numberOfPagesParam);
-        add(numberOfPages);
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.url").localize()));
-        ParameterModel urlParam =
-                       new StringParameter(Expertise.URL);
-        TextField url = new TextField(urlParam);
-        add(url);
+        add(numberOfPages);     
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.expertise.orderer").localize()));
@@ -95,8 +88,7 @@ public class ExpertisePropertyForm
 
         data.put(Expertise.PLACE, expertise.getPlace());
         data.put(ITEM_SEARCH_ORGA, expertise.getOrganization());
-        data.put(Expertise.NUMBER_OF_PAGES, expertise.getNumberOfPages());
-        data.put(Expertise.URL, expertise.getUrl());
+        data.put(Expertise.NUMBER_OF_PAGES, expertise.getNumberOfPages());       
         data.put(ITEM_SEARCH_ORDERER, expertise.getOrderer());
     }
 
@@ -113,8 +105,7 @@ public class ExpertisePropertyForm
             expertise.setOrganization(
                     (GenericOrganizationalUnit) data.get(ITEM_SEARCH_ORGA));
             expertise.setNumberOfPages(
-                    (Integer) data.get(Expertise.NUMBER_OF_PAGES));
-            expertise.setUrl((String) data.get(Expertise.URL));
+                    (Integer) data.get(Expertise.NUMBER_OF_PAGES));         
             expertise.setOrderer(
                     (GenericOrganizationalUnit) data.get(ITEM_SEARCH_ORDERER));
 

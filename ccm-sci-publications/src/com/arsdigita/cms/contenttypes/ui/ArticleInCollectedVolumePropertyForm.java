@@ -19,7 +19,7 @@ import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
  * @author Jens Pelzetter
  */
 public class ArticleInCollectedVolumePropertyForm
-        extends PublicationWithPublisherPropertyForm
+        extends PublicationPropertyForm
         implements FormProcessListener,
                    FormInitListener,
                    FormSubmissionListener {

@@ -25,11 +25,6 @@ import com.arsdigita.cms.ContentPage;
 // PDL definition for a collected volume
 object type CollectedVolume extends PublicationWithPublisher {
        
-       Integer[0..1] volume = ct_collected_volume.volume INTEGER;
-       Integer[0..1] numberOfVolumes = ct_collected_volume.number_of_volumes INTEGER;
-       Integer[0..1] numberOfPages = ct_collected_volume._number_of_pages INTEGER;
-       String[0..1] edition = ct_collected_volume.edition VARCHAR(256);
-
        reference key (ct_collected_volume.collected_volume_id);
 }
 

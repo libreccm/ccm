@@ -91,6 +91,7 @@ public class CollectedVolumeArticlesTable
             m_itemModel = itemModel;
         }
 
+        @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
             CollectedVolume collectedVolume =
@@ -149,6 +150,7 @@ public class CollectedVolumeArticlesTable
             }
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
             return m_article.getID();
         }
@@ -270,8 +272,7 @@ public class CollectedVolumeArticlesTable
             ArticleInCollectedVolumeCollection articles =
                                                collectedVolume.getArticles();
 
-            if ((articles.size() - 1)
-                == row) {
+            if ((articles.size() - 1) == row) {
                 s_log.debug("Row is last row in table, don't show down link");
                 Label label = new Label("");
                 return label;
@@ -299,7 +300,6 @@ public class CollectedVolumeArticlesTable
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-
         } else if(column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             collectedVolume.removeArticle(article);
         } else if(column.getHeaderKey().toString().equals(TABLE_COL_UP)) {

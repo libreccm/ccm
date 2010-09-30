@@ -28,28 +28,27 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter
  */
-public class ArticleInCollectedVolume extends PublicationWithPublisher {
+public class ArticleInCollectedVolume extends Publication {
 
     public final static String PAGES_FROM = "pagesFrom";
     public final static String PAGES_TO = "pagesTo";
     public final static String CHAPTER = "chapter";
     public final static String COLLECTED_VOLUME = "collectedVolume";
-
     public final static String BASE_DATA_OBJECT_TYPE =
-            "com.arsdigita.cms.contenttypes.ArticleInCollectedVolume";
+                               "com.arsdigita.cms.contenttypes.ArticleInCollectedVolume";
 
     public ArticleInCollectedVolume() {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
     public ArticleInCollectedVolume(BigDecimal id)
-            throws DataObjectNotFoundException{
+            throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
 
     }
 
     public ArticleInCollectedVolume(OID oid) throws
-            DataObjectNotFoundException{
+            DataObjectNotFoundException {
         super(oid);
     }
 
@@ -62,7 +61,7 @@ public class ArticleInCollectedVolume extends PublicationWithPublisher {
     }
 
     public Integer getPagesFrom() {
-        return (Integer)get(PAGES_FROM);
+        return (Integer) get(PAGES_FROM);
     }
 
     public void setPagesFrom(Integer pagesFrom) {
@@ -70,7 +69,7 @@ public class ArticleInCollectedVolume extends PublicationWithPublisher {
     }
 
     public Integer getPagesTo() {
-        return (Integer)get(PAGES_TO);
+        return (Integer) get(PAGES_TO);
     }
 
     public void setPagesTo(Integer pagesTo) {
