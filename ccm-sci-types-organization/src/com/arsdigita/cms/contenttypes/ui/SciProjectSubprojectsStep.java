@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
@@ -16,32 +12,33 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSubprojectPropertiesStep extends SimpleEditStep {
+public class SciProjectSubprojectsStep extends SimpleEditStep {
 
     private final static Logger s_log = Logger.getLogger(
-            SciProjectSubprojectPropertiesStep.class);
+            SciProjectSubprojectsStep.class);
     private String ADD_CHILD_SHEET_NAME = "addChild";
 
-    public SciProjectSubprojectPropertiesStep(ItemSelectionModel itemModel,
+    public SciProjectSubprojectsStep(ItemSelectionModel itemModel,
                                               AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
-    public SciProjectSubprojectPropertiesStep(
+    public SciProjectSubprojectsStep(
             ItemSelectionModel itemModel,
             AuthoringKitWizard parent,
             String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm addChildSheet = new SciProjectSubprojectAddForm(itemModel);
+        BasicItemForm addSubProjectSheet =
+                new SciProjectSubprojectAddForm(itemModel);
         add(ADD_CHILD_SHEET_NAME,
             (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.add_child").localize(),
-            new WorkflowLockedComponentAccess(addChildSheet, itemModel),
-            addChildSheet.getSaveCancelSection().getCancelButton());
+            new WorkflowLockedComponentAccess(addSubProjectSheet, itemModel),
+            addSubProjectSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitChildTable childrenTable = new GenericOrganizationalUnitChildTable(
+        SciProjectSubProjectsTable subProjectsTable = new SciProjectSubProjectsTable(
                 itemModel);
-        setDisplayComponent(childrenTable);
+        setDisplayComponent(subProjectsTable);
     }
 }

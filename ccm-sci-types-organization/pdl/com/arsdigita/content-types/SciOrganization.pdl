@@ -4,7 +4,37 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
 object type SciOrganization extends GenericOrganizationalUnit {
-    String[0..1] description = ct_sciorganizations.description;
+    String[0..1] organizationDescription = ct_sciorganizations.description;
 
     reference key ( ct_sciorganizations.organization_id );
 }
+
+association {
+	    SciOrganization[0..1] organization = join ct_sciorganizations.organization_id
+	    			  	           to ct_sciorganizations_departments_map.organization_id,
+						 join ct_sciorganizations_departments_map.department_id
+						   to ct_scidepartments.department_id;
+
+            SciDepartment[0..n] departments = join ct_scidepartments.department_id
+	                                       to ct_sciorganizations_departments_map.department_id,
+					     join ct_sciorganizations_departments_map.organization_id
+					       to ct_sciorganizations.organization_id;
+
+	    Integer[0..1] departmentOrder = ct_sciorganizations_departments_map.department_order INTEGER;
+}
+
+association {
+	    SciOrganization[0..1] organization = join ct_sciorganizations.organization_id
+	    			  	           to ct_sciorganizations_projects_map.organization_id,
+						 join ct_sciorganizations_projects_map.project_id
+						   to ct_sciprojects.project_id;
+
+            SciProject[0..n] projects = join ct_sciprojects.project_id
+	                                       to ct_sciorganizations_projects_map.project_id,
+					     join ct_sciorganizations_projects_map.organization_id
+					       to ct_sciorganizations.organization_id;
+
+	    Integer[0..1] projectOrder = ct_sciorganizations_projects_map.project_order INTEGER;
+}
+
+

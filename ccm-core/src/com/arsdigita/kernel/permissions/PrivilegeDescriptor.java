@@ -109,9 +109,11 @@ public class PrivilegeDescriptor {
         addChildPrivilege(ADMIN_NAME, name);
         s_log.warn(String.format("Creating privilege %s...", name));
         // Constructor PrivilegeDescriptor is deprecated and should be
-        // replace the class method get(name)
-        //PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
-        PrivilegeDescriptor desc = get(name);
+        // replaced by the class method get(name),
+	// but this does not work under all circumstances. Further
+	// investigation of this issue is neccessary.
+        PrivilegeDescriptor desc = new PrivilegeDescriptor(name);
+        //PrivilegeDescriptor desc = get(name);
         put(desc);
         return desc;
     }

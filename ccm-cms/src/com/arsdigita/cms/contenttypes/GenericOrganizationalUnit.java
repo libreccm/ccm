@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter, for the Center of Social Politics of the University of Bremen
+ * Copyright (c) 2010 Jens Pelzetter,
+ * for the Center of Social Politics of the University of Bremen
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -33,7 +34,6 @@ import java.math.BigDecimal;
  * An item of this content type can be linked with several other content types:
  * - Contact (0..n)
  * - Person (0..n)
- * - GenericOrganizationalUnit (0..n) to build organizations structures.
  *
  * @author Jens Pelzetter
  * @version $Id$
@@ -45,9 +45,6 @@ public class GenericOrganizationalUnit extends ContentPage {
     public final static String CONTACTS = "contacts";
     public final static String CONTACT_TYPE = "contact_type";
     public final static String CONTACT_ORDER = "contact_order";
-    public final static String ORGAUNIT_CHILDREN = "orgaunit_children";
-    public final static String ORGAUNIT_CHILDREN_ORDER =
-                               "orgaunit_children_order";
     public final static String PERSONS = "persons";
     public final static String ROLE = "role_name";
     public final static String PERSON_ORDER = "person_order";
@@ -105,29 +102,6 @@ public class GenericOrganizationalUnit extends ContentPage {
 
     public boolean hasContacts() {
         return !this.getContacts().isEmpty();
-    }
-
-    public GenericOrganizationalUnitChildrenCollection getOrgaUnitChildren() {
-        return new GenericOrganizationalUnitChildrenCollection((DataCollection) get(
-                ORGAUNIT_CHILDREN));
-    }
-
-    public void addOrgaUnitChildren(GenericOrganizationalUnit child) {
-        Assert.exists(child, GenericOrganizationalUnit.class);
-
-        DataObject link = add(ORGAUNIT_CHILDREN, child);
-
-        link.set(ORGAUNIT_CHILDREN_ORDER, Integer.valueOf((int) getOrgaUnitChildren().
-                size()));
-    }
-
-    public void removeOrgaUnitChildren(GenericOrganizationalUnit child) {
-        Assert.exists(child, GenericOrganizationalUnit.class);
-        remove(ORGAUNIT_CHILDREN, child);
-    }
-
-    public boolean hasOrgaUnitChildren() {
-        return !this.getOrgaUnitChildren().isEmpty();
     }
 
     public GenericOrganizationalUnitPersonCollection getPersons() {

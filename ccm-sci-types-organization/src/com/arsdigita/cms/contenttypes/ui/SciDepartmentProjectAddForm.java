@@ -9,6 +9,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -17,7 +18,7 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSubprojectAddForm
+public class SciDepartmentProjectAddForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener {
@@ -25,14 +26,14 @@ public class SciProjectSubprojectAddForm
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "projects";
 
-    public SciProjectSubprojectAddForm(ItemSelectionModel itemModel) {
-        super("SubprojectAddForm", itemModel);
+    public SciDepartmentProjectAddForm(ItemSelectionModel itemModel) {
+        super("ProjectsAddForm", itemModel);
     }
 
     @Override
     protected void addWidgets() {
         add(new Label((String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.select_subproject").localize()));
+                "sciorganization.ui.department.select_project").localize()));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
@@ -51,14 +52,16 @@ public class SciProjectSubprojectAddForm
     public void process(FormSectionEvent fse) throws FormProcessException {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        SciProject project = (SciProject) getItemSelectionModel().
+        SciDepartment department = (SciDepartment) getItemSelectionModel().
                 getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            project.addSubProject((SciProject) data.get(ITEM_SEARCH));
+            department.addProject((SciProject) data.get(ITEM_SEARCH));
         }
 
         init(fse);
+
+
     }
 }

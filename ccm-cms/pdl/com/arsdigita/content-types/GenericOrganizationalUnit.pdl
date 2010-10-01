@@ -31,23 +31,6 @@ object type GenericOrganizationalUnit extends ContentPage {
     reference key (cms_organizationalunits.organizationalunit_id);
 }
 
-// Parent <-> child relation organizationalunits to build department structures etc.
-association {
-
-    GenericOrganizationalUnit[0..n] orgaunit_parent = join cms_organizationalunits.organizationalunit_id
-                                               to cms_organizationalunits_organizationalunit_map.orgaunit_children_id,
-                                             join cms_organizationalunits_organizationalunit_map.orgaunit_parent_id
-                                               to cms_organizationalunits.organizationalunit_id;
-
-    GenericOrganizationalUnit[0..n] orgaunit_children = join cms_organizationalunits.organizationalunit_id
-                                                 to cms_organizationalunits_organizationalunit_map.orgaunit_parent_id,
-                                               join cms_organizationalunits_organizationalunit_map.orgaunit_children_id
-                                                 to cms_organizationalunits.organizationalunit_id;
-
-    // Link attribute, allows it to customize the order which the childs will be shown.
-    Integer[0..1] orgaunit_children_order = cms_organizationalunits_organizationalunit_map.map_order INTEGER;
-}
-
 // Link for contact points.
 association {
 

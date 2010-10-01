@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Label;
@@ -15,11 +11,11 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  *
  * @author Jens Pelzetter
  */
-public class SciProjectPropertiesStep
+public class SciDepartmentPropertiesStep
         extends GenericOrganizationalUnitPropertiesStep {
 
-    public SciProjectPropertiesStep(ItemSelectionModel itemModel,
-                                    AuthoringKitWizard parent) {
+    public SciDepartmentPropertiesStep(ItemSelectionModel itemModel,
+                                       AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
@@ -31,11 +27,12 @@ public class SciProjectPropertiesStep
                                                             EDIT_SHEET_NAME);
 
         BasicPageForm editBasicSheet =
-                      new SciProjectPropertyForm(itemModel, this);
+                      new SciDepartmentPropertyForm(itemModel, this);
 
         basicProperties.add(EDIT_SHEET_NAME,
                             (String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.edit_basic_sheet").localize(),
+                "sciorganization.ui.department.edit_basic_properties").
+                localize(),
                             new WorkflowLockedComponentAccess(editBasicSheet,
                                                               itemModel),
                             editBasicSheet.getSaveCancelSection().
@@ -46,26 +43,19 @@ public class SciProjectPropertiesStep
 
         getSegmentedPanel().addSegment(
                 new Label((String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.basic_properties").
-                localize()),
+                "sciorganization.ui.department.basic_properties").localize()),
                 basicProperties);
     }
 
     @Override
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
-        /*addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
-        parent),
-        "cms.contenttypes.ui.orgaunit.contact");
-        addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
-        parent),
-        "cms.contenttypes.ui.orgaunit.persons");*/
-
         super.addSteps(itemModel, parent);
 
-        addStep(new SciProjectSubprojectsStep(itemModel,
-                                                       parent),
-                "cms.contenttypes.ui.project.subprojects");
+        addStep(new SciDepartmentSubDepartmentsStep(itemModel, parent),
+                "sciorganization.ui.department.subdepartments");
 
+        addStep(new SciDepartmentProjectsStep(itemModel, parent),
+                "sciorganization.ui.department.projects");
     }
 }

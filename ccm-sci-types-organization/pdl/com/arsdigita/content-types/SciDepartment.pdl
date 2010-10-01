@@ -4,7 +4,34 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
 object type SciDepartment extends GenericOrganizationalUnit {
-    String[0..1] description = ct_scidepartments.description;
+    String[0..1] departmentDescription = ct_scidepartments.description;
 
-    reference key ( ct_scidepartments.organization_id );
+    reference key ( ct_scidepartments.department_id );
+}
+
+association {
+	    SciDepartment[0..1] department = join ct_scidepartments.department_id
+	                                       to ct_scidepartments_subdepartments_map.department_id,
+				             join ct_scidepartments_subdepartments_map.subdepartment_id
+				               to ct_scidepartments.department_id;
+            SciDepartment[0..n] subDepartments = join ct_scidepartments.department_id
+	    		  		          to ct_scidepartments_subdepartments_map.subdepartment_id,
+					        join ct_scidepartments_subdepartments_map.department_id
+					          to ct_scidepartments.department_id;
+
+	    Integer[0..1] subDepartmentOrder = ct_scidepartments_subdepartments_map.subdepartments_order INTEGER;
+}
+
+association {
+	    SciDepartment[0..1] department = join ct_scidepartments.department_id
+	    		  	               to ct_scidepartments_projects_map.department_id,
+				             join ct_scidepartments_projects_map.project_id,
+				       	       to ct_sciprojects.project_id;
+
+	    SciProject[0..n] projects = join ct_sciprojects.project_id
+	    		     	         to ct_scidepartments_projects_map.project_id,
+				       join ct_scidepartments_projects_map.department_id
+				         to ct_scidepartments.department_id;
+
+            Integer[0..1] projectOrder = ct_scidepartments_projects_map.projectorder INTEGER;
 }

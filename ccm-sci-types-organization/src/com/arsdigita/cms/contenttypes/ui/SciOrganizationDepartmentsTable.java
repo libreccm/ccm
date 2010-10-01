@@ -14,63 +14,59 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
-import com.arsdigita.cms.contenttypes.ArticleInCollectedVolumeCollection;
-import com.arsdigita.cms.contenttypes.CollectedVolume;
+import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciOrganization;
+import com.arsdigita.cms.contenttypes.SciOrganizationDepartmentsCollection;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
-import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter
  */
-public class CollectedVolumeArticlesTable
+public class SciOrganizationDepartmentsTable
         extends Table
         implements TableActionListener {
 
-    private static final Logger s_log =
-                                Logger.getLogger(
-            CollectedVolumeArticlesTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
     private final String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel m_itemModel;
 
-    public CollectedVolumeArticlesTable(ItemSelectionModel itemModel) {
+    public SciOrganizationDepartmentsTable(ItemSelectionModel itemModel) {
         super();
         m_itemModel = itemModel;
 
         setEmptyView(
-                new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.no_articles")));
+                new Label(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.organization.departments.none")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article").localize(),
+                SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.organization.department").localize(),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article.remove").localize(),
+                SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.organization.department.remove").localize(),
                 TABLE_COL_DEL));
         colModel.add(new TableColumn(
                 2,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article.up").localize(),
+                SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.organization.department.up").localize(),
                 TABLE_COL_UP));
         colModel.add(new TableColumn(
                 3,
-                PublicationGlobalizationUtil.globalize(
-                "publications.ui.collected_volume.article.down").localize(),
+                SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.organization.department.down").localize(),
                 TABLE_COL_DOWN));
 
         setModelBuilder(
-                new CollectedVolumeArticlesTableModelBuilder(itemModel));
+                new SciOrganizationDepartmentsTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
@@ -80,13 +76,13 @@ public class CollectedVolumeArticlesTable
         addTableActionListener(this);
     }
 
-    private class CollectedVolumeArticlesTableModelBuilder
+    private class SciOrganizationDepartmentsTableModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
-        public CollectedVolumeArticlesTableModelBuilder(
+        public SciOrganizationDepartmentsTableModelBuilder(
                 ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
@@ -94,27 +90,26 @@ public class CollectedVolumeArticlesTable
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            CollectedVolume collectedVolume =
-                            (CollectedVolume) m_itemModel.getSelectedObject(
-                    state);
-            return new CollectedVolumeArticlesTableModel(table,
-                                                         state,
-                                                         collectedVolume);
+            SciOrganization orga = (SciOrganization) m_itemModel.
+                    getSelectedObject(state);
+            return new SciOrganizationDepartmentsTableModel(table,
+                                                            state,
+                                                            orga);
         }
     }
 
-    private class CollectedVolumeArticlesTableModel implements TableModel {
+    private class SciOrganizationDepartmentsTableModel
+            implements TableModel {
 
         private Table m_table;
-        private ArticleInCollectedVolumeCollection m_articles;
-        private ArticleInCollectedVolume m_article;
+        private SciOrganizationDepartmentsCollection m_departments;
+        private SciDepartment m_department;
 
-        private CollectedVolumeArticlesTableModel(
-                Table table,
-                PageState state,
-                CollectedVolume collectedVolume) {
+        private SciOrganizationDepartmentsTableModel(Table table,
+                                                     PageState state,
+                                                     SciOrganization orga) {
             m_table = table;
-            m_articles = collectedVolume.getArticles();
+            m_departments = orga.getDepartments();
         }
 
         @Override
@@ -126,8 +121,8 @@ public class CollectedVolumeArticlesTable
         public boolean nextRow() {
             boolean ret;
 
-            if ((m_articles != null) && m_articles.next()) {
-                m_article = m_articles.getArticle();
+            if ((m_departments != null) && m_departments.next()) {
+                m_department = m_departments.getDepartment();
                 ret = true;
             } else {
                 ret = false;
@@ -140,10 +135,18 @@ public class CollectedVolumeArticlesTable
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return m_article.getTitle();
+                    return m_department.getTitle();
                 case 1:
-                    return PublicationGlobalizationUtil.globalize(
-                            "publications.ui.collected_volume.article.remove").
+                    return SciOrganizationGlobalizationUtil.globalize(
+                            "sciorganization.ui.organization.department.remove").
+                            localize();
+                case 2:
+                    return SciOrganizationGlobalizationUtil.globalize(
+                            "sciorganization.ui.organization.department.up").
+                            localize();
+                case 3:
+                    return SciOrganizationGlobalizationUtil.globalize(
+                            "sciorganization.ui.organization.department.down").
                             localize();
                 default:
                     return null;
@@ -152,7 +155,7 @@ public class CollectedVolumeArticlesTable
 
         @Override
         public Object getKeyAt(int columnIndex) {
-            return m_article.getID();
+            return m_department.getID();
         }
     }
 
@@ -170,13 +173,13 @@ public class CollectedVolumeArticlesTable
                                       int col) {
             SecurityManager securityManager =
                             Utilities.getSecurityManager(state);
-            CollectedVolume collectedVolume = (CollectedVolume) m_itemModel.
+            SciOrganization orga = (SciOrganization) m_itemModel.
                     getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.EDIT_ITEM,
-                    collectedVolume);
+                    orga);
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
@@ -202,21 +205,20 @@ public class CollectedVolumeArticlesTable
                                       int col) {
             SecurityManager securityManager =
                             Utilities.getSecurityManager(state);
-            CollectedVolume collectedVolume =
-                            (CollectedVolume) m_itemModel.getSelectedObject(
-                    state);
+            SciOrganization orga = (SciOrganization) m_itemModel.
+                    getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.DELETE_ITEM,
-                    collectedVolume);
+                    orga);
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) PublicationGlobalizationUtil.
+                link.setConfirmation((String) SciOrganizationGlobalizationUtil.
                         globalize(
-                        "publications.ui.collected_volume."
-                        + "articles.confirm_remove").
+                        "sciorganization.ui.organization.department."
+                        + ".confirm_remove").
                         localize());
                 return link;
             } else {
@@ -241,11 +243,13 @@ public class CollectedVolumeArticlesTable
                 int col) {
 
             if (0 == row) {
-                s_log.debug("Row is first row in table, don't show up link");
                 Label label = new Label("");
                 return label;
             } else {
-                ControlLink link = new ControlLink("up");
+                ControlLink link = new ControlLink(
+                        (String) SciOrganizationGlobalizationUtil.globalize(
+                        "sciorganization.ui.organization.department.up").
+                        localize());
                 return link;
             }
         }
@@ -265,18 +269,14 @@ public class CollectedVolumeArticlesTable
                 int row,
                 int col) {
 
-            CollectedVolume collectedVolume =
-                            (CollectedVolume) m_itemModel.getSelectedObject(
-                    state);
-            ArticleInCollectedVolumeCollection articles =
-                                               collectedVolume.getArticles();
-
-            if ((articles.size() - 1) == row) {
-                s_log.debug("Row is last row in table, don't show down link");
+            if (0 == row) {
                 Label label = new Label("");
                 return label;
             } else {
-                ControlLink link = new ControlLink("down");
+                ControlLink link = new ControlLink(
+                        (String) SciOrganizationGlobalizationUtil.globalize(
+                        "sciorganization.ui.organization.department.down").
+                        localize());
                 return link;
             }
         }
@@ -286,25 +286,24 @@ public class CollectedVolumeArticlesTable
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        ArticleInCollectedVolume article =
-                                 new ArticleInCollectedVolume(
+        SciDepartment department = new SciDepartment(
                 new BigDecimal(event.getRowKey().toString()));
 
-        CollectedVolume collectedVolume =
-                (CollectedVolume) m_itemModel.getSelectedObject(state);
+        SciOrganization orga =
+                        (SciOrganization) m_itemModel.getSelectedObject(state);
 
-        ArticleInCollectedVolumeCollection articles =
-                collectedVolume.getArticles();
+        SciOrganizationDepartmentsCollection departments =
+                                             orga.getDepartments();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-            collectedVolume.removeArticle(article);
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
-            articles.swapWithPrevious(article);
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
-            articles.swapWithNext(article);
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
+            orga.removeDepartment(department);
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
+            departments.swapWithPrevious(department);
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
+            departments.swapWithNext(department);
         }
     }
 
