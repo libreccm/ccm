@@ -84,6 +84,7 @@ public class ArticleInJournalPropertyForm
                 "publications.ui.articleinjournal.issn").localize()));
         ParameterModel issnParam = new StringParameter(ArticleInJournal.ISSN);
         TextField issn = new TextField(issnParam);
+        issn.setMaxLength(9);
         add(issn);
 
         Calendar today = new GregorianCalendar();

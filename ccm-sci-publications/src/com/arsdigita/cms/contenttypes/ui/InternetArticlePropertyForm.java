@@ -92,6 +92,7 @@ public class InternetArticlePropertyForm
         ParameterModel issnParam =
                        new StringParameter(InternetArticle.ISSN);
         TextField issn = new TextField(issnParam);
+        issn.setMaxLength(9);
         add(issn);
 
         Calendar today = new GregorianCalendar();

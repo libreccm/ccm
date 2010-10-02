@@ -66,7 +66,8 @@ public class PublicationWithPublisherPropertyForm
                 "publications.ui.with_publisher.isbn").localize()));
         ParameterModel isbnParam = new StringParameter(
                 PublicationWithPublisher.ISBN);
-        TextField isbn = new TextField(isbnParam);        
+        TextField isbn = new TextField(isbnParam);
+        isbn.setMaxLength(17);
         add(isbn);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
