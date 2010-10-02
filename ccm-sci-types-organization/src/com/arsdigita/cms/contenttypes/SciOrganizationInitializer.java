@@ -12,7 +12,7 @@ public class SciOrganizationInitializer extends ContentTypeInitializer {
             SciOrganizationInitializer.class);
 
     public SciOrganizationInitializer() {
-        super("ccm-sci-types-organization.odl.mf",
+        super("ccm-sci-types-organization.pdl.mf",
               SciOrganization.BASE_DATA_OBJECT_TYPE);
     }
 

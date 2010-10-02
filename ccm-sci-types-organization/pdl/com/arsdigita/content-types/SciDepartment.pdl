@@ -25,7 +25,7 @@ association {
 association {
 	    SciDepartment[0..1] department = join ct_scidepartments.department_id
 	    		  	               to ct_scidepartments_projects_map.department_id,
-				             join ct_scidepartments_projects_map.project_id,
+				             join ct_scidepartments_projects_map.project_id
 				       	       to ct_sciprojects.project_id;
 
 	    SciProject[0..n] projects = join ct_sciprojects.project_id

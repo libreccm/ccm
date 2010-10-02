@@ -17,6 +17,7 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import org.apache.log4j.Logger;
+import org.apache.lucene.analysis.LengthFilter;
 
 /**
  *
@@ -65,7 +66,7 @@ public class PublicationWithPublisherPropertyForm
                 "publications.ui.with_publisher.isbn").localize()));
         ParameterModel isbnParam = new StringParameter(
                 PublicationWithPublisher.ISBN);
-        TextField isbn = new TextField(isbnParam);
+        TextField isbn = new TextField(isbnParam);        
         add(isbn);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(

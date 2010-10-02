@@ -5,7 +5,7 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type
-      label="CollectedVolume"
+      label="SciPublications/CollectedVolume"
       description="Base type for collectedVolumes"
       objectType="com.arsdigita.cms.contenttypes.CollectedVolume"
       classname="com.arsdigita.cms.contenttypes.CollectedVolume">

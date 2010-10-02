@@ -5,7 +5,7 @@
                    xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
   <ctd:content-type
-      label="Proceedings"
+      label="SciPublications/Proceedings"
       description="Base type for collectedVolumes"
       objectType="com.arsdigita.cms.contenttypes.Proceedings"
       classname="com.arsdigita.cms.contenttypes.Proceedings">

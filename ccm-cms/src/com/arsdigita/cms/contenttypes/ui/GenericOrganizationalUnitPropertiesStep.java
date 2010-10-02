@@ -121,10 +121,7 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
                             AuthoringKitWizard parent) {
         addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                    parent),
-                "cms.contenttypes.ui.orgaunit.contact");
-        addStep(new GenericOrganizationalUnitChildrenPropertiesStep(itemModel,
-                                                                    parent),
-                "cms.contenttypes.ui.orgaunit.child");
+                "cms.contenttypes.ui.orgaunit.contact");        
         addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
                                                                   parent),
                 "cms.contenttypes.ui.orgaunit.persons");

@@ -6,10 +6,9 @@
 
   <ctd:content-type
       label="SciDepartment"
-      description="Base type for publications"
+      description="Base type for departments of scientific organizations"
       objectType="com.arsdigita.cms.contenttypes.SciDepartment"
-      classname="com.arsdigita.cms.contenttypes.SciDepartment"
-      isInternal="yes">
+      classname="com.arsdigita.cms.contenttypes.SciDepartment">
 
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       

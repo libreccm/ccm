@@ -52,7 +52,7 @@ public class SciProjectSubProjectsCollection extends DomainCollection {
         link.set(ORDER, order);
     }
 
-    public void swapWithNext(SciSubProject subproject) {
+    public void swapWithNext(SciProject subproject) {
         int currentPosition = 0;
         int currentIndex = 0;
         int nextIndex = 0;
@@ -99,7 +99,7 @@ public class SciProjectSubProjectsCollection extends DomainCollection {
         this.rewind();
     }
 
-    public void swapWithPrevious(SciSubProject subproject) {
+    public void swapWithPrevious(SciProject subproject) {
         int previousPosition = 0;
         int previousIndex = 0;
         int currentPosition = 0;
@@ -148,7 +148,7 @@ public class SciProjectSubProjectsCollection extends DomainCollection {
         this.rewind();
     }
 
-    public SciSubProject getSubProject() {
+    public SciProject getSubProject() {
         return new SciProject(m_dataCollection.getDataObject());
     }
 }

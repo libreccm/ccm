@@ -6,10 +6,9 @@
 
   <ctd:content-type
       label="SciOrganization"
-      description="Base type for publications"
+      description="Base type for scientific orgnizations"
       objectType="com.arsdigita.cms.contenttypes.SciOrganization"
-      classname="com.arsdigita.cms.contenttypes.SciOrganization"
-      isInternal="yes">
+      classname="com.arsdigita.cms.contenttypes.SciOrganization">
 
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       
