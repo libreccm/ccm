@@ -42,7 +42,8 @@ public class SciProjectPropertyForm
         Label descLabel = new Label(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganizations.ui.project.description"));
         add(descLabel);
-        ParameterModel descParam = new StringParameter(SciProject.PROJECT_DESCRIPTION);
+        ParameterModel descParam = new StringParameter(
+                SciProject.PROJECT_DESCRIPTION);
         TextArea desc = new TextArea(descParam);
         desc.setCols(60);
         desc.setRows(18);
@@ -56,7 +57,8 @@ public class SciProjectPropertyForm
         FormData data = fse.getFormData();
         SciProject project = (SciProject) super.initBasicWidgets(fse);
 
-        data.put(SciProject.PROJECT_DESCRIPTION, project.getDescription());
+        data.put(SciProject.PROJECT_DESCRIPTION,
+                 project.getProjectDescription());
     }
 
     @Override
@@ -68,7 +70,8 @@ public class SciProjectPropertyForm
 
         if ((project != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            project.setDescription((String) data.get(SciProject.PROJECT_DESCRIPTION));
+            project.setProjectDescription((String) data.get(
+                    SciProject.PROJECT_DESCRIPTION));
 
             project.save();
 

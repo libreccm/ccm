@@ -37,7 +37,7 @@ object type Proceedings extends PublicationWithPublisher {
 
 association {
 
-	    Proceedings[0..1]  proceedings = join ct_inproceedings.inproceedings_id
+	    Proceedings[0..n]  proceedings = join ct_inproceedings.inproceedings_id
 	    		       		       to ct_proceedings_papers_map.paper_id,
 					     join ct_proceedings_papers_map.proceedings_id
 					       to ct_proceedings.proceedings_id;

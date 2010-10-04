@@ -270,7 +270,12 @@ public class SciOrganizationProjectsTable
                 int row,
                 int col) {
 
-            if (0 == row) {
+             SciOrganization orga = (SciOrganization) m_itemModel.
+                    getSelectedObject(state);
+            SciOrganizationProjectsCollection projects = orga.
+                    getProjects();
+
+            if ((projects.size() - 1) == row) {
                 Label label = new Label("");
                 return label;
             } else {

@@ -108,7 +108,7 @@ public class Proceedings extends PublicationWithPublisher {
     }
 
     public Date getDateToOfConference() {
-        return (Date) get(DATE_FROM_OF_CONFERENCE);
+        return (Date) get(DATE_TO_OF_CONFERENCE);
     }
 
     public void setDateToOfConference(Date dateTo) {

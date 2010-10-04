@@ -270,7 +270,12 @@ public class SciDepartmentProjectsTable
                 int row,
                 int col) {
 
-            if (0 == row) {
+            SciDepartment department = (SciDepartment) m_itemModel.getSelectedObject(
+                    state);
+            SciDepartmentProjectsCollection projects =
+                                            department.getProjects();
+
+            if ((projects.size() - 1) == row) {
                 Label label = new Label("");
                 return label;
             } else {
@@ -283,7 +288,7 @@ public class SciDepartmentProjectsTable
         }
     }
 
-      @Override
+    @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
@@ -291,10 +296,10 @@ public class SciDepartmentProjectsTable
                 new BigDecimal(event.getRowKey().toString()));
 
         SciDepartment department =
-                        (SciDepartment) m_itemModel.getSelectedObject(state);
+                      (SciDepartment) m_itemModel.getSelectedObject(state);
 
         SciDepartmentProjectsCollection projects =
-                                          department.getProjects();
+                                        department.getProjects();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 

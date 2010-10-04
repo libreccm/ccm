@@ -83,9 +83,9 @@ public class ProceedingsPropertyForm
         add(dateFrom);
 
         add(new Label(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.date_from_of_conference")));
+                "publications.ui.proceedings.date_to_of_conference")));
         ParameterModel dateToParam = new DateParameter(
-                Proceedings.DATE_FROM_OF_CONFERENCE);
+                Proceedings.DATE_TO_OF_CONFERENCE);
         Date dateTo = new Date(dateToParam);
         dateTo.setYearRange(1900, today.get(Calendar.YEAR) + 3);
         add(dateTo);

@@ -269,7 +269,12 @@ public class SciOrganizationDepartmentsTable
                 int row,
                 int col) {
 
-            if (0 == row) {
+            SciOrganization orga = (SciOrganization) m_itemModel.
+                    getSelectedObject(state);
+            SciOrganizationDepartmentsCollection departments = orga.
+                    getDepartments();
+
+            if ((departments.size() - 1) == row) {
                 Label label = new Label("");
                 return label;
             } else {

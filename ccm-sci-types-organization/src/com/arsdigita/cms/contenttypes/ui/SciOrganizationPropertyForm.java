@@ -6,6 +6,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -19,7 +20,8 @@ import com.arsdigita.cms.contenttypes.SciOrganization;
 public class SciOrganizationPropertyForm
         extends GenericOrganizationalUnitPropertyForm
         implements FormProcessListener,
-                   FormInitListener {
+                   FormInitListener,
+                   FormSubmissionListener {
 
     public static final String ID = "SciOrganizationEdit";
 
@@ -64,16 +66,16 @@ public class SciOrganizationPropertyForm
         super.process(fse);
 
         FormData data = fse.getFormData();
-        SciOrganization organization = (SciOrganization) super.processBasicWidgets(fse);
+        SciOrganization organization = (SciOrganization) super.
+                processBasicWidgets(fse);
 
         if ((organization != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            organization.setDescription((String) data.get(
+
+            organization.setOrganizationDescription((String) data.get(
                     SciOrganization.ORGANIZATION_DESCRIPTION));
 
             organization.save();
-
-            init(fse);
         }
     }
 }

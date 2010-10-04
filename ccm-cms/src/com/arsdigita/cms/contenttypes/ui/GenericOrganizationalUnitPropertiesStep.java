@@ -56,6 +56,9 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
                 "cms.contenttypes.ui.genericorganunit.name"),
                   GenericOrganizationalUnit.NAME);
         sheet.add(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.title"),
+                GenericOrganizationalUnit.TITLE);
+        sheet.add(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorganunit.addendum"),
                   GenericOrganizationalUnit.ADDENDUM);
 

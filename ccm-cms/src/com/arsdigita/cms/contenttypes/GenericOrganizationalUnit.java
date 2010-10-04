@@ -114,8 +114,7 @@ public class GenericOrganizationalUnit extends ContentPage {
 
         DataObject link = add(PERSONS, person);
 
-        link.set(ROLE, role);
-        link.set(PERSON_ORDER, BigDecimal.valueOf(getPersons().size()));
+        link.set(ROLE, role);   
     }
 
     public void removePerson(GenericPerson person) {

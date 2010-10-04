@@ -269,7 +269,10 @@ public class SciProjectSubProjectsTable
                 int row,
                 int col) {
 
-            if (0 == row) {
+            SciProject project = (SciProject) m_itemModel.getSelectedObject(state);
+            SciProjectSubProjectsCollection subProjects = project.getSubProjects();
+
+            if ((subProjects.size() - 1) == row) {
                 Label label = new Label("");
                 return label;
             } else {

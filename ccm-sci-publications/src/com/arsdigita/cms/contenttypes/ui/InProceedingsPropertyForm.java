@@ -49,7 +49,7 @@ public class InProceedingsPropertyForm
         add(pagesFrom);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.inproceedings.pages_from").localize()));
+                "publications.ui.inproceedings.pages_to").localize()));
         ParameterModel pagesToParam =
                        new IntegerParameter(InProceedings.PAGES_TO);
         TextField pagesTo = new TextField(pagesToParam);

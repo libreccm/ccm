@@ -143,11 +143,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {               
                 case 0:
-                    return String.format("%s %s %s %s",
-                                         m_person.getTitlePre(),
-                                         m_person.getGivenName(),
-                                         m_person.getSurname(),
-                                         m_person.getTitlePost());
+                    return m_person.getFullName();
                 case 1:
                     return m_personsCollection.getRoleName();
                 case 2:

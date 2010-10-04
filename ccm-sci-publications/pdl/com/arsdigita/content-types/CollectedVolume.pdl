@@ -31,7 +31,7 @@ object type CollectedVolume extends PublicationWithPublisher {
 
 association {
 	    
-	    CollectedVolume[0..1] collectedVolume = join ct_article_in_collected_volume.article_id
+	    CollectedVolume[0..n] collectedVolume = join ct_article_in_collected_volume.article_id
 	    			  		      to ct_collected_volume_article_map.article_id,
 						    join ct_collected_volume_article_map.collected_volume_id
 						      to ct_collected_volume.collected_volume_id;

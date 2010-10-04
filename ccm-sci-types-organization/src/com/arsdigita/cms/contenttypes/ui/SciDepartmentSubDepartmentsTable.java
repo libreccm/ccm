@@ -254,7 +254,7 @@ public class SciDepartmentSubDepartmentsTable
         }
     }
 
-     private class DownCellRenderer
+    private class DownCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -268,7 +268,12 @@ public class SciDepartmentSubDepartmentsTable
                 int row,
                 int col) {
 
-            if (0 == row) {
+            SciDepartment department = (SciDepartment) m_itemModel.
+                    getSelectedObject(state);
+            SciDepartmentSubDepartmentsCollection subDepartments =
+            department.getSubDepartments();
+
+            if ((subDepartments.size() - 1) == row) {
                 Label label = new Label("");
                 return label;
             } else {
@@ -281,7 +286,7 @@ public class SciDepartmentSubDepartmentsTable
         }
     }
 
-     @Override
+    @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
@@ -289,10 +294,10 @@ public class SciDepartmentSubDepartmentsTable
                 new BigDecimal(event.getRowKey().toString()));
 
         SciDepartment department =
-                        (SciDepartment) m_itemModel.getSelectedObject(state);
+                      (SciDepartment) m_itemModel.getSelectedObject(state);
 
         SciDepartmentSubDepartmentsCollection subdepartments =
-                                             department.getSubDepartments();
+                                              department.getSubDepartments();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
@@ -300,9 +305,9 @@ public class SciDepartmentSubDepartmentsTable
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             department.removeSubDepartment(department);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
-            subdepartments.swapWithPrevious(department);
+            subdepartments.swapWithPrevious(subdepartment);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
-            subdepartments.swapWithNext(department);
+            subdepartments.swapWithNext(subdepartment);
         }
     }
 

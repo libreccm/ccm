@@ -14,15 +14,15 @@ object type SciProject extends GenericOrganizationalUnit {
 }
 
 association {
-	    SciProject[0..1] project = join ct_sciprojects.project_id
-	    		     	         to ct_sciprojects_subprojects_map.project_id,
-				       join ct_sciprojects_subprojects_map.subproject_id
-				       	 to ct_sciprojects.project_id;
-					
-            SciProject[0..n] subProjects = join ct_sciprojects.project_id
+	    SciProject[0..n] project = join ct_sciprojects.project_id
 	    		                    to ct_sciprojects_subprojects_map.subproject_id,
 					  join ct_sciprojects_subprojects_map.project_id
 					    to ct_sciprojects.project_id;
+					
+            SciProject[0..n] subProjects = join ct_sciprojects.project_id
+	    		     	         to ct_sciprojects_subprojects_map.project_id,
+				       join ct_sciprojects_subprojects_map.subproject_id
+				       	 to ct_sciprojects.project_id;
 
 	    Integer[0..1] subProjectOrder = ct_sciprojects_subprojects_map.subprojectorder INTEGER;
 	    

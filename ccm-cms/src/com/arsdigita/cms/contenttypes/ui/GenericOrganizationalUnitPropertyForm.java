@@ -120,10 +120,6 @@ public class GenericOrganizationalUnitPropertyForm
             orgaunit.setAddendum((String) data.get(ADDENDUM));
 
             orgaunit.save();
-        }
-
-        if (m_step != null) {
-            m_step.maybeForwardToNextStep(fse.getPageState());
-        }
+        }       
     }
 }

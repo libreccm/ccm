@@ -1,11 +1,13 @@
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
  *
@@ -17,6 +19,15 @@ public class SciDepartmentPropertiesStep
     public SciDepartmentPropertiesStep(ItemSelectionModel itemModel,
                                        AuthoringKitWizard parent) {
         super(itemModel, parent);
+    }
+
+    public static Component getSciDepartmentPropertySheet(
+            ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet =
+                                  (DomainObjectPropertySheet) GenericOrganizationalUnitPropertiesStep.
+                getGenericOrganizationalUnitPropertySheet(itemModel);
+
+        return sheet;
     }
 
     @Override

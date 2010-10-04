@@ -239,7 +239,7 @@ public class ProceedingsPapersTable
                                       PageState state,
                                       Object value,
                                       boolean isSelected,
-                                      Object key,
+                                    Object key,
                                       int row,
                                       int col) {
             if (0 == row) {
@@ -267,13 +267,13 @@ public class ProceedingsPapersTable
                 int row,
                 int col) {
 
-            CollectedVolume collectedVolume =
-                            (CollectedVolume) m_itemModel.getSelectedObject(
+            Proceedings proceedings =
+                            (Proceedings) m_itemModel.getSelectedObject(
                     state);
-            ArticleInCollectedVolumeCollection articles =
-                                               collectedVolume.getArticles();
+            InProceedingsCollection papers =
+                                               proceedings.getPapers();
 
-            if ((articles.size() - 1)
+            if ((papers.size() - 1)
                 == row) {
                 s_log.debug("Row is last row in table, don't show down link");
                 Label label = new Label("");
