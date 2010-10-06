@@ -58,6 +58,7 @@ public class SimpleComponent extends Completable
      * @return the clone of a component.
      * @post ! ((SimpleComponent) return).isLocked()
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         SimpleComponent result = (SimpleComponent) super.clone();
         if ( m_attr != null ) {
@@ -269,9 +270,9 @@ public class SimpleComponent extends Completable
      */
     public Component setKey(String key) {
         Assert.isUnlocked(this);
-        if (key.charAt(0) >= 0 && key.charAt(0) <= 9) //TODO: be more strict.
-            throw new IllegalArgumentException
-                ("key \"" + key + "\" must not start with a digit.");
+        if (key.charAt(0) >= 0 && key.charAt(0) <= 9) {
+            throw new IllegalArgumentException("key \"" + key + "\" must not start with a digit.");
+        }
         m_key = key;
         return this;
     }

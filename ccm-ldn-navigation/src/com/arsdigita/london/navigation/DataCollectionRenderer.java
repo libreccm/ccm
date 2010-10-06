@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.navigation;
 
 import com.arsdigita.domain.DomainObjectFactory;
@@ -50,11 +49,9 @@ import org.apache.log4j.Logger;
 public class DataCollectionRenderer extends LockableImpl {
 
     private static final Logger s_log =
-        Logger.getLogger(DataCollectionRenderer.class);
-
+            Logger.getLogger(DataCollectionRenderer.class);
     private ArrayList m_attributes = new ArrayList();
     private ArrayList m_properties = new ArrayList();
-
     private int m_pageSize = 20;
     private boolean m_specializeObjects = false;
     private boolean m_wrapAttributes = false;
@@ -107,7 +104,7 @@ public class DataCollectionRenderer extends LockableImpl {
      * @pageNumber current page, starting from 1
      */
     public Element generateXML(DataCollection objects,
-                               int pageNumber) {
+            int pageNumber) {
         Assert.isLocked(this);
 
         // Quasimodo: Begin
@@ -185,8 +182,7 @@ public class DataCollectionRenderer extends LockableImpl {
             DataObject dobj = objects.getDataObject();
             ACSObject object = null;
             if (m_specializeObjects) {
-                object = (ACSObject)
-                    DomainObjectFactory.newInstance(dobj);
+                object = (ACSObject) DomainObjectFactory.newInstance(dobj);
             }
 
             Element item = Navigation.newElement("item");
@@ -279,8 +275,8 @@ public class DataCollectionRenderer extends LockableImpl {
         }
     }
 
-    private void valuePersistenceError( PersistenceException ex,
-                                        String[] paths, int depth ) {
+    private void valuePersistenceError(PersistenceException ex,
+            String[] paths, int depth) {
         StringBuffer msg = new StringBuffer();
         msg.append("Attribute ");
         for (int i = 0; i <= depth; i++) {

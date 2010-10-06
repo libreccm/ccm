@@ -60,6 +60,15 @@
 <!--         xmlfeed may not be needed by ZeS, too                   -->
         <ccm:application name="ccm-cms-types-xmlfeed"/>                       
 
+        <ccm:application name="ccm-cms-types-baseAddress"/>
+        <ccm:application name="ccm-cms-types-baseContact"/>
+        <ccm:application name="ccm-cms-types-genericorganization"/>
+        <ccm:application name="ccm-cms-types-healthCareFacility"/>
+        <ccm:application name="ccm-cms-types-person"/>
+        <ccm:application name="ccm-cms-types-organization"/>
+        <ccm:application name="ccm-cms-types-organizationalunit"/>
+
+
 <!--  Applications   -->
 <!--  - - - - -  -   -->
 <!--    <ccm:application name="ccm-auth-http"/>                      -->

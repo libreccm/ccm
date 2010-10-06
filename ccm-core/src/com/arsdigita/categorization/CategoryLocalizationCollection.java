@@ -21,10 +21,7 @@ package com.arsdigita.categorization;
 
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.ACSObjectCollection;
-// unused imports
-// import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataCollection;
-// import com.arsdigita.persistence.DataObject;
 
 /**
  * Represents a collection of categoryLocalizations.
@@ -34,8 +31,6 @@ import com.arsdigita.persistence.DataCollection;
  * or {@link Category#getDescendants()}.</p>
  *
  * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
- * @author Randy Graebner (randyg@alum.mit.edu)
- * @version $Revision: #15 $ $DateTime: 2004/08/16 18:10:38 $
  **/
 public class CategoryLocalizationCollection extends ACSObjectCollection {
     
@@ -109,6 +104,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
         return (CategoryLocalization) getDomainObject();
     }
     
+    @Override
     public ACSObject getACSObject() {
         return getCategoryLocalization();
     }
@@ -125,12 +121,16 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
         if(!m_dataCollection.isEmpty() && locale != "") {
         
             // First check, if we are already at the right position. This will speed up repeated access for the same locale
-            if(this.getPosition() > 0 && this.getCategoryLocalization().getLocale().equals(locale)) return true;
+            if(this.getPosition() > 0 && this.getCategoryLocalization().getLocale().equals(locale)) {
+                return true;
+            }
         
             // Nope, so we have to start a search
             this.rewind();
             while(this.next()) {
-              if(this.getCategoryLocalization().getLocale().equals(locale)) return true;
+              if(this.getCategoryLocalization().getLocale().equals(locale)) {
+                    return true;
+                }
             }
 
         }
