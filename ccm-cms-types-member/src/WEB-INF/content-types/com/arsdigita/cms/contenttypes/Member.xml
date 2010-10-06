@@ -14,12 +14,20 @@
             createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
 
             <ctd:authoring-step
-                labelKey="member.authoring.basic_properties.title"
-                labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
-                descriptionKey="member.authoring.basic_properties.description"
-                descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                labelKey="cms.contenttypes.shared.basic_properties.title"
+                labelBundle="com.arsdigita.cms.ui.CMSResources"
+                descriptionKey="cms.contenttypes.shared.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.ui.CMSResources"
                 component="com.arsdigita.cms.contenttypes.ui.MemberPropertiesStep"
                 ordering="1"/>
+
+            <ctd:authoring-step
+                labelKey="person.authoring.contact_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                descriptionKey="person.authoring.contact_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                component="com.arsdigita.cms.contenttypes.ui.GenericPersonContactPropertiesStep"
+                ordering="2"/>
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
         </ctd:authoring-kit>
