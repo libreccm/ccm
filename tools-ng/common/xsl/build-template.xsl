@@ -1877,9 +1877,10 @@
         Corporation.  All Rights Reserved.&lt;/i&gt;
         Generated at ${{TODAY}}:${{TSTAMP}} UTC"
         windowtitle="${{app.prettyname}} API Documentation"
-        doctitle="&lt;h1&gt;${{app.prettyname}} API Documentation&lt;/h1&gt;">
+        doctitle="&lt;h1&gt;${{app.prettyname}} API Documentation&lt;/h1&gt;"
+	 access="private">
         <packageset dir="${{build.src.dir}}"/>
-        <classpath refid="server.build.classpath"/>
+        <classpath refid="server.build.classpath"/>	
         <link href="http://java.sun.com/j2se/1.4/docs/api/"/>
         <link href="http://java.sun.com/j2ee/tutorial/api/"/>
       </javadoc>
