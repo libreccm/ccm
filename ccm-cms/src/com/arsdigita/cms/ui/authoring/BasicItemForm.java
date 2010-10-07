@@ -231,6 +231,11 @@ public abstract class BasicItemForm extends FormSection
         FormData data = event.getFormData();
         String newName = (String) data.get(NAME);
 
+        validateNameUniqueness(parent, event, newName);
+    }
+
+    public void validateNameUniqueness(Folder parent, FormSectionEvent event, String newName)
+        throws FormProcessException {
         if ( newName != null ) {
             final String query = "com.arsdigita.cms.validateUniqueItemName";
             DataQuery dq = SessionManager.getSession().retrieveQuery(query);

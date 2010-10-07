@@ -44,6 +44,7 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     public static final String TITLEPRE = "titlepre";
     public static final String TITLEPOST = "titlepost";
     public static final String BIRTHDATE = "birthdate";
+    public static final String GENDER = "gender";
     public static final String CONTACTS = "contacts";
     public static final String CONTACT_TYPE = "contact_type";
     public static final String CONTACT_ORDER = "contact_order";
@@ -103,14 +104,6 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
         return (String) get(TITLEPRE);
     }
 
-    public Date getBirthdate() {
-        return (Date) get(BIRTHDATE);
-    }
-
-    public void setBirthdate(Date birthdate) {
-        set(BIRTHDATE, birthdate);
-    }
-
     public void setTitlePre(String titlePre) {
         set(TITLEPRE, titlePre);
     }
@@ -121,6 +114,22 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     public void setTitlePost(String titlePost) {
         set(TITLEPOST, titlePost);
+    }
+
+    public Date getBirthdate() {
+        return (Date) get(BIRTHDATE);
+    }
+
+    public void setBirthdate(Date birthdate) {
+        set(BIRTHDATE, birthdate);
+    }
+
+    public String getGender() {
+        return (String) get(GENDER);
+    }
+
+    public void setGender(String gender) {
+        set(GENDER, gender);
     }
 
     /**

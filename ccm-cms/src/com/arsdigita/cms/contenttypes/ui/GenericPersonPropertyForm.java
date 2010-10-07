@@ -19,11 +19,14 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
@@ -53,6 +56,7 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
     public static final String TITLEPRE = GenericPerson.TITLEPRE;
     public static final String TITLEPOST = GenericPerson.TITLEPOST;
     public static final String BIRTHDATE = GenericPerson.BIRTHDATE;
+    public static final String GENDER = GenericPerson.GENDER;
     public static final String DESCRIPTION = GenericPerson.DESCRIPTION;
     public static final String ID = "Person_edit";
 
@@ -69,26 +73,7 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
     @Override
     protected void addWidgets() {
         super.addWidgets();
-
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
-        ParameterModel surnameParam = new StringParameter(SURNAME);
-        TextField surname = new TextField(surnameParam);
-        add(surname);
-
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize()));
-        ParameterModel givennameParam = new StringParameter(GIVENNAME);
-        TextField givenname = new TextField(givennameParam);
-        add(givenname);
-
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
-        ParameterModel titlepreParam = new StringParameter(TITLEPRE);
-        TextField titlepre = new TextField(titlepreParam);
-        add(titlepre);
-
-        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize()));
-        ParameterModel titlepostParam = new StringParameter(TITLEPOST);
-        TextField titlepost = new TextField(titlepostParam);
-        add(titlepost);
+        mandatoryFieldWidgets(this);
 
         add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.birthdate").localize()));
         ParameterModel birthdateParam = new DateParameter(BIRTHDATE);
@@ -97,6 +82,14 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         birthdate.setYearRange(1900, today.get(Calendar.YEAR));
         add(birthdate);
 
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender").localize()));
+        ParameterModel genderParam = new StringParameter(GENDER);
+        SingleSelect gender  = new SingleSelect(genderParam);
+        gender.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        gender.addOption(new Option("f", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender.f").localize())));
+        gender.addOption(new Option("m", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender.m").localize())));
+        add(gender);
+
         add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.description").localize()));
         ParameterModel descriptionParam = new StringParameter(DESCRIPTION);
         TextArea description = new TextArea(descriptionParam);
@@ -104,6 +97,28 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         description.setRows(5);
         add(description);
 
+    }
+
+    public static void mandatoryFieldWidgets(FormSection form) {
+        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
+        ParameterModel surnameParam = new StringParameter(SURNAME);
+        TextField surname = new TextField(surnameParam);
+        form.add(surname);
+
+        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize()));
+        ParameterModel givennameParam = new StringParameter(GIVENNAME);
+        TextField givenname = new TextField(givennameParam);
+        form.add(givenname);
+
+        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
+        ParameterModel titlepreParam = new StringParameter(TITLEPRE);
+        TextField titlepre = new TextField(titlepreParam);
+        form.add(titlepre);
+
+        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize()));
+        ParameterModel titlepostParam = new StringParameter(TITLEPOST);
+        TextField titlepost = new TextField(titlepostParam);
+        form.add(titlepost);
     }
 
     public void init(FormSectionEvent fse) {
@@ -115,6 +130,7 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         data.put(TITLEPRE, person.getTitlePre());
         data.put(TITLEPOST, person.getTitlePost());
         data.put(BIRTHDATE, person.getBirthdate());
+        data.put(GENDER, person.getGender());
         data.put(DESCRIPTION, person.getDescription());
     }
 
@@ -137,6 +153,7 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
             person.setTitlePre((String) data.get(TITLEPRE));
             person.setTitlePost((String) data.get(TITLEPOST));
             person.setBirthdate((Date) data.get(BIRTHDATE));
+            person.setGender((String) data.get(GENDER));
             person.setDescription((String)data.get(DESCRIPTION));
 
             person.save();

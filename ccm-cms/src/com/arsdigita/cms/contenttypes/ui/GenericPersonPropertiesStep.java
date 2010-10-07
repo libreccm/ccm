@@ -94,6 +94,23 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
                     }
                 });
 
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender").localize(),
+                GenericPerson.GENDER,
+                new DomainObjectPropertySheet.AttributeFormatter() {
+
+                    public String format(DomainObject item,
+                            String attribute,
+                            PageState state) {
+                        //ContentPage page = (ContentPage) item;
+                        GenericPerson person = (GenericPerson) item;
+                        if (person.getGender() != null) {
+                            return (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender." + person.getGender().toLowerCase()).localize();
+                        } else {
+                            return (String) ContenttypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                        }
+                    }
+                });
+
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),
                     ContentPage.LAUNCH_DATE,

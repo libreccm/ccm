@@ -50,8 +50,8 @@ public class PageCreate extends BasicPageForm
 
     private static final Logger s_log = Logger.getLogger(PageCreate.class);
 
-    private final CreationSelector m_parent;
-    private ApplyWorkflowFormSection m_workflowSection;
+    protected final CreationSelector m_parent;
+    protected ApplyWorkflowFormSection m_workflowSection;
 
     /**
      * The state parameter which specifies the content section
@@ -125,6 +125,7 @@ public class PageCreate extends BasicPageForm
     }
 
     // Validate: ensure name uniqueness
+    @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         Folder f = m_parent.getFolder(e.getPageState());
         Assert.exists(f);

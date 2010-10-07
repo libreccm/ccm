@@ -22,12 +22,13 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.ContentPage;
 
 object type GenericPerson extends ContentPage {
-    String[0..1] surname = cms_persons.surname VARCHAR(512);
+    String[0..1] surname   = cms_persons.surname VARCHAR(512);
     String[0..1] givenname = cms_persons.givenname VARCHAR(512);
-    String[0..1] titlepre = cms_persons.titlepre VARCHAR(256);
+    String[0..1] titlepre  = cms_persons.titlepre VARCHAR(256);
     String[0..1] titlepost = cms_persons.titlepost VARCHAR(256);
 
-    Date[0..1] birthdate = cms_persons.birthdate DATE;
+    Date[0..1] birthdate   = cms_persons.birthdate DATE;
+    String[0..1] gender    = cms_persons.gender CHAR(1);
 
     reference key (cms_persons.person_id);
 }
