@@ -4,37 +4,37 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
 object type SciOrganization extends GenericOrganizationalUnit {
-    String[0..1] organizationDescription = ct_sciorganizations.description VARCHAR(4096);
+    String[0..1] organizationDescription = ct_sciorga_organizations.description VARCHAR(4096);
 
-    reference key ( ct_sciorganizations.organization_id );
+    reference key ( ct_sciorga_organizations.organization_id );
 }
 
 association {
-	    SciOrganization[0..n] organization = join ct_scidepartments.department_id
-	                                       to ct_sciorganizations_departments_map.department_id,
-					     join ct_sciorganizations_departments_map.organization_id
-					       to ct_sciorganizations.organization_id;
+	    SciOrganization[0..n] organization = join ct_sciorga_departments.department_id
+	                                       to ct_sciorga_organizations_departments_map.department_id,
+					     join ct_sciorga_organizations_departments_map.organization_id
+					       to ct_sciorga_organizations.organization_id;
 
-            SciDepartment[0..n] departments = join ct_sciorganizations.organization_id
-	    			  	           to ct_sciorganizations_departments_map.organization_id,
-						 join ct_sciorganizations_departments_map.department_id
-						   to ct_scidepartments.department_id;
+            SciDepartment[0..n] departments = join ct_sciorga_organizations.organization_id
+	    			  	           to ct_sciorga_organizations_departments_map.organization_id,
+						 join ct_sciorga_organizations_departments_map.department_id
+						   to ct_sciorga_departments.department_id;
 
-	    Integer[0..1] departmentOrder = ct_sciorganizations_departments_map.department_order INTEGER;
+	    Integer[0..1] departmentOrder = ct_sciorga_organizations_departments_map.department_order INTEGER;
 }
 
 association {
-	    SciOrganization[0..n] organization = join ct_sciprojects.project_id
-	                                       to ct_sciorganizations_projects_map.project_id,
-					     join ct_sciorganizations_projects_map.organization_id
-					       to ct_sciorganizations.organization_id;
+	    SciOrganization[0..n] organization = join ct_sciorga_projects.project_id
+	                                       to ct_sciorga_organizations_projects_map.project_id,
+					     join ct_sciorga_organizations_projects_map.organization_id
+					       to ct_sciorga_organizations.organization_id;
 
-            SciProject[0..n] projects = join ct_sciorganizations.organization_id
-	    			  	           to ct_sciorganizations_projects_map.organization_id,
-						 join ct_sciorganizations_projects_map.project_id
-						   to ct_sciprojects.project_id;
+            SciProject[0..n] projects = join ct_sciorga_organizations.organization_id
+	    			  	           to ct_sciorga_organizations_projects_map.organization_id,
+						 join ct_sciorga_organizations_projects_map.project_id
+						   to ct_sciorga_projects.project_id;
 
-	    Integer[0..1] projectOrder = ct_sciorganizations_projects_map.project_order INTEGER;
+	    Integer[0..1] projectOrder = ct_sciorga_organizations_projects_map.project_order INTEGER;
 }
 
 

@@ -5,25 +5,26 @@ import com.arsdigita.cms.*;
 
 object type SciProject extends GenericOrganizationalUnit {
 
-    Date[0..1] projectbegin = ct_sciprojects.projectbegin DATE;
-    Date[0..1] projectend = ct_sciprojects.projectend DATE;
-    String[0..1] projectDescription = ct_sciprojects.description VARCHAR(4096);
-    String[0..1] funding = ct_sciprojects.funding VARCHAR(2048);
+    Date[0..1] projectbegin = ct_sciorga_projects.projectbegin DATE;
+    Date[0..1] projectend = ct_sciorga_projects.projectend DATE;
+    String[0..1] projectShortDesc = ct_sciorga_projects.shortdesc VARCHAR(2048);
+    String[0..1] projectDescription = ct_sciorga_projects.description CLOB;
+    String[0..1] funding = ct_sciorga_projects.funding VARCHAR(2048);
     
-    reference key ( ct_sciprojects.project_id );
+    reference key ( ct_sciorga_projects.project_id );
 }
 
 association {
-	    SciProject[0..n] project = join ct_sciprojects.project_id
-	    		                    to ct_sciprojects_subprojects_map.subproject_id,
-					  join ct_sciprojects_subprojects_map.project_id
-					    to ct_sciprojects.project_id;
+	    SciProject[0..n] project = join ct_sciorga_projects.project_id
+	    		                    to ct_sciorga_projects_subprojects_map.subproject_id,
+					  join ct_sciorga_projects_subprojects_map.project_id
+					    to ct_sciorga_projects.project_id;
 					
-            SciProject[0..n] subProjects = join ct_sciprojects.project_id
-	    		     	         to ct_sciprojects_subprojects_map.project_id,
-				       join ct_sciprojects_subprojects_map.subproject_id
-				       	 to ct_sciprojects.project_id;
+            SciProject[0..n] subProjects = join ct_sciorga_projects.project_id
+	    		     	         to ct_sciorga_projects_subprojects_map.project_id,
+				       join ct_sciorga_projects_subprojects_map.subproject_id
+				       	 to ct_sciorga_projects.project_id;
 
-	    Integer[0..1] subProjectOrder = ct_sciprojects_subprojects_map.subprojectorder INTEGER;
+	    Integer[0..1] subProjectOrder = ct_sciorga_projects_subprojects_map.subprojectorder INTEGER;
 	    
 }

@@ -7,11 +7,16 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.Date;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.ui.CMSDHTMLEditor;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -39,15 +44,47 @@ public class SciProjectPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        Label descLabel = new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganizations.ui.project.description"));
-        add(descLabel);
+        add(new Label(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.begin")));
+        ParameterModel beginParam = new DateParameter(SciProject.BEGIN);
+        Calendar today = new GregorianCalendar();
+        Date begin = new Date(beginParam);
+        begin.setYearRange(1970, (today.get(Calendar.YEAR) + 2));
+        add(begin);
+
+        add(new Label(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.end")));
+        ParameterModel endParam = new DateParameter(SciProject.END);
+        Date end = new Date(endParam);
+        end.setYearRange(1970, (today.get(Calendar.YEAR) + 8));
+        add(end);
+
+        add(new Label(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganizations.ui.projectshortdesc")));
+        ParameterModel shortDescParam = new StringParameter(
+                SciProject.PROJECT_SHORT_DESCRIPTION);
+        TextArea shortDesc = new TextArea(shortDescParam);
+        shortDesc.setCols(60);
+        shortDesc.setRows(20);
+        add(shortDesc);
+
+        /*add(new Label(SciOrganizationGlobalizationUtil.globalize(
+        "sciorganization.ui.project.description")));
         ParameterModel descParam = new StringParameter(
-                SciProject.PROJECT_DESCRIPTION);
-        TextArea desc = new TextArea(descParam);
-        desc.setCols(60);
-        desc.setRows(18);
-        add(desc);
+        SciProject.PROJECT_DESCRIPTION);
+        CMSDHTMLEditor desc = new CMSDHTMLEditor(descParam);
+        desc.setCols(75);
+        desc.setRows(25);
+        add(desc);*/
+
+        /*add(new Label(SciOrganizationGlobalizationUtil.globalize(
+        "sciorganization.ui.project.funding")));
+        ParameterModel fundingParam = new StringParameter(
+        SciProject.FUNDING);
+        CMSDHTMLEditor funding = new CMSDHTMLEditor(fundingParam);
+        funding.setCols(60);
+        funding.setRows(18);
+        add(funding);*/
     }
 
     @Override
@@ -57,8 +94,10 @@ public class SciProjectPropertyForm
         FormData data = fse.getFormData();
         SciProject project = (SciProject) super.initBasicWidgets(fse);
 
-        data.put(SciProject.PROJECT_DESCRIPTION,
-                 project.getProjectDescription());
+        data.put(SciProject.BEGIN, project.getBegin());
+        data.put(SciProject.END, project.getEnd());
+        data.put(SciProject.PROJECT_SHORT_DESCRIPTION,
+                 project.getProjectShortDescription());
     }
 
     @Override
@@ -70,8 +109,12 @@ public class SciProjectPropertyForm
 
         if ((project != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            project.setProjectDescription((String) data.get(
-                    SciProject.PROJECT_DESCRIPTION));
+            project.setBegin((java.util.Date) data.get(
+                    SciProject.BEGIN));
+            project.setEnd((java.util.Date) data.get(
+                    SciProject.END));
+            project.setProjectShortDescription((String) data.get(
+                    SciProject.PROJECT_SHORT_DESCRIPTION));
 
             project.save();
 

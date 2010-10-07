@@ -35,6 +35,7 @@ public class SciProject extends GenericOrganizationalUnit {
 
     public static final String BEGIN = "projectbegin";
     public static final String END = "projectend";
+    public static final String PROJECT_SHORT_DESCRIPTION = "projectShortDesc";
     public static final String PROJECT_DESCRIPTION = "projectDescription";
     public static final String FUNDING = "funding";
     public static final String SUBPROJECTS = "subProjects";
@@ -76,6 +77,14 @@ public class SciProject extends GenericOrganizationalUnit {
 
     public void setEnd(Date end) {
         set(END, end);
+    }
+
+    public String getProjectShortDescription() {
+        return (String) get(PROJECT_SHORT_DESCRIPTION);
+    }
+
+    public void setProjectShortDescription(String shortDesc) {
+        set(PROJECT_SHORT_DESCRIPTION, shortDesc);
     }
 
     public String getProjectDescription() {
