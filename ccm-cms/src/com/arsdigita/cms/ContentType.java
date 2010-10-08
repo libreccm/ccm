@@ -21,10 +21,12 @@ package com.arsdigita.cms;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.formbuilder.PersistentForm;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -38,6 +40,7 @@ import java.util.ArrayList;
 
 import java.net.URL;
 import java.net.MalformedURLException;
+import java.util.StringTokenizer;
 
 /**
  * <p>A Content Type defines the characteristics of a content
@@ -457,35 +460,17 @@ public class ContentType extends ACSObject {
         ContentTypeCollection types = getAllContentTypes();
         types.addFilter("associatedObjectType = :type").set("type", objType);
 
-
-
-
-
         if (types.next()) {
             ContentType type = types.getContentType();
             types.close();
 
-
-
-
             return type;
-
-
-
 
         } else {
             // no match
             types.close();
-
-
-
-
             throw new DataObjectNotFoundException(
                     "No matching content type for object type " + objType);
-
-
-
-
         }
     }
 
@@ -497,10 +482,6 @@ public class ContentType extends ACSObject {
      */
     public static ContentTypeCollection getAllContentTypes() {
         return getAllContentTypes(true);
-
-
-
-
     }
 
     /**
@@ -510,35 +491,20 @@ public class ContentType extends ACSObject {
      */
     public static ContentTypeCollection getUserDefinedContentTypes() {
         return getAllContentTypes(false);
-
-
-
-
     }
 
     /**
      * @param internal If true, fetch all content types, including internal
-     *    content types. If false, only fetch all user-defined content types.
+     *    content types.
      */
     private static ContentTypeCollection getAllContentTypes(boolean internal) {
         DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
         ContentTypeCollection types = new ContentTypeCollection(da);
 
-
-
-
         if (!internal) {
             types.addFilter("isInternal = '0'");
-
-
-
-
         }
         return types;
-
-
-
-
     }
 
     /**
@@ -551,17 +517,40 @@ public class ContentType extends ACSObject {
         final String query = "com.arsdigita.cms.registeredContentTypes";
         DataQuery dq = SessionManager.getSession().retrieveQuery(query);
         DataCollection dc = new DataQueryDataCollectionAdapter(dq, "type");
-
-
-
-
         return new ContentTypeCollection(dc);
-
-
-
-
     }
-    private static List s_xsl = new ArrayList();
+
+    public static ContentTypeCollection getSiblingsOf(ContentType ct) {
+//        final String query = "com.arsdigita.cms.registeredContentTypes";
+//        DataQuery dq = SessionManager.getSession().retrieveQuery(query);
+//        DataCollection dc = new  DataQueryDataCollectionAdapter(dq, "type");
+//        return new ContentTypeCollection(dc);
+        ContentTypeCollection ctc = ContentType.getRegisteredContentTypes();
+
+        // The Filter Factory
+        FilterFactory ff = ctc.getFilterFactory();
+
+        // Create an or-filter
+        CompoundFilter or = ff.or();
+
+        // The content type must be either of the requested type
+        or.addFilter(ff.equals(ContentType.ID, ct.ID));
+
+        // Or must be a sibling of the requested type
+        try {
+            StringTokenizer strTok = new StringTokenizer(ct.getSiblings(), "/");
+            while (strTok.hasMoreElements()) {
+                or.addFilter(ff.equals(ContentType.ID, (String) strTok.nextElement()));
+            }
+        } catch (Exception ex) {
+            // WTF? The selected content type does not exist in the table???
+        }
+
+        ctc.addFilter(or);
+        return ctc;
+    }
+
+    private static List s_xsl  = new ArrayList();
 
     /**
      * NB this interface is liable to change.
@@ -573,10 +562,6 @@ public class ContentType extends ACSObject {
     public static void registerXSLFile(ContentType type,
             String path) {
         s_xsl.add(new XSLEntry(type, path));
-
-
-
-
     }
 
     /**
@@ -589,10 +574,6 @@ public class ContentType extends ACSObject {
     public static void unregisterXSLFile(ContentType type,
             String path) {
         s_xsl.remove(new XSLEntry(type, path));
-
-
-
-
     }
 
     /**
@@ -601,22 +582,6 @@ public class ContentType extends ACSObject {
      */
     public static Iterator getXSLFileURLs() {
         return new EntryIterator(s_xsl.iterator());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     private static class EntryIterator implements Iterator {
