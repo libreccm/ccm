@@ -25,6 +25,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.ui.LinkPropertyForm;
@@ -45,10 +46,10 @@ import com.arsdigita.util.Assert;
  * @version $Revision: #3 $ $Date: 2004/03/30 $
  * @author Scott Seago (sseago@redhat.com)
  */
-
 public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
     private static boolean isHideAdditionalResourceFields;
+
     static {
         isHideAdditionalResourceFields = ContentSection.getConfig().isHideAdditionalResourceFields();
     }
@@ -61,38 +62,45 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
      * @param link The LinkSelectionModel to use to obtain the 
      *    Link to work on
      */
-    public RelatedLinkPropertyForm( ItemSelectionModel itemModel,
-                                    LinkSelectionModel link ) {
-        
+    public RelatedLinkPropertyForm(ItemSelectionModel itemModel,
+            LinkSelectionModel link) {
+
         super(itemModel, link);
     }
-    
-    protected void addWidgets() {
-      
-      super.addWidgets();
 
-      if ( isHideAdditionalResourceFields ) {
-         // Do nothing except protect the poor users from themselves.
-      } else {
-      //Hack to get the form layout right.
-      add(new Label(""));
-      add(new Label(
-          new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceSize",
-          "com.arsdigita.cms.contentassets.RelatedLinkResources")));
-      
-      TextField resSize = new TextField(new StringParameter(RelatedLink.RESOURCE_SIZE));
-      add(resSize);
-      
-      add(new Label(
-          new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceType",
-          "com.arsdigita.cms.contentassets.RelatedLinkResources")));
+    public RelatedLinkPropertyForm(ItemSelectionModel itemModel,
+            LinkSelectionModel link, ContentType contentType) {
 
-      SingleSelect resType = new SingleSelect(new StringParameter(RelatedLink.RESOURCE_TYPE));
-      addMimeOptions(resType);
-      add(resType);
-       }
+        super(itemModel, link, contentType);
     }
-    
+
+    @Override
+    protected void addWidgets() {
+
+        super.addWidgets();
+
+        if (isHideAdditionalResourceFields) {
+            // Do nothing except protect the poor users from themselves.
+        } else {
+            //Hack to get the form layout right.
+            add(new Label(""));
+            add(new Label(
+                    new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceSize",
+                    "com.arsdigita.cms.contentassets.RelatedLinkResources")));
+
+            TextField resSize = new TextField(new StringParameter(RelatedLink.RESOURCE_SIZE));
+            add(resSize);
+
+            add(new Label(
+                    new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceType",
+                    "com.arsdigita.cms.contentassets.RelatedLinkResources")));
+
+            SingleSelect resType = new SingleSelect(new StringParameter(RelatedLink.RESOURCE_TYPE));
+            addMimeOptions(resType);
+            add(resType);
+        }
+    }
+
     /**
      * Add mime-type options to the option group by loading all mime
      * types which match a certain prefix from the database
@@ -103,12 +111,12 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
     public static void addMimeOptions(SingleSelect w) {
         MimeTypeCollection types;
         types = MimeType.getAllMimeTypes();
-        while(types.next()) {
+        while (types.next()) {
             MimeType type = types.getMimeType();
             w.addOption(new Option(type.getMimeType(), type.getLabel()));
         }
     }
-    
+
     /** 
      * Take care of basic RelatedLink creation steps. Creates the
      * RelatedLink and sets the linkOwner property.
@@ -125,10 +133,10 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
         //link.setName(item.getName() + "_link_" + item.getID());
         // set the owner of the link
         link.setLinkOwner(item);
-        
+
         return link;
     }
-    
+
     /**
      * Over-ride super class method to initialize addtional fields specific
      * to <code>RelatedLink</code> content asset.
@@ -138,41 +146,41 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
         FormData data = fse.getFormData();
         PageState ps = fse.getPageState();
         RelatedLink rl;
-        if ( isHideAdditionalResourceFields ) {
+        if (isHideAdditionalResourceFields) {
             // Do nothing except protect the poor users from themselves.
         } else {
-        if ( getLinkSelectionModel().isSelected(ps)) {
-          //We are editing the link , populate our addtional fields.
-          rl = (RelatedLink) getLinkSelectionModel().getSelectedLink(ps);
-          data.put(RelatedLink.RESOURCE_SIZE , rl.getResourceSize());
-          if(rl.getResourceType() != null){
-            data.put(RelatedLink.RESOURCE_TYPE , rl.getResourceType().getMimeType());
-          }
-        } else {
-          // New Link creation , clear the fields.
-          data.put(RelatedLink.RESOURCE_SIZE , null);
-          data.put(RelatedLink.RESOURCE_TYPE , null);
+            if (getLinkSelectionModel().isSelected(ps)) {
+                //We are editing the link , populate our addtional fields.
+                rl = (RelatedLink) getLinkSelectionModel().getSelectedLink(ps);
+                data.put(RelatedLink.RESOURCE_SIZE, rl.getResourceSize());
+                if (rl.getResourceType() != null) {
+                    data.put(RelatedLink.RESOURCE_TYPE, rl.getResourceType().getMimeType());
+                }
+            } else {
+                // New Link creation , clear the fields.
+                data.put(RelatedLink.RESOURCE_SIZE, null);
+                data.put(RelatedLink.RESOURCE_TYPE, null);
+            }
         }
     }
-    }
-    
+
     /** 
      * over-ride super class method to set extended properties for
      * <code>RelatedLink</code>.
      */
-    protected void setLinkProperties(Link link , FormSectionEvent fse){
-      RelatedLink rl = (RelatedLink) (link);
-      FormData data = fse.getFormData();
-      if ( isHideAdditionalResourceFields ) {
-         // We are not using these but let's try to set some reasonable defaults.
-         rl.setResourceSize( "" );
-         rl.setResourceType(MimeType.loadMimeType("text/html"));
-      } else {
-      rl.setResourceSize( (String) data.get(RelatedLink.RESOURCE_SIZE));
-      String typeName = (String) data.get(RelatedLink.RESOURCE_TYPE);
-      MimeType mType = MimeType.loadMimeType(typeName);
-      rl.setResourceType(mType);
-      }
-      super.setLinkProperties(link , fse);
+    protected void setLinkProperties(Link link, FormSectionEvent fse) {
+        RelatedLink rl = (RelatedLink) (link);
+        FormData data = fse.getFormData();
+        if (isHideAdditionalResourceFields) {
+            // We are not using these but let's try to set some reasonable defaults.
+            rl.setResourceSize("");
+            rl.setResourceType(MimeType.loadMimeType("text/html"));
+        } else {
+            rl.setResourceSize((String) data.get(RelatedLink.RESOURCE_SIZE));
+            String typeName = (String) data.get(RelatedLink.RESOURCE_TYPE);
+            MimeType mType = MimeType.loadMimeType(typeName);
+            rl.setResourceType(mType);
+        }
+        super.setLinkProperties(link, fse);
     }
 }

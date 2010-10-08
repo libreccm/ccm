@@ -24,11 +24,11 @@ import com.arsdigita.cms.*;
 
 object type RelationAttribute extends ContentItem {
 
-    String[1..1] attribute   = cms_contacttypes.attribute VARCHAR(100);
-    String[1..1] key         = cms_contacttypes.key VARCHAR(100);
-    String[1..1] lang        = cms_contacttypes.lang VARCHAR(2);
-//    String[1..1] name        = cms_contacttypes.name VARCHAR(100);
-    String[0..1] description = cms_contacttypes.description VARCHAR(500);
+    String[1..1] attribute   = cms_relation_attribute.attribute VARCHAR(100);
+    String[1..1] key         = cms_relation_attribute.key VARCHAR(100);
+    String[1..1] lang        = cms_relation_attribute.lang VARCHAR(2);
+//    String[1..1] name        = cms_relation_attribute.name VARCHAR(100);
+    String[0..1] description = cms_relation_attribute.description VARCHAR(500);
 
     unique (attribute, key, lang);
     reference key(cms_relationAttribute.relationattribute_id);
