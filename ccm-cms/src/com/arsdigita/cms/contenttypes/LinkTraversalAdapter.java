@@ -32,6 +32,8 @@ import com.arsdigita.domain.DomainObject;
  *
  * This is a modified copy of ContentItemTraversalAdapter to make the
  * Link-Objects aware of multilingual items (ContentBundle)
+ *
+ * @author Sören Bernstein (Quasimodo)
  */
 public class LinkTraversalAdapter 
     extends ContentItemTraversalAdapter {

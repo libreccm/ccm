@@ -47,6 +47,7 @@ import org.apache.log4j.Logger;
  *
  * @version $Revision: #7 $ $Date: 2004/08/17 $
  * @author Nobuko Asakai (nasakai@redhat.com)
+ * @author Sören Bernstein (Quasimodo)
  */
 public class Link extends ACSObject  {
     private static final Logger s_log = Logger.getLogger(Link.class);

@@ -521,10 +521,6 @@ public class ContentType extends ACSObject {
     }
 
     public static ContentTypeCollection getSiblingsOf(ContentType ct) {
-//        final String query = "com.arsdigita.cms.registeredContentTypes";
-//        DataQuery dq = SessionManager.getSession().retrieveQuery(query);
-//        DataCollection dc = new  DataQueryDataCollectionAdapter(dq, "type");
-//        return new ContentTypeCollection(dc);
         ContentTypeCollection ctc = ContentType.getRegisteredContentTypes();
 
         // The Filter Factory

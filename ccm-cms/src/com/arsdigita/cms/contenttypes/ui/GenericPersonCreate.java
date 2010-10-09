@@ -73,7 +73,7 @@ public class GenericPersonCreate extends PageCreate {
     public void validate(FormSectionEvent e) throws FormProcessException {
         Folder f = m_parent.getFolder(e.getPageState());
         Assert.exists(f);
-        validateNameUniqueness(f, e, urlSave(getFullname(e)));
+        validateNameUniqueness(f, e, GenericPerson.urlSave(getFullname(e)));
     }
 
     // Process: save fields to the database
@@ -89,7 +89,7 @@ public class GenericPersonCreate extends PageCreate {
 
         final ContentPage item = createContentPage(state);
         item.setLanguage((String) data.get(LANGUAGE));
-        item.setName(urlSave(fullName));
+        item.setName(GenericPerson.urlSave(fullName));
         item.setTitle(fullName);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             item.setLaunchDate((Date) data.get(LAUNCH_DATE));
@@ -112,28 +112,28 @@ public class GenericPersonCreate extends PageCreate {
         m_parent.editItem(state, item);
     }
 
-    //
+    // Generate full name
     private String getFullname(FormSectionEvent e) {
         final FormData data = e.getFormData();
-        return data.getString(TITLEPRE) + " " + data.getString(GIVENNAME) + " " + data.getString(SURNAME) + " " + data.getString(TITLEPOST);
+        String titlePre = data.getString(TITLEPRE);
+        String givenName = data.getString(GIVENNAME);
+        String surname = data.getString(SURNAME);
+        String titlePost = data.getString(TITLEPOST);
 
-    }
-
-    // Create a ulr save version of the full name
-    private String urlSave(String in) {
-
-        // Replacement map
-        String[][] replacements = {{"ä", "ae"}, {"Ä", "Ae"}, {"ö", "oe"}, {"Ö", "Oe"}, {"ü", "ue"}, {"Ü", "Ue"}, {"ß", "ss"}, {".", ""}};
-
-        // Replace all spaces with dash
-        String out = in.replace(" ", "-");
-
-        // Replace all special chars defined in replacement map
-        for (int i = 0; i < replacements.length; i++) {
-            out = out.replace(replacements[i][0], replacements[i][1]);
+        if (titlePre == null) {
+            titlePre = "";
+        }
+        if (titlePost == null) {
+            titlePost = "";
+        }
+        if (givenName == null) {
+            givenName = "";
+        }
+        if (surname == null) {
+            surname = "";
         }
 
-        // Replace all special chars that are not yet replaced with a dash
-        return out.replaceAll("[^A-Za-z0-9-]", "_");
+        return String.format("%s %s %s %s", titlePre, givenName, surname, titlePost).trim();
     }
+
 }

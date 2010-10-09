@@ -51,7 +51,7 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     private static final String RELATION_ATTRIBUTES = "GenericContactType";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.GenericPerson";
+            "com.arsdigita.cms.contenttypes.GenericPerson";
 
     /**
      * Default constructor. This creates a new (empty) GenericPerson.
@@ -90,6 +90,7 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     public void setSurname(String surname) {
         set(SURNAME, surname);
+        updateNameAndTitle();
     }
 
     public String getGivenName() {
@@ -98,6 +99,7 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     public void setGivenName(String givenName) {
         set(GIVENNAME, givenName);
+        updateNameAndTitle();
     }
 
     public String getTitlePre() {
@@ -106,6 +108,7 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     public void setTitlePre(String titlePre) {
         set(TITLEPRE, titlePre);
+        updateNameAndTitle();
     }
 
     public String getTitlePost() {
@@ -114,6 +117,7 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     public void setTitlePost(String titlePost) {
         set(TITLEPOST, titlePost);
+        updateNameAndTitle();
     }
 
     public Date getBirthdate() {
@@ -139,16 +143,10 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
      * @return {@code titlePre} {@code givenName) {@code surnameName} {@code titlePost}
      */
     public String getFullName() {
-        String titlePre;
-        String titlePost;
-        String givenName;
-        String surname;
-        String fullName = "";
-
-        titlePre = getTitlePre();
-        titlePost = getTitlePost();
-        givenName = getGivenName();
-        surname = getSurname();
+        String titlePre = getTitlePre();
+        String givenName = getGivenName();
+        String surname = getSurname();
+        String titlePost = getTitlePost();
 
         if (titlePre == null) {
             titlePre = "";
@@ -163,17 +161,14 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
             surname = "";
         }
 
-        if (0 == fullName.length()) {
-            fullName = getTitle();
-        }
+        return String.format("%s %s %s %s", titlePre, givenName, surname, titlePost).trim();
+    }
 
-        fullName = String.format("%s %s %s %s",
-                                 titlePre,
-                                 givenName,
-                                 surname,
-                                 titlePost).trim();
+    private void updateNameAndTitle() {
+        // Sync title and name with CI data
+        setTitle(getFullName());
+        setName(GenericPerson.urlSave(getTitle()));
 
-        return fullName;
     }
 
     // Get all contacts for this person
@@ -210,5 +205,23 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     @Override
     public StringTokenizer getRelationAttributes() {
         return new StringTokenizer(RELATION_ATTRIBUTES, ";");
+    }
+
+    // Create a ulr save version of the full name
+    public static String urlSave(String in) {
+
+        // Replacement map
+        String[][] replacements = {{"ä", "ae"}, {"Ä", "Ae"}, {"ö", "oe"}, {"Ö", "Oe"}, {"ü", "ue"}, {"Ü", "Ue"}, {"ß", "ss"}, {".", ""}};
+
+        // Replace all spaces with dash
+        String out = in.replace(" ", "-");
+
+        // Replace all special chars defined in replacement map
+        for (int i = 0; i < replacements.length; i++) {
+            out = out.replace(replacements[i][0], replacements[i][1]);
+        }
+
+        // Replace all special chars that are not yet replaced with a dash
+        return out.replaceAll("[^A-Za-z0-9-]", "_");
     }
 }
