@@ -5,8 +5,7 @@
 
 package com.arsdigita.cms;
 
-import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.ACSObjectCollection;
+import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.SessionManager;
@@ -15,11 +14,13 @@ import com.arsdigita.persistence.SessionManager;
  *
  * @author quasi
  */
-public class RelationAttributeCollection extends ACSObjectCollection {
+public class RelationAttributeCollection extends DomainCollection {
 
     public static String ATTRIBUTE = RelationAttribute.ATTRIBUTE;
     public static String KEY = RelationAttribute.KEY;
     public static String LANGUAGE = RelationAttribute.LANGUAGE;
+    public static String NAME = RelationAttribute.NAME;
+    public static String DESCRIPTION = RelationAttribute.DESCRIPTION;
 
     private Filter m_attributeFilter = null;
     private Filter m_keyFilter = null;
@@ -32,6 +33,12 @@ public class RelationAttributeCollection extends ACSObjectCollection {
     public RelationAttributeCollection(String attribute) {
         this();
         this.addAttributeFilter(attribute);
+        this.addOrder(KEY + ", " + LANGUAGE);
+    }
+
+    public RelationAttributeCollection(String attribute, String key) {
+        this(attribute);
+        this.addKeyFilter(key);
     }
 
     public RelationAttributeCollection(DataCollection dataCollection) {
@@ -40,23 +47,17 @@ public class RelationAttributeCollection extends ACSObjectCollection {
 
     /**
      * Wrapper to <code>getDomainObject()</code> that casts the returned
-     * <code>DomainObject</code> as a <code>CategoryLocalization</code>.
+     * <code>DomainObject</code> as a <code>RelationAttribute</code>.
      *
-     * @return a <code>CategoryLocalization</code> for the current position in the
+     * @return a <code>RelationAttribute</code> for the current position in the
      * collection.
      **/
     public RelationAttribute getRelationAttribute() {
-        return (RelationAttribute) getDomainObject();
+        return new RelationAttribute(m_dataCollection.getDataObject());
     }
-
-    @Override
-    public ACSObject getACSObject() {
-        return getRelationAttribute();
-    }
-
 
     // Modify filter
-    public void addAttributeFilter(String attribute) {
+    public final void addAttributeFilter(String attribute) {
         m_attributeFilter = this.addEqualsFilter(ATTRIBUTE, attribute);
     }
 
@@ -69,7 +70,7 @@ public class RelationAttributeCollection extends ACSObjectCollection {
         return retVal;
     }
 
-    public void addKeyFilter(String key) {
+    public final void addKeyFilter(String key) {
         m_keyFilter = this.addEqualsFilter(KEY, key);
     }
 
@@ -100,6 +101,39 @@ public class RelationAttributeCollection extends ACSObjectCollection {
     }
 
     // Accessors
+    public final String getKey() {
+        return (String) get(KEY);
+//        return (String) getRelationAttribute().getKey();
+    }
+
+    public final String getLanguage() {
+        return (String) get(LANGUAGE);
+//        return (String) getRelationAttribute().getLanguage();
+    }
+
+    // Get RelationAttribute in desired language
+    public RelationAttribute getRelationAttribute(String key, String language) {
+
+        // First, test the current element
+        if(this.getKey().equals(key) && this.getLanguage().equals(language)) {
+
+            return this.getRelationAttribute();
+
+        } else {
+
+            // Rewind the collection and search for a matching element
+            this.rewind();
+            while(this.next()) {
+                if(this.getKey().equals(key) && this.getLanguage().equals(language)){
+                    return this.getRelationAttribute();
+                }
+            }
+        }
+
+        // Nothing found
+        return null;
+    }
+
     public String getName() {
         return getRelationAttribute().getName();
     }
@@ -107,4 +141,18 @@ public class RelationAttributeCollection extends ACSObjectCollection {
     public String getDescription() {
         return getRelationAttribute().getDescription();
     }
+
+    // Tests
+    public boolean hasLanguage(String language) {
+
+        boolean retVal = false;
+        this.addLanguageFilter(language);
+        if(this.size() > 0) {
+            retVal = true;
+        }
+        this.removeLanguageFilter(language);
+
+        return retVal;
+    }
+
 }

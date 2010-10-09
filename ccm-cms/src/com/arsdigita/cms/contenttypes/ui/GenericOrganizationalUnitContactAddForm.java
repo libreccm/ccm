@@ -32,8 +32,8 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.contenttypes.GenericContact;
-import com.arsdigita.cms.contenttypes.GenericContactType;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
@@ -67,8 +67,7 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
     protected void addWidgets() {
         add(new Label((String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.select_contact").localize()));
-        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(GenericContact.class.getName()));
+        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(GenericContact.class.getName()));
         add(m_itemSearch);
 
         add(new Label(ContenttypesGlobalizationUtil.globalize(
@@ -77,16 +76,14 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
                 GenericOrganizationalUnitContactCollection.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.ui.select_one").localize())));
+        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
 
-        GenericContactTypeCollection contacttypes =
-                                     new GenericContactTypeCollection();
-        contacttypes.filterLanguage(DispatcherHelper.getNegotiatedLocale().
+        GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
+        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
                 getLanguage());
 
         while (contacttypes.next()) {
-            GenericContactType ct = contacttypes.getContactType();
+            RelationAttribute ct = contacttypes.getRelationAttribute();
             contactType.addOption(new Option(ct.getKey(), ct.getName()));
         }
 
@@ -112,8 +109,7 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
                 getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().isSelected(state))) {
-            orgaunit.addContact((GenericContact) data.get(ITEM_SEARCH), (String) data.
-                    get(GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
+            orgaunit.addContact((GenericContact) data.get(ITEM_SEARCH), (String) data.get(GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
         }
 
         init(fse);

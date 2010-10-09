@@ -100,6 +100,11 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
     }
 
     public static void mandatoryFieldWidgets(FormSection form) {
+        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
+        ParameterModel titlepreParam = new StringParameter(TITLEPRE);
+        TextField titlepre = new TextField(titlepreParam);
+        form.add(titlepre);
+
         form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
         ParameterModel surnameParam = new StringParameter(SURNAME);
         TextField surname = new TextField(surnameParam);
@@ -109,11 +114,6 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         ParameterModel givennameParam = new StringParameter(GIVENNAME);
         TextField givenname = new TextField(givennameParam);
         form.add(givenname);
-
-        form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize()));
-        ParameterModel titlepreParam = new StringParameter(TITLEPRE);
-        TextField titlepre = new TextField(titlepreParam);
-        form.add(titlepre);
 
         form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize()));
         ParameterModel titlepostParam = new StringParameter(TITLEPOST);
@@ -125,9 +125,9 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
         FormData data = fse.getFormData();
         GenericPerson person = (GenericPerson) super.initBasicWidgets(fse);
 
+        data.put(TITLEPRE, person.getTitlePre());
         data.put(SURNAME, person.getSurname());
         data.put(GIVENNAME, person.getGivenName());
-        data.put(TITLEPRE, person.getTitlePre());
         data.put(TITLEPOST, person.getTitlePost());
         data.put(BIRTHDATE, person.getBirthdate());
         data.put(GENDER, person.getGender());
@@ -148,9 +148,9 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
 
         if (person != null
                 && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
+            person.setTitlePre((String) data.get(TITLEPRE));
             person.setSurname((String) data.get(SURNAME));
             person.setGivenName((String) data.get(GIVENNAME));
-            person.setTitlePre((String) data.get(TITLEPRE));
             person.setTitlePost((String) data.get(TITLEPOST));
             person.setBirthdate((Date) data.get(BIRTHDATE));
             person.setGender((String) data.get(GENDER));

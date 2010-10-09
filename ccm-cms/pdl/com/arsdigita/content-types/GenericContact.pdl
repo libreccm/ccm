@@ -44,15 +44,6 @@ object type GenericContactEntry extends ContentItem {
 
 }
 
-object type GenericContactType extends ACSObject {
-    String[1..1] key      = cms_contacttypes.key VARCHAR(100);
-    String[1..1] language = cms_contacttypes.language VARCHAR(2);
-    String[1..1] name     = cms_contacttypes.name VARCHAR(100);
-
-    reference key (cms_contacttypes.contacttypes_id);
-    unique (key, language);
-}
-
 association {
 
     GenericPerson[0..1]  person   = join cms_contacts.contact_id
@@ -67,7 +58,6 @@ association {
 
     // Link Attribute
     BigDecimal[0..1] contact_order = cms_person_contact_map.contact_order INTEGER;
-    // Can't use a join statement here because contacttype_id is not unique
     String[0..1]     contact_type  = cms_person_contact_map.key VARCHAR(100);
 
 }

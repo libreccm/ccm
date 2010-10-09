@@ -112,7 +112,8 @@ public class RelationAttributeList extends List {
 
             // Label
             public final Object getElement() {
-                return m_item.getDisplayName();
+                return m_item.getName();
+//                return m_item.getDisplayName();
             }
 
             // URL

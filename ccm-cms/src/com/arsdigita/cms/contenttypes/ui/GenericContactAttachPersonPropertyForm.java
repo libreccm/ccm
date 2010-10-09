@@ -6,7 +6,6 @@
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
-
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
@@ -32,7 +31,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.contenttypes.GenericContactType;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
@@ -46,14 +45,12 @@ import org.apache.log4j.Logger;
  * @author quasi
  */
 public class GenericContactAttachPersonPropertyForm extends BasicPageForm implements FormProcessListener, FormInitListener, FormSubmissionListener {
-    
-    private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
 
+    private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
     private GenericContactPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "contactPerson";
-
     /**
      * ID of the form
      */
@@ -64,7 +61,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
      *
      * @param itemModel
      */
-    public GenericContactAttachPersonPropertyForm(ItemSelectionModel itemModel)    {
+    public GenericContactAttachPersonPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
@@ -82,12 +79,12 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
 
         addInitListener(this);
         addSubmissionListener(this);
-        
+
     }
 
     @Override
     public void addWidgets() {
-        add(new Label((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person").localize()));
+        add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person").localize()));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType("com.arsdigita.cms.contenttypes.GenericPerson"));
         add(this.m_itemSearch);
 
@@ -100,21 +97,21 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
 
         // Add the Options to the SingleSelect widget
         GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
-        contacttypes.filterLanguage(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
 
         while (contacttypes.next()) {
-            GenericContactType ct = contacttypes.getContactType();
+            RelationAttribute ct = contacttypes.getRelationAttribute();
             contactType.addOption(new Option(ct.getKey(), ct.getName()));
         }
 
         add(contactType);
     }
-    
+
     public void init(FormSectionEvent fse) {
-	FormData data = fse.getFormData();
+        FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(state);
-       
+        GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
+
         setVisible(state, true);
 
         if (contact != null) {
@@ -123,16 +120,15 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
     }
 
     public void process(FormSectionEvent fse) {
-	FormData data = fse.getFormData();
+        FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(state);
+        GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
 
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            contact.setPerson((GenericPerson)data.get(ITEM_SEARCH));
+            contact.setPerson((GenericPerson) data.get(ITEM_SEARCH));
         }
         init(fse);
     }
-
 
     /**
      * Creates the section with the save and the cancel button.
@@ -143,13 +139,13 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
             getSaveCancelSection().getSaveButton().addPrintListener(new PrintListener() {
 
                 public void prepare(PrintEvent e) {
-                    GenericContact contact = (GenericContact)getItemSelectionModel().getSelectedObject(e.getPageState());
+                    GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(e.getPageState());
                     Submit target = (Submit) e.getTarget();
 
                     if (contact.getPerson() != null) {
-                        target.setButtonLabel((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.change").localize());
+                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.change").localize());
                     } else {
-                        target.setButtonLabel((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.add").localize());
+                        target.setButtonLabel((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.add").localize());
                     }
                 }
             });
@@ -161,14 +157,14 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
     @Override
     public void validate(FormSectionEvent e) throws FormProcessException {
         if (e.getFormData().get(ITEM_SEARCH) == null) {
-            throw new FormProcessException((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.wrong_type").localize());
+            throw new FormProcessException((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.wrong_type").localize());
         }
     }
 
     public void submitted(FormSectionEvent e) throws FormProcessException {
         if (getSaveCancelSection().getCancelButton().isSelected(e.getPageState())) {
             init(e);
-            throw new FormProcessException((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.cancelled").localize());
+            throw new FormProcessException((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.select_person.cancelled").localize());
         }
     }
 }

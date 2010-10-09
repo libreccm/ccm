@@ -162,7 +162,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return contacttypes.getContactType(m_contactCollection.
+                    return contacttypes.getRelationAttribute(m_contactCollection.
                             getContactType(),
                                                        DispatcherHelper.
                             getNegotiatedLocale().getLanguage());

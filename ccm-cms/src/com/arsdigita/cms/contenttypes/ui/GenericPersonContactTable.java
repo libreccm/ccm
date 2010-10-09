@@ -150,8 +150,12 @@ public class GenericPersonContactTable extends Table implements TableActionListe
                 case 0:
                     return m_contactCollection.getContactOrder();
                 case 1:
-                    return contacttypes.getContactType(m_contactCollection.getContactType(),
+                    String lang = DispatcherHelper.getNegotiatedLocale().getLanguage();
+                    String key = m_contactCollection.getContactType();
+                    return contacttypes.getRelationAttribute(m_contactCollection.getContactType(),
                                                        DispatcherHelper.getNegotiatedLocale().getLanguage());
+//                    return contacttypes.getRelationAttribute(m_contactCollection.getContactType(),
+//                                                       DispatcherHelper.getNegotiatedLocale().getLanguage());
                 case 2:
                     return m_contact.getTitle();
 //                case 2:

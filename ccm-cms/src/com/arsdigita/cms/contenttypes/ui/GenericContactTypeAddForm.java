@@ -33,7 +33,7 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.contenttypes.GenericContactType;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelConfig;
@@ -52,14 +52,13 @@ import org.apache.log4j.Logger;
  */
 public class GenericContactTypeAddForm extends BasicItemForm {
 
-    public final static String KEY = GenericContactType.KEY;
-    public final static String LANGUAGE = GenericContactType.LANGUAGE;
-    public final static String NAME = GenericContactType.NAME;
+    public final static String KEY = RelationAttribute.KEY;
+    public final static String LANGUAGE = RelationAttribute.LANGUAGE;
+    public final static String NAME = RelationAttribute.NAME;
     private static final Logger s_log = Logger.getLogger(GenericContactTypeAddForm.class);
     private GenericPersonPropertiesStep m_step;
     private SaveCancelSection m_saveCancelSection;
     private ItemSelectionModel m_itemModel;
-
     private SingleSelect language;
 
     /** Creates a new instance of CategoryLocalizationAddForm */
@@ -101,8 +100,8 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     public void init(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContactType contacttype = (GenericContactType) getItemSelectionModel().getSelectedObject(state);
-        GenericContactTypeCollection contacttypeCollection =  new GenericContactTypeCollection(contacttype.getKey());
+        RelationAttribute contacttype = (RelationAttribute) getItemSelectionModel().getSelectedObject(state);
+        GenericContactTypeCollection contacttypeCollection = new GenericContactTypeCollection(contacttype.getKey());
 
         // all supported languages (by registry entry)
         KernelConfig kernelConfig = Kernel.getConfig();
@@ -128,7 +127,7 @@ public class GenericContactTypeAddForm extends BasicItemForm {
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
-        GenericContactType contacttype = (GenericContactType) getItemSelectionModel().getSelectedObject(state);
+        RelationAttribute contacttype = (RelationAttribute) getItemSelectionModel().getSelectedObject(state);
 
         //
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {

@@ -31,13 +31,12 @@ import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.GenericContactType;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 
@@ -92,7 +91,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
 
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            GenericContactType contacttype = (GenericContactType) m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
             return new GenericContactTypeTableModel(table, state, contacttype);
         }
     }
@@ -105,13 +104,13 @@ public class GenericContactTypeTable extends Table implements TableActionListene
 
         final private int MAX_DESC_LENGTH = 25;
         private Table m_table;
-        private GenericContactType m_contacttype;
+        private RelationAttribute m_contacttype;
         private GenericContactTypeCollection m_contacttypeCollection = new GenericContactTypeCollection();
 
-        private GenericContactTypeTableModel(Table t, PageState ps, GenericContactType contacttype) {
+        private GenericContactTypeTableModel(Table t, PageState ps, RelationAttribute contacttype) {
             m_table = t;
             m_contacttype = contacttype;
-//            m_contacttypeCollection.filterLanguage(DispatcherHelper.getNegotiatedLocale().getLanguage());
+//            m_contacttypeCollection.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
         }
 
         public int getColumnCount() {
@@ -127,7 +126,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         public boolean nextRow() {
 
             if (m_contacttypeCollection != null && m_contacttypeCollection.next()) {
-                m_contacttype = m_contacttypeCollection.getContactType();
+                m_contacttype = m_contacttypeCollection.getRelationAttribute();
                 return true;
 
             } else {
@@ -159,7 +158,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
          * @see com.arsdigita.bebop.table.TableModel#getKeyAt(int)
          */
         public Object getKeyAt(int columnIndex) {
-            return m_contacttype.getID();
+            return m_contacttype.getKey();
         }
     }
 
@@ -174,7 +173,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
                 int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
-            GenericContactType contacttype = (GenericContactType) m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
 
 //            boolean canEdit = sm.canAccess(state.getRequest(),
 //                    SecurityManager.EDIT_ITEM,
@@ -199,7 +198,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
                 int row, int column) {
 
             SecurityManager sm = Utilities.getSecurityManager(state);
-            GenericContactType contacttype = (GenericContactType) m_itemModel.getSelectedObject(state);
+            RelationAttribute contacttype = (RelationAttribute) m_itemModel.getSelectedObject(state);
 
 //            boolean canDelete = sm.canAccess(state.getRequest(),
 //                    SecurityManager.DELETE_ITEM,
@@ -224,7 +223,7 @@ public class GenericContactTypeTable extends Table implements TableActionListene
         PageState state = evt.getPageState();
 
         // Get selected GenericContactType
-        GenericContactType contacttype = new GenericContactType(new BigDecimal(evt.getRowKey().toString()));
+        RelationAttribute contacttype = new RelationAttribute(new BigDecimal(evt.getRowKey().toString()));
 
         // Get selected column
         TableColumn col = getColumnModel().get(evt.getColumn().intValue());

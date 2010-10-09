@@ -32,8 +32,8 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.contenttypes.GenericContact;
-import com.arsdigita.cms.contenttypes.GenericContactType;
 import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
@@ -84,10 +84,10 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         // Add the Options to the SingleSelect widget
         GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
-        contacttypes.filterLanguage(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
 
         while (contacttypes.next()) {
-            GenericContactType ct = contacttypes.getContactType();
+            RelationAttribute ct = contacttypes.getRelationAttribute();
             contactType.addOption(new Option(ct.getKey(), ct.getName()));
         }
 

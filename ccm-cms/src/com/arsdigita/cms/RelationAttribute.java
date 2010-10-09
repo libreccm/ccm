@@ -6,6 +6,7 @@
 package com.arsdigita.cms;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
@@ -14,13 +15,13 @@ import java.math.BigDecimal;
  *
  * @author quasi
  */
-public class RelationAttribute extends ContentItem {
+public class RelationAttribute extends ACSObject {
 
     public static final String ATTRIBUTE = "attribute";
-    public static final String KEY = "KEY";
+    public static final String KEY = "key";
     public static final String LANGUAGE = "lang";
-    //public static final String NAME = "name";
-    public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String NAME = "name";
+    public static final String DESCRIPTION = "description";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.RelationAttribute";
@@ -40,7 +41,6 @@ public class RelationAttribute extends ContentItem {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-
     public RelationAttribute(DataObject obj) {
         super(obj);
     }
@@ -49,60 +49,62 @@ public class RelationAttribute extends ContentItem {
         super(type);
     }
 
+    public RelationAttribute(String key, String language, String name) {
+        this();
+        setKey(key);
+        setLanguage(language);
+        setName(name);
+        save();
+    }
+
     /**
      * @return the base PDL object type for this item. Child classes
      * should override this method to return the correct value
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
 
     /* accessors *****************************************************/
-    public String getAttribute() {
+    public final String getAttribute() {
         return (String) get(ATTRIBUTE);
     }
 
-    public void setAttribute(String attribute) {
+    public final void setAttribute(String attribute) {
         set(ATTRIBUTE, attribute);
     }
 
-    public String getKey() {
+    public final String getKey() {
         return (String) get(KEY);
     }
 
-    public void setKey(String key) {
+    public final void setKey(String key) {
         set(KEY, key);
     }
 
-    @Override
-    public String getLanguage() {
+    public final String getLanguage() {
         return (String) get(LANGUAGE);
     }
 
-    @Override
-    public void setLanguage(String language) {
+    public final void setLanguage(String language) {
         set(LANGUAGE, language);
     }
 
-//    @Override
-//    public String getName() {
-//        return (String) get(NAME);
-//    }
-//
-//    @Override
-//    public void setName(String name) {
-//        set(NAME, name);
-//    }
+    public final String getName() {
+        return (String) get(NAME);
+    }
 
-    public String getDescription() {
+    public final void setName(String name) {
+        set(NAME, name);
+    }
+
+    public final String getDescription() {
         return (String) get(DESCRIPTION);
     }
 
-    public void setDescription(String description) {
+    public final void setDescription(String description) {
         set(DESCRIPTION, description);
     }
-
-
-
 
 }
