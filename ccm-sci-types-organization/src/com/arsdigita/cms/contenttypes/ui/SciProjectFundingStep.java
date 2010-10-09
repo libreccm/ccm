@@ -25,7 +25,7 @@ public class SciProjectFundingStep extends SimpleEditStep {
     public SciProjectFundingStep(ItemSelectionModel itemModel,
                                  AuthoringKitWizard parent,
                                  String prefix) {
-        super(itemModel, parent, null);
+        super(itemModel, parent, prefix);
 
         BasicItemForm editFundingForm = new SciProjectFundingForm(itemModel);
         add(EDIT_FUNDING_SHEET_NAME,

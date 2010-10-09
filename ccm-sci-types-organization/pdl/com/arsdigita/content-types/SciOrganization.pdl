@@ -21,6 +21,7 @@ association {
 						   to ct_sciorga_departments.department_id;
 
 	    Integer[0..1] departmentOrder = ct_sciorga_organizations_departments_map.department_order INTEGER;
+	    Integer[0..1] organizationOrder = ct_sciorga_organizations_departments_map.organization_order INTEGER;
 }
 
 association {
@@ -35,6 +36,7 @@ association {
 						   to ct_sciorga_projects.project_id;
 
 	    Integer[0..1] projectOrder = ct_sciorga_organizations_projects_map.project_order INTEGER;
+	    Integer[0..1] organizationOrder = ct_sciorga_organizations_projects_map.organization_order INTEGER;
 }
 
 

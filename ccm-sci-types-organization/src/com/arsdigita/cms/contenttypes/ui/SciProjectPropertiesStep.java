@@ -36,7 +36,7 @@ public class SciProjectPropertiesStep
                   SciProject.END);
         sheet.add(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.shortdesc"),
-                  SciProject.PROJECT_SHORT_DESCRIPTION);        
+                  SciProject.PROJECT_SHORT_DESCRIPTION);
 
         return sheet;
     }
@@ -72,18 +72,26 @@ public class SciProjectPropertiesStep
     @Override
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
-        /*addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
-        parent),
-        "cms.contenttypes.ui.orgaunit.contact");
+        addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
+                                                                   parent),
+                "cms.contenttypes.ui.orgaunit.contact");
         addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
-        parent),
-        "cms.contenttypes.ui.orgaunit.persons");*/
+                                                                  parent),
+                "cms.contenttypes.ui.orgaunit.persons");
 
         super.addSteps(itemModel, parent);
 
+        addStep(new SciProjectSuperProjectStep(itemModel,
+                                               parent),
+                "sciorganization.ui.project.superproject");
         addStep(new SciProjectSubprojectsStep(itemModel,
                                               parent),
-                "cms.contenttypes.ui.project.subprojects");
+                "sciorganization.ui.project.subprojects");
 
+        addStep(new SciProjectOrganizationsStep(itemModel, parent),
+                "sciorganization.ui.project.organizations");
+
+        addStep(new SciProjectDepartmentsStep(itemModel, parent),
+                "sciorganization.ui.project.departments");
     }
 }

@@ -9,6 +9,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -17,26 +18,26 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSubprojectAddForm
+public class SciProjectOrganizationsAddForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener {
 
     private ItemSearchWidget m_itemSearch;
-    private final String ITEM_SEARCH = "projects";
+    private final String ITEM_SEARCH = "projectOrga";
 
-    public SciProjectSubprojectAddForm(ItemSelectionModel itemModel) {
-        super("SubprojectAddForm", itemModel);
+    public SciProjectOrganizationsAddForm(ItemSelectionModel itemModel) {
+        super("projectOrgaAddForm", itemModel);
     }
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.select_subproject").localize()));
+        add(new Label(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.select_organization")));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
-                SciProject.class.getName()));
+                SciOrganization.class.getName()));
         add(m_itemSearch);
     }
 
@@ -56,9 +57,9 @@ public class SciProjectSubprojectAddForm
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            project.addSubProject((SciProject) data.get(ITEM_SEARCH));
+            project.addOrganization((SciOrganization) data.get(ITEM_SEARCH));
 
-             init(fse);
-        }       
+               init(fse);
+        }    
     }
 }

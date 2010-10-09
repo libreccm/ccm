@@ -33,5 +33,6 @@ association {
 				             join ct_sciorga_departments_projects_map.project_id
 				       	       to ct_sciorga_projects.project_id;
 
+	    Integer[0..1] departmentOrder = ct_sciorga_departments_projects_map.departmentOrder INTEGER;
             Integer[0..1] projectOrder = ct_sciorga_departments_projects_map.projectorder INTEGER;
 }

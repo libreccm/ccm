@@ -1,7 +1,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -19,7 +18,7 @@ public class SciProjectSubprojectsStep extends SimpleEditStep {
     private String ADD_CHILD_SHEET_NAME = "addChild";
 
     public SciProjectSubprojectsStep(ItemSelectionModel itemModel,
-                                              AuthoringKitWizard parent) {
+                                     AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
@@ -30,10 +29,10 @@ public class SciProjectSubprojectsStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
 
         BasicItemForm addSubProjectSheet =
-                new SciProjectSubprojectAddForm(itemModel);
+                      new SciProjectSubprojectAddForm(itemModel);
         add(ADD_CHILD_SHEET_NAME,
-            (String) ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.add_child").localize(),
+            (String) SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.addSubProject").localize(),
             new WorkflowLockedComponentAccess(addSubProjectSheet, itemModel),
             addSubProjectSheet.getSaveCancelSection().getCancelButton());
 

@@ -1,7 +1,5 @@
 package com.arsdigita.cms.contenttypes.ui;
 
-import java.math.BigDecimal;
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
@@ -16,16 +14,18 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciProject;
-import com.arsdigita.cms.contenttypes.SciProjectSubProjectsCollection;
+import com.arsdigita.cms.contenttypes.SciProjectDepartmentsCollection;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 
 /**
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSubProjectsTable
+public class SciProjectDepartmentsTable
         extends Table
         implements TableActionListener {
 
@@ -35,38 +35,38 @@ public class SciProjectSubProjectsTable
     private final String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel m_itemModel;
 
-    public SciProjectSubProjectsTable(ItemSelectionModel itemModel) {
+    public SciProjectDepartmentsTable(ItemSelectionModel itemModel) {
         super();
         m_itemModel = itemModel;
 
         setEmptyView(
                 new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.subprojects.none")));
+                "sciorganization.ui.project.departments.none")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
                 SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.subproject").localize(),
+                "sciorganization.ui.project.department").localize(),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
                 SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.subproject.remove").localize(),
+                "sciorganization.ui.project.department.remove").localize(),
                 TABLE_COL_DEL));
         colModel.add(new TableColumn(
                 2,
                 SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.subproject.up").localize(),
+                "sciorganization.ui.project.department.up").localize(),
                 TABLE_COL_UP));
         colModel.add(new TableColumn(
                 3,
                 SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.subproject.down").localize(),
+                "sciorganization.ui.project.department.down").localize(),
                 TABLE_COL_DOWN));
 
         setModelBuilder(
-                new SciProjectSubProjectsTableModelBuilder(itemModel));
+                new SciProjectDepartmentsTableModelBuilder(itemModel));
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
         colModel.get(2).setCellRenderer(new UpCellRenderer());
@@ -75,13 +75,11 @@ public class SciProjectSubProjectsTable
         addTableActionListener(this);
     }
 
-    private class SciProjectSubProjectsTableModelBuilder
+    private class SciProjectDepartmentsTableModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
 
-        private ItemSelectionModel m_itemModel;
-
-        public SciProjectSubProjectsTableModelBuilder(
+        public SciProjectDepartmentsTableModelBuilder(
                 ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
@@ -91,24 +89,25 @@ public class SciProjectSubProjectsTable
             table.getRowSelectionModel().clearSelection(state);
             SciProject project = (SciProject) m_itemModel.getSelectedObject(
                     state);
-            return new SciProjectSubProjectsTableModel(table,
+            return new SciProjectDepartmentsTableModel(table,
                                                        state,
                                                        project);
+
         }
     }
 
-    private class SciProjectSubProjectsTableModel
+    private class SciProjectDepartmentsTableModel
             implements TableModel {
 
         private Table m_table;
-        private SciProjectSubProjectsCollection m_subprojects;
-        private SciProject m_subproject;
+        private SciProjectDepartmentsCollection m_departments;
+        private SciDepartment m_department;
 
-        public SciProjectSubProjectsTableModel(Table table,
+        public SciProjectDepartmentsTableModel(Table table,
                                                PageState state,
                                                SciProject project) {
             m_table = table;
-            m_subprojects = project.getSubProjects();
+            m_departments = project.getDepartments();
         }
 
         @Override
@@ -120,8 +119,8 @@ public class SciProjectSubProjectsTable
         public boolean nextRow() {
             boolean ret;
 
-            if ((m_subprojects != null) && m_subprojects.next()) {
-                m_subproject = m_subprojects.getSubProject();
+            if ((m_departments != null) && m_departments.next()) {
+                m_department = m_departments.getDepartment();
                 ret = true;
             } else {
                 ret = false;
@@ -134,18 +133,18 @@ public class SciProjectSubProjectsTable
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return m_subproject.getTitle();
+                    return m_department.getTitle();
                 case 1:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.project.subproject.remove").
+                            "sciorganization.ui.project.department.remove").
                             localize();
                 case 2:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.project.subproject.up").
+                            "sciorganization.ui.project.department.up").
                             localize();
                 case 3:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.project.subproject.down").
+                            "sciorganization.ui.project.department.down").
                             localize();
                 default:
                     return null;
@@ -154,7 +153,7 @@ public class SciProjectSubProjectsTable
 
         @Override
         public Object getKeyAt(int columnIndex) {
-            return m_subproject.getID();
+            return m_department.getID();
         }
     }
 
@@ -169,24 +168,9 @@ public class SciProjectSubProjectsTable
                                       boolean isSelected,
                                       Object key,
                                       int row,
-                                      int col) {
-            SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
-            SciProject project = (SciProject) m_itemModel.getSelectedObject(
-                    state);
-
-            boolean canEdit = securityManager.canAccess(
-                    state.getRequest(),
-                    SecurityManager.EDIT_ITEM,
-                    project);
-
-            /*if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
-                return link;
-            } else {*/
-                Label label = new Label(value.toString());
-                return label;
-            //}
+                                      int column) {
+            Label label = new Label(value.toString());
+            return label;
         }
     }
 
@@ -216,7 +200,7 @@ public class SciProjectSubProjectsTable
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) SciOrganizationGlobalizationUtil.
                         globalize(
-                        "sciorganization.ui.project.subproject."
+                        "sciorganization.ui.project.organization."
                         + ".confirm_remove").
                         localize());
                 return link;
@@ -227,7 +211,7 @@ public class SciProjectSubProjectsTable
         }
     }
 
-    private class UpCellRenderer
+      private class UpCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -247,7 +231,7 @@ public class SciProjectSubProjectsTable
             } else {
                 ControlLink link = new ControlLink(
                         (String) SciOrganizationGlobalizationUtil.globalize(
-                        "sciorganization.ui.project.subproject.up").
+                        "sciorganization.ui.project.department.up").
                         localize());
                 return link;
             }
@@ -270,44 +254,44 @@ public class SciProjectSubProjectsTable
 
             SciProject project = (SciProject) m_itemModel.getSelectedObject(
                     state);
-            SciProjectSubProjectsCollection subProjects =
-                                            project.getSubProjects();
+            SciProjectDepartmentsCollection departments =
+                                            project.getDepartments();
 
-            if ((subProjects.size() - 1) == row) {
+            if ((departments.size() - 1) == row) {
                 Label label = new Label("");
                 return label;
             } else {
                 ControlLink link = new ControlLink(
                         (String) SciOrganizationGlobalizationUtil.globalize(
-                        "sciorganization.ui.project.subproject.down").
+                        "sciorganization.ui.project.department.down").
                         localize());
                 return link;
             }
         }
     }
 
-    @Override
+     @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        SciProject subProject = new SciProject(
+        SciDepartment department = new SciDepartment(
                 new BigDecimal(event.getRowKey().toString()));
 
         SciProject project =
                    (SciProject) m_itemModel.getSelectedObject(state);
 
-        SciProjectSubProjectsCollection subprojects =
-                                        project.getSubProjects();
+        SciProjectDepartmentsCollection departments =
+                                        project.getDepartments();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-            project.removeSubProject(subProject);
+            project.removeDepartment(department);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
-            subprojects.swapWithPrevious(subProject);
+            departments.swapWithPrevious(department);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
-            subprojects.swapWithNext(subProject);
+            departments.swapWithNext(department);
         }
     }
 

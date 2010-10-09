@@ -17,22 +17,22 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSubprojectAddForm
+public class SciProjectSuperProjectAttachForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener {
 
     private ItemSearchWidget m_itemSearch;
-    private final String ITEM_SEARCH = "projects";
+    private final String ITEM_SEARCH = "superproject";
 
-    public SciProjectSubprojectAddForm(ItemSelectionModel itemModel) {
-        super("SubprojectAddForm", itemModel);
+    public SciProjectSuperProjectAttachForm(ItemSelectionModel itemModel) {
+        super("SuperProjectAttachForm", itemModel);
     }
 
     @Override
     protected void addWidgets() {
         add(new Label((String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.select_subproject").localize()));
+                "sciorganization.ui.project.select_superproject").localize()));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
@@ -49,16 +49,16 @@ public class SciProjectSubprojectAddForm
 
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
-        FormData data = fse.getFormData();
-        PageState state = fse.getPageState();
-        SciProject project = (SciProject) getItemSelectionModel().
-                getSelectedObject(state);
+       FormData data = fse.getFormData();
+       PageState state = fse.getPageState();
+       SciProject project = (SciProject) getItemSelectionModel().
+               getSelectedObject(state);
 
-        if (!(this.getSaveCancelSection().getCancelButton().
-              isSelected(state))) {
-            project.addSubProject((SciProject) data.get(ITEM_SEARCH));
+       if (!(this.getSaveCancelSection().getCancelButton().
+               isSelected(state))) {
+           project.setSuperProject((SciProject) data.get(ITEM_SEARCH));
 
-             init(fse);
-        }       
+           init(fse);
+       }
     }
 }

@@ -40,6 +40,11 @@ public class SciProject extends GenericOrganizationalUnit {
     public static final String FUNDING = "funding";
     public static final String SUBPROJECTS = "subProjects";
     public static final String SUBPROJECT_ORDER = "subProjectOrder";
+    public static final String ORGANIZATIONS = "organization";
+    public static final String ORGANIZATIONS_ORDER = "organization";
+    public static final String SUPER_PROJECT = "superProject";
+    public static final String DEPARTMENTS = "department";
+    public static final String DEPARTMENTS_ORDER = "department";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciProject";
 
@@ -109,7 +114,7 @@ public class SciProject extends GenericOrganizationalUnit {
     }
 
     public void addSubProject(SciProject project) {
-        Assert.exists((project), SciProject.class);
+        Assert.exists(project, SciProject.class);
 
         DataObject link = add(SUBPROJECTS, project);
 
@@ -118,12 +123,89 @@ public class SciProject extends GenericOrganizationalUnit {
     }
 
     public void removeSubProject(SciProject project) {
-        Assert.exists((project), SciProject.class);
+        Assert.exists(project, SciProject.class);
 
         remove(SUBPROJECTS, project);
     }
 
     public boolean hasSubProjects() {
-        return !this.getSearchSummary().isEmpty();
+        return !this.getSubProjects().isEmpty();
+    }
+
+    public SciProjectOrganizationsCollection getOrganizations() {
+        return new SciProjectOrganizationsCollection((DataCollection) get(
+                ORGANIZATIONS));
+    }
+
+    public void addOrganization(SciOrganization orga) {
+        Assert.exists(orga, SciOrganization.class);
+
+        DataObject link = add(ORGANIZATIONS, orga);
+
+        link.set(ORGANIZATIONS_ORDER,
+                 Integer.valueOf((int) getOrganizations().size()));
+    }
+
+    public void removeOrganization(SciOrganization orga) {
+        Assert.exists(orga, SciOrganization.class);
+
+        remove(ORGANIZATIONS, orga);
+    }
+
+    public boolean hasOrganizations() {
+        return !this.getOrganizations().isEmpty();
+    }
+
+    public SciProjectDepartmentsCollection getDepartments() {
+        return new SciProjectDepartmentsCollection((DataCollection) get(
+                DEPARTMENTS));
+    }
+
+    public void addDepartment(SciDepartment department) {
+        Assert.exists(department, SciDepartment.class);
+
+        DataObject link = add(DEPARTMENTS, department);
+
+        link.set(DEPARTMENTS_ORDER,
+                 Integer.valueOf((int) getDepartments().size()));
+    }
+
+    public void removeDepartment(SciDepartment department) {
+        Assert.exists(department, SciDepartment.class);
+
+        remove(DEPARTMENTS, department);
+    }
+
+    public boolean hasDepartments() {
+        return !this.getDepartments().isEmpty();
+    }
+
+    public SciProject getSuperProject() {
+        DataCollection collection;
+
+        collection = (DataCollection) get(SUPER_PROJECT);
+
+        if (0 == collection.size()) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+
+            return new SciProject(dobj);
+        }
+    }
+
+    public void setSuperProject(SciProject superProject) {
+        SciProject oldSuperProject;
+
+        oldSuperProject = getSuperProject();
+        remove(SUPER_PROJECT, oldSuperProject);
+
+        if (null != superProject) {
+            Assert.exists(superProject, SciProject.class);
+            add(SUPER_PROJECT, superProject);
+        }        
     }
 }

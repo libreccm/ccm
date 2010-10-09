@@ -9,6 +9,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -17,26 +18,26 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSubprojectAddForm
+public class SciProjectDepartmentAddForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener {
 
     private ItemSearchWidget m_itemSearch;
-    private final String ITEM_SEARCH = "projects";
+    private final String ITEM_SEARCH = "projectDepartment";
 
-    public SciProjectSubprojectAddForm(ItemSelectionModel itemModel) {
-        super("SubprojectAddForm", itemModel);
+    public SciProjectDepartmentAddForm(ItemSelectionModel itemModel) {
+        super("projectDepartmentAddForm", itemModel);
     }
 
     @Override
     protected void addWidgets() {
-        add(new Label((String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.select_subproject").localize()));
+        add(new Label(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.select_department")));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
-                SciProject.class.getName()));
+                SciDepartment.class.getName()));
         add(m_itemSearch);
     }
 
@@ -55,10 +56,10 @@ public class SciProjectSubprojectAddForm
                 getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().getCancelButton().
-              isSelected(state))) {
-            project.addSubProject((SciProject) data.get(ITEM_SEARCH));
+                isSelected(state))) {
+            project.addDepartment((SciDepartment) data.get(ITEM_SEARCH));
 
-             init(fse);
-        }       
+            init(fse);
+        }
     }
 }
