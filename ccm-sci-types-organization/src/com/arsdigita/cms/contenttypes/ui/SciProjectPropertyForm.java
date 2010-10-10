@@ -14,7 +14,6 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
-import com.arsdigita.cms.ui.CMSDHTMLEditor;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -64,27 +63,9 @@ public class SciProjectPropertyForm
         ParameterModel shortDescParam = new StringParameter(
                 SciProject.PROJECT_SHORT_DESCRIPTION);
         TextArea shortDesc = new TextArea(shortDescParam);
-        shortDesc.setCols(60);
-        shortDesc.setRows(20);
-        add(shortDesc);
-
-        /*add(new Label(SciOrganizationGlobalizationUtil.globalize(
-        "sciorganization.ui.project.description")));
-        ParameterModel descParam = new StringParameter(
-        SciProject.PROJECT_DESCRIPTION);
-        CMSDHTMLEditor desc = new CMSDHTMLEditor(descParam);
-        desc.setCols(75);
-        desc.setRows(25);
-        add(desc);*/
-
-        /*add(new Label(SciOrganizationGlobalizationUtil.globalize(
-        "sciorganization.ui.project.funding")));
-        ParameterModel fundingParam = new StringParameter(
-        SciProject.FUNDING);
-        CMSDHTMLEditor funding = new CMSDHTMLEditor(fundingParam);
-        funding.setCols(60);
-        funding.setRows(18);
-        add(funding);*/
+        shortDesc.setCols(75);
+        shortDesc.setRows(5);
+        add(shortDesc);       
     }
 
     @Override

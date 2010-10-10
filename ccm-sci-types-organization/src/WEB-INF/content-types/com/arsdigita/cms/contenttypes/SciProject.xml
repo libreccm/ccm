@@ -25,14 +25,7 @@
 	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
 	      descriptionKey="sciorganization.ui.project_description.title.description"
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectDescriptionStep"
-	      ordering="2"/>
-	  
-	  <ctd:authoring-step
-	      labelKey="sciorganization.ui.project_funding.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
-	      descriptionKey="sciorganization.ui.project_funding.title.funding"
-	      component="com.arsdigita.cms.contenttypes.ui.SciProjectFundingStep"
-	      ordering="3"/>
+	      ordering="2"/>	  	
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 

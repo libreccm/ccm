@@ -1,6 +1,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.Form;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -16,6 +17,7 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 public class SciProjectDescriptionStep extends SimpleEditStep {
 
     private String EDIT_PROJECT_DESC_SHEET_NAME = "editProjectDesc";
+    private String UPLOAD_PROJECT_DESC_SHEET_NAME = "uploadProjectDesc";
 
     public SciProjectDescriptionStep(ItemSelectionModel itemModel,
                                      AuthoringKitWizard parent) {
@@ -27,12 +29,21 @@ public class SciProjectDescriptionStep extends SimpleEditStep {
                                      String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm editDescForm = new SciProjectEditDescForm(itemModel);
+        BasicItemForm editDescForm =
+                      new SciProjectDescriptionEditForm(itemModel);
         add(EDIT_PROJECT_DESC_SHEET_NAME,
             (String) SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.edit_desc").localize(),
             new WorkflowLockedComponentAccess(editDescForm, itemModel),
             editDescForm.getSaveCancelSection().getCancelButton());
+
+        SciProjectDescriptionUploadForm uploadDescForm =
+                new SciProjectDescriptionUploadForm(itemModel);
+        add(UPLOAD_PROJECT_DESC_SHEET_NAME,
+                (String) SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.upload_desc").localize(),
+                new WorkflowLockedComponentAccess(uploadDescForm, itemModel),
+                uploadDescForm.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(
                 getSciProjectEditDescSheet(itemModel));
@@ -45,8 +56,11 @@ public class SciProjectDescriptionStep extends SimpleEditStep {
                 itemModel);
 
         sheet.add(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganizaztion.ui.project.desc"),
-                SciProject.PROJECT_DESCRIPTION);
+                "sciorganization.ui.project.desc"),
+                  SciProject.PROJECT_DESCRIPTION);
+        sheet.add(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganization.ui.project.funding"),
+                  SciProject.FUNDING);
 
         return sheet;
     }

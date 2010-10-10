@@ -48,6 +48,13 @@ public class SciProject extends GenericOrganizationalUnit {
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciProject";
 
+    private static final SciOrganizationConfig s_config =
+            new SciOrganizationConfig();
+
+    static {
+        s_config.load();
+    }
+
     public SciProject() {
         super(BASE_DATA_OBJECT_TYPE);
     }
@@ -66,6 +73,10 @@ public class SciProject extends GenericOrganizationalUnit {
 
     public SciProject(String type) {
         super(type);
+    }
+
+    public static final SciOrganizationConfig getConfig() {
+        return s_config;
     }
 
     public Date getBegin() {
