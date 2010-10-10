@@ -7,8 +7,8 @@
               ccmVersion="6.1" 
                     name="aplaws-zes" 
               prettyName="APLAWS plus" 
-                 version="1-0-9" 
-                 release="rc-3" 
+                 version="1-1-0" 
+                 release="beta-1" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -49,25 +49,24 @@
 <!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
 <!--    <ccm:application name="ccm-cms-types-job"/>                  -->
 <!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
+
+        <ccm:application name="ccm-cms-types-member"/>      
+
 <!--    <ccm:application name="ccm-cms-types-minutes"/>              -->
 <!--    <ccm:application name="ccm-cms-types-motditem"/>             -->
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
+
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
+
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
+<!--    <ccm:application name="ccm-cms-types-researchnetwork"/>      -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
         <ccm:application name="ccm-cms-types-siteproxy"/>               
 <!--         xmlfeed may not be needed by ZeS, too                   -->
         <ccm:application name="ccm-cms-types-xmlfeed"/>                       
 
-        <ccm:application name="ccm-cms-types-baseAddress"/>
-        <ccm:application name="ccm-cms-types-baseContact"/>
-        <ccm:application name="ccm-cms-types-genericorganization"/>
-        <ccm:application name="ccm-cms-types-healthCareFacility"/>
-        <ccm:application name="ccm-cms-types-person"/>
-        <ccm:application name="ccm-cms-types-organization"/>
-        <ccm:application name="ccm-cms-types-organizationalunit"/>
-
+        <ccm:application name="ccm-sci-types-organization"/>                       
 
 <!--  Applications   -->
 <!--  - - - - -  -   -->
@@ -103,6 +102,7 @@
 
 <!--  ZeS extension  -->
 <!--  - - - - - - -  -->
+        <ccm:application name="ccm-sci-publications"/>
         <ccm:application name="ccm-zes-aplaws"/>
 
 
