@@ -13,14 +13,22 @@ import java.math.BigDecimal;
  */
 public class SciOrganization extends GenericOrganizationalUnit {
 
+    public static final String ORGANIZATION_SHORT_DESCRIPTION =
+            "organizationShortDescription";
     public static final String ORGANIZATION_DESCRIPTION =
                                "organizationDescription";
     public static final String DEPARTMENTS = "departments";
     public static final String DEPARTMENT_ORDER = "departmentOrder";
-    public static final String PROJECTS  ="projects";
+    public static final String PROJECTS = "projects";
     public static final String PROJECT_ORDER = "projectOrder";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciOrganization";
+    private static final SciOrganizationConfig s_config =
+                                               new SciOrganizationConfig();
+
+    static {
+        s_config.load();
+    }
 
     public SciOrganization() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -40,6 +48,18 @@ public class SciOrganization extends GenericOrganizationalUnit {
 
     public SciOrganization(String type) {
         super(type);
+    }
+
+    public static final SciOrganizationConfig getConfig() {
+        return s_config;
+    }
+
+    public String getOrganizationShortDescription() {
+        return (String) get(ORGANIZATION_SHORT_DESCRIPTION);
+    }
+
+    public void setOrganizationShortDescription(String description) {
+        set(ORGANIZATION_SHORT_DESCRIPTION, description);
     }
 
     public String getOrganizationDescription() {

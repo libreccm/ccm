@@ -2,6 +2,8 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.SciOrganization;
+import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -50,12 +52,31 @@ public class SciOrganizationPropertiesStep
     @Override
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
-        super.addSteps(itemModel, parent);
+        //super.addSteps(itemModel, parent);
 
-        addStep(new SciOrganizationDepartmentsStep(itemModel, parent),
-                "sciorganization.ui.organization.departments");
+        SciOrganizationConfig config;
+        config = SciOrganization.getConfig();
 
-        addStep(new SciOrganizationProjectsStep(itemModel, parent),
-                "sciorganization.ui.organization.projects");
+        if (!config.getOrganizationAddContactHide()) {
+            addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
+                                                                       parent),
+                    "cms.contenttypes.ui.orgaunit.contact");
+        }
+
+        if (!config.getOrganizationAddPersonHide()) {
+            addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
+                                                                      parent),
+                    "cms.contenttypes.ui.orgaunit.persons");
+        }
+
+        if (!config.getOrganizationAddDepartmentHide()) {
+            addStep(new SciOrganizationDepartmentsStep(itemModel, parent),
+                    "sciorganization.ui.organization.departments");
+        }
+
+        if (!config.getOrganizationAddProjectHide()) {
+            addStep(new SciOrganizationProjectsStep(itemModel, parent),
+                    "sciorganization.ui.organization.projects");
+        }
     }
 }

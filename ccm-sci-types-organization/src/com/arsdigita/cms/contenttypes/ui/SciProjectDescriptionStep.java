@@ -1,7 +1,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.Form;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
@@ -38,12 +37,13 @@ public class SciProjectDescriptionStep extends SimpleEditStep {
             editDescForm.getSaveCancelSection().getCancelButton());
 
         SciProjectDescriptionUploadForm uploadDescForm =
-                new SciProjectDescriptionUploadForm(itemModel);
+                                        new SciProjectDescriptionUploadForm(
+                itemModel);
         add(UPLOAD_PROJECT_DESC_SHEET_NAME,
-                (String) SciOrganizationGlobalizationUtil.globalize(
+            (String) SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.upload_desc").localize(),
-                new WorkflowLockedComponentAccess(uploadDescForm, itemModel),
-                uploadDescForm.getSaveCancelSection().getCancelButton());
+            new WorkflowLockedComponentAccess(uploadDescForm, itemModel),
+            uploadDescForm.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(
                 getSciProjectEditDescSheet(itemModel));

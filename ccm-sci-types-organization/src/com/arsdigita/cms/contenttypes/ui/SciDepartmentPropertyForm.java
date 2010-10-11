@@ -38,13 +38,13 @@ public class SciDepartmentPropertyForm
         super.addWidgets();
 
         Label descLabel = new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganizations.ui.department.description"));
+                "sciorganizations.ui.department.shortdescription"));
         add(descLabel);
         ParameterModel descParam = new StringParameter(
-                SciDepartment.DEPARTMENT_DESCRIPTION);
+                SciDepartment.DEPARTMENT_SHORT_DESCRIPTION);
         TextArea desc = new TextArea(descParam);
-        desc.setCols(60);
-        desc.setRows(18);
+        desc.setCols(75);
+        desc.setRows(5);
         add(desc);
     }
 
@@ -55,8 +55,8 @@ public class SciDepartmentPropertyForm
         FormData data = fse.getFormData();
         SciDepartment department = (SciDepartment) super.initBasicWidgets(fse);
 
-        data.put(SciDepartment.DEPARTMENT_DESCRIPTION,
-                 department.getDepartmentDescription());
+        data.put(SciDepartment.DEPARTMENT_SHORT_DESCRIPTION,
+                 department.getDepartmentShortDescription());
     }
 
     @Override
@@ -69,8 +69,8 @@ public class SciDepartmentPropertyForm
 
         if ((department != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            department.setDepartmentDescription(
-                    (String) data.get(SciDepartment.DEPARTMENT_DESCRIPTION));
+            department.setDepartmentShortDescription(
+                    (String) data.get(SciDepartment.DEPARTMENT_SHORT_DESCRIPTION));
 
             department.save();
 

@@ -9,7 +9,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 
@@ -17,26 +17,27 @@ import com.arsdigita.cms.ui.authoring.BasicItemForm;
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSuperProjectAttachForm
+public class SciDepartmentSuperDepartmentForm
         extends BasicItemForm
         implements FormProcessListener,
                    FormInitListener {
 
     private ItemSearchWidget m_itemSearch;
-    private final String ITEM_SEARCH = "superproject";
+    private final String ITEM_SEARCH = "superdepartment";
 
-    public SciProjectSuperProjectAttachForm(ItemSelectionModel itemModel) {
-        super("SuperProjectAttachForm", itemModel);
+    public SciDepartmentSuperDepartmentForm(ItemSelectionModel itemModel) {
+        super("SuperDepartmentSetForm", itemModel);
     }
 
     @Override
-    protected void addWidgets() {
+    public void addWidgets() {
         add(new Label((String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.select_superproject").localize()));
+                "sciorganization.ui.department.select_superdepartment").
+                localize()));
         m_itemSearch = new ItemSearchWidget(
                 ITEM_SEARCH,
                 ContentType.findByAssociatedObjectType(
-                SciProject.class.getName()));
+                SciDepartment.class.getName()));
         add(m_itemSearch);
     }
 
@@ -49,16 +50,16 @@ public class SciProjectSuperProjectAttachForm
 
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
-       FormData data = fse.getFormData();
-       PageState state = fse.getPageState();
-       SciProject project = (SciProject) getItemSelectionModel().
-               getSelectedObject(state);
+        FormData data = fse.getFormData();
+        PageState state = fse.getPageState();
+        SciDepartment department = (SciDepartment) getItemSelectionModel().
+                getSelectedObject(state);
 
-       if (!(this.getSaveCancelSection().getCancelButton().
-               isSelected(state))) {
-           project.setSuperProject((SciProject) data.get(ITEM_SEARCH));
+        if ((this.getSaveCancelSection().getSaveButton().isSelected(state))) {
+            department.setSuperDepartment(
+                    (SciDepartment) data.get(ITEM_SEARCH));
 
-           init(fse);
-       }
+            init(fse);
+        }
     }
 }

@@ -4,13 +4,14 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
 object type SciDepartment extends GenericOrganizationalUnit {
-    String[0..1] departmentDescription = ct_sciorga_departments.description VARCHAR(4096);
+    String[0..1] departmentShortDescription = ct_sciorga_departments.shortdescription VARCHAR(500);
+    String[0..1] departmentDescription = ct_sciorga_departments.description CLOB;
 
     reference key ( ct_sciorga_departments.department_id );
 }
 
 association {
-	    SciDepartment[0..n] department = join ct_sciorga_departments.department_id
+	    SciDepartment[0..n] superDepartment = join ct_sciorga_departments.department_id
 	    		  		          to ct_sciorga_departments_subdepartments_map.subdepartment_id,
 					        join ct_sciorga_departments_subdepartments_map.department_id
 					          to ct_sciorga_departments.department_id;

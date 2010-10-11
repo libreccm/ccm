@@ -13,13 +13,23 @@ import java.math.BigDecimal;
  */
 public class SciDepartment extends GenericOrganizationalUnit {
 
+    public static final String DEPARTMENT_SHORT_DESCRIPTION =
+            "departmentShortDescription";
     public static final String DEPARTMENT_DESCRIPTION = "departmentDescription";
+    public static final String ORGANIZATION = "organization";
+    public static final String SUPER_DEPARTMENT = "superDepartment";
     public static final String SUBDEPARTMENTS = "subDepartments";
     public static final String SUBDEPARTMENT_ORDER = "subDepartmentOrder";
     public static final String PROJECTS = "projects";
     public static final String PROJECT_ORDER = "projectOrder";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciDepartment";
+    private static final SciOrganizationConfig s_config =
+                                               new SciOrganizationConfig();
+
+    static {
+        s_config.load();
+    }
 
     public SciDepartment() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -41,12 +51,82 @@ public class SciDepartment extends GenericOrganizationalUnit {
         super(type);
     }
 
+    public static final SciOrganizationConfig getConfig() {
+        return s_config;
+    }
+
+    public String getDepartmentShortDescription() {
+        return (String) get(DEPARTMENT_SHORT_DESCRIPTION);
+    }
+
+    public void setDepartmentShortDescription(String description) {
+        set(DEPARTMENT_SHORT_DESCRIPTION, description);
+    }
+
     public String getDepartmentDescription() {
         return (String) get(DEPARTMENT_DESCRIPTION);
     }
 
     public void setDepartmentDescription(String description) {
         set(DEPARTMENT_DESCRIPTION, description);
+    }
+
+    public SciDepartment getSuperDepartment() {
+        DataCollection collection;
+
+        collection = (DataCollection) get(SUPER_DEPARTMENT);
+
+        if (0 == collection.size()) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+
+            return new SciDepartment(dobj);
+        }
+    }
+
+    public void setSuperDepartment(SciDepartment department) {
+        SciDepartment oldSuperDepartment;
+
+        oldSuperDepartment = getSuperDepartment();
+        remove(SUPER_DEPARTMENT, oldSuperDepartment);
+
+        if (null != department) {
+            Assert.exists(department, SciDepartment.class);
+            add(SUPER_DEPARTMENT, department);
+        }
+    }
+
+    public SciOrganization getOrganization() {
+        DataCollection collection;
+
+        collection = (DataCollection) get(ORGANIZATION);
+
+        if (0 == collection.size()) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+
+            return new SciOrganization(dobj);
+        }
+    }
+
+    public void setOrganization(SciOrganization orga) {
+        SciOrganization oldOrganization;
+
+        oldOrganization = getOrganization();
+        remove(ORGANIZATION, oldOrganization);
+
+        if (null != orga) {
+            Assert.exists(orga, SciOrganization.class);
+            add(ORGANIZATION, orga);
+        }
     }
 
     public SciDepartmentSubDepartmentsCollection getSubDepartments() {

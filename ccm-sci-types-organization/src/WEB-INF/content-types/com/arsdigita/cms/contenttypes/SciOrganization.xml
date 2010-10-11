@@ -20,6 +20,13 @@
 	  component="com.arsdigita.cms.contenttypes.ui.SciOrganizationPropertiesStep"
 	  ordering="1"/>
 
+      <ctd:authoring-step
+	  labelKey="sciorganization.ui.organizsation_description.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	  descriptionKey="sciorganization.ui.organization_description.title.description"
+	  component="com.arsdigita.cms.contenttypes.ui.SciOrganizationDescriptionStep"
+	  ordering="2"/>	  	
+
       <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
 
     </ctd:authoring-kit>

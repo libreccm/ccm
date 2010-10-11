@@ -4,7 +4,9 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
 object type SciOrganization extends GenericOrganizationalUnit {
-    String[0..1] organizationDescription = ct_sciorga_organizations.description VARCHAR(4096);
+
+    String[0..1] organizationShortDescription = ct_sciorga_organizations.shortdescription VARCHAR(500);
+    String[0..1] organizationDescription = ct_sciorga_organizations.description CLOB;
 
     reference key ( ct_sciorga_organizations.organization_id );
 }

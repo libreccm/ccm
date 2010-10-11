@@ -3,6 +3,8 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.SciDepartment;
+import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -61,12 +63,41 @@ public class SciDepartmentPropertiesStep
     @Override
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
-        super.addSteps(itemModel, parent);
+        //super.addSteps(itemModel, parent);
 
-        addStep(new SciDepartmentSubDepartmentsStep(itemModel, parent),
-                "sciorganization.ui.department.subdepartments");
+        SciOrganizationConfig config;
+        config = SciDepartment.getConfig();
 
-        addStep(new SciDepartmentProjectsStep(itemModel, parent),
-                "sciorganization.ui.department.projects");
+        if (!config.getDepartmentAddContactHide()) {
+            addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
+                                                                       parent),
+                    "cms.contenttypes.ui.orgaunit.contact");
+        }
+
+        if (!config.getDepartmentAddPersonHide()) {
+            addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
+                                                                      parent),
+                    "cms.contenttypes.ui.orgaunit.persons");
+        }
+
+        if (!config.getDepartmentAddSubDepartmentHide()) {
+            addStep(new SciDepartmentSubDepartmentsStep(itemModel, parent),
+                    "sciorganization.ui.department.subdepartments");
+        }
+
+        if (!config.getDepartmentSetSuperDepartmentHide()) {
+            addStep(new SciDepartmentSuperDepartmentStep(itemModel, parent),
+                    "sciorganization.ui.department.superdepartment");
+        }
+
+        if (!config.getDepartmentAddProjectHide()) {
+            addStep(new SciDepartmentProjectsStep(itemModel, parent),
+                    "sciorganization.ui.department.projects");
+        }
+
+        if (!config.getDepartmentSetOrganizationHide()) {
+            addStep(new SciDepartmentOrganizationStep(itemModel, parent),
+                    "sciorganization.ui.department.organization");
+        }
     }
 }

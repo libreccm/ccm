@@ -14,16 +14,15 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.dispatcher.Utilities;
-
 import com.arsdigita.util.LockableImpl;
 
 /**
  *
  * @author Jens Pelzetter
  */
-public class SciProjectSuperProjectSheet
+public class SciDepartmentSuperDepartmentSheet
         extends Table
         implements TableActionListener {
 
@@ -31,41 +30,41 @@ public class SciProjectSuperProjectSheet
     private final String TABLE_COL_DEL = "table_col_del";
     private ItemSelectionModel m_itemModel;
 
-    public SciProjectSuperProjectSheet(ItemSelectionModel itemModel) {
+    public SciDepartmentSuperDepartmentSheet(ItemSelectionModel itemModel) {
         super();
         m_itemModel = itemModel;
 
         setEmptyView(
                 new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.superproject_none")));
+                "sciorganization.ui.department.superdepartment_none")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
                 SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.superproject").localize(),
+                "sciorganization.ui.department.superdepartment").localize(),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
                 SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.superproject.remove").localize(),
+                "sciorganization.ui.department.superdepartment.remove").localize(),
                 TABLE_COL_DEL));
 
         setModelBuilder(
-                new SciProjectSuperProjectSheetModelBuilder(itemModel));
+                new SciDepartmentSuperDepartmentSheetModelBuilder(itemModel));
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
 
         addTableActionListener(this);
     }
 
-    private class SciProjectSuperProjectSheetModelBuilder
+    private class SciDepartmentSuperDepartmentSheetModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
 
         private ItemSelectionModel m_itemModel;
 
-        public SciProjectSuperProjectSheetModelBuilder(
+        public SciDepartmentSuperDepartmentSheetModelBuilder(
                 ItemSelectionModel itemModel) {
             m_itemModel = itemModel;
         }
@@ -73,58 +72,62 @@ public class SciProjectSuperProjectSheet
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            SciProject project = (SciProject) m_itemModel.getSelectedObject(
-                    state);
-            return new SciProjectSuperProjectSheetModel(table,
-                                                        state,
-                                                        project);
+            SciDepartment department = (SciDepartment) m_itemModel.
+                    getSelectedObject(state);
+            return new SciDepartmentSuperDepartmentSheetModel(table,
+                                                              state,
+                                                              department);
         }
     }
 
-    private class SciProjectSuperProjectSheetModel
+    private class SciDepartmentSuperDepartmentSheetModel
             implements TableModel {
 
         private Table m_table;
-        private SciProject m_superProject;
+        private SciDepartment m_superDepartment;
 
-        public SciProjectSuperProjectSheetModel(Table table,
-                                                PageState state,
-                                                SciProject project) {
+        public SciDepartmentSuperDepartmentSheetModel(Table table,
+                                                      PageState state,
+                                                      SciDepartment department) {
             m_table = table;
-            m_superProject = project.getSuperProject();
+            m_superDepartment = department.getSuperDepartment();
         }
 
+        @Override
         public int getColumnCount() {
             return m_table.getColumnModel().size();
         }
 
+        @Override
         public boolean nextRow() {
             boolean ret;
 
-            if (null == m_superProject) {
+            if (null == m_superDepartment) {
                 ret = false;
             } else {
                 ret = true;
-                m_superProject = null;
+                m_superDepartment = null;
             }
 
             return ret;
         }
 
+        @Override
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return m_superProject.getTitle();
+                    return m_superDepartment.getTitle();
                 case 1:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.project.superproject.remove");
+                            "sciorganization.ui.department.superdepartment.remove");
                 default:
                     return null;
             }
         }
 
+        @Override
         public Object getKeyAt(int columnIndex) {
-            return m_superProject.getID();
+            return m_superDepartment.getID();
         }
     }
 
@@ -134,8 +137,7 @@ public class SciProjectSuperProjectSheet
 
         @Override
         public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
+                                      PageState state, Object value,
                                       boolean isSelected,
                                       Object key,
                                       int row,
@@ -151,15 +153,15 @@ public class SciProjectSuperProjectSheet
 
         @Override
         public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
+                                      PageState state, Object value,
                                       boolean isSelected,
                                       Object key,
                                       int row,
-                                      int col) {
+                                      int column) {
             SecurityManager securityManager =
                             Utilities.getSecurityManager(state);
-            SciProject project = (SciProject) m_itemModel.getSelectedObject(
+            SciDepartment project = (SciDepartment) m_itemModel.
+                    getSelectedObject(
                     state);
 
             boolean canEdit = securityManager.canAccess(
@@ -171,7 +173,7 @@ public class SciProjectSuperProjectSheet
                 ControlLink link = new ControlLink(value.toString());
                 link.setConfirmation((String) SciOrganizationGlobalizationUtil.
                         globalize(
-                        "sciorganization.ui.project.superproject."
+                        "sciorganization.ui.department.superdepartment."
                         + ".confirm_remove").
                         localize());
                 return link;
@@ -182,26 +184,22 @@ public class SciProjectSuperProjectSheet
         }
     }
 
-    @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        /*SciProject superProject = new SciProject(
-                new BigDecimal(event.getRowKey().toString()));*/
-
-        SciProject project = (SciProject) m_itemModel.getSelectedObject(state);
+        SciDepartment department = (SciDepartment) m_itemModel.getSelectedObject(
+                state);
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-            project.setSuperProject(null);
-        }
 
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
+            department.setSuperDepartment(null);
+        }
     }
 
-    @Override
     public void headSelected(TableActionEvent event) {
-        //Nothing to do.
+        //Noting to do
     }
 }

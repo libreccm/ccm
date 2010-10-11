@@ -3,6 +3,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
@@ -72,26 +73,43 @@ public class SciProjectPropertiesStep
     @Override
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
-        addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
-                                                                   parent),
-                "cms.contenttypes.ui.orgaunit.contact");
-        addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
-                                                                  parent),
-                "cms.contenttypes.ui.orgaunit.persons");
+        SciOrganizationConfig config;
+        config = SciProject.getConfig();
 
-        super.addSteps(itemModel, parent);
+        if (!config.getProjectAddContactHide()) {
+            addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
+                                                                       parent),
+                    "cms.contenttypes.ui.orgaunit.contact");
+        }
 
-        addStep(new SciProjectSuperProjectStep(itemModel,
-                                               parent),
-                "sciorganization.ui.project.superproject");
-        addStep(new SciProjectSubprojectsStep(itemModel,
-                                              parent),
-                "sciorganization.ui.project.subprojects");
+        if (!config.getProjectAddPersonHide()) {
+            addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
+                                                                      parent),
+                    "cms.contenttypes.ui.orgaunit.persons");
+        }
 
-        addStep(new SciProjectOrganizationsStep(itemModel, parent),
-                "sciorganization.ui.project.organizations");
+        //super.addSteps(itemModel, parent);
 
-        addStep(new SciProjectDepartmentsStep(itemModel, parent),
-                "sciorganization.ui.project.departments");
+        if (!config.getProjectSetSuperProjectHide()) {
+            addStep(new SciProjectSuperProjectStep(itemModel,
+                                                   parent),
+                    "sciorganization.ui.project.superproject");
+        }
+
+        if (!config.getProjectAddSubProjectHide()) {
+            addStep(new SciProjectSubprojectsStep(itemModel,
+                                                  parent),
+                    "sciorganization.ui.project.subprojects");
+        }
+
+        if (!config.getProjectAddOrganizationHide()) {
+            addStep(new SciProjectOrganizationsStep(itemModel, parent),
+                    "sciorganization.ui.project.organizations");
+        }
+
+        if (!config.getProjectAddDepartmentHide()) {
+            addStep(new SciProjectDepartmentsStep(itemModel, parent),
+                    "sciorganization.ui.project.departments");
+        }
     }
 }

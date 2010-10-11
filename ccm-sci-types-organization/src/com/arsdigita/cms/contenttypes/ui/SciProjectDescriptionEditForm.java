@@ -34,7 +34,12 @@ public class SciProjectDescriptionEditForm
                 "sciorganizazion.ui.project.description")));
         ParameterModel descParam = new StringParameter(
                 SciProject.PROJECT_DESCRIPTION);
-        CMSDHTMLEditor desc = new CMSDHTMLEditor(descParam);
+        TextArea desc;
+        if (SciProject.getConfig().getProjectDescriptionDhtml()) {
+            desc = new CMSDHTMLEditor(descParam);
+        } else {
+            desc = new TextArea(descParam);
+        }
         desc.setCols(75);
         desc.setRows(25);
         add(desc);
@@ -51,7 +56,6 @@ public class SciProjectDescriptionEditForm
             } else {
                 funding = new TextArea(fundingParam);
             }
-
             funding.setCols(75);
             funding.setRows(25);
             add(funding);
@@ -83,7 +87,7 @@ public class SciProjectDescriptionEditForm
         SciProject project = (SciProject) getItemSelectionModel().
                 getSelectedObject(state);
 
-        if ((project != null) && this.getSaveCancelSection().getSaveButton().
+        if ((project != null) && getSaveCancelSection().getSaveButton().
                 isSelected(state)) {
             project.setProjectDescription((String) data.get(
                     SciProject.PROJECT_DESCRIPTION));

@@ -12,7 +12,7 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  */
 public class SciProjectSuperProjectStep extends SimpleEditStep {
 
-    private String ATTACH_SUPER_PROJECT_STEP = "attachSuperProject";
+    private String SET_SUPER_PROJECT_STEP = "setSuperProject";
 
     public SciProjectSuperProjectStep(ItemSelectionModel itemModel,
                                       AuthoringKitWizard parent) {
@@ -24,14 +24,14 @@ public class SciProjectSuperProjectStep extends SimpleEditStep {
                                       String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm attachSuperProjectForm =
-                      new SciProjectSuperProjectAttachForm(itemModel);
-        add(ATTACH_SUPER_PROJECT_STEP,
+        BasicItemForm setSuperProjectForm =
+                      new SciProjectSuperProjectSetForm(itemModel);
+        add(SET_SUPER_PROJECT_STEP,
             (String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.attachSuperProject").localize(),
-            new WorkflowLockedComponentAccess(attachSuperProjectForm,
+                "sciorganization.ui.project.setSuperProject").localize(),
+            new WorkflowLockedComponentAccess(setSuperProjectForm,
                                               itemModel),
-            attachSuperProjectForm.getSaveCancelSection().
+            setSuperProjectForm.getSaveCancelSection().
                 getCancelButton());
 
         SciProjectSuperProjectSheet superProjectSheet =

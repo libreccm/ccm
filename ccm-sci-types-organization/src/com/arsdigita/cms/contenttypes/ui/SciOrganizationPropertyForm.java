@@ -40,13 +40,13 @@ public class SciOrganizationPropertyForm
         super.addWidgets();
 
         Label descLabel = new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganizations.ui.organization.description"));
+                "sciorganizations.ui.organization.shortdescription"));
         add(descLabel);
         ParameterModel descParam = new StringParameter(
-                SciOrganization.ORGANIZATION_DESCRIPTION);
+                SciOrganization.ORGANIZATION_SHORT_DESCRIPTION);
         TextArea desc = new TextArea(descParam);
-        desc.setCols(60);
-        desc.setRows(18);
+        desc.setCols(75);
+        desc.setRows(5);
         add(desc);
     }
 
@@ -57,8 +57,8 @@ public class SciOrganizationPropertyForm
         FormData data = fse.getFormData();
         SciOrganization orga = (SciOrganization) super.initBasicWidgets(fse);
 
-        data.put(SciOrganization.ORGANIZATION_DESCRIPTION,
-                 orga.getOrganizationDescription());
+        data.put(SciOrganization.ORGANIZATION_SHORT_DESCRIPTION,
+                 orga.getOrganizationShortDescription());
     }
 
     @Override
@@ -72,8 +72,8 @@ public class SciOrganizationPropertyForm
         if ((organization != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
 
-            organization.setOrganizationDescription((String) data.get(
-                    SciOrganization.ORGANIZATION_DESCRIPTION));
+            organization.setOrganizationShortDescription((String) data.get(
+                    SciOrganization.ORGANIZATION_SHORT_DESCRIPTION));
 
             organization.save();
         }
