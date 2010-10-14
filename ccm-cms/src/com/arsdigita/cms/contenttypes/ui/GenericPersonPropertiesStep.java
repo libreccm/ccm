@@ -40,7 +40,8 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
 
     public static final String EDIT_SHEET_NAME = "edit";
 
-    public GenericPersonPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public GenericPersonPropertiesStep(ItemSelectionModel itemModel,
+                                       AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         /* Use a Segmented Panel for the multiple parts of data */
@@ -49,17 +50,26 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
         setDefaultEditKey(EDIT_SHEET_NAME);
 
         /* A new SimpleEditStep */
-        SimpleEditStep basicProperties = new SimpleEditStep(itemModel, parent, EDIT_SHEET_NAME);
+        SimpleEditStep basicProperties = new SimpleEditStep(itemModel, parent,
+                                                            EDIT_SHEET_NAME);
 
         /* Create the edit component for this SimpleEditStep and the corresponding link */
-        BasicPageForm editBasicSheet = new GenericPersonPropertyForm(itemModel, this);
-        basicProperties.add(EDIT_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.edit_basic_properties").localize(), new WorkflowLockedComponentAccess(editBasicSheet, itemModel), editBasicSheet.getSaveCancelSection().getCancelButton());
+        BasicPageForm editBasicSheet = new GenericPersonPropertyForm(itemModel,
+                                                                     this);
+        basicProperties.add(EDIT_SHEET_NAME, (String) ContenttypesGlobalizationUtil.
+                globalize("cms.contenttypes.ui.person.edit_basic_properties").
+                localize(), new WorkflowLockedComponentAccess(editBasicSheet,
+                                                              itemModel), editBasicSheet.
+                getSaveCancelSection().getCancelButton());
 
         /* Set the displayComponent for this step */
-        basicProperties.setDisplayComponent(getGenericPersonPropertySheet(itemModel));
+        basicProperties.setDisplayComponent(getGenericPersonPropertySheet(
+                itemModel));
 
         /* Add the SimpleEditStep to the segmented panel */
-        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.basic_properties").localize()), basicProperties);
+        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.
+                globalize("cms.contenttypes.ui.person.basic_properties").
+                localize()), basicProperties);
 
 
 //        GenericPersonContactPropertiesStep contactProperties = new GenericPersonContactPropertiesStep(itemModel, parent);
@@ -70,66 +80,87 @@ public class GenericPersonPropertiesStep extends SimpleEditStep {
 
     }
 
-    public static Component getGenericPersonPropertySheet(ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
+    public static Component getGenericPersonPropertySheet(
+            ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(
+                itemModel);
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize(), GenericPerson.SURNAME);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize(), GenericPerson.GIVENNAME);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize(), GenericPerson.TITLEPRE);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), GenericPerson.TITLEPOST);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.birthdate").localize(),
-                GenericPerson.BIRTHDATE,
-                new DomainObjectPropertySheet.AttributeFormatter() {
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.surname").localize(),
+                  GenericPerson.SURNAME);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.givenname").localize(),
+                  GenericPerson.GIVENNAME);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.titlepre").localize(),
+                  GenericPerson.TITLEPRE);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.titlepost").localize(),
+                  GenericPerson.TITLEPOST);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.birthdate").localize(),
+                  GenericPerson.BIRTHDATE,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
 
-                    public String format(DomainObject item,
-                            String attribute,
-                            PageState state) {
-                        //ContentPage page = (ContentPage) item;
-                        GenericPerson person = (GenericPerson) item;
-                        if (person.getBirthdate() != null) {
-                            return DateFormat.getDateInstance(DateFormat.LONG).format(person.getBirthdate());
-                        } else {
-                            return (String) ContenttypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                        }
-                    }
-                });
+            public String format(DomainObject item,
+                                 String attribute,
+                                 PageState state) {
+                //ContentPage page = (ContentPage) item;
+                GenericPerson person = (GenericPerson) item;
+                if (person.getBirthdate() != null) {
+                    return DateFormat.getDateInstance(DateFormat.LONG).format(person.
+                            getBirthdate());
+                } else {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                }
+            }
+        });
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender").localize(),
-                GenericPerson.GENDER,
-                new DomainObjectPropertySheet.AttributeFormatter() {
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.gender").localize(),
+                  GenericPerson.GENDER,
+                  new DomainObjectPropertySheet.AttributeFormatter() {
 
-                    public String format(DomainObject item,
-                            String attribute,
-                            PageState state) {
-                        //ContentPage page = (ContentPage) item;
-                        GenericPerson person = (GenericPerson) item;
-                        if (person.getGender() != null) {
-                            return (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender." + person.getGender().toLowerCase()).localize();
-                        } else {
-                            return (String) ContenttypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                        }
-                    }
-                });
+            public String format(DomainObject item,
+                                 String attribute,
+                                 PageState state) {
+                //ContentPage page = (ContentPage) item;
+                GenericPerson person = (GenericPerson) item;
+                if (person.getGender() != null) {
+                    return (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.gender." + person.
+                            getGender().toLowerCase()).localize();
+                } else {
+                    return (String) ContenttypesGlobalizationUtil.globalize(
+                            "cms.ui.unknown").localize();
+                }
+            }
+        });
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.ui.authoring.page_launch_date").localize(),
-                    ContentPage.LAUNCH_DATE,
-                    new DomainObjectPropertySheet.AttributeFormatter() {
+            sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                    "cms.ui.authoring.page_launch_date").localize(),
+                      ContentPage.LAUNCH_DATE,
+                      new DomainObjectPropertySheet.AttributeFormatter() {
 
-                        public String format(DomainObject item,
-                                String attribute,
-                                PageState state) {
-                            ContentPage page = (ContentPage) item;
-                            if (page.getLaunchDate() != null) {
-                                return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
-                            } else {
-                                return (String) ContenttypesGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                            }
-                        }
-                    });
+                public String format(DomainObject item,
+                                     String attribute,
+                                     PageState state) {
+                    ContentPage page = (ContentPage) item;
+                    if (page.getLaunchDate() != null) {
+                        return DateFormat.getDateInstance(DateFormat.LONG).
+                                format(page.getLaunchDate());
+                    } else {
+                        return (String) ContenttypesGlobalizationUtil.globalize(
+                                "cms.ui.unknown").localize();
+                    }
+                }
+            });
         }
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.description").localize(), GenericPerson.DESCRIPTION);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.person.description").localize(),
+                  GenericPerson.DESCRIPTION);
         return sheet;
     }
 }

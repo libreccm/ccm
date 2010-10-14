@@ -5,6 +5,7 @@ import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.Parameter;
 
 /**
+ * Configuration class for the complete ccm-sci-types-organization-module.
  *
  * @author Jens Pelzetter
  */

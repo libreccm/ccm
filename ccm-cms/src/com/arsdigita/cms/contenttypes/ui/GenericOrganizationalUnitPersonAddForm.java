@@ -23,7 +23,6 @@ import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
@@ -37,7 +36,6 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
-import org.apache.log4j.Logger;
 
 /**
  * Form for adding related persons the an organization.
@@ -46,24 +44,20 @@ import org.apache.log4j.Logger;
  */
 public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
 
-    private static final Logger s_log = Logger.getLogger(
-            GenericOrganizationalUnitPersonAddForm.class);
     private GenericOrganizationalUnitPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
-    private SaveCancelSection m_saveCancelSection;
-    private final String ITEM_SEARCH = "orgaunitPerson";
-    private ItemSelectionModel m_itemModel;
+    private final String ITEM_SEARCH = "orgaunitPerson";    
 
     public GenericOrganizationalUnitPersonAddForm(ItemSelectionModel itemModel) {
-        super("PersonAddForm", itemModel);
+          super("PersonAddForm", itemModel);
     }
-
+   
     @Override
     protected void addWidgets() {
         add(new Label((String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.select_person").localize()));
         this.m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
-                findByAssociatedObjectType(GenericPerson.BASE_DATA_OBJECT_TYPE));
+                findByAssociatedObjectType(getPersonType()));
         add(this.m_itemSearch);
 
         add(new Label(ContenttypesGlobalizationUtil.globalize(
@@ -74,9 +68,9 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
         /*SingleSelect roleSelect = new SingleSelect(roleParam);
         roleSelect.addValidationListener(new NotNullValidationListener());
         roleSelect.addOption(
-                new Option("",
-                           new Label((String) ContenttypesGlobalizationUtil.
-                globalize("cms.ui.select_one").localize())));
+        new Option("",
+        new Label((String) ContenttypesGlobalizationUtil.
+        globalize("cms.ui.select_one").localize())));
 
         add(roleSelect);*/
         TextField role = new TextField(roleParam);
@@ -86,7 +80,6 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
 
     @Override
     public void init(FormSectionEvent fse) {
-        FormData data = fse.getFormData();
         PageState state = fse.getPageState();
 
         setVisible(state, true);
@@ -106,5 +99,9 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
         }
 
         init(fse);
+    }
+
+    protected String getPersonType() {
+        return GenericPerson.class.getName();
     }
 }

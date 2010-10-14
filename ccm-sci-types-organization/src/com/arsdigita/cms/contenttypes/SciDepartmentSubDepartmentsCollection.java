@@ -25,8 +25,10 @@ import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
 
 /**
+ * Special domain collection for the subdepartments of a department.
  *
  * @author Jens Pelzetter
+ * @see SciDepartment
  */
 public class SciDepartmentSubDepartmentsCollection extends DomainCollection {
 

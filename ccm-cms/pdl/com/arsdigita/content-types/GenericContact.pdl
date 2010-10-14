@@ -36,9 +36,9 @@ object type GenericContact extends ContentPage {
 
 object type GenericContactEntry extends ContentItem {
 
-  String [1..1] key         = cms_contactEntries.key VARCHAR(100);
-  String [0..1] description = cms_contactEntries.description VARCHAR(100);
-  String [1..1] value       = cms_contactEntries.value VARCHAR(100);
+  String[1..1] key         = cms_contactEntries.key VARCHAR(100);
+  String[0..1] description = cms_contactEntries.description VARCHAR(100);
+  String[1..1] value       = cms_contactEntries.value VARCHAR(100);
   
   reference key ( cms_contactEntries.contactentry_id );
 

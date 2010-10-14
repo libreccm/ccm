@@ -25,8 +25,11 @@ import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
 
 /**
+ * Special domain collection for the projects of an organization.
  *
  * @author Jens Pelzetter
+ * @see SciOrganization
+ * @see SciProject
  */
 public class SciOrganizationProjectsCollection extends DomainCollection {
 

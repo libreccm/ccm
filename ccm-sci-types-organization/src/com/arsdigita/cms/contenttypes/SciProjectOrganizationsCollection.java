@@ -25,6 +25,7 @@ import com.arsdigita.persistence.DataObject;
 import org.apache.log4j.Logger;
 
 /**
+ * Special domain collection for the organization involved in a project.
  *
  * @author Jens Pelzetter
  */

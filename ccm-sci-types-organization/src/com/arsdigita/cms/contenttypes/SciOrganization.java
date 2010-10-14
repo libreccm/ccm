@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2010 Jens Pelzetter,
+ * for the Center of Social Politics of the University of Bremen
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -8,8 +27,36 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
+ * <p>
+ * A class for representing departments of an organization. Adds two 
+ * associations to {@link GenericOrganizationalUnit}:
+ * </p>
+ * <ul>
+ * <li>departments</li>
+ * <li>projects</li>
+ * </ul>
+ * <p>
+ * The <em>departments</em> association is used to link an organization with
+ * its departments. The <em>project</em> association can be used to link an 
+ * organization with projects.
+ * </p>
+ * <p>
+ * Also, two fields are added. The <code>shortDescription</code> takes a string
+ * of 500 characters for a short description of the organization. An detailed 
+ * description of the organization can be put into the <code>description</code>
+ * field.
+ * </p>
+ * <p>
+ * There is an
+ * <a href="doc-files/ccm-sci-types-organization_entities.png">UML digram</a>
+ * with an overview of the content types and their associations. Please not that
+ * the diagram show a design sketch and not the actually implemented classes.
+ * </p>
  *
  * @author Jens Pelzetter
+ * @see GenericOrganizationalUnit
+ * @see SciDepartment
+ * @see SciProject^
  */
 public class SciOrganization extends GenericOrganizationalUnit {
 
@@ -50,7 +97,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
         super(type);
     }
 
-    public static final SciOrganizationConfig getConfig() {
+    public static SciOrganizationConfig getConfig() {
         return s_config;
     }
 

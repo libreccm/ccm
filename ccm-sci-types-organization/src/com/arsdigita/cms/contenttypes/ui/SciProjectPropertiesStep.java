@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2010 Jens Pelzetter,
+ * for the Center of Social Politics of the University of Bremen
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
@@ -12,6 +31,7 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
+ * Step for editing the basic properties of a {@link SciProject}.
  *
  * @author Jens Pelzetter
  */
@@ -79,16 +99,14 @@ public class SciProjectPropertiesStep
         if (!config.getProjectAddContactHide()) {
             addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                        parent),
-                    "cms.contenttypes.ui.orgaunit.contact");
+                    "sciorganization.ui.project.contacts");
         }
 
         if (!config.getProjectAddPersonHide()) {
-            addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
-                                                                      parent),
-                    "cms.contenttypes.ui.orgaunit.persons");
+            addStep(new SciProjectMemberStep(itemModel,
+                                             parent),
+                    "sciorganization.ui.project.members");
         }
-
-        //super.addSteps(itemModel, parent);
 
         if (!config.getProjectSetSuperProjectHide()) {
             addStep(new SciProjectSuperProjectStep(itemModel,

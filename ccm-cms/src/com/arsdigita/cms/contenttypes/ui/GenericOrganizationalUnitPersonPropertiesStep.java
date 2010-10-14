@@ -46,17 +46,18 @@ public class GenericOrganizationalUnitPersonPropertiesStep
             ItemSelectionModel itemModel,
             AuthoringKitWizard parent,
             String prefix) {
-        super(itemModel, parent, prefix);
-
-        BasicItemForm addPersonSheet = new GenericOrganizationalUnitPersonAddForm(itemModel);
+         super(itemModel, parent, prefix);
+       
+        BasicItemForm addPersonSheet =
+                      new GenericOrganizationalUnitPersonAddForm(itemModel);
         add(ADD_PERSON_SHEET_NAME,
-                (String) ContenttypesGlobalizationUtil.globalize(
+            (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.add_person").localize(),
-                new WorkflowLockedComponentAccess(addPersonSheet, itemModel),
-                addPersonSheet.getSaveCancelSection().getCancelButton());
+            new WorkflowLockedComponentAccess(addPersonSheet, itemModel),
+            addPersonSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitPersonsTable personsTable = new GenericOrganizationalUnitPersonsTable(itemModel);
+        GenericOrganizationalUnitPersonsTable personsTable = new GenericOrganizationalUnitPersonsTable(
+                itemModel);
         setDisplayComponent(personsTable);
     }
-
 }

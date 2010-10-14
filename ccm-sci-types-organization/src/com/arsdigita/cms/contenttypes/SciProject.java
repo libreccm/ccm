@@ -28,8 +28,39 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
+ * <p>
+ * The class represents a (scientific) project. It extends 
+ * {@link GenericOrganizationalUnit} and adds a relation for subprojects and 
+ * some fields for additional information: 
+ * </p>
+ * <dl>
+ * <dt><code>projectBegin</code></dt>
+ * <dd>The begin of the project</dd>
+ * <dt><code>projectEnd</code></dt>
+ * <dd>The end of the project</dd>
+ * <dt><code>shortDescription</code></dt>
+ * <dd>A short description (500 characters) of the project</dd>
+ * <dt><code>description</code></dt>
+ * <dd>A description of the project/<dd>
+ * <dt><code>funding</code><dt>
+ * <dd>A text about the funding of the project</dd>
+ * </dl>
+ * <p>
+ * Also, the class has some methods the access the associations defined by
+ * {@link SciOrganization} and {@link SciDepartment} with
+ * <code>SciProject</code>.
+ * </p>
+ * <p>
+ * There is an
+ * <a href="doc-files/ccm-sci-types-organization_entities.png">UML digram</a>
+ * with an overview of the content types and their associations. Please not that
+ * the diagram show a design sketch and not the actually implemented classes.
+ * </p>
  *
  * @author Jens Pelzetter
+ * @see GenericOrganizationalUnit
+ * @see SciOrganization
+ * @see SciDepartment
  */
 public class SciProject extends GenericOrganizationalUnit {
 
