@@ -13,17 +13,17 @@
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       
       <ctd:authoring-step
-	  labelKey="publications.ui.publication_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	  labelKey="sciorganization.ui.department.properties.title"
+	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	  descriptionKey="publications.ui.publication_properties.title.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciDepartmentResources"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	  component="com.arsdigita.cms.contenttypes.ui.SciDepartmentPropertiesStep"
 	  ordering="1"/>
 
       <ctd:authoring-step
-	      labelKey="sciorganization.ui.department_description.title"
+	      labelKey="sciorganization.ui.department.description.title"
 	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
-	      descriptionKey="sciorganization.ui.department_description.title.description"
+	      descriptionKey="sciorganization.ui.department.description.title"
 	      component="com.arsdigita.cms.contenttypes.ui.SciDepartmentDescriptionStep"
 	      ordering="2"/>	  	
 

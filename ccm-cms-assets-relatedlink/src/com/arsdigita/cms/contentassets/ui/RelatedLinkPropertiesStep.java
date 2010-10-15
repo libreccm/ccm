@@ -57,6 +57,7 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
      *
      * @return The display component to use for the authoring step
      */
+    @Override
     public Component getDisplayComponent() {
         SimpleContainer container = new SimpleContainer();
         LinkTable table;
@@ -77,6 +78,7 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
      *
      * @return The edit form
      */
+    @Override
     protected FormSection getEditSheet() {
         return new RelatedLinkPropertyForm(getItemSelectionModel(), 
                                            getLinkSelectionModel());

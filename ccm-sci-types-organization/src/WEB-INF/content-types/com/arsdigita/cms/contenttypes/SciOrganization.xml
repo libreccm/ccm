@@ -13,7 +13,7 @@
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       
       <ctd:authoring-step
-	  labelKey="publications.ui.publication_properties.title"
+	  labelKey="sciorganization.ui.organization.properties.title"
 	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	  descriptionKey="publications.ui.publication_properties.title.description"
 	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
@@ -21,7 +21,7 @@
 	  ordering="1"/>
 
       <ctd:authoring-step
-	  labelKey="sciorganization.ui.organizsation_description.title"
+	  labelKey="sciorganization.ui.organization.description.title"
 	  labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
 	  descriptionKey="sciorganization.ui.organization_description.title.description"
 	  component="com.arsdigita.cms.contenttypes.ui.SciOrganizationDescriptionStep"

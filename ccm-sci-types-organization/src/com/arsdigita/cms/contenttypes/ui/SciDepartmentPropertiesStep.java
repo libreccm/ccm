@@ -50,6 +50,10 @@ public class SciDepartmentPropertiesStep
                                   (DomainObjectPropertySheet) GenericOrganizationalUnitPropertiesStep.
                 getGenericOrganizationalUnitPropertySheet(itemModel);
 
+        sheet.add(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganizations.ui.department.shortdescription"),
+                  SciDepartment.DEPARTMENT_SHORT_DESCRIPTION);
+
         return sheet;
     }
 
@@ -73,7 +77,7 @@ public class SciDepartmentPropertiesStep
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getGenericOrganizationalUnitPropertySheet(itemModel));
+                getSciDepartmentPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) SciOrganizationGlobalizationUtil.globalize(
@@ -92,33 +96,39 @@ public class SciDepartmentPropertiesStep
         if (!config.getDepartmentAddContactHide()) {
             addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                        parent),
-                    "sciorganization.ui.department.contacts");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.contacts"));
         }
 
         if (!config.getDepartmentAddPersonHide()) {
             addStep(new SciDepartmentMemberStep(itemModel,
                                                 parent),
-                    "sciorganization.ui.department.members");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.members"));
         }
 
         if (!config.getDepartmentAddSubDepartmentHide()) {
             addStep(new SciDepartmentSubDepartmentsStep(itemModel, parent),
-                    "sciorganization.ui.department.subdepartments");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.subdepartments"));
         }
 
         if (!config.getDepartmentSetSuperDepartmentHide()) {
             addStep(new SciDepartmentSuperDepartmentStep(itemModel, parent),
-                    "sciorganization.ui.department.superdepartment");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.superdepartment"));
         }
 
         if (!config.getDepartmentAddProjectHide()) {
             addStep(new SciDepartmentProjectsStep(itemModel, parent),
-                    "sciorganization.ui.department.projects");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.projects"));
         }
 
         if (!config.getDepartmentSetOrganizationHide()) {
             addStep(new SciDepartmentOrganizationStep(itemModel, parent),
-                    "sciorganization.ui.department.organization");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.department.organization"));
         }
     }
 }

@@ -14,16 +14,16 @@
       
 	  <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_properties.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
-	      descriptionKey="sciorganization.ui.project_properties.title.description"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      descriptionKey="sciorganization.ui.project_properties.title"
 	      descriptionBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectPropertiesStep"
 	      ordering="1"/>
 	  
 	  <ctd:authoring-step
 	      labelKey="sciorganization.ui.project_description.title"
-	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciProjectResources"
-	      descriptionKey="sciorganization.ui.project_description.title.description"
+	      labelBundle="com.arsdigita.cms.contenttypes.ui.SciOrganizationResources"
+	      descriptionKey="sciorganization.ui.project_description.title"
 	      component="com.arsdigita.cms.contenttypes.ui.SciProjectDescriptionStep"
 	      ordering="2"/>	  	
 

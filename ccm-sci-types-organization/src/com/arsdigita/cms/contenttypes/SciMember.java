@@ -40,7 +40,7 @@ import java.math.BigDecimal;
  */
 public class SciMember extends GenericPerson {
 
-    public static final String ASSOCIATED_MEBER = "associatedMember";
+    public static final String ASSOCIATED_MEMBER = "associatedMember";
     public static final String FORMER_MEMBER = "formerMember";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciMember";
@@ -84,10 +84,10 @@ public class SciMember extends GenericPerson {
     }
 
     public Boolean isAssociatedMember() {
-        return (Boolean) get(ASSOCIATED_MEBER);
+        return (Boolean) get(ASSOCIATED_MEMBER);
     }
 
-    public void setAssoicatedMember(Boolean associatedMember) {
-        set(ASSOCIATED_MEBER, associatedMember);
+    public void setAssociatedMember(Boolean associatedMember) {
+        set(ASSOCIATED_MEMBER, associatedMember);
     }
 }

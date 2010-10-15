@@ -20,6 +20,7 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.globalization.GlobalizedMessage;
 import java.text.DateFormat;
 
 /**
@@ -57,14 +58,14 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
                   GenericOrganizationalUnit.NAME);
         sheet.add(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.title"),
-                GenericOrganizationalUnit.TITLE);
+                  GenericOrganizationalUnit.TITLE);
         sheet.add(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorganunit.addendum"),
                   GenericOrganizationalUnit.ADDENDUM);
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
-            sheet.add((String) ContenttypesGlobalizationUtil.globalize(
-                    "cms.ui.authoring.page_launch_date").localize(),
+            sheet.add(ContenttypesGlobalizationUtil.globalize(
+                    "cms.ui.authoring.page_launch_date"),
                       ContentPage.LAUNCH_DATE,
                       new DomainObjectPropertySheet.AttributeFormatter() {
 
@@ -124,7 +125,7 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
                             AuthoringKitWizard parent) {
         addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                    parent),
-                "cms.contenttypes.ui.orgaunit.contact");        
+                "cms.contenttypes.ui.orgaunit.contact");
         addStep(new GenericOrganizationalUnitPersonPropertiesStep(itemModel,
                                                                   parent),
                 "cms.contenttypes.ui.orgaunit.persons");
@@ -137,9 +138,13 @@ public class GenericOrganizationalUnitPropertiesStep extends SimpleEditStep {
      * @param labelKey
      */
     protected void addStep(SimpleEditStep step, String labelKey) {
-        segmentedPanel.addSegment(new Label((String) ContenttypesGlobalizationUtil.
-                globalize(labelKey).localize()),
+        segmentedPanel.addSegment(new Label(ContenttypesGlobalizationUtil.
+                globalize(labelKey)),
                                   step);
+    }
+
+    protected void addStep(SimpleEditStep step, GlobalizedMessage label) {
+        segmentedPanel.addSegment(new Label(label), step);
     }
 
     protected SegmentedPanel getSegmentedPanel() {

@@ -19,6 +19,7 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciOrganization;
@@ -27,6 +28,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 /**
  * Step for editing the basic properties of a {@link SciOrganization}.
@@ -60,7 +62,7 @@ public class SciOrganizationPropertiesStep
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getGenericOrganizationalUnitPropertySheet(itemModel));
+                getSciOrganizationPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) SciOrganizationGlobalizationUtil.globalize(
@@ -80,23 +82,39 @@ public class SciOrganizationPropertiesStep
         if (!config.getOrganizationAddContactHide()) {
             addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                        parent),
-                    "sciorganization.ui.organization.contacts");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.organization.contacts"));
         }
 
         if (!config.getOrganizationAddPersonHide()) {
             addStep(new SciOrganizationMemberStep(itemModel,
                                                   parent),
-                    "sciorganization.ui.organization_members");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.organization_members"));
         }
 
         if (!config.getOrganizationAddDepartmentHide()) {
             addStep(new SciOrganizationDepartmentsStep(itemModel, parent),
-                    "sciorganization.ui.organization.departments");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.organization.departments"));
         }
 
         if (!config.getOrganizationAddProjectHide()) {
             addStep(new SciOrganizationProjectsStep(itemModel, parent),
-                    "sciorganization.ui.organization.projects");
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.organization.projects"));
         }
+    }
+
+    public static Component getSciOrganizationPropertySheet(
+            ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) GenericOrganizationalUnitPropertiesStep.
+                getGenericOrganizationalUnitPropertySheet(itemModel);
+
+        sheet.add(SciOrganizationGlobalizationUtil.globalize(
+                "sciorganizations.ui.organization.shortdescription"),
+                  SciOrganization.ORGANIZATION_SHORT_DESCRIPTION);
+
+        return sheet;
     }
 }

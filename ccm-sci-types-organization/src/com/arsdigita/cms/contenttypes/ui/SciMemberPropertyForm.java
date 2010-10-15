@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
@@ -32,6 +33,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciMember;
+import org.apache.log4j.Logger;
 
 /**
  * Form for editing the basic properties of a {@link SciMember}. This form
@@ -47,7 +49,11 @@ public class SciMemberPropertyForm
         implements FormInitListener,
                    FormSubmissionListener {
 
+    private static final Logger logger =
+                                Logger.getLogger(SciMemberPropertyForm.class);
     private SciMemberPropertiesStep m_step;
+    private CheckboxGroup m_associated;
+    private CheckboxGroup m_former;
 
     public SciMemberPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -66,19 +72,19 @@ public class SciMemberPropertyForm
         add(new Label(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.member.associatedMember")));
         ParameterModel isAssociated = new BooleanParameter(
-                SciMember.ASSOCIATED_MEBER);
+                SciMember.ASSOCIATED_MEMBER);
         ArrayParameter associatedParam = new ArrayParameter(isAssociated);
-        CheckboxGroup associated = new CheckboxGroup(associatedParam);
-        associated.addOption(new Option(""));
-        add(associated);
+        m_associated = new CheckboxGroup(associatedParam);
+        m_associated.addOption(new Option("assoc", ""));
+        add(m_associated);
 
         add(new Label(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.member.formerMember")));
         ParameterModel isFormer = new BooleanParameter(SciMember.FORMER_MEMBER);
         ArrayParameter formerParam = new ArrayParameter(isFormer);
-        CheckboxGroup former = new CheckboxGroup(formerParam);
-        former.addOption(new Option(""));
-        add(former);
+        m_former = new CheckboxGroup(formerParam);
+        m_former.addOption(new Option("former", ""));
+        add(m_former);
     }
 
     @Override
@@ -88,21 +94,37 @@ public class SciMemberPropertyForm
         FormData data = fse.getFormData();
         SciMember member = (SciMember) super.initBasicWidgets(fse);
 
-        data.put(SciMember.ASSOCIATED_MEBER, member.isAssociatedMember());
-        data.put(SciMember.FORMER_MEMBER, member.isFormerMember());
+        if (member.isAssociatedMember()) {
+            m_associated.setValue(fse.getPageState(), "assoc");
+        }
+        if (member.isFormerMember()) {
+            m_former.setValue(fse.getPageState(), "former");
+        }        
     }
 
     @Override
     public void process(FormSectionEvent fse) {
         super.process(fse);
-
-        FormData data = fse.getFormData();
+        
+        PageState state = fse.getPageState();
         SciMember member = (SciMember) super.processBasicWidgets(fse);
 
         if ((member != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
-            member.setAssoicatedMember((Boolean) data.get(SciMember.ASSOCIATED_MEBER));
-            member.setFormerMember((Boolean) data.get(SciMember.FORMER_MEMBER));
+                isSelected(fse.getPageState())) {            
+            if (m_associated.getValue(state) == null) {
+                logger.debug("Setting associated member status to false...");
+                member.setAssociatedMember(false);
+            } else {
+                logger.debug("Setting associated member status to true...");
+                member.setAssociatedMember(true);
+            }
+            if (m_former.getValue(state) == null) {
+                logger.debug("Setting former member status to false...");
+                member.setFormerMember(false);
+            } else {
+                logger.debug("Setting former member status to true...");
+                member.setFormerMember(true);
+            }           
 
             member.save();
 

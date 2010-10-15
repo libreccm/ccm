@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
@@ -85,7 +86,7 @@ public class SciProjectPropertiesStep
 
         getSegmentedPanel().addSegment(
                 new Label((String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.basic_properties").
+                "sciorganization.ui.project.edit_basic_properties").
                 localize()),
                 basicProperties);
     }
@@ -99,35 +100,48 @@ public class SciProjectPropertiesStep
         if (!config.getProjectAddContactHide()) {
             addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                        parent),
-                    "sciorganization.ui.project.contacts");
+                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.contacts"));
         }
 
         if (!config.getProjectAddPersonHide()) {
             addStep(new SciProjectMemberStep(itemModel,
                                              parent),
-                    "sciorganization.ui.project.members");
+                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.members"));
         }
 
         if (!config.getProjectSetSuperProjectHide()) {
             addStep(new SciProjectSuperProjectStep(itemModel,
                                                    parent),
-                    "sciorganization.ui.project.superproject");
+                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.superproject"));
         }
 
         if (!config.getProjectAddSubProjectHide()) {
             addStep(new SciProjectSubprojectsStep(itemModel,
                                                   parent),
-                    "sciorganization.ui.project.subprojects");
+                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.subprojects"));
         }
 
         if (!config.getProjectAddOrganizationHide()) {
             addStep(new SciProjectOrganizationsStep(itemModel, parent),
-                    "sciorganization.ui.project.organizations");
+                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.organizations"));
         }
 
         if (!config.getProjectAddDepartmentHide()) {
             addStep(new SciProjectDepartmentsStep(itemModel, parent),
-                    "sciorganization.ui.project.departments");
+                   SciOrganizationGlobalizationUtil.globalize( "sciorganization.ui.project.departments"));
+        }
+
+        if ((!config.getProjectMaterialsHide())
+            && ContentType.findByAssociatedObjectType(
+                "com.arsdigita.cms.contenttypes.Publication") != null) {
+            /*
+             * Must add this step manually since the basic class is not
+             * SimpleEditStep...
+             */
+            getSegmentedPanel().addSegment(new Label(SciOrganizationGlobalizationUtil.
+                    globalize("sciorganization.ui.project.publications")),
+                                           new SciProjectPublicationsStep(
+                    itemModel, parent));
         }
     }
 }
