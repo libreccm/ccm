@@ -47,4 +47,8 @@ public class SciOrganizationMemberAddForm
         return SciMember.class.getName();
     }
 
+    @Override
+    protected String getRoleAttributeName() {
+        return "SciOrganizationRole";
+    }
 }

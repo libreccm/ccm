@@ -44,4 +44,9 @@ public class SciDepartmentMemberAddForm
     protected String getPersonType() {
         return SciMember.class.getName();
     }
+
+    @Override
+    protected String getRoleAttributeName() {
+        return "SciDepartmentRole";
+    }
 }

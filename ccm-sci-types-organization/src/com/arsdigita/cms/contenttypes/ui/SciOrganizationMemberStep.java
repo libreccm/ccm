@@ -50,17 +50,15 @@ public class SciOrganizationMemberStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
 
         BasicItemForm addMemberSheet =
-                new SciOrganizationMemberAddForm(itemModel);
+                      new SciOrganizationMemberAddForm(itemModel);
         add(ADD_MEMBER_SHEET_NAME,
-                (String) SciOrganizationGlobalizationUtil.globalize(
+            (String) SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.orgnization.add_member").localize(),
-                new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
-                addMemberSheet.getSaveCancelSection().getCancelButton());
+            new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
+            addMemberSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitPersonsTable memberTable = new GenericOrganizationalUnitPersonsTable(
+        SciOrganizationMemberTable memberTable = new SciOrganizationMemberTable(
                 itemModel);
         setDisplayComponent(memberTable);
     }
-
-
 }

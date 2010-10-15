@@ -19,26 +19,17 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.cms.contenttypes.SciMember;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.SciProject;
 
 /**
- * Form for adding a link between a {@link SciProject} and a {@link SciMember}.
  *
  * @author Jens Pelzetter
  */
-public class SciProjectMemberAddForm
-        extends GenericOrganizationalUnitPersonAddForm {
-
-    public SciProjectMemberAddForm(
-            ItemSelectionModel itemModel) {
+public class SciProjectMemberTable
+        extends GenericOrganizationalUnitPersonsTable {
+    
+    public SciProjectMemberTable(ItemSelectionModel itemModel) {
         super(itemModel);
-    }
-
-    @Override
-    protected String getPersonType() {
-        return SciMember.class.getName();
     }
 
     @Override

@@ -33,11 +33,13 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.RelationAttributeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -64,7 +66,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.persons.none")));
         TableColumnModel tabModel = getColumnModel();
-     
+
         tabModel.add(new TableColumn(
                 0,
                 ContenttypesGlobalizationUtil.globalize(
@@ -141,11 +143,21 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
         }
 
         public Object getElementAt(int columnIndex) {
-            switch (columnIndex) {               
+            switch (columnIndex) {
                 case 0:
                     return m_person.getFullName();
                 case 1:
-                    return m_personsCollection.getRoleName();
+                    RelationAttributeCollection role = new RelationAttributeCollection(
+                            getRoleAttributeName(),
+                            m_personsCollection.getRoleName());
+                    role.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+                            getLanguage());
+                    //return m_personsCollection.getRoleName();
+                    if (role.next()) {
+                        return role.getName();
+                    } else {
+                        return GlobalizationUtil.globalize("cms.ui.unknownRole");
+                    }
                 case 2:
                     return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:
@@ -243,5 +255,9 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
     @Override
     public void headSelected(TableActionEvent event) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    protected String getRoleAttributeName() {
+        return "GenericOrganizationalUnitRole";
     }
 }

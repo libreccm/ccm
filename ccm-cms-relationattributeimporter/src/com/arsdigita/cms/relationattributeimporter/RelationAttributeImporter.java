@@ -54,7 +54,7 @@ import org.xml.sax.SAXException;
  * <code>RelationAttributeImporter</code> would like the following:
  * </p>
  * <pre>
- * ant -Dccm.classname="com.arsdigita.cms.relationattributeimporter.RelationAttributeImporter" -Dccm.parameters="/path/to/relation/attribute/file.xml" ccm-ru
+ * ant -Dccm.classname="com.arsdigita.cms.relationattributeimporter.RelationAttributeImporter" -Dccm.parameters="/path/to/relation/attribute/file.xml" ccm-run
  * </pre>
  * <p>
  * You have to add the <code>RelationAttributeImporter</code> to add to your

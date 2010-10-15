@@ -52,7 +52,7 @@ public class SciDepartmentMemberStep extends SimpleEditStep {
             new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
             addMemberSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitPersonsTable memberTable = new GenericOrganizationalUnitPersonsTable(
+        SciDepartmentMemberTable memberTable = new SciDepartmentMemberTable(
                 itemModel);
         setDisplayComponent(memberTable);
     }
