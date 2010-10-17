@@ -78,7 +78,7 @@ public class DocFolder extends Folder implements Resource {
     }
 
     /**
-     * Returns a DocFolder for the given data object.  Use this method instead
+     * Returns a DocFolder for the given data object. Use this method instead
      * of the new Docfolder(DataObject) method.  This method uses the domain
      * object factory to produce the appropriate docfolder class.
      *
