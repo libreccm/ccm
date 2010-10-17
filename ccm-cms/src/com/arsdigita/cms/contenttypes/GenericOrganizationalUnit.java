@@ -46,8 +46,7 @@ public class GenericOrganizationalUnit extends ContentPage {
     public final static String CONTACT_TYPE = "contact_type";
     public final static String CONTACT_ORDER = "contact_order";
     public final static String PERSONS = "persons";
-    public final static String ROLE = "role_name";
-    public final static String PERSON_ORDER = "person_order";
+    public final static String ROLE = "role_name";    
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
 
@@ -92,7 +91,7 @@ public class GenericOrganizationalUnit extends ContentPage {
         DataObject link = add(CONTACTS, contact);
 
         link.set(CONTACT_TYPE, contactType);
-        link.set(CONTACT_ORDER, BigDecimal.valueOf(getContacts().size()));
+        link.set(CONTACT_ORDER, Integer.valueOf((int)getContacts().size()));
     }
 
     public void removeContact(GenericContact contact) {

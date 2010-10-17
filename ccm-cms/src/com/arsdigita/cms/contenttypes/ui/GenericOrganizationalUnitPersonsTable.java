@@ -39,7 +39,6 @@ import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitPersonCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -92,11 +91,11 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             extends LockableImpl
             implements TableModelBuilder {
 
-        private ItemSelectionModel m_itemModel;
+        private ItemSelectionModel m_itemModel;        
 
         public GenericOrganizationalUnitTableModelBuilder(
                 ItemSelectionModel itemModel) {
-            m_itemModel = itemModel;
+            m_itemModel = itemModel;            
         }
 
         public TableModel makeModel(Table table, PageState state) {
@@ -104,24 +103,24 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             GenericOrganizationalUnit orgaunit =
                                       (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(state);
-            return new GenericOrganizationalUnitTableModel(table, state,
+            return new GenericOrganizationalUnitTableModel(table,
+                                                           state,
                                                            orgaunit);
         }
     }
 
     private class GenericOrganizationalUnitTableModel implements TableModel {
 
-        private final int MAX_DESC_LENGTH = 25;
         private Table m_table;
         private GenericOrganizationalUnitPersonCollection m_personsCollection;
-        private GenericPerson m_person;
+        private GenericPerson m_person;      
 
         private GenericOrganizationalUnitTableModel(
                 Table table,
                 PageState state,
                 GenericOrganizationalUnit orgaunit) {
             m_table = table;
-            m_personsCollection = orgaunit.getPersons();
+            m_personsCollection = orgaunit.getPersons();            
         }
 
         public int getColumnCount() {
@@ -146,20 +145,17 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             switch (columnIndex) {
                 case 0:
                     return m_person.getFullName();
-                case 1:
+                case 1:                    
                     RelationAttributeCollection role = new RelationAttributeCollection(
                             getRoleAttributeName(),
-                            m_personsCollection.getRoleName());
-                    role.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
-                            getLanguage());
-                    //return m_personsCollection.getRoleName();
+                            m_personsCollection.getRoleName());                                        
                     if (role.next()) {
                         return role.getName();
                     } else {
-                        return GlobalizationUtil.globalize("cms.ui.unknownRole");
+                        return ContenttypesGlobalizationUtil.globalize("cms.ui.unknownRole");
                     }
                 case 2:
-                    return GlobalizationUtil.globalize("cms.ui.delete").localize();
+                    return ContenttypesGlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:
                     return null;
             }

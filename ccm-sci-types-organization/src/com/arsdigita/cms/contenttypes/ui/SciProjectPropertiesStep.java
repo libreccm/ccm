@@ -100,35 +100,41 @@ public class SciProjectPropertiesStep
         if (!config.getProjectAddContactHide()) {
             addStep(new GenericOrganizationalUnitContactPropertiesStep(itemModel,
                                                                        parent),
-                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.contacts"));
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.contacts"));
         }
 
         if (!config.getProjectAddPersonHide()) {
             addStep(new SciProjectMemberStep(itemModel,
                                              parent),
-                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.members"));
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.members"));
         }
 
         if (!config.getProjectSetSuperProjectHide()) {
             addStep(new SciProjectSuperProjectStep(itemModel,
                                                    parent),
-                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.superproject"));
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.superproject"));
         }
 
         if (!config.getProjectAddSubProjectHide()) {
             addStep(new SciProjectSubprojectsStep(itemModel,
                                                   parent),
-                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.subprojects"));
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.subprojects"));
         }
 
         if (!config.getProjectAddOrganizationHide()) {
             addStep(new SciProjectOrganizationsStep(itemModel, parent),
-                    SciOrganizationGlobalizationUtil.globalize("sciorganization.ui.project.organizations"));
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.organizations"));
         }
 
         if (!config.getProjectAddDepartmentHide()) {
             addStep(new SciProjectDepartmentsStep(itemModel, parent),
-                   SciOrganizationGlobalizationUtil.globalize( "sciorganization.ui.project.departments"));
+                    SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.departments"));
         }
 
         if ((!config.getProjectMaterialsHide())

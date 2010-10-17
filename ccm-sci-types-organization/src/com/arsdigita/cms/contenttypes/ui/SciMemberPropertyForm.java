@@ -94,23 +94,24 @@ public class SciMemberPropertyForm
         FormData data = fse.getFormData();
         SciMember member = (SciMember) super.initBasicWidgets(fse);
 
-        if (member.isAssociatedMember()) {
+        if ((member.isAssociatedMember() != null) &&
+                member.isAssociatedMember()) {
             m_associated.setValue(fse.getPageState(), "assoc");
         }
-        if (member.isFormerMember()) {
+        if ((member.isFormerMember() != null) && member.isFormerMember()) {
             m_former.setValue(fse.getPageState(), "former");
-        }        
+        }
     }
 
     @Override
     public void process(FormSectionEvent fse) {
         super.process(fse);
-        
+
         PageState state = fse.getPageState();
         SciMember member = (SciMember) super.processBasicWidgets(fse);
 
         if ((member != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {            
+                isSelected(fse.getPageState())) {
             if (m_associated.getValue(state) == null) {
                 logger.debug("Setting associated member status to false...");
                 member.setAssociatedMember(false);
@@ -124,7 +125,7 @@ public class SciMemberPropertyForm
             } else {
                 logger.debug("Setting former member status to true...");
                 member.setFormerMember(true);
-            }           
+            }
 
             member.save();
 

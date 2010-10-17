@@ -55,7 +55,7 @@ public class SciMemberPropertiesStep extends SimpleEditStep {
 
                 member = (SciMember) obj;
 
-                if (member.isAssociatedMember()) {
+                if ((member.isAssociatedMember() != null) && member.isAssociatedMember()) {
                     return (String) SciOrganizationGlobalizationUtil.globalize(
                             "sciorganization.ui.member.yes").localize();
                 } else {
@@ -74,7 +74,7 @@ public class SciMemberPropertiesStep extends SimpleEditStep {
 
                 member = (SciMember) obj;
 
-                if (member.isFormerMember()) {
+                if ((member.isFormerMember() != null) && member.isFormerMember()) {
                     return (String) SciOrganizationGlobalizationUtil.globalize(
                             "sciorganization.ui.member.yes").localize();
                 } else {

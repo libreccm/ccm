@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.arsdigita.cms;
 
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.SessionManager;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,18 +16,21 @@ import com.arsdigita.persistence.SessionManager;
  */
 public class RelationAttributeCollection extends DomainCollection {
 
+    public static final Logger logger =
+                               Logger.getLogger(
+            RelationAttributeCollection.class);
     public static String ATTRIBUTE = RelationAttribute.ATTRIBUTE;
     public static String KEY = RelationAttribute.KEY;
     public static String LANGUAGE = RelationAttribute.LANGUAGE;
     public static String NAME = RelationAttribute.NAME;
     public static String DESCRIPTION = RelationAttribute.DESCRIPTION;
-
     private Filter m_attributeFilter = null;
     private Filter m_keyFilter = null;
     private Filter m_languageFilter = null;
 
     public RelationAttributeCollection() {
-        super(SessionManager.getSession().retrieve(RelationAttribute.BASE_DATA_OBJECT_TYPE));
+        super(SessionManager.getSession().retrieve(
+                RelationAttribute.BASE_DATA_OBJECT_TYPE));
     }
 
     public RelationAttributeCollection(String attribute) {
@@ -64,7 +67,7 @@ public class RelationAttributeCollection extends DomainCollection {
     public boolean removeAttributeFilter(String attribute) {
         boolean retVal = false;
         retVal = this.removeFilter(m_attributeFilter);
-        if(retVal == true) {
+        if (retVal == true) {
             m_attributeFilter = null;
         }
         return retVal;
@@ -77,7 +80,7 @@ public class RelationAttributeCollection extends DomainCollection {
     public boolean removeKeyFilter(String key) {
         boolean retVal = false;
         retVal = this.removeFilter(m_keyFilter);
-        if(retVal == true) {
+        if (retVal == true) {
             m_keyFilter = null;
         }
         return retVal;
@@ -90,7 +93,7 @@ public class RelationAttributeCollection extends DomainCollection {
     public boolean removeLanguageFilter(String language) {
         boolean retVal = false;
         retVal = this.removeFilter(m_languageFilter);
-        if(retVal == true) {
+        if (retVal == true) {
             m_languageFilter = null;
         }
         return retVal;
@@ -114,8 +117,11 @@ public class RelationAttributeCollection extends DomainCollection {
     // Get RelationAttribute in desired language
     public RelationAttribute getRelationAttribute(String key, String language) {
 
+        logger.debug(String.format("this.getKey() = %s", this.getKey()));
+        logger.debug(String.format("this.language() = %s", this.getLanguage()));
+
         // First, test the current element
-        if(this.getKey().equals(key) && this.getLanguage().equals(language)) {
+        if (this.getKey().equals(key) && this.getLanguage().equals(language)) {
 
             return this.getRelationAttribute();
 
@@ -123,8 +129,9 @@ public class RelationAttributeCollection extends DomainCollection {
 
             // Rewind the collection and search for a matching element
             this.rewind();
-            while(this.next()) {
-                if(this.getKey().equals(key) && this.getLanguage().equals(language)){
+            while (this.next()) {
+                if (this.getKey().equals(key) && this.getLanguage().equals(
+                        language)) {
                     return this.getRelationAttribute();
                 }
             }
@@ -147,12 +154,11 @@ public class RelationAttributeCollection extends DomainCollection {
 
         boolean retVal = false;
         this.addLanguageFilter(language);
-        if(this.size() > 0) {
+        if (this.size() > 0) {
             retVal = true;
         }
         this.removeLanguageFilter(language);
 
         return retVal;
     }
-
 }

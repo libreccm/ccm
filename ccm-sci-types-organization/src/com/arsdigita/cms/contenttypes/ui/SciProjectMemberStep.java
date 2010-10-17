@@ -49,11 +49,11 @@ public class SciProjectMemberStep extends SimpleEditStep {
                       new SciProjectMemberAddForm(itemModel);
         add(ADD_MEMBER_SHEET_NAME,
             (String) SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.department.add_member").localize(),
+                "sciorganization.ui.project.add_member").localize(),
             new WorkflowLockedComponentAccess(addMemberSheet, itemModel),
             addMemberSheet.getSaveCancelSection().getCancelButton());
 
-        GenericOrganizationalUnitPersonsTable memberTable = new GenericOrganizationalUnitPersonsTable(
+        SciProjectMemberTable memberTable = new SciProjectMemberTable(
                 itemModel);
         setDisplayComponent(memberTable);
     }

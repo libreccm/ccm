@@ -37,6 +37,7 @@ import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.dispatcher.Utilities;
 
 import com.arsdigita.util.LockableImpl;
+import org.apache.log4j.Logger;
 
 /**
  * Sheet for showing the superior project of a {@link SciProject}.
@@ -47,6 +48,8 @@ public class SciProjectSuperProjectSheet
         extends Table
         implements TableActionListener {
 
+    private static final Logger logger = Logger.getLogger(
+            SciProjectSuperProjectSheet.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private ItemSelectionModel m_itemModel;
@@ -106,12 +109,21 @@ public class SciProjectSuperProjectSheet
 
         private Table m_table;
         private SciProject m_superProject;
+        private boolean m_done;
 
         public SciProjectSuperProjectSheetModel(Table table,
                                                 PageState state,
                                                 SciProject project) {
             m_table = table;
             m_superProject = project.getSuperProject();
+            if (m_superProject == null) {
+                m_done = false;
+            } else {
+                m_done = true;
+                logger.debug(String.format("Super project to show: %s", m_superProject.
+                        getTitle()));
+            }
+
         }
 
         public int getColumnCount() {
@@ -121,11 +133,19 @@ public class SciProjectSuperProjectSheet
         public boolean nextRow() {
             boolean ret;
 
-            if (null == m_superProject) {
-                ret = false;
+            /*if (m_superProject == null) {
+            ret = false;
             } else {
+            ret = true;
+            m_superProject = null;
+            }*/
+            if (m_done) {
+                logger.debug("Returning true for nextRow()");
                 ret = true;
-                m_superProject = null;
+                m_done = false;
+            } else {
+                logger.debug("Returning false for nextRow()");
+                ret = false;
             }
 
             return ret;
@@ -134,10 +154,12 @@ public class SciProjectSuperProjectSheet
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
+                    logger.debug("returning project title...");
                     return m_superProject.getTitle();
                 case 1:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.project.superproject.remove");
+                            "sciorganization.ui.project.superproject.remove").
+                            localize();
                 default:
                     return null;
             }
@@ -207,7 +229,7 @@ public class SciProjectSuperProjectSheet
         PageState state = event.getPageState();
 
         /*SciProject superProject = new SciProject(
-                new BigDecimal(event.getRowKey().toString()));*/
+        new BigDecimal(event.getRowKey().toString()));*/
 
         SciProject project = (SciProject) m_itemModel.getSelectedObject(state);
 

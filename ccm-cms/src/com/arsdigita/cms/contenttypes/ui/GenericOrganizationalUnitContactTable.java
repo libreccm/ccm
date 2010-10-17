@@ -125,12 +125,11 @@ public class GenericOrganizationalUnitContactTable extends Table implements
     }
 
     private class GenericOrganizationalUnitTableModel implements TableModel {
-
-        private final int MAX_DESC_LENGTH = 25;
+       
         private Table m_table;
         private GenericOrganizationalUnitContactCollection m_contactCollection;
         private GenericContact m_contact;
-        private GenericContactTypeCollection contacttypes =
+        private GenericContactTypeCollection m_contacttypes =
                                              new GenericContactTypeCollection();
 
         private GenericOrganizationalUnitTableModel(
@@ -160,12 +159,14 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         }
 
         public Object getElementAt(int columnIndex) {
+            s_log.debug(String.format("contacttypes.size() = %d",
+                    m_contacttypes.size()));
             switch (columnIndex) {
                 case 0:
-                    return contacttypes.getRelationAttribute(m_contactCollection.
-                            getContactType(),
-                                                       DispatcherHelper.
-                            getNegotiatedLocale().getLanguage());
+                    return m_contacttypes.getRelationAttribute(
+                            m_contactCollection.getContactType(),
+                            DispatcherHelper.getNegotiatedLocale().
+                            getLanguage());
                 case 1:
                     return m_contact.getTitle();
                 case 2:
@@ -311,17 +312,16 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                 getSelectedObject(state);
 
         GenericOrganizationalUnitContactCollection contacts =
-                orgaunit.getContacts();
+                                                   orgaunit.getContacts();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-        }
-        else if(column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             orgaunit.removeContact(contact);
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {
             contacts.swapWithPrevious(contact);
-        } else if(column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
+        } else if (column.getHeaderKey().toString().equals(TABLE_COL_DOWN)) {
             contacts.swapWithNext(contact);
         }
 

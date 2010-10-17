@@ -26,6 +26,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  * <p>
@@ -78,9 +79,9 @@ public class SciProject extends GenericOrganizationalUnit {
     public static final String DEPARTMENTS_ORDER = "department";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciProject";
-
     private static final SciOrganizationConfig s_config =
-            new SciOrganizationConfig();
+                                               new SciOrganizationConfig();
+    private static final Logger logger = Logger.getLogger(SciProject.class);
 
     static {
         s_config.load();
@@ -167,6 +168,8 @@ public class SciProject extends GenericOrganizationalUnit {
     public void removeSubProject(SciProject project) {
         Assert.exists(project, SciProject.class);
 
+        logger.debug(String.format("Removing subproject %s",
+                                   project.getTitle()));
         remove(SUBPROJECTS, project);
     }
 
@@ -228,10 +231,14 @@ public class SciProject extends GenericOrganizationalUnit {
         collection = (DataCollection) get(SUPER_PROJECT);
 
         if (0 == collection.size()) {
+            logger.debug(String.format("Project %s has NO super project...",
+                                       getTitle()));
             return null;
         } else {
             DataObject dobj;
 
+            logger.debug(String.format("Project %s has a super project...",
+                                       getTitle()));
             collection.next();
             dobj = collection.getDataObject();
 
@@ -243,11 +250,19 @@ public class SciProject extends GenericOrganizationalUnit {
         SciProject oldSuperProject;
 
         oldSuperProject = getSuperProject();
-        remove(SUPER_PROJECT, oldSuperProject);
+        if (oldSuperProject != null) {
+            logger.debug("Removing old super project...");
+            remove(SUPER_PROJECT, oldSuperProject);
+        }
 
-        if (null != superProject) {
+        if (superProject != null) {
             Assert.exists(superProject, SciProject.class);
-            add(SUPER_PROJECT, superProject);
-        }        
+            logger.debug("Setting new super project...");
+            DataObject link = add(SUPER_PROJECT, superProject);
+
+            link.set(SUBPROJECT_ORDER,
+                     Integer.valueOf((int) superProject.getSubProjects().size()));
+            link.save();
+        }
     }
 }

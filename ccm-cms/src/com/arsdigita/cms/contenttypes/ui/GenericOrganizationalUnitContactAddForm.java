@@ -67,7 +67,8 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
     protected void addWidgets() {
         add(new Label((String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.select_contact").localize()));
-        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.findByAssociatedObjectType(GenericContact.class.getName()));
+        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
+                findByAssociatedObjectType(GenericContact.class.getName()));
         add(m_itemSearch);
 
         add(new Label(ContenttypesGlobalizationUtil.globalize(
@@ -76,9 +77,11 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
                 GenericOrganizationalUnitContactCollection.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
-        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.
+                globalize("cms.ui.select_one").localize())));
 
-        GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
+        GenericContactTypeCollection contacttypes =
+                                     new GenericContactTypeCollection();
         contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
                 getLanguage());
 
@@ -87,15 +90,11 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
             contactType.addOption(new Option(ct.getKey(), ct.getName()));
         }
 
-        //Only for testing
-        contactType.addOption(new Option("commonContact", "Common Contact"));
-
         add(contactType);
     }
 
     @Override
-    public void init(FormSectionEvent fse) throws FormProcessException {
-        FormData data = fse.getFormData();
+    public void init(FormSectionEvent fse) throws FormProcessException {      
         PageState state = fse.getPageState();
 
         setVisible(state, true);
@@ -108,10 +107,12 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
         GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) getItemSelectionModel().
                 getSelectedObject(state);
 
-        if (!(this.getSaveCancelSection().getCancelButton().isSelected(state))) {
-            orgaunit.addContact((GenericContact) data.get(ITEM_SEARCH), (String) data.get(GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
+        if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
+            orgaunit.addContact((GenericContact) data.get(ITEM_SEARCH),
+                                (String) data.get(
+                    GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
         }
 
-        init(fse);
+        //init(fse);
     }
 }
