@@ -30,11 +30,11 @@ package com.arsdigita.kernel;
  * </font>
  *
  * @see PackageType#addListener
- * @version $Revision: #7 $, $Date: 2004/08/16 $
  * @since ACS 5.0
+ * @version $Revision: #7 $, $Date: 2004/08/16 $
+ * @version $Id: PackageEventListener.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public interface PackageEventListener {
-    public static final String versionId = "$Id: PackageEventListener.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Called when a package instance is mounted on a

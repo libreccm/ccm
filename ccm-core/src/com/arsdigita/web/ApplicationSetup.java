@@ -297,6 +297,7 @@ public class ApplicationSetup {
             notice("  DispatcherClass: " + m_dispatcherClass);
 
             if (m_key == null && m_packageType == null) {
+                // This is a new style / legacy free application
                 applicationType = new ApplicationType(m_title, m_typeName);
             } else {
                 // This is a legacy application type.

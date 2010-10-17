@@ -18,7 +18,7 @@
 
 package com.arsdigita.london.rss;
 
-import com.arsdigita.domain.DomainObjectInstantiator;
+// import com.arsdigita.domain.DomainObjectInstantiator;
 
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.domain.DomainObject;
@@ -63,7 +63,7 @@ import com.arsdigita.london.rss.portlet.WorkspaceDirectoryPortlet;
 
 
 /**
- * The CMS initializer.
+ * The RSS initializer.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * @version $Id: Initializer.java 758 2005-09-02 14:26:56Z sskracic $

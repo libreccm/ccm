@@ -55,12 +55,9 @@ import org.apache.log4j.Logger;
  *
  * @author Dan Berrange
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @version $Id: Templating.java 1498 2007-03-19 16:22:15Z apevec $
  */
 public class Templating {
-    public static final String versionId =
-        "$Id: Templating.java 1498 2007-03-19 16:22:15Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Templating.class);
 

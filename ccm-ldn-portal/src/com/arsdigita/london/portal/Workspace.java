@@ -89,39 +89,39 @@ public class Workspace extends Application {
 	 */
 	private static Workspace defaultHomepageWorkspace = null;
 
-	/**
+
+    /**
      * Constructor
      * @param obj
      */
     public Workspace(DataObject obj) {
-		super(obj);
-	}
+        super(obj);
+    }
 
-	/**
+    /**
      * Constructor, retrieves the workspace from database using its OID
      * @param oid
      * @throws com.arsdigita.domain.DataObjectNotFoundException
      */
     public Workspace(OID oid) throws DataObjectNotFoundException {
+        super(oid);
+    }
 
-		super(oid);
-	}
+    /*
+     * public String getContextPath() { return "ccm-ldn-portal"; }
+     */
 
-	/*
-	 * public String getContextPath() { return "ccm-ldn-portal"; }
-	 */
-
-	/**
+    /**
      * 
      * @return ServletPath (constant) probably should be synchron with web.xml
      *                     entry
      */
     public String getServletPath() {
-		// return "/files";
-		return "/ccm-ldn-portal/files";
-	}
+        // return "/files";
+        return "/ccm-ldn-portal/files";
+    }
 
-	/**
+    /**
      * Wrapper class to handle a limited set of parameters, 
      * here: page layout is set to default layout.
      *  
@@ -132,12 +132,12 @@ public class Workspace extends Application {
      * @return
      */
     public static Workspace createWorkspace(String url, String title,
-			Application parent, boolean isPublic) {
-		return createWorkspace(url, title, PageLayout.getDefaultLayout(),
-				parent, isPublic);
-	}
+                                            Application parent, boolean isPublic) {
+        return createWorkspace(url, title, PageLayout.getDefaultLayout(),
+                               parent, isPublic);
+    }
 
-	/**
+    /**
      * 
      * @param url
      * @param title
@@ -146,12 +146,12 @@ public class Workspace extends Application {
      * @return
      */
     public static Workspace createWorkspace(String url, String title,
-			Application parent, User owner) {
-		return createWorkspace(url, title, PageLayout.getDefaultLayout(),
-				parent, owner);
-	}
+                                            Application parent, User owner) {
+        return createWorkspace(url, title, PageLayout.getDefaultLayout(),
+                               parent, owner);
+    }
 
-	/**
+    /**
      * Does the real work to create a workspace in the storage (db)
      * 
      * @param url
@@ -177,7 +177,7 @@ public class Workspace extends Application {
         return workspace;
     }
 
-	/**
+    /**
      * Does the real work to create a workspace in the storage (db)
      * 
      * @param url
@@ -239,31 +239,31 @@ public class Workspace extends Application {
 
     }
 
-	public void beforeSave() {
-		// If no permissions are configured, then setup empty groups
-		if (get(PARTY) == null) {
-			if (s_log.isDebugEnabled()) {
-				s_log.debug("No party is set, creating shared workspace "
-						+ getOID());
-			}
-			setupGroups(getTitle(), false);
-		}
-		// Setup the default layout.
-		if (isNew() && getDefaultLayout() == null) {
-			setDefaultLayout(PageLayout.getDefaultLayout());
-		}
-		super.beforeSave();
-	}
+    public void beforeSave() {
+        // If no permissions are configured, then setup empty groups
+        if (get(PARTY) == null) {
+            if (s_log.isDebugEnabled()) {
+                s_log.debug("No party is set, creating shared workspace "
+                            + getOID());
+            }
+            setupGroups(getTitle(), false);
+        }
+        // Setup the default layout.
+        if (isNew() && getDefaultLayout() == null) {
+            setDefaultLayout(PageLayout.getDefaultLayout());
+        }
+        super.beforeSave();
+    }
 
-	// public void beforeDelete() {
-	// super.beforeDelete();
-	// Category.clearRootForObject(this);
-	// }
+    // public void beforeDelete() {
+    // super.beforeDelete();
+    // Category.clearRootForObject(this);
+    // }
 
-	// This method wouldn't need to exist if permissioning used
-	// the associations rather than direct queries which require
-	// the object to be saved
-	public void afterSave() {
+    // This method wouldn't need to exist if permissioning used
+    // the associations rather than direct queries which require
+    // the object to be saved
+    public void afterSave() {
 		super.afterSave();
 
 		Party party = getParty();
@@ -302,9 +302,9 @@ public class Workspace extends Application {
 			WorkspacePage page = pages.getPage();
 			PermissionService.setContext(page, this);
 		}
-	}
+    }
 
-	private void setupGroups(String title, boolean isPublic) {
+    private void setupGroups(String title, boolean isPublic) {
 		Group members = new Group();
 		members.setName(title);
 		members.save();
@@ -336,11 +336,11 @@ public class Workspace extends Application {
 		}
 
 		setParty(members);
-	}
+    }
 
-	public static WorkspaceCollection retrieveAll() {
-		return retrieveAll(null);
-	}
+    public static WorkspaceCollection retrieveAll() {
+        return retrieveAll(null);
+    }
 
 	public static WorkspaceCollection retrieveAll(Application parent) {
 		DataCollection wks = SessionManager.getSession().retrieve(

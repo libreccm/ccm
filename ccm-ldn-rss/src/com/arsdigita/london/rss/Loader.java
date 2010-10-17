@@ -46,7 +46,6 @@ public class Loader extends PackageLoader {
                loadWorkspaceDirectoryPortlet();
             }
         }.run();
-       // Nada yet
     }
 
 	private void loadWorkspaceDirectoryPortlet() {

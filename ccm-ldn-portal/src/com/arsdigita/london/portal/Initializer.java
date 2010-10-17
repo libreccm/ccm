@@ -91,8 +91,8 @@ public class Initializer extends CompoundInitializer {
 
         super.init(e);
 
-	    XML.parse(Workspace.getConfig().getTraversalAdapters(),
-                           new TraversalHandler());
+        XML.parse(Workspace.getConfig().getTraversalAdapters(),
+                  new TraversalHandler());
 
         e.getFactory().registerInstantiator(
                 Workspace.BASE_DATA_OBJECT_TYPE,

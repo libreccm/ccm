@@ -56,7 +56,7 @@ public class ApplicationType extends ResourceType {
 
     /**
      * The fully qualified model name of the underlying data object, which in
-     * this case is the same as the Java type.
+     * this case is the same as the Java type (full qualified class name).
      */
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.web.ApplicationType";
@@ -65,7 +65,10 @@ public class ApplicationType extends ResourceType {
     boolean m_legacyFree = false;
 
     /**
-     * Constructor.
+     * Constructor creates a new ApplicationType instance to encapsulate a given
+     * data object (@see com.arsdigita.persistence.Session#retrieve(String) ).
+     * The super implementation uses overwritable methods initialize() and
+     * postInitialization() to further process the dataObject (see below).
      * 
      * @param dataObject
      */
@@ -82,13 +85,21 @@ public class ApplicationType extends ResourceType {
                               final String applicationObjectType) {
         this(objectType, title, applicationObjectType, false);
 
-   }
+    }
 
+    /**
+     * Internal constructor creates a (new) legacy free application type.
+     * 
+     * @param objectType 
+     * @param title
+     * @param applicationObjectType
+     * @param createContainerGroup
+     */
     protected ApplicationType(final String objectType,
 			      final String title,
 			      final String applicationObjectType,
 			      final boolean createContainerGroup) {
-        this(objectType);
+        this(objectType);  // creates and returns an empty data object
 
         Assert.exists(title, "String title");
         Assert.exists(applicationObjectType, "String applicationObjectType");
@@ -111,7 +122,9 @@ public class ApplicationType extends ResourceType {
     // previously only set on creation of application type 
     // (to be honest I can't remember the problem that was 
     // causing, but it did cause a problem in some 
-    // circumstances)   
+    // circumstances)
+    // Method overwrtes a (overwritable) method provided by the super class to
+    // process a created (empty) data object.
     public void initialize() {
         super.initialize();
         s_log.debug("initialising application type "); 
@@ -155,6 +168,7 @@ public class ApplicationType extends ResourceType {
  
     }
 
+    
     protected ApplicationType(final String dataObjectType,
 			      final PackageType packageType,
 			      final String title,
@@ -180,10 +194,11 @@ public class ApplicationType extends ResourceType {
 
     /**
      * Creates a legacy-compatible application type using the passed
-     * in package type.
+     * in package type using an internal constructor (below).
      */
-    public static ApplicationType createApplicationType
-        (PackageType packageType, String title, String applicationObjectType) {
+    public static ApplicationType createApplicationType(PackageType packageType, 
+                                                        String title,
+                                                        String applicationObjectType) {
         return new ApplicationType
             (BASE_DATA_OBJECT_TYPE, packageType, title, applicationObjectType);
     }
@@ -192,14 +207,23 @@ public class ApplicationType extends ResourceType {
      * Creates a legacy-compatible application type.  The key
      * parameter is used to create a legacy package type to back the
      * new application type.
+     * This variant is applicatable if packageType does not already exist!
      */
-    protected ApplicationType
-        (String dataObjectType, String key, String title,
-         String applicationObjectType) {
+    protected ApplicationType(String dataObjectType, String key, String title,
+                              String applicationObjectType) {
         this(dataObjectType, makePackageType(key, title), title,
              applicationObjectType);
     }
 
+    /**
+     * Helper method to create a packageType for a new legacy compatible 
+     * application type without a already existing (i.e. installed in db) legacy
+     * application.
+     * 
+     * @param key of the package to be created
+     * @param title of the package to be created
+     * @return
+     */
     private static final PackageType makePackageType(String key, String title) {
         PackageType packageType = new PackageType();
 
@@ -218,8 +242,8 @@ public class ApplicationType extends ResourceType {
      * parameter is used to create a legacy package type to back the
      * new application type.
      */
-    public static ApplicationType createApplicationType
-        (String key, String title, String applicationObjectType) {
+    public static ApplicationType createApplicationType(String key, String title,
+                                                        String applicationObjectType) {
         	
         return ApplicationType.createApplicationType(
                                       key, title, applicationObjectType, false);
@@ -250,6 +274,7 @@ public class ApplicationType extends ResourceType {
                 (BASE_DATA_OBJECT_TYPE, key, title, applicationObjectType);
         }
     }
+    
     // Param
     public static ApplicationType retrieveApplicationType(BigDecimal id) {
         Assert.exists(id, "id");

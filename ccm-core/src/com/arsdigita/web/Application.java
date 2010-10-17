@@ -101,14 +101,18 @@ public class Application extends Resource {
     }
 
     /**
-     * create application without parent, and without an associated
-     * container group
+     * Create (new style / legacy free) application without parent, and without
+     * an associated container group
      */
     public static Application createRootApplication(final ApplicationType type,
                                                     final String title) {
 	return Application.createRootApplication(type, title, false);
     }
 
+    /**
+     * Create (new style / legacy free) application without parent and with
+     * an associated container group
+     */
     public static Application createRootApplication(final ApplicationType type,
 						    final String title,
 						    final boolean createContainerGroup) {
@@ -172,6 +176,15 @@ public class Application extends Resource {
 	return Application.createApplication(type,fragment,title,parent,createContainerGroup);
     }
 
+    /** 
+     * 
+     * @param type   application type
+     * @param fragment last part of the applications URL
+     * @param title descriptive name 
+     * @param parent 
+     * @param createContainerGroup
+     * @return
+     */
     private static Application make(final ApplicationType type,
                                     final String fragment,
                                     final String title,

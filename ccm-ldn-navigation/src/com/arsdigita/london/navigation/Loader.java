@@ -57,7 +57,7 @@ import org.apache.log4j.Logger;
  */
 public class Loader extends PackageLoader {
 
-        /** Creates a s_logging category with name = full name of class */
+    /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger.getLogger(Loader.class);
 
     private StringParameter m_templatesFile = new StringParameter(
