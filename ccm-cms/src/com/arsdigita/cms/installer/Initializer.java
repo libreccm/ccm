@@ -26,11 +26,18 @@ import com.arsdigita.runtime.DomainInitEvent;
 
 import org.apache.log4j.Logger;
 
-// CURRENT STATUS:
+// WORK IN PROGRESS
+// Migrating the CMS Code from old style initializer and old style application
+// to new style initializer and new style application.
+//
+//
+// Plannings
+// 1. Step
 // (Simple) Migration of the Old Initializer code of this package to the new
 // initializer system. Current goal is a pure replacement with as less code
 // changes as possible.
-// In a second step a restructure of the code will be done.
+// 2. Step
+// Restructuring codel eventually remove this Initializer
 
 /**
  * XXX Reformulate according to the code development!
@@ -51,12 +58,12 @@ import org.apache.log4j.Logger;
  */
 public class Initializer extends CompoundInitializer {
 
-
     /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
     private static final LoaderConfig s_conf = new LoaderConfig();
-//  Verursacht aktuell eine Exception "no such contgext"
+//  Verursacht aktuell eine Exception "no such context"
+//  Vermutliche Lösung: in config.xml eintragen.
 //  static {            // requirred to actually read the config file!
 //     s_conf.load();
 //  }
@@ -87,13 +94,7 @@ public class Initializer extends CompoundInitializer {
     public void init(DomainInitEvent evt) {
         s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
 
-        // Recursive invokation of init, is it really necessary??
-        // On the other hand:
-        // An empty implementations prevents this initializer from being executed.
-        // A missing implementations causes the super class method to be executed,
-        // which invokes the above added LegacyInitializer.
-        // If super is not invoked, various other cms sub-initializer may not run.
-        super.init(evt);
+        super.init(evt);  // !
 
     /*
      * Imported from LegacyInitializer:
@@ -136,14 +137,11 @@ public class Initializer extends CompoundInitializer {
             // s_log.debug("Set cache items to " + cacheItems);
             // ItemDispatcher.setCacheItems(cacheItems);
 
-            final String workspaceURL = s_conf.getWorkspaceURL();
-            final String contentCenterMap = s_conf.getContentCenterMap();
-            ContentCenterSetup centerSetup = new ContentCenterSetup(
-                workspaceURL,
-                contentCenterMap);
-
-            centerSetup.run();
-
+        final String workspaceURL = s_conf.getWorkspaceURL();
+        final String contentCenterMap = s_conf.getContentCenterMap();
+        ContentCenterSetup centerSetup = new ContentCenterSetup( workspaceURL,
+                                                                 contentCenterMap);
+        centerSetup.run();
 
         s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
     }

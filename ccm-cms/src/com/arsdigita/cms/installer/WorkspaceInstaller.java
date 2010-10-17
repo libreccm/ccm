@@ -26,7 +26,6 @@ import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.Stylesheet;
 
 
-
 /**
  * <p>Provides methods to install the Content Center application, which
  * is used by the Content Management System.</p>

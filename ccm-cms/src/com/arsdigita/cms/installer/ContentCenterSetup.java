@@ -22,7 +22,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.Stylesheet;
+// import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
 
 
 /**
- * Sets up the content section.
+ * Sets up the CMS package.
  *
  * @author Jon Orris (jorris@redhat.com)
  * @version $Revision: #10 $ $DateTime: 2004/08/17 23:15:09 $
@@ -101,26 +101,34 @@ public final class ContentCenterSetup {
 
     public void run() {
 
-        // 1) Setup the CMS package.
-        setupCMSPackage();
+        // 1) Setup the content section package.
+        //    Currently just invokes createPrivileges, which should be executed
+        //    at each system startup to check for modifications. So it is an
+        //    Initializer task and will be moved to an Initializer.
+        // setupCMSPackage();
+        // createPrivileges();
 
         // 2) Setup the Workspace package.
-
-        setupWorkspacePackage();
+        //    Moved to Loader
+        // setupWorkspacePackage();
 
         // 3) Setup the CMS global services package.
-        setupServicePackage();
+        //    Moved to Loader
+        // setupServicePackage();
 
         // 8) Load the content-center page mappings
+        //    Has to be executed an each system startup and is an
+        //    Initializer task.
         setupContentCenter();
 
 
     }
 
     /**
-     * Creates the CMS package type if it does not already exist.
+     * Creates the CMS (i.e. content section) package type if it does not already exist.
      *
-     * Actually: Creates the PackageType contentsection!
+     * Actually: Creation ot content section is migrated to loader. Just used to
+     * create privileges.
      */
     private static void setupCMSPackage() {
         if ( !PackageType.typeExists(Installer.PACKAGE_KEY) ) {  //key = content-section
@@ -217,6 +225,12 @@ public final class ContentCenterSetup {
 
 
 
+    /**
+     * Load the content center page mappings.
+     * Mapping stored in hashMaps, must be run during each system startup, so
+     * it is an initializer task.
+     * @throws InitializationException
+     */
     private void setupContentCenter() throws InitializationException {
         final PageClassConfigHandler handler 
             = new PageClassConfigHandler(s_pageClasses, s_pageURLs);

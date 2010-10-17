@@ -142,7 +142,7 @@ public class Initializer extends CompoundInitializer {
 //      add(new LegacyInitializer("com/arsdigita/cms/contentsection/enterprise.init"));
 
         // Step 4a new
-        // Initializer for content section, needed when LegacyInitializer in step 3
+        // Initializer for content section, needed when LegacyInitializer in step 4
         // has been moved to c.ad.Loader in order to register the application and
         // optionally to install additional content sections.
         // add(new com.arsdigita.cms.contentsection.Initializer());
@@ -256,8 +256,6 @@ public class Initializer extends CompoundInitializer {
             FileAsset.BASE_DATA_OBJECT_TYPE,
             new AssetMetadataProvider());
 
-        // Mount the content-center sidenode
-
 
         s_log.debug("CMS.Initializer.init(DomainInitEvent) completed");
     }    //  END init(DomainInitEvent e)
@@ -306,8 +304,6 @@ public class Initializer extends CompoundInitializer {
                       return new TaskEventURLGenerator(dataObject);
                   }
               });
-         
-         
          
          f.registerInstantiator
              (Workflow.BASE_DATA_OBJECT_TYPE,

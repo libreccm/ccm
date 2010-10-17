@@ -74,7 +74,6 @@ public class ContentCenterDispatcher extends LockableImpl
     /**
      * The path of the file that maps resources.
      */
-
     public final static String DEFAULT_MAP_FILE = "/WEB-INF/resources/content-center-map.xml";
 
     /**
