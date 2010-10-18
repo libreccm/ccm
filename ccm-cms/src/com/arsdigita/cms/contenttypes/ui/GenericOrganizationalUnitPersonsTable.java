@@ -177,7 +177,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                 Object key,
                 int row,
                 int col) {
-            com.arsdigita.cms.SecurityManager securityManager = Utilities.
+            /*com.arsdigita.cms.SecurityManager securityManager = Utilities.
                     getSecurityManager(state);
             GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) m_itemModel.
                     getSelectedObject(
@@ -189,9 +189,9 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
                 return link;
-            } else {
+            } else {*/
                 return new Label(value.toString());
-            }
+           // }
         }
     }
 

@@ -106,12 +106,18 @@ public class SciDepartmentSuperDepartmentSheet
 
         private Table m_table;
         private SciDepartment m_superDepartment;
+        private boolean m_done;
 
         public SciDepartmentSuperDepartmentSheetModel(Table table,
                                                       PageState state,
                                                       SciDepartment department) {
             m_table = table;
             m_superDepartment = department.getSuperDepartment();
+            if (m_superDepartment == null) {
+                m_done = false;
+            } else {
+                m_done = true;
+            }
         }
 
         @Override
@@ -123,11 +129,11 @@ public class SciDepartmentSuperDepartmentSheet
         public boolean nextRow() {
             boolean ret;
 
-            if (null == m_superDepartment) {
-                ret = false;
-            } else {
+            if (m_done) {
                 ret = true;
-                m_superDepartment = null;
+                m_done = false;
+            } else {
+                ret = false;
             }
 
             return ret;
@@ -140,7 +146,8 @@ public class SciDepartmentSuperDepartmentSheet
                     return m_superDepartment.getTitle();
                 case 1:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.department.superdepartment.remove");
+                            "sciorganization.ui.department.superdepartment.remove").
+                            localize();
                 default:
                     return null;
             }
@@ -214,7 +221,6 @@ public class SciDepartmentSuperDepartmentSheet
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
-
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             department.setSuperDepartment(null);
         }

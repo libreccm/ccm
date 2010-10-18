@@ -108,12 +108,18 @@ public class SciDepartmentOrganizationSheet
 
         private Table m_table;
         private SciOrganization m_orga;
+        private boolean m_done;
 
         public SciDepartmentOrganizationSheetModel(Table table,
                                                    PageState state,
                                                    SciDepartment department) {
             m_table = table;
             m_orga = department.getOrganization();
+            if (m_orga == null) {
+                m_done = false;
+            } else {
+                m_done = true;
+            }
         }
 
         public int getColumnCount() {
@@ -123,11 +129,11 @@ public class SciDepartmentOrganizationSheet
         public boolean nextRow() {
             boolean ret;
 
-            if (null == m_orga) {
-                ret = false;
-            } else {
+            if (m_done) {
                 ret = true;
-                m_orga = null;
+                m_done = false;
+            } else {
+                ret = false;
             }
 
             return ret;
@@ -139,7 +145,8 @@ public class SciDepartmentOrganizationSheet
                     return m_orga.getTitle();
                 case 1:
                     return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.department.organization.remove");
+                            "sciorganization.ui.department.organization.remove").
+                            localize();
                 default:
                     return null;
             }

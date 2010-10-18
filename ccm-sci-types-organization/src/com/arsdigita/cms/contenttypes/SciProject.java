@@ -73,10 +73,10 @@ public class SciProject extends GenericOrganizationalUnit {
     public static final String SUBPROJECTS = "subProjects";
     public static final String SUBPROJECT_ORDER = "subProjectOrder";
     public static final String ORGANIZATIONS = "organization";
-    public static final String ORGANIZATIONS_ORDER = "organization";
+    public static final String ORGANIZATIONS_ORDER = "organizationOrder";
     public static final String SUPER_PROJECT = "superProject";
     public static final String DEPARTMENTS = "department";
-    public static final String DEPARTMENTS_ORDER = "department";
+    public static final String DEPARTMENTS_ORDER = "departmentOrder";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciProject";
     private static final SciOrganizationConfig s_config =
@@ -163,6 +163,7 @@ public class SciProject extends GenericOrganizationalUnit {
 
         link.set(SUBPROJECT_ORDER,
                  Integer.valueOf((int) getSubProjects().size()));
+        link.save();
     }
 
     public void removeSubProject(SciProject project) {
@@ -189,6 +190,9 @@ public class SciProject extends GenericOrganizationalUnit {
 
         link.set(ORGANIZATIONS_ORDER,
                  Integer.valueOf((int) getOrganizations().size()));
+        link.set(SciOrganization.PROJECT_ORDER,
+                Integer.valueOf((int) orga.getProjects().size()));
+        link.save();
     }
 
     public void removeOrganization(SciOrganization orga) {
@@ -213,6 +217,7 @@ public class SciProject extends GenericOrganizationalUnit {
 
         link.set(DEPARTMENTS_ORDER,
                  Integer.valueOf((int) getDepartments().size()));
+        link.save();
     }
 
     public void removeDepartment(SciDepartment department) {

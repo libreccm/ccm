@@ -132,13 +132,7 @@ public class SciProjectSuperProjectSheet
 
         public boolean nextRow() {
             boolean ret;
-
-            /*if (m_superProject == null) {
-            ret = false;
-            } else {
-            ret = true;
-            m_superProject = null;
-            }*/
+          
             if (m_done) {
                 logger.debug("Returning true for nextRow()");
                 ret = true;

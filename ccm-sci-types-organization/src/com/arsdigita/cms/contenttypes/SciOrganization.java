@@ -61,7 +61,7 @@ import java.math.BigDecimal;
 public class SciOrganization extends GenericOrganizationalUnit {
 
     public static final String ORGANIZATION_SHORT_DESCRIPTION =
-            "organizationShortDescription";
+                               "organizationShortDescription";
     public static final String ORGANIZATION_DESCRIPTION =
                                "organizationDescription";
     public static final String DEPARTMENTS = "departments";
@@ -129,6 +129,7 @@ public class SciOrganization extends GenericOrganizationalUnit {
 
         link.set(DEPARTMENT_ORDER,
                  Integer.valueOf((int) getDepartments().size()));
+        link.save();
     }
 
     public void removeDepartment(SciDepartment department) {
@@ -150,8 +151,10 @@ public class SciOrganization extends GenericOrganizationalUnit {
         Assert.exists(project, SciProject.class);
 
         DataObject link = add(PROJECTS, project);
-
-        link.set(PROJECT_ORDER, Integer.valueOf((int) getProjects().size()));
+        link.set(PROJECT_ORDER, Integer.valueOf((int) getProjects().size()));        
+        link.set(SciProject.ORGANIZATIONS_ORDER, Integer.valueOf((int) project.
+                getOrganizations().size()));
+        link.save();
     }
 
     public void removeProject(SciProject project) {

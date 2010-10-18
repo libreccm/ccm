@@ -294,10 +294,10 @@ public class SciProjectOrganizationsTable
 
             SciProject project = (SciProject) m_itemModel.getSelectedObject(
                     state);
-            SciProjectSubProjectsCollection subProjects =
-                                            project.getSubProjects();
+            SciProjectOrganizationsCollection orgas =
+                                            project.getOrganizations();
 
-            if ((subProjects.size() - 1) == row) {
+            if ((orgas.size() - 1) == row) {
                 Label label = new Label("");
                 return label;
             } else {

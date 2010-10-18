@@ -242,7 +242,7 @@ public class SciOrganizationProjectsTable
                 link.setConfirmation((String) SciOrganizationGlobalizationUtil.
                         globalize(
                         "sciorganization.ui.organization.project."
-                        + ".confirm_remove").
+                        + "confirm_remove").
                         localize());
                 return link;
             } else {

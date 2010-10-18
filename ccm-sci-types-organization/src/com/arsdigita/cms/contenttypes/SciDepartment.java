@@ -158,11 +158,16 @@ public class SciDepartment extends GenericOrganizationalUnit {
         SciDepartment oldSuperDepartment;
 
         oldSuperDepartment = getSuperDepartment();
-        remove(SUPER_DEPARTMENT, oldSuperDepartment);
+        if (oldSuperDepartment != null) {
+            remove(SUPER_DEPARTMENT, oldSuperDepartment);
+        }
 
         if (null != department) {
             Assert.exists(department, SciDepartment.class);
-            add(SUPER_DEPARTMENT, department);
+            DataObject link = add(SUPER_DEPARTMENT, department);
+            link.set(SUBDEPARTMENT_ORDER,
+                     Integer.valueOf((int) department.getSubDepartments().size()));
+            link.save();
         }
     }
 
@@ -187,11 +192,16 @@ public class SciDepartment extends GenericOrganizationalUnit {
         SciOrganization oldOrganization;
 
         oldOrganization = getOrganization();
-        remove(ORGANIZATION, oldOrganization);
+        if (oldOrganization != null) {
+            remove(ORGANIZATION, oldOrganization);
+        }
 
         if (null != orga) {
             Assert.exists(orga, SciOrganization.class);
-            add(ORGANIZATION, orga);
+            DataObject link = add(ORGANIZATION, orga);
+            link.set(SciOrganization.DEPARTMENT_ORDER,
+                     Integer.valueOf((int) orga.getDepartments().size()));
+            link.save();
         }
     }
 
@@ -207,6 +217,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
 
         link.set(SUBDEPARTMENT_ORDER, Integer.valueOf((int) getSubDepartments().
                 size()));
+        link.save();
     }
 
     public void removeSubDepartment(SciDepartment subDepartment) {
@@ -231,6 +242,9 @@ public class SciDepartment extends GenericOrganizationalUnit {
 
         link.set(PROJECT_ORDER,
                  Integer.valueOf((int) getProjects().size()));
+        link.set(SciProject.DEPARTMENTS_ORDER,
+                 Integer.valueOf((int) project.getDepartments().size()));
+        link.save();
     }
 
     public void removeProject(SciProject project) {

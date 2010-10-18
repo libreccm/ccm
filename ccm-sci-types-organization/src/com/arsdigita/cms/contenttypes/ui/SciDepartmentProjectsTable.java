@@ -241,7 +241,7 @@ public class SciDepartmentProjectsTable
                 link.setConfirmation((String) SciOrganizationGlobalizationUtil.
                         globalize(
                         "sciorganization.ui.department.project."
-                        + ".confirm_remove").
+                        + "confirm_remove").
                         localize());
                 return link;
             } else {
