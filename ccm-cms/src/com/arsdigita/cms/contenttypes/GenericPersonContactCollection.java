@@ -19,9 +19,9 @@ import java.math.BigDecimal;
  */
 public class GenericPersonContactCollection extends DomainCollection {
     
-    public static final String ORDER = "link.contact_order asc";
-    public static final String CONTACT_TYPE = "link.contact_type";
-    public static final String CONTACT_ORDER = "link.contact_order";
+    public static final String ORDER = "link." + GenericPerson.CONTACTS_ORDER + " asc";
+    public static final String CONTACTS_KEY = "link." + GenericPerson.CONTACTS_KEY;
+    public static final String CONTACTS_ORDER = "link." + GenericPerson.CONTACTS_ORDER;
     
     /**
      * Creates a new instance of GenericPersonContactCollection
@@ -34,12 +34,12 @@ public class GenericPersonContactCollection extends DomainCollection {
     
     // Get the contact type of the link
     public String getContactType() {
-        return (String) m_dataCollection.get(CONTACT_TYPE);
+        return (String) m_dataCollection.get(CONTACTS_KEY);
     }
     
     // Get the contact order of the link
     public String getContactOrder() {
-        String retVal = ((BigDecimal) m_dataCollection.get(CONTACT_ORDER)).toString();
+        String retVal = ((BigDecimal) m_dataCollection.get(CONTACTS_ORDER)).toString();
         
         if(retVal == null || retVal.isEmpty()) {
             retVal = String.valueOf(this.getPosition());

@@ -46,8 +46,8 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     public static final String BIRTHDATE = "birthdate";
     public static final String GENDER = "gender";
     public static final String CONTACTS = "contacts";
-    public static final String CONTACT_TYPE = "contact_type";
-    public static final String CONTACT_ORDER = "contact_order";
+    public static final String CONTACTS_KEY = "link_key";
+    public static final String CONTACTS_ORDER = "link_order";
     private static final String RELATION_ATTRIBUTES = "GenericContactType";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
@@ -166,9 +166,11 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     private void updateNameAndTitle() {
         // Sync title and name with CI data
-        setTitle(getFullName());
-        setName(GenericPerson.urlSave(getTitle()));
-
+        String fullname = getFullName();
+        if (fullname != null && !fullname.isEmpty()) {
+            setTitle(fullname);
+            setName(GenericPerson.urlSave(fullname));
+        }
     }
 
     // Get all contacts for this person
@@ -183,8 +185,8 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
         DataObject link = add(CONTACTS, contact);
 
-        link.set(CONTACT_TYPE, contactType);
-        link.set(CONTACT_ORDER, BigDecimal.valueOf(getContacts().size()));
+        link.set(CONTACTS_KEY, contactType);
+        link.set(CONTACTS_ORDER, BigDecimal.valueOf(getContacts().size()));
     }
 
     // Remove a contact for this person
@@ -210,18 +212,24 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     // Create a ulr save version of the full name
     public static String urlSave(String in) {
 
-        // Replacement map
-        String[][] replacements = {{"ä", "ae"}, {"Ä", "Ae"}, {"ö", "oe"}, {"Ö", "Oe"}, {"ü", "ue"}, {"Ü", "Ue"}, {"ß", "ss"}, {".", ""}};
+        if (in != null && !in.isEmpty()) {
 
-        // Replace all spaces with dash
-        String out = in.replace(" ", "-");
+            // Replacement map
+            String[][] replacements = {{"ä", "ae"}, {"Ä", "Ae"}, {"ö", "oe"}, {"Ö", "Oe"}, {"ü", "ue"}, {"Ü", "Ue"}, {"ß", "ss"}, {".", ""}};
 
-        // Replace all special chars defined in replacement map
-        for (int i = 0; i < replacements.length; i++) {
-            out = out.replace(replacements[i][0], replacements[i][1]);
+            // Replace all spaces with dash
+            String out = in.replace(" ", "-");
+
+            // Replace all special chars defined in replacement map
+            for (int i = 0; i < replacements.length; i++) {
+                out = out.replace(replacements[i][0], replacements[i][1]);
+            }
+
+            // Replace all special chars that are not yet replaced with a dash
+            return out.replaceAll("[^A-Za-z0-9-]", "_");
         }
 
-        // Replace all special chars that are not yet replaced with a dash
-        return out.replaceAll("[^A-Za-z0-9-]", "_");
+        return in;
+
     }
 }

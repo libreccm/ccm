@@ -31,12 +31,12 @@ import org.apache.log4j.Logger;
  * @author Scott Seago (sseago@redhat.com)
  */
 
-public class RelatedLinkTableModelBuilder 
-    extends LinkTableModelBuilder {
+public class RelatedLinkTableModelBuilder extends LinkTableModelBuilder {
     private static final Logger s_log = 
         Logger.getLogger(RelatedLinkTableModelBuilder.class);
 
     private ItemSelectionModel m_itemModel;
+    private String m_linkListName = "";
 
     /**
      * Constructor. Creates a <code>LinkTableModelBuilder</code> given an
@@ -45,8 +45,9 @@ public class RelatedLinkTableModelBuilder
      * @param item The <code>ItemSelectionModel</code> for the current page.
      * current link
      */
-    public RelatedLinkTableModelBuilder(ItemSelectionModel item) {
+    public RelatedLinkTableModelBuilder(ItemSelectionModel item, String name) {
         m_itemModel = item;
+        m_linkListName = name;
         s_log.debug("RelatedLinkTableModelBuilder");
     }
 
@@ -61,7 +62,7 @@ public class RelatedLinkTableModelBuilder
         Assert.isTrue(m_itemModel.isSelected(s), "item selected");
         ContentItem item = m_itemModel.getSelectedItem(s);
         s_log.debug("Getting related links for " + item.getName());
-        return RelatedLink.getRelatedLinks(item);
+        return RelatedLink.getRelatedLinks(item, m_linkListName);
         
     }
 }

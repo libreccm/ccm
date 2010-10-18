@@ -6,7 +6,6 @@
  * To change this template, choose Tools | Template Manager
  * and open the template in the editor.
  */
-
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
@@ -17,6 +16,8 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 
@@ -25,11 +26,14 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
  * @author quasi
  */
 public class GenericContactPersonPropertiesStep extends SimpleEditStep {
-    
+
     public static final String ADD_PERSON_SHEET_NAME = "addPerson";
     public static final String EDIT_PERSON_SHEET_NAME = "editPerson";
     public static final String CHANGE_PERSON_SHEET_NAME = "changePerson";
     public static final String DELETE_PERSON_SHEET_NAME = "deletePerson";
+    private WorkflowLockedComponentAccess addPerson;
+    private WorkflowLockedComponentAccess editPerson;
+    private WorkflowLockedComponentAccess delPerson;
 
     /**
      * Creates a new instance of GenericContactPersonPropertiesStep
@@ -37,48 +41,55 @@ public class GenericContactPersonPropertiesStep extends SimpleEditStep {
     public GenericContactPersonPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         this(itemModel, parent, "");
     }
-    
+
     public GenericContactPersonPropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent, String prefix) {
         super(itemModel, parent, prefix);
-    
-//XXX
-//        if(false/*EMPTY*/) {
-            
-            BasicPageForm addPersonSheet = new GenericContactAttachPersonPropertyForm(itemModel, this);
-            add(ADD_PERSON_SHEET_NAME, (String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.attach_person").localize(), new WorkflowLockedComponentAccess(addPersonSheet, itemModel), addPersonSheet.getSaveCancelSection().getCancelButton());
 
-            /* Set the displayComponent for this step */
-//            setDisplayComponent(getEmptyPersonPropertySheet(itemModel));
+        BasicPageForm addPersonSheet = new GenericContactAttachPersonPropertyForm(itemModel, this);
+        addPerson = new WorkflowLockedComponentAccess(addPersonSheet, itemModel);
+        add(ADD_PERSON_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.attach_person").localize(), addPerson, addPersonSheet.getSaveCancelSection().getCancelButton());
 
-//        } else {
-            
-            BasicPageForm editPersonSheet = new GenericContactEditPersonPropertyForm(itemModel, this);
-            add(EDIT_PERSON_SHEET_NAME, (String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.edit_person").localize(), new WorkflowLockedComponentAccess(editPersonSheet, itemModel), editPersonSheet.getSaveCancelSection().getCancelButton());
-            
-//            BasicPageForm changePersonSheet = new GenericContactEditPersonPropertyForm(itemModel, this);
-//            add(CHANGE_PERSON_SHEET_NAME, (String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.reattach_person").localize(), new WorkflowLockedComponentAccess(changePersonSheet, itemModel), changePersonSheet.getSaveCancelSection().getCancelButton());
-            
-            BasicPageForm deletePersonSheet = new GenericContactDeletePersonForm(itemModel, this);
-            add(DELETE_PERSON_SHEET_NAME, (String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_person").localize(), new WorkflowLockedComponentAccess(deletePersonSheet, itemModel), deletePersonSheet.getSaveCancelSection().getCancelButton());
+        BasicPageForm editPersonSheet = new GenericContactEditPersonPropertyForm(itemModel, this);
+        editPerson = new WorkflowLockedComponentAccess(editPersonSheet, itemModel);
+        add(EDIT_PERSON_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.edit_person").localize(), editPerson, editPersonSheet.getSaveCancelSection().getCancelButton());
 
-            /* Set the displayComponent for this step */
-            setDisplayComponent(getPersonPropertySheet(itemModel));
-//        }
+        BasicPageForm deletePersonSheet = new GenericContactDeletePersonForm(itemModel, this);
+        delPerson = new WorkflowLockedComponentAccess(deletePersonSheet, itemModel);
+        add(DELETE_PERSON_SHEET_NAME, (String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.delete_person").localize(), delPerson, deletePersonSheet.getSaveCancelSection().getCancelButton());
+
+        /* Set the displayComponent for this step */
+        setDisplayComponent(getPersonPropertySheet(itemModel));
 
     }
 
     public static Component getPersonPropertySheet(ItemSelectionModel itemModel) {
-	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-	sheet.add((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize(), "person." + GenericPerson.SURNAME);
-	sheet.add((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize(), "person." + GenericPerson.GIVENNAME);
-	sheet.add((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize(), "person." + GenericPerson.TITLEPRE);
-	sheet.add((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), "person." + GenericPerson.TITLEPOST);
-	
-	return sheet;
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize(), "person." + GenericPerson.SURNAME);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize(), "person." + GenericPerson.GIVENNAME);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize(), "person." + GenericPerson.TITLEPRE);
+        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), "person." + GenericPerson.TITLEPOST);
+
+        return sheet;
     }
-    
+
     public static Component getEmptyPersonPropertySheet(ItemSelectionModel itemModel) {
-        return new Label(((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.emptyPerson").localize()));
+        return new Label(((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.emptyPerson").localize()));
+    }
+
+    @Override
+    public boolean isVisible(PageState ps) {
+
+        if(((GenericContact) getItemSelectionModel().getSelectedItem(ps)).hasPerson() == false) {
+            addPerson.getComponent().setVisible(ps, true);
+            editPerson.getComponent().setVisible(ps, false);
+            delPerson.getComponent().setVisible(ps, false);
+        } else {
+            addPerson.getComponent().setVisible(ps, false);
+            editPerson.getComponent().setVisible(ps, true);
+            delPerson.getComponent().setVisible(ps, true);
+        }
+
+        return super.isVisible(ps);
     }
 }

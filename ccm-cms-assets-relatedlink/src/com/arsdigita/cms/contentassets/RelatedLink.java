@@ -44,6 +44,7 @@ public class RelatedLink extends Link  {
     private static final Logger s_log = Logger.getLogger(RelatedLink.class);
 
     /** PDL properties */
+    public static final String LINK_LIST_NAME = "linkListName";
     public static final String RESOURCE_SIZE = "resourceSize";
     public static final String RESOURCE_TYPE = "resourceType";
     public static final String LINK_OWNER = "linkOwner";
@@ -106,6 +107,16 @@ public class RelatedLink extends Link  {
      */
     public RelatedLink( String type ) {
         super( type );
+    }
+
+    /** get the name of the named link list. */
+    public String getLinkListName(){
+      return (String) get(LINK_LIST_NAME);
+    }
+
+    /** Set the name of the named link list. */
+    public void setLinkListName(String name){
+      set(LINK_LIST_NAME , name);
     }
 
     /**
@@ -171,15 +182,16 @@ public class RelatedLink extends Link  {
      *
      * @param item The item to return links for
      */
-    public static DataCollection getRelatedLinks(ContentItem item) {
+    public static DataCollection getRelatedLinks(ContentItem item, String name) {
         s_log.debug("Getting related links for a content item");
         Session session = SessionManager.getSession();
         DataCollection links = session.retrieve(BASE_DATA_OBJECT_TYPE);
         links.addEqualsFilter(LINK_OWNER + ".id", item.getID());
+        links.addEqualsFilter(LINK_LIST_NAME, name);
         links.addOrder(ORDER);
         return links;
     }
-    
+
     /** 
      * Returns a DataCollection of related links which refer to the
      * given item. 
@@ -261,6 +273,7 @@ public class RelatedLink extends Link  {
         Session session = SessionManager.getSession();
         DataCollection links = session.retrieve(BASE_DATA_OBJECT_TYPE);
         links.addEqualsFilter(LINK_OWNER + ".id", getLinkOwner().getID());
+        links.addEqualsFilter(LINK_LIST_NAME, getLinkListName());
         links.addOrder(TITLE);
         int sortKey = 0;
         while (links.next()) {
@@ -287,6 +300,7 @@ public class RelatedLink extends Link  {
         DataQuery query = SessionManager.getSession().retrieveQuery
             ("com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem");
         query.setParameter("ownerID", getLinkOwner().getID());
+        query.setParameter("linkListName", getLinkListName());
         query.addOrder("linkOrder DESC");
         if (query.next()) {
             Integer linkOrder = ((Integer)query.get("linkOrder"));

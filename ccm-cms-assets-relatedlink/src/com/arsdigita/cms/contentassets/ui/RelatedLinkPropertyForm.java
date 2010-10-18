@@ -19,6 +19,7 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.form.Hidden;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
@@ -49,6 +50,7 @@ import com.arsdigita.util.Assert;
 public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
     private static boolean isHideAdditionalResourceFields;
+    private String m_linkListName = "";
 
     static {
         isHideAdditionalResourceFields = ContentSection.getConfig().isHideAdditionalResourceFields();
@@ -63,7 +65,7 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
      *    Link to work on
      */
     public RelatedLinkPropertyForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link) {
+            LinkSelectionModel link, String linkListName) {
 
         super(itemModel, link);
     }
@@ -99,6 +101,9 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
             addMimeOptions(resType);
             add(resType);
         }
+
+        Hidden linkListName = new Hidden(new StringParameter(RelatedLink.LINK_LIST_NAME));
+        add(linkListName);
     }
 
     /**
@@ -124,6 +129,7 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
      * @param s the PageState
      * @return the newly-created RelatedLink
      */
+    @Override
     protected Link createLink(PageState s) {
         ContentItem item = getContentItem(s);
         Assert.exists(item, ContentItem.class);
@@ -141,6 +147,7 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
      * Over-ride super class method to initialize addtional fields specific
      * to <code>RelatedLink</code> content asset.
      */
+    @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
         super.init(fse);
         FormData data = fse.getFormData();
@@ -156,10 +163,12 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
                 if (rl.getResourceType() != null) {
                     data.put(RelatedLink.RESOURCE_TYPE, rl.getResourceType().getMimeType());
                 }
+                data.put(RelatedLink.LINK_LIST_NAME, rl.getLinkListName());
             } else {
                 // New Link creation , clear the fields.
                 data.put(RelatedLink.RESOURCE_SIZE, null);
                 data.put(RelatedLink.RESOURCE_TYPE, null);
+                data.put(RelatedLink.LINK_LIST_NAME, m_linkListName);
             }
         }
     }
@@ -168,6 +177,7 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
      * over-ride super class method to set extended properties for
      * <code>RelatedLink</code>.
      */
+    @Override
     protected void setLinkProperties(Link link, FormSectionEvent fse) {
         RelatedLink rl = (RelatedLink) (link);
         FormData data = fse.getFormData();
@@ -181,6 +191,7 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
             MimeType mType = MimeType.loadMimeType(typeName);
             rl.setResourceType(mType);
         }
+        rl.setLinkListName(data.getString(RelatedLink.LINK_LIST_NAME));
         super.setLinkProperties(link, fse);
     }
 }

@@ -74,7 +74,7 @@ public class GenericPersonContactTable extends Table implements TableActionListe
 
         setModelBuilder(new GenericPersonTableModelBuilder(itemModel));
 
-        tab_model.get(0).setCellRenderer(new EditCellRenderer());
+        tab_model.get(2).setCellRenderer(new EditCellRenderer());
         tab_model.get(3).setCellRenderer(new DeleteCellRenderer());
 
         addTableActionListener(this);
@@ -150,18 +150,10 @@ public class GenericPersonContactTable extends Table implements TableActionListe
                 case 0:
                     return m_contactCollection.getContactOrder();
                 case 1:
-                    String lang = DispatcherHelper.getNegotiatedLocale().getLanguage();
-                    String key = m_contactCollection.getContactType();
                     return contacttypes.getRelationAttribute(m_contactCollection.getContactType(),
-                                                       DispatcherHelper.getNegotiatedLocale().getLanguage());
-//                    return contacttypes.getRelationAttribute(m_contactCollection.getContactType(),
-//                                                       DispatcherHelper.getNegotiatedLocale().getLanguage());
+                                                       DispatcherHelper.getNegotiatedLocale().getLanguage()).getName();
                 case 2:
                     return m_contact.getTitle();
-//                case 2:
-//                    return (m_personEntry.getDescription() != null && m_personEntry.getDescription().length() > MAX_DESC_LENGTH)
-//                                ? m_personEntry.getDescription().substring(0, MAX_DESC_LENGTH)
-//                                : m_personEntry.getDescription();
                 case 3:
                     return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:

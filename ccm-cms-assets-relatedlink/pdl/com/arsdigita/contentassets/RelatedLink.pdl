@@ -21,6 +21,7 @@ import com.arsdigita.cms.MimeType;
 
 object type RelatedLink extends Link {
 
+    String[0..1] linkListName = cms_related_links.link_list_name VARCHAR(100);
     String[0..1] resourceSize = cms_related_links.resource_size VARCHAR(50);
     MimeType[0..1] resourceType = join cms_related_links.resource_type
                                 to cms_mime_types.mime_type;
@@ -56,7 +57,7 @@ query allRelatedLinkOrderForItem {
 
     do {
         select l.link_order from cms_links l, cms_related_links r
-        where r.owner_id = :ownerID and l.link_id = r.related_link_id
+        where r.owner_id = :ownerID and l.link_id = r.related_link_id and r.link_list_name = :linkListName
     } map {
         linkOrder = l.link_order;
     }
@@ -68,7 +69,7 @@ query getReferringRelatedLinks {
     do  {
         select l.link_id
           from cms_links l, cms_related_links r
-         where l.target_item_id = :itemID and l.link_id=r.related_link_id
+         where l.target_item_id = :itemID and l.link_id=r.related_link_id and r.link_list_name = :linkListName
     } map {
         id = l.link_id;
     }

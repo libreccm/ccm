@@ -39,6 +39,7 @@ public class GenericContact extends ContentPage implements RelationAttributeInte
 
     /** PDL property names */
     public static final String PERSON = "person";
+//    public static final String CONTACT_TYPE = "";
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
 
@@ -98,12 +99,22 @@ public class GenericContact extends ContentPage implements RelationAttributeInte
     public GenericPerson getPerson() {
         return (GenericPerson) DomainObjectFactory.newInstance((DataObject)get(PERSON));
     }
-    
+
     // Set the person for this contact
     public void setPerson(GenericPerson person) {
         set(PERSON, person);
     }
-    
+
+//    // Get the type for this contact
+//    public String getContactType() {
+//        return get(CONTACT_TYPE));
+//    }
+//
+//    // Set the type for this contact
+//    public void setContactType(String type) {
+//        set(CONTACT_TYPE, type);
+//    }
+
     // Unset the address for this contact
     public void unsetPerson() {
         set(PERSON, null);
@@ -141,6 +152,14 @@ public class GenericContact extends ContentPage implements RelationAttributeInte
         remove(CONTACT_ENTRIES, contactEntry);
     }
     
+    public boolean hasPerson() {
+        return !(this.getPerson() == null);
+    }
+
+    public boolean hasAddress() {
+        return !(this.getAddress() == null);
+    }
+
     public boolean hasContactEntries() {
         return !this.getContactEntries().isEmpty();
     }

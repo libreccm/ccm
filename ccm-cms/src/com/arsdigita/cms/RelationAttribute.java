@@ -19,7 +19,7 @@ public class RelationAttribute extends DomainObject {
 
     public static final String ID = "id";
     public static final String ATTRIBUTE = "attribute";
-    public static final String KEY = "key";
+    public static final String KEY = "attr_key";
     public static final String LANGUAGE = "lang";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";

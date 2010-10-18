@@ -51,6 +51,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
     private ItemSearchWidget m_itemSearch;
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "contactPerson";
+    private final String CONTACTS_KEY = GenericPersonContactCollection.CONTACTS_KEY;
     /**
      * ID of the form
      */
@@ -90,7 +91,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
 
         // GenericContact type field
         add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact.type")));
-        ParameterModel contactTypeParam = new StringParameter(GenericPersonContactCollection.CONTACT_TYPE);
+        ParameterModel contactTypeParam = new StringParameter(GenericPersonContactCollection.CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
@@ -116,6 +117,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
 
         if (contact != null) {
             data.put(ITEM_SEARCH, contact.getPerson());
+//            data.put(CONTACTS_KEY, contact.getContactType());
         }
     }
 
@@ -126,6 +128,7 @@ public class GenericContactAttachPersonPropertyForm extends BasicPageForm implem
 
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
             contact.setPerson((GenericPerson) data.get(ITEM_SEARCH));
+//            contact.setContactType(data.get(CONTACTS_KEY));
         }
         init(fse);
     }

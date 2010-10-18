@@ -173,7 +173,7 @@ public class LinkPropertyForm extends FormSection
         add(m_targetURI);
 
         add(new Label("Content Item:"));
-        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, m_contentType);
+        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, m_itemModel.getContentType());
         m_itemSearch.getSearchButton().setOnFocus("toggle_link_fields(true)");
         m_itemSearch.getClearButton().setOnFocus("toggle_link_fields(true)");
         add(m_itemSearch);

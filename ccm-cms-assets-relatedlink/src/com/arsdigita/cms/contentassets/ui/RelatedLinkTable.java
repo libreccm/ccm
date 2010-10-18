@@ -48,10 +48,10 @@ public class RelatedLinkTable extends LinkTable {
      * @param link The <code>LinkSelectionModel</code> to track the
      * current link
      */
-    public RelatedLinkTable(ItemSelectionModel item, LinkSelectionModel link) {
+    public RelatedLinkTable(ItemSelectionModel item, LinkSelectionModel link, String linkListName) {
         super(item, link);
 
-        setModelBuilder(new RelatedLinkTableModelBuilder(item));
+        setModelBuilder(new RelatedLinkTableModelBuilder(item, linkListName));
 
         RelatedLinkRenderer rlcr = new RelatedLinkRenderer();
         m_typeCol.setCellRenderer(rlcr);

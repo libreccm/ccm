@@ -168,11 +168,11 @@ public class GenericContactEditAddressPropertyForm extends BasicPageForm impleme
         GenericContact contact = (GenericContact) getItemSelectionModel().getSelectedObject(state);
 
         if (getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
-            if (contact.getAddress() == null) {
-                contact.setAddress(new GenericAddress());
-                contact.getAddress().setName("Address for " + contact.getName() + "(" + contact.getID() + ")");
-                contact.getAddress().setTitle("Address for " + contact.getName() + "(" + contact.getID() + ")");
-            }
+//            if (contact.getAddress() == null) {
+//                contact.setAddress(new GenericAddress());
+//                contact.getAddress().setName("Address for " + contact.getName() + "(" + contact.getID() + ")");
+//                contact.getAddress().setTitle("Address for " + contact.getName() + "(" + contact.getID() + ")");
+//            }
 
             contact.getAddress().setAddress((String) data.get(ADDRESS));
             contact.getAddress().setPostalCode((String) data.get(POSTAL_CODE));

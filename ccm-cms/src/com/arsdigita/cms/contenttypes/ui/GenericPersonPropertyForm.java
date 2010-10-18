@@ -30,6 +30,7 @@ import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
+import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -107,6 +108,7 @@ public class GenericPersonPropertyForm extends BasicPageForm implements FormProc
 
         form.add(new Label((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize()));
         ParameterModel surnameParam = new StringParameter(SURNAME);
+        surnameParam.addParameterListener(new NotNullValidationListener());
         TextField surname = new TextField(surnameParam);
         form.add(surname);
 

@@ -27,7 +27,9 @@ import com.arsdigita.cms.contenttypes.ui.LinkTable;
  * Authoring step to create a RelatedLink and change ordering. 
  */
 public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
-    
+
+    protected String m_linkListName = "";
+
     /**
      * Constructor. Creates a <code>RelatedLinkPropertiesStep</code> given an
      * <code>ItemSelectionModel</code>  and an
@@ -63,10 +65,9 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
         LinkTable table;
         if (ContentSection.getConfig().isHideAdditionalResourceFields()) {
         	table = new LinkTable(getItemSelectionModel(), getLinkSelectionModel());
-        	table.setModelBuilder(new RelatedLinkTableModelBuilder(getItemSelectionModel()));
+        	table.setModelBuilder(new RelatedLinkTableModelBuilder(getItemSelectionModel(), m_linkListName));
         } else {
-        	table = new RelatedLinkTable(getItemSelectionModel(), 
-                    getLinkSelectionModel());
+        	table = new RelatedLinkTable(getItemSelectionModel(), getLinkSelectionModel(), m_linkListName);
         }
       
         container.add(table);
@@ -81,7 +82,8 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
     @Override
     protected FormSection getEditSheet() {
         return new RelatedLinkPropertyForm(getItemSelectionModel(), 
-                                           getLinkSelectionModel());
+                                           getLinkSelectionModel(),
+                                           m_linkListName);
     }
 }
 

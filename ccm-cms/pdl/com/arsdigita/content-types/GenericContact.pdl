@@ -57,7 +57,7 @@ association {
                                       to cms_contacts.contact_id;
 
     // Link Attribute
-    BigDecimal[0..1] contact_order = cms_person_contact_map.contact_order INTEGER;
-    String[0..1]     contact_type  = cms_person_contact_map.key VARCHAR(100);
+    BigDecimal[0..1] link_order = cms_person_contact_map.link_order INTEGER;
+    String[0..1]     link_key   = cms_person_contact_map.link_key   VARCHAR(100);
 
 }

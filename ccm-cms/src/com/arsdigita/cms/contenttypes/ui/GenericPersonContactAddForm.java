@@ -77,7 +77,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         // GenericContact type field
         add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact.type")));
-        ParameterModel contactTypeParam = new StringParameter(GenericPersonContactCollection.CONTACT_TYPE);
+        ParameterModel contactTypeParam = new StringParameter(GenericPersonContactCollection.CONTACTS_KEY);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
@@ -109,7 +109,7 @@ public class GenericPersonContactAddForm extends BasicItemForm {
 
         //
         if (!this.getSaveCancelSection().getCancelButton().isSelected(state)) {
-            person.addContact((GenericContact) data.get(ITEM_SEARCH), (String) data.get(GenericPersonContactCollection.CONTACT_TYPE));
+            person.addContact((GenericContact) data.get(ITEM_SEARCH), (String) data.get(GenericPersonContactCollection.CONTACTS_KEY));
         }
 
         init(fse);
