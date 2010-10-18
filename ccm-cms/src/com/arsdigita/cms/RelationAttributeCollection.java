@@ -106,12 +106,10 @@ public class RelationAttributeCollection extends DomainCollection {
     // Accessors
     public final String getKey() {
         return (String) get(KEY);
-//        return (String) getRelationAttribute().getKey();
     }
 
     public final String getLanguage() {
         return (String) get(LANGUAGE);
-//        return (String) getRelationAttribute().getLanguage();
     }
 
     // Get RelationAttribute in desired language
@@ -121,7 +119,7 @@ public class RelationAttributeCollection extends DomainCollection {
         logger.debug(String.format("this.language() = %s", this.getLanguage()));
 
         // First, test the current element
-        if (this.getKey().equals(key) && this.getLanguage().equals(language)) {
+        if(!this.isBeforeFirst() && key.equals(this.getKey()) && language.equals(this.getLanguage())) {
 
             return this.getRelationAttribute();
 

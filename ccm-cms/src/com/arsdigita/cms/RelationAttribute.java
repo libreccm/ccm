@@ -6,7 +6,7 @@
 package com.arsdigita.cms;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
@@ -15,8 +15,9 @@ import java.math.BigDecimal;
  *
  * @author quasi
  */
-public class RelationAttribute extends ACSObject {
+public class RelationAttribute extends DomainObject {
 
+    public static final String ID = "id";
     public static final String ATTRIBUTE = "attribute";
     public static final String KEY = "key";
     public static final String LANGUAGE = "lang";
@@ -67,6 +68,14 @@ public class RelationAttribute extends ACSObject {
     }
 
     /* accessors *****************************************************/
+    public BigDecimal getID() {
+        return (BigDecimal) get(ID);
+    }
+
+    public BigDecimal setID(BigDecimal id) {
+        return getID();
+    }
+
     public final String getAttribute() {
         return (String) get(ATTRIBUTE);
     }

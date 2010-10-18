@@ -21,8 +21,9 @@ model com.arsdigita.cms;
 
 import com.arsdigita.kernel.ACSObject;
 
-object type RelationAttribute extends ACSObject {
+object type RelationAttribute {
 
+    BigDecimal[1..1] id      = cms_relation_attribute.object_id INTEGER;
     String[1..1] attribute   = cms_relation_attribute.attribute VARCHAR(100);
     String[1..1] key         = cms_relation_attribute.key VARCHAR(100);
     String[1..1] lang        = cms_relation_attribute.lang VARCHAR(2);
@@ -30,6 +31,6 @@ object type RelationAttribute extends ACSObject {
     String[0..1] description = cms_relation_attribute.description VARCHAR(500);
 
     unique (attribute, key, lang);
-    reference key(cms_relation_attribute.relationattribute_id);
+    object key (id);
 }
 

@@ -37,7 +37,7 @@ import java.math.BigDecimal;
  *
  * <p>It is possible to instantiate this model with a {@link
  * com.arsdigita.cms.ContentType} as a constructor parameter. In this
- * case, the model will only instantiate items that have are of the
+ * case, the model will only instantiate items that are of the
  * specified content type, or one of it subclasses.</p>
  *
  * @author Stanislav Freidin (stas@arsdigita.com)
