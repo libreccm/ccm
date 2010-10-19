@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
 import com.arsdigita.cms.contenttypes.SciProject;
@@ -137,9 +138,12 @@ public class SciProjectPropertiesStep
                     "sciorganization.ui.project.departments"));
         }
 
+        ContentTypeCollection contentTypes = ContentType.getAllContentTypes();
+        contentTypes.addFilter("associatedObjectType = :type").set(
+                "type",
+                "com.arsdigita.cms.contenttypes.Publication");
         if ((!config.getProjectMaterialsHide())
-            && ContentType.findByAssociatedObjectType(
-                "com.arsdigita.cms.contenttypes.Publication") != null) {
+            && (contentTypes.size() > 0)) {
             /*
              * Must add this step manually since the basic class is not
              * SimpleEditStep...
