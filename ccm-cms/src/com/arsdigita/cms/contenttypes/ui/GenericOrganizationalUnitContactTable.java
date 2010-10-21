@@ -125,7 +125,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
     }
 
     private class GenericOrganizationalUnitTableModel implements TableModel {
-       
+
         private Table m_table;
         private GenericOrganizationalUnitContactCollection m_contactCollection;
         private GenericContact m_contact;
@@ -160,9 +160,18 @@ public class GenericOrganizationalUnitContactTable extends Table implements
 
         public Object getElementAt(int columnIndex) {
             s_log.debug(String.format("contacttypes.size() = %d",
-                    m_contacttypes.size()));
+                                      m_contacttypes.size()));
             switch (columnIndex) {
                 case 0:
+                    s_log.debug(String.format(
+                            "Getting human readable contact type for contact type \"%s\"...",
+                            m_contactCollection.getContactType()));
+                    s_log.debug(String.format(
+                            "Human readable contact type is: \"%s\"...",
+                            m_contacttypes.getRelationAttribute(
+                            m_contactCollection.getContactType(),
+                            DispatcherHelper.getNegotiatedLocale().
+                            getLanguage())));
                     return m_contacttypes.getRelationAttribute(
                             m_contactCollection.getContactType(),
                             DispatcherHelper.getNegotiatedLocale().

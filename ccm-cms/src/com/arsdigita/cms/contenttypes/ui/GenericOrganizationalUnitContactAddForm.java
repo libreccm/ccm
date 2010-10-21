@@ -74,7 +74,7 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.contact.type")));
         ParameterModel contactTypeParam = new StringParameter(
-                GenericOrganizationalUnitContactCollection.CONTACT_TYPE);
+                GenericOrganizationalUnit.CONTACT_TYPE);
         SingleSelect contactType = new SingleSelect(contactTypeParam);
         contactType.addValidationListener(new NotNullValidationListener());
         contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.
@@ -110,7 +110,7 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
             orgaunit.addContact((GenericContact) data.get(ITEM_SEARCH),
                                 (String) data.get(
-                    GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
+                    GenericOrganizationalUnit.CONTACT_TYPE));
         }
 
         //init(fse);

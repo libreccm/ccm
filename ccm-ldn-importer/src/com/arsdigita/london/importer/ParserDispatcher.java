@@ -119,6 +119,8 @@ public class ParserDispatcher extends DefaultHandler {
             s_log.debug("Processing start element: " +
                         qname + " " + uri + " " + local);
         }
+        System.out.println("Processing start element: " +
+                        qname + " " + uri + " " + local);
 
         if (m_parsers.containsKey(getKey(local, uri))) {
             TagParser current = getCurrentParser();
@@ -155,8 +157,10 @@ public class ParserDispatcher extends DefaultHandler {
     public void endElement(String uri, String local, String qname ) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Processing end element: " +
-                        qname + " " + uri + " " + local);
+                        qname + " " + uri + " " + local);            
         }
+        System.out.println("Processing end element: " +
+                        qname + " " + uri + " " + local);
 
         getCurrentParser().endElement(local, uri);
         if (s_log.isDebugEnabled()) {

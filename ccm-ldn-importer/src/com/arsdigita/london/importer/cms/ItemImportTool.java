@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.importer.cms;
 
 import java.io.File;
@@ -38,14 +37,33 @@ import com.arsdigita.london.importer.ParserDispatcher;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.packaging.Program;
 import com.arsdigita.util.UncheckedWrapperException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * <p>
  *  Standalone command-line tool which invokes the importer.
  * It can be invoked by:
+ * </p>
  * <pre>
  * ccm-run com.arsdigita.london.importer.cms.ItemImportTool \
  *   master-import.xml /dir/with/files/to/include /dir/containing/lobs content-section-name
  * </pre>
+ * <p>
+ * <strong>Attention:</strong> The importer was modified to support import of
+ * items with more than one language version. The modifications for this are:
+ * </p>
+ * <ul>
+ * <li>A {@link Map} of the already created {@link ContentBundle}s is kept.</li>
+ * <li>To identify language versions, the imported content items must have a
+ * name of the following pattern: <code>name-language</code>, for example
+ * <code>about-de</code> and <code>about-en</code>.</li>
+ * <li>When the item is added, the importer now checks if there is
+ * already a content bundle for the item. If not a new one is created, if there
+ * is one, the item is added as an instance.</li>
+ * <li>For items with only one language version the importer should work as
+ * before.</li>
+ * </ul>
  *
  *  @see com.arsdigita.london.importer
  */
@@ -67,22 +85,24 @@ public class ItemImportTool extends Program {
     }
 
     protected void doRun(CommandLine cmdLine) {
-        final String[] args = cmdLine.getArgs();
-        if (args.length != 4) {
-            help(System.err);
-            System.exit(1);
-        }
+        try {
+            final String[] args = cmdLine.getArgs();
+            if (args.length != 4) {
+                help(System.err);
+                System.exit(1);
+            }
 
-        final String masterFile = args[0];
-        final File itemDir = new File(args[1]);
-        final File assetDir = new File(args[2]);
-        final ContentSection section = getContentSection(args[3]);
+            final String masterFile = args[0];
+            final File itemDir = new File(args[1]);
+            final File assetDir = new File(args[2]);
+            final ContentSection section = getContentSection(args[3]);
 
-        final DomainObjectMapper mapper = new DomainObjectMapper();
+            final DomainObjectMapper mapper = new DomainObjectMapper();
 
-        final List items = new ArrayList();
+            final List items = new ArrayList();
 
-        Transaction session = new Transaction() {
+            Transaction session = new Transaction() {
+
                 public void doRun() {
                     ParserDispatcher parser = new ParserDispatcher();
                     parser.addParser(new ImportParser(mapper));
@@ -91,24 +111,34 @@ public class ItemImportTool extends Program {
                     parser.execute(masterFile);
                 }
             };
-        session.run();
+            session.run();
 
-        Iterator lazyItems = items.iterator();
-        while (lazyItems.hasNext()) {
-            Object[] entry = (Object[])lazyItems.next();
-            final Folder folder = (Folder)entry[0];
-            final String file = (String)entry[1];
+            Iterator lazyItems = items.iterator();
+            /*
+             * Extension to support import of items in more than one language
+             * Jens Pelzetter 2010-10-21
+             */
+            final Map<String, ContentBundle> bundles;
+            bundles = new HashMap<String, ContentBundle>();
+            /*
+             * Extension end
+             */
+            while (lazyItems.hasNext()) {
+                Object[] entry = (Object[]) lazyItems.next();
+                final Folder folder = (Folder) entry[0];
+                final String file = (String) entry[1];
 
-            Transaction itemTransaction = new Transaction() {
+                Transaction itemTransaction = new Transaction() {
+
                     public void doRun() {
                         ItemParser itemParser =
-                            new ItemParser(assetDir, mapper);
+                                   new ItemParser(assetDir, mapper);
 
                         File itemFile = new File(itemDir, file);
-                        
+
                         if (s_log.isInfoEnabled()) {
-                            s_log.info("Loading " + file + 
-                                       " into " + folder.getPath());
+                            s_log.info("Loading " + file + " into "
+                                       + folder.getPath());
                         }
 
                         ParserDispatcher parser = new ParserDispatcher();
@@ -117,10 +147,25 @@ public class ItemImportTool extends Program {
                             parser.execute(itemFile.getCanonicalPath());
                         } catch (IOException ex) {
                             throw new UncheckedWrapperException(
-                                "cannot process file" + file, ex);
+                                    "cannot process file" + file, ex);
                         }
 
-                        ContentItem item = (ContentItem)itemParser.getDomainObject();
+                        ContentItem item =
+                                    (ContentItem) itemParser.getDomainObject();
+                        /*
+                         * Multi lang extension begin
+                         */
+                        String itemName = item.getName();
+                        String bundleName;
+                        if (itemName.lastIndexOf('-') == -1) {
+                            bundleName = itemName;
+                        } else {
+                            bundleName = itemName.substring(0, itemName.
+                                    lastIndexOf('-'));
+                        }
+                        /*
+                         * Multi lang extension end
+                         */
                         // returning the null item indicates an item that
                         // has already been imported
                         if (s_log.isDebugEnabled()) {
@@ -128,20 +173,50 @@ public class ItemImportTool extends Program {
                         }
                         if (item != null) {
                             // We have to place this item into language bundle
-                            ContentBundle bundle = new ContentBundle(item);
-                            bundle.setParent(folder);
+                            /*
+                             * Multi lang extension start
+                             */
+                            ContentBundle bundle;
+                            if (itemName.lastIndexOf('-') == -1) {
+                                bundle = new ContentBundle(item);
+                                bundle.setParent(folder);
+                                bundle.setName(bundleName);
+                                bundles.put(bundleName, bundle);
+                            } else {
+                                bundle = bundles.get(bundleName);
+                                if (bundle == null) {
+                                    bundle = new ContentBundle(item);
+                                    bundle.setParent(folder);
+                                    bundle.setName(bundleName);
+                                    bundles.put(bundleName, bundle);
+                                } else {
+                                    bundle.addInstance(item);
+                                }
+                            }
+                            /*
+                             * Extension end
+                             */
+                            System.out.println("Set bundle " + bundle);
                             if (s_log.isDebugEnabled()) {
-                                s_log.error("Set bundle " + bundle);
+                                s_log.debug("Set bundle " + bundle);
                             }
                         }
                     }
                 };
-            itemTransaction.run();
+                itemTransaction.run();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
         }
     }
 
     public static final void main(String[] args) {
-        new ItemImportTool().run(args);
+        try {
+            new ItemImportTool().run(args);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -160,12 +235,13 @@ public class ItemImportTool extends Program {
         if (!rawPath.endsWith("/")) {
             path.append("/");
         }
-        
-        final ContentSection section = (ContentSection)ContentSection
-            .retrieveApplicationForPath(path.toString());
-        
+
+        final ContentSection section = (ContentSection) ContentSection.
+                retrieveApplicationForPath(path.toString());
+
         if (section == null) {
-            throw new DataObjectNotFoundException("Content section not found with path " + path);
+            throw new DataObjectNotFoundException("Content section not found with path "
+                                                  + path);
         }
         return section;
     }

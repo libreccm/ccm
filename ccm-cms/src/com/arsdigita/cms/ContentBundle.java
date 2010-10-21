@@ -272,6 +272,7 @@ public class ContentBundle extends ContentItem {
      * @see #addInstance(ContentItem)
      */
     public final ContentItem getPrimaryInstance() {
+        System.out.printf("ContentBundle.getPrimaryInstance() for default lang %s\n", getDefaultLanguage());
         return getInstance(getDefaultLanguage());
     }
     

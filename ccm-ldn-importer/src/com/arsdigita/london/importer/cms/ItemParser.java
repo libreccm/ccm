@@ -5,6 +5,7 @@ import com.arsdigita.london.importer.DomainObjectMapper;
 
 import com.arsdigita.cms.BinaryAsset;
 import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DomainObject;
@@ -46,71 +47,58 @@ import sun.misc.BASE64Decoder;
  *  @see com.arsdigita.london.importer
  */
 public class ItemParser extends DomainObjectParser {
+
     private static Logger s_log =
-        Logger.getLogger(ItemParser.class);
-
-
-    public static final String    DEFAULT_DOMAIN_CLASS = "defaultDomainClass";
-    public static final String                      ID = "id";
-    public static final String              IS_DELETED = "isDeleted";
-    public static final String                 VERSION = "version";
-    public static final String               ANCESTORS = "ancestors";
-    public static final String                    NAME = "name";
-    public static final String                OID_ATTR = "oid";
-    public static final String                IMAGE_ID = "imageId";
-    public static final String              ARTICLE_ID = "articleId";
-    public static final String       DEFAULT_ANCESTORS = "defaultAncestors";
-    public static final String            DISPLAY_NAME = "displayName";
-    public static final String                    FILE = "file";
-
-    public static final String           ENCODING_ATTR = "encoding";
-    public static final String         ENCODING_BASE64 = "base64";
-    public static final String         INDEX_ITEM_ATTR = "indexItem";
-    public static final String     RELABEL_FOLDER_ATTR = "relabelFolder";
+                          Logger.getLogger(ItemParser.class);
+    public static final String DEFAULT_DOMAIN_CLASS = "defaultDomainClass";
+    public static final String ID = "id";
+    public static final String IS_DELETED = "isDeleted";
+    public static final String VERSION = "version";
+    public static final String ANCESTORS = "ancestors";
+    public static final String NAME = "name";
+    public static final String OID_ATTR = "oid";
+    public static final String IMAGE_ID = "imageId";
+    public static final String ARTICLE_ID = "articleId";
+    public static final String DEFAULT_ANCESTORS = "defaultAncestors";
+    public static final String DISPLAY_NAME = "displayName";
+    public static final String FILE = "file";
+    public static final String ENCODING_ATTR = "encoding";
+    public static final String ENCODING_BASE64 = "base64";
+    public static final String INDEX_ITEM_ATTR = "indexItem";
+    public static final String RELABEL_FOLDER_ATTR = "relabelFolder";
     // Contains email of the author.  If present, a worfklow is started
     // for the imported item on behalf of that user.  CCM user is created
     // if not found in database.
-    public static final String             AUTHOR_ATTR = "author";
-    public static final String        END_OF_LIFE_ATTR = "eol";
-
+    public static final String AUTHOR_ATTR = "author";
+    public static final String END_OF_LIFE_ATTR = "eol";
     /**
      *  Object types holding the "global" OIDs, i.e. those which don't
      * change from one CCM instance to another.  Importer will not try
      * to create any of those.
      */
-    static final String[] GLOBAL_OID_TYPES = new String[] {
+    static final String[] GLOBAL_OID_TYPES = new String[]{
         "com.arsdigita.cms.MimeType",
         "com.arsdigita.cms.contenttypes.IsoCountry"
-      };
-
-
-
+    };
     // Some sequence of charactes that cannot be part of property name
-    private static final String PLAIN_ATTRIBUTE = ":..just the plain attribute!..:";
-    private static final String DO_NOT_SAVE = ":..please persistence don't save!..:";
+    private static final String PLAIN_ATTRIBUTE =
+                                ":..just the plain attribute!..:";
+    private static final String DO_NOT_SAVE =
+                                ":..please persistence don't save!..:";
     private static final String COUNT_SUFFIX = "////";
-
     // As we're traversing the XML tree, we keep the stack of parsed objects here
     private Stack m_objectStack;
     // And we keep track of attributes here - you never know when you gonna need then
     private Stack m_attributeStack;
-
     private Map m_currentDataObject;
-
     private int m_recursionLevel;
-
     private boolean m_write;
-
     private static List s_ignoredProps;
-
     // <launchDate>Wed Nov 12 00:00:00 CET 2003</launchDate>
-    private static SimpleDateFormat s_formatter
-         = new SimpleDateFormat ("EEE MMM dd HH:mm:ss zzz yyyy");
-
+    private static SimpleDateFormat s_formatter = new SimpleDateFormat(
+            "EEE MMM dd HH:mm:ss zzz yyyy");
     private static byte[] s_byteArray = new byte[0];
-
     private boolean m_begin;
-
     private boolean m_isIndexItem;
     private boolean m_relabelFolder;
     private String m_author;
@@ -130,7 +118,8 @@ public class ItemParser extends DomainObjectParser {
     }
 
     public ItemParser(File lobDir, DomainObjectMapper mapper) {
-        this("item", CMS.CMS_XML_NS, ContentItem.BASE_DATA_OBJECT_TYPE, lobDir, mapper);
+        this("item", CMS.CMS_XML_NS, ContentItem.BASE_DATA_OBJECT_TYPE, lobDir,
+             mapper);
     }
 
     public ItemParser(String tagName,
@@ -146,11 +135,13 @@ public class ItemParser extends DomainObjectParser {
         m_write = true;
     }
 
-
     protected ContentItem importItem() {
         debugLog("Ending content item, write: " + m_write);
         if (m_write) {
-            debugLog("--------------- About to persist ContentItem -------------------");
+            debugLog(
+                    "--------------- About to persist ContentItem -------------------");
+            System.out.println(
+                    "--------------- About to persist ContentItem -------------------");
             return persistContentItem(m_currentDataObject);
         }
         return null;
@@ -175,14 +166,17 @@ public class ItemParser extends DomainObjectParser {
                 return;
             }
             Assert.exists(m_currentDataObject, DataObject.class);
-            OID currentOID = (OID)m_currentDataObject.get(OID_ATTR);
+            OID currentOID = (OID) m_currentDataObject.get(OID_ATTR);
             ObjectType ot = currentOID.getObjectType();
             if (ot == null) {
-                throw new UncheckedWrapperException("no object type " + currentOID);
+                throw new UncheckedWrapperException("no object type "
+                                                    + currentOID);
             }
             Property prop = ot.getProperty(name);
             if (prop == null) {
-                throw new UncheckedWrapperException("no property " + name + " for " + ot.getQualifiedName());
+                throw new UncheckedWrapperException("no property " + name
+                                                    + " for " + ot.
+                        getQualifiedName());
             }
             if (prop.isAttribute()) {
                 beginAttribute(m_currentDataObject, prop);
@@ -226,7 +220,6 @@ public class ItemParser extends DomainObjectParser {
         m_currentDataObject = getDataObject(oid);
     }
 
-
     /**
      *  Called whenever a start of block which represents the role
      * is encountered.
@@ -243,7 +236,6 @@ public class ItemParser extends DomainObjectParser {
         m_objectStack.push(parentObject);
         m_currentDataObject = getDataObject(oid);
     }
-
 
     /**
      *   Called whenever CMS content item block is started with
@@ -265,13 +257,14 @@ public class ItemParser extends DomainObjectParser {
             m_relabelFolder = "true".equals(atts.getValue(RELABEL_FOLDER_ATTR));
             m_author = atts.getValue(AUTHOR_ATTR);
             String eol = atts.getValue(END_OF_LIFE_ATTR);
-            if (eol != null  &&  eol.trim().length() > 0) {
+            if (eol != null && eol.trim().length() > 0) {
                 ParsePosition pos = new ParsePosition(0);
                 m_archiveDate = s_formatter.parse(eol.trim(), pos);
             }
             m_objectStack.push(m_currentDataObject);
         }
-        debugLog("Start of content item " + oid + " encountered, write=" + m_write);
+        debugLog("Start of content item " + oid + " encountered, write="
+                 + m_write);
     }
 
     /**
@@ -285,7 +278,6 @@ public class ItemParser extends DomainObjectParser {
         m_objectStack.push(PLAIN_ATTRIBUTE);
     }
 
-
     protected void endTag(String name,
                           String uri) {
         if (getTagName().equals(name)) {
@@ -296,12 +288,14 @@ public class ItemParser extends DomainObjectParser {
         // Ignore everything if DB writing is disabled
         if (m_write) {
             if (PLAIN_ATTRIBUTE.equals(m_objectStack.peek())) {
-                Property prop = ((OID) m_currentDataObject.get(OID_ATTR)).getObjectType().getProperty(name);
+                Property prop = ((OID) m_currentDataObject.get(OID_ATTR)).
+                        getObjectType().getProperty(name);
                 endAttribute(m_currentDataObject, prop, getTagBody());
             } else {
                 // The current attribute is either role or association (collection)
                 Map parentObject = (Map) m_objectStack.peek();
-                Property prop = ((OID) parentObject.get(OID_ATTR)).getObjectType().getProperty(name);
+                Property prop = ((OID) parentObject.get(OID_ATTR)).getObjectType().
+                        getProperty(name);
                 if (prop.isCollection()) {
                     endAssociation(parentObject, m_currentDataObject, prop);
                 } else if (prop.isRole()) {
@@ -316,7 +310,6 @@ public class ItemParser extends DomainObjectParser {
         }
     }
 
-
     /**
      * @return true if newly imported item is index item.
      */
@@ -328,7 +321,7 @@ public class ItemParser extends DomainObjectParser {
      * @return true if item is index item and its title should propagate to folder
      */
     public boolean relabelFolder() {
-        return m_isIndexItem  &&  m_relabelFolder;
+        return m_isIndexItem && m_relabelFolder;
     }
 
     /**
@@ -342,26 +335,26 @@ public class ItemParser extends DomainObjectParser {
      * @return the end of lifecycle date, might be null
      */
     public Date getArchiveDate() {
-        return (Date)m_archiveDate.clone();
+        return (Date) m_archiveDate.clone();
     }
-
 
     private ContentItem persistContentItem(Map itemMap) {
         OID srcOid = (OID) itemMap.get(OID_ATTR);
         String type = srcOid.getObjectType().getQualifiedName();
         DataObject itemDataObject = SessionManager.getSession().create(type);
-        ContentItem item = (ContentItem) createACSObject(itemDataObject, itemMap);
-        if (item != null &&
-            item.getLanguage() == null) {
+        ContentItem item =
+                    (ContentItem) createACSObject(itemDataObject, itemMap);
+        if (item != null && item.getLanguage() == null) {
             item.setLanguage("en");
         }
+
         getObjectMapper().setObject(srcOid, item);
 
-        setAllProperties(item, itemDataObject, itemMap, 0);
+        setAllProperties(item, itemDataObject, itemMap, 0);                
+
         s_log.info("Created item " + item.getOID() + " from " + srcOid);
         return item;
     }
-
 
     /**
      *   Called whenever a plain attribute (neither association nor role) element is ended.
@@ -417,25 +410,25 @@ public class ItemParser extends DomainObjectParser {
         String propName = property.getName();
         debugLog("Ending role: " + propName + ": " + childObject);
         // don't set ContentType
-        if (!((OID) childObject.get(OID_ATTR)).getObjectType().getQualifiedName().equals(ContentType.BASE_DATA_OBJECT_TYPE)) {
+        if (!((OID) childObject.get(OID_ATTR)).getObjectType().getQualifiedName().
+                equals(ContentType.BASE_DATA_OBJECT_TYPE)) {
             parentObject.put(propName + COUNT_SUFFIX + "1", childObject);
         }
         m_currentDataObject = parentObject;
         m_objectStack.pop();
     }
 
-
-
     /**
      *  Process the item recursively until we get all attributes set.
      */
-    private void setAllProperties(ACSObject acs, DataObject dataObject, Map objectMap, int recursionLevel) {
+    private void setAllProperties(ACSObject acs, DataObject dataObject,
+                                  Map objectMap, int recursionLevel) {
 
         m_recursionLevel = recursionLevel;
         debugLog("setAll on " + dataObject.getOID() + ": " + objectMap);
 
         // Loop over all properties recorded in Map and set them appropriately
-        for (Iterator it=objectMap.keySet().iterator(); it.hasNext(); ) {
+        for (Iterator it = objectMap.keySet().iterator(); it.hasNext();) {
 
             String key = (String) it.next();
             if (s_ignoredProps.contains(key)) {
@@ -449,7 +442,7 @@ public class ItemParser extends DomainObjectParser {
             //            of how many objects that association holds.  For this purpose, just
             //            ignore the property with simple count
             int pos = key.indexOf(COUNT_SUFFIX);
-            if (pos > -1  &&  key.length() > pos + COUNT_SUFFIX.length()) {
+            if (pos > -1 && key.length() > pos + COUNT_SUFFIX.length()) {
                 String propName = key.substring(0, pos);
                 debugLog("Compound property: " + propName);
                 // We're in role/association, get the child object
@@ -473,13 +466,15 @@ public class ItemParser extends DomainObjectParser {
                 }
                 Property prop = dataObject.getObjectType().getProperty(propName);
                 if (prop.isCollection()) {
-                    DataAssociation assoc = (DataAssociation) dataObject.get(propName);
+                    DataAssociation assoc = (DataAssociation) dataObject.get(
+                            propName);
                     assoc.add(childObject);
                 } else {
                     dataObject.set(propName, childObject);
                 }
                 if (recurse) {
-                    setAllProperties(childAcs, childObject, childObjectMap, recursionLevel+1);
+                    setAllProperties(childAcs, childObject, childObjectMap, recursionLevel
+                                                                            + 1);
                     m_recursionLevel = recursionLevel;
                 }
             } else if (pos == -1) { // We're dealing with simple property
@@ -490,7 +485,6 @@ public class ItemParser extends DomainObjectParser {
         finalizeACSObject(acs, dataObject, objectMap);
     }
 
-
     /**
      *  This methods guesses required properties not present in the import file.
      */
@@ -498,7 +492,7 @@ public class ItemParser extends DomainObjectParser {
 
         debugLog("finalizing ACS: " + acs.getClass() + ": " + acs);
         if (acs instanceof BinaryAsset
-                &&  dobj.get(BinaryAsset.MIME_TYPE) == null) {
+            && dobj.get(BinaryAsset.MIME_TYPE) == null) {
             // First get default
             String mimeString = "application/octet-stream";
             String filename = (String) dobj.get(NAME);
@@ -514,19 +508,20 @@ public class ItemParser extends DomainObjectParser {
             OID mimeOid = new OID(MimeType.BASE_DATA_OBJECT_TYPE);
             mimeOid.set(MimeType.MIME_TYPE, mimeString);
             DataObject mimeObj = SessionManager.getSession().retrieve(mimeOid);
-            debugLog("Guessing mimetype from filename: " + filename + ", mime=" + mimeOid);
+            debugLog("Guessing mimetype from filename: " + filename + ", mime="
+                     + mimeOid);
             dobj.set(BinaryAsset.MIME_TYPE, mimeObj);
         }
         if (dobj.getObjectType().getProperty(DISPLAY_NAME) != null
-              &&  dobj.get(DISPLAY_NAME) == null) {
+            && dobj.get(DISPLAY_NAME) == null) {
             dobj.set(DISPLAY_NAME, dobj.getObjectType().getQualifiedName()
-                                        + " " + dobj.getOID().get("id").toString());
+                                   + " " + dobj.getOID().get("id").toString());
             debugLog("finalizing DISPLAY_NAME: " + dobj.get(DISPLAY_NAME));
         }
         if (dobj.getObjectType().getProperty(NAME) != null
-              &&  dobj.get(NAME) == null) {
+            && dobj.get(NAME) == null) {
             dobj.set(NAME, dobj.getObjectType().getName()
-                                + "-" + dobj.getOID().get("id").toString());
+                           + "-" + dobj.getOID().get("id").toString());
             debugLog("finalizing NAME: " + dobj.get(NAME));
         }
     }
@@ -579,7 +574,6 @@ public class ItemParser extends DomainObjectParser {
         return newDataObject;
     }
 
-
     private ACSObject createACSObject(DataObject dobj, Map properties) {
         String domainClass = (String) properties.get(DEFAULT_DOMAIN_CLASS);
         if (domainClass == null) {
@@ -589,8 +583,10 @@ public class ItemParser extends DomainObjectParser {
         debugLog("Creating " + domainClass + " ...");
         try {
             Class classDef = Class.forName(domainClass);
-            Constructor constructor = classDef.getConstructor(new Class[] {DataObject.class});
-            ACSObject object = (ACSObject) constructor.newInstance(new Object[] {dobj});
+            Constructor constructor = classDef.getConstructor(new Class[]{
+                        DataObject.class});
+            ACSObject object = (ACSObject) constructor.newInstance(new Object[]{
+                        dobj});
             debugLog("Successfully created " + object.getOID());
             return object;
         } catch (InvocationTargetException e) {
@@ -601,13 +597,10 @@ public class ItemParser extends DomainObjectParser {
             throw new UncheckedWrapperException(e);
         } catch (ClassNotFoundException e) {
             throw new UncheckedWrapperException(e);
-        } catch (Exception e ) {
+        } catch (Exception e) {
             throw new UncheckedWrapperException(e);
         }
     }
-
-
-
 
     private void setProperty(Map dobj, Property prop, String value) {
         String key = prop.getName();
@@ -633,12 +626,12 @@ public class ItemParser extends DomainObjectParser {
             // not already been imported.  For others, we should never
             // be at this point anyway!
             OID srcOid = (OID) dobj.get(OID_ATTR);
-            String filename = srcOid.get("id").toString() +  "-" + key + ".raw";
+            String filename = srcOid.get("id").toString() + "-" + key + ".raw";
             // Override filename generation pattern if filename is
             // explicitly provided as attr of <content> element.
             Map atts = (Map) m_attributeStack.peek();
-            if (atts != null  &&  atts.get(FILE) != null) {
-                filename = (String)atts.get(FILE);
+            if (atts != null && atts.get(FILE) != null) {
+                filename = (String) atts.get(FILE);
                 // We will also use this attribute to populate "name" property
                 // (needed for mime-type guessing if none explicitly provided),
                 // but only if such has not been set so far.  If this property
@@ -648,7 +641,7 @@ public class ItemParser extends DomainObjectParser {
                     dobj.put(NAME, filename);
                 }
             }
-            if (atts != null &&  atts.get(ENCODING_ATTR) != null) {
+            if (atts != null && atts.get(ENCODING_ATTR) != null) {
                 String encoding = (String) atts.get(ENCODING_ATTR);
                 if (ENCODING_BASE64.equals(encoding)) {
                     BASE64Decoder decoder = new BASE64Decoder();
@@ -656,7 +649,7 @@ public class ItemParser extends DomainObjectParser {
                         byte[] content = decoder.decodeBuffer(value);
                         dobj.put(key, content);
                         debugLog("Successfully loaded base64 encoded BLOB"
-                                    + ", length: " + content.length + " bytes");
+                                 + ", length: " + content.length + " bytes");
                         return;
                     } catch (IOException ioe) {
                         throw new UncheckedWrapperException(ioe);
@@ -672,7 +665,7 @@ public class ItemParser extends DomainObjectParser {
             try {
                 in = new FileInputStream(lobFile);
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
-    
+
                 byte[] buffer = new byte[1024];
                 int length = -1;
                 try {
@@ -685,7 +678,7 @@ public class ItemParser extends DomainObjectParser {
                 byte[] content = os.toByteArray();
                 dobj.put(key, content);
                 debugLog("Successfully loaded file " + lobFile
-                            + ", length: " + content.length + " bytes");
+                         + ", length: " + content.length + " bytes");
             } catch (FileNotFoundException e) {
                 s_log.error("Lob file: " + lobFile + " does not exist!", e);
             } finally {
@@ -696,11 +689,10 @@ public class ItemParser extends DomainObjectParser {
                 }
             }
         } else {
-            s_log.warn("Don't know how to handle property " +
-                       key + ", type: " + propertyClass.getName());
+            s_log.warn("Don't know how to handle property " + key + ", type: " + propertyClass.
+                    getName());
         }
     }
-
 
     private void debugLog(String logString) {
         s_log.debug(getPadding() + logString);
@@ -724,15 +716,12 @@ public class ItemParser extends DomainObjectParser {
         return padding.toString();
     }
 
-
     protected Map copyAttributes(Attributes atts) {
         Map map = new HashMap();
 
-        for (int i = 0 ; i < atts.getLength() ; i++) {
+        for (int i = 0; i < atts.getLength(); i++) {
             map.put(atts.getQName(i), atts.getValue(i));
         }
         return map;
     }
 }
-
-
