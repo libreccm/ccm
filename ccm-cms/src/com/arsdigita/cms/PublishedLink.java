@@ -34,6 +34,7 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
+import com.redhat.persistence.DuplicateObjectException;
 
 import org.apache.log4j.Logger;
 
@@ -264,8 +265,8 @@ class PublishedLink extends DomainObject {
                 Property prop = ot.getProperty(propertyName);
                 Assert.exists(prop, propertyName + " for type " + ot.getQualifiedName() + ", ID: " + src.get("id"));
                 if (prop.isCollection()) {
-                    DataAssociation da = (DataAssociation) src.get(propertyName);
-                    da.add(target);
+                    DataAssociation da = (DataAssociation) src.get(propertyName);               
+                    da.add(target);               
                 } else {
                     src.set(propertyName,target);
                 }

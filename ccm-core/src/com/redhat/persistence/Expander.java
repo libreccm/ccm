@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  * Expands events. Each top level call to Session creates an exapnder and uses
@@ -40,6 +41,7 @@ import java.util.Map;
  */
 class Expander extends Event.Switch {
 
+    private static final Logger s_log = Logger.getLogger(Expander.class);
     final private Session m_ssn;
     final private Collection m_deleting = new HashSet();
     final private List m_deletes = new LinkedList();
@@ -54,8 +56,8 @@ class Expander extends Event.Switch {
 
     private void addEvent(Event ev) {
         if (m_pending == null) {
-            throw new IllegalStateException
-                ("using expander after call to finish");
+            throw new IllegalStateException(
+                    "using expander after call to finish");
         }
 
         ev.prepare();
@@ -67,21 +69,26 @@ class Expander extends Event.Switch {
     }
 
     private void addEvents(List l) {
-        for (Iterator it = l.iterator(); it.hasNext(); ) {
+        for (Iterator it = l.iterator(); it.hasNext();) {
             addEvent((Event) it.next());
         }
     }
 
     final void expand(Event ev) {
         try {
-            Session.trace(ev.getName(), new Object[] { ev });
-            ev.dispatch(this);
+            Session.trace(ev.getName(), new Object[]{ev});
+            try {
+                ev.dispatch(this);
+            } catch (DuplicateObjectException ex) {
+                s_log.warn("Duplicate object exception: ", ex);
+                s_log.warn("This is maybe an error, but not in all cases.");
+            }
         } catch (RuntimeException re) {
             if (re instanceof ProtoException) {
                 ProtoException pe = (ProtoException) re;
                 if (pe.isInternal()) {
-                    throw new UncheckedWrapperException
-                        ("internal persistence exception", pe);
+                    throw new UncheckedWrapperException(
+                            "internal persistence exception", pe);
                 } else {
                     pe.setInternal(true);
                 }
@@ -126,12 +133,12 @@ class Expander extends Event.Switch {
         addEvent(e);
 
         PropertyMap props = a.getProperties(obj);
-        for (Iterator it = props.entrySet().iterator(); it.hasNext(); ) {
+        for (Iterator it = props.entrySet().iterator(); it.hasNext();) {
             Map.Entry me = (Map.Entry) it.next();
             Event ev;
             try {
-                ev = new SetEvent
-                    (m_ssn, obj, (Property) me.getKey(), me.getValue());
+                ev = new SetEvent(m_ssn, obj, (Property) me.getKey(), me.
+                        getValue());
             } catch (TypeException te) {
                 te.setInternal(false);
                 throw te;
@@ -143,18 +150,22 @@ class Expander extends Event.Switch {
     public void onDelete(DeleteEvent e) {
         final Object obj = e.getObject();
 
-        if (m_ssn.isDeleted(obj) || isBeingDeleted(obj)) { return; }
+        if (m_ssn.isDeleted(obj) || isBeingDeleted(obj)) {
+            return;
+        }
 
         beginDelete(obj);
 
         ObjectType type = m_ssn.getObjectType(obj);
 
-        for (Iterator it = type.getRoles().iterator(); it.hasNext(); ) {
+        for (Iterator it = type.getRoles().iterator(); it.hasNext();) {
             Role role = (Role) it.next();
-            if (role.isCollection()) { clear(obj, role); }
+            if (role.isCollection()) {
+                clear(obj, role);
+            }
         }
 
-        for (Iterator it = type.getRoles().iterator(); it.hasNext(); ) {
+        for (Iterator it = type.getRoles().iterator(); it.hasNext();) {
             Role role = (Role) it.next();
 
             if (!role.isCollection() && m_ssn.get(obj, role) != null) {
@@ -178,8 +189,12 @@ class Expander extends Event.Switch {
         }
 
         if (role.isReversable()) {
-            if (old != null) { reverseUpdateOld(e, old); }
-            if (value != null) { reverseUpdateNew(e); }
+            if (old != null) {
+                reverseUpdateOld(e, old);
+            }
+            if (value != null) {
+                reverseUpdateNew(e);
+            }
         }
 
         addEvent(e);
@@ -193,14 +208,18 @@ class Expander extends Event.Switch {
 
     public void onAdd(AddEvent e) {
         Role role = (Role) e.getProperty();
-        if (role.isReversable()) { reverseUpdateNew(e); }
+        if (role.isReversable()) {
+            reverseUpdateNew(e);
+        }
         addEvent(e);
     }
 
     public void onRemove(RemoveEvent e) {
         Role role = (Role) e.getProperty();
 
-        if (role.isReversable()) { reverseUpdateOld(e, e.getArgument()); }
+        if (role.isReversable()) {
+            reverseUpdateOld(e, e.getArgument());
+        }
 
         addEvent(e);
 
@@ -212,7 +231,7 @@ class Expander extends Event.Switch {
     // also called by session
     private void clear(Object obj, Property prop) {
         PersistentCollection pc =
-            (PersistentCollection) m_ssn.get(obj, prop);
+                             (PersistentCollection) m_ssn.get(obj, prop);
         Cursor c = pc.getDataSet().getCursor();
         while (c.next()) {
             expand(new RemoveEvent(m_ssn, obj, prop, c.get()));
@@ -233,7 +252,9 @@ class Expander extends Event.Switch {
 
         expand(new DeleteEvent(m_ssn, containee));
 
-        if (me) { undelete(container); }
+        if (me) {
+            undelete(container);
+        }
     }
 
     /**
@@ -309,5 +330,4 @@ class Expander extends Event.Switch {
             return m_ssn.getSessionKey(o1).equals(m_ssn.getSessionKey(o2));
         }
     }
-
 }
