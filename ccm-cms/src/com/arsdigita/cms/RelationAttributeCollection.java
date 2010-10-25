@@ -16,9 +16,6 @@ import org.apache.log4j.Logger;
  */
 public class RelationAttributeCollection extends DomainCollection {
 
-    public static final Logger logger =
-                               Logger.getLogger(
-            RelationAttributeCollection.class);
     public static String ATTRIBUTE = RelationAttribute.ATTRIBUTE;
     public static String KEY = RelationAttribute.KEY;
     public static String LANGUAGE = RelationAttribute.LANGUAGE;
@@ -114,9 +111,6 @@ public class RelationAttributeCollection extends DomainCollection {
 
     // Get RelationAttribute in desired language
     public RelationAttribute getRelationAttribute(String key, String language) {
-
-        logger.debug(String.format("this.getKey() = %s", this.getKey()));
-        logger.debug(String.format("this.language() = %s", this.getLanguage()));
 
         // First, test the current element
         if(!this.isBeforeFirst() && key.equals(this.getKey()) && language.equals(this.getLanguage())) {

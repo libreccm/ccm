@@ -112,7 +112,6 @@ public class GenericPersonContactTable extends Table implements TableActionListe
         private GenericContact m_contact;
         private GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
 
-
         private GenericPersonTableModel(Table t, PageState ps, GenericPerson person) {
             m_table = t;
             m_contactCollection = person.getContacts();
@@ -151,7 +150,7 @@ public class GenericPersonContactTable extends Table implements TableActionListe
                     return m_contactCollection.getContactOrder();
                 case 1:
                     return contacttypes.getRelationAttribute(m_contactCollection.getContactType(),
-                                                       DispatcherHelper.getNegotiatedLocale().getLanguage()).getName();
+                            DispatcherHelper.getNegotiatedLocale().getLanguage()).getName();
                 case 2:
                     return m_contact.getTitle();
                 case 3:
@@ -231,7 +230,7 @@ public class GenericPersonContactTable extends Table implements TableActionListe
         PageState state = evt.getPageState();
 
         // Get selected GenericContact
-        GenericContact contact =  new GenericContact(new BigDecimal(evt.getRowKey().toString()));
+        GenericContact contact = new GenericContact(new BigDecimal(evt.getRowKey().toString()));
 
         // Get GenericPerson
         GenericPerson person = (GenericPerson) m_itemModel.getSelectedObject(state);
