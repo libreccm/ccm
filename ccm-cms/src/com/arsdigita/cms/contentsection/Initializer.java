@@ -21,53 +21,50 @@
 package com.arsdigita.cms.contentsection;
 
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.LoaderConfig;
-import com.arsdigita.cms.installer.ContentSectionSetup;
-import com.arsdigita.cms.installer.Util;
-import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.cms.ContentSectionCollection;
+// import com.arsdigita.cms.LoaderConfig;
+//import com.arsdigita.cms.installer.Util;
+// import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.workflow.UnfinishedTaskNotifier;
-import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.TransactionContext;
+// import com.arsdigita.domain.DataObjectNotFoundException;
+// import com.arsdigita.persistence.SessionManager;
+// import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.ConfigError;
+// import com.arsdigita.runtime.ConfigError;
 // import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ContextCloseEvent;
-import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.util.Assert;
-import com.arsdigita.web.Application;
+// import com.arsdigita.runtime.DomainInitEvent;
+// import com.arsdigita.util.Assert;
+// import com.arsdigita.web.Application;
+import com.arsdigita.cms.workflow.CMSTask;
 
-import java.math.BigDecimal;
-import java.util.Iterator;
+// import java.math.BigDecimal;
+import java.util.Enumeration;
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 import java.util.Timer;
+import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
 
-// CURRENT STATUS:
-// (Simple) Migration of the Old Initializer code of this package to the new
-// initializer system. Current goal is a pure replacement with as less code
-// changes as possible.
-// In a second step a restructure of the code will be done.
-
-// Has to handle in future:
-//  -- configuration of alert tasks
-//  -- creation of additional content sections during restart
-
 /**
- * XXX Reformulate according to the code development!
- * <p>Initializes a content section, registering a default workflow, lifecycle &
- * roles and adding the content types.
+ * Initializes the content section sub-package of the CMS package (module).
  *
- * <p>The initialization process takes several configuration
- * parameters. The <code>name</code> is the name of the content
- * section, the <code>types</code> is a list of content types
- * to register
+ * XXX Reformulate according to the code development!
+ * Currently:
+ * - creation of additional content sections during restart (comming soon)
+ * - initializes alert preferences for each content section
+ * - initializes overdue alerts for each content section
+ * In the (hopefully) near future:
+ * Content section specific tasks of cms.Initializer will be moved into this
+ * Initializer.
+ *
  *
  * @author Daniel Berrange (berrange@redhat.com)
  * @author Michael Pih
- * @author pb
+ * @author pboy (pb@zes.uni-bremen.de)
  * @version $Id: $
  */
 public class Initializer extends CompoundInitializer {
@@ -78,11 +75,10 @@ public class Initializer extends CompoundInitializer {
 
     /** Local configuration object ContentSectionConfig containing parameters
         which may be changed each system startup.  */
-    //  private static final LoaderConfig s_conf = LoaderConfig.getConfig();
-    private static final LoaderConfig s_conf = new LoaderConfig();
+    private static final ContentSectionConfig s_conf = ContentSectionConfig.getInstance();
 
     /** The Timer used to send Unfinished notifications  */
-    private static Timer s_unfinishedTimer;
+    private static Vector s_unfinishedTimers = new Vector();
 
 
     public Initializer() {
@@ -90,6 +86,7 @@ public class Initializer extends CompoundInitializer {
       //final int database = DbHelper.getDatabaseFromURL(url);
     }
 
+//  Currently nothing to do here. Will be changed in the ongoing migration process
 //  /**
 //   * An empty implementation of {@link Initializer#init(DataInitEvent)}.
 //   *
@@ -98,42 +95,35 @@ public class Initializer extends CompoundInitializer {
 //  public void init(DataInitEvent evt) {
 //  }
 
-    /**
-     * Initializes domain-coupling machinery, usually consisting of
-     * registering object instantiators and observers.
-     *
-     */
-    public void init(DomainInitEvent evt) {
-        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
-
-        // Recursive invokation of init, is it really necessary??
-        // On the other hand:
-        // An empty implementations prevents this initializer from being executed.
-        // A missing implementations causes the super class method to be executed,
-        // which invokes the above added LegacyInitializer.
-        // If super is not invoked, various other cms sub-initializer may not run.
-        super.init(evt);
-
-
-        /*
-         * loadAlertPrefs loads a list of workflow tasks and associated events
-         * from configuration file and fills a hashmap. No database operation.
-         * Not a loader task!
-         */
-        // XXX Currently in ContenSectionSetup - has to be migrated !!
-        //      setup.loadAlertPrefs((List) s_conf.getTaskAlerts());
-
-
-        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
-    }
+//  Currently nothing to do here. Will be changed in the ongoing migration process
+//  /**
+//   * Initializes domain-coupling machinery, usually consisting of
+//   * registering object instantiators and observers.
+//   *
+//   */
+//  public void init(DomainInitEvent evt) {
+//      s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
+//
+//      // Recursive invokation of init, is it really necessary??
+//      // On the other hand:
+//      // An empty implementations prevents this initializer from being executed.
+//      // A missing implementations causes the super class method to be executed,
+//      // which invokes the above added LegacyInitializer.
+//      // If super is not invoked, various other cms sub-initializer may not run.
+//      super.init(evt);
+//
+//
+//      s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
+//  }
 
 
     /**
      * Implementation of the {@link Initializer#init(ContextInitEvent)}
      * method.
      *
-     * Initializes the scheduler thread to fire all the events for the
-     * ......   that have just began or ended.
+     * Steps through all installed content sections and for each section
+     * - initializes the allert preferences
+     * - initializes the scheduler background thread to fire all all alert events.
      *
      * A delay value of 0 inhibits start of processing.
      * @param evt The context init event.
@@ -141,16 +131,33 @@ public class Initializer extends CompoundInitializer {
     public void init(ContextInitEvent evt) {
         s_log.debug("content section ContextInitEvent started");
 
-        // XXX to be done yet!
-        // Currently we have only one timer, but notification is handled
-        // on a per section base. We have also only one set of timing parameters.
-        // So we have to configure all sections in the same way.
-//      s_unfinishedTimer = setup.startNotifierTask
-//          (s_conf.getSendOverdueAlerts(),
-//           s_conf.getTaskDuration(),
-//           s_conf.getOverdueAlertInterval(),
-//           s_conf.getMaxAlerts());
+        super.init(evt);
 
+        // Currently we have only one set of both alert preference configuration
+        // and timer configuration. Notification is handled on a per section
+        // base, so we have to configure all sections in the same way.
+        // TODO: Store alerts prefs as well as timer configuration for each
+        // content section and make it configurable in the UI.
+        // For now we step through all sections and configure them the same way.
+        ContentSectionCollection sections=ContentSection.getAllSections();
+        while( sections.next() ) {
+            ContentSection section = sections.getContentSection();
+
+            // Initialize workflow tasks and associated events from configuration
+            // file filling a hashmap.
+            initializeTaskAlerts(section, s_conf.getTaskAlerts() );
+
+            Timer unfinishedTimer = startNotifierTask(
+                                                section,
+                                                s_conf.getSendOverdueAlerts(),
+                                                s_conf.getTaskDuration(),
+                                                s_conf.getAlertInterval(),
+                                                s_conf.getMaxAlerts()
+                                                     );
+            if ( unfinishedTimer != null) {
+                s_unfinishedTimers.addElement(unfinishedTimer);
+            }
+        }
     
         s_log.debug("content section ContextInitEvent completed");
     }
@@ -160,13 +167,53 @@ public class Initializer extends CompoundInitializer {
      * method.
      *
      */
+    @Override
     public void close(ContextCloseEvent evt) {
         s_log.debug("content section ContextCloseEvent started");
-        if (s_unfinishedTimer != null) {
-            s_unfinishedTimer.cancel();
-            s_unfinishedTimer = null;
+
+        Timer unfinishedTimer = null;
+        if (s_unfinishedTimers.size() > 0) {
+            for (Enumeration el=s_unfinishedTimers.elements(); el.hasMoreElements(); ) {
+                unfinishedTimer = (Timer) el.nextElement();
+                if(unfinishedTimer != null) unfinishedTimer.cancel();
+                unfinishedTimer = null;
+            // s_unfinishedTimer = null;
+            }
+
         }
         s_log.debug("content section ContextCloseEvent completed");
+    }
+
+
+    /**
+     * Steps through a string array of tasks and associated alert events
+     * creating section specific CMStasks from configuration file.
+     *
+     * Note: Tasks are created on a per section base, but we have currently no
+     * way to store different values for each section. So all sections are
+     * configured equal.
+     *
+     * @param section  A section object
+     * @param taskAlerts An array of tasks and associated events
+     */
+    public void initializeTaskAlerts(ContentSection section,
+                                     String[] taskAlerts) {
+
+        if (taskAlerts != null) {
+            for (int i=0,n=taskAlerts.length; i<n; i++) {
+                StringTokenizer tok = new StringTokenizer(taskAlerts[i],":");
+                try {
+                    String taskName = tok.nextToken();
+                    while (tok.hasMoreTokens()) {
+                        String operation = tok.nextToken();
+                        CMSTask.addAlert(section, taskName, operation);
+                    }
+                } catch (NoSuchElementException nsee) {
+                    s_log.warn("Invalid task alerts definition");
+                }
+            }
+        }
+
     }
 
 
@@ -178,10 +225,12 @@ public class Initializer extends CompoundInitializer {
      * @param max
      * @return
      */
-    private final Timer startNotifierTask(
-                                   ContentSection section,
-                                   Boolean sendOverdue, Integer duration,
-                                   Integer alertInterval, Integer max) {
+    private final Timer startNotifierTask( ContentSection section,
+                                           Boolean sendOverdue,
+                                           Integer duration,
+                                           Integer alertInterval,
+                                           Integer max
+                                         ) {
         Timer unfinished = null;
         if (sendOverdue.booleanValue()) {
             if (duration == null || alertInterval == null || max == null) {
@@ -191,10 +240,11 @@ public class Initializer extends CompoundInitializer {
             }
             // start the Timer as a daemon, so it doesn't keep the JVM from exiting
             unfinished = new Timer(true);
-            UnfinishedTaskNotifier notifier = 
-                    new UnfinishedTaskNotifier( section, duration.intValue(),
-                                                alertInterval.intValue(),
-                                                max.intValue());
+            UnfinishedTaskNotifier notifier = new UnfinishedTaskNotifier(
+                                                      section,
+                                                      duration.intValue(),
+                                                      alertInterval.intValue(),
+                                                      max.intValue() );
             // schedule the Task to start in 5 minutes, at 1 hour intervals
             unfinished.schedule(notifier, 5L * 60 * 1000, 60L * 60 * 1000);
             s_log.info("Sending overdue alerts for tasks greater than " +

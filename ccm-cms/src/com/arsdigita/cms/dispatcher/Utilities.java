@@ -24,8 +24,8 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.installer.ServiceInstaller;
-import com.arsdigita.cms.installer.WorkspaceInstaller;
+//import com.arsdigita.cms.installer.ServiceInstaller;
+// import com.arsdigita.cms.installer.WorkspaceInstaller;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelContext;
@@ -54,8 +54,8 @@ import java.util.Map;
  */
 public class Utilities {
 
-    public final static String CMS_WORKSPACE = WorkspaceInstaller.PACKAGE_KEY;
-    public final static String CMS_SERVICE = ServiceInstaller.PACKAGE_KEY;
+//  public final static String CMS_WORKSPACE = WorkspaceInstaller.PACKAGE_KEY;
+//  public final static String CMS_SERVICE = ServiceInstaller.PACKAGE_KEY;
 
     // Used for caching util lookups
     private static HashMap m_cache = new HashMap();
@@ -71,10 +71,10 @@ public class Utilities {
      * @return The URL of the CMS Workspace package
      */
     public static String getWorkspaceURL() {
-        String url = (String) m_cache.get(CMS_WORKSPACE);
+        String url = (String) m_cache.get(CMS.WORKSPACE_PACKAGE_KEY);
         if ( url == null ) {
-            url = getSingletonPackageURL(CMS_WORKSPACE);
-            m_cache.put(CMS_WORKSPACE, url);
+            url = getSingletonPackageURL(CMS.WORKSPACE_PACKAGE_KEY);
+            m_cache.put(CMS.WORKSPACE_PACKAGE_KEY, url);
         }
         return url;
     }
@@ -84,7 +84,7 @@ public class Utilities {
      * @return The URL of the CMS Services package
      */
     public static String getServiceURL() {
-        String url = (String) m_cache.get(CMS_SERVICE);
+        String url = (String) m_cache.get(CMS.SERVICE_PACKAGE_KEY);
         if ( url == null ) {
 	    // chris.gilbert@westsussex.gov.uk
             // We don't want application context in this url, especially when 
@@ -92,8 +92,8 @@ public class Utilities {
             // file that is maintained by a non cms application eg 
             // forum, then I can end up with a url that doesn't work
             // and so breaks file links everywhere
-            url = getSingletonPackageURLSansContext(CMS_SERVICE);
-            m_cache.put(CMS_SERVICE, url);
+            url = getSingletonPackageURLSansContext(CMS.SERVICE_PACKAGE_KEY);
+            m_cache.put(CMS.SERVICE_PACKAGE_KEY, url);
         }
 
         return url;

@@ -98,6 +98,7 @@ public class LifecycleDefinition extends ACSObject {
      * @return the base PDL object type for this definition. Child classes should
      *  override this method to return the correct value
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

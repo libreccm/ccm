@@ -20,7 +20,7 @@ package com.arsdigita.cms.workflow;
 
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
-import com.arsdigita.cms.SecurityManager;
+// import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.ui.ContentItemPage;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -43,7 +43,6 @@ import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.Assert;
-import com.arsdigita.util.StringUtils;
 import com.arsdigita.versioning.TagCollection;
 import com.arsdigita.versioning.Transaction;
 import com.arsdigita.versioning.TransactionCollection;
@@ -303,6 +302,7 @@ public class CMSTask extends UserTask {
      * Creates a deep copy of this task and stores a persistent copy.
      * TODO: refactor this method in this class, and its parents
      * */
+    @Override
     public Object clone() {
         CMSTask taskClone = new CMSTask();
         copyAttributes(taskClone);
@@ -444,6 +444,7 @@ public class CMSTask extends UserTask {
         return send;
     }
 
+    @Override
     protected boolean sendAlerts(String operation) {
     	ContentSection section = getContentSection();
     	String label = getLabel();
@@ -466,6 +467,7 @@ public class CMSTask extends UserTask {
      * @see com.arsdigita.messaging.Message
      * @see #filterUsersAndSendMessage
      */
+    @Override
     protected void sendMessageToAssignees(Message msg) {
     	if (m_authorOnly) {
     		ContentItem item = getItem();
@@ -619,6 +621,7 @@ public class CMSTask extends UserTask {
         }
     }
 
+    @Override
     public void finish() throws TaskException {
         super.finish();
         Integer type = getTaskType().getID();

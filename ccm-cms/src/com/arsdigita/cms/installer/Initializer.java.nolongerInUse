@@ -17,6 +17,15 @@
  *
  */
 
+
+// /////////////////////////////////////////////////////////////////////////////
+// Migration Status
+// All tasks this class used to perform are migrated to cms.Loader
+// File is kept in trunk for reference purpose until the whole migration process
+// will be completed. (2010-20-18)
+// /////////////////////////////////////////////////////////////////////////////
+
+
 package com.arsdigita.cms.installer;
 
 import com.arsdigita.cms.LoaderConfig;
@@ -106,6 +115,8 @@ public class Initializer extends CompoundInitializer {
      *   <li>create Workspace package type and instance</li>
      *   <li>create CMS Service package type and instance</li>
      * </ol>
+     *
+     * All these tasks are migrated to Loader (2010-10-15).
      */
 
 

@@ -35,7 +35,7 @@ import com.arsdigita.util.parameter.StringParameter;
 // import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
@@ -52,8 +52,37 @@ public final class ContentSectionConfig extends AbstractConfig {
     private static final Logger s_log =
                                 Logger.getLogger(ContentSectionConfig.class);
 
+    /** Private Object to hold one's own instance to return to users. */
+    private static ContentSectionConfig s_config;
 
-    // Parameters controlling Overdue Task alerts:
+    /**
+     * Returns the singleton configuration record for the content section
+     * environment.
+     *
+     * @return The <code>ContentSectionConfig</code> record; it cannot be null
+     */
+    public static final synchronized ContentSectionConfig getInstance() {
+        if (s_config == null) {
+            s_config = new ContentSectionConfig();
+            // deprecated
+            // s_config.require("ccm-core/runtime.properties");
+            // use instead:
+            // read values from the persistent storage
+            s_config.load();
+        }
+
+        return s_config;
+    }
+
+
+// /////////////////////////////////////////////////////////////////////////////
+//
+// Set of parameters controlling Overdue Task alerts:
+// Currently there is no way to persist it nor to persist on a per section base.
+// Therefore Initializer has to create overdue task alert mechanism using a
+// configuration applied to every content section.
+//
+// /////////////////////////////////////////////////////////////////////////////
 
     /**
      * A list of workflow tasks, and the associated events for which alerts
@@ -80,17 +109,23 @@ public final class ContentSectionConfig extends AbstractConfig {
      *  };
      * </pre>
      *
-     * Default value (site-wide) is handled via the parameter
-     * <pre>com.arsdigita.cms.default_task_alerts</pre>.
-     * Section-specific override can be added here. Only do so if you are
-     * changing for a good reason from the default for a specific content section.
+     * In the new Initializer system we use a specifically formatted String Array
+     * because we have no List parameter. Format:
+     * - A string for each task to handle, possible values: Authoring, Approval,
+     *   Depploy
+     * - Each String: [taskName]:[alert_1]:...:[alert_n]
+     * Currently there is no way to persist taskAlerts section specific. So all
+     * sections have to treated equally.
+     * Default values are provided here.
      */
     private final Parameter
             m_taskAlerts = new StringArrayParameter(
-                               "com.arsdigita.cms.loader.section_task_alerts",
-                               Parameter.REQUIRED,
-                               null  );
-                               // new String[] {}  );
+                               "com.arsdigita.cms.section.task_alerts",
+        	                   Parameter.REQUIRED, new String[] {
+                                   "Authoring:enable:finish:rollback",
+                                   "Approval:enable:finish:rollback",
+                                   "Deploy:enable:finish:rollback" }
+                               );
 
     /**
      * Should we send alerts about overdue tasks at all?
@@ -100,7 +135,7 @@ public final class ContentSectionConfig extends AbstractConfig {
      */
     private final Parameter
             m_sendOverdueAlerts = new BooleanParameter(
-                        "com.arsdigita.cms.contentsection.send_overdue_alerts",
+                        "com.arsdigita.cms.section.send_overdue_alerts",
                         Parameter.REQUIRED,
                         false  );
 
@@ -117,7 +152,7 @@ public final class ContentSectionConfig extends AbstractConfig {
     // considered overdue (in hours)
     private final Parameter
             m_taskDuration = new IntegerParameter(
-                        "com.arsdigita.cms.contentsection.task_duration",
+                        "com.arsdigita.cms.section.task_duration",
                         Parameter.REQUIRED,
                         new Integer(96)  );
 
@@ -131,7 +166,7 @@ public final class ContentSectionConfig extends AbstractConfig {
      */
     private final Parameter
             m_alertInterval = new IntegerParameter(
-                        "com.arsdigita.cms.contentsection.alert_interval",
+                        "com.arsdigita.cms.section.alert_interval",
                         Parameter.REQUIRED,
                         new Integer(24)  );
 
@@ -144,7 +179,7 @@ public final class ContentSectionConfig extends AbstractConfig {
      */
     private final Parameter
             m_maxAlerts = new IntegerParameter(
-                        "com.arsdigita.cms.contentsection.max_alerts",
+                        "com.arsdigita.cms.section.max_alerts",
                         Parameter.REQUIRED,
                         new Integer(5)  );
 
@@ -168,9 +203,141 @@ public final class ContentSectionConfig extends AbstractConfig {
      */
     private final Parameter
             m_newContentSectionName = new StringParameter(
-                            "com.arsdigita.cms.contentsection.new_section_name",
-                            Parameter.REQUIRED,
+                            "com.arsdigita.cms.section.new_section_name",
+                            Parameter.OPTIONAL,
                             null);
+    /**
+     * Staff Group
+     * Contains roles and associated privileges. In loading step a complete
+     * default configuration is persisted in database, immutable at this point.
+     * See contentsection.ContentSectionSetup.registerRoles()
+     * In enterprise.init: name roles, List of roles to create.
+     *
+     * Not implemented yet! We need a new parameter type "list" which must have
+     * multidimensional capabilities.
+     */
+//  private final StringParameter
+//          m_staffGroup = new StringParameter(
+//                         "com.arsdigita.cms.loader.section_staff_group",
+//                         Parameter.REQUIRED,
+//                         null);
+    private List m_staffGroup;
+
+
+    // Viewer group, set autonomously by ContentSection.create() method. We can
+    // here specify, whether the first ( probalby only) content section should
+    // have a public viewer, i.e. without registration and login.
+    /**
+     * Whether to make content viewable to 'The Public', ie non-registered users.
+     *
+     * Parameter name in the old initializer code: PUBLIC. Default true.
+     */
+    private final BooleanParameter
+            m_isPublic = new BooleanParameter(
+                           "com.arsdigita.cms.section.is_public",
+                           Parameter.REQUIRED,
+                           true);
+
+    /**
+     * List of content types to register in the given content-section.
+     *
+     * Example:
+     *    {
+     *     "com.arsdigita.cms.contenttypes.Address",
+     *     "com.arsdigita.cms.contenttypes.Article",
+     *     "com.arsdigita.cms.contenttypes.Contact"
+     *    }
+     *
+     * Parameter name "TYPES" in the old initializer code, empty by default in
+     * the former enterprise.init file.
+     * When the list is empty and the first default content section is created,
+     * all installed content types will get registered. This behaviour should
+     * not be altered without very good reasons.
+     */
+    private final Parameter
+            m_contentTypeList = new StringArrayParameter(
+                                    "com.arsdigita.cms.section.ctypes_list",
+                                    Parameter.REQUIRED,
+                               new String[] {}  );
+
+    // Page Resolver Class, set autonomously by ContentSection.create() method.
+
+    // Item Resolver Class, configurable.
+    /**
+     * Name of the item resolver class to use for the section (defaults to
+     * <pre>com.arsdigita.cms.dispatcher.MultilingualItemResolver</pre>).
+     *
+     * Default value (site-wide) is handled via the parameter
+     * <pre>com.arsdigita.cms.default_item_resolver_class</pre>.
+     * Section-specific override can be added here. Only do so if you are
+     * changing from the default for a specific content section. The class
+     * must implement <pre>com.arsdigita.cms.dispatcher.ItemResolver</pre>.
+     *
+     * Parameter name ITEM_RESOLVER_CLASS in the old initializer system.
+     * Description: The ItemResolver class to use for the section
+     * (defaults to MultilingualItemResolver)
+     */
+    private final Parameter
+            m_itemResolverClass = new StringParameter(
+                                 "com.arsdigita.cms.section.item_resolver_class",
+                                 Parameter.OPTIONAL, null );
+                            // , "com.arsdigita.cms.dispatcher.MultilingualItemResolver"
+
+
+    // Template Resolver Class, configurable.
+    /**
+     * Name of the template resolver class to use for the section
+     * (defaults to <pre>com.arsdigita.cms.dispatcher.DefaultTemplateResolver</pre>)
+     *
+     * Default value (site-wide) is handled via the parameter
+     * <pre>com.arsdigita.cms.default_template_resolver_class</pre>.
+     * Section-specific override can be added here. Only do so if you are
+     * changing from the default for a specific content section. The class
+     * must implement <pre>com.arsdigita.cms.dispatcher.TemplateResolver</pre>.
+     *
+     * Parameter name TEMPLATE_RESOLVER_CLASS in the old initializer system.
+     */
+    private final Parameter
+            m_templateResolverClass = new StringParameter(
+                               "com.arsdigita.cms.section.template_resolver_class",
+                               Parameter.OPTIONAL,
+                               null  );
+                               // "com.arsdigita.cms.dispatcher.DefaultTemplateResolver"  );
+
+
+    // XML Generator Class, set autonomously by ContentSection.create() method.
+
+
+    /**
+     * Determins weather to use section specific category tree(s). Defaults to
+     * false, so standard navigation is used.
+     * If set to true loader loads the categories from file(s) specified in the
+     * next parameter ( m_categoryFileList )
+     */
+    private final Parameter
+        m_useSectionCategories = new BooleanParameter
+            ("com.arsdigita.cms.section.use_section_categories",
+             Parameter.REQUIRED, new Boolean(false));
+
+    /**
+     * XML file containing the category tree to load for this content section.
+     * Usually not loaded {@see m_useSectionCategories). The files listed as
+     * default values are demo material and must be replaced in a production
+     * environment.
+     */
+    private final Parameter
+            m_categoryFileList = new StringArrayParameter(
+                    "com.arsdigita.cms.section.categories_toload",
+                    Parameter.REQUIRED,
+                    new String[] {"/WEB-INF/resources/article-categories.xml",
+                                  "/WEB-INF/resources/navigation-categories.xml"}  );
+    // Category tree to load
+    // categories = { "/WEB-INF/resources/article-categories.xml",
+    //                "/WEB-INF/resources/navigation-categories.xml" };
+    //   m_conf.initParameter(CATEGORIES,
+    //          "XML file containing the category tree",
+    //          List.class,
+    //          Collections.EMPTY_LIST);
 
 
     /**
@@ -189,6 +356,14 @@ public final class ContentSectionConfig extends AbstractConfig {
 
         // parameters for creation of a new (additional) content section
         register(m_newContentSectionName);
+        // register(m_staffGroup);    NOT IMPLEMENTED yet
+        register(m_isPublic);
+        register(m_itemResolverClass);
+        register(m_templateResolverClass);
+        register(m_contentTypeList);
+        register(m_useSectionCategories);
+        register(m_categoryFileList);
+
     }
 
 
@@ -201,14 +376,9 @@ public final class ContentSectionConfig extends AbstractConfig {
     /**
      * Retrieve the list of workflow tasks and events for each tasks which
      * should receive overdue notification alerts
-     *
-     * XXX wrong implementation !!
-     * Should be moved to CMS or section initializer because may be modified
-     * each startup. Does not store anything in database so not a loader task!
      */
-    public List getTaskAlerts() {
-//        String[] m_taskAlerts = (String[]) get(m_contentTypeList);
-        return Arrays.asList(m_taskAlerts);
+    public final String[] getTaskAlerts() {
+        return (String[]) get(m_taskAlerts);
     }
 
 
@@ -263,5 +433,145 @@ public final class ContentSectionConfig extends AbstractConfig {
     public String getNewContentSectionName() {
             return (String) get(m_newContentSectionName);
         }
+
+    /**
+     * Retrieve the STAFF GROUP, i.e. a set of roles (author, editor, publisher,
+     * manager) and associated privileges for the content section to be created
+     * (m_contentSectionName).
+     *
+     * In loading step a complete default configuration is persisted in database,
+     * immutable at this point.
+     * See contentsection.ContentSectionSetup.registerRoles()
+     * In enterprise.init: name roles, List of roles to create.
+     *
+     * Set consists of a set of roles, for each role first field is the role name,
+     * second is the description, third is a list of privileges, and (optional)
+     * fourth is the workflow task to assign to.
+     *
+     * The set of roles constructed here is a complete set which reflects all
+     * functions of CMS and forms a necessary base for operations. When the first
+     * content section is created and loaded into database (during installation)
+     * this set is created, immutable by installer / administrator. Additional
+     * content section may be created using a subset. For a very special purpose
+     * a developer may alter the set.
+     *
+     * This method is typically used to construct the initial content section
+     * during installation.
+     *
+     * Not really implemented yet! We need a new parameter type "list" which
+     * must have multidimensional capabilities.
+     *
+     * As a temporary measure a constant list is retrieved. Until now the list
+     * was burried in enterprise.init and not user available for configuration.
+     * So it may turn into a permanent solution.
+     */
+    public List getStuffGroup() {
+
+        final List<String> AUTH_PRIVS = Arrays.asList(
+                     "new_item","read_item", "preview_item", "edit_item",
+                     "categorize_items");
+        final List<String> EDIT_PRIVS = Arrays.asList(
+                     "new_item","read_item", "preview_item", "edit_item",
+                     "categorize_items", "delete_item", "approve_item" );
+        final List<String> PUBL_PRIVS = Arrays.asList(
+                     "new_item","read_item", "preview_item", "edit_item",
+                     "categorize_items", "delete_item", "approve_item",
+                     "publish");
+        final List<String> MNGR_PRIVS = Arrays.asList(
+                     "new_item","read_item", "preview_item", "edit_item",
+                     "categorize_items", "delete_item", "approve_item",
+                     "publish",
+                     "staff_admin", "content_type_admin", "lifecycle_admin",
+                     "workflow_admin", "category_admin");
+
+        m_staffGroup = new ArrayList();
+
+        m_staffGroup.add
+                ( new ArrayList() {{ add("Author");
+                                     add("Creates new content");
+                                     add(AUTH_PRIVS);
+                                     add("Authoring");
+                                  }}
+                 );
+        m_staffGroup.add
+                ( new ArrayList() {{ add("Editor");
+                                     add("Reviews and approves the author's work");
+                                     add(EDIT_PRIVS);
+                                     add("Approval");
+                                  }}
+                 );
+        m_staffGroup.add
+                ( new ArrayList() {{ add("Publisher");
+                                     add("Deploys the content to the web site");
+                                     add(PUBL_PRIVS);
+                                     add("Publishing");
+                                  }}
+                 );
+        m_staffGroup.add
+                ( new ArrayList() {{ add("Manager");
+                                     add("Manages the overall content section");
+                                     add(MNGR_PRIVS);
+                                     // NB, manager doesn't have any assigned
+                                     // task for workflow - (as usual)
+                                  }}
+                 );
+
+        return (List) m_staffGroup ;
+
+    }
+
+    /**
+     * Retrieve whether the content-section is publicly viewable (i.e. without
+     * registration and login)
+     */
+    public Boolean isPubliclyViewable() {
+        return ((Boolean) get(m_isPublic)).booleanValue();
+    }
+
+    /**
+     * Retrieve the item resolver class
+     */
+    public String getItemResolverClass() {
+        return (String) get(m_itemResolverClass);
+    }
+
+    /**
+     * Retrieve the template resolver class
+     */
+    public String getTemplateResolverClass() {
+        return (String) get(m_templateResolverClass);
+    }
+
+
+    /**
+     * Retrieve weather to use section specific categories. If true they are
+     * loaded using the next parameters file list {@see getUseSectionCategories()}
+     *
+     * Default value is false, so standard navigation is used.
+     * @return
+     */
+    public final boolean getUseSectionCategories() {
+        return ((Boolean) get(m_useSectionCategories)).booleanValue();
+    }
+
+    /**
+     * Retrieve the list of files containing categories to load.
+     * In old Initialiser: Parameter name: CATEGORIES
+     * Deskr. "XML file containing the category tree"
+     */
+    public List getCategoryFileList() {
+        String[] catFiles = (String[]) get(m_categoryFileList);
+        return Arrays.asList(catFiles);
+    }
+
+    /**
+     * Retrieve the
+     */
+    public List getContentSectionsContentTypes() {
+        String[] taskAlerts = (String[]) get(m_contentTypeList);
+        return Arrays.asList(taskAlerts);
+    }
+
+
 
 }

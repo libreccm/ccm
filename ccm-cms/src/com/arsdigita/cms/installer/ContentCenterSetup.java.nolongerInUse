@@ -38,6 +38,12 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 
+// Migration Status
+// All tasks this class used to perform are migrated to either cms.Loader or
+// cms.WorkspaceSetup.
+// File is kept in trunk for reference purpose until the whole migration process
+// will be completed. (2010-20-18)
+
 /**
  * Sets up the CMS package.
  *

@@ -33,13 +33,17 @@ import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
+// import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.Classes;
 import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * 
+ */
 public class ItemCategoryStep extends SimpleContainer 
     implements Resettable{
     

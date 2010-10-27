@@ -33,20 +33,46 @@ import org.apache.log4j.Logger;
  */
 public abstract class CMS {
 
+    private static final Logger s_log = Logger.getLogger(CMS.class);
+
     /**
      * The CMS XML namespace.
      */
     public final static String CMS_XML_NS = "http://www.arsdigita.com/cms/1.0";
 
-    private static final Logger s_log = Logger.getLogger(CMS.class);
+    /**
+     * Constant string used as key for creating Workspace (content-center) as a
+     * legacy application.
+     */
+    public static final String WORKSPACE_PACKAGE_KEY   = "content-center";
+
+    /**
+     * Constant string used as key for creating service package as a
+     * legacy application.
+     */
+    public final static String SERVICE_PACKAGE_KEY = "cms-service";
     
     static final CMSContext s_initialContext = new CMSContext();
-    
+
     private static final ThreadLocal s_context = new ThreadLocal() {
-            public Object initialValue() {
-                return s_initialContext;
-            }
-        };
+        @Override
+        public Object initialValue() {
+            return s_initialContext;
+        }
+    };
+    private static final CMSConfig s_config = new CMSConfig();
+    static {
+        s_config.load();
+    }
+
+
+    /**
+     *
+     * @return
+     */
+    public static CMSConfig getConfig() {
+        return s_config;
+    }
 
     /**
      * Get the context record of the current thread.

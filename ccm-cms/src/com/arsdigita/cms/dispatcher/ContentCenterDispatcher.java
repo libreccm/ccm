@@ -18,7 +18,8 @@
  */
 package com.arsdigita.cms.dispatcher;
 
-import com.arsdigita.cms.installer.ContentCenterSetup;
+import com.arsdigita.cms.WorkspaceSetup;
+import com.arsdigita.cms.util.PageClassConfigHandler;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.dispatcher.Dispatcher;
 import com.arsdigita.dispatcher.DispatcherHelper;
@@ -74,7 +75,8 @@ public class ContentCenterDispatcher extends LockableImpl
     /**
      * The path of the file that maps resources.
      */
-    public final static String DEFAULT_MAP_FILE = "/WEB-INF/resources/content-center-map.xml";
+    public final static String DEFAULT_MAP_FILE =
+                               "/WEB-INF/resources/content-center-map.xml";
 
     /**
      * Error logging.
@@ -83,11 +85,10 @@ public class ContentCenterDispatcher extends LockableImpl
         Logger.getLogger(ContentCenterDispatcher.class.getName());
 
     /**
-     * Mapping between a relative URL and the class name of a
-     * ResourceHandler.
+     * Mapping between a relative URL and the class name of a ResourceHandler.
      */
-    private static HashMap s_pageClasses = ContentCenterSetup.getURLToClassMap();
-    private static HashMap s_pageURLs = ContentCenterSetup.getClassToURLMap();
+    private static HashMap s_pageClasses = WorkspaceSetup.getURLToClassMap();
+    private static HashMap s_pageURLs = WorkspaceSetup.getClassToURLMap();
 
     /**
      * Instantiated ResourceHandlers cache. This allows for lazy loading.
@@ -101,6 +102,7 @@ public class ContentCenterDispatcher extends LockableImpl
      * Constructor.
      */
     public ContentCenterDispatcher() {
+        
         super();
 
         m_trailingSlashList = new ArrayList();
@@ -108,7 +110,6 @@ public class ContentCenterDispatcher extends LockableImpl
 
         setNotFoundDispatcher(JSPApplicationDispatcher.getInstance());
 
-        //readFromFile(new java.io.File(MAP_FILE));
     }
 
 
@@ -174,15 +175,17 @@ public class ContentCenterDispatcher extends LockableImpl
         m_trailingSlashList.add(url);
     }
 
-    /** Return the URL stub for the class name, can return null if not
-     * mapped */
-
+    /**
+     * Return the URL stub for the class name, can return null if not
+     * mapped
+     */
     public static String getURLStubForClass(String classname) {
         s_log.debug("Getting URL Stub for : " + classname);
         Iterator itr = s_pageURLs.keySet().iterator();
         while (itr.hasNext()) {
             String classname2 = (String)itr.next();
-            s_log.debug("key: " + classname + " value: " + (String)s_pageURLs.get(classname2));
+            s_log.debug("key: " + classname + " value: " +
+                        (String)s_pageURLs.get(classname2));
         }
         String url = (String)s_pageURLs.get(classname);
         return url;

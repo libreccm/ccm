@@ -18,11 +18,13 @@
  */
 package com.arsdigita.cms;
 
-import com.arsdigita.cms.installer.ContentSectionSetup;
+// import com.arsdigita.cms.CMS;
+// import com.arsdigita.cms.installer.ContentSectionSetup;
+import com.arsdigita.cms.contentsection.ContentSectionSetup;
 // import com.arsdigita.cms.installer.PageClassConfigHandler;
-import com.arsdigita.cms.installer.Util;
+import com.arsdigita.cms.util.Util;
 import com.arsdigita.cms.installer.xml.XMLContentTypeHandler;
-import com.arsdigita.cms.installer.WorkspaceInstaller;
+// import com.arsdigita.cms.installer.WorkspaceInstaller;
 //import com.arsdigita.cms.portlet.ContentDirectoryPortlet;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
 //import com.arsdigita.cms.portlet.ContentSectionsPortlet;
@@ -38,7 +40,7 @@ import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.SiteNode;
-// import com.arsdigita.kernel.Stylesheet;
+import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.persistence.DataObject;
@@ -138,11 +140,11 @@ public class Loader extends PackageLoader {
     private final static String CMS_STYLESHEET =
             "/packages/content-section/xsl/cms.xsl";
 
-    /**
-     * Constant string used as key for creating Workspace (content-center) as a
-     * legacy application.
-     */
-    public static final String WORKSPACE_PACKAGE_KEY   = "content-center";
+//  /**
+//   * Constant string used as key for creating Workspace (content-center) as a
+//   * legacy application.
+//   */
+//  public static final String WORKSPACE_PACKAGE_KEY   = "content-center";
     private static final String WORKSPACE_INSTANCE_NAME = "Content Center";
     /**
      * Dispatcher class for Workspace (content-center) (needed to be assigned
@@ -163,11 +165,11 @@ public class Loader extends PackageLoader {
      * Name of the CMS service package instance, i.e. its URL.
      */
     private final static String SERVICE_URL = "cms-service";
-    /**
-     * Constant string used as key for creating service package as a
-     * legacy application.
-     */
-    public final static String SERVICE_PACKAGE_KEY = "cms-service";
+//  /**
+//   * Constant string used as key for creating service package as a
+//   * legacy application.
+//   */
+//  public final static String SERVICE_PACKAGE_KEY = "cms-service";
 
 
 
@@ -235,40 +237,43 @@ public class Loader extends PackageLoader {
         }.run();
     }
 
-
-    /**
-     * Loads the CMS package type in the database, i.e. content-section,
-     * the main CMS domain (application) class.
-     *
-     * (pb) WRONG:
-     * Creates content-section PackageType. Is replaced by newer ApplicationType
-     * mechanisam (see loadContentSection). Must nolonger be used.
-     * createPrivileges might be included in load, but has te be executed at
-     * each startup to take modifications into accout. So it has to be an
-     * initializer task anyway.
-     */
-    private void loadCMSPackageType() {
-        s_log.debug("Loading the CMS package type...");
-
-        // creating appl. type using the deprecated legacy application style.
-        // Should be refactored to c.ad.web.Application.
-        //  CMS_PACKAGE_KEY = "content-section"
+//  Migration Status:
+//  Method completely replaced by loadContentSection()
+//  Code kept for reference purpose untill the complete migration will be done.
+//
+//  /**
+//   * Loads the CMS package type in the database, i.e. content-section,
+//   * the main CMS domain (application) class.
+//   *
+//   * (pb) WRONG:
+//   * Creates content-section PackageType. Is replaced by newer ApplicationType
+//   * mechanisam (see loadContentSection). Must nolonger be used.
+//   * createPrivileges might be included in load, but has te be executed at
+//   * each startup to take modifications into accout. So it has to be an
+//   * initializer task anyway.
+//   */
+//  private void loadCMSPackageType() {
+//      s_log.debug("Loading the CMS package type...");
+//
+//      // creating appl. type using the deprecated legacy application style.
+//      // Should be refactored to c.ad.web.Application.
+//      //  CMS_PACKAGE_KEY = "content-section"
 //      PackageType type = PackageType.create
 //                         (CMS_PACKAGE_KEY,
 //                          "Content Management System",
 //                          "Content Management Systems",
 //                          "http://cms-java.arsdigita.com/");
-
+//
 //      type.setDispatcherClass(CMS_DISPATCHER_CLASS);
-        //type.addListener(LISTENER_CLASS);  (commented out)
-
-        // Register a stylesheets to the CMS package.
+//      //type.addListener(LISTENER_CLASS);  (commented out)
+//
+//      // Register a stylesheets to the CMS package.
 //      Stylesheet ss = Stylesheet.createStylesheet(CMS_STYLESHEET);
 //      ss.save();
 //      type.addStylesheet(ss);
 //      type.save();
-
-
+//
+//
 //      Creating of CMS package using new style c.ad.web.Application could
 //      be done like the following.
 //      ApplicationType type = ApplicationType
@@ -280,12 +285,12 @@ public class Loader extends PackageLoader {
 //      // setDispatcherClass in web.Application or does it work magically without?
 //      type.setDispatcherClass(CMS_DISPATCHER_CLASS);
 //      type.addStylesheet(ss);
-
-
-        createPrivileges();
-
-        s_log.debug("Done creating the CMS package type.");
-    }
+//
+//
+//      createPrivileges();
+//
+//      s_log.debug("Done creating the CMS package type.");
+//  }
 
 
     /**
@@ -296,29 +301,42 @@ public class Loader extends PackageLoader {
     private void loadWorkspacePackage() {
         s_log.debug("Creating CMS Workspace...");
 
-        WorkspaceInstaller workspaceInstaller = new WorkspaceInstaller();
-            try {
-                workspaceInstaller.createPackageType();
-                // type.setDispatcherClass(WORKSPACE_DISPATCHER_CLASS);
+        // from WorkspaceInstaller workspaceInstaller = new WorkspaceInstaller();
+        try {
+            // workspaceInstaller.createPackageType();
+            PackageType type = PackageType.create(CMS.WORKSPACE_PACKAGE_KEY,
+                                                  "Content Center",
+                                                  "Content Centers",
+                                                  "http://cms-workspace.arsdigita.com/");
+            type.setDispatcherClass(WORKSPACE_DISPATCHER_CLASS);
 
-                // PackageInstance instance = workspaceInstaller.createPackageInstance();
-                // Does the following:
-                // type = PackageType.findByKey(WORKSPACE_PACKAGE_KEY);
-                // PackageInstance instance = type.createInstance(WORKSPACE_INSTANCE_NAME);
-                // instance.save();
-                PackageInstance instance = workspaceInstaller.createPackageInstance();
+            // Register a stylesheet to the Content Center package.
+            Stylesheet ss =
+                Stylesheet.createStylesheet(WORKSPACE_STYLESHEET);
+            ss.save();
+            type.addStylesheet(ss);
 
-                // workspaceInstaller.mountPackageInstance(instance, m_workspaceURL);
-                // Does the following:
-                // SiteNode node = SiteNode.createSiteNode(
-                //                          s_conf.getWorkspaceURL(),
-                //                          SiteNode.getRootSiteNode());
-                // node.mountPackage(instance);
-                // node.save();
+            type.save();
+
+            // from PackageInstance instance = workspaceInstaller.createPackageInstance();
+            // Does the following:
+            type = PackageType.findByKey(CMS.WORKSPACE_PACKAGE_KEY);
+            PackageInstance instance = type.createInstance(WORKSPACE_INSTANCE_NAME);
+            instance.save();
+
+            // from: workspaceInstaller.mountPackageInstance(instance, m_workspaceURL);
+            // Does the following:
+            // We really don't want it configurable.
+            // SiteNode node = SiteNode.createSiteNode(CMS.WORKSPACE_PACKAGE_KEY,
+            //                                      SiteNode.getRootSiteNode());
+            SiteNode node = SiteNode.createSiteNode(CMS.WORKSPACE_PACKAGE_KEY,
+                                                    SiteNode.getRootSiteNode());
+            node.mountPackage(instance);
+            node.save();
 
                 // m_workspaceURL == WORKSPACE_PACKAGE_KEY
                 // workspaceInstaller.mountPackageInstance(instance, m_workspaceURL);
-                workspaceInstaller.mountPackageInstance(instance, WORKSPACE_PACKAGE_KEY);
+                // workspaceInstaller.mountPackageInstance(instance, CMS.WORKSPACE_PACKAGE_KEY);
 
             } catch (DataObjectNotFoundException e) {
                 throw new ConfigError(
@@ -387,7 +405,7 @@ public class Loader extends PackageLoader {
             try {
                 // from ServiceInstaller.createPackageType();
                 PackageType type = PackageType.create
-                                   (SERVICE_PACKAGE_KEY,
+                                   (CMS.SERVICE_PACKAGE_KEY,
                                     "Content Management System Services",
                                     "Content Management System Services",
                                     "http://cms-service.arsdigita.com/");
@@ -396,8 +414,8 @@ public class Loader extends PackageLoader {
                 type.save();
 
                 // from PackageInstance instance = ServiceInstaller.createPackageInstance();
-              type = PackageType.findByKey(SERVICE_PACKAGE_KEY);
-                PackageInstance instance = type.createInstance(SERVICE_PACKAGE_KEY);
+              type = PackageType.findByKey(CMS.SERVICE_PACKAGE_KEY);
+                PackageInstance instance = type.createInstance(CMS.SERVICE_PACKAGE_KEY);
                 instance.save();
 
                 // from ServiceInstaller.mountPackageInstance(instance, url);
@@ -472,48 +490,68 @@ public class Loader extends PackageLoader {
 
         s_log.info("Creating content section on /" + name);
 
-        // Step 1: Creating content section application type first so that
-        //         concrete content-section instance can be created.
-        ContentSectionSetup.setupContentSectionAppType();
-
-        createPrivileges();
-        
-        // Step 2: Validatge name for section
+        // Step 1: Validate name for section
         Util.validateURLParameter("name", name);
 
-        // Step 3: Create the installation default content section "name"
-        ContentSection section = ContentSection.create(name);
+        // Step 2: Creating content section application type first so that
+        //         concrete content-section instance can be created.
+        // from: ContentSectionSetup.setupContentSectionAppType();
+        // Install application type using new application classes
+        ApplicationSetup appType = new ApplicationSetup(s_log);
+        appType.setApplicationObjectType(ContentSection.BASE_DATA_OBJECT_TYPE);
+        appType.setKey(ContentSection.PACKAGE_TYPE); // by default: content-section
+        appType.setTitle("CMS Content Section");
+        appType.setDescription("A CMS Content Section");
+        appType.setPortalApplication(false);
+        //setup.setDispatcherClass(ContentItemDispatcher.class.getName());
+        appType.setStylesheet(CMS_STYLESHEET); // by default: /pack./c-s/xml/cms.xml
+                                              // contains the xsl to generate the page
+        appType.setInstantiator(new ACSObjectInstantiator() {
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new ContentSection(dataObject);
+            }
+        });
+        appType.run();
 
-        // ContentSectionSetup is a convenient class for ContentSection.create()
+        // Step 3:
+        createPrivileges();
+
+        // Step 4: Create the installation default content section "name"
+        // ContentSection.create creates a section with several default values
+        // which have to be adopted for a concrete installation.
+        ContentSection section = ContentSection.create(name);
+        // ContentSectionSetup is a convenient class to adopt a section created
+        // by ContentSection.create()
         ContentSectionSetup setup = new ContentSectionSetup(section);
 
         // ContentSection.create uses the following properties:
         // Name, see above
         // Root & template folder, set autonomously by ContentSection.create()
+
         // Roles (staff group) used in content section. Register roles using
         // a complete set of default roles defined in ContentSectionSetup
         setup.registerRoles(s_conf.getStuffGroup());
+
         // ViewerGroup populated in ContentSection, public access is determined
         // by parameter (affecting characteristics of the viewer group)
         setup.registerViewers(s_conf.isPubliclyViewable());
+
         // Page resolver class, set autonomously by ContentSection.create()
         // Item resolver class, configurable, defaults in place.
         // Template resolver class, configurable, defaults in place.
         // We should not overwrite the default in the initial default configuration
 
-        // registers a predefined standard recipient for alerts
-        setup.registerAlerts();
         // register a predefined one-phase lifecycle for items.
         setup.registerPublicationCycles();
         // registers predefined "Authoring", "Approval", "Publishing' steps
         setup.registerWorkflowTemplates();
-        setup.registerContentTypes(s_conf.getContentSectionsContentTypes());
-
         setup.registerResolvers(s_conf.getItemResolverClass(),
                                 s_conf.getTemplateResolverClass() );
         // XML generator class, set autonomously by ContentSection.create()
 
-        // section specific categories, usually not used.
+        setup.registerContentTypes(s_conf.getContentSectionsContentTypes());
+        // Section specific categories, usually not used.
         // During initial load at install time nor used at all!
         // default value is false so no categories get loaded.
         if (s_conf.getUseSectionCategories()) {
@@ -522,6 +560,13 @@ public class Loader extends PackageLoader {
                 setup.registerCategories((String) files.next());
             }
         }
+
+        // registers a predefined standard recipient for alerts
+        setup.registerAlerts();
+
+        // Load a list of cms tasks and associated alert events
+        // Currently no functionality to persist them. Not a loader task yet
+        // setup.loadTaskAlerts(s_conf.getTaskAlerts());
 
         section.save();  //persists any changes in the database (DomainObject)
                          //i.e. creates an object (instance)

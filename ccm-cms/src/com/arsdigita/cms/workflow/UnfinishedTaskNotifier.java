@@ -83,6 +83,9 @@ public class UnfinishedTaskNotifier extends TimerTask {
 
     }
 
+    /**
+     * The action to be performed by this timer Task.
+     */
     public void run() {
         Thread.currentThread().setName("unfinished-notifier");
         try {

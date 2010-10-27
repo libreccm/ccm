@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.installer;
+package com.arsdigita.cms.util;
 
 import com.arsdigita.initializer.InitializationException;
 import org.apache.oro.text.perl.Perl5Util;

@@ -144,26 +144,43 @@ public class ContentSection extends Application {
 //        super(BASE_DATA_OBJECT_TYPE);
 //    }
 //
-//    public ContentSection(String type) {
-//        super(type);
-//    }
 
+    /**
+     * Constructor re-creating a content section object by retrieving its data
+     * object by OID
+     * 
+     * @param oid
+     * @throws DataObjectNotFoundException
+     */
     public ContentSection(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
 
+    /**
+     * Constructor re-creating a content section object from its data object.
+     *
+     * @param oid
+     * @throws DataObjectNotFoundException
+     */
     public ContentSection(DataObject obj) {
         super(obj);
     }
 
+    /**
+     * Constructor re-creating a content section object by retrieving its data
+     * Object by ID
+     *
+     * @param oid
+     * @throws DataObjectNotFoundException
+     */
     public ContentSection(BigDecimal id) throws DataObjectNotFoundException {
         super(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
+
     public static CMSConfig getConfig() {
         return s_config;
     }
-
 
     /**
      * @return the base PDL object type for this section. Child classes should
@@ -234,38 +251,42 @@ public class ContentSection extends Application {
         set(NAME, name);
     }
 
-    /**
-     * Get the package instance for this content section. Each section is
-     * associated with exactly one package instance.
-     *
-     * @return the package instance associated with this content section.
-     * @post return != null
-     */
+//  Left-over from content section as old-style application based on kernel
+//  PackageType and Sitenode instead on new style web.Application.  
+//  Retained for reference purpose until the packages Workspace and Service are
+//  migrated to new style application as well.
+//  /**
+//   * Get the package instance for this content section. Each section is
+//   * associated with exactly one package instance.
+//   *
+//   * @return the package instance associated with this content section.
+//   * @post return != null
+//   */
 //    public PackageInstance getPackageInstance() {
 //        DataObject pkg = (DataObject) get(PACKAGE);
 //        Assert.exists(pkg, "package instance");
 //        return new PackageInstance(pkg);
 //    }
-
-    /**
-     * Set the package instance for this content section.
-     *
-     * @param pkg The package instance
-     * @pre ( pkg != null )
-     */
+//
+//  /**
+//   * Set the package instance for this content section.
+//   *
+//   * @param pkg The package instance
+//   * @pre ( pkg != null )
+//   */
 //    protected void setPackageInstance(PackageInstance pkg) {
 //        Assert.exists(pkg, "package instance");
 //        setAssociation(PACKAGE, pkg);
 //    }
-
-    /**
-     * Fetch the site node on which the content section is mounted.
-     * A content section should be mounted on exactly one site node. If it
-     * is mounted on more than one site node, only the first site node will
-     * be returned.
-     *
-     * @return The site node
-     */
+//
+//  /**
+//   * Fetch the site node on which the content section is mounted.
+//   * A content section should be mounted on exactly one site node. If it
+//   * is mounted on more than one site node, only the first site node will
+//   * be returned.
+//   *
+//   * @return The site node
+//   */
 //    public SiteNode getSiteNode() {
 //        return getPackageInstance().getDefaultMountPoint();
 //    }
@@ -306,6 +327,7 @@ public class ContentSection extends Application {
         return URL.getDispatcherPath() + getPath();
     }
 
+//  Left over, see above
 //    public final String getPath() {
 //        final String path = getSiteNode().getURL();
 //
@@ -467,7 +489,7 @@ public class ContentSection extends Application {
      * @return The class name
      * @post ( return != null )
      */
-    public String getPageResolverClass() {
+    public String getPageResolverClassName() {
         String prc = (String) get(PAGE_RESOLVER_CLASS);
         Assert.exists(prc, "Page Resolver class");
         return prc;
@@ -489,7 +511,7 @@ public class ContentSection extends Application {
             }
 
             try {
-                final Class prc = Class.forName(getPageResolverClass());
+                final Class prc = Class.forName(getPageResolverClassName());
                 m_pageResolver = (PageResolver) prc.newInstance();
                 m_pageResolver.setContentSectionID(getID());
             } catch (ClassNotFoundException cnfe) {
@@ -513,7 +535,7 @@ public class ContentSection extends Application {
      *
      * @param className The class name
      */
-    public void setPageResolverClass(String className) {
+    public void setPageResolverClassName(String className) {
         set(PAGE_RESOLVER_CLASS, className);
         m_pageResolver = null;
     }
@@ -524,7 +546,7 @@ public class ContentSection extends Application {
      * @return The class name
      * @post ( return != null )
      */
-    public String getItemResolverClass() {
+    public String getItemResolverClassName() {
         String irc = (String) get(ITEM_RESOLVER_CLASS);
         Assert.exists(irc, "Content Item Resolver class");
         s_log.debug("Content Item Resolver Class is " + irc);
@@ -541,7 +563,7 @@ public class ContentSection extends Application {
     public ItemResolver getItemResolver() {
         if (m_itemResolver == null) {
             try {
-                final Class irc = Class.forName(getItemResolverClass());
+                final Class irc = Class.forName(getItemResolverClassName());
                 m_itemResolver = (ItemResolver) irc.newInstance();
             } catch (ClassNotFoundException cnfe) {
                 throw new UncheckedWrapperException(cnfe);
@@ -571,7 +593,7 @@ public class ContentSection extends Application {
      * @return The class name
      * @post ( return != null )
      */
-    public String getTemplateResolverClass() {
+    public String getTemplateResolverClassName() {
         String trc = (String) get(TEMPLATE_RESOLVER_CLASS);
         Assert.exists(trc, "Template Resolver class");
         return trc;
@@ -586,7 +608,7 @@ public class ContentSection extends Application {
     public TemplateResolver getTemplateResolver() {
         if (m_templateResolver == null) {
             try {
-                Class trc = Class.forName(getTemplateResolverClass());
+                Class trc = Class.forName(getTemplateResolverClassName());
                 m_templateResolver = (TemplateResolver) trc.newInstance();
             } catch (ClassNotFoundException cnfe) {
                 throw new UncheckedWrapperException(cnfe);
@@ -616,7 +638,7 @@ public class ContentSection extends Application {
      *
      * @return The class name
      */
-    public String getXMLGeneratorClass() {
+    public String getXMLGeneratorClassName() {
         String xgc = (String) get(XML_GENERATOR_CLASS);
         Assert.exists(xgc, "XML Generator class");
         return xgc;
@@ -631,7 +653,7 @@ public class ContentSection extends Application {
     public XMLGenerator getXMLGenerator() {
         if (m_xmlGenerator == null) {
             try {
-                Class xgc = Class.forName(getXMLGeneratorClass());
+                Class xgc = Class.forName(getXMLGeneratorClassName());
                 m_xmlGenerator = (XMLGenerator) xgc.newInstance();
             } catch (ClassNotFoundException cnfe) {
                 throw new UncheckedWrapperException(cnfe);
@@ -940,14 +962,14 @@ public class ContentSection extends Application {
 //        return getSectionFromPackage(pkg);
     }
 
-    /**
-     * Looks up the section given the PackageInstance.
-     *
-     * @param pkg The package instance
-     * @return The content section ID
-     * @pre ( pkg != null )
-     * @post ( return != null )
-     */
+//  /**
+//   * Looks up the section given the PackageInstance.
+//   *
+//   * @param pkg The package instance
+//   * @return The content section ID
+//   * @pre ( pkg != null )
+//   * @post ( return != null )
+//   */
 //    public static ContentSection getSectionFromPackage(PackageInstance pkg)
 //        throws DataObjectNotFoundException {
 //
@@ -964,8 +986,8 @@ public class ContentSection extends Application {
 //            dq.close();
 //        } else {
 //            throw new DataObjectNotFoundException(
-//                                                  "Failed to fetch a content section for the current package " +
-//                                                  "instance. [package_id =" + pkg.getID().toString() + "]");
+//                      "Failed to fetch a content section for the current package " +
+//                      "instance. [package_id =" + pkg.getID().toString() + "]");
 //        }
 //        return section;
 //    }
@@ -1014,6 +1036,48 @@ public class ContentSection extends Application {
 
 
 
+    /**
+     * Creates a content section of the given name using default values and
+     * returns it.
+     *
+     * @param name Name of the content section
+     * @return ContentSection
+     */
+    public static ContentSection create(final String name) {
+
+        Folder folder = createRootFolder(name);
+        Category category = createRootCategory(name);
+        Group staff = createStaffGroup(name);
+
+        // Some default classes for a content section.
+        String prc = "com.arsdigita.cms.dispatcher.SimplePageResolver";
+        String irc = "com.arsdigita.cms.dispatcher.MultilingualItemResolver";
+        String xgc = "com.arsdigita.cms.dispatcher.SimpleXMLGenerator";
+        String trc = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
+
+        ContentSection section = ContentSection.create( name,
+                                                        folder,
+                                                        category,
+                                                        staff,
+                                                        prc,
+                                                        irc,
+                                                        xgc,
+                                                        trc);
+
+        // Set the default context on the root folder to
+        // the content section
+        PermissionService.setContext(folder.getOID(), section.getOID());
+        createDefaultResources(section);
+
+//  Left over, see above
+//          }
+//      };
+//      rootExcursion.run();
+//
+//      //now retrieve the created content section and return it
+//      return (ContentSection) Application.retrieveApplicationForPath("/" + name + "/");
+        return section;
+    }
 
     /**
      * Create a new content section. This method is called automatically when a
@@ -1086,61 +1150,20 @@ public class ContentSection extends Application {
         //create and initialize the content section application
         ContentSection section = (ContentSection) Application.createApplication
             (BASE_DATA_OBJECT_TYPE, name, name, null );
-	section.initialize(
-            name,
-			folder,
-			category,
-			staff,
-			prc,
-			irc,
-			xgc,
-			trc,
-			templates,
-			viewers);
+        section.initialize( name,
+                            folder,
+                            category,
+                            staff,
+                            prc,
+                            irc,
+                            xgc,
+                            trc,
+                            templates,
+                            viewers);
 
         return section;
     }
 
-
-    /**
-     * Method create.  Creates a default content section and returns it
-     * @param name Name of the content section
-     * @return ContentSection
-     */
-    public static ContentSection create(final String name) {
-
-        Group staff = createStaffGroup(name);
-        Folder folder = createRootFolder(name);
-        Category category = createRootCategory(name);
-
-        // Some default classes for a content section.
-        String prc = "com.arsdigita.cms.dispatcher.SimplePageResolver";
-        String irc = "com.arsdigita.cms.dispatcher.MultilingualItemResolver";
-        String xgc = "com.arsdigita.cms.dispatcher.SimpleXMLGenerator";
-        String trc = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
-
-        ContentSection section = ContentSection.create(
-						name,
-						folder,
-						category,
-						staff,
-						prc,
-						irc,
-						xgc,
-						trc);
-
-        // Set the default context on the root folder to
-        // the content section
-        PermissionService.setContext(folder.getOID(), section.getOID());
-        createDefaultResources(section);
-//          }
-//      };
-//      rootExcursion.run();
-
-        //now retrieve the created content section and return it
-//      return (ContentSection) Application.retrieveApplicationForPath("/" + name + "/");
-        return section;
-    }
 
     /**
      * Creates and maps default resources to the content section.
@@ -1155,8 +1178,7 @@ public class ContentSection extends Application {
 
         // XML resources
         ResourceType rt = ResourceType.findResourceType("xml");
-        Resource r =
-                rt.createInstance("com.arsdigita.cms.ui.ContentSectionPage");
+        Resource r = rt.createInstance("com.arsdigita.cms.ui.ContentSectionPage");
         r.save();
         ResourceMapping rm = r.createInstance(section, "admin");
         rm.save();
@@ -1174,20 +1196,6 @@ public class ContentSection extends Application {
         rm = r.createInstance(section, "admin/item");
         rm.save();
 
-    }
-
-    /**
-     * Creates default staff group and associated default roles for a
-     * content section.
-     *
-     * @param name The name of the content section
-     * @return The staff group
-     */
-    private static Group createStaffGroup(String name) {
-        Group staff = new Group();
-        staff.setName(name + " Administration");
-        staff.save();
-        return staff;
     }
 
     /**
@@ -1215,6 +1223,20 @@ public class ContentSection extends Application {
         Category root = new Category("/", "Root Category");
         root.save();
         return root;
+    }
+
+    /**
+     * Creates default staff group and associated default roles for a
+     * content section.
+     *
+     * @param name The name of the content section
+     * @return The staff group
+     */
+    private static Group createStaffGroup(String name) {
+        Group staff = new Group();
+        staff.setName(name + " Administration");
+        staff.save();
+        return staff;
     }
 
 
@@ -1245,15 +1267,15 @@ public class ContentSection extends Application {
 
         setName(name);
         //setPackageInstance(pkg);
-        setStaffGroup(staff);
-        setViewersGroup(viewers);
         setRootFolder(folder);
         setRootCategory(category);
-        setPageResolverClass(prc);
+        setStaffGroup(staff);
+        setPageResolverClassName(prc);
         setItemResolverClass(irc);
         setXMLGeneratorClass(xgc);
-        setTemplatesFolder(templates);
         setTemplateResolverClass(trc);
+        setTemplatesFolder(templates);
+        setViewersGroup(viewers);
         save();
 
         return this;
@@ -1273,10 +1295,12 @@ public class ContentSection extends Application {
         return new Folder.ItemCollection(dq);
     }
 
+    @Override
     public String getServletPath() {
         return URL.SERVLET_DIR + "/content-section";
     }
 
+    @Override
     public String getStylesheetPath() {
         return STYLESHEET;
     }

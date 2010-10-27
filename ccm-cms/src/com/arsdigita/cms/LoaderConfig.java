@@ -17,18 +17,6 @@
  */
 
 
-// *****************************************************************************
-
-// Stand:
-// Alle Parameter aus SectionInitializer und enterprise.init hierhin übertragen.
-// Noch zu klären, welche gehören tatsächlich hier hin?
-// In Loader gehören nur solche, die in der Datenbank eingetragen werden (persisted).
-// Alles, was zur Laufzeit eingestellt wird, muss in Initializer configuration.
-
-// *****************************************************************************
-
-
-
 package com.arsdigita.cms;
 
 //import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
@@ -60,32 +48,36 @@ public final class LoaderConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(LoaderConfig.class);
 
-    // ////////////////////////////////////////////////
-    // The following two (three) parameters are used by
-    // com.arsdigita.cms.installer.Initializer
-    // ////////////////////////////////////////////////
+//  /**
+//   * The name of the workspace package instance, i.e. URL of the workspace,
+//   * where authors, editors and publishers are working and from which they
+//   * can select a content-section to create and edit documents.
+//   * Usually you won't modify it!
+//   *
+//   * NOTE Version 6.6.1 /2010-10-27)
+//   * This parameter is not used in Loader. Perhaps we will make it configurable
+//   * a migrating Workspace to new application style so it is retained here
+//   * for the time being.
+//   */
+//  private StringParameter
+//          m_workspaceURL = new StringParameter(
+//                               "com.arsdigita.cms.loader.workspace_url",
+//                               Parameter.REQUIRED,
+//                               "content-center");
 
-    /**
-     * The name of the workspace package instance, i.e. URL of the workspace,
-     * where authors, editors and publishers are working and from which they
-     * can select a content-section to create and edit documents.
-     * Usually you won't modify it!
-     */
-    private StringParameter 
-            m_workspaceURL = new StringParameter(
-                                 "com.arsdigita.cms.loader.workspace_url",
-                                 Parameter.REQUIRED,
-                                 "content-center");
-
-    /**
-     * XML Mapping of the content center tabs to URLs, see
-     * {@link ContentCenterDispatcher}
-     */
-    private final StringParameter 
-            m_contentCenterMap = new StringParameter(
-                                     "com.arsdigita.cms.loader.content_center_map",
-                                     Parameter.REQUIRED,
-                                     "/WEB-INF/resources/content-center-map.xml");
+//  /**
+//   * XML Mapping of the content center tabs to URLs, see
+//   * {@link ContentCenterDispatcher}
+//   * NOTE Version 6.6.1 /2010-10-27)
+//   * Currently not used in Loader because it will not be persisted. Retained
+//   * here for reference in case we will add persisting while migrating to
+//   * new style application.
+//   */
+//  private final StringParameter
+//          m_contentCenterMap = new StringParameter(
+//                                   "com.arsdigita.cms.loader.content_center_map",
+//                                   Parameter.REQUIRED,
+//                                   "/WEB-INF/resources/content-center-map.xml");
 
             // Update master object if upgrading from old versioning
             // XXX: shouldn't we just gut this section (and
@@ -127,12 +119,12 @@ public final class LoaderConfig extends AbstractConfig {
             m_ctDefFiles = new StringArrayParameter(
                            "com.arsdigita.cms.loader.contenttype_definition_files",
                            Parameter.REQUIRED,
-                           // Generic*.xml added by Quasi in enterprise.init fot
+                           // Generic*.xml added by Quasi in enterprise.init for
                            // new generic Basetypes in addition to article
                            new String[] {"/WEB-INF/content-types/GenericAddress.xml",
                                          "/WEB-INF/content-types/GenericArticle.xml",
                                          "/WEB-INF/content-types/GenericContact.xml",
-					 "/WEB-INF/content-types/GenericOrganizationalUnit.xml",
+                                         "/WEB-INF/content-types/GenericOrganizationalUnit.xml",
                                          "/WEB-INF/content-types/GenericPerson.xml",
                                          "/WEB-INF/content-types/Template.xml"}
                                                    );
@@ -153,7 +145,7 @@ public final class LoaderConfig extends AbstractConfig {
      */
     private final Parameter 
             m_contentSectionName = new StringParameter(
-                                   "com.arsdigita.cms.loader.content_section_name",
+                                   "com.arsdigita.cms.loader.section_name",
                                    Parameter.REQUIRED,
                                    "content");
                                    //"public");
@@ -172,7 +164,7 @@ public final class LoaderConfig extends AbstractConfig {
      * Not implemented yet! We need a new parameter type "list" which must have
      * multidimensional capabilities.
      */
-//  private final StringParameter
+//  private final Parameter
 //          m_staffGroup = new StringParameter(
 //                         "com.arsdigita.cms.loader.section_staff_group",
 //                         Parameter.REQUIRED,
@@ -212,7 +204,7 @@ public final class LoaderConfig extends AbstractConfig {
      */
     private final Parameter
             m_contentTypeList = new StringArrayParameter(
-                                    "com.arsdigita.cms.loader.ctypes_include_list",
+                                    "com.arsdigita.cms.loader.section_ctypes_list",
                                     Parameter.REQUIRED,
                                new String[] {}  );
 
@@ -287,13 +279,24 @@ public final class LoaderConfig extends AbstractConfig {
                     Parameter.REQUIRED,
                     new String[] {"/WEB-INF/resources/article-categories.xml",
                                   "/WEB-INF/resources/navigation-categories.xml"}  );
-    // Category tree to load
-    // categories = { "/WEB-INF/resources/article-categories.xml",
-    //                "/WEB-INF/resources/navigation-categories.xml" };
-    //   m_conf.initParameter(CATEGORIES,
-    //          "XML file containing the category tree",
-    //          List.class,
-    //          Collections.EMPTY_LIST);
+
+
+//  Currently not a Loader task. There is no way to persist tasks preferences
+//  on a per section base.
+//  /**
+//   * When to generate email alerts: by default, generate email alerts
+//   * on enable, finish, and rollback (happens on rejection) changes.
+//   * There are four action types for each task type: enable,
+//   * disable, finish, and rollback. Note that the values below are
+//   * based on the task labels, and as such are not globalized.
+//   */
+//  private final Parameter
+//          m_taskAlerts = new StringArrayParameter(
+//      	    "com.arsdigita.cms.task_alerts",
+//      	    Parameter.REQUIRED, new String[] {
+//      		    "Authoring:enable:finish:rollback",
+//      		    "Approval:enable:finish:rollback",
+//      		    "Deploy:enable:finish:rollback" }  );
 
 
     // ///////////////////////////////////////////////////////////////////////
@@ -351,8 +354,8 @@ public final class LoaderConfig extends AbstractConfig {
      */
     public LoaderConfig() {
 
-            register(m_workspaceURL);
-            register(m_contentCenterMap);
+//          register(m_workspaceURL);
+//          register(m_contentCenterMap);
             register(m_ctDefFiles);
 
             // Parameters for creating a content section
@@ -365,9 +368,10 @@ public final class LoaderConfig extends AbstractConfig {
             register(m_useSectionCategories);
             register(m_categoryFileList);
 
+            // (Currently not a loader task)
+//          register(m_taskAlerts);
             // Parameters controlling Overdue Task alerts:
             // (Currently not a loader task)
-//          register(m_taskAlerts); no Loader task, moved to contentsection/Initializer
 //          register(m_sendOverdueAlerts);
 //          register(m_taskDuration);
 //          register(m_overdueAlertInterval);
@@ -386,22 +390,24 @@ public final class LoaderConfig extends AbstractConfig {
     //
     // //////////////////////////
 
-    /**
-     * Fetch name (URL) of the workspace package instance, e.g. content-center
-     * @return (URL) of the workspace package instance
-     */
-    public String getWorkspaceURL() {
-        return (String) get(m_workspaceURL);
-    }
+//  Not used as long as we use old style application (seee above)
+//  /**
+//   * Fetch name (URL) of the workspace package instance, e.g. content-center
+//   * @return (URL) of the workspace package instance
+//   */
+//  public String getWorkspaceURL() {
+//      return (String) get(m_workspaceURL);
+//  }
 
-    /**
-     * Fetch the file name contaning XML Mapping of the content center tabs
-     * to URLs
-     * @return String containig file name including path component.
-     */
-    public String  getContentCenterMap() {
-        return (String) get(m_contentCenterMap);
-    }
+//  Moved to CMSConfig as long as it is not a Loader task. (see above)
+//  /**
+//   * Fetch the file name contaning XML Mapping of the content center tabs
+//   * to URLs
+//   * @return String containig file name including path component.
+//   */
+//  public String  getContentCenterMap() {
+//      return (String) get(m_contentCenterMap);
+//  }
 
     public List getCTDefFiles() {
         String[] ctDefFiles = (String[]) get(m_ctDefFiles);
@@ -424,8 +430,7 @@ public final class LoaderConfig extends AbstractConfig {
      *
      * In loading step a complete default configuration is persisted in database,
      * immutable at this point.
-     * See contentsection.ContentSectio
-nSetup.registerRoles()
+     * See contentsection.ContentSectionSetup.registerRoles()
      * In enterprise.init: name roles, List of roles to create.
      *
      * Set consists of a set of roles, for each role first field is the role name,
@@ -556,6 +561,10 @@ nSetup.registerRoles()
         return Arrays.asList(taskAlerts);
     }
 
+
+//  public final String[] getTaskAlerts() {
+//      return (String[]) get(m_taskAlerts);
+//  }
 
   // Parameters controlling Overdue Task alerts:
   // Currently not a loader task, see above

@@ -23,7 +23,8 @@ import com.arsdigita.cms.dispatcher.AssetURLFinder;
 import com.arsdigita.cms.dispatcher.ItemDelegatedURLPatternGenerator;
 import com.arsdigita.cms.dispatcher.ItemTemplatePatternGenerator;
 import com.arsdigita.cms.dispatcher.ItemURLFinder;
-import com.arsdigita.cms.installer.WorkspaceInstaller;
+// import com.arsdigita.cms.installer.WorkspaceInstaller;
+// import com.arsdigita.cms.installer.ContentCenterSetup;
 import com.arsdigita.cms.publishToFile.PublishToFileListener;
 import com.arsdigita.cms.publishToFile.QueueManager;
 import com.arsdigita.cms.search.AssetMetadataProvider;
@@ -49,10 +50,10 @@ import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.NoValidURLException;
-import com.arsdigita.kernel.PackageInstance;
-import com.arsdigita.kernel.PackageInstanceCollection;
-import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.SiteNode;
+// import com.arsdigita.kernel.PackageInstance;
+// import com.arsdigita.kernel.PackageInstanceCollection;
+// import com.arsdigita.kernel.PackageType;
+// import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.URLFinder;
 import com.arsdigita.kernel.URLFinderNotFoundException;
 import com.arsdigita.kernel.URLService;
@@ -62,7 +63,7 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.ConfigError;
+// import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
@@ -87,14 +88,15 @@ import com.arsdigita.cms.util.LanguageUtil;
 import com.arsdigita.kernel.Kernel;
 
 // For Id.
-import java.math.BigDecimal;
+// import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
 /**
- * The main CMS initializer.
+ * The main CMS initializer, executed recurringly at each system startup.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
+ * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: Initializer.java 2070 2010-01-28 08:47:41Z pboy $
  */
 public class Initializer extends CompoundInitializer {
@@ -103,8 +105,17 @@ public class Initializer extends CompoundInitializer {
     /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
+    /** Configuration object for the CMS module     */
+    private static final CMSConfig s_conf = CMSConfig.getInstance();
+//  Verursacht aktuell eine Exception "no such context"
+//  Vermutliche Lösung: in config.xml eintragen.
+//  static {            // requirred to actually read the config file!
+//     s_conf.load();
+//  }
+
     /**
-     * Constructor
+     * Constructor, adds db connection information and various sub-initializers
+     * for subpackages in the CMS module.
      */
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
@@ -127,7 +138,7 @@ public class Initializer extends CompoundInitializer {
         //
         // Invokes ContentCenterSetup (without any LegacyInitializer)
         // performs mainly loader tasks and should be migrated to Loader.
-        add(new com.arsdigita.cms.installer.Initializer());
+        // add(new com.arsdigita.cms.installer.Initializer());
 
         // Step 2:
         // Old type initializer "com.arsdigita.cms.installer.xml.ContentTypeInitializer"
@@ -145,7 +156,7 @@ public class Initializer extends CompoundInitializer {
         // Initializer for content section, needed when LegacyInitializer in step 4
         // has been moved to c.ad.Loader in order to register the application and
         // optionally to install additional content sections.
-        // add(new com.arsdigita.cms.contentsection.Initializer());
+        add(new com.arsdigita.cms.contentsection.Initializer());
 
         // Used to be step 3 in old enterprise.init migrated to loader/new init.
         add(new com.arsdigita.cms.publishToFile.Initializer());
@@ -231,8 +242,14 @@ public class Initializer extends CompoundInitializer {
         registerPatternGenerators();
         
         // cg - register Task Retrieval engine
-        
         Engine.registerEngine(CMSEngine.CMS_ENGINE_TYPE, new CMSEngine());
+
+        // Setup Workspace tab to URL mapping
+        final String workspaceURL = CMS.WORKSPACE_PACKAGE_KEY;
+        final String contentCenterMap = s_conf.getContentCenterMap();
+        WorkspaceSetup workspaceSetup = new WorkspaceSetup( workspaceURL,
+                                                            contentCenterMap);
+        workspaceSetup.run();
 
         // register item adapters
         XML.parse(ContentSection.getConfig().getItemAdapters(),
@@ -316,6 +333,7 @@ public class Initializer extends CompoundInitializer {
          f.registerInstantiator
              (WorkflowTemplate.BASE_DATA_OBJECT_TYPE,
               new ACSObjectInstantiator() {
+                  @Override
                   public DomainObject doNewInstance(DataObject dataObject) {
                       return new WorkflowTemplate(dataObject);
                   }
@@ -327,6 +345,7 @@ public class Initializer extends CompoundInitializer {
                   public DomainObject doNewInstance(DataObject dataObject) {
                       return new TemplateContext(dataObject);
                   }
+                  @Override
                   public DomainObjectInstantiator
                       resolveInstantiator(DataObject obj) {
                       return this;
