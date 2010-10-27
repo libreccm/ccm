@@ -33,26 +33,19 @@ import java.sql.SQLException;
 
 /**
  * 
- * Represents a role within a group. The class of users who
- * have a given role within a group are treated as a party, so that
- * permissions can be assigned to a role within a group.
- *
- * <p>
- * This class has not yet been reviewed and is subject to change.
- * </p>
- *
- *
- * @author Michael Bryzek 
- * @version 1.0
+ * Represents a role within a group. The class of users who have a given role
+ * within a group are treated as a party, so that permissions can be assigned
+ * to a role within a group.
  *
  * @see com.arsdigita.kernel.Group#createRole(String)
+ * @author Michael Bryzek 
+ * @version 1.0
+ * @version $Id: Role.java 1169 2006-06-14 13:08:25Z fabrice $
  **/
 public class Role extends DomainObject {
 
-    public static final String versionId = "$Id: Role.java 1169 2006-06-14 13:08:25Z fabrice $ by $Author: fabrice $, $DateTime: 2004/08/16 18:10:38 $";
-
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.kernel.Role";
+                               "com.arsdigita.kernel.Role";
 
     private Group m_sourceGroup;
     private Group m_roleGroup;
@@ -65,6 +58,7 @@ public class Role extends DomainObject {
     // TODO: Hack until we integrated roles with permissions
     private static final String IMPLICIT_GROUP = "implicitGroup";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

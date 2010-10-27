@@ -38,6 +38,7 @@ import com.redhat.persistence.EventProcessorManager;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
  **/
 final class VersioningProcessorManager implements EventProcessorManager {
+    
     private static final ThreadLocal s_processor = new ThreadLocal() {
             public Object initialValue() {
                 return new VersioningEventProcessor();

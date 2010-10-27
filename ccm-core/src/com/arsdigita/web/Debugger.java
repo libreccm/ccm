@@ -81,6 +81,7 @@ public abstract class Debugger {
     public abstract String debug();
 
     private static class DebuggerListLocal extends InternalRequestLocal {
+        @Override
         protected Object initialValue() {
             if (Kernel.getConfig().isDebugEnabled()) {
                 return new ArrayList();
@@ -89,6 +90,7 @@ public abstract class Debugger {
             }
         }
 
+        @Override
         protected void clearValue() {
             if (Kernel.getConfig().isDebugEnabled()) {
                 ArrayList list = (ArrayList) get();
