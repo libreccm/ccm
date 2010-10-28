@@ -12,6 +12,15 @@ import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
 
 /**
+ * Relation Attribute
+ *
+ * The purpose of this class is to provide a database driven enumeration of
+ * attributes. It can be used to create enumerated selects for content type
+ * or association attributes, which can be modified during runtime.
+ *
+ *
+ * For the moment, it will handle the translation by itself. This may be modified
+ * to use the GlobalizationService, when it is database driven.
  *
  * @author quasi
  */

@@ -22,15 +22,13 @@ model com.arsdigita.cms;
 import com.arsdigita.kernel.ACSObject;
 
 object type PublishedLink {
-    composite ContentItem[1..1]    pending = 
-        join cms_published_links.pending to cms_items.item_id;
+    composite ContentItem[1..1]    pending        = join cms_published_links.pending to cms_items.item_id;
     // change this later?
     // OID[1..1]                   pendingOID;
-    ACSObject[1..1]                pendingSource = 
-        join cms_published_links.pending_source to acs_objects.object_id;
-    String[1..1]                   propertyName = cms_published_links.property_name VARCHAR(100);
-    composite ContentItem[1..1]    draftTarget = 
-        join cms_published_links.draft_target to cms_items.item_id;
+    ACSObject[1..1]                pendingSource  = join cms_published_links.pending_source to acs_objects.object_id;
+    String[1..1]                   propertyName   = cms_published_links.property_name VARCHAR(100);
+    composite ContentItem[1..1]    draftTarget    = join cms_published_links.draft_target to cms_items.item_id;
+    Blob[0..1]                     linkAttributes = cms_published_links.link_attributes BLOB;
     object key(pending, pendingSource, propertyName, draftTarget);
     aggressive load (pending.id, pendingSource.id, draftTarget.id);
 }

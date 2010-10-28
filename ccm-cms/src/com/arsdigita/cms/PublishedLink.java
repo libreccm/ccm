@@ -34,7 +34,12 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.util.Assert;
-import com.redhat.persistence.DuplicateObjectException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
@@ -51,18 +56,17 @@ import java.util.Set;
 class PublishedLink extends DomainObject {
 
     private static final Logger s_log = Logger.getLogger(PublishedLink.class);
-
     static final String SOURCE_MASTER_ITEM = "pending";
-
     // replace below later with:
     //public static final String PENDING_OID = "pendingOID"
     static final String PENDING_SOURCE = "pendingSource";
     static final String PROPERTY_NAME = "propertyName";
     static final String DRAFT_TARGET = "draftTarget";
-
+    static final String LINK_ATTRIBUTES = "linkAttributes";
     static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.PublishedLink";
+            "com.arsdigita.cms.PublishedLink";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -122,9 +126,10 @@ class PublishedLink extends DomainObject {
      * one already exists for these items.
      */
     static PublishedLink create(ContentItem sourceMasterItem,
-                                DomainObject linkSource,
-                                String propertyName,
-                                ContentItem linkTarget) {
+            DomainObject linkSource,
+            String propertyName,
+            ContentItem linkTarget,
+            ContentItem sourceObject) {
         OID oid = new OID(BASE_DATA_OBJECT_TYPE);
         oid.set(SOURCE_MASTER_ITEM, DomainServiceInterfaceExposer.getDataObject(sourceMasterItem));
         oid.set(PROPERTY_NAME, propertyName);
@@ -134,15 +139,19 @@ class PublishedLink extends DomainObject {
         if (linkSource instanceof ACSObject) {
             oid.set(PENDING_SOURCE, DomainServiceInterfaceExposer.getDataObject(linkSource));
         } else {
-            Assert.fail("Cannot set PublishedLink source " + linkSource + "; it is not an " +
-                        "ACSObject");
+            Assert.fail("Cannot set PublishedLink source " + linkSource + "; it is not an "
+                    + "ACSObject");
         }
 
         PublishedLink link = null;
         try {
-            link  = new PublishedLink(oid);
+            link = new PublishedLink(oid);
         } catch (DataObjectNotFoundException e) {
             link = new PublishedLink(SessionManager.getSession().create(oid));
+        }
+
+        if (sourceObject.getObjectType().getProperty(propertyName).isCollection()) {
+            link.saveLinkAttributes((DataCollection) sourceObject.get(propertyName + "@link"));
         }
 
         return link;
@@ -159,9 +168,8 @@ class PublishedLink extends DomainObject {
     ContentItem getSourceMasterItem() {
         final DataObject item = (DataObject) get(SOURCE_MASTER_ITEM);
 
-        return item == null ? null :
-            (ContentItem) DomainObjectFactory.newInstance
-            ((DataObject) item);
+        return item == null ? null
+                : (ContentItem) DomainObjectFactory.newInstance((DataObject) item);
     }
 
     /**
@@ -174,9 +182,8 @@ class PublishedLink extends DomainObject {
         // this will need to be  refactored if we switch to OIDs
         final DataObject item = (DataObject) get(PENDING_SOURCE);
 
-        return item == null ? null :
-            DomainObjectFactory.newInstance
-            ((DataObject) item);
+        return item == null ? null
+                : DomainObjectFactory.newInstance((DataObject) item);
     }
 
     /**
@@ -186,7 +193,7 @@ class PublishedLink extends DomainObject {
      *
      */
     String getPropertyName() {
-        return  (String) get(PROPERTY_NAME);
+        return (String) get(PROPERTY_NAME);
     }
 
     /**
@@ -200,9 +207,8 @@ class PublishedLink extends DomainObject {
     ContentItem getLinkTarget() {
         final DataObject item = (DataObject) get(DRAFT_TARGET);
 
-        return item == null ? null :
-            (ContentItem) DomainObjectFactory.newInstance
-            ((DataObject) item);
+        return item == null ? null
+                : (ContentItem) DomainObjectFactory.newInstance((DataObject) item);
     }
 
     /**
@@ -246,15 +252,17 @@ class PublishedLink extends DomainObject {
             // will change w/ OID references
             DataObject master = (DataObject) coll.get(SOURCE_MASTER_ITEM);
             DataObject src = (DataObject) coll.get(PENDING_SOURCE);
-            src.specialize((String)src.get(ACSObject.OBJECT_TYPE));
+            src.specialize((String) src.get(ACSObject.OBJECT_TYPE));
             String propertyName = (String) coll.get(PROPERTY_NAME);
+            byte[] linkAttributes = (byte[]) coll.get(LINK_ATTRIBUTES);
+
             Assert.exists(src, DataObject.class);
             Assert.exists(propertyName, String.class);
 
             DataObject target = null;
-            DataObject draftTarget  = (DataObject) coll.get(DRAFT_TARGET);
+            DataObject draftTarget = (DataObject) coll.get(DRAFT_TARGET);
             DataAssociationCursor targetVersions =
-                ((DataAssociation) draftTarget.get(ContentItem.VERSIONS)).cursor();
+                    ((DataAssociation) draftTarget.get(ContentItem.VERSIONS)).cursor();
             targetVersions.addEqualsFilter(ContentItem.VERSION, ContentItem.LIVE);
             if (targetVersions.next()) {
                 target = targetVersions.getDataObject();
@@ -265,10 +273,10 @@ class PublishedLink extends DomainObject {
                 Property prop = ot.getProperty(propertyName);
                 Assert.exists(prop, propertyName + " for type " + ot.getQualifiedName() + ", ID: " + src.get("id"));
                 if (prop.isCollection()) {
-                    DataAssociation da = (DataAssociation) src.get(propertyName);               
-                    da.add(target);               
+                    DataAssociation da = (DataAssociation) src.get(propertyName);
+                    setLinkAttributesForLiveLink(da.add(target), linkAttributes);
                 } else {
-                    src.set(propertyName,target);
+                    src.set(propertyName, target);
                 }
                 if (itemsToRefresh != null && master != null) {
                     itemsToRefresh.add(master.getOID());
@@ -309,4 +317,76 @@ class PublishedLink extends DomainObject {
         }
     }
 
+    private void saveLinkAttributes(DataCollection coll) {
+
+        if (coll.next()) {
+
+            DataObject linkObj = coll.getDataObject();
+
+            Iterator properties = linkObj.getObjectType().getDeclaredProperties();
+            HashMap<String, Object> linkAttributes = new HashMap();
+
+            while (properties.hasNext()) {
+
+                Property prop = (Property) properties.next();
+                String key = prop.getName();
+
+                // Teste Property: Es darf kein Key und muß ein simples Attribute sein
+                if (prop.isAttribute() && !prop.isKeyProperty()) {
+
+                    Object value = linkObj.get(key);
+                    linkAttributes.put(key, value);
+                }
+            }
+
+            if (linkAttributes.size() > 0) {
+                ByteArrayOutputStream data = new ByteArrayOutputStream();
+                try {
+                    ObjectOutputStream out = new ObjectOutputStream(data);
+                    out.writeObject(linkAttributes);
+                } catch (IOException ex) {
+                }
+
+                set(LINK_ATTRIBUTES, data.toByteArray());
+
+            }
+        }
+    }
+
+    private static void setLinkAttributesForLiveLink(DataObject link, byte[] linkAttributes) {
+
+        if (linkAttributes != null) {
+            ByteArrayInputStream data = null;
+            ObjectInputStream in = null;
+            HashMap<String, Object> attributes = null;
+
+            data = new ByteArrayInputStream(linkAttributes);
+
+            try {
+                in = new ObjectInputStream(data);
+                try {
+                    attributes = (HashMap<String, Object>) in.readObject();
+                } catch (ClassNotFoundException ex) {
+                    s_log.error("Class HashMap not found? WTF?");
+                    return;
+                }
+            } catch (IOException ex) {
+                s_log.error("Can't read HashMap from database");
+                return;
+            }
+
+            if (attributes != null) {
+                Iterator keys = attributes.keySet().iterator();
+
+                while (keys.hasNext()) {
+                    String propertyName = (String) keys.next();
+                    Object value = (Object) attributes.get(propertyName);
+
+                    if (link.getObjectType().hasDeclaredProperty(propertyName) && link.getSession() != null) {
+                        link.set(propertyName, value);
+                    }
+                }
+            }
+        }
+    }
 }

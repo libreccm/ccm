@@ -75,6 +75,7 @@ class VersionCopier extends ObjectCopier {
      * @param item the item to be copied
      * @return a copy of the item
      */
+    @Override
     public ContentItem copyItem(final ContentItem item) {
         m_trace.enter("copyItem", item);
 
@@ -118,6 +119,7 @@ class VersionCopier extends ObjectCopier {
     /**
      * This copier is used to create published copies of items
      */
+    @Override
     public int getCopyType() {
         return ItemCopier.VERSION_COPY;
     }
@@ -129,6 +131,7 @@ class VersionCopier extends ObjectCopier {
      *
      * @param source the <code>DomainObject</code> from which to copy
      */
+    @Override
     public DomainObject copy(final DomainObject object) {
 	if (object != null) {
 	    m_traversedComponents.add(object);
@@ -168,6 +171,7 @@ class VersionCopier extends ObjectCopier {
      * @param prop the <code>Property</code> currently under
      * consideration
      */
+    @Override
     protected DomainObject copy(final DomainObject source,
 				final DomainObject target,
 				final DomainObject object,
@@ -214,8 +218,7 @@ class VersionCopier extends ObjectCopier {
                 s_log.debug("The property is not a component; creating " +
                             "PublishedLink for the item");
 
-		PublishedLink.create((ContentItem) getCopy(m_topLevelSourceOID), target, prop.getName(), item);
-
+		PublishedLink.create((ContentItem) getCopy(m_topLevelSourceOID), target, prop.getName(), item, (ContentItem) source);
                 m_trace.exit("copy", null);
 
                 return null;
