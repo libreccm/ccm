@@ -68,7 +68,6 @@ import org.apache.log4j.Logger;
 public class Session {
 
     private static final Logger LOG = Logger.getLogger(Session.class);
-
     private MetadataRoot m_root;
     private ConnectionSource m_source;
     private int m_database;
@@ -76,7 +75,6 @@ public class Session {
     private PSession m_ssn;
     private final RDBMSEngine m_engine;
     private final QuerySource m_qs;
-
     private List m_dataObjects = new ArrayList();
     FlushEventProcessor m_beforeFP;
     FlushEventProcessor m_afterFP;
@@ -88,35 +86,35 @@ public class Session {
         m_database = database;
 
         com.redhat.persistence.engine.rdbms.ConnectionSource src =
-            new com.redhat.persistence.engine.rdbms.ConnectionSource() {
+                new com.redhat.persistence.engine.rdbms.ConnectionSource() {
 
-                private Connection m_conn = null;
+                    private Connection m_conn = null;
 
-                public Connection acquire() {
-                    m_conn = m_source.acquire(m_conn);
-                    return m_conn;
-                }
+                    public Connection acquire() {
+                        m_conn = m_source.acquire(m_conn);
+                        return m_conn;
+                    }
 
-                public void release(Connection conn) {
-                    m_source.release(conn);
-                }
-            };
+                    public void release(Connection conn) {
+                        m_source.release(conn);
+                    }
+                };
 
         CompoundProfiler profs = new CompoundProfiler();
         profs.add(m_prof);
         profs.add(new DeveloperSupportProfiler());
 
         switch (m_database) {
-        case DbHelper.DB_ORACLE:
-            m_engine = new RDBMSEngine(src, new OracleWriter(), profs);
-            break;
-        case DbHelper.DB_POSTGRES:
-            m_engine = new RDBMSEngine(src, new PostgresWriter(), profs);
-            break;
-        default:
-            DbHelper.unsupportedDatabaseError("persistence");
-            m_engine = null;
-            break;
+            case DbHelper.DB_ORACLE:
+                m_engine = new RDBMSEngine(src, new OracleWriter(), profs);
+                break;
+            case DbHelper.DB_POSTGRES:
+                m_engine = new RDBMSEngine(src, new PostgresWriter(), profs);
+                break;
+            default:
+                DbHelper.unsupportedDatabaseError("persistence");
+                m_engine = null;
+                break;
         }
 
         m_qs = new QuerySource();
@@ -131,12 +129,17 @@ public class Session {
         m_ssn.addAfterFlush(m_afterFP);
 
         m_ssn.addBeforeDelete(new EventProcessor() {
-            protected void cleanUp(boolean isCommit) { }
-            protected void flush() { }
+
+            protected void cleanUp(boolean isCommit) {
+            }
+
+            protected void flush() {
+            }
+
             protected void write(Event ev) {
                 if (ev instanceof DeleteEvent) {
                     BeforeDeleteEvent bde =
-                        new BeforeDeleteEvent((DataObjectImpl) ev.getObject());
+                            new BeforeDeleteEvent((DataObjectImpl) ev.getObject());
                     bde.fire();
                 }
             }
@@ -145,8 +148,8 @@ public class Session {
         Root r = m_root.getRoot();
         synchronized (r) {
             Adapter ad = r.getAdapter(DataObjectImpl.class);
-            if (ad == null ||
-                !(ad instanceof DataObjectAdapter)) {
+            if (ad == null
+                    || !(ad instanceof DataObjectAdapter)) {
                 ad = new DataObjectAdapter();
                 r.addAdapter(DataObjectImpl.class, ad);
                 r.addAdapter(PropertyMap.class, ad);
@@ -233,18 +236,15 @@ public class Session {
      *
      * @return The transaction context for this Session.
      **/
-
     public TransactionContext getTransactionContext() {
         return m_ctx;
     }
-
 
     /**
      * Returns the JDBC connection associated with this session.
      *
      * @return The JDBC connection used by this Session object.
      **/
-
     public Connection getConnection() {
         return m_engine.getConnection();
     }
@@ -266,15 +266,13 @@ public class Session {
      * @see #create(String)
      **/
     public DataObject create(ObjectType type) {
-	if (type == null) {
-	    throw new IllegalArgumentException
-		("type must be non null");
-	}
+        if (type == null) {
+            throw new IllegalArgumentException("type must be non null");
+        }
         DataObjectImpl result = new DataObjectImpl(type);
         result.setSession(m_ssn);
         return result;
     }
-
 
     /**
      * Creates and returns an empty DataObject of the given type. The
@@ -303,16 +301,13 @@ public class Session {
      * @return A persistent object of the type identified by
      * <i>typeName</i>.
      **/
-
     public DataObject create(String typeName) {
-	ObjectType type = m_root.getObjectType(typeName);
-	if (type == null) {
-	    throw new PersistenceException
-		("no such type: " + typeName);
-	}
+        ObjectType type = m_root.getObjectType(typeName);
+        if (type == null) {
+            throw new PersistenceException("no such type: " + typeName);
+        }
         return create(type);
     }
-
 
     /**
      * Creates a new DataObject with the type of the given oid and initializes
@@ -321,7 +316,6 @@ public class Session {
      * @param oid The OID that specifies the type of and key properties for
      *        the resulting DataObject.
      **/
-
     public DataObject create(OID oid) {
         DataObject result = new DataObjectImpl(oid);
         try {
@@ -331,7 +325,6 @@ public class Session {
         }
         return result;
     }
-
 
     /**
      * Retrieves the DataObject specified by <i>oid</i>.  If there is
@@ -344,11 +337,9 @@ public class Session {
      *
      * @return A persistent object of the type specified by the oid.
      **/
-
     public DataObject retrieve(OID oid) {
         return (DataObject) m_ssn.retrieve(C.pmap(getRoot(), oid));
     }
-
 
     /**
      *  Deletes the persistent object of the given type with the given oid.
@@ -357,7 +348,6 @@ public class Session {
      *
      * @return True of an object was deleted, false otherwise.
      **/
-
     public boolean delete(OID oid) {
         DataObject dobj = retrieve(oid);
         boolean result = m_ssn.delete(dobj);
@@ -365,7 +355,6 @@ public class Session {
         m_ssn.assertFlushed(dobj);
         return result;
     }
-
 
     /**
      * Retrieves a collection of objects of the specified objectType.
@@ -377,13 +366,9 @@ public class Session {
      * @return A DataCollection of the specified type.
      * @see Session#retrieve(String)
      **/
-
     public DataCollection retrieve(ObjectType type) {
-        return new DataCollectionImpl
-            (this, m_ssn.getDataSet(getRoot().getObjectType
-                                    (type.getQualifiedName())));
+        return new DataCollectionImpl(this, m_ssn.getDataSet(getRoot().getObjectType(type.getQualifiedName())));
     }
-
 
     /**
      * <p>Retrieves a collection of objects of the specified objectType.
@@ -426,7 +411,6 @@ public class Session {
      * <code>retrieveAll</code> event..
      * @see Session#retrieve(ObjectType)
      **/
-
     public DataCollection retrieve(String typeName) {
         ObjectType ot = m_root.getObjectType(typeName);
         if (ot == null) {
@@ -434,7 +418,6 @@ public class Session {
         }
         return retrieve(ot);
     }
-
 
     /**
      * <p>Retrieves a persistent query object based on the named query.
@@ -478,10 +461,8 @@ public class Session {
      * @param name The name of the query.
      * @return A new DataQuery object.
      **/
-
     public DataQuery retrieveQuery(String name) {
-        com.redhat.persistence.metadata.ObjectType ot
-            = getRoot().getObjectType(name);
+        com.redhat.persistence.metadata.ObjectType ot = getRoot().getObjectType(name);
         if (ot == null) {
             throw new PersistenceException("no such query: " + name);
         }
@@ -518,10 +499,8 @@ public class Session {
      * in the PDL.
      *
      **/
-
     public DataOperation retrieveDataOperation(String name) {
-        com.redhat.persistence.metadata.DataOperation op
-            = getRoot().getDataOperation(Path.get(name));
+        com.redhat.persistence.metadata.DataOperation op = getRoot().getDataOperation(Path.get(name));
         if (op == null) {
             throw new PersistenceException("no such data operation: " + name);
         }
@@ -548,7 +527,7 @@ public class Session {
     }
 
     void invalidateDataObjects(boolean connectedOnly, boolean error) {
-        for (Iterator it = m_dataObjects.iterator(); it.hasNext(); ) {
+        for (Iterator it = m_dataObjects.iterator(); it.hasNext();) {
             WeakReference ref = (WeakReference) it.next();
             DataObjectImpl obj = (DataObjectImpl) ref.get();
             if (obj != null) {
@@ -559,10 +538,12 @@ public class Session {
         m_dataObjects.clear();
     }
 
-
     private static class AfterActivate extends EventProcessor {
+
         protected void write(Event ev) {
-            if (!(ev.getObject() instanceof DataObjectImpl)) { return; }
+            if (!(ev.getObject() instanceof DataObjectImpl)) {
+                return;
+            }
 
             if (ev instanceof PropertyEvent) {
                 PropertyEvent pe = (PropertyEvent) ev;
@@ -571,58 +552,66 @@ public class Session {
                 }
 
                 DataObjectImpl doi = (DataObjectImpl) ev.getObject();
-                if (doi.isDeleted()) { return; }
+                if (doi.isDeleted()) {
+                    return;
+                }
             }
 
             ev.dispatch(new Event.Switch() {
-                public void onCreate(CreateEvent e) { }
 
-                public void onDelete(DeleteEvent e) { }
+                public void onCreate(CreateEvent e) {
+                }
+
+                public void onDelete(DeleteEvent e) {
+                }
 
                 public void onSet(com.redhat.persistence.SetEvent e) {
                     new SetEvent((DataObjectImpl) e.getObject(),
-                                 e.getProperty().getName(),
-                                 e.getPreviousValue(),
-                                 e.getArgument()).fire();
+                            e.getProperty().getName(),
+                            e.getPreviousValue(),
+                            e.getArgument()).fire();
                 }
 
                 public void onAdd(com.redhat.persistence.AddEvent e) {
                     new AddEvent((DataObjectImpl) e.getObject(),
-                                 e.getProperty().getName(),
-                                 (DataObjectImpl) e.getArgument()).fire();
+                            e.getProperty().getName(),
+                            (DataObjectImpl) e.getArgument()).fire();
                 }
 
-                public void onRemove
-                    (com.redhat.persistence.RemoveEvent e) {
+                public void onRemove(com.redhat.persistence.RemoveEvent e) {
                     new RemoveEvent((DataObjectImpl) e.getObject(),
-                                    e.getProperty().getName(),
-                                    (DataObjectImpl) e.getArgument()).fire();
+                            e.getProperty().getName(),
+                            (DataObjectImpl) e.getArgument()).fire();
                 }
             });
         }
 
-        protected void flush() { }
-        protected void cleanUp(boolean isCommit) { }
+        protected void flush() {
+        }
+
+        protected void cleanUp(boolean isCommit) {
+        }
     }
 
     static class FlushEventProcessor extends EventProcessor {
+
         final private boolean m_before;
         private List m_events = new ArrayList();
         private List m_toFire = new LinkedList();
 
-        FlushEventProcessor(boolean before) { m_before = before; }
+        FlushEventProcessor(boolean before) {
+            m_before = before;
+        }
 
         protected void cleanUp(boolean isCommit) {
             if (isCommit && m_events.size() > 0) {
                 LOG.error("unfired data events: " + m_events);
-                throw new IllegalStateException
-                    ("unfired data events: " + m_events);
+                throw new IllegalStateException("unfired data events: " + m_events);
             }
             m_events.clear();
             if (isCommit && m_toFire.size() > 0) {
                 LOG.error("unfired data events: " + m_toFire);
-                throw new IllegalStateException
-                    ("unfired data events: " + m_toFire);
+                throw new IllegalStateException("unfired data events: " + m_toFire);
             }
             m_toFire.clear();
         }
@@ -630,7 +619,7 @@ public class Session {
         protected void write(Event e) {
             if (e.getObject() instanceof DataObjectImpl) {
                 if (e instanceof PropertyEvent
-                    && ((PropertyEvent) e).getProperty().getName().charAt(0)
+                        && ((PropertyEvent) e).getProperty().getName().charAt(0)
                         == '~') {
                     return;
                 }
@@ -671,22 +660,26 @@ public class Session {
             if (LOG.isDebugEnabled()) {
                 if (events.size() > 0) {
                     LOG.debug((m_before ? "before flush:" : "after flush: ")
-                              + events);
+                            + events);
                 }
             }
 
             m_toFire.addAll(events);
 
-            for (Iterator it = events.iterator(); it.hasNext(); ) {
+            for (Iterator it = events.iterator(); it.hasNext();) {
                 DataEvent e = (DataEvent) it.next();
-                if (e instanceof BeforeDeleteEvent) { continue; }
+                if (e instanceof BeforeDeleteEvent) {
+                    continue;
+                }
                 e.schedule();
             }
 
-            for (Iterator it = events.iterator(); it.hasNext(); ) {
+            for (Iterator it = events.iterator(); it.hasNext();) {
                 DataEvent e = (DataEvent) it.next();
                 if (m_toFire.remove(e)) {
-                    if (e instanceof BeforeDeleteEvent) { continue; }
+                    if (e instanceof BeforeDeleteEvent) {
+                        continue;
+                    }
                     e.fire();
                 }
             }
@@ -699,16 +692,15 @@ public class Session {
     }
 
     private static class DataObjectAdapter extends Adapter {
-        public void setSession
-            (Object obj, com.redhat.persistence.Session ssn) {
+
+        public void setSession(Object obj, com.redhat.persistence.Session ssn) {
             DataObjectImpl dobj = (DataObjectImpl) obj;
             dobj.setSession(ssn);
             getSessionFromProto(ssn).addDataObject(dobj);
         }
 
-        public Object getObject
-            (com.redhat.persistence.metadata.ObjectType type,
-             PropertyMap props) {
+        public Object getObject(com.redhat.persistence.metadata.ObjectType type,
+                PropertyMap props) {
             if (!type.isKeyed()) {
                 return props;
             }
@@ -717,8 +709,7 @@ public class Session {
 
             if (type.hasProperty("objectType")) {
                 Property p = type.getProperty("objectType");
-                if (p.getType().getQualifiedName().equals
-                    ("global.String")) {
+                if (p.getType().getQualifiedName().equals("global.String")) {
                     String qname = (String) props.get(p);
                     Root root = type.getRoot();
                     if (qname != null && root.hasObjectType(qname)) {
@@ -730,7 +721,7 @@ public class Session {
             MetadataRoot old = MetadataRoot.getMetadataRoot(sp.getRoot());
             OID oid = new OID(old.getObjectType(sp.getQualifiedName()));
             for (Iterator it = sp.getKeyProperties().iterator();
-                 it.hasNext(); ) {
+                    it.hasNext();) {
                 Property prop = (Property) it.next();
                 oid.set(prop.getName(), props.get(prop));
             }
@@ -747,29 +738,27 @@ public class Session {
             if (dobj.p_pMap == null) {
                 final PropertyMap pMap = new PropertyMap(getObjectType(obj));
                 final Iterator it =
-                    dobj.getOID().getProperties().entrySet().iterator();
+                        dobj.getOID().getProperties().entrySet().iterator();
 
                 while (it.hasNext()) {
                     Map.Entry me = (Map.Entry) it.next();
-                    pMap.put(getObjectType(obj)
-                             .getProperty((String) me.getKey()), me.getValue());
+                    pMap.put(getObjectType(obj).getProperty((String) me.getKey()), me.getValue());
                 }
                 dobj.p_pMap = pMap;
             }
             return dobj.p_pMap;
         }
 
-        public com.redhat.persistence.metadata.ObjectType
-            getObjectType(Object obj) {
+        public com.redhat.persistence.metadata.ObjectType getObjectType(Object obj) {
 
             if (obj instanceof PropertyMap) {
                 return ((PropertyMap) obj).getObjectType();
             }
 
             final DataObjectImpl dobj = (DataObjectImpl) obj;
-            if (dobj.p_objectType== null) {
+            if (dobj.p_objectType == null) {
                 dobj.p_objectType =
-                    C.type(this.getRoot(), dobj.getObjectType());
+                        C.type(this.getRoot(), dobj.getObjectType());
             }
 
             return dobj.p_objectType;
@@ -777,18 +766,28 @@ public class Session {
     }
 
     private class PSession extends com.redhat.persistence.Session {
+
         PSession(Root root, Engine engine, QuerySource source) {
             super(root, engine, source);
         }
-        private Session getOldSession() { return Session.this; }
-    }
 
-    static Session getSessionFromProto(com.redhat.persistence.Session ssn) {
-        try {
-            return ((PSession) ssn).getOldSession();
-        } catch (ClassCastException cce) {
-            return null;
+        private Session getOldSession() {
+            return Session.this;
         }
     }
 
+    static Session getSessionFromProto(com.redhat.persistence.Session ssn) {
+
+        // Test for non null ssn
+        if (ssn != null) {
+            try {
+                return ((PSession) ssn).getOldSession();
+            } catch (ClassCastException cce) {
+                return null;
+            }
+        } else {
+            // else return null
+            return null;
+        }
+    }
 }
