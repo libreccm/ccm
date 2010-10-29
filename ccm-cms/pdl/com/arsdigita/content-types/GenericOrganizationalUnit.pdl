@@ -20,12 +20,12 @@
 
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.*;
+import com.arsdigita.domain.*;
+import com.arsdigita.kernel.ACSObject;
 
 // PDL definition for a commons base type for organizations, departments, projects etc.
 object type GenericOrganizationalUnit extends ContentPage {
-    //String[0..1] orgaunit_name = cms_organizationalunits.name VARCHAR(256);
-
     String[0..1] addendum = cms_organizationalunits.addendum VARCHAR(512);
 
     reference key (cms_organizationalunits.organizationalunit_id);
@@ -34,7 +34,7 @@ object type GenericOrganizationalUnit extends ContentPage {
 // Link for contact points.
 association {
 
-    GenericOrganizationalUnit[0..1] organizationalunit = join cms_contacts.contact_id
+    GenericOrganizationalUnit[0..n] organizationalunit = join cms_contacts.contact_id
                                                            to cms_organizationalunits_contact_map.contact_id,
                                                          join cms_organizationalunits_contact_map.organizationalunit_id
                                                            to cms_organizationalunits.organizationalunit_id;
@@ -55,7 +55,7 @@ association {
 
     GenericOrganizationalUnit[0..n] organizationalunit = join cms_persons.person_id
                                                            to cms_organizationalunits_person_map.person_id,
-                                                         join cms_organizationalunits_person_map.organizationalunit_id
+                                                        join cms_organizationalunits_person_map.organizationalunit_id
                                                            to cms_organizationalunits.organizationalunit_id;
 
     GenericPerson[0..n] persons = join cms_organizationalunits.organizationalunit_id
@@ -64,6 +64,15 @@ association {
                                     to cms_persons.person_id;
 
    // Additional attributes for the association
-   String role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
+   String[0..1]  role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
 
 }
+
+//object type GenericOrganizationalUnitPersonAssociation extends ACSObject {
+//
+//      GenericPerson[0..1] person = join cms_organizationalunit_person_assoc.person_id 
+//                                         to cms_persons.person_id;
+//      String[0..1] roleName = cms_organizationalunit_person_assoc.role_name VARCHAR(100);
+//
+//      reference key (cms_organizationalunit_person_assoc.assoc_id);
+//}

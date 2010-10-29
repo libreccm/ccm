@@ -13,12 +13,10 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.contenttypes.GenericContact;
-import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 
 /**
@@ -63,12 +61,15 @@ public class GenericContactPersonPropertiesStep extends SimpleEditStep {
     }
 
     public static Component getPersonPropertySheet(ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
+        /*DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname").localize(), "person." + GenericPerson.SURNAME);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname").localize(), "person." + GenericPerson.GIVENNAME);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre").localize(), "person." + GenericPerson.TITLEPRE);
-        sheet.add((String) ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost").localize(), "person." + GenericPerson.TITLEPOST);
+        sheet.add(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.surname"), "person." + GenericPerson.SURNAME);
+        sheet.add(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.givenname"), "person." + GenericPerson.GIVENNAME);
+        sheet.add(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepre"), "person." + GenericPerson.TITLEPRE);
+        sheet.add(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.titlepost"), "person." + GenericPerson.TITLEPOST);*/
+
+        GenericContactPersonSheet sheet = new GenericContactPersonSheet(
+                itemModel);
 
         return sheet;
     }

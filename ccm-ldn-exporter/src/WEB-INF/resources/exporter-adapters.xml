@@ -202,7 +202,7 @@
     </xrd:adapter>
 
     <!-- Adds several image assets -->
-    <xrd:adapter objectType="com.arsdigita.cms.Article">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.GenericArticle">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/id"/>
         <xrd:property name="/object/defaultDomainClass"/>

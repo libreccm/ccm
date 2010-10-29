@@ -74,6 +74,7 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     public GenericPerson(String type) {
         super(type);
+        //set(CONTACTS, null);
     }
 
     @Override

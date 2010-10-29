@@ -41,14 +41,15 @@ import org.apache.log4j.Logger;
  */
 public class GenericOrganizationalUnit extends ContentPage {
 
-    private static final Logger logger = Logger.getLogger(GenericOrganizationalUnit.class);
+    private static final Logger logger = Logger.getLogger(
+            GenericOrganizationalUnit.class);
     //public final static String ORGAUNIT_NAME = "ORGAUNIT_NAME";
     public final static String ADDENDUM = "addendum";
     public final static String CONTACTS = "contacts";
     public final static String CONTACT_TYPE = "contact_type";
     public final static String CONTACT_ORDER = "contact_order";
     public final static String PERSONS = "persons";
-    public final static String ROLE = "role_name";    
+    public final static String ROLE = "role_name";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
 
@@ -56,8 +57,8 @@ public class GenericOrganizationalUnit extends ContentPage {
         this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public GenericOrganizationalUnit(BigDecimal id) 
-	throws DataObjectNotFoundException {
+    public GenericOrganizationalUnit(BigDecimal id)
+            throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
@@ -90,11 +91,12 @@ public class GenericOrganizationalUnit extends ContentPage {
     public void addContact(GenericContact contact, String contactType) {
         Assert.exists(contact, GenericContact.class);
 
-        logger.debug(String.format("Adding contact of type \"%s\"...", contactType));
+        logger.debug(String.format("Adding contact of type \"%s\"...",
+                                   contactType));
         DataObject link = add(CONTACTS, contact);
 
         link.set(CONTACT_TYPE, contactType);
-        link.set(CONTACT_ORDER, Integer.valueOf((int)getContacts().size()));
+        link.set(CONTACT_ORDER, Integer.valueOf((int) getContacts().size()));
         link.save();
     }
 
@@ -108,8 +110,9 @@ public class GenericOrganizationalUnit extends ContentPage {
     }
 
     public GenericOrganizationalUnitPersonCollection getPersons() {
-        return new GenericOrganizationalUnitPersonCollection((DataCollection) get(
-                PERSONS));
+        DataCollection dataColl = (DataCollection) get(PERSONS);
+        logger.debug(String.format("GenericOrganizationalUnitPersonCollection size = %d", dataColl.size()));
+        return new GenericOrganizationalUnitPersonCollection(dataColl);
     }
 
     public void addPerson(GenericPerson person, String role) {
@@ -118,12 +121,13 @@ public class GenericOrganizationalUnit extends ContentPage {
         DataObject link = add(PERSONS, person);
 
         link.set(ROLE, role);
-        link.save();
+        link.save();     
     }
 
-    public void removePerson(GenericPerson person) {
-        Assert.exists(person, GenericPerson.class);
-        remove(PERSONS, person);
+    public void removePerson(GenericPerson person) {    
+        logger.debug("Removing person association...");
+        Assert.exists(person, GenericPerson.class);        
+        remove(PERSONS, person);        
     }
 
     public boolean hasPersons() {

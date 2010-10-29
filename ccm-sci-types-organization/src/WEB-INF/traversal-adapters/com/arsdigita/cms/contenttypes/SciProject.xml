@@ -12,7 +12,6 @@
             <xrd:associations rule="include">
                 <xrd:property name="/object/addendum"/>
                 <xrd:property name="/object/contacts"/>              
-                <xrd:property name="/object/orgaunit_children"/>
                 <xrd:property name="/object/persons"/>		
             </xrd:associations>
         </xrd:adapter>

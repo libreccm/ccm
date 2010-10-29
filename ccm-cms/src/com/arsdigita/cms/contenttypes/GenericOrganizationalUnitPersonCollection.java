@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
-import java.math.BigDecimal;
 
 /**
  * Collection class for the GenericOrganizationalUnit -> Person relation.
@@ -29,13 +28,14 @@ import java.math.BigDecimal;
  */
 public class GenericOrganizationalUnitPersonCollection extends DomainCollection {
     
-    public static final String PERSON_ROLE = "link.role_name";    
+    public static final String PERSON_ROLE = "link.role_name";
 
     public GenericOrganizationalUnitPersonCollection(
             DataCollection dataCollection) {
         super(dataCollection);
     }
 
+   
     /**
      * Gets the name of the role of this orgaunit-person link
      */

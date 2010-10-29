@@ -221,7 +221,7 @@ public class DataCollectionRenderer extends LockableImpl {
 
     private void outputValue(final Element item, final Object value,
             final String name,
-            final String[] paths, final int depth) {
+            final String[] paths, final int depth) {        
         if (null == value) {
             return;
         }
@@ -298,5 +298,6 @@ public class DataCollectionRenderer extends LockableImpl {
             DataObject dobj,
             ACSObject obj,
             int index) {
+        
     }
 }

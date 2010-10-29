@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.aplaws;
 
 import com.arsdigita.london.navigation.Navigation;
@@ -66,12 +65,10 @@ import java.util.Set;
 public class Loader extends PackageLoader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
-
-    private static final String[] categoryFiles = new String[] {
-        "WEB-INF/aplaws/zes-nav-domain-1.00.xml"
-      , "WEB-INF/aplaws/zes-nav-hierarchy-1.00.xml"
+    private static final String[] categoryFiles = new String[]{
+        "WEB-INF/aplaws/zes-nav-domain-1.00.xml",
+        "WEB-INF/aplaws/zes-nav-hierarchy-1.00.xml"
     };
-
     private StringParameter m_navigationDomain;
     // private StringParameter m_servicesDomain;
     // private StringParameter m_interactionDomain;
@@ -79,7 +76,7 @@ public class Loader extends PackageLoader {
     // private StringParameter m_rssDomain;
 
     public Loader() {
-        
+
         // Es werden stumpf mehrere Kategorisierungsdomains fuer TERMS 
         // definiert und dann über xml Dateien gefüllt:
         // navigationDomain f. Navigation
@@ -88,60 +85,58 @@ public class Loader extends PackageLoader {
         // rssDomain fuer vermutlich RSS Feed
         //
         m_navigationDomain = new StringParameter(
-            "com.arsdigita.aplaws.navigation_domain",
-            Parameter.REQUIRED,
-            "ZES-NAV");
+                "com.arsdigita.aplaws.navigation_domain",
+                Parameter.REQUIRED,
+                "ZES-NAV");
         register(m_navigationDomain);
 
         /*
          * You may add more catagory domains by adding resources
          * according the followin schema
          */
-       
+
         /* currently not used
         m_subjectDomain = new StringParameter(
-            "com.arsdigita.aplaws.subject_domain",
-            Parameter.REQUIRED,
-            "LGCL");
+        "com.arsdigita.aplaws.subject_domain",
+        Parameter.REQUIRED,
+        "LGCL");
         register(m_subjectDomain);
          */
-        
+
         /* currently not used
         m_interactionDomain = new StringParameter(
-            "com.arsdigita.aplaws.subject_domain",
-            Parameter.REQUIRED,
-            "LGIL");
+        "com.arsdigita.aplaws.subject_domain",
+        Parameter.REQUIRED,
+        "LGIL");
         register(m_interactionDomain);
          */
-        
+
         /* currently not used
         m_rssDomain = new StringParameter(
-            "com.arsdigita.aplaws.rss_domain",
-            Parameter.REQUIRED,
-            "APLAWS-RSS");
+        "com.arsdigita.aplaws.rss_domain",
+        Parameter.REQUIRED,
+        "APLAWS-RSS");
         register(m_rssDomain);
          */
-        
+
 
     }
 
-
     public void run(final ScriptContext ctx) {
-        
+
         String[] files = categoryFiles;
 
         final Parser parser = new Parser();
-        for (int i = 0 ; i < files.length ; i++) {
+        for (int i = 0; i < files.length; i++) {
             final String file = files[i];
             if (s_log.isInfoEnabled()) {
                 s_log.info("Process " + file);
             }
-            parser.parse(Thread.currentThread().getContextClassLoader
-                         ().getResourceAsStream
-                         (file));
+            parser.parse(Thread.currentThread().getContextClassLoader().
+                    getResourceAsStream(file));
         }
 
-        String navigationKey = (String)get(m_navigationDomain);
+        String navigationKey = (String) get(m_navigationDomain);
         registerDomain(navigationKey, "/navigation/", null);
         registerDomain(navigationKey, "/content/", null);
         registerDomain(navigationKey, "/portal/", null);
@@ -169,16 +164,16 @@ public class Loader extends PackageLoader {
         // registerDomain(interactionKey, "/content/", "interaction");
 
 
-        
+
         // register new / addidional JSP templates (index pages) in Navigation
         // registerServicesTemplate("/services/");  wird nicht gebraucht
         registerNavigationTemplates();
 
         // Switch /portal/ to use 1 column layout for funky aplaws stuff.
-        Workspace portal = (Workspace)Application
-              .retrieveApplicationForPath("/portal/");
-        portal.setDefaultLayout(PageLayout
-              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));
+        Workspace portal = (Workspace) Application.retrieveApplicationForPath(
+                "/portal/");
+        portal.setDefaultLayout(PageLayout.findLayoutByFormat(
+                PageLayout.FORMAT_ONE_COLUMN));
     }
 
 //  public void registerServicesTemplate(String appURL) {
@@ -197,7 +192,6 @@ public class Loader extends PackageLoader {
 //                           Template.DEFAULT_DISPATCHER_CONTEXT, 
 //                           Template.DEFAULT_USE_CONTEXT );
 //  }
-    
     /**
      * Use Package com.arsdigita.london.navigation to add additional
      * templates (JSP page - index page) for use in navigation.
@@ -208,35 +202,46 @@ public class Loader extends PackageLoader {
      */
     public void registerNavigationTemplates() {
 
-        Template template ;
+        Template template;
 
-    /*  In navigation werden bereits Grund-Templates erstellt.
-    */
+        /*  In navigation werden bereits Grund-Templates erstellt.
+         */
         template = Template.create(
-            "ZeS AtoZ paginator",
-            "ZeS AtoZ paginator index page",
-            "/packages/navigation/templates/zes-atoz.jsp");
-
-        template = Template.create(
-            "ZeS Default",
-            "ZeS default index page",
-            "/packages/navigation/templates/zes-default.jsp");
+                "ZeS AtoZ paginator",
+                "ZeS AtoZ paginator index page",
+                "/packages/navigation/templates/zes-atoz.jsp");
 
         template = Template.create(
-            "ZeS Portalseite",
-            "ZeS Portal Page",
-            "/packages/navigation/templates/zes-portal.jsp");
+                "ZeS Default",
+                "ZeS default index page",
+                "/packages/navigation/templates/zes-default.jsp");
 
         template = Template.create(
-            "ZeS Recent",
-            "ZeS reverse order page",
-            "/packages/navigation/templates/zes-recent.jsp");
+                "ZeS Portalseite",
+                "ZeS Portal Page",
+                "/packages/navigation/templates/zes-portal.jsp");
 
         template = Template.create(
-            "ZeS Welcome Page",
-            "ZeS Welcome Page for navigation",
-            "/packages/navigation/templates/zes-welcome.jsp");
-    
+                "ZeS Recent",
+                "ZeS reverse order page",
+                "/packages/navigation/templates/zes-recent.jsp");
+
+        template = Template.create(
+                "ZeS Welcome Page",
+                "ZeS Welcome Page for navigation",
+                "/packages/navigation/templates/zes-welcome.jsp");
+
+        template = Template.create(
+                "ZeS Project List",
+                "List of SciProjects",
+                "/packages/navigation/templates/zes-project-list.jsp");
+
+        template = Template.create(
+                "SciOrganization Description Only",
+                "Display only the description of a SciOrganization",
+                "/packages/navigation/templates/" +
+                "SciOrganizationDescription.jsp");
+
     }
 
     /**
@@ -247,85 +252,66 @@ public class Loader extends PackageLoader {
      * delivered.  
      */
     // -- public void registerDefaultNavigationDomain() {
-
-       // -- private StringParameter m_customNavKey;
+    // -- private StringParameter m_customNavKey;
     // -- private URLParameter    m_customNavDomainURL;
     // -- private StringParameter m_customNavPath;
     // -- private StringParameter m_customNavUseContext;
     // -- private StringParameter m_customNavTitle;
     // -- private StringParameter m_customNavDesc;
-      
-        // -- m_customNavKey = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_key",
-        // --     Parameter.REQUIRED,
-        // --     "APLAWS-NAVIGATION");
-        
-/*   Zugriff auf Website wird nicht benötigt, aber der Parameter bei Einrichtung
- *   der Kategorien. Funktion URL prüft auf korrekte Syntax, nicht auf Existenz  
- */        
-        // -- try {
-        // --     m_customNavDomainURL = new URLParameter(
-        // --         "com.arsdigita.aplaws.custom_nav_domain_url",
-        // --         Parameter.REQUIRED,
-        // --         new URL("http://www.aplaws.org.uk/" +
-        // --                 "standards/custom/1.00/termslist.xml"));
-        // -- } catch (MalformedURLException ex) {
-        // --     throw new UncheckedWrapperException("Cannot parse url", ex);
-        // -- }
-
-        
-        // -- m_customNavPath = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_path",
-        // --     Parameter.REQUIRED,
-        // --     "local");
-        
-        // -- m_customNavUseContext = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_use_context",
-        // --     Parameter.REQUIRED,
-        // --     "local");
-        
-        // -- m_customNavTitle = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_title",
-        // --     Parameter.REQUIRED,
-        // --     "APLAWS Custom Navigation");
-        
-        // -- m_customNavDesc = new StringParameter(
-        // --     "com.arsdigita.aplaws.custom_nav_desc",
-        // --     Parameter.REQUIRED,
-        // --     "Installation specific navigation tree");
-       
-        
-        // -- register(m_customNavDesc);
-        // -- register(m_customNavDomainURL);
-        // -- register(m_customNavKey);
-        // -- register(m_customNavPath);
-        // -- register(m_customNavTitle);
-        // -- register(m_customNavUseContext);
-
-        // -- String customNavPath = (String)get(m_customNavPath);
-        // -- String customNavTitle = (String)get(m_customNavTitle);
-
-        // Package com.arsdigita.web
-        // Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE,
-        //                               customNavPath,
-        //                               customNavTitle,
-        //                               null);
-
-        
-        
-                // -- String customNavDesc = (String)get(m_customNavDesc);
-        // -- String customNavKey = (String)get(m_customNavKey);
-        // -- String customNavUseContext = (String)get(m_customNavUseContext);
-        // -- URL customNavDomainURL = (URL)get(m_customNavDomainURL);
-
-        // -- Domain.create(customNavKey, customNavDomainURL,
-        // --               customNavTitle, customNavDesc, "1.0.0", new Date());
-
-        // registerDomain(customNavKey, '/'+customNavPath+'/', null);
-        // -- registerDomain(customNavKey, "/content/", customNavUseContext);
-
+    // -- m_customNavKey = new StringParameter(
+    // --     "com.arsdigita.aplaws.custom_nav_key",
+    // --     Parameter.REQUIRED,
+    // --     "APLAWS-NAVIGATION");
+    /*   Zugriff auf Website wird nicht benötigt, aber der Parameter bei Einrichtung
+     *   der Kategorien. Funktion URL prüft auf korrekte Syntax, nicht auf Existenz
+     */
+    // -- try {
+    // --     m_customNavDomainURL = new URLParameter(
+    // --         "com.arsdigita.aplaws.custom_nav_domain_url",
+    // --         Parameter.REQUIRED,
+    // --         new URL("http://www.aplaws.org.uk/" +
+    // --                 "standards/custom/1.00/termslist.xml"));
+    // -- } catch (MalformedURLException ex) {
+    // --     throw new UncheckedWrapperException("Cannot parse url", ex);
     // -- }
-
+    // -- m_customNavPath = new StringParameter(
+    // --     "com.arsdigita.aplaws.custom_nav_path",
+    // --     Parameter.REQUIRED,
+    // --     "local");
+    // -- m_customNavUseContext = new StringParameter(
+    // --     "com.arsdigita.aplaws.custom_nav_use_context",
+    // --     Parameter.REQUIRED,
+    // --     "local");
+    // -- m_customNavTitle = new StringParameter(
+    // --     "com.arsdigita.aplaws.custom_nav_title",
+    // --     Parameter.REQUIRED,
+    // --     "APLAWS Custom Navigation");
+    // -- m_customNavDesc = new StringParameter(
+    // --     "com.arsdigita.aplaws.custom_nav_desc",
+    // --     Parameter.REQUIRED,
+    // --     "Installation specific navigation tree");
+    // -- register(m_customNavDesc);
+    // -- register(m_customNavDomainURL);
+    // -- register(m_customNavKey);
+    // -- register(m_customNavPath);
+    // -- register(m_customNavTitle);
+    // -- register(m_customNavUseContext);
+    // -- String customNavPath = (String)get(m_customNavPath);
+    // -- String customNavTitle = (String)get(m_customNavTitle);
+    // Package com.arsdigita.web
+    // Application.createApplication(Navigation.BASE_DATA_OBJECT_TYPE,
+    //                               customNavPath,
+    //                               customNavTitle,
+    //                               null);
+    // -- String customNavDesc = (String)get(m_customNavDesc);
+    // -- String customNavKey = (String)get(m_customNavKey);
+    // -- String customNavUseContext = (String)get(m_customNavUseContext);
+    // -- URL customNavDomainURL = (URL)get(m_customNavDomainURL);
+    // -- Domain.create(customNavKey, customNavDomainURL,
+    // --               customNavTitle, customNavDesc, "1.0.0", new Date());
+    // registerDomain(customNavKey, '/'+customNavPath+'/', null);
+    // -- registerDomain(customNavKey, "/content/", customNavUseContext);
+    // -- }
     /**
      * Use Package com.arsdigita.london.terms to register a Domain for
      * Categorisation
@@ -334,42 +320,46 @@ public class Loader extends PackageLoader {
                                String appURL,
                                String context) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Mapping domain " + domainKey + 
-                        " to app " + appURL + 
-                        " in context " + context);
+            s_log.debug("Mapping domain " + domainKey + " to app " + appURL
+                        + " in context " + context);
         }
 
         Domain domain = Domain.retrieve(domainKey);  // package com.arsdigita.london.terms
         Application app = Application.retrieveApplicationForPath(appURL);
         domain.setAsRootForObject(app, context);
         if (app instanceof ContentSection) {
-            RoleCollection coll = ((ContentSection) app).getStaffGroup().getOrderedRoles();
+            RoleCollection coll = ((ContentSection) app).getStaffGroup().
+                    getOrderedRoles();
             Set adminRoles = new HashSet();
             Set categorizeRoles = new HashSet();
             while (coll.next()) {
                 Role role = coll.getRole();
-                final DataQuery privs = RoleFactory.getRolePrivileges
-                    (app.getID(), role.getGroup().getID());
+                final DataQuery privs = RoleFactory.getRolePrivileges(
+                        app.getID(), role.getGroup().getID());
                 while (privs.next()) {
                     String priv = (String) privs.get(RoleFactory.PRIVILEGE);
                     if (priv.equals(SecurityManager.CMS_CATEGORY_ADMIN)) {
                         adminRoles.add(role);
-                    } else if (priv.equals(SecurityManager.CMS_CATEGORIZE_ITEMS)) {
+                    } else if (priv.equals(
+                            SecurityManager.CMS_CATEGORIZE_ITEMS)) {
                         categorizeRoles.add(role);
                     }
                 }
-                
+
             }
-            RootCategoryCollection catCollection = Category.getRootCategories(((ContentSection) app));
+            RootCategoryCollection catCollection = Category.getRootCategories(
+                    ((ContentSection) app));
             while (catCollection.next()) {
                 Iterator adminIter = adminRoles.iterator();
                 while (adminIter.hasNext()) {
-                    ((Role) adminIter.next()).grantPermission(catCollection.getCategory(),
+                    ((Role) adminIter.next()).grantPermission(catCollection.
+                            getCategory(),
                                                               PrivilegeDescriptor.ADMIN);
                 }
                 Iterator categorizeIter = categorizeRoles.iterator();
                 while (categorizeIter.hasNext()) {
-                    ((Role) categorizeIter.next()).grantPermission(catCollection.getCategory(),
+                    ((Role) categorizeIter.next()).grantPermission(catCollection.
+                            getCategory(),
                                                                    Category.MAP_DESCRIPTOR);
                 }
             }

@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  * PropertyData
@@ -34,6 +35,8 @@ import java.util.List;
 
 class PropertyData {
 
+    private final static Logger s_log = Logger.getLogger(PropertyData.class);
+    
     final private ObjectData m_odata;
     final private Property m_prop;
     private Object m_value;
@@ -92,6 +95,10 @@ class PropertyData {
                 (getObject(), getProperty());
             return evs.size() == 0;
         } else {
+            if (getSession().getEventStream().getLastEvent(getObject(), getProperty()) != null) {
+                //s_log.error(String.format("Last event is not null, property '%s' is not flushed. Last event is: '%s'",
+                  //      getProperty().getName(), getSession().getEventStream().getLastEvent(getObject(), getProperty()).getName()));
+            }
             return getSession().getEventStream().getLastEvent
                 (getObject(), getProperty()) == null;
         }

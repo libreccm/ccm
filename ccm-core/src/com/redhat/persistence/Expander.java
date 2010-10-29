@@ -8,7 +8,7 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * MERCHANTABILITY or FITNESS FOR sA PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -18,6 +18,7 @@
  */
 package com.redhat.persistence;
 
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.redhat.persistence.metadata.Adapter;
 import com.redhat.persistence.metadata.ObjectType;
@@ -77,12 +78,8 @@ class Expander extends Event.Switch {
     final void expand(Event ev) {
         try {
             Session.trace(ev.getName(), new Object[]{ev});
-            try {
-                ev.dispatch(this);
-            } catch (DuplicateObjectException ex) {
-                s_log.warn("Duplicate object exception: ", ex);
-                s_log.warn("This is maybe an error, but not in all cases.");
-            }
+            ev.dispatch(this);
+
         } catch (RuntimeException re) {
             if (re instanceof ProtoException) {
                 ProtoException pe = (ProtoException) re;
@@ -114,17 +111,20 @@ class Expander extends Event.Switch {
 
     public void onCreate(CreateEvent e) {
         final Object obj = e.getObject();
-
+        
         ObjectData od = m_ssn.getObjectData(obj);
         if (od == null) {
-            od = new ObjectData(m_ssn, obj, od.INFANTILE);
+            od = new ObjectData(m_ssn, obj, ObjectData.INFANTILE);
         } else if (!od.isDeleted()) {
-            od.dump();
-            ProtoException pe = new DuplicateObjectException(obj);
-            pe.setInternal(false);
-            throw pe;
+            //od.dump();
+            //ProtoException pe = new DuplicateObjectException(obj);
+            //pe.setInternal(false);
+            //throw pe;
+            s_log.warn("Duplicate object: " + ((DataObject) od.getObject()).
+                    getOID());
+            return;
         } else {
-            od.setState(od.INFANTILE);
+            od.setState(ObjectData.INFANTILE);
         }
 
         Adapter a = m_ssn.getAdapter(obj);

@@ -425,10 +425,13 @@ class DataObjectImpl implements DataObject {
             getSession().m_beforeFP.fireNow(new BeforeSaveEvent(this));
 
             if (!getSsn().isFlushed(this)) {
+                s_log.debug("Flushing...");
                 getSsn().flush();
+                s_log.debug("Checking flushing...");
                 assertFlushed();
             } else {
                 // with no changes on the object fire after save directly
+                s_log.debug("Direct save...");
                 getSession().m_afterFP.fireNow(new AfterSaveEvent(this));
             }
         } catch (ProtoException pe) {
@@ -441,6 +444,7 @@ class DataObjectImpl implements DataObject {
         for (Iterator it = getObjectType().getProperties();
              it.hasNext(); ) {
             Property p = (Property) it.next();
+            s_log.debug(String.format("Asserting that property '%s' is flushed...", p.getName()));
             if (!getSsn().isFlushed(this, C.prop(m_ssn.getRoot(), p))) {
                 // use m_ssn to generate the exception
                 getSsn().assertFlushed(this);

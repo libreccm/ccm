@@ -15,10 +15,11 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.navigation.cms;
 
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentItemXMLRenderer;
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.london.navigation.DataCollectionRenderer;
@@ -39,16 +40,24 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
             obj = (ACSObject) DomainObjectFactory.newInstance(dobj);
         }
         if (obj instanceof ContentItem) {
-            OID oid = ( (ContentItem) obj).getDraftVersion().getOID();
+            OID oid = ((ContentItem) obj).getDraftVersion().getOID();
             return Navigation.redirectURL(oid);
         }
         return super.getStableURL(dobj, obj);
     }
 
-
+    @Override
     protected void generateItemXML(Element item,
                                    DataObject dobj,
                                    ACSObject obj,
                                    int index) {
+        if (obj != null) {
+            ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(item);
+            renderer.setRevisitFullObject(false);
+            renderer.setWrapAttributes(true);
+            renderer.setWrapRoot(false);
+            renderer.setWrapObjects(false);
+            renderer.walk(obj, SimpleXMLGenerator.ADAPTER_CONTEXT);
+        }
     }
 }

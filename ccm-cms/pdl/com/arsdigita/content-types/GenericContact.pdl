@@ -46,7 +46,7 @@ object type GenericContactEntry extends ContentItem {
 
 association {
 
-    GenericPerson[0..1]  person   = join cms_contacts.contact_id
+    GenericPerson[0..n]  person   = join cms_contacts.contact_id
                                       to cms_person_contact_map.contact_id,
                                     join cms_person_contact_map.person_id
                                       to cms_persons.person_id;

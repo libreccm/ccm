@@ -8,13 +8,21 @@
     The default properties for BaseContact are left as is and are inherited from ContentPage
   -->
     <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
-        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.SciOrganization" extends="com.arsdigita.cms.ContentPage">
+        <xrd:adapter objectType="com.arsdigita.cms.contenttypes.SciOrganization"
+                     extends="com.arsdigita.cms.ContentPage">
             <xrd:associations rule="include">
                 <xrd:property name="/object/addendum"/>
-                <xrd:property name="/object/contacts"/>              
-                <xrd:property name="/object/orgaunit_children"/>
-                <xrd:property name="/object/persons"/>		
+                <xrd:property name="/object/contacts"/>
+                <xrd:property name="/object/contacts/person"/>
+                <xrd:property name="/object/contacts/address"/>
+		<xrd:property name="/object/contacts/contactentries"/>		
+		<xrd:property name="/object/contacts/person"/>
+                <xrd:property name="/object/departments"/>
+                <xrd:property name="/object/departments/persons"/>
+                <xrd:property name="/object/projects"/>
+                <xrd:property name="/object/persons"/>
             </xrd:associations>
         </xrd:adapter>
     </xrd:context>
+  
 </xrd:adapters>

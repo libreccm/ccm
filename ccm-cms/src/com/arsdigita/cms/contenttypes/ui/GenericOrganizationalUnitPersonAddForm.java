@@ -72,8 +72,8 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.person.role")));
         ParameterModel roleParam =
-                       new StringParameter(
-                GenericOrganizationalUnitPersonCollection.PERSON_ROLE);
+        new StringParameter(
+        GenericOrganizationalUnitPersonCollection.PERSON_ROLE);        
         SingleSelect roleSelect = new SingleSelect(roleParam);
         roleSelect.addValidationListener(new NotNullValidationListener());
         roleSelect.addOption(
@@ -120,8 +120,8 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
                         getFullName()));
             }
             orga.addPerson((GenericPerson) data.get(ITEM_SEARCH),
-                           (String) data.get(
-                    GenericOrganizationalUnitPersonCollection.PERSON_ROLE));
+            (String) data.get(
+            GenericOrganizationalUnitPersonCollection.PERSON_ROLE));            
         }
 
         init(fse);

@@ -30,30 +30,30 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
 
-
 /**
  * This content type represents an basic contact
  *
  */
-public class GenericContact extends ContentPage implements RelationAttributeInterface {
+public class GenericContact extends ContentPage implements
+        RelationAttributeInterface {
 
     /** PDL property names */
     public static final String PERSON = "person";
 //    public static final String CONTACT_TYPE = "";
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
-
-    private static final String RELATION_ATTRIBUTES = "GenericContactType;GenericContactEntryType";
-    
+    private static final String RELATION_ATTRIBUTES =
+                                "GenericContactType;GenericContactEntryType";
     // Config
-    private static final GenericContactConfig s_config = new GenericContactConfig();
+    private static final GenericContactConfig s_config =
+                                              new GenericContactConfig();
+
     static {
-	    s_config.load();
+        s_config.load();
     }
-    
     /** Data object type for tihs domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.GenericContact";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contenttypes.GenericContact";
 
     public GenericContact() {
         super(BASE_DATA_OBJECT_TYPE);
@@ -75,12 +75,13 @@ public class GenericContact extends ContentPage implements RelationAttributeInte
 
     public GenericContact(String type) {
         super(type);
+        //unsetPerson();
     }
 
     @Override
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
@@ -90,19 +91,42 @@ public class GenericContact extends ContentPage implements RelationAttributeInte
     public static final GenericContactConfig getConfig() {
         return s_config;
     }
-    
 
     ///////////////////////////////////////////////////////////////
     // accessors
-
     // Get the person for this contact
     public GenericPerson getPerson() {
-        return (GenericPerson) DomainObjectFactory.newInstance((DataObject)get(PERSON));
+        DataCollection collection;
+
+        collection = (DataCollection) get(PERSON);
+
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+
+            return (GenericPerson) DomainObjectFactory.newInstance(dobj);
+        }
+        //return (GenericPerson) DomainObjectFactory.newInstance((DataObject)get(PERSON));
     }
 
     // Set the person for this contact
     public void setPerson(GenericPerson person) {
-        set(PERSON, person);
+        //set(PERSON, person);
+        if (getPerson() != null) {
+            unsetPerson();
+        }
+
+        if (person != null) {
+            Assert.exists(person, GenericPerson.class);
+            DataObject link = add(PERSON, person);
+            link.set(GenericPerson.CONTACTS_ORDER,
+                     new BigDecimal(person.getContacts().size()));
+            link.save();
+        }
     }
 
 //    // Get the type for this contact
@@ -114,44 +138,50 @@ public class GenericContact extends ContentPage implements RelationAttributeInte
 //    public void setContactType(String type) {
 //        set(CONTACT_TYPE, type);
 //    }
-
     // Unset the address for this contact
     public void unsetPerson() {
-        set(PERSON, null);
+        //set(PERSON, null);
+        GenericPerson oldPerson;
+        oldPerson = getPerson();
+        if (oldPerson != null) {
+            remove(PERSON, oldPerson);
+        }
     }
-    
+
     // Get the address for this contact
     public GenericAddress getAddress() {
-        return (GenericAddress)DomainObjectFactory.newInstance((DataObject)get(ADDRESS));
+        return (GenericAddress) DomainObjectFactory.newInstance((DataObject) get(
+                ADDRESS));
     }
-    
+
     // Set the address for this contact
     public void setAddress(GenericAddress address) {
         set(ADDRESS, address);
     }
-    
+
     // Unset the address for this contact
     public void unsetAddress() {
         set(ADDRESS, null);
     }
-    
+
     // Get all contact entries for this contact, p. ex. phone number, type of contact etc.
     public GenericContactEntryCollection getContactEntries() {
-        return new GenericContactEntryCollection ((DataCollection) get(CONTACT_ENTRIES));
+        return new GenericContactEntryCollection((DataCollection) get(
+                CONTACT_ENTRIES));
     }
-    
+
     // Add a contact entry for this contact
     public void addContactEntry(GenericContactEntry contactEntry) {
         Assert.exists(contactEntry, GenericContactEntry.class);
         add(CONTACT_ENTRIES, contactEntry);
     }
-    
+
     // Remove a contect entry for this contact
     public void removeContactEntry(GenericContactEntry contactEntry) {
         Assert.exists(contactEntry, GenericContactEntry.class);
         remove(CONTACT_ENTRIES, contactEntry);
     }
-    
+
     public boolean hasPerson() {
         return !(this.getPerson() == null);
     }

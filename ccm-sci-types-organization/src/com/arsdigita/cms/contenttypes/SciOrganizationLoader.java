@@ -26,8 +26,18 @@ package com.arsdigita.cms.contenttypes;
  */
 public class SciOrganizationLoader extends AbstractContentTypeLoader {
 
+    public SciOrganizationLoader() {
+        super();
+
+      /*  Template.create("SciOrganization Description Only",
+                        "Display only the description of a SciOrganization",
+                        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/"
+                        + "SciOrganizationDescription.jsp");*/
+
+    }
     private static final String[] TYPES = {
-        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SciOrganization.xml"
+        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/"
+        + "SciOrganization.xml"
     };
 
     @Override

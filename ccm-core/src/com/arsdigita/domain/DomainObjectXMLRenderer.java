@@ -218,6 +218,7 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
         return XML.format(value);
     }
 
+    @Override
     protected void walk(DomainObject obj,
                         String context,
                         DomainObjectTraversalAdapter adapter) {
