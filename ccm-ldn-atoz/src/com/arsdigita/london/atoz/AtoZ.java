@@ -44,7 +44,6 @@ public class AtoZ extends Application {
         = "com.arsdigita.london.atoz.AtoZ";
 
     private static final AtoZConfig s_config = new AtoZConfig();
-
     static {
         s_config.load();
     }
