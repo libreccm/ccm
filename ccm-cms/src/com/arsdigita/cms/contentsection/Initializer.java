@@ -31,12 +31,12 @@ import com.arsdigita.cms.workflow.UnfinishedTaskNotifier;
 // import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.CompoundInitializer;
 // import com.arsdigita.runtime.ConfigError;
-// import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ContextCloseEvent;
-// import com.arsdigita.runtime.DomainInitEvent;
+// import com.arsdigita.runtime.DataInitEvent;
+import com.arsdigita.runtime.DomainInitEvent;
 // import com.arsdigita.util.Assert;
-// import com.arsdigita.web.Application;
+import com.arsdigita.web.Application;
 import com.arsdigita.cms.workflow.CMSTask;
 
 // import java.math.BigDecimal;
@@ -96,25 +96,52 @@ public class Initializer extends CompoundInitializer {
 //  }
 
 //  Currently nothing to do here. Will be changed in the ongoing migration process
-//  /**
-//   * Initializes domain-coupling machinery, usually consisting of
-//   * registering object instantiators and observers.
-//   *
-//   */
-//  public void init(DomainInitEvent evt) {
-//      s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
-//
-//      // Recursive invokation of init, is it really necessary??
-//      // On the other hand:
-//      // An empty implementations prevents this initializer from being executed.
-//      // A missing implementations causes the super class method to be executed,
-//      // which invokes the above added LegacyInitializer.
-//      // If super is not invoked, various other cms sub-initializer may not run.
-//      super.init(evt);
-//
-//
-//      s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
-//  }
+    /**
+     * Initializes domain-coupling machinery, usually consisting of
+     * registering object instantiators and observers.
+     *
+     */
+    public void init(DomainInitEvent evt) {
+        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
+
+        // Recursive invokation of init!
+        // An empty implementations prevents this initializer from being executed.
+        super.init(evt);
+
+        // Check here weather a new content section has to be created.
+        String newSectionName = s_conf.getNewContentSectionName();
+        if (newSectionName != null && !newSectionName.isEmpty() ) {
+            ContentSectionCollection sections=ContentSection.getAllSections();
+            sections.addEqualsFilter( Application.PRIMARY_URL, 
+                                      "/" + newSectionName + "/" );
+            ContentSection section;
+            if( sections.next() ) {
+                // Section with the configured name already exists
+                s_log.debug( "Content section " + newSectionName +
+                            " already exists, skipping creation task." );
+                section = sections.getContentSection();
+                sections.close();
+            } else {
+                s_log.debug( "Content section " + newSectionName + " in " +
+                            " doesn't exist, creating it." );
+                ContentSectionSetup.setupContentSectionAppInstance
+                                    (newSectionName,
+                                     s_conf.getStuffGroup(),
+                                     s_conf.isPubliclyViewable(),
+                                     s_conf.getItemResolverClass(),
+                                     s_conf.getTemplateResolverClass(),
+                                     s_conf.getContentSectionsContentTypes(),
+                                     s_conf.getUseSectionCategories(),
+                                     s_conf.getCategoryFileList()
+                                    );
+            }
+
+            
+        }
+
+
+        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
+    }
 
 
     /**

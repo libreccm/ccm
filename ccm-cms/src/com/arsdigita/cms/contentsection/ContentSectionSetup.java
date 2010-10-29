@@ -85,9 +85,6 @@ public final class ContentSectionSetup {
     private WorkflowTemplate m_wf;
     final ContentSection m_section;
     
-    // Load main CMS configuration file
-    private static final LoaderConfig s_conf = new LoaderConfig();
-
 
     /**
      * Constructor. Using this constructor the content section has to be
@@ -133,8 +130,6 @@ public final class ContentSectionSetup {
 
         // section specific categories, usually not used.
         if (useSectionCategories) {
-            // Iterator files = ((List) m_conf.getParameter(CATEGORIES)).iterator();
-            // Iterator files = s_conf.getCategoryFileList().iterator();
             Iterator files = categoryFileList.iterator();
             while ( files.hasNext() ) {
                 setup.registerCategories((String) files.next());

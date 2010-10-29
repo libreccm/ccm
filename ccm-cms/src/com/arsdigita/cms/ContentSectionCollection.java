@@ -46,6 +46,9 @@ public class ContentSectionCollection extends DomainCollection {
      * Set the order of this Collection. This method needs to be called
      * before <code>next()</code> is called on this collection.
      *
+     * @param order: name of the pdl property to use for sorting the collection
+     * (e.g. "primaryURL" in order to sort by section name
+     * see c.ad.london.util.cmd.SiteMapList as an example ).
      */
     public void addOrder(String order) {
         m_dataCollection.addOrder(order);
