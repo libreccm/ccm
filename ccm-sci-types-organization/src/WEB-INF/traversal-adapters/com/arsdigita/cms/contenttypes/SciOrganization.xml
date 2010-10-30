@@ -20,6 +20,7 @@
                 <xrd:property name="/object/departments"/>
                 <xrd:property name="/object/departments/persons"/>
                 <xrd:property name="/object/projects"/>
+                <xrd:property name="/object/projects/persons"/>
                 <xrd:property name="/object/persons"/>
             </xrd:associations>
         </xrd:adapter>
