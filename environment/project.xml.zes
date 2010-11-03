@@ -50,7 +50,7 @@
 <!--    <ccm:application name="ccm-cms-types-job"/>                  -->
 <!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
 
-        <ccm:application name="ccm-cms-types-member"/>      
+<!--        <ccm:application name="ccm-cms-types-member"/>           -->
 
 <!--    <ccm:application name="ccm-cms-types-minutes"/>              -->
 <!--    <ccm:application name="ccm-cms-types-motditem"/>             -->
@@ -86,9 +86,9 @@
 <!--    <ccm:application name="ccm-ldn-aplaws"/>                     -->
 <!--    <ccm:application name="ccm-ldn-atoz"/>                       -->
 <!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
-<!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
+        <ccm:application name="ccm-ldn-exporter"/>
 <!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
-<!--    <ccm:application name="ccm-ldn-importer"/>                   -->
+        <ccm:application name="ccm-ldn-importer"/>
         <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-portal"/>
         <ccm:application name="ccm-ldn-rss"/>                        
@@ -102,7 +102,7 @@
 
 <!--  ZeS extension  -->
 <!--  - - - - - - -  -->
-        <ccm:application name="ccm-sci-publications"/>
+<!--        <ccm:application name="ccm-sci-publications"/> -->
         <ccm:application name="ccm-zes-aplaws"/>
 
 
