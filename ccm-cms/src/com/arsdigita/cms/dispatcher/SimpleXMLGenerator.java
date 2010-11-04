@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.dispatcher;
 
-
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
@@ -45,7 +44,6 @@ import org.apache.log4j.Logger;
 
 import java.util.Iterator;
 
-
 /**
  * <p>The default <tt>XMLGenerator</tt> implementation.</p>
  *
@@ -56,25 +54,25 @@ import java.util.Iterator;
 public class SimpleXMLGenerator implements XMLGenerator {
 
     private static Logger s_log =
-        Logger.getLogger(SimpleXMLGenerator.class);
-
-    public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.getName();
+                          Logger.getLogger(SimpleXMLGenerator.class);
+    public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.
+            getName();
 
     // Register general purpose adaptor for all content items
     static {
         SimpleDomainObjectTraversalAdapter adapter =
-            new SimpleDomainObjectTraversalAdapter();
+                                           new SimpleDomainObjectTraversalAdapter();
         adapter.addAssociationProperty("/object/type");
         adapter.addAssociationProperty("/object/categories");
 
         DomainObjectTraversal.registerAdapter(
-            ContentItem.BASE_DATA_OBJECT_TYPE,
-            adapter,
-            ADAPTER_CONTEXT
-        );
+                ContentItem.BASE_DATA_OBJECT_TYPE,
+                adapter,
+                ADAPTER_CONTEXT);
     }
 
-    public SimpleXMLGenerator() {}
+    public SimpleXMLGenerator() {
+    }
 
     /**
      * Generates the XML to render the content panel.
@@ -90,61 +88,65 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
         s_log.info("Generate XML for item " + item.getOID());
 
-		
-		Party currentParty = Kernel.getContext().getParty();
-		if (currentParty == null) {
-			currentParty = Kernel.getPublicUser();
-		}
-		// check if current user can edit the current item (nb privilege is granted on draft item, but live item 
-		// has draft as its permission context
-		//
-		// Note that the xml that is generated is only of use if you DO NOT CACHE content pages. 
-		// cg. 
 
-		PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
-		if (PermissionService.checkPermission(edit)) {
-			parent.addAttribute("canEdit", "true");
-		}
-		PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
-		if (PermissionService.checkPermission(publish)) {
-			parent.addAttribute("canPublish", "true");
-		}
+        Party currentParty = Kernel.getContext().getParty();
+        if (currentParty == null) {
+            currentParty = Kernel.getPublicUser();
+        }
+        // check if current user can edit the current item (nb privilege is granted on draft item, but live item
+        // has draft as its permission context
+        //
+        // Note that the xml that is generated is only of use if you DO NOT CACHE content pages.
+        // cg.
+
+        PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.
+                get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
+        if (PermissionService.checkPermission(edit)) {
+            parent.addAttribute("canEdit", "true");
+        }
+        PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.
+                get(SecurityManager.CMS_PUBLISH), item, currentParty);
+        if (PermissionService.checkPermission(publish)) {
+            parent.addAttribute("canPublish", "true");
+        }
         String className = item.getDefaultDomainClass();
 
         // Ensure correct subtype of ContentItem is instantiated
         if (!item.getClass().getName().equals(className)) {
             s_log.info("Specializing item");
             try {
-                item = (ContentItem)DomainObjectFactory
-                    .newInstance(new OID(item.getObjectType().getQualifiedName(),
-                                         item.getID()));
+                item = (ContentItem) DomainObjectFactory.newInstance(new OID(item.
+                        getObjectType().getQualifiedName(),
+                                                                             item.
+                        getID()));
             } catch (DataObjectNotFoundException ex) {
-                throw new UncheckedWrapperException( 
-                    (String)GlobalizationUtil.globalize(
-                        "cms.dispatcher.cannot_find_domain_object"
-                    ).localize(),  ex);
+                throw new UncheckedWrapperException(
+                        (String) GlobalizationUtil.globalize(
+                        "cms.dispatcher.cannot_find_domain_object").localize(),
+                        ex);
             }
         }
 
         // Implementing XMLGenerator directly is now deprecated
-        if ( item instanceof XMLGenerator) {
+        if (item instanceof XMLGenerator) {
             s_log.info("Item implements XMLGenerator interface");
-            XMLGenerator xitem = (XMLGenerator)item;
+            XMLGenerator xitem = (XMLGenerator) item;
             xitem.generateXML(state, parent, useContext);
 
-        } else if (className.equals("com.arsdigita.cms.UserDefinedContentItem")) {
+        } else if (className.equals(
+                "com.arsdigita.cms.UserDefinedContentItem")) {
             s_log.info("Item is a user defined content item");
-            UserDefinedContentItem UDItem = (UserDefinedContentItem)item;
+            UserDefinedContentItem UDItem = (UserDefinedContentItem) item;
             generateUDItemXML(UDItem, state, parent, useContext);
 
         } else {
             s_log.info("Item is using DomainObjectXMLRenderer");
- 
+
             // This is the preferred method
             Element content = startElement(useContext);
 
             ContentItemXMLRenderer renderer =
-                new ContentItemXMLRenderer(content);
+                                   new ContentItemXMLRenderer(content);
 
             renderer.setWrapAttributes(true);
             renderer.setWrapRoot(false);
@@ -156,7 +158,6 @@ public class SimpleXMLGenerator implements XMLGenerator {
             parent.addContent(content);
         }
     }
-
 
     /**
      * Fetches the current content item. This method can be overidden to
@@ -191,10 +192,9 @@ public class SimpleXMLGenerator implements XMLGenerator {
         element.addAttribute("javaClass", UDItem.getContentType().getClassName());
 
         DynamicObjectType dot = new DynamicObjectType(
-            UDItem.getSpecificObjectType()
-        );
-        Iterator declaredProperties = dot.getObjectType()
-            .getDeclaredProperties();
+                UDItem.getSpecificObjectType());
+        Iterator declaredProperties =
+                 dot.getObjectType().getDeclaredProperties();
         Property currentProperty = null;
         Object value = null;
         while (declaredProperties.hasNext()) {
@@ -202,12 +202,12 @@ public class SimpleXMLGenerator implements XMLGenerator {
             value = (Object) UDItem.get(currentProperty.getName());
             if (value != null) {
                 element.addContent(
-                    UDItemAttrElement(currentProperty.getName(), 
-                                      value.toString()));
+                        UDItemAttrElement(currentProperty.getName(),
+                                          value.toString()));
             } else {
                 element.addContent(
-                    UDItemAttrElement(currentProperty.getName(), 
-                                      "none specified"));
+                        UDItemAttrElement(currentProperty.getName(),
+                                          "none specified"));
             }
         }
 
@@ -216,11 +216,9 @@ public class SimpleXMLGenerator implements XMLGenerator {
 
     }
 
-
-
     private Element startElement(String useContext) {
         Element element = new Element("cms:item", CMS.CMS_XML_NS);
-        if ( useContext != null ) {
+        if (useContext != null) {
             element.addAttribute("useContext", useContext);
         }
         return element;
@@ -229,10 +227,10 @@ public class SimpleXMLGenerator implements XMLGenerator {
     private Element UDItemElement(String useContext) {
         Element element = new Element("cms:UDItemAttributes", CMS.CMS_XML_NS);
         /*
-          if ( useContext != null ) {
-          element.addAttribute("useContext", useContext);
-          }
-        */
+        if ( useContext != null ) {
+        element.addAttribute("useContext", useContext);
+        }
+         */
         return element;
     }
 
@@ -242,5 +240,4 @@ public class SimpleXMLGenerator implements XMLGenerator {
         element.addAttribute("UDItemAttrValue", value);
         return element;
     }
-
 }

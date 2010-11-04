@@ -37,33 +37,36 @@ import org.apache.log4j.Logger;
 public class ContentPageMetadataProvider extends ContentItemMetadataProvider {
 
     public static final String ADAPTER_CONTEXT =
-        ContentPageMetadataProvider.class.getName();
-    
-    private static final Logger s_log = 
-        Logger.getLogger(ContentPageMetadataProvider.class);
+                               ContentPageMetadataProvider.class.getName();
+    private static final Logger s_log =
+                                Logger.getLogger(
+            ContentPageMetadataProvider.class);
 
     public String getTitle(DomainObject dobj) {
         if (dobj instanceof ContentPage) {
-        ContentPage item = (ContentPage)dobj;
-        String title = item.getTitle();
-        if (StringUtils.emptyString(title)) {
-            throw new IllegalArgumentException(
-                "ContentPage must have non-blank title!"
-            );
-        }
-        return title;
+            ContentPage item = (ContentPage) dobj;
+            s_log.debug(String.format("getting title of item with oid '%s'",
+                    item.getOID().toString()));
+            s_log.debug(String.format("and name '%s'", item.getName()));
+            s_log.debug(String.format("and title '%s'", item.getTitle()));
+            String title = item.getTitle();
+            if (StringUtils.emptyString(title)) {
+                throw new IllegalArgumentException(
+                        "ContentPage must have non-blank title!");
+            }
+            return title;
         } else {
             // this is not pretty,
             // but fails more gracefully for items which are not contentpages
-	    s_log.warn("Item is not a ContentPage.");
+            s_log.warn("Item is not a ContentPage.");
             return "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         }
     }
 
     public String getSummary(DomainObject dobj) {
         if (dobj instanceof ContentPage) {
-        ContentPage item = (ContentPage)dobj;
-        return item.getSearchSummary();
+            ContentPage item = (ContentPage) dobj;
+            return item.getSearchSummary();
         } else {
             return "";
         }
@@ -72,11 +75,11 @@ public class ContentPageMetadataProvider extends ContentItemMetadataProvider {
     public String getContentSection(DomainObject dobj) {
         String sectionName = "";
         if (dobj instanceof ContentPage) {
-        ContentPage item = (ContentPage)dobj;
-        ContentSection section = item.getContentSection();
-        if (section != null) {
-            sectionName = section.getName();
-        }
+            ContentPage item = (ContentPage) dobj;
+            ContentSection section = item.getContentSection();
+            if (section != null) {
+                sectionName = section.getName();
+            }
         }
         return sectionName;
     }

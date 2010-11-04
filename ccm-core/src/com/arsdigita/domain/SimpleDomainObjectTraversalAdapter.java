@@ -104,21 +104,39 @@ public class SimpleDomainObjectTraversalAdapter
     /**
      * Add a property to the attribute property set.
      *
-     * @param path the full path to the property
+     * @param prop the full path to the property
      */
     public void addAttributeProperty(String prop) {
         m_attr.add(prop);
     }
 
     /**
+     * Removes a property from the attribute property set.
+     * 
+     * @param prop full path of the property to remove
+     */
+    public void removeAttributeProperty(String prop) {
+        m_attr.remove(prop);
+    }
+
+    /**
      * Add a property to the association property set.
      *
-     * @param path the full path to the property
+     * @param prop the full path to the property
      */
     public void addAssociationProperty(String prop) {
         m_assoc.add(prop);
     }
-    
+
+    /**
+     * Removes a association property from the association property set.
+     *
+     * @param prop full path of the property to remove
+     */
+    public void removeAssociationProperty(String prop) {
+        m_assoc.remove(prop);
+    }
+  
     /**
      * Determines whether or not to allow processing
      * of a property, based on the property set and

@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -152,6 +153,17 @@ public class ItemImportTool extends Program {
 
                         ContentItem item =
                                     (ContentItem) itemParser.getDomainObject();
+                        if (item == null) {
+                            s_log.warn("item is null.Igoring...");
+                            return;
+                        }
+                        s_log.debug(String.format("Got item from ItemParser:"));
+                        s_log.debug(String.format("OID  : %s", item.getOID()));
+                        s_log.debug(String.format("Name : %s", item.getName()));
+                        s_log.debug(String.format("Title: %s", item.get("title")));
+                        if (item instanceof ContentPage) {
+                            s_log.debug("Item is a content page...");
+                        }
                         /*
                          * Multi lang extension begin
                          */
@@ -160,8 +172,15 @@ public class ItemImportTool extends Program {
                         if (itemName.lastIndexOf('-') == -1) {
                             bundleName = itemName;
                         } else {
-                            bundleName = itemName.substring(0, itemName.
-                                    lastIndexOf('-'));
+                            if (itemName.substring((itemName.lastIndexOf('-') + 1)).
+                                    equals("de")
+                                || itemName.substring((itemName.lastIndexOf('-') + 1)).
+                                    equals("en")) {
+                                bundleName = itemName.substring(0, itemName.
+                                        lastIndexOf('-'));
+                            } else {
+                                bundleName = itemName;
+                            }
                         }
                         /*
                          * Multi lang extension end
@@ -177,19 +196,25 @@ public class ItemImportTool extends Program {
                              * Multi lang extension start
                              */
                             ContentBundle bundle;
+                            s_log.debug(String.format("Bundle name: %s",
+                                                      bundleName));
                             if (itemName.lastIndexOf('-') == -1) {
+                                s_log.debug("Item is not localized...");
                                 bundle = new ContentBundle(item);
                                 bundle.setParent(folder);
                                 bundle.setName(bundleName);
                                 bundles.put(bundleName, bundle);
                             } else {
+                                s_log.debug("Item is localized...");
                                 bundle = bundles.get(bundleName);
                                 if (bundle == null) {
+                                    s_log.debug("No content bundle found for item, creating new.");
                                     bundle = new ContentBundle(item);
                                     bundle.setParent(folder);
                                     bundle.setName(bundleName);
                                     bundles.put(bundleName, bundle);
                                 } else {
+                                    s_log.debug("Found content bundle for item, adding item as instance.");
                                     bundle.addInstance(item);
                                 }
                             }

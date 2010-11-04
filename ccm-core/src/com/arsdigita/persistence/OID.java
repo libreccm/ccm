@@ -59,31 +59,27 @@ public class OID {
 
     private ObjectType m_type;
     private Map m_values = new HashMap();
-
     /** some shorthand names for common content-types  */
     private final static String[][] TYPE_SHORTHAND = {
-    	{"Article", "com.arsdigita.cms.contenttypes.Article"},
-    	{"MultiPartArticle", "com.arsdigita.cms.contenttypes.MultiPartArticle"},
-    	{"PressRelease", "com.arsdigita.cms.contenttypes.PressRelease"},
-    	{"NewsItem", "com.arsdigita.cms.contenttypes.NewsItem"},
-    	{"Bookmark", "com.arsdigita.cms.contenttypes.Bookmark"},
-    	{"ESDService", "com.arsdigita.cms.contenttypes.ESDService"},
-    	{"SiteProxy", "com.arsdigita.cms.contenttypes.SiteProxy"},
-    	{"RelatedLink", "com.arsdigita.cms.contentassets.RelatedLink"},
-    	{"FileAttachment", "com.arsdigita.cms.contentassets.FileAttachment"},
-    	{"Category", "com.arsdigita.categorization.Category"},
-    };
-    
+        {"Article", "com.arsdigita.cms.contenttypes.Article"},
+        {"MultiPartArticle", "com.arsdigita.cms.contenttypes.MultiPartArticle"},
+        {"PressRelease", "com.arsdigita.cms.contenttypes.PressRelease"},
+        {"NewsItem", "com.arsdigita.cms.contenttypes.NewsItem"},
+        {"Bookmark", "com.arsdigita.cms.contenttypes.Bookmark"},
+        {"ESDService", "com.arsdigita.cms.contenttypes.ESDService"},
+        {"SiteProxy", "com.arsdigita.cms.contenttypes.SiteProxy"},
+        {"RelatedLink", "com.arsdigita.cms.contentassets.RelatedLink"},
+        {"FileAttachment", "com.arsdigita.cms.contentassets.FileAttachment"},
+        {"Category", "com.arsdigita.categorization.Category"},};
     /** the separator character to be used in the new OID formatting scheme */
     private final static char OID_SEPARATOR_CHAR = '-';
-
     /** A Format used for formatting/parsing OIDs */
     private static MessageFormat m_format_old = new MessageFormat("[{0}:{1}]");
-    private static MessageFormat m_format_new = new MessageFormat("{0}" + OID_SEPARATOR_CHAR + "{1}");
-
+    private static MessageFormat m_format_new = new MessageFormat("{0}"
+                                                                  + OID_SEPARATOR_CHAR
+                                                                  + "{1}");
     /** used to log errors  */
     private static final Logger m_log = Logger.getLogger(OID.class);
-
 
     /**
      *  Creates an OID for the Object type.  An example of an object
@@ -148,8 +144,7 @@ public class OID {
 
         if (it.hasNext()) {
             throw new PersistenceException(
-                                           "This object type has a compound key."
-                                           );
+                    "This object type has a compound key.");
         }
 
         String attr = prop.getName();
@@ -165,13 +160,12 @@ public class OID {
      */
     private static final ObjectType lookup(String typeName) {
         ObjectType type =
-            MetadataRoot.getMetadataRoot().getObjectType(typeName);
+                   MetadataRoot.getMetadataRoot().getObjectType(typeName);
         if (type == null) {
             throw new PersistenceException("No such type " + typeName);
         }
         return type;
     }
-
 
     /**
      *  Creates an OID for the named ObjectType. The typename of the
@@ -196,7 +190,6 @@ public class OID {
     public OID(String typeName) {
         this(lookup(typeName));
     }
-
 
     /**
      * Creates an OID with a single attribute for the key. To create a
@@ -229,7 +222,6 @@ public class OID {
         this(lookup(typeName), value);
     }
 
-
     /**
      * Creates an OID with a single attribute for the key. To create a
      * multi-valued OID, use a single arg OID constructor, and add
@@ -257,7 +249,6 @@ public class OID {
     public OID(String typeName, int value) {
         this(typeName, new BigDecimal(value));
     }
-
 
     /**
      * Creates an OID with a single attribute for the key. To create a
@@ -300,9 +291,8 @@ public class OID {
         // We do some type-checking here, to ensure that OIDs are being
         // created with legit types of values.
         if (prop == null) {
-            throw new PersistenceException
-                ("no such property: " + propertyName
-                 + " for type " + m_type.getName());
+            throw new PersistenceException("no such property: " + propertyName
+                                           + " for type " + m_type.getName());
         }
 
         // null has no type
@@ -310,12 +300,12 @@ public class OID {
         if (prop.isAttribute() && value != null) {
             // we can be sure this is a simpletype because
             // isAttribute was true.
-            SimpleType expectedType = (SimpleType)prop.getType();
-            if (!expectedType.getJavaClass()
-                .isAssignableFrom(value.getClass())) {
-                throw new PersistenceException
-                    ("expected " + expectedType.getJavaClass()
-                     + "actual type " + value.getClass());
+            SimpleType expectedType = (SimpleType) prop.getType();
+            if (!expectedType.getJavaClass().isAssignableFrom(value.getClass())) {
+                throw new PersistenceException("expected " + expectedType.
+                        getJavaClass()
+                                               + "actual type "
+                                               + value.getClass());
             }
         } else if (value != null) {
             if (value instanceof DataObject) {
@@ -323,15 +313,15 @@ public class OID {
                 DataObject dobj = (DataObject) value;
                 ObjectType.verifySubtype(ot, dobj.getObjectType());
             } else {
-                throw new PersistenceException
-                    ("expected DataObject for property " + propertyName
-                     + " but got " + value.getClass());
+                throw new PersistenceException("expected DataObject for property "
+                                               + propertyName
+                                               + " but got " + value.getClass());
             }
         }
 
         if (hasProperty(propertyName)) {
-            throw new PersistenceException
-                (propertyName + " is already set to " + get(propertyName));
+            throw new PersistenceException(propertyName + " is already set to " + get(
+                    propertyName));
         }
 
         m_values.put(propertyName, value);
@@ -365,7 +355,7 @@ public class OID {
     }
 
     public boolean isInitialized() {
-        for (Iterator it = m_type.getKeyProperties(); it.hasNext(); ) {
+        for (Iterator it = m_type.getKeyProperties(); it.hasNext();) {
             if (!m_values.containsKey(((Property) it.next()).getName())) {
                 return false;
             }
@@ -405,7 +395,6 @@ public class OID {
         return getObjectType();
     }
 
-
     /**
      *  @return The ObjectType.
      **/
@@ -418,7 +407,6 @@ public class OID {
         m_type = subtype;
     }
 
-
     /**
      * Serializes the OID.
      */
@@ -426,60 +414,60 @@ public class OID {
         String fullType = m_type.getQualifiedName();
         Map props = getProperties();
         StringBuffer sb = new StringBuffer();
-        for(Iterator it = props.keySet().iterator(); it.hasNext(); ) {
-        	Object key = it.next();
-        	Object value = props.get(key);
-                /*if ((key == null) || (value == null)) {
-                    m_log.warn("key or value in OID.toString() are null");
-                    m_log.warn(String.format("key   = %s", key));
-                    m_log.warn(String.format("value = %s", value));
-                }*/
-                /*
-                 * Changed by Jens Pelzetter 2010-09-14. For unknown reasons
-                 * the value is null for some properties, which causes 
-                 * a NPE in the line below the if. 
-                 */
-                if (null == value) {
-                    m_log.info(String.format("The value for prop \"%s\" " +
-                            "is null. Ignoring.", key));
-                    continue;
-                }
-                /*
-                 * Changed by Jens Pelzetter 2010-09-14.
-                 *
-                 * The old method (see below) is very slow, because of this
-                 * has been changed.
-                 */
-                sb.append(key.toString());
+        for (Iterator it = props.keySet().iterator(); it.hasNext();) {
+            Object key = it.next();
+            Object value = props.get(key);
+            /*if ((key == null) || (value == null)) {
+            m_log.warn("key or value in OID.toString() are null");
+            m_log.warn(String.format("key   = %s", key));
+            m_log.warn(String.format("value = %s", value));
+            }*/
+            /*
+             * Changed by Jens Pelzetter 2010-09-14. For unknown reasons
+             * the value is null for some properties, which causes
+             * a NPE in the line below the if.
+             */
+            if (null == value) {
+                m_log.info(String.format("The value for prop \"%s\" "
+                                         + "is null. Ignoring.", key));
+                continue;
+            }
+            /*
+             * Changed by Jens Pelzetter 2010-09-14.
+             *
+             * The old method (see below) is very slow, because of this
+             * has been changed.
+             */
+            sb.append(key.toString());
+            sb.append(OID_SEPARATOR_CHAR);
+            sb.append(value.toString());
+            //sb.append(key.toString() + OID_SEPARATOR_CHAR + value.toString());
+            if (it.hasNext()) {
                 sb.append(OID_SEPARATOR_CHAR);
-                sb.append(value.toString());
-        	//sb.append(key.toString() + OID_SEPARATOR_CHAR + value.toString());
-        	if (it.hasNext()) {
-        		sb.append(OID_SEPARATOR_CHAR);
-        	}
+            }
         }
         Object[] args = {convertTypeShorthand(fullType), sb.toString()};
         return m_format_new.format(args);
     }
 
-
     /** Parse the oid string. If it contains a left-square-bracket,
      * use the old parsing scheme. Otherwise, use the new parser.
      */
     public static OID valueOf(String s) throws IllegalArgumentException {
-    	if (s.indexOf("[") >= 0 || s.indexOf("%5B") >= 0) {
-    		return valueOfOld(s);
-    	} else {
-    		return valueOfNew(s);
-    	}
+        if (s.indexOf("[") >= 0 || s.indexOf("%5B") >= 0) {
+            return valueOfOld(s);
+        } else {
+            return valueOfNew(s);
+        }
     }
 
     /** new way to parse the OID string */
     public static OID valueOfNew(String s) throws IllegalArgumentException {
         StringTokenizer st = new StringTokenizer(s, "" + OID_SEPARATOR_CHAR);
         if (st.countTokens() < 2) {
-            throw new IllegalArgumentException
-            ("Invalid OID '" + s + "'. It must have at least the object type and the value");        	
+            throw new IllegalArgumentException(
+                    "Invalid OID '" + s
+                    + "'. It must have at least the object type and the value");
 //        } else if (st.countTokens() % 2 != 1) {
 //            throw new IllegalArgumentException
 //            ("Invalid OID '" + s + "'. It must have type followed by name-value pairs");        	
@@ -488,49 +476,50 @@ public class OID {
         String type = convertTypeLonghand(st.nextToken());
 
         try {
-        	OID oid = new OID(type);
+            OID oid = new OID(type);
 
-	        if (st.hasMoreTokens()) {
-	        	String key = st.nextToken();
-	            String value = st.nextToken();
-	            while (st.hasMoreTokens()) {
-	            	value = value + OID_SEPARATOR_CHAR + st.nextToken();            	
-	            }
-	            
-	            // if it can be a BigDecimal, that is what we make it
-	            boolean bigDecimal = true;
-	            for (int i = 0; i < value.length(); i++) {
-	                char c = value.charAt(i);
-	                if (!('0' <= c && c <= '9') && !((i == 0) && (c == '-'))) {
-	                    bigDecimal = false;
-	                    break;
-	                }
-	            }
-	
-	            if (bigDecimal) {
-	                oid.set(key, new BigDecimal(value));
-	            } else {
-	                oid.set(key, value);
-	            }
-	        }
+            if (st.hasMoreTokens()) {
+                String key = st.nextToken();
+                String value = st.nextToken();
+                while (st.hasMoreTokens()) {
+                    value = value + OID_SEPARATOR_CHAR + st.nextToken();
+                }
+
+                // if it can be a BigDecimal, that is what we make it
+                boolean bigDecimal = true;
+                for (int i = 0; i < value.length(); i++) {
+                    char c = value.charAt(i);
+                    if (!('0' <= c && c <= '9') && !((i == 0) && (c == '-'))) {
+                        bigDecimal = false;
+                        break;
+                    }
+                }
+
+                if (bigDecimal) {
+                    oid.set(key, new BigDecimal(value));
+                } else {
+                    oid.set(key, value);
+                }
+            }
             return oid;
-	    } catch (PersistenceException e) {
-	    	throw new IllegalArgumentException
-	    	("Invalid OID '" + s + "'. The type specified [" + type +
-	    	"] is not defined");
-	    }	
+        } catch (PersistenceException e) {
+            throw new IllegalArgumentException("Invalid OID '" + s
+                                               + "'. The type specified ["
+                                               + type + "] is not defined");
+        }
     }
 
     // Couldn't get MessageFormat to work, so I cheated
     public static OID valueOfOld(String s) throws IllegalArgumentException {
+        m_log.debug(String.format("Trying to parse OID '%s'...", s));
         StringTokenizer st = new StringTokenizer(s, "[:{}],");
         if (st.countTokens() < 2) {
             st = new StringTokenizer(java.net.URLDecoder.decode(s), "[:{}],");
 
             if (st.countTokens() < 2) {
-                throw new IllegalArgumentException
-                    ("Invalid OID '" + s + "'. It must have at least the object " +
-                     "type and the value");
+                throw new IllegalArgumentException("Invalid OID '" + s
+                                                   + "'. It must have at least the object "
+                                                   + "type and the value");
             }
         }
 
@@ -547,6 +536,15 @@ public class OID {
             while (st.hasMoreTokens()) {
                 String nextToken = st.nextToken();
                 int index = nextToken.indexOf("=");
+                /**
+                 * jensp 2010-11-03: If next token is an empty string, or there
+                 * no '=', throw an exeception.
+                 */
+                if ((nextToken.length() < 1) || (index < 0)) {
+                    throw new IllegalArgumentException("Invalid OID '" + s
+                                                       + "'. It must have at least the object "
+                                                       + "type and the value");
+                }
                 String key = (nextToken.substring(0, index));
                 String value = nextToken.substring(index + 1);
 
@@ -561,8 +559,7 @@ public class OID {
                 boolean bigDecimal = true;
                 for (int i = 0; i < value.length(); i++) {
                     char c = value.charAt(i);
-                    if (!('0' <= c && c <= '9') &&
-                        !((i == 0) && (c == '-'))) {
+                    if (!('0' <= c && c <= '9') && !((i == 0) && (c == '-'))) {
                         bigDecimal = false;
                         break;
                     }
@@ -577,9 +574,9 @@ public class OID {
             }
             return oid;
         } catch (PersistenceException e) {
-            throw new IllegalArgumentException
-                ("Invalid OID '" + s + "'. The type specified [" + type +
-                 "] is not defined");
+            throw new IllegalArgumentException("Invalid OID '" + s
+                                               + "'. The type specified ["
+                                               + type + "] is not defined");
         }
     }
 
@@ -591,11 +588,11 @@ public class OID {
      * for an example).  */
     public boolean equals(Object obj) {
         if (obj instanceof OID) {
-            OID oid = (OID)obj;
+            OID oid = (OID) obj;
             // we rely on the toString ecause the HashMap.equals does not
             // give us what we need
-            return m_type.getBasetype().equals(oid.m_type.getBasetype()) &&
-                m_values.equals(oid.m_values);
+            return m_type.getBasetype().equals(oid.m_type.getBasetype()) && m_values.
+                    equals(oid.m_values);
         }
         return false;
     }
@@ -610,24 +607,24 @@ public class OID {
         // to base its hashcode on the hashcodes of the contained values.
         return (m_type.getBasetype().hashCode() + m_values.hashCode());
     }
-    
+
     /** create shorthand names for some common types */
     private static String convertTypeShorthand(String name) {
-    	for (int i=0; i<TYPE_SHORTHAND.length; ++i) {
-    		if (name.equals(TYPE_SHORTHAND[i][1])) {
-    			return TYPE_SHORTHAND[i][0];
-    		}
-    	}
-    	return name;
+        for (int i = 0; i < TYPE_SHORTHAND.length; ++i) {
+            if (name.equals(TYPE_SHORTHAND[i][1])) {
+                return TYPE_SHORTHAND[i][0];
+            }
+        }
+        return name;
     }
 
     /** create longhand name for some common types */
     private static String convertTypeLonghand(String name) {
-    	for (int i=0; i<TYPE_SHORTHAND.length; ++i) {
-    		if (name.equals(TYPE_SHORTHAND[i][0])) {
-    			return TYPE_SHORTHAND[i][1];
-    		}
-    	}
-    	return name;
+        for (int i = 0; i < TYPE_SHORTHAND.length; ++i) {
+            if (name.equals(TYPE_SHORTHAND[i][0])) {
+                return TYPE_SHORTHAND[i][1];
+            }
+        }
+        return name;
     }
 }

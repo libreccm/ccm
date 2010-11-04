@@ -69,6 +69,7 @@ public class ContentItemTraversalAdapter
      * to the asset's adapter, otherwise delegates to
      * the content item's primary adapter
      */
+    @Override
     public boolean processProperty(DomainObject obj,
                                    String path,
                                    Property prop,
