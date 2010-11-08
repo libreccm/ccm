@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,13 +32,18 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
+import java.math.BigDecimal;
 
 /**
  *
@@ -93,11 +99,10 @@ public class GenericContactPersonSheet
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            GenericContact contact = (GenericContact) m_itemModel.
-                    getSelectedObject(state);
+            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
             return new GenericContactPersonSheetModel(table,
-                                                      state,
-                                                      contact);
+                    state,
+                    contact);
         }
     }
 
@@ -108,8 +113,8 @@ public class GenericContactPersonSheet
         private boolean m_done;
 
         public GenericContactPersonSheetModel(Table table,
-                                              PageState state,
-                                              GenericContact contact) {
+                PageState state,
+                GenericContact contact) {
             m_table = table;
             m_person = contact.getPerson();
             if (m_person == null) {
@@ -119,7 +124,7 @@ public class GenericContactPersonSheet
             }
         }
 
-          public int getColumnCount() {
+        public int getColumnCount() {
             return m_table.getColumnModel().size();
         }
 
@@ -160,14 +165,40 @@ public class GenericContactPersonSheet
 
         @Override
         public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int column) {
-            Label label = new Label(value.toString());
-            return label;
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int column) {
+
+            com.arsdigita.cms.SecurityManager securityManager = Utilities.getSecurityManager(state);
+            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(
+                    state.getRequest(),
+                    com.arsdigita.cms.SecurityManager.EDIT_ITEM,
+                    contact);
+
+            if (canEdit) {
+                GenericPerson person;
+
+                try {
+                    person = new GenericPerson((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+
+                return new Link(value.toString(), resolver.generateItemURL(state, person, section, person.getVersion()));
+
+            } else {
+
+                return new Label(value.toString());
+
+            }
         }
     }
 
@@ -177,16 +208,15 @@ public class GenericContactPersonSheet
 
         @Override
         public Component getComponent(Table table,
-                                      PageState state,
-                                      Object value,
-                                      boolean isSelected,
-                                      Object key,
-                                      int row,
-                                      int col) {
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int col) {
             SecurityManager securityManager =
-                            Utilities.getSecurityManager(state);
-            GenericContact contact = (GenericContact) m_itemModel.
-                    getSelectedObject(
+                    Utilities.getSecurityManager(state);
+            GenericContact contact = (GenericContact) m_itemModel.getSelectedObject(
                     state);
 
             boolean canEdit = securityManager.canAccess(
@@ -196,8 +226,7 @@ public class GenericContactPersonSheet
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) ContenttypesGlobalizationUtil.
-                        globalize(
+                link.setConfirmation((String) ContenttypesGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.contact.person"
                         + ".confirm_remove").
                         localize());
@@ -209,7 +238,7 @@ public class GenericContactPersonSheet
         }
     }
 
-      @Override
+    @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 

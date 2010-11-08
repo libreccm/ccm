@@ -42,18 +42,19 @@ public class GenericContact extends ContentPage implements
 //    public static final String CONTACT_TYPE = "";
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
-    private static final String RELATION_ATTRIBUTES =
-                                "GenericContactType;GenericContactEntryType";
+    public static final String CONTACTS_KEY = GenericPersonContactCollection.CONTACTS_KEY;
+    private static final String RELATION_ATTRIBUTES = "GenericContactType;GenericContactEntryType";
+
     // Config
     private static final GenericContactConfig s_config =
-                                              new GenericContactConfig();
+            new GenericContactConfig();
 
     static {
         s_config.load();
     }
     /** Data object type for tihs domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.GenericContact";
+            "com.arsdigita.cms.contenttypes.GenericContact";
 
     public GenericContact() {
         super(BASE_DATA_OBJECT_TYPE);
@@ -114,7 +115,7 @@ public class GenericContact extends ContentPage implements
     }
 
     // Set the person for this contact
-    public void setPerson(GenericPerson person) {
+    public void setPerson(GenericPerson person, String contactType) {
         //set(PERSON, person);
         if (getPerson() != null) {
             unsetPerson();
@@ -123,8 +124,8 @@ public class GenericContact extends ContentPage implements
         if (person != null) {
             Assert.exists(person, GenericPerson.class);
             DataObject link = add(PERSON, person);
-            link.set(GenericPerson.CONTACTS_ORDER,
-                     new BigDecimal(person.getContacts().size()));
+            link.set(GenericPerson.CONTACTS_KEY, contactType);
+            link.set(GenericPerson.CONTACTS_ORDER, new BigDecimal(person.getContacts().size()));
             link.save();
         }
     }
@@ -180,6 +181,30 @@ public class GenericContact extends ContentPage implements
     public void removeContactEntry(GenericContactEntry contactEntry) {
         Assert.exists(contactEntry, GenericContactEntry.class);
         remove(CONTACT_ENTRIES, contactEntry);
+    }
+
+    public String getContactType() {
+
+        GenericPerson person = getPerson();
+
+        if(person != null) {
+            GenericPersonContactCollection collection =  person.getContacts();
+            collection.next();
+            return (String) collection.getContactType();
+        } else {
+            return null;
+        }
+    }
+
+    public void setContactType(String contactType) {
+
+        GenericPerson person = getPerson();
+        if(person != null) {
+            GenericPersonContactCollection collection =  person.getContacts();
+            collection.next();
+            DataObject link = (DataObject) collection.get("link");
+            link.set(CONTACTS_KEY, contactType);
+        }
     }
 
     public boolean hasPerson() {

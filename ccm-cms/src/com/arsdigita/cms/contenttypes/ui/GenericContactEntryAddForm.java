@@ -32,7 +32,8 @@ import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.bebop.parameters.StringParameter;
-import java.util.StringTokenizer;
+import com.arsdigita.cms.contenttypes.GenericContactEntryKeys;
+import com.arsdigita.dispatcher.DispatcherHelper;
 
 import org.apache.log4j.Logger;
 
@@ -63,10 +64,11 @@ public class GenericContactEntryAddForm extends BasicItemForm {
         contactEntryKey.addOption(new Option("", new Label((String)ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
         
         // Add the Options to the SingleSelect widget
-        StringTokenizer keyList = GenericContact.getConfig().getContactEntryKeys();
-        while(keyList.hasMoreElements()) {
-            String currentKey = keyList.nextToken();
-            contactEntryKey.addOption(new Option(currentKey, ((String)ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.contact.contactEntry.key." + currentKey).localize())));
+        GenericContactEntryKeys keyList = new GenericContactEntryKeys();
+        keyList.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+        while(keyList.next()) {
+            String currentKey = keyList.getKey();
+            contactEntryKey.addOption(new Option(currentKey, keyList.getName()));
         }
         
         add(contactEntryKey);

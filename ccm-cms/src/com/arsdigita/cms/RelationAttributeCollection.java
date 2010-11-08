@@ -8,7 +8,6 @@ import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.Filter;
 import com.arsdigita.persistence.SessionManager;
-import org.apache.log4j.Logger;
 
 /**
  *

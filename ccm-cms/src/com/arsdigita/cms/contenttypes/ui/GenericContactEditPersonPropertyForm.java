@@ -15,16 +15,22 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.RelationAttribute;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.contenttypes.GenericContact;
+import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.GenericPersonContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.dispatcher.DispatcherHelper;
 
 import org.apache.log4j.Logger;
 
@@ -36,10 +42,13 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
 
     private static final Logger logger = Logger.getLogger(GenericContactPropertyForm.class);
     private GenericContactPersonPropertiesStep m_step;
+    
     public static final String SURNAME = GenericPerson.SURNAME;
     public static final String GIVENNAME = GenericPerson.GIVENNAME;
     public static final String TITLEPRE = GenericPerson.TITLEPRE;
     public static final String TITLEPOST = GenericPerson.TITLEPOST;
+    public static final String CONTACTS_KEY = GenericPersonContactCollection.CONTACTS_KEY;
+
     /**
      * ID of the form
      */
@@ -93,6 +102,24 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
         titlepostParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
         TextField titlepost = new TextField(titlepostParam);
         add(titlepost);
+
+        // GenericContact type field
+        add(new Label(ContenttypesGlobalizationUtil.globalize("cms.contenttypes.ui.person.contact.type")));
+        ParameterModel contactTypeParam = new StringParameter(CONTACTS_KEY);
+        SingleSelect contactType = new SingleSelect(contactTypeParam);
+        contactType.addValidationListener(new NotNullValidationListener());
+        contactType.addOption(new Option("", new Label((String) ContenttypesGlobalizationUtil.globalize("cms.ui.select_one").localize())));
+
+        // Add the Options to the SingleSelect widget
+        GenericContactTypeCollection contacttypes = new GenericContactTypeCollection();
+        contacttypes.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+
+        while (contacttypes.next()) {
+            RelationAttribute ct = contacttypes.getRelationAttribute();
+            contactType.addOption(new Option(ct.getKey(), ct.getName()));
+        }
+
+        add(contactType);
     }
 
     public void init(FormSectionEvent fse) {
@@ -105,6 +132,7 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
             data.put(GIVENNAME, contact.getPerson().getGivenName());
             data.put(TITLEPRE, contact.getPerson().getTitlePre());
             data.put(TITLEPOST, contact.getPerson().getTitlePost());
+//            data.put(CONTACTS_KEY, contact.getContactType());
         }
     }
 
@@ -122,16 +150,17 @@ public class GenericContactEditPersonPropertyForm extends BasicPageForm implemen
 
         if (getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 
-            if (contact.getPerson() == null) {
-                contact.setPerson(new GenericPerson());
-                contact.getPerson().setName("Person for " + contact.getName() + "(" + contact.getID() + ")");
-                contact.getPerson().setTitle("Person for " + contact.getName() + "(" + contact.getID() + ")");
-            }
+//            if (contact.getPerson() == null) {
+//                contact.setPerson(new GenericPerson());
+//                contact.getPerson().setName("Person for " + contact.getName() + "(" + contact.getID() + ")");
+//                contact.getPerson().setTitle("Person for " + contact.getName() + "(" + contact.getID() + ")");
+//            }
 
             contact.getPerson().setSurname((String) data.get(SURNAME));
             contact.getPerson().setGivenName((String) data.get(GIVENNAME));
             contact.getPerson().setTitlePre((String) data.get(TITLEPRE));
             contact.getPerson().setTitlePost((String) data.get(TITLEPOST));
+//            contact.setContactType((String) data.get(CONTACTS_KEY));
 
             contact.getPerson().save();
         }
