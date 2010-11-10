@@ -102,7 +102,7 @@ public abstract class DomainObjectTraversal {
     }
 
     /**
-     * Unregisteres a traversal adapter for an object type in a
+     * Unregisters a traversal adapter for an object type in a
      * given context
      *
      * @param type the object type whose items will be traversed
@@ -131,14 +131,14 @@ public abstract class DomainObjectTraversal {
      */
     public static void registerAdapter(final String type,
                                        final DomainObjectTraversalAdapter adapter,
-                                       final String context) {       
+                                       final String context) {
         registerAdapter(SessionManager.getMetadataRoot().getObjectType(type),
                         adapter,
                         context);
     }
 
     /**
-     * Unregisteres a traversal adapter for an object type in a
+     * Unregisters a traversal adapter for an object type in a
      * given context
      *
      * @param type the object type whose items will be traversed
@@ -159,7 +159,7 @@ public abstract class DomainObjectTraversal {
      */
     public static DomainObjectTraversalAdapter lookupAdapter(
             final ObjectType type,
-                                                             final String context) {
+            final String context) {
         Assert.exists(type, ObjectType.class);
         Assert.exists(context, String.class);
         if (s_log.isDebugEnabled()) {
@@ -252,7 +252,8 @@ public abstract class DomainObjectTraversal {
                         final String path,
                         final String context,
                         final DomainObject linkObject) {
-        s_log.debug(String.format("Walking with path %s and context %s...", path, context));
+        s_log.debug(String.format("Walking with path %s and context %s...", path,
+                                  context));
         OID oid = obj.getOID();
         OID linkOid = null;
         if (linkObject != null) {
@@ -311,8 +312,8 @@ public abstract class DomainObjectTraversal {
             if (prop.isAttribute()) {
                 handleAttribute(obj, path, prop);
 
-                // Property is a DataObject, so start recursion
             } else if (propValue instanceof DataObject) {
+                // Property is a DataObject, so start recursion
                 if (s_log.isDebugEnabled()) {
                     s_log.debug(prop.getName() + " is a DataObject");
                 }
@@ -355,31 +356,40 @@ public abstract class DomainObjectTraversal {
                     }
 
                 } else {
-
-                    if (s_log.isDebugEnabled()) {
-                        s_log.debug(prop.getName() + " is a DataAssociation");
+                    //2010-11-08: Moved to seperate Methods to allow simple
+                    //extending of the handling of data assocications
+                    /*if (s_log.isDebugEnabled()) {
+                    s_log.debug(prop.getName() + " is a DataAssociation");
                     }
                     beginAssociation(obj, path, prop);
 
                     DataAssociationCursor daCursor =
-                                          ((DataAssociation) propValue).
-                            getDataAssociationCursor();
+                    ((DataAssociation) propValue).
+                    getDataAssociationCursor();
 
                     while (daCursor.next()) {
-                        s_log.debug("Processing data assoication cursor...");
-                        DataObject link = daCursor.getLink();
-                        DomainObject linkObj = null;
-                        if (link != null) {
-                            linkObj = new LinkDomainObject(link);
-                        }
-                        walk(adapter,
-                             DomainObjectFactory.newInstance(daCursor.
-                                getDataObject()),
-                             appendToPath(path, propName),
-                             context,
-                             linkObj);
+                    s_log.debug("Processing data assoication cursor...");
+                    DataObject link = daCursor.getLink();
+                    DomainObject linkObj = null;
+                    if (link != null) {
+                    linkObj = new LinkDomainObject(link);
                     }
-                    endAssociation(obj, path, prop);
+                    walk(adapter,
+                    DomainObjectFactory.newInstance(daCursor.
+                    getDataObject()),
+                    appendToPath(path, propName),
+                    context,
+                    linkObj);
+                    }
+                    endAssociation(obj, path, prop);*/
+
+                    walkDataAssociations(adapter,
+                                         obj,
+                                         path,
+                                         context,
+                                         prop,
+                                         propName,
+                                         propValue);
                 }
             } else {
                 // Unknown property value type - do nothing
@@ -388,6 +398,52 @@ public abstract class DomainObjectTraversal {
 
         // If needed, close a surrounding tag
         endObject(obj, path);
+    }
+
+    protected void walkDataAssociations(DomainObjectTraversalAdapter adapter,
+                                        DomainObject obj,
+                                        String path,
+                                        String context,
+                                        Property prop,
+                                        String propName,
+                                        Object propValue) {
+        s_log.debug(String.format("%s is a DataAssociation", prop.getName()));
+
+        beginAssociation(obj, path, prop);
+
+        DataAssociationCursor daCursor =
+                              ((DataAssociation) propValue).
+                getDataAssociationCursor();
+
+        while (daCursor.next()) {
+            walkDataAssociation(adapter,
+                                obj,
+                                path,
+                                context,
+                                propName,
+                                daCursor);
+        }
+
+        endAssociation(obj, path, prop);
+    }
+
+    protected void walkDataAssociation(DomainObjectTraversalAdapter adapter,
+                                       DomainObject obj,
+                                       String path,
+                                       String context,
+                                       String propName,
+                                       DataAssociationCursor daCursor) {
+        s_log.debug("Processing data assoication cursor...");
+        DataObject link = daCursor.getLink();
+        DomainObject linkObj = null;
+        if (link != null) {
+            linkObj = new LinkDomainObject(link);
+        }
+        walk(adapter,
+             DomainObjectFactory.newInstance(daCursor.getDataObject()),
+             appendToPath(path, propName),
+             context,
+             linkObj);
     }
 
     /**
@@ -534,9 +590,9 @@ public abstract class DomainObjectTraversal {
      *  this is simply a subclass since DomainObject is abstract
      *  but we don't have any other domain object to use.
      */
-    private class LinkDomainObject extends DomainObject {
+    protected class LinkDomainObject extends DomainObject {
 
-        LinkDomainObject(DataObject object) {
+        public LinkDomainObject(DataObject object) {
             super(object);
         }
     }

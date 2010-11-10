@@ -56,6 +56,8 @@ public class TermItemBuilder {
 
         SiteNode node = null;
         try {
+            s_log.debug(String.format("Trying to get SiteNode for path '%s",
+                    path));
             node = SiteNode.getSiteNode(path);
         } catch (DataObjectNotFoundException ex) {
             s_log.error("Couldn't fetch sitenode for " + path);
@@ -63,7 +65,7 @@ public class TermItemBuilder {
         }
         
         ContentSection section = null;
-        section = ContentSection.getSectionFromNode(node);
+        section = ContentSection.getSectionFromNode(node);        
 
         String[] bits = StringUtils.split(
             path.substring(node.getURL().length(), 

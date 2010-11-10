@@ -419,6 +419,14 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
         return m_element;
     }
 
+    protected void setCurrentElement(Element element) {
+        m_element = element;
+    }
+
+    protected Stack getElementStack() {
+        return m_elements;
+    }
+
     protected Element newElement(Element parent,
                                  String name) {
         return m_namespaceURI == null ? 

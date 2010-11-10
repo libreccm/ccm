@@ -33,12 +33,12 @@ import java.util.HashSet;
  *
  * <p>See <code>com.arsdigita.cms.installer.DomainObjectTraversalInitializer</code>.
  */
-public class SimpleDomainObjectTraversalAdapter 
-    implements  DomainObjectTraversalAdapter {
-    
-    private static final Logger s_log = 
-        Logger.getLogger(SimpleDomainObjectTraversalAdapter.class);
-    
+public class SimpleDomainObjectTraversalAdapter
+        implements DomainObjectTraversalAdapter {
+
+    private static final Logger s_log =
+                                Logger.getLogger(
+            SimpleDomainObjectTraversalAdapter.class);
     /**
      * Rule that indicates the set of properties should be treated
      * as an inclusion list. ie, don't allow any properties except
@@ -51,15 +51,12 @@ public class SimpleDomainObjectTraversalAdapter
      * except those listed. This is the default for attributes.
      */
     public final static int RULE_EXCLUDE = 1;
-
     private HashSet m_attr = new HashSet();
     private HashSet m_assoc = new HashSet();
-
     private int m_attrRule = RULE_EXCLUDE;
     private int m_assocRule = RULE_INCLUDE;
-
     private SimpleDomainObjectTraversalAdapter m_parent;
-    
+
     /**
      * Creates a new traversal adapter, with no parent
      * delegate. If no explicit rule is present it will
@@ -78,9 +75,16 @@ public class SimpleDomainObjectTraversalAdapter
      * @param parent the parent adapter to delegate to
      */
     public SimpleDomainObjectTraversalAdapter(
-        SimpleDomainObjectTraversalAdapter parent
-    ) {
+            SimpleDomainObjectTraversalAdapter parent) {
         m_parent = parent;
+    }
+
+    public SimpleDomainObjectTraversalAdapter getParent() {
+        return m_parent;
+    }
+
+    public int getAttributeRule() {
+        return m_attrRule;
     }
 
     /**
@@ -92,6 +96,10 @@ public class SimpleDomainObjectTraversalAdapter
         m_attrRule = rule;
     }
 
+    public int getAssociationRule() {
+        return m_assocRule;
+    }
+
     /**
      * Set the rule for processing associations
      *
@@ -100,7 +108,11 @@ public class SimpleDomainObjectTraversalAdapter
     public void setAssociationRule(int rule) {
         m_assocRule = rule;
     }
-    
+
+    public HashSet getAttributeProperties() {
+        return m_attr;
+    }
+
     /**
      * Add a property to the attribute property set.
      *
@@ -116,7 +128,19 @@ public class SimpleDomainObjectTraversalAdapter
      * @param prop full path of the property to remove
      */
     public void removeAttributeProperty(String prop) {
+        s_log.debug(String.format("Removing attribute property '%s'", prop));
         m_attr.remove(prop);
+    }
+
+    /**
+     * Clears the property set.
+     */
+    public void clearAttributeProperties() {
+        m_attr.clear();
+    }
+
+    public HashSet getAssociationProperties() {
+        return m_assoc;
     }
 
     /**
@@ -134,9 +158,17 @@ public class SimpleDomainObjectTraversalAdapter
      * @param prop full path of the property to remove
      */
     public void removeAssociationProperty(String prop) {
+        s_log.debug(String.format("Removing association property '%s'", prop));
         m_assoc.remove(prop);
     }
-  
+
+    /**
+     * Clears the association properties set.
+     */
+    public void clearAssociationProperties() {
+        m_assoc.clear();
+    }
+
     /**
      * Determines whether or not to allow processing
      * of a property, based on the property set and
@@ -149,8 +181,8 @@ public class SimpleDomainObjectTraversalAdapter
         if (prop.isAttribute()) {
             boolean result = m_attr.contains(path);
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Check attr " + path + " contains " + 
-                            result + " " + m_attrRule);
+                s_log.debug("Check attr " + path + " contains " + result + " "
+                            + m_attrRule);
             }
             if (!result && m_parent != null) {
                 if (s_log.isDebugEnabled()) {
@@ -162,8 +194,8 @@ public class SimpleDomainObjectTraversalAdapter
         } else {
             boolean result = m_assoc.contains(path);
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Check assoc " + path + " contains " + 
-                            result + " " + m_assocRule);
+                s_log.debug("Check assoc " + path + " contains " + result + " "
+                            + m_assocRule);
             }
             if (!result && m_parent != null) {
                 if (s_log.isDebugEnabled()) {

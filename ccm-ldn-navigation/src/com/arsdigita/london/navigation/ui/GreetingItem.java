@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.navigation.ui;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,20 +49,21 @@ import com.arsdigita.xml.Element;
  * @version $Id: GreetingItem.java 1473 2007-03-12 15:16:39Z chrisgilbert23 $
  */
 public class GreetingItem extends AbstractComponent {
-    private static final Logger s_log = Logger.getLogger( GreetingItem.class );
-    
+
+    private static final Logger s_log = Logger.getLogger(GreetingItem.class);
+
     public Element generateXML(HttpServletRequest request,
-            HttpServletResponse response) {
-        ContentItem item = (ContentItem)getObject();
+                               HttpServletResponse response) {
+        ContentItem item = (ContentItem) getObject();
         if (null == item || !item.isLive()) {
             return null;
         }
-        
+
         if (!ContentItem.VERSION.equals(item.getVersion())) {
             item = item.getLiveVersion();
         }
-        
-        
+
+
         Element content = Navigation.newElement("greetingItem");
         Party currentParty = Kernel.getContext().getParty();
         if (currentParty == null) {
@@ -74,18 +74,20 @@ public class GreetingItem extends AbstractComponent {
         //
         // Note that the xml that is generated is only of use if you DO NOT CACHE index pages.
         // cg.
-        
-        PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
+
+        PermissionDescriptor edit = new PermissionDescriptor(PrivilegeDescriptor.
+                get(SecurityManager.CMS_EDIT_ITEM), item, currentParty);
         if (PermissionService.checkPermission(edit)) {
             content.addAttribute("canEdit", "true");
         }
-        PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.get(SecurityManager.CMS_PUBLISH), item, currentParty);
+        PermissionDescriptor publish = new PermissionDescriptor(PrivilegeDescriptor.
+                get(SecurityManager.CMS_PUBLISH), item, currentParty);
         if (PermissionService.checkPermission(publish)) {
             content.addAttribute("canPublish", "true");
         }
-        
-        ContentBundle bundle = (ContentBundle)item;
-        
+
+        ContentBundle bundle = (ContentBundle) item;
+
         /* Fix by Jens Pelzetter, 2009-08-28
          * bundle.getPrimaryInstance() does not about the preferred languages
          * of the User Client, instead it returns the primary instance of
@@ -98,23 +100,41 @@ public class GreetingItem extends AbstractComponent {
         //ContentItem baseItem = bundle.getPrimaryInstance();
         ContentItem baseItem = bundle.negotiate(request.getLocales());
         // If there is no matching language version for this content item
-        if(baseItem == null) {
+        if (baseItem == null) {
             // get the primary instance instead (fallback)
             baseItem = bundle.getPrimaryInstance();
         }
         Element itemEl = content.newChildElement("cms:item",
-                CMS.CMS_XML_NS);
-        
-        ContentItemXMLRenderer renderer =
-                new ContentItemXMLRenderer(itemEl);
-        
-        renderer.setWrapAttributes( true );
-        renderer.setWrapRoot( false );
-        renderer.setWrapObjects( false );
-        
-        renderer.walk( baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT );
-        
+                                                 CMS.CMS_XML_NS);
+
+        //Moved to seperate method generateGreetingItemXml to make to
+        //XML generation extendable (use another renderer etc.)
+        /*ContentItemXMLRenderer renderer =
+                               new ContentItemXMLRenderer(itemEl);
+
+        renderer.setWrapAttributes(true);
+        renderer.setWrapRoot(false);
+        renderer.setWrapObjects(false);
+
+        renderer.walk(baseItem, SimpleXMLGenerator.ADAPTER_CONTEXT);*/
+
+        generateGreetingItemXml(itemEl, baseItem);
+
         return content;
     }
-    
+
+    /**
+     * Creates the XML for the greeting item.
+     *
+     * @param parent The parent element
+     * @param item The item to render
+     */
+    protected void generateGreetingItemXml(Element parent, ContentItem item) {
+        ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(parent);
+        renderer.setWrapAttributes(true);
+        renderer.setWrapRoot(false);
+        renderer.setWrapObjects(false);
+
+        renderer.walk(item, SimpleXMLGenerator.ADAPTER_CONTEXT);        
+    }
 }

@@ -5,7 +5,8 @@ xinha_init=null;
 xinha_config=null;
 xinha_init=xinha_init?xinha_init:function(){
 xinha_editors=xinha_editors?xinha_editors:["myTextArea","anotherOne"];
-xinha_plugins=xinha_plugins?xinha_plugins:["CharacterMap","ContextMenu","SmartReplace","Stylist","Linker","SuperClean","TableOperations"];
+//xinha_plugins=xinha_plugins?xinha_plugins:["CharacterMap","ContextMenu","SmartReplace","Stylist","Linker","SuperClean","TableOperations"];
+xinha_plugins=xinha_plugins?xinha_plugins:["CharacterMap","ContextMenu","SmartReplace","Stylist","SuperClean","TableOperations"];
 if(!Xinha.loadPlugins(xinha_plugins,xinha_init)){
 return;
 }

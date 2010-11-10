@@ -27,17 +27,19 @@ import com.arsdigita.persistence.DataCollection;
  * @author Jens Pelzetter
  */
 public class GenericOrganizationalUnitPersonCollection extends DomainCollection {
-    
+
     public static final String PERSON_ROLE = "link.role_name";
 
     public GenericOrganizationalUnitPersonCollection(
             DataCollection dataCollection) {
         super(dataCollection);
+        dataCollection.addOrder(
+                "surname asc, givenname asc, titlepre asc, titlepost asc");
     }
 
-   
     /**
      * Gets the name of the role of this orgaunit-person link
+     * @return
      */
     public String getRoleName() {
         return (String) m_dataCollection.get(PERSON_ROLE);

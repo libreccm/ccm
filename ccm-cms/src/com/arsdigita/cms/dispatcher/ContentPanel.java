@@ -44,12 +44,13 @@ public class ContentPanel extends SimpleComponent {
     }
 
     /**
-     * Fetches an XML Generator. This method can be overidden to fetch
+     * Fetches an XML Generator. This method can be overridden to fetch
      * any {@link com.arsdigita.cms.dispatcher.XMLGenerator}, but by default,
      * it fetches the <code>XMLGenerator</code> registered to the current
      * {@link com.arsdigita.cms.ContentSection}.
      *
      * @param state The page state
+     * @return The XMLGenerator used by this Content Panel
      */
     protected XMLGenerator getXMLGenerator(PageState state) {
         ContentSection section = CMS.getContext().getContentSection();
@@ -64,9 +65,11 @@ public class ContentPanel extends SimpleComponent {
      * @param parent The parent DOM element
      * @see com.arsdigita.cms.dispatcher.XMLGenerator
      */
+    @Override
     public void generateXML(PageState state, Element parent) {
         if (isVisible(state)) {
-            Element content = parent.newChildElement("cms:contentPanel", CMS.CMS_XML_NS);
+            Element content = parent.newChildElement("cms:contentPanel",
+                                                     CMS.CMS_XML_NS);
             exportAttributes(content);
 
             // Generate path information about the content item
@@ -78,7 +81,7 @@ public class ContentPanel extends SimpleComponent {
             xmlGenerator.generateXML(state, content, null);
         }
     }
-    
+
     /**
      * Generate information about the path to this content item.
      * 
@@ -86,23 +89,27 @@ public class ContentPanel extends SimpleComponent {
      * @param parent the element that will contain the path info
      */
     protected void generatePathInfoXML(PageState state, Element parent) {
-        Element pathInfo = parent.newChildElement("cms:pathInfo", CMS.CMS_XML_NS);
-        
+        Element pathInfo =
+                parent.newChildElement("cms:pathInfo", CMS.CMS_XML_NS);
+
         if (CMS.getContext().hasContentSection()) {
             pathInfo.newChildElement("cms:sectionPath", CMS.CMS_XML_NS).setText(
                     CMS.getContext().getContentSection().getPath());
         }
         String url = DispatcherHelper.getRequestContext().getRemainingURLPart();
         if (url.startsWith(CMSDispatcher.PREVIEW)) {
-            pathInfo.newChildElement("cms:previewPath", CMS.CMS_XML_NS).setText(ContentSectionServlet.PREVIEW);
+            pathInfo.newChildElement("cms:previewPath", CMS.CMS_XML_NS).setText(
+                    ContentSectionServlet.PREVIEW);
         }
         pathInfo.newChildElement("cms:templatePrefix", CMS.CMS_XML_NS).setText(
                 "/" + AbstractItemResolver.TEMPLATE_CONTEXT_PREFIX);
 
         if (CMS.getContext().hasContentItem()) {
             ContentItem item = CMS.getContext().getContentItem();
-            ContentItem bundle = (ContentItem) item.getDraftVersion().getParent();
-            pathInfo.newChildElement("cms:itemPath", CMS.CMS_XML_NS).setText("/" + bundle.getPath());
+            ContentItem bundle =
+                        (ContentItem) item.getDraftVersion().getParent();
+            pathInfo.newChildElement("cms:itemPath", CMS.CMS_XML_NS).setText("/" + bundle.
+                    getPath());
         }
     }
 }

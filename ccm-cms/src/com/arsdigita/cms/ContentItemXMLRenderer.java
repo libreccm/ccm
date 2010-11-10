@@ -34,6 +34,7 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
     // It's purpose is to test for ContentBundle objects and if found, replace
     // that object with the negotiated version of the content item.
     // Otherwise this methd will do nothing.
+    @Override
     protected void walk(final DomainObjectTraversalAdapter adapter,
             final DomainObject obj,
             final String path,
