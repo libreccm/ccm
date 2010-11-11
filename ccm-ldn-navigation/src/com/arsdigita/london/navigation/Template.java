@@ -128,6 +128,7 @@ public class Template extends DomainObject {
     public static TemplateCollection retrieveAll() {
         Session session = SessionManager.getSession();
         DataCollection temp = session.retrieve(BASE_DATA_OBJECT_TYPE);
+        temp.addOrder("title");
         return new TemplateCollection(temp);
     }
 

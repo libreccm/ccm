@@ -242,6 +242,59 @@ public class Loader extends PackageLoader {
                 "/packages/navigation/templates/" +
                 "SciOrganizationDescription.jsp");
 
+         template = Template.create(
+                "SciProject List",
+                "List of SciProjects",
+                "/packages/navigation/templates/SciProjectList.jsp");
+
+        template = Template.create(
+                "SciOrganization Description Only",
+                "Display only the description of a SciOrganization",
+                "/packages/navigation/templates/"
+                + "SciOrganizationDescription.jsp");
+
+        template = Template.create(
+                "SciOrganization Members",
+                "Displays only the members of a SciOrganization "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciOrganizationMembers.jsp");
+
+        template = Template.create(
+                "SciOrganization Departments",
+                "Displays only the departments of a SciOrganization",
+                "/packages/naviagation/templates/"
+                + "SciOrganizationDepartments.jsp");
+
+        template = Template.create(
+                "SciOrganization Projects",
+                "Displays only the projects of a SciOrganization (and its "
+                + "departments",
+                "/packages/navigation/templates/SciOrganizationProjects.jsp");
+
+        template = Template.create(
+                "SciDepartment Description Only",
+                "Display only the description of a SciDepartment",
+                "/packages/navigation/templates/"
+                + "SciDepartmentDescription.jsp");
+
+        template = Template.create(
+                "SciDepartment Members",
+                "Displays only the members of a SciDepartment "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciDepartmentMembers.jsp");
+
+        template = Template.create(
+                "SciDepartment Departments",
+                "Displays only the departments of a SciDepartment",
+                "/packages/naviagation/templates/"
+                + "SciDepartmentDepartments.jsp");
+
+        template = Template.create(
+                "SciDepartment Projects",
+                "Displays only the projects of a SciDepartment (and its "
+                + "departments",
+                "/packages/navigation/templates/SciDepartmentProjects.jsp");
+
     }
 
     /**
