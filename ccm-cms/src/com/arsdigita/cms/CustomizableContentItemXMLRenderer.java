@@ -19,11 +19,9 @@
  */
 package com.arsdigita.cms;
 
-import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.domain.DomainObjectTraversal;
 import com.arsdigita.domain.DomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.kernel.ACSObject;
@@ -54,7 +52,7 @@ public class CustomizableContentItemXMLRenderer
             CustomizableContentItemXMLRenderer.class);
     private int m_pageSize = 20;
     private String m_order;
-    private List<String> m_filters;
+    private List<String> m_filters;    
 
     public CustomizableContentItemXMLRenderer(Element root) {
         super(root);

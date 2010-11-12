@@ -239,10 +239,10 @@ public class Loader extends PackageLoader {
         template = Template.create(
                 "SciOrganization Description Only",
                 "Display only the description of a SciOrganization",
-                "/packages/navigation/templates/" +
-                "SciOrganizationDescription.jsp");
+                "/packages/navigation/templates/"
+                + "SciOrganizationDescription.jsp");
 
-         template = Template.create(
+        template = Template.create(
                 "SciProject List",
                 "List of SciProjects",
                 "/packages/navigation/templates/SciProjectList.jsp");
@@ -259,6 +259,27 @@ public class Loader extends PackageLoader {
                 + "(and the short description)",
                 "/packages/navigation/templates/SciOrganizationMembers.jsp");
 
+        template =
+        Template.create(
+                "SciOrganization Active Members",
+                "Displays only the active members of a SciOrganization "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciOrganizationActiveMembers.jsp");
+
+        template =
+        Template.create(
+                "SciOrganization Associated Members",
+                "Displays only the associated members of a SciOrganization "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciOrganizationAssociatedMembers.jsp");
+
+        template =
+        Template.create(
+                "SciOrganization Former Members",
+                "Displays only the former members of a SciOrganization "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciOrganizationFormerMembers.jsp");
+
         template = Template.create(
                 "SciOrganization Departments",
                 "Displays only the departments of a SciOrganization",
@@ -270,6 +291,20 @@ public class Loader extends PackageLoader {
                 "Displays only the projects of a SciOrganization (and its "
                 + "departments",
                 "/packages/navigation/templates/SciOrganizationProjects.jsp");
+
+        template =
+        Template.create(
+                "SciOrganization Ongoing Projects",
+                "Displays only the ongoging projects of a SciOrganization "
+                + "(and its departments)",
+                "/packages/navigation/templates/SciOrganizationOngoingProjects.jsp");
+
+        template =
+        Template.create(
+                "SciOrganization Finished Projects",
+                "Displays only the finished projects of a SciOrganization "
+                + "(and its departments)",
+                "/packages/navigation/templates/SciOrganizationFinishedProjects.jsp");
 
         template = Template.create(
                 "SciDepartment Description Only",
@@ -284,8 +319,27 @@ public class Loader extends PackageLoader {
                 "/packages/navigation/templates/SciDepartmentMembers.jsp");
 
         template = Template.create(
+                "SciDepartment Active Members",
+                "Displays only the active members of a SciDepartment "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciDepartmentActiveMembers.jsp");
+
+        template =
+        Template.create(
+                "SciDepartment Associated Members",
+                "Displays only the associated members of a SciDepartment "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciDepartmentAssociatedMembers.jsp");
+
+        template = Template.create(
+                "SciDepartment Former Members",
+                "Displays only the former members of a SciDepartment "
+                + "(and the short description)",
+                "/packages/navigation/templates/SciDepartmentFormerMembers.jsp");
+
+        template = Template.create(
                 "SciDepartment Departments",
-                "Displays only the departments of a SciDepartment",
+                "Displays only the subdepartments of a SciDepartment",
                 "/packages/naviagation/templates/"
                 + "SciDepartmentDepartments.jsp");
 
@@ -294,6 +348,20 @@ public class Loader extends PackageLoader {
                 "Displays only the projects of a SciDepartment (and its "
                 + "departments",
                 "/packages/navigation/templates/SciDepartmentProjects.jsp");
+
+        template =
+        Template.create(
+                "SciDepartment Ongoing Projects",
+                "Displays only the ongoing projects of a SciDepartment (and its "
+                + "subdepartments",
+                "/packages/navigation/templates/SciDepartmentOngoingProjects.jsp");
+
+        template =
+        Template.create(
+                "SciDepartment Finished Projects",
+                "Displays only the finished projects of a SciDepartment (and its "
+                + "subdepartments",
+                "/packages/navigation/templates/SciDepartmentFinishedProjects.jsp");
 
     }
 
