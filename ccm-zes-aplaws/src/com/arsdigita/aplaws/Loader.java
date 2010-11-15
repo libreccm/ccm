@@ -230,18 +230,7 @@ public class Loader extends PackageLoader {
                 "ZeS Welcome Page",
                 "ZeS Welcome Page for navigation",
                 "/packages/navigation/templates/zes-welcome.jsp");
-
-        template = Template.create(
-                "ZeS Project List",
-                "List of SciProjects",
-                "/packages/navigation/templates/zes-project-list.jsp");
-
-        template = Template.create(
-                "SciOrganization Description Only",
-                "Display only the description of a SciOrganization",
-                "/packages/navigation/templates/"
-                + "SciOrganizationDescription.jsp");
-
+     
         template = Template.create(
                 "SciProject List",
                 "List of SciProjects",
