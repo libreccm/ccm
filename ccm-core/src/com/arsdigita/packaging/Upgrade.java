@@ -51,10 +51,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * @version $Id: Upgrade.java 736 2005-09-01 10:46:05Z sskracic $
  */
 class Upgrade extends Command {
-    public final static String versionId =
-        "$Id: Upgrade.java 736 2005-09-01 10:46:05Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Options s_options = getOptions();
 
