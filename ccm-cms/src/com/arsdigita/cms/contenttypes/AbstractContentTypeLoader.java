@@ -227,10 +227,11 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
             // Save the current ct as possible parent if we haven't found any parent yet
             // or if the current ancestor list is longer than that one from the possible
             // parent earlier found
-            if (parent == null
+            if (!type.getClassName().equals(ct.getClassName())
+                    && (parent == null
                     || (parent.getAncestors() != null
-                        && ct.getAncestors() != null
-                        && parent.getAncestors().length() < ct.getAncestors().length())) {
+                    && ct.getAncestors() != null
+                    && parent.getAncestors().length() < ct.getAncestors().length()))) {
                 parent = ct;
             }
         }
