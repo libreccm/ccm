@@ -36,7 +36,9 @@ public class NotesSummary extends Table implements AdditionalDisplayComponent {
         setColumnSelectionModel(null);
         model.get(0).setCellRenderer(new TableCellRenderer() {
 
-			public Component getComponent(Table table, PageState state, Object value, boolean isSelected, Object key, int row, int column) {
+			public Component getComponent(Table table, PageState state, 
+                                          Object value, boolean isSelected,
+                                          Object key, int row, int column) {
 				Label t = new Label((String)value);
 	            t.setOutputEscaping(false);
 	            

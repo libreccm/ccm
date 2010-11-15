@@ -65,7 +65,8 @@ public class Note extends ACSObject {
     public static final String OWNER = "owner";
     public static final String NOTES = "ca_notes";
     public static final String AUDIT = "auditing";
-    public static final String CREATION_DATE = AUDIT + "." + BasicAuditTrail.CREATION_DATE;
+    public static final String CREATION_DATE = AUDIT + "."
+                                               + BasicAuditTrail.CREATION_DATE;
 	
 
     private BasicAuditTrail auditTrail;

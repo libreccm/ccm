@@ -45,7 +45,7 @@ public class NotesEdit extends SimpleContainer {
         m_noteModel = noteModel;
 
         m_form = new Form( "notesEdit",
-                           new SimpleContainer( "cms:notesEdit", CMS.CMS_XML_NS ) );
+                           new SimpleContainer("cms:notesEdit",CMS.CMS_XML_NS) );
         m_form.setRedirecting( true );
         add( m_form );
 
@@ -54,7 +54,9 @@ public class NotesEdit extends SimpleContainer {
         StringParameter contentParam = new StringParameter( "content" );
         contentParam.addParameterListener( new NotNullValidationListener() );
 
-        final DHTMLEditor content = new DHTMLEditor( contentParam,ContentSection.getConfig().getDHTMLEditorConfig() );
+        final DHTMLEditor content = new DHTMLEditor( contentParam,
+                                                     ContentSection.getConfig()
+                                                     .getDHTMLEditorConfig() );
         content.setRows( 20 );
 
         m_form.add( content );
