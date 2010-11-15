@@ -6,7 +6,7 @@
   <!-- First off the adapters for ContentItemPanel -->
   <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
     <!-- Individual article sections -->
-    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.ItemImageAttachment">
+    <xrd:adapter objectType="com.arsdigita.cms.contentassets.ItemImageAttachment">
       <xrd:attributes rule="exclude">
         <xrd:property name="/object/defaultDomainClass"/>
         <xrd:property name="/object/objectType"/>
