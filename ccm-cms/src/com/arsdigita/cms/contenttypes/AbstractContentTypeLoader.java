@@ -51,6 +51,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+import org.apache.log4j.Logger;
 
 /**
  * This is the base loader that can be used by individual content types.
@@ -61,6 +62,9 @@ import java.util.StringTokenizer;
  * @version $Revision: #754 $ $Date: 2005/09/02 $ $Author: sskracic $
  **/
 public abstract class AbstractContentTypeLoader extends PackageLoader {
+
+    private static final Logger s_log = Logger.getLogger(
+            AbstractContentTypeLoader.class);
 
     public void run(final ScriptContext ctx) {
         new KernelExcursion() {

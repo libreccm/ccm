@@ -52,7 +52,7 @@ import com.arsdigita.util.parameter.ParameterReader;
  */
 public abstract class PackageLoader extends AbstractScript {
 
-    public final static Logger s_log = Logger.getLogger(PackageLoader.class);
+    private final static Logger s_log = Logger.getLogger(PackageLoader.class);
 
     public static boolean exists(Connection conn, String table) {
         try {
