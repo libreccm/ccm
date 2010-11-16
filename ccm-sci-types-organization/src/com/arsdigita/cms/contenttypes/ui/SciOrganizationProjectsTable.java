@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -33,13 +34,18 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciOrganizationProjectsCollection;
 import com.arsdigita.cms.contenttypes.SciProject;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
+import org.apache.log4j.Logger;
 
 /**
  * Table for showing the links between a {@link SciOrganization} and 
@@ -53,6 +59,8 @@ public class SciOrganizationProjectsTable
         extends Table
         implements TableActionListener {
 
+    private final Logger s_log = Logger.getLogger(
+            SciOrganizationProjectsTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
@@ -206,8 +214,26 @@ public class SciOrganizationProjectsTable
                     orga);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                SciProject project;
+                try {
+                    project = new SciProject((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(value.toString(),
+                              resolver.generateItemURL(state,
+                                                       project,
+                                                       section,
+                                                       project.getVersion()));
+
                 return link;
+
             } else {
                 Label label = new Label(value.toString());
                 return label;
@@ -293,10 +319,9 @@ public class SciOrganizationProjectsTable
                 int row,
                 int col) {
 
-             SciOrganization orga = (SciOrganization) m_itemModel.
+            SciOrganization orga = (SciOrganization) m_itemModel.
                     getSelectedObject(state);
-            SciOrganizationProjectsCollection projects = orga.
-                    getProjects();
+            SciOrganizationProjectsCollection projects = orga.getProjects();
 
             if ((projects.size() - 1) == row) {
                 Label label = new Label("");

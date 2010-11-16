@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -31,14 +32,19 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciOrganizationDepartmentsCollection;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.dispatcher.ObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  * Table for showing the {@link SciDepartment}s linked to a
@@ -52,6 +58,8 @@ public class SciOrganizationDepartmentsTable
         extends Table
         implements TableActionListener {
 
+    private final Logger s_log = Logger.getLogger(
+            SciOrganizationDepartmentsTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
@@ -205,8 +213,28 @@ public class SciOrganizationDepartmentsTable
                     orga);
 
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                SciDepartment department;
+                try {
+                    department = new SciDepartment((BigDecimal) key);
+                } catch (ObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link = new Link(value.toString(),
+                                     resolver.generateItemURL(state,
+                                                              department,
+                                                              section,
+                                                              department.
+                        getVersion()));
+
                 return link;
+
             } else {
                 Label label = new Label(value.toString());
                 return label;

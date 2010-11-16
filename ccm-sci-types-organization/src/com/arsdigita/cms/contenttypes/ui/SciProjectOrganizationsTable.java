@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -33,14 +34,18 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.contenttypes.SciProjectOrganizationsCollection;
-import com.arsdigita.cms.contenttypes.SciProjectSubProjectsCollection;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
+import org.apache.log4j.Logger;
 
 /**
  * Table for showing the links between a {@link SciProject} and 
@@ -52,6 +57,8 @@ public class SciProjectOrganizationsTable
         extends Table
         implements TableActionListener {
 
+    private static final Logger s_log = Logger.getLogger(
+            SciProjectOrganizationsTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
@@ -204,13 +211,31 @@ public class SciProjectOrganizationsTable
                     SecurityManager.EDIT_ITEM,
                     project);
 
-            /*if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+            if (canEdit) {
+                SciOrganization orga;
+                try {
+                    orga = new SciOrganization((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    s_log.warn(String.format("No object with key '%s' found.",
+                                             key),
+                               ex);
+                    return new Label(value.toString());
+                }
+
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(value.toString(),
+                              resolver.generateItemURL(state,
+                                                       orga,
+                                                       section,
+                                                       orga.getVersion()));
                 return link;
-            } else {*/
+
+            } else {
                 Label label = new Label(value.toString());
                 return label;
-            //}
+            }
         }
     }
 
@@ -295,7 +320,7 @@ public class SciProjectOrganizationsTable
             SciProject project = (SciProject) m_itemModel.getSelectedObject(
                     state);
             SciProjectOrganizationsCollection orgas =
-                                            project.getOrganizations();
+                                              project.getOrganizations();
 
             if ((orgas.size() - 1) == row) {
                 Label label = new Label("");
@@ -310,7 +335,7 @@ public class SciProjectOrganizationsTable
         }
     }
 
-      @Override
+    @Override
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
@@ -321,7 +346,7 @@ public class SciProjectOrganizationsTable
                    (SciProject) m_itemModel.getSelectedObject(state);
 
         SciProjectOrganizationsCollection subprojects =
-                                        project.getOrganizations();
+                                          project.getOrganizations();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
