@@ -81,16 +81,18 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
         List types = handler.getContentTypes();
         Session ssn = ctx.getSession();
-        DataCollection sections = ssn.retrieve(ContentSection.BASE_DATA_OBJECT_TYPE);
+        DataCollection sections = ssn.retrieve(
+                ContentSection.BASE_DATA_OBJECT_TYPE);
 
         while (sections.next()) {
-            ContentSection section = (ContentSection) DomainObjectFactory.newInstance(sections.getDataObject());
+            ContentSection section = (ContentSection) DomainObjectFactory.
+                    newInstance(sections.getDataObject());
             if (!isLoadableInto(section)) {
                 continue;
             }
 
             LifecycleDefinitionCollection ldc =
-                    section.getLifecycleDefinitions();
+                                          section.getLifecycleDefinitions();
             LifecycleDefinition ld = null;
             if (ldc.next()) {
                 ld = ldc.getLifecycleDefinition();
@@ -118,10 +120,11 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
     }
 
     protected void prepareSection(final ContentSection section,
-            final ContentType type,
-            final LifecycleDefinition ld,
-            final WorkflowTemplate wf) {
-        ContentTypeLifecycleDefinition.updateLifecycleDefinition(section, type, ld);
+                                  final ContentType type,
+                                  final LifecycleDefinition ld,
+                                  final WorkflowTemplate wf) {
+        ContentTypeLifecycleDefinition.updateLifecycleDefinition(section, type,
+                                                                 ld);
 
         ContentTypeWorkflowTemplate.updateWorkflowTemplate(section, type, wf);
     }
@@ -163,12 +166,12 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      *  be called by the loader class by overriding prepareSection
      */
     protected Template setDefaultTemplate(final String name,
-            final String label,
-            final InputStream templateIs,
-            final ContentSection section,
-            final ContentType type,
-            final LifecycleDefinition ld,
-            final WorkflowTemplate wf) {
+                                          final String label,
+                                          final InputStream templateIs,
+                                          final ContentSection section,
+                                          final ContentType type,
+                                          final LifecycleDefinition ld,
+                                          final WorkflowTemplate wf) {
         final Template template = new Template();
         template.setName(name);
         template.setLabel(label);
@@ -177,7 +180,8 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
         Assert.isTrue(templateIs != null, "Template not found");
 
-        final BufferedReader input = new BufferedReader(new InputStreamReader(templateIs));
+        final BufferedReader input = new BufferedReader(new InputStreamReader(
+                templateIs));
 
         final StringBuffer body = new StringBuffer();
 
@@ -194,7 +198,8 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
         template.setText(body.toString());
 
-        TemplateManagerFactory.getInstance().addTemplate(section, type, template, TemplateManager.PUBLIC_CONTEXT);
+        TemplateManagerFactory.getInstance().addTemplate(section, type, template,
+                                                         TemplateManager.PUBLIC_CONTEXT);
 
         template.publish(ld, new Date());
         return template;
@@ -218,7 +223,8 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
             ContentType ct = cts.getContentType();
 
             try {
-                Class.forName(type.getClassName()).asSubclass(Class.forName(ct.getClassName()));
+                Class.forName(type.getClassName()).asSubclass(Class.forName(ct.
+                        getClassName()));
             } catch (Exception ex) {
                 // This cast is not valid so type is not a sublacss of ct
                 continue;
@@ -228,10 +234,11 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
             // or if the current ancestor list is longer than that one from the possible
             // parent earlier found
             if (!type.getClassName().equals(ct.getClassName())
-                    && (parent == null
+                && (parent == null
                     || (parent.getAncestors() != null
-                    && ct.getAncestors() != null
-                    && parent.getAncestors().length() < ct.getAncestors().length()))) {
+                        && ct.getAncestors() != null
+                        && parent.getAncestors().length() < ct.getAncestors().
+                        length()))) {
                 parent = ct;
             }
         }
@@ -241,13 +248,19 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
             if (parent.getAncestors() != null) {
                 String parentAncestors = parent.getAncestors();
 
-                StringTokenizer strTok = new StringTokenizer(parentAncestors, "/");
+                StringTokenizer strTok = new StringTokenizer(parentAncestors,
+                                                             "/");
 
                 // Add parent ancestors to this content types ancestor list
                 // Also while we iterate through the list, we also need to add
                 // this content type as sibling to all entries in the ancestor list
                 while (strTok.hasMoreElements()) {
 
+                    Object token;
+                    token = strTok.nextElement();
+                    s_log.error(String.format(
+                            "Trying to convert '%s' to BigDecimal...", token));
+                    //BigDecimal ctID = (BigDecimal) strTok.nextElement();
                     BigDecimal ctID = (BigDecimal) strTok.nextElement();
 
                     // Get the current content type
