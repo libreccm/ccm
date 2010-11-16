@@ -286,7 +286,7 @@ public class JournalArticlesTable
                 return label;
             } else {
                 ControlLink link = new ControlLink(
-                        (String) SciOrganizationGlobalizationUtil.globalize(
+                        (String) PublicationGlobalizationUtil.globalize(
                         "cms.contenttypes.ui.journal.articles.down").
                         localize());
                 return link;

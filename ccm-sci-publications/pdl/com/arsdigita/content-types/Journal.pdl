@@ -39,7 +39,7 @@ association {
 
   ArticleInJournal[0..n] articles = join ct_journal.journal_id
   			 	      to ct_journal_article_map.journal_id,
-				    join ct_journal.article_map.article_in_journal_id
+				    join ct_journal_article_map.article_in_journal_id
 				      to ct_article_in_journal.article_in_journal_id;
 
   Integer[0..1] articleOrder = ct_journal_article_map.article_order INTEGER;

@@ -19,7 +19,7 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.cms.contenttypes.SciMember;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciOrganization;
@@ -44,7 +44,7 @@ public class SciOrganizationMemberAddForm
 
     @Override
     protected String getPersonType() {
-        return SciMember.class.getName();
+        return GenericPerson.class.getName();
     }
 
     @Override
