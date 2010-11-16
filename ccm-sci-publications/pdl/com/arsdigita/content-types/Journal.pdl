@@ -22,24 +22,25 @@ model com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 
-//PDL definition for the basic attributes of publication.
-object type PublicationList extends ContentPage {
+//PDL definition for a journal
+object type Journal extends Publication {
 
-       String[0..1] description = ct_publicationlists.description VARCHAR(2048);       
+  String[0..1] issn = ct_journal.issn VARCHAR(9);       
 
-       reference key (ct_publicationlists.publicationlist_id);
+  reference key (ct_journal.journal_id);
 }
 
-//Association which links the publication list(s) and the publications
 association {
 
-	    PublicationList[0..n] publicationLists = join ct_publications.publication_id
-	    			  		      to ct_publicationlists_map.publication_id,
- 						    join ct_publicationlists_map.publicationlist_id
-						      to ct_publicationlists.publicationlist_id;
-	    
-            Publication[0..n] publications = join ct_publicationlists.publicationlist_id
-	    		                      to ct_publicationlists_map.publicationlist_id,
-					    join ct_publicationlists_map.publication_id
-					      to ct_publications.publication_id;
+  Journal[0..n] journal = join ct_article_in_journal.article_in_journal_id 
+  			    to ct_journal_article_map.article_in_journal_id,
+			  join ct_journal_article_map.journal_id
+			    to ct_journal.journal_id;
+
+  ArticleInJournal[0..n] articles = join ct_journal.journal_id
+  			 	      to ct_journal_article_map.journal_id,
+				    join ct_journal.article_map.article_in_journal_id
+				      to ct_article_in_journal.article_in_journal_id;
+
+  Integer[0..1] articleOrder = ct_journal_article_map.article_order INTEGER;
 }

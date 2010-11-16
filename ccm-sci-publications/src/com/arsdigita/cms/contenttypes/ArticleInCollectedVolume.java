@@ -20,8 +20,11 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 
 /**
@@ -85,10 +88,36 @@ public class ArticleInCollectedVolume extends Publication {
     }
 
     public CollectedVolume getCollectedVolume() {
-        return (CollectedVolume) get(COLLECTED_VOLUME);
+        DataCollection collection;
+
+        collection = (DataCollection) get(COLLECTED_VOLUME);
+
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+
+            return (CollectedVolume)DomainObjectFactory.newInstance(dobj);
+        }
     }
 
     public void setCollectedVolume(CollectedVolume collectedVolume) {
-        set(COLLECTED_VOLUME, collectedVolume);
+        CollectedVolume oldCollectedVolume;
+
+        oldCollectedVolume = getCollectedVolume();
+        if (oldCollectedVolume != null) {
+            remove(COLLECTED_VOLUME, oldCollectedVolume);
+        }
+
+        if (collectedVolume != null) {
+            Assert.exists(collectedVolume, CollectedVolume.class);
+            DataObject link = add(COLLECTED_VOLUME, collectedVolume);
+            link.set(CollectedVolume.ARTICLE_ORDER,
+                    Integer.valueOf((int) collectedVolume.getArticles().size()));
+            link.save();
+        }
     }
 }

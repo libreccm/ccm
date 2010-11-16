@@ -3,7 +3,6 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.ArticleInJournal;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -14,37 +13,18 @@ import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
  *
  * @author Jens Pelzetter
  */
-public class ArticleInJournalPropertiesStep extends PublicationPropertiesStep {
+public class JournalPropertiesStep extends PublicationPropertiesStep {
 
-    public ArticleInJournalPropertiesStep(ItemSelectionModel itemModel,
-                                          AuthoringKitWizard parent) {
+    public JournalPropertiesStep(
+            ItemSelectionModel itemModel,
+            AuthoringKitWizard parent) {
         super(itemModel, parent);
     }
 
-    public static Component getArticleInJournalPropertySheet(
+    public static Component getJournalPropertySheet(
             ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
                 getPublicationPropertySheet(itemModel);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.volume"),
-                ArticleInJournal.VOLUME);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.issue"),
-                ArticleInJournal.ISSUE);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.pages_from"),
-                ArticleInJournal.PAGES_FROM);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.pages_to"),
-                ArticleInJournal.PAGES_TO);
-     
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.publication_date"),
-                ArticleInJournal.PUBLICATION_DATE);
 
         return sheet;
     }
@@ -56,24 +36,32 @@ public class ArticleInJournalPropertiesStep extends PublicationPropertiesStep {
                                                             parent,
                                                             EDIT_SHEET_NAME);
 
-        BasicPageForm editBasicSheet =
-                      new ArticleInJournalPropertyForm(itemModel, this);
+        BasicPageForm editBasicSheet = new JournalPropertyForm(itemModel,
+                                                               this);
 
         basicProperties.add(EDIT_SHEET_NAME,
                             (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.edit_basic_sheet").
-                localize(),
+                "publications.ui.collected_volume.edit_basic_sheet").localize(),
                             new WorkflowLockedComponentAccess(editBasicSheet,
                                                               itemModel),
                             editBasicSheet.getSaveCancelSection().
                 getCancelButton());
 
-        basicProperties.setDisplayComponent(
-                getArticleInJournalPropertySheet(itemModel));
+        basicProperties.setDisplayComponent(getJournalPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.basic_properties").localize()),
+                "publications.ui.publication.basic_properties").
+                localize()),
                 basicProperties);
+    }
+
+    @Override
+    protected void addSteps(ItemSelectionModel itemModel,
+                            AuthoringKitWizard parent) {
+        super.addSteps(itemModel, parent);
+
+        addStep(new JournalArticlesStep(itemModel, parent),
+                "publications.ui.journal.articles");
     }
 }

@@ -1,8 +1,11 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -11,13 +14,12 @@ import java.util.Date;
  * @author Jens Pelzetter
  */
 public class ArticleInJournal extends Publication {
-
-    public static final String JOURNAL = "journal";
+    
     public static final String VOLUME = "volume";
     public static final String ISSUE = "issue";
     public static final String PAGES_FROM = "pagesFrom";
     public static final String PAGES_TO = "pagesTo";
-    public static final String ISSN = "issn";
+    public static final String JOURNAL = "journal";
     public static final String PUBLICATION_DATE = "publicationDate";
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.ArticleInJournal";
@@ -41,15 +43,7 @@ public class ArticleInJournal extends Publication {
     public ArticleInJournal(String type) {
         super(type);
     }
-
-    public String getJournal() {
-        return (String) get(JOURNAL);
-    }
-
-    public void setJournal(String journal) {
-        set(JOURNAL, journal);
-    }
-
+  
     public Integer getVolume() {
         return (Integer) get(VOLUME);
     }
@@ -81,15 +75,7 @@ public class ArticleInJournal extends Publication {
     public void setPagesTo(Integer pagesTo) {
         set(PAGES_TO, pagesTo);
     }
-
-    public String getISSN() {
-        return (String) get(ISSN);
-    }
-
-    public void setISSN(String issn) {
-        set(ISSN, issn);
-    }
-
+   
     public Date getPublicationDate() {
         return (Date) get(PUBLICATION_DATE);
     }
@@ -97,4 +83,38 @@ public class ArticleInJournal extends Publication {
     public void setPublicationDate(Date publicationDate) {
         set(PUBLICATION_DATE, publicationDate);
     }
+
+    public Journal getJournal() {
+        DataCollection collection;
+
+        collection = (DataCollection) get(JOURNAL);
+
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+
+            return (Journal) DomainObjectFactory.newInstance(dobj);
+        }
+    }
+
+   public void setJournal(Journal journal) {
+       Journal oldJournal;
+
+       oldJournal = getJournal();
+       if (oldJournal != null) {
+           remove(JOURNAL, oldJournal);
+       }
+
+       if (journal != null) {
+           Assert.exists(journal, Journal.class);
+           DataObject link = add(JOURNAL, journal);
+           link.set(Journal.ARTICLE_ORDER,
+                   Integer.valueOf((int) journal.getArticles().size()));
+           link.save();
+       }
+   }
 }

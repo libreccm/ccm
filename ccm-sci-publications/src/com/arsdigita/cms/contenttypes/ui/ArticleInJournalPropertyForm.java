@@ -44,14 +44,7 @@ public class ArticleInJournalPropertyForm
 
     @Override
     protected void addWidgets() {
-        super.addWidgets();
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.journal").localize()));
-        ParameterModel journalParam =
-                       new StringParameter(ArticleInJournal.JOURNAL);
-        TextField journal = new TextField(journalParam);
-        add(journal);
+        super.addWidgets();     
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleinjournal.volume").localize()));
@@ -80,13 +73,6 @@ public class ArticleInJournalPropertyForm
         TextField pagesTo = new TextField(pagesToParam);
         add(pagesTo);
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.articleinjournal.issn").localize()));
-        ParameterModel issnParam = new StringParameter(ArticleInJournal.ISSN);
-        TextField issn = new TextField(issnParam);
-        issn.setMaxLength(9);
-        add(issn);
-
         Calendar today = new GregorianCalendar();
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.articleinjournal.publicationDate").
@@ -106,13 +92,11 @@ public class ArticleInJournalPropertyForm
 
         FormData data = fse.getFormData();
         ArticleInJournal article = (ArticleInJournal) initBasicWidgets(fse);
-
-        data.put(ArticleInJournal.JOURNAL, article.getJournal());
+      
         data.put(ArticleInJournal.VOLUME, article.getVolume());
         data.put(ArticleInJournal.ISSUE, article.getIssue());
         data.put(ArticleInJournal.PAGES_FROM, article.getPagesFrom());
-        data.put(ArticleInJournal.PAGES_TO, article.getPagesTo());
-        data.put(ArticleInJournal.ISSN, article.getISSN());       
+        data.put(ArticleInJournal.PAGES_TO, article.getPagesTo());           
         data.put(ArticleInJournal.PUBLICATION_DATE,
                  article.getPublicationDate());
     }
@@ -125,16 +109,13 @@ public class ArticleInJournalPropertyForm
         ArticleInJournal article = (ArticleInJournal) initBasicWidgets(fse);
 
         if ((article != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
-            article.setJournal((String) data.get(ArticleInJournal.JOURNAL));
+                isSelected(fse.getPageState())) {        
             article.setVolume((Integer) data.get(ArticleInJournal.VOLUME));
             article.setIssue((String) data.get(ArticleInJournal.ISSUE));
             article.setPagesFrom(
                     (Integer) data.get(ArticleInJournal.PAGES_FROM));
             article.setPagesTo(
-                    (Integer) data.get(ArticleInJournal.PAGES_TO));
-            article.setISSN(
-                    (String) data.get(ArticleInJournal.ISSN));           
+                    (Integer) data.get(ArticleInJournal.PAGES_TO));            
             article.setPublicationDate(
                     (Date) data.get(ArticleInJournal.PUBLICATION_DATE));
 
