@@ -405,7 +405,7 @@ public final class ContentSectionSetup {
     }
 
     /** 
-     * Steps through a list of congtent types to be available for this content
+     * Steps through a list of content types to be available for this content
      * section and delegates processing of each type.
      * 
      * @param types list of content types to be available for this content section

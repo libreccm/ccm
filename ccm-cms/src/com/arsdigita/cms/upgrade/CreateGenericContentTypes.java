@@ -82,12 +82,11 @@ public class CreateGenericContentTypes extends Program {
                 // add new generic content types
                 tc.beginTxn();
 
-                String[] ctDefFiles = new String[]
-                    {"/WEB-INF/content-types/GenericAddress.xml",
-                     "/WEB-INF/content-types/GenericArticle.xml",
-                     "/WEB-INF/content-types/GenericContact.xml",
-                     "/WEB-INF/content-types/GenericOrganizationalUnit.xml",
-                     "/WEB-INF/content-types/GenericPerson.xml"};
+                String[] ctDefFiles = new String[]{"/WEB-INF/content-types/GenericAddress.xml",
+                    "/WEB-INF/content-types/GenericArticle.xml",
+                    "/WEB-INF/content-types/GenericContact.xml",
+                    "/WEB-INF/content-types/GenericOrganizationalUnit.xml",
+                    "/WEB-INF/content-types/GenericPerson.xml"};
 
                 if (ctDefFiles != null) {
                     for (int i = 0; i < ctDefFiles.length; i++) {
@@ -100,55 +99,30 @@ public class CreateGenericContentTypes extends Program {
                 tc.commitTxn();  // save database additions for re-reading
 
                 // add the dependency hierarchie to any installed ct
+/*  Das sollte ueberfluessig sein.
                 tc.beginTxn();
 
                 ContentTypeCollection ctc = ContentType.getAllContentTypes();
 
-                s_log.error("Starte content types update");
+                s_log.debug("Starte content types update");
 
                 while (ctc.next()) {
 
                     ContentType ct = ctc.getContentType();
 
-                    s_log.error("Verarbeite " + ct.getClassName());
+                    s_log.debug("Verarbeite " + ct.getClassName());
 
                     createPedigree(ct);
 
                 }
-
                 tc.commitTxn();
+*/
             }
         }.run();
 
 
     }
-/*
-    private boolean isLoadableInto(ContentSection section) {
-        if (section == null) {
-            throw new NullPointerException("section");
-        }
 
-        if (getContentSections().size() > 0) {
-            return getContentSections().contains(section.getName());
-        } else {
-            return ContentSection.getConfig().getDefaultContentSection().
-                    equals(section.getName());
-        }
-    }
-
-    protected void prepareSection(final ContentSection section,
-            final ContentType type,
-            final LifecycleDefinition ld,
-            final WorkflowTemplate wf) {
-        ContentTypeLifecycleDefinition.updateLifecycleDefinition(section, type, ld);
-
-        ContentTypeWorkflowTemplate.updateWorkflowTemplate(section, type, wf);
-    }
-
-    protected List getContentSections() {
-        return java.util.Collections.EMPTY_LIST;
-    }
-*/
     /**
      * Generates the pedigree for new content types created during update.
      * 
@@ -166,36 +140,35 @@ public class CreateGenericContentTypes extends Program {
         // This is a brute force method, but I can't come up with something
         // better atm without changing either all Loader or the xml-files.
 
-
         while (cts.next()) {
             ContentType ct = cts.getContentType();
 
-
-
             try {
                 Class.forName(type.getClassName()).asSubclass(Class.forName(ct.getClassName()));
-
-
             } catch (Exception ex) {
-                // This cast is not valid so type is not a sublacss of ct
+                // This cast is not valid so type is not a subclass of ct
                 continue;
+            }
 
+            s_log.debug("Possible Parent: " + ct.getClassName());
 
-            } // Save the current ct as possible parent if we haven't found any parent yet
+            // Save the current ct as possible parent if we haven't found any parent yet
             // or if the current ancestor list is longer than that one from the possible
             // parent earlier found
-            if (parent == null
+            if (!type.getClassName().equals(ct.getClassName())
+                    && (parent == null
                     || (parent.getAncestors() != null
                     && ct.getAncestors() != null
-                    && parent.getAncestors().length() < ct.getAncestors().length())) {
+                    && parent.getAncestors().length() < ct.getAncestors().length()))) {
                 parent = ct;
-
-
             }
         }
 
         // If there is a valid parent content type create the pedigree
         if (parent != null && !parent.getClassName().equals(type.getClassName())) {
+            s_log.debug(type.getClassName() + " is a subtype of "
+                    + parent.getClassName());
+
             if (parent.getAncestors() != null) {
                 String parentAncestors = parent.getAncestors();
 
@@ -219,12 +192,12 @@ public class CreateGenericContentTypes extends Program {
 
 
                     } catch (Exception ex) {
+                        s_log.error("The db is broken.");
                         // The db is broken. There is no content type for this ID
                     }
 
                     // Add parent ancestor
                     type.addAncestor(ctID);
-
 
                 }
             }
@@ -236,5 +209,7 @@ public class CreateGenericContentTypes extends Program {
             parent.addSiblings(type.getID());
 
         }
+
+        s_log.debug("Method Pedigree finished");
     }
 }

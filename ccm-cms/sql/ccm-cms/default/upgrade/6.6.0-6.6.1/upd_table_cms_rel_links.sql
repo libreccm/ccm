@@ -16,4 +16,4 @@
 -- $Id: upd_table_cms_tel_links.sql pboy $
 
 alter table cms_related_links
-    add column link__list_name varchar(100);
+    add column link_list_name varchar(100);

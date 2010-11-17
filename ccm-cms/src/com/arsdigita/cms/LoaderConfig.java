@@ -557,8 +557,8 @@ public final class LoaderConfig extends AbstractConfig {
      * Retrieve the 
      */
     public List getContentSectionsContentTypes() {
-        String[] taskAlerts = (String[]) get(m_contentTypeList);
-        return Arrays.asList(taskAlerts);
+        String[] contentTypes = (String[]) get(m_contentTypeList);
+        return Arrays.asList(contentTypes);
     }
 
 

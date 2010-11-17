@@ -20,7 +20,7 @@
 
 update acs_objects
     set (object_type,display_name,default_domain_class) =
-            ('com.arsdigita.cms.contentassets.Note' ,
-             'com.arsdigita.cms.contentassets.Note ' || object_id ,
-             'com.arsdigita.cms.contentassets.Note' )
-    where default_domain_class like 'com.arsdigita.london.notes.Note' ;
+            ('com.arsdigita.cms.contentassets.ItemImageAttachment' ,
+             'com.arsdigita.cms.contentassets.ItemImageAttachment ' || object_id ,
+             'com.arsdigita.cms.contentassets.ItemImageAttachment' )
+    where default_domain_class like 'com.arsdigita.cms.contenttypes.ItemImageAttachment' ;
