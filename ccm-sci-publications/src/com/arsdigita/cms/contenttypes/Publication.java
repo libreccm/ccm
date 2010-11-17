@@ -56,8 +56,7 @@ public class Publication extends ContentPage {
     public final static String MISC = "misc";
     public final static String AUTHORS = "authors";
     public final static String EDITOR = "editor";
-    public final static String AUTHOR_ORDER = "authorOrder";
-    public final static String PUBLICATIONLISTS = "publicationLists";
+    public final static String AUTHOR_ORDER = "authorOrder";   
     public final static String SERIES = "series";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.Publication";
@@ -182,28 +181,6 @@ public class Publication extends ContentPage {
      */
     public boolean hasAuthors() {
         return !this.getAuthors().isEmpty();
-    }
-
-    public PublicationListCollection getPublicationLists() {
-        return new PublicationListCollection(
-                (DataCollection) get(PUBLICATIONLISTS));
-    }
-
-    public void addPublicationList(PublicationList list) {
-        Assert.exists(list, PublicationList.class);
-
-        add(PUBLICATIONLISTS, list);
-
-    }
-
-    public void removePublicationList(PublicationList list) {
-        Assert.exists(list, PublicationList.class);
-
-        remove(PUBLICATIONLISTS, list);
-    }
-
-    public boolean hasPublicationLists() {
-        return !this.getPublicationLists().isEmpty();
     }
 
     public SeriesCollection getSeries() {

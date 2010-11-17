@@ -113,9 +113,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
         addStep(new PublicationAuthorsPropertyStep(itemModel, parent),
-                "publications.ui.publication.authors");
-        addStep(new PublicationPublicationListPropertyStep(itemModel, parent),
-                "publications.ui.publication.lists");
+                "publications.ui.publication.authors");       
         addStep(new PublicationSeriesPropertyStep(itemModel, parent),
                 "publication.ui.publication.series");
     }
