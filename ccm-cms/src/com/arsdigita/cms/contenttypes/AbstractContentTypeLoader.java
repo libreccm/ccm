@@ -20,7 +20,6 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.ContentTypeLifecycleDefinition;
 import com.arsdigita.cms.ContentTypeWorkflowTemplate;
 import com.arsdigita.cms.Template;
@@ -45,12 +44,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 /**
@@ -112,9 +109,6 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
             for (Iterator it = types.iterator(); it.hasNext();) {
                 final ContentType type = (ContentType) it.next();
-
-                // Save the ancestors for this content type
-                createPedigree(type);
 
                 section.addContentType(type);
 
@@ -207,84 +201,5 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
 
         template.publish(ld, new Date());
         return template;
-    }
-
-    /**
-     * Generates the pedigree for this content type
-     * @param type The new content type
-     */
-    private void createPedigree(ContentType type) {
-
-        // The parent content type
-        ContentType parent = null;
-
-        // Get all content types
-        ContentTypeCollection cts = ContentType.getAllContentTypes();
-
-        // This is a brute force method, but I can't come up with something
-        // better atm without changing either all Loader or the xml-files.
-        while (cts.next()) {
-            ContentType ct = cts.getContentType();
-
-            try {
-                Class.forName(type.getClassName()).asSubclass(Class.forName(ct.
-                        getClassName()));
-            } catch (Exception ex) {
-                // This cast is not valid so type is not a sublacss of ct
-                continue;
-            }
-
-            // Save the current ct as possible parent if we haven't found any parent yet
-            // or if the current ancestor list is longer than that one from the possible
-            // parent earlier found
-            if (!type.getClassName().equals(ct.getClassName())
-                && (parent == null
-                    || (parent.getAncestors() != null
-                        && ct.getAncestors() != null
-                        && parent.getAncestors().length() < ct.getAncestors().
-                        length()))) {
-                parent = ct;
-            }
-        }
-
-        // If there is a valid parent content type create the pedigree
-        if (parent != null && !parent.getClassName().equals(type.getClassName())) {
-            if (parent.getAncestors() != null) {
-                String parentAncestors = parent.getAncestors();
-
-                StringTokenizer strTok = new StringTokenizer(parentAncestors,
-                                                             "/");
-
-                // Add parent ancestors to this content types ancestor list
-                // Also while we iterate through the list, we also need to add
-                // this content type as sibling to all entries in the ancestor list
-                while (strTok.hasMoreElements()) {
-
-                    Object token;
-                    token = strTok.nextElement();
-                    s_log.error(String.format(
-                            "Trying to convert '%s' to BigDecimal...", token));
-                    //BigDecimal ctID = (BigDecimal) strTok.nextElement();
-                    BigDecimal ctID = (BigDecimal) strTok.nextElement();
-
-                    // Get the current content type
-                    try {
-                        ContentType ct = new ContentType(ctID);
-                        ct.addSiblings(ctID);
-                    } catch (Exception ex) {
-                        // The db is broken. There is no content type for this ID
-                    }
-
-                    // Add parent ancestor
-                    type.addAncestor(ctID);
-                }
-            }
-
-            // Add parent to ancestor list
-            type.addAncestor(parent.getID());
-
-            // Add this to parent siblings
-            parent.addSiblings(type.getID());
-        }
     }
 }
