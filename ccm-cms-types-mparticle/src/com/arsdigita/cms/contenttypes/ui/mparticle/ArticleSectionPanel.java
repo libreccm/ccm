@@ -21,7 +21,6 @@ package com.arsdigita.cms.contenttypes.ui.mparticle;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
-import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSContext;
@@ -29,12 +28,10 @@ import com.arsdigita.cms.CMSExcursion;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ExtraXMLGenerator;
-import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.ArticleSection;
 import com.arsdigita.cms.contenttypes.ArticleSectionCollection;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
-import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 
@@ -70,6 +67,7 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
         m_page = new PageParameter(PAGE_NUMBER_PARAM);
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
         
@@ -84,6 +82,9 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
      * Try to get the section from the context
      * if there isn't (eg if we are looking at an index
      * item on a category), guess the section from the item
+     * @param state
+     * @param item
+     * @return 
      */
     protected XMLGenerator getXMLGenerator(PageState state, ContentItem item) {
         ContentSection section = null;
@@ -228,6 +229,7 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
      * @param parent The parent DOM element
      * @see com.arsdigita.cms.dispatcher.XMLGenerator
      */
+    @Override
     public void generateXML(final PageState state, 
                             final Element parent) {
         ContentItem item = getContentItem(state);
@@ -248,7 +250,11 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
                                            
     /**
      * Specify the XML for a given content item.
+     * @param item
+     * @param element
+     * @param state 
      */
+    @Override
     public void generateXML(ContentItem item, Element element, PageState state) {
     
         Element content = element.newChildElement("cms:articleSectionPanel", CMS.CMS_XML_NS);
