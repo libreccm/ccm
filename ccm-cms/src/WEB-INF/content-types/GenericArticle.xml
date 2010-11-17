@@ -4,12 +4,12 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 		   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
 
-  <ctd:content-type
+    <ctd:content-type
       label="GenericArticle"
       description="A generic article type"
       objectType="com.arsdigita.cms.contenttypes.GenericArticle"
       classname="com.arsdigita.cms.contenttypes.GenericArticle"
-      isInternal="yes">
+      mode="hidden">
     
-  </ctd:content-type>
+    </ctd:content-type>
 </ctd:content-types>

@@ -46,7 +46,7 @@ class ContentTypeListModelBuilder extends LockableImpl
             final ContentSection section =
                 CMS.getContext().getContentSection();
 
-            m_types = section.getContentTypes();
+            m_types = section.getContentTypes(true);
             m_types.addOrder(ContentType.LABEL);
             m_types.rewind();
         }

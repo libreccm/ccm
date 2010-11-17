@@ -32,7 +32,7 @@ object type ContentType extends ACSObject {
   String[0..1]        ancestors = content_types.ancestors VARCHAR(2000);
   String[0..1]        siblings  = content_types.siblings VARCHAR(2000);
 
-  Boolean[1..1]       isInternal = content_types.is_internal CHAR(1);
+  String[1..1]       mode = content_types.mode CHAR(1);
   BigDecimal[0..1]    itemFormID = content_types.item_form_id INTEGER;
   AuthoringKit[0..1]  authoringKit = join content_types.type_id
                                        to authoring_kits.type_id;
@@ -64,7 +64,7 @@ association {
     do {
       select
         t.type_id, t.object_type, t.label, t.description, t.classname,
-        t.ancestors, t.siblings, t.is_internal, t.item_form_id
+        t.ancestors, t.siblings, t.mode, t.item_form_id
       from
         content_types t, content_section_type_map m, authoring_kits a
       where
@@ -80,7 +80,7 @@ association {
       creatableContentTypes.className             = t.classname;
       creatableContentTypes.ancestors             = t.ancestors;
       creatableContentTypes.siblings              = t.siblings;
-      creatableContentTypes.isInternal            = t.is_internal;
+      creatableContentTypes.mode                  = t.mode;
       creatableContentTypes.itemFormID            = t.item_form_id;
     }
   }
@@ -112,7 +112,7 @@ association {
     do {
       select
         t.type_id, t.object_type, t.label, t.description, t.classname,
-        t.ancestors, t.siblings, t.is_internal, t.item_form_id
+        t.ancestors, t.siblings, t.mode, t.item_form_id
       from
         content_types t
       where
@@ -128,7 +128,7 @@ association {
       notAssociatedContentTypes.className             = t.classname;
       notAssociatedContentTypes.ancestors             = t.ancestors;
       notAssociatedContentTypes.siblings              = t.siblings;
-      notAssociatedContentTypes.isInternal            = t.is_internal;
+      notAssociatedContentTypes.mode                  = t.mode;
       notAssociatedContentTypes.itemFormID            = t.item_form_id;
     }
   }
@@ -157,9 +157,9 @@ query registeredContentTypes {
         select
         t.type_id, t.object_type, t.label,
         t.description, t.classname, t.ancestors, t.siblings,
-        t.is_internal, t.item_form_id
+        t.mode, t.item_form_id
         from content_types t
-        where t.is_internal = '0'
+        where t.mode != 'I'
         and exists (select 1 from content_section_type_map
         where type_id = t.type_id)
     } map {
@@ -170,7 +170,7 @@ query registeredContentTypes {
         type.className            = t.classname;
         type.ancestors            = t.ancestors;
         type.siblings             = t.siblings;
-        type.isInternal           = t.is_internal;
+        type.mode                 = t.mode;
         type.itemFormID           = t.item_form_id;
     }
 }

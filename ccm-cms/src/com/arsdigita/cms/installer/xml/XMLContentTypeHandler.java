@@ -18,9 +18,9 @@
  */
 package com.arsdigita.cms.installer.xml;
 
-
 import com.arsdigita.cms.AuthoringKit;
 import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.contenttypes.ContentTypeInitializer;
 import com.arsdigita.xml.XML;
 
 import org.apache.log4j.Logger;
@@ -38,34 +38,30 @@ import java.util.List;
  *
  * @see ContentTypeInitializer
  * @author Nobuko Asakai <nasakai@redhat.com> */
-
 public class XMLContentTypeHandler extends DefaultHandler {
+
     private static Logger s_log =
-        Logger.getLogger(XMLContentTypeHandler.class.getName());
-
-
-
+            Logger.getLogger(XMLContentTypeHandler.class.getName());
     private ArrayList m_types = new ArrayList();
-
     private ContentTypeHelper m_type;
     private ContentType m_contentType;
     private AuthoringKit m_authoringKit;
     private int m_nextOrder;
-
     private boolean m_including;
 
     public List getContentTypes() {
         return m_types;
     }
 
-    public void startElement( String uri, String name,
-                              String qName, Attributes atts) {
-        if (name.equals("content-types") ) {
+    @Override
+    public void startElement(String uri, String name,
+            String qName, Attributes atts) {
+        if (name.equals("content-types")) {
             s_log.debug("matched content-types");
         } else if (name.equals("content-type")) {
             s_log.debug("matched content-type");
             String parentType = atts.getValue("parentType");
-            if (parentType != null ) {
+            if (parentType != null) {
                 m_type = new UDCTHelper();
                 s_log.debug("Creating UDCT");
             } else {
@@ -85,17 +81,20 @@ public class XMLContentTypeHandler extends DefaultHandler {
             m_type.setObjectType(atts.getValue("objectType"));
             m_type.setClassName(atts.getValue("classname"));
 
-            String internal = atts.getValue("isInternal");
-            if (internal != null &&
-                "yes".equals(internal)) {
-                m_type.setInternal(true);
+            String mode = atts.getValue("mode");
+            if (mode != null && !mode.isEmpty()) {
+                m_type.setMode(mode.trim());
+            } else {
+                m_type.setMode("default");
             }
+
             // UDCT stuff
             m_type.setParentType(parentType);
             m_type.setName(atts.getValue("name"));
+
             m_contentType = m_type.createType();
             m_types.add(m_contentType);
-        } else if ( name.equals("authoring-kit") ) {
+        } else if (name.equals("authoring-kit")) {
             if (!m_including) {
                 s_log.debug("matched authoring-kit");
                 if (atts.getValue("createComponent") != null) {
@@ -104,7 +103,7 @@ public class XMLContentTypeHandler extends DefaultHandler {
                 m_authoringKit = m_type.createAuthoringKit();
                 m_nextOrder = 1;
             }
-        } else if ( name.equals("authoring-step" )) {
+        } else if (name.equals("authoring-step")) {
             String label = atts.getValue("label");
             String labelKey = atts.getValue("labelKey");
             String labelBundle = atts.getValue("labelBundle");
@@ -118,10 +117,9 @@ public class XMLContentTypeHandler extends DefaultHandler {
                 descriptionKey = description;
             }
             m_type.addAuthoringStep(labelKey, labelBundle,
-                                    descriptionKey, descriptionBundle,
-                                    atts.getValue("component"),
-                                    new BigDecimal(m_nextOrder++)
-                                    );
+                    descriptionKey, descriptionBundle,
+                    atts.getValue("component"),
+                    new BigDecimal(m_nextOrder++));
         } else if (name.equals("include")) {
             String file = atts.getValue("href");
             m_including = true;
@@ -129,12 +127,12 @@ public class XMLContentTypeHandler extends DefaultHandler {
             m_including = false;
         } else {
             s_log.error("None of the elements match! name: " + name
-                        + " qName: " + qName + " URI: " + uri);
+                    + " qName: " + qName + " URI: " + uri);
         }
     }
 
-    public void endElement( String uri, String name,
-                            String qName, Attributes atts) {
+    public void endElement(String uri, String name,
+            String qName, Attributes atts) {
         if (name.equals("content-type")) {
             // reset the helper
             m_contentType.save();

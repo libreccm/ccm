@@ -31,9 +31,12 @@ create table content_types (
   classname       varchar(200),
   ancestors       varchar(2000),
   siblings        varchar(2000),
-  is_internal     char(1) default '0' not null
-                  constraint content_types_is_internal_ck
-                  check ( is_internal in ('0', '1') ),
+--  is_internal     char(1) default '0' not null
+--                  constraint content_types_is_internal_ck
+--                  check ( is_internal in ('0', '1') ),
+  mode            char(1) default '' not null
+                  constraint content_types_mode_ck
+                  check ( mode in ('D', 'H', 'I') ),
   item_form_id    integer
                   constraint content_types_form_id_fk references
 	          bebop_components (component_id)

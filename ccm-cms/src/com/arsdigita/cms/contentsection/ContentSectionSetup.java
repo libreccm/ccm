@@ -33,20 +33,14 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.workflow.CMSTask;
 import com.arsdigita.cms.workflow.CMSTaskType;
 import com.arsdigita.domain.DataObjectNotFoundException;
-// import com.arsdigita.domain.DomainObject;
 import com.arsdigita.initializer.InitializationException;
-// import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.PartyCollection;
 import com.arsdigita.kernel.Role;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-// import com.arsdigita.persistence.DataObject;
-// import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.cms.LoaderConfig;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-// import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.workflow.simple.WorkflowTemplate;
 import com.arsdigita.xml.XML;
 
@@ -59,7 +53,6 @@ import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-// import java.util.NoSuchElementException;
 import java.util.Stack;
 
 import org.apache.log4j.Logger;
@@ -78,13 +71,11 @@ import org.xml.sax.helpers.DefaultHandler;
 public final class ContentSectionSetup {
 
     private static Logger s_log = Logger.getLogger(ContentSectionSetup.class);
-
     private final static String STYLESHEET = "/packages/content-section/xsl/cms.xsl";
     private HashMap m_tasks = new HashMap();
     private LifecycleDefinition m_lcd;
     private WorkflowTemplate m_wf;
     final ContentSection m_section;
-    
 
     /**
      * Constructor. Using this constructor the content section has to be
@@ -98,21 +89,19 @@ public final class ContentSectionSetup {
         m_section = section;
     }
 
-
     /**
      * Wrapper class to create and configure a content section instance
      * in one step.
      *
      */
     public static void setupContentSectionAppInstance(String name,
-                                                      List staffGroup,
-                                                      Boolean isPubliclyViewable,
-                                                      String itemResolverClassName,
-                                                      String templateResolverClassName,
-                                                      List sectionContentTypes,
-                                                      Boolean useSectionCategories,
-                                                      List categoryFileList
-                                                     ) {
+            List staffGroup,
+            Boolean isPubliclyViewable,
+            String itemResolverClassName,
+            String templateResolverClassName,
+            List sectionContentTypes,
+            Boolean useSectionCategories,
+            List categoryFileList) {
         s_log.info("Creating content section on /" + name);
 
         ContentSection section = ContentSection.create(name);
@@ -123,7 +112,7 @@ public final class ContentSectionSetup {
         setup.registerViewers(isPubliclyViewable);
         setup.registerPublicationCycles();
         setup.registerWorkflowTemplates();
-        setup.registerResolvers( itemResolverClassName,templateResolverClassName );
+        setup.registerResolvers(itemResolverClassName, templateResolverClassName);
 
         // setup.registerContentTypes((List)m_conf.getParameter(TYPES));
         setup.registerContentTypes(sectionContentTypes);
@@ -131,7 +120,7 @@ public final class ContentSectionSetup {
         // section specific categories, usually not used.
         if (useSectionCategories) {
             Iterator files = categoryFileList.iterator();
-            while ( files.hasNext() ) {
+            while (files.hasNext()) {
                 setup.registerCategories((String) files.next());
             }
         }
@@ -143,8 +132,6 @@ public final class ContentSectionSetup {
 
     }
 
-
-
     /**
      * Steps through a list of roles which are part of a staff group and 
      * delegates processing of each role.
@@ -155,12 +142,12 @@ public final class ContentSectionSetup {
 
         Iterator i = roles.iterator();
         while (i.hasNext()) {
-            List role = (List)i.next();
+            List role = (List) i.next();
 
-            String name = (String)role.get(0);
-            String desc = (String)role.get(1);
-            List privileges = (List)role.get(2);
-            String task = (role.size() > 3 ? (String)role.get(3) : null);
+            String name = (String) role.get(0);
+            String desc = (String) role.get(1);
+            List privileges = (List) role.get(2);
+            String task = (role.size() > 3 ? (String) role.get(3) : null);
 
             s_log.info("Creating role " + name);
 
@@ -170,8 +157,9 @@ public final class ContentSectionSetup {
                     desc,
                     privileges);
 
-            if (task != null)
+            if (task != null) {
                 m_tasks.put(task, group);
+            }
         }
 
     }
@@ -192,22 +180,22 @@ public final class ContentSectionSetup {
 
         Iterator i = privileges.iterator();
         while (i.hasNext()) {
-            String priv = (String)i.next();
+            String priv = (String) i.next();
             s_log.info("Granting privilege cms_" + priv);
 
             role.grantPermission(m_section,
-                                 PrivilegeDescriptor.get("cms_" + priv));
+                    PrivilegeDescriptor.get("cms_" + priv));
 
-            if (priv.equals(SecurityManager.CATEGORY_ADMIN) ||
-                priv.equals(SecurityManager.CATEGORIZE_ITEMS)) {
+            if (priv.equals(SecurityManager.CATEGORY_ADMIN)
+                    || priv.equals(SecurityManager.CATEGORIZE_ITEMS)) {
                 RootCategoryCollection coll = Category.getRootCategories(m_section);
                 while (coll.next()) {
                     if (priv.equals(SecurityManager.CATEGORY_ADMIN)) {
                         role.grantPermission(coll.getCategory(),
-                                             PrivilegeDescriptor.ADMIN);
+                                PrivilegeDescriptor.ADMIN);
                     } else {
                         role.grantPermission(coll.getCategory(),
-                                             Category.MAP_DESCRIPTOR);
+                                Category.MAP_DESCRIPTOR);
                     }
                 }
             }
@@ -232,16 +220,16 @@ public final class ContentSectionSetup {
 
         // XXX  Shouldn't  read permission granted depending on pub=true?
         viewers.grantPermission(m_section,
-                                PrivilegeDescriptor.get("cms_read_item"));
+                PrivilegeDescriptor.get("cms_read_item"));
 
         String email = Boolean.TRUE.equals(pub) ? "public@nullhost"
-                                                : "registered@nullhost";
+                : "registered@nullhost";
 
         Party viewer = retrieveParty(email);
-        if (viewer == null)
-            throw new InitializationException(
-                (String) GlobalizationUtil.globalize(
-                "cms.installer.cannot_find_group_for_email").localize() + email);
+        if (viewer == null) {
+            throw new InitializationException((String) GlobalizationUtil.globalize(
+                    "cms.installer.cannot_find_group_for_email").localize() + email);
+        }
 
         s_log.info("Adding " + email + " to viewers role");
         viewers.getGroup().addMemberOrSubgroup(viewer);
@@ -275,29 +263,25 @@ public final class ContentSectionSetup {
      * @param templateResolverClassName
      */
     public void registerResolvers(String itemResolverClassName,
-                                  String templateResolverClassName) {
+            String templateResolverClassName) {
 
-        if (itemResolverClassName != null && itemResolverClassName.length()>0) {
+        if (itemResolverClassName != null && itemResolverClassName.length() > 0) {
             m_section.setItemResolverClass(itemResolverClassName);
             s_log.info("Registering " + itemResolverClassName
-                                      + " as the item resolver class");
+                    + " as the item resolver class");
         } else {
-            m_section.setItemResolverClass(ContentSection.getConfig()
-                                           .getDefaultItemResolverClass()
-                                           .getName());
+            m_section.setItemResolverClass(ContentSection.getConfig().getDefaultItemResolverClass().getName());
             s_log.info("Registering " + itemResolverClassName
-                                      + " as the item resolver class");
+                    + " as the item resolver class");
         }
-        if (templateResolverClassName != null && templateResolverClassName.length()>0) {
+        if (templateResolverClassName != null && templateResolverClassName.length() > 0) {
             m_section.setTemplateResolverClass(templateResolverClassName);
-            s_log.info("Registering " + templateResolverClassName +
-                       " as the template resolver class");
+            s_log.info("Registering " + templateResolverClassName
+                    + " as the template resolver class");
         } else {
-            m_section.setTemplateResolverClass(ContentSection.getConfig()
-                                               .getDefaultTemplateResolverClass()
-                                               .getName());
-            s_log.info("Registering " + templateResolverClassName +
-                       " as the template resolver class");
+            m_section.setTemplateResolverClass(ContentSection.getConfig().getDefaultTemplateResolverClass().getName());
+            s_log.info("Registering " + templateResolverClassName
+                    + " as the template resolver class");
         }
 
         m_section.save();
@@ -314,8 +298,8 @@ public final class ContentSectionSetup {
 
         // The feature lifecycle.
         LifecycleDefinition lcd = new LifecycleDefinition();
-        lcd.setLabel( (String) GlobalizationUtil.globalize(
-                      "cms.installer.simple_publication").localize());
+        lcd.setLabel((String) GlobalizationUtil.globalize(
+                "cms.installer.simple_publication").localize());
         lcd.setDescription("A one-phase lifecycle for items.");
         lcd.save();
 
@@ -339,40 +323,42 @@ public final class ContentSectionSetup {
      * @throws InitializationException
      */
     public void registerWorkflowTemplates()
-           throws InitializationException {
+            throws InitializationException {
 
         // The 3-step production workflow.
         WorkflowTemplate wf = new WorkflowTemplate();
-        wf.setLabel( (String) GlobalizationUtil.globalize(
-                     "cms.installer.production_workflow").localize());
+        wf.setLabel((String) GlobalizationUtil.globalize(
+                "cms.installer.production_workflow").localize());
         wf.setDescription("A process that involves creating and approving content.");
         wf.save();
 
         CMSTask authoring = new CMSTask();
         authoring.setLabel((String) GlobalizationUtil.globalize(
-                           "cms.installer.authoring").localize());
+                "cms.installer.authoring").localize());
         authoring.setDescription("Create content.");
         authoring.save();
 
 
-        Role author = (Role)m_tasks.get("Authoring");
-        if (author != null)
+        Role author = (Role) m_tasks.get("Authoring");
+        if (author != null) {
             authoring.assignGroup(author.getGroup());
+        }
 
         authoring.setTaskType(CMSTaskType.retrieve(CMSTaskType.AUTHOR));
         authoring.save();
 
         CMSTask approval = new CMSTask();
-        approval.setLabel( (String) GlobalizationUtil.globalize(
-                           "cms.installer.approval").localize());
+        approval.setLabel((String) GlobalizationUtil.globalize(
+                "cms.installer.approval").localize());
         approval.setDescription("Approve content.");
         approval.save();
         approval.addDependency(authoring);
         approval.save();
 
-        Role approver = (Role)m_tasks.get("Approval");
-        if (approver != null)
+        Role approver = (Role) m_tasks.get("Approval");
+        if (approver != null) {
             approval.assignGroup(approver.getGroup());
+        }
 
         approval.setTaskType(CMSTaskType.retrieve(CMSTaskType.EDIT));
         approval.save();
@@ -380,15 +366,16 @@ public final class ContentSectionSetup {
 
         CMSTask deploy = new CMSTask();
         deploy.setLabel((String) GlobalizationUtil.globalize(
-                                 "cms.installer.deploy").localize());
+                "cms.installer.deploy").localize());
         deploy.setDescription("Deploy content.");
         deploy.save();
         deploy.addDependency(approval);
         deploy.save();
 
-        Role publisher = (Role)m_tasks.get("Publishing");
-        if (publisher != null)
+        Role publisher = (Role) m_tasks.get("Publishing");
+        if (publisher != null) {
             deploy.assignGroup(publisher.getGroup());
+        }
 
         deploy.setTaskType(CMSTaskType.retrieve(CMSTaskType.DEPLOY));
         deploy.save();
@@ -417,11 +404,11 @@ public final class ContentSectionSetup {
         while (i.hasNext()) {
             Object obj = i.next();
             if (obj instanceof String) {
-                registerContentType((String)obj);
+                registerContentType((String) obj);
             } else {
-                List list = (List)obj;
-                String name = (String)list.get(0);
-                String file = (String)list.get(1);
+                List list = (List) obj;
+                String name = (String) list.get(0);
+                String file = (String) list.get(1);
 
                 ContentType type = registerContentType(name);
                 registerTemplate(type, file);
@@ -440,22 +427,21 @@ public final class ContentSectionSetup {
         try {
             type = ContentType.findByAssociatedObjectType(name);
         } catch (DataObjectNotFoundException ex) {
-            throw new UncheckedWrapperException( 
-                (String) GlobalizationUtil.globalize(
-                "cms.installer.cannot_find_content_type").localize() + name, ex);
+            throw new UncheckedWrapperException(
+                    (String) GlobalizationUtil.globalize(
+                    "cms.installer.cannot_find_content_type").localize() + name, ex);
         }
 
         s_log.info("Adding type " + name + " to " + m_section.getDisplayName());
         m_section.addContentType(type);
 
-        s_log.info("Setting the default lifecycle for " +
-                   name + " to " + m_lcd.getLabel());
-        ContentTypeLifecycleDefinition.
-                updateLifecycleDefinition(m_section, type, m_lcd);
+        s_log.info("Setting the default lifecycle for "
+                + name + " to " + m_lcd.getLabel());
+        ContentTypeLifecycleDefinition.updateLifecycleDefinition(m_section, type, m_lcd);
         m_lcd.save();
 
-        s_log.info("Setting the default workflow template for " + name +
-                   " to " + m_wf.getLabel());
+        s_log.info("Setting the default workflow template for " + name
+                + " to " + m_wf.getLabel());
         ContentTypeWorkflowTemplate.updateWorkflowTemplate(m_section, type, m_wf);
         m_wf.save();
 
@@ -468,14 +454,15 @@ public final class ContentSectionSetup {
         int pos1 = filename.lastIndexOf("/");
         int pos2 = filename.lastIndexOf(".");
 
-        if (pos2 == -1)
+        if (pos2 == -1) {
             pos2 = filename.length();
+        }
 
-        String label = filename.substring(pos1+1,pos2);
+        String label = filename.substring(pos1 + 1, pos2);
 
         String typename = type.getClassName();
         int pos3 = typename.lastIndexOf(".");
-        String name = typename.substring(pos3+1, typename.length()) + "-" + label;
+        String name = typename.substring(pos3 + 1, typename.length()) + "-" + label;
 
         Template temp = new Template();
         temp.setContentSection(m_section);
@@ -483,32 +470,28 @@ public final class ContentSectionSetup {
         temp.setLabel(label);
         temp.setParent(m_section.getTemplatesFolder());
 
-        final ClassLoader loader = Thread.currentThread
-            ().getContextClassLoader();
-        final InputStream stream = loader.getResourceAsStream
-            (filename.substring(1));
+        final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+        final InputStream stream = loader.getResourceAsStream(filename.substring(1));
 
         if (stream == null) {
-            throw new IllegalStateException
-                ((String) GlobalizationUtil.globalize
-                 ("cms.installer.cannot_find_file").localize() + filename);
+            throw new IllegalStateException((String) GlobalizationUtil.globalize("cms.installer.cannot_find_file").localize() + filename);
         }
 
-        final BufferedReader input = new BufferedReader
-            (new InputStreamReader(stream));
+        final BufferedReader input = new BufferedReader(new InputStreamReader(stream));
 
-        StringBuffer body = new StringBuffer();
+        StringBuilder body = new StringBuilder();
         String line;
         for (;;) {
             try {
                 line = input.readLine();
             } catch (IOException ex) {
-                throw new UncheckedWrapperException( 
-                    (String) GlobalizationUtil.globalize(
-                    "cms.installer.cannot_read_line_of_data").localize(),  ex);
+                throw new UncheckedWrapperException(
+                        (String) GlobalizationUtil.globalize(
+                        "cms.installer.cannot_read_line_of_data").localize(), ex);
             }
-            if (line == null)
+            if (line == null) {
                 break;
+            }
 
             body.append(line);
             body.append("\n");
@@ -518,12 +501,9 @@ public final class ContentSectionSetup {
 
         temp.save();
 
-        TemplateManagerFactory.getInstance()
-                .addTemplate(m_section, type, temp, "public");
+        TemplateManagerFactory.getInstance().addTemplate(m_section, type, temp, "public");
 
         temp.publish(m_lcd, new Date());
-        // Dan said to comment this out
-        // temp.getLifecycle().start();
     }
 
     /**
@@ -552,7 +532,6 @@ public final class ContentSectionSetup {
                 "Receive alerts regarding expiration of pubished content");
         alert.save();
     }
-
 
 //  // Currently there is no way to persists alert preferemces, therefore
 //  // currently not a loader or setup task.
@@ -607,14 +586,13 @@ public final class ContentSectionSetup {
 //
 //      return unfinished;
 //  }
-
 //  /////////////////////   Private Class Section   ////////////////////////////
-
     /**
      *  SAX Handler for category lists.  Creates the categories as they are
      *  defined, with structure, in the xml document.
      */
     private class CategoryHandler extends DefaultHandler {
+
         private Stack m_cats = new Stack();
         private ContentSection m_section;
 
@@ -623,8 +601,8 @@ public final class ContentSectionSetup {
         }
 
         @Override
-        public void startElement ( String uri, String local,
-                                   String qName, Attributes attrs ) {
+        public void startElement(String uri, String local,
+                String qName, Attributes attrs) {
             if ("categories".equals(qName)) {
                 String name = attrs.getValue("name");
                 if (name == null) {
@@ -634,7 +612,7 @@ public final class ContentSectionSetup {
                 String context = attrs.getValue("context");
 
                 Category root = Category.getRootForObject(m_section,
-                                                          context);
+                        context);
                 if (root == null) {
                     root = new Category();
                 }
@@ -643,18 +621,18 @@ public final class ContentSectionSetup {
 
                 if (root.isNew()) {
                     Category.setRootForObject(m_section,
-                                              root,
-                                              context);
+                            root,
+                            context);
                 }
                 m_cats.push(root);
                 PermissionService.setContext(root, m_section);
-            } else if ( "category".equals(qName) ) {
+            } else if ("category".equals(qName)) {
                 String name = attrs.getValue("name");
                 String description = attrs.getValue("description");
                 String url = attrs.getValue("url");
 
                 // set the default description to the name of the category
-                if ( description == null ) {
+                if (description == null) {
                     description = name;
                 }
 
@@ -664,8 +642,8 @@ public final class ContentSectionSetup {
 
                 Category parent = null;
                 try {
-                    parent = (Category)m_cats.peek();
-                } catch ( EmptyStackException ex ) {
+                    parent = (Category) m_cats.peek();
+                } catch (EmptyStackException ex) {
                     throw new UncheckedWrapperException("no root category", ex);
                 }
 
@@ -679,13 +657,12 @@ public final class ContentSectionSetup {
         }
 
         @Override
-        public void endElement ( String uri, String local, String qName ) {
-            if ( "category".equals(qName) ) {
+        public void endElement(String uri, String local, String qName) {
+            if ("category".equals(qName)) {
                 m_cats.pop();
-            } else if ( "categories".equals(qName)) {
+            } else if ("categories".equals(qName)) {
                 m_cats.pop();
             }
         }
     }
-
 }

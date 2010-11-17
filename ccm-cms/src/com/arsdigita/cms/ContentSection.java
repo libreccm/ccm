@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms;
 
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.PageResolver;
@@ -54,7 +53,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-
 
 /**
  * <p>A content section represents a collection of content that is
@@ -94,12 +92,10 @@ import java.math.BigDecimal;
 public class ContentSection extends Application {
 
     private static final Logger s_log = Logger.getLogger(ContentSection.class);
-
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.ContentSection";
+            "com.arsdigita.cms.ContentSection";
     public static final String PACKAGE_TYPE = "content-section";
     public final static String STYLESHEET = "/packages/content-section/xsl/cms.xsl";
-
     protected static final String ID = "id";
     protected static final String PACKAGE = "package";
     protected static final String NAME = "label";
@@ -113,27 +109,21 @@ public class ContentSection extends Application {
     protected static final String ITEM_RESOLVER_CLASS = "itemResolverClass";
     protected static final String TEMPLATE_RESOLVER_CLASS = "templateResolverClass";
     protected static final String XML_GENERATOR_CLASS = "xmlGeneratorClass";
-
     protected static final String CONTENT_TYPES = "associatedContentTypes";
     protected static final String CREATABLE_CONTENT_TYPES =
-        "creatableContentTypes";
+            "creatableContentTypes";
     protected static final String CONTENT_TYPES_NOT_ASSOC =
-        "notAssociatedContentTypes";
+            "notAssociatedContentTypes";
     protected static final String LIFECYCLE_DEFINITIONS =
-        "associatedLifecycleDefinitions";
+            "associatedLifecycleDefinitions";
     protected static final String WF_TEMPLATES = "associatedWorkflowTemplates";
-
     private final static String ITEM_QUERY = "com.arsdigita.cms.ItemsInSection";
     private final static String SECTION_ID = "sectionId";
-
     private static final CMSConfig s_config = new CMSConfig();
 
     static {
         s_config.load();
     }
-
-
-
     // Cached properties
     PageResolver m_pageResolver = null;
     ItemResolver m_itemResolver = null;
@@ -144,7 +134,6 @@ public class ContentSection extends Application {
 //        super(BASE_DATA_OBJECT_TYPE);
 //    }
 //
-
     /**
      * Constructor re-creating a content section object by retrieving its data
      * object by OID
@@ -177,7 +166,6 @@ public class ContentSection extends Application {
         super(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-
     public static CMSConfig getConfig() {
         return s_config;
     }
@@ -186,6 +174,7 @@ public class ContentSection extends Application {
      * @return the base PDL object type for this section. Child classes should
      *  override this method to return the correct value
      */
+    @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -197,6 +186,7 @@ public class ContentSection extends Application {
      * @param key The name of the attribute
      * @return The value of the attribute
      */
+    @Override
     public Object get(String key) {
         return super.get(key);
     }
@@ -208,6 +198,7 @@ public class ContentSection extends Application {
      * @param key The name of the attribute
      * @param value The value of the attribute
      */
+    @Override
     public void set(String key, Object value) {
         super.set(key, value);
     }
@@ -215,6 +206,7 @@ public class ContentSection extends Application {
     /**
      * Sets the content section of the root folder to this section.
      */
+    @Override
     protected void afterSave() {
         super.afterSave();
         // Set the root folder's content section.
@@ -238,6 +230,7 @@ public class ContentSection extends Application {
      *
      * @return A title
      */
+    @Override
     public String getDisplayName() {
         return getName();
     }
@@ -290,7 +283,6 @@ public class ContentSection extends Application {
 //    public SiteNode getSiteNode() {
 //        return getPackageInstance().getDefaultMountPoint();
 //    }
-
     /**
      * Finds the location of the content section.
      *
@@ -337,7 +329,6 @@ public class ContentSection extends Application {
 //
 //        return path.substring(0, path.length() - 1);
 //    }
-
     /**
      * Get the folder in which all draft items are contained, directly or
      * indirectly. This folder will in general contain different kinds of
@@ -371,7 +362,7 @@ public class ContentSection extends Application {
         //     sub-items/folders. The next step is to recursively update items
         //     under the root folder when fetching "all items in a section" is
         //     implemented.
-        if ( !isNew() ) {
+        if (!isNew()) {
             Folder oldRoot = getRootFolder();
             oldRoot.setContentSection(null);
             oldRoot.save();
@@ -506,8 +497,8 @@ public class ContentSection extends Application {
 
         if (m_pageResolver == null) {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("The page resolver hasn't been loaded yet; " +
-                            "loading it now");
+                s_log.debug("The page resolver hasn't been loaded yet; "
+                        + "loading it now");
             }
 
             try {
@@ -677,13 +668,10 @@ public class ContentSection extends Application {
         m_xmlGenerator = null;
     }
 
-
-
     //////////////////////////////
     //
     // Globalization.
     //
-
     /**
      * Gets the default Locale. This is used for translating or creating
      * content if no locale is specified.
@@ -692,7 +680,7 @@ public class ContentSection extends Application {
      */
     public Locale getDefaultLocale() {
         DataObject obj = (DataObject) get(DEFAULT_LOCALE);
-        if ( obj == null ) {
+        if (obj == null) {
             return null;
         } else {
             return new Locale(obj);
@@ -748,7 +736,7 @@ public class ContentSection extends Application {
         DataAssociation da = (DataAssociation) get(LOCALES);
         locale.addToAssociation(da);
 
-        if ( isDefault ) {
+        if (isDefault) {
             setDefaultLocale(locale);
         }
     }
@@ -764,22 +752,27 @@ public class ContentSection extends Application {
         locale.removeFromAssociation(da);
     }
 
-
     //////////////////////////////
     //
     // Content types.
     //
-
     /**
      * Get all user-defined content types registered to the content section.
      *
      * @return A ContentTypeCollection of registered content types
      */
     public ContentTypeCollection getContentTypes() {
+        return getContentTypes(false);
+    }
+
+    public ContentTypeCollection getContentTypes(boolean hidden) {
         DataAssociation da = (DataAssociation) get(CONTENT_TYPES);
         ContentTypeCollection types = new ContentTypeCollection(da);
-        // Filter out internal contentt types.
-        types.addFilter("isInternal = '0'");
+        // Filter out internal content types.
+        types.addFilter("mode != 'I'");
+        if (!hidden) {
+            types.addFilter("mode != 'H'");
+        }
         return types;
     }
 
@@ -793,10 +786,17 @@ public class ContentSection extends Application {
      * 3) possess a non-empty creation component in its AuthoringKit.
      */
     public ContentTypeCollection getCreatableContentTypes() {
+        return getCreatableContentTypes(false);
+    }
+
+    public ContentTypeCollection getCreatableContentTypes(boolean hidden) {
         DataAssociation da = (DataAssociation) get(CREATABLE_CONTENT_TYPES);
         ContentTypeCollection types = new ContentTypeCollection(da);
         // Filter out internal content types.
-        types.addFilter("isInternal = '0'");
+        types.addFilter("mode != 'I'");
+        if (!hidden) {
+            types.addFilter("mode != 'H'");
+        }
         return types;
     }
 
@@ -807,7 +807,7 @@ public class ContentSection extends Application {
      * @param type The content type
      */
     public void addContentType(ContentType type) {
-        if ( ! hasContentType(type) ) {
+        if (!hasContentType(type)) {
             DataAssociation da = (DataAssociation) get(CONTENT_TYPES);
             type.addToAssociation(da);
         }
@@ -835,7 +835,7 @@ public class ContentSection extends Application {
         DataAssociation da = (DataAssociation) get(CONTENT_TYPES);
         DataAssociationCursor cursor = da.cursor();
         cursor.addEqualsFilter(ID, type.getID());
-        return ( cursor.size() > 0 );
+        return (cursor.size() > 0);
     }
 
     /**
@@ -849,16 +849,14 @@ public class ContentSection extends Application {
         DataAssociation da = (DataAssociation) get(CONTENT_TYPES_NOT_ASSOC);
         ContentTypeCollection types = new ContentTypeCollection(da);
         // Filter out internal content types.
-        types.addFilter("isInternal = '0'");
+        types.addFilter("mode != 'I'");
         return types;
     }
-
 
     //////////////////////////////
     //
     // Lifecycle definitions.
     //
-
     /**
      * Get all lifecycle definitions registered to the content section.
      *
@@ -866,8 +864,7 @@ public class ContentSection extends Application {
      * lifecycle definition.
      */
     public LifecycleDefinitionCollection getLifecycleDefinitions() {
-        return
-            new LifecycleDefinitionCollection(getLifecycleDefinitionsAssociation());
+        return new LifecycleDefinitionCollection(getLifecycleDefinitionsAssociation());
     }
 
     /**
@@ -892,12 +889,10 @@ public class ContentSection extends Application {
         return (DataAssociation) get(LIFECYCLE_DEFINITIONS);
     }
 
-
     //////////////////////////////
     //
     // Workflow templates.
     //
-
     /**
      * Get all workflow templates registered to the content section.
      *
@@ -931,13 +926,10 @@ public class ContentSection extends Application {
         return (DataAssociation) get(WF_TEMPLATES);
     }
 
-
-
     //////////////////////////////
     //
     // Finding a content section.
     //
-
     /**
      * Looks up the section given the SiteNode.
      *
@@ -947,9 +939,9 @@ public class ContentSection extends Application {
      * @post ( return != null )
      */
     public static ContentSection getSectionFromNode(SiteNode node)
-        throws DataObjectNotFoundException {
+            throws DataObjectNotFoundException {
 
-        return (ContentSection)retrieveApplicationForSiteNode(node);
+        return (ContentSection) retrieveApplicationForSiteNode(node);
 
 //        BigDecimal sectionId = null;
 //
@@ -991,7 +983,6 @@ public class ContentSection extends Application {
 //        }
 //        return section;
 //    }
-
     /**
      * Get the content section for an item.
      *
@@ -1003,7 +994,7 @@ public class ContentSection extends Application {
      * @return The content section of an item
      */
     public static ContentSection getContentSection(ContentItem item)
-        throws DataObjectNotFoundException {
+            throws DataObjectNotFoundException {
 
         return item.getContentSection();
     }
@@ -1018,7 +1009,7 @@ public class ContentSection extends Application {
      * @return The content section of the folder
      */
     public static ContentSection getContentSection(Folder folder)
-        throws DataObjectNotFoundException {
+            throws DataObjectNotFoundException {
 
         return folder.getContentSection();
     }
@@ -1029,12 +1020,9 @@ public class ContentSection extends Application {
      * @return A collection of content sections
      */
     public static ContentSectionCollection getAllSections() {
-        DataCollection da = SessionManager.getSession().retrieve
-            (BASE_DATA_OBJECT_TYPE);
+        DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
         return new ContentSectionCollection(da);
     }
-
-
 
     /**
      * Creates a content section of the given name using default values and
@@ -1055,27 +1043,20 @@ public class ContentSection extends Application {
         String xgc = "com.arsdigita.cms.dispatcher.SimpleXMLGenerator";
         String trc = "com.arsdigita.cms.dispatcher.DefaultTemplateResolver";
 
-        ContentSection section = ContentSection.create( name,
-                                                        folder,
-                                                        category,
-                                                        staff,
-                                                        prc,
-                                                        irc,
-                                                        xgc,
-                                                        trc);
+        ContentSection section = ContentSection.create(name,
+                folder,
+                category,
+                staff,
+                prc,
+                irc,
+                xgc,
+                trc);
 
         // Set the default context on the root folder to
         // the content section
         PermissionService.setContext(folder.getOID(), section.getOID());
         createDefaultResources(section);
 
-//  Left over, see above
-//          }
-//      };
-//      rootExcursion.run();
-//
-//      //now retrieve the created content section and return it
-//      return (ContentSection) Application.retrieveApplicationForPath("/" + name + "/");
         return section;
     }
 
@@ -1093,22 +1074,21 @@ public class ContentSection extends Application {
      * @return The new content section
      */
     public static ContentSection create(String name,
-                                        Folder folder,
-                                        Category category,
-                                        Group staff,
-                                        String prc,
-                                        String irc,
-                                        String xgc) {
+            Folder folder,
+            Category category,
+            Group staff,
+            String prc,
+            String irc,
+            String xgc) {
         return ContentSection.create(
-                              name,
-                              folder,
-                              category,
-                              staff,
-                              prc,
-                              irc,
-                              xgc,
-                              "com.arsdigita.cms.dispatcher.DefaultTemplateResolver"
-                                    );
+                name,
+                folder,
+                category,
+                staff,
+                prc,
+                irc,
+                xgc,
+                "com.arsdigita.cms.dispatcher.DefaultTemplateResolver");
     }
 
     /**
@@ -1126,13 +1106,13 @@ public class ContentSection extends Application {
      * @return The new content section
      */
     public static ContentSection create(String name,
-                                        Folder folder,
-                                        Category category,
-                                        Group staff,
-                                        String prc,
-                                        String irc,
-                                        String xgc,
-                                        String trc) {
+            Folder folder,
+            Category category,
+            Group staff,
+            String prc,
+            String irc,
+            String xgc,
+            String trc) {
 
         // This could be moved out of here and into the Installer
         // (passing it into a modified version of create)
@@ -1143,27 +1123,25 @@ public class ContentSection extends Application {
         // Create template root folder.
         Folder templates = new Folder();
         templates.setName("templates");
-        templates.setLabel( (String) GlobalizationUtil.globalize(
-                                     "cms.templates").localize());
+        templates.setLabel((String) GlobalizationUtil.globalize(
+                "cms.templates").localize());
         templates.save();
 
         //create and initialize the content section application
-        ContentSection section = (ContentSection) Application.createApplication
-            (BASE_DATA_OBJECT_TYPE, name, name, null );
-        section.initialize( name,
-                            folder,
-                            category,
-                            staff,
-                            prc,
-                            irc,
-                            xgc,
-                            trc,
-                            templates,
-                            viewers);
+        ContentSection section = (ContentSection) Application.createApplication(BASE_DATA_OBJECT_TYPE, name, name, null);
+        section.initialize(name,
+                folder,
+                category,
+                staff,
+                prc,
+                irc,
+                xgc,
+                trc,
+                templates,
+                viewers);
 
         return section;
     }
-
 
     /**
      * Creates and maps default resources to the content section.
@@ -1185,7 +1163,7 @@ public class ContentSection extends Application {
         rm = r.createInstance(section, "admin/index");
         rm.save();
 
-	// XXX What's up with this?  The class doesn't exist anymore.
+        // XXX What's up with this?  The class doesn't exist anymore.
         //r = rt.createInstance("com.arsdigita.cms.user.ItemIndexPage");
         //r.save();
         //rm = r.createInstance(section, "index");
@@ -1207,8 +1185,8 @@ public class ContentSection extends Application {
     protected static Folder createRootFolder(String name) {
         Folder root = new Folder();
         root.setName("/");
-        root.setLabel( (String) GlobalizationUtil.globalize(
-                                "cms.installer.root_folder").localize());
+        root.setLabel((String) GlobalizationUtil.globalize(
+                "cms.installer.root_folder").localize());
         root.save();
         return root;
     }
@@ -1239,7 +1217,6 @@ public class ContentSection extends Application {
         return staff;
     }
 
-
     /**
      * Initialize a newly created content section.
      *
@@ -1254,16 +1231,16 @@ public class ContentSection extends Application {
      * @return The new content section
      */
     public ContentSection initialize(
-                                     String name,
-                                     Folder folder,
-                                     Category category,
-                                     Group staff,
-                                     String prc,
-                                     String irc,
-                                     String xgc,
-                                     String trc,
-                                     Folder templates,
-                                     Group viewers) {
+            String name,
+            Folder folder,
+            Category category,
+            Group staff,
+            String prc,
+            String irc,
+            String xgc,
+            String trc,
+            Folder templates,
+            Group viewers) {
 
         setName(name);
         //setPackageInstance(pkg);
@@ -1280,7 +1257,6 @@ public class ContentSection extends Application {
 
         return this;
     }
-
 
     /**
      * Fetches the child items of this section. An item is defined to be "in"
@@ -1304,5 +1280,4 @@ public class ContentSection extends Application {
     public String getStylesheetPath() {
         return STYLESHEET;
     }
-
 }

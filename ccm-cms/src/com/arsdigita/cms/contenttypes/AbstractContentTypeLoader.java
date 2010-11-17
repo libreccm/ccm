@@ -86,14 +86,13 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
                 ContentSection.BASE_DATA_OBJECT_TYPE);
 
         while (sections.next()) {
-            ContentSection section = (ContentSection) DomainObjectFactory.
-                    newInstance(sections.getDataObject());
+            ContentSection section = (ContentSection) DomainObjectFactory.newInstance(sections.getDataObject());
             if (!isLoadableInto(section)) {
                 continue;
             }
 
             LifecycleDefinitionCollection ldc =
-                                          section.getLifecycleDefinitions();
+                    section.getLifecycleDefinitions();
             LifecycleDefinition ld = null;
             if (ldc.next()) {
                 ld = ldc.getLifecycleDefinition();
@@ -118,11 +117,11 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
     }
 
     protected void prepareSection(final ContentSection section,
-                                  final ContentType type,
-                                  final LifecycleDefinition ld,
-                                  final WorkflowTemplate wf) {
+            final ContentType type,
+            final LifecycleDefinition ld,
+            final WorkflowTemplate wf) {
         ContentTypeLifecycleDefinition.updateLifecycleDefinition(section, type,
-                                                                 ld);
+                ld);
 
         ContentTypeWorkflowTemplate.updateWorkflowTemplate(section, type, wf);
     }
@@ -164,12 +163,12 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
      *  be called by the loader class by overriding prepareSection
      */
     protected Template setDefaultTemplate(final String name,
-                                          final String label,
-                                          final InputStream templateIs,
-                                          final ContentSection section,
-                                          final ContentType type,
-                                          final LifecycleDefinition ld,
-                                          final WorkflowTemplate wf) {
+            final String label,
+            final InputStream templateIs,
+            final ContentSection section,
+            final ContentType type,
+            final LifecycleDefinition ld,
+            final WorkflowTemplate wf) {
         final Template template = new Template();
         template.setName(name);
         template.setLabel(label);
@@ -197,7 +196,7 @@ public abstract class AbstractContentTypeLoader extends PackageLoader {
         template.setText(body.toString());
 
         TemplateManagerFactory.getInstance().addTemplate(section, type, template,
-                                                         TemplateManager.PUBLIC_CONTEXT);
+                TemplateManager.PUBLIC_CONTEXT);
 
         template.publish(ld, new Date());
         return template;

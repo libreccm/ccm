@@ -9,7 +9,7 @@
         description="A generic Person type"
         objectType="com.arsdigita.cms.contenttypes.GenericPerson"
         classname="com.arsdigita.cms.contenttypes.GenericPerson"
-        isInternal="yes">
+        mode="hidden">
 
         <ctd:authoring-kit createComponent="com.arsdigita.cms.contenttypes.ui.GenericPersonCreate">
 

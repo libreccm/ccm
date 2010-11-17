@@ -61,6 +61,7 @@ import com.arsdigita.xml.XML;
 // import java.io.IOException;
 // import java.io.InputStream;
 // import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 // import javax.xml.parsers.ParserConfigurationException;
@@ -72,7 +73,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-
 //  Migration status
 //
 //  The module in its complete version (i.e. all method invocations in run()
@@ -83,8 +83,6 @@ import org.apache.log4j.Logger;
 //
 //  Next Try
 //  Refactor using legacy compatible web/Application and ApplicationSetup
-
-
 /**
  * <p>Executes nonrecurring at install time and loads (installs and initializes)
  * the Content Management System module,including the Content Center, CMS Service
@@ -115,14 +113,11 @@ public class Loader extends PackageLoader {
 
     /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger.getLogger(Loader.class);
-
     // Load main CMS configuration file
     private static final LoaderConfig s_conf = new LoaderConfig();
-
 //  static {               // requirred to actually read the config file
 //      s_config.load();
 //  }
-
     /**
      * Constant string used as key for creating CMS (content-section) as a
      * legacy application.
@@ -139,7 +134,6 @@ public class Loader extends PackageLoader {
      */
     private final static String CMS_STYLESHEET =
             "/packages/content-section/xsl/cms.xsl";
-
 //  /**
 //   * Constant string used as key for creating Workspace (content-center) as a
 //   * legacy application.
@@ -151,7 +145,7 @@ public class Loader extends PackageLoader {
      * to a legacy application).
      */
     private static final String WORKSPACE_DISPATCHER_CLASS =
-        "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
+            "com.arsdigita.cms.dispatcher.ContentCenterDispatcher";
     // To be updated soon...
     // "com.arsdigita.dispatcher.DefaultPackageDispatcher";
     /**
@@ -160,7 +154,6 @@ public class Loader extends PackageLoader {
      */
     private final static String WORKSPACE_STYLESHEET =
             "/packages/content-section/xsl/content-center.xsl";
-
     /**
      * Name of the CMS service package instance, i.e. its URL.
      */
@@ -170,9 +163,7 @@ public class Loader extends PackageLoader {
 //   * legacy application.
 //   */
 //  public final static String SERVICE_PACKAGE_KEY = "cms-service";
-
-
-
+    private ArrayList m_content_type_list = new ArrayList();
 
     /**
      * Standard constructor.
@@ -183,11 +174,11 @@ public class Loader extends PackageLoader {
         s_log.debug("CMS.loader (Constructor) completed");
     }
 
-
     public void run(final ScriptContext ctx) {
         s_log.debug("CMS.loader.run() invoked");
 
         new KernelExcursion() {
+
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
@@ -214,7 +205,7 @@ public class Loader extends PackageLoader {
 
                 // 5) load content type definition(s)
                 // Used to be step 2 in former enterprise.init file
-                loadContentTypeDefinitions(s_conf.getCTDefFiles() );
+                loadContentTypeDefinitions(s_conf.getCTDefFiles());
 
                 // 6) Load CMS (content section) package application instance
                 // Used to be step 4 in former enterprise.init file
@@ -232,7 +223,7 @@ public class Loader extends PackageLoader {
                 //ContentSectionsPortlet.loadPortletType();
                 TaskPortlet.loadPortletType();
 
-             
+
             }
         }.run();
     }
@@ -291,8 +282,6 @@ public class Loader extends PackageLoader {
 //
 //      s_log.debug("Done creating the CMS package type.");
 //  }
-
-
     /**
      * Loads and instantiates the Workspace package (content-center) in the
      * database using old style application.
@@ -305,14 +294,14 @@ public class Loader extends PackageLoader {
         try {
             // workspaceInstaller.createPackageType();
             PackageType type = PackageType.create(CMS.WORKSPACE_PACKAGE_KEY,
-                                                  "Content Center",
-                                                  "Content Centers",
-                                                  "http://cms-workspace.arsdigita.com/");
+                    "Content Center",
+                    "Content Centers",
+                    "http://cms-workspace.arsdigita.com/");
             type.setDispatcherClass(WORKSPACE_DISPATCHER_CLASS);
 
             // Register a stylesheet to the Content Center package.
             Stylesheet ss =
-                Stylesheet.createStylesheet(WORKSPACE_STYLESHEET);
+                    Stylesheet.createStylesheet(WORKSPACE_STYLESHEET);
             ss.save();
             type.addStylesheet(ss);
 
@@ -330,21 +319,20 @@ public class Loader extends PackageLoader {
             // SiteNode node = SiteNode.createSiteNode(CMS.WORKSPACE_PACKAGE_KEY,
             //                                      SiteNode.getRootSiteNode());
             SiteNode node = SiteNode.createSiteNode(CMS.WORKSPACE_PACKAGE_KEY,
-                                                    SiteNode.getRootSiteNode());
+                    SiteNode.getRootSiteNode());
             node.mountPackage(instance);
             node.save();
 
-                // m_workspaceURL == WORKSPACE_PACKAGE_KEY
-                // workspaceInstaller.mountPackageInstance(instance, m_workspaceURL);
-                // workspaceInstaller.mountPackageInstance(instance, CMS.WORKSPACE_PACKAGE_KEY);
+            // m_workspaceURL == WORKSPACE_PACKAGE_KEY
+            // workspaceInstaller.mountPackageInstance(instance, m_workspaceURL);
+            // workspaceInstaller.mountPackageInstance(instance, CMS.WORKSPACE_PACKAGE_KEY);
 
-            } catch (DataObjectNotFoundException e) {
-                throw new ConfigError(
-                        "Failed to initialize the Workspace package: ");
-            }
+        } catch (DataObjectNotFoundException e) {
+            throw new ConfigError(
+                    "Failed to initialize the Workspace package: ");
+        }
 
     }
-
 
     /**
      * Loads and instantiates the Workspace package (content-center) in the
@@ -360,22 +348,24 @@ public class Loader extends PackageLoader {
         // create application type
         ApplicationSetup appsetup = new ApplicationSetup(s_log);
         // new style properties
-        appsetup.setApplicationObjectType( Workspace.BASE_DATA_OBJECT_TYPE  );
-        appsetup.setTitle( Workspace.INSTANCE_NAME );  // same as for instance
-                                                       // there is only one
+        appsetup.setApplicationObjectType(Workspace.BASE_DATA_OBJECT_TYPE);
+        appsetup.setTitle(Workspace.INSTANCE_NAME);  // same as for instance
+        // there is only one
         appsetup.setDescription("The content center workspace for content creators.");
         // old style / legacy compatible properties
-        appsetup.setKey( Workspace.PACKAGE_KEY );
-        appsetup.setDispatcherClass( Workspace.DISPATCHER_CLASS );
+        appsetup.setKey(Workspace.PACKAGE_KEY);
+        appsetup.setDispatcherClass(Workspace.DISPATCHER_CLASS);
         // should not be needed anymore, stypesheets handled by StylesheetResolver
-        appsetup.setStylesheet( Workspace.STYLESHEET );
+        appsetup.setStylesheet(Workspace.STYLESHEET);
         appsetup.setSingleton(true);
         appsetup.setPortalApplication(false);
         appsetup.setInstantiator(new ACSObjectInstantiator() {
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new Workspace(dataObject);
-                }
-            });
+
+            @Override
+            protected DomainObject doNewInstance(DataObject dataObject) {
+                return new Workspace(dataObject);
+            }
+        });
 
         ApplicationType workspaceType = appsetup.run();
         workspaceType.save();
@@ -383,15 +373,14 @@ public class Loader extends PackageLoader {
         // create legacy compatible  application instance,
         // old-style package key used as url fragment where to install the instance
         Workspace app = (Workspace) Application.createApplication(
-                                                workspaceType,          // type
-                                                Workspace.PACKAGE_KEY,  // url fragment
-                                                Workspace.INSTANCE_NAME,// title
-                                                null);                  // parent
+                workspaceType, // type
+                Workspace.PACKAGE_KEY, // url fragment
+                Workspace.INSTANCE_NAME,// title
+                null);                  // parent
         app.save();
 
         s_log.debug("Done loading CMS Workspace.");
     }
-
 
     /**
      * CMS Service application is used by the Content Management System as a 
@@ -402,34 +391,31 @@ public class Loader extends PackageLoader {
     private void loadServicePackage() {
         s_log.debug("Loading CMS Servce Package...");
 
-            try {
-                // from ServiceInstaller.createPackageType();
-                PackageType type = PackageType.create
-                                   (CMS.SERVICE_PACKAGE_KEY,
-                                    "Content Management System Services",
-                                    "Content Management System Services",
-                                    "http://cms-service.arsdigita.com/");
-                type.setDispatcherClass(
-                        "com.arsdigita.cms.dispatcher.ServiceDispatcher");
-                type.save();
+        try {
+            // from ServiceInstaller.createPackageType();
+            PackageType type = PackageType.create(CMS.SERVICE_PACKAGE_KEY,
+                    "Content Management System Services",
+                    "Content Management System Services",
+                    "http://cms-service.arsdigita.com/");
+            type.setDispatcherClass(
+                    "com.arsdigita.cms.dispatcher.ServiceDispatcher");
+            type.save();
 
-                // from PackageInstance instance = ServiceInstaller.createPackageInstance();
-              type = PackageType.findByKey(CMS.SERVICE_PACKAGE_KEY);
-                PackageInstance instance = type.createInstance(CMS.SERVICE_PACKAGE_KEY);
-                instance.save();
+            // from PackageInstance instance = ServiceInstaller.createPackageInstance();
+            type = PackageType.findByKey(CMS.SERVICE_PACKAGE_KEY);
+            PackageInstance instance = type.createInstance(CMS.SERVICE_PACKAGE_KEY);
+            instance.save();
 
-                // from ServiceInstaller.mountPackageInstance(instance, url);
-                SiteNode node = SiteNode.createSiteNode(SERVICE_URL,
-                                                          SiteNode.getRootSiteNode());
-               node.mountPackage(instance);
-                node.save();
+            // from ServiceInstaller.mountPackageInstance(instance, url);
+            SiteNode node = SiteNode.createSiteNode(SERVICE_URL,
+                    SiteNode.getRootSiteNode());
+            node.mountPackage(instance);
+            node.save();
 
-          } catch (DataObjectNotFoundException e) {
-                throw new ConfigError
-                   ("Failed to initialize CMS global services package.");
-           }
+        } catch (DataObjectNotFoundException e) {
+            throw new ConfigError("Failed to initialize CMS global services package.");
+        }
     }
-
 
     /**
      * CMS Service application is used by the Content Management System as a
@@ -447,22 +433,24 @@ public class Loader extends PackageLoader {
         // create application type
         ApplicationSetup appsetup = new ApplicationSetup(s_log);
         // new style properties
-        appsetup.setApplicationObjectType( Service.BASE_DATA_OBJECT_TYPE  );
-        appsetup.setTitle( Service.INSTANCE_NAME );  // same as for instance
-                                                     // there is only one
+        appsetup.setApplicationObjectType(Service.BASE_DATA_OBJECT_TYPE);
+        appsetup.setTitle(Service.INSTANCE_NAME);  // same as for instance
+        // there is only one
         appsetup.setDescription("Services to store global resources and assets.");
         // old style / legacy compatible properties
-        appsetup.setKey( Service.PACKAGE_KEY );
-        appsetup.setDispatcherClass( Service.DISPATCHER_CLASS );
+        appsetup.setKey(Service.PACKAGE_KEY);
+        appsetup.setDispatcherClass(Service.DISPATCHER_CLASS);
         // Service has no UI, therefore no stylesheet available
         // appsetup.setStylesheet( Workspace.STYLESHEET );
         appsetup.setSingleton(true);
         appsetup.setPortalApplication(false);
         appsetup.setInstantiator(new ACSObjectInstantiator() {
-                protected DomainObject doNewInstance(DataObject dataObject) {
-                    return new Service(dataObject);
-                }
-            });
+
+            @Override
+            protected DomainObject doNewInstance(DataObject dataObject) {
+                return new Service(dataObject);
+            }
+        });
 
         ApplicationType serviceType = appsetup.run();
         serviceType.save();
@@ -470,15 +458,14 @@ public class Loader extends PackageLoader {
         // create legacy compatible  application instance,
         // old-style package key used as url fragment where to install the instance
         Service app = (Service) Application.createApplication(
-                                                serviceType,          // type
-                                                Service.PACKAGE_KEY,  // url fragment
-                                                Service.INSTANCE_NAME,// title
-                                                null);                // parent
+                serviceType, // type
+                Service.PACKAGE_KEY, // url fragment
+                Service.INSTANCE_NAME,// title
+                null);                // parent
         app.save();
 
         s_log.debug("Done creating CMS Service Package.");
     }
-
 
     /**
      * Load an content section application type and an initial default
@@ -505,8 +492,9 @@ public class Loader extends PackageLoader {
         appType.setPortalApplication(false);
         //setup.setDispatcherClass(ContentItemDispatcher.class.getName());
         appType.setStylesheet(CMS_STYLESHEET); // by default: /pack./c-s/xml/cms.xml
-                                              // contains the xsl to generate the page
+        // contains the xsl to generate the page
         appType.setInstantiator(new ACSObjectInstantiator() {
+
             @Override
             public DomainObject doNewInstance(DataObject dataObject) {
                 return new ContentSection(dataObject);
@@ -547,16 +535,17 @@ public class Loader extends PackageLoader {
         // registers predefined "Authoring", "Approval", "Publishing' steps
         setup.registerWorkflowTemplates();
         setup.registerResolvers(s_conf.getItemResolverClass(),
-                                s_conf.getTemplateResolverClass() );
+                s_conf.getTemplateResolverClass());
         // XML generator class, set autonomously by ContentSection.create()
 
+        setup.registerContentTypes(m_content_type_list);
         setup.registerContentTypes(s_conf.getContentSectionsContentTypes());
         // Section specific categories, usually not used.
         // During initial load at install time nor used at all!
         // default value is false so no categories get loaded.
         if (s_conf.getUseSectionCategories()) {
             Iterator files = ((List) s_conf.getCategoryFileList()).iterator();
-            while ( files.hasNext() ) {
+            while (files.hasNext()) {
                 setup.registerCategories((String) files.next());
             }
         }
@@ -569,7 +558,7 @@ public class Loader extends PackageLoader {
         // setup.loadTaskAlerts(s_conf.getTaskAlerts());
 
         section.save();  //persists any changes in the database (DomainObject)
-                         //i.e. creates an object (instance)
+        //i.e. creates an object (instance)
 
     }
 
@@ -605,18 +594,28 @@ public class Loader extends PackageLoader {
     private void loadContentTypeDefinitions(List ctDefFiles) {
         s_log.debug("Loading content type definitions ...");
 
-        if ( ctDefFiles != null) {
+        if (ctDefFiles != null) {
+            XMLContentTypeHandler handler = new XMLContentTypeHandler();
             Iterator i = ctDefFiles.iterator();
             while (i.hasNext()) {
-                String xmlFile = (String)i.next();
+                String xmlFile = (String) i.next();
                 s_log.debug("Processing contentTypes in: " + xmlFile);
-                XML.parseResource(xmlFile, new XMLContentTypeHandler());
+                XML.parseResource(xmlFile, handler);
             }
+
+            Iterator iter = handler.getContentTypes().iterator();
+
+            while (iter.hasNext()) {
+                ContentType ct = (ContentType) iter.next();
+                if (!ct.isInternal()) {
+                    m_content_type_list.add(ct.getClassName());
+                }
+            }
+
         }
 
         s_log.debug("Done loading content type definitions.");
     }
-
 
     /**
      * Integrates the CMS privileges into the Core permision system.
@@ -633,10 +632,10 @@ public class Loader extends PackageLoader {
 
         DataQuery dq = SessionManager.getSession().retrieveQuery(CMS_PRIVILEGES);
         try {
-            while ( dq.next() ) {
+            while (dq.next()) {
                 String privilege = (String) dq.get(PRIVILEGE);
                 s_log.debug(String.format("privilege = %s", privilege));
-                if ( PrivilegeDescriptor.get(privilege) == null ) {
+                if (PrivilegeDescriptor.get(privilege) == null) {
                     PrivilegeDescriptor.createPrivilege(privilege);
                 }
             }
@@ -646,6 +645,4 @@ public class Loader extends PackageLoader {
         }
         s_log.debug("Done creating Privileges.");
     }
-
-
 }

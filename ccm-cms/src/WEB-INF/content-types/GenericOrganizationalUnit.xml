@@ -10,7 +10,7 @@
         description="A generic content type for organizations and projects."
         objectType="com.arsdigita.cms.contenttypes.GenericOrganizationalUnit"
         classname= "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit"
-	isInternal="yes">
+        mode="hidden">
             
         <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
 

@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.type;
 
-
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
@@ -57,19 +56,17 @@ import java.util.TooManyListenersException;
 public class AddContentItemElement extends ElementAddForm {
 
     private static final Logger s_log =
-        Logger.getLogger(AddContentItemElement.class);
-
+            Logger.getLogger(AddContentItemElement.class);
     private SingleSelect m_itemTypeSelect;
+
     /**
      * Constructor
      */
     public AddContentItemElement(ACSObjectSelectionModel types) {
         super("ContentTypeAddContentItemElement", "Add a ContentItem Element", types);
 
-        add(new Label(GlobalizationUtil.globalize
-                      ("cms.ui.type.association_content_type")));
-        m_itemTypeSelect = new SingleSelect
-            (new BigDecimalParameter("AddContentItemTypeSelect"));
+        add(new Label(GlobalizationUtil.globalize("cms.ui.type.association_content_type")));
+        m_itemTypeSelect = new SingleSelect(new BigDecimalParameter("AddContentItemTypeSelect"));
         try {
             m_itemTypeSelect.addPrintListener(new ItemTypeSelectPrintListener());
         } catch (TooManyListenersException ex) {
@@ -78,49 +75,45 @@ public class AddContentItemElement extends ElementAddForm {
         }
         add(m_itemTypeSelect);
 
-        add(m_buttons, ColumnPanel.FULL_WIDTH|ColumnPanel.CENTER);
+        add(m_buttons, ColumnPanel.FULL_WIDTH | ColumnPanel.CENTER);
     }
 
     private ContentType getItemType(PageState state)
-        throws FormProcessException {
+            throws FormProcessException {
 
         BigDecimal itemTypeID =
-            (BigDecimal) m_itemTypeSelect.getValue(state);
+                (BigDecimal) m_itemTypeSelect.getValue(state);
 
         ContentType itemType = null;
         Assert.exists(itemTypeID, "itemTypeID");
         try {
             itemType = new ContentType(itemTypeID);
         } catch (DataObjectNotFoundException ex) {
-            throw new FormProcessException
-                ((String) GlobalizationUtil.globalize
-                 ("cms.ui.type.invalid").localize());
+            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.invalid").localize());
         }
         return itemType;
     }
 
     protected final void addAttribute(DynamicObjectType dot, String label,
-                                      PageState state)
-        throws FormProcessException {
+            PageState state)
+            throws FormProcessException {
 
         ContentType itemType = getItemType(state);
         dot.addOptionalAssociation(label,
-                                   MetadataRoot.getMetadataRoot().getObjectType
-                                   (itemType.getAssociatedObjectType()));
+                MetadataRoot.getMetadataRoot().getObjectType(itemType.getAssociatedObjectType()));
     }
 
     protected final void addFormComponent(PersistentForm pForm, String label,
-                                          PageState state)
-        throws FormProcessException {
+            PageState state)
+            throws FormProcessException {
 
         ContentType itemType = getItemType(state);
-        PersistentHidden pContentTypeName = PersistentHidden.create(label+"Type");
+        PersistentHidden pContentTypeName = PersistentHidden.create(label + "Type");
         pContentTypeName.setDefaultValue(itemType.getAssociatedObjectType());
         pContentTypeName.save();
         pForm.addComponent(pContentTypeName);
         PersistentSingleSelect pSelect = PersistentSingleSelect.create(label);
-        pSelect.setParameterModel
-            ("com.arsdigita.bebop.parameters.BigDecimalParameter");
+        pSelect.setParameterModel("com.arsdigita.bebop.parameters.BigDecimalParameter");
         pSelect.save();
         pForm.addComponent(pSelect);
     }
@@ -137,9 +130,9 @@ public class AddContentItemElement extends ElementAddForm {
             // Get the current content section
             ContentSection section = CMS.getContext().getContentSection();
 
-            ContentTypeCollection contentTypes = section.getCreatableContentTypes();
+            ContentTypeCollection contentTypes = section.getCreatableContentTypes(true);
             contentTypes.addOrder(ContentType.LABEL);
-            while ( contentTypes.next() ) {
+            while (contentTypes.next()) {
                 ContentType type = contentTypes.getContentType();
                 t.addOption(new Option(type.getID().toString(), type.getLabel()));
             }

@@ -50,7 +50,7 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
     private String m_className;
     private String m_createComponent;
     private AuthoringKit m_kit;
-    private boolean m_internal;
+    private String m_mode;
 
     public ContentTypeHelperImpl() {
     }
@@ -95,12 +95,16 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         return m_labelKey;
     }
 
-    public void setInternal(boolean internal) {
-        m_internal = internal;
+    public void setMode(String mode) {
+        m_mode = mode.toLowerCase();
     }
 
     public boolean isInternal() {
-        return m_internal;
+        return m_mode.equalsIgnoreCase("internal");
+    }
+
+    public boolean isHidden() {
+        return m_mode.equalsIgnoreCase("hidden");
     }
 
     /**
@@ -210,7 +214,7 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
             m_type.setDescription(m_description);
             m_type.setClassName(m_className);
             m_type.setAssociatedObjectType(m_objectType);
-            m_type.setInternal(m_internal);
+            m_type.setMode(m_mode);
 
             // create pedigree for this content type
             createPedigree(m_type);
@@ -221,7 +225,7 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
         // Turn on search indexing for this type
         ObjectType type = SessionManager.getMetadataRoot().getObjectType(m_objectType);
         if (type.isSubtypeOf(ContentPage.BASE_DATA_OBJECT_TYPE)
-                && !m_internal) {
+                && !isInternal()) {
             s_log.debug("Registering search adapter for "
                     + m_objectType);
             MetadataProviderRegistry.registerAdapter(

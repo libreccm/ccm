@@ -65,7 +65,7 @@ public class ContentType extends ACSObject {
     public static final String LABEL = "label";
     public static final String DESCRIPTION = "description";
     public static final String CLASSNAME = "className";
-    public static final String IS_INTERNAL = "isInternal";
+    public static final String MODE = "mode";
     public static final String AUTHORING_KIT = "authoringKit";
     public static final String ITEM_FORM_ID = "itemFormID";
     public static final String ITEM_FORM = "itemForm";
@@ -123,8 +123,8 @@ public class ContentType extends ACSObject {
 
     @Override
     protected void beforeSave() {
-        if (isInternal() == null) {
-            setInternal(false);
+        if (getMode() == null) {
+            setMode("default");
         }
         super.beforeSave();
     }
@@ -224,17 +224,37 @@ public class ContentType extends ACSObject {
      * otherwise.
      */
     public Boolean isInternal() {
-        return (Boolean) get(IS_INTERNAL);
+        return "I".equalsIgnoreCase((String) get(MODE));
     }
 
     /**
-     * Make this content type internal or not.
+     * <p>A hidden content type is one that is not user-defined but not meant
+     * to be used directly (p. ex. GenericArticle). in contrast they provide
+     * some basic features for different kind of content type to be extended
+     * from. Also, they are legit perents for UDCTs.
      *
-     * @param isInternal true if this content type should be internal,
-     *        false otherwise
+     * @return Boolean.TRUE if this content type is internal, Boolean.FALSE
+     * otherwise.
      */
-    public void setInternal(boolean isInternal) {
-        set(IS_INTERNAL, (isInternal ? Boolean.TRUE : Boolean.FALSE));
+    public Boolean isHidden() {
+        return "H".equalsIgnoreCase((String) get(MODE));
+    }
+
+    /**
+     * Save the display / user mode of this content type
+     *
+     * @param mode string. ATM: "interal" or "hidden" or ""
+     */
+    public void setMode(String mode) {
+        if (mode != null && !mode.isEmpty()) {
+            set(MODE, mode.toUpperCase().substring(0, 1));
+        } else {
+            set(MODE, "default".toUpperCase().substring(0, 1));
+        }
+    }
+
+    public String getMode() {
+        return (String) get(MODE);
     }
 
     /**
@@ -481,7 +501,19 @@ public class ContentType extends ACSObject {
      * @return A collection of all content types
      */
     public static ContentTypeCollection getAllContentTypes() {
-        return getAllContentTypes(true);
+        return getAllContentTypes(true, true);
+    }
+
+    /**
+     * Fetches a collection of all content types, including internal content
+     * types.
+     *
+     * @param hidden If false, fetch all content types, ecluding hidden
+     *    content types
+     * @return A collection of all content types
+     */
+    public static ContentTypeCollection getAllContentTypes(boolean hidden) {
+        return getAllContentTypes(true, hidden);
     }
 
     /**
@@ -490,19 +522,25 @@ public class ContentType extends ACSObject {
      * @return A collection of user-defined content types
      */
     public static ContentTypeCollection getUserDefinedContentTypes() {
-        return getAllContentTypes(false);
+        return getAllContentTypes(false, true);
     }
 
     /**
-     * @param internal If true, fetch all content types, including internal
+     * @param internal If false, fetch all content types, excluding internal
+     *    content types.
+     * @param hidden If false, fetch all content types, excluding hidden
      *    content types.
      */
-    private static ContentTypeCollection getAllContentTypes(boolean internal) {
+    private static ContentTypeCollection getAllContentTypes(boolean internal, boolean hidden) {
         DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
         ContentTypeCollection types = new ContentTypeCollection(da);
 
         if (!internal) {
-            types.addFilter("isInternal = '0'");
+            types.addFilter("mode != 'I'");
+        }
+
+        if (!hidden) {
+            types.addFilter("mode != 'H'");
         }
         return types;
     }
@@ -545,8 +583,7 @@ public class ContentType extends ACSObject {
         ctc.addFilter(or);
         return ctc;
     }
-
-    private static List s_xsl  = new ArrayList();
+    private static List s_xsl = new ArrayList();
 
     /**
      * NB this interface is liable to change.

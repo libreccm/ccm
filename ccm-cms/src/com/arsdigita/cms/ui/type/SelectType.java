@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.type;
 
-
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
@@ -45,7 +44,6 @@ import com.arsdigita.util.UncheckedWrapperException;
 import java.math.BigDecimal;
 import java.util.TooManyListenersException;
 
-
 /**
  * This class contains a form component to that allows adding
  * already-existing content type to a content section.
@@ -55,10 +53,9 @@ import java.util.TooManyListenersException;
  * @version $Id: SelectType.java 287 2005-02-22 00:29:02Z sskracic $ 
  */
 public class SelectType extends CMSForm
-    implements PrintListener, FormSubmissionListener, FormProcessListener {
+        implements PrintListener, FormSubmissionListener, FormProcessListener {
 
     private final static String TYPES = "types";
-
     private CheckboxGroup m_typesCheckbox;
     private Submit m_submit;
     private Submit m_cancel;
@@ -83,13 +80,12 @@ public class SelectType extends CMSForm
         m_cancel = new Submit("cancel");
         m_cancel.setButtonLabel("Cancel");
         s.add(m_cancel);
-        add(s, ColumnPanel.FULL_WIDTH|ColumnPanel.CENTER);
+        add(s, ColumnPanel.FULL_WIDTH | ColumnPanel.CENTER);
 
         addProcessListener(this);
         addSubmissionListener(new TypeSecurityListener());
         addSubmissionListener(this);
     }
-
 
     /**
      * Generate a checkbox list of all content type not associated
@@ -103,13 +99,16 @@ public class SelectType extends CMSForm
         ContentSection section = CMS.getContext().getContentSection();
 
         ContentTypeCollection contentTypes =
-            section.getNotAssociatedContentTypes();
+                section.getNotAssociatedContentTypes();
         contentTypes.addOrder(ContentType.LABEL);
         while (contentTypes.next()) {
             ContentType contentType = contentTypes.getContentType();
 
-            t.addOption(new Option(contentType.getID().toString(),
-                                   contentType.getLabel()));
+            Label label = new Label(contentType.getLabel());
+            if (contentType.isHidden()) {
+                label.setFontWeight(Label.ITALIC);
+            }
+            t.addOption(new Option(contentType.getID().toString(), label));
         }
     }
 
@@ -121,7 +120,7 @@ public class SelectType extends CMSForm
      */
     public void submitted(FormSectionEvent event) throws FormProcessException {
         PageState state = event.getPageState();
-        if ( isCancelled(state) ) {
+        if (isCancelled(state)) {
             throw new FormProcessException("cancelled");
         }
     }
@@ -135,7 +134,6 @@ public class SelectType extends CMSForm
         return m_cancel.isSelected(state);
     }
 
-
     /**
      * Processes form listener which updates a life cycle
      */
@@ -146,14 +144,14 @@ public class SelectType extends CMSForm
         String[] types = (String[]) data.get(TYPES);
         ContentType type;
 
-        if ( types != null ) {
-            for ( int i = 0; i < types.length; i++ ) {
+        if (types != null) {
+            for (int i = 0; i < types.length; i++) {
                 try {
                     type = new ContentType(new BigDecimal(types[i]));
                     section.addContentType(type);
                 } catch (DataObjectNotFoundException ex) {
-                    throw new UncheckedWrapperException("Content Type ID#" + types[i] +
-                                               " not found", ex);
+                    throw new UncheckedWrapperException("Content Type ID#" + types[i]
+                            + " not found", ex);
                 }
             }
 
@@ -162,5 +160,4 @@ public class SelectType extends CMSForm
             }
         }
     }
-
 }

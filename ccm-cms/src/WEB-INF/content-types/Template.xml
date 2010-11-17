@@ -7,7 +7,7 @@
               description="Templates for rendering content items"
                objectType="com.arsdigita.cms.Template"
                 classname="com.arsdigita.cms.Template"
-               isInternal="yes">
+                     mode="internal">
     <ctd:authoring-kit>
 
       <ctd:authoring-step 

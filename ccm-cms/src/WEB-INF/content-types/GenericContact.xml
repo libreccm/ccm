@@ -9,7 +9,7 @@
         description="A generic Contact type"
         objectType="com.arsdigita.cms.contenttypes.GenericContact"
         classname="com.arsdigita.cms.contenttypes.GenericContact"
-        isInternal="yes">
+        mode="hidden">
         
         <ctd:authoring-kit
             createComponent="com.arsdigita.cms.ui.authoring.PageCreate">

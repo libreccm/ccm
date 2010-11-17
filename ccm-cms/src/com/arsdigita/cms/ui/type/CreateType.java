@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.type;
 
-
 import com.arsdigita.bebop.ColumnPanel;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
@@ -85,21 +84,16 @@ import java.util.TooManyListenersException;
  * @author Xixi D'Moon (xdmoon@arsdigita.com)
  * @version $Revision: #21 $ $Date: 2004/08/17 $
  */
-
 public class CreateType extends CMSForm
-    implements FormProcessListener, FormInitListener, FormSubmissionListener, FormValidationListener {
+        implements FormProcessListener, FormInitListener, FormSubmissionListener, FormValidationListener {
 
     private static final String DEFAULT_UDITEM_TYPE = ContentPage.BASE_DATA_OBJECT_TYPE;
     private static final String CATEGORIZATION_COMPONENT =
-        "com.arsdigita.cms.ui.authoring.ItemCategoryStep";
-
+            "com.arsdigita.cms.ui.authoring.ItemCategoryStep";
     private final static Logger s_log =
-        Logger.getLogger(CreateType.class.getName());
-
+            Logger.getLogger(CreateType.class.getName());
     //private static final ObjectType TEST_TYPE = SessionManager.getMetadataRoot().getObjectType("com.arsdigita.kernel.Party");
-
     private static final String CREATION_COMPONENT = "com.arsdigita.cms.ui.authoring.PageCreateDynamic";
-
     private Hidden m_id;
     private TextField m_name;
     private TextField m_label;
@@ -110,12 +104,12 @@ public class CreateType extends CMSForm
     private Submit m_submit;
     private Submit m_cancel;
     private SingleSelectionModel m_types = null;
-
     DynamicObjectType dot;
 
     public CreateType() {
         this(null);
     }
+
     public CreateType(SingleSelectionModel m) {
         super("NewContentItemDefinition");
         if (m != null) {
@@ -190,7 +184,7 @@ public class CreateType extends CMSForm
         m_cancel = new Submit("cancel");
         m_cancel.setButtonLabel("Cancel");
         s.add(m_cancel);
-        add(s, ColumnPanel.FULL_WIDTH|ColumnPanel.CENTER);
+        add(s, ColumnPanel.FULL_WIDTH | ColumnPanel.CENTER);
 
         //add the listeners
         addProcessListener(this);
@@ -201,6 +195,7 @@ public class CreateType extends CMSForm
     }
 
     // if this form is cancelled
+    @Override
     public boolean isCancelled(PageState s) {
         return m_cancel.isSelected(s);
     }
@@ -210,7 +205,7 @@ public class CreateType extends CMSForm
      * the particular content section, and if the new type name is
      * legal dynamic object type name
      */
-    public void validate (FormSectionEvent e) throws FormProcessException {
+    public void validate(FormSectionEvent e) throws FormProcessException {
         PageState s = e.getPageState();
         String typeLabel = (String) m_label.getValue(s);
         String typeName = (String) m_name.getValue(s);
@@ -220,23 +215,22 @@ public class CreateType extends CMSForm
 
         boolean dupe = false;
 
-        while (contentTypes.next() && dupe==false) {
-            if (contentTypes.getContentType().getLabel().compareTo(typeLabel)==0) {
+        while (contentTypes.next() && dupe == false) {
+            if (contentTypes.getContentType().getLabel().compareTo(typeLabel) == 0) {
                 dupe = true;
             }
         }
 
         if (dupe == true) {
-            throw new FormProcessException
-                ((String) GlobalizationUtil.globalize("cms.ui.type.name_not_unique", new Object[] { typeLabel }).localize());
+            throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.name_not_unique", new Object[]{typeLabel}).localize());
         } else {
 
             for (int i = 0; i < typeName.length(); i++) {
                 char c = typeName.charAt(i);
                 if (Character.isWhitespace(c)) {
-                    throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.type.name_has_whitespace").localize());
+                    throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.name_has_whitespace").localize());
                 } else if (!Character.isLetterOrDigit(c)) {
-                    throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.type.name_not_alphanumeric").localize());
+                    throw new FormProcessException((String) GlobalizationUtil.globalize("cms.ui.type.name_not_alphanumeric").localize());
                 }
             }
 
@@ -278,12 +272,10 @@ public class CreateType extends CMSForm
         if (parentContentType != null) {
             parentContentClassname = parentContentType.getClassName();
             parentObjectType =
-                SessionManager.getMetadataRoot().getObjectType
-                (parentContentType.getAssociatedObjectType());
+                    SessionManager.getMetadataRoot().getObjectType(parentContentType.getAssociatedObjectType());
         } else {
             try {
-                parentContentType = ContentType.findByAssociatedObjectType
-                    (DEFAULT_UDITEM_TYPE);
+                parentContentType = ContentType.findByAssociatedObjectType(DEFAULT_UDITEM_TYPE);
                 parentContentClassname = parentContentType.getClassName();
             } catch (DataObjectNotFoundException ex) {
                 // If parent content type isn't found, don't add
@@ -291,18 +283,15 @@ public class CreateType extends CMSForm
                 //classname
                 parentContentClassname = "com.arsdigita.cms.ContentPage";
             }
-            parentObjectType = SessionManager.getMetadataRoot().getObjectType
-                (DEFAULT_UDITEM_TYPE);
+            parentObjectType = SessionManager.getMetadataRoot().getObjectType(DEFAULT_UDITEM_TYPE);
         }
 
 
         String qname = parentObjectType.getModel().getName() + "." + name;
         MetadataRoot root = MetadataRoot.getMetadataRoot();
         if (root.getObjectType(qname) != null || root.hasTable(name)) {
-            throw new FormValidationException
-                (m_name, (String) GlobalizationUtil.globalize
-                 ("cms.ui.type.duplicate_type",
-                  new Object[] { name }).localize());
+            throw new FormValidationException(m_name, (String) GlobalizationUtil.globalize("cms.ui.type.duplicate_type",
+                    new Object[]{name}).localize());
         }
 
         //create a new dynamic object type with
@@ -317,8 +306,7 @@ public class CreateType extends CMSForm
         try {
             contentType = new ContentType(key);
         } catch (DataObjectNotFoundException ex) {
-            contentType = new ContentType(SessionManager.getSession().create
-                                          (new OID(ContentType.BASE_DATA_OBJECT_TYPE, key)));
+            contentType = new ContentType(SessionManager.getSession().create(new OID(ContentType.BASE_DATA_OBJECT_TYPE, key)));
             isNew = true;
         }
 
@@ -339,10 +327,10 @@ public class CreateType extends CMSForm
         }
 
         //associate a default lifecycle
-        setDefaultLifecycle (lifecycleID, section, contentType);
+        setDefaultLifecycle(lifecycleID, section, contentType);
 
         //associate a default workflow
-        setDefaultWorkflow (workflowID, section, contentType);
+        setDefaultWorkflow(workflowID, section, contentType);
 
         //drop the page to refresh content center, admin and item ui
         Utilities.refreshItemUI(state);
@@ -378,7 +366,7 @@ public class CreateType extends CMSForm
      * return true if this form is cancelled, false otherwise
      */
     public void submitted(FormSectionEvent e) throws FormProcessException {
-        if(m_cancel.isSelected(e.getPageState())) {
+        if (m_cancel.isSelected(e.getPageState())) {
             throw new FormProcessException("cancelled");
         }
     }
@@ -389,16 +377,17 @@ public class CreateType extends CMSForm
      * With no parent type sent, the parent type authoring kit steps won't be added
      */
     protected void updateContentTypeAssociation(ContentSection section,
-                                                ContentType type) {
+            ContentType type) {
         updateContentTypeAssociation(section, type, null);
     }
+
     /**
      * registers the new type to this content section
      * and creates authoring kit for the content type
      */
     protected void updateContentTypeAssociation(ContentSection section,
-                                                ContentType type,
-                                                ContentType parentType) {
+            ContentType type,
+            ContentType parentType) {
         section.addContentType(type);
         section.save();
 
@@ -417,29 +406,29 @@ public class CreateType extends CMSForm
                     hasCategoryStep = true;
                 }
                 kit.createStep(step.getLabel(),
-                               step.getDescription(),
-                               step.getComponent(),
-                               new BigDecimal(stepOrdering));
+                        step.getDescription(),
+                        step.getComponent(),
+                        new BigDecimal(stepOrdering));
                 stepOrdering++;
             }
         }
         if (stepOrdering == 1) {
             kit.createStep(type.getLabel() + " Basic Properties",
-                           type.getAssociatedObjectType(),
-                           "com.arsdigita.cms.ui.authoring.PageEditDynamic",
-                           new BigDecimal(stepOrdering));
+                    type.getAssociatedObjectType(),
+                    "com.arsdigita.cms.ui.authoring.PageEditDynamic",
+                    new BigDecimal(stepOrdering));
         } else {
             kit.createStep(type.getLabel() + " Basic Properties",
-                           type.getAssociatedObjectType(),
-                           "com.arsdigita.cms.ui.authoring.SecondaryPageEditDynamic",
-                           new BigDecimal(stepOrdering));
+                    type.getAssociatedObjectType(),
+                    "com.arsdigita.cms.ui.authoring.SecondaryPageEditDynamic",
+                    new BigDecimal(stepOrdering));
         }
         stepOrdering++;
         if (!hasCategoryStep) {
             kit.createStep("Categories",
-                           "",
-                           CATEGORIZATION_COMPONENT,
-                           new BigDecimal(stepOrdering));
+                    "",
+                    CATEGORIZATION_COMPONENT,
+                    new BigDecimal(stepOrdering));
         }
         kit.save();
 
@@ -462,13 +451,17 @@ public class CreateType extends CMSForm
             // Get the current content section
             ContentSection section = CMS.getContext().getContentSection();
 
-            t.addOption(new Option("-1","-- select --"));
+            t.addOption(new Option("-1", "-- select --"));
 
-            ContentTypeCollection contentTypes = section.getCreatableContentTypes();
+            ContentTypeCollection contentTypes = section.getCreatableContentTypes(true);
             contentTypes.addOrder(ContentType.LABEL);
-            while ( contentTypes.next() ) {
+            while (contentTypes.next()) {
                 ContentType type = contentTypes.getContentType();
-                t.addOption(new Option(type.getID().toString(), type.getLabel()));
+                Label label = new Label(type.getLabel());
+                if (type.isHidden()) {
+                    label.setFontWeight(Label.ITALIC);
+                }
+                t.addOption(new Option(type.getID().toString(), label));
             }
         }
     }
@@ -485,10 +478,10 @@ public class CreateType extends CMSForm
             // Get the current content section
             ContentSection section = CMS.getContext().getContentSection();
 
-            t.addOption(new Option("-1","-- select --"));
+            t.addOption(new Option("-1", "-- select --"));
 
             LifecycleDefinitionCollection cycles = section.getLifecycleDefinitions();
-            while ( cycles.next() ) {
+            while (cycles.next()) {
                 LifecycleDefinition cycle = cycles.getLifecycleDefinition();
                 t.addOption(new Option(cycle.getID().toString(), cycle.getLabel()));
             }
@@ -507,22 +500,22 @@ public class CreateType extends CMSForm
             // Get the current content section
             ContentSection section = CMS.getContext().getContentSection();
 
-            t.addOption(new Option("-1","-- select --"));
+            t.addOption(new Option("-1", "-- select --"));
 
             TaskCollection templates = section.getWorkflowTemplates();
-            while ( templates.next() ) {
+            while (templates.next()) {
                 WorkflowTemplate template =
-                    (WorkflowTemplate) templates.getDomainObject();
+                        (WorkflowTemplate) templates.getDomainObject();
                 t.addOption(new Option(template.getID().toString(),
-                                       template.getLabel()));
+                        template.getLabel()));
             }
 
         }
     }
 
     private void setDefaultLifecycle(BigDecimal lifecycleID,
-                                     ContentSection section,
-                                     ContentType contentType) {
+            ContentSection section,
+            ContentType contentType) {
 
         //associate a default lifecycle
         try {
@@ -530,11 +523,10 @@ public class CreateType extends CMSForm
                 if (lifecycleID.intValue() != -1) {
                     LifecycleDefinition lifecycle = new LifecycleDefinition(lifecycleID);
                     ContentTypeLifecycleDefinition.updateLifecycleDefinition(section,
-                                                                             contentType, lifecycle);
+                            contentType, lifecycle);
                 } else {
                     //remove the association
-                    ContentTypeLifecycleDefinition.removeLifecycleDefinition
-                        (section, contentType);
+                    ContentTypeLifecycleDefinition.removeLifecycleDefinition(section, contentType);
                 }
             }
         } catch (DataObjectNotFoundException ex) {
@@ -544,17 +536,16 @@ public class CreateType extends CMSForm
     }
 
     private void setDefaultWorkflow(BigDecimal workflowID,
-                                    ContentSection section,
-                                    ContentType contentType) {
+            ContentSection section,
+            ContentType contentType) {
 
         //associate a default workflow
         try {
-            if ( workflowID != null) {
-                if(workflowID.intValue() != -1) {
+            if (workflowID != null) {
+                if (workflowID.intValue() != -1) {
                     // Set default workflow definition association.
                     WorkflowTemplate template = new WorkflowTemplate(new OID(WorkflowTemplate.BASE_DATA_OBJECT_TYPE, workflowID));
-                    ContentTypeWorkflowTemplate.
-                        updateWorkflowTemplate(section, contentType, template);
+                    ContentTypeWorkflowTemplate.updateWorkflowTemplate(section, contentType, template);
                 } else {
                     // Remove the association.
                     ContentTypeWorkflowTemplate.removeWorkflowTemplate(section, contentType);
@@ -565,5 +556,4 @@ public class CreateType extends CMSForm
         }
 
     }
-
 }

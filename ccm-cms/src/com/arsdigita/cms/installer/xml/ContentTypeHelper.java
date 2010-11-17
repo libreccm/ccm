@@ -45,7 +45,8 @@ public interface ContentTypeHelper {
     public void setLabelKey(String labelKey);        
     public String getLabelKey();
     public boolean isInternal();
-    public void setInternal(boolean internal);
+    public boolean isHidden();
+    public void setMode(String mode);
     /**  @deprecated */
     public void setDescription(String description) ;      
     /**  @deprecated */

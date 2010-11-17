@@ -48,6 +48,7 @@ import com.arsdigita.toolbox.ui.Cancellable;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
+
 /**
  * This class contains the split pane for the ContentType
  * administration interface.
@@ -60,15 +61,13 @@ import java.math.BigDecimal;
  */
 public final class ContentTypeAdminPane extends BaseAdminPane {
 
-    private static final Logger s_log = Logger.getLogger
-        (ContentTypeAdminPane.class);
-
+    private static final Logger s_log = Logger.getLogger(ContentTypeAdminPane.class);
     private final ACSObjectSelectionModel m_model;
     private final ContentTypeRequestLocal m_type;
 
     public ContentTypeAdminPane() {
         super(new Label(gz("cms.ui.types")),
-              new ContentTypeListModelBuilder());
+                new ContentTypeListModelBuilder());
 
         m_model = new ACSObjectSelectionModel(getSelectionModel());
         m_type = new SelectionRequestLocal();
@@ -83,13 +82,13 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
                 new EditType(m_model));
 
         setDelete(new ActionLink(new Label(gz("cms.ui.type.delete"))),
-                  new DeleteForm());
+                new DeleteForm());
 
         setIntroPane(new Label(gz("cms.ui.type.intro")));
-	setItemPane(new ContentTypeItemPane(m_model,
-                                            m_type,
-                                            getEditLink(),
-                                            getDeleteLink()));
+        setItemPane(new ContentTypeItemPane(m_model,
+                m_type,
+                getEditLink(),
+                getDeleteLink()));
 
         addAction(new TypeSecurityContainer(addTypeLink), ActionGroup.ADD);
     }
@@ -98,53 +97,54 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
         super.register(p);
 
         p.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    final PageState state = e.getPageState();
-                    ContentType contentType = (ContentType) m_model.getSelectedObject(state);
-                    ContentSection section = CMS.getContext().getContentSection();
-                    if ( contentType == null ) {
-                        final String template = state.getRequest().getParameter
-                            (ContentSectionPage.SET_TEMPLATE);
-                        if (template != null) {
-                            DataCollection da = SessionManager.getSession().retrieve(SectionTemplateMapping.BASE_DATA_OBJECT_TYPE);
-                            DomainCollection c = new DomainCollection(da);
-                            c.addEqualsFilter(SectionTemplateMapping.SECTION + "." + ACSObject.ID, 
-                                              section.getID());
-                            c.addEqualsFilter(SectionTemplateMapping.TEMPLATE + "." + ACSObject.ID, 
-                                              new BigDecimal(template));
-                            c.addOrder(SectionTemplateMapping.CONTENT_TYPE + "." + ContentType.LABEL);
-                            if (c.next()) {
-                                SectionTemplateMapping mapping = 
-                                    (SectionTemplateMapping) c.getDomainObject();
-                                contentType = mapping.getContentType();
-                            }
-                            c.close();
-                        }
-                        if ( contentType == null ) {
-                            ContentTypeCollection contentTypes = section.getContentTypes();
-                            contentTypes.addOrder("label asc");
-                            try {
-                                if ( contentTypes.next() ) {
-                                    contentType = contentTypes.getContentType();
-                                }
-                            } finally {
-                                contentTypes.close();
-                            }
-                        }
-                        if (contentType != null) {
-                            m_model.setSelectedObject(state,contentType);
-                            getBody().push(state, getItemPane());    
-                        }
 
-                        
+            public void actionPerformed(ActionEvent e) {
+                final PageState state = e.getPageState();
+                ContentType contentType = (ContentType) m_model.getSelectedObject(state);
+                ContentSection section = CMS.getContext().getContentSection();
+                if (contentType == null) {
+                    final String template = state.getRequest().getParameter(ContentSectionPage.SET_TEMPLATE);
+                    if (template != null) {
+                        DataCollection da = SessionManager.getSession().retrieve(SectionTemplateMapping.BASE_DATA_OBJECT_TYPE);
+                        DomainCollection c = new DomainCollection(da);
+                        c.addEqualsFilter(SectionTemplateMapping.SECTION + "." + ACSObject.ID,
+                                section.getID());
+                        c.addEqualsFilter(SectionTemplateMapping.TEMPLATE + "." + ACSObject.ID,
+                                new BigDecimal(template));
+                        c.addOrder(SectionTemplateMapping.CONTENT_TYPE + "." + ContentType.LABEL);
+                        if (c.next()) {
+                            SectionTemplateMapping mapping =
+                                    (SectionTemplateMapping) c.getDomainObject();
+                            contentType = mapping.getContentType();
+                        }
+                        c.close();
                     }
+                    if (contentType == null) {
+                        ContentTypeCollection contentTypes = section.getContentTypes();
+                        contentTypes.addOrder("label asc");
+                        try {
+                            if (contentTypes.next()) {
+                                contentType = contentTypes.getContentType();
+                            }
+                        } finally {
+                            contentTypes.close();
+                        }
+                    }
+                    if (contentType != null) {
+                        m_model.setSelectedObject(state, contentType);
+                        getBody().push(state, getItemPane());
+                    }
+
+
                 }
-            });
+            }
+        });
     }
 
     private class AddTypeContainer extends GridPanel implements ActionListener, FormProcessListener {
-        private Label m_noTypesAvailable = 
-            new Label(gz("cms.ui.type.select.none"));
+
+        private Label m_noTypesAvailable =
+                new Label(gz("cms.ui.type.select.none"));
         private SelectType m_selectType;
         private CreateType m_createType;
 
@@ -157,44 +157,41 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
             GridPanel container = new GridPanel(1);
             container.add(m_noTypesAvailable);
             m_selectType = new SelectType();
-            m_selectType.addSubmissionListener
-                (new CancelListener(m_selectType));
+            m_selectType.addSubmissionListener(new CancelListener(m_selectType));
             m_selectType.addProcessListener(this);
             container.add(m_selectType);
             selectSection.setBody(container);
 
             Section addSection = new Section() {
-                    public final boolean isVisible(final PageState state) {
-                        return super.isVisible(state) &&
-                            !ContentSection.getConfig().getHideUDCTUI();
-                    }
-                };
+
+                public final boolean isVisible(final PageState state) {
+                    return super.isVisible(state)
+                            && !ContentSection.getConfig().getHideUDCTUI();
+                }
+            };
             addSection.setHeading(new Label(gz("cms.ui.type.define")));
             m_createType = new CreateType(m_model);
-            m_createType.addSubmissionListener
-                (new CancelListener(m_createType));
+            m_createType.addSubmissionListener(new CancelListener(m_createType));
             m_createType.addProcessListener(this);
             addSection.setBody(m_createType);
             add(addSection);
         }
 
-
         public void actionPerformed(ActionEvent e) {
             PageState s = e.getPageState();
             ContentSection section = CMS.getContext().getContentSection();
             ContentTypeCollection contentTypes =
-                section.getNotAssociatedContentTypes();
+                    section.getNotAssociatedContentTypes();
             boolean hasAvailableTypes = !contentTypes.isEmpty();
             m_selectType.setVisible(s, hasAvailableTypes);
             m_noTypesAvailable.setVisible(s, !hasAvailableTypes);
         }
 
         public final void process(final FormSectionEvent e)
-            throws FormProcessException {
+                throws FormProcessException {
             final PageState state = e.getPageState();
             resetPane(state);
         }
-
     }
 
     /**
@@ -203,13 +200,15 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
      *  becaue it was protected
      */
     private final class CancelListener implements FormSubmissionListener {
+
         Cancellable m_form;
+
         CancelListener(Cancellable form) {
             m_form = form;
         }
 
-        public void submitted(FormSectionEvent event) 
-            throws FormProcessException {
+        public void submitted(FormSectionEvent event)
+                throws FormProcessException {
             PageState state = event.getPageState();
             if (m_form.isCancelled(state)) {
                 getBody().pop(state);
@@ -221,20 +220,22 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
     private void resetPane(PageState state) {
         getBody().reset(state);
         if (getSelectionModel().isSelected(state)) {
-            s_log.debug("The selection model is selected; displaying " +
-                        "the item pane");
+            s_log.debug("The selection model is selected; displaying "
+                    + "the item pane");
             getBody().push(state, getItemPane());
         }
     }
 
     private class SelectionRequestLocal extends ContentTypeRequestLocal {
+
         protected final Object initialValue(final PageState state) {
-	    ContentType contentType = (ContentType) m_model.getSelectedObject(state);
+            ContentType contentType = (ContentType) m_model.getSelectedObject(state);
             return contentType;
         }
     }
 
     private class DeleteForm extends BaseDeleteForm {
+
         DeleteForm() {
             super(new Label(gz("cms.ui.type.delete_prompt")));
 
@@ -245,7 +246,7 @@ public final class ContentTypeAdminPane extends BaseAdminPane {
                 throws FormProcessException {
             final PageState state = e.getPageState();
             final ContentSection section =
-                CMS.getContext().getContentSection();
+                    CMS.getContext().getContentSection();
 
             section.removeContentType(m_type.getContentType(state));
             section.save();

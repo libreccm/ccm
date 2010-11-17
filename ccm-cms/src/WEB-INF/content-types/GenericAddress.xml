@@ -9,7 +9,7 @@
         description="A generic address type"
         objectType="com.arsdigita.cms.contenttypes.GenericAddress"
         classname="com.arsdigita.cms.contenttypes.GenericAddress"
-        isInternal="yes">
+        mode="hidden">
 
         <ctd:authoring-kit
             createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
