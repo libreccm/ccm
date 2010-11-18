@@ -25,6 +25,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.CMSContext;
 import com.arsdigita.cms.CMSExcursion;
+import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ExtraXMLGenerator;
@@ -33,6 +34,7 @@ import com.arsdigita.cms.contenttypes.ArticleSectionCollection;
 import com.arsdigita.cms.contenttypes.MultiPartArticle;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
 import com.arsdigita.util.UncheckedWrapperException;
+import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
 import java.io.IOException;
@@ -52,25 +54,29 @@ import org.apache.log4j.Logger;
  * @version $Revision: #7 $ $Date: 2004/08/17 $
  * @version $Id: ArticleSectionPanel.java 1167 2006-06-14 12:27:28Z fabrice $
  */
-public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGenerator {
+public class ArticleSectionPanel extends SimpleComponent implements
+        ExtraXMLGenerator {
 
-    private static final Logger s_log = Logger.getLogger(ArticleSectionPanel.class);
-
+    private static final Logger s_log = Logger.getLogger(
+            ArticleSectionPanel.class);
     private PageParameter m_page;
     private boolean m_showAllSections = false;
-
+    /**
+     * Variable for holding an injected item.
+     */
+    private ContentItem m_item = null;
     public static final String PAGE_NUMBER_PARAM = "page";
 
     public ArticleSectionPanel() {
         super();
-        
+
         m_page = new PageParameter(PAGE_NUMBER_PARAM);
     }
 
     @Override
     public void register(Page p) {
         super.register(p);
-        
+
         addGlobalStateParams(p);
     }
 
@@ -94,7 +100,8 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
         }
         if (section == null) {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Item id ; "+item.getOID()+" - "+item.getContentSection()+" - "+item);
+                s_log.debug("Item id ; " + item.getOID() + " - " + item.
+                        getContentSection() + " - " + item);
             }
             section = item.getContentSection();
             CMS.getContext().setContentSection(section);
@@ -108,14 +115,47 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
 
     protected ContentItem getContentItem(PageState state) {
         CMSContext context = CMS.getContext();
-        
+
+        if (m_item != null) {
+            return m_item;
+        }
+
         if (!context.hasContentItem()) {
             return null;
         }
         return context.getContentItem();
     }
 
-    protected ArticleSection[] getSections(ContentItem item, final PageState state) {
+    /**
+     * This method provides a way for injecting the item to show if the other
+     * ways for retrieving the item to show do not work. An example for this
+     * is the index/greeting item of a category.
+     *
+     * @param item The item to inject.
+     */
+    public void setContentItem(ContentItem item) {
+        if (item instanceof ContentBundle) {
+            ContentBundle bundle;
+            HttpServletRequest request;
+            ContentItem resolved = null;
+            String lang;
+
+            bundle = (ContentBundle) item;
+            request = Web.getRequest();
+
+            if (request == null) {
+                resolved = bundle.getPrimaryInstance();
+            } else {
+                resolved = bundle.negotiate(request.getLocales());
+            }
+            m_item = resolved;
+        } else {
+            m_item = item;
+        }
+    }
+
+    protected ArticleSection[] getSections(ContentItem item,
+                                           final PageState state) {
         PageNumber number = null;
         try {
             number = (PageNumber) state.getValue(m_page);
@@ -132,7 +172,7 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
         if (number == null) {
             number = new PageNumber("1");
         }
-        
+
         MultiPartArticle mpa = (MultiPartArticle) item;
         if (!number.wantAllSections()) {
             if (s_log.isDebugEnabled()) {
@@ -144,16 +184,16 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
             if (s_log.isDebugEnabled()) {
                 s_log.debug("No page number provided");
             }
-            ArticleSection[] page = new ArticleSection[(int)sections.size()];
+            ArticleSection[] page = new ArticleSection[(int) sections.size()];
             int i = 0;
             while (sections.next()) {
-                page[i] = (ArticleSection)sections.getArticleSection();
+                page[i] = (ArticleSection) sections.getArticleSection();
                 i++;
             }
             return page;
         }
     }
-    
+
     // Get the section based on position in list of sections
     protected ArticleSection[] getSections(ContentItem item,
                                            PageState state,
@@ -175,9 +215,10 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
                     if (s_log.isDebugEnabled()) {
                         s_log.debug("Hit end of section list");
                     }
-                    return new ArticleSection[] {};
+                    return new ArticleSection[]{};
                 }
-                ArticleSection section = (ArticleSection)sections.getArticleSection();
+                ArticleSection section = (ArticleSection) sections.
+                        getArticleSection();
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Skipping " + section.getOID());
                 }
@@ -199,7 +240,8 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
                     }
                     break;
                 }
-                ArticleSection section = (ArticleSection)sections.getArticleSection();
+                ArticleSection section = (ArticleSection) sections.
+                        getArticleSection();
                 page.add(section);
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Keeping section " + section.getOID());
@@ -218,8 +260,8 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
         if (s_log.isDebugEnabled()) {
             s_log.debug("All done " + page.size() + " sections found");
         }
-        
-        return (ArticleSection[])page.toArray(new ArticleSection[page.size()]);
+
+        return (ArticleSection[]) page.toArray(new ArticleSection[page.size()]);
     }
 
     /**
@@ -230,24 +272,23 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
      * @see com.arsdigita.cms.dispatcher.XMLGenerator
      */
     @Override
-    public void generateXML(final PageState state, 
+    public void generateXML(final PageState state,
                             final Element parent) {
         ContentItem item = getContentItem(state);
 
-        if (!isVisible(state) || item == null ||
-            !(item instanceof MultiPartArticle)) {
+        if (!isVisible(state) || item == null
+            || !(item instanceof MultiPartArticle)) {
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Skipping generate XML isVisible: " + 
-                            isVisible(state) +
-                            " item " + 
-                            (item == null ? null : item.getOID()));
+                s_log.debug("Skipping generate XML isVisible: " + isVisible(
+                        state) + " item "
+                            + (item == null ? null : item.getOID()));
             }
             return;
         }
 
         generateXML(item, parent, state);
     }
-                                           
+
     /**
      * Specify the XML for a given content item.
      * @param item
@@ -256,31 +297,33 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
      */
     @Override
     public void generateXML(ContentItem item, Element element, PageState state) {
-    
-        Element content = element.newChildElement("cms:articleSectionPanel", CMS.CMS_XML_NS);
+
+        Element content = element.newChildElement("cms:articleSectionPanel",
+                                                  CMS.CMS_XML_NS);
         exportAttributes(content);
-        
+
         XMLGenerator xmlGenerator = getXMLGenerator(state, item);
-        
+
         ArticleSection sections[] = getSections(item, state);
-        for (int i= 0 ; i < sections.length ; i++) {
-            generateSectionXML(state, 
-                               content, 
+        for (int i = 0; i < sections.length; i++) {
+            generateSectionXML(state,
+                               content,
                                sections[i],
                                xmlGenerator);
         }
     }
-                                           
+
     protected void generateSectionXML(final PageState state,
                                       final Element parent,
                                       final ContentItem section,
                                       final XMLGenerator xmlGenerator) {
         CMSExcursion excursion = new CMSExcursion() {
-                public void excurse() {
-                    setContentItem(section);
-                    xmlGenerator.generateXML(state, parent, null);
-                }
-            };
+
+            public void excurse() {
+                setContentItem(section);
+                xmlGenerator.generateXML(state, parent, null);
+            }
+        };
         try {
             excursion.run();
         } catch (ServletException ex) {
@@ -293,13 +336,13 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
     // A class representing either an Integer number indicating
     // the position in the list of sections, or the string 'all'
     private class PageNumber {
-        
+
         private boolean m_all;
         private Integer m_number;
-        
-        public PageNumber(String number) 
-            throws NumberFormatException {
-            
+
+        public PageNumber(String number)
+                throws NumberFormatException {
+
             if ("all".equals(number.toLowerCase())) {
                 m_all = true;
                 m_number = null;
@@ -308,32 +351,32 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
                 m_number = new Integer(number);
             }
         }
-        
+
         public boolean wantAllSections() {
             return m_all;
         }
-        
+
         public Integer getPageNumber() {
             return m_number;
         }
     }
-    
+
     // A parameter which is either an Integer number indicating
     // the position in the list of sections, or the string 'all'
     private class PageParameter extends ParameterModel {
-        
+
         public PageParameter(String name) {
             super(name);
         }
-        
+
         public Object transformValue(HttpServletRequest request)
-            throws IllegalArgumentException {
+                throws IllegalArgumentException {
             return transformSingleValue(request);
         }
-        
+
         public Object unmarshal(String encoded)
-            throws IllegalArgumentException {
-            
+                throws IllegalArgumentException {
+
             if (encoded == null || encoded.length() == 0) {
                 return null;
             }
@@ -341,15 +384,14 @@ public class ArticleSectionPanel extends SimpleComponent implements ExtraXMLGene
                 return new PageNumber(encoded);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                throw new IllegalArgumentException
-                    (getName() + " should be a BigDecimal: '" + encoded + "'");
+                throw new IllegalArgumentException(getName()
+                                                   + " should be a BigDecimal: '"
+                                                   + encoded + "'");
             }
         }
-        
+
         public Class getValueClass() {
             return PageNumber.class;
         }
-        
     }
-
 }

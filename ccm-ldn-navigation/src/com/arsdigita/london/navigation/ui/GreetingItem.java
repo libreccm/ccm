@@ -89,7 +89,8 @@ public class GreetingItem extends AbstractComponent {
         ContentBundle bundle = (ContentBundle) item;
 
         /* Fix by Jens Pelzetter, 2009-08-28
-         * bundle.getPrimaryInstance() does not about the preferred languages
+         * bundle.getPrimaryInstance() does not care about the preferred
+         * languages
          * of the User Client, instead it returns the primary instance of
          * a ContentItem (the first language created).
          *
@@ -137,4 +138,5 @@ public class GreetingItem extends AbstractComponent {
 
         renderer.walk(item, SimpleXMLGenerator.ADAPTER_CONTEXT);        
     }
+   
 }

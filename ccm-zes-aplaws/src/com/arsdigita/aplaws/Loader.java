@@ -230,7 +230,7 @@ public class Loader extends PackageLoader {
                 "ZeS Welcome Page",
                 "ZeS Welcome Page for navigation",
                 "/packages/navigation/templates/zes-welcome.jsp");
-     
+
         template = Template.create(
                 "SciProject List",
                 "List of SciProjects",
@@ -351,6 +351,12 @@ public class Loader extends PackageLoader {
                 "Displays only the finished projects of a SciDepartment (and its "
                 + "subdepartments",
                 "/packages/navigation/templates/SciDepartmentFinishedProjects.jsp");
+
+        template =
+        Template.create(
+                "MultiPartArticle as Index Item",
+                "Display a MultiPartArticle as index item",
+                "/packages/navigation/templates/mparticle-index.jsp");
 
     }
 
