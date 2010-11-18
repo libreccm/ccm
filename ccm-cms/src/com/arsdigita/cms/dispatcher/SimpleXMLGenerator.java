@@ -115,10 +115,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
         if (!item.getClass().getName().equals(className)) {
             s_log.info("Specializing item");
             try {
-                item = (ContentItem) DomainObjectFactory.newInstance(new OID(item.
-                        getObjectType().getQualifiedName(),
-                                                                             item.
-                        getID()));
+                item = (ContentItem) DomainObjectFactory.newInstance(new OID(item. getObjectType().getQualifiedName(), item.getID()));
             } catch (DataObjectNotFoundException ex) {
                 throw new UncheckedWrapperException(
                         (String) GlobalizationUtil.globalize(
@@ -133,8 +130,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
             XMLGenerator xitem = (XMLGenerator) item;
             xitem.generateXML(state, parent, useContext);
 
-        } else if (className.equals(
-                "com.arsdigita.cms.UserDefinedContentItem")) {
+        } else if (className.equals("com.arsdigita.cms.UserDefinedContentItem")) {
             s_log.info("Item is a user defined content item");
             UserDefinedContentItem UDItem = (UserDefinedContentItem) item;
             generateUDItemXML(UDItem, state, parent, useContext);
@@ -145,8 +141,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
             // This is the preferred method
             Element content = startElement(useContext);
 
-            ContentItemXMLRenderer renderer =
-                                   new ContentItemXMLRenderer(content);
+            ContentItemXMLRenderer renderer = new ContentItemXMLRenderer(content);
 
             renderer.setWrapAttributes(true);
             renderer.setWrapRoot(false);

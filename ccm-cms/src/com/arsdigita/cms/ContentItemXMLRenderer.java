@@ -4,10 +4,12 @@
  */
 package com.arsdigita.cms;
 
+import com.arsdigita.cms.contenttypes.GenericAddress;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
+import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.xml.Element;
 
 /**
@@ -22,13 +24,11 @@ import com.arsdigita.xml.Element;
  *
  * @author quasi
  */
-
 public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
 
     public ContentItemXMLRenderer(Element root) {
         super(root);
     }
-
 
     // This method will be called by DomainObjectTraversal.walk()
     // It's purpose is to test for ContentBundle objects and if found, replace
@@ -49,5 +49,25 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
         }
 
         super.walk(adapter, nObj, path, context, linkObject);
+    }
+
+    @Override
+    protected void handleAttribute(DomainObject obj,
+            String path,
+            Property property) {
+
+        String name = property.getName();
+
+        if (obj instanceof GenericAddress) {
+            if (name.equals("isoCountryCode")) {
+                super.handleAttribute(obj, path, property);
+
+                Element element = newElement(m_element, "country");
+                element.setText(GenericAddress.getCountryNameFromIsoCode(((GenericAddress) obj).getIsoCountryCode()));
+                return;
+            }
+        }
+
+        super.handleAttribute(obj, path, property);
     }
 }

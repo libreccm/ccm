@@ -23,7 +23,7 @@
                 <xrd:property name="/object/type/displayName"/>
                 <xrd:property name="/object/type/associatedObjectType"/>
                 <xrd:property name="/object/type/className"/>
-                <xrd:property name="/object/type/isInternal"/>
+                <xrd:property name="/object/type/mode"/>
                 <xrd:property name="/object/type/itemFormID"/>
             </xrd:attributes>
             <xrd:associations rule="include">

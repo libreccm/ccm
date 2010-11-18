@@ -45,10 +45,19 @@ import org.apache.log4j.Logger;
  */
 public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 
-    private static final Logger s_log = Logger.getLogger
-        (DomainObjectXMLRenderer.class);
-
+    private static final Logger s_log = Logger.getLogger(DomainObjectXMLRenderer.class);
     private static Map s_formatters = new HashMap();
+    private Stack m_elements = new Stack();
+    protected Element m_element;
+    private boolean m_wrapRoot = false;
+    private boolean m_wrapObjects = false;
+    private boolean m_wrapAttributes = false;
+    private boolean m_revisitFullObject = false;
+    private Map m_objectElements;
+    private String m_namespaceURI;
+    private String m_namespacePrefix;
+    private DomainObjectXMLFormatter m_formatter;
+    private String m_context;
 
     /**
      * Registers a traversal formatter for an object type in a given
@@ -59,8 +68,8 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param context the context in which the formatter should be used
      */
     public static void registerFormatter(ObjectType type,
-                                         DomainObjectXMLFormatter formatter,
-                                         String context) {
+            DomainObjectXMLFormatter formatter,
+            String context) {
         s_formatters.put(new AdapterKey(type, context), formatter);
     }
 
@@ -72,7 +81,7 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param context the context in which the formatter should be used
      */
     public static void unregisterFormatter(ObjectType type,
-                                           String context) {
+            String context) {
         s_formatters.remove(new AdapterKey(type, context));
     }
 
@@ -85,17 +94,17 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param context the context in which the formatter should be used
      */
     public static void registerFormatter(String type,
-                                         DomainObjectXMLFormatter formatter,
-                                         String context) {
-        if( s_log.isDebugEnabled() ) {
-            s_log.debug( "Registering formatter " +
-                         formatter.getClass().getName() + " for type " + type +
-                         " in context " + context );
+            DomainObjectXMLFormatter formatter,
+            String context) {
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Registering formatter "
+                    + formatter.getClass().getName() + " for type " + type
+                    + " in context " + context);
         }
 
         registerFormatter(MetadataRoot.getMetadataRoot().getObjectType(type),
-                        formatter,
-                        context);
+                formatter,
+                context);
     }
 
     /**
@@ -106,9 +115,9 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param context the context in which the formatter should be used
      */
     public static void unregisterFormatter(String type,
-                                           String context) {
+            String context) {
         unregisterFormatter(MetadataRoot.getMetadataRoot().getObjectType(type),
-                          context);
+                context);
     }
 
     /**
@@ -119,10 +128,9 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param context the formatter context
      */
     public static DomainObjectXMLFormatter getFormatter(
-        ObjectType type,
-        String context) {
-        return (DomainObjectXMLFormatter)s_formatters
-            .get(new AdapterKey(type, context));
+            ObjectType type,
+            String context) {
+        return (DomainObjectXMLFormatter) s_formatters.get(new AdapterKey(type, context));
     }
 
     /**
@@ -135,34 +143,18 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
      * @param context the formatter context
      */
     public static DomainObjectXMLFormatter findFormatter(ObjectType type,
-                                                         String context) {
+            String context) {
         DomainObjectXMLFormatter formatter = null;
         while (formatter == null && type != null) {
             formatter = getFormatter(type, context);
             if (s_log.isDebugEnabled()) {
-                s_log.debug("getFormatter("+type+","+context+")="+formatter);
+                s_log.debug("getFormatter(" + type + "," + context + ")=" + formatter);
             }
             type = type.getSupertype();
         }
         return formatter;
     }
 
-    private Stack m_elements = new Stack();
-    private Element m_element;
-
-    private boolean m_wrapRoot = false;
-    private boolean m_wrapObjects = false;
-    private boolean m_wrapAttributes = false;
-    private boolean m_revisitFullObject = false;
-
-    private Map m_objectElements;
-
-    private String m_namespaceURI;
-    private String m_namespacePrefix;
-
-    private DomainObjectXMLFormatter m_formatter;
-    private String m_context;
-    
     /**
      * Creates a new DomainObject XML renderer
      * that outputs XML into the element passed into
@@ -176,22 +168,22 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     public void setNamespace(String prefix,
-                             String uri) {
+            String uri) {
         m_namespacePrefix = prefix;
         m_namespaceURI = uri;
     }
 
-    protected  Object format(DomainObject obj,
-                             String path,
-                             Property prop,
-                             Object value) {
+    protected Object format(DomainObject obj,
+            String path,
+            Property prop,
+            Object value) {
         if (m_formatter != null) {
             String propertyPath = appendToPath(path, prop.getName());
-            Object rendered = m_formatter.format(obj, 
-                                      propertyPath, 
-                                      prop, value);
+            Object rendered = m_formatter.format(obj,
+                    propertyPath,
+                    prop, value);
             if (s_log.isDebugEnabled()) {
-                s_log.debug("FORMAT "+obj+" m_formatter="+m_formatter+" rendered="+rendered);
+                s_log.debug("FORMAT " + obj + " m_formatter=" + m_formatter + " rendered=" + rendered);
             }
             if (rendered == null) {
                 // try supertype formatters
@@ -205,7 +197,7 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
                         rendered = null;
                     }
                     if (s_log.isDebugEnabled()) {
-                        s_log.debug("FALLBACK supertype "+objectType+" formatter="+formatter+" rendered="+rendered);
+                        s_log.debug("FALLBACK supertype " + objectType + " formatter=" + formatter + " rendered=" + rendered);
                     }
                     objectType = objectType.getSupertype();
                 }
@@ -220,11 +212,11 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 
     @Override
     protected void walk(DomainObject obj,
-                        String context,
-                        DomainObjectTraversalAdapter adapter) {
+            String context,
+            DomainObjectTraversalAdapter adapter) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Traversing " + obj + " for context " + context + " " +
-                        "using adapter " + adapter);
+            s_log.debug("Traversing " + obj + " for context " + context + " "
+                    + "using adapter " + adapter);
         }
 
         m_formatter = findFormatter(obj.getObjectType(), context);
@@ -236,7 +228,6 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
 
         super.walk(obj, context, adapter);
     }
-
 
     /**
      * Determines XML output for root object.
@@ -281,7 +272,6 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
         m_revisitFullObject = value;
     }
 
-
     public boolean isWrappingAttributes() {
         return m_wrapAttributes;
     }
@@ -289,13 +279,13 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     public boolean isWrappingObjects() {
         return m_wrapObjects;
     }
-    
+
     public boolean isWrappingRoot() {
         return m_wrapRoot;
     }
 
     protected void beginObject(DomainObject obj,
-                               String path) {
+            String path) {
         if (m_wrapRoot || !path.equals("/object")) {
             String name = m_wrapObjects ? "object" : nameFromPath(path);
             Element element = newElement(m_element, name);
@@ -310,19 +300,19 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     protected void endObject(DomainObject obj,
-                             String path) {
+            String path) {
         if (m_wrapRoot || !path.equals("/object")) {
-            m_element = (Element)m_elements.pop();
+            m_element = (Element) m_elements.pop();
         }
     }
 
     protected void revisitObject(DomainObject obj,
-                                 String path) {
+            String path) {
         Element priorElement = null;
         if (m_revisitFullObject) {
             priorElement = (Element) m_objectElements.get(obj.getOID());
         }
-        if (priorElement != null && (m_elements.search(priorElement)==-1)) {
+        if (priorElement != null && (m_elements.search(priorElement) == -1)) {
             String name = m_wrapObjects ? "object" : nameFromPath(path);
             Element element = newElement(m_element, name, priorElement);
         } else {
@@ -331,56 +321,56 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
             element.addAttribute("oid", obj.getOID().toString());
         }
     }
-    
+
     protected void handleAttribute(DomainObject obj,
-                                   String path,
-                                   Property property) {
+            String path,
+            Property property) {
         String name = property.getName();
         Object value = obj.get(name);
 
         if (value != null) {
             if (m_wrapAttributes) {
-            	Object formattedValue = format(obj, path, property, value);
-            	if (formattedValue instanceof Element) {
-           	    m_element.addContent((Element)formattedValue);
-										
-		} else {
-                Element element = newElement(m_element, name);
-		    element.setText((String)format(obj, path, property, value));
-				
-                // locale-independent date output 
-                if (value instanceof Date) {
-                    Date date = (Date) value;
-                    Calendar calDate = Calendar.getInstance();
-                    calDate.setTime(date);
-                    element.addAttribute("year", Integer.toString(calDate.get(Calendar.YEAR)));
-                    element.addAttribute("month", Integer.toString(calDate.get(Calendar.MONTH)+1));
-                    element.addAttribute("day", Integer.toString(calDate.get(Calendar.DAY_OF_MONTH)));
-                    element.addAttribute("hour", Integer.toString(calDate.get(Calendar.HOUR_OF_DAY)));
-                    element.addAttribute("minute", Integer.toString(calDate.get(Calendar.MINUTE)));
-                    element.addAttribute("second", Integer.toString(calDate.get(Calendar.SECOND)));
+                Object formattedValue = format(obj, path, property, value);
+                if (formattedValue instanceof Element) {
+                    m_element.addContent((Element) formattedValue);
 
-                    // Quasimodo: BEGIN
-                    // Add attributes for date and time
-                    Locale negLocale = com.arsdigita.dispatcher.DispatcherHelper.getNegotiatedLocale();
-                    DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, negLocale);
-                    DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT, negLocale);
-                    element.addAttribute("date", dateFormatter.format(date));
-                    element.addAttribute("time", timeFormatter.format(date));
-                    // Quasimodo: END
+                } else {
+                    Element element = newElement(m_element, name);
+                    element.setText((String) format(obj, path, property, value));
 
+                    // locale-independent date output
+                    if (value instanceof Date) {
+                        Date date = (Date) value;
+                        Calendar calDate = Calendar.getInstance();
+                        calDate.setTime(date);
+                        element.addAttribute("year", Integer.toString(calDate.get(Calendar.YEAR)));
+                        element.addAttribute("month", Integer.toString(calDate.get(Calendar.MONTH) + 1));
+                        element.addAttribute("day", Integer.toString(calDate.get(Calendar.DAY_OF_MONTH)));
+                        element.addAttribute("hour", Integer.toString(calDate.get(Calendar.HOUR_OF_DAY)));
+                        element.addAttribute("minute", Integer.toString(calDate.get(Calendar.MINUTE)));
+                        element.addAttribute("second", Integer.toString(calDate.get(Calendar.SECOND)));
+
+                        // Quasimodo: BEGIN
+                        // Add attributes for date and time
+                        Locale negLocale = com.arsdigita.dispatcher.DispatcherHelper.getNegotiatedLocale();
+                        DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, negLocale);
+                        DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT, negLocale);
+                        element.addAttribute("date", dateFormatter.format(date));
+                        element.addAttribute("time", timeFormatter.format(date));
+                        // Quasimodo: END
+
+                    }
                 }
-		}
             } else {
-                m_element.addAttribute(property.getName(), 
-                                       (String)format(obj, path, property, value));
+                m_element.addAttribute(property.getName(),
+                        (String) format(obj, path, property, value));
             }
         }
     }
 
     protected void beginRole(DomainObject obj,
-                             String path,
-                             Property property) {
+            String path,
+            Property property) {
         if (m_wrapObjects) {
             Element element = newElement(m_element, property.getName());
             m_elements.push(m_element);
@@ -389,17 +379,16 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     protected void endRole(DomainObject obj,
-                           String path,
-                           Property property) {
+            String path,
+            Property property) {
         if (m_wrapObjects) {
-            m_element = (Element)m_elements.pop();
+            m_element = (Element) m_elements.pop();
         }
     }
 
-
     protected void beginAssociation(DomainObject obj,
-                                    String path,
-                                    Property property) {
+            String path,
+            Property property) {
         if (m_wrapObjects) {
             Element element = newElement(m_element, property.getName());
             m_elements.push(m_element);
@@ -408,10 +397,10 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     protected void endAssociation(DomainObject obj,
-                                  String path,
-                                  Property property) {
+            String path,
+            Property property) {
         if (m_wrapObjects) {
-            m_element = (Element)m_elements.pop();
+            m_element = (Element) m_elements.pop();
         }
     }
 
@@ -428,20 +417,20 @@ public class DomainObjectXMLRenderer extends DomainObjectTraversal {
     }
 
     protected Element newElement(Element parent,
-                                 String name) {
-        return m_namespaceURI == null ? 
-            parent.newChildElement(name) :
-            parent.newChildElement(m_namespacePrefix + ":" + name,
-                                   m_namespaceURI);    
+            String name) {
+        return m_namespaceURI == null
+                ? parent.newChildElement(name)
+                : parent.newChildElement(m_namespacePrefix + ":" + name,
+                m_namespaceURI);
     }
 
     protected Element newElement(Element parent,
-                                 String name,
-                                 Element copy) {
-        return m_namespaceURI == null ? 
-            parent.newChildElement(name, copy) :
-            parent.newChildElement(m_namespacePrefix + ":" + name,
-                                   m_namespaceURI,
-                                   copy);
+            String name,
+            Element copy) {
+        return m_namespaceURI == null
+                ? parent.newChildElement(name, copy)
+                : parent.newChildElement(m_namespacePrefix + ":" + name,
+                m_namespaceURI,
+                copy);
     }
 }
