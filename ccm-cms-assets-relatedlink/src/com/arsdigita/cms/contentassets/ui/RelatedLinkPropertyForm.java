@@ -67,13 +67,14 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
     public RelatedLinkPropertyForm(ItemSelectionModel itemModel,
             LinkSelectionModel link, String linkListName) {
 
-        super(itemModel, link);
+        this(itemModel, link, linkListName, null);
     }
 
     public RelatedLinkPropertyForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link, ContentType contentType) {
+            LinkSelectionModel link, String linkListName, ContentType contentType) {
 
         super(itemModel, link, contentType);
+        m_linkListName = linkListName;
     }
 
     @Override

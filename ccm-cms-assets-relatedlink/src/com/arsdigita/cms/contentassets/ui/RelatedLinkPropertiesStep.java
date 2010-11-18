@@ -18,6 +18,7 @@ import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.contenttypes.ui.LinkPropertiesStep;
@@ -29,6 +30,7 @@ import com.arsdigita.cms.contenttypes.ui.LinkTable;
 public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
 
     protected String m_linkListName = "";
+    protected ContentType m_contentType = null;
 
     /**
      * Constructor. Creates a <code>RelatedLinkPropertiesStep</code> given an
@@ -48,6 +50,7 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
      * Sets a RelatedLinkSelectionModel as the 
      * LinkSelectionModel for this authoring step. 
      */
+    @Override
     protected void setLinkSelectionModel() {
         setLinkSelectionModel(
             new RelatedLinkSelectionModel(getLinkParam()));
@@ -83,7 +86,8 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
     protected FormSection getEditSheet() {
         return new RelatedLinkPropertyForm(getItemSelectionModel(), 
                                            getLinkSelectionModel(),
-                                           m_linkListName);
+                                           m_linkListName,
+                                           m_contentType);
     }
 }
 
