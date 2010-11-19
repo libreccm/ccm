@@ -28,6 +28,7 @@ import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentItemXMLRenderer;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
@@ -99,7 +100,8 @@ public class GreetingItem extends AbstractComponent {
          * language version.
          */
         //ContentItem baseItem = bundle.getPrimaryInstance();
-        ContentItem baseItem = bundle.negotiate(request.getLocales());
+        ContentItem baseItem = bundle.getInstance(DispatcherHelper.
+                getNegotiatedLocale().getLanguage());
         // If there is no matching language version for this content item
         if (baseItem == null) {
             // get the primary instance instead (fallback)
@@ -111,7 +113,7 @@ public class GreetingItem extends AbstractComponent {
         //Moved to seperate method generateGreetingItemXml to make to
         //XML generation extendable (use another renderer etc.)
         /*ContentItemXMLRenderer renderer =
-                               new ContentItemXMLRenderer(itemEl);
+        new ContentItemXMLRenderer(itemEl);
 
         renderer.setWrapAttributes(true);
         renderer.setWrapRoot(false);
@@ -136,7 +138,6 @@ public class GreetingItem extends AbstractComponent {
         renderer.setWrapRoot(false);
         renderer.setWrapObjects(false);
 
-        renderer.walk(item, SimpleXMLGenerator.ADAPTER_CONTEXT);        
+        renderer.walk(item, SimpleXMLGenerator.ADAPTER_CONTEXT);
     }
-   
 }
