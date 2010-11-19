@@ -9,7 +9,7 @@
       description="Base type for publications"
       objectType="com.arsdigita.cms.contenttypes.Publication"
       classname="com.arsdigita.cms.contenttypes.Publication"
-      isInternal="yes">
+      mode="hidden">
 
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       

@@ -359,8 +359,7 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
                 // Also while we iterate through the list, we also need to add
                 // this content type as sibling to all entries in the ancestor list
                 while (strTok.hasMoreElements()) {
-
-                    BigDecimal ctID = (BigDecimal) strTok.nextElement();
+                    BigDecimal ctID = new BigDecimal(strTok.nextToken());
 
                     // Get the current content type
                     try {
