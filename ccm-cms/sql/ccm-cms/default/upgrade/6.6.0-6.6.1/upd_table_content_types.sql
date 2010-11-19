@@ -40,7 +40,7 @@ alter table content_types
         (("mode" = ANY (ARRAY['D'::bpchar, 'H'::bpchar, 'I'::bpchar]))) ;
 
 alter table content_types
-    alter mode set default '0'::bpchar
+    alter mode set default '0'::bpchar ;
 
 alter table content_types
     alter mode set NOT NULL ;
