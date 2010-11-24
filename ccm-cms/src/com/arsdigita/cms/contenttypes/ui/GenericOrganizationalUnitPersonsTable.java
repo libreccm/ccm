@@ -163,7 +163,7 @@ public class GenericOrganizationalUnitPersonsTable extends Table implements
                         return role.getName();
                     } else {
                         return ContenttypesGlobalizationUtil.globalize(
-                                "cms.ui.unknownRole");
+								       "cms.ui.unknownRole").localize();
                     }
                 case 2:
                     return ContenttypesGlobalizationUtil.globalize(
