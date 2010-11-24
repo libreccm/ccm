@@ -90,17 +90,15 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
             add(new Label(
                     new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceSize",
                     "com.arsdigita.cms.contentassets.RelatedLinkResources")));
-
             TextField resSize = new TextField(new StringParameter(RelatedLink.RESOURCE_SIZE));
             add(resSize);
 
             add(new Label(
                     new GlobalizedMessage("com.arsdigita.cms.contentassets.related_link_resourceType",
                     "com.arsdigita.cms.contentassets.RelatedLinkResources")));
-
             SingleSelect resType = new SingleSelect(new StringParameter(RelatedLink.RESOURCE_TYPE));
             addMimeOptions(resType);
-            add(resType);
+            add(resType);           
         }
 
         Hidden linkListName = new Hidden(new StringParameter(RelatedLink.LINK_LIST_NAME));

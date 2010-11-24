@@ -64,7 +64,8 @@ import org.apache.log4j.Logger;
  * @author Nobuko Asakai (nasakai@redhat.com)
  */
 public class LinkPropertyForm extends FormSection
-        implements FormInitListener, FormProcessListener, FormValidationListener, FormSubmissionListener {
+        implements FormInitListener, FormProcessListener, FormValidationListener,
+                   FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(LinkPropertyForm.class);
     /** Name of this form */
@@ -80,6 +81,7 @@ public class LinkPropertyForm extends FormSection
     private LinkSelectionModel m_linkModel;
     private SaveCancelSection m_saveCancelSection;
     private ItemSearchWidget m_itemSearch;
+    private TextField m_itemParams;
     private ContentType m_contentType;
     private final String ITEM_SEARCH = "contentItem";
 
@@ -92,12 +94,12 @@ public class LinkPropertyForm extends FormSection
      *    Link to work on
      */
     public LinkPropertyForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link) {
+                            LinkSelectionModel link) {
         this(itemModel, link, null);
     }
 
     public LinkPropertyForm(ItemSelectionModel itemModel,
-            LinkSelectionModel link, ContentType contentType) {
+                            LinkSelectionModel link, ContentType contentType) {
         super(new ColumnPanel(2));
         s_log.debug("property form constructor");
         m_linkModel = link;
@@ -127,7 +129,8 @@ public class LinkPropertyForm extends FormSection
         m_description = new TextArea("description");
         m_description.setCols(40);
         m_description.setRows(5);
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.description")));
+        add(new Label(GlobalizationUtil.globalize(
+                "cms.contenttypes.ui.description")));
 
         add(m_description);
 
@@ -135,26 +138,46 @@ public class LinkPropertyForm extends FormSection
                 "<script language=\"javascript\">\n"
                 + "<!-- \n"
                 + "function toggle_link_fields(status) { \n"
-                + "  document.forms['linkEditForm'].targetURI.disabled = status; \n"
-                + "  document.forms['linkEditForm'].openOption.disabled = status; \n"
-                + "  document.forms['linkEditForm'].contentItem.disabled = !status; \n"
-                + "  document.forms['linkEditForm'].contentItem_search.disabled = !status; \n"
-                + "  document.forms['linkEditForm'].contentItem_clear.disabled = !status; \n"
+                + "//  document.forms['linkEditForm'].targetURI.disabled = status; \n"
+                + "//  document.forms['linkEditForm'].openOption.disabled = status; \n"
+                + "//  document.forms['linkEditForm'].contentItem.disabled = !status; \n"
+                + "//  document.forms['linkEditForm'].contentItem_search.disabled = !status; \n"
+                + "//  document.forms['linkEditForm'].contentItem_clear.disabled = !status; \n"
+                + "//  document.forms['linkEditForm'].itemParams.disabled = !status; \n"
                 + "}\n"
+                + "function enableUrlFields() { \n"
+                + "  document.forms['linkEditForm'].targetURI.disabled = false; \n"
+                + "  document.forms['linkEditForm'].openOption.disabled = false; \n"
+                + "  document.forms['linkEditForm'].contentItem.disabled = true; \n"
+                + "  document.forms['linkEditForm'].contentItem_search.disabled = true; \n"
+                + "  //document.forms['linkEditForm'].contentItem_clear.disabled = true; \n"
+                + "  document.forms['linkEditForm'].itemParams.disabled = true; \n"
+                + "} \n"
+                + "function enableItemFields() { \n"
+                + "  document.forms['linkEditForm'].targetURI.disabled = true; \n"
+                + "  document.forms['linkEditForm'].openOption.disabled = true; \n"
+                + "  document.forms['linkEditForm'].contentItem.disabled = false; \n"
+                + "  document.forms['linkEditForm'].contentItem_search.disabled = false; \n"
+                + "  //document.forms['linkEditForm'].contentItem_clear.disabled = false; \n"
+                + "  document.forms['linkEditForm'].itemParams.disabled = false; \n"
+                + "} \n"
                 + "// -->\n"
                 + "</script>\n",
                 false));
 
         add(new Label("Choose either a URL or a Content Item", Label.BOLD),
-                ColumnPanel.FULL_WIDTH);
+            ColumnPanel.FULL_WIDTH);
         m_linkType = new RadioGroup("linkType");
         Option m_external = new Option(Link.EXTERNAL_LINK, "URL");
-        m_external.setOnClick("toggle_link_fields(false)");
+        //m_external.setOnClick("toggle_link_fields(false)");
+        m_external.setOnClick("enableUrlFields()");
 
         Option m_internal = new Option(Link.INTERNAL_LINK, "Content Item");
-        m_internal.setOnClick("toggle_link_fields(true)");
+        //m_internal.setOnClick("toggle_link_fields(true)");
+        m_internal.setOnClick("enableItemFields()");
 
-        Option m_selectWindow = new Option(Link.TARGET_WINDOW, "Open URL in new window");
+        Option m_selectWindow = new Option(Link.TARGET_WINDOW,
+                                           "Open URL in new window");
         m_URIOption = new CheckboxGroup("openOption");
         m_URIOption.addOption(m_selectWindow);
 
@@ -168,7 +191,8 @@ public class LinkPropertyForm extends FormSection
 
         m_targetURI = new TextField("targetURI");
         m_targetURI.setOnFocus("toggle_link_fields(false)");
-        m_targetURI.setHint("Enter a URL such as http://www.example.com/ or /ccm/forum/");
+        m_targetURI.setHint(
+                "Enter a URL such as http://www.example.com/ or /ccm/forum/");
         add(new Label("URL: "));
         add(m_targetURI);
 
@@ -178,13 +202,22 @@ public class LinkPropertyForm extends FormSection
         m_itemSearch.getClearButton().setOnFocus("toggle_link_fields(true)");
         add(m_itemSearch);
 
+        add(new Label("Parameters"));
+        m_itemParams = new TextField("itemParams");
+        m_itemParams.setOnFocus("toggle_link_fields(true)");
+        m_itemParams.setHint(
+                "Enter parameters for the item URL. Separate items with '&'.");
+        add(m_itemParams);
+
         add(new Label(
                 "<script language=\"javascript\">\n"
                 + "<!-- \n"
                 + "if (document.forms['linkEditForm'].linkType[0].checked) { \n"
-                + "  toggle_link_fields(false); \n"
+                + "  //toggle_link_fields(false); \n"
+                + "  enableUrlFields(); \n"
                 + "} else { \n"
-                + "  toggle_link_fields(true); \n"
+                + "  //toggle_link_fields(true); \n"
+                + " enableItemFields(); \n"
                 + "} \n"
                 + "// -->\n"
                 + "</script>\n",
@@ -264,7 +297,8 @@ public class LinkPropertyForm extends FormSection
             // The link is external, the URL must be valid and not null
             String externalURI = (String) m_targetURI.getValue(state);
             if (externalURI == null || externalURI.length() == 0) {
-                throw new FormProcessException("The URI field is required for an external link.");
+                throw new FormProcessException(
+                        "The URI field is required for an external link.");
             }
 
             String url = (String) m_targetURI.getValue(state);
@@ -282,7 +316,7 @@ public class LinkPropertyForm extends FormSection
                     // "http://servername" on the front
 
                     newURL = HTTP_PROTOCOL + Web.getConfig().getHost()
-                            + url;
+                             + url;
                 } else if (!hasProtocol) {
                     // There's no protocol. See if it would be ok if we
                     // put one on the beginning
@@ -291,7 +325,8 @@ public class LinkPropertyForm extends FormSection
                 } else {
                     // No idea, just throw the error
 
-                    throw new FormProcessException("URL is not valid: " + ex.getMessage());
+                    throw new FormProcessException("URL is not valid: " + ex.
+                            getMessage());
                 }
 
                 try {
@@ -320,13 +355,16 @@ public class LinkPropertyForm extends FormSection
                 // check that's what they intended
                 if (!localLink && !hasProtocol) {
                     m_targetURI.setValue(state, newURL);
-                    throw new FormProcessException("A valid URL starts with a protocol, eg http://");
+                    throw new FormProcessException(
+                            "A valid URL starts with a protocol, eg http://");
                 }
             }
-        } else if (Link.INTERNAL_LINK.equals((String) m_linkType.getValue(state))) {
+        } else if (Link.INTERNAL_LINK.equals((String) m_linkType.getValue(
+                state))) {
             // The link is internal, the item selected must be not null
             if (data.get(ITEM_SEARCH) == null) {
-                throw new FormProcessException("Item selection is required for internal link.");
+                throw new FormProcessException(
+                        "Item selection is required for internal link.");
             }
         }
     }
@@ -371,8 +409,14 @@ public class LinkPropertyForm extends FormSection
             try {
                 m_title.setValue(state, link.getTitle());
                 m_description.setValue(state, link.getDescription());
-                m_targetURI.setValue(state, link.getTargetURI());
-                if (com.arsdigita.bebop.Link.NEW_FRAME.equals(link.getTargetWindow())) {
+                if (link.getTargetURI().startsWith("&")) {
+                    m_itemParams.setValue(state,
+                                          link.getTargetURI().substring(1));
+                } else {
+                    m_targetURI.setValue(state, link.getTargetURI());
+                }
+                if (com.arsdigita.bebop.Link.NEW_FRAME.equals(link.
+                        getTargetWindow())) {
                     m_URIOption.setValue(state, Link.TARGET_WINDOW);
                 } else {
                     m_URIOption.setValue(state, null);
@@ -427,7 +471,7 @@ public class LinkPropertyForm extends FormSection
             //call to set various properties of Link.
             setLinkProperties(link, fse);
             s_log.debug("Created Link with ID: " + link.getOID().toString()
-                    + "Title " + link.getTitle());
+                        + "Title " + link.getTitle());
         }
         // XXX Initialize the form
         m_linkModel.clearSelection(state);
@@ -453,7 +497,12 @@ public class LinkPropertyForm extends FormSection
             link.setTargetItem(null);
         } else {
             // Internal
-            link.setTargetURI(null);
+            if (((String) m_itemParams.getValue(state)).isEmpty()) {
+                link.setTargetURI(null);
+            } else {
+                link.setTargetURI(String.format("&%s", m_itemParams.getValue(
+                        state)));
+            }
 
             // Quasimodo: BEGIN
             // This is part of the patch to make RelatedLink (and Link) multilanguage compatible
