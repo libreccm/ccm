@@ -2,8 +2,8 @@
 <ctd:authoring-kit xmlns:ctd="http://xmlns.redhat.com/cms/content-types">
       <ctd:authoring-step 
          labelKey="cms.contenttypes.shared.body_text.title" 
-         labelBundle="com.arsdigita.cms.ui.CMSResources"
+         labelBundle="com.arsdigita.cms.CMSResources"
          descriptionKey="cms.contenttypes.shared.body_text.description" 
-         descriptionBundle="com.arsdigita.cms.ui.CMSResources"
+         descriptionBundle="com.arsdigita.cms.CMSResources"
          component="com.arsdigita.cms.ui.authoring.TextPageBody"/>
 </ctd:authoring-kit>

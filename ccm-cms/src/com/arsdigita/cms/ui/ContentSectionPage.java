@@ -66,7 +66,7 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         (ContentSectionPage.class);
 
     public static final String RESOURCE_BUNDLE =
-        "com.arsdigita.cms.ui.CMSResources";
+        "com.arsdigita.cms.CMSResources";
 
     /**
      * The URL parameter that can be passed in in order to set the

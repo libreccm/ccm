@@ -2,8 +2,8 @@
 <ctd:authoring-kit xmlns:ctd="http://xmlns.redhat.com/cms/content-types">
   <ctd:authoring-step 
        labelKey="cms.contenttypes.shared.assign_categories.title" 
-       labelBundle="com.arsdigita.cms.ui.CMSResources"
+       labelBundle="com.arsdigita.cms.CMSResources"
        descriptionKey="cms.contenttypes.shared.assign_categories.description" 
-       descriptionBundle="com.arsdigita.cms.ui.CMSResources"
+       descriptionBundle="com.arsdigita.cms.CMSResources"
     component="com.arsdigita.cms.ui.authoring.ItemCategoryStep"/>
 </ctd:authoring-kit>
