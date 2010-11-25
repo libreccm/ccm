@@ -150,7 +150,7 @@ class PublishedLink extends DomainObject {
             link = new PublishedLink(SessionManager.getSession().create(oid));
         }
 
-        if (sourceObject.getObjectType().getProperty(propertyName).isCollection()) {
+        if ((sourceObject != null) && sourceObject.getObjectType().getProperty(propertyName).isCollection()) {
             link.saveLinkAttributes((DataCollection) sourceObject.get(propertyName + "@link"));
         }
 

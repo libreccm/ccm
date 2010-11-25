@@ -21,6 +21,7 @@ package com.arsdigita.cms;
 import com.arsdigita.cms.lifecycle.Lifecycle;
 import com.arsdigita.cms.lifecycle.LifecycleService;
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
@@ -39,7 +40,6 @@ import java.util.HashSet;
 class VersionCopier extends ObjectCopier {
 
     private static Logger s_log = Logger.getLogger(VersionCopier.class);
-
     private final Lifecycle m_lifecycle;
     private boolean m_once = false;
     private long m_start = 0;
@@ -91,10 +91,10 @@ class VersionCopier extends ObjectCopier {
             m_once = true;
         }
 
-	m_topLevelSourceOID = item.getOID();
+        m_topLevelSourceOID = item.getOID();
         final ContentItem version = createVersion(item);
-	//Assert.isTrue(m_topLevelSourceOID == null,
-	//	     "CopyItem should be called only once for a given copier instance");
+        //Assert.isTrue(m_topLevelSourceOID == null,
+        //	     "CopyItem should be called only once for a given copier instance");
 
         if (m_lifecycle != null) {
             LifecycleService.setLifecycle(version, m_lifecycle);
@@ -108,9 +108,10 @@ class VersionCopier extends ObjectCopier {
         }
 
         if (s_log.isInfoEnabled()) {
-            s_log.info("Done publishing " + item + " (" +
-                       (System.currentTimeMillis() - m_start) +
-                       " millis)");
+            s_log.info("Done publishing " + item + " (" + (System.
+                                                           currentTimeMillis()
+                                                           - m_start)
+                       + " millis)");
         }
 
         return version;
@@ -133,10 +134,10 @@ class VersionCopier extends ObjectCopier {
      */
     @Override
     public DomainObject copy(final DomainObject object) {
-	if (object != null) {
-	    m_traversedComponents.add(object);
-	}
-	return super.copy(object);
+        if (object != null) {
+            m_traversedComponents.add(object);
+        }
+        return super.copy(object);
     }
 
     /**
@@ -173,9 +174,9 @@ class VersionCopier extends ObjectCopier {
      */
     @Override
     protected DomainObject copy(final DomainObject source,
-				final DomainObject target,
-				final DomainObject object,
-				final Property prop) {
+                                final DomainObject target,
+                                final DomainObject object,
+                                final Property prop) {
         m_trace.enter("copy", object, prop);
 
         if (s_log.isDebugEnabled()) {
@@ -197,8 +198,8 @@ class VersionCopier extends ObjectCopier {
             }
 
             if (prop.isComponent()) {
-                s_log.debug("The property is a component; creating a " +
-                            "live or pending version");
+                s_log.debug("The property is a component; creating a "
+                            + "live or pending version");
 
                 final ContentItem copy = createVersion(item);
 
@@ -206,26 +207,35 @@ class VersionCopier extends ObjectCopier {
 
                 return copy;
             } else if (m_traversedComponents.contains(object)) {
-		final DomainObject copy = copy(object);
-		
-		m_trace.exit("copy", copy);
-		
-		return copy;
-            } else if (prop.isRequired()) {
-                Assert.fail("1..1 associations to non-component top-level ContentItems are not allowed");
-		return null;
-            } else {
-                s_log.debug("The property is not a component; creating " +
-                            "PublishedLink for the item");
+                final DomainObject copy = copy(object);
 
-		PublishedLink.create((ContentItem) getCopy(m_topLevelSourceOID), target, prop.getName(), item, (ContentItem) source);
+                m_trace.exit("copy", copy);
+
+                return copy;
+            } else if (prop.isRequired()) {
+                Assert.fail(
+                        "1..1 associations to non-component top-level ContentItems are not allowed");
+                return null;
+            } else {
+                s_log.debug("The property is not a component; creating "
+                            + "PublishedLink for the item");
+
+                if (source instanceof ContentItem) {
+                    PublishedLink.create((ContentItem) getCopy(
+                            m_topLevelSourceOID), target, prop.getName(), item,
+                                         (ContentItem) source);
+                } else {
+                    PublishedLink.create((ContentItem) getCopy(
+                            m_topLevelSourceOID), target, prop.getName(), item,
+                                         null);
+                }
                 m_trace.exit("copy", null);
 
                 return null;
             }
         } else {
-            s_log.debug("The property is not a content item; using " +
-                        "domain object copier");
+            s_log.debug("The property is not a content item; using "
+                        + "domain object copier");
 
             final DomainObject copy = super.copy(source, target, object, prop);
 
@@ -244,11 +254,11 @@ class VersionCopier extends ObjectCopier {
 
         final ContentItem version = (ContentItem) copy(item);
 
-	s_log.debug("The copy is pending; associating it with " +
-		    "the draft item");
-	
-	version.setVersion(ContentItem.PENDING);
-	item.addPendingVersion(version);
+        s_log.debug("The copy is pending; associating it with "
+                    + "the draft item");
+
+        version.setVersion(ContentItem.PENDING);
+        item.addPendingVersion(version);
 
         version.copyServicesFrom(item);
 
