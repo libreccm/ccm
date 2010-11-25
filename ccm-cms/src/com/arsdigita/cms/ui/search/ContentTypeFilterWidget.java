@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.search;
 
-
 import com.arsdigita.search.ui.FilterWidget;
 import com.arsdigita.search.Search;
 import com.arsdigita.search.FilterSpecification;
@@ -28,38 +27,105 @@ import com.arsdigita.cms.ContentSection;
 import com.arsdigita.xml.Element;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.parameters.ArrayParameter;
+import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.search.ContentTypeFilterType;
 import com.arsdigita.cms.search.ContentTypeFilterSpecification;
+import com.arsdigita.cms.ui.ItemSearch;
+import com.arsdigita.domain.DataObjectNotFoundException;
+import java.math.BigDecimal;
 
 public class ContentTypeFilterWidget extends FilterWidget {
 
-    private ContentType[] m_types;
+    private ContentType m_parentType = null;
+    private ContentSection m_section = null;
+    private ContentTypeCollection m_types = null;
 
     public ContentTypeFilterWidget(ContentTypeCollection types) {
-        super(new ContentTypeFilterType(),
-              new ArrayParameter(new StringParameter(ContentTypeFilterType.KEY)));
-
-        m_types = new ContentType[(int)types.size()];
-        int i = 0;
-        while (types.next()) {
-            m_types[i++] = types.getContentType();
-        }
+        super(new ContentTypeFilterType(), new ArrayParameter(new StringParameter(ContentTypeFilterType.KEY)));
+        m_types = types;
     }
+
     public ContentTypeFilterWidget(ContentSection section) {
         this(section.getContentTypes());
+    }
+
+    public ContentTypeFilterWidget(ContentSection section, ContentType parentType) {
+        this(section.getSiblingsOfContentType(parentType));
+        m_section = section;
+        m_parentType = parentType;
+    }
+
+    public ContentTypeFilterWidget(ContentType parentType) {
+        this(ContentType.getSiblingsOf(parentType));
+        m_parentType = parentType;
     }
 
     public ContentTypeFilterWidget() {
         this(ContentType.getRegisteredContentTypes());
     }
 
+    protected ContentSection getContentSection() {
+        return m_section;
+    }
+
+    private ContentType getParentType(PageState state) {
+
+        ContentType ct = m_parentType;
+
+        BigDecimal singleTypeID =
+                (BigDecimal) state.getValue(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+
+        if (singleTypeID != null) {
+            try {
+                ct = new ContentType(singleTypeID);
+            } catch (DataObjectNotFoundException ex) {
+                ct = null;
+            }
+        }
+
+        return ct;
+    }
+
     protected ContentType[] getContentTypes(PageState state) {
-        return m_types;
+
+        ContentType parentType = getParentType(state);
+        ContentTypeCollection typesCollection = m_types;
+
+        // If the section and parent type both equals the preset from initializer
+        // there is no need to get a new ContentTypeCollection
+        if (getContentSection() != m_section && parentType != m_parentType) {
+
+            if (getContentSection() != null) {
+                ContentSection section = getContentSection();
+
+                if (parentType == null) {
+                    typesCollection = section.getContentTypes();
+                } else {
+                    typesCollection = section.getSiblingsOfContentType(parentType);
+                }
+
+            } else {
+
+                if (parentType == null) {
+                    typesCollection = ContentType.getRegisteredContentTypes();
+                } else {
+                    typesCollection = ContentType.getSiblingsOf(parentType);
+                }
+            }
+        }
+
+        ContentType[] typesArray = new ContentType[(int) typesCollection.size()];
+
+        for (int i = 0; typesCollection.next();) {
+            typesArray[i++] = typesCollection.getContentType();
+        }
+
+        return typesArray;
     }
 
     public FilterSpecification getFilter(PageState state) {
-        String[] types = (String[])getValue(state);
+        String[] types = (String[]) getValue(state);
 
         if (types == null) {
             types = new String[0];
@@ -68,29 +134,29 @@ public class ContentTypeFilterWidget extends FilterWidget {
         return new ContentTypeFilterSpecification(types);
     }
 
-    public void generateBodyXML(PageState state,
-                                Element parent) {
+    @Override
+    public void generateBodyXML(PageState state, Element parent) {
         super.generateBodyXML(state, parent);
 
-        String[] types = (String[])getValue(state);
+        String[] types = (String[]) getValue(state);
         if (types == null) {
             types = new String[0];
         }
 
         ContentType[] widgetTypes = getContentTypes(state);
 
-        for (int i = 0 ; i < widgetTypes.length ; i++) {
+        for (int i = 0; i < widgetTypes.length; i++) {
             Element type = Search.newElement("contentType");
             type.addAttribute("name", widgetTypes[i].getAssociatedObjectType());
             type.addAttribute("title", widgetTypes[i].getLabel());
-            for (int j = 0 ; j < types.length ; j++) {
+
+            for (int j = 0; j < types.length; j++) {
                 if (types[j].equals(widgetTypes[i].getAssociatedObjectType())) {
                     type.addAttribute("isSelected", "1");
+
                     break;
                 }
             }
-
-
 
             parent.addContent(type);
         }

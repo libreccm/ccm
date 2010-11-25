@@ -157,6 +157,7 @@ public class ItemSearchFolderBrowser extends Table {
                 return new Integer((int) itemColl.size());
             }
         };
+
         private RequestLocal m_itemColl = new RequestLocal() {
 
             @Override
@@ -328,9 +329,9 @@ public class ItemSearchFolderBrowser extends Table {
                     + widget + ".value=\"" + fill + "\";\n");
             // set protocol to 'other' in FCKEditor, else relative url prepended by http://
             if (Bebop.getConfig().getDHTMLEditor().equals(BebopConstants.BEBOP_FCKEDITOR)) {
-		buffer.append(" if(window.opener.document.getElementById('cmbLinkProtocol')) {\n");
+                buffer.append(" if(window.opener.document.getElementById('cmbLinkProtocol')) {\n");
                 buffer.append("  window.opener.document.getElementById('cmbLinkProtocol').value=\"\";\n");
-		buffer.append(" }\n");
+                buffer.append(" }\n");
             }
 
             buffer.append(" self.close(); \n"

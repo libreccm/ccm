@@ -35,11 +35,13 @@ import com.arsdigita.globalization.Locale;
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.permissions.PermissionService;
+import com.arsdigita.persistence.CompoundFilter;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
+import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
@@ -53,6 +55,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.StringTokenizer;
 
 /**
  * <p>A content section represents a collection of content that is
@@ -774,6 +777,32 @@ public class ContentSection extends Application {
             types.addFilter("mode != 'H'");
         }
         return types;
+    }
+
+    public ContentTypeCollection getSiblingsOfContentType(ContentType ct) {
+        ContentTypeCollection ctc = getContentTypes();
+
+        // The Filter Factory
+        FilterFactory ff = ctc.getFilterFactory();
+
+        // Create an or-filter
+        CompoundFilter or = ff.or();
+
+        // The content type must be either of the requested type
+        or.addFilter(ff.equals(ContentType.ID, ct.ID));
+
+        // Or must be a sibling of the requested type
+        try {
+            StringTokenizer strTok = new StringTokenizer(ct.getSiblings(), "/");
+            while (strTok.hasMoreElements()) {
+                or.addFilter(ff.equals(ContentType.ID, (String) strTok.nextElement()));
+            }
+        } catch (Exception ex) {
+            // WTF? The selected content type does not exist in the table???
+        }
+
+        ctc.addFilter(or);
+        return ctc;
     }
 
     /**

@@ -165,8 +165,7 @@ public class ItemSearchWidget extends FormSection
     /**
      * Construct a new ItemSearchWidget. The model must be an ItemSearchParameter
      */
-    public ItemSearchWidget(ParameterModel model,
-            ContentType contentType) {
+    public ItemSearchWidget(ParameterModel model, ContentType contentType) {
         super(new BoxPanel(BoxPanel.VERTICAL));
 
         if (!(model instanceof ItemSearchParameter)) {
@@ -267,8 +266,7 @@ public class ItemSearchWidget extends FormSection
                 : ContentType.findByAssociatedObjectType(objectType)));
     }
 
-    public ItemSearchWidget(String name,
-            ContentType contentType) {
+    public ItemSearchWidget(String name, ContentType contentType) {
         this(new ItemSearchParameter(name, contentType), contentType);
     }
 

@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui;
 
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
@@ -45,10 +44,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ItemSearchPopup extends ItemSearch {
 
-
-    private static final org.apache.log4j.Logger s_log = 
-        org.apache.log4j.Logger.getLogger(ItemSearchPopup.class);
-
+    private static final org.apache.log4j.Logger s_log =
+            org.apache.log4j.Logger.getLogger(ItemSearchPopup.class);
     public static final String WIDGET_PARAM = "widget";
     public static final String URL_PARAM = "useURL";
 
@@ -63,22 +60,25 @@ public class ItemSearchPopup extends ItemSearch {
     }
 
     // Hide results by default
+    @Override
     public void register(Page p) {
         super.register(p);
         p.addGlobalStateParam(new StringParameter(WIDGET_PARAM));
         p.addGlobalStateParam(new StringParameter(URL_PARAM));
     }
 
+    @Override
     protected ItemSearchSection createSearchSection(String context) {
         return new ItemSearchSectionPopup(context);
     }
 
     private static class ItemSearchSectionPopup extends ItemSearchSection {
-        
+
         public ItemSearchSectionPopup(String context) {
             super(context);
         }
-        
+
+        @Override
         protected Component createResultsPane(QueryGenerator generator) {
             return new PopupResultsPane(generator);
         }
@@ -93,55 +93,56 @@ public class ItemSearchPopup extends ItemSearch {
         //map.setParameter("oid", oid.toString());
         //return URL.there(request, "/redirect/", map).toString();
         // Always link directly to the live version.
-        return "/redirect/?oid="+oid.toString();
+        return "/redirect/?oid=" + oid.toString();
     }
 
     private static class PopupResultsPane extends ResultsPane {
+
         public PopupResultsPane(QueryGenerator generator) {
             super(generator);
             setRelativeURLs(true);
         }
 
-        protected Element generateDocumentXML(PageState state,
-                                              Document doc) {
+        @Override
+        protected Element generateDocumentXML(PageState state, Document doc) {
             Element element = super.generateDocumentXML(state, doc);
-            
+
             element.addAttribute("class", "jsButton");
 
             String widget = (String) state.getValue(
-                new StringParameter(WIDGET_PARAM));
-            
-            boolean useURL = "true".equals(
-                state.getValue(new StringParameter(URL_PARAM)));
+                    new StringParameter(WIDGET_PARAM));
 
-            String fillString = useURL ? 
-                getItemURL(state.getRequest(), doc.getOID()) :
-                doc.getOID().get("id").toString() + 
-                " (" + doc.getTitle() + ")";
-            
+            boolean useURL = "true".equals(
+                    state.getValue(new StringParameter(URL_PARAM)));
+
+            String fillString = useURL
+                    ? getItemURL(state.getRequest(), doc.getOID())
+                    : doc.getOID().get("id").toString()
+                    + " (" + doc.getTitle() + ")";
+
             Element jsLabel = Search.newElement("jsAction");
-            jsLabel.addAttribute("name", "fillItem" + 
-                                 doc.getOID().get("id") + "()");
-            jsLabel.setText(generateJSLabel((BigDecimal)doc.getOID().get("id"), 
-                                            widget,  fillString));
+            jsLabel.addAttribute("name", "fillItem"
+                    + doc.getOID().get("id") + "()");
+            jsLabel.setText(generateJSLabel((BigDecimal) doc.getOID().get("id"),
+                    widget, fillString));
             element.addContent(jsLabel);
 
             return element;
         }
 
         private String generateJSLabel(BigDecimal id, String widget, String fill) {
-            return " <script language=javascript> " +
-                " <!-- \n" +
-                " function fillItem" +
-                id +
-                "() { \n" +
-                " window.opener.document." +
-                widget + ".value=\"" + fill + "\";\n" +
-                " self.close(); \n" +
-                " return false; \n" +
-                " } \n" +
-                " --> \n" +
-                " </script> ";
+            return " <script language=javascript> "
+                    + " <!-- \n"
+                    + " function fillItem"
+                    + id
+                    + "() { \n"
+                    + " window.opener.document."
+                    + widget + ".value=\"" + fill + "\";\n"
+                    + " self.close(); \n"
+                    + " return false; \n"
+                    + " } \n"
+                    + " --> \n"
+                    + " </script> ";
         }
     }
 }

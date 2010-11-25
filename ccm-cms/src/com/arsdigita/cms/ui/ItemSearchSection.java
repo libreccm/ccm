@@ -79,8 +79,8 @@ public class ItemSearchSection extends FormSection
         m_query = createQueryGenerator(context);
         m_results = createResultsPane(m_query);
         
-        addResultsPane(this);
         addQueryGenerator(this);
+        addResultsPane(this);
         addFormListener();
 
         setClassAttr("itemSearch");

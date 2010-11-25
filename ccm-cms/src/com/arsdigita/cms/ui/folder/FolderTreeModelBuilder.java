@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
 
-
 /**
  * A {@link com.arsdigita.bebop.tree.TreeModelBuilder} that produces trees
  * containing the folder structure underneath a root folder. The root
@@ -56,14 +55,13 @@ import org.apache.log4j.Logger;
  *
  * @version $Id: FolderTreeModelBuilder.java 1940 2009-05-29 07:15:05Z terry $
  */
-
 public class FolderTreeModelBuilder extends LockableImpl
-    implements TreeModelBuilder {
+        implements TreeModelBuilder {
 
     private static final Logger s_log = Logger.getLogger(FolderTreeModelBuilder.class);
-
     private PrivilegeDescriptor TREE_DESCRIPTOR =
-        SecurityManager.CMS_PREVIEW_ITEM_DESCRIPTOR;
+            SecurityManager.CMS_PREVIEW_ITEM_DESCRIPTOR;
+
     /**
      * Make a tree model that lists the hierarchy of folders underneath the
      * folder returnedby {@link #getRoot getRoot}.
@@ -75,40 +73,45 @@ public class FolderTreeModelBuilder extends LockableImpl
      */
     public com.arsdigita.bebop.tree.TreeModel makeModel(final Tree t, PageState s) {
         return new DataQueryTreeModel(getRoot(s).getID(),
-                                      "com.arsdigita.cms.getRootFolder",
-                                      "com.arsdigita.cms.getSubFolders") {
+                "com.arsdigita.cms.getRootFolder",
+                "com.arsdigita.cms.getSubFolders") {
 
-                public Iterator getChildren(TreeNode node, PageState data) {
-                    String nodeKey = node.getKey().toString();
-                    if (t.isCollapsed(nodeKey, data)) {
-                        return Collections.EMPTY_LIST.iterator();
-                    }
-                    Party party = Kernel.getContext().getParty();
-                    OID partyOID = null;
-                    if (party == null) {
-                        partyOID = new OID(User.BASE_DATA_OBJECT_TYPE,
-                                           PermissionManager.VIRTUAL_PUBLIC_ID);
-                    } else {
-                        partyOID = party.getOID();
-                    }
-                    UniversalPermissionDescriptor universalPermission =
-                        new UniversalPermissionDescriptor
-                        (SecurityManager.CMS_PREVIEW_ITEM_DESCRIPTOR, partyOID);
-                    if (PermissionService.checkPermission
-                        (universalPermission)) {
-                        // the person is an admin so we just pass in the
-                        // standard, non filtered query
-                        return getDataQueryTreeIterator(
-                             (DataQueryTreeNode) node,
-                             "com.arsdigita.cms.getSubFolders");
-                    } else {
-                        // now we need to set the parameters
-                        return new NewFolderBrowserIterator(
+            @Override
+            public Iterator getChildren(TreeNode node, PageState data) {
+                String nodeKey = node.getKey().toString();
+
+                // Always expand root node
+                if (nodeKey.equals(getRoot(data).getKey().toString())/* && t.isCollapsed(nodeKey, data)*/) {
+                    t.expand(nodeKey, data);
+                }
+
+                if (t.isCollapsed(nodeKey, data)) {
+                    return Collections.EMPTY_LIST.iterator();
+                }
+                Party party = Kernel.getContext().getParty();
+                OID partyOID = null;
+                if (party == null) {
+                    partyOID = new OID(User.BASE_DATA_OBJECT_TYPE,
+                            PermissionManager.VIRTUAL_PUBLIC_ID);
+                } else {
+                    partyOID = party.getOID();
+                }
+                UniversalPermissionDescriptor universalPermission =
+                        new UniversalPermissionDescriptor(SecurityManager.CMS_PREVIEW_ITEM_DESCRIPTOR, partyOID);
+                if (PermissionService.checkPermission(universalPermission)) {
+                    // the person is an admin so we just pass in the
+                    // standard, non filtered query
+                    return getDataQueryTreeIterator(
+                            (DataQueryTreeNode) node,
+                            "com.arsdigita.cms.getSubFolders");
+                } else {
+                    // now we need to set the parameters
+                    return new NewFolderBrowserIterator(
                             (DataQueryTreeNode) node,
                             partyOID);
-                    }
                 }
-            };
+            }
+        };
     }
 
     /**
@@ -119,11 +122,10 @@ public class FolderTreeModelBuilder extends LockableImpl
      * @post return != null
      */
     protected Folder getRoot(PageState s)
-        throws IllegalStateException {
+            throws IllegalStateException {
         ContentSection sec = CMS.getContext().getContentSection();
         return sec.getRootFolder();
     }
-
 
     private class NewFolderBrowserIterator implements Iterator {
 
@@ -134,56 +136,55 @@ public class FolderTreeModelBuilder extends LockableImpl
             BigDecimal userID = (BigDecimal) partyOID.get("id");
 
             String sql = ""
-+ "\n    select f.folder_id as id,"
-+ "\n           f.label as name,"
-+ "\n           count(sub.item_id) as nchild"
-+ "\n    from cms_folders f,"
-+ "\n         cms_items i"
-+ "\n         left join"
-+ "\n             (select i2.item_id, f2.label as name, i2.parent_id"
-+ "\n                from cms_folders f2,"
-+ "\n                     cms_items i2"
-+ "\n               where f2.folder_id = i2.item_id) sub"
-+ "\n           on (sub.parent_id = i.item_id"
-+ "\n             and"
-+ "\n             exists (select 1"
-+ "\n                          from dnm_object_1_granted_context dogc,"
-+ "\n                               dnm_granted_context dgc,"
-+ "\n                               dnm_permissions dp,"
-+ "\n                               dnm_group_membership dgm"
-+ "\n                           where dogc.pd_object_id = sub.item_id"
-+ "\n                             and dogc.pd_context_id = dgc.pd_object_id"
-+ "\n                             and dgc.pd_context_id = dp.pd_object_id"
-+ "\n                             and dp.pd_grantee_id = dgm.pd_group_id"
-+ "\n                             and dgm.pd_member_id in (-200," + userID + ",-202)"
-+ "\n                             and dp." + TREE_DESCRIPTOR.getColumnName() + " = 1"
-+ "\n                             ) )"
-+ "\n    where i.parent_id = " + node.getID()
-+ "\n      and f.folder_id = i.item_id"
-+ "\n      and  exists ("
-+ "\n            select 1 as permission_p"
-+ "\n              from dnm_object_1_granted_context dogc,"
-+ "\n                   dnm_granted_context dgc,"
-+ "\n                   dnm_permissions dp,"
-+ "\n                   dnm_group_membership dgm"
-+ "\n              where dogc.pd_context_id = dgc.pd_object_id"
-+ "\n                and dgc.pd_context_id = dp.pd_object_id"
-+ "\n                and dgm.pd_member_id in (-200," + userID + ",-202)"
-+ "\n                and dp.pd_grantee_id = dgm.pd_group_id"
-+ "\n                and dogc.pd_object_id = f.folder_id"
-+ "\n                and dp." + TREE_DESCRIPTOR.getColumnName() + " = 1 )"
-+ "\n    group by f.label, f.folder_id"
-+ "\n    order by lower(f.label)" ;
+                    + "\n    select f.folder_id as id,"
+                    + "\n           f.label as name,"
+                    + "\n           count(sub.item_id) as nchild"
+                    + "\n    from cms_folders f,"
+                    + "\n         cms_items i"
+                    + "\n         left join"
+                    + "\n             (select i2.item_id, f2.label as name, i2.parent_id"
+                    + "\n                from cms_folders f2,"
+                    + "\n                     cms_items i2"
+                    + "\n               where f2.folder_id = i2.item_id) sub"
+                    + "\n           on (sub.parent_id = i.item_id"
+                    + "\n             and"
+                    + "\n             exists (select 1"
+                    + "\n                          from dnm_object_1_granted_context dogc,"
+                    + "\n                               dnm_granted_context dgc,"
+                    + "\n                               dnm_permissions dp,"
+                    + "\n                               dnm_group_membership dgm"
+                    + "\n                           where dogc.pd_object_id = sub.item_id"
+                    + "\n                             and dogc.pd_context_id = dgc.pd_object_id"
+                    + "\n                             and dgc.pd_context_id = dp.pd_object_id"
+                    + "\n                             and dp.pd_grantee_id = dgm.pd_group_id"
+                    + "\n                             and dgm.pd_member_id in (-200," + userID + ",-202)"
+                    + "\n                             and dp." + TREE_DESCRIPTOR.getColumnName() + " = 1"
+                    + "\n                             ) )"
+                    + "\n    where i.parent_id = " + node.getID()
+                    + "\n      and f.folder_id = i.item_id"
+                    + "\n      and  exists ("
+                    + "\n            select 1 as permission_p"
+                    + "\n              from dnm_object_1_granted_context dogc,"
+                    + "\n                   dnm_granted_context dgc,"
+                    + "\n                   dnm_permissions dp,"
+                    + "\n                   dnm_group_membership dgm"
+                    + "\n              where dogc.pd_context_id = dgc.pd_object_id"
+                    + "\n                and dgc.pd_context_id = dp.pd_object_id"
+                    + "\n                and dgm.pd_member_id in (-200," + userID + ",-202)"
+                    + "\n                and dp.pd_grantee_id = dgm.pd_group_id"
+                    + "\n                and dogc.pd_object_id = f.folder_id"
+                    + "\n                and dp." + TREE_DESCRIPTOR.getColumnName() + " = 1 )"
+                    + "\n    group by f.label, f.folder_id"
+                    + "\n    order by lower(f.label)";
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Custom SQL: \n" + sql);
             }
 
             m_nodes = new GenericDataQuery(
-                SessionManager.getSession(),
-                sql,
-                new String[] {"id", "name", "nchild"}
-              );
+                    SessionManager.getSession(),
+                    sql,
+                    new String[]{"id", "name", "nchild"});
         }
 
         public Object next() {
@@ -192,25 +193,24 @@ public class FolderTreeModelBuilder extends LockableImpl
                 // this appears to be the only portable way to dig numbers out
                 // of the result set
                 id = new BigDecimal(m_nodes.get("id").toString());
-            } catch (NumberFormatException nfe) {}
+            } catch (NumberFormatException nfe) {
+            }
             String name = m_nodes.get("name").toString();
             BigDecimal count = new BigDecimal(0);
             try {
                 count = new BigDecimal(m_nodes.get("nchild").toString());
-            } catch (NumberFormatException nfe) {}
+            } catch (NumberFormatException nfe) {
+            }
 
             return new DataQueryTreeNode(id, name, count.intValue() > 0);
         }
 
         public void remove() {
-            throw new UnsupportedOperationException
-                ("cannot remove nodes via iterator");
+            throw new UnsupportedOperationException("cannot remove nodes via iterator");
         }
 
         public boolean hasNext() {
             return m_nodes.next();
         }
-
     }
-
 }

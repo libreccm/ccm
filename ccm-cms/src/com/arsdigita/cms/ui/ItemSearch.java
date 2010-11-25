@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui;
 
-
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Resettable;
@@ -34,15 +33,11 @@ import com.arsdigita.search.ui.QueryGenerator;
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
  * @version $Id: ItemSearch.java 1940 2009-05-29 07:15:05Z terry $
  */
-public class ItemSearch extends Form 
-    implements Resettable, QueryGenerator {
+public class ItemSearch extends Form implements Resettable, QueryGenerator {
 
-    private static final org.apache.log4j.Logger s_log = 
-        org.apache.log4j.Logger.getLogger(ItemSearch.class);
-
-    public static final String SINGLE_TYPE_PARAM
-        = ItemSearchSection.SINGLE_TYPE_PARAM;
-
+    private static final org.apache.log4j.Logger s_log =
+            org.apache.log4j.Logger.getLogger(ItemSearch.class);
+    public static final String SINGLE_TYPE_PARAM = ItemSearchSection.SINGLE_TYPE_PARAM;
     private ItemSearchSection m_section;
 
     /**
@@ -52,7 +47,7 @@ public class ItemSearch extends Form
      *   {@link ContentItem#DRAFT} or {@link ContentItem#LIVE}
      */
     public ItemSearch(String context) {
-        super("itemSearch",new SimpleContainer());
+        super("itemSearch", new SimpleContainer());
         setMethod("GET");
         m_section = createSearchSection(context);
         add(m_section);

@@ -61,12 +61,11 @@ import org.apache.log4j.Logger;
  * @version $Id: ItemSearchBrowsePane.java 1166 2006-06-14 11:45:15Z fabrice $
  */
 public class ItemSearchBrowsePane extends CMSContainer
-    implements Resettable, TreeExpansionListener, ChangeListener,
-               FormProcessListener, FormSubmissionListener {
+        implements Resettable, TreeExpansionListener, ChangeListener,
+        FormProcessListener, FormSubmissionListener {
 
     private static final Logger s_log =
-        Logger.getLogger( ItemSearchBrowsePane.class );
-
+            Logger.getLogger(ItemSearchBrowsePane.class);
     private FolderSelectionModel m_folderSel;
     private Tree m_tree;
     private ItemSearchFolderBrowser m_browser;
@@ -74,7 +73,7 @@ public class ItemSearchBrowsePane extends CMSContainer
 
     public ItemSearchBrowsePane() {
         setClassAttr("sidebarNavPanel");
-        setAttribute("navbar-title", "Folders");
+        setAttribute("navbar-title", GlobalizationUtil.globalize("cms.ui.folder_browser").localize().toString());
 
         Label l = new Label(GlobalizationUtil.globalize("cms.ui.folder_browser"));
         l.setClassAttr("heading");
@@ -84,26 +83,30 @@ public class ItemSearchBrowsePane extends CMSContainer
         // subsites through the ItemSearchBrowsePane.  A new parameter has been added to allow the 
         // administrator to pick between the old and new versions.
         boolean linksOnlyInSameSubsite = ContentSection.getConfig().getLinksOnlyInSameSubsite();
-        s_log.debug("linksOnlyInSameSubsite value is "+linksOnlyInSameSubsite);
+        s_log.debug("linksOnlyInSameSubsite value is " + linksOnlyInSameSubsite);
 
-        m_tree = new Tree( new FolderTreeModelBuilder() {
-            protected Folder getRoot( PageState ps ) {
-                Folder root = getRootFolder( ps );
+        m_tree = new Tree(new FolderTreeModelBuilder() {
 
-                if( null == root ) return super.getRoot( ps );
+            @Override
+            protected Folder getRoot(PageState ps) {
+                Folder root = getRootFolder(ps);
+
+                if (null == root) {
+                    return super.getRoot(ps);
+                }
                 return root;
             }
-        } );
-    	m_folderSel = createFolderSelectionModel();
+        });
+        m_folderSel = createFolderSelectionModel();
         m_folderSel.addChangeListener(this);
 
-        if(!linksOnlyInSameSubsite) {
-        	// The client should be able to pick between the subsites
+        if (!linksOnlyInSameSubsite) {
+            // The client should be able to pick between the subsites
             Form sectionForm = getSectionForm();
-            add( sectionForm );
-        } 
+            add(sectionForm);
+        }
 
-        m_tree.setSelectionModel( m_folderSel );
+        m_tree.setSelectionModel(m_folderSel);
 
         m_tree.setClassAttr("navbar");
         m_tree.addTreeExpansionListener(this);
@@ -112,64 +115,67 @@ public class ItemSearchBrowsePane extends CMSContainer
         CMSContainer container = new CMSContainer();
         container.setClassAttr("main");
 
-        m_browser = new ItemSearchFolderBrowser (m_folderSel);
-        container.add( m_browser );
+        m_browser = new ItemSearchFolderBrowser(m_folderSel);
+        container.add(m_browser);
         container.add(m_browser.getPaginator());
 
-        add( container );
+        add(container);
     }
 
     private Form getSectionForm() {
-        Form sectionForm = new Form( "isfbSectionForm",
-                                     new BoxPanel( BoxPanel.HORIZONTAL ) );
+        Form sectionForm = new Form("isfbSectionForm",
+                new BoxPanel(BoxPanel.HORIZONTAL));
         sectionForm.setClassAttr("navbar");
 
-        m_section = new SingleSelect( new OIDParameter( "isfbSection" ) );
+        m_section = new SingleSelect(new OIDParameter("isfbSection"));
         ContentSectionCollection sections = ContentSection.getAllSections();
-        while( sections.next() ) {
+        while (sections.next()) {
             ContentSection section = sections.getContentSection();
-            m_section.addOption( new Option( section.getOID().toString(),
-                                             section.getDisplayName() ) );
+            m_section.addOption(new Option(section.getOID().toString(),
+                    section.getDisplayName()));
         }
 
-        sectionForm.addInitListener( new FormInitListener() {
-            public void init( FormSectionEvent ev ) {
+        sectionForm.addInitListener(new FormInitListener() {
+
+            public void init(FormSectionEvent ev) {
                 PageState ps = ev.getPageState();
 
-                if( null == m_section.getValue( ps ) ) {
+                if (null == m_section.getValue(ps)) {
                     ContentSection section = CMS.getContext().getContentSection();
-                    m_section.setValue( ps, section.getOID() );
+                    m_section.setValue(ps, section.getOID());
                 }
             }
-        } );
+        });
 
-        sectionForm.add( m_section );
-        sectionForm.add( new Submit( "Change Section" ) );
+        sectionForm.add(m_section);
+        sectionForm.add(new Submit("Change Section"));
 
         return sectionForm;
     }
 
-    private Folder getRootFolder( PageState ps ) {
-    		s_log.debug("Getting the root folder.");
-    		if(m_section!=null) {
-    			// We have more than one subsite to choose between
-            OID sectionOID = (OID) m_section.getValue( ps );
-            if( s_log.isDebugEnabled() ) {
-                if( null != sectionOID )
-                    s_log.debug( "Using section " + sectionOID.toString() );
-                else
-                    s_log.debug( "Using default section" );
+    private Folder getRootFolder(PageState ps) {
+        s_log.debug("Getting the root folder.");
+        if (m_section != null) {
+            // We have more than one subsite to choose between
+            OID sectionOID = (OID) m_section.getValue(ps);
+            if (s_log.isDebugEnabled()) {
+                if (null != sectionOID) {
+                    s_log.debug("Using section " + sectionOID.toString());
+                } else {
+                    s_log.debug("Using default section");
+                }
             }
 
-            if( null == sectionOID ) return null;
+            if (null == sectionOID) {
+                return null;
+            }
 
-            ContentSection section = (ContentSection)
-                DomainObjectFactory.newInstance( sectionOID );
+            ContentSection section = (ContentSection) DomainObjectFactory.newInstance(sectionOID);
 
             return section.getRootFolder();
-    		} else {
-    			return null;
-    		}
+        } else {
+            return null;
+        }
     }
 
     public void register(Page p) {
@@ -177,13 +183,13 @@ public class ItemSearchBrowsePane extends CMSContainer
         p.addComponentStateParam(this, m_folderSel.getStateParameter());
 
         // Only add the SingleSelect item if it exists
-        if(m_section!=null) {
+        if (m_section != null) {
             p.addComponentStateParam(this, m_section.getParameterModel());
-    }
+        }
     }
 
     public void reset(PageState s) {
-      //m_browser.reset(s);
+        //m_browser.reset(s);
     }
 
     public ItemSearchFolderBrowser getFolderBrowser() {
@@ -207,14 +213,13 @@ public class ItemSearchBrowsePane extends CMSContainer
         m_folderSel.setSelectedKey(s, key);
         Folder current = (Folder) m_folderSel.getSelectedObject(s);
         Folder parent = (Folder) current.getParent();
-        if ( parent != null ) {
+        if (parent != null) {
             BigDecimal id = parent.getID();
             m_tree.expand(id.toString(), s);
         }
     }
 
     // Implement TreeExpansionListener
-
     public void treeCollapsed(TreeExpansionEvent e) {
         PageState s = e.getPageState();
         m_folderSel.setSelectedKey(s, e.getNodeKey());
@@ -229,7 +234,7 @@ public class ItemSearchBrowsePane extends CMSContainer
         Folder current = (Folder) m_folderSel.getSelectedObject(s);
         Folder parent = (Folder) current.getParent();
         m_browser.getPaginator().reset(s);
-        if ( parent != null ) {
+        if (parent != null) {
             BigDecimal id = parent.getID();
             m_tree.expand(id.toString(), s);
         }
@@ -238,37 +243,39 @@ public class ItemSearchBrowsePane extends CMSContainer
     }
 
     public void process(FormSectionEvent e) {
-	/*
+        /*
         PageState s = e.getPageState();
         if ( e.getSource() == m_browser.getManipulator().getItemView() ) {
-            // Hide everything except for the flat item list
-            m_tree.setVisible(s, false);
+        // Hide everything except for the flat item list
+        m_tree.setVisible(s, false);
         } else if ( e.getSource() == m_browser.getManipulator().getTargetSelector() ) {
-            m_tree.setVisible(s, true);
+        m_tree.setVisible(s, true);
         }
-	*/
+         */
     }
 
     public void submitted(FormSectionEvent e) {
-	/*
+        /*
         PageState s = e.getPageState();
         if ( e.getSource() == m_browser.getManipulator().getTargetSelector() ) {
-            if ( ! m_browser.getManipulator().getTargetSelector().isVisible(s) ) {
-                m_tree.setVisible(s, true);
-            }
+        if ( ! m_browser.getManipulator().getTargetSelector().isVisible(s) ) {
+        m_tree.setVisible(s, true);
         }
-	*/
+        }
+         */
     }
 
     private FolderSelectionModel createFolderSelectionModel() {
-    	return new FolderSelectionModel("folder") {
-            protected BigDecimal getRootFolderID( PageState ps ) {
-                Folder root = getRootFolder( ps );
+        return new FolderSelectionModel("folder") {
 
-                if( null == root ) return super.getRootFolderID( ps );
+            protected BigDecimal getRootFolderID(PageState ps) {
+                Folder root = getRootFolder(ps);
+
+                if (null == root) {
+                    return super.getRootFolderID(ps);
+                }
                 return root.getID();
             }
         };
     }
-
 }

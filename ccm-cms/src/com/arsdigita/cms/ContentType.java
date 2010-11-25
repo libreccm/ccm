@@ -583,6 +583,7 @@ public class ContentType extends ACSObject {
         ctc.addFilter(or);
         return ctc;
     }
+    
     private static List s_xsl = new ArrayList();
 
     /**

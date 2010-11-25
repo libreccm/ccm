@@ -23,10 +23,12 @@ import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
+import com.arsdigita.cms.CMSConfig;
 import com.arsdigita.cms.CMSExcursion;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.dispatcher.CMSPage;
+import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.templating.PresentationManager;
@@ -47,27 +49,25 @@ import javax.servlet.http.HttpServletResponse;
  * @author Scott Seago (scott@arsdigita.com)
  * @version $Revision: #12 $ $DateTime: 2004/08/17 23:15:09 $
  */
-public class ItemSearchPage extends CMSPage  {
+public class ItemSearchPage extends CMSPage {
+
     private final static String XSL_CLASS = "CMS Admin";
-
     private TabbedPane m_tabbedPane;
-
     private ItemSearchBrowsePane m_browse;
     private ItemSearchPopup m_search;
     private BigDecimalParameter m_sectionId;
-
+    private static final CMSConfig s_conf = CMSConfig.getInstance();
     public static final String CONTENT_SECTION = "section_id";
 
     /**
      * Construct a new ItemSearchPage
      */
     public ItemSearchPage() {
-        super("Item Search", new SimpleContainer());
+        super(GlobalizationUtil.globalize("cms.ui.item_search.page_title").localize().toString(), new SimpleContainer());
 
         setClassAttr("cms-admin");
 
-        addGlobalStateParam
-            (new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
+        addGlobalStateParam(new BigDecimalParameter(ItemSearch.SINGLE_TYPE_PARAM));
         addGlobalStateParam(new StringParameter(ItemSearchPopup.WIDGET_PARAM));
 
         m_sectionId = new BigDecimalParameter(CONTENT_SECTION);
@@ -80,7 +80,6 @@ public class ItemSearchPage extends CMSPage  {
         m_tabbedPane.setIdAttr("page-body");
         add(m_tabbedPane);
     }
-
 
     /**
      * Creates, and then caches, the Browse pane. Overriding this
@@ -107,7 +106,6 @@ public class ItemSearchPage extends CMSPage  {
         return m_search;
     }
 
-
     /**
      * Created the TabbedPane to use for this page. Sets the class
      * attribute for this tabbed pane. The default implementation uses a
@@ -122,13 +120,21 @@ public class ItemSearchPage extends CMSPage  {
     protected TabbedPane createTabbedPane() {
         TabbedPane pane = new TabbedPane();
         pane.setClassAttr(XSL_CLASS);
-        addToPane(pane, "Browse", getBrowsePane());
-        addToPane(pane, "Search", getSearchPane());
-        pane.setDefaultPane(m_browse);
+
+        addToPane(pane, "browse", getBrowsePane());
+        addToPane(pane, "search", getSearchPane());
+
+        if(s_conf.getItemSearchDefaultTab().equals("browse")) {
+            pane.setDefaultPane(m_browse);
+        }
+        if(s_conf.getItemSearchDefaultTab().equals("search")) {
+            pane.setDefaultPane(m_search);
+        }
+
         //pane.addActionListener(this);
+//        pane.setTabVisible(null, pane, true);
         return pane;
     }
-
 
     /**
      * Adds the specified component, with the specified tab name, to the
@@ -140,10 +146,9 @@ public class ItemSearchPage extends CMSPage  {
      */
     protected void addToPane(TabbedPane pane, String tabName, Component comp) {
         if (comp != null) {
-            pane.addTab(tabName, comp);
+            pane.addTab(GlobalizationUtil.globalize("cms.ui.item_search." + tabName).localize().toString(), comp);
         }
     }
-
 
     /**
      * When a new tab is selected, reset the state of the
@@ -154,42 +159,40 @@ public class ItemSearchPage extends CMSPage  {
     //public void actionPerformed(ActionEvent event) {
     //PageState state = event.getPageState();
     //Component pane = m_tabbedPane.getCurrentPane(state);
-
     //if ( pane == m_browse ) {
     // MP: reset tasks pane
     //} else if ( pane == m_search ) {
     //m_search.reset(state);
     //}
     //}
-
     /**
      * This strange voodoo from Dan. No idea what it does.
      */
+    @Override
     public void dispatch(final HttpServletRequest request,
-                         final HttpServletResponse response,
-                         RequestContext actx)
+            final HttpServletResponse response,
+            RequestContext actx)
             throws IOException, ServletException {
         new CMSExcursion() {
+
             public void excurse()
-                throws IOException, ServletException {
+                    throws IOException, ServletException {
                 ContentSection section = null;
                 Application app = Web.getContext().getApplication();
                 if (app instanceof ContentSection) {
-                    section = (ContentSection)app;
+                    section = (ContentSection) app;
                 } else {
                     try {
-                        section = new ContentSection
-                            ((BigDecimal) m_sectionId.transformValue(request));
+                        section = new ContentSection((BigDecimal) m_sectionId.transformValue(request));
                     } catch (DataObjectNotFoundException ex) {
                         throw new UncheckedWrapperException(ex);
                     }
                 }
                 setContentSection(section);
 
-
                 final Document doc = buildDocument(request, response);
                 final PresentationManager pm =
-                    Templating.getPresentationManager();
+                        Templating.getPresentationManager();
 
                 pm.servePage(doc, request, response);
             }

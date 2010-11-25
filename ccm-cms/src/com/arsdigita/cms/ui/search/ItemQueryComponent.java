@@ -57,79 +57,76 @@ public class ItemQueryComponent extends BaseQueryComponent {
 
         if (Search.getConfig().isIntermediaEnabled()) {
             add(new LaunchDateFilterWidget(new LaunchDateFilterType(),
-                                          LaunchDateFilterType.KEY));
+                    LaunchDateFilterType.KEY));
         }
 
-        if (Search.getConfig().isIntermediaEnabled() ||
-            Search.getConfig().isLuceneEnabled()) {
+        if (Search.getConfig().isIntermediaEnabled()
+                || Search.getConfig().isLuceneEnabled()) {
 
             add(new PermissionFilterComponent(
                     SecurityManager.CMS_PREVIEW_ITEM));
 
             add(new SimpleCategoryFilterWidget() {
+
+                @Override
                 protected Category[] getRoots(PageState state) {
                     Category[] roots;
                     if (CMS.getContext().hasContentSection()) {
                         ContentSection section = CMS.getContext().getContentSection();
-                        roots = new Category[] { section.getRootCategory() };
+                        roots = new Category[]{section.getRootCategory()};
                     } else {
                         ContentSectionCollection sections =
-                            ContentSection.getAllSections();
+                                ContentSection.getAllSections();
                         List cats = new ArrayList();
                         while (sections.next()) {
                             ContentSection section = sections.getContentSection();
                             cats.add(section.getRootCategory());
                         }
-                        roots = (Category[])cats.toArray(new Category[cats.size()]);
+                        roots = (Category[]) cats.toArray(new Category[cats.size()]);
                     }
                     return roots;
                 }
-              });
+            });
 
             add(new ContentTypeFilterWidget() {
-                protected ContentType[] getContentTypes(PageState state) {
-                    // override only if there's content section context
+
+                @Override
+                protected ContentSection getContentSection() {
                     if (CMS.getContext().hasContentSection()) {
-                        ContentSection section = CMS.getContext().getContentSection();
-                        ContentTypeCollection typesCollection =  section.getContentTypes();
-                        ContentType[] typesArray = new ContentType[(int)typesCollection.size()];
-                        int i = 0;
-                        while (typesCollection.next()) {
-                            typesArray[i++] = typesCollection.getContentType();
-                        }
-                        return typesArray;
+                        return CMS.getContext().getContentSection();
                     } else {
-                        return super.getContentTypes(state);
+                        return super.getContentSection();
                     }
                 }
-              });
+            });
 
             add(new VersionFilterComponent(context));
             add(new ContentSectionFilterComponent());
             add(new DateRangeFilterWidget(new LastModifiedDateFilterType(),
-                                          LastModifiedDateFilterType.KEY));
+                    LastModifiedDateFilterType.KEY));
             add(new DateRangeFilterWidget(new CreationDateFilterType(),
-                                          CreationDateFilterType.KEY));
+                    CreationDateFilterType.KEY));
             add(new PartyFilterWidget(new CreationUserFilterType(),
-                                      CreationUserFilterType.KEY));
+                    CreationUserFilterType.KEY));
             add(new PartyFilterWidget(new LastModifiedUserFilterType(),
-                                      LastModifiedUserFilterType.KEY));
+                    LastModifiedUserFilterType.KEY));
         }
 
         Submit submit = new Submit(m_context + "_search",
-                                   ContentSectionPage.globalize("cms.ui.search"));
+                ContentSectionPage.globalize("cms.ui.search"));
         add(submit);
     }
 
     private class LaunchDateFilterWidget extends DateRangeFilterWidget {
+
         public LaunchDateFilterWidget(FilterType type, String name) {
-            super(type,name);
+            super(type, name);
 
         }
+
         public boolean isVisible(PageState state) {
-            return !ContentSection.getConfig().getHideLaunchDate() &&
-                super.isVisible(state);
+            return !ContentSection.getConfig().getHideLaunchDate()
+                    && super.isVisible(state);
         }
-
     }
 }

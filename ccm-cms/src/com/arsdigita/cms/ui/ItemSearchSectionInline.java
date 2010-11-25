@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui;
 
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Container;
 import com.arsdigita.bebop.PageState;
@@ -45,13 +44,10 @@ import com.arsdigita.search.ui.ResultsPane;
  */
 public class ItemSearchSectionInline extends ItemSearchSection {
 
-    private static final org.apache.log4j.Logger s_log = 
-        org.apache.log4j.Logger.getLogger(ItemSearchSectionInline.class);
-
-
+    private static final org.apache.log4j.Logger s_log =
+            org.apache.log4j.Logger.getLogger(ItemSearchSectionInline.class);
     private Submit m_selectItem;
     private String m_name;
-
     private OIDParameter m_item;
 
     /**
@@ -66,27 +62,32 @@ public class ItemSearchSectionInline extends ItemSearchSection {
         m_item = new OIDParameter(name + "_itemOID");
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
         p.addGlobalStateParam(m_item);
     }
 
+    @Override
     protected Component createResultsPane(QueryGenerator generator) {
         return new InlineResultsPane(generator);
     }
 
+    @Override
     protected void addResultsPane(Container container) {
         super.addResultsPane(container);
 
         m_selectItem = new ItemSelectSubmit(
-            m_name + "_itemSelect", "Select Item");
+                m_name + "_itemSelect", "Select Item");
         container.add(m_selectItem);
     }
 
+    @Override
     protected void addFormListener() {
         // do nothing (ItemSearchWidget's submission listener does this.
     }
 
+    @Override
     public void processQuery(PageState state) {
         super.processQuery(state);
         m_selectItem.setVisible(state, hasQuery(state));
@@ -97,39 +98,43 @@ public class ItemSearchSectionInline extends ItemSearchSection {
     }
 
     public ContentItem getSelectedItem(PageState state) {
-        OID oid = (OID)state.getValue(m_item);
-        
+        OID oid = (OID) state.getValue(m_item);
+
         if (oid == null) {
             return null;
         }
-        
-        return (ContentItem)DomainObjectFactory.newInstance(oid);
+
+        return (ContentItem) DomainObjectFactory.newInstance(oid);
     }
-    
+
     private class ItemSelectSubmit extends Submit {
+
         public ItemSelectSubmit(String name, String label) {
             super(name, label);
         }
+
         public ItemSelectSubmit(String name, GlobalizedMessage label) {
             super(name, label);
         }
 
+        @Override
         public boolean isVisible(PageState ps) {
             return hasQuery(ps) && super.isVisible(ps);
         }
-
     }
 
     private class InlineResultsPane extends ResultsPane {
+
         public InlineResultsPane(QueryGenerator query) {
             super(query);
             setRelativeURLs(true);
         }
-        
+
+        @Override
         protected Element generateDocumentXML(PageState state,
-                                              Document doc) {
+                Document doc) {
             Element element = super.generateDocumentXML(state, doc);
-            
+
             element.addAttribute("field", m_item.getName());
             element.addAttribute("class", "radioButton");
 
