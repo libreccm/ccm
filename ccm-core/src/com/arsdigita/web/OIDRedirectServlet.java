@@ -30,22 +30,21 @@ import com.arsdigita.kernel.URLFinderNotFoundException;
 
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-
 public class OIDRedirectServlet extends BaseServlet {
-    
-    private static final Logger s_log = 
-        Logger.getLogger(OIDRedirectServlet.class);
 
+    private static final Logger s_log =
+                                Logger.getLogger(OIDRedirectServlet.class);
     public static final String OID_PARAM = "oid";
-
     private static final OIDParameter param = new OIDParameter(OID_PARAM);
 
+    @Override
     protected void doService(HttpServletRequest sreq,
                              HttpServletResponse sresp)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
         OID oid = null;
         try {
@@ -55,19 +54,19 @@ public class OIDRedirectServlet extends BaseServlet {
             sresp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        
+
         if (oid == null) {
             // fix for non-encoded OIDs,
             // put in content body text using the link functionality
             try {
                 oid = URLService.getNonencodedOID(sreq);
-            } catch (Exception e ) {
+            } catch (Exception e) {
                 // invalid OID value, return 400 Bad Request
                 sresp.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
             if (s_log.isDebugEnabled()) {
-                s_log.debug("Tried to read non encoded OID, result: "+oid);
+                s_log.debug("Tried to read non encoded OID, result: " + oid);
             }
 
             if (oid == null) {
@@ -78,15 +77,34 @@ public class OIDRedirectServlet extends BaseServlet {
                 return;
             }
         }
-        
+
         try {
             String context = sreq.getParameter("context");
-            String url = URLService.locate(oid,context);
+            String url = URLService.locate(oid, context);
+
+            Map<?, ?> parameters = sreq.getParameterMap();
+            StringBuilder urlParams = new StringBuilder();
+            for (Map.Entry<?, ?> entry : parameters.entrySet()) {
+                if (!entry.getKey().equals("oid")) {
+                    if (urlParams.length() == 0) {
+                        urlParams.append('?');
+                    } else {
+                        urlParams.append('&');
+                    }
+                    String key = (String) entry.getKey();
+                    String[] value = (String[]) entry.getValue();
+                    if (value.length > 0) {
+                        urlParams.append(String.format("%s=%s", key, value[0]));
+                    }
+                }
+            }
+
+            url = url.concat(urlParams.toString());
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Redirecting oid " + oid + " to " + url);
             }
-            
+
             throw new RedirectSignal(url, false);
         } catch (URLFinderNotFoundException ex) {
             if (s_log.isDebugEnabled()) {
