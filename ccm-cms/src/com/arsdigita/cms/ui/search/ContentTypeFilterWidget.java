@@ -39,11 +39,16 @@ public class ContentTypeFilterWidget extends FilterWidget {
 
     private ContentType m_parentType = null;
     private ContentSection m_section = null;
-    private ContentTypeCollection m_types = null;
+    private ContentType[] m_types = null;
 
     public ContentTypeFilterWidget(ContentTypeCollection types) {
         super(new ContentTypeFilterType(), new ArrayParameter(new StringParameter(ContentTypeFilterType.KEY)));
-        m_types = types;
+
+        m_types = new ContentType[(int) types.size()];
+
+        for (int i = 0; types.next();) {
+            m_types[i++] = types.getContentType();
+        }
     }
 
     public ContentTypeFilterWidget(ContentSection section) {
@@ -90,7 +95,8 @@ public class ContentTypeFilterWidget extends FilterWidget {
     protected ContentType[] getContentTypes(PageState state) {
 
         ContentType parentType = getParentType(state);
-        ContentTypeCollection typesCollection = m_types;
+        ContentTypeCollection typesCollection = null;
+        ContentType[] typesArray = m_types.clone();
 
         // If the section and parent type both equals the preset from initializer
         // there is no need to get a new ContentTypeCollection
@@ -113,12 +119,12 @@ public class ContentTypeFilterWidget extends FilterWidget {
                     typesCollection = ContentType.getSiblingsOf(parentType);
                 }
             }
-        }
 
-        ContentType[] typesArray = new ContentType[(int) typesCollection.size()];
+            typesArray = new ContentType[(int) typesCollection.size()];
 
-        for (int i = 0; typesCollection.next();) {
-            typesArray[i++] = typesCollection.getContentType();
+            for (int i = 0; typesCollection.next();) {
+                typesArray[i++] = typesCollection.getContentType();
+            }
         }
 
         return typesArray;
