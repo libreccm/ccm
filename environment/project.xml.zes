@@ -102,7 +102,7 @@
 
 <!--  ZeS extension  -->
 <!--  - - - - - - -  -->
-<!--        <ccm:application name="ccm-sci-publications"/> -->
+        <ccm:application name="ccm-sci-publications"/>
         <ccm:application name="ccm-zes-aplaws"/>
 
 
