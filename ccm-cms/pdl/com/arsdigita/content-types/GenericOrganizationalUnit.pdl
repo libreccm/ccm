@@ -64,15 +64,7 @@ association {
                                     to cms_persons.person_id;
 
    // Additional attributes for the association
-   String[0..1]  role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
+   String[0..1] role_name = cms_organizationalunits_person_map.role_name VARCHAR(100);
+   String[0..1] status = cms_organizationalunits_person_map.status VARCHAR(100);
 
 }
-
-//object type GenericOrganizationalUnitPersonAssociation extends ACSObject {
-//
-//      GenericPerson[0..1] person = join cms_organizationalunit_person_assoc.person_id 
-//                                         to cms_persons.person_id;
-//      String[0..1] roleName = cms_organizationalunit_person_assoc.role_name VARCHAR(100);
-//
-//      reference key (cms_organizationalunit_person_assoc.assoc_id);
-//}

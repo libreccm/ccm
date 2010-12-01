@@ -3,10 +3,6 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.cms.*;
 
-object type SciMember extends GenericPerson {
-
-       Boolean[0..1] formerMember = ct_sciorga_members.formerMember BIT;
-       Boolean[0..1] associatedMember = ct_sciorga_members.associatedMember BIT;
-
+object type SciMember extends GenericPerson {     
        reference key ( ct_sciorga_members.member_id );
 }

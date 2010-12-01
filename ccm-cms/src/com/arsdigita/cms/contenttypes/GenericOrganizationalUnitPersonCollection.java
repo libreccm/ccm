@@ -19,6 +19,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DomainCollection;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 
 /**
@@ -29,6 +30,7 @@ import com.arsdigita.persistence.DataCollection;
 public class GenericOrganizationalUnitPersonCollection extends DomainCollection {
 
     public static final String PERSON_ROLE = "link.role_name";
+    public static final String STATUS = "link.status";
 
     public GenericOrganizationalUnitPersonCollection(
             DataCollection dataCollection) {
@@ -45,7 +47,12 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
         return (String) m_dataCollection.get(PERSON_ROLE);
     }
 
+    public String getStatus() {
+        return (String) m_dataCollection.get(STATUS);
+    }
+
     public GenericPerson getPerson() {
-        return new GenericPerson(m_dataCollection.getDataObject());
+        return (GenericPerson) DomainObjectFactory.newInstance(m_dataCollection.
+                getDataObject());
     }
 }

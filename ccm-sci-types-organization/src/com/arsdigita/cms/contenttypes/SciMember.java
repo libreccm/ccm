@@ -39,9 +39,7 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter
  */
 public class SciMember extends GenericPerson {
-
-    public static final String ASSOCIATED_MEMBER = "associatedMember";
-    public static final String FORMER_MEMBER = "formerMember";
+   
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciMember";
     private static final SciOrganizationConfig s_config =
@@ -73,21 +71,5 @@ public class SciMember extends GenericPerson {
 
     public static SciOrganizationConfig getConfig() {
         return s_config;
-    }
-
-    public Boolean isFormerMember() {
-        return (Boolean )get(FORMER_MEMBER);
-    }
-
-    public void setFormerMember(Boolean formerMember) {
-        set(FORMER_MEMBER, formerMember);
-    }
-
-    public Boolean isAssociatedMember() {
-        return (Boolean) get(ASSOCIATED_MEMBER);
-    }
-
-    public void setAssociatedMember(Boolean associatedMember) {
-        set(ASSOCIATED_MEMBER, associatedMember);
-    }
+    }    
 }

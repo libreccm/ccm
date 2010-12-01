@@ -35,7 +35,6 @@ import com.arsdigita.cms.contenttypes.MultiPartArticle;
 import com.arsdigita.cms.dispatcher.XMLGenerator;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.UncheckedWrapperException;
-import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
 
 import java.io.IOException;

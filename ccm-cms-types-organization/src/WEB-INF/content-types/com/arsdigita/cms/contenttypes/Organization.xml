@@ -9,9 +9,9 @@
 
       <ctd:authoring-step 
          labelKey="cms.contenttypes.shared.basic_properties.title" 
-         labelBundle="com.arsdigita.cms.ui.CMSResources"
+         labelBundle="com.arsdigita.cms.CMSResources"
          descriptionKey="cms.contenttypes.shared.basic_properties.description" 
-         descriptionBundle="com.arsdigita.cms.ui.CMSResources"
+         descriptionBundle="com.arsdigita.cms.CMSResources"
          component="com.arsdigita.cms.contenttypes.ui.OrganizationPropertiesStep" 
         ordering="1"/>
 		

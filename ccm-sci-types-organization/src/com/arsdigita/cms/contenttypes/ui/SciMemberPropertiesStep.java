@@ -45,52 +45,7 @@ public class SciMemberPropertiesStep extends SimpleEditStep {
 
         sheet = (DomainObjectPropertySheet) GenericPersonPropertiesStep.
                 getGenericPersonPropertySheet(itemModel);
-
-        DomainObjectPropertySheet.AttributeFormatter associatedFormatter =
-                                                     new DomainObjectPropertySheet.AttributeFormatter() {
-
-            public String format(DomainObject obj, String attribute,
-                                 PageState state) {
-                SciMember member;
-
-                member = (SciMember) obj;
-
-                if ((member.isAssociatedMember() != null) && member.isAssociatedMember()) {
-                    return (String) SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.member.yes").localize();
-                } else {
-                    return (String) SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.member.no").localize();
-                }
-            }
-        };
-
-        DomainObjectPropertySheet.AttributeFormatter formerFormatter =
-                                                     new DomainObjectPropertySheet.AttributeFormatter() {
-
-            public String format(DomainObject obj, String attribute,
-                                 PageState state) {
-                SciMember member;
-
-                member = (SciMember) obj;
-
-                if ((member.isFormerMember() != null) && member.isFormerMember()) {
-                    return (String) SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.member.yes").localize();
-                } else {
-                    return (String) SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.member.no").localize();
-                }
-            }
-        };
-
-        sheet.add(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.member.associatedMember"),
-                  SciMember.ASSOCIATED_MEMBER, associatedFormatter);
-        sheet.add(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.member.formerMember"),
-                  SciMember.FORMER_MEMBER, formerFormatter);
-
+       
         return sheet;
     }
 }

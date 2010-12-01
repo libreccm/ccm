@@ -78,11 +78,9 @@ import org.apache.log4j.Logger;
  * @version $Revision: #15 $ $Date: 2004/08/16 $
  * @version $Id: ConfigRegistry.java 736 2005-09-01 10:46:05Z sskracic $
  **/
-
 public class ConfigRegistry {
 
     private static final Logger s_log = Logger.getLogger(ConfigRegistry.class);
-
     /**
      * Base url for registry location(s).
      * (i.e. $CATALINA_HOME/webapps/$context/WEB-INF/conf/registry in a
@@ -90,7 +88,6 @@ public class ConfigRegistry {
      */
     private URL m_url;
     private ClassLoader m_loader;
-
     private List m_packages = new ArrayList();
     private List m_contexts = new ArrayList();
     private Map m_storage = new HashMap();
@@ -106,7 +103,6 @@ public class ConfigRegistry {
      * @param loader The ClassLoader to use for retrieving registry
      *               configuration files.
      **/
-
     public ConfigRegistry(URL url, ClassLoader loader) {
         m_url = url;
         m_loader = loader;
@@ -122,7 +118,6 @@ public class ConfigRegistry {
      *
      * @see Thread#getContextClassLoader()
      **/
-
     public ConfigRegistry(URL url) {
         this(url, Thread.currentThread().getContextClassLoader());
     }
@@ -135,7 +130,6 @@ public class ConfigRegistry {
      * @param loader The ClassLoader to use when searching for
      * registry configuration files.
      **/
-
     public ConfigRegistry(ClassLoader loader) {
         this(CCMResourceManager.getConfigURL(), loader);
     }
@@ -156,7 +150,7 @@ public class ConfigRegistry {
      */
     private void initialize(URL url, ErrorList errs) {
 
-        ClassLoader ldr = new URLClassLoader(new URL[] {url}, null);
+        ClassLoader ldr = new URLClassLoader(new URL[]{url}, null);
 
         RegistryConfig rc = new RegistryConfig();
         load(rc, errs, ldr);
@@ -181,6 +175,7 @@ public class ConfigRegistry {
      * This method is <strong>not</strong> supported API.
      */
     public final void initialize(String key) {
+        s_log.debug(String.format("Initalizing for key '%s'", key));
         if (m_packages.contains(key)) {
             throw new IllegalArgumentException("already loaded: " + key);
         }
@@ -205,7 +200,6 @@ public class ConfigRegistry {
      *
      * @return A list of package keys represented as Strings.
      **/
-
     public List getPackages() {
         return m_packages;
     }
@@ -215,7 +209,6 @@ public class ConfigRegistry {
      *
      * @return A list of Class objects.
      **/
-
     public List getContexts() {
         return m_contexts;
     }
@@ -232,18 +225,20 @@ public class ConfigRegistry {
      * @throws IllegalArgumentException if this ConfigRegistry does
      * not contain a mapping for <code>context</code>
      **/
-
     public String getStorage(Class context) {
         if (!m_contexts.contains(context)) {
-            throw new IllegalArgumentException
-                ("no such context: " + context +
-                 "; available contexts=" + m_contexts +
-                 "; context->storage map: " + m_storage);
+            throw new IllegalArgumentException("no such context: " + context
+                                               + "; available contexts="
+                                               + m_contexts
+                                               + "; context->storage map: "
+                                               + m_storage);
         }
         return (String) m_storage.get(context);
     }
 
     private void addContext(Class context, String storage) {
+        s_log.debug(String.format("Adding context '%s', storage '%s'...",
+                                  context.getName(), storage));
         m_contexts.add(context);
         m_storage.put(context, storage);
     }
@@ -258,7 +253,6 @@ public class ConfigRegistry {
      * @return true iff this ConfigRegistry contains a mapping for
      * <code>context</code>
      **/
-
     public boolean isConfigured(Class context) {
         return m_contexts.contains(context);
     }
@@ -275,9 +269,8 @@ public class ConfigRegistry {
      * @throws IllegalArgumentException if this ConfigRegistry does
      * not contain a mapping for <code>ctx.getClass()</code>
      **/
-
     public void load(ParameterContext ctx, ErrorList errs) {
-        for (Iterator it = m_loaders.iterator(); it.hasNext(); ) {
+        for (Iterator it = m_loaders.iterator(); it.hasNext();) {
             ClassLoader ldr = (ClassLoader) it.next();
             load(ctx, errs, ldr);
         }
@@ -300,7 +293,9 @@ public class ConfigRegistry {
         for (int i = m_loaders.size() - 1; i >= 0; i--) {
             ClassLoader ldr = (ClassLoader) m_loaders.get(i);
             InputStream is = ldr.getResourceAsStream(resource);
-            if (is != null) { return is; }
+            if (is != null) {
+                return is;
+            }
         }
 
         return m_loader.getResourceAsStream(resource);
@@ -316,12 +311,14 @@ public class ConfigRegistry {
         Properties props = new Properties();
         InputStream is = ldr.getResourceAsStream(resource);
         if (is != null) {
-            try { props.load(is); }
-            catch (IOException e) {
+            try {
+                props.load(is);
+            } catch (IOException e) {
                 throw new UncheckedWrapperException(e);
             } finally {
-                try { is.close(); }
-                catch (IOException e) {
+                try {
+                    is.close();
+                } catch (IOException e) {
                     throw new UncheckedWrapperException(e);
                 }
             }
@@ -330,6 +327,7 @@ public class ConfigRegistry {
     }
 
     private class ConfigRegistryParser extends DefaultHandler {
+
         public void startElement(String uri, String localName, String qn,
                                  Attributes attrs) {
             if (localName.equals("config")) {
@@ -338,8 +336,8 @@ public class ConfigRegistry {
                 // XXX: Is there a better way to handle errors that
                 // includes line number information?
                 if (klass == null || storage == null) {
-                    throw new IllegalArgumentException
-                        ("class and storage attributes are required");
+                    throw new IllegalArgumentException(
+                            "class and storage attributes are required");
                 }
 
                 Class context = Classes.loadClass(klass);
@@ -347,5 +345,4 @@ public class ConfigRegistry {
             }
         }
     }
-
 }

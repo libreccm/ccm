@@ -67,24 +67,7 @@ public class SciMemberPropertyForm
 
     @Override
     protected void addWidgets() {
-        super.addWidgets();
-
-        add(new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.member.associatedMember")));
-        ParameterModel isAssociated = new BooleanParameter(
-                SciMember.ASSOCIATED_MEMBER);
-        ArrayParameter associatedParam = new ArrayParameter(isAssociated);
-        m_associated = new CheckboxGroup(associatedParam);
-        m_associated.addOption(new Option("assoc", ""));
-        add(m_associated);
-
-        add(new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.member.formerMember")));
-        ParameterModel isFormer = new BooleanParameter(SciMember.FORMER_MEMBER);
-        ArrayParameter formerParam = new ArrayParameter(isFormer);
-        m_former = new CheckboxGroup(formerParam);
-        m_former.addOption(new Option("former", ""));
-        add(m_former);
+        super.addWidgets();     
     }
 
     @Override
@@ -92,15 +75,7 @@ public class SciMemberPropertyForm
         super.init(fse);
 
         FormData data = fse.getFormData();
-        SciMember member = (SciMember) super.initBasicWidgets(fse);
-
-        if ((member.isAssociatedMember() != null) &&
-                member.isAssociatedMember()) {
-            m_associated.setValue(fse.getPageState(), "assoc");
-        }
-        if ((member.isFormerMember() != null) && member.isFormerMember()) {
-            m_former.setValue(fse.getPageState(), "former");
-        }
+        SciMember member = (SciMember) super.initBasicWidgets(fse);        
     }
 
     @Override
@@ -112,21 +87,7 @@ public class SciMemberPropertyForm
 
         if ((member != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            if (m_associated.getValue(state) == null) {
-                logger.debug("Setting associated member status to false...");
-                member.setAssociatedMember(false);
-            } else {
-                logger.debug("Setting associated member status to true...");
-                member.setAssociatedMember(true);
-            }
-            if (m_former.getValue(state) == null) {
-                logger.debug("Setting former member status to false...");
-                member.setFormerMember(false);
-            } else {
-                logger.debug("Setting former member status to true...");
-                member.setFormerMember(true);
-            }
-
+           
             member.save();
 
             init(fse);

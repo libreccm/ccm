@@ -9,7 +9,7 @@
 
       <ctd:authoring-step
                   labelKey="cms.contenttypes.shared.basic_properties.title" 
-               labelBundle="com.arsdigita.cms.ui.CMSResources"
+               labelBundle="com.arsdigita.cms.CMSResources"
             descriptionKey="faq_item.authoring.basic_properties.description" 
          descriptionBundle="com.arsdigita.cms.contenttypes.FAQItemResources"
                  component="com.arsdigita.cms.contenttypes.ui.FAQItemPropertiesStep" 

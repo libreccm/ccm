@@ -15,6 +15,10 @@ public class SciOrganizationConfig extends AbstractConfig {
     private final Parameter m_organizationAddDepartmentHide;
     private final Parameter m_organizationAddProjectHide;
     private final Parameter m_organizationAddContactHide;
+    private final Parameter m_organizationMembersAllInOne;
+    private final Parameter m_organizationMembersMerge;
+    private final Parameter m_organizationProjectsAllInOne;
+    private final Parameter m_organizationProjectsMerge;
     private final Parameter m_departmentAddPersonHide;
     private final Parameter m_departmentAddSubDepartmentHide;
     private final Parameter m_departmentAddProjectHide;
@@ -33,6 +37,8 @@ public class SciOrganizationConfig extends AbstractConfig {
     private final Parameter m_projectFundingHide;
     private final Parameter m_projectFundingDhtml;
     private final Parameter m_projectMaterialsHide;
+    private final Parameter m_projectMembersAllInOne;
+    private final Parameter m_projectMembersMerge;
 
     public SciOrganizationConfig() {
 
@@ -52,6 +58,22 @@ public class SciOrganizationConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.sciorganization.add_contact_hide",
                 Parameter.REQUIRED,
                 Boolean.FALSE);
+        m_organizationMembersAllInOne = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciorganization.members_all_in_one",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
+        m_organizationMembersMerge = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciorganization.members_merge",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
+        m_organizationProjectsAllInOne = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciorganization.projects_all_in_one",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
+        m_organizationProjectsMerge = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciorganization.projects_merge",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
         m_departmentAddPersonHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.add_person_hide",
                 Parameter.REQUIRED,
@@ -59,7 +81,7 @@ public class SciOrganizationConfig extends AbstractConfig {
         m_departmentAddSubDepartmentHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.add_subdepartment_hide",
                 Parameter.REQUIRED,
-                Boolean.FALSE);
+                Boolean.TRUE);
         m_departmentAddProjectHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.add_project_hide",
                 Parameter.REQUIRED,
@@ -71,7 +93,7 @@ public class SciOrganizationConfig extends AbstractConfig {
         m_departmentSetSuperDepartmentHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.set_superdepartment_hide",
                 Parameter.REQUIRED,
-                Boolean.FALSE);
+                Boolean.TRUE);
         m_departmentAddContactHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.add_contact_hide",
                 Parameter.REQUIRED,
@@ -91,11 +113,11 @@ public class SciOrganizationConfig extends AbstractConfig {
         m_projectAddSubProjectHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.add_subproject_hide",
                 Parameter.REQUIRED,
-                Boolean.FALSE);
+                Boolean.TRUE);
         m_projectSetSuperProjectHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.set_superproject_hide",
                 Parameter.REQUIRED,
-                Boolean.FALSE);
+                Boolean.TRUE);
         m_projectAddContactHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciorganization.add_project_hide",
                 Parameter.REQUIRED,
@@ -126,22 +148,39 @@ public class SciOrganizationConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 Boolean.FALSE);
 
+        m_projectMembersAllInOne = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.members_all_in_one",
+                Parameter.REQUIRED,
+                Boolean.TRUE);
+        m_projectMembersMerge = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.members_merge",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
+
         register(m_organizationAddPersonHide);
         register(m_organizationAddDepartmentHide);
         register(m_organizationAddProjectHide);
+        register(m_organizationMembersAllInOne);
+        register(m_organizationMembersMerge);
+        register(m_organizationProjectsAllInOne);
+        register(m_organizationProjectsMerge);
+
         register(m_departmentAddPersonHide);
         register(m_departmentAddSubDepartmentHide);
         register(m_departmentAddProjectHide);
         register(m_departmentSetOrganizationHide);
         register(m_departmentSetSuperDepartmentHide);
+
         register(m_projectAddPersonHide);
         register(m_projectAddOrganizationHide);
         register(m_projectAddDepartmentHide);
         register(m_projectAddSubProjectHide);
         register(m_projectSetSuperProjectHide);
+
         register(m_organizationDescriptionDhtml);
         register(m_departmentDescriptionDhtml);
         register(m_projectDescriptionDhtml);
+
         register(m_organizationAddContactHide);
         register(m_departmentAddContactHide);
         register(m_projectAddContactHide);
@@ -149,6 +188,9 @@ public class SciOrganizationConfig extends AbstractConfig {
         register(m_projectFundingHide);
         register(m_projectFundingDhtml);
         register(m_projectMaterialsHide);
+
+        register(m_projectMembersAllInOne);
+        register(m_projectMembersMerge);
 
         loadInfo();
     }
@@ -167,6 +209,22 @@ public class SciOrganizationConfig extends AbstractConfig {
 
     public final boolean getOrganizationAddContactHide() {
         return (Boolean) get(m_organizationAddContactHide);
+    }
+
+    public final boolean getOrganizationMembersAllInOne() {
+        return (Boolean) get(m_organizationMembersAllInOne);
+    }
+
+    public final boolean getOrganizationMembersMerge() {
+        return (Boolean) get(m_organizationMembersMerge);
+    }
+
+    public final boolean getOrganizationProjectsAllInOne() {
+        return (Boolean) get(m_organizationProjectsAllInOne);
+    }
+
+    public final boolean getOrganizationProjectsMerge() {
+        return (Boolean) get(m_organizationProjectsMerge);
     }
 
     public final boolean getDepartmentAddPersonHide() {
@@ -239,5 +297,13 @@ public class SciOrganizationConfig extends AbstractConfig {
 
     public final boolean getProjectMaterialsHide() {
         return (Boolean) get(m_projectMaterialsHide);
+    }
+
+    public final boolean getProjectMembersAllInOne() {
+        return (Boolean) get(m_projectMembersAllInOne);
+    }
+
+    public final boolean getProjectMembersMerge() {
+        return (Boolean) get(m_projectMembersMerge);
     }
 }

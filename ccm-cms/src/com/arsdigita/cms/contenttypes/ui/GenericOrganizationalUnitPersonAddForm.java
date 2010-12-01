@@ -26,6 +26,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
+import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -72,8 +73,8 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.person.role")));
         ParameterModel roleParam =
-        new StringParameter(
-        GenericOrganizationalUnitPersonCollection.PERSON_ROLE);        
+                       new StringParameter(
+                GenericOrganizationalUnitPersonCollection.PERSON_ROLE);
         SingleSelect roleSelect = new SingleSelect(roleParam);
         roleSelect.addValidationListener(new NotNullValidationListener());
         roleSelect.addOption(
@@ -89,12 +90,29 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
             role = roles.getRelationAttribute();
             roleSelect.addOption(new Option(role.getKey(), role.getName()));
         }
-
         add(roleSelect);
 
-        /*TextField role = new TextField(roleParam);
-        role.addValidationListener(new NotNullValidationListener());
-        add(role);*/
+        add(new Label(ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.person.status")));
+        ParameterModel statusModel =
+                       new StringParameter(
+                GenericOrganizationalUnitPersonCollection.STATUS);
+        SingleSelect statusSelect = new SingleSelect(statusModel);
+        statusSelect.addValidationListener(new NotNullValidationListener());
+        statusSelect.addOption(new Option("",
+                                          new Label((String) ContenttypesGlobalizationUtil.
+                globalize("cms.ui.select_one").localize())));
+        RelationAttributeCollection statusColl = new RelationAttributeCollection(
+                getStatusAttributeName());
+        statusColl.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().
+                getLanguage());
+        while (statusColl.next()) {
+            RelationAttribute status;
+            status = statusColl.getRelationAttribute();
+            statusSelect.addOption(new Option(status.getKey(), status.getName()));
+        }
+        add(statusSelect);
+
     }
 
     @Override
@@ -120,8 +138,10 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
                         getFullName()));
             }
             orga.addPerson((GenericPerson) data.get(ITEM_SEARCH),
-            (String) data.get(
-            GenericOrganizationalUnitPersonCollection.PERSON_ROLE));            
+                           (String) data.get(
+                    GenericOrganizationalUnitPersonCollection.PERSON_ROLE),
+                           (String) data.get(
+                    GenericOrganizationalUnitPersonCollection.STATUS));
         }
 
         init(fse);
@@ -132,6 +152,10 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
     }
 
     protected String getRoleAttributeName() {
-        return "GenericOrganizationRole";
+        return "GenericOrganizationalUnitRole";
+    }
+
+    protected String getStatusAttributeName() {
+        return "GenericOrganizationalUnitMemberStatus";
     }
 }

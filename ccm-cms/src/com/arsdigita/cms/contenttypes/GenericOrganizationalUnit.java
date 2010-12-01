@@ -50,6 +50,7 @@ public class GenericOrganizationalUnit extends ContentPage {
     public final static String CONTACT_ORDER = "contact_order";
     public final static String PERSONS = "persons";
     public final static String ROLE = "role_name";
+    public final static String STATUS = "status";
     public final static String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.GenericOrganizationalUnit";
 
@@ -115,12 +116,13 @@ public class GenericOrganizationalUnit extends ContentPage {
         return new GenericOrganizationalUnitPersonCollection(dataColl);
     }
 
-    public void addPerson(GenericPerson person, String role) {
+    public void addPerson(GenericPerson person, String role, String status) {
         Assert.exists(person, GenericPerson.class);
 
         DataObject link = add(PERSONS, person);
 
         link.set(ROLE, role);
+        link.set(STATUS, status);
         link.save();     
     }
 

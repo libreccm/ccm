@@ -133,34 +133,26 @@ import org.apache.log4j.Logger;
 public class URL {
 
     private static final Logger s_log = Logger.getLogger(URL.class);
-
     private static final String INTERNAL_DIR = "/__ccm__";
-
     /**
      * The standard location for JSP files.
      */
     public static final String JSP_DIR = INTERNAL_DIR + "/jsp";
-
     /**
      * The standard location for static files.
      */
     public static final String STATIC_DIR = INTERNAL_DIR + "/static";
-
     /**
      * The standard location for XSL files.
      */
     public static final String XSL_DIR = INTERNAL_DIR + "/xsl";
-
     /**
      * The standard location for servlets.
      */
     public static final String SERVLET_DIR = INTERNAL_DIR + "/servlet";
-
     private static final ThreadLocal s_empty = new EmptyParameterMap();
-
     private StringBuffer m_url;
     private ParameterMap m_params;
-
     private int m_schemeEnd = -1;
     private int m_serverNameEnd = -1;
     private int m_serverPortEnd = -1;
@@ -182,28 +174,27 @@ public class URL {
         if (Assert.isEnabled()) {
             Assert.exists(scheme, "String scheme");
             Assert.isTrue(!scheme.equals(""),
-                              "The scheme cannot be an empty string");
+                          "The scheme cannot be an empty string");
 
             Assert.exists(serverName, "String serverName");
             Assert.isTrue(serverPort > 0,
-                              "The serverPort must be greater than 0; " +
-                              "I got " + serverPort);
+                          "The serverPort must be greater than 0; " + "I got "
+                          + serverPort);
 
             Assert.exists(contextPath, "String contextPath");
 
             if (contextPath.startsWith("/")) {
-                Assert.isTrue
-                    (!contextPath.endsWith("/"),
-                     "A contextPath starting with '/' must not end in '/'; " +
-                     "I got '" + contextPath + "'");
+                Assert.isTrue(!contextPath.endsWith("/"),
+                              "A contextPath starting with '/' must not end in '/'; "
+                              + "I got '" + contextPath + "'");
             }
 
             Assert.exists(servletPath, "String servletPath");
 
             if (pathInfo != null) {
                 Assert.isTrue(pathInfo.startsWith("/"),
-                                  "I expected a pathInfo starting with '/' " +
-                                  "and got '" + pathInfo + "' instead");
+                              "I expected a pathInfo starting with '/' "
+                              + "and got '" + pathInfo + "' instead");
             }
         }
 
@@ -292,8 +283,8 @@ public class URL {
                final String pathInfo,
                final ParameterMap params) {
         HttpServletRequest req = Web.getRequest();
-        String dispatcherPrefix = req ==  null ? null :
-            DispatcherHelper.getDispatcherPrefix(req);
+        String dispatcherPrefix = req == null ? null : DispatcherHelper.
+                getDispatcherPrefix(req);
 
         init(scheme,
              serverName,
@@ -314,7 +305,7 @@ public class URL {
     private URL(final HttpServletRequest sreq,
                 final ParameterMap params) {
         final String dispatcherPrefix =
-            DispatcherHelper.getDispatcherPrefix(sreq);
+                     DispatcherHelper.getDispatcherPrefix(sreq);
         final HttpHost host = new HttpHost(sreq);
 
         init(sreq.getScheme(),
@@ -346,17 +337,11 @@ public class URL {
      * @return a debugging representation of this URL
      */
     public final String toDebugString() {
-        return super.toString() + " " +
-            "[" +
-            getScheme() + "," +
-            getServerName() + "," +
-            getServerPort() + "," +
-            getContextPath() + "," +
-            getServletPath() + "," +
-            getDispatcherPrefix() + "," +
-            getPathInfo() + "," +
-            getQueryString() +
-            "]";
+        return super.toString() + " " + "[" + getScheme() + ","
+               + getServerName() + "," + getServerPort() + ","
+               + getContextPath() + "," + getServletPath() + ","
+               + getDispatcherPrefix() + "," + getPathInfo() + ","
+               + getQueryString() + "]";
     }
 
     /**
@@ -606,14 +591,13 @@ public class URL {
     public static final URL root() {
         final WebConfig config = Web.getConfig();
 
-        URL url = new URL
-            (config.getDefaultScheme(),
-             config.getServer().getName(),
-             config.getServer().getPort(),
-             "",
-             "/",
-             null,
-             null);
+        URL url = new URL(config.getDefaultScheme(),
+                          config.getServer().getName(),
+                          config.getServer().getPort(),
+                          "",
+                          "/",
+                          null,
+                          null);
 
         return url;
     }
@@ -641,16 +625,15 @@ public class URL {
             // If the URL is being generated outside of a WebContext,
             // use the request to fill out the URL.
 
-            return new URL( sreq, params );
+            return new URL(sreq, params);
         } else {
-            return new URL
-                (url.getScheme(),
-                 url.getServerName(),
-                 url.getServerPort(),
-                 url.getContextPath(),
-                 url.getServletPath(),
-                 url.getPathInfo(),
-                 params);
+            return new URL(url.getScheme(),
+                           url.getServerName(),
+                           url.getServerPort(),
+                           url.getContextPath(),
+                           url.getServletPath(),
+                           url.getPathInfo(),
+                           params);
         }
     }
 
@@ -682,14 +665,13 @@ public class URL {
 
         final HttpHost host = new HttpHost(sreq);
 
-        return new URL
-            (sreq.getScheme(),
-             host.getName(),
-             host.getPort(),
-             config.getDispatcherContextPath(),
-             config.getDispatcherServletPath(),
-             path,
-             params);
+        return new URL(sreq.getScheme(),
+                       host.getName(),
+                       host.getPort(),
+                       config.getDispatcherContextPath(),
+                       config.getDispatcherServletPath(),
+                       path,
+                       params);
     }
 
     /**
@@ -705,8 +687,8 @@ public class URL {
      * @return a <code>URL</code> with a path to dispatch to
      */
     public static final URL dynamicHostThere(final HttpServletRequest sreq,
-                                  final String path,
-                                  final ParameterMap params) {
+                                             final String path,
+                                             final ParameterMap params) {
         final WebConfig config = Web.getConfig();
         DynamicHostProvider provider = Web.getConfig().getDynamicHostProvider();
 
@@ -753,14 +735,13 @@ public class URL {
 
         final HttpHost host = new HttpHost(sreq);
 
-        return new URL
-            (sreq.getScheme(),
-             host.getName(),
-             host.getPort(),
-             config.getDispatcherContextPath(),
-             config.getDispatcherServletPath(),
-             path,
-             (ParameterMap) s_empty.get());
+        return new URL(sreq.getScheme(),
+                       host.getName(),
+                       host.getPort(),
+                       config.getDispatcherContextPath(),
+                       config.getDispatcherServletPath(),
+                       path,
+                       (ParameterMap) s_empty.get());
     }
 
     /**
@@ -783,8 +764,7 @@ public class URL {
                                   final ParameterMap params) {
         if (Assert.isEnabled() && pathInfo != null) {
             Assert.isTrue(pathInfo.startsWith("/"),
-                              "pathInfo, if not null, must " +
-                              "start with a slash");
+                          "pathInfo, if not null, must " + "start with a slash");
         }
 
         if (pathInfo == null) {
@@ -810,8 +790,7 @@ public class URL {
                                   final String pathInfo) {
         if (Assert.isEnabled() && pathInfo != null) {
             Assert.isTrue(pathInfo.startsWith("/"),
-                              "pathInfo, if not null, must " +
-                              "start with a slash");
+                          "pathInfo, if not null, must " + "start with a slash");
         }
 
         if (pathInfo == null) {
@@ -832,14 +811,13 @@ public class URL {
                                   final ParameterMap params) {
         final WebConfig config = Web.getConfig();
 
-        return new URL
-            (config.getDefaultScheme(),
-             config.getServer().getName(),
-             config.getServer().getPort(),
-             config.getDispatcherContextPath(),
-             config.getDispatcherServletPath(),
-             path,
-             params);
+        return new URL(config.getDefaultScheme(),
+                       config.getServer().getName(),
+                       config.getServer().getPort(),
+                       config.getDispatcherContextPath(),
+                       config.getDispatcherServletPath(),
+                       path,
+                       params);
     }
 
     /**
@@ -914,7 +892,13 @@ public class URL {
         if (m_params == null) {
             return m_url.substring(m_serverPortEnd);
         } else {
-            return m_url.substring(m_serverPortEnd) + m_params;
+            String str = m_url.substring(m_serverPortEnd);
+            if (str.contains("?")) {
+                return String.format("%s%s", m_url.substring(m_serverPortEnd),
+                                     m_params.toString().replace('?', '&'));
+            } else {
+                return m_url.substring(m_serverPortEnd) + m_params;
+            }
         }
     }
 
@@ -939,6 +923,7 @@ public class URL {
     }
 
     private static class EmptyParameterMap extends InternalRequestLocal {
+
         protected final Object initialValue() {
             return new ParameterMap();
         }

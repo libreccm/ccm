@@ -85,7 +85,7 @@ public class SciDepartmentProjectsTable
                 SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.department.project.remove").localize(),
                 TABLE_COL_DEL));
-        colModel.add(new TableColumn(
+        /*colModel.add(new TableColumn(
                 2,
                 SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.department.project.up").localize(),
@@ -94,15 +94,15 @@ public class SciDepartmentProjectsTable
                 3,
                 SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.department.project.down").localize(),
-                TABLE_COL_DOWN));
+                TABLE_COL_DOWN));*/
 
         setModelBuilder(
                 new SciDepartmentProjectsTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
-        colModel.get(2).setCellRenderer(new UpCellRenderer());
-        colModel.get(3).setCellRenderer(new DownCellRenderer());
+        //colModel.get(2).setCellRenderer(new UpCellRenderer());
+        //colModel.get(3).setCellRenderer(new DownCellRenderer());
 
         addTableActionListener(this);
     }

@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.event.TableActionEvent;
@@ -32,6 +33,8 @@ import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.bebop.util.GlobalizationUtil;
+import com.arsdigita.cms.CMS;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.GenericContact;
@@ -39,8 +42,10 @@ import com.arsdigita.cms.contenttypes.GenericContactTypeCollection;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnit;
 import com.arsdigita.cms.contenttypes.GenericOrganizationalUnitContactCollection;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
+import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.DispatcherHelper;
+import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -77,7 +82,8 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         tabModel.add(new TableColumn(
                 1,
                 ContenttypesGlobalizationUtil.globalize(
-                "cms.contenttypes.ui.genericorgaunit.contact.title").localize()));
+                "cms.contenttypes.ui.genericorgaunit.contact.title").localize(),
+                TABLE_COL_EDIT));
         tabModel.add(new TableColumn(
                 2,
                 ContenttypesGlobalizationUtil.globalize(
@@ -101,6 +107,8 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         tabModel.get(2).setCellRenderer(new DeleteCellRenderer());
         tabModel.get(3).setCellRenderer(new UpCellRenderer());
         tabModel.get(3).setCellRenderer(new DownCellRenderer());
+
+        addTableActionListener(this);
     }
 
     private class GenericOrganizationalUnitTableModelBuilder
@@ -212,7 +220,20 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                                                         SecurityManager.EDIT_ITEM,
                                                         orgaunit);
             if (canEdit) {
-                ControlLink link = new ControlLink(value.toString());
+                GenericContact contact;
+                try {
+                    contact = new GenericContact((BigDecimal) key);
+                } catch (DataObjectNotFoundException ex) {
+                    return new Label(value.toString());
+                }
+                ContentSection section = CMS.getContext().getContentSection();
+                ItemResolver resolver = section.getItemResolver();
+                Link link =
+                     new Link(value.toString(),
+                              resolver.generateItemURL(state,
+                                                       contact,
+                                                       section,
+                                                       contact.getVersion()));
                 return link;
             } else {
                 return new Label(value.toString());

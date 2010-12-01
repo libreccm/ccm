@@ -19,6 +19,14 @@
  */
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.lifecycle.LifecycleDefinition;
+import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.ResourceParameter;
+import com.arsdigita.workflow.simple.WorkflowTemplate;
+import java.io.InputStream;
+
 /**
  * Loader for {@link SciProject}
  *
@@ -26,12 +34,41 @@ package com.arsdigita.cms.contenttypes;
  */
 public class SciProjectLoader extends AbstractContentTypeLoader {
 
+    private ResourceParameter m_template;
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SciProject.xml"
     };
 
+    public SciProjectLoader() {
+        super();
+
+        m_template = new ResourceParameter(
+                "com.arsdigita.cms.contenttypes.SciProjectTemplate",
+                Parameter.REQUIRED,
+                "/WEB-INF/content-types/com/arsdigita/"
+                + "cms/contenttypes/sciproject-item.jsp");
+
+        register(m_template);
+    }
+
+    @Override
     public String[] getTypes() {
         return TYPES;
     }
 
+    @Override
+    protected void prepareSection(final ContentSection section,
+                                  final ContentType type,
+                                  final LifecycleDefinition lifecycle,
+                                  final WorkflowTemplate workflow) {
+        super.prepareSection(section, type, lifecycle, workflow);
+
+        setDefaultTemplate("SciProject Item",
+                           "sciproject-item",
+                           (InputStream) get(m_template),
+                           section,
+                           type,
+                           lifecycle,
+                           workflow);
+    }
 }

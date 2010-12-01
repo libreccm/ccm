@@ -6,7 +6,7 @@
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       <ctd:authoring-step 
        labelKey="cms.contenttypes.shared.basic_properties.title" 
-       labelBundle="com.arsdigita.cms.ui.CMSResources"
+       labelBundle="com.arsdigita.cms.CMSResources"
        descriptionKey="press_release.authoring.basic_properties.description" 
        descriptionBundle="com.arsdigita.cms.contenttypes.PressReleaseResources"
        component="com.arsdigita.cms.contenttypes.ui.PressReleasePropertiesStep"/>
