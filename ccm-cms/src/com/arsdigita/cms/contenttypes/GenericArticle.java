@@ -18,16 +18,10 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ImageAsset;
-import com.arsdigita.cms.ImageAssetCollection;
 import com.arsdigita.cms.TextPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.persistence.DataAssociation;
-import com.arsdigita.persistence.DataAssociationCursor;
-import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
 
@@ -42,10 +36,6 @@ public class GenericArticle extends TextPage {
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.cms.contenttypes.GenericArticle";
-
-    protected static final String IMAGES = "imageAssets";
-
-    private static final String IMAGE_CAPTIONS = "imageCaptions";
 
     private static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(GenericArticle.class);
@@ -97,102 +87,5 @@ public class GenericArticle extends TextPage {
     @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
-    }
-
-    /**
-     * Add an image to this article.  If the image is already added
-     * to the article, the caption will be updated.
-     *
-     * @param image the image to add
-     * @param caption the caption for the image
-     * @return true if image is added and false if caption is updated
-     */
-    public boolean addImage(ImageAsset image, String caption) {
-	ImageAssetCollection col = getImages();
-	col.addEqualsFilter(GenericArticleImageAssociation.IMAGE_ID,image.getID());
-	boolean toReturn = false;
-	GenericArticleImageAssociation assn = null;
-	if (col.next()) {
-	    assn = (GenericArticleImageAssociation)(col.getDomainObject());
-            col.close();
-	} else {
-	    assn = new GenericArticleImageAssociation();
-            String name = this.getName();
-            Assert.exists(name, String.class);
-            String imgName = image.getName();
-            Assert.exists(imgName, String.class);
-	    assn.setName(name + "/" + imgName);
-	    assn.setArticle(this);
-	    assn.setImage(image);
-	    toReturn = true;
-	    assn.setMaster(this);
-	}
-	assn.setCaption(caption);
-	assn.save();
-	return toReturn;
-    }
-
-    /**
-     * Get the caption of the image
-     * @deprecated Do not use this method, it will always return the
-     * first available caption regardless of what image is in use. Use
-     * GenericArticleImageAssnCollection.getCaption() or
-     * GenericArticleImageAssociation.getCaption().
-     * @return the caption, or null if the image is not associated to this
-     *   article
-     */
-    public String getCaption(ImageAsset image) {
-	DataCollection col = (DataCollection)get(IMAGE_CAPTIONS);
-	String caption = null;
-	if (col.next()) {
-	    caption = (String)col.getDataObject().get("caption");
-	}
-        col.close();
-	return caption;
-    }
-
-    /**
-     * Remove a image from this article.
-     * @return true is the image is removed, false otherwise.
-     */
-    public boolean removeImage(ImageAsset image) {
-        GenericArticleImageAssociation assn = GenericArticleImageAssociation
-            .retrieveAssociation(getID(), image.getID());
-	if (assn != null) {
-	    assn.delete();
-	    return true;
-	} else {
-	    return false;
-	}
-    }
-
-    /**
-     * Get the images for this article
-     */
-    public ImageAssetCollection getImages() {
-	DataAssociationCursor dac = ((DataAssociation) get(IMAGE_CAPTIONS)).cursor();
-	ImageAssetCollection images = new GenericArticleImageAssnCollection(dac);
-	return images;
-    }
-
-    /**
-     * Unassociate all images from this article
-     */
-    public void clearImages() {
-        ImageAssetCollection images = getImages();
-        while(images.next()) {
-            images.getDomainObject().delete();
-        }
-    }
-
-    @Override
-    protected void propagateMaster(com.arsdigita.versioning.VersionedACSObject master) {
-	super.propagateMaster(master);
-	ImageAssetCollection collection = getImages();
-	while (collection.next()) {
-	    GenericArticleImageAssociation assn = (GenericArticleImageAssociation)(collection.getDomainObject());
-	    assn.setMaster(master);
-	    assn.save();
-	}
     }
 }

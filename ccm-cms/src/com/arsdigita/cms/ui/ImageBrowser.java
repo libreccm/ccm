@@ -30,7 +30,6 @@ import com.arsdigita.bebop.table.DefaultTableCellRenderer;
 import com.arsdigita.bebop.table.TableCellRenderer;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.cms.contenttypes.GenericArticleImageAssociation;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.Utilities;
@@ -66,9 +65,7 @@ import org.apache.log4j.Logger;
 public class ImageBrowser extends Table {
 
     private ImageBrowserModelBuilder m_builder;
-
-    private static final String[] HEADERS =
-    {"Thumbnail", "Name", "Size", "Type", "Action", ""};
+    private static final String[] HEADERS = {"Thumbnail", "Name", "Size", "Type", "Action", ""};
     private static final int THUMB = 0;
     private static final int NAME = 1;
     private static final int SIZE = 2;
@@ -76,9 +73,7 @@ public class ImageBrowser extends Table {
     private static final int LINK = 4;
     private static final int DELETE = 5;
     private static final int NUM_COLUMNS = 6;
-
     private int m_thumbSize;
-
     private static final Logger s_log = Logger.getLogger(ImageBrowser.class);
 
     /**
@@ -134,7 +129,7 @@ public class ImageBrowser extends Table {
      *   request
      */
     public ImageBrowserModel getImageBrowserModel(PageState state) {
-        return ((ImageModelAdapter)getTableModel(state)).getModel();
+        return ((ImageModelAdapter) getTableModel(state)).getModel();
     }
 
     /**
@@ -143,18 +138,19 @@ public class ImageBrowser extends Table {
      * linkClicked method.
      */
     public static abstract class LinkActionListener
-        extends TableActionAdapter {
+            extends TableActionAdapter {
 
         public void cellSelected(TableActionEvent e) {
             int c = e.getColumn().intValue();
-            if(c == LINK) {
-                linkClicked(e.getPageState(), new BigDecimal((String)e.getRowKey()));
-            } else if (c==DELETE) {
-                deleteClicked(e.getPageState(), new BigDecimal((String)e.getRowKey()));
+            if (c == LINK) {
+                linkClicked(e.getPageState(), new BigDecimal((String) e.getRowKey()));
+            } else if (c == DELETE) {
+                deleteClicked(e.getPageState(), new BigDecimal((String) e.getRowKey()));
             }
         }
 
         public abstract void linkClicked(PageState state, BigDecimal imageId);
+
         public abstract void deleteClicked(PageState state, BigDecimal imageId);
     }
 
@@ -162,9 +158,9 @@ public class ImageBrowser extends Table {
     private class ThumbnailCellRenderer implements TableCellRenderer {
 
         public Component getComponent(Table table, PageState state, Object value,
-                                      boolean isSelected, Object key,
-                                      int row, int column) {
-            ImageAsset a = (ImageAsset)value;
+                boolean isSelected, Object key,
+                int row, int column) {
+            ImageAsset a = (ImageAsset) value;
             String url = Utilities.getImageURL(a);
 
             Image img = new Image(URL.getDispatcherPath() + url);
@@ -178,11 +174,10 @@ public class ImageBrowser extends Table {
                 w = m_thumbSize;
                 h = m_thumbSize;
             } else {
-                Dimension d = ImageSizer.getScaledSize (
-                    width.intValue(), height.intValue(), m_thumbSize, m_thumbSize
-                );
-                w = (int)d.getWidth();
-                h = (int)d.getHeight();
+                Dimension d = ImageSizer.getScaledSize(
+                        width.intValue(), height.intValue(), m_thumbSize, m_thumbSize);
+                w = (int) d.getWidth();
+                h = (int) d.getHeight();
             }
 
             img.setWidth(Integer.toString(w));
@@ -195,22 +190,24 @@ public class ImageBrowser extends Table {
     // Renders the delete link if the user has permission to delete
     // the asset and it's not used in an article.
     private class DeleteCellRenderer extends DefaultTableCellRenderer {
+
         public DeleteCellRenderer() {
             super(true);
         }
+
+        @Override
         public Component getComponent(Table table, PageState state, Object value,
-                                      boolean isSelected, Object key,
-                                      int row, int column)
-        {
+                boolean isSelected, Object key,
+                int row, int column) {
             boolean canDelete = false;
             SecurityManager sm = Utilities.getSecurityManager(state);
-            if (sm.canAccess(state.getRequest(),SecurityManager.DELETE_IMAGES) ) {
+            if (sm.canAccess(state.getRequest(), SecurityManager.DELETE_IMAGES)) {
                 try {
-                    ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance
-                        (new OID(ImageAsset.BASE_DATA_OBJECT_TYPE,(BigDecimal) key));
-                    if (!GenericArticleImageAssociation.imageHasAssociation(asset)) {
-                        canDelete = true;
-                    }
+                    ImageAsset asset = (ImageAsset) DomainObjectFactory.newInstance(new OID(ImageAsset.BASE_DATA_OBJECT_TYPE, (BigDecimal) key));
+//XXX Find a new way to figure out, if this image is used by any CI so we can decide if it can be deleted
+//                    if (!GenericArticleImageAssociation.imageHasAssociation(asset)) {
+//                        canDelete = true;
+//                    }
                 } catch (DataObjectNotFoundException e) {
                     // can't find asset, can't delete it
                 }
@@ -223,13 +220,11 @@ public class ImageBrowser extends Table {
                 return new Label("");
             }
         }
-
-
     }
 
     // Converts an ImageBrowserModelBuilder to a TableModelBuilder
     private static class BuilderAdapter extends LockableImpl
-        implements TableModelBuilder {
+            implements TableModelBuilder {
 
         private ImageBrowserModelBuilder m_builder;
 
@@ -239,10 +234,10 @@ public class ImageBrowser extends Table {
 
         public TableModel makeModel(Table t, PageState s) {
             return new ImageModelAdapter(
-                m_builder.makeModel((ImageBrowser)t, s)
-            );
+                    m_builder.makeModel((ImageBrowser) t, s));
         }
 
+        @Override
         public void lock() {
             m_builder.lock();
             super.lock();
@@ -269,40 +264,50 @@ public class ImageBrowser extends Table {
         public Object getElementAt(int columnIndex) {
             ImageAsset a = m_model.getImageAsset();
 
-            switch(columnIndex) {
-            case ImageBrowser.THUMB:
-                return a;
+            switch (columnIndex) {
+                case ImageBrowser.THUMB:
+                    return a;
 
-            case ImageBrowser.NAME:
-                return a.getName();
+                case ImageBrowser.NAME:
+                    return a.getName();
 
-            case ImageBrowser.SIZE:
-                StringBuffer buf = new StringBuffer();
-                BigDecimal v;
+                case ImageBrowser.SIZE:
+                    StringBuilder buf = new StringBuilder();
+                    BigDecimal v;
 
-                v = a.getWidth();
-                if(v == null) buf.append("???"); else buf.append(v.toString());
-                buf.append(" x ");
+                    v = a.getWidth();
+                    if (v == null) {
+                        buf.append("???");
+                    } else {
+                        buf.append(v.toString());
+                    }
+                    buf.append(" x ");
 
-                v = a.getHeight();
-                if(v == null) buf.append("???"); else buf.append(v.toString());
+                    v = a.getHeight();
+                    if (v == null) {
+                        buf.append("???");
+                    } else {
+                        buf.append(v.toString());
+                    }
 
-                return buf.toString();
+                    return buf.toString();
 
-            case ImageBrowser.TYPE:
-                MimeType m = a.getMimeType();
-                if(m == null) return "???";
+                case ImageBrowser.TYPE:
+                    MimeType m = a.getMimeType();
+                    if (m == null) {
+                        return "???";
+                    }
 
-                return m.getMimeType();
+                    return m.getMimeType();
 
-            case ImageBrowser.LINK:
-                return "select";
+                case ImageBrowser.LINK:
+                    return "select";
 
-            case ImageBrowser.DELETE:
-                return "delete";
+                case ImageBrowser.DELETE:
+                    return "delete";
 
-            default:
-                return null;
+                default:
+                    return null;
             }
         }
 
@@ -314,5 +319,4 @@ public class ImageBrowser extends Table {
             return m_model;
         }
     }
-
 }

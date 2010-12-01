@@ -21,13 +21,10 @@ package com.arsdigita.cms.dispatcher;
 import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ImageAsset;
-import com.arsdigita.cms.ImageAssetCollection;
-import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
 import com.arsdigita.versioning.Transaction;
@@ -150,19 +147,6 @@ public class StreamImage extends ResourceHandlerImpl {
                         "no ImageAsset with oid " + oid);
                 return;
             }
-
-        } else {
-            ImageAssetCollection col = article.getImages();
-            col.addEqualsFilter(ACSObject.ID, imageId);
-            if (col.next()) {
-                image = col.getImage();
-                col.close();
-            } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                        "failed to retrieve ImageAsset " + imageId);
-                return;
-            }
-
         }
 
 
