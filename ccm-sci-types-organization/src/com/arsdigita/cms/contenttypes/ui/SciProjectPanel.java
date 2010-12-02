@@ -235,12 +235,12 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
 
         String show = getShowParam(state);
 
-        if (SHOW_DESCRIPTION.equals(show)) {
-            String desc;
-            desc = project.getProjectDescription();
-
+        if (SHOW_DESCRIPTION.equals(show)) {            
             Element description = content.newChildElement("description");
-            description.setText(desc);
+            description.setText(project.getProjectDescription());
+
+            Element funding = content.newChildElement("funding");
+            funding.setText(project.getFunding());
         } else if (SHOW_CONTACTS.equals(show)) {
             generateContactsXML(project, content, state);
         } else if (SHOW_SUBPROJECTS.equals(show)) {

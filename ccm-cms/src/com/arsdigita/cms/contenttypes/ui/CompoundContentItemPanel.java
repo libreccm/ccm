@@ -234,9 +234,9 @@ public abstract class CompoundContentItemPanel
         paginator.addAttribute("pageNumber", Long.toString(pageNumber));
         paginator.addAttribute("pageCount", Long.toString(pageCount));
         paginator.addAttribute("pageSize", Long.toString(m_pageSize));
-        paginator.addAttribute("objectBegin", Long.toString(begin));
+        paginator.addAttribute("objectBegin", Long.toString(begin + 1));
         paginator.addAttribute("objectEnd", Long.toString(end));
-        paginator.addAttribute("objectCount", Long.toString(count));
+        paginator.addAttribute("objectCount", Long.toString(count + 1));
     }
 
     /**
@@ -312,6 +312,8 @@ public abstract class CompoundContentItemPanel
                 CMS.CMS_XML_NS);
 
         exportAttributes(content);
+
+        content.addAttribute("showing", getShowParam(state));
 
         return content;
     }

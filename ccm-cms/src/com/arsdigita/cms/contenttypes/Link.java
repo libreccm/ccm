@@ -316,7 +316,7 @@ public class Link extends ACSObject {
             String url = resolver.generateItemURL(
                     state, item, section, item.getVersion());
 
-            if (getTargetURI().startsWith("&")) {
+            if ((getTargetURI() != null) && getTargetURI().startsWith("&")) {
                 ParameterMap parameters;
                 StringTokenizer tokenizer;
 

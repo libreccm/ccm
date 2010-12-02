@@ -409,7 +409,8 @@ public class LinkPropertyForm extends FormSection
             try {
                 m_title.setValue(state, link.getTitle());
                 m_description.setValue(state, link.getDescription());
-                if (link.getTargetURI().startsWith("&")) {
+                if ((link.getTargetURI() != null)
+                    && link.getTargetURI().startsWith("&")) {
                     m_itemParams.setValue(state,
                                           link.getTargetURI().substring(1));
                 } else {

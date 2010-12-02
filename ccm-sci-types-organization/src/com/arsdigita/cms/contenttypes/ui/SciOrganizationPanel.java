@@ -502,7 +502,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                             Element element,
                             PageState state) {
         Element content = generateBaseXML(item, element, state);
-
+      
         Element availableData = content.newChildElement("availableData");
 
         SciOrganization orga = (SciOrganization) item;
@@ -578,8 +578,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         } else if (SHOW_PROJECTS_ONGOING.equals(show)) {
             generateProjectsXML(
                     orga, content, state, getFiltersForOngoingProjects());
-        } else if (SHOW_PROJECTS_FINISHED.equals(show)) {
-            Calendar today = new GregorianCalendar();
+        } else if (SHOW_PROJECTS_FINISHED.equals(show)) {           
             generateProjectsXML(
                     orga, content, state, getFiltersForFinishedProjects());
         }
