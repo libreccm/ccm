@@ -64,7 +64,6 @@ public class SciProjectDescriptionEditForm
         desc.setRows(25);
         add(desc);
 
-
         if (!SciProject.getConfig().getProjectFundingHide()) {
             add(new Label(SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.project.funding")));
@@ -77,7 +76,7 @@ public class SciProjectDescriptionEditForm
                 funding = new TextArea(fundingParam);
             }
             funding.setCols(75);
-            funding.setRows(25);
+            funding.setRows(8);
             add(funding);
         }
     }
