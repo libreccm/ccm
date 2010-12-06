@@ -20,16 +20,11 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.CheckboxGroup;
-import com.arsdigita.bebop.form.Option;
-import com.arsdigita.bebop.parameters.ArrayParameter;
-import com.arsdigita.bebop.parameters.BooleanParameter;
-import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.SciMember;
@@ -49,11 +44,11 @@ public class SciMemberPropertyForm
         implements FormInitListener,
                    FormSubmissionListener {
 
-    private static final Logger logger =
+    /*private static final Logger logger =
                                 Logger.getLogger(SciMemberPropertyForm.class);
     private SciMemberPropertiesStep m_step;
     private CheckboxGroup m_associated;
-    private CheckboxGroup m_former;
+    private CheckboxGroup m_former;*/
 
     public SciMemberPropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
@@ -62,7 +57,7 @@ public class SciMemberPropertyForm
     public SciMemberPropertyForm(ItemSelectionModel itemModel,
                                  SciMemberPropertiesStep step) {
         super(itemModel);
-        m_step = step;
+        //m_step = step;
     }
 
     @Override

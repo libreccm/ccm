@@ -25,6 +25,7 @@ public class SciOrganizationConfig extends AbstractConfig {
     private final Parameter m_departmentSetOrganizationHide;
     private final Parameter m_departmentSetSuperDepartmentHide;
     private final Parameter m_departmentAddContactHide;
+    private final Parameter m_departmentPublicationsHide;
     private final Parameter m_projectAddPersonHide;
     private final Parameter m_projectAddOrganizationHide;
     private final Parameter m_projectAddDepartmentHide;
@@ -96,6 +97,10 @@ public class SciOrganizationConfig extends AbstractConfig {
                 Boolean.TRUE);
         m_departmentAddContactHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.scidepartment.add_contact_hide",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
+        m_departmentPublicationsHide = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.scidepartment.publications_hide",
                 Parameter.REQUIRED,
                 Boolean.FALSE);
         m_projectAddPersonHide = new BooleanParameter(
@@ -170,6 +175,7 @@ public class SciOrganizationConfig extends AbstractConfig {
         register(m_departmentAddProjectHide);
         register(m_departmentSetOrganizationHide);
         register(m_departmentSetSuperDepartmentHide);
+        register(m_departmentPublicationsHide);
 
         register(m_projectAddPersonHide);
         register(m_projectAddOrganizationHide);
@@ -249,6 +255,10 @@ public class SciOrganizationConfig extends AbstractConfig {
 
     public final boolean getDepartmentAddContactHide() {
         return (Boolean) get(m_departmentAddContactHide);
+    }
+
+    public final boolean getDepartmentPublicationsHide() {
+        return (Boolean) get(m_departmentPublicationsHide);
     }
 
     public final boolean getProjectAddPersonHide() {

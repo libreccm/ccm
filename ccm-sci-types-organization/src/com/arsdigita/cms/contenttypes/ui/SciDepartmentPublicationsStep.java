@@ -26,16 +26,16 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 
 /**
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
-public class SciProjectPublicationsStep extends RelatedLinkPropertiesStep {
+public class SciDepartmentPublicationsStep extends RelatedLinkPropertiesStep {
 
-    protected String m_linkListName = "SciProjectPublications";
+    protected String m_linkListName = "SciDepartmentPublications";
     protected ContentType m_contentType = ContentType.findByAssociatedObjectType(
             "com.arsdigita.cms.contenttypes.Publication");
 
-    public SciProjectPublicationsStep(ItemSelectionModel itemModel,
-                                      AuthoringKitWizard parent) {
+    public SciDepartmentPublicationsStep(ItemSelectionModel itemModel,
+                                         AuthoringKitWizard parent) {     
         super(itemModel, parent);
     }
 }

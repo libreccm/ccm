@@ -21,6 +21,8 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
+import com.arsdigita.cms.ContentType;
+import com.arsdigita.cms.ContentTypeCollection;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciOrganizationConfig;
@@ -129,6 +131,22 @@ public class SciDepartmentPropertiesStep
             addStep(new SciDepartmentOrganizationStep(itemModel, parent),
                     SciOrganizationGlobalizationUtil.globalize(
                     "sciorganization.ui.department.organization"));
+        }
+
+        ContentTypeCollection contentTypes = ContentType.getAllContentTypes();
+        contentTypes.addFilter("associatedObjectType = :type").set(
+                "type",
+                "com.arsdigita.cms.contenttypes.Publication");
+        if ((!config.getDepartmentPublicationsHide())
+            && (contentTypes.size() > 0)) {
+            /*
+             * Must add this step manually since the basic class is not
+             * SimpleEditStep...
+             */
+            getSegmentedPanel().addSegment(new Label(SciOrganizationGlobalizationUtil.
+                    globalize("sciorganization.ui.department.publications")),
+                                           new SciDepartmentPublicationsStep(
+                    itemModel, parent));
         }
     }
 }

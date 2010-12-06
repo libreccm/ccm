@@ -25,16 +25,9 @@ import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
 
 /**
- * <p>
- * Specialized variant of {@link GenericPerson} for members of scientific
- * organizations. Adds two fields to the fields of <code>GenericPerson</code>:
- * </p>
- * <dl>
- * <dt><code>associatedMember</code></dt>
- * <dd>Is the member an associated member?</dd>
- * <dt><code>formerMember</code></dt>
- * <dd>Is the member a former member?</dd>
- * </ul>
+ * A concrete class extending {@link GenericPerson}. Does not add any new
+ * fields, it just makes the internal type <code>GenericPerson</code> usable
+ * without any other modules.
  *
  * @author Jens Pelzetter
  */

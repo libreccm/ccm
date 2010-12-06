@@ -13,7 +13,7 @@
 	  <xrd:attributes rule="exclude">
 	    <xrd:property name="/object/organizationDescription"/>
 	  </xrd:attributes>
-<!--            <xrd:associations rule="include">
+<xrd:associations rule="include">
                 <xrd:property name="/object/addendum"/>
                 <xrd:property name="/object/contacts"/>
                 <xrd:property name="/object/contacts/person"/>
@@ -30,7 +30,7 @@
                 <xrd:property name="/object/persons/contacts"/>
                 <xrd:property name="/object/persons/contacts/address"/>
                 <xrd:property name="/object/persons/contacts/contactentries"/>
-            </xrd:associations>-->
+            </xrd:associations>
         </xrd:adapter>
     </xrd:context>
   
