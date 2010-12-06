@@ -22,7 +22,8 @@
     <table name="ct_grey_literature"/>
     <table name="ct_working_paper"/>
     <table name="ct_expertise"/>
-    <table name="ct_review"/>    
+    <table name="ct_review"/>
+    <table name="sciauthors"/>
     <initializer class="com.arsdigita.cms.contenttypes.PublicationInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.PublicationWithPublisherInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.SeriesInitializer"/>
@@ -39,7 +40,8 @@
     <initializer class="com.arsdigita.cms.contenttypes.GreyLiteratureInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.WorkingPaperInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.ExpertiseInitializer"/>
-    <initializer class="com.arsdigita.cms.contenttypes.ReviewInitializer"/>    
+    <initializer class="com.arsdigita.cms.contenttypes.ReviewInitializer"/>
+    <initializer class="com.arsdigita.cms.contenttypes.SciAuthorInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-sci-publications"/>
@@ -59,6 +61,7 @@
     <data class="com.arsdigita.cms.contenttypes.GreyLiteratureLoader"/>
     <data class="com.arsdigita.cms.contenttypes.WorkingPaperLoader"/>
     <data class="com.arsdigita.cms.contenttypes.ExpertiseLoader"/>
-    <data class="com.arsdigita.cms.contenttypes.ReviewLoader"/>    
+    <data class="com.arsdigita.cms.contenttypes.ReviewLoader"/>
+    <data class="com.arsdigita.cms.contenttypes.SciAuthorLoader"/>
   </scripts>
 </load>

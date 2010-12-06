@@ -1,0 +1,8 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.cms.*;
+
+object type SciAuthor extends GenericPerson {     
+       reference key ( ct_sciauthors.author_id );
+}
