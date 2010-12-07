@@ -28,23 +28,23 @@ object type GenericArticle extends TextPage {
 
 }
 
-association {
-
-  component GenericArticleImageAssociation[0..n] imageCaptions = join cms_articles.article_id
-    to cms_article_image_map.article_id;
-
-  GenericArticle[1..1] captionArticle = join cms_article_image_map.article_id to cms_articles.article_id;
-
-}
-
-object type GenericArticleImageAssociation extends ContentItem {
-    String[0..1]         caption = cms_article_image_map.caption VARCHAR(4000);
-
-    // Only including these ID attributes for legacy purposes
-    BigDecimal[0..1] articleId = cms_article_image_map.article_id INTEGER;
-    BigDecimal[0..1] imageId = cms_article_image_map.image_id INTEGER;
-    composite ReusableImageAsset[0..1] imageAsset = join cms_article_image_map.image_id
-	to cms_images.image_id;
-
-    reference key (cms_article_image_map.map_id);
-}
+//association {
+//
+//  component GenericArticleImageAssociation[0..n] imageCaptions = join cms_articles.article_id
+//    to cms_article_image_map.article_id;
+//
+//  GenericArticle[1..1] captionArticle = join cms_article_image_map.article_id to cms_articles.article_id;
+//
+//}
+//
+//object type GenericArticleImageAssociation extends ContentItem {
+//    String[0..1]         caption = cms_article_image_map.caption VARCHAR(4000);
+//
+//    // Only including these ID attributes for legacy purposes
+//    BigDecimal[0..1] articleId = cms_article_image_map.article_id INTEGER;
+//    BigDecimal[0..1] imageId = cms_article_image_map.image_id INTEGER;
+//    composite ReusableImageAsset[0..1] imageAsset = join cms_article_image_map.image_id
+//	to cms_images.image_id;
+//
+//    reference key (cms_article_image_map.map_id);
+//}
