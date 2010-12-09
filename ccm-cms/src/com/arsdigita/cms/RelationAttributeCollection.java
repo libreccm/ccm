@@ -128,8 +128,8 @@ public class RelationAttributeCollection extends DomainCollection {
             }
         }
 
-        // Nothing found
-        return null;
+        // Nothing found        
+        return null;        
     }
 
     public String getName() {

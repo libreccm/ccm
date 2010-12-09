@@ -201,7 +201,8 @@ public class RelationAttributeImporter extends Program {
             }
         };
         transaction.run();
-        System.out.println("Done\n");
+        System.out.println("Done\n");        
+
     }
 
     public final static void main(String[] args) {

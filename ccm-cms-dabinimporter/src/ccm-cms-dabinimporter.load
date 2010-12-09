@@ -1,0 +1,12 @@
+
+<load>
+    <requires>
+         <table name="cms_items"/>
+    </requires>
+    <provides>
+        <initializer class="com.arsdigita.cms.dabin.Initializer"/>
+    </provides>
+    <scripts>
+        <data class="com.arsdigita.cms.dabin.Loader"/>
+    </scripts>
+</load>

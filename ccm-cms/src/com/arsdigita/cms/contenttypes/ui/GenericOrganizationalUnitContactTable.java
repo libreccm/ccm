@@ -32,7 +32,6 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.table.TableColumnModel;
 import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
-import com.arsdigita.bebop.util.GlobalizationUtil;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
@@ -46,6 +45,7 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.cms.util.GlobalizationUtil;;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -106,7 +106,7 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         tabModel.get(1).setCellRenderer(new EditCellRenderer());
         tabModel.get(2).setCellRenderer(new DeleteCellRenderer());
         tabModel.get(3).setCellRenderer(new UpCellRenderer());
-        tabModel.get(3).setCellRenderer(new DownCellRenderer());
+        tabModel.get(4).setCellRenderer(new DownCellRenderer());
 
         addTableActionListener(this);
     }
@@ -174,16 +174,37 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                     s_log.debug(String.format(
                             "Getting human readable contact type for contact type \"%s\"...",
                             m_contactCollection.getContactType()));
-                    s_log.debug(String.format(
-                            "Human readable contact type is: \"%s\"...",
-                            m_contacttypes.getRelationAttribute(
-                            m_contactCollection.getContactType(),
-                            DispatcherHelper.getNegotiatedLocale().
-                            getLanguage())));
-                    return m_contacttypes.getRelationAttribute(
-                            m_contactCollection.getContactType(),
-                            DispatcherHelper.getNegotiatedLocale().
-                            getLanguage());
+                    String lang =
+                           DispatcherHelper.getNegotiatedLocale().
+                            getLanguage();
+                    if (m_contacttypes.size() <= 0) {
+                        s_log.warn(String.format("No matching relation "
+                                + "attributes for contact type '%s' found. "
+                                + "Using key as fallback.",
+                                m_contactCollection.getContactType()));
+                        return m_contactCollection.getContactType();
+                    }
+                    if (m_contacttypes.getRelationAttribute(m_contactCollection.
+                            getContactType(), lang) == null) {
+                        s_log.debug(String.format(
+                                "No human readable name "
+                                + "found for '%s' for language '%s' Using key.",
+                                                  m_contactCollection.
+                                getContactType(),
+                                                  lang));
+                        return m_contactCollection.getContactType();
+                    } else {
+                        s_log.debug(String.format(
+                                "Human readable contact type is: \"%s\"...",
+                                m_contacttypes.getRelationAttribute(
+                                m_contactCollection.getContactType(),
+                                DispatcherHelper.getNegotiatedLocale().
+                                getLanguage()).getName()));
+                        return m_contacttypes.getRelationAttribute(
+                                m_contactCollection.getContactType(),
+                                DispatcherHelper.getNegotiatedLocale().
+                                getLanguage()).getName();
+                    }
                 case 1:
                     return m_contact.getTitle();
                 case 2:

@@ -181,6 +181,7 @@ public class RelatedLink extends Link  {
      * Retrieves related links for a given content item
      *
      * @param item The item to return links for
+     * @param name Name of the link list
      */
     public static DataCollection getRelatedLinks(ContentItem item, String name) {
         s_log.debug("Getting related links for a content item");

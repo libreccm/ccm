@@ -184,16 +184,30 @@ public class GenericPersonContactTable extends Table implements
                     s_log.debug(String.format(
                             "Getting human readable contact type for contact type \"%s\"...",
                             m_contactCollection.getContactType()));
+                    String lang = DispatcherHelper.getNegotiatedLocale().
+                            getLanguage();
+                    if (contacttypes.size() <= 0) {
+                        s_log.warn("No contact entry types found. Using key as "
+                                   + "fallback.");
+                        return m_contactCollection.getContactType();
+                    }
+                    if ((contacttypes.getRelationAttribute(m_contactCollection.
+                         getContactType(), lang) == null)) {
+                        s_log.debug(String.format(
+                                "No human readable name "
+                                + "found for '%s' for language '%s' Using key.",
+                                m_contactCollection.getContactType(),
+                                lang));
+                        return m_contactCollection.getContactType();
+                    }
                     s_log.debug(String.format(
                             "Human readable contact type is: \"%s\"...",
                             contacttypes.getRelationAttribute(
                             m_contactCollection.getContactType(),
-                            DispatcherHelper.getNegotiatedLocale().
-                            getLanguage())));
-                    return contacttypes.getRelationAttribute(m_contactCollection.
-                            getContactType(),
-                                                             DispatcherHelper.
-                            getNegotiatedLocale().getLanguage()).getName();
+                            lang)));
+                    return contacttypes.getRelationAttribute(
+                            m_contactCollection.getContactType(),
+                            lang).getName();
                 case 1:
                     return m_contact.getTitle();
                 case 2:
@@ -323,7 +337,7 @@ public class GenericPersonContactTable extends Table implements
                     state);
             GenericPersonContactCollection contacts = person.getContacts();
             if ((contacts.size() - 1) == row) {
-                 s_log.debug("Row is last row in table, don't show down-link");
+                s_log.debug("Row is last row in table, don't show down-link");
                 return new Label("");
             } else {
                 ControlLink link = new ControlLink("down");

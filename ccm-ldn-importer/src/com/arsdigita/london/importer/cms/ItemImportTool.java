@@ -154,31 +154,47 @@ public class ItemImportTool extends Program {
                         ContentItem item =
                                     (ContentItem) itemParser.getDomainObject();
                         if (item == null) {
-                            s_log.warn("item is null.Igoring...");
+                            s_log.warn("item is null. Igoring...");
                             return;
                         }
                         s_log.debug(String.format("Got item from ItemParser:"));
                         s_log.debug(String.format("OID  : %s", item.getOID()));
                         s_log.debug(String.format("Name : %s", item.getName()));
-                        s_log.debug(String.format("Title: %s", item.get("title")));
+                        s_log.debug(String.format("Item file name : %s", itemFile.
+                                getName()));
+                        s_log.debug(
+                                String.format("Title: %s", item.get("title")));
                         if (item instanceof ContentPage) {
                             s_log.debug("Item is a content page...");
                         }
                         /*
                          * Multi lang extension begin
                          */
-                        String itemName = item.getName();
+                        String itemName = itemFile.getName().substring(
+                                0, itemFile.getName().length() - 4);
                         String bundleName;
+                        s_log.debug(String.format("Using item name '%s'...",
+                                                  item.getName()));
                         if (itemName.lastIndexOf('-') == -1) {
+                            s_log.debug(
+                                    "No '-' in name, using name as bundle name");
                             bundleName = itemName;
                         } else {
-                            if (itemName.substring((itemName.lastIndexOf('-') + 1)).
+                            s_log.debug(
+                                    "Found a '-' in the, name, using part before '-' as bundle name.");
+                            if (itemName.substring((itemName.lastIndexOf('-')
+                                                    + 1)).
                                     equals("de")
-                                || itemName.substring((itemName.lastIndexOf('-') + 1)).
+                                || itemName.substring((itemName.lastIndexOf('-')
+                                                       + 1)).
                                     equals("en")) {
                                 bundleName = itemName.substring(0, itemName.
                                         lastIndexOf('-'));
+                                s_log.debug(String.format(
+                                        "Created bundle name: '%s'", bundleName));
                             } else {
+                                s_log.debug(
+                                        "Part behind the last '-' is not 'de' or 'en', using item name as bundle name");
                                 bundleName = itemName;
                             }
                         }
@@ -208,13 +224,15 @@ public class ItemImportTool extends Program {
                                 s_log.debug("Item is localized...");
                                 bundle = bundles.get(bundleName);
                                 if (bundle == null) {
-                                    s_log.debug("No content bundle found for item, creating new.");
+                                    s_log.debug(
+                                            "No content bundle found for item, creating new.");
                                     bundle = new ContentBundle(item);
                                     bundle.setParent(folder);
                                     bundle.setName(bundleName);
                                     bundles.put(bundleName, bundle);
                                 } else {
-                                    s_log.debug("Found content bundle for item, adding item as instance.");
+                                    s_log.debug(
+                                            "Found content bundle for item, adding item as instance.");
                                     bundle.addInstance(item);
                                 }
                             }

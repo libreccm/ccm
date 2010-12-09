@@ -170,7 +170,8 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
         String fullname = getFullName();
         if (fullname != null && !fullname.isEmpty()) {
             setTitle(fullname);
-            setName(GenericPerson.urlSave(fullname));
+            //setName(GenericPerson.urlSave(fullname));
+            setName(GenericPerson.urlSave(String.format("%s %s", getSurname(), getGivenName())));
         }
     }
 
