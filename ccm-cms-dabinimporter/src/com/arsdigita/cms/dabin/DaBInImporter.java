@@ -26,7 +26,9 @@ import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.Address;
 import com.arsdigita.cms.contenttypes.Contact;
 import com.arsdigita.cms.contenttypes.GenericContactEntry;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Link;
+import com.arsdigita.cms.contenttypes.Person;
 import com.arsdigita.cms.contenttypes.SciAuthor;
 import com.arsdigita.cms.contenttypes.SciDepartment;
 import com.arsdigita.cms.contenttypes.SciMember;
@@ -44,6 +46,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,11 +73,12 @@ public class DaBInImporter extends Program {
     private Folder members;
     private Map<String, Folder> membersAlpha;
     private Folder organization;
+    private Folder persons;
+    private Map<String, Folder> personsAlpha;
     private Folder projects;
     private Folder publications;
-    private Map<String, SciAuthor> authorsMap;
     private Map<String, ContentBundle> departmentsMap;
-    private Map<String, SciMember> membersMap;
+    private Map<String, ContentBundle> personsMap;
     private Map<String, ContentBundle> projectsMap;
     private Map<String, ContentBundle> publicationMap;
     private Map<String, ContentBundle> workingPaperMap;
@@ -109,9 +113,9 @@ public class DaBInImporter extends Program {
               startup);
         authorsAlpha = new HashMap<String, Folder>(12);
         membersAlpha = new HashMap<String, Folder>(12);
-        authorsMap = new HashMap<String, SciAuthor>();
+        personsAlpha = new HashMap<String, Folder>(12);
         departmentsMap = new HashMap<String, ContentBundle>();
-        membersMap = new HashMap<String, SciMember>();
+        personsMap = new HashMap<String, ContentBundle>();
         projectsMap = new HashMap<String, ContentBundle>();
         publicationMap = new HashMap<String, ContentBundle>();
         workingPaperMap = new HashMap<String, ContentBundle>();
@@ -224,7 +228,7 @@ public class DaBInImporter extends Program {
         authorsAlpha.put("kl", folder);
         folder = createFolder(authors, "mn", "M - N");
         authorsAlpha.put("mn", folder);
-        folder = createFolder(authors, "op", "P - P");
+        folder = createFolder(authors, "op", "O - P");
         authorsAlpha.put("op", folder);
         folder = createFolder(authors, "qr", "Q - R");
         authorsAlpha.put("qr", folder);
@@ -254,7 +258,7 @@ public class DaBInImporter extends Program {
         membersAlpha.put("kl", folder);
         folder = createFolder(members, "mn", "M - N");
         membersAlpha.put("mn", folder);
-        folder = createFolder(members, "op", "P - P");
+        folder = createFolder(members, "op", "O - P");
         membersAlpha.put("op", folder);
         folder = createFolder(members, "qr", "Q - R");
         membersAlpha.put("qr", folder);
@@ -266,6 +270,32 @@ public class DaBInImporter extends Program {
         membersAlpha.put("wxyz", folder);
 
         organization = createFolder(root, "organisationen", "Organisation(en)");
+
+        persons = createFolder(root, "personen", "Personen");
+        folder = createFolder(persons, "ab", "A - B");
+        personsAlpha.put("ab", folder);
+        folder = createFolder(persons, "cd", "C - D");
+        personsAlpha.put("cd", folder);
+        folder = createFolder(persons, "ef", "E - F");
+        personsAlpha.put("ef", folder);
+        folder = createFolder(persons, "gh", "G - H");
+        personsAlpha.put("gh", folder);
+        folder = createFolder(persons, "ij", "I - J");
+        personsAlpha.put("ij", folder);
+        folder = createFolder(persons, "kl", "K - L");
+        personsAlpha.put("kl", folder);
+        folder = createFolder(persons, "mn", "M - N");
+        personsAlpha.put("mn", folder);
+        folder = createFolder(persons, "op", "O - P");
+        personsAlpha.put("op", folder);
+        folder = createFolder(persons, "qr", "Q - R");
+        personsAlpha.put("qr", folder);
+        folder = createFolder(persons, "st", "S - T");
+        personsAlpha.put("st", folder);
+        folder = createFolder(persons, "uv", "U - V");
+        personsAlpha.put("uv", folder);
+        folder = createFolder(persons, "wxzy", "W - Z");
+        personsAlpha.put("wxyz", folder);
 
         projects = createFolder(root, "projekte", "Projekte");
 
@@ -394,7 +424,8 @@ public class DaBInImporter extends Program {
         transaction.run();
         System.out.println("OK");
 
-        System.out.println("\nImporting members from DaBIn into CCM...");
+        System.out.println(
+                "\nImporting persons (members) from DaBIn into CCM...");
         try {
             Statement stmt =
                       connection.createStatement(
@@ -415,9 +446,7 @@ public class DaBInImporter extends Program {
             stmt.executeQuery(
                     "SELECT person.Person_Id, Anrede, Vorname, Name, Angaben "
                     + "FROM person "
-                    + "JOIN abteilunglink ON person.Person_Id = abteilunglink.Person_Id "
                     + "WHERE Eigenschaft  = 'Aktiv' OR Eigenschaft = 'Ehemalig' "
-                    + "GROUP BY person.Person_Id, Vorname, Name "
                     + "ORDER BY Name, Vorname");
             result.last();
             number = result.getRow();
@@ -425,13 +454,13 @@ public class DaBInImporter extends Program {
 
             while (result.next()) {
                 System.out.printf("%4d of %4d:", counter, number);
-                MemberData data = new MemberData();
+                PersonData data = new PersonData();
                 data.setDabinId(result.getString("person.Person_Id"));
                 data.setTitlePre(result.getString("Anrede"));
                 data.setGivenname(result.getString("Vorname"));
                 data.setSurname(result.getString("Name"));
                 data.setContactData(result.getString("Angaben"));
-                createMember(data);
+                createPerson(data, PersonType.MEMBER);
                 counter++;
             }
 
@@ -443,7 +472,58 @@ public class DaBInImporter extends Program {
             ex.printStackTrace(System.err);
         }
 
-        System.out.println("Adding associated members to organization...");
+        /*System.out.println("Adding associated members to organization...");
+        try {
+        Statement stmt = connection.createStatement(
+        ResultSet.TYPE_SCROLL_INSENSITIVE,
+        ResultSet.CONCUR_UPDATABLE);
+        ResultSet result;
+        long counter = 1;
+        long number;
+
+        result =
+        stmt.executeQuery(
+        "SELECT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
+        + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+        + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Aktiv'");
+        result.last();
+        number = result.getRow();
+        result.beforeFirst();
+
+        while (result.next()) {
+        System.out.printf("\t%d of %d ", counter, number);
+        if (personsMap.containsKey(result.getString("person.Person_Id"))) {
+        System.out.printf("%s...", ((GenericPerson) personsMap.get(result.
+        getString(
+        "person.Person_Id")).
+        getPrimaryInstance()).getTitle());
+        orgaDe.addPerson((GenericPerson) personsMap.get(result.
+        getString(
+        "person.Person_Id")).getInstance("de"),
+        "member",
+        "associated");
+        orgaEn.addPerson((GenericPerson) personsMap.get(result.
+        getString(
+        "person.Person_Id")).getInstance("en"),
+        "member",
+        "associated");
+        System.out.println("OK");
+        } else {
+        System.out.printf("... No value of DaBIn person ID ' '\n",
+        result.getString("person.PersonId"));
+        }
+        }
+        } catch (SQLException ex) {
+        System.out.println("FAILED");
+        ex.printStackTrace(System.err);
+        } catch (Exception ex) {
+        System.out.println("FAILED");
+        ex.printStackTrace(System.err);
+        }
+        System.out.println("FINISHED");*/
+
+        System.out.printf(
+                "Importing persons (cooperatives) from DaBIn into CCM...\n");
         try {
             Statement stmt = connection.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -452,33 +532,25 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
-            result =
-            stmt.executeQuery(
-                    "SELECT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
-                    + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
-                    + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Aktiv'");
+            result = stmt.executeQuery(
+                    "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                    + "FROM person JOIN projektlink on person.Person_Id = projektlink.Person_Id "
+                    + "WHERE Eigenschaft = 'Autor' OR Eigenschaft = 'Sonstiges' "
+                    + "ORDER BY Name, Vorname");
             result.last();
             number = result.getRow();
             result.beforeFirst();
 
             while (result.next()) {
-                System.out.printf("\t%d of %d ", counter, number);
-                if (membersMap.containsKey(result.getString("person.Person_Id"))) {
-                    System.out.printf("%s...", membersMap.get(result.getString(
-                            "person.Person_Id")).getTitle());
-                    orgaDe.addPerson(membersMap.get(result.getString(
-                            "person.Person_Id")),
-                                     "member",
-                                     "associated");
-                    orgaEn.addPerson(membersMap.get(result.getString(
-                            "person.Person_Id")),
-                                     "member",
-                                     "associated");
-                    System.out.println("OK");
-                } else {
-                    System.out.printf("... No value of DaBIn person ID ' '\n",
-                                      result.getString("person.PersonId"));
-                }
+                System.out.printf("%4d of %4d:", counter, number);
+                PersonData data = new PersonData();
+                data.setDabinId(result.getString("person.Person_Id"));
+                data.setTitlePre(result.getString("Anrede"));
+                data.setGivenname(result.getString("Vorname"));
+                data.setSurname(result.getString("Name"));
+                data.setContactData(result.getString("Angaben"));
+                createPerson(data, PersonType.OTHER);
+                counter++;
             }
         } catch (SQLException ex) {
             System.out.println("FAILED");
@@ -489,6 +561,93 @@ public class DaBInImporter extends Program {
         }
         System.out.println("FINSHED");
 
+        System.out.printf("Importing persons (authors) from DaBIn into CCM...\n");
+        try {
+            Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet result;
+            long counter = 1;
+            long number;
+
+            result = stmt.executeQuery(
+                    "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                    + "FROM person "
+                    + "WHERE Eigenschaft  = 'Autor' AND NOT EXISTS (SELECT * FROM projektlink where projektlink.Person_Id = person.Person_Id)"
+                    + "ORDER BY Name, Vorname");
+            result.last();
+            number = result.getRow();
+            result.beforeFirst();
+
+            while (result.next()) {
+                System.out.printf("%4d of %4d:", counter, number);
+                PersonData data = new PersonData();
+                data.setDabinId(result.getString("person.Person_Id"));
+                data.setTitlePre(result.getString("Anrede"));
+                data.setGivenname(result.getString("Vorname"));
+                data.setSurname(result.getString("Name"));
+                data.setContactData(result.getString("Angaben"));
+                createPerson(data, PersonType.AUTHOR);
+                counter++;
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        } catch (Exception ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        }
+
+        System.out.println("Adding active associated members to organization...");
+        try {
+            Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet result;
+            long counter = 1;
+            long number;
+
+            result =
+            stmt.executeQuery(
+                    "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
+                    + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+                    + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Aktiv'");
+            result.last();
+            number = result.getRow();
+            result.beforeFirst();
+
+            while (result.next()) {
+                System.out.printf("\t%d of %d ", counter, number);
+                if (personsMap.containsKey(result.getString("person.Person_Id"))) {
+                    System.out.printf("%s...", ((GenericPerson) personsMap.get(result.
+                                                getString(
+                                                "person.Person_Id")).
+                                                getPrimaryInstance()).getTitle());
+                    orgaDe.addPerson((GenericPerson) personsMap.get(result.
+                            getString(
+                            "person.Person_Id")).getInstance("de"),
+                                     "member",
+                                     "associated");
+                    orgaEn.addPerson((GenericPerson) personsMap.get(result.
+                            getString(
+                            "person.Person_Id")).getInstance("en"),
+                                     "member",
+                                     "associated");
+                    System.out.println("OK");
+                } else {
+                    System.out.printf("... No value of DaBIn person ID ' '\n",
+                                      result.getString("person.PersonId"));
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        } catch (Exception ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        }
 
         System.out.println("Adding former associated members to organization...");
         try {
@@ -501,7 +660,7 @@ public class DaBInImporter extends Program {
 
             result =
             stmt.executeQuery(
-                    "SELECT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
+                    "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
                     + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
                     + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Ehemalig'");
             result.last();
@@ -510,17 +669,21 @@ public class DaBInImporter extends Program {
 
             while (result.next()) {
                 System.out.printf("\t%d of %d ", counter, number);
-                if (membersMap.containsKey(result.getString("person.Person_Id"))) {
-                    System.out.printf("%s...", membersMap.get(result.getString(
-                            "person.Person_Id")).getTitle());
-                    orgaDe.addPerson(membersMap.get(result.getString(
-                            "person.Person_Id")),
+                if (personsMap.containsKey(result.getString("person.Person_Id"))) {
+                    System.out.printf("%s...", ((GenericPerson) personsMap.get(result.
+                                                getString(
+                                                "person.Person_Id")).
+                                                getPrimaryInstance()).getTitle());
+                    orgaDe.addPerson((GenericPerson) personsMap.get(result.
+                            getString(
+                            "person.Person_Id")).getInstance("de"),
                                      "member",
-                                     "associated");
-                    orgaEn.addPerson(membersMap.get(result.getString(
-                            "person.Person_Id")),
+                                     "associatedFormer");
+                    orgaEn.addPerson((GenericPerson) personsMap.get(result.
+                            getString(
+                            "person.Person_Id")).getInstance("en"),
                                      "member",
-                                     "associated");
+                                     "associatedFormer");
                     System.out.println("OK");
                 } else {
                     System.out.printf("... No value of DaBIn person ID ' '\n",
@@ -626,7 +789,7 @@ public class DaBInImporter extends Program {
 
                 System.out.printf("%3d of %3d:\n", i + 1, projectsIds.size());
                 result = stmt.executeQuery(String.format(
-                        "SELECT Name, Beschreibung, Finanzierung, Abteilung_Id "
+                        "SELECT Name, Beschreibung, Finanzierung, Abteilung_Id, Beginn, Ende "
                         + "FROM projekt "
                         + "WHERE Projekt_Id = %s AND Sprache = 'DE'",
                         projectsIds.get(i)));
@@ -635,10 +798,18 @@ public class DaBInImporter extends Program {
                     data.setDescDe(result.getString("Beschreibung"));
                     data.setFundingDe(result.getString("Finanzierung"));
                     data.setDepartment(result.getString("Abteilung_Id"));
+                    if (result.getInt("Beginn") != 0) {
+                        data.setBegin(new GregorianCalendar(result.getInt(
+                                "Beginn"), 0, 1, 0, 0));
+                    }
+                    if (result.getInt("Ende") != 0) {
+                        data.setEnd(new GregorianCalendar(result.getInt("Ende"),
+                                                          11, 31, 23, 59));
+                    }
                 }
 
                 result = stmt.executeQuery(String.format(
-                        "SELECT Name, Beschreibung, Finanzierung "
+                        "SELECT Name, Beschreibung, Finanzierung, Abteilung_Id, Beginn, Ende "
                         + "FROM projekt "
                         + "WHERE Projekt_Id = %s AND Sprache = 'EN'",
                         projectsIds.get(i)));
@@ -646,6 +817,15 @@ public class DaBInImporter extends Program {
                     data.setNameEn(result.getString("Name"));
                     data.setDescEn(result.getString("Beschreibung"));
                     data.setFundingEn(result.getString("Finanzierung"));
+                    data.setDepartment(result.getString("Abteilung_Id"));
+                    if (result.getInt("Beginn") != 0) {
+                        data.setBegin(new GregorianCalendar(result.getInt(
+                                "Beginn"), 0, 1, 0, 0));
+                    }
+                    if (result.getInt("Ende") != 0) {
+                        data.setEnd(new GregorianCalendar(result.getInt("Ende"),
+                                                          11, 31, 23, 59));
+                    }
                 }
 
                 result = stmt.executeQuery(String.format(
@@ -667,6 +847,22 @@ public class DaBInImporter extends Program {
                 data.setDabinId(projectsIds.get(i));
                 createProject(data);
             }
+
+        } catch (SQLException ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        } catch (Exception ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        }
+
+        System.out.println("Importing publications from DaBIn into CCM...");
+        System.out.println("Mongraphies...");
+        try {
+            Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
 
         } catch (SQLException ex) {
             System.out.println("FAILED");
@@ -774,7 +970,7 @@ public class DaBInImporter extends Program {
                                   result.getString("Anrede"),
                                   result.getString("Eigenschaft"));
                 num++;
-                MemberData memberData = new MemberData();
+                PersonData memberData = new PersonData();
                 memberData.setDabinId(result.getString("Person_Id"));
                 memberData.setTitlePre(result.getString("Anrede"));
                 memberData.setSurname(result.getString("Name"));
@@ -802,112 +998,124 @@ public class DaBInImporter extends Program {
         System.exit(0);
     }
 
-    private void createMember(final MemberData memberData) {
-
-        StringBuilder memberTitleBuilder = new StringBuilder();
-        if ((memberData.getTitlePre() != null)
-            && (memberData.getTitlePre().length() > 0)) {
-            memberTitleBuilder.append(memberData.getTitlePre());
-            memberTitleBuilder.append(' ');
+    private void createPerson(final PersonData personData,
+                              final PersonType type) {
+        StringBuilder personTitleBuilder = new StringBuilder();
+        if ((personData.getTitlePre() != null)
+            && (personData.getTitlePre().length() > 0)) {
+            personTitleBuilder.append(personData.getTitlePre());
+            personTitleBuilder.append(' ');
         }
-        memberTitleBuilder.append(memberData.getGivenname());
-        memberTitleBuilder.append(' ');
-        memberTitleBuilder.append(memberData.getSurname());
-        System.out.printf(" Creating new member '%s'...",
-                          memberTitleBuilder.toString());
+        personTitleBuilder.append(personData.getGivenname());
+        personTitleBuilder.append(' ');
+        personTitleBuilder.append(personData.getSurname());
+        System.out.printf(" Creating new person '%s'...",
+                          personTitleBuilder.toString());
+
+        Map<String, Folder> folders = null;
+        switch (type) {
+            case MEMBER:
+                folders = membersAlpha;
+                break;
+            case AUTHOR:
+                folders = authorsAlpha;
+                break;
+            case OTHER:
+                folders = personsAlpha;
+                break;
+        }
 
         final Folder folder;
         char letter;
 
-        letter = memberData.getSurname().toLowerCase().charAt(0);
-
+        letter = personData.getSurname().toLowerCase().charAt(0);
         switch (letter) {
             case 'a':
-                folder = membersAlpha.get("ab");
+                folder = folders.get("ab");
                 break;
             case 'b':
-                folder = membersAlpha.get("ab");
+                folder = folders.get("ab");
                 break;
             case 'c':
-                folder = membersAlpha.get("cd");
+                folder = folders.get("cd");
                 break;
             case 'd':
-                folder = membersAlpha.get("cd");
+                folder = folders.get("cd");
                 break;
             case 'e':
-                folder = membersAlpha.get("ef");
+                folder = folders.get("ef");
                 break;
             case 'f':
-                folder = membersAlpha.get("ef");
+                folder = folders.get("ef");
                 break;
             case 'g':
-                folder = membersAlpha.get("gh");
+                folder = folders.get("gh");
                 break;
             case 'h':
-                folder = membersAlpha.get("gh");
+                folder = folders.get("gh");
                 break;
             case 'i':
-                folder = membersAlpha.get("ij");
+                folder = folders.get("ij");
                 break;
             case 'j':
-                folder = membersAlpha.get("ij");
+                folder = folders.get("ij");
                 break;
             case 'k':
-                folder = membersAlpha.get("kl");
+                folder = folders.get("kl");
                 break;
             case 'l':
-                folder = membersAlpha.get("kl");
+                folder = folders.get("kl");
                 break;
             case 'm':
-                folder = membersAlpha.get("mn");
+                folder = folders.get("mn");
                 break;
             case 'n':
-                folder = membersAlpha.get("mn");
+                folder = folders.get("mn");
                 break;
             case 'o':
-                folder = membersAlpha.get("op");
+                folder = folders.get("op");
                 break;
             case 'p':
-                folder = membersAlpha.get("op");
+                folder = folders.get("op");
                 break;
             case 'q':
-                folder = membersAlpha.get("qr");
+                folder = folders.get("qr");
                 break;
             case 'r':
-                folder = membersAlpha.get("qr");
+                folder = folders.get("qr");
                 break;
             case 's':
-                folder = membersAlpha.get("st");
+                folder = folders.get("st");
                 break;
             case 't':
-                folder = membersAlpha.get("st");
+                folder = folders.get("st");
                 break;
             case 'u':
-                folder = membersAlpha.get("uv");
+                folder = folders.get("uv");
                 break;
             case 'v':
-                folder = membersAlpha.get("uv");
+                folder = folders.get("uv");
                 break;
             case 'w':
-                folder = membersAlpha.get("wxyz");
+                folder = folders.get("wxyz");
                 break;
             case 'x':
-                folder = membersAlpha.get("wxyz");
+                folder = folders.get("wxyz");
                 break;
             case 'y':
-                folder = membersAlpha.get("wxyz");
+                folder = folders.get("wxyz");
                 break;
             case 'z':
-                folder = membersAlpha.get("wxyz");
+                folder = folders.get("wxyz");
                 break;
             case 'ä':
-                folder = membersAlpha.get("ab");
+                folder = folders.get("ab");
                 break;
             case 'ö':
-                folder = membersAlpha.get("op");
+                folder = folders.get("op");
                 break;
             case 'ü':
-                folder = membersAlpha.get("uv");
+                folder = folders.get("uv");
                 break;
             default:
                 folder = members;
@@ -918,32 +1126,62 @@ public class DaBInImporter extends Program {
 
             @Override
             public void doRun() {
-                SciMember member;
+                GenericPerson personDe = null;
+                GenericPerson personEn = null;
 
-                member = new SciMember();
-                member.setSurname(memberData.getSurname());
-                member.setGivenName(memberData.getGivenname());
-                member.setTitlePre(memberData.getTitlePre());
+                switch (type) {
+                    case MEMBER:
+                        personDe = new SciMember();
+                        personEn = new SciMember();
+                        break;
+                    case AUTHOR:
+                        personDe = new SciAuthor();
+                        personEn = new SciAuthor();
+                        break;
+                    case OTHER:
+                        personDe = new Person();
+                        personEn = new Person();
+                        break;
+                }
+                personDe.setSurname(personData.getSurname());
+                personDe.setGivenName(personData.getGivenname());
+                personDe.setTitlePre(personData.getTitlePre());
 
-                member.save();
-                member.setLanguage("de");
+                personDe.save();
+                personDe.setLanguage("de");
 
-                ContentBundle bundle;
-                bundle = new ContentBundle(member);
+                personEn.setSurname(personData.getSurname());
+                personEn.setGivenName(personData.getGivenname());
+                personEn.setTitlePre(personData.getTitlePre());
 
-                folder.addItem(bundle);
+                personEn.save();
+                personEn.setLanguage("en");
+
+                ContentBundle person;
+                person = new ContentBundle(personDe);
+                person.addInstance(personEn);
+
+                folder.addItem(person);
 
                 StringTokenizer contactData = new StringTokenizer(
-                        memberData.getContactData(),
+                        personData.getContactData(),
                         "\n");
-                Contact contact = new Contact();
+                Contact contactDe = new Contact();
+                Contact contactEn = new Contact();
                 //System.out.printf("\nmember.name = %s\n", member.getName());
                 //System.out.printf("\nmember.title = %s\n", member.getTitle());
-                contact.setLanguage("de");
-                contact.setName(String.format("kontakt-%s", member.getName()));
-                contact.setTitle(String.format("Kontakt %s",
-                                               member.getTitle()));
-                contact.setPerson(member, "commonContact");
+                contactDe.setLanguage("de");
+                contactDe.setName(
+                        String.format("kontakt-%s", personDe.getName()));
+                contactDe.setTitle(String.format("Kontakt %s",
+                                                 personDe.getTitle()));
+                contactDe.setPerson(personDe, "commonContact");
+                contactEn.setLanguage("en");
+                contactEn.setName(
+                        String.format("kontakt-%s", personEn.getName()));
+                contactEn.setTitle(String.format("Kontakt %s",
+                                                 personEn.getTitle()));
+                contactEn.setPerson(personDe, "commonContact");
                 String homepage = null;
                 while (contactData.hasMoreTokens()) {
                     String token;
@@ -960,59 +1198,96 @@ public class DaBInImporter extends Program {
                     value = token.substring(token.indexOf('=') + 1).trim();
 
                     if ("Raum_1".equals(key)) {
-                        contact.addContactEntry(
-                                new GenericContactEntry(contact,
+                        contactDe.addContactEntry(
+                                new GenericContactEntry(contactDe,
+                                                        "office",
+                                                        value,
+                                                        ""));
+                        contactEn.addContactEntry(
+                                new GenericContactEntry(contactEn,
                                                         "office",
                                                         value,
                                                         ""));
                     } else if ("Tel_1".equals(key)
                                    && value.startsWith("Fax: ")) {
-                        contact.addContactEntry(new GenericContactEntry(
-                                contact,
+                        contactDe.addContactEntry(new GenericContactEntry(
+                                contactDe,
+                                "fax",
+                                value.substring(6),
+                                ""));
+                        contactEn.addContactEntry(new GenericContactEntry(
+                                contactEn,
                                 "fax",
                                 value.substring(6),
                                 ""));
                     } else if ("Tel_1".equals(key)) {
-                        contact.addContactEntry(
-                                new GenericContactEntry(contact,
+                        contactDe.addContactEntry(
+                                new GenericContactEntry(contactDe,
+                                                        "phoneOffice",
+                                                        value,
+                                                        ""));
+                        contactEn.addContactEntry(
+                                new GenericContactEntry(contactEn,
                                                         "phoneOffice",
                                                         value,
                                                         ""));
                     } else if ("eMail_1".equals(key)) {
-                        contact.addContactEntry(
-                                new GenericContactEntry(contact,
+                        contactDe.addContactEntry(
+                                new GenericContactEntry(contactDe,
+                                                        "email",
+                                                        value,
+                                                        ""));
+                        contactEn.addContactEntry(
+                                new GenericContactEntry(contactEn,
                                                         "email",
                                                         value,
                                                         ""));
                     } else if ("WWW_1".equals(key)) {
-                        contact.addContactEntry(
-                                new GenericContactEntry(contact,
+                        contactDe.addContactEntry(
+                                new GenericContactEntry(contactDe,
+                                                        "homepage",
+                                                        value,
+                                                        ""));
+                        contactEn.addContactEntry(
+                                new GenericContactEntry(contactEn,
                                                         "homepage",
                                                         value,
                                                         ""));
                         homepage = value;
+                        homepage = value;
                     }
 
-                    contact.setContentSection(section);
-                    contact.save();
-                    ContentBundle contactBundle = new ContentBundle(contact);
+                    contactDe.setContentSection(section);
+                    contactDe.save();
+                    contactEn.setContentSection(section);
+                    contactEn.save();
+                    ContentBundle contactBundle = new ContentBundle(contactDe);
+                    contactBundle.addInstance(contactEn);
                     contacts.addItem(contactBundle);
-                    member.save();
+                    personDe.save();
 
                     if (homepage != null) {
-                        RelatedLink homepageLink;
-                        homepageLink = new RelatedLink();
-                        homepageLink.setTitle("Persönliche Homepage");
-                        homepageLink.setTargetType(Link.EXTERNAL_LINK);
-                        homepageLink.setTargetURI(homepage);
-                        homepageLink.setLinkListName("");
-                        homepageLink.setLinkOwner(member);
-                        homepageLink.save();
+                        RelatedLink homepageLinkDe;
+                        homepageLinkDe = new RelatedLink();
+                        homepageLinkDe.setTitle("Persönliche Homepage");
+                        homepageLinkDe.setTargetType(Link.EXTERNAL_LINK);
+                        homepageLinkDe.setTargetURI(homepage);
+                        homepageLinkDe.setLinkListName("");
+                        homepageLinkDe.setLinkOwner(personDe);
+                        homepageLinkDe.save();
+
+                        RelatedLink homepageLinkEn;
+                        homepageLinkEn = new RelatedLink();
+                        homepageLinkEn.setTitle("Personal homepage");
+                        homepageLinkEn.setTargetType(Link.EXTERNAL_LINK);
+                        homepageLinkEn.setTargetURI(homepage);
+                        homepageLinkEn.setLinkListName("");
+                        homepageLinkEn.setLinkOwner(personDe);
+                        homepageLinkEn.save();
                     }
                 }
 
-
-                membersMap.put(memberData.getDabinId(), member);
+                personsMap.put(personData.getDabinId(), person);
             }
         };
         transaction.run();
@@ -1068,22 +1343,24 @@ public class DaBInImporter extends Program {
                 //departmentEn.save();
                 //department.save();
 
-                System.out.println("Assigning members...");
+                System.out.println("\tAssigning members...");
                 int i = 1;
                 for (MembershipData membership : departmentData.getMembers()) {
-                    System.out.printf("\t\t%d of %d...", i, departmentData.
-                            getMembers().size());
-                    SciMember member = membersMap.get(membership.
-                            getPersonDaBInId());
-                    String status;
-                    String role;
-
-                    if (member == null) {
-                        System.out.printf(
-                                "No member for DaBIn person ID '%s' found. Skiping.\n", membership.
-                                getPersonDaBInId());
+                    System.out.printf("\t\t%d of %d: (DaBIn member id: %s)...",
+                                      i,
+                                      departmentData.getMembers().size(),
+                                      membership.getPersonDaBInId());
+                    if (!personsMap.containsKey(
+                            membership.getPersonDaBInId())) {
+                        System.out.printf("No person for DaBIn id '%s'. "
+                                          + "Skiping.\n",
+                                          membership.getPersonDaBInId());
                         continue;
                     }
+                    SciMember member = (SciMember) personsMap.get(membership.
+                            getPersonDaBInId()).getPrimaryInstance();
+                    String status;
+                    String role;
 
                     if ("Aktiv".equals(membership.getEigenschaft())) {
                         status = "active";
@@ -1112,7 +1389,7 @@ public class DaBInImporter extends Program {
                     i++;
                 }
 
-                System.out.println("OK");
+                System.out.println("\tOK");
 
                 orgaDe.addDepartment(departmentDe);
                 orgaEn.addDepartment(departmentEn);
@@ -1151,12 +1428,18 @@ public class DaBInImporter extends Program {
                     projectDe.setName(projectNameDe);
                     projectDe.setProjectDescription(projectData.getDescDe());
                     projectDe.setFunding(projectData.getFundingDe());
+                    if (projectData.getBegin() != null) {
+                        projectDe.setBegin(projectData.getBegin().getTime());
+                    }
+                    if (projectData.getEnd() != null) {
+                        projectDe.setEnd(projectData.getEnd().getTime());
+                    }
                     projectDe.setLanguage("de");
                     projectDe.setContentSection(section);
                     projectDe.save();
                     System.out.println("OK");
                 } else {
-                    System.out.println("No english version. Skiping.");
+                    System.out.println("No german version. Skiping.");
                 }
 
                 System.out.printf("\ten: %s...", projectData.getNameEn());
@@ -1175,6 +1458,12 @@ public class DaBInImporter extends Program {
                     projectEn.setName(projectNameEn);
                     projectEn.setProjectDescription(projectData.getDescEn());
                     projectEn.setFunding(projectData.getFundingEn());
+                    if (projectData.getBegin() != null) {
+                        projectEn.setBegin(projectData.getBegin().getTime());
+                    }
+                    if (projectData.getEnd() != null) {
+                        projectEn.setEnd(projectData.getEnd().getTime());
+                    }
                     projectEn.setLanguage("en");
                     projectEn.setContentSection(section);
                     projectEn.save();
@@ -1196,13 +1485,16 @@ public class DaBInImporter extends Program {
                 projects.addItem(project);
                 projectsMap.put(projectData.getDabinId(), project);
 
-                System.out.print("Assigning project to department... ");
+                System.out.print("\tAssigning project to department... ");
                 ContentBundle department = departmentsMap.get(projectData.
                         getDepartment());
                 if (department == null) {
-                    System.out.printf(
-                            "No department found for DaBIn id '%s'. Assinging project to organization...");
-                    orgaDe.addProject(projectDe);
+                    System.out.printf("No department found for DaBIn id '%s'. "
+                                      + "Assinging project to organization...",
+                                      projectData.getDabinId());
+                    if (orgaDe != null) {
+                        orgaDe.addProject(projectDe);
+                    }
                     if (projectEn != null) {
                         orgaEn.addProject(projectEn);
                     }
@@ -1212,28 +1504,32 @@ public class DaBInImporter extends Program {
                     SciDepartment departmentEn = (SciDepartment) department.
                             getInstance("en");
 
-                    departmentDe.addProject(projectDe);
+                    if (projectDe != null) {
+                        departmentDe.addProject(projectDe);
+                    }
                     if (projectEn != null) {
                         departmentEn.addProject(projectEn);
                     }
                 }
                 System.out.println("OK");
 
-                System.out.println("Assigning members...");
+                System.out.println("\tAssigning members...");
                 int i = 1;
                 for (MembershipData membership : projectData.getMembers()) {
-                    System.out.printf("\t\t%d of %d...", i, projectData.
-                            getMembers().size());
-                    SciMember member = membersMap.get(membership.
-                            getPersonDaBInId());
-                    String role;
-
-                    if (member == null) {
-                        System.out.printf(
-                                "No member for DaBIn person ID '%s' found. Skiping.\n",
-                                membership.getPersonDaBInId());
+                    System.out.printf("\t\t%d of %d (dabin member id: %s)...",
+                                      i,
+                                      projectData.getMembers().size(),
+                                      membership.getPersonDaBInId());
+                    if (!personsMap.containsKey(
+                            membership.getPersonDaBInId())) {
+                        System.out.printf("No person for DaBIn id '%s'. "
+                                          + "Skiping.\n",
+                                          membership.getPersonDaBInId());
                         continue;
                     }
+                    GenericPerson member = (GenericPerson) personsMap.get(membership.
+                            getPersonDaBInId()).getPrimaryInstance();
+                    String role;
 
                     if ("Projektleitung".equals(membership.getAuftrag())) {
                         role = "head";
@@ -1241,7 +1537,9 @@ public class DaBInImporter extends Program {
                         role = "member";
                     }
 
-                    projectDe.addPerson(member, role, "active");
+                    if (projectDe != null) {
+                        projectDe.addPerson(member, role, "active");
+                    }
                     if (projectEn != null) {
                         projectEn.addPerson(member, role, "active");
                     }
@@ -1249,7 +1547,7 @@ public class DaBInImporter extends Program {
                     i++;
                 }
 
-                System.out.println("OK");
+                System.out.println("\tOK");
             }
         };
 

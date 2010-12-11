@@ -8,7 +8,7 @@ package com.arsdigita.cms.dabin;
  *
  * @author jensp
  */
-public class MemberData {
+public class PersonData {
 
     private String dabinId;
     private String titlePre;

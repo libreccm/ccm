@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ctd:content-types xmlns:ctd="http://xmlns.redhat.com/cms/content-types" 
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
+
+    <ctd:content-type
+        label="Person"
+        description="A Person type"
+        objectType="com.arsdigita.cms.contenttypes.Person"
+        classname="com.arsdigita.cms.contenttypes.Person">
+
+        <ctd:authoring-kit
+            createComponent="com.arsdigita.cms.contenttypes.ui.GenericPersonCreate">
+
+            <ctd:authoring-step
+                labelKey="cms.contenttypes.shared.basic_properties.title"
+                labelBundle="com.arsdigita.cms.CMSResources"
+                descriptionKey="cms.contenttypes.shared.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.CMSResources"
+                component="com.arsdigita.cms.contenttypes.ui.PersonPropertiesStep"
+                ordering="1"/>
+
+            <ctd:authoring-step
+                labelKey="person.authoring.contact_properties.title"
+                labelBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                descriptionKey="person.authoring.contact_properties.description"
+                descriptionBundle="com.arsdigita.cms.contenttypes.ContenttypesResources"
+                component="com.arsdigita.cms.contenttypes.ui.GenericPersonContactPropertiesStep"
+                ordering="2"/>
+
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+        </ctd:authoring-kit>
+
+    </ctd:content-type>
+</ctd:content-types>
