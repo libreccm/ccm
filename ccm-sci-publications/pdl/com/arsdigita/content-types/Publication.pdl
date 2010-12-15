@@ -26,8 +26,8 @@ import com.arsdigita.cms.ContentPage;
 object type Publication extends ContentPage {
        
        Integer[0..1] yearOfPublication = ct_publications.year INTEGER;
-       String[0..1] abstract = ct_publications.abstract VARCHAR(2048);
-       String[0..1] misc = ct_publications.misc VARCHAR(2048);
+       String[0..1] abstract = ct_publications.abstract VARCHAR(4096);
+       String[0..1] misc = ct_publications.misc VARCHAR(4096);
 
        reference key (ct_publications.publication_id);
 }
