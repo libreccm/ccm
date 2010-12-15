@@ -56,8 +56,6 @@ import com.arsdigita.persistence.FilterFactory;
 import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 /**
@@ -72,7 +70,7 @@ public class ItemSearchFolderBrowser extends Table {
 
     private static final org.apache.log4j.Logger s_log =
             org.apache.log4j.Logger.getLogger(ItemSearchFolderBrowser.class);
-    public static final int MAX_ROWS = 15;
+    
     private static GlobalizedMessage[] s_headers = {
         globalize("cms.ui.folder.name"),
         globalize("cms.ui.folder.title"),
@@ -90,7 +88,7 @@ public class ItemSearchFolderBrowser extends Table {
         FolderTableModelBuilder builder = new FolderTableModelBuilder();
         setModelBuilder(builder);
 
-        m_paginator = new Paginator(builder, MAX_ROWS);
+        m_paginator = new Paginator(builder, ContentSection.getConfig().getFolderBrowseListSize());
 
         m_currentFolder = currentFolder;
 
@@ -253,7 +251,7 @@ public class ItemSearchFolderBrowser extends Table {
             int size = ((Integer) m_size.get(state)).intValue();
 
             return ItemSearchFolderBrowser.this.isVisible(state)
-                    && (size > MAX_ROWS);
+                    && (size > ContentSection.getConfig().getFolderBrowseListSize());
         }
     }
 
@@ -319,7 +317,7 @@ public class ItemSearchFolderBrowser extends Table {
         }
 
         private String generateJSLabel(BigDecimal id, String widget, String fill) {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             buffer.append(" <script language=javascript> "
                     + " <!-- \n"
                     + " function fillItem"
@@ -389,6 +387,7 @@ public class ItemSearchFolderBrowser extends Table {
 
     private class FolderChanger extends TableActionAdapter {
 
+        @Override
         public void cellSelected(TableActionEvent e) {
             PageState s = e.getPageState();
             int col = e.getColumn().intValue();

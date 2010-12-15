@@ -93,9 +93,6 @@ public class FlatItemList extends SegmentedPanel
     private static final String PRIVILEGE = "privilege";
     private static final String PRIVILEGE_NAME = "prettyName";
 
-    //maximum number of items displayed in the table at a time
-    public static int LIST_SIZE = 20;
-
     // The folder selectors
     private FolderSelectionModel m_folderSel;
     private FolderRequestLocal m_folder;
@@ -295,6 +292,7 @@ public class FlatItemList extends SegmentedPanel
         m_editFolderSeg.add(new Label("<br/>", false));
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
 

@@ -44,16 +44,16 @@ public class TextAssetBodyLabelCellRenderer implements TableCellRenderer {
         if (TextAsset.CONTENT.equals(key) && value instanceof TextAsset) {
             // We have different styles for different mime types
             TextAsset asset = (TextAsset)value;
+            label = new Label(asset.getText());
+            label.setIdAttr("webPage");
             String type = asset.getMimeType().getMimeType()
                 .toLowerCase();
             if (type.indexOf("text/xml") > -1 || 
                 type.indexOf("text/xsl") > -1 ||
                 type.indexOf("text/x-jsp") > -1) {
-                label = new Label(asset.getText());
                 label.setClassAttr("preformatted");
                 label.setOutputEscaping(true);
             } else {
-                label = new Label(asset.getText());
                 label.setOutputEscaping(false);
             }
         } else if (MIME_TYPE_KEY.equals(key) && value instanceof TextAsset) {

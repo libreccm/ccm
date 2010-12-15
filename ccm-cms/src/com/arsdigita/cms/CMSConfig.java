@@ -442,6 +442,13 @@ public final class CMSConfig extends AbstractConfig {
     private final Parameter m_itemSearchDefaultTab = new StringParameter("com.arsdigita.cms.item_search.default_tab",
             Parameter.REQUIRED, "browse");
 
+    /////////////////////////////////////////////
+    // FolderBrowse
+    /////////////////////////////////////////////
+    private final Parameter m_folderBrowseListSize = new IntegerParameter("com.arsdigita.cms.folder_browse_list_size",
+            Parameter.REQUIRED, 20);
+
+
     // ///////////////////////////////////////////
     // publishToFile package related parameter
     // ///////////////////////////////////////////
@@ -515,6 +522,8 @@ public final class CMSConfig extends AbstractConfig {
         register(m_defaultTemplateResolverClass);
 
         register(m_itemSearchDefaultTab);
+
+        register(m_folderBrowseListSize);
 
         // publishToFile package related parameter
         // Moved to publishToFile.PublishToFileConfig as of version 6.0.2
@@ -887,5 +896,9 @@ public final class CMSConfig extends AbstractConfig {
 
     public String getItemSearchDefaultTab() {
         return (String) get(m_itemSearchDefaultTab);
+    }
+
+    public Integer getFolderBrowseListSize() {
+        return (Integer) get(m_folderBrowseListSize);
     }
 }

@@ -83,18 +83,15 @@ public class ItemSearchWidget extends FormSection
     private class SearchFragment extends Submit {
 
         private ItemSearchWidget parent;
-        private ContentType contentType;
 
-        public SearchFragment(String name,
-                ItemSearchWidget parent,
-                ContentType contentType) {
+        public SearchFragment(String name, ItemSearchWidget parent) {
             super(name, "Search");
             this.parent = parent;
-            this.contentType = contentType;
             this.setAttribute("onClick", "return " + parent.m_item.getName().replace('.', '_') + "Popup(this.form)");
             this.setAttribute("value", "Search");
         }
 
+        @Override
         public boolean isVisible(PageState ps) {
             return (!(parent.m_search.isSelected(ps)
                     || parent.m_searchComponent.hasQuery(ps))
@@ -188,7 +185,7 @@ public class ItemSearchWidget extends FormSection
 
         m_contentType = contentType;
         m_item = new ItemFragment(model, this);
-        m_search = new SearchFragment(m_searchName, this, m_contentType);
+        m_search = new SearchFragment(m_searchName, this);
         m_clear = new ClearFragment(m_clearName, this);
         m_jsLabel = new LabelFragment("", false, this);
         m_jsLabel.addPrintListener(new PrintListener() {

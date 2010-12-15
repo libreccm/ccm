@@ -57,11 +57,11 @@ import com.arsdigita.bebop.table.TableColumn;
 import com.arsdigita.bebop.tree.TreeCellRenderer;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.cms.ui.FlatItemList;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -129,6 +129,7 @@ public class FolderManipulator extends SimpleContainer
         m_targetSelector.addSubmissionListener(this);
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
         p.setVisibleDefault(m_targetSelector, false);
@@ -369,6 +370,7 @@ public class FolderManipulator extends SimpleContainer
             add(scs);
         }
 
+        @Override
         public void register(Page p) {
             super.register(p);
             p.addComponentStateParam(this, m_targetSel.getStateParameter());
@@ -429,7 +431,7 @@ public class FolderManipulator extends SimpleContainer
             m_browser = new FolderBrowser(m_srcFolderSel);
             m_paginator = new Paginator
                 ((PaginationModelBuilder)m_browser.getModelBuilder(),
-                 FlatItemList.LIST_SIZE);
+                 ContentSection.getConfig().getFolderBrowseListSize());
             panel.add(m_paginator);
             panel.add(m_browser);
 
