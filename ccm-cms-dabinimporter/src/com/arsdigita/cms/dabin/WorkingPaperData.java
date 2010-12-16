@@ -1,5 +1,6 @@
 package com.arsdigita.cms.dabin;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class WorkingPaperData {
     private String year;
     private String descDe;
     private String descEn;
+    private InputStream file;
     private List<Authorship> authors;
 
     public WorkingPaperData() {
@@ -34,7 +36,13 @@ public class WorkingPaperData {
     }
 
     public void setDescDe(String descDe) {
-        this.descDe = descDe;
+        if (descDe.length() < 4096) {
+            this.descDe = descDe;
+        } else {
+            System.out.println(
+                    "Value of DaBIn field is longer than maximum length for abstract (4096 characters). Truncating");
+            this.descDe = descDe.substring(0, 4096);
+        }
     }
 
     public String getDescEn() {
@@ -42,7 +50,13 @@ public class WorkingPaperData {
     }
 
     public void setDescEn(String descEn) {
-        this.descEn = descEn;
+        if (descEn.length() < 4096) {
+            this.descEn = descEn;
+        } else {
+            System.out.println(
+                    "Value of DaBIn field is longer than maximum length for abstract (4096 characters). Truncating");
+            this.descEn = descEn.substring(0, 4096);
+        }
     }
 
     public String getTitleDe() {
@@ -71,6 +85,14 @@ public class WorkingPaperData {
 
     public List<Authorship> getAuthors() {
         return authors;
+    }
+
+    public InputStream getFile() {
+        return file;
+    }
+
+    public void setFile(InputStream file) {
+        this.file = file;
     }
 
     public void setAuthors(List<Authorship> authors) {

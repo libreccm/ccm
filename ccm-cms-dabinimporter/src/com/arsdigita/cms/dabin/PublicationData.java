@@ -17,6 +17,8 @@ public class PublicationData {
     private String beschreibung;
     private String abteilungId;
     private String erschienenIn;
+    private int pagesFrom;
+    private int pagesTo;
     private PublicationVisibility visiblity;
     private PublicationType type;
     private List<Authorship> authors = new ArrayList<Authorship>();
@@ -34,7 +36,13 @@ public class PublicationData {
     }
 
     public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
+        if (beschreibung.length() < 4096) {
+            this.beschreibung = beschreibung;
+        } else {
+            System.out.println(
+                    "***Warning: Value of DaBIn field 'Beschreibung' is too long for abstract (max: 4096 characters). Truncating.");
+            this.beschreibung = beschreibung.substring(0, 4095);
+        }
     }
 
     public String getErschienenIn() {
@@ -111,5 +119,21 @@ public class PublicationData {
 
     public void addAuthor(final Authorship author) {
         authors.add(author);
+    }
+
+    public int getPagesFrom() {
+        return pagesFrom;
+    }
+
+    public void setPagesFrom(int pagesFrom) {
+        this.pagesFrom = pagesFrom;
+    }
+
+    public int getPagesTo() {
+        return pagesTo;
+    }
+
+    public void setPagesTo(int pagesTo) {
+        this.pagesTo = pagesTo;
     }
 }

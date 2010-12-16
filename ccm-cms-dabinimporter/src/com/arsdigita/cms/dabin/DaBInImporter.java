@@ -21,13 +21,19 @@ package com.arsdigita.cms.dabin;
 
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentSection;
+import com.arsdigita.cms.FileAsset;
 import com.arsdigita.cms.Folder;
 import com.arsdigita.cms.ItemCollection;
 import com.arsdigita.cms.contentassets.RelatedLink;
 import com.arsdigita.cms.contenttypes.Address;
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
+import com.arsdigita.cms.contenttypes.ArticleInJournal;
+import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.contenttypes.Contact;
+import com.arsdigita.cms.contenttypes.FileStorageItem;
 import com.arsdigita.cms.contenttypes.GenericContactEntry;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.GreyLiterature;
 import com.arsdigita.cms.contenttypes.Link;
 import com.arsdigita.cms.contenttypes.Monograph;
 import com.arsdigita.cms.contenttypes.Person;
@@ -42,21 +48,27 @@ import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.packaging.Program;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import org.apache.commons.cli.CommandLine;
 import org.apache.log4j.Logger;
 
@@ -83,6 +95,7 @@ public class DaBInImporter extends Program {
     private Folder projects;
     private Folder publications;
     private Folder publishers;
+    private Folder files;
     private Map<String, ContentBundle> departmentsMap;
     private Map<String, ContentBundle> personsMap;
     private Map<String, ContentBundle> projectsMap;
@@ -97,16 +110,6 @@ public class DaBInImporter extends Program {
 
     public DaBInImporter() {
         this(true);
-        /*super("DaBInImporter",
-        "0.1.0",
-        "MySQLHost MySQLUser MySQLPassword MySQLDB OrgaTitle OrgaName contentsection");
-        authorsAlpha = new HashMap<String, Folder>(12);
-        membersAlpha = new HashMap<String, Folder>(12);
-        authorsMap = new HashMap<String, SciAuthor>();
-        departmentsMap = new HashMap<String, SciDepartment>();
-        membersMap = new HashMap<String, SciMember>();
-        projectsMap = new HashMap<String, SciProject>();
-        publicationMap = new HashMap<String, Publication>();*/
     }
 
     public DaBInImporter(boolean startup) {
@@ -294,6 +297,8 @@ public class DaBInImporter extends Program {
         publishers = createFolder(root, "verlage", "Verlage");
 
         publications = createFolder(root, "publikationen", "Publikationen");
+
+        files = createFolder(root, "dateien", "Dateien");
 
         System.out.print("Creating organization item and "
                          + "postal and office address items...");
@@ -881,7 +886,7 @@ public class DaBInImporter extends Program {
 
                 result = stmt.executeQuery(String.format(
                         "SELECT Beteiligung, Person_Id "
-                        + "FROM arbeitspapierlink "
+                        + "FROM publikationlink "
                         + "WHERE Publikation_Id = %s "
                         + "ORDER BY Reihenfolge",
                         data.getPublicationDaBInId()));
@@ -900,6 +905,75 @@ public class DaBInImporter extends Program {
                 counter++;
             }
 
+        } catch (SQLException ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        } catch (Exception ex) {
+            System.out.println("FAILED");
+            ex.printStackTrace(System.err);
+        }
+
+        System.out.println("Collected volumes...");
+        try {
+            Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet result;
+            long counter = 1;
+            long number;
+
+            result = stmt.executeQuery(
+                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit "
+                    + "FROM publikation "
+                    + "WHERE (Typ = 'Sammelband' AND (ErschienenIn IS NULL OR CHAR_LENGTH(ErschienenIn) = 0)) "
+                    + "ORDER BY Name");
+            result.last();
+            number = result.getRow();
+            result.beforeFirst();
+
+            while (result.next()) {
+                System.out.printf("%4d of %4d: %s...\n", counter, number, result.
+                        getString("Name"));
+                PublicationData data = new PublicationData();
+                data.setType(PublicationType.COLLECTED_VOLUME);
+                data.setPublicationDaBInId(result.getString("Publikation_Id"));
+                data.setName(result.getString("Name"));
+                data.setVerlag(result.getString("Verlag"));
+                data.setJahr(result.getString("Jahr"));
+                data.setLink(result.getString("Link"));
+                data.setBeschreibung(result.getString("Beschreibung"));
+                data.setAbteilungId(result.getString("Abteilung_Id"));
+                if ("Abteilung".equals(result.getString(
+                        "Sichtbarkeit"))) {
+                    data.setVisiblity(PublicationVisibility.DEPARTMENT);
+                } else if ("Persönlich".equals(result.getString(
+                        "Sichtbarkeit"))) {
+                    data.setVisiblity(PublicationVisibility.PRIVATE);
+                } else {
+                    data.setVisiblity(PublicationVisibility.GLOBAL);
+                }
+
+                result = stmt.executeQuery(String.format(
+                        "SELECT Beteiligung, Person_Id "
+                        + "FROM publikationlink "
+                        + "WHERE Publikation_Id = %s "
+                        + "ORDER BY Reihenfolge",
+                        data.getPublicationDaBInId()));
+                while (result.next()) {
+                    Authorship authorship;
+                    authorship = new Authorship();
+
+                    authorship.setPersonDaBInId(result.getString("Person_Id"));
+                    authorship.setBeteiligung(result.getString("Beteiligung"));
+
+                    data.addAuthor(authorship);
+                }
+
+                createPublication(data);
+
+                counter++;
+            }
         } catch (SQLException ex) {
             System.out.println("FAILED");
             ex.printStackTrace(System.err);
@@ -951,6 +1025,24 @@ public class DaBInImporter extends Program {
                 } else {
                     data.setVisiblity(PublicationVisibility.GLOBAL);
                 }
+                extractPages(result.getString("Verlag"), data);
+
+                result = stmt.executeQuery(String.format(
+                        "SELECT Beteiligung, Person_Id "
+                        + "FROM publikationlink "
+                        + "WHERE Publikation_Id = %s "
+                        + "ORDER BY Reihenfolge",
+                        data.getPublicationDaBInId()));
+                while (result.next()) {
+                    Authorship authorship;
+                    authorship = new Authorship();
+
+                    authorship.setPersonDaBInId(result.getString("Person_Id"));
+                    authorship.setBeteiligung(result.getString("Beteiligung"));
+
+                    data.addAuthor(authorship);
+                }
+
                 createPublication(data);
 
                 counter++;
@@ -1004,6 +1096,24 @@ public class DaBInImporter extends Program {
                 } else {
                     data.setVisiblity(PublicationVisibility.GLOBAL);
                 }
+                extractPages(result.getString("Verlag"), data);
+
+                result = stmt.executeQuery(String.format(
+                        "SELECT Beteiligung, Person_Id "
+                        + "FROM publikationlink "
+                        + "WHERE Publikation_Id = %s "
+                        + "ORDER BY Reihenfolge",
+                        data.getPublicationDaBInId()));
+                while (result.next()) {
+                    Authorship authorship;
+                    authorship = new Authorship();
+
+                    authorship.setPersonDaBInId(result.getString("Person_Id"));
+                    authorship.setBeteiligung(result.getString("Beteiligung"));
+
+                    data.addAuthor(authorship);
+                }
+
                 createPublication(data);
 
                 counter++;
@@ -1057,6 +1167,23 @@ public class DaBInImporter extends Program {
                 } else {
                     data.setVisiblity(PublicationVisibility.GLOBAL);
                 }
+
+                result = stmt.executeQuery(String.format(
+                        "SELECT Beteiligung, Person_Id "
+                        + "FROM publikationlink "
+                        + "WHERE Publikation_Id = %s "
+                        + "ORDER BY Reihenfolge",
+                        data.getPublicationDaBInId()));
+                while (result.next()) {
+                    Authorship authorship;
+                    authorship = new Authorship();
+
+                    authorship.setPersonDaBInId(result.getString("Person_Id"));
+                    authorship.setBeteiligung(result.getString("Beteiligung"));
+
+                    data.addAuthor(authorship);
+                }
+
                 createPublication(data);
 
                 counter++;
@@ -1089,7 +1216,7 @@ public class DaBInImporter extends Program {
                 WorkingPaperData data = new WorkingPaperData();
 
                 result = stmt.executeQuery(String.format(
-                        "SELECT Name, Jahr, Beschreibung "
+                        "SELECT Name, Jahr, Beschreibung, Datei "
                         + "FROM arbeitspapier "
                         + "WHERE Arbeitspapier_Id = %s AND Sprache = 'DE'",
                         workingPaperIds.get(i)));
@@ -1101,6 +1228,9 @@ public class DaBInImporter extends Program {
                     data.setTitleDe(result.getString("Name"));
                     data.setDescDe(result.getString("Beschreibung"));
                     data.setYear(result.getString("Jahr"));
+                    if (result.getBlob("Datei") != null) {
+                        data.setFile(result.getBlob("Datei").getBinaryStream());
+                    }
                 }
 
                 result = stmt.executeQuery(String.format(
@@ -1835,7 +1965,7 @@ public class DaBInImporter extends Program {
                 ContentBundle publication;
 
                 switch (publicationData.getType()) {
-                    case MONOGRAPH:
+                    case MONOGRAPH: {
                         Monograph monographDe = null;
                         Monograph monographEn = null;
                         PublisherData publisherData;
@@ -1843,14 +1973,7 @@ public class DaBInImporter extends Program {
                         monographDe = new Monograph();
                         monographDe.setTitle(publicationData.getName());
                         monographDe.setName(publicationData.getName());
-                        try {
-                            monographDe.setYearOfPublication(Integer.parseInt(publicationData.
-                                    getJahr()));
-                        } catch (NumberFormatException ex) {
-                            System.out.println(
-                                    "***WARNING: Invalid year of publication: Not a number. Ignoring.");
-
-                        }
+                        extractYearOfPublication(publicationData, monographDe);
                         publisherData = extractPublisher(publicationData.
                                 getVerlag());
                         if (publishersMap.containsKey(publisherData)) {
@@ -1886,14 +2009,7 @@ public class DaBInImporter extends Program {
                         monographEn = new Monograph();
                         monographEn.setTitle(publicationData.getName());
                         monographEn.setName(publicationData.getName());
-                        try {
-                            monographEn.setYearOfPublication(Integer.parseInt(publicationData.
-                                    getJahr()));
-                        } catch (NumberFormatException ex) {
-                            System.out.println(
-                                    "***WARNING: Invalid year of publication: Not a number. Ignoring.");
-
-                        }
+                   extractYearOfPublication(publicationData, monographEn);
                         publisherData = extractPublisher(publicationData.
                                 getVerlag());
                         if (publishersMap.containsKey(publisherData)) {
@@ -1926,24 +2042,272 @@ public class DaBInImporter extends Program {
                         }
                         monographEn.save();
 
+                        publicationDe = monographDe;
+                        publicationEn = monographEn;
+
                         break;
-                    case COLLECTED_VOLUME:
-                        System.out.println("Not supported yet.");
-                        return;
-                    //break;
-                    case ARTICLE_IN_COLLECTED_VOLUME:
-                        System.out.println("Not supported yet.");
-                        return;
-                    //break;
-                    case ARTICLE_IN_JOURNAL:
-                        System.out.println("Not supported yet.");
-                        return;
-                    //break;
-                    case GREY_LITERATURE:
-                        System.out.println("Not supported yet.");
-                        return;
-                    //break;
+                    }
+                    case COLLECTED_VOLUME: {
+                        CollectedVolume collectedVolumeDe;
+                        CollectedVolume collectedVolumeEn;
+                        PublisherData publisherData;
+
+                        collectedVolumeDe = new CollectedVolume();
+                        collectedVolumeDe.setTitle(publicationData.getName());
+                        collectedVolumeDe.setName(publicationData.getName());
+                      extractYearOfPublication(publicationData, collectedVolumeDe);
+                        publisherData = extractPublisher(publicationData.
+                                getVerlag());
+                        if (publishersMap.containsKey(publisherData)) {
+                            collectedVolumeDe.setPublisher((Publisher) publishersMap.
+                                    get(publisherData).getPrimaryInstance());
+                        } else {
+                            System.out.println(
+                                    "***WARNING: Invalid publisher. Ignoring.");
+                        }
+
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(collectedVolumeDe);
+                        }
+
+
+                        collectedVolumeDe.save();
+
+                        collectedVolumeEn = new CollectedVolume();
+                        collectedVolumeEn.setTitle(publicationData.getName());
+                        collectedVolumeEn.setName(publicationData.getName());
+                        extractYearOfPublication(publicationData, collectedVolumeEn);
+                        publisherData = extractPublisher(publicationData.
+                                getVerlag());
+                        if (publishersMap.containsKey(publisherData)) {
+                            collectedVolumeEn.setPublisher((Publisher) publishersMap.
+                                    get(publisherData).getPrimaryInstance());
+                        } else {
+                            System.out.println(
+                                    "***WARNING: Invalid publisher. Ignoring.");
+                        }
+
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(collectedVolumeEn);
+                        }
+
+                        collectedVolumeEn.save();
+                        publicationDe = collectedVolumeDe;
+                        publicationEn = collectedVolumeEn;
+
+                        break;
+                    }
+                    case ARTICLE_IN_COLLECTED_VOLUME: {
+                        ArticleInCollectedVolume articleDe;
+                        ArticleInCollectedVolume articleEn;
+
+                        articleDe = new ArticleInCollectedVolume();
+                        articleDe.setTitle(publicationData.getName());
+                        articleDe.setName(publicationData.getName());
+                       extractYearOfPublication(publicationData, articleDe);
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(articleDe);
+                        }
+
+                        if (publicationData.getBeschreibung() != null) {
+                            articleDe.setAbstract(publicationData.
+                                    getBeschreibung());
+                        }
+
+                        if ((publicationData.getErschienenIn() != null)
+                            && !publicationData.getErschienenIn().isEmpty()) {
+                            articleDe.setMisc(publicationData.getErschienenIn());
+                        }
+                        if (publicationData.getPagesFrom() != 0) {
+                            articleDe.setPagesFrom(
+                                    publicationData.getPagesFrom());
+                            articleDe.setPagesTo(publicationData.getPagesTo());
+                        }
+                        articleDe.save();
+
+                        articleEn = new ArticleInCollectedVolume();
+                        articleEn.setTitle(publicationData.getName());
+                        articleEn.setName(publicationData.getName());
+                    extractYearOfPublication(publicationData, articleEn);
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(articleEn);
+                        }
+
+                        if (publicationData.getBeschreibung() != null) {
+                            articleEn.setAbstract(publicationData.
+                                    getBeschreibung());
+                        }
+
+                        if ((publicationData.getErschienenIn() != null)
+                            && !publicationData.getErschienenIn().isEmpty()) {
+                            articleEn.setMisc(publicationData.getErschienenIn());
+                        }
+                        if (publicationData.getPagesFrom() != 0) {
+                            articleEn.setPagesFrom(
+                                    publicationData.getPagesFrom());
+                            articleEn.setPagesTo(publicationData.getPagesTo());
+                        }
+
+                        articleEn.save();
+                        publicationDe = articleDe;
+                        publicationEn = articleEn;
+
+                        break;
+                    }
+                    case ARTICLE_IN_JOURNAL: {
+                        ArticleInJournal articleDe;
+                        ArticleInJournal articleEn;
+
+                        articleDe = new ArticleInJournal();
+                        articleDe.setTitle(publicationData.getName());
+                        articleDe.setName(publicationData.getName());
+                        extractYearOfPublication(publicationData, articleDe);
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(articleDe);
+                        }
+
+                        if (publicationData.getBeschreibung() != null) {
+                            articleDe.setAbstract(publicationData.
+                                    getBeschreibung());
+                        }
+
+                        if ((publicationData.getErschienenIn() != null)
+                            && !publicationData.getErschienenIn().isEmpty()) {
+                            articleDe.setMisc(publicationData.getErschienenIn());
+                        }
+                        if (publicationData.getPagesFrom() != 0) {
+                            articleDe.setPagesFrom(
+                                    publicationData.getPagesFrom());
+                            articleDe.setPagesTo(publicationData.getPagesTo());
+                        }
+                        articleDe.save();
+
+                        articleEn = new ArticleInJournal();
+                        articleEn.setTitle(publicationData.getName());
+                        articleEn.setName(publicationData.getName());
+                       extractYearOfPublication(publicationData, articleEn);
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(articleEn);
+                        }
+
+                        if (publicationData.getBeschreibung() != null) {
+                            articleEn.setAbstract(publicationData.
+                                    getBeschreibung());
+                        }
+
+                        if ((publicationData.getErschienenIn() != null)
+                            && !publicationData.getErschienenIn().isEmpty()) {
+                            articleEn.setMisc(publicationData.getErschienenIn());
+                        }
+                        if (publicationData.getPagesFrom() != 0) {
+                            articleEn.setPagesFrom(
+                                    publicationData.getPagesFrom());
+                            articleEn.setPagesTo(publicationData.getPagesTo());
+                        }
+
+                        articleEn.save();
+                        publicationDe = articleDe;
+                        publicationEn = articleEn;
+
+                        break;
+                    }
+                    case GREY_LITERATURE: {
+                        GreyLiterature greyDe;
+                        GreyLiterature greyEn;
+
+                        greyDe = new GreyLiterature();
+                        greyDe.setTitle(publicationData.getName());
+                        greyDe.setName(publicationData.getName());
+                       extractYearOfPublication(publicationData, greyDe);
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(greyDe);
+                        }
+
+                        if (publicationData.getBeschreibung() != null) {
+                            greyDe.setAbstract(publicationData.getBeschreibung());
+                        }
+                        if ((publicationData.getErschienenIn() != null)
+                            && !publicationData.getErschienenIn().isEmpty()) {
+                            greyDe.setMisc(publicationData.getErschienenIn());
+                        }
+                        if (publicationData.getPagesFrom() != 0) {
+                            greyDe.setPagesFrom(
+                                    publicationData.getPagesFrom());
+                            greyDe.setPagesTo(publicationData.getPagesTo());
+                        }
+                        greyDe.save();
+
+                        greyEn = new GreyLiterature();
+                        greyEn.setTitle(publicationData.getName());
+                        greyEn.setName(publicationData.getName());
+                      extractYearOfPublication(publicationData, greyEn);
+                        if ((publicationData.getLink() != null)
+                            && !publicationData.getLink().isEmpty()) {
+                            RelatedLink link = new RelatedLink();
+                            link.setTitle(publicationData.getLink());
+                            link.setTargetType(Link.EXTERNAL_LINK);
+                            link.setTargetURI(publicationData.getLink());
+                            link.setLinkOwner(greyEn);
+                        }
+
+                        if (publicationData.getBeschreibung() != null) {
+                            greyEn.setAbstract(publicationData.getBeschreibung());
+                        }
+                        if ((publicationData.getErschienenIn() != null)
+                            && !publicationData.getErschienenIn().isEmpty()) {
+                            greyEn.setMisc(publicationData.getErschienenIn());
+                        }
+                        if (publicationData.getPagesFrom() != 0) {
+                            greyEn.setPagesFrom(
+                                    publicationData.getPagesFrom());
+                            greyEn.setPagesTo(publicationData.getPagesTo());
+                        }
+
+                        greyEn.save();
+                        publicationDe = greyDe;
+                        publicationEn = greyEn;
+
+                        break;
+                    }
                 }
+
+                publicationDe.setLanguage("de");
+                publicationEn.setLanguage("en");
 
                 System.out.println("\tAssigning authors...\n");
                 int i = 1;
@@ -2045,6 +2409,7 @@ public class DaBInImporter extends Program {
                     }
                     workingPaperDe.setOrganization(orgaDe);
                     workingPaperDe.setPlace("Bremen");
+                    extractYearOfPublication(workingPaperData, workingPaperDe);
                     workingPaperDe.setLanguage("de");
                     workingPaperDe.setContentSection(section);
                     workingPaperDe.save();
@@ -2070,14 +2435,17 @@ public class DaBInImporter extends Program {
                         workingPaperNameEn.substring(0, 200);
                     }
                     workingPaperEn.setName(workingPaperNameEn);
-                    if (workingPaperData.getDescEn().length() > 8000) {
+                    if (workingPaperData.getDescEn().length() > 4096) {
+                        System.out.println(
+                                "***Warning: Value of DaBIn field abstract too long for abstracts (max: 4096 characters). Truncating.");
                         workingPaperEn.setAbstract(workingPaperData.getDescEn().
-                                substring(0, 8000));
+                                substring(0, 4095));
                     } else {
                         workingPaperEn.setAbstract(workingPaperData.getDescEn());
                     }
                     workingPaperEn.setOrganization(orgaEn);
                     workingPaperEn.setPlace("Bremen");
+                     extractYearOfPublication(workingPaperData, workingPaperEn);
                     workingPaperEn.setLanguage("En");
                     workingPaperEn.setContentSection(section);
                     workingPaperEn.save();
@@ -2098,7 +2466,80 @@ public class DaBInImporter extends Program {
                 publications.addItem(workingPaper);
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
 
-                System.out.println("OK");
+                System.out.println("\tOK");
+
+                System.out.print("\tAssigning file...");
+                if (workingPaperData.getFile() == null) {
+                    System.out.println("No file found.");
+                } else {
+                    try {
+                        File tmpFile = File.createTempFile(
+                                "ccm_workingpaperCompressed", "zip");
+
+                        FileOutputStream tmpFileStream =
+                                         new FileOutputStream(tmpFile);
+                        byte[] buf = new byte[4096];
+                        int len;
+                        while ((len = workingPaperData.getFile().read(buf)) > 0) {
+                            tmpFileStream.write(buf);
+                        }
+
+                        ZipFile zipFile = new ZipFile(tmpFile);
+                        Enumeration<? extends ZipEntry> entries = zipFile.
+                                entries();
+                        if (entries.hasMoreElements()) {
+                            InputStream unzip = zipFile.getInputStream(entries.
+                                    nextElement());
+
+                            File pdf = File.createTempFile("ccm_workingPaper",
+                                                           "pdf");
+                            FileOutputStream pdfFileStream = new FileOutputStream(
+                                    pdf);
+                            byte[] buffer = new byte[4096];
+                            while ((len = unzip.read(buffer)) > 0) {
+                                pdfFileStream.write(buffer);
+                            }
+
+
+                            FileStorageItem fsi = new FileStorageItem();
+                            fsi.setTitle("Datei "
+                                         + ((WorkingPaper) workingPaper.
+                                            getPrimaryInstance()).getTitle());
+                            fsi.setName("datei_" + ((WorkingPaper) workingPaper.
+                                                    getPrimaryInstance()).
+                                    getName());
+                            FileAsset file = new FileAsset();
+                            file.loadFromFile(workingPaper.getPrimaryInstance().
+                                    getName(), pdf, "application/pdf");
+                            file.setContentSection(section);
+                            fsi.setContentSection(section);
+
+                            fsi.setLanguage("de");
+                            ContentBundle bundle = new ContentBundle(fsi);
+                            bundle.setContentSection(section);
+                            bundle.setDefaultLanguage("de");
+
+                            files.addItem(bundle);
+
+                            RelatedLink download = new RelatedLink();
+                            download.setTitle("download");
+                            download.setTargetType(Link.INTERNAL_LINK);
+                            download.setTargetItem(fsi);
+                            download.setLinkOwner(workingPaperDe);
+
+                            download = new RelatedLink();
+                            download.setTitle("download");
+                            download.setTargetType(Link.INTERNAL_LINK);
+                            download.setTargetItem(fsi);
+                            download.setLinkOwner(workingPaperEn);
+                        }
+                    } catch (IOException ex) {
+                        System.out.println(
+                                "***ERROR: Failed to copy file from DaBIn to CCM: ");
+                        ex.printStackTrace(System.out);
+                    }
+
+                }
 
                 System.out.print("\tAssigning authors to working paper...\n");
                 int i = 1;
@@ -2316,6 +2757,70 @@ public class DaBInImporter extends Program {
                           publisher.getName(),
                           publisher.getPlace());
         return publisher;
+    }
+
+    private void extractYearOfPublication(final PublicationData data,
+                                          final Publication publication) {
+        try {
+            if ((data.getJahr() != null)
+                && (data.getJahr().length() <= 4)) {
+                publication.setYearOfPublication(
+                        Integer.parseInt(data.getJahr()));
+            } else if ((data.getJahr() != null)
+                           && (data.getJahr().length() > 4)) {
+                publication.setYearOfPublication(Integer.parseInt(data.getJahr().
+                        substring(0, 4)));
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println(
+                    "***WARNING: Invalid year of publication: Not a number. Ignoring.");
+        }
+    }
+
+    private void extractYearOfPublication(final WorkingPaperData data,
+                                          final Publication publication) {
+        try {
+            if ((data.getYear() != null)
+                && (data.getYear().length() <= 4)) {
+                publication.setYearOfPublication(
+                        Integer.parseInt(data.getYear()));
+            } else if ((data.getYear() != null)
+                           && (data.getYear().length() > 4)) {
+                publication.setYearOfPublication(Integer.parseInt(data.getYear().
+                        substring(0, 4)));
+            }
+        } catch (NumberFormatException ex) {
+            System.out.println(
+                    "***WARNING: Invalid year of publication: Not a number. Ignoring.");
+        }
+    }
+
+    private void extractPages(final String data,
+                              final PublicationData publicationData) {
+        int index;
+        int leftLimit;
+        int rightLimit;
+        String tmp;
+        int pagesFrom;
+        int pagesTo;
+
+        index = data.lastIndexOf('-');
+        leftLimit = data.lastIndexOf(' ', index);
+        rightLimit = data.indexOf(' ', index);
+
+        try {
+            tmp = data.substring(leftLimit + 1, index);
+            pagesFrom = Integer.parseInt(tmp);
+
+            tmp = data.substring(index + 1, rightLimit);
+            pagesTo = Integer.parseInt(tmp);
+        } catch (NumberFormatException ex) {
+            System.out.println("Malformed pages. Ignoring.");
+            return;
+        }
+
+        publicationData.setPagesFrom(pagesFrom);
+        publicationData.setPagesTo(pagesTo);
     }
 
     public static void main(String[] args) {
