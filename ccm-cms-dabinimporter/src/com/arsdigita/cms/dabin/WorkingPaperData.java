@@ -16,7 +16,8 @@ public class WorkingPaperData {
     private String year;
     private String descDe;
     private String descEn;
-    private InputStream file;
+    private String number;
+    private byte[] file;
     private List<Authorship> authors;
 
     public WorkingPaperData() {
@@ -87,11 +88,11 @@ public class WorkingPaperData {
         return authors;
     }
 
-    public InputStream getFile() {
+    public byte[] getFile() {
         return file;
     }
 
-    public void setFile(InputStream file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
 
@@ -101,5 +102,13 @@ public class WorkingPaperData {
 
     public void addAuthor(final Authorship author) {
         authors.add(author);
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

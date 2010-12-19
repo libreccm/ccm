@@ -46,6 +46,8 @@ import com.arsdigita.cms.contenttypes.SciOrganization;
 import com.arsdigita.cms.contenttypes.SciProject;
 import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.london.terms.Domain;
+import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.util.Transaction;
 import com.arsdigita.packaging.Program;
 import java.io.File;
@@ -60,6 +62,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -70,6 +73,7 @@ import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 
 /**
@@ -84,18 +88,23 @@ public class DaBInImporter extends Program {
     private Connection connection = null;
     private Folder root;
     private Folder authors;
-    private Map<String, Folder> authorsAlpha;
+    private Map<Character, Folder> authorsAlpha;
     private Folder contacts;
+    private Map<Character, Folder> contactsAlpha;
     private Folder departments;
     private Folder members;
-    private Map<String, Folder> membersAlpha;
+    private Map<Character, Folder> membersAlpha;
     private Folder organization;
     private Folder persons;
-    private Map<String, Folder> personsAlpha;
+    private Map<Character, Folder> personsAlpha;
     private Folder projects;
+    private Map<Character, Folder> projectsAlpha;
     private Folder publications;
+    private Map<Character, Folder> publicationsAlpha;
     private Folder publishers;
+    private Map<Character, Folder> publishersAlpha;
     private Folder files;
+    private Map<Character, Folder> filesAlpha;
     private Map<String, ContentBundle> departmentsMap;
     private Map<String, ContentBundle> personsMap;
     private Map<String, ContentBundle> projectsMap;
@@ -107,29 +116,39 @@ public class DaBInImporter extends Program {
     private ContentBundle orga;
     private Address postalAddress;
     private Address officeAddress;
+    private Domain termsDomain;
+    private Term publicationsTerm;
+    private Map<String, Term> publicationTerms;
+    private Term workingPapersTerm;
+    private Map<String, Term> workingPaperTerms;
+    private Term currentProjectsTerm;
+    private Term finishedProjectsTerm;
 
     public DaBInImporter() {
         this(true);
     }
 
     public DaBInImporter(boolean startup) {
-        /*super("DaBInImporter",
-        "0.1.0",
-        "MySQLHost MySQLUser MySQLPassword MySQLDB OrgaTitle OrgaName contentSection",
-        startup);*/
         super("DaBInImporter",
               "0.1.0",
               "configFile",
               startup);
-        authorsAlpha = new HashMap<String, Folder>(12);
-        membersAlpha = new HashMap<String, Folder>(12);
-        personsAlpha = new HashMap<String, Folder>(12);
+        authorsAlpha = new HashMap<Character, Folder>(27);
+        membersAlpha = new HashMap<Character, Folder>(27);
+        personsAlpha = new HashMap<Character, Folder>(27);
+        contactsAlpha = new HashMap<Character, Folder>(27);
+        projectsAlpha = new HashMap<Character, Folder>(27);
+        publicationsAlpha = new HashMap<Character, Folder>(27);
+        publishersAlpha = new HashMap<Character, Folder>(27);
+        filesAlpha = new HashMap<Character, Folder>(27);
         departmentsMap = new HashMap<String, ContentBundle>();
         personsMap = new HashMap<String, ContentBundle>();
         projectsMap = new HashMap<String, ContentBundle>();
         publishersMap = new HashMap<PublisherData, ContentBundle>();
         publicationMap = new HashMap<String, ContentBundle>();
         workingPaperMap = new HashMap<String, ContentBundle>();
+        publicationTerms = new HashMap<String, Term>(30);
+        workingPaperTerms = new HashMap<String, Term>(30);
     }
 
     @Override
@@ -139,8 +158,6 @@ public class DaBInImporter extends Program {
         String mySqlUser;
         String mySqlPassword;
         String mySqlDb;
-        String orgaTitle;
-        String orgaName;
 
         System.out.println("");
         System.out.println("");
@@ -209,96 +226,433 @@ public class DaBInImporter extends Program {
         root = section.getRootFolder();
 
         authors = createFolder(root, "autoren", "Autoren");
-        folder = createFolder(authors, "ab", "A - B");
-        authorsAlpha.put("ab", folder);
-        folder = createFolder(authors, "cd", "C - D");
-        authorsAlpha.put("cd", folder);
-        folder = createFolder(authors, "ef", "E - F");
-        authorsAlpha.put("ef", folder);
-        folder = createFolder(authors, "gh", "G - H");
-        authorsAlpha.put("gh", folder);
-        folder = createFolder(authors, "ij", "I - J");
-        authorsAlpha.put("ij", folder);
-        folder = createFolder(authors, "kl", "K - L");
-        authorsAlpha.put("kl", folder);
-        folder = createFolder(authors, "mn", "M - N");
-        authorsAlpha.put("mn", folder);
-        folder = createFolder(authors, "op", "O - P");
-        authorsAlpha.put("op", folder);
-        folder = createFolder(authors, "qr", "Q - R");
-        authorsAlpha.put("qr", folder);
-        folder = createFolder(authors, "st", "S - T");
-        authorsAlpha.put("st", folder);
-        folder = createFolder(authors, "uv", "U - V");
-        authorsAlpha.put("uv", folder);
-        folder = createFolder(authors, "wxzy", "W - Z");
-        authorsAlpha.put("wxyz", folder);
+        folder = createFolder(authors, "09", "0-9");
+        authorsAlpha.put('0', folder);
+        folder = createFolder(authors, "ab", "A-B");
+        authorsAlpha.put('a', folder);
+        authorsAlpha.put('b', folder);
+        folder = createFolder(authors, "cd", "C-D");
+        authorsAlpha.put('c', folder);
+        authorsAlpha.put('d', folder);
+        folder = createFolder(authors, "ef", "E-F");
+        authorsAlpha.put('e', folder);
+        authorsAlpha.put('f', folder);
+        folder = createFolder(authors, "gh", "G-H");
+        authorsAlpha.put('g', folder);
+        authorsAlpha.put('h', folder);
+        folder = createFolder(authors, "ij", "I-J");
+        authorsAlpha.put('i', folder);
+        authorsAlpha.put('j', folder);
+        folder = createFolder(authors, "kl", "K-L");
+        authorsAlpha.put('k', folder);
+        authorsAlpha.put('l', folder);
+        folder = createFolder(authors, "mn", "M-N");
+        authorsAlpha.put('m', folder);
+        authorsAlpha.put('n', folder);
+        folder = createFolder(authors, "op", "O-P");
+        authorsAlpha.put('o', folder);
+        authorsAlpha.put('p', folder);
+        folder = createFolder(authors, "qr", "Q-R");
+        authorsAlpha.put('q', folder);
+        authorsAlpha.put('r', folder);
+        folder = createFolder(authors, "st", "S-T");
+        authorsAlpha.put('s', folder);
+        authorsAlpha.put('t', folder);
+        folder = createFolder(authors, "uv", "U-V");
+        authorsAlpha.put('u', folder);
+        authorsAlpha.put('v', folder);
+        folder = createFolder(authors, "wxzy", "W-Z");
+        authorsAlpha.put('w', folder);
+        authorsAlpha.put('x', folder);
+        authorsAlpha.put('y', folder);
+        authorsAlpha.put('z', folder);
 
         contacts = createFolder(root, "kontaktdaten", "Kontaktdaten");
+        folder = createFolder(contacts, "09", "0-9");
+        contactsAlpha.put('0', folder);
+        folder = createFolder(contacts, "ab", "A-B");
+        contactsAlpha.put('a', folder);
+        contactsAlpha.put('b', folder);
+        folder = createFolder(contacts, "cd", "C-D");
+        contactsAlpha.put('c', folder);
+        contactsAlpha.put('d', folder);
+        folder = createFolder(contacts, "ef", "E-F");
+        contactsAlpha.put('e', folder);
+        contactsAlpha.put('f', folder);
+        folder = createFolder(contacts, "gh", "G-H");
+        contactsAlpha.put('g', folder);
+        contactsAlpha.put('h', folder);
+        folder = createFolder(contacts, "ij", "I-J");
+        contactsAlpha.put('i', folder);
+        contactsAlpha.put('j', folder);
+        folder = createFolder(contacts, "kl", "K-L");
+        contactsAlpha.put('k', folder);
+        contactsAlpha.put('l', folder);
+        folder = createFolder(contacts, "mn", "M-N");
+        contactsAlpha.put('m', folder);
+        contactsAlpha.put('n', folder);
+        folder = createFolder(contacts, "op", "O-P");
+        contactsAlpha.put('o', folder);
+        contactsAlpha.put('p', folder);
+        folder = createFolder(contacts, "qr", "Q-R");
+        contactsAlpha.put('q', folder);
+        contactsAlpha.put('r', folder);
+        folder = createFolder(contacts, "st", "S-T");
+        contactsAlpha.put('s', folder);
+        contactsAlpha.put('t', folder);
+        folder = createFolder(contacts, "uv", "U-V");
+        contactsAlpha.put('u', folder);
+        contactsAlpha.put('v', folder);
+        folder = createFolder(contacts, "wxzy", "W-Z");
+        contactsAlpha.put('w', folder);
+        contactsAlpha.put('x', folder);
+        contactsAlpha.put('y', folder);
+        contactsAlpha.put('z', folder);
 
         departments = createFolder(root, "abteilungen", "Abteilungen");
 
         members = createFolder(root, "mitglieder", "Mitglieder");
-        folder = createFolder(members, "ab", "A - B");
-        membersAlpha.put("ab", folder);
-        folder = createFolder(members, "cd", "C - D");
-        membersAlpha.put("cd", folder);
-        folder = createFolder(members, "ef", "E - F");
-        membersAlpha.put("ef", folder);
-        folder = createFolder(members, "gh", "G - H");
-        membersAlpha.put("gh", folder);
-        folder = createFolder(members, "ij", "I - J");
-        membersAlpha.put("ij", folder);
-        folder = createFolder(members, "kl", "K - L");
-        membersAlpha.put("kl", folder);
-        folder = createFolder(members, "mn", "M - N");
-        membersAlpha.put("mn", folder);
-        folder = createFolder(members, "op", "O - P");
-        membersAlpha.put("op", folder);
-        folder = createFolder(members, "qr", "Q - R");
-        membersAlpha.put("qr", folder);
-        folder = createFolder(members, "st", "S - T");
-        membersAlpha.put("st", folder);
-        folder = createFolder(members, "uv", "U - V");
-        membersAlpha.put("uv", folder);
-        folder = createFolder(members, "wxzy", "W - Z");
-        membersAlpha.put("wxyz", folder);
+        folder = createFolder(members, "09", "0-9");
+        membersAlpha.put('0', folder);
+        folder = createFolder(members, "ab", "A-B");
+        membersAlpha.put('a', folder);
+        membersAlpha.put('b', folder);
+        folder = createFolder(members, "cd", "C-D");
+        membersAlpha.put('c', folder);
+        membersAlpha.put('d', folder);
+        folder = createFolder(members, "ef", "E-F");
+        membersAlpha.put('e', folder);
+        membersAlpha.put('f', folder);
+        folder = createFolder(members, "gh", "G-H");
+        membersAlpha.put('g', folder);
+        membersAlpha.put('h', folder);
+        folder = createFolder(members, "ij", "I-J");
+        membersAlpha.put('i', folder);
+        membersAlpha.put('j', folder);
+        folder = createFolder(members, "kl", "K-L");
+        membersAlpha.put('k', folder);
+        membersAlpha.put('l', folder);
+        folder = createFolder(members, "mn", "M-N");
+        membersAlpha.put('m', folder);
+        membersAlpha.put('n', folder);
+        folder = createFolder(members, "op", "O-P");
+        membersAlpha.put('o', folder);
+        membersAlpha.put('p', folder);
+        folder = createFolder(members, "qr", "Q-R");
+        membersAlpha.put('q', folder);
+        membersAlpha.put('r', folder);
+        folder = createFolder(members, "st", "S-T");
+        membersAlpha.put('s', folder);
+        membersAlpha.put('t', folder);
+        folder = createFolder(members, "uv", "U-V");
+        membersAlpha.put('u', folder);
+        membersAlpha.put('v', folder);
+        folder = createFolder(members, "wxzy", "W-Z");
+        membersAlpha.put('w', folder);
+        membersAlpha.put('x', folder);
+        membersAlpha.put('y', folder);
+        membersAlpha.put('z', folder);
 
         organization = createFolder(root, "organisationen", "Organisation(en)");
 
         persons = createFolder(root, "personen", "Personen");
-        folder = createFolder(persons, "ab", "A - B");
-        personsAlpha.put("ab", folder);
-        folder = createFolder(persons, "cd", "C - D");
-        personsAlpha.put("cd", folder);
-        folder = createFolder(persons, "ef", "E - F");
-        personsAlpha.put("ef", folder);
-        folder = createFolder(persons, "gh", "G - H");
-        personsAlpha.put("gh", folder);
-        folder = createFolder(persons, "ij", "I - J");
-        personsAlpha.put("ij", folder);
-        folder = createFolder(persons, "kl", "K - L");
-        personsAlpha.put("kl", folder);
-        folder = createFolder(persons, "mn", "M - N");
-        personsAlpha.put("mn", folder);
-        folder = createFolder(persons, "op", "O - P");
-        personsAlpha.put("op", folder);
-        folder = createFolder(persons, "qr", "Q - R");
-        personsAlpha.put("qr", folder);
-        folder = createFolder(persons, "st", "S - T");
-        personsAlpha.put("st", folder);
-        folder = createFolder(persons, "uv", "U - V");
-        personsAlpha.put("uv", folder);
-        folder = createFolder(persons, "wxzy", "W - Z");
-        personsAlpha.put("wxyz", folder);
+        folder = createFolder(persons, "09", "0-9");
+        personsAlpha.put('0', folder);
+        folder = createFolder(persons, "ab", "A-B");
+        personsAlpha.put('a', folder);
+        personsAlpha.put('b', folder);
+        folder = createFolder(persons, "cd", "C-D");
+        personsAlpha.put('c', folder);
+        personsAlpha.put('d', folder);
+        folder = createFolder(persons, "ef", "E-F");
+        personsAlpha.put('e', folder);
+        personsAlpha.put('f', folder);
+        folder = createFolder(persons, "gh", "G-H");
+        personsAlpha.put('g', folder);
+        personsAlpha.put('h', folder);
+        folder = createFolder(persons, "ij", "I-J");
+        personsAlpha.put('i', folder);
+        personsAlpha.put('j', folder);
+        folder = createFolder(persons, "kl", "K-L");
+        personsAlpha.put('k', folder);
+        personsAlpha.put('l', folder);
+        folder = createFolder(persons, "mn", "M-N");
+        personsAlpha.put('m', folder);
+        personsAlpha.put('n', folder);
+        folder = createFolder(persons, "op", "O-P");
+        personsAlpha.put('o', folder);
+        personsAlpha.put('p', folder);
+        folder = createFolder(persons, "qr", "Q-R");
+        personsAlpha.put('q', folder);
+        personsAlpha.put('r', folder);
+        folder = createFolder(persons, "st", "S-T");
+        personsAlpha.put('s', folder);
+        personsAlpha.put('t', folder);
+        folder = createFolder(persons, "uv", "U-V");
+        personsAlpha.put('u', folder);
+        personsAlpha.put('v', folder);
+        folder = createFolder(persons, "wxzy", "W-Z");
+        personsAlpha.put('w', folder);
+        personsAlpha.put('x', folder);
+        personsAlpha.put('y', folder);
+        personsAlpha.put('z', folder);
 
         projects = createFolder(root, "projekte", "Projekte");
+        folder = createFolder(projects, "09", "0-9");
+        projectsAlpha.put('0', folder);
+        folder = createFolder(projects, "a", "A");
+        projectsAlpha.put('a', folder);
+        folder = createFolder(projects, "b", "B");
+        projectsAlpha.put('b', folder);
+        folder = createFolder(projects, "c", "C");
+        projectsAlpha.put('c', folder);
+        folder = createFolder(projects, "d", "D");
+        projectsAlpha.put('d', folder);
+        folder = createFolder(projects, "e", "E");
+        projectsAlpha.put('e', folder);
+        folder = createFolder(projects, "f", "F");
+        projectsAlpha.put('f', folder);
+        folder = createFolder(projects, "g", "G");
+        projectsAlpha.put('g', folder);
+        folder = createFolder(projects, "h", "H");
+        projectsAlpha.put('h', folder);
+        folder = createFolder(projects, "i", "I");
+        projectsAlpha.put('i', folder);
+        folder = createFolder(projects, "j", "J");
+        projectsAlpha.put('j', folder);
+        folder = createFolder(projects, "k", "K");
+        projectsAlpha.put('k', folder);
+        folder = createFolder(projects, "l", "L");
+        projectsAlpha.put('l', folder);
+        folder = createFolder(projects, "m", "M");
+        projectsAlpha.put('m', folder);
+        folder = createFolder(projects, "n", "N");
+        projectsAlpha.put('n', folder);
+        folder = createFolder(projects, "o", "O");
+        projectsAlpha.put('o', folder);
+        folder = createFolder(projects, "p", "P");
+        projectsAlpha.put('p', folder);
+        folder = createFolder(projects, "q", "Q");
+        projectsAlpha.put('q', folder);
+        folder = createFolder(projects, "r", "R");
+        projectsAlpha.put('r', folder);
+        folder = createFolder(projects, "s", "S");
+        projectsAlpha.put('s', folder);
+        folder = createFolder(projects, "t", "T");
+        projectsAlpha.put('t', folder);
+        folder = createFolder(projects, "u", "U");
+        projectsAlpha.put('u', folder);
+        folder = createFolder(projects, "v", "V");
+        projectsAlpha.put('v', folder);
+        folder = createFolder(projects, "w", "W");
+        projectsAlpha.put('w', folder);
+        folder = createFolder(projects, "x", "X");
+        projectsAlpha.put('x', folder);
+        folder = createFolder(projects, "y", "Y");
+        projectsAlpha.put('y', folder);
+        folder = createFolder(projects, "z", "Z");
+        projectsAlpha.put('z', folder);
 
         publishers = createFolder(root, "verlage", "Verlage");
+        folder = createFolder(publishers, "09", "0-9");
+        publishersAlpha.put('0', folder);
+        folder = createFolder(publishers, "a", "A");
+        publishersAlpha.put('a', folder);
+        folder = createFolder(publishers, "b", "B");
+        publishersAlpha.put('b', folder);
+        folder = createFolder(publishers, "c", "C");
+        publishersAlpha.put('c', folder);
+        folder = createFolder(publishers, "d", "D");
+        publishersAlpha.put('d', folder);
+        folder = createFolder(publishers, "e", "E");
+        publishersAlpha.put('e', folder);
+        folder = createFolder(publishers, "f", "F");
+        publishersAlpha.put('f', folder);
+        folder = createFolder(publishers, "g", "G");
+        publishersAlpha.put('g', folder);
+        folder = createFolder(publishers, "h", "H");
+        publishersAlpha.put('h', folder);
+        folder = createFolder(publishers, "i", "I");
+        publishersAlpha.put('i', folder);
+        folder = createFolder(publishers, "j", "J");
+        publishersAlpha.put('j', folder);
+        folder = createFolder(publishers, "k", "K");
+        publishersAlpha.put('k', folder);
+        folder = createFolder(publishers, "l", "L");
+        publishersAlpha.put('l', folder);
+        folder = createFolder(publishers, "m", "M");
+        publishersAlpha.put('m', folder);
+        folder = createFolder(publishers, "n", "N");
+        publishersAlpha.put('n', folder);
+        folder = createFolder(publishers, "o", "O");
+        publishersAlpha.put('o', folder);
+        folder = createFolder(publishers, "p", "P");
+        publishersAlpha.put('p', folder);
+        folder = createFolder(publishers, "q", "Q");
+        publishersAlpha.put('q', folder);
+        folder = createFolder(publishers, "r", "R");
+        publishersAlpha.put('r', folder);
+        folder = createFolder(publishers, "s", "S");
+        publishersAlpha.put('s', folder);
+        folder = createFolder(publishers, "t", "T");
+        publishersAlpha.put('t', folder);
+        folder = createFolder(publishers, "u", "U");
+        publishersAlpha.put('u', folder);
+        folder = createFolder(publishers, "v", "V");
+        publishersAlpha.put('v', folder);
+        folder = createFolder(publishers, "w", "W");
+        publishersAlpha.put('w', folder);
+        folder = createFolder(publishers, "x", "X");
+        publishersAlpha.put('x', folder);
+        folder = createFolder(publishers, "y", "Y");
+        publishersAlpha.put('y', folder);
+        folder = createFolder(publishers, "z", "Z");
+        publishersAlpha.put('z', folder);
 
         publications = createFolder(root, "publikationen", "Publikationen");
+        folder = createFolder(publications, "09", "0-9");
+        publicationsAlpha.put('0', folder);
+        folder = createFolder(publications, "a", "A");
+        publicationsAlpha.put('a', folder);
+        folder = createFolder(publications, "b", "B");
+        publicationsAlpha.put('b', folder);
+        folder = createFolder(publications, "c", "C");
+        publicationsAlpha.put('c', folder);
+        folder = createFolder(publications, "d", "D");
+        publicationsAlpha.put('d', folder);
+        folder = createFolder(publications, "e", "E");
+        publicationsAlpha.put('e', folder);
+        folder = createFolder(publications, "f", "F");
+        publicationsAlpha.put('f', folder);
+        folder = createFolder(publications, "g", "G");
+        publicationsAlpha.put('g', folder);
+        folder = createFolder(publications, "h", "H");
+        publicationsAlpha.put('h', folder);
+        folder = createFolder(publications, "i", "I");
+        publicationsAlpha.put('i', folder);
+        folder = createFolder(publications, "j", "J");
+        publicationsAlpha.put('j', folder);
+        folder = createFolder(publications, "k", "K");
+        publicationsAlpha.put('k', folder);
+        folder = createFolder(publications, "l", "L");
+        publicationsAlpha.put('l', folder);
+        folder = createFolder(publications, "m", "M");
+        publicationsAlpha.put('m', folder);
+        folder = createFolder(publications, "n", "N");
+        publicationsAlpha.put('n', folder);
+        folder = createFolder(publications, "o", "O");
+        publicationsAlpha.put('o', folder);
+        folder = createFolder(publications, "p", "P");
+        publicationsAlpha.put('p', folder);
+        folder = createFolder(publications, "q", "Q");
+        publicationsAlpha.put('q', folder);
+        folder = createFolder(publications, "r", "R");
+        publicationsAlpha.put('r', folder);
+        folder = createFolder(publications, "s", "S");
+        publicationsAlpha.put('s', folder);
+        folder = createFolder(publications, "t", "T");
+        publicationsAlpha.put('t', folder);
+        folder = createFolder(publications, "u", "U");
+        publicationsAlpha.put('u', folder);
+        folder = createFolder(publications, "v", "V");
+        publicationsAlpha.put('v', folder);
+        folder = createFolder(publications, "w", "W");
+        publicationsAlpha.put('w', folder);
+        folder = createFolder(publications, "x", "X");
+        publicationsAlpha.put('x', folder);
+        folder = createFolder(publications, "y", "Y");
+        publicationsAlpha.put('y', folder);
+        folder = createFolder(publications, "z", "Z");
+        publicationsAlpha.put('z', folder);
 
         files = createFolder(root, "dateien", "Dateien");
+        folder = createFolder(files, "09", "0-9");
+        filesAlpha.put('0', folder);
+        folder = createFolder(files, "a", "A");
+        filesAlpha.put('a', folder);
+        folder = createFolder(files, "b", "B");
+        filesAlpha.put('b', folder);
+        folder = createFolder(files, "c", "C");
+        filesAlpha.put('c', folder);
+        folder = createFolder(files, "d", "D");
+        filesAlpha.put('d', folder);
+        folder = createFolder(files, "e", "E");
+        filesAlpha.put('e', folder);
+        folder = createFolder(files, "f", "F");
+        filesAlpha.put('f', folder);
+        folder = createFolder(files, "g", "G");
+        filesAlpha.put('g', folder);
+        folder = createFolder(files, "h", "H");
+        filesAlpha.put('h', folder);
+        folder = createFolder(files, "i", "I");
+        filesAlpha.put('i', folder);
+        folder = createFolder(files, "j", "J");
+        filesAlpha.put('j', folder);
+        folder = createFolder(files, "k", "K");
+        filesAlpha.put('k', folder);
+        folder = createFolder(files, "l", "L");
+        filesAlpha.put('l', folder);
+        folder = createFolder(files, "m", "M");
+        filesAlpha.put('m', folder);
+        folder = createFolder(files, "n", "N");
+        filesAlpha.put('n', folder);
+        folder = createFolder(files, "o", "O");
+        filesAlpha.put('o', folder);
+        folder = createFolder(files, "p", "P");
+        filesAlpha.put('p', folder);
+        folder = createFolder(files, "q", "Q");
+        filesAlpha.put('q', folder);
+        folder = createFolder(files, "r", "R");
+        filesAlpha.put('r', folder);
+        folder = createFolder(files, "s", "S");
+        filesAlpha.put('s', folder);
+        folder = createFolder(files, "t", "T");
+        filesAlpha.put('t', folder);
+        folder = createFolder(files, "u", "U");
+        filesAlpha.put('u', folder);
+        folder = createFolder(files, "v", "V");
+        filesAlpha.put('v', folder);
+        folder = createFolder(files, "w", "W");
+        filesAlpha.put('w', folder);
+        folder = createFolder(files, "x", "X");
+        filesAlpha.put('x', folder);
+        folder = createFolder(files, "y", "Y");
+        filesAlpha.put('y', folder);
+        folder = createFolder(files, "z", "Z");
+        filesAlpha.put('z', folder);
+
+        System.out.println(
+                "\nRetrieving terms/categories and creating them if necsseary...");
+        try {
+            termsDomain = Domain.retrieve(
+                    (String) config.get("terms.domain.key"));
+
+            System.out.println("Terms for publications...");
+            String publicationsTermPath = (String) config.get(
+                    "terms.publications");
+            publicationsTerm = checkTermPath(publicationsTermPath);
+            publicationTerms = checkYearTerms(publicationsTerm,
+                                              getPublicationYears());
+
+            System.out.println("Terms for working papers...");
+            String workingPapersTermPath =
+                   (String) config.get("terms.workingpapers");
+            workingPapersTerm = checkTermPath(workingPapersTermPath);
+            workingPaperTerms = checkYearTerms(workingPapersTerm,
+                                               getWorkingPaperYears());
+
+            System.out.println("Term for current projects...");
+            String currentProjectsTermPath = (String) config.get(
+                    "terms.projects.current");
+            currentProjectsTerm = checkTermPath(currentProjectsTermPath);
+
+            System.out.println("Term for finished projects...");
+            String finishedProjectsTermPath = (String) config.get(
+                    "terms.projects.finished");
+            finishedProjectsTerm = checkTermPath(finishedProjectsTermPath);
+        } catch (Exception ex) {
+            ex.printStackTrace(System.err);
+        }
 
         System.out.print("Creating organization item and "
                          + "postal and office address items...");
@@ -847,6 +1201,9 @@ public class DaBInImporter extends Program {
             Statement stmt = connection.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
+            Statement stmt2 = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
 
             ResultSet result;
             long counter = 1;
@@ -884,18 +1241,20 @@ public class DaBInImporter extends Program {
                     data.setVisiblity(PublicationVisibility.GLOBAL);
                 }
 
-                result = stmt.executeQuery(String.format(
+                ResultSet authorResult = stmt2.executeQuery(String.format(
                         "SELECT Beteiligung, Person_Id "
                         + "FROM publikationlink "
                         + "WHERE Publikation_Id = %s "
                         + "ORDER BY Reihenfolge",
                         data.getPublicationDaBInId()));
-                while (result.next()) {
+                while (authorResult.next()) {
                     Authorship authorship;
                     authorship = new Authorship();
 
-                    authorship.setPersonDaBInId(result.getString("Person_Id"));
-                    authorship.setBeteiligung(result.getString("Beteiligung"));
+                    authorship.setPersonDaBInId(authorResult.getString(
+                            "Person_Id"));
+                    authorship.setBeteiligung(authorResult.getString(
+                            "Beteiligung"));
 
                     data.addAuthor(authorship);
                 }
@@ -906,16 +1265,19 @@ public class DaBInImporter extends Program {
             }
 
         } catch (SQLException ex) {
-            System.out.println("FAILED");
+            System.err.println("FAILED");
             ex.printStackTrace(System.err);
         } catch (Exception ex) {
-            System.out.println("FAILED");
+            System.err.println("FAILED");
             ex.printStackTrace(System.err);
         }
 
         System.out.println("Collected volumes...");
         try {
             Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            Statement stmt2 = connection.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
@@ -954,18 +1316,20 @@ public class DaBInImporter extends Program {
                     data.setVisiblity(PublicationVisibility.GLOBAL);
                 }
 
-                result = stmt.executeQuery(String.format(
+                ResultSet authorResult = stmt2.executeQuery(String.format(
                         "SELECT Beteiligung, Person_Id "
                         + "FROM publikationlink "
                         + "WHERE Publikation_Id = %s "
                         + "ORDER BY Reihenfolge",
                         data.getPublicationDaBInId()));
-                while (result.next()) {
+                while (authorResult.next()) {
                     Authorship authorship;
                     authorship = new Authorship();
 
-                    authorship.setPersonDaBInId(result.getString("Person_Id"));
-                    authorship.setBeteiligung(result.getString("Beteiligung"));
+                    authorship.setPersonDaBInId(authorResult.getString(
+                            "Person_Id"));
+                    authorship.setBeteiligung(authorResult.getString(
+                            "Beteiligung"));
 
                     data.addAuthor(authorship);
                 }
@@ -985,6 +1349,9 @@ public class DaBInImporter extends Program {
         System.out.println("Articles in collected volumes...");
         try {
             Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            Statement stmt2 = connection.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
@@ -1027,18 +1394,20 @@ public class DaBInImporter extends Program {
                 }
                 extractPages(result.getString("Verlag"), data);
 
-                result = stmt.executeQuery(String.format(
+                ResultSet authorResult = stmt2.executeQuery(String.format(
                         "SELECT Beteiligung, Person_Id "
                         + "FROM publikationlink "
                         + "WHERE Publikation_Id = %s "
                         + "ORDER BY Reihenfolge",
                         data.getPublicationDaBInId()));
-                while (result.next()) {
+                while (authorResult.next()) {
                     Authorship authorship;
                     authorship = new Authorship();
 
-                    authorship.setPersonDaBInId(result.getString("Person_Id"));
-                    authorship.setBeteiligung(result.getString("Beteiligung"));
+                    authorship.setPersonDaBInId(authorResult.getString(
+                            "Person_Id"));
+                    authorship.setBeteiligung(authorResult.getString(
+                            "Beteiligung"));
 
                     data.addAuthor(authorship);
                 }
@@ -1058,6 +1427,9 @@ public class DaBInImporter extends Program {
         System.out.println("Articles in journals...");
         try {
             Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            Statement stmt2 = connection.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
@@ -1098,18 +1470,20 @@ public class DaBInImporter extends Program {
                 }
                 extractPages(result.getString("Verlag"), data);
 
-                result = stmt.executeQuery(String.format(
+                ResultSet authorResult = stmt2.executeQuery(String.format(
                         "SELECT Beteiligung, Person_Id "
                         + "FROM publikationlink "
                         + "WHERE Publikation_Id = %s "
                         + "ORDER BY Reihenfolge",
                         data.getPublicationDaBInId()));
-                while (result.next()) {
+                while (authorResult.next()) {
                     Authorship authorship;
                     authorship = new Authorship();
 
-                    authorship.setPersonDaBInId(result.getString("Person_Id"));
-                    authorship.setBeteiligung(result.getString("Beteiligung"));
+                    authorship.setPersonDaBInId(authorResult.getString(
+                            "Person_Id"));
+                    authorship.setBeteiligung(authorResult.getString(
+                            "Beteiligung"));
 
                     data.addAuthor(authorship);
                 }
@@ -1131,6 +1505,10 @@ public class DaBInImporter extends Program {
             Statement stmt = connection.createStatement(
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
+            Statement stmt2 = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
 
             ResultSet result;
             long counter = 1;
@@ -1168,18 +1546,20 @@ public class DaBInImporter extends Program {
                     data.setVisiblity(PublicationVisibility.GLOBAL);
                 }
 
-                result = stmt.executeQuery(String.format(
+                ResultSet authorResult = stmt2.executeQuery(String.format(
                         "SELECT Beteiligung, Person_Id "
                         + "FROM publikationlink "
                         + "WHERE Publikation_Id = %s "
                         + "ORDER BY Reihenfolge",
                         data.getPublicationDaBInId()));
-                while (result.next()) {
+                while (authorResult.next()) {
                     Authorship authorship;
                     authorship = new Authorship();
 
-                    authorship.setPersonDaBInId(result.getString("Person_Id"));
-                    authorship.setBeteiligung(result.getString("Beteiligung"));
+                    authorship.setPersonDaBInId(authorResult.getString(
+                            "Person_Id"));
+                    authorship.setBeteiligung(authorResult.getString(
+                            "Beteiligung"));
 
                     data.addAuthor(authorship);
                 }
@@ -1216,7 +1596,7 @@ public class DaBInImporter extends Program {
                 WorkingPaperData data = new WorkingPaperData();
 
                 result = stmt.executeQuery(String.format(
-                        "SELECT Name, Jahr, Beschreibung, Datei "
+                        "SELECT Name, Jahr, Beschreibung, Abkürzung, Datei "
                         + "FROM arbeitspapier "
                         + "WHERE Arbeitspapier_Id = %s AND Sprache = 'DE'",
                         workingPaperIds.get(i)));
@@ -1228,13 +1608,17 @@ public class DaBInImporter extends Program {
                     data.setTitleDe(result.getString("Name"));
                     data.setDescDe(result.getString("Beschreibung"));
                     data.setYear(result.getString("Jahr"));
-                    if (result.getBlob("Datei") != null) {
-                        data.setFile(result.getBlob("Datei").getBinaryStream());
+                    data.setNumber(result.getString("Abkürzung"));
+                    if ((result.getBlob("Datei") != null)
+                        && (result.getBlob("Datei").length() > 0)) {
+                        data.setFile(result.getBlob("Datei").getBytes(
+                                1,
+                                (int) result.getBlob("Datei").length()));
                     }
                 }
 
                 result = stmt.executeQuery(String.format(
-                        "SELECT Name, Jahr, Beschreibung "
+                        "SELECT Name, Jahr, Beschreibung, Abkürzung "
                         + "FROM arbeitspapier "
                         + "WHERE Arbeitspapier_Id = %s AND Sprache = 'EN'",
                         workingPaperIds.get(i)));
@@ -1285,118 +1669,6 @@ public class DaBInImporter extends Program {
         System.exit(0);
     }
 
-    protected void oldDoRun(CommandLine cmdLine) {
-        final String args[];
-        String mySqlHost;
-        String mySqlUser;
-        String mySqlPassword;
-        String mySqlDb;
-        String orgaTitle;
-        String orgaName;
-        ContentSection section;
-
-        //Connection connection = null;
-
-        System.out.println("");
-        System.out.println("");
-        System.out.println("DaBInImporter starting...");
-
-        //Get command line arguments...
-        args = cmdLine.getArgs();
-
-        if (args.length != 7) {
-            logger.error("Invalid number of arguments.");
-            //System.err.println();
-            help(System.err);
-            System.exit(-1);
-        }
-
-        mySqlHost = args[0];
-        mySqlUser = args[1];
-        mySqlPassword = args[2];
-        mySqlDb = args[3];
-        orgaTitle = args[4];
-        orgaName = args[5];
-
-        section = getContentSection(args[6]);
-
-        //Create connection to the DaBIn MySQL database
-        System.out.println("Trying to connect to DaBIn MySQL database with these "
-                           + "parameters:");
-        System.out.printf("Host     = %s\n", mySqlHost);
-        System.out.printf("User     = %s\n", mySqlUser);
-        //logger.info(String.format("Password = %s", mySqlPassword));
-        System.out.printf("Database = %s\n", mySqlDb);
-        try {
-            connection = DriverManager.getConnection(
-                    String.format("jdbc:mysql://%s/%s", mySqlHost, mySqlDb),
-                    mySqlUser,
-                    mySqlPassword);
-        } catch (SQLException ex) {
-            System.err.println("Failed to connect to DaBIn MySQL database: ");
-            ex.printStackTrace(System.err);
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex1) {
-                System.err.println("Failed to close failed connection: ");
-                ex1.printStackTrace(System.err);
-            }
-            System.exit(-1);
-        }
-
-
-        try {
-            Statement stmt = connection.createStatement();
-            long num = 1;
-
-            ResultSet result =
-                      stmt.executeQuery(
-                    "SELECT Person_Id, Name, Vorname, Anrede, Eigenschaft "
-                    + "FROM person "
-                    + "WHERE Eigenschaft = 'Aktiv' OR Eigenschaft = 'Ehemalig"
-                    + "ORDER BY Name, Vorname, Anrede");
-
-
-            System.out.println("Creating members...");
-            while (result.next()) {
-                System.out.printf("%d: %s, %s, %s, %s, %s\n",
-                                  num,
-                                  result.getString("Person_Id"),
-                                  result.getString("Name"),
-                                  result.getString("Vorname"),
-                                  result.getString("Anrede"),
-                                  result.getString("Eigenschaft"));
-                num++;
-                PersonData memberData = new PersonData();
-                memberData.setDabinId(result.getString("Person_Id"));
-                memberData.setTitlePre(result.getString("Anrede"));
-                memberData.setSurname(result.getString("Name"));
-                memberData.setGivenname(result.getString("Vorname"));
-                //createMember(memberData, section);
-            }
-        } catch (SQLException ex) {
-            System.err.println("Failed to query 'person' table: ");
-            ex.printStackTrace(System.err);
-        } catch (Exception ex) {
-            System.err.println("Failed to create member: ");
-            ex.printStackTrace(System.err);
-        }
-
-        System.out.println("Closing MySQL connection...");
-        try {
-            connection.close();
-        } catch (SQLException ex) {
-            System.err.println("Failed to close MySQL connection: ");
-            ex.printStackTrace(System.err);
-            System.exit(-1);
-        }
-
-        System.out.println("DaBIn importer finished successfully.");
-        System.exit(0);
-    }
-
     private void createPerson(final PersonData personData,
                               final PersonType type) {
         StringBuilder personTitleBuilder = new StringBuilder();
@@ -1410,116 +1682,6 @@ public class DaBInImporter extends Program {
         personTitleBuilder.append(personData.getSurname());
         System.out.printf(" Creating new person '%s'...",
                           personTitleBuilder.toString());
-
-        Map<String, Folder> folders = null;
-        switch (type) {
-            case MEMBER:
-                folders = membersAlpha;
-                break;
-            case AUTHOR:
-                folders = authorsAlpha;
-                break;
-            case OTHER:
-                folders = personsAlpha;
-                break;
-        }
-
-        final Folder folder;
-        char letter;
-
-        letter = personData.getSurname().toLowerCase().charAt(0);
-        switch (letter) {
-            case 'a':
-                folder = folders.get("ab");
-                break;
-            case 'b':
-                folder = folders.get("ab");
-                break;
-            case 'c':
-                folder = folders.get("cd");
-                break;
-            case 'd':
-                folder = folders.get("cd");
-                break;
-            case 'e':
-                folder = folders.get("ef");
-                break;
-            case 'f':
-                folder = folders.get("ef");
-                break;
-            case 'g':
-                folder = folders.get("gh");
-                break;
-            case 'h':
-                folder = folders.get("gh");
-                break;
-            case 'i':
-                folder = folders.get("ij");
-                break;
-            case 'j':
-                folder = folders.get("ij");
-                break;
-            case 'k':
-                folder = folders.get("kl");
-                break;
-            case 'l':
-                folder = folders.get("kl");
-                break;
-            case 'm':
-                folder = folders.get("mn");
-                break;
-            case 'n':
-                folder = folders.get("mn");
-                break;
-            case 'o':
-                folder = folders.get("op");
-                break;
-            case 'p':
-                folder = folders.get("op");
-                break;
-            case 'q':
-                folder = folders.get("qr");
-                break;
-            case 'r':
-                folder = folders.get("qr");
-                break;
-            case 's':
-                folder = folders.get("st");
-                break;
-            case 't':
-                folder = folders.get("st");
-                break;
-            case 'u':
-                folder = folders.get("uv");
-                break;
-            case 'v':
-                folder = folders.get("uv");
-                break;
-            case 'w':
-                folder = folders.get("wxyz");
-                break;
-            case 'x':
-                folder = folders.get("wxyz");
-                break;
-            case 'y':
-                folder = folders.get("wxyz");
-                break;
-            case 'z':
-                folder = folders.get("wxyz");
-                break;
-            case 'ä':
-                folder = folders.get("ab");
-                break;
-            case 'ö':
-                folder = folders.get("op");
-                break;
-            case 'ü':
-                folder = folders.get("uv");
-                break;
-            default:
-                folder = members;
-                break;
-        }
 
         Transaction transaction = new Transaction() {
 
@@ -1560,7 +1722,23 @@ public class DaBInImporter extends Program {
                 person = new ContentBundle(personDe);
                 person.addInstance(personEn);
 
-                folder.addItem(person);
+                //folder.addItem(person);
+                char letter;
+                letter = personData.getSurname().toLowerCase().charAt(0);
+                Map<Character, Folder> folders = null;
+                switch (type) {
+                    case MEMBER:
+                        folders = membersAlpha;
+                        break;
+                    case AUTHOR:
+                        folders = authorsAlpha;
+                        break;
+                    case OTHER:
+                        folders = personsAlpha;
+                        break;
+                }
+
+                insertIntoAZFolder(person, letter, folders);
 
                 StringTokenizer contactData = new StringTokenizer(
                         personData.getContactData(),
@@ -1662,7 +1840,10 @@ public class DaBInImporter extends Program {
                     contactEn.save();
                     ContentBundle contactBundle = new ContentBundle(contactDe);
                     contactBundle.addInstance(contactEn);
-                    contacts.addItem(contactBundle);
+                    //contacts.addItem(contactBundle);
+                    insertIntoAZFolder(contactBundle,
+                                       personDe.getSurname().charAt(0),
+                                       contactsAlpha);
                     personDe.save();
 
                     if (homepage != null) {
@@ -1881,7 +2062,7 @@ public class DaBInImporter extends Program {
                 }
                 project.setContentSection(section);
                 project.save();
-                projects.addItem(project);
+                //projects.addItem(project);
                 projectsMap.put(projectData.getDabinId(), project);
 
                 System.out.print("\tAssigning project to department... ");
@@ -1946,6 +2127,19 @@ public class DaBInImporter extends Program {
                     i++;
                 }
 
+                insertIntoAZFolder(project, projectsAlpha);
+
+                //Assign to term/category
+                Calendar today = new GregorianCalendar();
+                SciProject sciProject = (SciProject) project.
+                                           getPrimaryInstance();
+                if ((sciProject.getEnd() != null)  
+                        && today.getTime().after(sciProject.getEnd())) {
+                    finishedProjectsTerm.addObject(project);
+                } else {
+                    currentProjectsTerm.addObject(project);
+                }
+
                 System.out.println("\tOK");
             }
         };
@@ -1972,7 +2166,7 @@ public class DaBInImporter extends Program {
 
                         monographDe = new Monograph();
                         monographDe.setTitle(publicationData.getName());
-                        monographDe.setName(publicationData.getName());
+                        monographDe.setName(publicationData.getUrl());
                         extractYearOfPublication(publicationData, monographDe);
                         publisherData = extractPublisher(publicationData.
                                 getVerlag());
@@ -2008,8 +2202,8 @@ public class DaBInImporter extends Program {
 
                         monographEn = new Monograph();
                         monographEn.setTitle(publicationData.getName());
-                        monographEn.setName(publicationData.getName());
-                   extractYearOfPublication(publicationData, monographEn);
+                        monographEn.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData, monographEn);
                         publisherData = extractPublisher(publicationData.
                                 getVerlag());
                         if (publishersMap.containsKey(publisherData)) {
@@ -2054,8 +2248,9 @@ public class DaBInImporter extends Program {
 
                         collectedVolumeDe = new CollectedVolume();
                         collectedVolumeDe.setTitle(publicationData.getName());
-                        collectedVolumeDe.setName(publicationData.getName());
-                      extractYearOfPublication(publicationData, collectedVolumeDe);
+                        collectedVolumeDe.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData,
+                                                 collectedVolumeDe);
                         publisherData = extractPublisher(publicationData.
                                 getVerlag());
                         if (publishersMap.containsKey(publisherData)) {
@@ -2080,8 +2275,9 @@ public class DaBInImporter extends Program {
 
                         collectedVolumeEn = new CollectedVolume();
                         collectedVolumeEn.setTitle(publicationData.getName());
-                        collectedVolumeEn.setName(publicationData.getName());
-                        extractYearOfPublication(publicationData, collectedVolumeEn);
+                        collectedVolumeEn.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData,
+                                                 collectedVolumeEn);
                         publisherData = extractPublisher(publicationData.
                                 getVerlag());
                         if (publishersMap.containsKey(publisherData)) {
@@ -2113,8 +2309,8 @@ public class DaBInImporter extends Program {
 
                         articleDe = new ArticleInCollectedVolume();
                         articleDe.setTitle(publicationData.getName());
-                        articleDe.setName(publicationData.getName());
-                       extractYearOfPublication(publicationData, articleDe);
+                        articleDe.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData, articleDe);
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
@@ -2142,8 +2338,8 @@ public class DaBInImporter extends Program {
 
                         articleEn = new ArticleInCollectedVolume();
                         articleEn.setTitle(publicationData.getName());
-                        articleEn.setName(publicationData.getName());
-                    extractYearOfPublication(publicationData, articleEn);
+                        articleEn.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData, articleEn);
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
@@ -2180,12 +2376,19 @@ public class DaBInImporter extends Program {
 
                         articleDe = new ArticleInJournal();
                         articleDe.setTitle(publicationData.getName());
-                        articleDe.setName(publicationData.getName());
+                        articleDe.setName(publicationData.getUrl());
                         extractYearOfPublication(publicationData, articleDe);
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            if (publicationData.getLink().length() < 200) {
+                                link.setTitle(publicationData.getLink());
+                            } else {
+                                System.out.println(
+                                        "\t***WARNING: Link in publication is too long for title. Truncating.");
+                                link.setTitle(publicationData.getLink().
+                                        substring(0, 200));
+                            }
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(articleDe);
@@ -2209,12 +2412,19 @@ public class DaBInImporter extends Program {
 
                         articleEn = new ArticleInJournal();
                         articleEn.setTitle(publicationData.getName());
-                        articleEn.setName(publicationData.getName());
-                       extractYearOfPublication(publicationData, articleEn);
+                        articleEn.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData, articleEn);
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            if (publicationData.getLink().length() < 200) {
+                                link.setTitle(publicationData.getLink());
+                            } else {
+                                System.out.println(
+                                        "\t***WARNING: Link in publication is too long for title. Truncating.");
+                                link.setTitle(publicationData.getLink().
+                                        substring(0, 200));
+                            }
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(articleEn);
@@ -2247,8 +2457,8 @@ public class DaBInImporter extends Program {
 
                         greyDe = new GreyLiterature();
                         greyDe.setTitle(publicationData.getName());
-                        greyDe.setName(publicationData.getName());
-                       extractYearOfPublication(publicationData, greyDe);
+                        greyDe.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData, greyDe);
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
@@ -2274,8 +2484,8 @@ public class DaBInImporter extends Program {
 
                         greyEn = new GreyLiterature();
                         greyEn.setTitle(publicationData.getName());
-                        greyEn.setName(publicationData.getName());
-                      extractYearOfPublication(publicationData, greyEn);
+                        greyEn.setName(publicationData.getUrl());
+                        extractYearOfPublication(publicationData, greyEn);
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
@@ -2332,6 +2542,39 @@ public class DaBInImporter extends Program {
                         publicationEn.addAuthor(author, true);
                     }
 
+                    RelatedLink myPublication;
+                    myPublication = new RelatedLink();
+                    myPublication.setLinkOwner((GenericPerson) personsMap.get(authorship.
+                            getPersonDaBInId()).getInstance("de"));
+                    myPublication.setTargetType(Link.INTERNAL_LINK);
+                    myPublication.setTargetItem(publicationDe);
+                    if (publicationDe.getTitle().length() < 200) {
+                        myPublication.setTitle(publicationDe.getTitle());
+                    } else {
+                        System.out.println(
+                                "\t***WARNING: Publication title is too long for link title. Trancating.");
+                        myPublication.setTitle(publicationDe.getTitle().
+                                substring(0, 200));
+                    }
+                    myPublication.setLinkListName("MyPublications");
+                    myPublication.save();
+
+                    myPublication = new RelatedLink();
+                    myPublication.setLinkOwner((GenericPerson) personsMap.get(authorship.
+                            getPersonDaBInId()).getInstance("en"));
+                    myPublication.setTargetType(Link.INTERNAL_LINK);
+                    myPublication.setTargetItem(publicationEn);
+                    if (publicationEn.getTitle().length() < 180) {
+                        myPublication.setTitle(publicationEn.getTitle());
+                    } else {
+                        System.out.println(
+                                "\t***WARNING: Publication title is too long for link title. Truncating.");
+                        myPublication.setTitle(publicationEn.getTitle().
+                                substring(0, 180));
+                    }
+                    myPublication.setLinkListName("MyPublications");
+                    myPublication.save();
+
                     System.out.println("OK");
                 }
 
@@ -2344,7 +2587,7 @@ public class DaBInImporter extends Program {
                     publication.setDefaultLanguage("de");
                 }
                 publication.setContentSection(section);
-                publications.addItem(publication);
+                //publications.addItem(publication);
 
                 if ((publicationData.getAbteilungId() != null)
                     && !publicationData.getAbteilungId().isEmpty()
@@ -2359,14 +2602,32 @@ public class DaBInImporter extends Program {
                         RelatedLink pubLink;
                         pubLink = new RelatedLink();
                         pubLink.setLinkListName("SciDepartmentPublications");
-                        pubLink.setTitle(((Publication) publication.
-                                          getPrimaryInstance()).getTitle());
+                        if (((Publication) publication.getPrimaryInstance()).
+                                getTitle().length() < 180) {
+                            pubLink.setTitle(((Publication) publication.
+                                              getPrimaryInstance()).getTitle());
+                        } else {
+                            System.out.println(
+                                    "\t***WARNING: Title of publication too long for link title. Truncating.");
+                            pubLink.setTitle(((Publication) publication.
+                                              getPrimaryInstance()).getTitle().
+                                    substring(0, 180));
+                        }
                         pubLink.setTargetType(Link.INTERNAL_LINK);
                         pubLink.setTargetItem(publication);
                         pubLink.setLinkOwner(instances.getContentItem());
                         pubLink.save();
                     }
                 }
+
+                insertIntoAZFolder(publication, publicationsAlpha);
+                Term term = publicationTerms.get(Integer.toString(((Publication) publication.
+                                                                   getPrimaryInstance()).
+                        getYearOfPublication()));
+                if (term == null) {
+                    term = publicationsTerm;
+                }
+                term.addObject(publication);
             }
         };
 
@@ -2407,6 +2668,7 @@ public class DaBInImporter extends Program {
                     } else {
                         workingPaperDe.setAbstract(workingPaperData.getDescDe());
                     }
+                    workingPaperDe.setNumber(workingPaperData.getNumber());
                     workingPaperDe.setOrganization(orgaDe);
                     workingPaperDe.setPlace("Bremen");
                     extractYearOfPublication(workingPaperData, workingPaperDe);
@@ -2443,9 +2705,10 @@ public class DaBInImporter extends Program {
                     } else {
                         workingPaperEn.setAbstract(workingPaperData.getDescEn());
                     }
+                    workingPaperEn.setNumber(workingPaperData.getNumber());
                     workingPaperEn.setOrganization(orgaEn);
                     workingPaperEn.setPlace("Bremen");
-                     extractYearOfPublication(workingPaperData, workingPaperEn);
+                    extractYearOfPublication(workingPaperData, workingPaperEn);
                     workingPaperEn.setLanguage("En");
                     workingPaperEn.setContentSection(section);
                     workingPaperEn.save();
@@ -2463,8 +2726,16 @@ public class DaBInImporter extends Program {
                     }
                 }
                 workingPaper.setContentSection(section);
-                publications.addItem(workingPaper);
+                //publications.addItem(workingPaper);
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
+                insertIntoAZFolder(workingPaper, publicationsAlpha);
+                Term term = workingPaperTerms.get(Integer.toString(((Publication) workingPaper.
+                                                                    getPrimaryInstance()).
+                        getYearOfPublication()));
+                if (term == null) {
+                    term = workingPapersTerm;
+                }
+                term.addObject(workingPaper);
 
                 System.out.println("\tOK");
 
@@ -2474,15 +2745,14 @@ public class DaBInImporter extends Program {
                 } else {
                     try {
                         File tmpFile = File.createTempFile(
-                                "ccm_workingpaperCompressed", "zip");
+                                "ccm_workingpaperCompressed", ".zip");
 
                         FileOutputStream tmpFileStream =
                                          new FileOutputStream(tmpFile);
-                        byte[] buf = new byte[4096];
-                        int len;
-                        while ((len = workingPaperData.getFile().read(buf)) > 0) {
-                            tmpFileStream.write(buf);
-                        }
+                        byte buf[] = new Base64().decode(workingPaperData.
+                                getFile());
+                        tmpFileStream.write(buf);
+                        tmpFileStream.close();
 
                         ZipFile zipFile = new ZipFile(tmpFile);
                         Enumeration<? extends ZipEntry> entries = zipFile.
@@ -2492,25 +2762,41 @@ public class DaBInImporter extends Program {
                                     nextElement());
 
                             File pdf = File.createTempFile("ccm_workingPaper",
-                                                           "pdf");
+                                                           ".pdf");
                             FileOutputStream pdfFileStream = new FileOutputStream(
                                     pdf);
-                            byte[] buffer = new byte[4096];
-                            while ((len = unzip.read(buffer)) > 0) {
-                                pdfFileStream.write(buffer);
+                            int b;
+                            while ((b = unzip.read()) != -1) {
+                                pdfFileStream.write(b);
                             }
+
+                            unzip.close();
+                            pdfFileStream.close();
 
 
                             FileStorageItem fsi = new FileStorageItem();
-                            fsi.setTitle("Datei "
-                                         + ((WorkingPaper) workingPaper.
-                                            getPrimaryInstance()).getTitle());
-                            fsi.setName("datei_" + ((WorkingPaper) workingPaper.
-                                                    getPrimaryInstance()).
+                            String title = String.format("Datei %s",
+                                                         ((WorkingPaper) workingPaper.
+                                                          getPrimaryInstance()).
+                                    getTitle());
+                            if (title.length() > 200) {
+                                fsi.setTitle(title.substring(0, 199));
+                            } else {
+                                fsi.setTitle(title);
+                            }
+
+                            String name = String.format("datei_%s",
+                                                        ((WorkingPaper) workingPaper.
+                                                         getPrimaryInstance()).
                                     getName());
+                            if (name.length() > 200) {
+                                fsi.setName(name.substring(0, 199));
+                            } else {
+                                fsi.setName(name);
+                            }
                             FileAsset file = new FileAsset();
                             file.loadFromFile(workingPaper.getPrimaryInstance().
-                                    getName(), pdf, "application/pdf");
+                                    getName(), pdf, "application/octet-stream");
                             file.setContentSection(section);
                             fsi.setContentSection(section);
 
@@ -2519,7 +2805,7 @@ public class DaBInImporter extends Program {
                             bundle.setContentSection(section);
                             bundle.setDefaultLanguage("de");
 
-                            files.addItem(bundle);
+                            //files.addItem(bundle);
 
                             RelatedLink download = new RelatedLink();
                             download.setTitle("download");
@@ -2532,10 +2818,14 @@ public class DaBInImporter extends Program {
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
+
+                            char letter = workingPaperDe.getName().toLowerCase().
+                                    charAt(0);
+                            insertIntoAZFolder(bundle, letter, filesAlpha);
                         }
                     } catch (IOException ex) {
                         System.out.println(
-                                "***ERROR: Failed to copy file from DaBIn to CCM: ");
+                                "\n***ERROR: Failed to copy file from DaBIn to CCM: ");
                         ex.printStackTrace(System.out);
                     }
 
@@ -2562,6 +2852,23 @@ public class DaBInImporter extends Program {
                         } else {
                             workingPaperDe.addAuthor(author, false);
                         }
+
+
+                        RelatedLink myPublication;
+                        myPublication = new RelatedLink();
+                        myPublication.setLinkOwner((GenericPerson) personsMap.
+                                get(authorship.getPersonDaBInId()).getInstance(
+                                "de"));
+                        myPublication.setTargetType(Link.INTERNAL_LINK);
+                        myPublication.setTargetItem(workingPaperDe);
+                        if (workingPaperDe.getTitle().length() > 180) {
+                            myPublication.setTitle(workingPaperDe.getTitle().
+                                    substring(0, 180));
+                        } else {
+                            myPublication.setTitle(workingPaperDe.getTitle());
+                        }
+                        myPublication.setLinkListName("MyPublications");
+                        myPublication.save();
                     }
                     if (workingPaperEn != null) {
                         if ("Herausgeber".equals(authorship.getBeteiligung())) {
@@ -2569,6 +2876,22 @@ public class DaBInImporter extends Program {
                         } else {
                             workingPaperEn.addAuthor(author, false);
                         }
+
+                        RelatedLink myPublication;
+                        myPublication = new RelatedLink();
+                        myPublication.setLinkOwner((GenericPerson) personsMap.
+                                get(authorship.getPersonDaBInId()).getInstance(
+                                "en"));
+                        myPublication.setTargetType(Link.INTERNAL_LINK);
+                        myPublication.setTargetItem(workingPaperEn);
+                        if (workingPaperEn.getTitle().length() > 180) {
+                            myPublication.setTitle(workingPaperDe.getTitle().
+                                    substring(0, 180));
+                        } else {
+                            myPublication.setTitle(workingPaperDe.getTitle());
+                        }
+                        myPublication.setLinkListName("MyPublications");
+                        myPublication.save();
                     }
 
                     System.out.println("\tOK");
@@ -2625,7 +2948,8 @@ public class DaBInImporter extends Program {
                 publisher.addInstance(publisherEn);
                 publisher.setDefaultLanguage("de");
                 publisher.setContentSection(section);
-                publishers.addItem(publisher);
+                //publishers.addItem(publisher);
+                insertIntoAZFolder(publisher, publishersAlpha);
                 publishersMap.put(publisherData, publisher);
                 System.out.println("OK");
             }
@@ -2804,9 +3128,25 @@ public class DaBInImporter extends Program {
         int pagesFrom;
         int pagesTo;
 
+        System.out.printf("Trying to extract pages from '%s'...\n", data);
+
         index = data.lastIndexOf('-');
         leftLimit = data.lastIndexOf(' ', index);
         rightLimit = data.indexOf(' ', index);
+
+        if (leftLimit < 0) {
+            System.out.println(
+                    "*** WARNING: Malformed pages. Left limit less than 0. Ignoring.");
+
+        }
+        if (rightLimit > data.length()) {
+            System.out.println(
+                    "*** WARNING: Malformed pages. Right limit greater than length of string. Ignoring.");
+        }
+        if (rightLimit < 0) {
+            System.out.println(
+                    "*** WARNING: Malformed pages. Right limit is smaller than 0. Ignoring.");
+        }
 
         try {
             tmp = data.substring(leftLimit + 1, index);
@@ -2815,12 +3155,174 @@ public class DaBInImporter extends Program {
             tmp = data.substring(index + 1, rightLimit);
             pagesTo = Integer.parseInt(tmp);
         } catch (NumberFormatException ex) {
-            System.out.println("Malformed pages. Ignoring.");
+            System.out.println("*** WARNING: Malformed pages. Ignoring.");
+            return;
+        } catch (StringIndexOutOfBoundsException ex) {
+            System.out.println("*** WARNING: Malformed pages. Ignoring.");
             return;
         }
 
         publicationData.setPagesFrom(pagesFrom);
         publicationData.setPagesTo(pagesTo);
+    }
+
+    private void insertIntoAZFolder(final ContentBundle bundle,
+                                    final Map<Character, Folder> folders) {
+        Character letter;
+
+        letter = bundle.getPrimaryInstance().getName().toLowerCase().charAt(0);
+
+        insertIntoAZFolder(bundle, letter, folders);
+    }
+
+    private void insertIntoAZFolder(final ContentBundle bundle,
+                                    final Character letter,
+                                    final Map<Character, Folder> folders) {
+        Folder folder;
+
+        folder = folders.get(letter);
+        if (folder == null) {
+            folder = folders.get('0');
+        }
+
+        folder.addItem(bundle);
+    }
+
+    private Term checkTermPath(final String path) {
+        StringTokenizer pathTokenizer = new StringTokenizer(path, "/");
+
+        Term prevTerm = null;
+        Term term = null;
+        while (pathTokenizer.hasMoreTokens()) {
+            String token = pathTokenizer.nextToken();
+            String[] split;
+            String uniqueId;
+            String name;
+
+            split = token.split(":");
+            if (split.length < 2) {
+                System.err.printf(
+                        "***ERROR: Malformed path token '%s'. Abborting path check.\n",
+                        token);
+                return null;
+            }
+
+            uniqueId = split[0];
+            name = split[1];
+
+            prevTerm = term;
+            try {
+                term = termsDomain.getTerm(uniqueId);
+            } catch (DataObjectNotFoundException ex) {
+                System.out.printf("Term '%s' does not exist. Creating...\n", token);
+                createTerm(uniqueId, name, termsDomain, prevTerm);
+            }
+        }
+
+        return term;
+    }
+
+    private Map<String, Term> checkYearTerms(final Term parent,
+                                             final List<String> years) {
+        String parentId = parent.getUniqueID();
+        Map<String, Term> yearTerms = new HashMap<String, Term>();
+
+        for (String year : years) {
+            String yearTermId = String.format("%s%s", parentId, year);
+            Term term;
+            try {
+                term = termsDomain.getTerm(yearTermId);
+            } catch (DataObjectNotFoundException ex) {
+                System.out.printf(
+                        "Term for year '%s' in term '%s' does not exist. Creating.\n",
+                        year,
+                        parent.getName());
+                createTerm(yearTermId, year, termsDomain, parent);
+                term = termsDomain.getTerm(yearTermId);
+            }
+
+            yearTerms.put(year, term);
+        }
+
+        return yearTerms;
+    }
+
+    private void createTerm(final String uniqueId,
+                            final String name,
+                            final Domain domain,
+                            final Term parent) {
+        Transaction transaction = new Transaction() {
+
+            @Override
+            protected void doRun() {
+                try {
+                    Term term = Term.create(uniqueId, name, false, "", domain);
+                    term.save();
+                    parent.addNarrowerTerm(term, false, false);
+                    //parent.save();
+                } catch (Exception ex) {
+                    ex.printStackTrace(System.err);
+                }
+            }
+        };
+
+        transaction.run();
+    }
+
+    private List<String> getPublicationYears() {
+        List<String> years = new ArrayList<String>();
+
+        try {
+            Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet result = stmt.executeQuery(
+                    "SELECT Jahr FROM publikation GROUP BY Jahr");
+
+            while (result.next()) {
+                String year = result.getString(1);
+                if (year.length() > 4) {
+                    years.add(year.substring(0, 4));
+                } else {
+                    years.add(year);
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("Query for publication years failed.");
+            ex.printStackTrace(System.err);
+        }
+
+        return years;
+    }
+
+    private List<String> getWorkingPaperYears() {
+        List<String> years = new ArrayList<String>();
+
+        try {
+            Statement stmt = connection.createStatement(
+                    ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet result = stmt.executeQuery(
+                    "SELECT Jahr FROM arbeitspapier GROUP BY Jahr");
+
+            while (result.next()) {
+                while (result.next()) {
+                    String year = result.getString(1);
+                    if (year.length() > 4) {
+                        years.add(year.substring(0, 4));
+                    } else {
+                        years.add(year);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("Query for publication years failed.");
+            ex.printStackTrace(System.err);
+        }
+
+        return years;
     }
 
     public static void main(String[] args) {

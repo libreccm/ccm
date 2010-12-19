@@ -14,7 +14,15 @@ public class PublisherData {
     }
 
     public void setName(String name) {
-        this.name = name.trim();
+        if (name == null) {
+            this.name = "";
+        } else {
+            if ("null".equals(name.toLowerCase())) {
+                this.name = "";
+            } else {
+                this.name = name.trim();
+            }
+        }
     }
 
     public String getPlace() {
@@ -22,7 +30,15 @@ public class PublisherData {
     }
 
     public void setPlace(String place) {
-        this.place = place.trim();
+        if (place == null) {
+            this.place = "";
+        } else {
+            if ("null".equals(place.toLowerCase())) {
+                this.place = "";
+            } else {
+                this.place = place.trim();
+            }
+        }
     }
 
     @Override
@@ -35,11 +51,11 @@ public class PublisherData {
         }
         final PublisherData other = (PublisherData) obj;
         if ((this.name == null) ? (other.name != null)
-                : !this.name.equals(other.name)) {
+            : !this.name.equals(other.name)) {
             return false;
         }
         if ((this.place == null) ? (other.place != null)
-                : !this.place.equals(other.place)) {
+            : !this.place.equals(other.place)) {
             return false;
         }
         return true;
