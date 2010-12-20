@@ -2131,13 +2131,15 @@ public class DaBInImporter extends Program {
 
                 //Assign to term/category
                 Calendar today = new GregorianCalendar();
-                SciProject sciProject = (SciProject) project.
-                                           getPrimaryInstance();
-                if ((sciProject.getEnd() != null)  
-                        && today.getTime().after(sciProject.getEnd())) {
+                SciProject sciProject =
+                           (SciProject) project.getPrimaryInstance();
+                if ((sciProject.getEnd() != null)
+                    && today.getTime().after(sciProject.getEnd())) {
                     finishedProjectsTerm.addObject(project);
+                    finishedProjectsTerm.save();
                 } else {
                     currentProjectsTerm.addObject(project);
+                    currentProjectsTerm.save();
                 }
 
                 System.out.println("\tOK");
@@ -2628,6 +2630,7 @@ public class DaBInImporter extends Program {
                     term = publicationsTerm;
                 }
                 term.addObject(publication);
+                term.save();
             }
         };
 
@@ -2736,6 +2739,7 @@ public class DaBInImporter extends Program {
                     term = workingPapersTerm;
                 }
                 term.addObject(workingPaper);
+                term.save();
 
                 System.out.println("\tOK");
 
@@ -2797,6 +2801,7 @@ public class DaBInImporter extends Program {
                             FileAsset file = new FileAsset();
                             file.loadFromFile(workingPaper.getPrimaryInstance().
                                     getName(), pdf, "application/octet-stream");
+                            fsi.setFile(file);
                             file.setContentSection(section);
                             fsi.setContentSection(section);
 
@@ -2804,8 +2809,6 @@ public class DaBInImporter extends Program {
                             ContentBundle bundle = new ContentBundle(fsi);
                             bundle.setContentSection(section);
                             bundle.setDefaultLanguage("de");
-
-                            //files.addItem(bundle);
 
                             RelatedLink download = new RelatedLink();
                             download.setTitle("download");
@@ -3214,7 +3217,8 @@ public class DaBInImporter extends Program {
             try {
                 term = termsDomain.getTerm(uniqueId);
             } catch (DataObjectNotFoundException ex) {
-                System.out.printf("Term '%s' does not exist. Creating...\n", token);
+                System.out.printf("Term '%s' does not exist. Creating...\n",
+                                  token);
                 createTerm(uniqueId, name, termsDomain, prevTerm);
             }
         }
