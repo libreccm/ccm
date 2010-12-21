@@ -2135,11 +2135,17 @@ public class DaBInImporter extends Program {
                            (SciProject) project.getPrimaryInstance();
                 if ((sciProject.getEnd() != null)
                     && today.getTime().after(sciProject.getEnd())) {
-                    finishedProjectsTerm.addObject(project);
-                    finishedProjectsTerm.save();
+                    Term term;
+                    term = termsDomain.getTerm(
+                            finishedProjectsTerm.getUniqueID());
+                    term.addObject(project);
+                    term.save();
                 } else {
-                    currentProjectsTerm.addObject(project);
-                    currentProjectsTerm.save();
+                    Term term;
+                    term =
+                    termsDomain.getTerm(currentProjectsTerm.getUniqueID());
+                    term.addObject(project);
+                    term.save();
                 }
 
                 System.out.println("\tOK");
@@ -2623,9 +2629,9 @@ public class DaBInImporter extends Program {
                 }
 
                 insertIntoAZFolder(publication, publicationsAlpha);
-                Term term = publicationTerms.get(Integer.toString(((Publication) publication.
-                                                                   getPrimaryInstance()).
-                        getYearOfPublication()));
+                Term term = termsDomain.getTerm(publicationTerms.get(Integer.
+                        toString(((Publication) publication.getPrimaryInstance()).
+                        getYearOfPublication())).getUniqueID());
                 if (term == null) {
                     term = publicationsTerm;
                 }
@@ -2732,9 +2738,9 @@ public class DaBInImporter extends Program {
                 //publications.addItem(workingPaper);
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
                 insertIntoAZFolder(workingPaper, publicationsAlpha);
-                Term term = workingPaperTerms.get(Integer.toString(((Publication) workingPaper.
+                Term term = termsDomain.getTerm(workingPaperTerms.get(Integer.toString(((Publication) workingPaper.
                                                                     getPrimaryInstance()).
-                        getYearOfPublication()));
+                        getYearOfPublication())).getUniqueID());
                 if (term == null) {
                     term = workingPapersTerm;
                 }
