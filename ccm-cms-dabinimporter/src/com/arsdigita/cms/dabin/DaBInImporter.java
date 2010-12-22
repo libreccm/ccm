@@ -161,7 +161,7 @@ public class DaBInImporter extends Program {
 
         System.out.println("");
         System.out.println("");
-        System.out.println("DaBInImporter starting...");
+        System.out.println("DaBInImporter is starting...");
 
         //Get command line arguments...
         args = cmdLine.getArgs();
@@ -2738,12 +2738,13 @@ public class DaBInImporter extends Program {
                 //publications.addItem(workingPaper);
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
                 insertIntoAZFolder(workingPaper, publicationsAlpha);
-                Term term = termsDomain.getTerm(workingPaperTerms.get(Integer.toString(((Publication) workingPaper.
-                                                                    getPrimaryInstance()).
-                        getYearOfPublication())).getUniqueID());
+                WorkingPaper primary = (WorkingPaper) workingPaper.getPrimaryInstance();
+                String yearStr = Integer.toString(primary.getYearOfPublication());
+                Term term = workingPaperTerms.get(yearStr);
                 if (term == null) {
                     term = workingPapersTerm;
                 }
+                term = termsDomain.getTerm(term.getUniqueID());                
                 term.addObject(workingPaper);
                 term.save();
 
@@ -3328,7 +3329,7 @@ public class DaBInImporter extends Program {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println("Query for publication years failed.");
+            System.err.println("Query for publication years of working papers failed.");
             ex.printStackTrace(System.err);
         }
 
