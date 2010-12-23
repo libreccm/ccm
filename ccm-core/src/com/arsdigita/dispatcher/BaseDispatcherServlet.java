@@ -44,10 +44,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Contains functions common to all
- * entry-point dispatcher servlets in the core.  Any dispatcher that
- * is the first in its chain to handle an HTTP request must also be a
- * servlet and should extend this class.
+ * Contains functions common to all entry-point dispatcher servlets in the core.
+ * 
+ * Any dispatcher that is the first in its chain to handle an HTTP request
+ * must also be a servlet and should extend this class.
  *
  * <p>You do <em>not</em> need to extend this class unless your
  * dispatcher is also a servlet and is mounted in web.xml.  In any

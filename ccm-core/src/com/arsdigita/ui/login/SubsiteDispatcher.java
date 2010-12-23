@@ -41,7 +41,6 @@ import com.arsdigita.web.RedirectSignal;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.log4j.Logger;
 import com.arsdigita.dispatcher.Dispatcher;
 import com.arsdigita.dispatcher.DispatcherConfig;
 import com.arsdigita.dispatcher.RequestContext;
@@ -59,13 +58,9 @@ import org.apache.log4j.Logger;
  * page, user workspace, logout, and permissions admin pages.
  *
  * @author Sameer Ajmani
+ * @version $Id: SubsiteDispatcher.java 1225 2006-06-19 09:27:21Z apevec
  **/
 public class SubsiteDispatcher extends BebopMapDispatcher {
-
-    public static final String versionId = 
-            "$Id: SubsiteDispatcher.java 1225 2006-06-19 09:27:21Z apevec $" +
-            " by $Author: apevec $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
 	public class SubsiteDispatcherMap extends HashMap implements Map {
 

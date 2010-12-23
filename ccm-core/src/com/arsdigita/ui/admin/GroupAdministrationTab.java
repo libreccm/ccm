@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 /**
- *
+ * Constructs the panel for administration of groups.
  *
  * @author David Dao
  *

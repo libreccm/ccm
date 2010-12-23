@@ -58,10 +58,19 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
     // Set of pathinfo
     private final Set m_clientCacheDisabledPages = new HashSet();
 
+    /**
+     * 
+     * @throws ServletException
+     */
     public void init() throws ServletException {
         super.init();
     }
 
+    /**
+     * 
+     * @param pathInfo
+     * @param page
+     */
     protected final void put(final String pathInfo,
                              final Page page) {
         Assert.exists(pathInfo, String.class);
@@ -70,6 +79,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
 
         m_pages.put(pathInfo, page);
     }
+
     /**
      *
      * disable client/middleware caching of specified page. 
@@ -77,16 +87,25 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
      */
     protected final void disableClientCaching(String pathInfo) {
         Assert.exists(pathInfo, String.class);
-	Assert.isTrue(m_pages.containsKey(pathInfo), "Page " + pathInfo + " has not been put in servlet");
+	Assert.isTrue(m_pages.containsKey(pathInfo), 
+                      "Page " + pathInfo + " has not been put in servlet");
    	m_clientCacheDisabledPages.add(pathInfo);
     }
 
+    /**
+     * 
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @throws ServletException
+     * @throws IOException
+     */
     protected final void doService(final HttpServletRequest sreq,
                                    final HttpServletResponse sresp,
                                    final Application app)
-            throws ServletException, IOException {
-        final String pathInfo = sreq.getPathInfo();
+                         throws ServletException, IOException {
 
+        final String pathInfo = sreq.getPathInfo();
         Assert.exists(pathInfo, "String pathInfo");
 
         final Page page = (Page) m_pages.get(pathInfo);

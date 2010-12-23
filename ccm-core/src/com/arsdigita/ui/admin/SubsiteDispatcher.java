@@ -53,7 +53,7 @@ class SubsiteDispatcher extends BebopMapDispatcher {
         (SubsiteDispatcher.class);
 
     /**
-     * Adds one URL the dispatcher's page map.  If isIndex is true,
+     * Adds one URL to the dispatcher's page map.  If isIndex is true,
      * the page is also mapped to the empty string "" so that it can
      * handle the special case of a request for the directory.
      */

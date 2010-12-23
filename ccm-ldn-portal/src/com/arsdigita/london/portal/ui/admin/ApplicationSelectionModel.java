@@ -42,28 +42,28 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 	private static final Logger s_log = Logger
 			.getLogger(ApplicationSelectionModel.class);
 
-	/**
+    /**
      * Constructor 
      * 
      * @param param
      * @param hasDefaultValue
      */
     public ApplicationSelectionModel(BigDecimalParameter param,
-			                                                     boolean hasDefaultValue) {
-		super(param);
+                                     boolean hasDefaultValue) {
+        super(param);
 
-		m_hasDefaultValue = hasDefaultValue;
-	}
+        m_hasDefaultValue = hasDefaultValue;
+    }
 
-	/**
+    /**
      * 
      * @param hasDefaultValue
      */
     public ApplicationSelectionModel(boolean hasDefaultValue) {
-		this(new BigDecimalParameter(DEFAULT_PARAM_NAME), hasDefaultValue);
-	}
+        this(new BigDecimalParameter(DEFAULT_PARAM_NAME), hasDefaultValue);
+    }
 
-	/**
+    /**
      * 
      * @param param
      */
@@ -87,37 +87,37 @@ public class ApplicationSelectionModel extends ACSObjectSelectionModel {
 		this(DEFAULT_PARAM_NAME, false);
 	}
 
-	/**
+    /**
      * 
      * @return
      */
     public Application getDefaultApplication() {
-		Application app = Web.getContext().getApplication();
+        Application app = Web.getContext().getApplication();
 
-		// XXX just in case
-		if (app == null) {
-			s_log.debug("Using kernel.getContext().getResource() instead");
+        // XXX just in case
+        if (app == null) {
+            s_log.debug("Using kernel.getContext().getResource() instead");
 			app = (Application) Kernel.getContext().getResource();
-		}
+        }
 
-		if (app != null) {
-			s_log.debug("Default Application: " + app.getID());
-		} else {
-			s_log.debug("No application found");
-		}
-		return app;
-	}
+        if (app != null) {
+            s_log.debug("Default Application: " + app.getID());
+        } else {
+            s_log.debug("No application found");
+        }
+        return app;
+    }
 
-	/**
-	 * Override ACSObjectSelectionModel methods to default to the default
-	 * Application
-	 */
-	public boolean isSelected(PageState state) {
-		if (m_hasDefaultValue && !super.isSelected(state)) {
-			return (getDefaultApplication() != null);
-		}
-		return super.isSelected(state);
-	}
+    /**
+     * Override ACSObjectSelectionModel methods to default to the default
+     * Application
+     */
+    public boolean isSelected(PageState state) {
+        if (m_hasDefaultValue && !super.isSelected(state)) {
+            return (getDefaultApplication() != null);
+        }
+        return super.isSelected(state);
+    }
 
 	/**
      * 

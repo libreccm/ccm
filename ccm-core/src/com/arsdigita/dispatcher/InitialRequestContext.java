@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
 /**
- * Implements a request context for the
- * site map application or for any application dispatcher that creates
- * the first application context for an incoming request.
+ * Implements a request context for the site map application
+ * or for any application dispatcher that creates the first application context
+ * for an incoming request.
  *
  * @author Bill Schneider 
  * @version $Id: InitialRequestContext.java 287 2005-02-22 00:29:02Z sskracic $

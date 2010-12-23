@@ -27,8 +27,7 @@ import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServlet;
 
 /**
- * Bootstraps the ACS by
- * calling the initializers in the enterprise.init file.
+ * Bootstraps the ACS by calling the initializers in the enterprise.init file.
  *
  * @author Raphael Schloming (rhs@mit.edu)
  * @version $Id: InitializerServlet.java 287 2005-02-22 00:29:02Z sskracic $

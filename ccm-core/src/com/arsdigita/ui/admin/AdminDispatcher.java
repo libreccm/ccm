@@ -41,8 +41,9 @@ public class AdminDispatcher extends SubsiteDispatcher
      * Constructor.  Instantiates the subsite url/page mapping.
      */
     public AdminDispatcher() {
-        addPage("", buildAdminIndexPage(), true);
-        addPage("denied", buildDeniedPage());
+        addPage("", buildAdminIndexPage(), true); // adds index page to dispatchers
+                                                  // page mapping table
+        addPage("denied", buildDeniedPage());     // adds demied page respectively.
     }
 
     /**
@@ -50,8 +51,10 @@ public class AdminDispatcher extends SubsiteDispatcher
      * be customized by editing the admin stylesheet.
      */
     private Page buildDeniedPage() {
-        Page p = PageFactory.buildPage("admin", new Label(new GlobalizedMessage
-                                                          ("ui.admin.dispatcher.accessDenied", BUNDLE_NAME)));
+        Page p = PageFactory.buildPage("admin",
+                                       new Label(new GlobalizedMessage
+                                           ("ui.admin.dispatcher.accessDenied",
+                                            BUNDLE_NAME)));
 
         Label label = new Label(GlobalizationUtil.globalize("ui.admin.access_denied"));
         label.setClassAttr("AccessDenied");
@@ -89,10 +92,12 @@ public class AdminDispatcher extends SubsiteDispatcher
         userSplitPanel.addTab(USER_TAB_CREATE_USER,
                               new CreateUserPane(userSplitPanel));
 
-        /**
-         * Create main administration tab.
+        /*
+         * Create group administration panel
          */
         GroupAdministrationTab groupAdministrationTab = new GroupAdministrationTab();
+
+        // Create the Admin's page tab bar, currently 2 elements: user & groups
         TabbedPane tb = new TabbedPane();
         tb.setIdAttr("page-body");
 

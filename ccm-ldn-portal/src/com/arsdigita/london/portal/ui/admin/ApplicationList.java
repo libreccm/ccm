@@ -74,37 +74,41 @@ public class ApplicationList extends SimpleContainer {
 		}
 	}
 
-	/**
+    /**
+     * Retrieves a list of installed applications and creates the xml to show
+     * a listing.
      * 
      * @param state
      * @param parent
      */
     public void generateXML(PageState state, Element parent) {
-		Element content = generateParent(parent);
 
-		ApplicationCollection apps = Application.retrieveAllApplications();
+        Element content = generateParent(parent);
 
-		while (apps.next()) {
-			Application app = (Application) apps.getDomainObject();
+        // get installed web/Applications to show
+        ApplicationCollection apps = Application.retrieveAllApplications();
 
-			Element appEl = content.newChildElement("portal:application",
-					PortalConstants.PORTAL_XML_NS);
-			try {
-				state.setControlEvent(this, SELECT, app.getOID().toString());				
-				appEl.addAttribute("appClass", app.getClass().getName());
-				appEl.addAttribute("appType", app.getApplicationType().getTitle());
-				appEl.addAttribute("viewURL", state.stateAsURL());
-				state.clearControlEvent();
-			} catch (IOException ex) {
-				throw new UncheckedWrapperException("damn", ex);
-			}
+        while (apps.next()) {
+            Application app = (Application) apps.getDomainObject();
 
-			DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(appEl);
-			xr.setWrapRoot(false);
-			xr.setWrapAttributes(true);
-			xr.setWrapObjects(false);
+            Element appEl = content.newChildElement("portal:application",
+                                                    PortalConstants.PORTAL_XML_NS);
+            try {
+                state.setControlEvent(this, SELECT, app.getOID().toString());
+                appEl.addAttribute("appClass", app.getClass().getName());
+                appEl.addAttribute("appType", app.getApplicationType().getTitle());
+                appEl.addAttribute("viewURL", state.stateAsURL());
+                state.clearControlEvent();
+            } catch (IOException ex) {
+                throw new UncheckedWrapperException("damn", ex);
+            }
 
-			xr.walk(app, ApplicationList.class.getName());
-		}
-	}
+            DomainObjectXMLRenderer xr = new DomainObjectXMLRenderer(appEl);
+            xr.setWrapRoot(false);
+            xr.setWrapAttributes(true);
+            xr.setWrapObjects(false);
+
+            xr.walk(app, ApplicationList.class.getName());
+        }
+    }
 }

@@ -41,19 +41,23 @@ import com.arsdigita.web.ApplicationTypeCollection;
 
 public class ApplicationPane extends SimpleContainer {
 
-	private Map m_edit; // Map of application type -> edit config form
+    private Map m_edit; // Map of application type -> edit config form
 
-	private Map m_create;
+    private Map m_create;
 
-	private NewApplicationForm m_newApp;
+    private NewApplicationForm m_newApp;
 
-	private ApplicationDetails m_appDetails;
+    private ApplicationDetails m_appDetails;
 
-	private ActionLink m_editLink;
+    private ActionLink m_editLink;
 
-	private ApplicationSelectionModel m_app;
+    private ApplicationSelectionModel m_app;
 
-	public ApplicationPane(ApplicationSelectionModel app) {
+    /**
+     *
+     * @param app
+     */
+    public ApplicationPane(ApplicationSelectionModel app) {
 		super("portal:applicationPane", PortalConstants.PORTAL_XML_NS);
 
 		m_app = app;

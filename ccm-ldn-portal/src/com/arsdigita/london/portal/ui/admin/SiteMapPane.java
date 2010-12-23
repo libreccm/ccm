@@ -29,37 +29,43 @@ import com.arsdigita.london.portal.ui.PortalConstants;
 import com.arsdigita.web.Application;
 
 /**
- * 
+ * Entry page for Application administration as part of ccm portal. Invocation
+ * by /web/templates/ccm-ldn-portal/admin/sitemap.jsp
+ *
+ * A list of all installed application is created and presented along with
+ * buttons for creating new instances and others.
  * 
  */
 public class SiteMapPane extends SimpleContainer {
 
-	private ApplicationSelectionModel m_app;
+    private ApplicationSelectionModel m_app;
 
-	private ApplicationList m_appList;
+    private ApplicationList m_appList;
 
-	private ApplicationPane m_appPane;
+    private ApplicationPane m_appPane;
 
-	private static final Logger s_log = Logger.getLogger(SiteMapPane.class);
+    /** Private Logger instance  */
+    private static final Logger s_log = Logger.getLogger(SiteMapPane.class);
 
-	/**
-     * Constructor
+    /**
+     * Constructor  creates a new application admin pane instance
      */
     public SiteMapPane() {
-		setTag("portal:sitemap");
-		setNamespace(PortalConstants.PORTAL_XML_NS);
+        setTag("portal:sitemap");
+        setNamespace(PortalConstants.PORTAL_XML_NS);
 
-		m_app = new ApplicationSelectionModel("application", false);
-		m_app.addChangeListener(new ApplicationEditListener());
+        m_app = new ApplicationSelectionModel("application", false);
+        m_app.addChangeListener(new ApplicationEditListener());
 
-		m_appList = new ApplicationList(m_app);
-		add(m_appList);
+        m_appList = new ApplicationList(m_app);
+        // adds a list of installed applications
+        add(m_appList);
 
-		m_appPane = new ApplicationPane(m_app);
-		add(m_appPane);
-	}
+        m_appPane = new ApplicationPane(m_app);
+        add(m_appPane);
+    }
 
-	/**
+    /**
      * 
      * @param p
      */
