@@ -83,9 +83,12 @@ public final class SubsiteContext {
      * @return the currently selected content site
      */
     public final Site getSite() {
+        Site site = null;
         HttpServletRequest request = DispatcherHelper.getRequest();
-        Site site = (Site)request.getAttribute(SITE_REQUEST_ATTRIBUTE);
-        Assert.exists(site, Site.class);
+        if(request.getAttribute(SITE_REQUEST_ATTRIBUTE) != null) {
+            site = (Site)request.getAttribute(SITE_REQUEST_ATTRIBUTE);
+            Assert.exists(site, Site.class);
+        }
         return site;
     }    
 }
