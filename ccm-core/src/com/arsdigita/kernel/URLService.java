@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Supports generically locating a domain object on the site.
+ * 
  * The URLService can produce the path (relative to the root URL) to a page
  * that displays the domain object identified by a given OID.
  * <P>
@@ -82,11 +83,12 @@ public class URLService {
      * @throws NoValidURLException when the
      * URLFinder registered for the given <i>oid</i>'s object type is unable
      * to produce a valid non-null URL.
-     **/
+     */
     public static String locate(OID oid)
         throws URLFinderNotFoundException, NoValidURLException {
         return locate(oid,null);
     }
+
     /**
      * Returns a URL path to a page that displays the object identified by
      * the given <i>oid</i>. The URL path is relative to the server root.
@@ -100,10 +102,10 @@ public class URLService {
      * @throws NoValidURLException when the
      * URLFinder registered for the given <i>oid</i>'s object type is unable
      * to produce a valid non-null URL.
-     **/
+     */
     public static String locate(OID oid, String context)
-        throws URLFinderNotFoundException, NoValidURLException
-    {
+                         throws URLFinderNotFoundException, NoValidURLException{
+
         URLFinder f = getFinder(oid.getObjectType());
         if (f==null) {
             throw new URLFinderNotFoundException("There is no URLFinder " +
@@ -112,6 +114,7 @@ public class URLService {
                                                  oid.getObjectType().getQualifiedName());
         }
 	
+        // Determine the URL using the objects URLFinder
         String url = (context == null) ? f.find(oid) : f.find(oid,context);
 
         if (url == null) {
@@ -149,7 +152,7 @@ public class URLService {
      *
      * @return the previous finder that was
      * registered with this service for this object type.
-     **/
+     */
     public synchronized static URLFinder registerFinder(ObjectType objectType,
                                                         URLFinder finder) {
         return (URLFinder) s_finders.put(objectType, finder);

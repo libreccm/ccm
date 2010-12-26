@@ -18,22 +18,39 @@
  */
 package com.arsdigita.web;
 
+import com.arsdigita.kernel.URLService;
+import com.arsdigita.kernel.NoValidURLException;
+import com.arsdigita.kernel.URLFinderNotFoundException;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.toolbox.ui.OIDParameter;
+
+import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-
-import com.arsdigita.kernel.URLService;
-import com.arsdigita.kernel.NoValidURLException;
-import com.arsdigita.kernel.URLFinderNotFoundException;
-
-import com.arsdigita.persistence.OID;
-import com.arsdigita.toolbox.ui.OIDParameter;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
+/**
+ * Servlet to redirect an OID based request to a complete url in an application's
+ * url tree and is one of the basic servlets required by any ccm-core application
+ * instance to work correctly.
+ *
+ * It has to be declared in an application web.xml, typically:
+ *   <servlet>
+ *     <servlet-name>oid-redirect</servlet-name>
+ *     <servlet-class>com.arsdigita.web.OIDRedirectServlet</servlet-class>
+ *   </servlet>
+ *   ....
+ *   ....
+ *   <servlet-mapping>
+ *     <servlet-name>oid-redirect</servlet-name>
+ *     <url-pattern>/redirect/*</url-pattern>
+ *   </servlet-mapping>
+ * 
+ */
 public class OIDRedirectServlet extends BaseServlet {
 
     private static final Logger s_log =
@@ -48,6 +65,8 @@ public class OIDRedirectServlet extends BaseServlet {
 
         OID oid = null;
         try {
+            // extract parameter named OID_PARAM (="oid") from sreq object
+            // searches for something like oid=Article-id-167013
             oid = (OID) param.transformValue(sreq);
         } catch (Exception e) {
             // invalid OID value, return 400 Bad Request
@@ -65,6 +84,7 @@ public class OIDRedirectServlet extends BaseServlet {
                 sresp.sendError(HttpServletResponse.SC_BAD_REQUEST);
                 return;
             }
+
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Tried to read non encoded OID, result: " + oid);
             }
@@ -82,6 +102,7 @@ public class OIDRedirectServlet extends BaseServlet {
             String context = sreq.getParameter("context");
             String url = URLService.locate(oid, context);
 
+            /* Addition by JensP: */
             Map<?, ?> parameters = sreq.getParameterMap();
             StringBuilder urlParams = new StringBuilder();
             for (Map.Entry<?, ?> entry : parameters.entrySet()) {
@@ -98,20 +119,21 @@ public class OIDRedirectServlet extends BaseServlet {
                     }
                 }
             }
-
             url = url.concat(urlParams.toString());
+            /* JensP END */
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Redirecting oid " + oid + " to " + url);
             }
-
             throw new RedirectSignal(url, false);
+
         } catch (URLFinderNotFoundException ex) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("No URL finder for oid " + oid);
             }
             sresp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
+            
         } catch (NoValidURLException ex) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("No URL for oid " + oid);

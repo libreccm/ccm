@@ -21,13 +21,16 @@ package com.arsdigita.bebop.parameters;
 import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.event.ParameterEvent;
 import com.arsdigita.bebop.event.ParameterListener;
-import com.arsdigita.util.Assert;
 import com.arsdigita.globalization.Globalization;
+import com.arsdigita.util.Assert;
 import com.arsdigita.util.Lockable;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 
 /**

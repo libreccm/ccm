@@ -31,7 +31,6 @@ import javax.servlet.http.HttpUtils;
 import java.net.URLEncoder;
 
 /**
- *
  * A URLFinder that can be registered for most object types.  The
  * GenericURLFinder is constructed with a specified URL pattern such
  * as <code>one-ticket?ticket_id=:id</code>.  For a given OID, the
@@ -102,11 +101,9 @@ import java.net.URLEncoder;
  * <code>PackageInstance</code>.
  *
  * @author Oumi Mehrotra
- *
+ * @version $Id: GenericURLFinder.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class GenericURLFinder implements URLFinder {
-
-    public static final String versionId = "$Id: GenericURLFinder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private String m_base;
     private Map m_params;

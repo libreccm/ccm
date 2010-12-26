@@ -36,11 +36,10 @@ import com.arsdigita.persistence.OID;
  * is not applicable to some data object type, the developer
  * should write a new URLFinder that uses application-specific logic.
  *
- * @author Oumi Mehrotra 
- **/
+ * @author Oumi Mehrotra
+ * @version $Id: URLFinder.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public interface URLFinder {
-
-    public static final String versionId = "$Id: URLFinder.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Returns a URL path to a page that displays the object identified by

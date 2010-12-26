@@ -18,8 +18,6 @@
  */
 package com.arsdigita.cms.dispatcher;
 
-import org.apache.log4j.Logger;
-
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
@@ -39,11 +37,29 @@ import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 
+import org.apache.log4j.Logger;
+
+/** 
+ * Implementation of {@link com.arsdigita.kernel.URLFinder} for content types, 
+ * necessary for ccm dispatcher to find a concrete content item for an url
+ * provided by a client request.
+ * 
+ * Specifically it is a helper class for {@link com.arsdigita.web.OIDRedirectServlet} 
+ * to map an OID to an URL.
+ * 
+ */
 public class ItemURLFinder implements URLFinder {
 
     private static final Logger s_log = Logger.getLogger(ItemURLFinder.class);
 
-    public String find(OID oid,String context) throws NoValidURLException {
+    /**
+     *
+     * @param oid
+     * @param context publication status ['live'|'draft']
+     * @return
+     * @throws NoValidURLException
+     */
+    public String find(OID oid, String context) throws NoValidURLException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Locating " + oid + " in " + context);
         }
@@ -78,6 +94,12 @@ public class ItemURLFinder implements URLFinder {
         return find(item, context);
     }
 
+    /**
+     * 
+     * @param oid
+     * @return
+     * @throws NoValidURLException
+     */
     public String find(OID oid) throws NoValidURLException {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Locating " + oid);
@@ -98,14 +120,18 @@ public class ItemURLFinder implements URLFinder {
             s_log.debug("Item version is " + item.getVersion());
         }
 
-        // Revert to the behavior before change# 41315.  Clients relied on the behavior that
-        // links with no context defaulted to the live version (if one existed).  Changing
-        // that behavior broke a lot of links in static content that couldn't easily be updated.
-        // This change restores the old behavior.  We don't get a regression of bz 116226
-        // (which bz 41315 was intended to fix) because the CMS search.xsl has been updated to
-        // append "&context=draft" to the search results.  The CMS DHTML editor has also been
-        // updated to append generated links with "&context=live".  If at some point in the future
-        // all unqualified links have been removed, then this fix could be removed as well.
+        // Revert to the behavior before change #41315.
+        // Clients relied on the behavior that links with no context
+        // defaulted to the live version (if one existed). Changing
+        // that behavior broke a lot of links in static content that couldn't
+        // easily be updated.
+        // This change restores the old behavior. We don't get a regression of
+        // bz 116226 (which bz 41315 was intended to fix) because the CMS
+        // search.xsl has been updated to append "&context=draft" to the search
+        // results.  The CMS DHTML editor has also been updated to append
+        // generated links with "&context=live". If at some point in the future
+        // all unqualified links have been removed, then this fix could be
+        // removed as well.
         if (item.isLive() && !item.isLiveVersion()) {
             item = item.getLiveVersion();
             if (s_log.isDebugEnabled()) {
@@ -116,8 +142,16 @@ public class ItemURLFinder implements URLFinder {
         return find(item, item.getVersion());
     }
 
-    private String find(ContentItem item,
-                        String context) throws NoValidURLException {
+    /**
+     * 
+     * @param item
+     * @param context publication status ['live'|'draft']
+     * @return
+     * @throws NoValidURLException
+     */
+    private String find(ContentItem item, String context)
+                   throws NoValidURLException {
+        
         ContentSection section = item.getContentSection();
         ItemResolver resolver = section.getItemResolver();
 
@@ -127,7 +161,7 @@ public class ItemURLFinder implements URLFinder {
         // always send to the admin screen (that's for results of the admin
         // search)
 
-        if (!ContentItem.DRAFT.equals(context)) {
+        if (!ContentItem.DRAFT.equals(context)) {  // LIVE context
             ACSObject parent = item.getParent();
             ContentBundle bundle = null;
             if (parent instanceof ContentBundle) {
@@ -137,14 +171,19 @@ public class ItemURLFinder implements URLFinder {
                 DataAssociationCursor categories =
                     ((DataAssociation) DomainServiceInterfaceExposer.
                             get(bundle, Category.CATEGORIES)).cursor();
+                // XXX  pb (2010.12.15)  ToDO
+                // solution is currently not subsite aware!
+                // provides an index url even if the category tree is not part
+                // of subsite (which results in a resource not found exception)
                 categories.addEqualsFilter("link." + Category.IS_INDEX, Boolean.TRUE);
                 if (categories.next()) {
                     Category indexCat = (Category) DomainObjectFactory.
-                    newInstance(categories.getDataObject());
+                                        newInstance(categories.getDataObject());
                     categories.close();
                     try {
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug(item + " is a Category index item.  Resolving URL for " + indexCat);
+                            s_log.debug(item + " is a Category index item. " +
+                                        "Resolving URL for " + indexCat);
                         }
                         return URLService.locate(indexCat.getOID(), context);
                     } catch (URLFinderNotFoundException ufnfe) {
@@ -165,12 +204,14 @@ public class ItemURLFinder implements URLFinder {
         } else { // DRAFT context
             // public users get 404 when item gets unpublished
             // if com.arsdigita.cms.unpublished_not_found=true
-            if (ContentSection.getConfig().isUnpublishedNotFound() && !Web.getUserContext().isLoggedIn()) {
+            if (ContentSection.getConfig().isUnpublishedNotFound()
+                && !Web.getUserContext().isLoggedIn()) {
                 throw new NoValidURLException("user must be logged-in to get draft");
             } else {
                 // force the switch to draft version at this point
                 // otherwise resolver below breaks with:
-                // java.lang.IllegalStateException: Generating draft url: item must be draft version
+                // java.lang.IllegalStateException: Generating draft url:
+                // item must be draft version
                 if (!item.isDraftVersion()) {
                     item = item.getDraftVersion();
                     s_log.debug("switching to draft version");

@@ -35,12 +35,9 @@ import org.apache.log4j.Logger;
  * Initializes the Kernel and bootstraps the rest of the system.
  *
  * @version $Revision: #39 $ $Date: 2004/08/16 $
+ * @version $Id: Initializer.java 1169 2006-06-14 13:08:25Z fabrice $
  */
 public class Initializer extends BaseInitializer {
-    public static final String versionId =
-        "$Id: Initializer.java 1169 2006-06-14 13:08:25Z fabrice $" +
-        "$Author: fabrice $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(Initializer.class);
 

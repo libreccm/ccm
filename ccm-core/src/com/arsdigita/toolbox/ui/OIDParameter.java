@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.bebop.parameters.ParameterModel;
 
-/*
+/**
  * A {@link com.arsdigita.bebop.parameters.ParameterModel} for an
  * {@link com.arsdigita.persistence.OID}
  *
@@ -31,6 +31,7 @@ import com.arsdigita.bebop.parameters.ParameterModel;
  * @since Iteration 1
  */
 public class OIDParameter extends ParameterModel {
+
     public OIDParameter(String name) {
         super(name);
     }

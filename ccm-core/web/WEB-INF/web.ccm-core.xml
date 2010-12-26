@@ -4,19 +4,20 @@
  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
             version="2.4">
 
-    <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - basic web.xml for ccm-core and basic functions. If
-        additional modules provide specific web.xml snippets they must be integrated before CCM is ready to work. Alternatively a
-        complete web.xml file from an installation bundle may be used. - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        - - - - -
-    -->
+    <!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        basic web.xml for ccm-core and basic functions. If
+        additional modules provide specific web.xml snippets they must be
+        integrated before CCM is ready to work. Alternatively a
+        complete web.xml file from an installation bundle may be used.
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 
     <display-name>CCM</display-name>
     <description>Content and Collaboration Management</description>
 
     <!--
-        path and filename of the log4j user accessible config file WEB-INF/conf/log4j.properties is the built-in default value
+        path and filename of the log4j user accessible config file
+        WEB-INF/conf/log4j.properties is the built-in default value
     -->
     <context-param>
         <param-name>log4j-conf-file</param-name>
@@ -24,20 +25,18 @@
     </context-param>
 
 
-    <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Context Listener required and used to
-        initialize the runtime environment before any other task is performed or any servlet initialized. - - - - - - - - - - - -
-        - - - - - - - - - - - - - - - - - - - - - - - - - -
-    -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      Context Listener required and used to initialize the runtime environment
+      before any other task is performed or any servlet initialized.
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <listener>
         <listener-class>com.arsdigita.web.CCMApplicationContextListener</listener-class>
     </listener>
 
-    <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - BASE SERVLET DECLARATIONS SECTION basically
-        requirred by ccm-core - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    -->
-
+    <!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        BASE SERVLET DECLARATIONS SECTION
+        basically requirred by ANY ccm-core application to work correctly!
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <servlet>
         <servlet-name>reg</servlet-name>
         <servlet-class>com.arsdigita.web.ContextRegistrationServlet</servlet-class>
@@ -95,10 +94,11 @@
     </servlet>
 
     <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ADDITIONAL SERVLET DECLARATIONS SECTION
-        basically requirred by ccm-cms - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      ADDITIONAL SERVLET DECLARATIONS SECTION
+      basically requirred by ccm-cms
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     -->
-
     <servlet>
         <servlet-name>content-section</servlet-name>
         <servlet-class>com.arsdigita.cms.ContentSectionServlet</servlet-class>
@@ -140,8 +140,10 @@
     </servlet>
 
     <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - BASE SERVLET MAPPINGS SECTION basically
-        requirred by ccm-core - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      BASE SERVLET MAPPINGS SECTION basically
+      requirred by ccm-core
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     -->
 
     <servlet-mapping>
@@ -185,8 +187,10 @@
     </servlet-mapping>
 
     <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ADDITIONAL SERVLET MAPPINGS SECTION basically
-        requirred by ccm-cms - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      ADDITIONAL SERVLET MAPPINGS SECTION basically
+      requirred by ccm-cms
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     -->
 
     <servlet-mapping>
@@ -220,8 +224,9 @@
     </servlet-mapping>
 
     <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ERROR PAGES - - - - - - - - - - - - - - - - -
-        - - - - - - - - - - - - - - - - - - - - -
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      ERROR PAGES
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     -->
 
     <error-page>
@@ -260,8 +265,9 @@
     </error-page>
 
     <!--
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - TAG LIBS - - - - - - - - - - - - - - - - - - -
-        - - - - - - - - - - - - - - - - - - -
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      TAG LIBS
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     -->
 
     <jsp-config>
