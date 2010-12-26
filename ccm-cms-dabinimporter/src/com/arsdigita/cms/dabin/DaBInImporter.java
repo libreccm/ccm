@@ -2144,7 +2144,12 @@ public class DaBInImporter extends Program {
                     Term term;
                     term =
                     termsDomain.getTerm(currentProjectsTerm.getUniqueID());
-                    term.addObject(project);
+                    if (projectDe != null) {
+                        term.addObject(projectDe);
+                    }
+                    if (projectEn != null) {
+                        term.addObject(projectEn);
+                    }
                     term.save();
                 }
 
@@ -2629,13 +2634,19 @@ public class DaBInImporter extends Program {
                 }
 
                 insertIntoAZFolder(publication, publicationsAlpha);
-                Term term = termsDomain.getTerm(publicationTerms.get(Integer.
-                        toString(((Publication) publication.getPrimaryInstance()).
-                        getYearOfPublication())).getUniqueID());
+                Term term = publicationTerms.get(Integer.toString(((Publication) publication.
+                                                                   getPrimaryInstance()).
+                        getYearOfPublication()));
                 if (term == null) {
                     term = publicationsTerm;
                 }
-                term.addObject(publication);
+                term = termsDomain.getTerm(term.getUniqueID());
+                if (publicationDe != null) {
+                    term.addObject(publicationDe);
+                }
+                if (publicationEn != null) {
+                    term.addObject(publicationEn);
+                }
                 term.save();
             }
         };
@@ -2738,19 +2749,29 @@ public class DaBInImporter extends Program {
                 //publications.addItem(workingPaper);
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
                 insertIntoAZFolder(workingPaper, publicationsAlpha);
-                WorkingPaper primary = (WorkingPaper) workingPaper.getPrimaryInstance();
-                String yearStr = Integer.toString(primary.getYearOfPublication());
+                WorkingPaper primary = (WorkingPaper) workingPaper.
+                        getPrimaryInstance();
+                String yearStr =
+                       Integer.toString(primary.getYearOfPublication());
                 Term term = workingPaperTerms.get(yearStr);
                 if (term == null) {
+                    System.out.printf(
+                            "***WARNING: Term for year '%s' not found. Using basic term.",
+                            yearStr);
                     term = workingPapersTerm;
                 }
-                term = termsDomain.getTerm(term.getUniqueID());                
-                term.addObject(workingPaper);
+                term = termsDomain.getTerm(term.getUniqueID());
+                if (workingPaperDe != null) {
+                    term.addObject(workingPaperDe);
+                }
+                if (workingPaperEn != null) {
+                    term.addObject(workingPaperEn);
+                }
                 term.save();
 
                 System.out.println("\tOK");
 
-                System.out.print("\tAssigning file...");
+                System.out.print("\tAssigning file...\n ");
                 if (workingPaperData.getFile() == null) {
                     System.out.println("No file found.");
                 } else {
@@ -2791,23 +2812,23 @@ public class DaBInImporter extends Program {
                                                           getPrimaryInstance()).
                                     getTitle());
                             if (title.length() > 200) {
-                                fsi.setTitle(title.substring(0, 199));
+                                fsi.setTitle(title.substring(0, 200));
                             } else {
                                 fsi.setTitle(title);
                             }
 
-                            String name = String.format("datei_%s",
+                            String name = String.format("datei_%s.pdf",
                                                         ((WorkingPaper) workingPaper.
                                                          getPrimaryInstance()).
                                     getName());
                             if (name.length() > 200) {
-                                fsi.setName(name.substring(0, 199));
-                            } else {
-                                fsi.setName(name);
-                            }
+                                name = name.substring(0, 200);
+                            } 
+                            fsi.setName(name);
                             FileAsset file = new FileAsset();
-                            file.loadFromFile(workingPaper.getPrimaryInstance().
-                                    getName(), pdf, "application/octet-stream");
+                            file.loadFromFile(name,
+                                              pdf,
+                                              "application/pdf");
                             fsi.setFile(file);
                             file.setContentSection(section);
                             fsi.setContentSection(section);
@@ -2818,13 +2839,13 @@ public class DaBInImporter extends Program {
                             bundle.setDefaultLanguage("de");
 
                             RelatedLink download = new RelatedLink();
-                            download.setTitle("download");
+                            download.setTitle("Download");
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperDe);
 
                             download = new RelatedLink();
-                            download.setTitle("download");
+                            download.setTitle("Download");
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
@@ -2895,10 +2916,10 @@ public class DaBInImporter extends Program {
                         myPublication.setTargetType(Link.INTERNAL_LINK);
                         myPublication.setTargetItem(workingPaperEn);
                         if (workingPaperEn.getTitle().length() > 180) {
-                            myPublication.setTitle(workingPaperDe.getTitle().
+                            myPublication.setTitle(workingPaperEn.getTitle().
                                     substring(0, 180));
                         } else {
-                            myPublication.setTitle(workingPaperDe.getTitle());
+                            myPublication.setTitle(workingPaperEn.getTitle());
                         }
                         myPublication.setLinkListName("MyPublications");
                         myPublication.save();
@@ -3227,6 +3248,7 @@ public class DaBInImporter extends Program {
                 System.out.printf("Term '%s' does not exist. Creating...\n",
                                   token);
                 createTerm(uniqueId, name, termsDomain, prevTerm);
+                term = termsDomain.getTerm(uniqueId);
             }
         }
 
@@ -3329,7 +3351,8 @@ public class DaBInImporter extends Program {
                 }
             }
         } catch (SQLException ex) {
-            System.err.println("Query for publication years of working papers failed.");
+            System.err.println(
+                    "Query for publication years of working papers failed.");
             ex.printStackTrace(System.err);
         }
 

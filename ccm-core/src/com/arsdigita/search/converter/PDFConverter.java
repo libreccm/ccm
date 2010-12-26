@@ -20,9 +20,9 @@ package com.arsdigita.search.converter;
 
 import java.io.InputStream;
 import java.io.IOException;
-import org.pdfbox.pdfparser.PDFParser;
-import org.pdfbox.util.PDFTextStripper;
-import org.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.util.PDFTextStripper;
+import org.apache.pdfbox.pdmodel.PDDocument;
 
 /**
  * This class provides the mechanism to perform a conversion from
