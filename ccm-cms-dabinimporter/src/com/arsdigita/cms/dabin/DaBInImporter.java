@@ -2138,19 +2138,22 @@ public class DaBInImporter extends Program {
                     Term term;
                     term = termsDomain.getTerm(
                             finishedProjectsTerm.getUniqueID());
+                    System.out.printf("\tAdding project to term '%s:%s'...\n",
+                                      term.getUniqueID(),
+                                      term.getName());
                     term.addObject(project);
                     term.save();
+                    project.save();
                 } else {
                     Term term;
                     term =
                     termsDomain.getTerm(currentProjectsTerm.getUniqueID());
-                    if (projectDe != null) {
-                        term.addObject(projectDe);
-                    }
-                    if (projectEn != null) {
-                        term.addObject(projectEn);
-                    }
+                    System.out.printf("\tAdding project to term '%s:%s'...\n",
+                                      term.getUniqueID(),
+                                      term.getName());
+                    term.addObject(project);                  
                     term.save();
+                    project.save();
                 }
 
                 System.out.println("\tOK");
@@ -2641,12 +2644,9 @@ public class DaBInImporter extends Program {
                     term = publicationsTerm;
                 }
                 term = termsDomain.getTerm(term.getUniqueID());
-                if (publicationDe != null) {
-                    term.addObject(publicationDe);
-                }
-                if (publicationEn != null) {
-                    term.addObject(publicationEn);
-                }
+                System.out.printf("\tAdding publication to term '%s:%s'...\n", term.
+                        getUniqueID(), term.getName());
+                term.addObject(publication);
                 term.save();
             }
         };
@@ -2761,12 +2761,9 @@ public class DaBInImporter extends Program {
                     term = workingPapersTerm;
                 }
                 term = termsDomain.getTerm(term.getUniqueID());
-                if (workingPaperDe != null) {
-                    term.addObject(workingPaperDe);
-                }
-                if (workingPaperEn != null) {
-                    term.addObject(workingPaperEn);
-                }
+                System.out.printf("\tAdding project to term '%s:%s'...\n", term.
+                        getUniqueID(), term.getName());
+                term.addObject(workingPaper);
                 term.save();
 
                 System.out.println("\tOK");
@@ -2823,7 +2820,7 @@ public class DaBInImporter extends Program {
                                     getName());
                             if (name.length() > 200) {
                                 name = name.substring(0, 200);
-                            } 
+                            }
                             fsi.setName(name);
                             FileAsset file = new FileAsset();
                             file.loadFromFile(name,
@@ -3291,8 +3288,10 @@ public class DaBInImporter extends Program {
                 try {
                     Term term = Term.create(uniqueId, name, false, "", domain);
                     term.save();
-                    parent.addNarrowerTerm(term, false, false);
-                    //parent.save();
+                    Term parentTerm = termsDomain.getTerm(parent.getUniqueID());
+                    term = termsDomain.getTerm(term.getUniqueID());
+                    parentTerm.addNarrowerTerm(term, true, true);
+                    parentTerm.save();
                 } catch (Exception ex) {
                     ex.printStackTrace(System.err);
                 }
