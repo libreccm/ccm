@@ -45,7 +45,7 @@ public class ProceedingsPropertiesStep
                   Proceedings.DATE_FROM_OF_CONFERENCE);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.date_TO_of_conference"),
+                "publications.ui.proceedings.date_to_of_conference"),
                   Proceedings.DATE_TO_OF_CONFERENCE);
 
         return sheet;

@@ -115,7 +115,7 @@ public class PublicationPropertiesStep extends SimpleEditStep {
         addStep(new PublicationAuthorsPropertyStep(itemModel, parent),
                 "publications.ui.publication.authors");       
         addStep(new PublicationSeriesPropertyStep(itemModel, parent),
-                "publication.ui.publication.series");
+                "publications.ui.publication.series");
     }
 
     protected void addStep(SimpleEditStep step, String labelKey) {

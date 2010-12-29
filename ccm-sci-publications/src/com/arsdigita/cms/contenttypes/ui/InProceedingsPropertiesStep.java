@@ -61,7 +61,7 @@ public class InProceedingsPropertiesStep
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(
-                "publication.ui.publications.basic_properties").localize()),
+                "publications.ui.publications.basic_properties").localize()),
                 basicProperties);
     }
 }
