@@ -15,47 +15,39 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
-
 package com.arsdigita.london.navigation.ui.object;
 
 import com.arsdigita.london.navigation.Navigation;
 import com.arsdigita.london.navigation.ui.AbstractObjectList;
 
-
-
-
 import com.arsdigita.xml.Element;
-
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 
 /**
  * A object list
  */
 public class SimpleObjectList extends AbstractObjectList {
-    
+
     public static final String CUSTOM_NAME = "customName";
     protected String m_customName = null;
 
     public void setCustomName(String name) {
-	m_customName = name;
+        m_customName = name;
     }
 
     public String getCustomName() {
-	return m_customName;
+        return m_customName;
     }
-    
+
     public Element generateXML(HttpServletRequest request,
                                HttpServletResponse response) {
         Element content = Navigation.newElement("simpleObjectList");
 
-	if (m_customName != null) {
-	    content.addAttribute(CUSTOM_NAME, m_customName);
-	}
+        if (m_customName != null) {
+            content.addAttribute(CUSTOM_NAME, m_customName);
+        }
 
         content.addContent(generateObjectListXML(request,
                                                  response));

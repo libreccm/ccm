@@ -40,6 +40,7 @@
       
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setPageSize(20);
       ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setSpecializeObjects(true);
+      ((com.arsdigita.london.navigation.ui.object.SimpleObjectList) itemList).getRenderer().setSpecializeObjectsContext("sciProjectList");
     </jsp:scriptlet>
 
     <define:component name="assignedTerms"

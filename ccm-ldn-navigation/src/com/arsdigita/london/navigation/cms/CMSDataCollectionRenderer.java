@@ -57,7 +57,14 @@ public class CMSDataCollectionRenderer extends DataCollectionRenderer {
             renderer.setWrapAttributes(true);
             renderer.setWrapRoot(false);
             renderer.setWrapObjects(false);
-            renderer.walk(obj, SimpleXMLGenerator.ADAPTER_CONTEXT);
+            //renderer.walk(obj, SimpleXMLGenerator.ADAPTER_CONTEXT);
+            /* jensp 2011-01-03: 
+             * I needed the option to use different traversal adapters for
+             * the object in the detail view and the list view. It is now 
+             * possible to set the adapter context used from a JSP template, 
+             * using DataCollectionRenderer#setSpecializeObjectsContext(String).
+             */
+            renderer.walk(obj, getSpecializeObjectsContext());
         }
     }
 }

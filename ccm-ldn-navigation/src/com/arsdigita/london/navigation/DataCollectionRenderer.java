@@ -17,6 +17,7 @@
  */
 package com.arsdigita.london.navigation;
 
+import com.arsdigita.cms.dispatcher.SimpleXMLGenerator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.persistence.DataAssociation;
@@ -54,6 +55,13 @@ public class DataCollectionRenderer extends LockableImpl {
     private ArrayList m_properties = new ArrayList();
     private int m_pageSize = 20;
     private boolean m_specializeObjects = false;
+    /**
+     * The traversal adapter context used if {@link #m_specializeObjects} is
+     * <code>true</code>. Defaults to
+     * {@link SimpleXMLGenerator.ADAPTER_CONTEXT}.
+     */
+    private String m_specializeObjectsContext =
+            SimpleXMLGenerator.ADAPTER_CONTEXT;
     private boolean m_wrapAttributes = false;
     private boolean m_navItems = true;
 
@@ -89,6 +97,20 @@ public class DataCollectionRenderer extends LockableImpl {
     public void setSpecializeObjects(boolean specializeObjects) {
         Assert.isUnlocked(this);
         m_specializeObjects = specializeObjects;
+    }
+
+    protected String getSpecializeObjectsContext() {
+        return m_specializeObjectsContext;
+    }
+
+    /**
+     * Sets the context of the traversal adapter used the render the objects
+     * if {@link #m_specializeObjects} is set to <code>true</code>
+     *
+     * @param context The adapter context.
+     */
+    public void setSpecializeObjectsContext(String context) {
+        m_specializeObjectsContext = context;
     }
 
     public void setWrapAttributes(boolean wrapAttributes) {
