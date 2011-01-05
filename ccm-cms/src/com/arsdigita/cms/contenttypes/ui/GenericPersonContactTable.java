@@ -205,9 +205,15 @@ public class GenericPersonContactTable extends Table implements
                             contacttypes.getRelationAttribute(
                             m_contactCollection.getContactType(),
                             lang)));
-                    return contacttypes.getRelationAttribute(
+
+                    Object name = contacttypes.getRelationAttribute(
                             m_contactCollection.getContactType(),
                             lang).getName();
+
+                    // Close collection to prevent open ResultSet
+                    contacttypes.close();
+
+                    return name;
                 case 1:
                     return m_contact.getTitle();
                 case 2:

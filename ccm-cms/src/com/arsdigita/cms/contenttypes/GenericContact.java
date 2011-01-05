@@ -109,6 +109,9 @@ public class GenericContact extends ContentPage implements
             collection.next();
             dobj = collection.getDataObject();
 
+            // Close Collection to prevent an open ResultSet
+            collection.close();
+
             return (GenericPerson) DomainObjectFactory.newInstance(dobj);
         }
         //return (GenericPerson) DomainObjectFactory.newInstance((DataObject)get(PERSON));
@@ -190,7 +193,12 @@ public class GenericContact extends ContentPage implements
         if(person != null) {
             GenericPersonContactCollection collection =  person.getContacts();
             collection.next();
-            return (String) collection.getContactType();
+            String contactType = (String) collection.getContactType();
+
+            // Close Collection to prevent open ResultSet
+            collection.close();
+
+            return contactType;
         } else {
             return null;
         }

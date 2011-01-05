@@ -151,7 +151,12 @@ public class GenericContactEntriesTable extends Table implements TableActionList
                     GenericContactEntryKeys keys = new GenericContactEntryKeys(m_contactEntry.getKey());
                     keys.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
                     if (keys.next()) {
-                        return keys.getName();
+                        Object key =  keys.getName();
+                        
+                        // Close Collection to prevent open ResultSet
+                        keys.close();
+
+                        return key;
                     }
                     return m_contactEntry.getKey();
                 case 1:
