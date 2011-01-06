@@ -144,6 +144,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
 
             collection.next();
             dobj = collection.getDataObject();
+            collection.close();
 
             return new SciDepartment(dobj);
         }
@@ -183,6 +184,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
 
             collection.next();
             dobj = collection.getDataObject();
+            collection.close();
 
             return new SciOrganization(dobj);
         }

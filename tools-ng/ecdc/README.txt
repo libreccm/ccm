@@ -127,8 +127,16 @@ Eclipse:
 	Use File > Import to import aplaws.launch 
 		(if aplaws doesn't appear in Debug configurations)
 	Debug > Debug configurations > aplaws > Debug
+
+Heap space:
+       If you have problems with the heap space, you can enlarge you
+       heap space using these command line on Unix system with Bash:
+
+       ANT_OPTS="-Xms256M -Xmx256M" ant <target>        
+       
 	
 5. CONTACTS
 
 Send any queries to the "Developing on APLAWS+" forum at 
 http://sourceforge.net/forum/forum.php?forum_id=368401
+

@@ -246,6 +246,7 @@ public class SciProject extends GenericOrganizationalUnit {
                                        getTitle()));
             collection.next();
             dobj = collection.getDataObject();
+            collection.close();
 
             return new SciProject(dobj);
         }

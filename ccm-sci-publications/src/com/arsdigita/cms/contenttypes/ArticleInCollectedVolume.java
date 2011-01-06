@@ -99,6 +99,7 @@ public class ArticleInCollectedVolume extends Publication {
 
             collection.next();
             dobj = collection.getDataObject();
+            collection.close();
 
             return (CollectedVolume)DomainObjectFactory.newInstance(dobj);
         }

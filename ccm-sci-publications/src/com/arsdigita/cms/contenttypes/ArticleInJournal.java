@@ -96,6 +96,7 @@ public class ArticleInJournal extends Publication {
 
             collection.next();
             dobj = collection.getDataObject();
+            collection.close();
 
             return (Journal) DomainObjectFactory.newInstance(dobj);
         }
