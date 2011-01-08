@@ -20,19 +20,20 @@ package com.arsdigita.cms.installer.xml;
 
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.TextAsset;
-import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import org.apache.log4j.Logger;
 
 /**
- * TextPageHelper
+ * GenericArticleHelper
  *
  * @author <a href="mailto:jorris@redhat.com">Jon Orris</a>
  *
  */
-public class TextPageHelper extends ContentPageHelper {
+public class GenericArticleHelper extends ContentPageHelper {
 
-    private static final Logger s_log = Logger.getLogger(TextPageHelper.class);
-    public TextPageHelper(ContentSection section) {
+    private static final Logger s_log = Logger.getLogger(GenericArticleHelper.class);
+
+    public GenericArticleHelper(ContentSection section) {
         super(section);
     }
 
@@ -41,7 +42,7 @@ public class TextPageHelper extends ContentPageHelper {
         TextAsset asset = new TextAsset();
         asset.setText(body);
 
-        TextPage page = (TextPage) m_item;
+        GenericArticle page = (GenericArticle) m_item;
         page.setTextAsset(asset);
         asset.setParent(page);
         asset.setName(page.getName() + "_text_" + page.getID());

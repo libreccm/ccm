@@ -23,7 +23,7 @@ import com.arsdigita.cms.*;
 
 // object type to hold extended attributes of event content type
 
-object type Event extends TextPage {
+object type Event extends GenericArticle {
     // The starting date and time of the event, so the events content type 
     // can be used by calendar
     Date [0..1] startDate         = ct_events.start_date DATE;

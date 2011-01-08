@@ -16,13 +16,6 @@
             <ctd:include href="/WEB-INF/content-types/edit-body-text-step.xml"/>
 
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
-
-            <ctd:authoring-step label="Image" description="Image"
-                                labelKey="article.authoring.image.title"
-                                labelBundle="com.arsdigita.cms.contenttypes.ArticleResources"
-                                descriptionKey="article.authoring.image.description"
-                                descriptionBundle="com.arsdigita.cms.contenttypes.ArticleResources"
-                                component="com.arsdigita.cms.ui.authoring.ArticleImage"/>
         </ctd:authoring-kit>
     </ctd:content-type>
 </ctd:content-types>

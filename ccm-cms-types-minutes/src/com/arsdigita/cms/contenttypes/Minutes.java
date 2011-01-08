@@ -18,9 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.TextPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -34,11 +32,10 @@ import java.math.BigDecimal;
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  **/
-public class Minutes extends TextPage {
+public class Minutes extends GenericArticle {
 
     private static Logger s_log =
-        Logger.getLogger(Minutes.class);
-
+            Logger.getLogger(Minutes.class);
     /** PDL property name for attendees */
     public static final String ATTENDEES = "attendees";
     /** PDL property name for description */
@@ -49,10 +46,8 @@ public class Minutes extends TextPage {
     public static final String MINUTE_NUMBER = "minuteNumber";
     /** PDL property name for description */
     public static final String DESCRIPTION_OF_MINUTES = "descriptionOfMinutes";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.Minutes";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Minutes";
 
     public Minutes() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -74,10 +69,9 @@ public class Minutes extends TextPage {
         super(type);
     }
 
-
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
@@ -121,12 +115,11 @@ public class Minutes extends TextPage {
     public void setMinuteNumber(String minuteNumber) {
         set(MINUTE_NUMBER, minuteNumber);
     }
-
     public static final int SUMMARY_LENGTH = 200;
+
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getDescription(),
-                                                             SUMMARY_LENGTH,
-                                                             true);
+                SUMMARY_LENGTH,
+                true);
     }
-
 }

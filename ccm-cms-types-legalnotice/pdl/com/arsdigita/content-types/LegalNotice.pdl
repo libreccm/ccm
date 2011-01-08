@@ -22,7 +22,7 @@ model com.arsdigita.cms.contenttypes;
 import com.arsdigita.cms.*;
 
 // object type to hold extended attributes of legal notice content type
-object type LegalNotice extends TextPage {
+object type LegalNotice extends GenericArticle {
     // The government issued UID for the legal notice
     String [0..1] governmentUID       = ct_legal_notices.government_uid VARCHAR(100);
 

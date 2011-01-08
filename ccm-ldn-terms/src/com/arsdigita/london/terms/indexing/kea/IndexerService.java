@@ -33,7 +33,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 
 import com.arsdigita.cms.ContentItem;
-import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.Term;
 import com.arsdigita.london.terms.indexing.Indexer;
@@ -63,7 +63,7 @@ public class IndexerService {
 
         // Extract keyphrases
         StringBuffer txtStr = new StringBuffer();
-        txtStr.append(((TextPage) item).getTextAsset().getText());
+        txtStr.append(((GenericArticle) item).getTextAsset().getText());
 
         double[] newInst = new double[2];
         newInst[0] = (double) data.attribute(0).addStringValue(txtStr.toString());

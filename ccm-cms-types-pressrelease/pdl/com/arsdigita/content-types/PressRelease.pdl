@@ -25,7 +25,7 @@ import com.arsdigita.cms.*;
 
 
 
-object type PressRelease extends TextPage {
+object type PressRelease extends GenericArticle {
     // contact information text for the press release
     String [0..1] contactInfo   = ct_press_releases.contact_info VARCHAR(1000);
     // the text summary for the press release

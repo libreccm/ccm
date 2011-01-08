@@ -18,16 +18,13 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.TextPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.Assert;
-import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -40,7 +37,7 @@ import java.util.Date;
  * It represents an event object and provides methods for creating new event
  * objects, retrieving existing objects from the persistent storage and 
  * retrieving and setting is properties.</p>
- * <p>This class extends {@link com.arsdigita.cms.TextPage content page} and
+ * <p>This class extends {@link com.arsdigita.cms.contenttypes.GenericArticle content page} and
  * inherits title, name (filename), body (TextAsset), and metadata. It adds 
  * extended attributes specific for an event:</p>
  * <dl>
@@ -70,21 +67,17 @@ import java.util.Date;
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  **/
-public class Event extends TextPage {
+public class Event extends GenericArticle {
 
     private final static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(Event.class);
-
+            org.apache.log4j.Logger.getLogger(Event.class);
     /** PDL property name for lead (summary) */
     public static final String LEAD = "lead";
-
     /** PDL property name for event date */
     public static final String START_DATE = "startDate";
     public static final String END_DATE = "endDate";
-
     public static final String START_TIME = "startTime";
     public static final String END_TIME = "endTime";
-
     public static final String EVENT_DATE = "eventDate";
     /** PDL property name for location */
     public static final String LOCATION = "location";
@@ -96,20 +89,17 @@ public class Event extends TextPage {
     public static final String MAP_LINK = "mapLink";
     /** PDL property name for cost */
     public static final String COST = "cost";
-
     public static final String RECENT_EVENT = "com.arsdigita.cms.contenttypes.RecentEvent";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.Event";
-
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Event";
     private static final EventConfig s_config = new EventConfig();
+
     static {
-	    s_config.load();
+        s_config.load();
     }
-    public static final EventConfig getConfig()
-    {
-	    return s_config;
+
+    public static final EventConfig getConfig() {
+        return s_config;
     }
 
     /**
@@ -172,48 +162,45 @@ public class Event extends TextPage {
      */
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
-    public String formatDate (Date date) {
-        return (date != null) ? DateFormat.getDateInstance(DateFormat.LONG)
-            .format(date) : null;
+    public String formatDate(Date date) {
+        return (date != null) ? DateFormat.getDateInstance(DateFormat.LONG).format(date) : null;
     }
 
-
-    public String formatTime (Date time) {
-        return (time != null) ? DateFormat.getTimeInstance(DateFormat.SHORT)
-            .format(time) : null;
+    public String formatTime(Date time) {
+        return (time != null) ? DateFormat.getTimeInstance(DateFormat.SHORT).format(time) : null;
     }
 
     /* accessors *****************************************************/
-    public Date getStartTime () {
-        return (Date)get(START_TIME);
+    public Date getStartTime() {
+        return (Date) get(START_TIME);
     }
 
-    public void setStartTime (Date startTime) {
+    public void setStartTime(Date startTime) {
         set(START_TIME, startTime);
     }
 
-    public String getDisplayStartTime () {
+    public String getDisplayStartTime() {
         return formatTime(getStartTime());
     }
 
-    public Date getEndTime () {
-        return (Date)get(END_TIME);
+    public Date getEndTime() {
+        return (Date) get(END_TIME);
     }
 
-    public void setEndTime (Date endTime) {
+    public void setEndTime(Date endTime) {
         set(END_TIME, endTime);
     }
 
-    public String getDisplayEndTime () {
+    public String getDisplayEndTime() {
         return formatTime(getEndTime());
     }
 
     public Date getStartDate() {
-        Date startDate = (Date) get (START_DATE);
+        Date startDate = (Date) get(START_DATE);
         return startDate;
     }
 
@@ -226,7 +213,7 @@ public class Event extends TextPage {
     }
 
     public Date getEndDate() {
-        Date endDate = (Date) get (END_DATE);
+        Date endDate = (Date) get(END_DATE);
         return endDate;
     }
 
@@ -241,7 +228,6 @@ public class Event extends TextPage {
     public String getEventDate() {
         return (String) get(EVENT_DATE);
     }
-
 
     public void setEventDate(String eventDate) {
         set(EVENT_DATE, eventDate);
@@ -294,13 +280,13 @@ public class Event extends TextPage {
     public void setCost(String cost) {
         set(COST, cost);
     }
-
     // Search stuff to allow the content type to be searchable
     public static final int SUMMARY_LENGTH = 200;
+
     public String getSearchSummary() {
         return com.arsdigita.util.StringUtils.truncateString(getLead(),
-                                                             SUMMARY_LENGTH,
-                                                             true);
+                SUMMARY_LENGTH,
+                true);
     }
 
 

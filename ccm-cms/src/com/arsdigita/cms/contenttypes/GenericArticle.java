@@ -18,7 +18,8 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.TextAsset;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -32,13 +33,14 @@ import java.math.BigDecimal;
  * @version $Revision: #28 $ $Date: 2004/08/17 $
  * @version $Id: Article.java 2070 2010-01-28 08:47:41Z pboy $
  */
-public class GenericArticle extends TextPage {
+public class GenericArticle extends ContentPage {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.contenttypes.GenericArticle";
-
+            "com.arsdigita.cms.contenttypes.GenericArticle";
+    public static final String TEXT_ASSET = "textAsset";
+    protected static final int SUMMARY_SIZE = 1024;
     private static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(GenericArticle.class);
+            org.apache.log4j.Logger.getLogger(GenericArticle.class);
 
     /**
      * Default constructor. This creates a new article.
@@ -60,7 +62,7 @@ public class GenericArticle extends TextPage {
     }
 
     public GenericArticle(String type) {
-	super(type);
+        super(type);
     }
 
     /**
@@ -87,5 +89,42 @@ public class GenericArticle extends TextPage {
     @Override
     public String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
+    }
+
+    /**
+     * Return the text asset for this <code>TextPage</code>. Could return
+     * null if there is no text body actually associated with the page
+     */
+    public TextAsset getTextAsset() {
+        DataObject text = (DataObject) get(TEXT_ASSET);
+        if (text == null) {
+            return null;
+        } else {
+            return new TextAsset(text);
+        }
+    }
+
+    /**
+     * Pass in a null value to remove the text of this item.
+     * Explicitly call text.delete() to remove the text from the database
+     */
+    public void setTextAsset(TextAsset text) {
+        setAssociation(TEXT_ASSET, text);
+    }
+
+    /**
+     * Return a short summary of the text body for search.
+     * This method is WRONG, because the text body could actually
+     * be extremely large, and doing substring on it is NOT safe
+     */
+    public String getSearchSummary() {
+        TextAsset a = getTextAsset();
+
+        if (a == null) {
+            return "";
+        }
+        return com.arsdigita.util.StringUtils.truncateString(a.getText(),
+                SUMMARY_SIZE,
+                true);
     }
 }

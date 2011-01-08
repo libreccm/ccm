@@ -18,10 +18,8 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.TextAsset;
-import com.arsdigita.cms.TextPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -35,16 +33,14 @@ import java.math.BigDecimal;
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  **/
-public class LegalNotice extends TextPage {
+public class LegalNotice extends GenericArticle {
 
     /** PDL property name for government UID */
     public static final String GOVERNMENT_UID = "governmentUID";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.LegalNotice";
-
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.LegalNotice";
     private static final Logger s_log = Logger.getLogger(LegalNotice.class);
+
     public LegalNotice() {
         this(BASE_DATA_OBJECT_TYPE);
     }
@@ -67,7 +63,7 @@ public class LegalNotice extends TextPage {
 
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
@@ -79,7 +75,6 @@ public class LegalNotice extends TextPage {
     public void setGovernmentUID(String governmentUID) {
         set(GOVERNMENT_UID, governmentUID);
     }
-
     // Search stuff to allow the content type to be searchable
     public static final int SUMMARY_LENGTH = 200;
 
@@ -88,11 +83,10 @@ public class LegalNotice extends TextPage {
 
         if (ta != null) {
             return com.arsdigita.util.StringUtils.truncateString(ta.getText(),
-                                                                 SUMMARY_LENGTH,
-                                                                 true);
+                    SUMMARY_LENGTH,
+                    true);
         } else {
             return "";
         }
     }
-
 }

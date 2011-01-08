@@ -28,7 +28,7 @@ import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.TextAsset;
-import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.domain.DomainObject;
@@ -44,15 +44,15 @@ import com.arsdigita.util.Assert;
  * this class.
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
- * @version $Id: TextPageBody.java 1949 2009-06-25 08:30:50Z terry $
+ * @version $Id: GenericArticleBody.java 1949 2009-06-25 08:30:50Z terry $
  */
-public class TextPageBody extends TextAssetBody {
+public class GenericArticleBody extends TextAssetBody {
 
     private AuthoringKitWizard m_parent;
     private ItemSelectionModel m_itemModel;
 
     /**
-     * Construct a new TextPageBody component
+     * Construct a new GenericArticleBody component
      *
      * @param itemModel The {@link ItemSelectionModel} which will
      *   be responsible for loading the current item
@@ -61,7 +61,7 @@ public class TextPageBody extends TextAssetBody {
      *   may use the wizard's methods, such as stepForward and stepBack,
      *   in its process listener.
      */
-    public TextPageBody(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public GenericArticleBody(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(new ItemAssetModel(itemModel));
         m_itemModel = itemModel;
         m_parent = parent;
@@ -87,8 +87,9 @@ public class TextPageBody extends TextAssetBody {
 
     /**
      * Adds the options for the mime type select widget of
-     * <code>TextPageForm</code> and sets the default mime type.
+     * <code>GenericArticleForm</code> and sets the default mime type.
      **/
+    @Override
     protected void setMimeTypeOptions(SingleSelect mimeSelect) {
         mimeSelect.addOption(new Option("text/html", "HTML Text"));
         mimeSelect.setOptionSelected("text/html");
@@ -101,7 +102,7 @@ public class TextPageBody extends TextAssetBody {
      * @return a valid TextAsset
      */
     protected TextAsset createTextAsset(PageState s) {
-        TextPage item = getTextPage(s);
+        GenericArticle item = getGenericArticle(s);
         TextAsset t = new TextAsset();
         t.setName(item.getName() + "_text_" + item.getID());
         // no need - cg. Text doesn't need a security context,
@@ -118,7 +119,7 @@ public class TextPageBody extends TextAssetBody {
      * @param a the new <code>TextAsset</code>
      */
     protected void updateTextAsset(PageState s, TextAsset a) {
-        TextPage t = getTextPage(s);
+        GenericArticle t = getGenericArticle(s);
         Assert.exists(t);
         // no need - cg. Text doesn't need a security context,
         // and ownership of text is recorded in text_pages
@@ -130,10 +131,10 @@ public class TextPageBody extends TextAssetBody {
     }
 
     /**
-     * Get the current TextPage
+     * Get the current GenericArticle
      */
-    protected TextPage getTextPage(PageState s) {
-        return (TextPage)m_itemModel.getSelectedObject(s);
+    protected GenericArticle getGenericArticle(PageState s) {
+        return (GenericArticle)m_itemModel.getSelectedObject(s);
     }
 
     /**
@@ -148,8 +149,9 @@ public class TextPageBody extends TextAssetBody {
             super(m);
 
             m_asset = new RequestLocal() {
+                @Override
                     protected Object initialValue(PageState s) {
-                        TextPage t = (TextPage)
+                        GenericArticle t = (GenericArticle)
                             ((ItemSelectionModel)getSingleSelectionModel())
                             .getSelectedObject(s);
                         Assert.exists(t);
@@ -158,23 +160,28 @@ public class TextPageBody extends TextAssetBody {
                 };
         }
 
+        @Override
         public Object getSelectedKey(PageState s) {
             TextAsset a = (TextAsset)getSelectedObject(s);
             return (a == null) ? null : a.getID();
         }
 
+        @Override
         public DomainObject getSelectedObject(PageState s) {
             return (DomainObject)m_asset.get(s);
         }
 
+        @Override
         public void setSelectedObject(PageState s, DomainObject o) {
             m_asset.set(s, o);
         }
 
+        @Override
         public void setSelectedKey(PageState s, Object key) {
             throw new UnsupportedOperationException( (String) GlobalizationUtil.globalize("cms.ui.authoring.not_implemented").localize());
         }
 
+        @Override
         public boolean isSelected(PageState s) {
             return (getSelectedObject(s) != null);
         }

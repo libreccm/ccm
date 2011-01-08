@@ -18,10 +18,8 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.TextAsset;
-import com.arsdigita.cms.TextPage;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -52,7 +50,7 @@ import java.util.Date;
  *
  * @version $Revision: #6 $ $Date: 2004/08/17 $
  **/
-public class Agenda extends TextPage {
+public class Agenda extends GenericArticle {
 
     /** PDL property name for summary */
     public static final String SUMMARY = "summary";
@@ -68,12 +66,9 @@ public class Agenda extends TextPage {
     public static final String CONTACT_INFO = "contactInfo";
     /** PDL property name for creation date */
     public static final String CREATION_DATE = "creationDate";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.Agenda";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Agenda";
     /** Data object type for this domain object (for CMS compatibility) */
-
     private static final Logger s_log = Logger.getLogger(Logger.class);
 
     /**
@@ -136,7 +131,7 @@ public class Agenda extends TextPage {
      */
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
@@ -145,11 +140,11 @@ public class Agenda extends TextPage {
         return (Date) get(AGENDA_DATE);
     }
 
-    public String getDisplayAgendaDate () {
+    public String getDisplayAgendaDate() {
         Date d = getAgendaDate();
-        return (d != null) ? DateFormat.getDateInstance(DateFormat.LONG)
-            .format(d) : null;
+        return (d != null) ? DateFormat.getDateInstance(DateFormat.LONG).format(d) : null;
     }
+
     public void setAgendaDate(Date agendaDate) {
         set(AGENDA_DATE, agendaDate);
     }
@@ -163,7 +158,7 @@ public class Agenda extends TextPage {
     }
 
     public String getAttendees() {
-        return  (String) get(ATTENDEES);
+        return (String) get(ATTENDEES);
     }
 
     public void setAttendees(String attendees) {
@@ -171,7 +166,7 @@ public class Agenda extends TextPage {
     }
 
     public String getSubjectItems() {
-        return  (String) get(SUBJECT_ITEMS);
+        return (String) get(SUBJECT_ITEMS);
     }
 
     public void setSubjectItems(String subjectItems) {
@@ -201,7 +196,6 @@ public class Agenda extends TextPage {
     public void setCreationDate(Date creationDate) {
         set(CREATION_DATE, creationDate);
     }
-
     // Search stuff to allow the content type to be searchable
     public static final int SUMMARY_LENGTH = 200;
 
@@ -209,12 +203,11 @@ public class Agenda extends TextPage {
         TextAsset ta = getTextAsset();
 
         if (ta != null) {
-                return com.arsdigita.util.StringUtils.truncateString(ta.getText(),
-                                                                     SUMMARY_LENGTH,
-                                                                     true);
+            return com.arsdigita.util.StringUtils.truncateString(ta.getText(),
+                    SUMMARY_LENGTH,
+                    true);
         } else {
             return "";
         }
     }
-
 }

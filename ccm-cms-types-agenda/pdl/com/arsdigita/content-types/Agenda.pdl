@@ -23,7 +23,7 @@ import com.arsdigita.cms.*;
 
 // object type to hold extended attributes of agenda content type
 
-object type Agenda extends TextPage {
+object type Agenda extends GenericArticle {
     // The date and time for the agenda
     Date [0..1]   agendaDate   = ct_agendas.agenda_date TIMESTAMP;
     // The location for the agenda

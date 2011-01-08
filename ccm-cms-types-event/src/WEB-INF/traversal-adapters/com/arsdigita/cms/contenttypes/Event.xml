@@ -7,7 +7,7 @@
 
   <!-- First off the adapters for ContentItemPanel -->
   <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator">
-    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Event" extends="com.arsdigita.cms.TextPage"  traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Event" extends="com.arsdigita.cms.GenericArticle"  traversalClass="com.arsdigita.cms.contenttypes.ContentItemTraversalAdapter">
       <xrd:formatter property="/object/startDate" 
                         class="com.arsdigita.xml.formatters.DateFormatter"/>
       <xrd:formatter property="/object/endDate" 

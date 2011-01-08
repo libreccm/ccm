@@ -23,7 +23,7 @@ import com.arsdigita.cms.*;
 
 // object type to hold extended attributes of minutes content type
 
-object type Minutes extends TextPage {
+object type Minutes extends GenericArticle {
     // The minute number for the minutes
     String [0..1] minuteNumber         = ct_minutes.minute_number VARCHAR(100);
     // The description of the minutes
