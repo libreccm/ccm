@@ -4,8 +4,6 @@
     <table name="acs_objects"/>
     <table name="cms_items"/>
     <initializer class="com.arsdigita.cms.Initializer"/>
-    <table name="ct_articles"/>
-    <initializer class="com.arsdigita.cms.contenttypes.ArticleInitializer"/>
   </requires>
   <provides>
     <initializer class="com.arsdigita.cms.contenttypes.HTMLFormInitializer"/>

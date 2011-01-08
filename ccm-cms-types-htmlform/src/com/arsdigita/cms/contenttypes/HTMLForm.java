@@ -28,10 +28,13 @@ import java.math.BigDecimal;
  *
  * @version $Revision: #1 $ $Date: 2004/03/05 $
  */
-public class HTMLForm extends Article {
+public class HTMLForm extends GenericArticle {
 
     private final static org.apache.log4j.Logger s_log =
         org.apache.log4j.Logger.getLogger(HTMLForm.class);
+
+    /** PDL property name for lead */
+    public static final String LEAD = "lead";
 
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE
@@ -68,4 +71,20 @@ public class HTMLForm extends Article {
         
         Assert.exists(getContentType(), ContentType.class);
     }
+
+    public String getLead() {
+        return (String) get( LEAD );
+    }
+
+    public void setLead( String lead ) {
+        set( LEAD, lead );
+    }
+
+    public static final int SUMMARY_LENGTH = 200;
+    public String getSearchSummary() {
+        return com.arsdigita.util.StringUtils.truncateString(getLead(),
+                                                             SUMMARY_LENGTH,
+                                                             true);
+    }
+
 }

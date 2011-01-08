@@ -7,7 +7,7 @@
          labelBundle="com.arsdigita.cms.CMSResources"
          descriptionKey="cms.contenttypes.shared.basic_properties.description" 
          descriptionBundle="com.arsdigita.cms.CMSResources"
-         component="com.arsdigita.cms.contenttypes.ui.ArticlePropertiesStep"/>
+         component="com.arsdigita.cms.contenttypes.ui.HTMLFormPropertiesStep"/>
 
      <ctd:include href="/WEB-INF/content-types/edit-body-text-step.xml"/>
 

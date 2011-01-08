@@ -17,5 +17,8 @@
 model com.arsdigita.cms.contenttypes;
 
 
-object type HTMLForm extends Article {
+object type HTMLForm extends GenericArticle {
+    String [0..1] lead            = ct_htmlform.lead VARCHAR(1000);
+
+    reference key (ct_htmlform.item_id);
 }
