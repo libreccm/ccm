@@ -105,7 +105,7 @@ public class TextAsset extends Asset {
     //*****
     // NOTE: readText is no longer used (except in a test) because it
     // does no input validation.  Processing for loading files is now done
-    // in TextPageBody.java.
+    // in GenericArticleBody.java.
     //*****
     public long readText(Reader reader) throws IOException {
         //this does not work since get(CONTENT) returns a null value

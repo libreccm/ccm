@@ -81,7 +81,7 @@ import com.arsdigita.util.UncheckedWrapperException;
  * classes should override the {@link #createTextAsset(PageState)} method
  * in to create a valid text asset.
  * <p>
- * This component is used primarily in {@link TextPageBody} and
+ * This component is used primarily in {@link GenericArticleBody} and
  * {@link com.arsdigita.cms.ui.templates.TemplateBody}
  *
  * @author Stanislav Freidin (sfreidin@arsdigita.com)
@@ -108,7 +108,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
     }
 
     /**
-     * Construct a new TextPageBody component
+     * Construct a new GenericArticleBody component
      *
      * @param assetModel The {@link ItemSelectionModel} which will
      *   be responsible for maintaining the current asset
@@ -117,7 +117,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         this(assetModel,null);
     }
     /**
-     * Construct a new TextPageBody component
+     * Construct a new GenericArticleBody component
      *
      * @param assetModel The {@link ItemSelectionModel} which will
      *   be responsible for maintaining the current asset
@@ -163,7 +163,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
     /**
      * Adds the options for the mime type select widget of
-     * <code>TextPageForm</code> and sets the default mime type.
+     * <code>GenericArticleForm</code> and sets the default mime type.
      **/
     protected void setMimeTypeOptions(SingleSelect mimeSelect) {
         FileUploadSection.addMimeOptions(mimeSelect, "text");
@@ -188,7 +188,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
     }
 
     // Create a text asset if it does not exist.
-    // This should probably be a method in TextPage ?
+    // This should probably be a method in GenericArticle ?
     protected TextAsset createOrGetTextAsset(ItemSelectionModel assetModel, 
                                              PageState s) {
         // Get the text asset or create a new one

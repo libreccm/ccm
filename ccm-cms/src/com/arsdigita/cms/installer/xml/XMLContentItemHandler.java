@@ -56,7 +56,7 @@ import org.xml.sax.helpers.DefaultHandler;
  *               and replicated to the specified depth --&gt;
  *          &lt;ccm:content-item
  *                          clone="2"
- *                          helperClass="com.arsdigita.cms.installer.xml.TextPageHelper"&gt;
+ *                          helperClass="com.arsdigita.cms.installer.xml.GenericArticleHelper"&gt;
  *              &lt;!-- ContentItems can be cloned but cannot have a depth. The
  *                   helperClass is used to create the object described here --&gt;
  *              &lt;ccm:content-type

@@ -92,7 +92,7 @@ public class GenericArticle extends ContentPage {
     }
 
     /**
-     * Return the text asset for this <code>TextPage</code>. Could return
+     * Return the text asset for this <code>GenericArticle</code>. Could return
      * null if there is no text body actually associated with the page
      */
     public TextAsset getTextAsset() {

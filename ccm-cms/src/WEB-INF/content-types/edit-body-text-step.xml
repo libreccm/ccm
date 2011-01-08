@@ -5,5 +5,5 @@
          labelBundle="com.arsdigita.cms.CMSResources"
          descriptionKey="cms.contenttypes.shared.body_text.description" 
          descriptionBundle="com.arsdigita.cms.CMSResources"
-         component="com.arsdigita.cms.ui.authoring.TextPageBody"/>
+         component="com.arsdigita.cms.ui.authoring.GenericArticleBody"/>
 </ctd:authoring-kit>
