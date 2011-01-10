@@ -16,7 +16,7 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 -- $Id: oracle-se-create.sql 1305 2006-09-01 08:54:11Z sskracic $
--- $DateTime: 2004/08/17 23:15:09 $
+-- 
 
 @@ ddl/oracle-se/create.sql
 
@@ -66,7 +66,7 @@
 @@ default/content-section/comment-authoring_kits.sql
 @@ default/content-section/index-cms_assets_mime_type_idx.sql
 @@ default/content-section/index-cms_text_pages_text_id_idx.sql
-@@ default/content-section/table-cms_article_image_map.sql
+-- @@ default/content-section/table-cms_article_image_map.sql
 @@ default/content-section/insert-cms_resource_types.sql
 @@ default/content-section/index-cms_resources_type_idx.sql
 @@ default/content-section/table-cms_resource_map.sql
@@ -102,7 +102,7 @@
 @@ default/content-section/index-publish_to_fs_links_target_idx.sql
 @@ default/content-section/table-publish_to_fs_notify_broken.sql
 @@ default/content-section/index-akit_step_map_step_id_idx.sql
-@@ default/content-section/index-cms_artcl_img_map_img_id_idx.sql
+-- @@ default/content-section/index-cms_artcl_img_map_img_id_idx.sql
 @@ default/content-section/index-cms_itm_tplt_map_tplt_id_idx.sql
 @@ default/content-section/index-cms_item_tplt_map_use_ctx_idx.sql
 @@ default/content-section/index-cms_sec_tplt_map_tplt_id_idx.sql
@@ -117,7 +117,7 @@
 @@ default/content-section/index-cms_top_level_pages.sql
 @@ default/content-section/index-section_lifecycle_def_map.sql
 @@ default/content-section/index-acs_object_cycl_map_itm_idx.sql
-@@ default/content-section/index-cms_artcl_imag_map_art_id_idx.sql
+-- @@ default/content-section/index-cms_artcl_imag_map_art_id_idx.sql
 @@ default/content-section/index-cms_ctgry_tmpl_map_sctn_id_idx.sql
 @@ default/content-section/index-cms_ctgry_tmpl_map_tmpl_id_idx.sql
 @@ default/content-section/index-cms_ctgry_tmpl_map_type_id_idx.sql

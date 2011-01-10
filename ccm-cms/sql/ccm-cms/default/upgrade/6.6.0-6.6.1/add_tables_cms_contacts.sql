@@ -26,8 +26,8 @@ create table cms_contactentries (
     contactentry_id integer NOT NULL,
     contact_id integer,
     "key" character varying(100) NOT NULL,
-    description character varying(100),
-    value character varying(100) NOT NULL
+    description character varying(200),
+    value character varying(200) NOT NULL
 );
 
 ALTER TABLE ONLY cms_contacts

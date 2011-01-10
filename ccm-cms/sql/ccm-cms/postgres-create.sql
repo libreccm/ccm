@@ -16,7 +16,7 @@
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
 -- $Id: postgres-create.sql 1305 2006-09-01 08:54:11Z sskracic $
--- $DateTime: 2004/08/17 23:15:09 $
+-- 
 
 \i ddl/postgres/create.sql
 
@@ -66,7 +66,7 @@
 \i default/content-section/comment-authoring_kits.sql
 \i default/content-section/index-cms_assets_mime_type_idx.sql
 --\i default/content-section/index-cms_text_pages_text_id_idx.sql
-\i default/content-section/table-cms_article_image_map.sql
+--  \i default/content-section/table-cms_article_image_map.sql
 \i default/content-section/insert-cms_resource_types.sql
 \i default/content-section/index-cms_resources_type_idx.sql
 \i default/content-section/table-cms_resource_map.sql
@@ -77,6 +77,7 @@
 \i default/content-section/table-cms_wf_notifications.sql
 \i default/content-section/insert-task-types.sql
 \i default/content-section/table-cw_process_definitions.sql
+--  Oracle uses default/content-section/sequence-convert_format_seq.sql here!
 \i default/content-section/table-cms_templates.sql
 \i default/content-section/comment-cms_templates.sql
 \i default/content-section/index-cms_category_template_map.sql
@@ -101,7 +102,7 @@
 \i default/content-section/index-publish_to_fs_links_target_idx.sql
 \i default/content-section/table-publish_to_fs_notify_broken.sql
 \i default/content-section/index-akit_step_map_step_id_idx.sql
-\i default/content-section/index-cms_artcl_img_map_img_id_idx.sql
+-- \i default/content-section/index-cms_artcl_img_map_img_id_idx.sql
 \i default/content-section/index-cms_itm_tplt_map_tplt_id_idx.sql
 \i default/content-section/index-cms_item_tplt_map_use_ctx_idx.sql
 \i default/content-section/index-cms_sec_tplt_map_tplt_id_idx.sql
@@ -116,7 +117,7 @@
 \i default/content-section/index-cms_top_level_pages.sql
 \i default/content-section/index-section_lifecycle_def_map.sql
 \i default/content-section/index-acs_object_cycl_map_itm_idx.sql
-\i default/content-section/index-cms_artcl_imag_map_art_id_idx.sql
+-- \i default/content-section/index-cms_artcl_imag_map_art_id_idx.sql
 \i default/content-section/index-cms_ctgry_tmpl_map_sctn_id_idx.sql
 \i default/content-section/index-cms_ctgry_tmpl_map_tmpl_id_idx.sql
 \i default/content-section/index-cms_ctgry_tmpl_map_type_id_idx.sql

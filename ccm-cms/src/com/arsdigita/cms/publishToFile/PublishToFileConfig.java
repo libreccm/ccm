@@ -20,7 +20,7 @@ package com.arsdigita.cms.publishToFile;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
-import com.arsdigita.util.parameter.ClassParameter;
+// import com.arsdigita.util.parameter.ClassParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.SpecificClassParameter;

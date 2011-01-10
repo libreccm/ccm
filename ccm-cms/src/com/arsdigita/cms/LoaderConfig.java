@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2010 pboy (pboy@barkhof.uni-bremen.de) All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the
@@ -206,7 +206,7 @@ public final class LoaderConfig extends AbstractConfig {
             m_contentTypeList = new StringArrayParameter(
                                     "com.arsdigita.cms.loader.section_ctypes_list",
                                     Parameter.REQUIRED,
-                               new String[] {}  );
+                                    new String[] {}  );
 
     // Page Resolver Class, set autonomously by ContentSection.create() method.
 

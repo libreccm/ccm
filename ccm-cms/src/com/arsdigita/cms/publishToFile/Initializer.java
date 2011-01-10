@@ -18,12 +18,10 @@
  */
 package com.arsdigita.cms.publishToFile;
 
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.Template;
 import com.arsdigita.db.DbHelper;
 
 import com.arsdigita.domain.DomainObject;
-// import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DomainObjectInstantiator;
 
 import com.arsdigita.persistence.DataObject;
@@ -36,8 +34,6 @@ import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.ContextInitEvent;
 // import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
-// import com.arsdigita.runtime.LegacyInitEvent;
-// import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.util.UncheckedWrapperException;
 

@@ -24,7 +24,6 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.xml.Element;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
@@ -87,7 +86,7 @@ public class FolderBreadcrumbNav extends SimpleComponent {
         //}
 
         Element component = parent.newChildElement
-            ("cms:folderPathLinks", CMSPage.CMS_XML_NS);
+            ("cms:folderPathLinks", CMS.CMS_XML_NS);
         component.addAttribute("id","folderPath");
 
         // root folder of the content section is not in breadcrumb
@@ -99,7 +98,7 @@ public class FolderBreadcrumbNav extends SimpleComponent {
         while (folders.size() > 0) {
             f = (Folder) folders.remove(0);
             Element folderElem = component.newChildElement
-                ("cms:folderPathLink", CMSPage.CMS_XML_NS);
+                ("cms:folderPathLink", CMS.CMS_XML_NS);
             folderElem.addAttribute("title", f.getLabel());
             folderElem.addAttribute
                 ("url", contentSection+f.getPath()+"/");

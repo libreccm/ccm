@@ -35,9 +35,7 @@ public abstract class CMS {
 
     private static final Logger s_log = Logger.getLogger(CMS.class);
 
-    /**
-     * The CMS XML namespace.
-     */
+    /** The CMS XML namespace. */
     public final static String CMS_XML_NS = "http://www.arsdigita.com/cms/1.0";
 
     /**

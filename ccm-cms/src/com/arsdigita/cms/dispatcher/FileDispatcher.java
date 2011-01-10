@@ -30,9 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 /**
- * Dispatches to a file
- * stored under the CMS package root
- * (<code>/packages/cms/www</code>).  This includes both unmanaged
+ * Dispatches to a file stored under the CMS package root
+ * (<code>/packages/cms/www</code>). This includes both unmanaged
  * files copied or created directly in the file system, as well as
  * pages and assets published to the file system from CMS.
  *

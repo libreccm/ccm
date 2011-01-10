@@ -33,7 +33,8 @@ create table cms_organizationalunits_contact_map (
 create table cms_organizationalunits_person_map (
     organizationalunit_id integer NOT NULL,
     person_id integer NOT NULL,
-    role_name character varying(100)
+    role_name character varying(100),
+    status character varying(100)
 );
 
 ALTER TABLE ONLY cms_organizationalunits_contact_map

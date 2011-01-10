@@ -27,15 +27,13 @@ import com.arsdigita.util.parameter.Parameter;
 
 import org.apache.log4j.Logger;
 
-// import java.io.File;
 
 /**
  * LifecycleConfig
  *
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: $
- **/
-
+ */
 public class LifecycleConfig extends AbstractConfig {
 
     private static final Logger s_log = Logger.getLogger(LifecycleConfig.class);
