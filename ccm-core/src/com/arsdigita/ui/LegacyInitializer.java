@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010 pboy (pboy@barkhof.uni-bremen.de) All Rights Reserved.
+ * Copyright (C) 2002-2004 Red Hat Inc. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,63 +16,47 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.ui;
 
-// import com.arsdigita.domain.DomainObject;
-// import com.arsdigita.domain.DomainObjectInstantiator;
-// import com.arsdigita.kernel.ACSObjectInstantiator;
-// import com.arsdigita.persistence.DataObject;
-// import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.ContextInitEvent;
-import com.arsdigita.runtime.ConfigError;
-
+import com.arsdigita.initializer.Configuration;
+import org.apache.log4j.Logger;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import com.arsdigita.initializer.InitializationException;
 
-/**
- * Initializes the core ui package.
- *
- * Initializer is invoked by the add-method in the core initializer.
- *
- * @author pb
- * @version $Id: $
- */
-// public class Initializer extends CompoundInitializer {
-public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
-    /** Creates a s_logging category with name = to the full name of class */
-    private static Logger s_log = Logger.getLogger(Initializer.class);
+public class LegacyInitializer implements com.arsdigita.initializer.Initializer {
 
-    /** Config object for the UI package   */
-    private static UIConfig s_conf = UIConfig.getConfig();
-    // s_log.debug("ui configuration loaded.");
+    private Configuration m_conf = new Configuration();
+    private static final Logger s_log =
+        Logger.getLogger(LegacyInitializer.class);
 
-    /**
-     *
-     */
-    public Initializer() {
+    public static final String DEFAULT_LAYOUT = "defaultLayout";
+    public static final String APPLICATION_LAYOUTS = "applicationLayouts";
+
+    public LegacyInitializer() {
+        m_conf.initParameter
+            (DEFAULT_LAYOUT,
+             "The default layout for the SimplePage class",
+             List.class);
+        m_conf.initParameter
+            (APPLICATION_LAYOUTS,
+             "The customized layout for applications using the SimplePage class",
+             List.class);
+
     }
 
+    public void startup() throws InitializationException {
+        s_log.info("Starting UI initializer");
 
-    /**
-     * Implementation of the {@link Initializer#init(ContextInitEvent)}
-     * method.
-     *
-     * @param evt The context init event.
-     */
-    public void init(ContextInitEvent evt) {
-        s_log.debug("UI context initialization started.");
-
-        List defaultLayout = (List) s_conf.getDefaultLayout();
+        List defaultLayout = (List)m_conf.getParameter(DEFAULT_LAYOUT);
         if (defaultLayout != null) {
             s_log.info("Processing default layout");
             SimplePage.setDefaultLayout(buildLayout(defaultLayout));
         }
 
-        List apps = (List) s_conf.getApplicationLayouts();
+        List apps = (List)m_conf.getParameter(APPLICATION_LAYOUTS);
         if (apps != null) {
             Iterator i = apps.iterator();
             while (i.hasNext()) {
@@ -88,9 +72,16 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
             }
         }
 
-        s_log.debug("UI context initialization completed");
+        s_log.info("UI initializer completed");
     }
 
+    public Configuration getConfiguration() {
+        return m_conf;
+    }
+
+    public void shutdown() {
+        // nada
+    }
 
     private SimplePageLayout buildLayout(List desc) {
         SimplePageLayout layout = new SimplePageLayout();
@@ -101,14 +92,16 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
             String position = (String)comp.get(0);
             String className = (String)comp.get(1);
-
+            
             Class classObject;
             try {
                 classObject =  Class.forName(className);
             } catch (ClassNotFoundException ex) {
-                throw new ConfigError("cannot find component " + className);
+                throw new InitializationException(
+                    "cannot find component " + className, ex
+                );
             }
-
+            
             s_log.info("Adding " + className + " to " + position);
 
             layout.addComponent(classObject,
@@ -117,5 +110,4 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
         return layout;
     }
-
 }

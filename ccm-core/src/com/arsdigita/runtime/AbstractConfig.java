@@ -81,8 +81,7 @@ public abstract class AbstractConfig extends AbstractParameterContext {
 
     /**
      * Default constructor for subclasses.
-     **/
-
+     */
     protected AbstractConfig() {}
 
     /**
@@ -98,8 +97,7 @@ public abstract class AbstractConfig extends AbstractParameterContext {
      *               unmarshaling and loading.
      *
      * @see ConfigRegistry
-     **/
-
+     */
     public final void load(ErrorList errors) {
         ConfigRegistry reg = new ConfigRegistry();
         reg.load(this, errors);
@@ -122,8 +120,7 @@ public abstract class AbstractConfig extends AbstractParameterContext {
      *         configuration loading.
      *
      * @see #load(ErrorList)
-     **/
-
+     */
     public final ErrorList load() {
         ErrorList errs = new ErrorList();
         load(errs);
@@ -132,16 +129,14 @@ public abstract class AbstractConfig extends AbstractParameterContext {
 
     /**
      * @deprecated Use @{link #load()} instead.
-     **/
-
+     */
     public final ErrorList load(final String resource) {
         return load();
     }
 
     /**
      * @deprecated Use @{link #load()} instead.
-     **/
-
+     */
     public final ErrorList require(final String resource) {
         return load();
     }

@@ -41,17 +41,17 @@ import org.apache.log4j.Logger;
  *
  * @version $Revision: #15 $ $Date: 2004/08/16 $
  */
-public class Initializer implements com.arsdigita.initializer.Initializer {
+public class LegacyInitializer implements com.arsdigita.initializer.Initializer {
 
     private static final String DEFAULT_CHARSET = "defaultCharset";
     private static final String CHARSETS = "charsets";
     private static final String LOCALES  = "locales";
 
-    private static final Logger s_log = Logger.getLogger(Initializer.class);
+    private static final Logger s_log = Logger.getLogger(LegacyInitializer.class);
 
     private Configuration m_conf = new Configuration();
 
-    public Initializer() throws InitializationException {
+    public LegacyInitializer() throws InitializationException {
         m_conf.initParameter
             (CHARSETS,
              "Recognized character sets",

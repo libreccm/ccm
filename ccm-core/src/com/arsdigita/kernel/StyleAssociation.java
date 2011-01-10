@@ -30,8 +30,16 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;                // for logging
 
+/**
+ * 
+ * @version $Id: StyleAssociation.java 287 2005-02-22 00:29:02Z sskracic $ 
+ *
+ * @deprecated without direct replacement. It is designed to work with
+ * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+ * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+ * So thes method is just not used anymore. (pboy) 
+ */
 public class StyleAssociation {
-    public static final String versionId = "$Id: StyleAssociation.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /** this class is static-only */
     private StyleAssociation() {};
@@ -39,14 +47,16 @@ public class StyleAssociation {
     private static final Logger s_cat =
         Logger.getLogger(StyleAssociation.class.getName());
 
-    /** Gets an array with all applicable stylesheets.
-     *  @param style a DataAssociation that is the result from get("defaultStylesheet")
-     *  @param locale the locale of the request
-     *  @param outputType  the desired type of output (HTML, WML, XML, and so on)
+    /**
+     * Gets an array with all applicable stylesheets.
+     * @param style a DataAssociation that is the result from get("defaultStylesheet")
+     * @param locale the locale of the request
+     * @param outputType  the desired type of output (HTML, WML, XML, and so on)
      *
-     *  @return an array with all applicable stylesheets.
+     * @return an array with all applicable stylesheets.
      *
-     *  @pre style != null && style instanceof DataAssociation
+     * @pre style != null && style instanceof DataAssociation
+     * @deprecated  see above
      */
     public static Stylesheet[] getStylesheets(Object style,
                                               Locale locale,
@@ -131,6 +141,7 @@ public class StyleAssociation {
      *  @return the first stylesheet associated with this object.
      *
      *  @pre style != null && style instanceof DataAssociation
+     * @deprecated see above
      */
     public static Stylesheet getStylesheet(Object style,
                                            Locale locale,

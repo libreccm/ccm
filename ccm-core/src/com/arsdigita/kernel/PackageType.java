@@ -44,9 +44,11 @@ import org.apache.log4j.Logger;
  * Represents a package type.
  *
  * @since ACS 5.0
- * @deprecated Use {@link com.arsdigita.web.ApplicationType} instead.
  * @version $Revision: #15 $, $Date: 2004/08/16 $
  * @version $Id: PackageType.java 287 2005-02-22 00:29:02Z sskracic $
+
+ * @deprecated without direct replacement. Refactor to use
+ *             {@link com.arsdigita.web.ApplicationType} instead.
  */
 
 public class PackageType extends com.arsdigita.domain.DomainObject {
@@ -396,6 +398,11 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      * @return an array of stylesheets for the specificed locale and
      * output type.
      * @see #addStylesheet(Stylesheet)
+     *
+     * @deprecated without direct replacement. It is designed to work with
+     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+     * So thes method is just not used anymore. (pboy)
      */
     public Stylesheet[] getStylesheets(Locale locale, String outputType) {
         return StyleAssociation
@@ -409,6 +416,11 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      * "text/html"
      * @return the best match stylesheet for this package.
      * @see #addStylesheet(Stylesheet)
+     *
+     * @deprecated without direct replacement. It is designed to work with
+     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+     * So thes method is just not used anymore. (pboy)
      */
     public Stylesheet getStylesheet(Locale locale, String outputType) {
         return StyleAssociation

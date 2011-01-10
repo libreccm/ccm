@@ -72,10 +72,12 @@ import org.apache.log4j.Logger;
  * do the same tree walk except we'll look for the stylesheet
  * associated with the <em>package</em> mounted on each site node.
  *
- * @deprecated Use {@link com.arsdigita.templating.SimplePresentationManager} instead.
- *
  * @author Bill Schneider
  * @version $Id: BasePresentationManager.java 562 2005-06-12 23:53:19Z apevec $
+ *
+ * @deprecated Use {@link com.arsdigita.templating.SimplePresentationManager} instead.
+ * SimplePresentationManager is deprecated as well, use
+ * {@link com.arsdigita.bebop.page.PageTransformer} instead!
  */
 public class BasePresentationManager implements PresentationManager {
 
@@ -172,6 +174,11 @@ public class BasePresentationManager implements PresentationManager {
      * the default stylesheet for the mounted package on this site node,
      * or the default stylesheets for the packages mounted on ancestors
      * of this site node.  (lowest precedence)
+     *
+     * @deprecated without direct replacement. It is design wo work with
+     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+     * So this method is just not used anymore. (pboy)
      */
     protected Stylesheet findStylesheet(SiteNodeRequestContext rctx) {
         return findStylesheet(rctx.getSiteNode(),
@@ -192,6 +199,11 @@ public class BasePresentationManager implements PresentationManager {
      * the default stylesheet for the mounted package on this site node,
      * or the default stylesheets for the packages mounted on ancestors
      * of this site node.  (lowest precedence)
+     *
+     * @deprecated without direct replacement. It is design wo work with
+     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+     * So this method is just not used anymore. (pboy)
      */
     protected synchronized Stylesheet findStylesheet
         (SiteNode sn, Locale l, String outputType) {
@@ -214,6 +226,18 @@ public class BasePresentationManager implements PresentationManager {
         return stylesheet;
     }
 
+    /**
+     * 
+     * @param sn
+     * @param l
+     * @param outputType
+     * @return
+     * 
+     * @deprecated without direct replacement. It is design wo work with
+     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+     * So this method is just not used anymore. (pboy) 
+     */
     private Stylesheet findStylesheetHelper(SiteNode sn,
                                             Locale l,
                                             String outputType) {

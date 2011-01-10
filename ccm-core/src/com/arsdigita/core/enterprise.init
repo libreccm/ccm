@@ -4,7 +4,8 @@
 //
 
 
-init com.arsdigita.globalization.Initializer {
+// init com.arsdigita.globalization.Initializer {
+init com.arsdigita.globalization.LegacyInitializer {
     // See http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc
     charsets = {
         "ISO-8859-1",
@@ -58,7 +59,7 @@ init com.arsdigita.webdevsupport.Initializer {
 
 init com.arsdigita.toolbox.CharsetEncodingProviderInitializer { }
 
-init com.arsdigita.ui.Initializer {
+init com.arsdigita.ui.LegacyInitializer {
 //  If using the default SimplePage class, the following
 //  two parameters specify the class names of the bebop
 //  components to (optionally) add to margins of pages
@@ -75,7 +76,8 @@ init com.arsdigita.ui.Initializer {
 
 }
 
-init com.arsdigita.portal.Initializer { }
+// init com.arsdigita.portal.Initializer { }
+// init com.arsdigita.portal.LegacyInitializer { }
 
 
 // The formbuilder application is now deprecated and will

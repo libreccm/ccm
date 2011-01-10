@@ -39,12 +39,10 @@ import org.apache.log4j.Logger;
  * all the URLs that have been loaded. If you set this as the URI
  * resolver for a Transformer then this will track all the
  * <code>xsl:import</code> and <code>xsl:include</code> statements.
+ *
+ * @version $Id: SimpleURIResolver.java 287 2005-02-22 00:29:02Z sskracic $
  */
 final class SimpleURIResolver implements URIResolver {
-    public static final String versionId =
-        "$Id: SimpleURIResolver.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger
         (SimpleURIResolver.class);

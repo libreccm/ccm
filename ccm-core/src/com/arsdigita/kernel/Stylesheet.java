@@ -60,9 +60,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * 
+ * @version $Id: Stylesheet.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class Stylesheet extends ACSObject implements Templates {
-
-    public static final String versionId = "$Id: Stylesheet.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /** Composite of a String and a boolean.  The boolean defaults to false.
      *  We use it to keep track of all XSL Files and which of them are valid.
@@ -501,7 +503,8 @@ public class Stylesheet extends ACSObject implements Templates {
                 // Saxon requires full path info
                 if(usingSaxon())
                     {
-                        String pathname = rm.getResourceAsFile(getPath()).getAbsolutePath();
+                        String pathname = rm.getResourceAsFile(getPath())
+                                            .getAbsolutePath();
                         ssSource.setSystemId(pathname);
                     }
                 m_lastModified = System.currentTimeMillis();
@@ -524,10 +527,11 @@ public class Stylesheet extends ACSObject implements Templates {
                 if (tfact == null) {
                     tfact = TransformerFactory.newInstance();
                     if (usingXSLTC()) {
-                        //disable template inlining, otherwise xsltc might generate methods
-                        //that are too long, or contain jump offsets that are too large for
-                        //the JVM to handle for more details see "Known problems for XSLTC
-                        //Translets - http://xml.apache.org/xalan-j/xsltc_constraints.html#xsltcknownproblems
+                        //disable template inlining, otherwise xsltc might generate 
+                        //methods that are too long, or contain jump offsets that
+                        //are too large for the JVM to handle.
+                        //For more details see "Known problems for XSLTC Translets - 
+                        //http://xml.apache.org/xalan-j/xsltc_constraints.html#xsltcknownproblems
                         tfact.setAttribute("disable-inlining", new Boolean(true));
                         s_cat.info("set disable-inlining to true for XSLSTC");
                         tfact.setErrorListener(new ErrorListener() {

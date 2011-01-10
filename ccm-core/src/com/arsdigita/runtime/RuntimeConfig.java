@@ -68,7 +68,6 @@ public final class RuntimeConfig extends AbstractConfig {
      * Constructs an empty RuntimeConfig object.
      *
      */
-
     public RuntimeConfig() {
     // pboy: According to the comment for the getConfig() method a singleton
     // pattern is to be used. Therefore the constructor must be changed to
@@ -91,10 +90,10 @@ public final class RuntimeConfig extends AbstractConfig {
         m_resultSetWindowSize = new IntegerParameter
             ("waf.runtime.jdbc_resultset_windowsize", Parameter.REQUIRED,
              new Integer(1));
-	m_runBackgroundTasks = new BooleanParameter
-	    ("waf.runtime.run_background_tasks",
-	     Parameter.REQUIRED,
-	     Boolean.TRUE);
+        m_runBackgroundTasks = new BooleanParameter
+            ("waf.runtime.run_background_tasks",
+             Parameter.REQUIRED,
+             Boolean.TRUE);
 
         register(m_url);
         register(m_poolSize);

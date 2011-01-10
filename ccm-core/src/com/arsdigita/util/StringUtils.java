@@ -51,11 +51,14 @@ public class StringUtils {
 
     private static Perl5Util s_re = new Perl5Util();
 
+    public static final String NEW_LINE = System.getProperty("line.separator");
+
+
     private StringUtils() {
         // can't instantiate me!
     }
 
-    public static final String NEW_LINE = System.getProperty("line.separator");
+
     /**
      * Tests if a string is empty.
      * @param s A string to test
@@ -463,7 +466,7 @@ public class StringUtils {
 
     /**
      * Convert a string of items separated by a separator
-     * character to an array of the items.  sep is the separator
+     * character to an (string)array of the items.  sep is the separator
      * character.  Example: Input - s == "cat,house,dog" sep==','
      * Output - {"cat", "house", "dog"}
      * @param s string contains items separated by a separator character.
@@ -710,7 +713,6 @@ public class StringUtils {
      * Get a String representation for an Object.  If it has an
      * asString method, use that; otherwise fall back on toString
      */
-
     public static String toString(Object o) {
         try {
             return (String) o.getClass().getMethod("asString", null)
@@ -727,7 +729,6 @@ public class StringUtils {
      * create a String representation of a map.  This method is not
      * too necessary, because Map.toString() does almost the same.
      */
-
     public static String toString(Map m) {
         StringBuffer to = new StringBuffer();
         if (m == null) {
@@ -881,7 +882,6 @@ public class StringUtils {
      * string consists of nothing but whitespace characters, an empty
      * string is returned.
      */
-
     public final static String trimleft(String s) {
         for (int i = 0; i < s.length(); i++) {
             if (!Character.isWhitespace(s.charAt(i))) {
@@ -898,7 +898,6 @@ public class StringUtils {
      * @param pattern the pattern String
      * @param repeatCount the number of time to repeat it
      */
-
     public final static String repeat(String pattern, int repeatCount) {
         StringBuffer sb = new StringBuffer(repeatCount * pattern.length());
         for (int i = 0; i < repeatCount; i++) {
@@ -914,7 +913,6 @@ public class StringUtils {
      * @param pattern the pattern character
      * @param repeatCount the number of time to repeat it
      */
-
     public final static String repeat(char pattern, int repeatCount) {
         return repeat(String.valueOf(pattern), repeatCount);
     }
@@ -928,7 +926,6 @@ public class StringUtils {
      *
      * @since  5.1.2
      */
-
     public final static String wrap(String input) {
         return wrap(input,80);
     }
@@ -1252,7 +1249,7 @@ public class StringUtils {
 
     /**
      * @throws NullPointerException if <code>throwable</code> is null
-     **/
+     */
     public static String getStackTrace(Throwable throwable) {
         if (throwable==null) { throw new NullPointerException("throwable"); }
 
@@ -1289,7 +1286,7 @@ public class StringUtils {
      *
      * @see #getStackTrace(Throwable)
      * @throws NullPointerException if <code>throwable</code> is null
-     **/
+     */
     public static List getStackList(Throwable throwable) {
         StringTokenizer tkn = new StringTokenizer
             (getStackTrace(throwable), System.getProperty("line.separator"));

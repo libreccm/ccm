@@ -19,10 +19,24 @@
 package com.arsdigita.templating;
 
 /**
- * @deprecated Use {@link com.arsdigita.bebop.page.PageTransformer}
+ * An Implementation of a Presentation Manager as specified by the
+ * {@link PresentationManager} interface which may be used as a default.
+ *
+ * As bebop is currently the only one providing a presenation layer it simply
+ * links to the bebop implementation. At the same time it makes shure an
+ * implementation exists which can be used as default in the templating
+ * configuration registry.
+ */
+/* NON Javadoc comment:
+ * Used to be depracated in version 6.6.0. Reverted to non-deprecated in version
+ * 6.6.0 release 3. Package templating provides the basic mechanism for CCM
+ * templating system an should provide an implementation of the Presentation
+ * Manager interface to be complete.  
+ * @ deprecated Use {@link com.arsdigita.bebop.page.PageTransformer}
  * instead
  */
 public class SimplePresentationManager
-        extends com.arsdigita.bebop.page.PageTransformer {
+        extends com.arsdigita.bebop.page.PageTransformer 
+        implements PresentationManager{
     // Empty
 }

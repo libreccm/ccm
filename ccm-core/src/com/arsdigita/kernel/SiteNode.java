@@ -58,12 +58,13 @@ import org.apache.log4j.Logger;
  *   child of the root <code>SiteNode</code> with a name of "news."</li>
  * </ul>
  *
- * @deprecated Use {@link com.arsdigita.web.Application} instead.
  * @version 1.0
- * @since ACS 5.0 */
+ * @version $Id: SiteNode.java 287 2005-02-22 00:29:02Z sskracic $
+ * @since ACS 5.0
+ * @deprecated Refactor to use {@link com.arsdigita.web.Application} instead.
+ */
 public class SiteNode extends ACSObject {
-    public static final String versionId =
-        "$Id: SiteNode.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
     private static final String s_typeName = "com.arsdigita.kernel.SiteNode";
     private static final Logger s_log =
         Logger.getLogger(SiteNode.class.getName());
@@ -86,6 +87,7 @@ public class SiteNode extends ACSObject {
      *
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.metadata.ObjectType
+     * @deprecated see above
      */
     public SiteNode() {
         super(s_typeName);
@@ -98,6 +100,7 @@ public class SiteNode extends ACSObject {
      * @param dataObject the data object to encapsulate in the new domain
      * object
      * @see com.arsdigita.persistence.Session#retrieve(String)
+     * @deprecated see above
      */
     public SiteNode(DataObject dataObject) {
         super(dataObject);
@@ -119,6 +122,7 @@ public class SiteNode extends ACSObject {
      * @param id a SiteNode ID
      * @exception DataObjectNotFoundException if the ID does not match
      *     a SiteNode in the system.
+     * @deprecated see above
      */
     public SiteNode(BigDecimal id) throws DataObjectNotFoundException {
         super(new OID(s_typeName, id));
@@ -130,7 +134,8 @@ public class SiteNode extends ACSObject {
      * @param oid the OID for the retrieved instance
      * @see com.arsdigita.domain.DomainObject#DomainObject(OID)
      * @see com.arsdigita.persistence.OID
-     **/
+     * @deprecated see above
+     */
     public SiteNode(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -243,14 +248,16 @@ public class SiteNode extends ACSObject {
     }
 
     /**
-     * @return <code>true</code> if this SiteNode can have children; <code>false</code> otherwise.
+     * @return <code>true</code> if this SiteNode can have children;
+     * <code>false</code> otherwise.
      */
     public boolean isDirectory() {
         return ((Boolean) (get("isDirectory"))).booleanValue();
     }
 
     /**
-     * @return <code>true</code> if the SiteNode supports patterns; <code>false</code> otherwise.
+     * @return <code>true</code> if the SiteNode supports patterns;
+     * <code>false</code> otherwise.
      * @deprecated
      */
     public boolean isPattern() {
@@ -450,11 +457,31 @@ public class SiteNode extends ACSObject {
     }
 
 
+    /**
+     * 
+     * @param locale
+     * @param outputType
+     * @return
+     * @deprecated without direct replacement. It is designed to work with
+     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+     * So thes method is just not used anymore. (pboy) 
+     */
     public Stylesheet[] getStylesheets(Locale locale, String outputType) {
         return StyleAssociation
             .getStylesheets(get("defaultStyle"), locale, outputType);
     }
 
+    /**
+     * 
+     * @param locale
+     * @param outputType
+     * @return
+     * @deprecated without direct replacement. It is design wo work with
+     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+     * So this method is just not used anymore. (pboy)
+     */
     public Stylesheet getStylesheet(Locale locale, String outputType) {
         return StyleAssociation
             .getStylesheet(get("defaultStyle"), locale, outputType);

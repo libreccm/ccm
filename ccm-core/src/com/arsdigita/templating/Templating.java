@@ -14,13 +14,12 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
- *
  */
 package com.arsdigita.templating;
 
-import com.arsdigita.bebop.Bebop; // XXX Blech
-import com.arsdigita.kernel.Kernel;
+import com.arsdigita.bebop.Bebop; 
 import com.arsdigita.caching.CacheTable;
+import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.ExceptionUnwrapper;
 import com.arsdigita.util.Exceptions;
@@ -49,9 +48,8 @@ import org.apache.log4j.Logger;
 /**
  * An entry-point class for the functions of the templating package.
  *
- * This class maintains a cache of <code>XSLTemplate</code> objects,
- * managed via the <code>getTemplate</code> and
- * <code>purgeTemplate</code> methods.
+ * This class maintains a cache of <code>XSLTemplate</code> objects, managed
+ * via the <code>getTemplate</code> and <code>purgeTemplate</code> methods.
  *
  * @author Dan Berrange
  * @author Justin Ross &lt;jross@redhat.com&gt;
@@ -61,9 +59,9 @@ public class Templating {
 
     private static final Logger s_log = Logger.getLogger(Templating.class);
 
-    // XXX eliminate these?
-    public static final Class DEFAULT_PRESENTATION_MANAGER
-        = SimplePresentationManager.class;
+    // just a tag to assure an implementation exists
+//  public static final Class DEFAULT_PRESENTATION_MANAGER
+//      = SimplePresentationManager.class;
 
     /**
      *  This is the name of the attribute that is set in the request whose
@@ -115,54 +113,59 @@ public class Templating {
     }
 
     /**
-     * Returns a new instance of the current presentation manager
-     * class. This is an object which has the {@link
-     * PresentationManager} interface which can be used to transform
-     * an XML document into an output stream.
+     * Returns a new instance of the current presentation manager class. This is
+     * an object which has the {@link com.arsdigita.templating.PresentationManager
+     * PresentationManager} interface which can be used to transform an XML
+     * document into an output stream.
      *
-     * @deprecated Use {@link
-     * com.arsdigita.bebop.BebopConfig#getPresentationManager()}
-     * instead.
+     * As of v ersion 6.6.0 the bebop framework is the only instance to provide
+     * an implementation. To avoid class hierachie kludge we directly return the
+     * bebop config here.
+     *
      * @return an instance of the <code>PresentationManager</code>
      * interface
      */
+    /* NON Javadoc
+     * Used to be deprecated up to version 6.6.0. Reverted to non-deprecated.
+     * Package templating provides the basic mechanism for CCM templating
+     * machinerie and provides the Presentation Manager interface. It should be
+     * able to be queried for an implementation as well.
+     * @ deprecated Use {@link
+     * com.arsdigita.bebop.BebopConfig#getPresentationManager()}
+     * instead.
+     */
     public static PresentationManager getPresentationManager() {
-        // XXX Very broken dependency.
         return Bebop.getConfig().getPresentationManager();
     }
 
     /**
-     * Retrieves an XSL template. If the template is already loaded in
-     * the cache, it will be returned.  If the template has been
-     * modified since it was first generated, it will be regenerated
-     * first.
+     * Retrieves an XSL template. If the template is already loaded in the
+     * cache, it will be returned.  If the template has been modified since
+     * it was first generated, it will be regenerated first.
      *
-     * @param source the <code>URL</code> to the top-level template
-     * resource
+     * @param  source the <code>URL</code> to the top-level template resource
      * @return an <code>XSLTemplate</code> instance representing
-     * <code>source</code>
+     *         <code>source</code>
      */
     public static synchronized XSLTemplate getTemplate(final URL source) {
         return getTemplate(source, false, true);
     }
         
     /**
-     * Retrieves an XSL template. If the template is already loaded in
-     * the cache, it will be returned.  If the template has been
-     * modified since it was first generated, it will be regenerated
-     * first.
+     * Retrieves an XSL template. If the template is already loaded in the
+     * cache, it will be returned.  If the template has been modified since
+     * it was first generated, it will be regenerated first.
      *
-     * @param source the <code>URL</code> to the top-level template
-     * resource
-     * @param fancyErrors Should this place any xsl errors in the request
+     * @param  source the <code>URL</code> to the top-level template resource
+     * @param  fancyErrors Should this place any xsl errors in the request
      *                    for use by another class.  If this is true, the
      *                    the errors are stored for later use.
-     * @param useCache Should the templates be pulled from cache, if available?
+     * @param  useCache Should the templates be pulled from cache, if available?
      *                 True means they are pulled from cache.  False means
      *                 they are pulled from the disk.  If this is false
      *                 the pages are also not placed in the cache.
      * @return an <code>XSLTemplate</code> instance representing
-     * <code>source</code>
+     *         <code>source</code>
      */
     public static synchronized XSLTemplate getTemplate(final URL source,
                                                        boolean fancyErrors,
@@ -226,7 +229,7 @@ public class Templating {
     /**
      * Resolves and retrieves the template for the given request.
      *
-     * @param sreq The current request object
+     * @param  sreq The current request object
      * @return The resolved <code>XSLTemplate</code> instance
      */
     public static XSLTemplate getTemplate(final HttpServletRequest sreq) {

@@ -34,27 +34,30 @@ public final class TemplatingConfig extends AbstractConfig {
     private static final Logger s_log = Logger.getLogger
         (TemplatingConfig.class);
 
-    private final Parameter m_paths;
-    private final Parameter m_resolver;
-    private final Parameter m_cacheSize;
-    private final Parameter m_cacheAge;
-
-    public TemplatingConfig() {
-        m_paths = new StringParameter
+    /** Fully qualified path string to file contain the pattern file for
+        {@link com.arsdigita.templating.PatternStylesheetResolver 
+        PatternStylesheetResolver}                                           */
+    private final Parameter m_paths = new StringParameter
             ("waf.templating.stylesheet_paths", Parameter.REQUIRED,
              "/WEB-INF/resources/stylesheet-paths.txt");
 
-        m_resolver = new SingletonParameter
+    /** Specifies class for the implementation of StylesheetResolver Interface
+        to resolve a modules stylesheet.                                     */
+    private final Parameter m_resolver  = new SingletonParameter
             ("waf.templating.stylesheet_resolver", Parameter.REQUIRED,
              new PatternStylesheetResolver());
 
-        m_cacheSize = new IntegerParameter
+    /** Specifies number of stylesheets cached.                              */
+    private final Parameter m_cacheSize = new IntegerParameter
             ("waf.templating.stylesheet_cache_size", Parameter.OPTIONAL,
              null);
 
-        m_cacheAge = new IntegerParameter
+    /** Duration of stylesheet cache in seconds                             */
+    private final Parameter m_cacheAge = new IntegerParameter
             ("waf.templating.stylesheet_cache_age", Parameter.OPTIONAL,
              null);
+
+    public TemplatingConfig() {
 
         register(m_paths);
         register(m_resolver);
@@ -64,6 +67,11 @@ public final class TemplatingConfig extends AbstractConfig {
         loadInfo();
     }
 
+    /** 
+     * Get name and location of stylesheet pattern file.
+     * 
+     * @return String with fully qualified file name
+     */
     final String getStylesheetPaths() {
         return (String) get(m_paths);
     }

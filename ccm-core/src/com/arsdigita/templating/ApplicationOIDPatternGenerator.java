@@ -18,7 +18,6 @@
  */
 package com.arsdigita.templating;
 
-import com.arsdigita.templating.PatternGenerator;
 import com.arsdigita.web.Web;
 import com.arsdigita.web.Application;
 

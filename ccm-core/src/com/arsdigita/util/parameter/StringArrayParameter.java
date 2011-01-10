@@ -25,7 +25,7 @@ import com.arsdigita.util.StringUtils;
 /**
  * StringArrayParameter
  *
- * Usage Esample:
+ * Usage Example:
  * <pre>
  * private static parameter exampleName ;
  * exampleName = new StringArrayParameter(
@@ -52,6 +52,7 @@ public class StringArrayParameter extends StringParameter {
 
     }
 
+    @Override
     protected String marshal(final Object value) {
         if (value == null) {
             return null;
@@ -60,6 +61,7 @@ public class StringArrayParameter extends StringParameter {
         }
     }
 
+    @Override
     protected Object unmarshal(final String literal,
                                final ErrorList errors) {
         final String[] literals = StringUtils.split(literal, ',');
@@ -77,6 +79,7 @@ public class StringArrayParameter extends StringParameter {
         return strings;
     }
 
+    @Override
     protected void doValidate(final Object value,
                               final ErrorList errors) {
         if (value != null) {
