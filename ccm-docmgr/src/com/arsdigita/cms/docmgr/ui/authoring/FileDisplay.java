@@ -2,15 +2,16 @@ package com.arsdigita.cms.docmgr.ui.authoring;
 
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
+import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.FileAsset;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.dispatcher.CMSPage;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.xml.Element;
 
 
 /**
+ *
  */
 public class FileDisplay extends SimpleComponent {
 
@@ -30,10 +31,11 @@ public class FileDisplay extends SimpleComponent {
         m_asset = asset;
     }
 
+    @Override
     public void generateXML(PageState state, Element parent) {
       if ( isVisible(state) && m_asset != null ) {
   
-        Element element = new Element("cms:FileDisplay", CMSPage.CMS_XML_NS);
+        Element element = new Element("cms:FileDisplay", CMS.CMS_XML_NS);
   
         generateFilePropertiesXML(m_asset, state, element);
   
@@ -43,8 +45,8 @@ public class FileDisplay extends SimpleComponent {
     }
   
     protected void generateFilePropertiesXML(FileAsset asset,
-                                              PageState state,
-                                              Element element) {
+                                             PageState state,
+                                             Element element) {
 
         element.addAttribute("src", Utilities.getAssetURL(asset));
       

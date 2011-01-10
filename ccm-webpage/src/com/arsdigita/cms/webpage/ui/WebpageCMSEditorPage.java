@@ -33,7 +33,7 @@ import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.IntegerParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.categorization.Category;
+// import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
 import com.arsdigita.cms.ContentBundle;
 import com.arsdigita.cms.ContentSection;
