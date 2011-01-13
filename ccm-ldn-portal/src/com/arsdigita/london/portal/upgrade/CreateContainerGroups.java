@@ -86,13 +86,27 @@ public class CreateContainerGroups extends Program {
 		if (workspaceGroup != null) {
 		    GroupCollection supergroups = workspaceGroup.getSupergroups();
 		    supergroups.addEqualsFilter(Group.ID, parentGroup.getID());
-		    if (supergroups.size() == 0) {
-			s_log.info("moving group for " + workspace.getTitle());
-			System.out.println("moving group for " + workspace.getTitle());
-			parentGroup.addSubgroup(workspaceGroup);
+
+            boolean isEmpty = false;
+            try {
+                supergroups.isEmpty();
+            } catch (com.redhat.persistence.metadata.MetadataException e) {
+                isEmpty = true;
+            }
+
+            if (isEmpty) { //XXX Exception thrown relating to this logic!
+                        // com.redhat.persistence.metadata.MetadataException:
+                        // com/arsdigita/kernel/Group.pdl: line 27, column 23:
+                        // Query for: com.arsdigita.kernel.Group.name failed to
+                        // return rows
+                s_log.info("moving group for " + workspace.getTitle());
+                System.out.println("moving group for " + workspace.getTitle());
+                parentGroup.addSubgroup(workspaceGroup);
 		    } else {
-			s_log.info("group for " + workspace.getTitle() + " is already child of workspace type group");
-			System.out.println("group for " + workspace.getTitle() + " is already child of workspace type group");
+			    s_log.info("group for " + workspace.getTitle()
+                          +" is already child of workspace type group");
+			    System.out.println("group for " + workspace.getTitle()
+                                  +" is already child of workspace type group");
 		    }
 		} else {
 		    s_log.info("can't find group for " + workspace.getTitle());

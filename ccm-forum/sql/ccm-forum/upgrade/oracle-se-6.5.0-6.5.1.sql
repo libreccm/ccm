@@ -20,11 +20,11 @@
 PROMPT APLAWS ccm-forum 6.5.0 -> 6.5.1 Upgrade Script (Oracle)
  
 
-@@ ./oracle-se/6.5.0-6.5.1/add_privileges.sql
-@@ ./oracle-se/6.5.0-6.5.1/add_groups.sql
-@@ ./oracle-se/6.5.0-6.5.1/add_thread_subscriber.sql
-@@ ./oracle-se/6.5.0-6.5.1/add_file_attachments.sql
-@@ ./oracle-se/6.5.0-6.5.1/add_forum_introduction.sql
-@@ ./oracle-se/6.5.0-6.5.1/add_image_uploads.sql
-@@ ./oracle-se/6.5.0-6.5.1/add_forum_no_category_posts.sql
-@@ ./oracle-se/6.5.0-6.5.1/add_anonymous_option.sql
+@@ oracle-se/6.5.0-6.5.1/add_privileges.sql
+@@ oracle-se/6.5.0-6.5.1/add_groups.sql
+@@ oracle-se/6.5.0-6.5.1/add_thread_subscriber.sql
+@@ oracle-se/6.5.0-6.5.1/add_file_attachments.sql
+@@ oracle-se/6.5.0-6.5.1/add_forum_introduction.sql
+@@ oracle-se/6.5.0-6.5.1/add_image_uploads.sql
+@@ oracle-se/6.5.0-6.5.1/add_forum_no_category_posts.sql
+@@ oracle-se/6.5.0-6.5.1/add_anonymous_option.sql

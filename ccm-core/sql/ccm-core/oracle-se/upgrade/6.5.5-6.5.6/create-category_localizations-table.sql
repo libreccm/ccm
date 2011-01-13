@@ -26,13 +26,13 @@ CREATE TABLE cat_category_localizations (
     category_id integer NOT NULL
 );
 
-ALTER TABLE ONLY cat_category_localizations
+ALTER TABLE cat_category_localizations
     ADD CONSTRAINT cat_cate_localizati_id_p_ancqs PRIMARY KEY (id);
 
-ALTER TABLE ONLY cat_category_localizations
+ALTER TABLE cat_category_localizations
     ADD CONSTRAINT cat_cat_localiz_cat_id_f_ykbad FOREIGN KEY (category_id) REFERENCES cat_categories(category_id);
 
-ALTER TABLE ONLY cat_category_localizations
+ALTER TABLE cat_category_localizations
     ADD CONSTRAINT cat_cate_localizati_id_f__leq0 FOREIGN KEY (id) REFERENCES acs_objects(object_id);
 
 

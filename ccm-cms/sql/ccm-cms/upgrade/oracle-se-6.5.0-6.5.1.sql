@@ -23,7 +23,6 @@ PROMPT Red Hat Enterprise CMS 6.5.0 -> 6.5.1 Upgrade Script (Oracle)
 @@ ../oracle-se/upgrade/6.5.0-6.5.1/drop-xml-index.sql
 
 begin
-        ctx_ddl.drop_section_group('autogroup');
         ctx_ddl.create_section_group('pathgroup', 'PATH_SECTION_GROUP');
 
 end;
