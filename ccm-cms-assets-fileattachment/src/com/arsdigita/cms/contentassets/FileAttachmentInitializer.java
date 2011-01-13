@@ -22,6 +22,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.URLService;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.search.MetadataProviderRegistry;
+import com.arsdigita.util.StringUtils;
 import com.arsdigita.xml.XML;
 
 /**
@@ -81,6 +82,11 @@ public class FileAttachmentInitializer extends ContentAssetInitializer {
             "/WEB-INF/traversal-adapters/com/arsdigita/cms/contentassets/"
              + "FileAttachment-search.xml",
             new TraversalHandler());
+
+            final String traversal = getTraversalXML();
+            if(!StringUtils.emptyString(traversal)) {
+                XML.parseResource(traversal, new TraversalHandler());
+            }
     }
 
 
