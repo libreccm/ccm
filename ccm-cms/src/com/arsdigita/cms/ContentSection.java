@@ -98,7 +98,7 @@ public class ContentSection extends Application {
     public static final String BASE_DATA_OBJECT_TYPE =
             "com.arsdigita.cms.ContentSection";
     public static final String PACKAGE_TYPE = "content-section";
-    public final static String STYLESHEET = "/packages/content-section/xsl/cms.xsl";
+//     public final static String STYLESHEET = "/packages/content-section/xsl/cms.xsl";
     protected static final String ID = "id";
     protected static final String PACKAGE = "package";
     protected static final String NAME = "label";
@@ -1305,8 +1305,8 @@ public class ContentSection extends Application {
         return URL.SERVLET_DIR + "/content-section";
     }
 
-    @Override
-    public String getStylesheetPath() {
-        return STYLESHEET;
-    }
+//  @Override
+//  public String getStylesheetPath() {
+//      return STYLESHEET;
+//  }
 }

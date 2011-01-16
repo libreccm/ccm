@@ -19,20 +19,14 @@
 
 package com.arsdigita.cms.contentsection;
 
-//import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
-//import com.arsdigita.util.parameter.ErrorList;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 //import com.arsdigita.util.parameter.ParameterError;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-// import com.arsdigita.util.parameter.ResourceParameter;
-// import com.arsdigita.util.parameter.URLParameter;
-//import com.arsdigita.util.StringUtils;
 
-// import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -64,10 +58,6 @@ public final class ContentSectionConfig extends AbstractConfig {
     public static final synchronized ContentSectionConfig getInstance() {
         if (s_config == null) {
             s_config = new ContentSectionConfig();
-            // deprecated
-            // s_config.require("ccm-core/runtime.properties");
-            // use instead:
-            // read values from the persistent storage
             s_config.load();
         }
 
@@ -112,8 +102,12 @@ public final class ContentSectionConfig extends AbstractConfig {
      * In the new Initializer system we use a specifically formatted String Array
      * because we have no List parameter. Format:
      * - A string for each task to handle, possible values: Authoring, Approval,
-     *   Depploy
-     * - Each String: [taskName]:[alert_1]:...:[alert_n]
+     *   Deploy
+     * - Each Task String: [taskName]:[alert_1]:...:[alert_n]
+     * The specially formatted string is not handled by StringArray parameter,
+     * but forwarded untouched to the initializer which has the duty to process
+     * it!
+     * 
      * Currently there is no way to persist taskAlerts section specific. So all
      * sections have to treated equally.
      * Default values are provided here.

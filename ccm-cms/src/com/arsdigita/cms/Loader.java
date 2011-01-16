@@ -40,7 +40,7 @@ import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.SiteNode;
-import com.arsdigita.kernel.Stylesheet;
+// import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.loader.PackageLoader;
 import com.arsdigita.persistence.DataObject;
@@ -132,8 +132,8 @@ public class Loader extends PackageLoader {
      * Stylesheet which has to be assigned as part of a legacy application
      * creation.
      */
-    private final static String CMS_STYLESHEET =
-            "/packages/content-section/xsl/cms.xsl";
+//  private final static String CMS_STYLESHEET =
+//          "/packages/content-section/xsl/cms.xsl";
 //  /**
 //   * Constant string used as key for creating Workspace (content-center) as a
 //   * legacy application.
@@ -300,10 +300,16 @@ public class Loader extends PackageLoader {
             type.setDispatcherClass(WORKSPACE_DISPATCHER_CLASS);
 
             // Register a stylesheet to the Content Center package.
-            Stylesheet ss =
-                    Stylesheet.createStylesheet(WORKSPACE_STYLESHEET);
-            ss.save();
-            type.addStylesheet(ss);
+   //  Registering a Stylesheet referrs to the old LegacyStylesheetResolver
+   //  which uses a database entry to determine an appropriate stylesheet.
+   //  New way is a pattern based search algorithm. Preserved here for easy
+   //  reference during transition (removal of corresponding classes)
+   //  see com.arsdigita.templating
+   //  content center works without registering a style sheet here.
+   //       Stylesheet ss =
+   //               Stylesheet.createStylesheet(WORKSPACE_STYLESHEET);
+   //       ss.save();
+   //       type.addStylesheet(ss);
 
             type.save();
 
@@ -356,7 +362,6 @@ public class Loader extends PackageLoader {
         appsetup.setKey(Workspace.PACKAGE_KEY);
         appsetup.setDispatcherClass(Workspace.DISPATCHER_CLASS);
         // should not be needed anymore, stypesheets handled by StylesheetResolver
-        appsetup.setStylesheet(Workspace.STYLESHEET);
         appsetup.setSingleton(true);
         appsetup.setPortalApplication(false);
         appsetup.setInstantiator(new ACSObjectInstantiator() {
@@ -491,7 +496,6 @@ public class Loader extends PackageLoader {
         appType.setDescription("A CMS Content Section");
         appType.setPortalApplication(false);
         //setup.setDispatcherClass(ContentItemDispatcher.class.getName());
-        appType.setStylesheet(CMS_STYLESHEET); // by default: /pack./c-s/xml/cms.xml
         // contains the xsl to generate the page
         appType.setInstantiator(new ACSObjectInstantiator() {
 

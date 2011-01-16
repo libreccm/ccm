@@ -19,17 +19,12 @@
 
 package com.arsdigita.cms;
 
-//import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
-// import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
-// import com.arsdigita.util.parameter.ResourceParameter;
-// import com.arsdigita.util.parameter.URLParameter;
 
-// import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
@@ -113,7 +108,8 @@ public final class LoaderConfig extends AbstractConfig {
      * List of Paths to XML files that contain content type definition(s).
      * Example:
      * contentTypeDefinitions = { "/WEB-INF/content-types/Template.xml" };
-     * List currently contains only one path/filename.
+     * An entry in this list is required by internal content types (see package
+     * ccm-cms/src/com/arsdigita/cms/contenttypes)
      */
     private final Parameter 
             m_ctDefFiles = new StringArrayParameter(
@@ -560,68 +556,5 @@ public final class LoaderConfig extends AbstractConfig {
         String[] contentTypes = (String[]) get(m_contentTypeList);
         return Arrays.asList(contentTypes);
     }
-
-
-//  public final String[] getTaskAlerts() {
-//      return (String[]) get(m_taskAlerts);
-//  }
-
-  // Parameters controlling Overdue Task alerts:
-  // Currently not a loader task, see above
-
-
-//  /**
-//   * getSendOverdueAlerts: Retrieve wether we should send alerts about
-//   * overdue tasks at all?
-//   */
-//  public final boolean getSendOverdueAlerts() {
-//      return ((Boolean) get(m_sendOverdueAlerts)).booleanValue(); }
-
-//  /**
-//   * getTaskDuration: Retrieve the time between when a task is enabled
-//   * (it is made available for completion) and when it is considered
-//   * overdue (in HOURS)
-//   */
-//  public final Integer getTaskDuration() {
-//      return ((Integer) get(m_taskDuration)); }
-
-//  /**
-//   * getAlertInterval: Retrieve the time to wait between sending successive
-//   * alerts on the same overdue task (in HOURS)
-//   */
-//  public final Integer getOverdueAlertInterval() {
-//      return ((Integer) get(m_overdueAlertInterval)); }
-
-//  /**
-//   * maxAlerts: Retrieve the maximum number of alerts to send about any one
-//   * overdue task
-//   */
-//  public final Integer getMaxAlerts() {
-//      return ((Integer) get(m_maxAlerts)); }
-
-    // End section task alerts
-
-//	InputStream getTraversalAdapters() {
-//		return (InputStream) get(m_adapters);
-//	}
-
-//	public String getDefaultLayout() {
-//		return (String) get(m_defaultLayout);
-//	}
-
-//	public boolean getCreateUserWorkspaces() {
-//		return ((Boolean) get(m_createUserWorkspaces)).booleanValue();
-//	}
-
-//	public List getExcludedPortletTypes() {
-//		String[] excludedTypes = (String[]) get(m_excludedPortletTypes);
-//		return Arrays.asList(excludedTypes);
-//	}
-
-//	public List getAdminPortletTypes() {
-//		String[] adminTypes = (String[]) get(m_adminPortletTypes);
-//		return Arrays.asList(adminTypes);
-//	}
-
 
 }
