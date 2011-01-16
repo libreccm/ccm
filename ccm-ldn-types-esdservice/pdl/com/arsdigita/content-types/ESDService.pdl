@@ -17,10 +17,10 @@
 
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.contenttypes.GenericArticle;
                                                                                                                                                              
 // object type to hold Contact content type
-object type ESDService extends TextPage {
+object type ESDService extends GenericArticle {
     String[0..1] serviceTimes = ct_esdservice.servicetimes VARCHAR(500);
 
     reference key ( ct_esdservice.service_id );

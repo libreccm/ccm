@@ -107,7 +107,6 @@ public class Initializer extends CompoundInitializer {
         appsetup.setTitle("Bookmarks Application");
         appsetup.setDescription("Bookmarks for a Portal");
         appsetup.setDispatcherClass("com.arsdigita.bookmarks.BookmarkDispatcher");
-        appsetup.setStylesheet("/packages/bookmarks/xsl/bookmarks.xsl");
         appsetup.setPortalApplication(true);
         appsetup.setInstantiator(new ACSObjectInstantiator() {
                 protected DomainObject doNewInstance(DataObject dataObject) {

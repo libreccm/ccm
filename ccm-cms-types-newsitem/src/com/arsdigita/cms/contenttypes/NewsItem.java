@@ -142,6 +142,7 @@ public class NewsItem extends GenericArticle {
     public void setNewsDate(Date newsDate) {
         set(NEWS_DATE, newsDate);
     }
+
     public static final int SUMMARY_LENGTH = 200;
 
     @Override

@@ -28,16 +28,20 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ui.authoring.*;
 import com.arsdigita.kernel.ACSObject;
-// import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
+import com.arsdigita.london.terms.ui.ACSObjectCategoryPicker;
 import com.arsdigita.london.terms.ui.TermWidget;
 
-
 /**
+ * <p> cms specific Concrete implementation of 
+ * <code>com.arsdigita.aplaws.ui.ACSObjectCategoryPicker</code>. </p>
  * 
+ *  
  * 
- * cms specific Concrete implementation of ACSObjectCategoryPicker 
- * 
+ * <p>Activated by pointing the parameter 
+ * <code>com.arsdigita.cms.category_authoring_add_form<</code> to it.</p>
  */
+
+
 public class ItemCategoryPicker extends ACSObjectCategoryPicker {
     private static final Logger s_log = Logger.getLogger(ItemCategoryPicker.class);
 
@@ -51,11 +55,13 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
 
 
     /*
-     * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getForm(com.arsdigita.bebop.parameters.BigDecimalParameter, com.arsdigita.bebop.parameters.StringParameter)
+     * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getForm(
+                         com.arsdigita.bebop.parameters.BigDecimalParameter, 
+                         com.arsdigita.bebop.parameters.StringParameter)
      */
     protected ACSObjectCategoryForm getForm(BigDecimalParameter root, StringParameter mode) {
-	s_log.debug("getForm");
-	return new ItemCategoryForm(root, mode, new TermWidget(mode, this));
+        s_log.debug("getForm");
+        return new ItemCategoryForm(root, mode, new TermWidget(mode, this));
     }
 
 
@@ -63,8 +69,8 @@ public class ItemCategoryPicker extends ACSObjectCategoryPicker {
      * @see com.arsdigita.aplaws.ui.ACSObjectCategoryPicker#getObject()
      */
     protected ACSObject getObject(PageState state) {
-	ContentItem item = CMS.getContext().getContentItem();
-	return item.getParent();
+        ContentItem item = CMS.getContext().getContentItem();
+        return item.getParent();
 
     }
     

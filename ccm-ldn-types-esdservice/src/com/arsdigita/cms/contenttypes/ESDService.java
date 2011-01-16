@@ -17,7 +17,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.TextPage;
+import com.arsdigita.cms.contenttypes.GenericArticle;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -33,7 +33,7 @@ import java.math.BigDecimal;
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * @version $Id: ESDService.java 287 2005-02-22 00:29:02Z sskracic $
  */
-public class ESDService extends TextPage {
+public class ESDService extends GenericArticle {
 
     /** data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
