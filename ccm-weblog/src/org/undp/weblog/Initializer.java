@@ -11,7 +11,7 @@ import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.Stylesheet;
+// import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
@@ -93,9 +93,12 @@ public class Initializer extends CompoundInitializer {
 				"WebLogs", "http://www.undp.org/weblog");
 		s_log.debug("Just added package type WebLog ");
 
-		Stylesheet entitySheet = Stylesheet
-				.createStylesheet("/packages/weblog/xsl/weblog.xsl");
-		entityType.addStylesheet(entitySheet);
+		// Old style StylesheetResolver where location of stylesheets are stored
+        // in db and as well as mappings to applications.
+        // New style is pattern based, see cpom.arsdigita.templating
+  //    Stylesheet entitySheet = Stylesheet
+  //                             .createStylesheet("/packages/weblog/xsl/weblog.xsl");
+  //	entityType.addStylesheet(entitySheet);
 
 		entityType.setDispatcherClass(WebLogDispatcher.class.getName());
 
