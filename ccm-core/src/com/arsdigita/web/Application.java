@@ -188,8 +188,9 @@ public class Application extends Resource {
     private static Application make(final ApplicationType type,
                                     final String fragment,
                                     final String title,
-				    final Application parent,
-				    final boolean createContainerGroup) {
+                                    final Application parent,
+                                    final boolean createContainerGroup) {
+        
 	final Application app =	(Application) Resource.createResource(type, title, parent);
 	if (createContainerGroup) {
 	    app.createGroup();
@@ -633,10 +634,6 @@ public class Application extends Resource {
      */
     public String getServletPath() {
         return URL.SERVLET_DIR + "/legacy-adapter";
-    }
-
-    public String getStylesheetPath() {
-        return URL.XSL_DIR + "/core-platform.xsl";
     }
 
     protected void beforeSave() {

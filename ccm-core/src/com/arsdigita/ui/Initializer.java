@@ -63,6 +63,7 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
      *
      * @param evt The context init event.
      */
+    @Override
     public void init(ContextInitEvent evt) {
         s_log.debug("UI context initialization started.");
 

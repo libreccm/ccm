@@ -130,9 +130,9 @@
 @@ default/kernel/index-apm_package_type_listener_map.sql
 @@ default/kernel/view-object_package_map.sql
 
-@@ default/kernel/index-acs_stylesheets.sql
-@@ default/kernel/index-acs_stylesheet_type_map.sql
-@@ default/kernel/index-acs_stylesheet_node_map.sql
+-- @@ default/kernel/index-acs_stylesheets.sql
+-- @@ default/kernel/index-acs_stylesheet_type_map.sql
+-- @@ default/kernel/index-acs_stylesheet_node_map.sql
 @@ default/kernel/function-package_id_for_object_id.sql
 
 @@ default/kernel/constraint-email_addresses.sql

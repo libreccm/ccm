@@ -36,7 +36,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.log4j.Logger;
 
@@ -74,7 +73,9 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      *
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.metadata.ObjectType
-     **/
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.ApplicationType} instead.
+     */
     public PackageType() {
         super(BASE_DATA_OBJECT_TYPE);
     }
@@ -91,7 +92,9 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      * @see Party#Party(ObjectType)
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.metadata.ObjectType
-     **/
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.ApplicationType} instead.
+     */
     public PackageType(DataObject dataObject) {
         super(dataObject);
     }
@@ -107,7 +110,9 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      * @see com.arsdigita.domain.ObservableDomainObject#ObservableDomainObject(OID)
      * @see com.arsdigita.persistence.DataObject
      * @see com.arsdigita.persistence.OID
-     **/
+     * @deprecated without direct replacement. Refactor to use
+     *             {@link com.arsdigita.web.ApplicationType} instead.
+     */
     public PackageType(OID oid) throws DataObjectNotFoundException {
         super(oid);
     }
@@ -385,10 +390,10 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      *
      * @param sheet a stylesheet used for rendering this package
      */
-    public void addStylesheet(Stylesheet sheet) {
+/*  public void addStylesheet(Stylesheet sheet) {
         sheet.addToAssociation((DataAssociation) get("defaultStyle"));
     }
-
+*/
     /**
      * Gets all the stylesheets used for rendering this package.
      *
@@ -404,11 +409,11 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
      * So thes method is just not used anymore. (pboy)
      */
-    public Stylesheet[] getStylesheets(Locale locale, String outputType) {
+/*    public Stylesheet[] getStylesheets(Locale locale, String outputType) {
         return StyleAssociation
             .getStylesheets(get("defaultStyle"), locale, outputType);
     }
-
+*/
     /**
      * Gets the first stylesheet (best match) associated with this package.
      * @param locale the locale being used for rendering the package
@@ -422,21 +427,21 @@ public class PackageType extends com.arsdigita.domain.DomainObject {
      * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
      * So thes method is just not used anymore. (pboy)
      */
-    public Stylesheet getStylesheet(Locale locale, String outputType) {
+/*    public Stylesheet getStylesheet(Locale locale, String outputType) {
         return StyleAssociation
             .getStylesheet(get("defaultStyle"), locale, outputType);
     }
-
+*/
     /**
      * Removes a stylesheet from the set of stylesheets used for rendering
      * this package.
      *
      * @param sheet the stylesheet to be removed
      */
-    public void removeStylesheet(Stylesheet sheet) {
+/*  public void removeStylesheet(Stylesheet sheet) {
         sheet.removeFromAssociation((DataAssociation)get("defaultStyle"));
     }
-
+*/
     /**
      * Adds a listener to the events for this package.
      *

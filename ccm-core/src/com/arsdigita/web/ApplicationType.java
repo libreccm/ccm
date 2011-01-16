@@ -20,7 +20,6 @@ package com.arsdigita.web;
 
 import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.ResourceType;
-import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataObject;
@@ -125,6 +124,7 @@ public class ApplicationType extends ResourceType {
     // circumstances)
     // Method overwrtes a (overwritable) method provided by the super class to
     // process a created (empty) data object.
+    @Override
     public void initialize() {
         super.initialize();
         s_log.debug("initialising application type "); 
@@ -377,25 +377,6 @@ public class ApplicationType extends ResourceType {
      * called for an application type without a corresponding package
      * type.
      */
-    public void addStylesheet(Stylesheet stylesheet) {
-        if (m_legacyFree == true) {
-            throw new UnsupportedOperationException
-                ("This method is only supported for legacy application types");
-        }
-
-        if (m_packageType == null) {
-            m_packageType = getPackageType();
-        }
-
-        m_packageType.addStylesheet(stylesheet);
-    }
-
-    /**
-     * @deprecated with no replacement.
-     * @throws UnsupportedOperationException when this method is
-     * called for an application type without a corresponding package
-     * type.
-     */
     public void setDispatcherClass(String className) {
         if (m_legacyFree == true) {
             throw new UnsupportedOperationException
@@ -636,9 +617,6 @@ public class ApplicationType extends ResourceType {
         return id;
     }
 
-    public String getStylesheet() {
-        return "/__ccm__/xsl/default.xsl";
-    }
 
     //
     // Other

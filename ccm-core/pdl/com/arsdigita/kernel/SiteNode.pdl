@@ -47,10 +47,10 @@ object type SiteNode extends ACSObject {
     PackageInstance[0..1] mountedObject =
         join site_nodes.object_id to apm_packages.package_id;
 
-    Stylesheet[0..n] defaultStyle = join site_nodes.node_id
-                                      to acs_stylesheet_node_map.node_id,
-                                    join acs_stylesheet_node_map.stylesheet_id
-                                      to acs_stylesheets.stylesheet_id;
+//  Stylesheet[0..n] defaultStyle = join site_nodes.node_id
+//                                    to acs_stylesheet_node_map.node_id,
+//                                  join acs_stylesheet_node_map.stylesheet_id
+//                                    to acs_stylesheets.stylesheet_id;
 
     unique (parent, name);
 

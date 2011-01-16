@@ -52,6 +52,12 @@ public class StringArrayParameter extends StringParameter {
 
     }
 
+    /**
+     * Converts a String[] object into a literal representation.
+     *
+     * @param value
+     * @return
+     */
     @Override
     protected String marshal(final Object value) {
         if (value == null) {
@@ -61,6 +67,12 @@ public class StringArrayParameter extends StringParameter {
         }
     }
 
+    /**
+     * 
+     * @param literal
+     * @param errors
+     * @return
+     */
     @Override
     protected Object unmarshal(final String literal,
                                final ErrorList errors) {

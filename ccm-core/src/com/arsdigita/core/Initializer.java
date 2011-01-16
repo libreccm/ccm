@@ -82,7 +82,7 @@ public class Initializer extends CompoundInitializer {
              ("ccm-core.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-//      add(new com.arsdigita.ui.Initializer());
+        // add(new com.arsdigita.ui.Initializer());
         add(new com.arsdigita.portal.Initializer());
         add(new com.arsdigita.search.Initializer());
         add(new com.arsdigita.search.lucene.Initializer());

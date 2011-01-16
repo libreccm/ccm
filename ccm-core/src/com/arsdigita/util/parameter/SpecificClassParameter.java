@@ -34,6 +34,13 @@ public class SpecificClassParameter extends ClassParameter {
 
         private Class m_requiredClass;
 
+        /**
+         * Constructor
+         * @param name
+         * @param multiplicity
+         * @param defaultObj
+         * @param requiredClass
+         */
         public SpecificClassParameter(final String name,
                                       final int multiplicity,
                                       final Object defaultObj,
@@ -42,7 +49,13 @@ public class SpecificClassParameter extends ClassParameter {
             m_requiredClass = requiredClass;
         }
 
-        // value != null
+        /**
+         * Unmarshals a string representation of the parameter.
+         * 
+         * @param value  string representation of class, must be value != null
+         * @param errors
+         * @return
+         */
         @Override
         protected Object unmarshal(String value, ErrorList errors) {
             Class theClass = (Class) super.unmarshal(value,errors);

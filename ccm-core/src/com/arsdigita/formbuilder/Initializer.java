@@ -23,7 +23,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.SiteNode;
-import com.arsdigita.kernel.Stylesheet;
+// import com.arsdigita.kernel.Stylesheet;
 
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.TransactionContext;
@@ -51,14 +51,18 @@ public class Initializer
     private static final Logger log =
         Logger.getLogger(Initializer.class);
 
+    /**
+     * Constructor
+     * 
+     * @throws InitializationException
+     */
     public Initializer() throws InitializationException {
 
     }
 
     /**
      * Returns the configuration object used by this initializer.
-     **/
-
+     */
     public Configuration getConfiguration() {
         return m_conf;
     }
@@ -72,10 +76,7 @@ public class Initializer
      * automitically calls the startup() method of any
      * class that implements com.arsdigita.util.initializer.Initializer
      * present in enterprise.ini
-     *
-     **/
-
-
+     */
     public void startup() {
 
         log.info("FormBuilder Initializer starting.");
@@ -83,6 +84,7 @@ public class Initializer
         TransactionContext txn = SessionManager.getSession()
             .getTransactionContext();
         txn.beginTxn();
+        
         checkFormBuilderSetup();
 
         txn.commitTxn();
@@ -131,20 +133,17 @@ public class Initializer
 
         /** Adding a style sheet
          */
-
-        Stylesheet FormBuilderSheet = Stylesheet.createStylesheet ("/packages/formbuilder/xsl/formbuilder.xsl");
-        FormBuilderType.addStylesheet(FormBuilderSheet);
+//      Stylesheet FormBuilderSheet = Stylesheet.createStylesheet ("/packages/formbuilder/xsl/formbuilder.xsl");
+//      FormBuilderType.addStylesheet(FormBuilderSheet);
 
 
         /** Mapping the package type to a dispatcher
          *  class
          */
-
         FormBuilderType.setDispatcherClass("com.arsdigita.formbuilder.FormBuilderDispatcher");
 
         /** Saving changes
          */
-
         FormBuilderType.save();
 
     }
@@ -153,7 +152,6 @@ public class Initializer
      * Called on shutdown. It's probably not a good idea to depend on this
      * being called.
      **/
-
     public void shutdown() {
     }
 

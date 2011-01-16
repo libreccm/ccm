@@ -38,8 +38,8 @@ import org.apache.log4j.Logger;
  * @author pb
  * @version $Id: $
  */
-// Not shure if this initializeris realy needed. In a short test - commenting
-// the initializer out - made no difference. (pboy-2011-01-09)
+// Not shure if this initializer is realy needed. In a short test - commenting
+// the initializer out - it made no difference. (pboy-2011-01-09)
 public class Initializer extends CompoundInitializer {
 
     /** Creates a s_logging category with name = to the full name of class */
@@ -60,7 +60,7 @@ public class Initializer extends CompoundInitializer {
      *
      */
     public void init(DomainInitEvent e) {
-        s_log.debug("publishToFile.Initializer.init(DomainInitEvent) invoked");
+        s_log.debug("portal.Initializer.init(DomainInitEvent) invoked");
 
         // Recursive invokation of init, is it really necessary??
         // On the other hand:
@@ -87,6 +87,6 @@ public class Initializer extends CompoundInitializer {
                  }
              });
 
-        s_log.debug("publishToFile.Initializer.init(DomainInitEvent) completed");
+        s_log.debug("portal.Initializer.init(DomainInitEvent) completed");
     }
 }

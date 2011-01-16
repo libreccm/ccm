@@ -45,8 +45,10 @@ begin;
 
 
 
-\i default/kernel/sequence-acs_object_id_seq.sql
 \i postgres/kernel/package-hierarchy_denormalization.sql
+\i default/kernel/sequence-acs_object_id_seq.sql
+
+
 
 \i default/kernel/table-group_subgroup_trans_index.sql
 \i default/kernel/index-group_subgroup_trans_index.sql
@@ -57,6 +59,7 @@ begin;
 \i default/kernel/view-group_subgroup_trans_map.sql
 \i default/kernel/view-group_member_trans_map.sql
 \i default/kernel/view-party_member_trans_map.sql
+
 \i default/kernel/index-party_email_map.sql
 \i default/kernel/index-users.sql
 \i default/kernel/index-user_authentication.sql

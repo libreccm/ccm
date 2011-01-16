@@ -20,6 +20,7 @@
 package com.arsdigita.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
+import com.arsdigita.util.parameter.ArrayOfStringArrayParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.Parameter;
 
@@ -86,11 +87,11 @@ public class UIConfig extends AbstractConfig {
                     "waf.ui.default_layout",
                     Parameter.REQUIRED,
                     new String[]
-                        { "top:com.arsdigita.ui.UserBanner",
-                          "bottom:com.arsdigita.ui.SiteBanner",
-                          "bottom:com.arsdigita.ui.DebugPanel"
-                          // "left,com.arsdigita.x.y.zl",
-                          // "right,com.arsdigita.x.y.zr",
+                        { "top:com.arsdigita.ui.UserBanner"
+                        ,"bottom:com.arsdigita.ui.SiteBanner"
+                        ,"bottom:com.arsdigita.ui.DebugPanel"
+                      //,"left:com.arsdigita.x.y.zl",
+                      //,"right:com.arsdigita.x.y.zr",
                         }
                 );
 
@@ -126,7 +127,15 @@ public class UIConfig extends AbstractConfig {
      * the default layout for SimplePage class.
      */
     public List getDefaultLayout() {
-        String[] defaultLayoutArray = (String[]) get(m_defaultLayout);
+//         String[][] defaultLayoutArray = (String[]) get(m_defaultLayout);
+        String[][] defaultLayoutArray =
+                    new String[][]
+                        {{ "top","com.arsdigita.ui.UserBanner"}
+                        ,{"bottom","com.arsdigita.ui.SiteBanner"}
+                        ,{"bottom","com.arsdigita.ui.DebugPanel"}
+                      //,{"left","com.arsdigita.x.y.zl"},
+                      //,{"right","com.arsdigita.x.y.zr"},
+                        };
         return Arrays.asList(defaultLayoutArray);
     }
 

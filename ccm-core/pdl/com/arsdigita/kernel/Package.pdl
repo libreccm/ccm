@@ -31,10 +31,11 @@ object type PackageType {
     // XXX: Deprecated.
     String servletPackage = apm_package_types.servlet_package VARCHAR(100);
 
-    Stylesheet[0..n] defaultStyle = join apm_package_types.package_type_id
-                                      to acs_stylesheet_type_map.package_type_id,
-                                    join acs_stylesheet_type_map.stylesheet_id
-                                      to acs_stylesheets.stylesheet_id;
+//  deprecated
+//  Stylesheet[0..n] defaultStyle = join apm_package_types.package_type_id
+//                                    to acs_stylesheet_type_map.package_type_id,
+//                                  join acs_stylesheet_type_map.stylesheet_id
+//                                    to acs_stylesheets.stylesheet_id;
     PackageListener[0..n] listener = 
                            join apm_package_types.package_type_id 
                              to apm_package_type_listener_map.package_type_id, 

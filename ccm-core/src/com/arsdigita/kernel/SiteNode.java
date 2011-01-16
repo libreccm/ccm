@@ -29,7 +29,7 @@ import com.arsdigita.util.HierarchyDenormalization;
 import com.arsdigita.web.PathMapCache;
 
 import java.math.BigDecimal;
-import java.util.Locale;
+// import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -106,6 +106,7 @@ public class SiteNode extends ACSObject {
         super(dataObject);
     }
 
+    @Override
     protected void initialize() {
         super.initialize();
         if (isNew()) {
@@ -243,6 +244,7 @@ public class SiteNode extends ACSObject {
      *
      * @see ACSObject#getDisplayName()
      */
+    @Override
     public String getDisplayName() {
         return getURL();
     }
@@ -448,30 +450,31 @@ public class SiteNode extends ACSObject {
         return siteNode;
     }
 
+    @Override
     public String toString() {
         return "[url: " + getURL() + "]";
     }
 
-    public void addStylesheet(Stylesheet sheet) {
+/*    public void addStylesheet(Stylesheet sheet) {
         sheet.addToAssociation((DataAssociation)get("defaultStyle"));
     }
+*/
 
-
-    /**
-     * 
-     * @param locale
-     * @param outputType
-     * @return
-     * @deprecated without direct replacement. It is designed to work with
-     * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
-     * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
-     * So thes method is just not used anymore. (pboy) 
-     */
-    public Stylesheet[] getStylesheets(Locale locale, String outputType) {
-        return StyleAssociation
-            .getStylesheets(get("defaultStyle"), locale, outputType);
-    }
-
+//  /**
+//   *
+//   * @param locale
+//   * @param outputType
+//   * @return
+//   * @deprecated without direct replacement. It is designed to work with
+//   * {@link com.arsdigita.templating.LegacyStylesheetResolver} which is
+//   * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
+//   * So thes method is just not used anymore. (pboy)
+//   */
+//    public Stylesheet[] getStylesheets(Locale locale, String outputType) {
+//      return StyleAssociation
+//          .getStylesheets(get("defaultStyle"), locale, outputType);
+//  }
+  
     /**
      * 
      * @param locale
@@ -482,15 +485,15 @@ public class SiteNode extends ACSObject {
      * replaced by {@link com.arsdigita.templating.PatternStylesheetResolver}.
      * So this method is just not used anymore. (pboy)
      */
-    public Stylesheet getStylesheet(Locale locale, String outputType) {
+/*    public Stylesheet getStylesheet(Locale locale, String outputType) {
         return StyleAssociation
             .getStylesheet(get("defaultStyle"), locale, outputType);
     }
-
-    public void removeStylesheet(Stylesheet sheet) {
+*/
+/*    public void removeStylesheet(Stylesheet sheet) {
         sheet.removeFromAssociation((DataAssociation)get("defaultStyle"));
     }
-
+*/
     // the sole purpose of this class is to make site nodes hash the same across
     // multiple server instances.
     private static class SiteNodeWrapper {
@@ -502,6 +505,7 @@ public class SiteNode extends ACSObject {
             m_node = node;
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (obj==null) { return false; }
 
@@ -510,10 +514,12 @@ public class SiteNode extends ACSObject {
                 m_node.getURL().equals(snw.m_node.getURL());
         }
 
+        @Override
         public int hashCode() {
             return m_node.getID().hashCode() + m_node.getURL().hashCode();
         }
 
+        @Override
         public String toString() {
             return m_node.toString();
         }

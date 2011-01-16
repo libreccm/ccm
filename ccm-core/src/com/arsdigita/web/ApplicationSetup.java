@@ -19,7 +19,6 @@
 package com.arsdigita.web;
 
 import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -75,7 +74,6 @@ public class ApplicationSetup {
     protected PackageType m_packageType = null;
     protected boolean m_isWorkspaceApplication = true;
     protected boolean m_isSingleton = false;
-    protected String m_stylesheet = null;
     protected String m_dispatcherClass = null;
 
     public ApplicationSetup(Category category) {
@@ -164,13 +162,6 @@ public class ApplicationSetup {
      */
     public void setSingleton(boolean isSingleton) {
         m_isSingleton = isSingleton;
-    }
-
-    /**
-     * Sets the stylesheet to use for applications of this type.
-     */
-    public void setStylesheet(String stylesheet) {
-        m_stylesheet = stylesheet;
     }
 
     /**
@@ -266,8 +257,6 @@ public class ApplicationSetup {
                     (m_typeName);
 
                 applicationType.setPackageType(packageType);
-                applicationType.addStylesheet
-                    (Stylesheet.createStylesheet(m_stylesheet));
                 applicationType.setDispatcherClass(m_dispatcherClass);
 
                 packageType.save();
@@ -293,7 +282,6 @@ public class ApplicationSetup {
             notice("  IsSingleton: " + m_isSingleton);
             notice("  Key: " + m_key);
             notice("  PackageType: " + m_packageType);
-            notice("  Stylesheet: " + m_stylesheet);
             notice("  DispatcherClass: " + m_dispatcherClass);
 
             if (m_key == null && m_packageType == null) {
@@ -308,11 +296,6 @@ public class ApplicationSetup {
                 } else if (m_packageType == null) {
                     applicationType = ApplicationType.createApplicationType
                         (m_key, m_title, m_typeName);
-
-                    if (m_stylesheet != null) {
-                        applicationType.addStylesheet
-                            (Stylesheet.createStylesheet(m_stylesheet));
-                    }
 
                     if (m_dispatcherClass != null) {
                         applicationType.setDispatcherClass(m_dispatcherClass);

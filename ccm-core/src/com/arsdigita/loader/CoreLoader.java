@@ -26,7 +26,7 @@ import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.PackageType;
 import com.arsdigita.kernel.ResourceType;
 import com.arsdigita.kernel.SiteNode;
-import com.arsdigita.kernel.Stylesheet;
+// import com.arsdigita.kernel.Stylesheet;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.permissions.PermissionService;
@@ -58,7 +58,7 @@ import com.arsdigita.web.Web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Locale;
+// import java.util.Locale;
 
 import javax.mail.internet.InternetAddress;
 
@@ -108,9 +108,6 @@ public class CoreLoader extends PackageLoader {
     private StringParameter m_answer = new StringParameter
         ("waf.admin.password.answer", Parameter.REQUIRED, null);
 
-    private StringParameter m_stylesheet = new StringParameter
-        ("waf.login.stylesheet", Parameter.OPTIONAL, "login_en.xsl");
-
     private StringParameter m_dispatcher = new StringParameter
         ("waf.login.dispatcher", Parameter.OPTIONAL,
          "com.arsdigita.ui.login.SubsiteDispatcher");
@@ -127,7 +124,6 @@ public class CoreLoader extends PackageLoader {
         register(m_password);
         register(m_question);
         register(m_answer);
-        register(m_stylesheet);
         register(m_dispatcher);
         register(m_resource);
 
@@ -160,10 +156,6 @@ public class CoreLoader extends PackageLoader {
 
     private String getAnswer() {
         return (String) get(m_answer);
-    }
-
-    private String getStylesheet() {
-        return (String) get(m_stylesheet);
     }
 
     private String getDispatcher() {
@@ -297,7 +289,6 @@ public class CoreLoader extends PackageLoader {
     }
 
     private void loadSubsite(SiteNode rootNode) {
-        String stylesheetName = "";
         String sDispatcher = "";
 
         PackageInstance packageInstance = rootNode.getPackageInstance();
@@ -317,12 +308,6 @@ public class CoreLoader extends PackageLoader {
                 ("Package Type with key \"" + packageKey + "\" was not found.\n");
         }
 
-        // Create default stylesheet.
-        stylesheetName = "/packages/login/xsl/" + getStylesheet();
-
-        s_log.info("Adding stylesheet: " + stylesheetName);
-        subsite.addStylesheet(Stylesheet.createStylesheet(stylesheetName));
-
         // Set subsite dispatcher class.
         subsite.setDispatcherClass(getDispatcher());
     }
@@ -335,14 +320,6 @@ public class CoreLoader extends PackageLoader {
              "http://arsdigita.com/bebop/");
         bebop.createInstance("Bebop Service");
 
-        // Create and associate stylesheets.
-        // SF: Is there a better way to do this other than hardcoding
-        // these strings ?
-        String name = "/packages/bebop/xsl/bebop.xsl";
-        Stylesheet partSheet = Stylesheet.createStylesheet(name);
-
-        s_log.info("Adding stylesheet: " + name);
-        bebop.addStylesheet(partSheet);
     }
 
     private void loadWebDev() {
@@ -360,7 +337,7 @@ public class CoreLoader extends PackageLoader {
         packType.setDispatcherClass("com.arsdigita.webdevsupport.Dispatcher");
     }
 
-    private static final String XSL_ROOT = "/packages/acs-admin/xsl/";
+//     private static final String XSL_ROOT = "/packages/acs-admin/xsl/";
 
     private Application loadAdminApp() {
         ApplicationType adminType = ApplicationType
@@ -370,10 +347,6 @@ public class CoreLoader extends PackageLoader {
         adminType.setDispatcherClass("com.arsdigita.ui.admin.AdminDispatcher");
         adminType.setDescription("CCM user and group administration");
         
-        Stylesheet adminXsl = Stylesheet.createStylesheet
-            (XSL_ROOT + "admin_en.xsl", Locale.ENGLISH);
-        adminType.addStylesheet(adminXsl);
-
         Application admin = Application.createApplication(adminType,
                                                           "admin",
                                                           "CCM Admin",
@@ -389,9 +362,6 @@ public class CoreLoader extends PackageLoader {
                                    SiteMap.BASE_DATA_OBJECT_TYPE);
         sitemapType.setDispatcherClass("com.arsdigita.ui.sitemap.SiteMapDispatcher");
         sitemapType.setDescription("CCM sitemap administration");
-        sitemapType.addStylesheet
-            (Stylesheet.createStylesheet
-             (XSL_ROOT + "sitemap_en.xsl", Locale.ENGLISH));
 
 
         Application sitemap = Application.createApplication(sitemapType,
@@ -411,10 +381,6 @@ public class CoreLoader extends PackageLoader {
             ("acs-permissions", "ACS Permissions Package",
              "ACS Permissions Packages", "http://arsdigita.com/acs-permissions");
         }
-        // Add stylesheets
-        Stylesheet permissionsXsl = Stylesheet.createStylesheet
-            ("/packages/permissions/xsl/permissions.xsl");
-        permissionsType.addStylesheet(permissionsXsl);
 
         permissionsType.setDispatcherClass
             ("com.arsdigita.ui.permissions.PermissionsDispatcher");
