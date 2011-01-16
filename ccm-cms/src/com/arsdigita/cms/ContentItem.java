@@ -55,7 +55,6 @@ import com.arsdigita.util.Reporter;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.versioning.VersionedACSObject;
 import com.arsdigita.versioning.Versions;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 import java.math.BigDecimal;
@@ -68,7 +67,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 /**
  * This class represents a content item.
@@ -202,7 +200,7 @@ import java.util.StringTokenizer;
  *
  * @version $Id: ContentItem.java 1621 2007-09-13 12:43:12Z chrisg23 $
  */
-public class ContentItem extends VersionedACSObject implements CustomCopy, RelationAttributeInterface {
+public class ContentItem extends VersionedACSObject implements CustomCopy {
 
     private static final Logger s_log = Logger.getLogger(ContentItem.class);
     private static final Logger s_logDenorm = Logger.getLogger(ContentItem.class.getName() + ".Denorm");
@@ -235,7 +233,6 @@ public class ContentItem extends VersionedACSObject implements CustomCopy, Relat
     public static final String DRAFT_VERSION = "masterVersion";
     public static final String VERSIONS = "slaveVersions";
     public static final String CONTENT_SECTION = "section";
-    private static final String RELATION_ATTRIBUTES = "";
     private static final String PUBLISH_LISTENER_CLASS =
             PublishLifecycleListener.class.getName();
     private VersionCache m_pending;
@@ -2083,11 +2080,4 @@ public class ContentItem extends VersionedACSObject implements CustomCopy, Relat
         return extraXMLGenerators;
     }
 
-    public boolean hasRelationAttributes() {
-        return !RELATION_ATTRIBUTES.isEmpty();
-    }
-
-    public StringTokenizer getRelationAttributes() {
-        return new StringTokenizer(RELATION_ATTRIBUTES, ";");
-    }
 }

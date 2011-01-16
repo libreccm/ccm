@@ -48,7 +48,9 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
     public static final String CONTACTS = "contacts";
     public static final String CONTACTS_KEY = "link_key";
     public static final String CONTACTS_ORDER = "link_order";
-    private static final String RELATION_ATTRIBUTES = "GenericContactType";
+
+    private static final String RELATION_ATTRIBUTES = "contacts.link_key:GenericContactType";
+
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
             "com.arsdigita.cms.contenttypes.GenericPerson";
@@ -74,7 +76,6 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
 
     public GenericPerson(String type) {
         super(type);
-        //set(CONTACTS, null);
     }
 
     @Override
@@ -170,7 +171,6 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
         String fullname = getFullName();
         if (fullname != null && !fullname.isEmpty()) {
             setTitle(fullname);
-            //setName(GenericPerson.urlSave(fullname));
             setName(GenericPerson.urlSave(String.format("%s %s", getSurname(), getGivenName())));
         }
     }
@@ -201,16 +201,6 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
         return !this.getContacts().isEmpty();
     }
 
-    @Override
-    public boolean hasRelationAttributes() {
-        return !RELATION_ATTRIBUTES.isEmpty();
-    }
-
-    @Override
-    public StringTokenizer getRelationAttributes() {
-        return new StringTokenizer(RELATION_ATTRIBUTES, ";");
-    }
-
     // Create a ulr save version of the full name
     public static String urlSave(String in) {
 
@@ -234,4 +224,56 @@ public class GenericPerson extends ContentPage implements RelationAttributeInter
         return in;
 
     }
+
+    @Override
+    public boolean hasRelationAttributes() {
+        return !RELATION_ATTRIBUTES.isEmpty();
+    }
+
+    @Override
+    public boolean hasRelationAttributeProperty(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public StringTokenizer getRelationAttributes() {
+        return new StringTokenizer(RELATION_ATTRIBUTES, ";");
+    }
+
+    @Override
+    public String getRelationAttributeKeyName(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(".") + 1, token.indexOf(":"));
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getRelationAttributeName(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(":") + 1);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getRelationAttributeKey(String propertyName) {
+        return null;
+    }
+
 }

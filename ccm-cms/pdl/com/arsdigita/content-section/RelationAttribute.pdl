@@ -25,7 +25,7 @@ object type RelationAttribute {
 
     BigDecimal[1..1] id      = cms_relation_attribute.object_id INTEGER;
     String[1..1] attribute   = cms_relation_attribute.attribute VARCHAR(100);
-    String[1..1] attr_key         = cms_relation_attribute.attr_key VARCHAR(100);
+    String[1..1] attr_key    = cms_relation_attribute.attr_key VARCHAR(100);
     String[1..1] lang        = cms_relation_attribute.lang VARCHAR(2);
     String[1..1] name        = cms_relation_attribute.name VARCHAR(100);
     String[0..1] description = cms_relation_attribute.description VARCHAR(500);

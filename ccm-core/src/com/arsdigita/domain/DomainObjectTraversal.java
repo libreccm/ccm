@@ -189,7 +189,7 @@ public abstract class DomainObjectTraversal {
             s_log.debug("findAdapter for type " + type.getQualifiedName()
                         + " in context " + context);
 
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             buf.append("Adapters contain:\n");
             Iterator keys = s_adapters.keySet().iterator();
             while (keys.hasNext()) {
@@ -568,6 +568,7 @@ public abstract class DomainObjectTraversal {
             m_context = context;
         }
 
+        @Override
         public boolean equals(Object o) {
             if (o instanceof AdapterKey) {
                 AdapterKey k = (AdapterKey) o;
@@ -577,10 +578,12 @@ public abstract class DomainObjectTraversal {
             }
         }
 
+        @Override
         public int hashCode() {
             return m_type.hashCode() + m_context.hashCode();
         }
 
+        @Override
         public String toString() {
             return m_type.getQualifiedName() + ',' + m_context;
         }
@@ -595,5 +598,10 @@ public abstract class DomainObjectTraversal {
         public LinkDomainObject(DataObject object) {
             super(object);
         }
+
+        @Override
+        public Object get(String attr) {
+        return super.get(attr);
+    }
     }
 }

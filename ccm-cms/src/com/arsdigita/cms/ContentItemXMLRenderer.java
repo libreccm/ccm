@@ -26,6 +26,10 @@ import com.arsdigita.xml.Element;
  */
 public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
 
+    private String m_propertyName = "";
+    private String m_keyName = "";
+    private String m_relationAttribute = "";
+
     public ContentItemXMLRenderer(Element root) {
         super(root);
     }
@@ -56,10 +60,11 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
             String path,
             Property property) {
 
-        String name = property.getName();
+        String propertyName = property.getName();
 
+        // Special handling for the isoCountryCode field in GenericAddress
         if (obj instanceof GenericAddress) {
-            if (name.equals("isoCountryCode")) {
+            if (propertyName.equals("isoCountryCode")) {
                 super.handleAttribute(obj, path, property);
 
                 Element element = newElement(m_element, "country");
@@ -68,6 +73,66 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
             }
         }
 
+        // Special handling for the relation attribute keys
+        if (!m_relationAttribute.isEmpty()) {
+            String key = "";
+
+            // The RelationAttribute is part of this domain object as field
+            if (obj instanceof RelationAttributeInterface
+                    && ((RelationAttributeInterface) obj).hasRelationAttributeProperty(propertyName)) {
+
+                RelationAttributeInterface relationAttributeObject = (RelationAttributeInterface) obj;
+                key = relationAttributeObject.getRelationAttributeKey(propertyName);
+
+            }
+
+            // This RelationAttribute is part of an n:m association as link attribute
+            if (obj instanceof LinkDomainObject
+                    && propertyName.equals(m_keyName)) {
+                key = (String) ((LinkDomainObject) obj).get(m_keyName);
+
+            }
+
+            // Replace value of the property defined in RELATION_ATTRIBUTES string
+            // of the primary domain object with the localized String.
+            if (!key.isEmpty()) {
+                RelationAttributeCollection relationAttributeCollection = new RelationAttributeCollection(m_relationAttribute, key);
+                relationAttributeCollection.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
+                Element element = newElement(m_element, m_keyName);
+                element.setText(relationAttributeCollection.getName());
+                relationAttributeCollection.close();
+                return;
+            }
+        }
+
         super.handleAttribute(obj, path, property);
+    }
+
+    @Override
+    protected void beginAssociation(DomainObject obj, String path, Property property) {
+        super.beginAssociation(obj, path, property);
+
+        String propertyName = property.getName();
+
+        if (obj instanceof RelationAttributeInterface
+                && ((RelationAttributeInterface) obj).hasRelationAttributeProperty(propertyName)) {
+
+            RelationAttributeInterface relationAttributeObject = (RelationAttributeInterface) obj;
+
+            m_propertyName = propertyName;
+            m_keyName = relationAttributeObject.getRelationAttributeKeyName(propertyName);
+            m_relationAttribute = relationAttributeObject.getRelationAttributeName(propertyName);
+
+        }
+    }
+
+    @Override
+    protected void endAssociation(DomainObject obj, String path, Property property) {
+
+        m_propertyName = "";
+        m_keyName = "";
+        m_relationAttribute = "";
+
+        super.endAssociation(obj, path, property);
     }
 }

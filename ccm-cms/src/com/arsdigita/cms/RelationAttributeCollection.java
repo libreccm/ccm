@@ -101,10 +101,16 @@ public class RelationAttributeCollection extends DomainCollection {
 
     // Accessors
     public final String getKey() {
+        if (this.isBeforeFirst()) {
+            this.next();
+        }
         return (String) get(KEY);
     }
 
     public final String getLanguage() {
+        if (this.isBeforeFirst()) {
+            this.next();
+        }
         return (String) get(LANGUAGE);
     }
 
@@ -133,10 +139,16 @@ public class RelationAttributeCollection extends DomainCollection {
     }
 
     public String getName() {
+        if (this.isBeforeFirst()) {
+            this.next();
+        }
         return getRelationAttribute().getName();
     }
 
     public String getDescription() {
+        if (this.isBeforeFirst()) {
+            this.next();
+        }
         return getRelationAttribute().getDescription();
     }
 

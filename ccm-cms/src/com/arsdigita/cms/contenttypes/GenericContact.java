@@ -43,7 +43,8 @@ public class GenericContact extends ContentPage implements
     public static final String ADDRESS = "address";
     public static final String CONTACT_ENTRIES = "contactentries";
     public static final String CONTACTS_KEY = GenericPersonContactCollection.CONTACTS_KEY;
-    private static final String RELATION_ATTRIBUTES = "GenericContactType;GenericContactEntryType";
+
+    private static final String RELATION_ATTRIBUTES = "person.link_key:GenericContactTypes;contactentries.key:GenericContactEntryKeys";
 
     // Config
     private static final GenericContactConfig s_config =
@@ -233,7 +234,49 @@ public class GenericContact extends ContentPage implements
     }
 
     @Override
+    public boolean hasRelationAttributeProperty(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public StringTokenizer getRelationAttributes() {
         return new StringTokenizer(RELATION_ATTRIBUTES, ";");
     }
+
+    @Override
+    public String getRelationAttributeKeyName(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(".") + 1, token.indexOf(":"));
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getRelationAttributeName(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(":") + 1);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getRelationAttributeKey(String propertyName) {
+        return null;
+    }
+
 }

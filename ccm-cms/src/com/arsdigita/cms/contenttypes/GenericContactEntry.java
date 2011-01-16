@@ -21,17 +21,19 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentItem;
+import com.arsdigita.cms.RelationAttributeInterface;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import java.util.StringTokenizer;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author quasi
  */
-public class GenericContactEntry extends ContentItem {
+public class GenericContactEntry extends ContentItem implements RelationAttributeInterface {
     
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.GenericContactEntry";
     private static final String BASE_DATA_OBJECT_PACKAGE = "com.arsdigita.cms.contenttypes";
@@ -43,7 +45,8 @@ public class GenericContactEntry extends ContentItem {
     public static final String VALUE = "value";
     public static final String DESCRIPTION = "description";
     
-    
+    private static final String RELATION_ATTRIBUTES = "key.key:GenericContactEntryKeys";
+
     /**
      * Creates a new instance of GenericContactEntry
      */
@@ -111,4 +114,56 @@ public class GenericContactEntry extends ContentItem {
     public void setDescription(String description) {
         set(DESCRIPTION, description);
     }
+
+    @Override
+    public boolean hasRelationAttributes() {
+        return !RELATION_ATTRIBUTES.isEmpty();
+    }
+
+    @Override
+    public boolean hasRelationAttributeProperty(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public StringTokenizer getRelationAttributes() {
+        return new StringTokenizer(RELATION_ATTRIBUTES, ";");
+    }
+
+    @Override
+    public String getRelationAttributeKeyName(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(".") + 1, token.indexOf(":"));
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getRelationAttributeName(String propertyName) {
+        StringTokenizer strTok = new StringTokenizer(RELATION_ATTRIBUTES, ";");
+        while(strTok.hasMoreTokens()) {
+            String token = strTok.nextToken();
+            if(token.startsWith(propertyName + ".")) {
+                return token.substring(token.indexOf(":") + 1);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getRelationAttributeKey(String propertyName) {
+        return getKey();
+    }
+
 }
