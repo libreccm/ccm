@@ -5,7 +5,7 @@
 package com.arsdigita.cms.ui.type;
 
 import com.arsdigita.bebop.Component;
-import com.arsdigita.bebop.Link;
+import com.arsdigita.bebop.ControlLink;
 import com.arsdigita.bebop.List;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.list.AbstractListModelBuilder;
@@ -13,7 +13,7 @@ import com.arsdigita.bebop.list.ListCellRenderer;
 import com.arsdigita.bebop.list.ListModel;
 import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentType;
-import com.arsdigita.cms.RelationAttributeCollection;
+import com.arsdigita.cms.RelationAttributeInterface;
 import java.util.StringTokenizer;
 
 /**
@@ -23,15 +23,11 @@ import java.util.StringTokenizer;
 public class RelationAttributeList extends List {
 
     private ContentTypeRequestLocal m_type;
-    private ContentType contentType;
-    private StringTokenizer relationAttributeList;
 
     public RelationAttributeList(ContentTypeRequestLocal type) {
         super(new RelationAttributeListModelBuilder(type));
 
         m_type = type;
-        relationAttributeList = null;
-
         setCellRenderer(new CellRenderer());
     }
 
@@ -47,8 +43,10 @@ public class RelationAttributeList extends List {
         try {
             Class<? extends ContentItem> clazz = Class.forName(ct.getClassName()).asSubclass(ContentItem.class);
             ci = clazz.newInstance();
-            retVal = clazz.cast(ci).hasRelationAttributes();
-            relationAttributeList = clazz.cast(ci).getRelationAttributes();
+            if (ci instanceof RelationAttributeInterface) {
+                RelationAttributeInterface rai = (RelationAttributeInterface) ci;
+                retVal = rai.hasRelationAttributes();
+            }
             ci.delete();
         } catch (Exception ex) {
             //retVal = false;
@@ -60,7 +58,6 @@ public class RelationAttributeList extends List {
     private static class RelationAttributeListModelBuilder extends AbstractListModelBuilder {
 
         private ContentTypeRequestLocal m_type;
-        private ContentType contentType;
         private StringTokenizer relationAttributeList;
 
         public RelationAttributeListModelBuilder(ContentTypeRequestLocal type) {
@@ -71,15 +68,16 @@ public class RelationAttributeList extends List {
 
         public final ListModel makeModel(final List list, final PageState state) {
 
-            boolean retVal = false;
             ContentType ct = (ContentType) m_type.getContentType(state);
             ContentItem ci = null;
 
             try {
                 Class<? extends ContentItem> clazz = Class.forName(ct.getClassName()).asSubclass(ContentItem.class);
                 ci = clazz.newInstance();
-                retVal = clazz.cast(ci).hasRelationAttributes();
-                relationAttributeList = clazz.cast(ci).getRelationAttributes();
+                if (ci instanceof RelationAttributeInterface) {
+                    RelationAttributeInterface rai = (RelationAttributeInterface) ci;
+                    relationAttributeList = rai.getRelationAttributes();
+                }
                 ci.delete();
             } catch (Exception ex) {
                 //retVal = false;
@@ -91,8 +89,8 @@ public class RelationAttributeList extends List {
         private class Model implements ListModel {
 
             private final StringTokenizer m_items;
-//            private String m_item;
-            private RelationAttributeCollection m_item;
+            private String m_item;
+//            private RelationAttributeCollection m_item;
 
             Model(final StringTokenizer items) {
                 m_items = items;
@@ -101,8 +99,8 @@ public class RelationAttributeList extends List {
 
             public final boolean next() {
                 if (m_items.hasMoreTokens()) {
-//                    m_item = m_items.nextToken();
-                    m_item = new RelationAttributeCollection(m_items.nextToken());
+                    m_item = m_items.nextToken();
+//                    m_item = new RelationAttributeCollection(m_items.nextToken());
                     return true;
                 } else {
                     m_item = null;
@@ -112,13 +110,14 @@ public class RelationAttributeList extends List {
 
             // Label
             public final Object getElement() {
-                return m_item.getName();
-//                return m_item.getDisplayName();
+                return m_item;
+//                return m_item.getName();
             }
 
             // URL
             public final String getKey() {
-                return m_item+"/";//.getName() + "/";
+                return m_item;
+//                return m_item.getName() + "/";
             }
         }
     }
@@ -131,7 +130,13 @@ public class RelationAttributeList extends List {
                 final String key,
                 final int index,
                 final boolean isSelected) {
-            return new Link((String) value, key);
+            ControlLink link = new ControlLink(key){
+                public void setControlEvent(PageState state) {
+                    state.setControlEvent(list, "editRelationAttributes", key);
+                };
+            };
+
+            return link;
         }
     }
 }
