@@ -3035,7 +3035,11 @@ public class DaBInImporter extends Program {
                         getPlace());
                 publisherDe = new Publisher();
                 publisherDe.setTitle(publisherData.getName());
-                publisherDe.setName(publisherData.getName().toLowerCase());
+                publisherDe.setName(publisherData.getName().
+                        replace(",", "").
+                        replace("/", "").
+                        replaceAll("\\s\\s+", " ").
+                        replace(' ', '-').toLowerCase());
                 publisherDe.setPlace(publisherData.getPlace());
                 publisherDe.setLanguage("de");
                 publisherDe.setLifecycle(createLifecycle());
@@ -3047,7 +3051,11 @@ public class DaBInImporter extends Program {
                         getPlace());
                 publisherEn = new Publisher();
                 publisherEn.setTitle(publisherData.getName());
-                publisherEn.setName(publisherData.getName().toLowerCase());
+                publisherEn.setName(publisherData.getName().
+                        replace(",", "").
+                        replace("/", "").
+                        replaceAll("\\s\\s+", " ").
+                        replace(' ', '-').toLowerCase());
                 publisherEn.setPlace(publisherData.getPlace());
                 publisherEn.setLanguage("en");
                 publisherEn.setLifecycle(createLifecycle());
@@ -3151,7 +3159,11 @@ public class DaBInImporter extends Program {
 
         int colonIndex = normalizedData.indexOf(':');
         if (colonIndex < 0) {
-            publisher.setName(normalizedData);
+            publisher.setName(normalizedData.
+                        replace(",", "").
+                        replace("/", "").
+                        replaceAll("\\s\\s+", " ").
+                        replace(' ', '-').toLowerCase());
         } else {
             String name;
             String place;
@@ -3188,7 +3200,11 @@ public class DaBInImporter extends Program {
             System.out.printf("\tprevDelimIndex = %d\n", prevDelimIndex);
             place = normalizedData.substring(prevDelimIndex, colonIndex);
 
-            publisher.setName(name.trim());
+            publisher.setName(name.trim().
+                        replace(",", "").
+                        replace("/", "").
+                        replaceAll("\\s\\s+", " ").
+                        replace(' ', '-').toLowerCase());
             publisher.setPlace(place.trim());
         }
 

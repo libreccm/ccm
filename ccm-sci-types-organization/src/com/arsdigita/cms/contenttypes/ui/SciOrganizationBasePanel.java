@@ -40,7 +40,14 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 /**
- * Base class for all panels of the sci-types-organization module.
+ * Base class for all panels of the sci-types-organization module. The panels
+ * are displaying the information of an organization type (
+ * <code>SciOrganization</code>, <code>SciDepartment</code>,
+ * <code>SciProject</code>) similar to the <code>MultiPartArticle</code>. For
+ * each information, e.g. members, there is a link, which replaces the
+ * information shown. To use this as an index item, a special template is
+ * necessary. An example of such a template can be found in the ccm-zes-aplaws
+ * module.
  *
  * @see SciOrganizationPanel
  * @see SciDepartmentPanel

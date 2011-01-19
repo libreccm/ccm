@@ -250,6 +250,7 @@ public class FileAsset extends BinaryAsset {
     }
 
 
+    @Override
     protected void beforeSave() {
         if( null == getLanguage() ) {
             setLanguage( Locale.getDefault().getLanguage() );

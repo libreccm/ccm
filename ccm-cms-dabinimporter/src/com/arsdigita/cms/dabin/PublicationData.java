@@ -67,9 +67,10 @@ public class PublicationData {
 
     public void setLink(String link) {
         if (link.length() < 200) {
-        this.link = link;
+            this.link = link;
         } else {
-            System.out.println("\n***WARNING: Link value too long. Truncating.\n");
+            System.out.println(
+                    "\n***WARNING: Link value too long. Truncating.\n");
             this.link = link.substring(0, 200);
         }
     }
@@ -84,10 +85,18 @@ public class PublicationData {
 
     public String getUrl() {
         if (name.length() < 200) {
-            return name;
+            return name.replace(",", "").
+                    replace("/", "").
+                    replaceAll("\\s\\s+", " ").
+                    replace(' ', '-').toLowerCase();
         } else {
-            System.out.println("\t***WARNING: Title of publication is too long for URL. Triming to title to a length of 200 characters for URL.");
-            return name.substring(0,200);
+            System.out.println(
+                    "\t***WARNING: Title of publication is too long for URL. Triming to title to a length of 200 characters for URL.");
+            return name.substring(0, 200).
+                    replace(",", "").
+                    replace("/", "").
+                    replaceAll("\\s\\s+", " ").
+                    replace(' ', '-').toLowerCase();
         }
     }
 
