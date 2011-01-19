@@ -1,6 +1,4 @@
 --
--- Copyright (C) 2008 Peter Boy All Rights Reserved.
---
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License
 -- as published by the Free Software Foundation; either version 2.1 of
@@ -15,13 +13,13 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2010/11/10 23:15:09 $
+-- $Id: recreateusers_index.sql pboy $
 
-\echo Red Hat Enterprise CORE 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
+-- for some unkown reason for some ccm installations an index for
+-- users tables has been lost. Just in case it is recreated here.
 
-begin;
+-- First: Drop index to avoid an error it it already exists
+drop index if exists users_lower_screen_name_idx ;
 
-\i ../default/upgrade/6.6.0-6.6.1/drop_tables_acs_stylesheets.sql
-\i ../default/upgrade/6.6.0-6.6.1/recreate_users_index.sql
-
-commit;
+create unique index users_lower_screen_name_idx on users
+       USING btree (lower((screen_name)::text));
