@@ -15,8 +15,8 @@
 --
 -- $Id: upd_constraints.sql pboy $
 
--- recreate constraint  on cms_articles which had to be deleted during
--- update of cms_articles
+-- recreate constraint on trm_domains_indexer which got lost anywhere during
+-- the update processes
 ALTER TABLE trm_domains_indexer
       ADD CONSTRAINT trm_doma_inde_index_id_f_ggaqm FOREIGN KEY (indexer_id)
       REFERENCES acs_objects(object_id);

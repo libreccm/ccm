@@ -13,9 +13,9 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: upd_table_ct_articles.sql pboy $
+-- $Id: upd_constraints.sql pboy $
 
--- recreate constraint  on cms_articles which had to be deleted during
+-- recreate constraint  on ct_news which had to be deleted during
 -- update of cms_articles
 ALTER TABLE ct_news
       ADD CONSTRAINT ct_news_item_id_f_mduh5 FOREIGN KEY (item_id)

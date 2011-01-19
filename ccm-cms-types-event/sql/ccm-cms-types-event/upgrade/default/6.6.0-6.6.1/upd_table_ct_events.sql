@@ -13,7 +13,7 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $Id: upd_table_ct_articles.sql pboy $
+-- $Id: upd_table_ct_events.sql pboy $
 
 -- recreate constraint  on cms_articles which had to be deleted during
 -- update of cms_articles

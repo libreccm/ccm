@@ -17,6 +17,6 @@
 --
 -- $Id: oracle-se-6.6.0-6.6.1.sql 293 2011-01-07 15:10:39Z pboy $
 
-PROMPT Red Hat Enterprise CT NEWSITEM 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
+PROMPT Red Hat Enterprise TERMS 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
 
-@@ ./default/6.6.0-6.6.1/upd_constraints.sql
+@@ ../default/upgrade/6.6.0-6.6.1/upd_constraints.sql

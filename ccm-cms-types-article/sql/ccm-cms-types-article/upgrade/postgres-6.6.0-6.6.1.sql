@@ -15,12 +15,12 @@
 -- License along with this library; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 --
--- $DateTime: 2010/11/10 23:15:09 $
+-- $Id: postgres-6.6.0-6.6.1.sql  pboy $
 
 \echo Red Hat Enterprise CT ARTICLE 6.6.0 -> 6.6.1 Upgrade Script (PostgreSQL)
 
 begin;
 
-\i ./default/6.6.0-6.6.1/upd_table_ct_articles.sql
+\i default/6.6.0-6.6.1/upd_table_ct_articles.sql
 
 commit;

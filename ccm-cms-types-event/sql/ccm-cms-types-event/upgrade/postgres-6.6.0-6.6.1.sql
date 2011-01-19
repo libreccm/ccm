@@ -21,6 +21,6 @@
 
 begin;
 
-\i ./default/6.6.0-6.6.1/upd_table_ct_events.sql
+\i default/6.6.0-6.6.1/upd_table_ct_events.sql
 
 commit;

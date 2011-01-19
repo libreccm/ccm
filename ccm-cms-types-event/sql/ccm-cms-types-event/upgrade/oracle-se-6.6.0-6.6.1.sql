@@ -19,4 +19,4 @@
 
 PROMPT Red Hat Enterprise CT EVENT 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
 
-@@ ./default/6.6.0-6.6.1/upd_table_ct_events.sql
+@@ default/6.6.0-6.6.1/upd_table_ct_events.sql

@@ -30,16 +30,6 @@ comment on column content_types.classname is '
 comment on column content_types.label is '
   The pretty name for this content type
 ';
---comment on column content_types.is_internal is '
---  An internal content type is one that is not user-defined and maintained
---  internally. A content type should be made internal under the following
---  two conditions:
---  1) The object type needs to take advantage of content type services
---  (i.e., versioning, categorization, lifecycle, workflow) that are already
---  implemented in CMS.
---  2) The content type cannot be explicitly registered to a content section.
---  The Template content type is one such internal content type.
---';
  comment on column content_types.mode is '
   Saves the mode of the content type: I = internal, H = hidden
 
@@ -52,6 +42,6 @@ comment on column content_types.label is '
   2) The content type cannot be explicitly registered to a content section.
   The Template content type is one such internal content type.
 
-  A hidden content type is one that cannot used directly but other content
+  A hidden content type is one that cannot be used directly but other content
   types can extend from it. Also, it is a legit parent for UDCTs.
 ';
