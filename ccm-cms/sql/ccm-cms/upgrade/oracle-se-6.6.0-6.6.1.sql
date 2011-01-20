@@ -29,3 +29,4 @@ PROMPT Red Hat Enterprise CMS 6.6.0 -> 6.6.1 Upgrade Script (Oracle)
 @@ ../default/upgrade/6.6.0-6.6.1/upd_table_content_types.sql
 @@ ../default/upgrade/6.6.0-6.6.1/drop_table_cms_article_image_map.sql
 @@ ../default/upgrade/6.6.0-6.6.1/upd_table_cms_articles.sql
+@@ ../default/upgrade/6.6.0-6.6.1/upd_table_authoring_steps.sql
