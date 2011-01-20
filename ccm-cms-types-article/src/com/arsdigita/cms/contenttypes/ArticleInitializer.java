@@ -37,9 +37,9 @@ public class ArticleInitializer extends ContentTypeInitializer {
         super("ccm-cms-types-article.pdl.mf", GenericArticle.BASE_DATA_OBJECT_TYPE);
     }
 
-
-    public String[] getStylesheets() {
-        return new String[]
-            { "/static/content-types/com/arsdigita/cms/contenttypes/Article.xsl" };
-    }
+//  deprecated, no longer used.
+//  public String[] getStylesheets() {
+//      return new String[]
+//          { "/static/content-types/com/arsdigita/cms/contenttypes/Article.xsl" };
+//  }
 }

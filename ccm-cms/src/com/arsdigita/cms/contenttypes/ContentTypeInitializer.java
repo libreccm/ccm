@@ -186,6 +186,10 @@ public abstract class ContentTypeInitializer extends CompoundInitializer {
      * 
      * @return List (array) of fully qualified file names (relative to docuemnt /
      *         context root) to content types style sheets.
+     * @deprecated without replacement.
+     *   Since a long time {@link com.arsdigita.templating.PatternStylesheetResolver
+     *   PatternStylesheetResolver} is used to locate stylesheets based on a
+     *   file patterns. Not used anymore (pb 2011.01.20)
      */
     public String[] getStylesheets() {
         return EMPTY_ARRAY;

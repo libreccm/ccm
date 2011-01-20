@@ -37,7 +37,8 @@ import java.text.DateFormat;
 /**
  * Authoring step to edit the simple attributes of the Article content
  * type (and its subclasses). The attributes edited are 'name', 'title',
- * 'article date', 'location', 'lead', 'main contributor', 'article type', 'map link', and 'cost'. This authoring step replaces
+ * 'article date', 'location', 'lead', and 'article type'.
+ * This authoring step replaces
  * the <code>com.arsdigita.ui.authoring.PageEdit</code> step for this type.
  */
 public class ArticlePropertiesStep

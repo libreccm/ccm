@@ -86,7 +86,10 @@ public class ArticlePropertyForm
             = new StringParameter( LEAD );
         
         if (ContentSection.getConfig().mandatoryDescriptions()) {
-			leadParam.addParameterListener(new NotEmptyValidationListener(GlobalizationUtil.globalize("cms.contenttypes.ui.description_missing")));
+			leadParam.addParameterListener(
+                    new NotEmptyValidationListener(
+                        GlobalizationUtil.globalize(
+                            "cms.contenttypes.ui.description_missing")));
 		}
         //leadParam
         //    .addParameterListener( new NotNullValidationListener() );
