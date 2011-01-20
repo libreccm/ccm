@@ -18,3 +18,11 @@
 update authoring_steps
     set   component='com.arsdigita.cms.ui.authoring.GenericArticleBody'
     where component like '%TextPageBody%' ;
+
+update authoring_steps
+    set   label_bundle='com.arsdigita.cms.CMSResources'
+    where label_bundle like 'com.arsdigita.cms.ui.CMSResources'  ;
+
+update authoring_steps
+    set   description_bundle='com.arsdigita.cms.CMSResources'
+    where description_bundle like 'com.arsdigita.cms.ui.CMSResources'  ;
