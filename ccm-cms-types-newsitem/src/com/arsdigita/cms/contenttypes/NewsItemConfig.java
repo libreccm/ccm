@@ -21,24 +21,47 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.BooleanParameter;
+import com.arsdigita.util.parameter.IntegerParameter;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class NewsItemConfig extends AbstractConfig {
     
     private final Parameter m_hideHomepageField;
+    private final Parameter m_startYear;
+    private final Parameter m_endYearDelta;
 
     public NewsItemConfig() {
         m_hideHomepageField = new BooleanParameter(
             "com.arsdigita.cms.contenttypes.newsitem.hide_homepage",
             Parameter.REQUIRED,
             new Boolean(false));
+        m_startYear = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.newsitem.start_year",
+                Parameter.REQUIRED,
+                new Integer(GregorianCalendar.getInstance().get(Calendar.YEAR) - 1));
+        
+        m_endYearDelta = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.newsitem.end_year_delta",
+                Parameter.REQUIRED,
+                new Integer(3));
+        
         
         register(m_hideHomepageField);
+        register(m_startYear);
+        register(m_endYearDelta);
 
         loadInfo();
     }
     
     public final boolean getHideHomepageField() {
         return ((Boolean) get(m_hideHomepageField)).booleanValue();
+    }
+    public final int getStartYear() {
+        return ((Integer) get(m_startYear)).intValue();
+    }
+    public final int getEndYearDelta() {
+        return ((Integer) get(m_endYearDelta)).intValue();
     }
 
 }
