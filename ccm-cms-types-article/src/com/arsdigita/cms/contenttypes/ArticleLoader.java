@@ -18,7 +18,7 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
+//  import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
 
 /**
  * Loader.
