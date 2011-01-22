@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ContentPage;
@@ -32,8 +31,13 @@ import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.contenttypes.util.EventGlobalizationUtil;
+import com.arsdigita.dispatcher.DispatcherHelper;
 
 import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Authoring step to view/edit the simple attributes of the Event content type (and
@@ -49,7 +53,7 @@ public class EventPropertiesStep extends SimpleEditStep {
     public static String EDIT_SHEET_NAME = "edit";
 
     public EventPropertiesStep(ItemSelectionModel itemModel,
-                               AuthoringKitWizard parent) {
+            AuthoringKitWizard parent) {
         super(itemModel, parent);
 
         setDefaultEditKey(EDIT_SHEET_NAME);
@@ -57,7 +61,7 @@ public class EventPropertiesStep extends SimpleEditStep {
 
         editSheet = new EventPropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel),
-            editSheet.getSaveCancelSection().getCancelButton());
+                editSheet.getSaveCancelSection().getCancelButton());
 
         setDisplayComponent(getEventPropertySheet(itemModel));
     }
@@ -71,102 +75,92 @@ public class EventPropertiesStep extends SimpleEditStep {
      * @return A component to display the state of the basic properties
      *  of the release
      **/
-    public static Component getEventPropertySheet(ItemSelectionModel
-                                                  itemModel) {
+    public static Component getEventPropertySheet(ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add( (String)EventGlobalizationUtil.globalize
-                   ("cms.contenttypes.ui.event.name").localize(),  Event.NAME);
-        sheet.add( (String)EventGlobalizationUtil.globalize
-                   ("cms.contenttypes.ui.event.title").localize(),  Event.TITLE);
-	sheet.add( (String)EventGlobalizationUtil.globalize
-                   ("cms.contenttypes.ui.event.lead").localize(),  Event.LEAD);
+        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.name").localize(), Event.NAME);
+        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.title").localize(), Event.TITLE);
+        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.lead").localize(), Event.LEAD);
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(EventGlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
-                      ContentPage.LAUNCH_DATE,
-                      new DomainObjectPropertySheet.AttributeFormatter() {
-                          public String format(DomainObject item,
-                                               String attribute,
-                                               PageState state) {
-                              ContentPage page = (ContentPage) item;
-                              if(page.getLaunchDate() != null) {
-                                  return DateFormat.getDateInstance(DateFormat.LONG)
-                                      .format(page.getLaunchDate());
-                              } else {
-                                  return (String)EventGlobalizationUtil.globalize("cms.ui.unknown").localize();
-                              }
-                          }
-                      });
+                    ContentPage.LAUNCH_DATE,
+                    new DomainObjectPropertySheet.AttributeFormatter() {
+
+                        public String format(DomainObject item,
+                                String attribute,
+                                PageState state) {
+                            ContentPage page = (ContentPage) item;
+                            if (page.getLaunchDate() != null) {
+                                return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale()).format(page.getLaunchDate());
+                            } else {
+                                return (String) EventGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                            }
+                        }
+                    });
         }
-        sheet.add( (String)EventGlobalizationUtil.globalize
-                   ("cms.contenttypes.ui.event.start_time").localize(), Event.START_DATE,
-                  new DomainObjectPropertySheet.AttributeFormatter() {
-                      public String format(DomainObject item,
-                                           String attribute,
-                                           PageState state) {
-                          Event e = (Event) item;
+        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.start_time").localize(), Event.START_DATE,
+                new DomainObjectPropertySheet.AttributeFormatter() {
 
-                          if (e.getStartDate() != null) {
-                              StringBuffer buf = new StringBuffer();
-                              buf.append(DateFormat.getDateInstance(DateFormat.LONG)
-                                         .format(e.getStartDate()));
+                    public String format(DomainObject item,
+                            String attribute,
+                            PageState state) {
+                        Event e = (Event) item;
 
-                              if (e.getStartTime() != null) {
-                                  buf.append(". " + e.getDisplayStartTime());
-                              }
+                        if (e.getStartDate() != null) {
 
-                              return buf.toString();
-                          } else {
-                              return "<i>unknown</i>";
-                          }
-                      }
-                  });
+                            if (e.getStartTime() == null) {
+                                return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale()).format(e.getStartDate());
+                            } else {
+                                Date startDateTime = new Date(e.getStartDate().getTime() + e.getStartTime().getTime());
+                                return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, DispatcherHelper.getNegotiatedLocale()).format(startDateTime);
 
-        sheet.add( (String)EventGlobalizationUtil.globalize
-                   ("cms.contenttypes.ui.event.end_time").localize(), Event.END_DATE,
-                  new DomainObjectPropertySheet.AttributeFormatter() {
-                      public String format(DomainObject item,
-                                           String attribute,
-                                           PageState state) {
-                          Event e = (Event) item;
-                          if (e.getEndDate() != null) {
-                              StringBuffer buf = new StringBuffer();
-                              buf.append(DateFormat.getDateInstance(DateFormat.LONG)
-                                         .format(e.getEndDate()));
+                            }
 
-                              if (e.getEndTime() != null) {
-                                  buf.append(". " + e.getDisplayEndTime());
-                              }
+                        } else {
+                            return  (String) EventGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                        }
+                    }
+                });
 
-                              return buf.toString();
-                          } else {
-                              return "<i>unknown</i>";
-                          }
-                      }
-                  });
-	if(!Event.getConfig().getHideDateDescription()) {
-     	   sheet.add( (String)EventGlobalizationUtil.globalize
-                      ("cms.contenttypes.ui.event.date_description").localize(),  Event.EVENT_DATE);
-	}
-        sheet.add( (String)EventGlobalizationUtil.globalize
-                   ("cms.contenttypes.ui.event.location").localize(),  Event.LOCATION);
-        
-	if(!Event.getConfig().getHideMainContributor()) {
- 	   sheet.add( (String)EventGlobalizationUtil.globalize
-                      ("cms.contenttypes.ui.event.main_contributor").localize(),  Event.MAIN_CONTRIBUTOR);
-	}
-        if(!Event.getConfig().getHideEventType()) {
-	   sheet.add( (String)EventGlobalizationUtil.globalize
-                      ("cms.contenttypes.ui.event.event_type").localize(),  Event.EVENT_TYPE);
-	}
-        if(!Event.getConfig().getHideLinkToMap()) {
-	   sheet.add( (String)EventGlobalizationUtil.globalize
-                      ("cms.contenttypes.ui.event.link_to_map").localize(),  Event.MAP_LINK);
-	}
-	if(!Event.getConfig().getHideCost()) {
-       	   sheet.add( (String)EventGlobalizationUtil.globalize
-                      ("cms.contenttypes.ui.event.cost").localize(),  Event.COST);
-	}
+        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.end_time").localize(), Event.END_DATE,
+                new DomainObjectPropertySheet.AttributeFormatter() {
+
+                    public String format(DomainObject item,
+                            String attribute,
+                            PageState state) {
+                        Event e = (Event) item;
+                        if (e.getEndDate() != null) {
+
+                            if (e.getEndTime() == null) {
+                                return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale()).format(e.getEndDate());
+                            } else {
+                                Date endDateTime = new Date(e.getEndDate().getTime() + e.getEndTime().getTime());
+                                return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, DispatcherHelper.getNegotiatedLocale()).format(endDateTime);
+
+                            }
+
+                        } else {
+                            return  (String) EventGlobalizationUtil.globalize("cms.ui.unknown").localize();
+                        }
+                    }
+                });
+        if (!Event.getConfig().getHideDateDescription()) {
+            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.date_description").localize(), Event.EVENT_DATE);
+        }
+        sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.location").localize(), Event.LOCATION);
+
+        if (!Event.getConfig().getHideMainContributor()) {
+            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.main_contributor").localize(), Event.MAIN_CONTRIBUTOR);
+        }
+        if (!Event.getConfig().getHideEventType()) {
+            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.event_type").localize(), Event.EVENT_TYPE);
+        }
+        if (!Event.getConfig().getHideLinkToMap()) {
+            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.link_to_map").localize(), Event.MAP_LINK);
+        }
+        if (!Event.getConfig().getHideCost()) {
+            sheet.add((String) EventGlobalizationUtil.globalize("cms.contenttypes.ui.event.cost").localize(), Event.COST);
+        }
         return sheet;
     }
 }

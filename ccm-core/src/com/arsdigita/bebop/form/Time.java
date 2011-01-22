@@ -27,11 +27,15 @@ import com.arsdigita.bebop.parameters.NumberInRangeValidationListener;
 import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.util.BebopConstants;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.util.Assert;
 import com.arsdigita.xml.Element;
+import java.text.DateFormat;
 
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * A class representing a time field in an HTML form.
@@ -57,7 +61,11 @@ public class Time extends Widget implements BebopConstants {
         public HourFragment(String name, Time parent) {
             super(name);
             this.parent = parent;
-            this.addValidationListener(new NumberInRangeValidationListener(1, 12));
+            if (has12HourClock()) {
+                this.addValidationListener(new NumberInRangeValidationListener(1, 12));
+            } else {
+                this.addValidationListener(new NumberInRangeValidationListener(1, 24));
+            }
         }
 
         @Override
@@ -71,9 +79,11 @@ public class Time extends Widget implements BebopConstants {
 
         @Override
         public Object getValue(PageState ps) {
-            // Depending on locale we need to differ between 12 hour and 24 hout format
-//            return parent.getFragmentValue(ps, Calendar.HOUR);
-            return parent.getFragmentValue(ps, Calendar.HOUR_OF_DAY);
+            if (has12HourClock()) {
+                return parent.getFragmentValue(ps, Calendar.HOUR);
+            } else {
+                return parent.getFragmentValue(ps, Calendar.HOUR_OF_DAY);
+            }
         }
     }
 
@@ -178,10 +188,9 @@ public class Time extends Widget implements BebopConstants {
 
         if (!(model instanceof TimeParameter)) {
             throw new IllegalArgumentException(
-                    "The Time widget " + model.getName() +
-                    " must be backed by a TimeParameter parameter model");
+                    "The Time widget " + model.getName()
+                    + " must be backed by a TimeParameter parameter model");
         }
-
 
         String name = model.getName();
         String nameHour = name + ".hour";
@@ -267,7 +276,9 @@ public class Time extends Widget implements BebopConstants {
         if (m_showSeconds) {
             m_second.generateXML(ps, time);
         }
-        m_amOrPm.generateXML(ps, time);
+        if (has12HourClock()) {
+            m_amOrPm.generateXML(ps, time);
+        }
     }
 
     @Override
@@ -277,7 +288,9 @@ public class Time extends Widget implements BebopConstants {
         if (m_showSeconds) {
             m_second.setDisabled();
         }
-        m_amOrPm.setDisabled();
+        if (has12HourClock()) {
+            m_amOrPm.setDisabled();
+        }
     }
 
     @Override
@@ -287,7 +300,9 @@ public class Time extends Widget implements BebopConstants {
         if (m_showSeconds) {
             m_second.setReadOnly();
         }
-        m_amOrPm.setReadOnly();
+        if (has12HourClock()) {
+            m_amOrPm.setReadOnly();
+        }
     }
 
     /**
@@ -319,12 +334,26 @@ public class Time extends Widget implements BebopConstants {
                 Calendar c = Calendar.getInstance();
                 c.setTime(value);
                 int intVal = c.get(field);
-                if (field == Calendar.HOUR && intVal == 0) {
+                if (field == Calendar.HOUR && intVal == 0 && has12HourClock()) {
                     intVal = 12;
                 }
                 return new Integer(intVal);
             }
         }
         return null;
+    }
+
+    private boolean has12HourClock() {
+        Locale locale = DispatcherHelper.getNegotiatedLocale();
+        DateFormat format_12Hour = DateFormat.getTimeInstance(DateFormat.SHORT, Locale.US);
+        DateFormat format_locale = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
+
+        String midnight = "";
+        try {
+            midnight = format_locale.format(format_12Hour.parse("12:00 AM"));
+        } catch (ParseException ignore) {
+        }
+
+        return midnight.contains("12");
     }
 }
