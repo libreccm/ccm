@@ -32,10 +32,10 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
-import com.arsdigita.kernel.Kernel;
 // This interface contains the XML element name of this class
 // in a constant which is used when generating XML
 import com.arsdigita.bebop.util.BebopConstants;
+import com.arsdigita.dispatcher.DispatcherHelper;
 
 import com.arsdigita.xml.Element;
 import java.text.SimpleDateFormat;
@@ -57,6 +57,7 @@ public class Date extends Widget implements BebopConstants {
     protected TextField m_day;
     private int m_year_begin;
     private int m_year_end;
+    private Locale m_locale;
 
     // Inner classes for the fragment widgets
     protected class YearFragment extends SingleSelect {
@@ -154,13 +155,6 @@ public class Date extends Widget implements BebopConstants {
         String nameMonth = name + ".month";
         String nameDay = name + ".day";
 
-        DateFormatSymbols dfs = null;
-        Locale locale = Kernel.getContext().getLocale();
-        if (locale != null) {
-            dfs = new DateFormatSymbols(locale);
-        } else {
-            dfs = new DateFormatSymbols();
-        }
         Calendar currentTime = GregorianCalendar.getInstance();
 
         m_year = new YearFragment(nameYear, this);
@@ -169,16 +163,9 @@ public class Date extends Widget implements BebopConstants {
 
         m_day.setMaxLength(2);
         m_day.setSize(2);
-        String[] months = dfs.getMonths();
 
-        for (int i = 0; i < months.length; i += 1) {
-            // This check is necessary because
-            // java.text.DateFormatSymbols.getMonths() returns an array
-            // of 13 Strings: 12 month names and an empty string.
-            if (months[i].length() > 0) {
-                m_month.addOption(new Option(String.valueOf(i), months[i]));
-            }
-        }
+        populateMonthOptions();
+
         int currentYear = currentTime.get(Calendar.YEAR);
         setYearRange(currentYear - 1, currentYear + 3);
 
@@ -205,13 +192,13 @@ public class Date extends Widget implements BebopConstants {
         Calendar cal = new GregorianCalendar();
         cal.setTime(date);
         int year = (cal.get(Calendar.YEAR));
-            if (year < m_year_begin) {
-                m_year.prependOption(new Option(String.valueOf(year)));
-            }
+        if (year < m_year_begin) {
+            m_year.prependOption(new Option(String.valueOf(year)));
+        }
 
-            if (year > m_year_end) {
-                m_year.addOption(new Option(String.valueOf(year)));
-            }
+        if (year > m_year_end) {
+            m_year.addOption(new Option(String.valueOf(year)));
+        }
     }
 
     /**
@@ -261,13 +248,47 @@ public class Date extends Widget implements BebopConstants {
     // Resepct the localized
     public void generateLocalizedWidget(PageState ps, Element date) {
 
-        // Get the current Pattern
-//        String format = new SimpleDateFormat(SimpleDateFormat.SHORT, Kernel.getContext().getLocale()).toPattern();
-        String format = new SimpleDateFormat().toPattern();
+        Locale defaultLocale = Locale.getDefault();
+        Locale locale = DispatcherHelper.getNegotiatedLocale();
 
-        m_month.generateXML(ps, date);
-        m_day.generateXML(ps, date);
-        m_year.generateXML(ps, date);
+        // Get the current Pattern
+        // XXX This is really, really, really, really, really, really bad
+        // but there is no way to get a SimpleDateFormat object for a
+        // different locale the the system default (the one you get with
+        // Locale.getDefault();). Also there is now way getting the pattern
+        // in another way (up until JDK 1.1 there was), so I have to temporarly
+        // switch the default locale to my desired locale, get a SimpleDateFormat
+        // and switch back.
+        Locale.setDefault(locale);
+        String format = new SimpleDateFormat().toPattern();
+        Locale.setDefault(defaultLocale);
+
+        // Repopulate the options for the month select box to get them localized
+        populateMonthOptions();
+
+        char[] chars = format.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+
+            // Test for doublettes
+            if (i >= 1 && chars[i - 1] == chars[i]) {
+                continue;
+            }
+
+            switch (chars[i]) {
+                case 'd':
+                    m_day.generateXML(ps, date);
+                    break;
+                case 'M':
+                    m_month.generateXML(ps, date);
+                    break;
+                case 'y':
+                    m_year.generateXML(ps, date);
+                    break;
+                default:
+                    break;
+            }
+
+        }
 
     }
 
@@ -322,5 +343,28 @@ public class Date extends Widget implements BebopConstants {
         m_year.setClassAttr(at);
         m_day.setClassAttr(at);
         super.setClassAttr(at);
+    }
+
+    private void populateMonthOptions() {
+
+        Locale locale = DispatcherHelper.getNegotiatedLocale();
+
+        if (m_locale == null || (locale != null && !m_locale.equals(locale))) {
+
+            DateFormatSymbols dfs = new DateFormatSymbols(locale);
+            String[] months = dfs.getMonths();
+
+            m_month.clearOptions();
+
+            for (int i = 0; i < months.length; i += 1) {
+                // This check is necessary because
+                // java.text.DateFormatSymbols.getMonths() returns an array
+                // of 13 Strings: 12 month names and an empty string.
+                if (months[i].length() > 0) {
+                    m_month.addOption(new Option(String.valueOf(i), months[i]));
+                }
+            }
+            m_locale = DispatcherHelper.getNegotiatedLocale();
+        }
     }
 }
