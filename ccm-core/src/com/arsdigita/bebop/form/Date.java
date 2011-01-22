@@ -18,7 +18,6 @@
  */
 package com.arsdigita.bebop.form;
 
-
 import java.text.DateFormatSymbols;
 
 import java.util.Calendar;
@@ -55,7 +54,9 @@ public class Date extends Widget implements BebopConstants {
 
     protected OptionGroup m_year;
     protected OptionGroup m_month;
-    protected TextField   m_day;
+    protected TextField m_day;
+    private int m_year_begin;
+    private int m_year_end;
 
     // Inner classes for the fragment widgets
     protected class YearFragment extends SingleSelect {
@@ -78,15 +79,14 @@ public class Date extends Widget implements BebopConstants {
 
         @Override
         public Object getValue(PageState ps) {
-            Object value =  parent.getFragmentValue(ps, Calendar.YEAR);
-	    if (value == null) {
-		Calendar currentTime = GregorianCalendar.getInstance();
-		int currentYear = currentTime.get(Calendar.YEAR);
-		value = new Integer(currentYear);
-	    }
-	    return value;
+            Object value = parent.getFragmentValue(ps, Calendar.YEAR);
+            if (value == null) {
+                Calendar currentTime = GregorianCalendar.getInstance();
+                int currentYear = currentTime.get(Calendar.YEAR);
+                value = new Integer(currentYear);
+            }
+            return value;
         }
-
     }
 
     protected class MonthFragment extends SingleSelect {
@@ -111,7 +111,6 @@ public class Date extends Widget implements BebopConstants {
         public Object getValue(PageState ps) {
             return parent.getFragmentValue(ps, Calendar.MONTH);
         }
-
     }
 
     protected class DayFragment extends TextField {
@@ -144,10 +143,10 @@ public class Date extends Widget implements BebopConstants {
     public Date(ParameterModel model) {
         super(model);
 
-        if ( ! (model instanceof DateParameter)) {
+        if (!(model instanceof DateParameter)) {
             throw new IllegalArgumentException(
-                                               "The Date widget " + model.getName() +
-                                               " must be backed by a DateParameter parmeter model");
+                    "The Date widget " + model.getName()
+                    + " must be backed by a DateParameter parmeter model");
         }
 
         String name = model.getName();
@@ -170,14 +169,14 @@ public class Date extends Widget implements BebopConstants {
 
         m_day.setMaxLength(2);
         m_day.setSize(2);
-        String [] months = dfs.getMonths();
+        String[] months = dfs.getMonths();
 
-        for (int i=0; i<months.length; i+=1) {        
+        for (int i = 0; i < months.length; i += 1) {
             // This check is necessary because
             // java.text.DateFormatSymbols.getMonths() returns an array
             // of 13 Strings: 12 month names and an empty string.
-            if ( months[i].length() > 0 ) {
-                m_month.addOption(new Option(String.valueOf(i),months[i]));
+            if (months[i].length() > 0) {
+                m_month.addOption(new Option(String.valueOf(i), months[i]));
             }
         }
         int currentYear = currentTime.get(Calendar.YEAR);
@@ -189,12 +188,30 @@ public class Date extends Widget implements BebopConstants {
         this(new DateParameter(name));
     }
 
-    public void setYearRange(int startYear, int endYear) {
+    public void setYearRange(int yearBegin, int yearEnd) {
         Assert.isUnlocked(this);
-        m_year.clearOptions();
-        for (int j= startYear; j<=endYear; j+=1) {
-            m_year.addOption(new Option(String.valueOf(j)));
+        if (yearBegin != m_year_begin || yearEnd != m_year_end) {
+            m_year_begin = yearBegin;
+            m_year_end = yearEnd;
+
+            m_year.clearOptions();
+            for (int year = m_year_begin; year <= m_year_end; year += 1) {
+                m_year.addOption(new Option(String.valueOf(year)));
+            }
         }
+    }
+
+    public void addYear(java.util.Date date) {
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        int year = (cal.get(Calendar.YEAR));
+            if (year < m_year_begin) {
+                m_year.prependOption(new Option(String.valueOf(year)));
+            }
+
+            if (year > m_year_end) {
+                m_year.addOption(new Option(String.valueOf(year)));
+            }
     }
 
     /**
@@ -226,7 +243,7 @@ public class Date extends Widget implements BebopConstants {
     @Override
     public void generateWidget(PageState ps, Element parent) {
 
-        if ( ! isVisible(ps) ) {
+        if (!isVisible(ps)) {
             return;
         }
 
@@ -251,7 +268,7 @@ public class Date extends Widget implements BebopConstants {
         m_month.generateXML(ps, date);
         m_day.generateXML(ps, date);
         m_year.generateXML(ps, date);
-        
+
     }
 
     @Override
@@ -279,17 +296,17 @@ public class Date extends Widget implements BebopConstants {
      */
     @Override
     public void setForm(Form f) {
-        super   .setForm(f);
-        m_year .setForm(f);
+        super.setForm(f);
+        m_year.setForm(f);
         m_month.setForm(f);
-        m_day  .setForm(f);
+        m_day.setForm(f);
     }
 
     public Object getFragmentValue(PageState ps, int field) {
         Assert.exists(ps, "PageState");
         FormData f = getForm().getFormData(ps);
         if (f != null) {
-            java.util.Date value = (java.util.Date)f.get(getName());
+            java.util.Date value = (java.util.Date) f.get(getName());
             if (value != null) {
                 Calendar c = Calendar.getInstance();
                 c.setTime(value);
@@ -306,8 +323,4 @@ public class Date extends Widget implements BebopConstants {
         m_day.setClassAttr(at);
         super.setClassAttr(at);
     }
-
-    // Don't lock
-//    @Override
-//    public void lock() {}
 }

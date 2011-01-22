@@ -130,7 +130,25 @@ public abstract class OptionGroup extends Widget
      * what its group was.
      */
     public void addOption(Option opt) {
-        addOption(opt, null);
+        addOption(opt, null, false);
+    }
+
+    public void addOption(Option opt, PageState ps) {
+        addOption(opt, ps, false);
+    }
+
+    /**
+     * Adds a new option.at the beginning of the list
+     * @param opt The {@link Option} to be added.  Note: the argument
+     * is modified and associated with this OptionGroup, regardless of
+     * what its group was.
+     */
+    public void prependOption(Option opt) {
+        addOption(opt, null, true);
+    }
+
+    public void prependOption(Option opt, PageState ps) {
+        addOption(opt, ps, true);
     }
 
     public void removeOption(Option opt) {
@@ -146,8 +164,9 @@ public abstract class OptionGroup extends Widget
      * what its group was.
      * @param ps the current page state.  if ps is null, adds option to the
      * default option list.
+     * @param prepend If true, prepend option to the list instead of appending it
      */
-    public void addOption(Option opt, PageState ps) {
+    public void addOption(Option opt, PageState ps, boolean prepend) {
         ArrayList list = m_options;
         if (ps == null) {
             Assert.isUnlocked(this);
@@ -155,7 +174,12 @@ public abstract class OptionGroup extends Widget
             list = (ArrayList)m_requestOptions.get(ps);
         }
         opt.setGroup( this );
+
+        if(prepend == true) {
+        list.add(0, opt);
+        } else {
         list.add(opt);
+        }
     }
 
 
