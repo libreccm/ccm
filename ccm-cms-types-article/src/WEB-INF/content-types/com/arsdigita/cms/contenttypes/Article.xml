@@ -4,7 +4,7 @@
           xsi:schemaLocation="http://xmlns.redhat.com/cms/content-types content-types.xsd">
               
     <ctd:content-type label="Article"
-                 escription="An article type with image"
+                description="An article type with image"
                  objectType="com.arsdigita.cms.contenttypes.Article"
                   classname="com.arsdigita.cms.contenttypes.Article">
 
