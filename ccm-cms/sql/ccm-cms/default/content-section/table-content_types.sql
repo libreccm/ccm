@@ -30,10 +30,7 @@ create table content_types (
   description	  varchar(4000),
   classname       varchar(200),
   ancestors       varchar(2000),
-  siblings        varchar(2000),
---  is_internal     char(1) default '0' not null
---                  constraint content_types_is_internal_ck
---                  check ( is_internal in ('0', '1') ),
+  decendats       varchar(2000),
   mode            char(1) default '' not null
                   constraint content_types_mode_ck
                   check ( mode in ('D', 'H', 'I') ),

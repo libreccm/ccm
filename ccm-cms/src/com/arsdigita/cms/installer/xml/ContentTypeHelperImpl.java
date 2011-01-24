@@ -357,14 +357,14 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
 
                 // Add parent ancestors to this content types ancestor list
                 // Also while we iterate through the list, we also need to add
-                // this content type as sibling to all entries in the ancestor list
+                // this content type as decendant to all entries in the ancestor list
                 while (strTok.hasMoreElements()) {
                     BigDecimal ctID = new BigDecimal(strTok.nextToken());
 
                     // Get the current content type
                     try {
                         ContentType ct = new ContentType(ctID);
-                        ct.addSiblings(ctID);
+                        ct.addDecendants(ctID);
                     } catch (Exception ex) {
                         // The db is broken. There is no content type for this ID
                     }
@@ -377,8 +377,8 @@ public class ContentTypeHelperImpl implements ContentTypeHelper {
             // Add parent to ancestor list
             type.addAncestor(parent.getID());
 
-            // Add this to parent siblings
-            parent.addSiblings(type.getID());
+            // Add this to parent decendats
+            parent.addDecendants(type.getID());
         }
     }
 }

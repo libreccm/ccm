@@ -70,7 +70,7 @@ public class ContentType extends ACSObject {
     public static final String ITEM_FORM_ID = "itemFormID";
     public static final String ITEM_FORM = "itemForm";
     public static final String ANCESTORS = "ancestors";
-    public static final String SIBLINGS = "siblings";
+    public static final String DECENDANTS = "decendats";
 
     /**
      * Default constructor. This creates a new folder.
@@ -343,14 +343,14 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Add an ancestor to the list of siblings, if not already in the list
+     * Add an ancestor to the list of decendats, if not already in the list
      * @param newAncestor ID of the ancestor to add
      */
     public void addAncestor(BigDecimal newAncestor) {
-        // Get the list of siblings from db
+        // Get the list of decendats from db
         String ancestors = (String) get(ANCESTORS);
 
-        // Only add if the newSibling in not yet in the list
+        // Only add if the newAncestor in not yet in the list
         if (ancestors == null) {
             ancestors = newAncestor.toString();
         } else if (!ancestors.contains(newAncestor.toString())) {
@@ -368,11 +368,11 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Remove an ancestor id from the list of siblings
+     * Remove an ancestor id from the list of decendats
      * @param ancestor ID to be removed
      */
     public void delAncestor(BigDecimal ancestor) {
-        // Get the list of siblings from db
+        // Get the list of decendats from db
         String ancestors = (String) get(ANCESTORS);
 
         // Only try to remove from a non-empty string
@@ -403,65 +403,65 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Add a sibling to the list of siblings, if not already in list
-     * @param newSibling ID of the sibling to add
+     * Add a decendant to the list of decendats, if not already in list
+     * @param newDecendant ID of the decendant to add
      */
-    public void addSiblings(BigDecimal newSibling) {
+    public void addDecendants(BigDecimal newDecendant) {
 
-        // Get the list of siblings from db
-        String siblings = (String) get(SIBLINGS);
+        // Get the list of decendats from db
+        String decendats = (String) get(DECENDANTS);
 
-        // Only add if the newSibling in not yet in the list
-        if (siblings == null) {
-            siblings = newSibling.toString();
-        } else if (!siblings.contains(newSibling.toString())) {
+        // Only add if the newDecendant in not yet in the list
+        if (decendats == null) {
+            decendats = newDecendant.toString();
+        } else if (!decendats.contains(newDecendant.toString())) {
 
-            if (siblings.length() == 0) {
+            if (decendats.length() == 0) {
                 // First entry in list
-                siblings = newSibling.toString();
+                decendats = newDecendant.toString();
             } else {
                 // Additional entry in the list
-                siblings += "/" + newSibling.toString();
+                decendats += "/" + newDecendant.toString();
             }
         }
 
         // Write new data back to db
-        set(SIBLINGS, siblings);
+        set(DECENDANTS, decendats);
     }
 
     /**
-     * Get the list of siblings
+     * Get the list of decendats
      * @return
      */
-    public String getSiblings() {
-        return (String) get(SIBLINGS);
+    public String getDecendants() {
+        return (String) get(DECENDANTS);
     }
 
     /**
-     * Remove a sibling from the list of siblings
-     * @param sibling ID to be removed
+     * Remove a decendant from the list of decendats
+     * @param decendant ID to be removed
      */
-    public void delSiblings(BigDecimal sibling) {
-        // Get the list of siblings from db
-        String siblings = (String) get(SIBLINGS);
+    public void delDecendants(BigDecimal decendant) {
+        // Get the list of decendats from db
+        String decendats = (String) get(DECENDANTS);
 
         // Only try to remove from a non-empty string
-        if (siblings != null && siblings.length() > 0) {
+        if (decendats != null && decendats.length() > 0) {
 
             // Remove ancestor ID from list
-            siblings.replace(sibling.toString(), "");
+            decendats.replace(decendant.toString(), "");
             // Delete the additional slash
-            siblings.replace("//", "/");
+            decendats.replace("//", "/");
 
             // If the list only contains a single slash,
             // we have just removed the last list entry, so the list is empty
-            if (siblings.equals("/")) {
-                siblings = "";
+            if (decendats.equals("/")) {
+                decendats = "";
             }
         }
 
         // Write new data back to db
-        set(SIBLINGS, siblings);
+        set(DECENDANTS, decendats);
     }
 
     //////////////////////////////////////
@@ -558,7 +558,7 @@ public class ContentType extends ACSObject {
         return new ContentTypeCollection(dc);
     }
 
-    public static ContentTypeCollection getSiblingsOf(ContentType ct) {
+    public static ContentTypeCollection getDecendantsOf(ContentType ct) {
         ContentTypeCollection ctc = ContentType.getRegisteredContentTypes();
 
         // The Filter Factory
@@ -570,9 +570,9 @@ public class ContentType extends ACSObject {
         // The content type must be either of the requested type
         or.addFilter(ff.equals(ContentType.ID, ct.ID));
 
-        // Or must be a sibling of the requested type
+        // Or must be a decendant of the requested type
         try {
-            StringTokenizer strTok = new StringTokenizer(ct.getSiblings(), "/");
+            StringTokenizer strTok = new StringTokenizer(ct.getDecendants(), "/");
             while (strTok.hasMoreElements()) {
                 or.addFilter(ff.equals(ContentType.ID, (String) strTok.nextElement()));
             }

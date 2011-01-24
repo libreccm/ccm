@@ -70,6 +70,7 @@ public class ResultsPane extends SimpleComponent {
         m_relative = false;
     }
 
+    @Override
     public void generateXML(PageState state, Element parent) {
         if (!m_query.hasQuery(state)) {
             if (s_log.isDebugEnabled()) {

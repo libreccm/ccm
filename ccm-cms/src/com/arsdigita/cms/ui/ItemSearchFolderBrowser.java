@@ -216,7 +216,7 @@ public class ItemSearchFolderBrowser extends Table {
                 try {
                     ContentType ct = new ContentType(singleTypeID);
 
-                    StringTokenizer strTok = new StringTokenizer(ct.getSiblings(), "/");
+                    StringTokenizer strTok = new StringTokenizer(ct.getDecendants(), "/");
                     while (strTok.hasMoreElements()) {
                         or.addFilter(ff.equals(ContentItem.CONTENT_TYPE + "." + ContentType.ID, (String) strTok.nextElement()));
                     }

@@ -56,13 +56,13 @@ public class ContentTypeFilterWidget extends FilterWidget {
     }
 
     public ContentTypeFilterWidget(ContentSection section, ContentType parentType) {
-        this(section.getSiblingsOfContentType(parentType));
+        this(section.getDecendantsOfContentType(parentType));
         m_section = section;
         m_parentType = parentType;
     }
 
     public ContentTypeFilterWidget(ContentType parentType) {
-        this(ContentType.getSiblingsOf(parentType));
+        this(ContentType.getDecendantsOf(parentType));
         m_parentType = parentType;
     }
 
@@ -108,7 +108,7 @@ public class ContentTypeFilterWidget extends FilterWidget {
                 if (parentType == null) {
                     typesCollection = section.getContentTypes();
                 } else {
-                    typesCollection = section.getSiblingsOfContentType(parentType);
+                    typesCollection = section.getDecendantsOfContentType(parentType);
                 }
 
             } else {
@@ -116,7 +116,7 @@ public class ContentTypeFilterWidget extends FilterWidget {
                 if (parentType == null) {
                     typesCollection = ContentType.getRegisteredContentTypes();
                 } else {
-                    typesCollection = ContentType.getSiblingsOf(parentType);
+                    typesCollection = ContentType.getDecendantsOf(parentType);
                 }
             }
 

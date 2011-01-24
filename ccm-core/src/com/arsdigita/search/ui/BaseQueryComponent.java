@@ -73,12 +73,14 @@ public class BaseQueryComponent extends QueryComponent {
         m_filters = new HashSet();
     }
     
+    @Override
     public void register(Page p) {
         super.register(p);
         
         findFilters(m_filters);
     }
     
+    @Override
     public void register(Form form, FormModel model) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Adding " + m_terms.getName() + " to form model");
@@ -117,6 +119,7 @@ public class BaseQueryComponent extends QueryComponent {
     }
 
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         Element content = generateParent(parent);
