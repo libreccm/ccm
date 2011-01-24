@@ -20,7 +20,7 @@ alter table content_types
 
 alter table content_types
     add column ancestors character varying(2000),
-    add column siblings character varying(2000) ;
+    add column decendants character varying(2000) ;
 
 
 update content_types
