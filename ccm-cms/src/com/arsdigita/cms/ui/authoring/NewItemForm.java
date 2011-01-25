@@ -112,7 +112,7 @@ public abstract class NewItemForm extends Form {
                     if (parentType == null) {
                         typesCollection = section.getCreatableContentTypes();
                     } else {
-                        typesCollection = section.getDecendantsOfContentType(parentType);
+                        typesCollection = section.getDescendantsOfContentType(parentType);
                     }
 
                     typesCollection.addOrder(ContentType.LABEL);

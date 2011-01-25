@@ -779,7 +779,7 @@ public class ContentSection extends Application {
         return types;
     }
 
-    public ContentTypeCollection getDecendantsOfContentType(ContentType ct) {
+    public ContentTypeCollection getDescendantsOfContentType(ContentType ct) {
         ContentTypeCollection ctc = getContentTypes();
 
         // The Filter Factory
@@ -791,7 +791,7 @@ public class ContentSection extends Application {
         // The content type must be either of the requested type
         or.addFilter(ff.equals(ContentType.ID, ct.ID));
 
-        // Or must be a decendant of the requested type
+        // Or must be a descendant of the requested type
         try {
             StringTokenizer strTok = new StringTokenizer(ct.getDescendants(), "/");
             while (strTok.hasMoreElements()) {
