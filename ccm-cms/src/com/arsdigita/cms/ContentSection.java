@@ -793,7 +793,7 @@ public class ContentSection extends Application {
 
         // Or must be a decendant of the requested type
         try {
-            StringTokenizer strTok = new StringTokenizer(ct.getDecendants(), "/");
+            StringTokenizer strTok = new StringTokenizer(ct.getDescendants(), "/");
             while (strTok.hasMoreElements()) {
                 or.addFilter(ff.equals(ContentType.ID, (String) strTok.nextElement()));
             }

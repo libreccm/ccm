@@ -27,10 +27,10 @@ object type ContentType extends ACSObject {
   String[1..1]        label = content_types.label VARCHAR(1000);
   String[0..1]        description = content_types.description VARCHAR(4000);
   String[0..1]        className = content_types.classname VARCHAR(200);
-  // Quasimodo: Store the information about ancenstors and decendants, so we
+  // Quasimodo: Store the information about ancenstors and descendants, so we
   // can make use of extending content types
   String[0..1]        ancestors = content_types.ancestors VARCHAR(2000);
-  String[0..1]        decendants  = content_types.decendants VARCHAR(2000);
+  String[0..1]        descendants  = content_types.descendants VARCHAR(2000);
 
   String[1..1]       mode = content_types.mode CHAR(1);
   BigDecimal[0..1]    itemFormID = content_types.item_form_id INTEGER;
@@ -64,7 +64,7 @@ association {
     do {
       select
         t.type_id, t.object_type, t.label, t.description, t.classname,
-        t.ancestors, t.decendats, t.mode, t.item_form_id
+        t.ancestors, t.descendants, t.mode, t.item_form_id
       from
         content_types t, content_section_type_map m, authoring_kits a
       where
@@ -79,7 +79,7 @@ association {
       creatableContentTypes.description           = t.description;
       creatableContentTypes.className             = t.classname;
       creatableContentTypes.ancestors             = t.ancestors;
-      creatableContentTypes.decendats             = t.decendats;
+      creatableContentTypes.descendants           = t.descendants;
       creatableContentTypes.mode                  = t.mode;
       creatableContentTypes.itemFormID            = t.item_form_id;
     }
@@ -112,7 +112,7 @@ association {
     do {
       select
         t.type_id, t.object_type, t.label, t.description, t.classname,
-        t.ancestors, t.decendats, t.mode, t.item_form_id
+        t.ancestors, t.descendants, t.mode, t.item_form_id
       from
         content_types t
       where
@@ -127,7 +127,7 @@ association {
       notAssociatedContentTypes.description           = t.description;
       notAssociatedContentTypes.className             = t.classname;
       notAssociatedContentTypes.ancestors             = t.ancestors;
-      notAssociatedContentTypes.decendats             = t.decendats;
+      notAssociatedContentTypes.descendants           = t.descendants;
       notAssociatedContentTypes.mode                  = t.mode;
       notAssociatedContentTypes.itemFormID            = t.item_form_id;
     }
@@ -156,7 +156,7 @@ query registeredContentTypes {
     do {
         select
         t.type_id, t.object_type, t.label,
-        t.description, t.classname, t.ancestors, t.decendats,
+        t.description, t.classname, t.ancestors, t.descendants,
         t.mode, t.item_form_id
         from content_types t
         where t.mode != 'I'
@@ -169,7 +169,7 @@ query registeredContentTypes {
         type.description          = t.description;
         type.className            = t.classname;
         type.ancestors            = t.ancestors;
-        type.decendats            = t.decendats;
+        type.descendants          = t.descendants;
         type.mode                 = t.mode;
         type.itemFormID           = t.item_form_id;
     }

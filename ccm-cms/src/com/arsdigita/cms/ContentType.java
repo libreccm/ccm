@@ -70,7 +70,7 @@ public class ContentType extends ACSObject {
     public static final String ITEM_FORM_ID = "itemFormID";
     public static final String ITEM_FORM = "itemForm";
     public static final String ANCESTORS = "ancestors";
-    public static final String DECENDANTS = "decendats";
+    public static final String DESCENDANTS = "descendants";
 
     /**
      * Default constructor. This creates a new folder.
@@ -343,11 +343,11 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Add an ancestor to the list of decendats, if not already in the list
+     * Add an ancestor to the list of descendants, if not already in the list
      * @param newAncestor ID of the ancestor to add
      */
     public void addAncestor(BigDecimal newAncestor) {
-        // Get the list of decendats from db
+        // Get the list of descendants from db
         String ancestors = (String) get(ANCESTORS);
 
         // Only add if the newAncestor in not yet in the list
@@ -368,11 +368,11 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Remove an ancestor id from the list of decendats
+     * Remove an ancestor id from the list of descendants
      * @param ancestor ID to be removed
      */
     public void delAncestor(BigDecimal ancestor) {
-        // Get the list of decendats from db
+        // Get the list of descendants from db
         String ancestors = (String) get(ANCESTORS);
 
         // Only try to remove from a non-empty string
@@ -403,71 +403,73 @@ public class ContentType extends ACSObject {
     }
 
     /**
-     * Add a decendant to the list of decendats, if not already in list
-     * @param newDecendant ID of the decendant to add
+     * Add a descendant to the list of descendants, if not already in list
+     * @param newDescendant ID of the descendant to add
      */
-    public void addDecendants(BigDecimal newDecendant) {
+    public void addDescendants(BigDecimal newDescendant) {
 
-        // Get the list of decendats from db
-        String decendats = (String) get(DECENDANTS);
+        // Get the list of descendants from db
+        String descendants = (String) get(DESCENDANTS);
 
-        // Only add if the newDecendant in not yet in the list
-        if (decendats == null) {
-            decendats = newDecendant.toString();
-        } else if (!decendats.contains(newDecendant.toString())) {
+        // Only add if the newDescendant in not yet in the list
+        if (descendants == null) {
+            descendants = newDescendant.toString();
+        } else if (!descendants.contains(newDescendant.toString())) {
 
-            if (decendats.length() == 0) {
+            if (descendants.length() == 0) {
                 // First entry in list
-                decendats = newDecendant.toString();
+                descendants = newDescendant.toString();
             } else {
                 // Additional entry in the list
-                decendats += "/" + newDecendant.toString();
+                descendants += "/" + newDescendant.toString();
             }
         }
 
         // Write new data back to db
-        set(DECENDANTS, decendats);
+        set(DESCENDANTS, descendants);
     }
 
     /**
-     * Get the list of decendats
+     * Get the list of descendants
      * @return
      */
-    public String getDecendants() {
-        return (String) get(DECENDANTS);
+    public String getDescendants() {
+        return (String) get(DESCENDANTS);
     }
 
     /**
-     * Remove a decendant from the list of decendats
-     * @param decendant ID to be removed
+     * Remove a descendant from the list of descendants
+     * @param descendant ID to be removed
      */
-    public void delDecendants(BigDecimal decendant) {
-        // Get the list of decendats from db
-        String decendats = (String) get(DECENDANTS);
+    public void delDescendants(BigDecimal descendant) {
+        // Get the list of descendants from db
+        String descendants = (String) get(DESCENDANTS);
 
         // Only try to remove from a non-empty string
-        if (decendats != null && decendats.length() > 0) {
+        if (descendants != null && descendants.length() > 0) {
 
             // Remove ancestor ID from list
-            decendats.replace(decendant.toString(), "");
+            descendants.replace(descendant.toString(), "");
             // Delete the additional slash
-            decendats.replace("//", "/");
+            descendants.replace("//", "/");
 
             // If the list only contains a single slash,
             // we have just removed the last list entry, so the list is empty
-            if (decendats.equals("/")) {
-                decendats = "";
+            if (descendants.equals("/")) {
+                descendants = "";
             }
         }
 
         // Write new data back to db
-        set(DECENDANTS, decendats);
+        set(DESCENDANTS, descendants);
     }
 
     //////////////////////////////////////
     //
     // Fetching/Finding content types.
     //
+    //////////////////////////////////////
+    
     /**
      * Find the content type with the associated with the object type.
      *
@@ -558,7 +560,7 @@ public class ContentType extends ACSObject {
         return new ContentTypeCollection(dc);
     }
 
-    public static ContentTypeCollection getDecendantsOf(ContentType ct) {
+    public static ContentTypeCollection getDescendantsOf(ContentType ct) {
         ContentTypeCollection ctc = ContentType.getRegisteredContentTypes();
 
         // The Filter Factory
@@ -570,9 +572,9 @@ public class ContentType extends ACSObject {
         // The content type must be either of the requested type
         or.addFilter(ff.equals(ContentType.ID, ct.ID));
 
-        // Or must be a decendant of the requested type
+        // Or must be a descendant of the requested type
         try {
-            StringTokenizer strTok = new StringTokenizer(ct.getDecendants(), "/");
+            StringTokenizer strTok = new StringTokenizer(ct.getDescendants(), "/");
             while (strTok.hasMoreElements()) {
                 or.addFilter(ff.equals(ContentType.ID, (String) strTok.nextElement()));
             }
