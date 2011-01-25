@@ -43,11 +43,10 @@ import org.apache.log4j.Logger;
  *
  * @author Sameer Ajmani
  * @since ACS 4.5
+ * @version $Id: Initializer.java 1225 2006-06-19 09:27:21Z apevec $
  **/
 public class Initializer
     implements com.arsdigita.initializer.Initializer {
-
-    public static final String versionId = "$Id: Initializer.java 1225 2006-06-19 09:27:21Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(Initializer.class);

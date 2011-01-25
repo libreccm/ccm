@@ -32,13 +32,12 @@ import com.arsdigita.util.parameter.StringParameter;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
+ * @version $Id: SecurityConfig.java 1471 2007-03-12 11:27:55Z chrisgilbert23 $
  **/
 
 public class SecurityConfig extends AbstractConfig {
 
     private static String s_systemAdministratorEmailAddress = null;
-
-    public final static String versionId = "$Id: SecurityConfig.java 1471 2007-03-12 11:27:55Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
 
     private final Parameter m_rootPage       = new StringParameter
         ("waf.pagemap.root", Parameter.REQUIRED, "register/");
