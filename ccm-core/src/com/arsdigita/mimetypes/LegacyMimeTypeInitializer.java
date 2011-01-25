@@ -42,15 +42,15 @@ import java.math.BigDecimal;
  * @author Stanislav Freidin
  * @version $Revision: #15 $ $Date: 2004/08/16 $
  */
-public class MimeTypeInitializer extends BaseInitializer {
-    private static final Logger s_log = Logger.getLogger(MimeTypeInitializer.class);
+public class LegacyMimeTypeInitializer extends BaseInitializer {
+    private static final Logger s_log = Logger.getLogger(LegacyMimeTypeInitializer.class);
 
     private final Configuration m_conf = new Configuration();
     public static final String INSO_FILTER_WORKS = "INSOFilterEnabled";
 
     /**
      * Update status table with new hash code
-     **/
+     */
     private void updateStatus() {
         MimeTypeStatus ms = MimeTypeStatus.getMimeTypeStatus();
         if ( isFilterEnabled() ) {
@@ -63,7 +63,7 @@ public class MimeTypeInitializer extends BaseInitializer {
 
     /**
      * Register a trivial instantiator for MimeType
-     **/
+     */
     private static void registerInstantiator() {
         if (DomainObjectFactory.getInstantiator
                 (MimeType.BASE_DATA_OBJECT_TYPE) == null) {
@@ -77,7 +77,7 @@ public class MimeTypeInitializer extends BaseInitializer {
         }
     }
 
-    public MimeTypeInitializer() throws InitializationException {
+    public LegacyMimeTypeInitializer() throws InitializationException {
         m_conf.initParameter
             (INSO_FILTER_WORKS,
              "Set to true if you have a working INSO filter",
@@ -105,8 +105,8 @@ public class MimeTypeInitializer extends BaseInitializer {
             disableFilter();
         }
 
-        testINSOFilter();
-        updateStatus();
+        // testINSOFilter();
+        // updateStatus();
         registerInstantiator();
 
         txn.commitTxn();
@@ -118,6 +118,10 @@ public class MimeTypeInitializer extends BaseInitializer {
 
     protected void doShutdown () { }
 
+    /** 
+     * Provides a routine test whether the INSO filter works correctly. Disables 
+     * INSO filter if testing fails.
+     */
     private void testINSOFilter() {
         if ( !isFilterEnabled() ) {
             s_log.info("Not testing INSO filter.");

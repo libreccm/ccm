@@ -45,7 +45,7 @@ import com.arsdigita.util.parameter.CompoundParameterReader;
 import com.arsdigita.util.parameter.ParameterReader;
 
 /**
- * PackageLoader
+ * Base class which loaders of all modules extend.
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: PackageLoader.java 2070 2010-01-28 08:47:41Z pboy $
@@ -119,17 +119,10 @@ public abstract class PackageLoader extends AbstractScript {
 
     /**
      * 
+     * 
      * @param args
      * @return
-     * //@deprecated use reader() instead
-     * but seems not to be used by any module
      */
-    //public static ParameterLoader loader(String[] args) {
-        // return ( this.reader(args) );
-    //    return null;
-    // }
-
-    
     public static ParameterReader reader(String[] args) {
         CompoundParameterReader result = new CompoundParameterReader();
         result.add(new JavaPropertyReader(props(args)));

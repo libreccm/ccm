@@ -47,34 +47,34 @@ init com.arsdigita.kernel.security.Initializer {
 
 
 // Set to true when using intermedia search
-init com.arsdigita.mimetypes.MimeTypeInitializer {
-    INSOFilterEnabled = false;
-}
+//-init com.arsdigita.mimetypes.LegacyMimeTypeInitializer {
+//-    INSOFilterEnabled = false;
+//-}
 
 
-
+// Should get integrated into the same configuration file as parameter
+// waf.debug, i.e. ccm-core/kernel.properties.
 init com.arsdigita.webdevsupport.Initializer {
   active = false;
 }
 
-init com.arsdigita.toolbox.CharsetEncodingProviderInitializer { }
+// init com.arsdigita.toolbox.CharsetEncodingProviderInitializer { }
 
-init com.arsdigita.ui.LegacyInitializer {
+// init com.arsdigita.ui.LegacyInitializer {
 //  If using the default SimplePage class, the following
 //  two parameters specify the class names of the bebop
 //  components to (optionally) add to margins of pages
 
 //  The is default set of page components
-  defaultLayout = {
-    { "top", "com.arsdigita.ui.UserBanner" },
-    { "bottom", "com.arsdigita.ui.SiteBanner" },
-    { "bottom", "com.arsdigita.ui.DebugPanel" }
+//   defaultLayout = {
+//     { "top", "com.arsdigita.ui.UserBanner" },
+//     { "bottom", "com.arsdigita.ui.SiteBanner" },
+//     { "bottom", "com.arsdigita.ui.DebugPanel" }
+//     // { "left", "com.arsdigita.x.y.z" },
+//     // { "right", "com.arsdigita.x.y.z" }
+//    };
 
-//    { "left", "com.arsdigita.x.y.z" },
-//    { "right", "com.arsdigita.x.y.z" }
-  };
-
-}
+// }
 
 // init com.arsdigita.portal.Initializer { }
 // init com.arsdigita.portal.LegacyInitializer { }

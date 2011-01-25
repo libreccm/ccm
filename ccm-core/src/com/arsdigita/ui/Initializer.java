@@ -19,11 +19,6 @@
 
 package com.arsdigita.ui;
 
-// import com.arsdigita.domain.DomainObject;
-// import com.arsdigita.domain.DomainObjectInstantiator;
-// import com.arsdigita.kernel.ACSObjectInstantiator;
-// import com.arsdigita.persistence.DataObject;
-// import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ConfigError;
 
@@ -40,7 +35,6 @@ import org.apache.log4j.Logger;
  * @author pb
  * @version $Id: $
  */
-// public class Initializer extends CompoundInitializer {
 public class Initializer extends com.arsdigita.runtime.GenericInitializer {
 
     /** Creates a s_logging category with name = to the full name of class */
@@ -51,7 +45,7 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
     // s_log.debug("ui configuration loaded.");
 
     /**
-     *
+     * Constructor
      */
     public Initializer() {
     }
@@ -93,7 +87,13 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
     }
 
 
+    /**
+     * Helper method creates the layout definitions
+     * @param desc
+     * @return
+     */
     private SimplePageLayout buildLayout(List desc) {
+        
         SimplePageLayout layout = new SimplePageLayout();
 
         Iterator comps = desc.iterator();

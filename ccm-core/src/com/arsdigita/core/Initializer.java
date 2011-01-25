@@ -24,6 +24,7 @@ import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.loader.CoreLoader;
+import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
@@ -37,8 +38,10 @@ import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.OptionalLegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
+import com.arsdigita.toolbox.CharsetEncodingProvider;
 import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.sitemap.SiteMap;
+import com.arsdigita.util.URLRewriter;
 import com.arsdigita.xml.FactoriesSetup;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.WebApp;
@@ -82,7 +85,7 @@ public class Initializer extends CompoundInitializer {
              ("ccm-core.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-        // add(new com.arsdigita.ui.Initializer());
+        add(new com.arsdigita.ui.Initializer());
         add(new com.arsdigita.portal.Initializer());
         add(new com.arsdigita.search.Initializer());
         add(new com.arsdigita.search.lucene.Initializer());
@@ -93,6 +96,10 @@ public class Initializer extends CompoundInitializer {
         add(new OptionalLegacyInitializer("enterprise.init"));
     }
 
+    /**
+     * 
+     * @param e
+     */
     @Override
     public final void init(final DomainInitEvent e) {
         super.init(e);
@@ -155,6 +162,41 @@ public class Initializer extends CompoundInitializer {
 	             }
 	         });
 
+/*      MimeType used to have its own initializer in the old initialize system
+ *      based on enterprise.ini. This initializer performed a DomainObjectFactgory
+ *      instantiation and some handling of INSO filter, an Oracle db related
+ *      filter for intermedia textsearch. INSO filter handling is moved to
+ *      intermedia search engine so no configuration was left in the domain
+ *      instantiation could be moved to the central core initializer
+        From old Initializer system:
+
+        if (DomainObjectFactory.getInstantiator
+                (MimeType.BASE_DATA_OBJECT_TYPE) == null) {
+            DomainObjectInstantiator instMimeType = new DomainObjectInstantiator() {
+                    public DomainObject doNewInstance(DataObject dataObject) {
+                        return new MimeType(dataObject);
+                    }
+                };
+            DomainObjectFactory.registerInstantiator
+                (MimeType.BASE_DATA_OBJECT_TYPE, instMimeType);
+        }
+
+*/
+        e.getFactory().registerInstantiator
+            (MimeType.BASE_DATA_OBJECT_TYPE,
+             new DomainObjectInstantiator() {
+                 public DomainObject doNewInstance(DataObject dataObject) {
+                     return new MimeType(dataObject);
+                 }
+                 public DomainObjectInstantiator
+                     resolveInstantiator(DataObject obj) {
+                     return this;
+                 }
+             });
+
+
+
+
         // register the document converters
         Converter converter = new PDFConverter();
         ConverterRegistry.registerConverter(converter, 
@@ -176,9 +218,16 @@ public class Initializer extends CompoundInitializer {
         ConverterRegistry.registerConverter(converter, 
                                             converter.getMimeTypes());
 
+        // Initialize the the CharsetEncodingProvider internal data structure
+        URLRewriter.addParameterProvider(new CharsetEncodingProvider());
+
         s_log.info("Core init(DomainInitEvent) done");
     }
 
+    /**
+     * 
+     * @param e
+     */
     public final void init(final LegacyInitEvent e) {
         super.init(e);
 

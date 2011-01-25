@@ -20,12 +20,12 @@
 package com.arsdigita.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.parameter.ArrayOfStringArrayParameter;
+import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.Parameter;
 
 import java.util.Arrays;
-// import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -63,33 +63,38 @@ public class UIConfig extends AbstractConfig {
 
     /**
      * Default set of page component objects defining the default layout for the
-     * SimplePage class.
-     * Format: list
+     * <strong>SimplePage</strong> class.
      *
+     * Format expected by clients:
+     * list  { { "margin_position", "class_name_of_bebop_component"} ,
+     *         { "margin_position", "class_name_of_bebop_component"} ,
+     *         ...
+     *         { "margin_position", "class_name_of_bebop_component"} 
+     *        }
+     * Elements are optional and may have 0 ...n pairs of position/classname.
+     *
+     * Example: 
+     *  defaultLayout = { { "top", "com.arsdigita.ui.UserBanner" },
+     *                    { "bottom", "com.arsdigita.ui.SiteBanner" },
+     *                    { "bottom", "com.arsdigita.ui.DebugPanel" }
+     *                    { "left", "com.arsdigita.x.y.z" },
+     *                    { "right", "com.arsdigita.x.y.z" }
+     *                  };
+     *
+     * Currently there is no list parameter model available. We use a
+     * StringArrayParameter instead, where each String element contains a
+     * colon separated position:class entry. It is converted to a list by
+     * the getter method.
      */
-//  From the OLD initializer:
-//  If using the default SimplePage class, the following
-//  two parameters specify the class names of the bebop
-//  components to (optionally) add to margins of pages
-
-//  The is default set of page components
-//  defaultLayout = {
-//    { "top", "com.arsdigita.ui.UserBanner" },
-//    { "bottom", "com.arsdigita.ui.SiteBanner" },
-//    { "bottom", "com.arsdigita.ui.DebugPanel" }
-//
-//    //    { "left", "com.arsdigita.x.y.z" },
-//    //    { "right", "com.arsdigita.x.y.z" }
-//  };
-
+    // Quick 'md Dirty, we reeally need a StringListParameter class
     private final Parameter m_defaultLayout = 
             new StringArrayParameter(
                     "waf.ui.default_layout",
                     Parameter.REQUIRED,
                     new String[]
                         { "top:com.arsdigita.ui.UserBanner"
-                        ,"bottom:com.arsdigita.ui.SiteBanner"
-                        ,"bottom:com.arsdigita.ui.DebugPanel"
+                         ,"bottom:com.arsdigita.ui.SiteBanner"
+                         ,"bottom:com.arsdigita.ui.DebugPanel"
                       //,"left:com.arsdigita.x.y.zl",
                       //,"right:com.arsdigita.x.y.zr",
                         }
@@ -97,7 +102,29 @@ public class UIConfig extends AbstractConfig {
 
     /**
      * The customized layout for applications using the SimplePage class
-     * Format: list
+     * Format: list presumably same format as m_defaultLayout. details unknown
+     * 
+     * According to a comment in old enterprise.init file:
+     * //  Application specific page components
+     * //  applicationLayouts = {
+     * //    { "forums",
+     * //      {
+     * //        { "top", "com.arsdigita.x.y.z" },
+     * //        { "left", "com.arsdigita.x.y.z" },
+     * //        { "bottom", "com.arsdigita.x.y.z" },
+     * //        { "right", "com.arsdigita.x.y.z" }
+     * //      }
+     * //    },
+     * //    { "search",
+     * //      {
+     * //        { "top", "com.arsdigita.x.y.z" },
+     * //        { "left", "com.arsdigita.x.y.z" },
+     * //        { "bottom", "com.arsdigita.x.y.z" },
+     * //        { "right", "com.arsdigita.x.y.z" }
+     * //      }
+     * //    }
+     * //  };
+     *
      */
     private final Parameter m_applicationLayouts = 
             new StringArrayParameter(
@@ -127,25 +154,45 @@ public class UIConfig extends AbstractConfig {
      * the default layout for SimplePage class.
      */
     public List getDefaultLayout() {
-//         String[][] defaultLayoutArray = (String[]) get(m_defaultLayout);
-        String[][] defaultLayoutArray =
-                    new String[][]
-                        {{ "top","com.arsdigita.ui.UserBanner"}
-                        ,{"bottom","com.arsdigita.ui.SiteBanner"}
-                        ,{"bottom","com.arsdigita.ui.DebugPanel"}
-                      //,{"left","com.arsdigita.x.y.zl"},
-                      //,{"right","com.arsdigita.x.y.zr"},
-                        };
-        return Arrays.asList(defaultLayoutArray);
+
+        /** List contain the default layout used to create a SimplePage. */
+        ArrayList defaultLayout = new ArrayList();
+        /** Value of the defaultLayout parameter, a string array of
+            pair of position:class strings                               */
+        String[] layoutParameter = (String[]) get(m_defaultLayout) ;
+
+        for (int i = 0; i < layoutParameter.length ; ++i) {
+            String[] layoutSection = StringUtils.split(layoutParameter[i],':');
+            defaultLayout.add(Arrays.asList(layoutSection));
+        }
+        return defaultLayout;
     }
 
     /**
-     * Retrieve the set of default page component objects defining
-     * the default layout for SimplePage class.
+     * Retrieve the set of customized layout for applications using the
+     * SimplePage class.
+     * Parameter is optional, method may return null!
      */
     public List getApplicationLayouts() {
-        String[] layouts = (String[]) get(m_applicationLayouts);
-        return Arrays.asList(layouts);
+
+        /** Value of the customLayout parameter, a string array of
+            pair of position:class strings                               */
+        String[] customParameter = (String[]) get(m_applicationLayouts) ;
+
+        if (customParameter != null) {
+            // This part of method could NOT be tested yet!
+            /** List contain the application layout used to create a SimplePage. */
+            ArrayList customLayout = new ArrayList();
+            for (int i = 0; i < customParameter.length ; ++i) {
+                String[] layoutSection = StringUtils.split(customParameter[i],':');
+                customLayout.add(Arrays.asList(layoutSection));
+            }
+            return customLayout;
+        } else {
+
+            return null;
+
+        }
     }
 
 }

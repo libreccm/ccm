@@ -70,6 +70,11 @@ public class IntermediaConfig extends AbstractConfig {
     private BooleanParameter m_stemming = new BooleanParameter
 	("waf.intermedia.stemming", Parameter.REQUIRED,
 				    Boolean.FALSE);
+    /** Enable INSO filter for (advanced) intermedia text search. Set to true
+        when using intermedia search.                                         */
+    private Parameter m_insoFilterEnabled = new BooleanParameter
+	("waf.intermedia.inso_filter_enabled", Parameter.REQUIRED,
+				    Boolean.FALSE);
 
 
     public IntermediaConfig() {
@@ -79,6 +84,7 @@ public class IntermediaConfig extends AbstractConfig {
         register(m_maxIndexingTime);
         register(m_indexingRetryDelay);
         register(m_stemming);
+        register(m_insoFilterEnabled);
         
         loadInfo();
     }
@@ -140,6 +146,11 @@ public class IntermediaConfig extends AbstractConfig {
      */
     public boolean includeStemming() {
     	return ((Boolean)get(m_stemming)).booleanValue();
+
+    }
+
+    public boolean isINSOFilterEnabled() {
+    	return ((Boolean)get(m_insoFilterEnabled)).booleanValue();
 
     }
 
