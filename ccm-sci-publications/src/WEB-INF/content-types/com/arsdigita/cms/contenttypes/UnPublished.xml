@@ -9,15 +9,15 @@
       description="Base type for unPublisheds"
       objectType="com.arsdigita.cms.contenttypes.UnPublished"
       classname="com.arsdigita.cms.contenttypes.UnPublished"
-      isInternal="yes">
+      mode="hidden">
 
     <ctd:authoring-kit createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
       
       <ctd:authoring-step
 	  labelKey="publications.ui.unPublished_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes..ui.PublicationResources"
+	  labelBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
 	  descriptionKey="publications.ui.unPublished.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes..ui.PublicationResources"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
 	  component="com.arsdigita.cms.contenttypes.ui.UnPublishedPropertiesStep"
 	  ordering="1"/>
 

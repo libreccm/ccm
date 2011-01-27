@@ -14,9 +14,9 @@
       
       <ctd:authoring-step
 	  labelKey="publications.ui.publisher_properties.title"
-	  labelBundle="com.arsdigita.cms.contenttypes..ui.PublicationResources"
+	  labelBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
 	  descriptionKey="publications.ui.publisher.basic_properties.description"
-	  descriptionBundle="com.arsdigita.cms.contenttypes..ui.PublicationResources"
+	  descriptionBundle="com.arsdigita.cms.contenttypes.ui.PublicationResources"
 	  component="com.arsdigita.cms.contenttypes.ui.PublisherPropertiesStep"
 	  ordering="1"/>
 

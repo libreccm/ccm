@@ -26,32 +26,34 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 /**
+ * Step for associating an article in journal with a journal.
  *
  * @author Jens Pelzetter
  */
-public class PublicationSeriesPropertyStep extends SimpleEditStep {
+public class ArticleInJournalJournalStep extends SimpleEditStep {
 
-    private static final String ADD_SERIES_SHEET_NAME = "addSeries";
+    private String ADD_JOURNAL_STEP = "addJournal";
 
-    public PublicationSeriesPropertyStep(ItemSelectionModel itemModel,
-                                         AuthoringKitWizard parent) {
+    public ArticleInJournalJournalStep(ItemSelectionModel itemModel,
+                                       AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
-    public PublicationSeriesPropertyStep(ItemSelectionModel itemModel,
+    public ArticleInJournalJournalStep(ItemSelectionModel itemModel,
                                        AuthoringKitWizard parent,
                                        String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm addSeriesSheet = new PublicationSeriesAddForm(itemModel);
-        add(ADD_SERIES_SHEET_NAME,
+        BasicItemForm addJournalForm =
+                      new ArticleInJournalJournalForm(itemModel);
+        add(ADD_JOURNAL_STEP,
             (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.add_series").localize(),
-            new WorkflowLockedComponentAccess(addSeriesSheet, itemModel),
-            addSeriesSheet.getSaveCancelSection().getCancelButton());
+                "publications.ui.articleInJournal.addJournal").localize(),
+            new WorkflowLockedComponentAccess(addJournalForm, itemModel),
+            addJournalForm.getSaveCancelSection().getCancelButton());
 
-        PublicationSeriesTable seriesTable = new PublicationSeriesTable(
+        ArticleInJournalJournalSheet sheet = new ArticleInJournalJournalSheet(
                 itemModel);
-        setDisplayComponent(seriesTable);
+        setDisplayComponent(sheet);
     }
 }

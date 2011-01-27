@@ -20,10 +20,12 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  *
@@ -74,10 +76,37 @@ public class InProceedings extends Publication {
     }
 
     public Proceedings getProceedings() {
-        return (Proceedings) get(PROCEEDINGS);
+        DataCollection collection;
+
+        collection = (DataCollection) get(PROCEEDINGS);
+
+        if (collection.size() == 0) {
+            return null;
+        } else {
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+            collection.close();
+
+            return (Proceedings) DomainObjectFactory.newInstance(dobj);
+        }
     }
 
     public void setProceedings(Proceedings proceedings) {
-        set(PROCEEDINGS, proceedings);
+        Proceedings oldProceedings;
+
+        oldProceedings = getProceedings();
+        if (oldProceedings != null) {
+            remove(PROCEEDINGS, oldProceedings);
+        }
+
+        if (proceedings != null) {
+            Assert.exists(proceedings, Proceedings.class);
+            DataObject link = add(PROCEEDINGS, proceedings);
+            link.set(Proceedings.PAPER_ORDER,
+                    Integer.valueOf((int) proceedings.getPapers().size()));
+            link.save();
+        }
     }
 }

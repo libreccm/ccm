@@ -26,32 +26,39 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 
 /**
+ * Step for creating an association between an InProceedings publication
+ * and a Proceedings publication.
  *
  * @author Jens Pelzetter
  */
-public class PublicationSeriesPropertyStep extends SimpleEditStep {
+public class InProceedingsProceedingsStep extends SimpleEditStep {
 
-    private static final String ADD_SERIES_SHEET_NAME = "addSeries";
+    private String ADD_PROCEEDINGS_STEP = "addProceedings";
 
-    public PublicationSeriesPropertyStep(ItemSelectionModel itemModel,
-                                         AuthoringKitWizard parent) {
+    public InProceedingsProceedingsStep(ItemSelectionModel itemModel,
+                                        AuthoringKitWizard parent) {
         this(itemModel, parent, null);
     }
 
-    public PublicationSeriesPropertyStep(ItemSelectionModel itemModel,
-                                       AuthoringKitWizard parent,
-                                       String prefix) {
+    public InProceedingsProceedingsStep(ItemSelectionModel itemModel,
+                                        AuthoringKitWizard parent,
+                                        String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm addSeriesSheet = new PublicationSeriesAddForm(itemModel);
-        add(ADD_SERIES_SHEET_NAME,
-            (String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.add_series").localize(),
-            new WorkflowLockedComponentAccess(addSeriesSheet, itemModel),
-            addSeriesSheet.getSaveCancelSection().getCancelButton());
-
-        PublicationSeriesTable seriesTable = new PublicationSeriesTable(
+        BasicItemForm addProceedingsForm = new InProceedingsProceedingsForm(
                 itemModel);
-        setDisplayComponent(seriesTable);
+        add(ADD_PROCEEDINGS_STEP,
+            (String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.inProceedings.addProceedings").localize(),
+            new WorkflowLockedComponentAccess(addProceedingsForm,
+                                              itemModel),
+            addProceedingsForm.getSaveCancelSection().getCancelButton());
+
+        InProceedingsProceedingsSheet sheet = new InProceedingsProceedingsSheet(
+                itemModel);
+        setDisplayComponent(sheet);
+
+
+
     }
 }

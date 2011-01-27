@@ -33,105 +33,109 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
-import com.arsdigita.cms.contenttypes.SciDepartment;
-import com.arsdigita.cms.contenttypes.SciOrganization;
+import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
+import com.arsdigita.cms.contenttypes.CollectedVolume;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.util.LockableImpl;
 
 /**
- * Sheet for showing the superior organization of a SciDepartment.
+ * Sheet which displays the collected volume to which an article in a collected
+ * volume is associated to.
  *
  * @author Jens Pelzetter
- * @see SciDepartment
- * @see SciOrganization
  */
-public class SciDepartmentOrganizationSheet
+public class ArticleInCollectedVolumeCollectedVolumeSheet
         extends Table
         implements TableActionListener {
 
     private final String TABLE_COL_EDIT = "table_col_edit";
     private final String TABLE_COL_DEL = "table_col_del";
-    private ItemSelectionModel m_itemModel;
+    private ItemSelectionModel itemModel;
 
-    public SciDepartmentOrganizationSheet(ItemSelectionModel itemModel) {
+    public ArticleInCollectedVolumeCollectedVolumeSheet(
+            ItemSelectionModel itemModel) {
         super();
-        m_itemModel = itemModel;
+        this.itemModel = itemModel;
 
         setEmptyView(
-                new Label(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.department.organization_none")));
+                new Label(PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.collectedVolume.none")));
 
         TableColumnModel colModel = getColumnModel();
         colModel.add(new TableColumn(
                 0,
-                SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.department.organization").localize(),
+                PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.collectedVolume").
+                localize(),
                 TABLE_COL_EDIT));
         colModel.add(new TableColumn(
                 1,
-                SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.department.organization.remove").localize(),
+                PublicationGlobalizationUtil.globalize(
+                "publications.ui.articleInCollectedVolume.collectedVolume.remove").
+                localize(),
                 TABLE_COL_DEL));
 
         setModelBuilder(
-                new SciDepartmentOrganizationSheetModelBuilder(itemModel));
+                new ArticleInCollectedVolumeCollectedVolumeSheetModelBuilder(
+                itemModel));
         colModel.get(0).setCellRenderer(new EditCellRenderer());
         colModel.get(1).setCellRenderer(new DeleteCellRenderer());
 
         addTableActionListener(this);
     }
 
-    private class SciDepartmentOrganizationSheetModelBuilder
+    private class ArticleInCollectedVolumeCollectedVolumeSheetModelBuilder
             extends LockableImpl
             implements TableModelBuilder {
 
-        private ItemSelectionModel m_itemModel;
+        private ItemSelectionModel itemModel;
 
-        public SciDepartmentOrganizationSheetModelBuilder(
+        public ArticleInCollectedVolumeCollectedVolumeSheetModelBuilder(
                 ItemSelectionModel itemModel) {
-            m_itemModel = itemModel;
+            this.itemModel = itemModel;
         }
 
         @Override
         public TableModel makeModel(Table table, PageState state) {
             table.getRowSelectionModel().clearSelection(state);
-            SciDepartment department = (SciDepartment) m_itemModel.
+            ArticleInCollectedVolume article = (ArticleInCollectedVolume) itemModel.
                     getSelectedObject(state);
-            return new SciDepartmentOrganizationSheetModel(table,
-                                                           state,
-                                                           department);
+            return new ArticleInCollectedVolumeCollectedVolumeSheetModel(table,
+                                                                         state,
+                                                                         article);
+
         }
     }
 
-    private class SciDepartmentOrganizationSheetModel
+    private class ArticleInCollectedVolumeCollectedVolumeSheetModel
             implements TableModel {
 
-        private Table m_table;
-        private SciOrganization m_orga;
-        private boolean m_done;
+        private Table table;
+        private CollectedVolume collectedVolume;
+        private boolean done;
 
-        public SciDepartmentOrganizationSheetModel(Table table,
-                                                   PageState state,
-                                                   SciDepartment department) {
-            m_table = table;
-            m_orga = department.getOrganization();
-            if (m_orga == null) {
-                m_done = false;
+        public ArticleInCollectedVolumeCollectedVolumeSheetModel(Table table,
+                                                                 PageState state,
+                                                                 ArticleInCollectedVolume article) {
+            this.table = table;
+            this.collectedVolume = article.getCollectedVolume();
+            if (collectedVolume == null) {
+                done = false;
             } else {
-                m_done = true;
+                done = true;
             }
         }
 
         public int getColumnCount() {
-            return m_table.getColumnModel().size();
+            return table.getColumnModel().size();
         }
 
         public boolean nextRow() {
             boolean ret;
 
-            if (m_done) {
+            if (done) {
                 ret = true;
-                m_done = false;
+                done = false;
             } else {
                 ret = false;
             }
@@ -142,10 +146,10 @@ public class SciDepartmentOrganizationSheet
         public Object getElementAt(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return m_orga.getTitle();
+                    return collectedVolume.getTitle();
                 case 1:
-                    return SciOrganizationGlobalizationUtil.globalize(
-                            "sciorganization.ui.department.organization.remove").
+                    return PublicationGlobalizationUtil.globalize(
+                            "publications.ui.articleInCollectedVolume.collectedVolume.remove").
                             localize();
                 default:
                     return null;
@@ -153,7 +157,7 @@ public class SciDepartmentOrganizationSheet
         }
 
         public Object getKeyAt(int columnIndex) {
-            return m_orga.getID();
+            return collectedVolume.getID();
         }
     }
 
@@ -178,32 +182,29 @@ public class SciDepartmentOrganizationSheet
             extends LockableImpl
             implements TableCellRenderer {
 
-        @Override
         public Component getComponent(Table table,
                                       PageState state,
                                       Object value,
                                       boolean isSelected,
                                       Object key,
                                       int row,
-                                      int col) {
+                                      int column) {
             SecurityManager securityManager =
                             Utilities.getSecurityManager(state);
-            SciDepartment department = (SciDepartment) m_itemModel.
-                    getSelectedObject(
-                    state);
+            ArticleInCollectedVolume article = (ArticleInCollectedVolume) itemModel.
+                    getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.DELETE_ITEM,
-                    department);
+                    article);
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
-                link.setConfirmation((String) SciOrganizationGlobalizationUtil.
-                        globalize(
-                        "sciorganization.ui.department.organization."
-                        + "confirm_remove").
-                        localize());
+                link.setConfirmation(
+                        (String) PublicationGlobalizationUtil.globalize(
+                        "publications.ui.articleInCollectedVolume.collectedVolume."
+                        + "confirm_remove").localize());
                 return link;
             } else {
                 Label label = new Label(value.toString());
@@ -216,14 +217,14 @@ public class SciDepartmentOrganizationSheet
     public void cellSelected(TableActionEvent event) {
         PageState state = event.getPageState();
 
-        SciDepartment department = (SciDepartment) m_itemModel.getSelectedObject(
-                state);
+        ArticleInCollectedVolume article = (ArticleInCollectedVolume) itemModel.
+                getSelectedObject(state);
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
-            department.setOrganization(null);
+            article.setCollectedVolume(null);
         }
     }
 
