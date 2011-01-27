@@ -21,6 +21,7 @@ package com.arsdigita.cms.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.TabbedPane;
 import com.arsdigita.bebop.event.ActionEvent;
@@ -43,6 +44,7 @@ import com.arsdigita.cms.ui.type.ContentTypeAdminPane;
 import com.arsdigita.cms.ui.workflow.WorkflowAdminPane;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.kernel.User;
+import com.arsdigita.toolbox.ui.LayoutPanel;
 import com.arsdigita.util.Assert;
 import com.arsdigita.ui.DebugPanel;
 import com.arsdigita.web.Web;
@@ -130,14 +132,14 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
 
     private FolderAdminPane m_folderPane;
     private BrowsePane m_browsePane;
-    private ItemSearch m_searchPane;
+    private LayoutPanel m_searchPane;
     private RoleAdminPane m_rolePane;
     private WorkflowAdminPane m_workflowPane;
     private LifecycleAdminPane m_lifecyclePane;
     private CategoryAdminPane m_categoryPane;
     private ContentTypeAdminPane m_typePane;
-    private UserAdminPane m_userAdminPane;
-    private ContentSoonExpiredPane m_csePane;
+    private LayoutPanel m_userAdminPane;
+    private LayoutPanel m_csePane;
     private ReportPane m_reportPane;
 
     private static class TitlePrinter implements PrintListener {
@@ -236,9 +238,11 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
      * Creates, and then caches, the search pane. Overriding this
      * method to return null will prevent this tab from appearing.
      */
-    protected ItemSearch getSearchPane() {
+    protected LayoutPanel getSearchPane() {
         if (m_searchPane == null) {
-            m_searchPane = new ItemSearch(ContentItem.DRAFT);
+            m_searchPane = new LayoutPanel();
+            m_searchPane.setLeft(new SimpleComponent());
+            m_searchPane.setBody(new ItemSearch(ContentItem.DRAFT));
         }
         return m_searchPane;
     }
@@ -298,16 +302,20 @@ public class ContentSectionPage extends CMSPage implements ActionListener {
         return m_typePane;
     }
 
-    protected UserAdminPane getUserAdminPane() {
+    protected LayoutPanel getUserAdminPane() {
         if (m_userAdminPane == null) {
-            m_userAdminPane = new UserAdminPane();
+            m_userAdminPane = new LayoutPanel();
+            m_userAdminPane.setLeft(new SimpleComponent());
+            m_userAdminPane.setBody(new UserAdminPane());
         }
         return m_userAdminPane;
     }
 
-    protected ContentSoonExpiredPane getCSEPane() {
+    protected LayoutPanel getCSEPane() {
         if (m_csePane == null) {
-            m_csePane = new ContentSoonExpiredPane();
+            m_csePane = new LayoutPanel();
+            m_csePane.setLeft(new SimpleComponent());
+            m_csePane.setBody(new ContentSoonExpiredPane());
         }
         return m_csePane;
     }
