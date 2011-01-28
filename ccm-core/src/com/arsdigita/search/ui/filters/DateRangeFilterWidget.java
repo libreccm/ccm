@@ -24,6 +24,7 @@ import com.arsdigita.search.FilterSpecification;
 import com.arsdigita.search.FilterType;
 import com.arsdigita.xml.Element;
 import com.arsdigita.bebop.PageState;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.search.filters.DateRangeFilterSpecification;
 
 
@@ -31,7 +32,18 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Date;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
+/**
+ * This class represents a date range filter used by item search.
+ *
+ * Changed to respect the date format string according to negotiated locale.
+ * Effect will be visible in Mandalay beginning with r163.
+ *
+ * @author unknown...
+ * @author Sören Bernstein (quasimodo) <sbernstein@zes.uni-bremen.de>
+ */
 public class DateRangeFilterWidget extends FilterWidget {
 
     private FilterType m_type;
@@ -40,27 +52,46 @@ public class DateRangeFilterWidget extends FilterWidget {
         super(type, new DateRangeParameter(name));
         m_type = type;
     }
-    
+
     public FilterSpecification getFilter(PageState state) {
-        DateRange range = (DateRange)getValue(state);
+        DateRange range = (DateRange) getValue(state);
 
         if (range == null) {
             return new DateRangeFilterSpecification(null,
-                                                    null,
-                                                    m_type);
+                    null,
+                    m_type);
         } else {
             return new DateRangeFilterSpecification(range.getStartDate(),
-                                                    range.getEndDate(),
-                                                    m_type);
+                    range.getEndDate(),
+                    m_type);
         }
     }
 
-    public void generateBodyXML(PageState state,
-                                Element parent) {
+    @Override
+    public void generateBodyXML(PageState state, Element parent) {
         super.generateBodyXML(state, parent);
-        
-        
-        DateRange range = (DateRange)getValue(state);
+
+        String x = "";
+
+        Locale defaultLocale = Locale.getDefault();
+        Locale locale = DispatcherHelper.getNegotiatedLocale();
+
+        // Get the current Pattern
+        // XXX This is really, really, really, really, really, really bad
+        // but there is no way to get a SimpleDateFormat object for a
+        // different locale the the system default (the one you get with
+        // Locale.getDefault();). Also there is now way getting the pattern
+        // in another way (up until JDK 1.1 there was), so I have to temporarly
+        // switch the default locale to my desired locale, get a SimpleDateFormat
+        // and switch back.
+        Locale.setDefault(locale);
+        String format = new SimpleDateFormat().toPattern();
+        Locale.setDefault(defaultLocale);
+
+        DateFormatSymbols dfs = new DateFormatSymbols(locale);
+        Calendar currentTime = GregorianCalendar.getInstance();
+
+        DateRange range = (DateRange) getValue(state);
         int startDay = -1;
         int startMonth = -1;
         int startYear = -1;
@@ -68,6 +99,7 @@ public class DateRangeFilterWidget extends FilterWidget {
         int endDay = -1;
         int endMonth = -1;
         int endYear = -1;
+
         if (range != null) {
             Date start = range.getStartDate();
             if (start != null) {
@@ -81,7 +113,6 @@ public class DateRangeFilterWidget extends FilterWidget {
 
             Date end = range.getEndDate();
             if (end != null) {
-                Element value = Search.newElement("end");
                 Calendar cal = GregorianCalendar.getInstance();
                 cal.setTime(end);
                 endDay = cal.get(Calendar.DAY_OF_MONTH);
@@ -90,62 +121,92 @@ public class DateRangeFilterWidget extends FilterWidget {
             }
         }
 
-        Element day = Search.newElement("day");
-        if (startDay != -1) {
-            day.addAttribute("startDay", "1");
-        }
-        if (endDay != -1) {
-            day.addAttribute("endDay", "1");
+        // Localize the date range widget according to the date format string
+        char[] chars = format.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+
+            // Test for doublettes
+            if (i >= 1 && chars[i - 1] == chars[i]) {
+                continue;
+            }
+
+            switch (chars[i]) {
+                case 'd':
+                    // Day fragment
+                    x += "day ";
+                    Element day = Search.newElement("day");
+                    if (startDay != -1) {
+                        day.addAttribute("startDay", String.valueOf(startDay));
+                    }
+                    if (endDay != -1) {
+                        day.addAttribute("endDay", String.valueOf(endDay));
+                    }
+                    parent.addContent(day);
+
+                    break;
+                case 'M':
+                    // Month fragment
+                    x += "month ";
+                    if (startMonth == -1) {
+                        startMonth = currentTime.get(Calendar.MONTH);
+                    }
+                    if (endMonth == -1) {
+                        endMonth = currentTime.get(Calendar.MONTH);
+                    }
+
+                    String[] monthsList = dfs.getMonths();
+                    for (int monthIndex = 0; monthIndex < monthsList.length; monthIndex++) {
+                        // This check is necessary because
+                        // java.text.DateFormatSymbols.getMonths() returns an array
+                        // of 13 Strings: 12 month names and an empty string.
+                        if (monthsList[monthIndex].length() > 0) {
+                            Element month = Search.newElement("month");
+                            month.addAttribute("value", String.valueOf(monthIndex));
+                            month.addAttribute("title", monthsList[monthIndex]);
+                            if (startMonth == monthIndex) {
+                                month.addAttribute("startMonth", "1");
+                            }
+                            if (endMonth == monthIndex) {
+                                month.addAttribute("endMonth", "1");
+                            }
+                            parent.addContent(month);
+                        }
+                    }
+
+                    break;
+                case 'y':
+                    // Year fragment
+                    x += "year ";
+                    if (startYear == -1) {
+                        startYear = currentTime.get(Calendar.YEAR);
+                    }
+                    if (endYear == -1) {
+                        endYear = currentTime.get(Calendar.YEAR);
+                    }
+
+                    int currentYear = currentTime.get(Calendar.YEAR);
+
+                    // TODO: use start_year and end_year_deta config params
+
+                    for (int yearStep = currentYear - 5; yearStep <= currentYear + 5; yearStep++) {
+                        Element year = Search.newElement("year");
+                        year.addAttribute("value", String.valueOf(yearStep));
+                        year.addAttribute("title", String.valueOf(yearStep));
+                        if (startYear == yearStep) {
+                            year.addAttribute("startYear", "1");
+                        }
+                        if (endYear == yearStep) {
+                            year.addAttribute("endYear", "1");
+                        }
+                        parent.addContent(year);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
         }
 
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        Calendar currentTime = GregorianCalendar.getInstance();
-
-        if (startMonth == -1) {
-            startMonth = currentTime.get(Calendar.MONTH);
-        }
-        if (endMonth == -1) {
-            endMonth = currentTime.get(Calendar.MONTH);
-        }
-        
-        String [] monthsList = dfs.getMonths();
-        for (int i = 0 ; i < monthsList.length; i++) {
-            // This check is necessary because
-            // java.text.DateFormatSymbols.getMonths() returns an array
-            // of 13 Strings: 12 month names and an empty string.
-            if ( monthsList[i].length() > 0 ) {
-                Element month = Search.newElement("month");
-                month.addAttribute("value", String.valueOf(i));
-                month.addAttribute("title", monthsList[i]);
-                if (startMonth == i) {
-                    month.addAttribute("startMonth", "1");
-                }
-                if (endMonth == i) {
-                    month.addAttribute("endMonth", "1");
-                }
-                parent.addContent(month);
-            }
-        }
-
-        if (startYear == -1) {
-            startYear = currentTime.get(Calendar.YEAR);
-        }
-        if (endYear == -1) {
-            endYear = currentTime.get(Calendar.YEAR);
-        }
-        
-        int currentYear = currentTime.get(Calendar.YEAR);
-        for ( int i = currentYear - 5 ; i <= currentYear+5 ; i++) {
-            Element year = Search.newElement("year");
-            year.addAttribute("value", String.valueOf(i));
-            year.addAttribute("title", String.valueOf(i));
-            if (startYear == i) {
-                year.addAttribute("startYear", "1");
-            }
-            if (endYear == i) {
-                year.addAttribute("endYear", "1");
-            }
-            parent.addContent(year);
-        }
+        parent.addAttribute("format", x.trim());
     }
 }
