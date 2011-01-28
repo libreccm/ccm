@@ -31,7 +31,7 @@ import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.cms.ui.authoring.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import java.text.DateFormat;
@@ -64,8 +64,12 @@ public class SeriesPropertiesStep extends SimpleEditStep {
                 itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.title"),
+                "publications.ui.series.name"),
                   Series.NAME);
+        sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.title"),
+                  Series.TITLE);
+
 
         if (!ContentSection.getConfig().getHideLaunchDate()) {
             sheet.add(ContenttypesGlobalizationUtil.globalize(
@@ -104,18 +108,18 @@ public class SeriesPropertiesStep extends SimpleEditStep {
                 (String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.edit_basic_sheet").localize(),
                 new WorkflowLockedComponentAccess(editBasicSheet,
-                                                itemModel),
+                                                  itemModel),
                 editBasicSheet.getSaveCancelSection().getCancelButton());
 
         basicProperties.setDisplayComponent(getSeriesPropertySheet(itemModel));
 
         segmentedPanel.addSegment(new Label((String) PublicationGlobalizationUtil.
                 globalize("publications.ui.series.basic_properties").localize()),
-                                  basicProperties);        
-        }
+                                  basicProperties);
+    }
 
     protected void addSteps(ItemSelectionModel itemModel,
-            AuthoringKitWizard parent) {
+                            AuthoringKitWizard parent) {
         addStep(new SeriesEditshipStep(itemModel, parent),
                 "publications.ui.series.editors");
         addStep(new SeriesVolumesStep(itemModel, parent),

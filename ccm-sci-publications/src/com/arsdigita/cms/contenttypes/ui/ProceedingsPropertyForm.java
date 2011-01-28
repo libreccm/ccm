@@ -112,6 +112,7 @@ public class ProceedingsPropertyForm
 
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
+
         super.init(fse);
 
         FormData data = fse.getFormData();

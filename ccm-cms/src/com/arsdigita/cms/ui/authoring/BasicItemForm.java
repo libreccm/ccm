@@ -58,12 +58,11 @@ import java.util.Collection;
 public abstract class BasicItemForm extends FormSection
         implements FormInitListener, FormProcessListener,
                    FormValidationListener {
-    private static final Logger s_log = Logger.getLogger(BasicItemForm.class);
 
+    private static final Logger s_log = Logger.getLogger(BasicItemForm.class);
     private final ItemSelectionModel m_itemModel;
     private SaveCancelSection m_saveCancelSection;
     private FormSection m_widgetSection;
-
     public static final String NAME = ContentItem.NAME;
     public static final String TITLE = ContentPage.TITLE;
     public static final String LANGUAGE = ContentItem.LANGUAGE;
@@ -113,7 +112,7 @@ public abstract class BasicItemForm extends FormSection
         super(columnPanel);
         //super(formName, columnPanel);
         m_widgetSection =
-            new FormSection(new ColumnPanel(columnPanel.getNumCols(), true));
+        new FormSection(new ColumnPanel(columnPanel.getNumCols(), true));
         super.add(m_widgetSection, ColumnPanel.INSERT);
         m_itemModel = itemModel;
     }
@@ -125,10 +124,9 @@ public abstract class BasicItemForm extends FormSection
         m_saveCancelSection = new SaveCancelSection();
         super.add(m_saveCancelSection, ColumnPanel.FULL_WIDTH | ColumnPanel.LEFT);
     }
-
-	private Label m_script = new Label("<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>", false);
-	
-
+    private Label m_script = new Label(
+            "<script language=\"javascript\" src=\"/javascript/manipulate-input.js\"></script>",
+            false);
 
     /**
      * Add various widgets to the form. Child classes should override
@@ -149,28 +147,33 @@ public abstract class BasicItemForm extends FormSection
         // it breaks URLs & potentially overwrites the user's
         // customizations.
 
-        add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_title")));
+        //jensp 2011-01-28: For some content types it is maybe useful to change
+        //the label of this field to something other than 'title'. This can now
+        //be done by overwriting the getTitleLabel() method.
+        //add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.page_title")));
+        add(new Label(getTitleLabel()));
         TextField titleWidget = new TextField(new TrimmedStringParameter(TITLE));
         titleWidget.addValidationListener(new NotNullValidationListener());
-        titleWidget.setOnFocus("if (this.form." + NAME + ".value == '') { " +
-                               " defaulting = true; this.form." + NAME +
-                               ".value = urlize(this.value); }");
+        titleWidget.setOnFocus("if (this.form." + NAME + ".value == '') { "
+                               + " defaulting = true; this.form." + NAME
+                               + ".value = urlize(this.value); }");
         titleWidget.setOnKeyUp(
-            "if (defaulting) { this.form." + NAME +
-            ".value = urlize(this.value) }"
-            );
+                "if (defaulting) { this.form." + NAME
+                + ".value = urlize(this.value) }");
         add(titleWidget);
 
-        add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.name_url")));
+        //jensp 2011-01-28: For some content types it is maybe useful to change
+        //the label of this field to something other than 'title'. This can now
+        //be done by overwriting the getNameLabel() method.
+        //add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.name_url")));
+        add(new Label(getNameLabel()));
         TextField nameWidget = new TextField(new TrimmedStringParameter(NAME));
         nameWidget.addValidationListener(new NameValidationListener());
         nameWidget.setOnFocus("defaulting = false");
         nameWidget.setOnBlur(
-            "if (this.value == '') " +
-            "{ defaulting = true; this.value = urlize(this.form." + TITLE +
-            ".value) } " +
-            " else { this.value = urlize(this.value); }"
-            );
+                "if (this.value == '') "
+                + "{ defaulting = true; this.value = urlize(this.form." + TITLE
+                + ".value) } " + " else { this.value = urlize(this.value); }");
         add(nameWidget);
 
     }
@@ -226,7 +229,7 @@ public abstract class BasicItemForm extends FormSection
      * with the name the user provided on the input form.
      */
     public void validateNameUniqueness(Folder parent, FormSectionEvent event)
-        throws FormProcessException {
+            throws FormProcessException {
 
         FormData data = event.getFormData();
         String newName = (String) data.get(NAME);
@@ -234,15 +237,16 @@ public abstract class BasicItemForm extends FormSection
         validateNameUniqueness(parent, event, newName);
     }
 
-    public void validateNameUniqueness(Folder parent, FormSectionEvent event, String newName)
-        throws FormProcessException {
-        if ( newName != null ) {
+    public void validateNameUniqueness(Folder parent, FormSectionEvent event,
+                                       String newName)
+            throws FormProcessException {
+        if (newName != null) {
             final String query = "com.arsdigita.cms.validateUniqueItemName";
             DataQuery dq = SessionManager.getSession().retrieveQuery(query);
             dq.setParameter("parentId", parent.getID());
             dq.setParameter("name", newName.toUpperCase());
 
-            if ( dq.size() > 0) {
+            if (dq.size() > 0) {
                 // we need to add all of the items that are
                 // different versions of this item to the list
                 // so that we do not throw an error if those
@@ -251,27 +255,26 @@ public abstract class BasicItemForm extends FormSection
 
                 ContentItem item = null;
                 if (getItemSelectionModel() != null) {
-                    item = (ContentItem) getItemSelectionModel()
-                        .getSelectedObject(event.getPageState());
+                    item = (ContentItem) getItemSelectionModel().
+                            getSelectedObject(event.getPageState());
                 }
                 if (item == null) {
                     // this means it is a creation form
-                    throw new FormProcessException
-                        ("An item with this name already exists");
+                    throw new FormProcessException(
+                            "An item with this name already exists");
                 }
                 Collection list = getAllVersionIDs(item);
                 while (dq.next()) {
-                    itemID = (BigDecimal)dq.get("itemID");
+                    itemID = (BigDecimal) dq.get("itemID");
                     if (!list.contains(itemID)) {
                         dq.close();
-                        throw new FormProcessException
-                            ("An item with this name already exists");
+                        throw new FormProcessException(
+                                "An item with this name already exists");
                     }
                 }
-            }            
+            }
         }
     }
-
 
     /**
      * Ensure that the name of an item is unique within a category. This 
@@ -286,12 +289,12 @@ public abstract class BasicItemForm extends FormSection
      */
     public void validateNameUniquenessWithinCategory(FormSectionEvent event,
                                                      BigDecimal id)
-        throws FormProcessException {
+            throws FormProcessException {
         if (id == null) {
-            s_log.warn("Trying to validation the name uniqueness without " +
-                       " a valid item is invalid.  This method should only " +
-                       " be called in \"edit\" forms.  The passed in id " +
-                       " was null.");
+            s_log.warn("Trying to validation the name uniqueness without "
+                       + " a valid item is invalid.  This method should only "
+                       + " be called in \"edit\" forms.  The passed in id "
+                       + " was null.");
             return;
         }
         // now we check to make sure that the new name is valid
@@ -302,8 +305,9 @@ public abstract class BasicItemForm extends FormSection
         if (url == null) {
             return;
         }
-        DataQuery query = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.categorization.getAllItemURLsForCategoryFromItem");
+        DataQuery query =
+                  SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.categorization.getAllItemURLsForCategoryFromItem");
         query.setParameter("itemID", id);
         query.addEqualsFilter("lower(url)", url.toLowerCase());
         if (query.size() > 0) {
@@ -312,18 +316,18 @@ public abstract class BasicItemForm extends FormSection
             BigDecimal itemID = null;
 
             ContentItem item =
-                (ContentItem) getItemSelectionModel()
-                .getSelectedObject(event.getPageState());
+                        (ContentItem) getItemSelectionModel().getSelectedObject(event.
+                    getPageState());
             Collection list = getAllVersionIDs(item);
             try {
                 while (query.next()) {
-                    itemID = (BigDecimal)query.get("itemID");
+                    itemID = (BigDecimal) query.get("itemID");
                     if (!list.contains(itemID)) {
                         StringBuffer buffer =
-                            new StringBuffer("There are conflicts with this URL.  " +
-                                     "Specifically, there is at least one item " +
-                                     "in the same category as this item with " +
-                                     "the name (url) of ");
+                                     new StringBuffer("There are conflicts with this URL.  "
+                                                      + "Specifically, there is at least one item "
+                                                      + "in the same category as this item with "
+                                                      + "the name (url) of ");
                         buffer.append(url);
                         throw new FormProcessException(buffer.toString());
                     }
@@ -373,5 +377,33 @@ public abstract class BasicItemForm extends FormSection
      * */
     public void add(Component pc, int constraints) {
         m_widgetSection.add(pc, constraints);
+    }
+
+    /**
+     * jensp, 2011-01-28
+     * This method can be overridden to change the label of the title field.
+     * To change to label of the title field can be useful for some
+     * content types. For example, for an organization the label "Title" for
+     * the field is may confusing for the normal user. For such a content type,
+     * the label would be changed to something like "Name of the organization".
+     *
+     * @return (Content for the) Label for the title field as string
+     */
+    protected String getTitleLabel() {
+        return (String) GlobalizationUtil.globalize(
+                "cms.ui.authoring.page_title").
+                localize();
+    }
+
+    /**
+     * jensp, 2011-01-28
+     * This method does the same as {@link #getTitleLabel() } for the label of
+     * the name (URL) field.
+     *
+     * @return (Content for the) Label for the name field as string
+     */
+    protected String getNameLabel() {
+        return (String) GlobalizationUtil.globalize("cms.ui.authoring.name_url").
+                localize();
     }
 }

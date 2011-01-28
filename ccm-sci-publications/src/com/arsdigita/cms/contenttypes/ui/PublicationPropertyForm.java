@@ -66,11 +66,11 @@ public class PublicationPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.publication.title").localize()));
+        /*add(new Label((String) PublicationGlobalizationUtil.globalize(
+        "publications.ui.publication.title").localize()));
         ParameterModel titleParam = new StringParameter(Publication.TITLE);
         TextField title = new TextField(titleParam);
-        add(title);
+        add(title);*/
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.year_of_publication").localize()));
@@ -102,7 +102,7 @@ public class PublicationPropertyForm
         FormData data = fse.getFormData();
         Publication publication = (Publication) super.initBasicWidgets(fse);
 
-        data.put(Publication.TITLE, publication.getTitle());
+        //data.put(Publication.TITLE, publication.getTitle());
         data.put(Publication.YEAR_OF_PUBLICATION, publication.
                 getYearOfPublication());
         data.put(Publication.ABSTRACT, publication.getAbstract());
@@ -116,14 +116,16 @@ public class PublicationPropertyForm
 
         if ((publication != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            publication.setTitle((String) data.get(Publication.TITLE));
+            //publication.setTitle((String) data.get(Publication.TITLE));
             publication.setYearOfPublication((Integer) data.get(
                     Publication.YEAR_OF_PUBLICATION));
             publication.setAbstract((String) data.get(Publication.ABSTRACT));
             publication.setMisc((String) data.get(Publication.MISC));
 
             publication.save();
-        }       
+
+            init(fse);
+        }
     }
 
     @Override
@@ -132,5 +134,11 @@ public class PublicationPropertyForm
                 isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
+    }
+
+    @Override
+    protected String getTitleLabel() {
+        return (String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.publication.title").localize();
     }
 }

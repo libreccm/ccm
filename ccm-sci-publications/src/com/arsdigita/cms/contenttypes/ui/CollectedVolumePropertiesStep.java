@@ -44,8 +44,8 @@ public class CollectedVolumePropertiesStep
     public static Component getCollectedVolumePropertySheet(
             ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationWithPublisherPropertiesStep.
-                getPublicationPropertySheet(itemModel);
-
+                getPublicationWithPublisherPropertySheet(itemModel);
+      
         return sheet;
     }
 

@@ -41,8 +41,8 @@ public class ReviewPropertiesStep extends ArticleInJournalPropertiesStep {
 
     public static Component getReviewPropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
-                getPublicationPropertySheet(itemModel);
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) ArticleInJournalPropertiesStep.
+                getArticleInJournalPropertySheet(itemModel);
 
         return sheet;
     }

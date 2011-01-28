@@ -90,7 +90,7 @@ public class ProceedingsPropertiesStep
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getPublicationPropertySheet(itemModel));
+                getProceedingsPropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(

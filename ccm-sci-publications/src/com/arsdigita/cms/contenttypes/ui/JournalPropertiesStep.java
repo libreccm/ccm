@@ -22,6 +22,7 @@ package com.arsdigita.cms.contenttypes.ui;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.Journal;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -44,6 +45,10 @@ public class JournalPropertiesStep extends PublicationPropertiesStep {
             ItemSelectionModel itemModel) {
         DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) PublicationPropertiesStep.
                 getPublicationPropertySheet(itemModel);
+
+          sheet.add(PublicationGlobalizationUtil.globalize(
+                "publications.ui.journal.issn"),
+                Journal.ISSN);
 
         return sheet;
     }

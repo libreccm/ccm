@@ -21,14 +21,10 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.event.FormSubmissionListener;
-import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
@@ -64,11 +60,11 @@ public class SeriesPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.series.title").localize()));
+        /*add(new Label((String) PublicationGlobalizationUtil.globalize(
+        "publications.ui.series.title").localize()));
         ParameterModel titleParam = new StringParameter(Series.NAME);
         TextField title = new TextField(titleParam);
-        add(title);
+        add(title);*/
     }
 
     @Override
@@ -76,7 +72,7 @@ public class SeriesPropertyForm
         FormData data = fse.getFormData();
         Series series = (Series) super.initBasicWidgets(fse);
 
-        data.put(Series.NAME, series.getTitle());
+        //data.put(Series.NAME, series.getTitle());
     }
 
     @Override
@@ -86,10 +82,10 @@ public class SeriesPropertyForm
 
         if ((series != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            series.setTitle((String) data.get(Series.NAME));
+            /*series.setTitle((String) data.get(Series.NAME));
 
-            series.save();
-        }     
+            series.save();*/
+        }
     }
 
     @Override
@@ -98,5 +94,11 @@ public class SeriesPropertyForm
                 isSelected(fse.getPageState())) {
             m_step.cancelStreamlinedCreation(fse.getPageState());
         }
+    }
+
+    @Override
+    protected String getTitleLabel() {
+        return (String) PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.title").localize();
     }
 }

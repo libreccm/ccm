@@ -69,12 +69,12 @@ public class GenericOrganizationalUnitPropertyForm
     protected void addWidgets() {
         super.addWidgets();
 
-        add(new Label(
+        /*add(new Label(
                 (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorganunit.name").localize()));
         ParameterModel nameParam = new StringParameter(NAME);
         TextField name = new TextField(nameParam);
-        add(name);
+        add(name);*/
 
         add(new Label(
                 (String) ContenttypesGlobalizationUtil.globalize(
@@ -101,7 +101,7 @@ public class GenericOrganizationalUnitPropertyForm
                                   (GenericOrganizationalUnit) super.
                 initBasicWidgets(fse);
 
-        data.put(NAME, orgaunit.getName());
+        //data.put(NAME, orgaunit.getName());
         data.put(ADDENDUM, orgaunit.getAddendum());
     }
 
@@ -116,7 +116,7 @@ public class GenericOrganizationalUnitPropertyForm
         if ((orgaunit != null)
             && getSaveCancelSection().getSaveButton().isSelected(fse.
                 getPageState())) {
-            orgaunit.setName((String) data.get(NAME));
+            //orgaunit.setName((String) data.get(NAME));
             orgaunit.setAddendum((String) data.get(ADDENDUM));
 
             orgaunit.save();

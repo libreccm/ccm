@@ -32,6 +32,7 @@ object type Forum extends Application {
 
     Boolean [1..1] isModerated  = forum_forums.is_moderated;
     Boolean [1..1] isNoticeboard  = forum_forums.is_noticeboard;
+    Boolean [1..1] isPublic = forum_forums.is_public;
 
     component Group [0..1] adminGroup =
         join forum_forums.admin_group_id to groups.group_id;

@@ -55,158 +55,167 @@ import org.apache.log4j.Logger;
  * that apply to this forum instance
  */
 public class SetupView
-	extends Form
-	implements FormInitListener, FormSubmissionListener, FormProcessListener, Constants {
-	private static final Logger s_log = Logger.getLogger(SetupView.class);
+        extends Form
+        implements FormInitListener, FormSubmissionListener, FormProcessListener,
+                   Constants {
 
-	// values for checkboxes
-	private static final String MODERATED = "moderated";
-	private static final String NOTICEBOARD = "noticeboard";
-	private static final String ALLOW_FILES = "filesAllowed";
-	private static final String ALLOW_IMAGES = "imagesallowed";
-	private static final String AUTOSUBSCRIBE_THREAD_STARTERS = "autosubscribe";
-	private static final String NO_CATEGORY_POSTS_ALLOWED = "nocategory";
-	private static final String ANONYMOUS_POSTS_ALLOWED = "anonymous";
+    private static final Logger s_log = Logger.getLogger(SetupView.class);
+    // values for checkboxes
+    private static final String MODERATED = "moderated";
+    private static final String PUBLIC = "public";
+    private static final String NOTICEBOARD = "noticeboard";
+    private static final String ALLOW_FILES = "filesAllowed";
+    private static final String ALLOW_IMAGES = "imagesallowed";
+    private static final String AUTOSUBSCRIBE_THREAD_STARTERS = "autosubscribe";
+    private static final String NO_CATEGORY_POSTS_ALLOWED = "nocategory";
+    private static final String ANONYMOUS_POSTS_ALLOWED = "anonymous";
+    private CheckboxGroup m_settings;
+    private TextField m_expiry;
+    private SaveCancelSection m_saveCancel;
+    private TextArea m_introduction;
+    private TextField m_title;
 
-	private CheckboxGroup m_settings;
-	private TextField m_expiry;
-	private SaveCancelSection m_saveCancel;
-	private TextArea m_introduction;
-	private TextField m_title;
-	
-	public SetupView() {
-		super("setupForm", new SimpleContainer("forum:setup", FORUM_XML_NS));
-		m_settings = new CheckboxGroup("settings");
-		m_settings.addOption(
-			new Option(
-				MODERATED,
-				(String) Text.gz("forum.ui.settings.moderated").localize()));
-		m_settings.addOption(
-			new Option(
-				NOTICEBOARD,
-				(String) Text.gz("forum.ui.settings.noticeboard").localize()));
-		m_settings.addOption(
-			new Option(
-				ALLOW_FILES,
-				(String) Text.gz("forum.ui.settings.allowFiles").localize()));
-		m_settings.addOption(
-			new Option(
-				ALLOW_IMAGES,
-				(String) Text.gz("forum.ui.settings.allowImages").localize()));
-		m_settings.addOption(
-			new Option(
-				AUTOSUBSCRIBE_THREAD_STARTERS,
-				(String) Text
-					.gz("forum.ui.settings.autosubscribe")
-					.localize()));
-					
-		m_settings.addOption(
-			new Option(
-				NO_CATEGORY_POSTS_ALLOWED,
-				(String) Text
-					.gz("forum.ui.settings.noCategoryPosts")
-					.localize()));
-		m_settings.addOption(
-			new Option(
-				ANONYMOUS_POSTS_ALLOWED,
-				(String) Text
-					.gz("forum.ui.settings.anonymousPosts")
-					.localize()));
-								
-		
+    public SetupView() {
+        super("setupForm", new SimpleContainer("forum:setup", FORUM_XML_NS));
+        m_settings = new CheckboxGroup("settings");
+        m_settings.addOption(
+                new Option(
+                MODERATED,
+                (String) Text.gz("forum.ui.settings.moderated").localize()));
+        m_settings.addOption(
+                new Option(PUBLIC,
+                           (String) Text.gz("forum.ui.settings.public").localize()));
+        m_settings.addOption(
+                new Option(
+                NOTICEBOARD,
+                (String) Text.gz("forum.ui.settings.noticeboard").
+                localize()));
+        m_settings.addOption(
+                new Option(
+                ALLOW_FILES,
+                (String) Text.gz("forum.ui.settings.allowFiles").localize()));
+        m_settings.addOption(
+                new Option(
+                ALLOW_IMAGES,
+                (String) Text.gz("forum.ui.settings.allowImages").localize()));
+        m_settings.addOption(
+                new Option(
+                AUTOSUBSCRIBE_THREAD_STARTERS,
+                (String) Text.gz("forum.ui.settings.autosubscribe").localize()));
 
-		m_expiry = new TextField(new IntegerParameter("expiry"));
-		m_expiry.setMetaDataAttribute("label", (String)Text.gz("forum.ui.noticeboard.expiry_after").localize());
-		m_saveCancel = new SaveCancelSection();
-		m_saveCancel.getSaveButton().setButtonLabel(Text.gz("forum.ui.settings.save"));
-		m_introduction = new TextArea("introduction", 8, 60, TextArea.SOFT);	
-		m_introduction.addValidationListener(new StringInRangeValidationListener(0, 4000, Text.gz("forum.ui.validation.introduction_too_long")));
-		m_introduction.setMetaDataAttribute("label", (String)Text.gz("forum.ui.settings.introduction").localize());
-		
-		m_title = new TextField("title");		
-		m_title.setMetaDataAttribute("label", (String)Text.gz("forum.ui.settings.title").localize());
-		m_title.setSize(70);		
-		
-		add(m_title);
-		add(m_introduction);
-		add(m_settings);
-		add(m_expiry);	
-		add(m_saveCancel);
+        m_settings.addOption(
+                new Option(
+                NO_CATEGORY_POSTS_ALLOWED,
+                (String) Text.gz("forum.ui.settings.noCategoryPosts").localize()));
+        m_settings.addOption(
+                new Option(
+                ANONYMOUS_POSTS_ALLOWED,
+                (String) Text.gz("forum.ui.settings.anonymousPosts").localize()));
 
-		addInitListener(this);
-		addSubmissionListener(this);
-		addProcessListener(this);
-	}
 
-	public void init(FormSectionEvent e) throws FormProcessException {
-		PageState state = e.getPageState();
-		Forum forum = ForumContext.getContext(state).getForum();
-		Set settingsSet = new HashSet();
-		if (forum.isModerated()) {
-			settingsSet.add(MODERATED);
-		}
-		if (forum.isNoticeboard()) {
-			settingsSet.add(NOTICEBOARD);
-		}
-		if (forum.allowFileAttachments()) {
-			settingsSet.add(ALLOW_FILES);
-		}
-		if (forum.allowImageUploads()) {
-			settingsSet.add(ALLOW_IMAGES);
-		}
-		if (forum.autoSubscribeThreadStarter()) {
-			settingsSet.add(AUTOSUBSCRIBE_THREAD_STARTERS);
-		}
-		if (forum.noCategoryPostsAllowed()) {
-			settingsSet.add(NO_CATEGORY_POSTS_ALLOWED);
-		}
-		if (forum.anonymousPostsAllowed()) {
-			settingsSet.add(ANONYMOUS_POSTS_ALLOWED);
-		}
-		m_settings.setValue(state, settingsSet.toArray());
 
-		m_expiry.setValue(state, new Integer(forum.getExpireAfter()));
-		
-		m_introduction.setValue(state, forum.getIntroduction());
-		
-		m_title.setValue(state, forum.getTitle());
+        m_expiry = new TextField(new IntegerParameter("expiry"));
+        m_expiry.setMetaDataAttribute("label", (String) Text.gz(
+                "forum.ui.noticeboard.expiry_after").localize());
+        m_saveCancel = new SaveCancelSection();
+        m_saveCancel.getSaveButton().setButtonLabel(Text.gz(
+                "forum.ui.settings.save"));
+        m_introduction = new TextArea("introduction", 8, 60, TextArea.SOFT);
+        m_introduction.addValidationListener(new StringInRangeValidationListener(
+                0, 4000, Text.gz("forum.ui.validation.introduction_too_long")));
+        m_introduction.setMetaDataAttribute("label", (String) Text.gz(
+                "forum.ui.settings.introduction").localize());
 
-	}
+        m_title = new TextField("title");
+        m_title.setMetaDataAttribute("label", (String) Text.gz(
+                "forum.ui.settings.title").localize());
+        m_title.setSize(70);
 
-	public void submitted(FormSectionEvent e) throws FormProcessException {
-		PageState state = e.getPageState();
+        add(m_title);
+        add(m_introduction);
+        add(m_settings);
+        add(m_expiry);
+        add(m_saveCancel);
 
-		if (m_saveCancel.getCancelButton().isSelected(state)) {
-			s_log.debug("cancelled");
-			throw new FormProcessException("cancelled");
-		}
-	}
+        addInitListener(this);
+        addSubmissionListener(this);
+        addProcessListener(this);
+    }
 
-	public void process(FormSectionEvent e) throws FormProcessException {
-		PageState state = e.getPageState();
-		Forum forum = ForumContext.getContext(state).getForum();
-		String[] settingsArray = (String[]) m_settings.getValue(state);
-		List settings = Collections.EMPTY_LIST;
-		if (settingsArray != null) {
-			
-			settings = Arrays.asList(settingsArray);
-		}
-		forum.setModerated(settings.contains(MODERATED));
-		forum.setNoticeboard(settings.contains(NOTICEBOARD));
-		// could remove any existing files but i don't think that would be desirable
-		forum.setAllowFileAttachments(settings.contains(ALLOW_FILES));
-		forum.setAllowImageUploads(settings.contains(ALLOW_IMAGES));
-		forum.setAutoSubscribeThreadCreator(settings.contains(AUTOSUBSCRIBE_THREAD_STARTERS));
-		forum.setNoCategoryPostsAllowed(settings.contains(NO_CATEGORY_POSTS_ALLOWED));
-		forum.setAnonymousPostsAllowed(settings.contains(ANONYMOUS_POSTS_ALLOWED));
-		
-		forum.setTitle((String)m_title.getValue(state));
-		forum.setIntroduction((String)m_introduction.getValue(state));
-		Integer expiry = (m_expiry.getValue(state) == null) ? new Integer(0) : (Integer) m_expiry.getValue(state);
-		int newExpiry = expiry.intValue();
-		if (forum.getExpireAfter() != newExpiry) {
-			forum.setExpireAfter(newExpiry);
-		}
+    public void init(FormSectionEvent e) throws FormProcessException {
+        PageState state = e.getPageState();
+        Forum forum = ForumContext.getContext(state).getForum();
+        Set settingsSet = new HashSet();
+        if (forum.isModerated()) {
+            settingsSet.add(MODERATED);
+        }
+        if (forum.isNoticeboard()) {
+            settingsSet.add(NOTICEBOARD);
+        }
+        if (forum.allowFileAttachments()) {
+            settingsSet.add(ALLOW_FILES);
+        }
+        if (forum.allowImageUploads()) {
+            settingsSet.add(ALLOW_IMAGES);
+        }
+        if (forum.autoSubscribeThreadStarter()) {
+            settingsSet.add(AUTOSUBSCRIBE_THREAD_STARTERS);
+        }
+        if (forum.noCategoryPostsAllowed()) {
+            settingsSet.add(NO_CATEGORY_POSTS_ALLOWED);
+        }
+        if (forum.anonymousPostsAllowed()) {
+            settingsSet.add(ANONYMOUS_POSTS_ALLOWED);
+        }
+        m_settings.setValue(state, settingsSet.toArray());
 
-	}
+        m_expiry.setValue(state, new Integer(forum.getExpireAfter()));
+
+        m_introduction.setValue(state, forum.getIntroduction());
+
+        m_title.setValue(state, forum.getTitle());
+
+    }
+
+    public void submitted(FormSectionEvent e) throws FormProcessException {
+        PageState state = e.getPageState();
+
+        if (m_saveCancel.getCancelButton().isSelected(state)) {
+            s_log.debug("cancelled");
+            throw new FormProcessException("cancelled");
+        }
+    }
+
+    public void process(FormSectionEvent e) throws FormProcessException {
+        PageState state = e.getPageState();
+        Forum forum = ForumContext.getContext(state).getForum();
+        String[] settingsArray = (String[]) m_settings.getValue(state);
+        List settings = Collections.EMPTY_LIST;
+        if (settingsArray != null) {
+
+            settings = Arrays.asList(settingsArray);
+        }
+        forum.setModerated(settings.contains(MODERATED));
+        forum.setPublic(settings.contains(PUBLIC));
+        forum.setNoticeboard(settings.contains(NOTICEBOARD));
+        // could remove any existing files but i don't think that would be desirable
+        forum.setAllowFileAttachments(settings.contains(ALLOW_FILES));
+        forum.setAllowImageUploads(settings.contains(ALLOW_IMAGES));
+        forum.setAutoSubscribeThreadCreator(settings.contains(
+                AUTOSUBSCRIBE_THREAD_STARTERS));
+        forum.setNoCategoryPostsAllowed(settings.contains(
+                NO_CATEGORY_POSTS_ALLOWED));
+        forum.setAnonymousPostsAllowed(
+                settings.contains(ANONYMOUS_POSTS_ALLOWED));
+
+        forum.setTitle((String) m_title.getValue(state));
+        forum.setIntroduction((String) m_introduction.getValue(state));
+        Integer expiry = (m_expiry.getValue(state) == null) ? new Integer(0) : (Integer) m_expiry.
+                getValue(state);
+        int newExpiry = expiry.intValue();
+        if (forum.getExpireAfter() != newExpiry) {
+            forum.setExpireAfter(newExpiry);
+        }
+
+    }
 }

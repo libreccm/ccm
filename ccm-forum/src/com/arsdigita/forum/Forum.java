@@ -116,6 +116,7 @@ public class Forum extends Application {
     private static final String POSTS = "posts";
     private static final String SUBSCRIPTIONS = "subscriptions";
     private static final String MODERATION = "isModerated";
+    private static final String PUBLIC = "isPublic";
     private static final String NOTICEBOARD = "isNoticeboard";
 
     private static final String ADMIN_GROUP = "adminGroup";
@@ -205,6 +206,7 @@ public class Forum extends Application {
                                                             title, parent, true);
 
         forum.setModerated(moderated);
+        forum.setPublic(true);
         // default settings ensure legacy forum users do not
         // see any change  chris.gilbert@westsussex.gov.uk
         forum.setAllowFileAttachments(false);
@@ -766,6 +768,16 @@ public class Forum extends Application {
         Boolean isModerated = (Boolean)get(MODERATION);
         Assert.exists(isModerated);
         return isModerated.booleanValue();
+    }
+
+    public boolean isPublic() {
+        Boolean isPublic = (Boolean)get(PUBLIC);
+        Assert.exists(isPublic);
+        return isPublic.booleanValue();
+    }
+
+    public void setPublic(boolean isPublic) {
+        set(PUBLIC, new Boolean(isPublic));
     }
 
     /**

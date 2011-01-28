@@ -96,7 +96,7 @@ public class InternetArticlePropertiesStep extends PublicationPropertiesStep {
                 getCancelButton());
 
         basicProperties.setDisplayComponent(
-                getPublicationPropertySheet(itemModel));
+                getInternetArticlePropertySheet(itemModel));
 
         getSegmentedPanel().addSegment(
                 new Label((String) PublicationGlobalizationUtil.globalize(
