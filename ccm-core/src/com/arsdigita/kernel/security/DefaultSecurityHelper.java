@@ -26,10 +26,10 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author Sameer Ajmani
  * @see SecurityHelper
- **/
+ * @version $Id: DefaultSecurityHelper.java 709 2005-08-17 10:03:23Z apevec $
+ */
 public class DefaultSecurityHelper implements SecurityHelper {
 
-    public static final String versionId = "$Id: DefaultSecurityHelper.java 709 2005-08-17 10:03:23Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Determines whether the request is secure by calling
      * <code>req.isSecure()</code>.

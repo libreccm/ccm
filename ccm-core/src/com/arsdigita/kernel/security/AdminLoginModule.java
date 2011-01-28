@@ -38,10 +38,10 @@ import org.apache.log4j.Logger;
  * @author Sameer Ajmani
  *
  * @see UserContext#login(com.arsdigita.kernel.User)
- **/
+ * @version $Id: AdminLoginModule.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class AdminLoginModule implements LoginModule {
 
-    public static final String versionId = "$Id: AdminLoginModule.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
         Logger.getLogger(AdminLoginModule.class.getName());
 

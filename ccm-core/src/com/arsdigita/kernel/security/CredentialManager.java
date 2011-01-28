@@ -33,26 +33,27 @@ import org.apache.log4j.Logger;
  * @see CredentialLoginModule
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: CredentialManager.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public abstract class CredentialManager {
 
-    public static final String versionId = "$Id: CredentialManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+    /** Logging instance */
     private static final Logger s_log =
         Logger.getLogger(URLManager.class.getName());
 
-    // the login module associated with this manager
+    /** The login module associated with this manager  */
     private CredentialLoginModule m_module;
 
     /**
      * Constructs a new <code>CredentialManager</code>.
-     **/
+     */
     protected CredentialManager() {
     }
 
     /**
      * Returns the <code>CredentialLoginModule</code> associated with this
      * <code>CredentialManager</code>.
-     **/
+     */
     protected CredentialLoginModule getModule() {
         return m_module;
     }
@@ -63,7 +64,7 @@ public abstract class CredentialManager {
      *
      * @param module the <code>CredentialLoginModule</code> associated with
      * this <code>CredentialManager</code>.
-     **/
+     */
     protected void initialize(CredentialLoginModule module,
                               Subject subject,
                               CallbackHandler handler,
@@ -81,7 +82,7 @@ public abstract class CredentialManager {
      * @throws CredentialNotFoundException if credential does not exist.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected abstract String getValue()
         throws LoginException;
 
@@ -93,7 +94,7 @@ public abstract class CredentialManager {
      * @return true if <code>setValue()</code> should be called
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected abstract boolean shouldSetValue(String value)
         throws LoginException;
 
@@ -104,7 +105,7 @@ public abstract class CredentialManager {
      * @param value the new value for the credential
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected abstract void setValue(String value)
         throws LoginException;
 
@@ -113,7 +114,7 @@ public abstract class CredentialManager {
      * <code>getModule().getCredentialName()</code>.
      *
      * @throws LoginException if an error occurs.
-     **/
+     */
     protected abstract void deleteValue()
         throws LoginException;
 }

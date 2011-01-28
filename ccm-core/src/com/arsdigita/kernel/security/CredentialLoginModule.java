@@ -50,10 +50,10 @@ import com.arsdigita.kernel.Kernel;
  * @see CredentialManager
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: CredentialLoginModule.java 718 2005-08-18 15:34:42Z apevec $
+ */
 public abstract class CredentialLoginModule implements LoginModule {
 
-    public static final String versionId = "$Id: CredentialLoginModule.java 718 2005-08-18 15:34:42Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
         Logger.getLogger(CredentialLoginModule.class.getName());
 

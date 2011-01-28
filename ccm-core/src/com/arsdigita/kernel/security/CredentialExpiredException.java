@@ -22,10 +22,10 @@ package com.arsdigita.kernel.security;
  * Thrown when a credential has expired.
  *
  * @author Sameer Ajmani
+ * @version $Id: CredentialExpiredException.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class CredentialExpiredException extends CredentialException {
 
-    public static final String versionId = "$Id: CredentialExpiredException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public CredentialExpiredException() {
         super();
     }

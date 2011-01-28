@@ -22,10 +22,10 @@ package com.arsdigita.kernel.security;
  * Thrown when an account is accessed while expired.
  *
  * @author Sameer Ajmani
+ * @version $Id: AccountExpiredException.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class AccountExpiredException extends AccountException {
 
-    public static final String versionId = "$Id: AccountExpiredException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public AccountExpiredException() {
         super();
     }

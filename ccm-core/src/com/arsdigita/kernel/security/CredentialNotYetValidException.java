@@ -22,10 +22,10 @@ package com.arsdigita.kernel.security;
  * Thrown when a credential is not yet valid.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: CredentialNotYetValidException.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class CredentialNotYetValidException extends CredentialException {
 
-    public static final String versionId = "$Id: CredentialNotYetValidException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public CredentialNotYetValidException() {
         super();
     }

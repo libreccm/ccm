@@ -22,10 +22,10 @@ package com.arsdigita.kernel.security;
  * Thrown when a credential is not found.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: CredentialNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class CredentialNotFoundException extends CredentialException {
 
-    public static final String versionId = "$Id: CredentialNotFoundException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     public CredentialNotFoundException() {
         super();
     }
