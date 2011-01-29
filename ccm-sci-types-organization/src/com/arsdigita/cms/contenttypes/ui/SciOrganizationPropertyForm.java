@@ -98,4 +98,10 @@ public class SciOrganizationPropertyForm
             organization.save();
         }
     }
+
+    @Override
+    public String getTitleLabel() {
+        return (String) SciOrganizationGlobalizationUtil.globalize(
+                "sciorganizations.ui.organization.title").localize();
+    }
 }

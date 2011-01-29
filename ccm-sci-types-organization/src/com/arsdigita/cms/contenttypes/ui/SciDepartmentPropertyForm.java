@@ -97,7 +97,11 @@ public class SciDepartmentPropertyForm
 
             init(fse);
         }
+    }
 
-
+    @Override
+    protected String getTitleLabel() {
+        return (String) SciOrganizationGlobalizationUtil.globalize(
+                "sciorganizations.ui.department.title").localize();
     }
 }

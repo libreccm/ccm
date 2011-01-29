@@ -85,7 +85,7 @@ public class SciProjectPropertyForm
         TextArea shortDesc = new TextArea(shortDescParam);
         shortDesc.setCols(75);
         shortDesc.setRows(5);
-        add(shortDesc);       
+        add(shortDesc);
     }
 
     @Override
@@ -121,5 +121,11 @@ public class SciProjectPropertyForm
 
             init(fse);
         }
+    }
+
+    @Override
+    public String getTitleLabel() {
+        return (String) PublicationGlobalizationUtil.globalize(
+                "sciorganizations.ui.project.title").localize();
     }
 }
