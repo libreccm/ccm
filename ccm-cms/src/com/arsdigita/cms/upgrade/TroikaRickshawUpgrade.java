@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms;
+package com.arsdigita.cms.upgrade;
 
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
@@ -27,6 +27,15 @@ import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.runtime.Startup;
 import java.io.IOException;
 import org.apache.log4j.Logger;
+
+
+// /////////////////////////////////////////////////////////////////////////
+//
+// Obviously rather old upgrade script - pre 6.6.0 / APLAWS 1.0.2
+// Kept here for easy reference as a template / pattern for a complex update
+//
+// /////////////////////////////////////////////////////////////////////////
+
 
 /**
  * Subject to change.
