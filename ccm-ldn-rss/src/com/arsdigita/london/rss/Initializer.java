@@ -79,7 +79,7 @@ public class Initializer extends CompoundInitializer {
              ("ccm-ldn-rss.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-        add(new LegacyInitializer("com/arsdigita/london/rss/enterprise.init"));
+        // add(new LegacyInitializer("com/arsdigita/london/rss/enterprise.init"));
     }
 
     /**

@@ -30,10 +30,22 @@ public class SimpleRSSDispatcher extends RSSDispatcher {
 
     private RSSChannel m_channel;
 
+    /**
+     * Constructor.
+     * @param channel
+     */
     public SimpleRSSDispatcher(RSSChannel channel) {
         m_channel = channel;
     }
 
+    /**
+     * Implementation auf abstract method in parent class
+     * @param request
+     * @param response
+     * @param actx
+     * @return
+     * @throws ServletException
+     */
     public RSSChannel getChannel(HttpServletRequest request,
                                  HttpServletResponse response,
                                  RequestContext actx)

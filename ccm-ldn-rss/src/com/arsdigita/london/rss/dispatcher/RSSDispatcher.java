@@ -35,11 +35,27 @@ import org.jdom.output.XMLOutputter;
 
 public abstract class RSSDispatcher implements Dispatcher {
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @param actx
+     * @return
+     * @throws ServletException
+     */
     public abstract RSSChannel getChannel(HttpServletRequest request,
                                           HttpServletResponse response,
                                           RequestContext actx)
         throws ServletException;
     
+    /**
+     * 
+     * @param request
+     * @param response
+     * @param actx
+     * @throws IOException
+     * @throws ServletException
+     */
     public void dispatch(HttpServletRequest request,
                          HttpServletResponse response,
                          RequestContext actx)

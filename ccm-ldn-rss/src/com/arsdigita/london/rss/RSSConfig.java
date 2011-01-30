@@ -27,26 +27,24 @@ import org.apache.log4j.Logger;
 
 /**
  *  The file that contains all configuration information for
- *  the RSS application
+ *  the RSS application.
+ *  @version $Id: RSSConfig.java 1319 2006-09-15 10:52:49Z apevec $
  */
 public final class RSSConfig extends AbstractConfig {
-    public static final String versionId =
-        "$Id: RSSConfig.java 1319 2006-09-15 10:52:49Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2003/11/27 11:55:32 $";
 
     private static final Logger s_log = Logger.getLogger(RSSConfig.class);
 
-    private final Parameter m_categoryKey;
-    private final Parameter m_processingInstruction_xslt;
+    /**  */
+    private final Parameter m_categoryKey= new RSSCategoryKeyParameter
+            ("com.arsdigita.london.rss.categoryKey", Parameter.REQUIRED, "RSS");
+    /** */
+    private final Parameter m_processingInstruction_xslt= new StringParameter
+            ("com.arsdigita.london.rss.processingInstruction_xslt",
+             Parameter.OPTIONAL, null);
 
     public RSSConfig() {
-        m_categoryKey = new RSSCategoryKeyParameter
-            ("com.arsdigita.london.rss.categoryKey", Parameter.REQUIRED, "RSS");
-        register(m_categoryKey);
 
-        m_processingInstruction_xslt = new StringParameter
-            ("com.arsdigita.london.rss.processingInstruction_xslt", Parameter.OPTIONAL, null);
+        register(m_categoryKey);
         register(m_processingInstruction_xslt);
 
         loadInfo();

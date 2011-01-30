@@ -10,11 +10,11 @@ import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.DataCollection;
 
+
 /**
  * Domain object for an RSS channel.
  * @author Simon Buckle (sbuckle@arsdigita.com)
  */
-
 public class Feed extends ACSObject {
 
     public static final String BASE_DATA_OBJECT_TYPE

@@ -21,15 +21,15 @@ package com.arsdigita.london.rss.installer;
 import com.arsdigita.initializer.Configuration;
 import com.arsdigita.initializer.InitializationException;
 
-import com.arsdigita.persistence.TransactionContext;
-import com.arsdigita.persistence.SessionManager;
+// import com.arsdigita.persistence.TransactionContext;
+//import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.kernel.BaseInitializer;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 
-import com.arsdigita.categorization.CategoryPurpose;
+// import com.arsdigita.categorization.CategoryPurpose;
 import com.arsdigita.london.rss.RSS;
 import com.arsdigita.london.rss.Feed;
 
@@ -68,21 +68,23 @@ public class Initializer extends BaseInitializer {
      **/
     protected void doStartup() throws InitializationException {
 
-        String catKey = RSS.getConfig().getCategoryKey();
-        s_log.info("Setting RSS Category Key to " + catKey + ".");
+        // Moved into loader
+    //  String catKey = RSS.getConfig().getCategoryKey();
+    //  s_log.info("Setting RSS Category Key to " + catKey + ".");
 
-        TransactionContext txn = SessionManager.getSession()
-            .getTransactionContext();
-        txn.beginTxn();
+    //  TransactionContext txn = SessionManager.getSession()
+    //      .getTransactionContext();
+    //  txn.beginTxn();
  
-        if (!CategoryPurpose.purposeExists(catKey)) {
-            (new CategoryPurpose(catKey, "RSS Feed")).save();
-        }
+    //  if (!CategoryPurpose.purposeExists(catKey)) {
+    //      (new CategoryPurpose(catKey, "RSS Feed")).save();
+    //  }
         
-        setupChannelControlCenter();
+        // Moved into loader
+        // setupChannelControlCenter();
         setupLocalFeeds();
 
-        txn.commitTxn();
+    //  txn.commitTxn();
     }
 
     public void setupChannelControlCenter() {
@@ -120,8 +122,8 @@ public class Initializer extends BaseInitializer {
 
 
     public void setupLocalFeeds() {
-        URL external = URL.there("/channels/rss/external.rss", null);
-        
+
+        URL external = URL.there("/channels/rss/external.rss", null);        
         try {
             Feed feed = Feed.retrieve(external.getURL());
         } catch (DataObjectNotFoundException ex) {
