@@ -26,7 +26,7 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.xml.Element;
 
 /**
@@ -45,7 +45,7 @@ public class ContentSectionNavbar extends CMSContainer {
         setClassAttr("section");
 
         String wsUrl = 
-            "/" + Initializer.getURL(Initializer.WORKSPACE_PAGE_KEY);
+            "/" + LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY);
         String csUrl = Utilities.getWorkspaceURL();
 
         m_navbar = new DimensionalNavbar();

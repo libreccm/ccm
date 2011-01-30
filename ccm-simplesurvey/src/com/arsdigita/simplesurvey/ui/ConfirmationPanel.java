@@ -39,7 +39,7 @@ import com.arsdigita.bebop.Label;
 
 import com.arsdigita.simplesurvey.ui.SimpleSurveyPanel;
 
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 
 
 /**
@@ -59,7 +59,7 @@ public class ConfirmationPanel extends SimpleSurveyPanel {
     protected void addComponentsToPage() {	
 
 	String workspaceURL = 
-	    Initializer.getURL(Initializer.WORKSPACE_PAGE_KEY);
+	    LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY);
 
 	Label bodyText = new Label("Your survey response has been submitted. " +
 				   "You may return to your <a href=\"/" + workspaceURL +

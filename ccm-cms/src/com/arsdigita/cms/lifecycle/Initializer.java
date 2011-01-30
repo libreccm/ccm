@@ -60,6 +60,7 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
      * A delay value of 0 inhibits start of processing.
      * @param evt The context init event.
      */
+    @Override
     public void init(ContextInitEvent evt) {
         s_log.debug("lifecycle background startup beginn.");
 
@@ -83,6 +84,7 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
     /**
      *
      */
+    @Override
     public void close(ContextCloseEvent evt) {
         Scheduler.stopTimer();
         s_log.debug("lifecycle background processing stopped");

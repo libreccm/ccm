@@ -1,6 +1,6 @@
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2">
 
-  <jsp:directive.page import="com.arsdigita.kernel.security.Initializer"/>
+  <jsp:directive.page import="com.arsdigita.kernel.security.LegacyInitializer"/>
   <jsp:directive.page import="com.arsdigita.web.URL"/>
   <jsp:directive.page import="com.arsdigita.web.RedirectSignal"/>
   <jsp:directive.page import="com.arsdigita.cms.ContentSection"/>
@@ -26,7 +26,7 @@
     if (hasAccess) {
         url = Utilities.getWorkspaceURL();
     } else {
-        url = Initializer.getFullURL(Initializer.WORKSPACE_PAGE_KEY, request);
+        url = LegacyInitializer.getFullURL(LegacyInitializer.WORKSPACE_PAGE_KEY, request);
     }
 
     throw new RedirectSignal(URL.there(request, url), false);

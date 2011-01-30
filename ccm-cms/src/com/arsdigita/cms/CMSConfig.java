@@ -428,10 +428,11 @@ public final class CMSConfig extends AbstractConfig {
     // to SectionInitializer. However, it still may be useful to
     // keep these for the default values.
     // ///////////////////////////////////////////
-    private final Parameter m_defaultItemResolverClass = new SpecificClassParameter("com.arsdigita.cms.default_item_resolver_class",
-            Parameter.REQUIRED,
-            MultilingualItemResolver.class,
-            ItemResolver.class);
+    private final Parameter m_defaultItemResolverClass = new SpecificClassParameter
+            ("com.arsdigita.cms.default_item_resolver_class",
+             Parameter.REQUIRED,
+             MultilingualItemResolver.class,
+             ItemResolver.class);
     private final Parameter m_defaultTemplateResolverClass = new SpecificClassParameter("com.arsdigita.cms.default_template_resolver_class",
             Parameter.REQUIRED,
             DefaultTemplateResolver.class,

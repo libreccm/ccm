@@ -19,13 +19,13 @@
 package com.arsdigita.cms.dispatcher;
 
 import com.arsdigita.cms.WorkspaceSetup;
-import com.arsdigita.cms.util.PageClassConfigHandler;
+// import com.arsdigita.cms.util.PageClassConfigHandler;
 import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.dispatcher.Dispatcher;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.JSPApplicationDispatcher;
 import com.arsdigita.dispatcher.RequestContext;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.Util;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.ui.login.LoginHelper;
 import com.arsdigita.util.LockableImpl;
@@ -284,10 +284,10 @@ public class ContentCenterDispatcher extends LockableImpl
     protected void redirectToLoginPage(HttpServletRequest req,
                                        HttpServletResponse resp)
         throws ServletException {
-        String url = Initializer.getSecurityHelper()
-            .getLoginURL(req)
-            +"?"+UserContext.RETURN_URL_PARAM_NAME
-            +"="+UserContext.encodeReturnURL(req);
+        String url = Util.getSecurityHelper()
+                         .getLoginURL(req)
+                         +"?"+LoginHelper.RETURN_URL_PARAM_NAME
+                         +"="+UserContext.encodeReturnURL(req);
         try {
             LoginHelper.sendRedirect(req, resp, url);
         } catch (IOException e) {

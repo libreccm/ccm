@@ -9,7 +9,7 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.london.portal.Workspace;
 import com.arsdigita.london.portal.util.GlobalizationUtil;
 import com.arsdigita.web.Application;
@@ -56,7 +56,7 @@ public class PersonalPortalPage extends Page {
             Party party = Kernel.getContext().getParty();
 
             if (party == null) {
-                sUrl = Initializer.getURL(Initializer.LOGIN_PAGE_KEY);
+                sUrl = LegacyInitializer.getURL(LegacyInitializer.LOGIN_PAGE_KEY);
             } else {
                 try {
                     user = User.retrieve(party.getOID());
@@ -97,7 +97,7 @@ public class PersonalPortalPage extends Page {
                     sUrl = personalWorkspace.getPath();
 
                 } catch (DataObjectNotFoundException donfe) {
-                    sUrl = Initializer.getURL(Initializer.LOGIN_PAGE_KEY);
+                    sUrl = LegacyInitializer.getURL(LegacyInitializer.LOGIN_PAGE_KEY);
                 }
             }
 

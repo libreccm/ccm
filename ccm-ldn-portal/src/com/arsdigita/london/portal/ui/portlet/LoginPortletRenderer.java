@@ -28,7 +28,7 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.permissions.UniversalPermissionDescriptor;
 import com.arsdigita.kernel.security.Credential;
 import com.arsdigita.kernel.security.CredentialEncodingException;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.london.portal.portlet.LoginPortlet;
 import com.arsdigita.london.portal.ui.PortalConstants;
 import com.arsdigita.persistence.DataQuery;
@@ -68,8 +68,8 @@ public class LoginPortletRenderer extends AbstractPortletRenderer {
 
 			Element content = login.newChildElement("portlet:loginform",
 					PortalConstants.PORTLET_XML_NS);
-			content.addAttribute("url", Initializer
-					.getURL(Initializer.LOGIN_PAGE_KEY));
+			content.addAttribute("url", LegacyInitializer
+					.getURL(LegacyInitializer.LOGIN_PAGE_KEY));
 			content.addAttribute("timestamp", timestamp);
 		} else {
 			User user = (User) party;
@@ -82,15 +82,15 @@ public class LoginPortletRenderer extends AbstractPortletRenderer {
 					.getFamilyName());
 
 			Link editProfile = new Link("Edit profile", "/"
-					+ Initializer.getURL(Initializer.EDIT_PAGE_KEY));
+					+ LegacyInitializer.getURL(LegacyInitializer.EDIT_PAGE_KEY));
 			editProfile.generateXML(state, content);
 
 			Link changePassword = new Link("Change password", "/"
-					+ Initializer.getURL(Initializer.CHANGE_PAGE_KEY));
+					+ LegacyInitializer.getURL(LegacyInitializer.CHANGE_PAGE_KEY));
 			changePassword.generateXML(state, content);
 
 			Link logout = new Link("Logout", "/"
-					+ Initializer.getURL(Initializer.LOGOUT_PAGE_KEY));
+					+ LegacyInitializer.getURL(LegacyInitializer.LOGOUT_PAGE_KEY));
 			logout.generateXML(state, content);
 
 			// Test whether the user can do anything in any content section

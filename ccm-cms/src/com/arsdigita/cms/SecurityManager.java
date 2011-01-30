@@ -500,9 +500,9 @@ public class SecurityManager implements Security, SecurityConstants {
         throws IOException, ServletException {
 
         if (KernelHelper.getCurrentUser(request) != null) { return; }
-        String url = com.arsdigita.kernel.security.Initializer
+        String url = com.arsdigita.kernel.security.Util
             .getSecurityHelper().getLoginURL(request)
-            + "?" + UserContext.RETURN_URL_PARAM_NAME
+            + "?" + LoginHelper.RETURN_URL_PARAM_NAME
             + "=" + UserContext.encodeReturnURL(request);
 
         LoginHelper.sendRedirect(request, response, url);

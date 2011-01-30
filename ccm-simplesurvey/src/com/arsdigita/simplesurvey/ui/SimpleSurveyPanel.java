@@ -37,7 +37,7 @@ import com.arsdigita.kernel.SiteNode;
 
 
 
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 
 import com.arsdigita.bebop.BoxPanel;
 import javax.servlet.http.HttpServletRequest;
@@ -115,7 +115,7 @@ public abstract class SimpleSurveyPanel extends SimpleContainer {
 
 	// Link to the workspace of the site
 	m_navBar.add(new Link("Workspace",
-		   "/" + Initializer.getURL(Initializer.WORKSPACE_PAGE_KEY)));
+		   "/" + LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY)));
     }
 
     protected abstract void addComponentsToPage();

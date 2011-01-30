@@ -22,7 +22,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
@@ -47,8 +47,8 @@ class GlobalNavigation extends SimpleComponent {
 
     GlobalNavigation() {
         m_centerPath = Utilities.getWorkspaceURL();
-        m_wspcPath = path(Initializer.WORKSPACE_PAGE_KEY);
-        m_signOutPath = path(Initializer.LOGOUT_PAGE_KEY);
+        m_wspcPath = path(LegacyInitializer.WORKSPACE_PAGE_KEY);
+        m_signOutPath = path(LegacyInitializer.LOGOUT_PAGE_KEY);
         m_helpPath = "/nowhere"; // We don't have this yet XXX.
     }
 
@@ -72,7 +72,7 @@ class GlobalNavigation extends SimpleComponent {
     }
 
     private static String path(final String key) {
-        return "/" + Initializer.getURL(key);
+        return "/" + LegacyInitializer.getURL(key);
     }
 
     private static Element link(final HttpServletRequest sreq,

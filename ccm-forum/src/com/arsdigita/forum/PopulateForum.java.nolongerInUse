@@ -32,6 +32,17 @@ import com.arsdigita.populate.apps.PopulateApp;
 import com.arsdigita.util.Assert;
 import com.arsdigita.web.ApplicationType;
 
+//
+//  Class is not used anywhere in the source tree, obviously even not in the
+//  test code tree.
+//  No Documentation how to use available.
+//
+//  Retained temporarily for easy reference until the refactoring of the
+//  test cases is completed.
+//
+//  (pboy 2011-01-30)
+
+
 /**
  * @author bche
  */

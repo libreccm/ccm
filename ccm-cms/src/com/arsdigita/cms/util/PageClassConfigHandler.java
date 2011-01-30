@@ -60,12 +60,14 @@ public class PageClassConfigHandler extends DefaultHandler {
         m_buffer = new StringBuffer();
     }
 
+    @Override
     public void characters(char[] ch, int start, int len) {
         for (int i = 0; i < len; i++) {
             m_buffer.append(ch[start + i]);
         }
     }
 
+    @Override
     public void endElement(String uri, String localName, String qn) {
         if ( qn.equals("url") ) {
             m_url = m_buffer.toString().trim();
