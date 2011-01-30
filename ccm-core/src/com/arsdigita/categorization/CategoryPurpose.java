@@ -43,9 +43,9 @@ import org.apache.log4j.Logger;
  * filter the list of categories associated with an object.
  *
  * @author Scott Seago
+ * @version $Revision: #13 $ $DateTime: 2004/08/16 18:10:38 $
  * @deprecated See the note about "use context" methods in the documentation for
  * {@link Category} class.
- * @version $Revision: #13 $ $DateTime: 2004/08/16 18:10:38 $
  */
 public class CategoryPurpose extends ACSObject {
 

@@ -43,7 +43,7 @@ import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.persistence.PersistenceException;
 
 import javax.mail.internet.InternetAddress;
@@ -219,8 +219,8 @@ public class UserNewForm extends UserForm
         // redirect to workspace or return URL, if specified
         final HttpServletRequest req = state.getRequest();
 
-        url = Initializer.getFullURL
-                (Initializer.WORKSPACE_PAGE_KEY, req);
+        url = LegacyInitializer.getFullURL
+                (LegacyInitializer.WORKSPACE_PAGE_KEY, req);
 
         final URL fallback = com.arsdigita.web.URL.there(req, url);
 

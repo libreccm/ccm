@@ -30,6 +30,18 @@ import com.arsdigita.populate.Utilities;
 import com.arsdigita.portal.Portal;
 import com.arsdigita.web.Application;
 
+
+// ///////////////////////////////////////////////////////////////////////////
+//
+// NOT USED anywhere in the source tree.
+// No documentation available.
+// Retained temporarily until refactoring of test cases is completed.
+//
+// (pboy 2011.01.30)
+//
+// ///////////////////////////////////////////////////////////////////////////
+
+
 /**
  * @author bche
  */

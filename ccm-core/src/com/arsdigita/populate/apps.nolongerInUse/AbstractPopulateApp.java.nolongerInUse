@@ -25,6 +25,18 @@ import com.arsdigita.portal.apportlet.AppPortlet;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 
+
+// ///////////////////////////////////////////////////////////////////////////
+//
+// NOT USED anywhere in the source tree.
+// No documentation available.
+// Retained temporarily until refactoring of test cases is completed.
+//
+// (pboy 2011.01.30)
+//
+// ///////////////////////////////////////////////////////////////////////////
+
+
 /**
  * @author bche
  */

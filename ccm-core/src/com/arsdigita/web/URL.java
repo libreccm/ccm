@@ -888,6 +888,7 @@ public class URL {
      *
      * @return a <code>String</code> URL
      */
+    @Override
     public final String toString() {
         if (m_params == null) {
             return m_url.substring(m_serverPortEnd);
@@ -924,14 +925,17 @@ public class URL {
 
     private static class EmptyParameterMap extends InternalRequestLocal {
 
+        @Override
         protected final Object initialValue() {
             return new ParameterMap();
         }
 
+        @Override
         protected final void prepareValue(final HttpServletRequest sreq) {
             ((ParameterMap) get()).runListeners(sreq);
         }
 
+        @Override
         protected final void clearValue() {
             ((ParameterMap) get()).clear();
         }

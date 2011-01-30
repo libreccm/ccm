@@ -34,10 +34,10 @@ import org.apache.log4j.Logger;
  * @see URLLoginModule
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: URLManager.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class URLManager extends CredentialManager {
 
-    public static final String versionId = "$Id: URLManager.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
         Logger.getLogger(URLManager.class.getName());
 

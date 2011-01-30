@@ -29,7 +29,7 @@ import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.SiteNodeCollection;
 import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.xml.Element;
@@ -78,11 +78,11 @@ public class UserInfo extends SimpleContainer {
         // add list of links
         ListPanel list = new ListPanel(false);
         list.add(new DynamicLink("login.userInfo.logoutLink",
-                                 Initializer.LOGOUT_PAGE_KEY));
+                                 LegacyInitializer.LOGOUT_PAGE_KEY));
         list.add(new DynamicLink("login.userInfo.editProfileLink",
-                                 Initializer.EDIT_PAGE_KEY));
+                                 LegacyInitializer.EDIT_PAGE_KEY));
         list.add(new DynamicLink("login.userInfo.changePasswordLink",
-                                 Initializer.CHANGE_PAGE_KEY));
+                                 LegacyInitializer.CHANGE_PAGE_KEY));
         add(list);
         // add user info text
         add(new SimpleComponent() {

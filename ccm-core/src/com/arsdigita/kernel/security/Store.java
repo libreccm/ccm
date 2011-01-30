@@ -54,7 +54,7 @@ final class Store implements KeyStorage {
     Store() {}
 
     static byte[] newKey() {
-        byte[] key = new byte[Initializer.SECRET_KEY_BYTES];
+        byte[] key = new byte[LegacyInitializer.SECRET_KEY_BYTES];
         new SecureRandom().nextBytes(key);
         return key;
     }
@@ -107,9 +107,9 @@ final class Store implements KeyStorage {
             throw new IllegalStateException
                 ("the store is null");
         }
-        if ( m_secret.length != Initializer.SECRET_KEY_BYTES ) {
+        if ( m_secret.length != LegacyInitializer.SECRET_KEY_BYTES ) {
             throw new IllegalArgumentException
-                ("wrong length. expected=" + Initializer.SECRET_KEY_BYTES +
+                ("wrong length. expected=" + LegacyInitializer.SECRET_KEY_BYTES +
                  ", but got " + m_secret.length);
         }
         return m_secret;

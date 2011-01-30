@@ -20,6 +20,8 @@ package com.arsdigita.kernel.security;
 
 import com.arsdigita.util.Classes;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.UnsupportedCallbackException;
@@ -29,11 +31,17 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Utility package of static security methods
  *
- * @author Christian
- *            Brechb&uuml;hler
+ * @author Christian Brechb&uuml;hler
  */
 public class Util {
+
+    private static SecurityConfig s_conf = SecurityConfig.getConfig();
+
     private static SecurityHelper s_helper = null;
+
+    /** list of excluded extensions */
+    private static List s_exclExts = null;
+    // private static List s_exclExts = s_conf.getExcludedExtensions();
 
     /** This class needs not to be instantiated. */
     private Util() {}
@@ -79,4 +87,26 @@ public class Util {
             throw new KernelLoginException("Error getting HTTP request", e);
         }
     }
+
+
+    /**
+     * Returns an iterator over the list of excluded extensions.
+     *
+     * @return an iterator over the list of excluded extensions.
+     */
+    // TODO: Currently method is used by CredentialLoginModule only. If no other
+    // class will use it, it is trivial and should directly be moved over there.
+    public static Iterator getExcludedExtensions() {
+        
+        // Alternativly we may introduce a setExkludedExtensions method as with
+        // setSecurityHelper and avoid a reference to config object here at all.
+        // Nevertheless, we shoul use it consistantly!
+        if (s_exclExts == null) {
+            s_exclExts = s_conf.getExcludedExtensions();
+            // return java.util.Collections.EMPTY_LIST.iterator();
+        } 
+        return s_exclExts.iterator();
+        
+    }
+
 }

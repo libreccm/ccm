@@ -45,7 +45,7 @@ import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.RecoveryLoginModule;
 import com.arsdigita.mail.Mail;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -297,8 +297,8 @@ public class ChangePasswordForm extends Form
 
         final HttpServletRequest req = state.getRequest();
 
-        final String path = Initializer.getFullURL
-            (Initializer.WORKSPACE_PAGE_KEY, req);
+        final String path = LegacyInitializer.getFullURL
+            (LegacyInitializer.WORKSPACE_PAGE_KEY, req);
 
         final URL fallback = URL.there(req, path);
 

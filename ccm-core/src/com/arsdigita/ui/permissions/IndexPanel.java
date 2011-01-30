@@ -37,7 +37,7 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.LockableImpl;
@@ -69,8 +69,8 @@ class IndexPanel extends SimpleContainer implements PermissionsConstants  {
         setClassAttr("PERMISSIONS");
         m_navbar = new DimensionalNavbar();
         m_navbar.add(new Link(PERSONAL_SITE.localize()+"", 
-                              "/" + Initializer.getURL(
-                                  Initializer.WORKSPACE_PAGE_KEY)));
+                              "/" + LegacyInitializer.getURL(
+                                  LegacyInitializer.WORKSPACE_PAGE_KEY)));
         m_navbar.add(new Link(MAIN_SITE.localize()+"", "/"));
         m_navbar.add(new Label(PERMISSIONS_INDEX_NAVBAR.localize()+""));
         m_navbar.setClassAttr("permNavBar");

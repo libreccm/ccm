@@ -46,7 +46,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.security.CredentialEncodingException;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.RecoveryLoginModule;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
@@ -351,8 +351,8 @@ public class RecoverPasswordPanel extends SimpleContainer
             
             url = com.arsdigita.web.URL.dynamicHostThere
                 (req, 
-                 Initializer.getFullURL
-                 (Initializer.CHANGE_PAGE_KEY, req),
+                 LegacyInitializer.getFullURL
+                 (LegacyInitializer.CHANGE_PAGE_KEY, req),
                  map);
         } catch (CredentialEncodingException e) {
             throw new UncheckedWrapperException

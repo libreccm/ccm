@@ -31,10 +31,10 @@ import org.apache.log4j.Logger;
  * Determines the URL parameters needed for user tracking.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: SecurityParameterProvider.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class SecurityParameterProvider implements ParameterProvider {
 
-    public static final String versionId = "$Id: SecurityParameterProvider.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
         Logger.getLogger(SecurityParameterProvider.class.getName());
 

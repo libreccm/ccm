@@ -24,35 +24,73 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.BooleanParameter;
 import com.arsdigita.util.parameter.IntegerParameter;
 import com.arsdigita.util.parameter.Parameter;
+import com.arsdigita.util.parameter.SpecificClassParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.StringParameter;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 /**
- * SecurityConfig
+ * A record containing server-session scoped security configuration properties.
+ *
+ * Accessors of this class may return null. Developers should take care
+ * to trap null return values in their code.
+ *
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #8 $ $Date: 2004/08/16 $
  * @version $Id: SecurityConfig.java 1471 2007-03-12 11:27:55Z chrisgilbert23 $
- **/
+ */
 
 public class SecurityConfig extends AbstractConfig {
 
+    private static final Logger s_log = Logger.getLogger(SecurityConfig.class);
+
+    private static SecurityConfig s_config = null;
+
     private static String s_systemAdministratorEmailAddress = null;
 
+    /** The class name of the SecurityHelper implementation. Must implement
+        SecurityHelper interface                                              */
+    private final Parameter m_securityHelperClass  = new SpecificClassParameter
+        ("waf.security_helper_class", Parameter.REQUIRED,
+         com.arsdigita.kernel.security.DefaultSecurityHelper.class,
+         com.arsdigita.kernel.security.SecurityHelper.class);
+    /** This parameter is obsolete.                                           */
+    private final Parameter m_sessionTrackingMethod  = new StringParameter
+        ("waf.session_tracking_method", Parameter.REQUIRED, "cookie");
+    /** List of extensions excluded from authentication cookies.
+     *  Authentication is checked for all requests, but requests with one of
+     *  these extensions will never cause a new cookie to be set.
+     *  Include a leading dot for each extension.                             */
+    private final Parameter m_excludedExtensions  = new StringArrayParameter
+        ("waf.excluded_extensions", Parameter.REQUIRED,
+        new String[] { ".jpg", ".gif", ".png", ".pdf" } );
+    /** Key for the root page of the site.                                    */
     private final Parameter m_rootPage       = new StringParameter
         ("waf.pagemap.root", Parameter.REQUIRED, "register/");
+    /** Key for the login page.                                               */
     private final Parameter m_loginPage      = new StringParameter
         ("waf.pagemap.login", Parameter.REQUIRED, "register/");
+    /** Key for the new user page.                                            */
     private final Parameter m_newUserPage    = new StringParameter
         ("waf.pagemap.newuser", Parameter.REQUIRED, "register/new-user");
+    /** Key for the logout page.                                              */
     private final Parameter m_logoutPage     = new StringParameter
         ("waf.pagemap.logout", Parameter.REQUIRED, "register/logout");
+    /** Key for the explain-cookies page.                                     */
     private final Parameter m_cookiesPage    = new StringParameter
         ("waf.pagemap.cookies", Parameter.REQUIRED, "register/explain-persistent-cookies");
+    /** Key for the change-password page. **/
     private final Parameter m_changePage     = new StringParameter
         ("waf.pagemap.change", Parameter.REQUIRED, "register/change-password");
+    /** Key for the recover-password page. **/
     private final Parameter m_recoverPage    = new StringParameter
         ("waf.pagemap.recover", Parameter.REQUIRED, "register/recover-password");
+    /** Key for the login-expired page.                                       */
     private final Parameter m_expiredPage    = new StringParameter
         ("waf.pagemap.expired", Parameter.REQUIRED, "register/login-expired");
     private final Parameter m_workspacePage  = new StringParameter
@@ -67,6 +105,7 @@ public class SecurityConfig extends AbstractConfig {
         ("waf.pagemap.cookies_duration_minutes", Parameter.OPTIONAL, null);
     private final Parameter m_cookieDomain = new StringParameter
         ("waf.cookie_domain", Parameter.OPTIONAL, null);
+
     private final Parameter m_loginConfig = new StringArrayParameter
         ("waf.login_config", Parameter.REQUIRED, new String[] {
                 "Request:com.arsdigita.kernel.security.AdminLoginModule:sufficient",
@@ -79,6 +118,7 @@ public class SecurityConfig extends AbstractConfig {
                 "RegisterSSO:com.arsdigita.kernel.security.CookieLoginModule:optional"
                 }
         );
+
     private final Parameter m_adminEmail = new StringParameter
         ("waf.admin.contact_email", Parameter.OPTIONAL, null);
     private final Parameter m_autoRegistrationOn = new BooleanParameter
@@ -90,6 +130,10 @@ public class SecurityConfig extends AbstractConfig {
      * Constructs an empty SecurityConfig object
      */
     public SecurityConfig() {
+        register(m_securityHelperClass);
+        register(m_sessionTrackingMethod);
+        register(m_excludedExtensions);
+
         register(m_rootPage);
         register(m_loginPage);
         register(m_newUserPage);
@@ -104,12 +148,56 @@ public class SecurityConfig extends AbstractConfig {
         register(m_permSinglePage);
         register(m_cookieDomain);
         register(m_loginConfig);
+
         register(m_cookieDurationMinutes);
         register(m_adminEmail);
         register(m_autoRegistrationOn);
         register(m_userBanOn);
 
         loadInfo();
+    }
+
+    /**
+     * Returns the singleton configuration record for the runtime
+     * environment.
+     *
+     * @return The <code>RuntimeConfig</code> record; it cannot be null
+     */
+    public static final synchronized SecurityConfig getConfig() {
+        if (s_config == null) {
+            s_config = new SecurityConfig();
+            // deprecated
+            // s_config.require("ccm-core/runtime.properties");
+            // use instead:
+            // read values from the persistent storage
+            s_config.load();
+        }
+
+        return s_config;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public final Class getSecurityHelperClass() {
+        return (Class) get(m_securityHelperClass);
+    }
+
+    /**
+     * Obsolete!
+     * @return
+     */
+    public final String getSessionTrackingMethod() {
+        return (String) get(m_sessionTrackingMethod);
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public final List getExcludedExtensions() {
+        return Arrays.asList( (String[]) get(m_excludedExtensions));
     }
 
     String getRootPage() {

@@ -51,7 +51,7 @@ import com.arsdigita.kernel.Kernel;
  *
  * @author Sameer Ajmani
  * @version $Id: CredentialLoginModule.java 718 2005-08-18 15:34:42Z apevec $
- */
+ **/
 public abstract class CredentialLoginModule implements LoginModule {
 
     private static final Logger s_log =
@@ -389,7 +389,7 @@ public abstract class CredentialLoginModule implements LoginModule {
      **/
     protected final boolean requestIsExcluded()
         throws LoginException {
-        java.util.Iterator exts = Initializer.getExcludedExtensions();
+        java.util.Iterator exts = Util.getExcludedExtensions();
         while (exts.hasNext()) {
             String ext = (String)exts.next();
             if (getRequest().getRequestURI().endsWith(ext)) {
@@ -466,7 +466,9 @@ public abstract class CredentialLoginModule implements LoginModule {
             if (m_forever == null) {
                 LifetimeCallback cb = new LifetimeCallback();
                 m_handler.handle(new Callback[] { cb });
-                m_forever = new Boolean(cb.isForever());
+                // m_forever = new Boolean(cb.isForever());
+                // performancewise better:
+                m_forever = Boolean.valueOf(cb.isForever());
             }
             return m_forever.booleanValue();
         } catch (IOException e) {

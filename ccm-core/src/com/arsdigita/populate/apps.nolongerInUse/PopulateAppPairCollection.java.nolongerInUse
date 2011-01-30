@@ -18,33 +18,40 @@
  */
 package com.arsdigita.populate.apps;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import com.arsdigita.util.Assert;
+
+// ///////////////////////////////////////////////////////////////////////////
+//
+// NOT USED anywhere in the source tree.
+// No documentation available.
+// Retained temporarily until refactoring of test cases is completed.
+//
+// (pboy 2011.01.30)
+//
+// ///////////////////////////////////////////////////////////////////////////
+
 
 /**
  * @author bche
  */
-public class PopulateAppPair {
-    private PopulateApp m_popApp;
-    private List m_args;
+public class PopulateAppPairCollection {
     
-    public PopulateAppPair(List popAppPair) {
-        Assert.isTrue(popAppPair.size() == 2);
-        m_popApp = (PopulateApp)popAppPair.get(0);
-        m_args = (List)popAppPair.get(1);
+    private ArrayList m_PopAppPairs = new ArrayList();
+    
+    public PopulateAppPairCollection() {;
+    }
+        
+    public void addPopulateApp(PopulateAppPair popAppPair) {
+        m_PopAppPairs.add(popAppPair);
     }
     
-    public PopulateAppPair(PopulateApp popApp, List args) {
-        m_popApp = popApp;
-        m_args = args;
+    public int getSize() {
+        return m_PopAppPairs.size();
     }
     
-    public PopulateApp getPopulateApp() {
-        return m_popApp;
+    public PopulateAppPair getPopulateApp(int iIndex) throws IndexOutOfBoundsException {
+        return (PopulateAppPair)m_PopAppPairs.get(iIndex);
     }
-    
-    public List getArgs() {
-        return m_args;
-    }
+
 }

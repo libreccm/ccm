@@ -31,10 +31,10 @@ import com.arsdigita.kernel.Kernel;
  * current HTTP request.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: UserLoginModule.java 1477 2007-03-14 10:27:16Z chrisgilbert23 $
+ */
 public abstract class UserLoginModule extends CredentialLoginModule {
 
-    public static final String versionId = "$Id: UserLoginModule.java 1477 2007-03-14 10:27:16Z chrisgilbert23 $ by $Author: chrisgilbert23 $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
         Logger.getLogger(UserLoginModule.class.getName());
 

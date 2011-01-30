@@ -32,10 +32,10 @@ import org.apache.log4j.Logger;
  * <code>com.arsdigita.kernel.UserAuthentication</code>.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: UserIDLoginModule.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class UserIDLoginModule extends MappingLoginModule {
 
-    public static final String versionId = "$Id: UserIDLoginModule.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
         Logger.getLogger(UserIDLoginModule.class.getName());
 

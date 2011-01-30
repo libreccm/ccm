@@ -22,7 +22,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 
 /**
  * Package-private class that generates the URL for a link dynamically from
@@ -43,7 +43,7 @@ class DynamicLink extends Link {
                   public void prepare(PrintEvent e) {
                       Link link = (Link) e.getTarget();
 
-                      String url = Initializer.getFullURL
+                      String url = LegacyInitializer.getFullURL
                           (targetKey, e.getPageState().getRequest());
 
                       link.setTarget(url);

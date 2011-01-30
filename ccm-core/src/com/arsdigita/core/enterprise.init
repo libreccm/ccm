@@ -37,7 +37,7 @@ init com.arsdigita.globalization.LegacyInitializer {
 
 init com.arsdigita.kernel.Initializer {}
 
-init com.arsdigita.kernel.security.Initializer {
+init com.arsdigita.kernel.security.LegacyInitializer {
     securityHelperClass = "com.arsdigita.kernel.security.DefaultSecurityHelper";
     sessionTrackingMethod = "cookie";
 

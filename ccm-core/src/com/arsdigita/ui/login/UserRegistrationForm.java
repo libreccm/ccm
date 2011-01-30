@@ -47,7 +47,7 @@ import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.security.AccountNotFoundException;
 import com.arsdigita.kernel.security.Credential;
 import com.arsdigita.kernel.security.CredentialException;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.RedirectSignal;
@@ -146,17 +146,17 @@ public class UserRegistrationForm extends Form
         cookiePanel.add(m_isPersistent);
         cookiePanel.add(new DynamicLink
                 ("login.userRegistrationForm.explainCookieLink",
-                        Initializer.COOKIES_PAGE_KEY));
+                        LegacyInitializer.COOKIES_PAGE_KEY));
         add(cookiePanel);
 
         add(new Submit(SUBMIT), ColumnPanel.CENTER | ColumnPanel.FULL_WIDTH);
 
         add(new DynamicLink("login.userRegistrationForm.forgotPasswordLink",
-                Initializer.RECOVER_PAGE_KEY));
+                LegacyInitializer.RECOVER_PAGE_KEY));
 
         if (m_autoRegistrationOn) {
             add(new DynamicLink("login.userRegistrationForm.newUserRegister",
-                                Initializer.NEWUSER_PAGE_KEY));
+                                LegacyInitializer.NEWUSER_PAGE_KEY));
         }
 
         add(new ElementComponent("subsite:promptToEnableCookiesMsg",
@@ -241,8 +241,8 @@ public class UserRegistrationForm extends Form
             } catch (CredentialException e) {
                 s_log.info( "Invalid credential" );
 
-                final String path = Initializer.getFullURL
-                        (Initializer.EXPIRED_PAGE_KEY, state.getRequest());
+                final String path = LegacyInitializer.getFullURL
+                        (LegacyInitializer.EXPIRED_PAGE_KEY, state.getRequest());
 
                 final URL url = com.arsdigita.web.URL.there
                         (state.getRequest(), path);
@@ -268,8 +268,8 @@ public class UserRegistrationForm extends Form
         final HttpServletRequest req = state.getRequest();
         
 	// Redirect to workspace or return URL, if specified.
-        final String path = Initializer.getFullURL
-                (Initializer.LOGIN_REDIRECT_PAGE_KEY, req);
+        final String path = LegacyInitializer.getFullURL
+                (LegacyInitializer.LOGIN_REDIRECT_PAGE_KEY, req);
 
         final URL url = com.arsdigita.web.URL.there(req, path);
 
@@ -404,8 +404,8 @@ public class UserRegistrationForm extends Form
     }
 
     protected void redirectToNewUserPage(PageState state) {
-        String url = Initializer.getFullURL
-            (Initializer.NEWUSER_PAGE_KEY, state.getRequest());
+        String url = LegacyInitializer.getFullURL
+            (LegacyInitializer.NEWUSER_PAGE_KEY, state.getRequest());
         
         ParameterMap map = new ParameterMap();
         map.setParameter(LoginHelper.RETURN_URL_PARAM_NAME,

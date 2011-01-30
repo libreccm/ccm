@@ -23,7 +23,7 @@ import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 import com.arsdigita.ui.util.GlobalizationUtil;
@@ -103,25 +103,25 @@ public class UserBanner extends SimpleComponent {
         content.addAttribute(
             "workspaceURL",
             URL.there(state.getRequest(),
-                      Initializer.getFullURL(Initializer.WORKSPACE_PAGE_KEY,
+                      LegacyInitializer.getFullURL(LegacyInitializer.WORKSPACE_PAGE_KEY,
                                              state.getRequest())).toString());
 
         content.addAttribute(
             "loginURL",
             URL.there(state.getRequest(),
-                      Initializer.getFullURL(Initializer.LOGIN_PAGE_KEY,
+                      LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
                                              state.getRequest())).toString());
 
         content.addAttribute(
             "loginExcursionURL",
             URL.excursion(state.getRequest(),
-                      Initializer.getFullURL(Initializer.LOGIN_PAGE_KEY,
+                      LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
                                              state.getRequest())).toString());
 
         content.addAttribute(
             "logoutURL",
             URL.there(state.getRequest(),
-                      Initializer.getFullURL(Initializer.LOGOUT_PAGE_KEY,
+                      LegacyInitializer.getFullURL(LegacyInitializer.LOGOUT_PAGE_KEY,
                                              state.getRequest())).toString());
 
     }

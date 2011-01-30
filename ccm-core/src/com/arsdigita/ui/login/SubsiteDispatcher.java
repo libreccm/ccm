@@ -33,7 +33,7 @@ import com.arsdigita.dispatcher.DispatcherConfig;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.ReturnSignal;
@@ -89,40 +89,40 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
         //Map map = new HashMap();
     	Map map = new SubsiteDispatcherMap();
         // special-case the empty URL
-        String redirect = Initializer.getURL(Initializer.ROOT_PAGE_KEY);
+        String redirect = LegacyInitializer.getURL(LegacyInitializer.ROOT_PAGE_KEY);
         Dispatcher root = new RedirectDispatcher(redirect);
         map.put("", root);
         map.put("index", root);
 
-        put(map, Initializer.EDIT_PAGE_KEY, buildSimplePage
+        put(map, LegacyInitializer.EDIT_PAGE_KEY, buildSimplePage
             ("login.userEditPage.title", new UserEditForm(), "edit"));
-        put(map, Initializer.LOGIN_PAGE_KEY, buildSimplePage
+        put(map, LegacyInitializer.LOGIN_PAGE_KEY, buildSimplePage
             ("login.userRegistrationForm.title",
              new UserRegistrationForm(Kernel.getSecurityConfig().isAutoRegistrationOn()),
              "login"));
         if (Kernel.getSecurityConfig().isAutoRegistrationOn()) {
-            put(map, Initializer.NEWUSER_PAGE_KEY, buildSimplePage
+            put(map, LegacyInitializer.NEWUSER_PAGE_KEY, buildSimplePage
                 ("login.userNewForm.title", new UserNewForm(),"register"));
         }
-        put(map, Initializer.LOGOUT_PAGE_KEY, buildLogOutPage());
-        put(map, Initializer.COOKIES_PAGE_KEY, buildSimplePage
+        put(map, LegacyInitializer.LOGOUT_PAGE_KEY, buildLogOutPage());
+        put(map, LegacyInitializer.COOKIES_PAGE_KEY, buildSimplePage
             ("login.explainCookiesPage.title", new ElementComponent
              ("subsite:explainPersistentCookies", SUBSITE_NS_URI), "cookies"));
-        put(map, Initializer.CHANGE_PAGE_KEY, buildSimplePage
+        put(map, LegacyInitializer.CHANGE_PAGE_KEY, buildSimplePage
             ("login.changePasswordPage.title", new ChangePasswordForm(),
              "changepassword"));
-        put(map, Initializer.RECOVER_PAGE_KEY, buildSimplePage
+        put(map, LegacyInitializer.RECOVER_PAGE_KEY, buildSimplePage
             ("login.recoverPasswordPage.title", new RecoverPasswordPanel(),
              "recoverpassword"));
 
         Page workspace = checkForPageSubClass();
         if (workspace == null) workspace = buildSimplePage
             ("login.workspacePage.title", new UserInfo(), "workspace");
-        put(map, Initializer.WORKSPACE_PAGE_KEY, workspace);
-        put(map, Initializer.EXPIRED_PAGE_KEY, buildExpiredPage());
+        put(map, LegacyInitializer.WORKSPACE_PAGE_KEY, workspace);
+        put(map, LegacyInitializer.EXPIRED_PAGE_KEY, buildExpiredPage());
 
         // special case to handle pvt/home
-        String url = Initializer.getURL(Initializer.WORKSPACE_PAGE_KEY);
+        String url = LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY);
         if (url.equals("pvt/")) {
             map.put("pvt/home", workspace);
         }
@@ -139,9 +139,9 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
         // /register/login-expired, /register/recover-password
         // NB, although you'd think /register is cachable, it
         // stores a timestamp in the login form :(
-        if (url.equals(Initializer.getURL(Initializer.COOKIES_PAGE_KEY)) ||
-            url.equals(Initializer.getURL(Initializer.EXPIRED_PAGE_KEY)) ||
-            url.equals(Initializer.getURL(Initializer.RECOVER_PAGE_KEY))) {
+        if (url.equals(LegacyInitializer.getURL(LegacyInitializer.COOKIES_PAGE_KEY)) ||
+            url.equals(LegacyInitializer.getURL(LegacyInitializer.EXPIRED_PAGE_KEY)) ||
+            url.equals(LegacyInitializer.getURL(LegacyInitializer.RECOVER_PAGE_KEY))) {
             DispatcherHelper.cacheForWorld(resp);
         } else {
             DispatcherHelper.cacheDisable(resp);
@@ -155,7 +155,7 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
      * redirected to URL.
      **/
     private void put(Map map, String key, Page page) {
-        String url = Initializer.getURL(key);
+        String url = LegacyInitializer.getURL(key);
         map.put(url, page);
         if (url.endsWith("/")) {
             map.put(url+"index", page);
@@ -205,7 +205,7 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
                  add(new Label(LoginHelper.getMessage
                                ("login.loginExpiredPage.before")));
                  add(new DynamicLink("login.loginExpiredPage.link",
-                                     Initializer.LOGIN_PAGE_KEY));
+                                     LegacyInitializer.LOGIN_PAGE_KEY));
                  add(new Label(LoginHelper.getMessage
                                ("login.loginExpiredPage.after")));
                  add(new ElementComponent("subsite:explainLoginExpired",
@@ -227,8 +227,8 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
 
                     final HttpServletRequest req = state.getRequest();
 
-                    final String path = Initializer.getFullURL
-                        (Initializer.ROOT_PAGE_KEY, req);
+                    final String path = LegacyInitializer.getFullURL
+                        (LegacyInitializer.ROOT_PAGE_KEY, req);
 
                     throw new ReturnSignal(req, URL.there(req, path));
                 }

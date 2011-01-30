@@ -61,12 +61,9 @@ import org.apache.log4j.Logger;
  * accessing the user ID.
  *
  * @author Sameer Ajmani
+ * @version $Id: UserContext.java 1498 2007-03-19 16:22:15Z apevec $
  */
 public class UserContext {
-    public static final String versionId =
-        "$Id: UserContext.java 1498 2007-03-19 16:22:15Z apevec $" +
-        "$Author: apevec $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(UserContext.class);
 
@@ -360,7 +357,8 @@ public class UserContext {
 
             // Check that the user making this request is not banned.  If they
             // are we logout the context and throw an exception.
-            if(Kernel.getSecurityConfig().isUserBanOn() && User.retrieve(m_userID).isBanned()) {
+            if(Kernel.getSecurityConfig().isUserBanOn()
+               && User.retrieve(m_userID).isBanned()) {
                 context.logout();
                 throw new LoginException("This user is banned");
             }
@@ -414,7 +412,8 @@ public class UserContext {
                     return;
                 }
                 String encoded = auth.substring(6).trim(); // remove "Basic "
-                byte[] decoded = new Base64().decode(encoded.getBytes(Crypto.CHARACTER_ENCODING));
+                byte[] decoded = new Base64().decode(
+                                 encoded.getBytes(Crypto.CHARACTER_ENCODING));
                 String userpass = new String(decoded, Crypto.CHARACTER_ENCODING);
                 int colon = userpass.indexOf(':');
                 if (colon < 0) {
@@ -541,7 +540,8 @@ public class UserContext {
             // We now check if the user is banned and, if so, we don't allow
             // the user to login.
             if(Kernel.getSecurityConfig().isUserBanOn() 
-               && UserAuthentication.retrieveForLoginName(username).getUser().isBanned()) {
+               && UserAuthentication.retrieveForLoginName(username).getUser()
+                                                                   .isBanned()) {
                 throw new LoginException("This user is currently banned");
             }
 

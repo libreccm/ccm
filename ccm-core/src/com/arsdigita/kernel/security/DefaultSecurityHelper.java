@@ -41,11 +41,11 @@ public class DefaultSecurityHelper implements SecurityHelper {
     }
 
     private static String[] allowedPages = new String[] {
-        Initializer.LOGIN_PAGE_KEY,
-        Initializer.LOGOUT_PAGE_KEY,
-        Initializer.COOKIES_PAGE_KEY,
-        Initializer.RECOVER_PAGE_KEY,
-        Initializer.EXPIRED_PAGE_KEY,
+        LegacyInitializer.LOGIN_PAGE_KEY,
+        LegacyInitializer.LOGOUT_PAGE_KEY,
+        LegacyInitializer.COOKIES_PAGE_KEY,
+        LegacyInitializer.RECOVER_PAGE_KEY,
+        LegacyInitializer.EXPIRED_PAGE_KEY,
     };
 
     /**
@@ -68,7 +68,7 @@ public class DefaultSecurityHelper implements SecurityHelper {
 //        // don't require login if page on allowed list
 //        String url = req.getRequestURI();
 //        for (int i = 0; i < allowedPages.length; i++) {
-//            String allowed = Initializer.getFullURL(allowedPages[i], req);
+//            String allowed = LegacyInitializer.getFullURL(allowedPages[i], req);
 //            if (url.equals(allowed)) {
 //                return false;
 //            }
@@ -83,6 +83,6 @@ public class DefaultSecurityHelper implements SecurityHelper {
      * @return the full URL of the login page.
      **/
     public String getLoginURL(HttpServletRequest req) {
-        return Initializer.getFullURL(Initializer.LOGIN_PAGE_KEY, req);
+        return LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY, req);
     }
 }

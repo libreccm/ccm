@@ -59,7 +59,7 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.PersistenceException;
@@ -285,8 +285,8 @@ class UserBrowsePane extends SegmentedPanel
                     }
 
                     // Redirect to workspace URL
-                    final String path = Initializer.getFullURL
-                        (Initializer.LOGIN_REDIRECT_PAGE_KEY, state.getRequest());
+                    final String path = LegacyInitializer.getFullURL
+                        (LegacyInitializer.LOGIN_REDIRECT_PAGE_KEY, state.getRequest());
 
                     final URL url = URL.there(state.getRequest(), path);
 

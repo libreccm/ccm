@@ -35,10 +35,9 @@ import javax.security.auth.login.LoginException;
  * KernelRequestContext has a getSessionContext method and is "Stable".
  *
  * @author Rob Mayoff
- **/
+ * @version $Id: SessionContext.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class SessionContext {
-
-    public static final String versionId = "$Id: SessionContext.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
         Logger.getLogger(SessionContext.class.getName());

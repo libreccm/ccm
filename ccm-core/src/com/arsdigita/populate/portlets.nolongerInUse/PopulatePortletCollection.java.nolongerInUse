@@ -18,20 +18,38 @@
  */
 package com.arsdigita.populate.portlets;
 
-import com.arsdigita.portal.Portal;
-import com.arsdigita.portal.Portlet;
-import com.arsdigita.portal.PortletType;
+import java.util.ArrayList;
+
+
+// ///////////////////////////////////////////////////////////////////////////
+//
+// NOT USED anywhere in the source tree.
+// No documentation available.
+// Retained temporarily until refactoring of test cases is completed.
+//
+// (pboy 2011.01.30)
+//
+// ///////////////////////////////////////////////////////////////////////////
+
 
 /**
  * @author bche
  */
-public interface PopulatePortlet {
+public class PopulatePortletCollection {
+    private ArrayList m_PopPortlets = new ArrayList();
     
-    public void createPortlet(Portal parent, int iCellNumber);        
+    public PopulatePortletCollection() {;
+    }
         
-    public void populatePortlet();            
-         
-    public PortletType getPortletType();
-        
-    public Portlet getPortlet();
+    public void addPopulatePortlet(PopulatePortlet popPortlet) {
+        m_PopPortlets.add(popPortlet);
+    }
+    
+    public int getSize() {
+        return m_PopPortlets.size();
+    }
+    
+    public PopulatePortlet getPopulatePortlet(int iIndex) throws IndexOutOfBoundsException {
+        return (PopulatePortlet)m_PopPortlets.get(iIndex);
+    }
 }

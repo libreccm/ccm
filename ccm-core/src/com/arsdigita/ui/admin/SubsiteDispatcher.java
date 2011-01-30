@@ -32,7 +32,7 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.Util;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +70,7 @@ class SubsiteDispatcher extends BebopMapDispatcher {
      * that the user requesting the page is logged in and authorized
      * as a system-wide administrator.
      */
+    @Override
     public void dispatch(HttpServletRequest req,
                          HttpServletResponse resp,
                          RequestContext ctx)
@@ -88,7 +89,7 @@ class SubsiteDispatcher extends BebopMapDispatcher {
         if (party == null) {
             // The user is not logged in; redirect to the login page.
 
-            final String path = Initializer.getSecurityHelper().getLoginURL
+            final String path = Util.getSecurityHelper().getLoginURL
                 (req);
 
             final ParameterMap params = new ParameterMap();

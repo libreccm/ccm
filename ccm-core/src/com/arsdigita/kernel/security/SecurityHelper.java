@@ -25,10 +25,10 @@ import javax.servlet.http.HttpServletRequest;
  * determining security properties for a request.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: SecurityHelper.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public interface SecurityHelper {
 
-    public static final String versionId = "$Id: SecurityHelper.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
     /**
      * Determines whether the given request is secure.  Implementation may
      * simply return <code>req.isSecure()</code>, but certain deployments

@@ -21,6 +21,7 @@ package com.arsdigita.ui.login;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.web.ReturnSignal;
 import java.io.IOException;
 import org.apache.log4j.Logger;
@@ -32,12 +33,9 @@ import javax.servlet.http.HttpServletResponse;
  * Provides helper functions for the login UI.
  *
  * @author Sameer Ajmani
- **/
+ * @version $Id: LoginHelper.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public class LoginHelper {
-    public static final String versionId =
-        "$Id: LoginHelper.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(LoginHelper.class);
 
@@ -141,4 +139,54 @@ public class LoginHelper {
                         +"response already committed");
         }
     }
+
+//  /**
+//   * Returns the relative URL associated with the given key.  This is the
+//   * value of the URL in the page map for the given key.
+//   *
+//   * @return the relative URL associated with the given key, or null if it
+//   * does not exist.
+//   *
+//   * @deprecated To be replaced by package parameters.
+//   *
+//   * @see #getFullURL(String, HttpServletRequest)
+//    **/
+//  public static String getURL(String key) {
+//      return (String)s_pageMap.get(key);
+//  }
+
+    /**
+     * Returns the absolute URL associated with the given key.  This is the
+     * root URL for the system (the mount point) prepended to the result of
+     * getURL(key).
+     *
+     * @return the absolute URL associated with the given key, or null
+     * if it does not exist.
+     *
+     * @see #getURL(String)
+     **/
+    public static String getFullURL(String key, HttpServletRequest req) {
+        String root = getRootURL(req);
+        String url = com.arsdigita.kernel.security.LegacyInitializer.getURL(key);
+
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Root is " + root + ", url is " + url);
+        }
+
+        if ((root == null) || (key == null)) {
+            return null;
+        }
+        return root + url;
+    }
+
+    private static String getRootURL(HttpServletRequest req) {
+        // XXX this isn't safe since you aren't neccessarily
+        // calling it from the root webapp - so we can't
+        // blindly prepend the context path from the current
+        // request.
+        //return SiteNode.getRootSiteNode().getURL(req);
+
+        return SiteNode.getRootSiteNode().getURL();
+    }
+
 }

@@ -27,7 +27,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.security.Initializer;
+import com.arsdigita.kernel.security.LegacyInitializer;
 
 /**
  *
@@ -68,8 +68,8 @@ class PermissionsHeader extends BoxPanel implements PermissionsConstants {
 
         DimensionalNavbar navbar = new DimensionalNavbar();
         navbar.add(new Link(PERSONAL_SITE.localize()+"", 
-                            "/" + Initializer.getURL(
-                                Initializer.WORKSPACE_PAGE_KEY)));
+                            "/" + LegacyInitializer.getURL(
+                                LegacyInitializer.WORKSPACE_PAGE_KEY)));
         navbar.add(new Link(MAIN_SITE.localize()+"", "/"));
         navbar.add(new Link(PERMISSIONS_INDEX.localize()+"", "/permissions/"));
         navbar.add(objectName);

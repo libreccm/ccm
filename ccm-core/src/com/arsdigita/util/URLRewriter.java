@@ -39,12 +39,10 @@ import org.apache.log4j.Logger;
  */
 public class URLRewriter {
 
-    private static final Logger s_log =
-        Logger.getLogger(URLRewriter.class);
+    /** Creates a s_logging category with name = to the full name of class  */
+    private static final Logger s_log = Logger.getLogger(URLRewriter.class);
 
-    /**
-     * The parameter providers for the system.
-     **/
+    /** The parameter providers for the system. Client classes are registered here. */
     private static LinkedList s_providers = new LinkedList();
 
     /**

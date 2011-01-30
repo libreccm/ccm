@@ -34,7 +34,6 @@ import org.apache.log4j.Priority;
  **/
 public class SecurityLogger {
 
-    public static final String versionId = "";
     private static final Logger s_log = Logger.getLogger("SECURITY");
 
     private SecurityLogger() {}
