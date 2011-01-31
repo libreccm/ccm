@@ -38,6 +38,16 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+
+// //////////////////////////////////////////////////////////////////////////
+//
+// NOT USED anywhere in the code base.
+// Kept here temporarily for easy reference until until refactoring of
+// unit tests is completed.
+//
+// //////////////////////////////////////////////////////////////////////////
+
+
 /** 
  *  An initializer to load content items for load testing Will take an
  *  XML file with one content item definition, and create items whose
@@ -94,8 +104,6 @@ import java.math.BigDecimal;
  * @see XMLContentItemHandler
  * @see ContentItemHelper
 */
-
-
 public class ContentItemLoader extends BaseInitializer {
 
     private Configuration m_conf = new Configuration();

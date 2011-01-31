@@ -120,6 +120,20 @@ public class Initializer extends com.arsdigita.runtime.GenericInitializer {
                                                    new CategoryFilterType()
                                                },
                                                new BaseQueryEngine());
+
+            /* From Old Style Initializer SyncInitializer:
+             * Forces a sync of the database.
+             * Should be run as the last initializer, so that initial
+             * setup data will immediately be available to search.
+             * Presently has no configuration available, either it runs
+             * or it doesn't.
+             *
+             * @author David Eison
+             *
+             * XXX  May be have to comment out. Testing required!
+             */
+            BuildIndex.forceSyncNow();
+
         } else {
             s_log.debug("Intermedia search engine not enabled. Initialization skipped.");
         }

@@ -18,7 +18,7 @@
  */
 package com.arsdigita.cms.lifecycle;
 
-import com.arsdigita.cms.RickshawPublishAPIUpgrade;
+// import com.arsdigita.cms.RickshawPublishAPIUpgrade;
 import com.arsdigita.db.Sequences;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObject;
@@ -79,6 +79,7 @@ public class LifecycleService extends DomainObject{
         super(obj);
     }
 
+    @Override
     protected void initialize() {
         super.initialize();
 
@@ -227,6 +228,7 @@ public class LifecycleService extends DomainObject{
         }
     }
 
+    @Override
     protected void beforeDelete() {
 	super.beforeDelete();
 	Lifecycle lifecycle = getLifecycle();
@@ -241,16 +243,19 @@ public class LifecycleService extends DomainObject{
 		foundReference = true;
 	    }
 	    coll.close();
+
 	    // check temporary lifecycle references for
 	    // unpublish/republish upgrade.
-	    coll = SessionManager.getSession().
-		retrieve(RickshawPublishAPIUpgrade.UPGRADE_ITEM_LIFECYCLE_MAP_TYPE);
-	    coll.addEqualsFilter(RickshawPublishAPIUpgrade.UPGRADE_LIFECYCLE+"."+ ACSObject.ID, 
-				 lifecycle.getID());
-	    if (coll.next()) {
-		foundReference = true;
-	    }
-	    coll.close();
+        // Refers to a very old upgrade routine. Should be removed without
+        // problems for current code.
+//      coll = SessionManager.getSession().
+//      retrieve(RickshawPublishAPIUpgrade.UPGRADE_ITEM_LIFECYCLE_MAP_TYPE);
+//      coll.addEqualsFilter(RickshawPublishAPIUpgrade.UPGRADE_LIFECYCLE+"."+ ACSObject.ID,
+//                           lifecycle.getID());
+//      if (coll.next()) {
+//      foundReference = true;
+//      }
+//      coll.close();
 
 	    if (!foundReference) {
 		m_lifecycleToDelete = lifecycle;
@@ -263,6 +268,7 @@ public class LifecycleService extends DomainObject{
      * Remove the lifecycle if it doesn't have any remaining
      * <code>LifecycleService</code> components
      */
+    @Override
     protected void afterDelete() {
 	if (m_lifecycleToDelete != null) {
 	    m_lifecycleToDelete.delete();
