@@ -125,7 +125,7 @@ public class SciProjectPropertyForm
 
     @Override
     public String getTitleLabel() {
-        return (String) PublicationGlobalizationUtil.globalize(
+        return (String) SciOrganizationGlobalizationUtil.globalize(
                 "sciorganizations.ui.project.title").localize();
     }
 }

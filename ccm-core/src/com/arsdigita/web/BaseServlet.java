@@ -47,7 +47,7 @@ import org.apache.log4j.Logger;
  * <b>Subject zu change!</b>
  *
  * Note: Database initialization (Startup() ) has been moved to
- *       CCMAplicationContextListener).
+ *       CCMApplicationContextListener).
  *
  * <p>Users of this class may implement {@link
  * #doService(HttpServletRequest,HttpServletResponse)} to service a

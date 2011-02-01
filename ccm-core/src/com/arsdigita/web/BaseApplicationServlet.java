@@ -49,6 +49,14 @@ import org.apache.log4j.Logger;
  * {@link #doService(HttpServletRequest,HttpServletResponse,Application)} to
  * perform application-private dispatch to UI code.</p>
  *
+ * <p>
+ * The application will be available at the path
+ * <code>www.example.org/ccm/applicationname</code>, where
+ * <code>applicationname</code> is
+ * the name defined for the application and <code>www.example.org</code> the
+ * URL of the server.
+ * </p>
+ *
  * @see com.arsdigita.web.BaseServlet
  * @see com.arsdigita.web.DispatcherServlet
  * @see com.arsdigita.web.RedirectSignal
@@ -65,7 +73,10 @@ public abstract class BaseApplicationServlet extends BaseServlet {
      * <p>The ID of the application whose service is requested.  This
      * request attribute must be set by a previous servlet or filter
      * before this servlet can proceed.  In CCM, the default servlet,
-     * DispatcherServlet, sets this attribute.</p>
+     * {@link DispatcherServlet}, sets this attribute using the 
+     * {@link BaseDispatcher}. <strong>Important:</strong> This does only work
+     * if the application is called using an URL like
+     * <code>http://www.example.org/ccm/application</code>!</p>
      */
     public static final String APPLICATION_ID_ATTRIBUTE =
         BaseApplicationServlet.class.getName() + ".application_id";
