@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class PublicationExporterLoader extends PackageLoader {
+public class SciPublicationsLoader extends PackageLoader {
 
     private static final Logger logger = Logger.getLogger(
-            PublicationExporterLoader.class);
+            SciPublicationsLoader.class);
 
     @Override
     public void run(final ScriptContext ctx) {
@@ -33,16 +33,16 @@ public class PublicationExporterLoader extends PackageLoader {
                 ApplicationSetup setup = new ApplicationSetup(logger);
 
                 setup.setApplicationObjectType(
-                        PublicationExporter.BASE_DATA_OBJECT_TYPE);
-                setup.setKey("scipubliationsexporter");
-                setup.setTitle("sci-publication Exporter");
+                        SciPublications.BASE_DATA_OBJECT_TYPE);
+                setup.setKey("scipubliations");
+                setup.setTitle("sci-publications");
                 setup.setDescription(
-                        "Exports publication data in various formats");
+                        "Provides several functions like export and import for publications.");
                 //setup.setSingleton(true);
                 setup.setInstantiator(new ACSObjectInstantiator() {
                    @Override
                    public DomainObject doNewInstance(DataObject dataObject) {
-                       return new PublicationExporter(dataObject);
+                       return new SciPublications(dataObject);
                    }
                 });
 
@@ -50,10 +50,10 @@ public class PublicationExporterLoader extends PackageLoader {
                 type.save();
 
                 if (!Application.isInstalled(
-                        PublicationExporter.BASE_DATA_OBJECT_TYPE, "/scipublicationsexporter/")) {
+                        SciPublications.BASE_DATA_OBJECT_TYPE, "/scipublications/")) {
                     Application app = Application.createApplication(type,
-                                                                    "scipublicationsexporter",
-                                                                    "PublicationExporter",
+                                                                    "scipublications",
+                                                                    "SciPublications",
                                                                     null);
                     app.save();
                 }

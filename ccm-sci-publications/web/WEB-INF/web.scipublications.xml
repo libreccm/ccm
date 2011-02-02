@@ -6,13 +6,13 @@
         <!-- Servlets for the sci-publications applications -->
 
     <servlet>
-        <servlet-name>PublicationExporter</servlet-name>
-        <servlet-class>com.arsdigita.cms.scipublications.PublicationExporterServlet</servlet-class>
+        <servlet-name>SciPublications</servlet-name>
+        <servlet-class>com.arsdigita.cms.scipublications.SciPublicationsServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>PublicationExporter</servlet-name>
-        <url-pattern>/scipublicationsexporter/*</url-pattern>
+        <servlet-name>SciPublications</servlet-name>
+        <url-pattern>/scipublications/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

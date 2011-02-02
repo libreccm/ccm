@@ -42,7 +42,7 @@
     <initializer class="com.arsdigita.cms.contenttypes.ExpertiseInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.ReviewInitializer"/>
     <initializer class="com.arsdigita.cms.contenttypes.SciAuthorInitializer"/>
-    <initializer class="com.arsdigita.cms.scipublications.PublicationExporterInitializer"/>
+    <initializer class="com.arsdigita.cms.scipublications.SciPublicationsInitializer"/>
   </provides>
   <scripts>
     <schema directory="ccm-sci-publications"/>
@@ -64,6 +64,6 @@
     <data class="com.arsdigita.cms.contenttypes.ExpertiseLoader"/>
     <data class="com.arsdigita.cms.contenttypes.ReviewLoader"/>
     <data class="com.arsdigita.cms.contenttypes.SciAuthorLoader"/>
-    <data class="com.arsdigita.cms.scipublications.PublicationExporterLoader"/>
+    <data class="com.arsdigita.cms.scipublications.SciPublicationsLoader"/>
   </scripts>
 </load>

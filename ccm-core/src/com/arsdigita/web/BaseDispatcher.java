@@ -26,7 +26,6 @@ import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.profiler.Profiler;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.StringUtils;
-import com.arsdigita.web.Application;
 
 import java.io.IOException;
 import java.math.BigDecimal;

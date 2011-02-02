@@ -12,9 +12,9 @@ import com.arsdigita.runtime.RuntimeConfig;
  *
  * @author Jens Pelzetter
  */
-public class PublicationExporterInitializer extends CompoundInitializer {
+public class SciPublicationsInitializer extends CompoundInitializer {
 
-    public PublicationExporterInitializer() {
+    public SciPublicationsInitializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
 

@@ -23,6 +23,6 @@ model com.arsdigita.cms.scipublications;
 
 import com.arsdigita.web.Application;
 
-object type PublicationExporter extends Application {
-    reference key (publication_exporter.application_id);
+object type SciPublications extends Application {
+    reference key (scipublications.application_id);
 }

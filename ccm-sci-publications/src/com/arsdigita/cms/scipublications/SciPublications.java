@@ -10,25 +10,25 @@ import java.math.BigDecimal;
  *
  * @author Jens Pelzetter
  */
-public class PublicationExporter extends Application {
+public class SciPublications extends Application {
 
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.scipublications.PublicationExporter";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.scipublications.SciPublications";
 
-    public PublicationExporter(DataObject dobj)  {
+    public SciPublications(DataObject dobj)  {
         super(dobj);
     }
 
-    public PublicationExporter(OID oid) throws DataObjectNotFoundException{
+    public SciPublications(OID oid) throws DataObjectNotFoundException{
         super(oid);
     }
 
-    public PublicationExporter(BigDecimal key) throws DataObjectNotFoundException {
+    public SciPublications(BigDecimal key) throws DataObjectNotFoundException {
         this(new OID(BASE_DATA_OBJECT_TYPE, key));
     }
 
     @Override
     public String getServletPath() {
-        return "/scipublicationsexporter/";
+        return "/scipublications/";
     }
 
 }

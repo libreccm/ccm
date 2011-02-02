@@ -62,6 +62,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
      * 
      * @throws ServletException
      */
+    @Override
     public void init() throws ServletException {
         super.init();
     }
@@ -83,7 +84,7 @@ public class BebopApplicationServlet extends BaseApplicationServlet {
     /**
      *
      * disable client/middleware caching of specified page. 
-     * @param pathinfo - the same path used to add the page when put was called
+     * @param pathInfo - the same path used to add the page when put was called
      */
     protected final void disableClientCaching(String pathInfo) {
         Assert.exists(pathInfo, String.class);
