@@ -32,7 +32,7 @@ public class FileAttachmentGlobalize {
      */
     public static GlobalizedMessage AuthoringStepLabel() {
         return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.file_attachment_label",
+            "cms.contentassets.file_attachment.label",
             "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
 
@@ -41,7 +41,7 @@ public class FileAttachmentGlobalize {
      */
     public static GlobalizedMessage AuthoringStepDescription() {
         return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.file_attachment_description",
+            "cms.contentassets.file_attachment.description",
             "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
 
@@ -50,7 +50,7 @@ public class FileAttachmentGlobalize {
      */
     public static GlobalizedMessage FileTypeLabel() {
         return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.file_type_label",
+            "cms.contentassets.file_attachment.type_label",
             "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
 
@@ -59,7 +59,7 @@ public class FileAttachmentGlobalize {
      */
     public static GlobalizedMessage NoFilesAssociatedMsg() {
         return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.no_files_associated_msg",
+            "cms.contentassets.file_attachment.no_files_associated_msg",
             "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
 
@@ -68,7 +68,7 @@ public class FileAttachmentGlobalize {
      */
     public static GlobalizedMessage UploadNewFileLabel() {
         return new GlobalizedMessage(
-            "com.arsdigita.cms.contentassets.upload_new_file_label",
+            "cms.contentassets.file_attachment.upload_new_file_label",
             "com.arsdigita.cms.contentassets.FileAttachmentResources");
     }
 

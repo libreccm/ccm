@@ -96,10 +96,13 @@ public class FileAttachmentsStep extends SecurityPropertyEditor {
         // The upload form.
         m_uploadForm = new FileAttachmentUpload(m_item);
         add("upload",
-        // XXX todo: use of tostring() is ugly and not supported API. add method
-        // has to be refactored to accept a GlobalizedMessage as Parameter instead
-        // of a plain string for the Label (2. parameter) !
-            FileAttachmentGlobalize.UploadNewFileLabel().toString(),
+        // XXX todo: method add expects a plain string as label parameter. Use
+        // of tostring() is ugly and not supported API (for debugging only).
+        // add method has to be refactored to accept a GlobalizedMessage
+        // Parameter instead of a plain string for the Label (2. parameter) !
+        // It is uggly to make an additional localize() to get an object which
+        // can be  casted to String!
+            (String)FileAttachmentGlobalize.UploadNewFileLabel().localize(),
             new WorkflowLockedComponentAccess(m_uploadForm, m_item),
             m_uploadForm.getSaveCancelSection().getCancelButton());
 
