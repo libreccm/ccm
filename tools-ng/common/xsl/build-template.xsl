@@ -1883,6 +1883,18 @@
         <classpath refid="server.build.classpath"/>	
         <link href="http://java.sun.com/j2se/1.4/docs/api/"/>
         <link href="http://java.sun.com/j2ee/tutorial/api/"/>
+	<doclet name="org.umlgraph.doclet.UmlGraphDoc" path="tools-ng/devel/lib/UmlGraph.jar">
+	   <param name="-inferrel"/>
+                        <param name="-inferdep"/>
+                        <param name="-hide" value="java.*"/>
+                        <param name="-collpackages" value="java.util.*"/>
+                        <param name="-qualify"/>
+                        <param name="-postfixpackage"/>
+                        <param name="-nodefontsize" value="9"/>
+                        <param name="-nodefontpackagesize" value="7"/>
+                        <param name="-link" value="http://java.sun.com/j2se/1.5.0/docs/guide/javadoc/doclet/spec"/>
+                        <param name="-link" value="http://java.sun.com/j2se/1.5/docs/api"/>
+	</doclet>
       </javadoc>
     </target>
 

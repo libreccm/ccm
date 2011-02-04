@@ -3,6 +3,7 @@ package com.arsdigita.cms.scipublications.exporter.bibtex.converters;
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
+import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXBuilder;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXBuilders;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXField;
@@ -48,8 +49,20 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
     protected void convertPublisher(final PublicationWithPublisher publication)
             throws UnsupportedFieldException {
         if (publication.getPublisher() != null) {
-            getBibTeXBuilder().setField(BibTeXField.PUBLISHER,
-                                        publication.getPublisher().getTitle());
+            if ((publication.getPublisher().getPlace() == null)
+                && publication.getPublisher().getPlace().isEmpty()) {
+                getBibTeXBuilder().setField(BibTeXField.PUBLISHER,
+                                            publication.getPublisher().getTitle());
+            } else {
+                getBibTeXBuilder().setField(BibTeXField.PUBLISHER,
+                                            String.format("%s, %s",
+                                                          publication.
+                        getPublisher().
+                        getTitle(),
+                                                          publication.
+                        getPublisher().
+                        getPlace()));
+            }
         }
     }
 
@@ -76,11 +89,26 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
                                         publication.getEdition());
         }
     }
-    
+
+    protected void convertSeries(final Publication publication)
+            throws UnsupportedFieldException {
+        SeriesCollection seriesColl =
+                         publication.getSeries();
+        if ((seriesColl != null) && (seriesColl.size() > 0)) {
+
+            seriesColl.next();
+
+            getBibTeXBuilder().setField(BibTeXField.SERIES,
+                             seriesColl.getSeries().getTitle());
+
+            seriesColl.close();
+        }
+    }
+
     protected BibTeXBuilder getBibTeXBuilder() {
         if (bibTeXBuilder == null) {
-            bibTeXBuilder = BibTeXBuilders.getInstance().getBibTeXBuilderForType(
-                    getBibTeXType());
+            bibTeXBuilder = BibTeXBuilders.getInstance().
+                    getBibTeXBuilderForType(getBibTeXType());
         }
 
         return bibTeXBuilder;

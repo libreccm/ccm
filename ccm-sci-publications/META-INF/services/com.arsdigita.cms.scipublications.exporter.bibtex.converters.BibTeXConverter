@@ -1,0 +1,13 @@
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.ArticleInCollectedVolumeConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.ArticleInJournalConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.CollectedVolumeConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.ExpertiseConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.GreyLiteratureConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.InProceedingsConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.InternetArticleConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.MonographConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.ProceedingsConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.PublicationConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.PublicationWithPublisherConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.ReviewConverter
+com.arsdigita.cms.scipublications.exporter.bibtex.converters.WorkingPaperConverter

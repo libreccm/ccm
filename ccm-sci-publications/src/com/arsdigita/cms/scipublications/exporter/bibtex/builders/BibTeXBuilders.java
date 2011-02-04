@@ -3,6 +3,7 @@ package com.arsdigita.cms.scipublications.exporter.bibtex.builders;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -10,6 +11,7 @@ import java.util.ServiceLoader;
  */
 public class BibTeXBuilders {
 
+    private static final Logger logger = Logger.getLogger(BibTeXBuilders.class);
     private Map<String, BibTeXBuilder> builders =
                                        new HashMap<String, BibTeXBuilder>();
 
@@ -33,6 +35,22 @@ public class BibTeXBuilders {
     }
 
     public BibTeXBuilder getBibTeXBuilderForType(final String type) {
-        return builders.get(type);
+        if (builders.containsKey(type)) {
+            try {
+                return builders.get(type).getClass().newInstance();
+            } catch (InstantiationException ex) {
+                logger.warn(String.format("Failed to create BibTeXBuilder "
+                                          + "for type '%s'.", type),
+                            ex);
+                return null;
+            } catch (IllegalAccessException ex) {
+                logger.warn(String.format("Failed to create BibTeXBuilder "
+                                          + "for type '%s'.", type),
+                            ex);
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }

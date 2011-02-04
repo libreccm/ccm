@@ -48,32 +48,36 @@ public class ArticleInCollectedVolumeConverter extends AbstractBibTeXConverter {
             convertTitle(publication);
             convertYear(publication);
 
-            builder.setField(BibTeXField.BOOKTITLE,
-                             article.getCollectedVolume().getTitle());
-            if (article.getCollectedVolume().getPublisher() == null) {
-                builder.setField(BibTeXField.PUBLISHER, "");
+            if (article.getCollectedVolume() != null) {
+                builder.setField(BibTeXField.BOOKTITLE,
+                                 article.getCollectedVolume().getTitle());
+
+                if (article.getCollectedVolume().getPublisher() == null) {
+                    builder.setField(BibTeXField.PUBLISHER, "");
+                }
+
+                if (article.getCollectedVolume().getVolume() != null) {
+                    builder.setField(BibTeXField.VOLUME,
+                                     article.getCollectedVolume().getVolume().
+                            toString());
+                }
+                SeriesCollection seriesColl =
+                                 article.getCollectedVolume().getSeries();
+                if ((seriesColl != null) && (seriesColl.size() > 0)) {
+
+                    seriesColl.next();
+
+                    builder.setField(BibTeXField.SERIES,
+                                     seriesColl.getSeries().getTitle());
+
+                    seriesColl.close();
+                }
             } else {
                 builder.setField(BibTeXField.PUBLISHER,
                                  article.getCollectedVolume().getPublisher().
                         getTitle());
             }
 
-            if (article.getCollectedVolume().getVolume() != null) {
-                builder.setField(BibTeXField.VOLUME,
-                                 article.getCollectedVolume().getVolume().
-                        toString());
-            }
-            SeriesCollection seriesColl =
-                             article.getCollectedVolume().getSeries();
-            if ((seriesColl != null) && (seriesColl.size() > 0)) {
-
-                seriesColl.next();
-
-                builder.setField(BibTeXField.SERIES,
-                                 seriesColl.getSeries().getTitle());
-
-                seriesColl.close();
-            }
 
             if (article.getChapter() != null) {
                 builder.setField(BibTeXField.CHAPTER, article.getChapter());
