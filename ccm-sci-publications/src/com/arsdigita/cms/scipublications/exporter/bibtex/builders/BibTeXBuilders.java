@@ -32,7 +32,7 @@ public class BibTeXBuilders {
         return Instance.INSTANCE;
     }
 
-    public BibTeXBuilder getBibTeXBuilderForCcmPublicationtType(final String type) {
+    public BibTeXBuilder getBibTeXBuilderForType(final String type) {
         return builders.get(type);
     }
 }

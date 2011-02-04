@@ -46,25 +46,10 @@ public class BibTeXExporter implements SciPublicationsExporter {
     }
 
     public String exportPublication(final Publication publication) {
-        BibTeXBuilder builder;
-        
 
-        builder = BibTeXBuilders.getInstance().
-                getBibTeXBuilderForCcmPublicationtType(publication.getClass().
-                getName());
 
-        if ((builder == null) && publication instanceof PublicationWithPublisher) {
-            builder = BibTeXBuilders.getInstance().
-                    getBibTeXBuilderForCcmPublicationtType(
-                    PublicationWithPublisher.class.getName());
-        } else {
-            builder = BibTeXBuilders.getInstance().
-                    getBibTeXBuilderForCcmPublicationtType(Publication.class.
-                    getName());
-        }
+        throw new UnsupportedOperationException("Not implemented yet.");
 
-        
 
-        return builder.toBibTeX();
     }
 }
