@@ -1,23 +1,9 @@
 package com.arsdigita.cms.scipublications.exporter.bibtex;
 
-import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXBuilder;
-import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXBuilders;
-import com.arsdigita.cms.contenttypes.ArticleInCollectedVolume;
-import com.arsdigita.cms.contenttypes.ArticleInJournal;
-import com.arsdigita.cms.contenttypes.CollectedVolume;
-import com.arsdigita.cms.contenttypes.Expertise;
-import com.arsdigita.cms.contenttypes.GreyLiterature;
-import com.arsdigita.cms.contenttypes.InProceedings;
-import com.arsdigita.cms.contenttypes.InternetArticle;
-import com.arsdigita.cms.contenttypes.Journal;
-import com.arsdigita.cms.contenttypes.Monograph;
-import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
-import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
-import com.arsdigita.cms.contenttypes.Review;
-import com.arsdigita.cms.contenttypes.WorkingPaper;
 import com.arsdigita.cms.scipublications.exporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
+import com.arsdigita.cms.scipublications.exporter.bibtex.converters.BibTeXConverters;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import org.apache.log4j.Logger;
@@ -45,11 +31,7 @@ public class BibTeXExporter implements SciPublicationsExporter {
         }
     }
 
-    public String exportPublication(final Publication publication) {
-
-
-        throw new UnsupportedOperationException("Not implemented yet.");
-
-
+    public String exportPublication(final Publication publication) {       
+        return BibTeXConverters.getInstance().convert(publication);     
     }
 }

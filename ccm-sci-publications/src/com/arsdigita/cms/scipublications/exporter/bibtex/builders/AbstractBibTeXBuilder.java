@@ -52,9 +52,10 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
         if (checkMandatoryFields()) {
             type = getBibTeXType();
         } else {
-            logger.warn(String.format("Missing mandandory field"
-                    + "for BibTeX type '%s'. Using type 'type'.",
-                    getBibTeXType()));
+            logger.warn(String.format(
+                    "Missing mandandory field "
+                    + "for BibTeX type '%s'. Using type 'misc'.",
+                                      getBibTeXType()));
             type = "misc";
         }
 
@@ -64,7 +65,7 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
         builder.append(type);
         builder.append('{');
         builder.append(generateBibTeXId());
-        builder.append(",\n");
+        //builder.append(",\n");
 
         if (authors.size() > 0) {
             addField("author", generatePersonFieldValue(authors), builder);
@@ -80,11 +81,11 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
                      builder);
         }
 
-
+        builder.append('}');
 
         return builder.toString();
     }
-   
+
     protected String generateBibTeXId() {
         StringBuilder builder;
 
@@ -102,7 +103,7 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
 
         return builder.toString();
     }
-    
+
     protected abstract List<BibTeXField> getMandatoryFields();
 
     protected abstract boolean isFieldSupported(final BibTeXField name);
@@ -110,11 +111,15 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
     private boolean checkMandatoryFields() {
         if (getMandatoryFields().contains(BibTeXField.AUTHOR)
             && authors.isEmpty()) {
+            logger.warn("Field authors is mandatory, but publications has "
+                        + "not authors.");
             return false;
         }
 
         if (getMandatoryFields().contains(BibTeXField.EDITOR)
             && editors.isEmpty()) {
+            logger.warn("Field editors is mandatory, but publications has "
+                        + "no editors.");
             return false;
         }
 
@@ -122,6 +127,10 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
             if (!BibTeXField.AUTHOR.equals(field)
                 && !BibTeXField.EDITOR.equals(field)
                 && !fields.containsKey(field)) {
+                logger.warn(String.format(
+                        "Field '%s' is mandandory for the "
+                        + "selected BibTeX type, but is not set.",
+                        field.name().toLowerCase()));
                 return false;
             }
         }
@@ -152,10 +161,11 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
     private void addField(final String name,
                           final String value,
                           final StringBuilder builder) {
+        builder.append(",\n");
         builder.append(' ');
         builder.append(name);
         builder.append(" = \"");
         builder.append(value);
-        builder.append("\",\n");
+        builder.append("\"");
     }
 }

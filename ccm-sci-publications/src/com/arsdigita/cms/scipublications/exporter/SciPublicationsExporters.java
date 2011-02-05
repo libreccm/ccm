@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -12,6 +13,8 @@ import java.util.ServiceLoader;
  */
 public final class SciPublicationsExporters {
 
+    private static final Logger logger = Logger.getLogger(
+            SciPublicationsExporters.class);
     private Map<String, SciPublicationsExporter> exporters =
                                                  new HashMap<String, SciPublicationsExporter>();
 
@@ -22,16 +25,24 @@ public final class SciPublicationsExporters {
     }
 
     private SciPublicationsExporters() {
-        ServiceLoader<SciPublicationsExporter> exporterServices ;
+        logger.debug("Creating SciPublicationsExporter instance...");
+        ServiceLoader<SciPublicationsExporter> exporterServices;
 
+        logger.debug("Loading all available implementations of the "
+                     + "SciPublicationsExporter interface...");
         exporterServices = ServiceLoader.load(SciPublicationsExporter.class);
 
-        for(SciPublicationsExporter exporter : exporterServices) {
-            exporters.put(exporter.getSupportedFormat().getName(), exporter);
+        for (SciPublicationsExporter exporter : exporterServices) {
+            logger.debug(String.format("Found exporter for format '%s'...",
+                                       exporter.getSupportedFormat().getName().
+                    toLowerCase()));
+            exporters.put(exporter.getSupportedFormat().getName().toLowerCase(),
+                          exporter);
         }
+        logger.debug(String.format("Found %d exporters.", exporters.size()));
     }
 
-    public SciPublicationsExporters getInstance() {
+    public static SciPublicationsExporters getInstance() {
         return Instance.INSTANCE;
     }
 
@@ -44,7 +55,8 @@ public final class SciPublicationsExporters {
 
         supportedFormats = new ArrayList<PublicationFormat>();
 
-        for(Map.Entry<String, SciPublicationsExporter> entry : exporters.entrySet()) {
+        for (Map.Entry<String, SciPublicationsExporter> entry : exporters.
+                entrySet()) {
             supportedFormats.add(entry.getValue().getSupportedFormat());
         }
 

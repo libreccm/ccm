@@ -50,7 +50,7 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
             throws UnsupportedFieldException {
         if (publication.getPublisher() != null) {
             if ((publication.getPublisher().getPlace() == null)
-                && publication.getPublisher().getPlace().isEmpty()) {
+                || publication.getPublisher().getPlace().isEmpty()) {
                 getBibTeXBuilder().setField(BibTeXField.PUBLISHER,
                                             publication.getPublisher().getTitle());
             } else {

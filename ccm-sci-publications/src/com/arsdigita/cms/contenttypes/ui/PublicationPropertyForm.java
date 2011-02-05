@@ -48,7 +48,7 @@ public class PublicationPropertyForm
 
     private static final Logger s_log = Logger.getLogger(
             PublicationPropertyForm.class);
-    private PublicationPropertiesStep m_step;
+    private PublicationPropertiesStep m_step;    
     public static final String ID = "Publication_edit";
 
     public PublicationPropertyForm(ItemSelectionModel itemModel) {
@@ -122,9 +122,7 @@ public class PublicationPropertyForm
             publication.setAbstract((String) data.get(Publication.ABSTRACT));
             publication.setMisc((String) data.get(Publication.MISC));
 
-            publication.save();
-
-            init(fse);
+            publication.save();            
         }
     }
 
@@ -140,5 +138,5 @@ public class PublicationPropertyForm
     protected String getTitleLabel() {
         return (String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.title").localize();
-    }
+    }    
 }

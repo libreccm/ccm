@@ -36,7 +36,6 @@ import com.arsdigita.cms.contenttypes.PublicationWithPublisher;
 import com.arsdigita.cms.contenttypes.Publisher;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.LengthFilter;
 
 /**
  *
@@ -124,9 +123,10 @@ public class PublicationWithPublisherPropertyForm
 
     @Override
     public void init(FormSectionEvent fse) throws FormProcessException {
+        FormData data = fse.getFormData();
+
         super.init(fse);
 
-        FormData data = fse.getFormData();
         PublicationWithPublisher publication =
                                  (PublicationWithPublisher) super.
                 initBasicWidgets(fse);
@@ -144,9 +144,9 @@ public class PublicationWithPublisherPropertyForm
 
     @Override
     public void process(FormSectionEvent fse) throws FormProcessException {
+        FormData data = fse.getFormData();
         super.process(fse);
 
-        FormData data = fse.getFormData();
         PublicationWithPublisher publication =
                                  (PublicationWithPublisher) super.
                 processBasicWidgets(fse);
