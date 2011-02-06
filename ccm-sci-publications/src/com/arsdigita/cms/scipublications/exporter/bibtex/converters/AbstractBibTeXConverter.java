@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2010 Jens Pelzetter,
+ * for the Center of Social Politics of the University of Bremen
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *
+ */
 package com.arsdigita.cms.scipublications.exporter.bibtex.converters;
 
 import com.arsdigita.cms.contenttypes.AuthorshipCollection;
@@ -10,13 +29,21 @@ import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXField;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnsupportedFieldException;
 
 /**
+ * An abstract implementation of the {@link BibTeXConverter} providing common
+ * functionality for all converters. To create the BibTeX data, implementations
+ * of the {@link BibTeXBuilder} interface are used.
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
 public abstract class AbstractBibTeXConverter implements BibTeXConverter {
 
     private BibTeXBuilder bibTeXBuilder;
 
+    /**
+     * Convert the authors of a publication to BibTeX.
+     *
+     * @param publication The publication to use.
+     */
     protected void convertAuthors(final Publication publication) {
         AuthorshipCollection authors;
 
@@ -32,11 +59,24 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         }
     }
 
+    /**
+     * Convert the title of a publication to BibTeX.
+     *
+     * @param publication The publication to use.
+     * @throws UnsupportedFieldException If the title field is not supported by
+     * the BibTeX type.
+     */
     protected void convertTitle(final Publication publication)
             throws UnsupportedFieldException {
         getBibTeXBuilder().setField(BibTeXField.TITLE, publication.getTitle());
     }
 
+    /**
+     * Converts the year of publication to BibTeX.
+     *
+     * @param publication
+     * @throws UnsupportedFieldException
+     */
     protected void convertYear(final Publication publication)
             throws UnsupportedFieldException {
         if (publication.getYearOfPublication() != null) {
@@ -46,6 +86,12 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         }
     }
 
+    /**
+     * Converts the publisher to BibTeX.
+     *
+     * @param publication
+     * @throws UnsupportedFieldException
+     */
     protected void convertPublisher(final PublicationWithPublisher publication)
             throws UnsupportedFieldException {
         if (publication.getPublisher() != null) {
@@ -66,6 +112,12 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         }
     }
 
+    /**
+     * Convert the ISBN to BibTeX.
+     *
+     * @param publication
+     * @throws UnsupportedFieldException
+     */
     protected void convertISBN(final PublicationWithPublisher publication)
             throws UnsupportedFieldException {
         if (publication.getISBN() != null) {
@@ -74,6 +126,12 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         }
     }
 
+    /**
+     * Convert the volume to BibTeX.
+     *
+     * @param publication
+     * @throws UnsupportedFieldException
+     */
     protected void convertVolume(final PublicationWithPublisher publication)
             throws UnsupportedFieldException {
         if (publication.getVolume() != null) {
@@ -82,6 +140,12 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         }
     }
 
+    /**
+     * Convert the edition to BibTeX.
+     *
+     * @param publication
+     * @throws UnsupportedFieldException
+     */
     protected void convertEdition(final PublicationWithPublisher publication)
             throws UnsupportedFieldException {
         if (publication.getEdition() != null) {
@@ -90,10 +154,15 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         }
     }
 
+    /**
+     * Convert the series to BibTeX.
+     *
+     * @param publication
+     * @throws UnsupportedFieldException
+     */
     protected void convertSeries(final Publication publication)
             throws UnsupportedFieldException {
-        SeriesCollection seriesColl =
-                         publication.getSeries();
+        SeriesCollection seriesColl = publication.getSeries();
         if ((seriesColl != null) && (seriesColl.size() > 0)) {
 
             seriesColl.next();
@@ -105,6 +174,12 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         }
     }
 
+    /**
+     * Retrieves to BibTeX builder for the converter. Uses the implementation
+     * of {@link #getBibTeXType()} for get the BibTeX type.
+     *
+     * @return The BibTeX builder for the converter.
+     */
     protected BibTeXBuilder getBibTeXBuilder() {
         if (bibTeXBuilder == null) {
             bibTeXBuilder = BibTeXBuilders.getInstance().
@@ -114,5 +189,9 @@ public abstract class AbstractBibTeXConverter implements BibTeXConverter {
         return bibTeXBuilder;
     }
 
+    /**
+     *
+     * @return The BibTeX type to use for building the BibTeX data.
+     */
     protected abstract String getBibTeXType();
 }

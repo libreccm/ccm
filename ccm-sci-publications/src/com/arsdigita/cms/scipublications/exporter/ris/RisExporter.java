@@ -17,45 +17,38 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.scipublications.exporter.bibtex;
+package com.arsdigita.cms.scipublications.exporter.ris;
 
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.scipublications.exporter.PublicationFormat;
 import com.arsdigita.cms.scipublications.exporter.SciPublicationsExporter;
-import com.arsdigita.cms.scipublications.exporter.bibtex.converters.BibTeXConverter;
-import com.arsdigita.cms.scipublications.exporter.bibtex.converters.BibTeXConverters;
 import javax.activation.MimeType;
 import javax.activation.MimeTypeParseException;
 import org.apache.log4j.Logger;
 
 /**
- * An exporter for the BibTeX format. The actual conversion between the CCM
- * publication content types and the BibTeX format is done by the converters
- * in the <code>com.arsdigita.cms.scipublications.exporter.bibtex</code> which
- * are implementation the {@link BibTeXConverter} interface.
  *
  * @author Jens Pelzetter
  */
-public class BibTeXExporter implements SciPublicationsExporter {
+public class RisExporter implements SciPublicationsExporter {
 
-    private final static Logger logger = Logger.getLogger(BibTeXExporter.class);
+    private static final Logger logger = Logger.getLogger(RisExporter.class);
 
     public PublicationFormat getSupportedFormat() {
         try {
-            return new PublicationFormat("BibTeX",
-                                         new MimeType("text", "x-bibtex"),
-                                         "bib");
-        } catch (MimeTypeParseException ex) {
-            logger.warn("Failed to create MimeType for PublicationFormat."
+            return new PublicationFormat("RIS",
+                    new MimeType("text", "x-ris"),
+                    "ris");
+        } catch(MimeTypeParseException ex) {
+             logger.warn("Failed to create MimeType for PublicationFormat."
                         + "Using null mimetype instead. Cause: ", ex);
-            return new PublicationFormat("BibTeX",
+            return new PublicationFormat("RIS",
                                          null,
-                                         "bib");
-
+                                         "ris");
         }
     }
 
-    public String exportPublication(final Publication publication) {       
-        return BibTeXConverters.getInstance().convert(publication);     
+    public String exportPublication(final Publication publication) {
+        return RisConverters.getInstance().convert(publication);
     }
 }

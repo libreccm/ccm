@@ -3,7 +3,6 @@ package com.arsdigita.cms.scipublications.exporter.bibtex.converters;
 import com.arsdigita.cms.contenttypes.InProceedings;
 import com.arsdigita.cms.contenttypes.Proceedings;
 import com.arsdigita.cms.contenttypes.Publication;
-import com.arsdigita.cms.contenttypes.SeriesCollection;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXBuilder;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXField;
 import com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnsupportedFieldException;
@@ -67,7 +66,7 @@ public class InProceedingsConverter extends AbstractBibTeXConverter {
                                  proceedings.getTitle());
 
                 convertVolume(proceedings);
-                convertSeries(publication);
+                convertSeries(proceedings);
 
                 if (proceedings.getOrganizerOfConference() != null) {
                     builder.setField(BibTeXField.ORGANIZATION,

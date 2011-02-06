@@ -1,27 +1,16 @@
-package com.arsdigita.cms.scipublications.exporter.bibtex.converters;
+package com.arsdigita.cms.scipublications.exporter.ris;
 
 import com.arsdigita.cms.contenttypes.GreyLiterature;
 import com.arsdigita.cms.contenttypes.Publication;
-import com.arsdigita.cms.scipublications.exporter.bibtex.builders.BibTeXBuilder;
-import com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnsupportedFieldException;
-import org.apache.log4j.Logger;
 
 /**
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
-public class GreyLiteratureConverter extends AbstractBibTeXConverter {
-
-    private static final Logger logger = Logger.getLogger(
-            GreyLiteratureConverter.class);
+public class GreyLiteratureConverter extends AbstractRisConverter {
 
     @Override
-    protected String getBibTeXType() {
-        return "misc";
-    }
-
-    public String convert(Publication publication) {
-        BibTeXBuilder builder;
+    public String convert(final Publication publication) {
         GreyLiterature greyLiterature;
 
         if (!(publication instanceof GreyLiterature)) {
@@ -40,19 +29,15 @@ public class GreyLiteratureConverter extends AbstractBibTeXConverter {
 
         greyLiterature = (GreyLiterature) publication;
 
+        getRisBuilder().setType(RisTypes.GEN);
         convertAuthors(publication);
-        builder = getBibTeXBuilder();
-        try {
-            convertTitle(publication);
-            convertYear(publication);
-        } catch (UnsupportedFieldException ex) {
-            logger.warn("Tried to set unsupported BibTeX field while "
-                        + "converting a publication");
-        }
+        convertTitle(publication);
+        convertYear(publication);
 
-        return builder.toBibTeX();
+        return getRisBuilder().toRis();
     }
 
+    @Override
     public String getCcmType() {
         return GreyLiterature.class.getName();
     }

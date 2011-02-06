@@ -54,6 +54,10 @@ public class ArticleInCollectedVolumeConverter extends AbstractBibTeXConverter {
 
                 if (article.getCollectedVolume().getPublisher() == null) {
                     builder.setField(BibTeXField.PUBLISHER, "");
+                } else {
+                    builder.setField(BibTeXField.PUBLISHER,
+                                     article.getCollectedVolume().getPublisher().
+                            getTitle());
                 }
 
                 if (article.getCollectedVolume().getVolume() != null) {
@@ -61,6 +65,12 @@ public class ArticleInCollectedVolumeConverter extends AbstractBibTeXConverter {
                                      article.getCollectedVolume().getVolume().
                             toString());
                 }
+
+                if (article.getCollectedVolume().getEdition() != null) {
+                    builder.setField(BibTeXField.EDITION,
+                                     article.getCollectedVolume().getEdition());
+                }
+
                 SeriesCollection seriesColl =
                                  article.getCollectedVolume().getSeries();
                 if ((seriesColl != null) && (seriesColl.size() > 0)) {
@@ -72,12 +82,7 @@ public class ArticleInCollectedVolumeConverter extends AbstractBibTeXConverter {
 
                     seriesColl.close();
                 }
-            } else {
-                builder.setField(BibTeXField.PUBLISHER,
-                                 article.getCollectedVolume().getPublisher().
-                        getTitle());
             }
-
 
             if (article.getChapter() != null) {
                 builder.setField(BibTeXField.CHAPTER, article.getChapter());
@@ -90,10 +95,7 @@ public class ArticleInCollectedVolumeConverter extends AbstractBibTeXConverter {
                                                article.getPagesTo()));
             }
 
-            if (article.getCollectedVolume().getEdition() != null) {
-                builder.setField(BibTeXField.EDITION,
-                                 article.getCollectedVolume().getEdition());
-            }
+
         } catch (UnsupportedFieldException ex) {
             logger.warn("Tried to set unsupported BibTeX field while "
                         + "converting a publication");

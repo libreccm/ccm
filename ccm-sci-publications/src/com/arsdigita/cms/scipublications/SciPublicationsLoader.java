@@ -49,6 +49,7 @@ public class SciPublicationsLoader extends PackageLoader {
                 ApplicationType type = setup.run();
                 type.save();
 
+                //Install the application and mount the app at 'scipublications'.
                 if (!Application.isInstalled(
                         SciPublications.BASE_DATA_OBJECT_TYPE, "/scipublications/")) {
                     Application app = Application.createApplication(type,

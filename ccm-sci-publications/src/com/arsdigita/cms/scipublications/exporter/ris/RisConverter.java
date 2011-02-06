@@ -17,29 +17,30 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-package com.arsdigita.cms.scipublications.exporter;
+package com.arsdigita.cms.scipublications.exporter.ris;
 
 import com.arsdigita.cms.contenttypes.Publication;
 
 /**
- * This interface describes the methods provided by all publication exporters.
+ * Interface for the RIS converters
  *
  * @author Jens Pelzetter
  */
-public interface SciPublicationsExporter {
+public interface RisConverter {
 
     /**
+     * Converts a publication.
      *
-     * @return A description of the export format provided by this exporter.
+     * @param publication The publication to convert.
+     * @return The data of the publication converted to RIS.
+     * @throws UnsupportedCcmTypeException If the provided publication is of
+     * a type which is not supported by this converter.
      */
-    PublicationFormat getSupportedFormat();
+    String convert(Publication publication);
 
     /**
-     * Exports an publication to the format provided by this exporter.
-     *
-     * @param publication The publication to export.
-     * @return The data of the publication in the provided export format.
+     * @return The CCM publication type supported by this converter.
      */
-    String exportPublication(Publication publication);
+    String getCcmType();
 
 }

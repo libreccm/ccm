@@ -21,7 +21,7 @@ public class PublicationConverter extends AbstractBibTeXConverter {
             convertYear(publication);
         } catch (UnsupportedFieldException ex) {
             logger.warn("Tried to set unsupported BibTeX field while "
-                        + "converting a publication");
+                        + "converting a publication", ex);
         }
 
         return getBibTeXBuilder().toBibTeX();

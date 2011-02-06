@@ -1,24 +1,15 @@
-package com.arsdigita.cms.scipublications.exporter.bibtex.converters;
+package com.arsdigita.cms.scipublications.exporter.ris;
 
-import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.Monograph;
-import com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnsupportedFieldException;
-import org.apache.log4j.Logger;
+import com.arsdigita.cms.contenttypes.Publication;
 
 /**
  *
- * @author jensp
+ * @author Jens Pelzetter
  */
-public class MonographConverter extends AbstractBibTeXConverter {
-
-    private static final Logger logger = Logger.getLogger(
-            MonographConverter.class);
+public class MonographConverter extends AbstractRisConverter {
 
     @Override
-    protected String getBibTeXType() {
-        return "book";
-    }
-
     public String convert(final Publication publication) {
         Monograph monograph;
 
@@ -36,22 +27,19 @@ public class MonographConverter extends AbstractBibTeXConverter {
 
         monograph = (Monograph) publication;
 
+        getRisBuilder().setType(RisTypes.BOOK);
         convertAuthors(publication);
-        try {
-            convertTitle(publication);
-            convertYear(publication);
+        convertTitle(publication);
+        convertYear(publication);
 
-            convertPublisher(monograph);
-            convertISBN(monograph);
-            convertEdition(monograph);
-        } catch (UnsupportedFieldException ex) {
-            logger.warn("Tried to set unsupported BibTeX field while "
-                        + "converting a publication", ex);
-        }
+        convertPublisher(monograph);
+        convertISBN(monograph);
+        convertEdition(monograph);
 
-        return getBibTeXBuilder().toBibTeX();
+        return getRisBuilder().toRis();
     }
 
+    @Override
     public String getCcmType() {
         return Monograph.class.getName();
     }

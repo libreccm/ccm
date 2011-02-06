@@ -81,7 +81,7 @@ public abstract class AbstractBibTeXBuilder implements BibTeXBuilder {
                      builder);
         }
 
-        builder.append('}');
+        builder.append("}\n");
 
         return builder.toString();
     }
