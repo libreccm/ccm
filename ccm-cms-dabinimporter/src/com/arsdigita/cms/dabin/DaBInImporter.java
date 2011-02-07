@@ -99,9 +99,18 @@ public class DaBInImporter extends Program {
     private static final Logger logger = Logger.getLogger(DaBInImporter.class);
     private Properties config;
     private ContentSection section;
+    private ContentSection personsSection;
+    private ContentSection projectsSection;
+    private ContentSection publicationsSection;
     private LifecycleDefinition lifecycle;
+    private LifecycleDefinition personsLifecycle;
+    private LifecycleDefinition projectsLifecycle;
+    private LifecycleDefinition publicationsLifecycle;
     private Connection connection = null;
     private Folder root;
+    private Folder personsRootFolder;
+    private Folder projectsRootFolder;
+    private Folder publicationsRootFolder;
     private Folder authors;
     private Map<Character, Folder> authorsAlpha;
     private Folder contacts;
@@ -208,10 +217,25 @@ public class DaBInImporter extends Program {
         mySqlDb = config.getProperty("mysql.db");
 
         section = getContentSection(config.getProperty("ccm.contentsection"));
+        personsSection = getContentSection(config.getProperty("ccm.personsContentSection"));
+        projectsSection = getContentSection(config.getProperty("ccm.projectsContentSection"));
+        publicationsSection = getContentSection(config.getProperty("ccm.publicationsContentSection"));
         LifecycleDefinitionCollection lifecycles =
                                       section.getLifecycleDefinitions();
         while (lifecycles.next()) {
             lifecycle = lifecycles.getLifecycleDefinition();
+        }
+        lifecycles = personsSection.getLifecycleDefinitions();
+        while(lifecycles.next()) {
+            personsLifecycle = lifecycles.getLifecycleDefinition();
+        }
+        lifecycles = projectsSection.getLifecycleDefinitions();
+        while(lifecycles.next()) {
+            projectsLifecycle = lifecycles.getLifecycleDefinition();
+        }
+        lifecycles = publicationsSection.getLifecycleDefinitions();
+        while(lifecycles.next()) {
+            publicationsLifecycle = lifecycles.getLifecycleDefinition();
         }
 
         //Create connection to the DaBIn MySQL database
@@ -245,8 +269,11 @@ public class DaBInImporter extends Program {
         System.out.println(
                 "\nCreating CCM folders (if they do not exist already)...");
         root = section.getRootFolder();
+        personsRootFolder = personsSection.getRootFolder();
+        projectsRootFolder = projectsSection.getRootFolder();
+        publicationsRootFolder = publicationsSection.getRootFolder();
 
-        authors = createFolder(root, "autoren", "Autoren");
+        authors = createFolder(personsRootFolder, "autoren", "Autoren");
         folder = createFolder(authors, "09", "0-9");
         authorsAlpha.put('0', folder);
         folder = createFolder(authors, "ab", "A-B");
@@ -288,7 +315,7 @@ public class DaBInImporter extends Program {
         authorsAlpha.put('y', folder);
         authorsAlpha.put('z', folder);
 
-        contacts = createFolder(root, "kontaktdaten", "Kontaktdaten");
+        contacts = createFolder(personsRootFolder, "kontaktdaten", "Kontaktdaten");
         folder = createFolder(contacts, "09", "0-9");
         contactsAlpha.put('0', folder);
         folder = createFolder(contacts, "ab", "A-B");
@@ -332,7 +359,7 @@ public class DaBInImporter extends Program {
 
         departments = createFolder(root, "abteilungen", "Abteilungen");
 
-        members = createFolder(root, "mitglieder", "Mitglieder");
+        members = createFolder(personsRootFolder, "mitglieder", "Mitglieder");
         folder = createFolder(members, "09", "0-9");
         membersAlpha.put('0', folder);
         folder = createFolder(members, "ab", "A-B");
@@ -376,7 +403,7 @@ public class DaBInImporter extends Program {
 
         organization = createFolder(root, "organisationen", "Organisation(en)");
 
-        persons = createFolder(root, "personen", "Personen");
+        persons = createFolder(personsRootFolder, "personen", "Personen");
         folder = createFolder(persons, "09", "0-9");
         personsAlpha.put('0', folder);
         folder = createFolder(persons, "ab", "A-B");
@@ -418,7 +445,7 @@ public class DaBInImporter extends Program {
         personsAlpha.put('y', folder);
         personsAlpha.put('z', folder);
 
-        projects = createFolder(root, "projekte", "Projekte");
+        projects = createFolder(projectsRootFolder, "projekte", "Projekte");
         folder = createFolder(projects, "09", "0-9");
         projectsAlpha.put('0', folder);
         folder = createFolder(projects, "a", "A");
@@ -474,7 +501,7 @@ public class DaBInImporter extends Program {
         folder = createFolder(projects, "z", "Z");
         projectsAlpha.put('z', folder);
 
-        publishers = createFolder(root, "verlage", "Verlage");
+        publishers = createFolder(publicationsRootFolder, "verlage", "Verlage");
         folder = createFolder(publishers, "09", "0-9");
         publishersAlpha.put('0', folder);
         folder = createFolder(publishers, "a", "A");
@@ -530,7 +557,7 @@ public class DaBInImporter extends Program {
         folder = createFolder(publishers, "z", "Z");
         publishersAlpha.put('z', folder);
 
-        publications = createFolder(root, "publikationen", "Publikationen");
+        publications = createFolder(publicationsRootFolder, "publikationen", "Publikationen");
         folder = createFolder(publications, "09", "0-9");
         publicationsAlpha.put('0', folder);
         folder = createFolder(publications, "a", "A");
@@ -586,7 +613,7 @@ public class DaBInImporter extends Program {
         folder = createFolder(publications, "z", "Z");
         publicationsAlpha.put('z', folder);
 
-        files = createFolder(root, "dateien", "Dateien");
+        files = createFolder(publicationsRootFolder, "dateien", "Dateien");
         folder = createFolder(files, "09", "0-9");
         filesAlpha.put('0', folder);
         folder = createFolder(files, "a", "A");
@@ -1738,7 +1765,7 @@ public class DaBInImporter extends Program {
                 personDe.setGivenName(personData.getGivenname());
                 personDe.setTitlePre(personData.getTitlePre());
                 personDe.setContentSection(section);
-                personDe.setLifecycle(createLifecycle());
+                personDe.setLifecycle(createLifecycle(personsLifecycle));
                 personDe.save();
                 personDe.setLanguage("de");
 
@@ -1746,7 +1773,7 @@ public class DaBInImporter extends Program {
                 personEn.setTitlePre(personData.getTitlePre());
                 personEn.setGivenName(personData.getGivenname());
                 personEn.setContentSection(section);
-                personEn.setLifecycle(createLifecycle());
+                personEn.setLifecycle(createLifecycle(personsLifecycle));
                 personEn.save();
                 personEn.setLanguage("en");
 
@@ -1755,13 +1782,12 @@ public class DaBInImporter extends Program {
                 person.addInstance(personEn);
                 person.setDefaultLanguage("de");
                 person.setContentSection(section);
-                person.setLifecycle(createLifecycle());
+                person.setLifecycle(createLifecycle(personsLifecycle));
                 person.save();
 
                 personDe.setContentSection(section);
                 personEn.setContentSection(section);
-
-                //folder.addItem(person);
+                
                 char letter;
                 letter = personData.getSurname().toLowerCase().charAt(0);
                 Map<Character, Folder> folders = null;
@@ -1873,22 +1899,21 @@ public class DaBInImporter extends Program {
                         homepage = value;
                     }
 
-                    contactDe.setContentSection(section);
-                    contactDe.setLifecycle(createLifecycle());
+                    contactDe.setContentSection(personsSection);
+                    contactDe.setLifecycle(createLifecycle(personsLifecycle));
                     contactDe.save();
-                    contactEn.setContentSection(section);
-                    contactEn.setLifecycle(createLifecycle());
+                    contactEn.setContentSection(personsSection);
+                    contactEn.setLifecycle(createLifecycle(personsLifecycle));
                     contactEn.save();
                     ContentBundle contactBundle = new ContentBundle(contactDe);
                     contactBundle.addInstance(contactEn);
-                    contactBundle.setContentSection(section);
-                    //contacts.addItem(contactBundle);
+                    contactBundle.setContentSection(personsSection);
                     insertIntoAZFolder(contactBundle,
                                        personDe.getSurname().charAt(0),
                                        contactsAlpha);
 
-                    contactDe.setContentSection(section);
-                    contactEn.setContentSection(section);
+                    contactDe.setContentSection(personsSection);
+                    contactEn.setContentSection(personsSection);
 
 
                     if (homepage != null) {
@@ -1938,7 +1963,7 @@ public class DaBInImporter extends Program {
                         replaceAll("\\s\\s+", " ").
                         replace(' ', '-').toLowerCase());
                 departmentDe.setLanguage("de");
-                departmentDe.setLifecycle(createLifecycle());
+                departmentDe.setLifecycle(createLifecycle(lifecycle));
                 departmentDe.setContentSection(section);
                 departmentDe.save();
                 System.out.println("OK");
@@ -1953,7 +1978,7 @@ public class DaBInImporter extends Program {
                         replaceAll("\\s\\s+", " ").
                         replace(' ', '-').toLowerCase());
                 departmentEn.setLanguage("en");
-                departmentEn.setLifecycle(createLifecycle());
+                departmentEn.setLifecycle(createLifecycle(lifecycle));
                 departmentEn.setContentSection(section);
                 departmentEn.save();
                 System.out.println("OK");
@@ -1962,7 +1987,7 @@ public class DaBInImporter extends Program {
                 department.addInstance(departmentEn);
                 department.setContentSection(section);
                 department.setDefaultLanguage("de");
-                department.setLifecycle(createLifecycle());
+                department.setLifecycle(createLifecycle(lifecycle));
                 department.setContentSection(section);
 
                 departmentDe.setContentSection(section);
@@ -2067,8 +2092,8 @@ public class DaBInImporter extends Program {
                         projectDe.setEnd(projectData.getEnd().getTime());
                     }
                     projectDe.setLanguage("de");
-                    projectDe.setLifecycle(createLifecycle());
-                    projectDe.setContentSection(section);
+                    projectDe.setLifecycle(createLifecycle(projectsLifecycle));
+                    projectDe.setContentSection(projectsSection);
                     projectDe.save();
                     System.out.println("OK");
                 } else {
@@ -2098,8 +2123,8 @@ public class DaBInImporter extends Program {
                         projectEn.setEnd(projectData.getEnd().getTime());
                     }
                     projectEn.setLanguage("en");
-                    projectEn.setLifecycle(createLifecycle());
-                    projectEn.setContentSection(section);
+                    projectEn.setLifecycle(createLifecycle(projectsLifecycle));
+                    projectEn.setContentSection(projectsSection);
                     projectEn.save();
                     System.out.println("OK");
                 } else {
@@ -2114,16 +2139,16 @@ public class DaBInImporter extends Program {
                         project.addInstance(projectEn);
                     }
                 }
-                project.setLifecycle(createLifecycle());
-                project.setContentSection(section);
+                project.setLifecycle(createLifecycle(projectsLifecycle));
+                project.setContentSection(projectsSection);
                 project.setDefaultLanguage("de");
 
                 if (projectDe != null) {
-                    projectDe.setContentSection(section);
+                    projectDe.setContentSection(projectsSection);
                 }
 
                 if (projectEn != null) {
-                    projectEn.setContentSection(section);
+                    projectEn.setContentSection(projectsSection);
                 }
 
                 projectsMap.put(projectData.getDabinId(), project);
@@ -2595,12 +2620,12 @@ public class DaBInImporter extends Program {
                     }
                 }
 
-                publicationDe.setLifecycle(createLifecycle());
-                publicationDe.setContentSection(section);
+                publicationDe.setLifecycle(createLifecycle(publicationsLifecycle));
+                publicationDe.setContentSection(publicationsSection);
                 publicationDe.setLanguage("de");
                 publicationEn.setLanguage("en");
-                publicationEn.setLifecycle(createLifecycle());
-                publicationEn.setContentSection(section);
+                publicationEn.setLifecycle(createLifecycle(publicationsLifecycle));
+                publicationEn.setContentSection(publicationsSection);
 
                 System.out.println("\tAssigning authors...\n");
                 int i = 1;
@@ -2668,11 +2693,11 @@ public class DaBInImporter extends Program {
                     publication = new ContentBundle(publicationDe);
                     publication.setDefaultLanguage("de");
                 }
-                publication.setLifecycle(createLifecycle());
-                publication.setContentSection(section);
+                publication.setLifecycle(createLifecycle(publicationsLifecycle));
+                publication.setContentSection(publicationsSection);
 
-                publicationDe.setContentSection(section);
-                publicationEn.setContentSection(section);
+                publicationDe.setContentSection(publicationsSection);
+                publicationEn.setContentSection(publicationsSection);
 
                 if ((publicationData.getAbteilungId() != null)
                     && !publicationData.getAbteilungId().isEmpty()
@@ -2762,8 +2787,8 @@ public class DaBInImporter extends Program {
                     workingPaperDe.setPlace("Bremen");
                     extractYearOfPublication(workingPaperData, workingPaperDe);
                     workingPaperDe.setLanguage("de");
-                    workingPaperDe.setLifecycle(createLifecycle());
-                    workingPaperDe.setContentSection(section);
+                    workingPaperDe.setLifecycle(createLifecycle(publicationsLifecycle));
+                    workingPaperDe.setContentSection(publicationsSection);
                     workingPaperDe.save();
                     System.out.println("OK");
                 } else {
@@ -2800,8 +2825,8 @@ public class DaBInImporter extends Program {
                     workingPaperEn.setPlace("Bremen");
                     extractYearOfPublication(workingPaperData, workingPaperEn);
                     workingPaperEn.setLanguage("En");
-                    workingPaperEn.setLifecycle(createLifecycle());
-                    workingPaperEn.setContentSection(section);
+                    workingPaperEn.setLifecycle(createLifecycle(publicationsLifecycle));
+                    workingPaperEn.setContentSection(publicationsSection);
                     workingPaperEn.save();
                     System.out.println("OK");
                 } else {
@@ -2816,11 +2841,11 @@ public class DaBInImporter extends Program {
                         workingPaper.addInstance(workingPaperEn);
                     }
                 }
-                workingPaper.setLifecycle(createLifecycle());
-                workingPaper.setContentSection(section);
+                workingPaper.setLifecycle(createLifecycle(publicationsLifecycle));
+                workingPaper.setContentSection(publicationsSection);
 
-                workingPaperDe.setContentSection(section);
-                workingPaperEn.setContentSection(section);
+                workingPaperDe.setContentSection(publicationsSection);
+                workingPaperEn.setContentSection(publicationsSection);
 
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
                 insertIntoAZFolder(workingPaper, publicationsAlpha);
@@ -2901,16 +2926,16 @@ public class DaBInImporter extends Program {
                                               pdf,
                                               "application/pdf");
                             fsi.setFile(file);
-                            file.setContentSection(section);
-                            file.setLifecycle(createLifecycle());
-                            fsi.setLifecycle(createLifecycle());
-                            fsi.setContentSection(section);
+                            file.setContentSection(publicationsSection);
+                            file.setLifecycle(createLifecycle(publicationsLifecycle));
+                            fsi.setLifecycle(createLifecycle(publicationsLifecycle));
+                            fsi.setContentSection(publicationsSection);
                             fsi.save();
 
                             fsi.setLanguage("de");
                             ContentBundle bundle = new ContentBundle(fsi);
-                            bundle.setLifecycle(createLifecycle());
-                            bundle.setContentSection(section);
+                            bundle.setLifecycle(createLifecycle(publicationsLifecycle));
+                            bundle.setContentSection(publicationsSection);
                             bundle.setDefaultLanguage("de");
                             //bundle.save();
 
@@ -3042,8 +3067,8 @@ public class DaBInImporter extends Program {
                         replace(' ', '-').toLowerCase());
                 publisherDe.setPlace(publisherData.getPlace());
                 publisherDe.setLanguage("de");
-                publisherDe.setLifecycle(createLifecycle());
-                publisherDe.setContentSection(section);
+                publisherDe.setLifecycle(createLifecycle(publicationsLifecycle));
+                publisherDe.setContentSection(publicationsSection);
                 publisherDe.save();
                 System.out.println("OK");
 
@@ -3058,19 +3083,19 @@ public class DaBInImporter extends Program {
                         replace(' ', '-').toLowerCase());
                 publisherEn.setPlace(publisherData.getPlace());
                 publisherEn.setLanguage("en");
-                publisherEn.setLifecycle(createLifecycle());
-                publisherEn.setContentSection(section);
+                publisherEn.setLifecycle(createLifecycle(publicationsLifecycle));
+                publisherEn.setContentSection(publicationsSection);
                 publisherEn.save();
                 System.out.println("OK");
 
                 publisher = new ContentBundle(publisherDe);
                 publisher.addInstance(publisherEn);
                 publisher.setDefaultLanguage("de");
-                publisher.setLifecycle(createLifecycle());
-                publisher.setContentSection(section);
+                publisher.setLifecycle(createLifecycle(publicationsLifecycle));
+                publisher.setContentSection(publicationsSection);
 
-                publisherDe.setContentSection(section);
-                publisherEn.setContentSection(section);
+                publisherDe.setContentSection(publicationsSection);
+                publisherEn.setContentSection(publicationsSection);
 
                 insertIntoAZFolder(publisher, publishersAlpha);
                 publishersMap.put(publisherData, publisher);
@@ -3461,11 +3486,11 @@ public class DaBInImporter extends Program {
         return years;
     }
 
-    private Lifecycle createLifecycle() {
+    private Lifecycle createLifecycle(final LifecycleDefinition def) {
         Lifecycle lifecycle;
         Calendar calendarNow = new GregorianCalendar();
         Date now = calendarNow.getTime();
-        lifecycle = this.lifecycle.createLifecycle();
+        lifecycle = def.createLifecycle();
         lifecycle.setStartDate(now);
 
         return lifecycle;
