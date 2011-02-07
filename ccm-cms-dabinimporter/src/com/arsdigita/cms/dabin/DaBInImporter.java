@@ -98,6 +98,7 @@ public class DaBInImporter extends Program {
      */
     private static final Logger logger = Logger.getLogger(DaBInImporter.class);
     private Properties config;
+    private String timestamp = null;
     private ContentSection section;
     private ContentSection personsSection;
     private ContentSection projectsSection;
@@ -216,25 +217,30 @@ public class DaBInImporter extends Program {
         mySqlPassword = config.getProperty("mysql.password");
         mySqlDb = config.getProperty("mysql.db");
 
+        timestamp = config.getProperty("data.timestamp");
+
         section = getContentSection(config.getProperty("ccm.contentsection"));
-        personsSection = getContentSection(config.getProperty("ccm.personsContentSection"));
-        projectsSection = getContentSection(config.getProperty("ccm.projectsContentSection"));
-        publicationsSection = getContentSection(config.getProperty("ccm.publicationsContentSection"));
+        personsSection = getContentSection(config.getProperty(
+                "ccm.personsContentSection"));
+        projectsSection = getContentSection(config.getProperty(
+                "ccm.projectsContentSection"));
+        publicationsSection = getContentSection(config.getProperty(
+                "ccm.publicationsContentSection"));
         LifecycleDefinitionCollection lifecycles =
                                       section.getLifecycleDefinitions();
         while (lifecycles.next()) {
             lifecycle = lifecycles.getLifecycleDefinition();
         }
         lifecycles = personsSection.getLifecycleDefinitions();
-        while(lifecycles.next()) {
+        while (lifecycles.next()) {
             personsLifecycle = lifecycles.getLifecycleDefinition();
         }
         lifecycles = projectsSection.getLifecycleDefinitions();
-        while(lifecycles.next()) {
+        while (lifecycles.next()) {
             projectsLifecycle = lifecycles.getLifecycleDefinition();
         }
         lifecycles = publicationsSection.getLifecycleDefinitions();
-        while(lifecycles.next()) {
+        while (lifecycles.next()) {
             publicationsLifecycle = lifecycles.getLifecycleDefinition();
         }
 
@@ -315,7 +321,8 @@ public class DaBInImporter extends Program {
         authorsAlpha.put('y', folder);
         authorsAlpha.put('z', folder);
 
-        contacts = createFolder(personsRootFolder, "kontaktdaten", "Kontaktdaten");
+        contacts = createFolder(personsRootFolder, "kontaktdaten",
+                                "Kontaktdaten");
         folder = createFolder(contacts, "09", "0-9");
         contactsAlpha.put('0', folder);
         folder = createFolder(contacts, "ab", "A-B");
@@ -557,7 +564,8 @@ public class DaBInImporter extends Program {
         folder = createFolder(publishers, "z", "Z");
         publishersAlpha.put('z', folder);
 
-        publications = createFolder(publicationsRootFolder, "publikationen", "Publikationen");
+        publications = createFolder(publicationsRootFolder, "publikationen",
+                                    "Publikationen");
         folder = createFolder(publications, "09", "0-9");
         publicationsAlpha.put('0', folder);
         folder = createFolder(publications, "a", "A");
@@ -845,12 +853,20 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
-            result =
-            stmt.executeQuery(
-                    "SELECT person.Person_Id, Anrede, Vorname, Name, Angaben "
-                    + "FROM person "
-                    + "WHERE Eigenschaft  = 'Aktiv' OR Eigenschaft = 'Ehemalig' "
-                    + "ORDER BY Name, Vorname");
+            if (timestamp == null) {
+                result =
+                stmt.executeQuery(
+                        "SELECT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                        + "FROM person "
+                        + "WHERE Eigenschaft  = 'Aktiv' OR Eigenschaft = 'Ehemalig' "
+                        + "ORDER BY Name, Vorname");
+            } else {
+                result = stmt.executeQuery(String.format(
+                        "SELECT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                        + "FROM person "
+                        + "WHERE (Eigenschaft  = 'Aktiv' OR Eigenschaft = 'Ehemalig') AND Timestamp > '%s' "
+                        + "ORDER BY Name, Vorname", timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -885,11 +901,20 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
-            result = stmt.executeQuery(
-                    "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
-                    + "FROM person JOIN projektlink on person.Person_Id = projektlink.Person_Id "
-                    + "WHERE Eigenschaft = 'Autor' OR Eigenschaft = 'Sonstiges' "
-                    + "ORDER BY Name, Vorname");
+            if (timestamp == null) {
+                result = stmt.executeQuery(
+                        "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                        + "FROM person JOIN projektlink on person.Person_Id = projektlink.Person_Id "
+                        + "WHERE Eigenschaft = 'Autor' OR Eigenschaft = 'Sonstiges' "
+                        + "ORDER BY Name, Vorname");
+            } else {
+                result = stmt.executeQuery(String.format(
+                        "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                        + "FROM person JOIN projektlink on person.Person_Id = projektlink.Person_Id "
+                        + "WHERE (Eigenschaft = 'Autor' OR Eigenschaft = 'Sonstiges') AND Timestamp > '%s' "
+                        + "ORDER BY Name, Vorname", timestamp));
+
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -923,11 +948,19 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
-            result = stmt.executeQuery(
-                    "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
-                    + "FROM person "
-                    + "WHERE Eigenschaft  = 'Autor' AND NOT EXISTS (SELECT * FROM projektlink where projektlink.Person_Id = person.Person_Id)"
-                    + "ORDER BY Name, Vorname");
+            if (timestamp == null) {
+                result = stmt.executeQuery(
+                        "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                        + "FROM person "
+                        + "WHERE Eigenschaft  = 'Autor' AND NOT EXISTS (SELECT * FROM projektlink where projektlink.Person_Id = person.Person_Id)"
+                        + "ORDER BY Name, Vorname");
+            } else {
+                result = stmt.executeQuery(String.format(
+                        "SELECT DISTINCT person.Person_Id, Anrede, Vorname, Name, Angaben "
+                        + "FROM person "
+                        + "WHERE Eigenschaft  = 'Autor' AND NOT EXISTS (SELECT * FROM projektlink where projektlink.Person_Id = person.Person_Id) AND Timestamp > '%s' "
+                        + "ORDER BY Name, Vorname", timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -961,11 +994,20 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
-            result =
-            stmt.executeQuery(
-                    "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
-                    + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
-                    + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Aktiv'");
+            if (timestamp == null) {
+                result =
+                stmt.executeQuery(
+                        "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
+                        + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+                        + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Aktiv'");
+            } else {
+                result =
+                stmt.executeQuery(String.format(
+                        "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
+                        + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+                        + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Aktiv' AND Timestamp > '%s'",
+                        timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1012,11 +1054,20 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
-            result =
-            stmt.executeQuery(
-                    "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
-                    + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
-                    + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Ehemalig'");
+            if (timestamp == null) {
+                result =
+                stmt.executeQuery(
+                        "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
+                        + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+                        + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Ehemalig'");
+            } else {
+                result =
+                stmt.executeQuery(String.format(
+                        "SELECT DISTINCT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft, abteilunglink.Auftrag "
+                        + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+                        + "WHERE abteilunglink.Abteilung_Id = 11 AND person.Eigenschaft = 'Ehemalig' AND Timestamp > '%s'",
+                        timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1093,11 +1144,19 @@ public class DaBInImporter extends Program {
                     data.setNameEn(result.getString(1));
                 }
 
-                result = stmt.executeQuery(String.format(
-                        "SELECT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft "
-                        + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
-                        + "WHERE abteilunglink.Abteilung_Id = %s AND (person.Eigenschaft = 'Aktiv' OR person.Eigenschaft = 'Ehemalig')",
-                        departmentIds.get(i)));
+                if (timestamp == null) {
+                    result = stmt.executeQuery(String.format(
+                            "SELECT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft "
+                            + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+                            + "WHERE abteilunglink.Abteilung_Id = %s AND (person.Eigenschaft = 'Aktiv' OR person.Eigenschaft = 'Ehemalig')",
+                            departmentIds.get(i)));
+                } else {
+                    result = stmt.executeQuery(String.format(
+                            "SELECT abteilunglink.Auftrag, person.Person_Id, person.Eigenschaft "
+                            + "FROM abteilunglink JOIN person ON abteilunglink.Person_Id = person.Person_Id "
+                            + "WHERE abteilunglink.Abteilung_Id = %s AND (person.Eigenschaft = 'Aktiv' OR person.Eigenschaft = 'Ehemalig') AND Timestamp > '%s'",
+                            departmentIds.get(i), timestamp));
+                }
 
                 while (result.next()) {
                     MembershipData membership;
@@ -1132,9 +1191,17 @@ public class DaBInImporter extends Program {
             ResultSet result;
             List<String> projectsIds = new ArrayList<String>();
 
-            result = stmt.executeQuery("SELECT DISTINCT Projekt_Id "
-                                       + "FROM projekt "
-                                       + "ORDER BY Projekt_Id");
+            if (timestamp == null) {
+                result = stmt.executeQuery("SELECT DISTINCT Projekt_Id "
+                                           + "FROM projekt "
+                                           + "ORDER BY Projekt_Id");
+            } else {
+                result = stmt.executeQuery(String.format("SELECT DISTINCT Projekt_Id "
+                                                         + "FROM projekt "
+                                                         + "WHERE Timestamp > '%s'"
+                                                         + "ORDER BY Projekt_Id",
+                                                         timestamp));
+            }
             while (result.next()) {
                 projectsIds.add(result.getString(1));
             }
@@ -1221,9 +1288,15 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
-            result = stmt.executeQuery("SELECT Verlag FROM publikation "
-                                       + "WHERE Typ = 'Monographie' OR Typ = 'Sammelband' OR Typ = 'Artikel / Aufsatz' "
-                                       + "GROUP BY Verlag");
+            if (timestamp == null) {
+                result = stmt.executeQuery("SELECT Verlag FROM publikation "
+                                           + "WHERE Typ = 'Monographie' OR Typ = 'Sammelband' OR Typ = 'Artikel / Aufsatz' "
+                                           + "GROUP BY Verlag");
+            } else {
+                result = stmt.executeQuery(String.format("SELECT Verlag FROM publikation "
+                                           + "WHERE (Typ = 'Monographie' OR Typ = 'Sammelband' OR Typ = 'Artikel / Aufsatz') AND Timestamp > '%s' "
+                                           + "GROUP BY Verlag", timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1266,11 +1339,20 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
+            if (timestamp == null) {
             result = stmt.executeQuery(
                     "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
                     + "FROM publikation "
                     + "WHERE Typ = 'Monographie' "
                     + "ORDER BY Name");
+            } else {
+                result = stmt.executeQuery(String.format(
+                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                    + "FROM publikation "
+                    + "WHERE Typ = 'Monographie' AND Timestamp > '%s' "
+                    + "ORDER BY Name",
+                    timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1342,11 +1424,19 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
+            if (timestamp == null) {
             result = stmt.executeQuery(
                     "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit "
                     + "FROM publikation "
                     + "WHERE (Typ = 'Sammelband' AND (ErschienenIn IS NULL OR CHAR_LENGTH(ErschienenIn) = 0)) "
                     + "ORDER BY Name");
+            } else {
+                result = stmt.executeQuery(String.format(
+                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit "
+                    + "FROM publikation "
+                    + "WHERE (Typ = 'Sammelband' AND (ErschienenIn IS NULL OR CHAR_LENGTH(ErschienenIn) = 0)) AND Timestamp > '%s' "
+                    + "ORDER BY Name", timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1416,6 +1506,7 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
+            if (timestamp == null) {
             result = stmt.executeQuery(
                     "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
                     + "FROM publikation "
@@ -1423,6 +1514,16 @@ public class DaBInImporter extends Program {
                     + "OR (Typ = 'Monograph' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
                     + "OR (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) = 'in') "
                     + "ORDER BY Name");
+            } else {
+                result = stmt.executeQuery(String.format(
+                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                    + "FROM publikation "
+                    + "WHERE ((Typ = 'Sammelband' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
+                    + "OR (Typ = 'Monograph' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
+                    + "OR (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) = 'in')) "
+                    + "AND Timestamp > '%s' "
+                    + "ORDER BY Name", timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1494,11 +1595,19 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
+            if (timestamp == null) {
             result = stmt.executeQuery(
                     "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
                     + "FROM publikation "
                     + "WHERE (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) <> 'in') "
                     + "ORDER BY Name");
+            } else {
+                result = stmt.executeQuery(String.format(
+                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                    + "FROM publikation "
+                    + "WHERE (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) <> 'in') AND Timestamp > '%s' "
+                    + "ORDER BY Name", timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1571,11 +1680,19 @@ public class DaBInImporter extends Program {
             long counter = 1;
             long number;
 
+            if (timestamp == null) {
             result = stmt.executeQuery(
                     "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
                     + "FROM publikation "
                     + "WHERE Typ = 'Sonstiges' "
                     + "ORDER BY Name");
+            } else {
+                result = stmt.executeQuery(String.format(
+                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                    + "FROM publikation "
+                    + "WHERE Typ = 'Sonstiges' AND Timestamp > '%s' "
+                    + "ORDER BY Name", timestamp));
+            }
             result.last();
             number = result.getRow();
             result.beforeFirst();
@@ -1643,8 +1760,14 @@ public class DaBInImporter extends Program {
             ResultSet result;
             List<String> workingPaperIds = new ArrayList<String>();
 
+            if (timestamp == null) {
             result = stmt.executeQuery("SELECT DISTINCT Arbeitspapier_Id FROM arbeitspapier "
                                        + "ORDER BY Jahr, Name");
+            } else {
+                result = stmt.executeQuery(String.format("SELECT DISTINCT Arbeitspapier_Id FROM arbeitspapier "
+                        + "WHERE Timestamp > '%s'"
+                                       + "ORDER BY Jahr, Name", timestamp));
+            }
             while (result.next()) {
                 workingPaperIds.add(result.getString(1));
             }
@@ -1787,7 +1910,7 @@ public class DaBInImporter extends Program {
 
                 personDe.setContentSection(section);
                 personEn.setContentSection(section);
-                
+
                 char letter;
                 letter = personData.getSurname().toLowerCase().charAt(0);
                 Map<Character, Folder> folders = null;
@@ -2620,11 +2743,13 @@ public class DaBInImporter extends Program {
                     }
                 }
 
-                publicationDe.setLifecycle(createLifecycle(publicationsLifecycle));
+                publicationDe.setLifecycle(
+                        createLifecycle(publicationsLifecycle));
                 publicationDe.setContentSection(publicationsSection);
                 publicationDe.setLanguage("de");
                 publicationEn.setLanguage("en");
-                publicationEn.setLifecycle(createLifecycle(publicationsLifecycle));
+                publicationEn.setLifecycle(
+                        createLifecycle(publicationsLifecycle));
                 publicationEn.setContentSection(publicationsSection);
 
                 System.out.println("\tAssigning authors...\n");
@@ -2787,7 +2912,8 @@ public class DaBInImporter extends Program {
                     workingPaperDe.setPlace("Bremen");
                     extractYearOfPublication(workingPaperData, workingPaperDe);
                     workingPaperDe.setLanguage("de");
-                    workingPaperDe.setLifecycle(createLifecycle(publicationsLifecycle));
+                    workingPaperDe.setLifecycle(createLifecycle(
+                            publicationsLifecycle));
                     workingPaperDe.setContentSection(publicationsSection);
                     workingPaperDe.save();
                     System.out.println("OK");
@@ -2825,7 +2951,8 @@ public class DaBInImporter extends Program {
                     workingPaperEn.setPlace("Bremen");
                     extractYearOfPublication(workingPaperData, workingPaperEn);
                     workingPaperEn.setLanguage("En");
-                    workingPaperEn.setLifecycle(createLifecycle(publicationsLifecycle));
+                    workingPaperEn.setLifecycle(createLifecycle(
+                            publicationsLifecycle));
                     workingPaperEn.setContentSection(publicationsSection);
                     workingPaperEn.save();
                     System.out.println("OK");
@@ -2927,14 +3054,17 @@ public class DaBInImporter extends Program {
                                               "application/pdf");
                             fsi.setFile(file);
                             file.setContentSection(publicationsSection);
-                            file.setLifecycle(createLifecycle(publicationsLifecycle));
-                            fsi.setLifecycle(createLifecycle(publicationsLifecycle));
+                            file.setLifecycle(createLifecycle(
+                                    publicationsLifecycle));
+                            fsi.setLifecycle(createLifecycle(
+                                    publicationsLifecycle));
                             fsi.setContentSection(publicationsSection);
                             fsi.save();
 
                             fsi.setLanguage("de");
                             ContentBundle bundle = new ContentBundle(fsi);
-                            bundle.setLifecycle(createLifecycle(publicationsLifecycle));
+                            bundle.setLifecycle(createLifecycle(
+                                    publicationsLifecycle));
                             bundle.setContentSection(publicationsSection);
                             bundle.setDefaultLanguage("de");
                             //bundle.save();
@@ -3184,11 +3314,10 @@ public class DaBInImporter extends Program {
 
         int colonIndex = normalizedData.indexOf(':');
         if (colonIndex < 0) {
-            publisher.setName(normalizedData.
-                        replace(",", "").
-                        replace("/", "").
-                        replaceAll("\\s\\s+", " ").
-                        replace(' ', '-').toLowerCase());
+            publisher.setName(normalizedData.replace(",", "").
+                    replace("/", "").
+                    replaceAll("\\s\\s+", " ").
+                    replace(' ', '-').toLowerCase());
         } else {
             String name;
             String place;
@@ -3226,10 +3355,10 @@ public class DaBInImporter extends Program {
             place = normalizedData.substring(prevDelimIndex, colonIndex);
 
             publisher.setName(name.trim().
-                        replace(",", "").
-                        replace("/", "").
-                        replaceAll("\\s\\s+", " ").
-                        replace(' ', '-').toLowerCase());
+                    replace(",", "").
+                    replace("/", "").
+                    replaceAll("\\s\\s+", " ").
+                    replace(' ', '-').toLowerCase());
             publisher.setPlace(place.trim());
         }
 
