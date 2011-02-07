@@ -27,8 +27,17 @@ import javax.activation.MimeTypeParseException;
 import org.apache.log4j.Logger;
 
 /**
+ * Implementation of {@link SciPublicationsExporter} which exports publications
+ * in the RIS format. The RIS format is described at 
+ * <a href="http://www.refman.com/support/risformat_intro.asp">http://www.refman.com/support/risformat_intro.asp</a>
+ * and 
+ * <a href="http://www.adeptscience.co.uk/kb/article/FE26">http://www.adeptscience.co.uk/kb/article/FE26</a>.
+ * The <code>RisExporter</code> uses implementations of the {@link RisConverter} 
+ * interface provided by the {@link RisConverters} class to convert the
+ * publication content items from CCM to RIS references.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class RisExporter implements SciPublicationsExporter {
 

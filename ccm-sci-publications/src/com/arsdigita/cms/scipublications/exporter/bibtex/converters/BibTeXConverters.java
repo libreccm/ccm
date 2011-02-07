@@ -30,6 +30,7 @@ import org.apache.log4j.Logger;
  * Provides easy access to all available BibTeX converters.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class BibTeXConverters {
 

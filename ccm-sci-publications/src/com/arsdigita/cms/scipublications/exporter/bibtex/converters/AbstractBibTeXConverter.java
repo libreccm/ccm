@@ -34,6 +34,7 @@ import com.arsdigita.cms.scipublications.exporter.bibtex.builders.UnsupportedFie
  * of the {@link BibTeXBuilder} interface are used.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public abstract class AbstractBibTeXConverter implements BibTeXConverter {
 

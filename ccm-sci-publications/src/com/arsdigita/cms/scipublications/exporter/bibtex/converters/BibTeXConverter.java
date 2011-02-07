@@ -25,6 +25,7 @@ import com.arsdigita.cms.contenttypes.Publication;
  * Interface for the BibTeX converters.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public interface BibTeXConverter {
 

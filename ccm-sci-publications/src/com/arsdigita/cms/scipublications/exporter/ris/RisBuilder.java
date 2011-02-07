@@ -23,9 +23,10 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * Build an reference in RIS format.
+ * Builds an reference in RIS format.
  *
  * @author Jens Pelzetter
+ * @version $Id$
  */
 public class RisBuilder {
 
