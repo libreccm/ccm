@@ -1294,8 +1294,9 @@ public class DaBInImporter extends Program {
                                            + "GROUP BY Verlag");
             } else {
                 result = stmt.executeQuery(String.format("SELECT Verlag FROM publikation "
-                                           + "WHERE (Typ = 'Monographie' OR Typ = 'Sammelband' OR Typ = 'Artikel / Aufsatz') AND Timestamp > '%s' "
-                                           + "GROUP BY Verlag", timestamp));
+                                                         + "WHERE (Typ = 'Monographie' OR Typ = 'Sammelband' OR Typ = 'Artikel / Aufsatz') AND Timestamp > '%s' "
+                                                         + "GROUP BY Verlag",
+                                                         timestamp));
             }
             result.last();
             number = result.getRow();
@@ -1340,18 +1341,18 @@ public class DaBInImporter extends Program {
             long number;
 
             if (timestamp == null) {
-            result = stmt.executeQuery(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE Typ = 'Monographie' "
-                    + "ORDER BY Name");
+                result = stmt.executeQuery(
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE Typ = 'Monographie' "
+                        + "ORDER BY Name");
             } else {
                 result = stmt.executeQuery(String.format(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE Typ = 'Monographie' AND Timestamp > '%s' "
-                    + "ORDER BY Name",
-                    timestamp));
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE Typ = 'Monographie' AND Timestamp > '%s' "
+                        + "ORDER BY Name",
+                        timestamp));
             }
             result.last();
             number = result.getRow();
@@ -1425,17 +1426,17 @@ public class DaBInImporter extends Program {
             long number;
 
             if (timestamp == null) {
-            result = stmt.executeQuery(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit "
-                    + "FROM publikation "
-                    + "WHERE (Typ = 'Sammelband' AND (ErschienenIn IS NULL OR CHAR_LENGTH(ErschienenIn) = 0)) "
-                    + "ORDER BY Name");
+                result = stmt.executeQuery(
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit "
+                        + "FROM publikation "
+                        + "WHERE (Typ = 'Sammelband' AND (ErschienenIn IS NULL OR CHAR_LENGTH(ErschienenIn) = 0)) "
+                        + "ORDER BY Name");
             } else {
                 result = stmt.executeQuery(String.format(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit "
-                    + "FROM publikation "
-                    + "WHERE (Typ = 'Sammelband' AND (ErschienenIn IS NULL OR CHAR_LENGTH(ErschienenIn) = 0)) AND Timestamp > '%s' "
-                    + "ORDER BY Name", timestamp));
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit "
+                        + "FROM publikation "
+                        + "WHERE (Typ = 'Sammelband' AND (ErschienenIn IS NULL OR CHAR_LENGTH(ErschienenIn) = 0)) AND Timestamp > '%s' "
+                        + "ORDER BY Name", timestamp));
             }
             result.last();
             number = result.getRow();
@@ -1507,22 +1508,22 @@ public class DaBInImporter extends Program {
             long number;
 
             if (timestamp == null) {
-            result = stmt.executeQuery(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE (Typ = 'Sammelband' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
-                    + "OR (Typ = 'Monograph' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
-                    + "OR (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) = 'in') "
-                    + "ORDER BY Name");
+                result = stmt.executeQuery(
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE (Typ = 'Sammelband' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
+                        + "OR (Typ = 'Monograph' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
+                        + "OR (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) = 'in') "
+                        + "ORDER BY Name");
             } else {
                 result = stmt.executeQuery(String.format(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE ((Typ = 'Sammelband' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
-                    + "OR (Typ = 'Monograph' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
-                    + "OR (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) = 'in')) "
-                    + "AND Timestamp > '%s' "
-                    + "ORDER BY Name", timestamp));
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE ((Typ = 'Sammelband' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
+                        + "OR (Typ = 'Monograph' AND ErschienenIn IS NOT NULL AND CHAR_LENGTH(ErschienenIn) > 0) "
+                        + "OR (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) = 'in')) "
+                        + "AND Timestamp > '%s' "
+                        + "ORDER BY Name", timestamp));
             }
             result.last();
             number = result.getRow();
@@ -1596,17 +1597,17 @@ public class DaBInImporter extends Program {
             long number;
 
             if (timestamp == null) {
-            result = stmt.executeQuery(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) <> 'in') "
-                    + "ORDER BY Name");
+                result = stmt.executeQuery(
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) <> 'in') "
+                        + "ORDER BY Name");
             } else {
                 result = stmt.executeQuery(String.format(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) <> 'in') AND Timestamp > '%s' "
-                    + "ORDER BY Name", timestamp));
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE (Typ = 'Artikel / Aufsatz' AND SUBSTRING(ErschienenIn, 1, 2) <> 'in') AND Timestamp > '%s' "
+                        + "ORDER BY Name", timestamp));
             }
             result.last();
             number = result.getRow();
@@ -1681,17 +1682,17 @@ public class DaBInImporter extends Program {
             long number;
 
             if (timestamp == null) {
-            result = stmt.executeQuery(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE Typ = 'Sonstiges' "
-                    + "ORDER BY Name");
+                result = stmt.executeQuery(
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE Typ = 'Sonstiges' "
+                        + "ORDER BY Name");
             } else {
                 result = stmt.executeQuery(String.format(
-                    "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
-                    + "FROM publikation "
-                    + "WHERE Typ = 'Sonstiges' AND Timestamp > '%s' "
-                    + "ORDER BY Name", timestamp));
+                        "SELECT Publikation_Id, Name, Verlag, Jahr, Link, Beschreibung, Abteilung_Id, Sichtbarkeit, ErschienenIn "
+                        + "FROM publikation "
+                        + "WHERE Typ = 'Sonstiges' AND Timestamp > '%s' "
+                        + "ORDER BY Name", timestamp));
             }
             result.last();
             number = result.getRow();
@@ -1761,12 +1762,13 @@ public class DaBInImporter extends Program {
             List<String> workingPaperIds = new ArrayList<String>();
 
             if (timestamp == null) {
-            result = stmt.executeQuery("SELECT DISTINCT Arbeitspapier_Id FROM arbeitspapier "
-                                       + "ORDER BY Jahr, Name");
+                result = stmt.executeQuery("SELECT DISTINCT Arbeitspapier_Id FROM arbeitspapier "
+                                           + "ORDER BY Jahr, Name");
             } else {
                 result = stmt.executeQuery(String.format("SELECT DISTINCT Arbeitspapier_Id FROM arbeitspapier "
-                        + "WHERE Timestamp > '%s'"
-                                       + "ORDER BY Jahr, Name", timestamp));
+                                                         + "WHERE Timestamp > '%s'"
+                                                         + "ORDER BY Jahr, Name",
+                                                         timestamp));
             }
             while (result.next()) {
                 workingPaperIds.add(result.getString(1));
@@ -2775,6 +2777,11 @@ public class DaBInImporter extends Program {
                         publicationEn.addAuthor(author, true);
                     }
 
+                    if ("et. al.".equals(author.getSurname())
+                            || "et. al.".equals(author.getGivenName())) {
+                        System.out.printf("\t***WARNING: The publication %s has a author 'et. al.'. It is strongly recommened to name ALL authors of a publication. ");
+                    }
+
                     RelatedLink myPublication;
                     myPublication = new RelatedLink();
                     myPublication.setLinkOwner((GenericPerson) personsMap.get(authorship.
@@ -2785,7 +2792,7 @@ public class DaBInImporter extends Program {
                         myPublication.setTitle(publicationDe.getTitle());
                     } else {
                         System.out.println(
-                                "\t***WARNING: Publication title is too long for link title. Trancating.");
+                                "\t***WARNING: Publication title is too long for link title. Truncating.");
                         myPublication.setTitle(publicationDe.getTitle().
                                 substring(0, 200));
                     }
@@ -3172,10 +3179,23 @@ public class DaBInImporter extends Program {
     private void createPublisher(final PublisherData publisherData) {
         if (publishersMap.containsKey(publisherData)) {
             System.out.printf(
-                    "Publisher '%s: %s' was already exists. Skiping.\n",
+                    "Publisher '%s: %s' already exists. Skiping.\n",
                     publisherData.getPlace(),
                     publisherData.getName());
             return;
+        }
+
+        if (publisherData.getName().length() < 3) {
+            System.out.printf(
+                    "WARNING: The name of the publisher '%s' is very short.",
+                             publisherData.getName());
+        }
+
+        if ((publisherData.getPlace() == null)
+                || publisherData.getPlace().isEmpty()) {
+            System.out.printf(
+                    "WARNING: The publisher '%s' has no place.",
+                             publisherData.getName());
         }
 
         Transaction transaction = new Transaction() {
