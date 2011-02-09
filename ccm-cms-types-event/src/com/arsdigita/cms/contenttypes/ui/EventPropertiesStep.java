@@ -111,7 +111,8 @@ public class EventPropertiesStep extends SimpleEditStep {
                             if (e.getStartTime() == null) {
                                 return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale()).format(e.getStartDate());
                             } else {
-                                Date startDateTime = new Date(e.getStartDate().getTime() + e.getStartTime().getTime());
+                                int timezoneOffset = Calendar.getInstance().get(Calendar.ZONE_OFFSET) + Calendar.getInstance().get(Calendar.DST_OFFSET) / (60 * 1000);
+                                Date startDateTime = new Date(e.getStartDate().getTime() + e.getStartTime().getTime() + timezoneOffset);
                                 return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, DispatcherHelper.getNegotiatedLocale()).format(startDateTime);
 
                             }
@@ -134,7 +135,8 @@ public class EventPropertiesStep extends SimpleEditStep {
                             if (e.getEndTime() == null) {
                                 return DateFormat.getDateInstance(DateFormat.LONG, DispatcherHelper.getNegotiatedLocale()).format(e.getEndDate());
                             } else {
-                                Date endDateTime = new Date(e.getEndDate().getTime() + e.getEndTime().getTime());
+                                int timezoneOffset = Calendar.getInstance().get(Calendar.ZONE_OFFSET) + Calendar.getInstance().get(Calendar.DST_OFFSET) / (60 * 1000);
+                                Date endDateTime = new Date(e.getEndDate().getTime() + e.getEndTime().getTime() + timezoneOffset);
                                 return DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, DispatcherHelper.getNegotiatedLocale()).format(endDateTime);
 
                             }

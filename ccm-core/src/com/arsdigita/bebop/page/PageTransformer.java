@@ -77,103 +77,98 @@ import org.apache.log4j.Logger;
  */
 public class PageTransformer implements PresentationManager {
 
-    private static final Logger s_log = Logger.getLogger
-        (PageTransformer.class);
-
+    private static final Logger s_log = Logger.getLogger(PageTransformer.class);
     // this keeps track of all of the XSLParameters that can be added to
     // stylesheets
     private static final HashMap s_XSLParameters = new HashMap();
 
-
     // load the default xsl parameter generators
     static {
-        registerXSLParameterGenerator
-            ("contextPath",
-             new XSLParameterGenerator() {
-                 public String generateValue(HttpServletRequest request) {
-                     return request.getContextPath();
-                 }
-             });
+        registerXSLParameterGenerator("contextPath",
+                new XSLParameterGenerator() {
 
-        registerXSLParameterGenerator
-            ("root-context-prefix",
-             new XSLParameterGenerator() {
-                 public String generateValue(HttpServletRequest request) {
-                     return Web.getConfig().getDispatcherContextPath();
-                 }
-             });
+                    public String generateValue(HttpServletRequest request) {
+                        return request.getContextPath();
+                    }
+                });
 
-        registerXSLParameterGenerator
-            ("context-prefix",
-             new XSLParameterGenerator() {
-                 public String generateValue(HttpServletRequest request) {
-                     return Web.getContext().getRequestURL().getContextPath();
-                 }
-             });
+        registerXSLParameterGenerator("root-context-prefix",
+                new XSLParameterGenerator() {
 
-        registerXSLParameterGenerator
-            ("static-prefix",
-             new XSLParameterGenerator() {
-                 public String generateValue(HttpServletRequest request) {
-                     return Web.getContext().getRequestURL().getContextPath() +
-                         com.arsdigita.web.URL.STATIC_DIR;
-                 }
-             });
+                    public String generateValue(HttpServletRequest request) {
+                        return Web.getConfig().getDispatcherContextPath();
+                    }
+                });
 
-        registerXSLParameterGenerator
-            ("dispatcher-prefix",
-             new XSLParameterGenerator() {
-                 public String generateValue(HttpServletRequest request) {
-                     return com.arsdigita.web.URL.getDispatcherPath();
-                 }
-             });
+        registerXSLParameterGenerator("context-prefix",
+                new XSLParameterGenerator() {
 
-        registerXSLParameterGenerator
-            ("dcp-on-buttons",
-             new XSLParameterGenerator() {
-                 public String generateValue(HttpServletRequest request) {
-					if (Bebop.getConfig().doubleClickProtectionOnButtons()) {
-						   return "true";
-					   } else {
-						   return null;
-					   }
-                    
-                      }
-             });
-             
-		registerXSLParameterGenerator
-				("dcp-on-links",
-				 new XSLParameterGenerator() {
-					 public String generateValue(HttpServletRequest request) {
-					 	if (Bebop.getConfig().doubleClickProtectionOnLinks()) {
-					 		return "true";
-					 	} else {
-                      return null;
-                 }
-						 
-                
-					 }
-             });
+                    public String generateValue(HttpServletRequest request) {
+                        return Web.getContext().getRequestURL().getContextPath();
+                    }
+                });
 
-        registerXSLParameterGenerator
-            ("user-agent",
-             new XSLParameterGenerator() {
-                public String generateValue(HttpServletRequest request) {
-                    return request.getHeader("User-Agent");
-                }
-             });
+        registerXSLParameterGenerator("static-prefix",
+                new XSLParameterGenerator() {
 
-        registerXSLParameterGenerator
-            ("negotiated-language",
-             new XSLParameterGenerator() {
-                public String generateValue(HttpServletRequest request) {
-                    return DispatcherHelper.getNegotiatedLocale().getLanguage();
-                }
-             });
+                    public String generateValue(HttpServletRequest request) {
+                        return Web.getContext().getRequestURL().getContextPath()
+                                + com.arsdigita.web.URL.STATIC_DIR;
+                    }
+                });
+
+        registerXSLParameterGenerator("dispatcher-prefix",
+                new XSLParameterGenerator() {
+
+                    public String generateValue(HttpServletRequest request) {
+                        return com.arsdigita.web.URL.getDispatcherPath();
+                    }
+                });
+
+        registerXSLParameterGenerator("dcp-on-buttons",
+                new XSLParameterGenerator() {
+
+                    public String generateValue(HttpServletRequest request) {
+                        if (Bebop.getConfig().doubleClickProtectionOnButtons()) {
+                            return "true";
+                        } else {
+                            return null;
+                        }
+
+                    }
+                });
+
+        registerXSLParameterGenerator("dcp-on-links",
+                new XSLParameterGenerator() {
+
+                    public String generateValue(HttpServletRequest request) {
+                        if (Bebop.getConfig().doubleClickProtectionOnLinks()) {
+                            return "true";
+                        } else {
+                            return null;
+                        }
+
+
+                    }
+                });
+
+        registerXSLParameterGenerator("user-agent",
+                new XSLParameterGenerator() {
+
+                    public String generateValue(HttpServletRequest request) {
+                        return request.getHeader("User-Agent");
+                    }
+                });
+
+        registerXSLParameterGenerator("negotiated-language",
+                new XSLParameterGenerator() {
+
+                    public String generateValue(HttpServletRequest request) {
+                        return DispatcherHelper.getNegotiatedLocale().getLanguage();
+                    }
+                });
     }
-
     // XXX These need to move somewhere else.
-
     /**
      *  This is used to indicate that all xsl templates used should
      *  be pulled from the disk and not from the cache.  If this
@@ -181,7 +176,6 @@ public class PageTransformer implements PresentationManager {
      *  all XSL Stylesheets are pulled from the disk, not the cache
      */
     public static final String CACHE_XSL_NONE = "cacheXSLNone";
-
     /**
      *  This is used to indicate that the "fancy errors" should be
      *  used and that the errors should be placed in the request
@@ -189,28 +183,22 @@ public class PageTransformer implements PresentationManager {
      *  with this name in the request with the value of Boolean.TRUE
      */
     public static final String FANCY_ERRORS = "fancyErrors";
-
-
     /**
      * State flag for preventing caching in every case.
      */
     public static final String CACHE_NONE = "none";
-
     /**
      * State flag for per-user caching.
      */
     public static final String CACHE_USER = "user";
-
     /**
      * State flag for enabling caching in every case.
      */
     public static final String CACHE_WORLD = "world";
-
     /**
      * State flag for disabling HTTP header caching.
      */
     public static final String CACHE_DISABLE = "disable";
-
     private static String s_defaultCachePolicy = CACHE_DISABLE;
 
     /**
@@ -228,8 +216,8 @@ public class PageTransformer implements PresentationManager {
      * Sets the content type of the response and then gets the PrintWriter
      */
     private PrintWriter getWriter(final HttpServletResponse resp,
-                                  final String contentType,
-                                  final String charset) {
+            final String contentType,
+            final String charset) {
         Assert.exists(contentType);
         Assert.exists(charset);
 
@@ -241,9 +229,8 @@ public class PageTransformer implements PresentationManager {
             s_log.warn("Using getOutputStream instead of getWriter");
 
             try {
-                return new PrintWriter
-                    (new OutputStreamWriter(resp.getOutputStream(),
-                                            charset));
+                return new PrintWriter(new OutputStreamWriter(resp.getOutputStream(),
+                        charset));
             } catch (IOException ex) {
                 throw new UncheckedWrapperException(ex);
             }
@@ -258,8 +245,8 @@ public class PageTransformer implements PresentationManager {
      * <code>PresentationManager</code> interface.
      */
     public void servePage(final Document doc,
-                          final HttpServletRequest req,
-                          final HttpServletResponse resp) {
+            final HttpServletRequest req,
+            final HttpServletResponse resp) {
         servePage(doc, req, resp, null);
     }
 
@@ -278,11 +265,11 @@ public class PageTransformer implements PresentationManager {
      * to the Transformer
      */
     public void servePage(final Document doc,
-                          final HttpServletRequest req,
-                          final HttpServletResponse resp,
-                          final Map params) {
-    	if (resp.isCommitted()) {
-        	return;
+            final HttpServletRequest req,
+            final HttpServletResponse resp,
+            final Map params) {
+        if (resp.isCommitted()) {
+            return;
         }
         if (Assert.isEnabled()) {
             Assert.exists(doc, Document.class);
@@ -293,8 +280,7 @@ public class PageTransformer implements PresentationManager {
 
         Profiler.startOp("XSLT");
         try {
-            final String charset = Globalization.getDefaultCharset(Kernel
-                    .getContext().getLocale());
+            final String charset = Globalization.getDefaultCharset(Kernel.getContext().getLocale());
 
             final String output = req.getParameter("output");
             s_log.info("output=" + output);
@@ -308,8 +294,7 @@ public class PageTransformer implements PresentationManager {
                 // Get the stylesheet transformer object corresponding to the
                 // current request.
                 final XSLTemplate template = Templating.getTemplate(req,
-                        fancyErrors, !Boolean.TRUE.equals(req
-                                .getAttribute(CACHE_XSL_NONE)));
+                        fancyErrors, !Boolean.TRUE.equals(req.getAttribute(CACHE_XSL_NONE)));
 
                 DeveloperSupport.endStage("PresMgr get stylesheet");
 
@@ -337,8 +322,7 @@ public class PageTransformer implements PresentationManager {
                     while (entries.hasNext()) {
                         final Map.Entry entry = (Map.Entry) entries.next();
 
-                        xf.setParameter((String) entry.getKey(), entry
-                                .getValue());
+                        xf.setParameter((String) entry.getKey(), entry.getValue());
                     }
                 }
 
@@ -367,10 +351,8 @@ public class PageTransformer implements PresentationManager {
 
                 // copy and paste from BasePresentationManager
                 if (Kernel.getConfig().isDebugEnabled()) {
-                    Document origDoc = (Document) req
-                            .getAttribute("com.arsdigita.xml.Document");
-                    Debugger.addDebugger(new TransformationDebugger(template
-                            .getSource(), template.getDependents()));
+                    Document origDoc = (Document) req.getAttribute("com.arsdigita.xml.Document");
+                    Debugger.addDebugger(new TransformationDebugger(template.getSource(), template.getDependents()));
                     writer.print(Debugger.getDebugging(req));
                 }
 
@@ -390,15 +372,10 @@ public class PageTransformer implements PresentationManager {
                     // Get the stylesheet transformer object corresponding to
                     // the
                     // current request.
-                    template = Templating
-                            .getTemplate(
-                                    req,
-                                    Boolean.TRUE
-                                            .equals(req
-                                                    .getAttribute(PageTransformer.FANCY_ERRORS)),
-                                    !Boolean.TRUE
-                                            .equals(req
-                                                    .getAttribute(PageTransformer.CACHE_XSL_NONE)));
+                    template = Templating.getTemplate(
+                            req,
+                            Boolean.TRUE.equals(req.getAttribute(PageTransformer.FANCY_ERRORS)),
+                            !Boolean.TRUE.equals(req.getAttribute(PageTransformer.CACHE_XSL_NONE)));
                     endTransaction(req);
                 } finally {
                     DeveloperSupport.endStage("PresMgr get stylesheet");
@@ -436,7 +413,6 @@ public class PageTransformer implements PresentationManager {
         }
     }
 
-
     /**
      * Ends the current transaction. Is a performance optimization to end ASAP before
      * serving the page.
@@ -458,9 +434,8 @@ public class PageTransformer implements PresentationManager {
      * parameter name then all previous calls are overwritten and
      * only the last registered generator is used.
      */
-    public static void registerXSLParameterGenerator
-        (String parameterName,
-         XSLParameterGenerator parameterGenerator) {
+    public static void registerXSLParameterGenerator(String parameterName,
+            XSLParameterGenerator parameterGenerator) {
         s_XSLParameters.put(parameterName, parameterGenerator);
     }
 
@@ -480,15 +455,14 @@ public class PageTransformer implements PresentationManager {
         return s_XSLParameters.keySet();
     }
 
-
     /**
      *  This takes a name and request and returns the value that should
      *  be used in the XSL for the given name
      */
-    public static String getXSLParameterValue(String name, 
-                                              HttpServletRequest request) {
-        XSLParameterGenerator generator = 
-            (XSLParameterGenerator)s_XSLParameters.get(name);
+    public static String getXSLParameterValue(String name,
+            HttpServletRequest request) {
+        XSLParameterGenerator generator =
+                (XSLParameterGenerator) s_XSLParameters.get(name);
         if (generator != null) {
             return generator.generateValue(request);
         } else {
@@ -500,20 +474,19 @@ public class PageTransformer implements PresentationManager {
      *  This takes in a transformer and adds all of the registered
      *  xsl paraemters.  
      */
-    public static void addXSLParameters(Transformer transformer, 
-                                        HttpServletRequest request) {
+    public static void addXSLParameters(Transformer transformer,
+            HttpServletRequest request) {
         final Iterator entries = s_XSLParameters.entrySet().iterator();
-        
+
         while (entries.hasNext()) {
             final Map.Entry entry = (Map.Entry) entries.next();
 
-            String value = ((XSLParameterGenerator)entry.getValue())
-                .generateValue(request);
+            String value = ((XSLParameterGenerator) entry.getValue()).generateValue(request);
             if (value == null) {
                 // XSL does not like nulls
                 value = "";
             }
             transformer.setParameter((String) entry.getKey(), value);
         }
-    }    
+    }
 }

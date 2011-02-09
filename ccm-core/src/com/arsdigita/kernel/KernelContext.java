@@ -143,6 +143,8 @@ public final class KernelContext {
     /**
      * @return the locale for the current session
      */
+    @Deprecated 
+    /** use {@link DispatcherHelper.getNegotiatedLocale()} instead */
     public final Locale getLocale() {
         return m_locale;
     }
