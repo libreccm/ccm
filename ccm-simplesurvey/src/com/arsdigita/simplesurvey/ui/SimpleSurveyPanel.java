@@ -21,32 +21,19 @@ package com.arsdigita.simplesurvey.ui;
 
 import com.arsdigita.simplesurvey.util.GlobalizationUtil ; 
 
+import com.arsdigita.bebop.BoxPanel;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
-import com.arsdigita.bebop.Link;
-
-
-
-import com.arsdigita.ui.login.UserAuthenticationListener;
-
-
-
-
-
-import com.arsdigita.kernel.SiteNode;
-
-
-
-import com.arsdigita.kernel.security.LegacyInitializer;
-
-import com.arsdigita.bebop.BoxPanel;
-import javax.servlet.http.HttpServletRequest;
-
+import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.bebop.event.PrintEvent;
+import com.arsdigita.kernel.SiteNode;
+import com.arsdigita.ui.UI;
+import com.arsdigita.ui.login.UserAuthenticationListener;
 
-import com.arsdigita.bebop.SimpleContainer;
-import com.arsdigita.bebop.Label;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -114,8 +101,8 @@ public abstract class SimpleSurveyPanel extends SimpleContainer {
     protected void addWorkspaceToNavBar() {
 
 	// Link to the workspace of the site
-	m_navBar.add(new Link("Workspace",
-		   "/" + LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY)));
+	m_navBar.add(new Link("Workspace",UI.getWorkspaceURL()));
+    //  "/" + LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY)));
     }
 
     protected abstract void addComponentsToPage();

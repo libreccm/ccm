@@ -18,28 +18,8 @@
  */
 package com.arsdigita.simplesurvey.ui;
 
-
-
-import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.event.FormProcessListener;
-
-
-
-
-
-
-
-
-
-
-
 import com.arsdigita.bebop.Label;
-
-
-
-import com.arsdigita.simplesurvey.ui.SimpleSurveyPanel;
-
-import com.arsdigita.kernel.security.LegacyInitializer;
+import com.arsdigita.ui.UI;
 
 
 /**
@@ -58,12 +38,12 @@ public class ConfirmationPanel extends SimpleSurveyPanel {
 
     protected void addComponentsToPage() {	
 
-	String workspaceURL = 
-	    LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY);
+	String workspaceURL = UI.getWorkspaceURL() ;
+	//  LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY);
 
 	Label bodyText = new Label("Your survey response has been submitted. " +
-				   "You may return to your <a href=\"/" + workspaceURL +
-				   "\">workspace</a>");
+                         "You may return to your <a href=\"/" + workspaceURL +
+				         "\">workspace</a>");
 
 	bodyText.setOutputEscaping(false);
 	add(bodyText);    

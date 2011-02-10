@@ -127,8 +127,11 @@ public class Initializer extends CompoundInitializer {
         setup.setDescription
             ("The document manager empowers users to share documents.");
         setup.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DMDispatcher");
-        setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
+        // Class Stylesheet and database backed stylesheet locations are
+        // deprecated and removed. New StylesheetResolver is pattern based.
+        // setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
         setup.setInstantiator(new ACSObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new Repository(dataObject);
                 }
@@ -164,7 +167,9 @@ public class Initializer extends CompoundInitializer {
         setup.setDescription
             ("Browse documents by category.");
         setup.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DCNDispatcher");
-        setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
+        // Class Stylesheet and database backed stylesheet locations are
+        // deprecated and removed. New StylesheetResolver is pattern based.
+        //setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
         setup.setInstantiator(new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new DocumentCategoryBrowserApplication(dataObject);
@@ -182,7 +187,9 @@ public class Initializer extends CompoundInitializer {
         setup.setDescription
             ("Browse documents by category.");
         setup.setDispatcherClass("com.arsdigita.cms.docmgr.ui.DCNDispatcher");
-        setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
+        // Class Stylesheet and database backed stylesheet locations are
+        // deprecated and removed. New StylesheetResolver is pattern based.
+        //setup.setStylesheet("/packages/cms-docmgr/xsl/docs.xsl");
         setup.setInstantiator(new ACSObjectInstantiator() {
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new LegacyCategoryBrowserApplication(dataObject);

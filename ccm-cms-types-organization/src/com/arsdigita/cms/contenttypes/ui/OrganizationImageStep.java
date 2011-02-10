@@ -19,7 +19,6 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.contenttypes.Organization;
-import com.arsdigita.cms.contenttypes.ui.OrganizationImageForm;
 import com.arsdigita.cms.contenttypes.util.OrganizationGlobalizationUtil;
 
 import com.arsdigita.bebop.PageState;
@@ -28,7 +27,6 @@ import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
@@ -55,7 +53,9 @@ public class OrganizationImageStep
 	super( itemModel, parent, "_image" );
 
     setDefaultEditKey(IMAGE_SHEET_NAME);
-	add( IMAGE_SHEET_NAME, "Change", new WorkflowLockedComponentAccess(new OrganizationImageForm("OrganizationImageForm", itemModel, this), itemModel));   
+	add( IMAGE_SHEET_NAME, "Change",
+         new WorkflowLockedComponentAccess(new OrganizationImageForm(
+                 "OrganizationImageForm", itemModel, this), itemModel));
 
 	DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel, false);
 	sheet.add(OrganizationGlobalizationUtil.globalize

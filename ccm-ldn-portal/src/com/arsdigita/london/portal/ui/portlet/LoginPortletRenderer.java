@@ -1,15 +1,19 @@
 /*
- * Copyright (C) 2001 ArsDigita Corporation. All Rights Reserved.
+ * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
- * The contents of this file are subject to the ArsDigita Public 
- * License (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of
- * the License at http://www.arsdigita.com/ADPL.txt
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
 
@@ -28,12 +32,12 @@ import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.permissions.UniversalPermissionDescriptor;
 import com.arsdigita.kernel.security.Credential;
 import com.arsdigita.kernel.security.CredentialEncodingException;
-import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.london.portal.portlet.LoginPortlet;
 import com.arsdigita.london.portal.ui.PortalConstants;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.Session;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.ui.UI;
 import com.arsdigita.ui.login.LoginConstants;
 import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.web.Application;
@@ -41,13 +45,23 @@ import com.arsdigita.web.ApplicationCollection;
 import com.arsdigita.xml.Element;
 
 public class LoginPortletRenderer extends AbstractPortletRenderer {
+
 	private LoginPortlet m_portlet;
 
-	public LoginPortletRenderer(LoginPortlet portlet) {
+	/**
+     * Constructor.
+     * @param portlet
+     */
+    public LoginPortletRenderer(LoginPortlet portlet) {
 		m_portlet = portlet;
 	}
 
-	public void generateBodyXML(PageState state, Element parent) {
+	/** 
+     * 
+     * @param state
+     * @param parent
+     */
+    public void generateBodyXML(PageState state, Element parent) {
 		Element login = parent.newChildElement("portlet:login",
 				PortalConstants.PORTLET_XML_NS);
 
@@ -68,8 +82,10 @@ public class LoginPortletRenderer extends AbstractPortletRenderer {
 
 			Element content = login.newChildElement("portlet:loginform",
 					PortalConstants.PORTLET_XML_NS);
-			content.addAttribute("url", LegacyInitializer
-					.getURL(LegacyInitializer.LOGIN_PAGE_KEY));
+
+            //  content.addAttribute("url", LegacyInitializer
+            //                       .getURL(LegacyInitializer.LOGIN_PAGE_KEY));
+			content.addAttribute("url", UI.getLoginPageURL() );
 			content.addAttribute("timestamp", timestamp);
 		} else {
 			User user = (User) party;
@@ -81,16 +97,19 @@ public class LoginPortletRenderer extends AbstractPortletRenderer {
 			content.addAttribute("familyName", user.getPersonName()
 					.getFamilyName());
 
-			Link editProfile = new Link("Edit profile", "/"
-					+ LegacyInitializer.getURL(LegacyInitializer.EDIT_PAGE_KEY));
+			Link editProfile = new Link("Edit profile", 
+					                    UI.getEditUserProfilePageURL());
+//					"/" + LegacyInitializer.getURL(LegacyInitializer.EDIT_PAGE_KEY));
 			editProfile.generateXML(state, content);
 
-			Link changePassword = new Link("Change password", "/"
-					+ LegacyInitializer.getURL(LegacyInitializer.CHANGE_PAGE_KEY));
+			Link changePassword = new Link("Change password", 
+                                           UI.getRecoverPasswordPageURL());
+//					"/" + LegacyInitializer.getURL(LegacyInitializer.CHANGE_PAGE_KEY));
 			changePassword.generateXML(state, content);
 
-			Link logout = new Link("Logout", "/"
-					+ LegacyInitializer.getURL(LegacyInitializer.LOGOUT_PAGE_KEY));
+			Link logout = new Link("Logout",
+                                   UI.getLogoutPageURL() );
+//					"/" + LegacyInitializer.getURL(LegacyInitializer.LOGOUT_PAGE_KEY));
 			logout.generateXML(state, content);
 
 			// Test whether the user can do anything in any content section
