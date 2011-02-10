@@ -28,12 +28,13 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ActionEvent;
-import com.arsdigita.dispatcher.Dispatcher;
-import com.arsdigita.dispatcher.DispatcherConfig;
-import com.arsdigita.dispatcher.DispatcherHelper;
-import com.arsdigita.dispatcher.RequestContext;
+// import com.arsdigita.dispatcher.Dispatcher;
+// import com.arsdigita.dispatcher.DispatcherConfig;
+// import com.arsdigita.dispatcher.DispatcherHelper;
+// import com.arsdigita.dispatcher.RequestContext;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.kernel.security.LegacyInitializer;
+// import com.arsdigita.kernel.security.LegacyInitializer;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.ReturnSignal;
@@ -62,67 +63,88 @@ import org.apache.log4j.Logger;
  **/
 public class SubsiteDispatcher extends BebopMapDispatcher {
 
+    public static final String APPLICATION_NAME = "login";
+
+    private static final Logger s_log =
+                         Logger.getLogger(SubsiteDispatcher.class.getName());
+
+    // define namespace URI
+    final static String SUBSITE_NS_URI =
+        "http://www.arsdigita.com/subsite/1.0";
+
+    /** Dispatcher map class to store url - page mapping    */
 	public class SubsiteDispatcherMap extends HashMap implements Map {
 
 		public SubsiteDispatcherMap() {
 			super();
 			// TODO Auto-generated constructor stub
 		}
-
-		
 	}
 
-    public static final String APPLICATION_NAME = "login";
-
-    private static final Logger s_log =
-        Logger.getLogger(SubsiteDispatcher.class.getName());
-
-    // define namespace URI
-    final static String SUBSITE_NS_URI =
-        "http://www.arsdigita.com/subsite/1.0";
-
     /**
-     * Initializes dispatcher by registering URLs with bebop pages.
-     **/
+     * Constructor initializes dispatcher by registering URLs with bebop pages.
+     */
     public SubsiteDispatcher() {
-    	s_log.debug("SubsiteDispatcher is used!!");
-        //Map map = new HashMap();
+    	s_log.debug("SubsiteDispatcher Constructor entered.");
+
     	Map map = new SubsiteDispatcherMap();
+
         // special-case the empty URL
-        String redirect = LegacyInitializer.getURL(LegacyInitializer.ROOT_PAGE_KEY);
+//        String redirect = LegacyInitializer.getURL(LegacyInitializer.ROOT_PAGE_KEY);
+        String redirect = UI.getRootPageURL();
         Dispatcher root = new RedirectDispatcher(redirect);
+
         map.put("", root);
         map.put("index", root);
 
-        put(map, LegacyInitializer.EDIT_PAGE_KEY, buildSimplePage
-            ("login.userEditPage.title", new UserEditForm(), "edit"));
-        put(map, LegacyInitializer.LOGIN_PAGE_KEY, buildSimplePage
-            ("login.userRegistrationForm.title",
-             new UserRegistrationForm(Kernel.getSecurityConfig().isAutoRegistrationOn()),
-             "login"));
+//      put(map, LegacyInitializer.EDIT_PAGE_KEY, buildSimplePage
+        put(map, UI.getEditUserProfilePageURL(), buildSimplePage
+                                                  ("login.userEditPage.title",
+                                                   new UserEditForm(), "edit"));
+//      put(map, LegacyInitializer.LOGIN_PAGE_KEY, buildSimplePage
+        put(map, UI.getLoginPageURL(), buildSimplePage
+                                                   ("login.userRegistrationForm.title",
+                                                    new UserRegistrationForm(
+                                                        Kernel.getSecurityConfig()
+                                                              .isAutoRegistrationOn()),
+                                                    "login"));
         if (Kernel.getSecurityConfig().isAutoRegistrationOn()) {
-            put(map, LegacyInitializer.NEWUSER_PAGE_KEY, buildSimplePage
-                ("login.userNewForm.title", new UserNewForm(),"register"));
+        //  put(map, LegacyInitializer.NEWUSER_PAGE_KEY, buildSimplePage
+            put(map, UI.getNewUserPageURL(), buildSimplePage
+                                                         ("login.userNewForm.title",
+                                                          new UserNewForm(),
+                                                          "register"));
         }
-        put(map, LegacyInitializer.LOGOUT_PAGE_KEY, buildLogOutPage());
-        put(map, LegacyInitializer.COOKIES_PAGE_KEY, buildSimplePage
+//      put(map, LegacyInitializer.LOGOUT_PAGE_KEY, buildLogOutPage());
+        put(map, UI.getLogoutPageURL(), buildLogOutPage());
+//      put(map, LegacyInitializer.COOKIES_PAGE_KEY, buildSimplePage
+        put(map, UI.getCookiesExplainPageURL(), buildSimplePage
             ("login.explainCookiesPage.title", new ElementComponent
              ("subsite:explainPersistentCookies", SUBSITE_NS_URI), "cookies"));
-        put(map, LegacyInitializer.CHANGE_PAGE_KEY, buildSimplePage
-            ("login.changePasswordPage.title", new ChangePasswordForm(),
-             "changepassword"));
-        put(map, LegacyInitializer.RECOVER_PAGE_KEY, buildSimplePage
-            ("login.recoverPasswordPage.title", new RecoverPasswordPanel(),
-             "recoverpassword"));
+//      put(map, LegacyInitializer.CHANGE_PAGE_KEY, buildSimplePage
+        put(map, UI.getChangePasswordPageURL(), buildSimplePage
+                                                ("login.changePasswordPage.title",
+                                                 new ChangePasswordForm(),
+                                                 "changepassword"));
+//      put(map, LegacyInitializer.RECOVER_PAGE_KEY, buildSimplePage
+        put(map, UI.getRecoverPasswordPageURL(), buildSimplePage
+                                                 ("login.recoverPasswordPage.title",
+                                                  new RecoverPasswordPanel(),
+                                                  "recoverpassword"));
 
         Page workspace = checkForPageSubClass();
         if (workspace == null) workspace = buildSimplePage
-            ("login.workspacePage.title", new UserInfo(), "workspace");
-        put(map, LegacyInitializer.WORKSPACE_PAGE_KEY, workspace);
-        put(map, LegacyInitializer.EXPIRED_PAGE_KEY, buildExpiredPage());
+                                               ("login.workspacePage.title",
+                                                new UserInfo(),
+                                                "workspace");
+//      put(map, LegacyInitializer.WORKSPACE_PAGE_KEY, workspace);
+        put(map, UI.getWorkspaceURL(), workspace);
+//      put(map, LegacyInitializer.EXPIRED_PAGE_KEY, buildExpiredPage());
+        put(map, UI.getLoginExpiredPageURL(), buildExpiredPage());
 
         // special case to handle pvt/home
-        String url = LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY);
+        // String url = LegacyInitializer.getURL(LegacyInitializer.WORKSPACE_PAGE_KEY);
+        String url = UI.getWorkspaceURL();
         if (url.equals("pvt/")) {
             map.put("pvt/home", workspace);
         }
@@ -130,6 +152,28 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
         setMap(map);
     }
 
+    /**
+     * Adds <url, page> to the given map. If the URL represents a directory
+     * (ends with "/"), URL+"index" is also added to the map and URL-"/" is
+     * redirected to URL.
+     **/
+    private void put(Map map, String url, Page page) {
+        // String url = LegacyInitializer.getURL(key);
+        if (url.startsWith("/")) {
+            // Currently the getter method provide a leading slash (API change)
+            // but the dispatcher needs an url without
+            // Needs to be checked when the old style sitenode based Dispatcher
+            // is eliminated.
+            url = url.substring(1);
+        }
+        map.put(url, page);
+        if (url.endsWith("/")) {
+            map.put(url+"index", page);
+            requireTrailingSlash(url.substring(0, url.length()-1));
+        }
+    }
+
+    @Override
     protected void preprocessRequest(HttpServletRequest req,
                                      HttpServletResponse resp,
                                      RequestContext ctx,
@@ -139,30 +183,17 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
         // /register/login-expired, /register/recover-password
         // NB, although you'd think /register is cachable, it
         // stores a timestamp in the login form :(
-        if (url.equals(LegacyInitializer.getURL(LegacyInitializer.COOKIES_PAGE_KEY)) ||
-            url.equals(LegacyInitializer.getURL(LegacyInitializer.EXPIRED_PAGE_KEY)) ||
-            url.equals(LegacyInitializer.getURL(LegacyInitializer.RECOVER_PAGE_KEY))) {
+        //
+        // url comes without leading "/" and we have to compensate for the
+        // leading slash provided by the UI.get... methods here.
+        if (("/"+url).equals(UI.getCookiesExplainPageURL()) ||
+            ("/"+url).equals(UI.getLoginExpiredPageURL())   ||
+            ("/"+url).equals(UI.getRecoverPasswordPageURL()) ) {
             DispatcherHelper.cacheForWorld(resp);
         } else {
             DispatcherHelper.cacheDisable(resp);
         }
     }
-
-    /**
-     * Adds <url, page> to the given map, where URL is looked up from the
-     * page map using the given key.  If the URL represents a directory
-     * (ends with "/"), URL+"index" is also added to the map and URL-"/" is
-     * redirected to URL.
-     **/
-    private void put(Map map, String key, Page page) {
-        String url = LegacyInitializer.getURL(key);
-        map.put(url, page);
-        if (url.endsWith("/")) {
-            map.put(url+"index", page);
-            requireTrailingSlash(url.substring(0, url.length()-1));
-        }
-    }
-
 
     private static Page checkForPageSubClass() {
     	//check to see if there is subclass of Page defined in Config
@@ -199,13 +230,14 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
     private static Page buildExpiredPage() {
         Page page = PageFactory.buildPage(
             APPLICATION_NAME,
-            new Label(LoginHelper.getMessage("login.loginExpiredPage.title")));
+            new Label(LoginHelper.getMessage("login.loginExpiredPage.title"))
+            );
         page.add(new SimpleContainer() {
              { // constructor
                  add(new Label(LoginHelper.getMessage
                                ("login.loginExpiredPage.before")));
                  add(new DynamicLink("login.loginExpiredPage.link",
-                                     LegacyInitializer.LOGIN_PAGE_KEY));
+                                     UI.getLoginPageURL() ));
                  add(new Label(LoginHelper.getMessage
                                ("login.loginExpiredPage.after")));
                  add(new ElementComponent("subsite:explainLoginExpired",
@@ -216,10 +248,15 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
         return page;
     }
 
+    /**
+     * 
+     * @return
+     */
     private static Page buildLogOutPage() {
         Page page = PageFactory.buildPage(
             APPLICATION_NAME,
-            new Label(LoginHelper.getMessage("Logout")));
+            new Label(LoginHelper.getMessage("Logout"))
+            );
         page.addActionListener(new UserLogoutListener());
         page.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -227,8 +264,7 @@ public class SubsiteDispatcher extends BebopMapDispatcher {
 
                     final HttpServletRequest req = state.getRequest();
 
-                    final String path = LegacyInitializer.getFullURL
-                        (LegacyInitializer.ROOT_PAGE_KEY, req);
+                    final String path = UI.getRootPageURL(req);
 
                     throw new ReturnSignal(req, URL.there(req, path));
                 }

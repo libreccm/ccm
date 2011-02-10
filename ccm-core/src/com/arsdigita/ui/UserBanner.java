@@ -23,7 +23,6 @@ import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 import com.arsdigita.ui.util.GlobalizationUtil;
@@ -103,26 +102,27 @@ public class UserBanner extends SimpleComponent {
         content.addAttribute(
             "workspaceURL",
             URL.there(state.getRequest(),
-                      LegacyInitializer.getFullURL(LegacyInitializer.WORKSPACE_PAGE_KEY,
-                                             state.getRequest())).toString());
+                      UI.getWorkspaceURL()).toString());
+        //            LegacyInitializer.getFullURL(LegacyInitializer.WORKSPACE_PAGE_KEY,
+        //                                   state.getRequest())).toString());
 
         content.addAttribute(
             "loginURL",
             URL.there(state.getRequest(),
-                      LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
-                                             state.getRequest())).toString());
+                      UI.getLoginPageURL()).toString());
+            //        LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
+            //                               state.getRequest())).toString());
 
         content.addAttribute(
             "loginExcursionURL",
             URL.excursion(state.getRequest(),
-                      LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
-                                             state.getRequest())).toString());
+                          UI.getLoginPageURL()).toString());
+            //        LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY,
+            //                               state.getRequest())).toString());
 
         content.addAttribute(
             "logoutURL",
-            URL.there(state.getRequest(),
-                      LegacyInitializer.getFullURL(LegacyInitializer.LOGOUT_PAGE_KEY,
-                                             state.getRequest())).toString());
+            URL.there(state.getRequest(),UI.getLoginPageURL()).toString());
 
     }
 }

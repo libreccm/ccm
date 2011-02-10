@@ -22,7 +22,8 @@ import com.arsdigita.bebop.DimensionalNavbar;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.globalization.GlobalizedMessage;
-import com.arsdigita.kernel.security.LegacyInitializer;
+// import com.arsdigita.kernel.security.LegacyInitializer;
+import com.arsdigita.ui.UI;
 
 /**
  * Delimited dimensional navbar.
@@ -39,8 +40,10 @@ public class GlobalNavbar extends DimensionalNavbar {
         // FIXME: Write online help, for the time being offer no link
         // add(new Link("Help", "help"));
 
+        //String signOutURL = Utilities.getWebappContext() + "/" +
+        //    LegacyInitializer.getURL(LegacyInitializer.LOGOUT_PAGE_KEY);
         String signOutURL = Utilities.getWebappContext() + "/" +
-            LegacyInitializer.getURL(LegacyInitializer.LOGOUT_PAGE_KEY);
+            UI.getLogoutPageURL();
 
         add(new Link((String) globalize("cms.ui.sign_out").localize(),
                      signOutURL));

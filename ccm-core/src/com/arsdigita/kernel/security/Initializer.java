@@ -25,14 +25,9 @@ import com.arsdigita.runtime.GenericInitializer;
 import com.arsdigita.util.URLRewriter;
 
 import java.util.Arrays;
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.Iterator;
 import java.util.List;
-//import java.util.Map;
 
 import javax.security.auth.login.LoginException;
-//import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
@@ -55,6 +50,7 @@ public class Initializer extends GenericInitializer {
      *
      * @param evt The domain init event.
      */
+    @Override
     public void init(DomainInitEvent evt) {
         s_log.debug("kernel security domain init begin.");
 
@@ -66,9 +62,9 @@ public class Initializer extends GenericInitializer {
         URLRewriter.addParameterProvider(new SecurityParameterProvider());
 
         // Step 2:
-        // TODO: Implement an equivalant to loadExcludedExtensions() of
-        // LegacyInitializer to set the list of ExludecExtensions in Util!
-        // Avoid any reference to the config object in Util.
+        // Implement an equivalant to loadExcludedExtensions() of
+        // LegacyInitializer to set the list of ExludecExtensions
+        // Implemented in Util!
 
         // Step 3:
         // Set the SecurityHelper class to be used.
@@ -89,7 +85,7 @@ public class Initializer extends GenericInitializer {
 
         // Step 4:
         // LoadPageMap / handling of URL's. Not an initializer task.
-        // Has to be handled anywhere else (e.g. com arsdigita.ui)
+        // Moved to com arsdigita.ui.UI
 
         // Step 5:
         loadLoginConfig();

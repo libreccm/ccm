@@ -22,31 +22,38 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
-import com.arsdigita.kernel.security.LegacyInitializer;
+// import com.arsdigita.kernel.security.LegacyInitializer;
 
 /**
  * Package-private class that generates the URL for a link dynamically from
  * the kernel page map.  This class will be removed or changes when the page
  * map is replaced by package parameters.
  *
+ * 2011-02-04: API change (pboy)
+ * The page map is no retrieved from a set of parameters. The target is now a
+ * String representation of the absolut url (leading slash) relativ to
+ * document root. The target is now a targetUrl, no longer a targetKey.
+ *
  * @author Sameer Ajmani
- **/
+ * @version $Id: DynamicLink.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 class DynamicLink extends Link {
-    public static final String versionId = 
-        "$Id: DynamicLink.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
-    DynamicLink(final String labelKey, final String targetKey) {
+    DynamicLink(final String labelKey, final String targetUrl) {
+
         super(new Label(LoginHelper.getMessage(labelKey)),
               new PrintListener() {
                   public void prepare(PrintEvent e) {
                       Link link = (Link) e.getTarget();
 
-                      String url = LegacyInitializer.getFullURL
-                          (targetKey, e.getPageState().getRequest());
+                  // see {@link com.arsdigita.bebopLink#Link(String,URL)}
+                  // Url is now expected without leading context wich is handled
+                  // by the new dispatcher. Therefore the req. is not needed.
+                  // anymore.
+                  //  String url = LegacyInitializer.getFullURL
+                  //      (targetKey, e.getPageState().getRequest());
 
-                      link.setTarget(url);
+                      link.setTarget(targetUrl);
                   }
               });
     }

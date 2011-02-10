@@ -277,9 +277,11 @@ public class GlobalizedMessage {
     }
 
     /**
-     * <p>
-     * For debugging, not for localizing.
-     * </p>
+     * <p>For debugging, not for localizing!</p>
+     *
+     * If you need a String, use an additional localize() to get an object
+     * and cast it to String. e.g.
+     * String label = (String) GlobalizedMessage(key,bundleName).localize();
      *
      * @return The contents in String form for debugging.
      */

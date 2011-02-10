@@ -56,6 +56,8 @@ import org.apache.log4j.Logger;
  *
  *
  * <p><b>Subject to change!</b></p>
+ * 
+ * A similiar task is performed by com.arsdigita.util.ResourceManager
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
  * rewritten by

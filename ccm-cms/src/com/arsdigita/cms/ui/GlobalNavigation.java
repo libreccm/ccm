@@ -22,7 +22,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SimpleComponent;
 import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.dispatcher.Utilities;
-import com.arsdigita.kernel.security.LegacyInitializer;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.URL;
 import com.arsdigita.xml.Element;
 import org.apache.log4j.Logger;
@@ -47,11 +47,12 @@ class GlobalNavigation extends SimpleComponent {
 
     GlobalNavigation() {
         m_centerPath = Utilities.getWorkspaceURL();
-        m_wspcPath = path(LegacyInitializer.WORKSPACE_PAGE_KEY);
-        m_signOutPath = path(LegacyInitializer.LOGOUT_PAGE_KEY);
+        m_wspcPath = UI.getWorkspaceURL();
+        m_signOutPath = UI.getLogoutPageURL();
         m_helpPath = "/nowhere"; // We don't have this yet XXX.
     }
 
+    @Override
     public void generateXML(final PageState state, final Element parent) {
         if (isVisible(state)) {
             final HttpServletRequest sreq = state.getRequest();
@@ -69,10 +70,6 @@ class GlobalNavigation extends SimpleComponent {
             link(sreq, nav, "cms:signOut", m_signOutPath, signOutTitle);
             link(sreq, nav, "cms:help", m_helpPath, helpTitle);
         }
-    }
-
-    private static String path(final String key) {
-        return "/" + LegacyInitializer.getURL(key);
     }
 
     private static Element link(final HttpServletRequest sreq,

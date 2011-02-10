@@ -31,6 +31,7 @@ import com.arsdigita.bebop.parameters.ArrayParameter;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.URLParameter;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.Web;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ReturnSignal;
@@ -43,7 +44,6 @@ import com.arsdigita.kernel.UserAuthentication;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.persistence.PersistenceException;
 
 import javax.mail.internet.InternetAddress;
@@ -71,7 +71,6 @@ public class UserNewForm extends UserForm
         FormProcessListener,
         FormValidationListener
 {
-    public static final String versionId = "$Id: UserNewForm.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log =
             Logger.getLogger(UserNewForm.class);
@@ -219,8 +218,9 @@ public class UserNewForm extends UserForm
         // redirect to workspace or return URL, if specified
         final HttpServletRequest req = state.getRequest();
 
-        url = LegacyInitializer.getFullURL
-                (LegacyInitializer.WORKSPACE_PAGE_KEY, req);
+        // url = LegacyInitializer.getFullURL
+        //         (LegacyInitializer.WORKSPACE_PAGE_KEY, req);
+        url = UI.getWorkspaceURL(); 
 
         final URL fallback = com.arsdigita.web.URL.there(req, url);
 

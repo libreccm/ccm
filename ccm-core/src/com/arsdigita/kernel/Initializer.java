@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -16,98 +15,106 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
+
 package com.arsdigita.kernel;
 
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.domain.DomainObjectFactory;
-import com.arsdigita.domain.DomainObjectInstantiator;
-import com.arsdigita.initializer.Configuration;
-import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.persistence.DataObject;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.TransactionContext;
-
+import com.arsdigita.runtime.DomainInitEvent;
+import com.arsdigita.runtime.GenericInitializer;
 
 import org.apache.log4j.Logger;
 
+
 /**
- * Initializes the Kernel and bootstraps the rest of the system.
+ * Initializes the kernel subpackage recurringly each system boot.
  *
- * @version $Revision: #39 $ $Date: 2004/08/16 $
- * @version $Id: Initializer.java 1169 2006-06-14 13:08:25Z fabrice $
+ * @author pb
  */
-public class Initializer extends BaseInitializer {
+public class Initializer extends GenericInitializer {
 
-    private static final Logger s_log = Logger.getLogger(Initializer.class);
+    /** Creates a s_logging category with name = to the full name of class  */
+    public static final Logger s_log = Logger.getLogger(Initializer.class);
 
-    private Configuration m_conf = new Configuration();
 
-    public Configuration getConfiguration() {
-        return m_conf;
-    }
+    /**
+     * Implementation of the {@link Initializer#init(DomainInitEvent)}
+     * method.
+     *
+     * @param evt The domain init event.
+     */
+    @Override
+    public void init(DomainInitEvent evt) {
+        s_log.debug("kernel security domain init begin.");
 
-    protected void doStartup() {
-        setupDomainFactory();
-        setupURLService();
+        // Steps carried over from the old style initializer / enterprise.ini
 
-        TransactionContext txn = SessionManager.getSession()
-            .getTransactionContext();
-        txn.beginTxn();
-
-        // Initialize privilege descriptors used in permissions service
-        s_log.debug("Initializing privilege descriptors...");
-        PrivilegeDescriptor.initialize();
-        s_log.debug("Done.");
-
-        txn.commitTxn();
-    }
-
-    private void setupDomainFactory() {
-        DomainObjectInstantiator instantiator;
-
-        /*** ACSObject ***/
+        /* ** ACSObject ** */
         // register instantiator for ACSObject data object type
-        instantiator = new ACSObjectInstantiator();
-        DomainObjectFactory.registerInstantiator(ACSObject.BASE_DATA_OBJECT_TYPE,
-                                                 instantiator);
+        // OLD Initializer code
+        // instantiator = new ACSObjectInstantiator();
+        // DomainObjectFactory.registerInstantiator(ACSObject.BASE_DATA_OBJECT_TYPE,
+        //                                          instantiator);
+        evt.getFactory().registerInstantiator
+            (ACSObject.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() );
 
-        /*** Party ***/
+        /* ** Party ** */
         // We use the same instantiator as for ACSObject because party is
         // abstract so we don't need to override doNewInstance().
-        DomainObjectFactory.registerInstantiator(Party.BASE_DATA_OBJECT_TYPE,
-                                                 instantiator);
+        //DomainObjectFactory.registerInstantiator(Party.BASE_DATA_OBJECT_TYPE,
+        //                                         instantiator);
+        evt.getFactory().registerInstantiator
+            (Party.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() );
 
-        /*** User ***/
-        instantiator = new ACSObjectInstantiator() {
-                public DomainObject doNewInstance(DataObject dataObject) {
-                    return new User(dataObject);
-                }
-            };
-        DomainObjectFactory.registerInstantiator
-            (User.BASE_DATA_OBJECT_TYPE, instantiator);
+        /* ** User ** */
+        evt.getFactory().registerInstantiator
+            (User.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dobj) {
+                     return new User(dobj);
+                 }
+             } );
 
-        /*** Group ***/
-        instantiator = new ACSObjectInstantiator() {
-                public DomainObject doNewInstance(DataObject dataObject) {
-                    return new Group(dataObject);
-                }
-            };
-        DomainObjectFactory.registerInstantiator(Group.BASE_DATA_OBJECT_TYPE,
-                                                 instantiator);
+        /* ** Group ** */
+        // OLD IOnitializer code
+        // instantiator = new ACSObjectInstantiator() {
+        //         public DomainObject doNewInstance(DataObject dataObject) {
+        //             return new Group(dataObject);
+        //         }
+        //     };
+        // DomainObjectFactory.registerInstantiator(Group.BASE_DATA_OBJECT_TYPE,
+        //                                          instantiator);
+        evt.getFactory().registerInstantiator
+            (Group.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dobj) {
+                     return new Group(dobj);
+                 }
+             } );
 
         /*** Role ***/
-        instantiator = new DomainObjectInstantiator() {
-                public DomainObject doNewInstance(DataObject dataObject) {
-                    return new Role(dataObject);
-                }
-            };
-        DomainObjectFactory.registerInstantiator(Role.BASE_DATA_OBJECT_TYPE,
-                                                 instantiator);
-    }
+        // instantiator = new DomainObjectInstantiator() {
+        //         public DomainObject doNewInstance(DataObject dataObject) {
+        //             return new Role(dataObject);
+        //         }
+        //     };
+        // DomainObjectFactory.registerInstantiator(Role.BASE_DATA_OBJECT_TYPE,
+        //                                         instantiator);
+        evt.getFactory().registerInstantiator
+            (Role.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dobj) {
+                     return new Role(dobj);
+                 }
+             } );
 
-    /* Register URLFinders with the URLService */
-    private void setupURLService() {
+        /* Register URLFinders with the URLService */
         // PackageInstance is the only kernel object type for which kernel
         // can provide a URLFinder.  Other object types could have
         // finders registered for them by other initializers (in UI packages).
@@ -115,9 +122,23 @@ public class Initializer extends BaseInitializer {
         // the site map.
         URLService.registerFinder(PackageInstance.BASE_DATA_OBJECT_TYPE,
                                   new GenericURLFinder(""));
+
+        // READ-ONLY operation, during initializing a transaction should not
+        // requirred.
+        //TransactionContext txn = SessionManager.getSession()
+        //                                       .getTransactionContext();
+        //txn.beginTxn();
+
+        s_log.debug("Initializing privilege descriptors...");
+        // Initialize privilege descriptors used in permissions service
+        // Recurring task, reads from database and stores in an internal Map
+        // field.
+        PrivilegeDescriptor.initialize();
+        s_log.debug("Done.");
+
+        //txn.commitTxn();
+
+        s_log.debug("kernel security domain init completed");
     }
 
-    protected void doShutdown() {
-        // Empty
-    }
 }

@@ -29,11 +29,11 @@ import com.arsdigita.kernel.PackageInstance;
 import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.SiteNodeCollection;
 import com.arsdigita.kernel.PackageType;
-import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.xml.Element;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.URL;
+import com.arsdigita.xml.Element;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
@@ -55,37 +55,40 @@ import org.apache.log4j.Logger;
  * @author Sameer Ajmani
  * @since 2001-06-01
  * @version 1.0
+ * @version $Id: UserInfo.java 287 2005-02-22 00:29:02Z sskracic $
  *
  **/
 public class UserInfo extends SimpleContainer {
 
-    public static final String versionId = "$Id: UserInfo.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
-
     private static final Logger s_log =
         Logger.getLogger(UserInfo.class.getName());
 
-    // m_contentCenters holds a list of content centers that exist
-    // on this installation
+    /** m_contentCenters holds a list of content centers that exist
+        on this installation */
     private List m_contentCenters;
-    // m_centerSiteNodes contains a mapping of content centers to the
-    // site nodes where they are mounted.
+    /** m_centerSiteNodes contains a mapping of content centers to the
+        site nodes where they are mounted.  */
     private HashMap m_centerSiteNodes;
 
     private UserAuthenticationListener m_listener =
-        new UserAuthenticationListener();
+                new UserAuthenticationListener();
 
+    /** 
+     * Constructor. 
+     */
     public UserInfo() {
         // add list of links
         ListPanel list = new ListPanel(false);
         list.add(new DynamicLink("login.userInfo.logoutLink",
-                                 LegacyInitializer.LOGOUT_PAGE_KEY));
+                                 UI.getLogoutPageURL()));
         list.add(new DynamicLink("login.userInfo.editProfileLink",
-                                 LegacyInitializer.EDIT_PAGE_KEY));
+                                 UI.getEditUserProfilePageURL()));
         list.add(new DynamicLink("login.userInfo.changePasswordLink",
-                                 LegacyInitializer.CHANGE_PAGE_KEY));
+                                 UI.getRecoverPasswordPageURL()));
         add(list);
         // add user info text
         add(new SimpleComponent() {
+            @Override
                 public void generateXML(PageState state, Element parent) {
                     if (!isLoggedIn(state)) {
                         s_log.debug("user is not logged in, so no XML generated");
@@ -99,12 +102,25 @@ public class UserInfo extends SimpleContainer {
                     if (m_contentCenters == null) {
                         m_contentCenters = new ArrayList();
                         m_centerSiteNodes = new HashMap();
+
+       //  XXX has to refactored!
+       //  used old style packageType to retrieve a list of installed
+       //  content-centers. Odd, there may exist only one content-center per
+       //  installation!
+       //  Currently (version 6.6.0 2011-02-06) content-center = workspace
+       //  exists as legacy application only, not as legacy compatible application!
+                        // retrieve all packages of type content-center
+                        // works because there may be only one.
                         DataCollection dc = SessionManager.getSession().retrieve
                             (PackageType.BASE_DATA_OBJECT_TYPE);
                         dc.addEqualsFilter("packageKey", "content-center");
+
                         if (dc.next()) {
+                            // works because there may be only one entry of
+                            // package type content-center
                             PackageType pt = new PackageType(dc.getDataObject());
                             dc.close();
+
                             PackageInstanceCollection collection = pt.getInstances();
                             while (collection.next()) {
                                 PackageInstance instance = collection.getPackageInstance();

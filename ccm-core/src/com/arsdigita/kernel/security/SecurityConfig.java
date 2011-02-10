@@ -53,15 +53,18 @@ public class SecurityConfig extends AbstractConfig {
 
     private static String s_systemAdministratorEmailAddress = null;
 
+    /** Size of secret key in bytes. **/
+    public static int SECRET_KEY_BYTES = 16;
+
     /** The class name of the SecurityHelper implementation. Must implement
         SecurityHelper interface                                              */
     private final Parameter m_securityHelperClass  = new SpecificClassParameter
         ("waf.security_helper_class", Parameter.REQUIRED,
          com.arsdigita.kernel.security.DefaultSecurityHelper.class,
          com.arsdigita.kernel.security.SecurityHelper.class);
-    /** This parameter is obsolete.                                           */
-    private final Parameter m_sessionTrackingMethod  = new StringParameter
-        ("waf.session_tracking_method", Parameter.REQUIRED, "cookie");
+//  /** This parameter is obsolete.                                           */
+//  private final Parameter m_sessionTrackingMethod  = new StringParameter
+//      ("waf.session_tracking_method", Parameter.REQUIRED, "cookie");
     /** List of extensions excluded from authentication cookies.
      *  Authentication is checked for all requests, but requests with one of
      *  these extensions will never cause a new cookie to be set.
@@ -69,38 +72,50 @@ public class SecurityConfig extends AbstractConfig {
     private final Parameter m_excludedExtensions  = new StringArrayParameter
         ("waf.excluded_extensions", Parameter.REQUIRED,
         new String[] { ".jpg", ".gif", ".png", ".pdf" } );
-    /** Key for the root page of the site.                                    */
-    private final Parameter m_rootPage       = new StringParameter
-        ("waf.pagemap.root", Parameter.REQUIRED, "register/");
-    /** Key for the login page.                                               */
-    private final Parameter m_loginPage      = new StringParameter
-        ("waf.pagemap.login", Parameter.REQUIRED, "register/");
-    /** Key for the new user page.                                            */
-    private final Parameter m_newUserPage    = new StringParameter
-        ("waf.pagemap.newuser", Parameter.REQUIRED, "register/new-user");
-    /** Key for the logout page.                                              */
-    private final Parameter m_logoutPage     = new StringParameter
-        ("waf.pagemap.logout", Parameter.REQUIRED, "register/logout");
-    /** Key for the explain-cookies page.                                     */
-    private final Parameter m_cookiesPage    = new StringParameter
-        ("waf.pagemap.cookies", Parameter.REQUIRED, "register/explain-persistent-cookies");
-    /** Key for the change-password page. **/
-    private final Parameter m_changePage     = new StringParameter
-        ("waf.pagemap.change", Parameter.REQUIRED, "register/change-password");
-    /** Key for the recover-password page. **/
-    private final Parameter m_recoverPage    = new StringParameter
-        ("waf.pagemap.recover", Parameter.REQUIRED, "register/recover-password");
-    /** Key for the login-expired page.                                       */
-    private final Parameter m_expiredPage    = new StringParameter
-        ("waf.pagemap.expired", Parameter.REQUIRED, "register/login-expired");
-    private final Parameter m_workspacePage  = new StringParameter
-        ("waf.pagemap.workspace", Parameter.REQUIRED, "pvt/");
-    private final Parameter m_loginRedirectPage  = new StringParameter
-        ("waf.pagemap.login_redirect", Parameter.REQUIRED, "pvt/");
-    private final Parameter m_permissionPage = new StringParameter
-        ("waf.pagemap.permission", Parameter.REQUIRED, "permissions/");
-    private final Parameter m_permSinglePage = new StringParameter
-        ("waf.pagemap.perm_single", Parameter.REQUIRED, "permissions/one");
+    
+// /////////////////////////////////////////////////////////////////////////////
+// This section completely moved to com.arsdigita.ui.UIConfig.
+// Configuration is not an Initializer task.
+// Retained here during transition, should be removed when completed (2011-02)
+// /////////////////////////////////////////////////////////////////////////////
+
+//  /** Key for the root page of the site.                                    */
+//  private final Parameter m_rootPage       = new StringParameter
+//      ("waf.pagemap.root", Parameter.REQUIRED, "register/");
+//  /** Key for the login page.                                               */
+//  private final Parameter m_loginPage      = new StringParameter
+//      ("waf.pagemap.login", Parameter.REQUIRED, "register/");
+//  /** Key for the new user page.                                            */
+//  private final Parameter m_newUserPage    = new StringParameter
+//      ("waf.pagemap.newuser", Parameter.REQUIRED, "register/new-user");
+//  /** Key for the logout page.                                              */
+//  private final Parameter m_logoutPage     = new StringParameter
+//      ("waf.pagemap.logout", Parameter.REQUIRED, "register/logout");
+//  /** Key for the explain-cookies page.                                     */
+//  private final Parameter m_cookiesPage    = new StringParameter
+//      ("waf.pagemap.cookies", Parameter.REQUIRED,
+//                              "register/explain-persistent-cookies");
+//  /** Key for the change-password page. **/
+//  private final Parameter m_changePage     = new StringParameter
+//      ("waf.pagemap.change", Parameter.REQUIRED, "register/change-password");
+//  /** Key for the recover-password page. **/
+//  private final Parameter m_recoverPage    = new StringParameter
+//      ("waf.pagemap.recover", Parameter.REQUIRED, "register/recover-password");
+//  /** Key for the login-expired page.                                       */
+//  private final Parameter m_expiredPage    = new StringParameter
+//      ("waf.pagemap.expired", Parameter.REQUIRED, "register/login-expired");
+//  private final Parameter m_workspacePage  = new StringParameter
+//      ("waf.pagemap.workspace", Parameter.REQUIRED, "pvt/");
+//  private final Parameter m_loginRedirectPage  = new StringParameter
+//      ("waf.pagemap.login_redirect", Parameter.REQUIRED, "pvt/");
+//  private final Parameter m_permissionPage = new StringParameter
+//      ("waf.pagemap.permission", Parameter.REQUIRED, "permissions/");
+//  private final Parameter m_permSinglePage = new StringParameter
+//      ("waf.pagemap.perm_single", Parameter.REQUIRED, "permissions/one");
+
+//  ////////////////////////////////////////////////////////////////////////////
+
+    
     private final Parameter m_cookieDurationMinutes = new IntegerParameter
         ("waf.pagemap.cookies_duration_minutes", Parameter.OPTIONAL, null);
     private final Parameter m_cookieDomain = new StringParameter
@@ -131,24 +146,25 @@ public class SecurityConfig extends AbstractConfig {
      */
     public SecurityConfig() {
         register(m_securityHelperClass);
-        register(m_sessionTrackingMethod);
+//      register(m_sessionTrackingMethod);
         register(m_excludedExtensions);
 
-        register(m_rootPage);
-        register(m_loginPage);
-        register(m_newUserPage);
-        register(m_logoutPage);
-        register(m_cookiesPage);
-        register(m_changePage);
-        register(m_recoverPage);
-        register(m_expiredPage);
-        register(m_workspacePage);
-        register(m_loginRedirectPage);
-        register(m_permissionPage);
-        register(m_permSinglePage);
+//  MOVED, see above
+//      register(m_rootPage);
+//      register(m_loginPage);
+//      register(m_newUserPage);
+//      register(m_logoutPage);
+//      register(m_cookiesPage);
+//      register(m_changePage);
+//      register(m_recoverPage);
+//      register(m_expiredPage);
+//      register(m_workspacePage);
+//      register(m_loginRedirectPage);
+//      register(m_permissionPage);
+//      register(m_permSinglePage);
+
         register(m_cookieDomain);
         register(m_loginConfig);
-
         register(m_cookieDurationMinutes);
         register(m_adminEmail);
         register(m_autoRegistrationOn);
@@ -184,13 +200,13 @@ public class SecurityConfig extends AbstractConfig {
         return (Class) get(m_securityHelperClass);
     }
 
-    /**
-     * Obsolete!
-     * @return
-     */
-    public final String getSessionTrackingMethod() {
-        return (String) get(m_sessionTrackingMethod);
-    }
+//  /**
+//   * Obsolete!
+//   * @return
+//   */
+//  public final String getSessionTrackingMethod() {
+//      return (String) get(m_sessionTrackingMethod);
+//  }
 
     /**
      * 
@@ -200,42 +216,45 @@ public class SecurityConfig extends AbstractConfig {
         return Arrays.asList( (String[]) get(m_excludedExtensions));
     }
 
-    String getRootPage() {
-        return (String) get(m_rootPage);
-    }
-    String getLoginPage() {
-        return (String) get(m_loginPage);
-    }
-    String getNewUserPage() {
-        return (String) get(m_newUserPage);
-    }
-    String getLogoutPage() {
-        return (String) get(m_logoutPage);
-    }
-    String getCookiesPage() {
-        return (String) get(m_cookiesPage);
-    }
-    String getChangePage() {
-        return (String) get(m_changePage);
-    }
-    String getRecoverPage() {
-        return (String) get(m_recoverPage);
-    }
-    String getExpiredPage() {
-        return (String) get(m_expiredPage);
-    }
-    String getWorkspacePage() {
-        return (String) get(m_workspacePage);
-    }
-    public String getLoginRedirectPage() {
-        return (String) get(m_loginRedirectPage);
-    }
-    String getPermissionPage() {
-        return (String) get(m_permissionPage);
-    }
-    String getPermSinglePage() {
-        return (String) get(m_permSinglePage);
-    }
+//  MOVED, see above
+//  String getRootPage() {
+//      return (String) get(m_rootPage);
+//  }
+//  String getLoginPage() {
+//      return (String) get(m_loginPage);
+//  }
+//  String getNewUserPage() {
+//      return (String) get(m_newUserPage);
+//  }
+//  String getLogoutPage() {
+//      return (String) get(m_logoutPage);
+//  }
+//  String getCookiesPage() {
+//      return (String) get(m_cookiesPage);
+//  }
+//  String getChangePage() {
+//      return (String) get(m_changePage);
+//  }
+//  String getRecoverPage() {
+//      return (String) get(m_recoverPage);
+//  }
+//  String getExpiredPage() {
+//      return (String) get(m_expiredPage);
+//  }
+//  String getWorkspacePage() {
+//      return (String) get(m_workspacePage);
+//  }
+//  public String getLoginRedirectPage() {
+//      return (String) get(m_loginRedirectPage);
+//  }
+//  String getPermissionPage() {
+//      return (String) get(m_permissionPage);
+//  }
+//  String getPermSinglePage() {
+//      return (String) get(m_permSinglePage);
+//  }
+//  ///////////////////////////////////////////////////////////////////////////
+
     public String getCookieDomain() {
         return (String) get(m_cookieDomain);
     }
@@ -259,7 +278,8 @@ public class SecurityConfig extends AbstractConfig {
 
     private static synchronized String getSystemAdministratorEmailAddress() {
         if (s_systemAdministratorEmailAddress == null) {
-            ObjectPermissionCollection perms = PermissionService.getGrantedUniversalPermissions();
+            ObjectPermissionCollection perms =
+                    PermissionService.getGrantedUniversalPermissions();
             perms.addEqualsFilter("granteeIsUser", Boolean.TRUE);
             perms.clearOrder();
             perms.addOrder("granteeID");

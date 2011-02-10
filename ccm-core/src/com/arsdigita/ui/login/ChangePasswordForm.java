@@ -39,13 +39,13 @@ import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.bebop.parameters.URLParameter;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.Web;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
-import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.RecoveryLoginModule;
 import com.arsdigita.mail.Mail;
 import com.arsdigita.util.UncheckedWrapperException;
@@ -297,8 +297,7 @@ public class ChangePasswordForm extends Form
 
         final HttpServletRequest req = state.getRequest();
 
-        final String path = LegacyInitializer.getFullURL
-            (LegacyInitializer.WORKSPACE_PAGE_KEY, req);
+        final String path = UI.getWorkspaceURL(req);
 
         final URL fallback = URL.there(req, path);
 

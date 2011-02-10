@@ -31,10 +31,10 @@ import org.apache.log4j.Logger;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Common base class for a generic URL-to-Bebop-Page dispatching
- * pattern.  This class may be used directly by applications, or it
- * may be subclassed to be coded with a specific map or to override
- * the map lookup for certain sets of URLs.
+ * Common base class for a generic URL-to-Bebop-Page dispatching pattern.
+ * This class may be used directly by applications, or it may be subclassed
+ * to be coded with a specific map or to override the map lookup for certain
+ * sets of URLs.
  *
  * @version $Id: BebopMapDispatcher.java 287 2005-02-22 00:29:02Z sskracic $
  */

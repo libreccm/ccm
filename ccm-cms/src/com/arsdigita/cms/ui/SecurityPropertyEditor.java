@@ -161,7 +161,7 @@ public class SecurityPropertyEditor extends PropertyEditor {
             addSecurityListener(section);
         } else {
             throw new IllegalArgumentException(
-                                               "The ComponentAccess object did not contain a form section.");
+                          "The ComponentAccess object did not contain a form section.");
         }
     }
 

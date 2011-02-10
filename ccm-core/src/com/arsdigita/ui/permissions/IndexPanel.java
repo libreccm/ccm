@@ -34,13 +34,12 @@ import com.arsdigita.kernel.ACSObject;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.permissions.PermissionService;
-import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.ui.UI;
 import com.arsdigita.util.LockableImpl;
+
 import java.math.BigDecimal;
 
 /**
@@ -68,9 +67,10 @@ class IndexPanel extends SimpleContainer implements PermissionsConstants  {
     public IndexPanel() {
         setClassAttr("PERMISSIONS");
         m_navbar = new DimensionalNavbar();
-        m_navbar.add(new Link(PERSONAL_SITE.localize()+"", 
-                              "/" + LegacyInitializer.getURL(
-                                  LegacyInitializer.WORKSPACE_PAGE_KEY)));
+        m_navbar.add(new Link(PERSONAL_SITE.localize()+"",
+                              UI.getWorkspaceURL()));
+        //                    "/" + LegacyInitializer.getURL(
+        //                        LegacyInitializer.WORKSPACE_PAGE_KEY)));
         m_navbar.add(new Link(MAIN_SITE.localize()+"", "/"));
         m_navbar.add(new Label(PERMISSIONS_INDEX_NAVBAR.localize()+""));
         m_navbar.setClassAttr("permNavBar");
@@ -87,7 +87,9 @@ class IndexPanel extends SimpleContainer implements PermissionsConstants  {
         boxpanel.add(m_adminObjs);
 
         m_segmentedPanel = new SegmentedPanel();
-        m_segmentedPanel.addSegment(new Label(PAGE_OBJECT_PANEL_TITLE.localize()+""), boxpanel);
+        m_segmentedPanel.addSegment(new Label(
+                                    PAGE_OBJECT_PANEL_TITLE.localize()+""),
+                                    boxpanel);
         add(m_segmentedPanel);
     }
 

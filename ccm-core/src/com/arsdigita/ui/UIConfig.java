@@ -21,6 +21,7 @@ package com.arsdigita.ui;
 
 import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.StringUtils;
+import com.arsdigita.util.parameter.StringParameter;
 import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.Parameter;
 
@@ -32,7 +33,10 @@ import org.apache.log4j.Logger;
 
 /**
  * A configuration record for configuration of the core UI package
- * (layoput of main UI components).
+ * (layout of main UI components).
+ *
+ * Accessors of this class may return null. Developers should take care
+ * to trap null return values in their code.
  *
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @version $Id: $
@@ -52,7 +56,7 @@ public class UIConfig extends AbstractConfig {
      * constructor directly!
      * @return
      */
-    public static final synchronized UIConfig getConfig() {
+    public static synchronized UIConfig getConfig() {
         if (s_conf == null) {
             s_conf = new UIConfig();
             s_conf.load();
@@ -89,7 +93,7 @@ public class UIConfig extends AbstractConfig {
     // Quick 'md Dirty, we reeally need a StringListParameter class
     private final Parameter m_defaultLayout = 
             new StringArrayParameter(
-                    "waf.ui.default_layout",
+                    "core.ui.default_layout",
                     Parameter.REQUIRED,
                     new String[]
                         { "top:com.arsdigita.ui.UserBanner"
@@ -128,10 +132,45 @@ public class UIConfig extends AbstractConfig {
      */
     private final Parameter m_applicationLayouts = 
             new StringArrayParameter(
-                    "waf.ui.application_layouts",
+                    "core.ui.application_layouts",
                     Parameter.OPTIONAL,
                     null
                 );
+
+    /** String containing the relative URL for the top level page
+     *  (or entry page / home page) of the site, Without leading slash but with
+     *  trailing slash in case of a directory.
+     *  By default it is the login page, but usually the root page of the main
+     *  presentation application, e.g. portal, navigation, forum, etc.        */
+    // Old initializer: waf.pagemap.root
+    private final Parameter m_rootPageURL       = new StringParameter
+        ("core.ui.pagemap.root_page_url", Parameter.REQUIRED, "register/");
+
+    /**String containing the URL for the login page, Without leading slash but
+     * with trailing slash in case of a directory.                            */
+    // Old initializer: waf.pagemap.login
+    private final Parameter m_loginURL      = new StringParameter
+        ("core.ui.pagemap.login_url", Parameter.REQUIRED, "register/");
+
+    /** String containing the URL for the logout page, Without leading slash 
+     *  but with trailing slash in case of a directory.                       */
+    // Old initializer: waf.pagemap.logout
+    private final Parameter m_logoutURL     = new StringParameter
+        ("core.ui.pagemap.logout_url", Parameter.REQUIRED, "register/logout");
+
+    /** String containing the URL for a page which may perform a user specific
+     *  redirect if logged in or to a general public page if not.             */
+    // Used to be LOGIN_REDIRECT_PAGE_KEY in old kernel/security/initializer
+    // parameter waf.pagemap.login_redirect = pvt/
+    // XXX  url pvt seems not to exist anymore! (pboy 2011-02-03)
+    private final Parameter m_userRedirectURL  = new StringParameter
+        ("core.ui.pagemap.user_redirect_url", Parameter.REQUIRED, "pvt/");
+    
+    /** String containing the URL for the workspace of the site.              */
+    // Old initializer: waf.pagemap.workspace
+    // XXX  url pvt seems not to exist anymore! (pboy 2011-02-03)
+    private final Parameter m_workspaceURL  = new StringParameter
+        ("core.ui.pagemap.workspace_url", Parameter.REQUIRED, "pvt/");
 
     /**
      * Constructs an empty RuntimeConfig object.
@@ -144,6 +183,12 @@ public class UIConfig extends AbstractConfig {
     // private UIConfig() {
         register(m_defaultLayout);
         register(m_applicationLayouts);
+
+        register(m_rootPageURL);
+        register(m_loginURL);
+        register(m_logoutURL);
+        register(m_userRedirectURL);
+        register(m_workspaceURL);
 
         loadInfo();
 
@@ -193,6 +238,51 @@ public class UIConfig extends AbstractConfig {
             return null;
 
         }
+    }
+
+    /**
+     * Retrieve systems root page (entry page) url.
+     * 
+     * @return root page url
+     */
+    public String getRootPage() {
+        return (String)get(m_rootPageURL) ;
+    }
+
+    /**
+     * Retrieve systems login page url.
+     *
+     * @return login page url
+     */
+    public String getLogin() {
+        return (String)get(m_loginURL) ;
+    }
+
+    /**
+     * Retrieve systems logout page url.
+     *
+     * @return logout page url
+     */
+    public String getLogout() {
+        return (String)get(m_logoutURL) ;
+    }
+
+    /**
+     * Retrieve systems user login redirect page url.
+     *
+     * @return user login redirect page url
+     */
+    public String getUserRedirect() {
+        return (String)get(m_userRedirectURL) ;
+    }
+
+    /**
+     * Retrieve systems workspace url.
+     *
+     * @return workspace page url
+     */
+    public String getWorkspace() {
+        return (String)get(m_workspaceURL) ;
     }
 
 }

@@ -26,13 +26,26 @@ import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.http.HttpServlet;
 
+
+
+//  ////////////////////////////////////////////////////////////////////////
+//
+//  Presumably outdated - part of the old enterprise.ini based initializer
+//  system.
+//  Not used in web.xml now and superseded by the new initializer system and
+//  its legacy init method.
+//
+//  ////////////////////////////////////////////////////////////////////////
+
+
+
 /**
  * Bootstraps the ACS by calling the initializers in the enterprise.init file.
  *
  * @author Raphael Schloming (rhs@mit.edu)
  * @version $Id: InitializerServlet.java 287 2005-02-22 00:29:02Z sskracic $
+ * @deprecated  without direct replacement. Not used anymore
  */
-
 public class InitializerServlet extends HttpServlet {
 
     private Script m_ini = null;

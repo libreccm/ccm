@@ -28,8 +28,8 @@ import com.arsdigita.web.ParameterMap;
 import org.apache.log4j.Logger;
 
 /**
- * A URL on a page. May contain a label, an image,
- * or any other component.  A Link is a BaseLink that manages URL variables.
+ * A URL on a page. May contain a label, an image, or any other component.
+ *  A Link is a BaseLink that manages URL variables.
  *
  * <p> <b>Example:</b> The common usage for a Link component is
  * illustrated in the code fragment below:
@@ -63,9 +63,9 @@ public class Link extends BaseLink {
     protected final String TYPE_LINK = "link";
 
     /**
-     * <p>Passing this value to {@link #setTargetFrame setTargetFrame}
-     * will create a link that opens a new browser window whenever it
-     * is clicked.</p>
+     * <p>Passing this value to {@link #setTargetFrame setTargetFrame} will
+     * create a link that opens a new browser window whenever it is clicked.
+     *</p>
      *
      * @see #setTargetFrame
      */
@@ -77,18 +77,19 @@ public class Link extends BaseLink {
     }
 
     /**
-     * <p>The <tt>Component</tt> parameter in this constructor is
-     * usually a {@link Label} or {@link Image}.</p>
+     * Constructor.
+     * 
+     * <p>The <tt>Component</tt> parameter in this constructor is usually a
+     * {@link Label} or {@link Image}.</p>
      *
-     * <p>Starting with release 5.2, this method prefixes the
-     * passed-in <code>url</code> with the path to the CCM dispatcher.
-     * Code using this constructor should not prefix <code>url</code>
-     * with the webapp context path or the dispatcher servlet
-     * path.</p>
+     * <p>Starting with release 5.2, this method prefixes the passed-in url with
+     * the path to the CCM dispatcher. Code using this constructor should not
+     * prefix <code>url</code> with the webapp context path or the dispatcher
+     * servlet path.</p>
      *
-     * <p>The vast majority of CCM UI code expects to link through the
-     * dispatcher.  Code that does not should use the
-     * <code>Link</code> constructor taking a <code>URL</code>.</p>
+     * <p>The vast majority of CCM UI code expects to link through the dispatcher.
+     * Code that does not should use the <code>Link</code> constructor taking
+     * a <code>URL</code>.</p>
      *
      * @see #Link(String,URL)
      */
@@ -99,12 +100,11 @@ public class Link extends BaseLink {
     }
 
     /**
-     * Constructors with <tt>PrintListener</tt> parameters
-     * allow for a {@link PrintListener} to be set for
-     * the Link, without the need to make a separate call to
-     * the <tt>addPrintListener</tt> method. PrintListeners
-     * are a convenient way to alter underlying Link attributes
-     * such as Link text or target URL within a locked page
+     * Constructors with <tt>PrintListener</tt> parameters allow for a
+     * {@link PrintListener} to be set for the Link, without the need
+     * to make a separate call to the <tt>addPrintListener</tt> method.
+     * PrintListeners are a convenient way to alter underlying Link
+     * attributes such as Link text or target URL within a locked page
      * on a per request basis.
      */
     public Link(Component child, PrintListener l) {
@@ -113,12 +113,30 @@ public class Link extends BaseLink {
         init();
     }
 
+
+    /**
+     * Constructors with <tt>PrintListener</tt> parameters allow for a
+     * {@link PrintListener} to be set for the Link, without the need to make a
+     * separate call to the <tt>addPrintListener</tt> method.  PrintListeners
+     * are a convenient way to alter underlying Link attributes such as Link
+     * text or target URL within a locked page on a per request basis.
+     */
     public Link(String label, PrintListener l) {
         super(label,l);
 
         init();
     }
 
+
+    /**
+     * Constructors with <tt>PrintListener</tt> parameters
+     * allow for a {@link PrintListener} to be set for
+     * the Link, without the need to make a separate call to
+     * the <tt>addPrintListener</tt> method. PrintListeners
+     * are a convenient way to alter underlying Link attributes
+     * such as Link text or target URL within a locked page
+     * on a per request basis.
+     */
     public Link(PrintListener l) {
         super(l);
 
@@ -126,9 +144,9 @@ public class Link extends BaseLink {
     }
 
     /**
-     * <p>This constructor is a common one for a Link component, as it
-     * allows for the Link text and the target URL to be set at the
-     * same time during construction.</p>
+     * <p>This constructor is a common one for a Link component, as it allows
+     * for the Link text and the target URL to be set at the same time during
+     * construction.</p>
      *
      * <p>Starting with release 5.2, this method prefixes the
      * passed-in <code>url</code> with the path to the CCM dispatcher.
@@ -149,11 +167,10 @@ public class Link extends BaseLink {
     }
 
     /**
-     * <p>Constructs a Link using a <code>URL</code>.  When this
-     * constructor is used, the method {@link #setVar(String,String)}
-     * and its deprecated equivalent have no effect on the resulting
-     * hyperlink.  Instead, use the <code>ParameterMap</code> argument
-     * to <code>URL</code>.</p>
+     * <p>Constructs a Link using a <code>URL</code>.  When this constructor is
+     * used, the method {@link #setVar(String,String)} and its deprecated
+     * equivalent have no effect on the resulting hyperlink.  Instead, use the
+     * <code>ParameterMap</code> argument to <code>URL</code>.</p>
      *
      * @see com.arsdigita.web.URL
      * @see com.arsdigita.web.ParameterMap

@@ -1,4 +1,6 @@
 <product name="CCM Core" current_version="5.1.1">
+  <!-- Configuration file for core com.arsdigita.dmi automatic update facility
+       package. (not in use as of version 6.x.x                              -->
   <product_description>Red Hat CCM Core</product_description>
 
   <version_history database="oracle-se">

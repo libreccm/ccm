@@ -328,6 +328,7 @@ public class PrivilegeDescriptor {
 
     /**
      * Initializes the PrivilegeDescriptor's internal cache of privileges.
+     * Reads privileges from database and stores in the internal Map s_privs.
      * Called from the kernel initializer.
      */
     public static void initialize() {

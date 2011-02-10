@@ -39,10 +39,9 @@ import org.apache.log4j.Logger;
  *
  * @author Phong Nguyen
  * @version 1.0
+ * @version $Id: Party.java 738 2005-09-01 12:36:52Z sskracic $
  **/
 public abstract class Party extends ACSObject {
-
-    public static final String versionId = "$Id: Party.java 738 2005-09-01 12:36:52Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger( Party.class );
 
@@ -55,6 +54,7 @@ public abstract class Party extends ACSObject {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.kernel.Party";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -143,6 +143,7 @@ public abstract class Party extends ACSObject {
      *
      * @see ACSObject#getDisplayName()
      */
+    @Override
     public String getDisplayName() {
         return getName();
     }

@@ -35,15 +35,32 @@ init com.arsdigita.globalization.LegacyInitializer {
     defaultCharset = "UTF-8";
 }
 
-init com.arsdigita.kernel.Initializer {}
 
-init com.arsdigita.kernel.security.LegacyInitializer {
-    securityHelperClass = "com.arsdigita.kernel.security.DefaultSecurityHelper";
-    sessionTrackingMethod = "cookie";
-
-    excludedExtensions = { ".jpg", ".gif", ".png", ".pdf" };
-
+// Should get integrated into the same configuration file as parameter
+// waf.debug, i.e. ccm-core/kernel.properties.
+init com.arsdigita.webdevsupport.Initializer {
+  active = false;
 }
+
+
+
+// /////////////////////////////////////////////////////////////////
+//
+//    Initializer definitely replaced by new initialization system
+//
+// /////////////////////////////////////////////////////////////////
+
+// Move configuration options to enterprise.init.nolongerInUse
+
+// init com.arsdigita.kernel.LegacyInitializer {}
+ 
+// -init com.arsdigita.kernel.security.LegacyInitializer {
+// -    securityHelperClass = "com.arsdigita.kernel.security.DefaultSecurityHelper";
+// -    sessionTrackingMethod = "cookie";
+// -
+// -    excludedExtensions = { ".jpg", ".gif", ".png", ".pdf" };
+// -
+// -}
 
 
 // Set to true when using intermedia search
@@ -52,11 +69,6 @@ init com.arsdigita.kernel.security.LegacyInitializer {
 //-}
 
 
-// Should get integrated into the same configuration file as parameter
-// waf.debug, i.e. ccm-core/kernel.properties.
-init com.arsdigita.webdevsupport.Initializer {
-  active = false;
-}
 
 // init com.arsdigita.toolbox.CharsetEncodingProviderInitializer { }
 
@@ -140,15 +152,6 @@ init com.arsdigita.webdevsupport.Initializer {
 //  	{ "com.arsdigita.bookmarks.PopulateBookmarks", {5}}
 //     };
 // }
-
-
-// /////////////////////////////////////////////////////////////////
-//
-//    Initializer definitely replaced by new initialization system
-//
-// /////////////////////////////////////////////////////////////////
-
-// Move configuration options to enterprise.init.nolongerInUse
 
 // no longer used - old versioning system?
 // init com.arsdigita.versioning.Initializer { }

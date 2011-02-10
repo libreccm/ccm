@@ -47,8 +47,9 @@ import com.arsdigita.kernel.KernelHelper;
 import com.arsdigita.kernel.security.AccountNotFoundException;
 import com.arsdigita.kernel.security.Credential;
 import com.arsdigita.kernel.security.CredentialException;
-import com.arsdigita.kernel.security.LegacyInitializer;
+// import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.UserContext;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.RedirectSignal;
 import com.arsdigita.web.ReturnSignal;
@@ -69,15 +70,11 @@ import org.apache.log4j.Logger;
  * @author Sameer Ajmani
  *
  * @version $Id: UserRegistrationForm.java 1230 2006-06-22 11:50:59Z apevec $
- *
- **/
+ */
 
 public class UserRegistrationForm extends Form
         implements LoginConstants, FormInitListener,
-        FormValidationListener, FormProcessListener
-{
-
-    public static final String versionId = "$Id: UserRegistrationForm.java 1230 2006-06-22 11:50:59Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
+        FormValidationListener, FormProcessListener {
 
     private static final Logger s_log =
             Logger.getLogger(UserRegistrationForm.class);
@@ -114,19 +111,18 @@ public class UserRegistrationForm extends Form
 
         m_autoRegistrationOn = autoRegistrationOn;
 
-        m_timestamp = new Hidden(new StringParameter
-                (FORM_TIMESTAMP));
+        m_timestamp = new Hidden(new StringParameter (FORM_TIMESTAMP));
         add(m_timestamp);
 
         m_returnURL = new Hidden(new URLParameter
-                (LoginHelper.RETURN_URL_PARAM_NAME));
+                                     (LoginHelper.RETURN_URL_PARAM_NAME));
         m_returnURL.setPassIn(true);
         add(m_returnURL);
 
         setupLogin();
 
         add(new Label(LoginHelper.getMessage
-                ("login.userRegistrationForm.password")));
+                                  ("login.userRegistrationForm.password")));
         m_password = new Password(new StringParameter(FORM_PASSWORD));
         // Since new users should not enter a password, allow null.
         //m_password.addValidationListener(new NotNullValidationListener());
@@ -137,7 +133,7 @@ public class UserRegistrationForm extends Form
             new CheckboxGroup(FORM_PERSISTENT_LOGIN_P);
         Label optLabel =
                 new Label(LoginHelper.getMessage
-                ("login.userRegistrationForm.cookieOption"));
+                          ("login.userRegistrationForm.cookieOption"));
         Option opt = new Option(FORM_PERSISTENT_LOGIN_P_DEFAULT, optLabel);
         m_isPersistent.addOption(opt);
         if (Kernel.getConfig().isLoginRemembered()) {
@@ -146,17 +142,17 @@ public class UserRegistrationForm extends Form
         cookiePanel.add(m_isPersistent);
         cookiePanel.add(new DynamicLink
                 ("login.userRegistrationForm.explainCookieLink",
-                        LegacyInitializer.COOKIES_PAGE_KEY));
+                 UI.getCookiesExplainPageURL()));
         add(cookiePanel);
 
         add(new Submit(SUBMIT), ColumnPanel.CENTER | ColumnPanel.FULL_WIDTH);
 
         add(new DynamicLink("login.userRegistrationForm.forgotPasswordLink",
-                LegacyInitializer.RECOVER_PAGE_KEY));
+                UI.getRecoverPasswordPageURL()));
 
         if (m_autoRegistrationOn) {
             add(new DynamicLink("login.userRegistrationForm.newUserRegister",
-                                LegacyInitializer.NEWUSER_PAGE_KEY));
+                                UI.getNewUserPageURL()));
         }
 
         add(new ElementComponent("subsite:promptToEnableCookiesMsg",
@@ -199,7 +195,7 @@ public class UserRegistrationForm extends Form
     }
 
     public void init(FormSectionEvent event)
-            throws FormProcessException {
+                throws FormProcessException {
         s_log.info( "In init" );
         if (Kernel.getConfig().isSSOenabled()) {
             // try SSO login
@@ -241,8 +237,9 @@ public class UserRegistrationForm extends Form
             } catch (CredentialException e) {
                 s_log.info( "Invalid credential" );
 
-                final String path = LegacyInitializer.getFullURL
-                        (LegacyInitializer.EXPIRED_PAGE_KEY, state.getRequest());
+              //final String path = LegacyInitializer.getFullURL
+              //        (LegacyInitializer.EXPIRED_PAGE_KEY, state.getRequest());
+                final String path = UI.getLoginExpiredPageURL();
 
                 final URL url = com.arsdigita.web.URL.there
                         (state.getRequest(), path);
@@ -267,9 +264,8 @@ public class UserRegistrationForm extends Form
         final PageState state = event.getPageState();
         final HttpServletRequest req = state.getRequest();
         
-	// Redirect to workspace or return URL, if specified.
-        final String path = LegacyInitializer.getFullURL
-                (LegacyInitializer.LOGIN_REDIRECT_PAGE_KEY, req);
+        // Redirect to workspace or return URL, if specified.
+        final String path = UI.getUserRedirectURL(req);
 
         final URL url = com.arsdigita.web.URL.there(req, path);
 
@@ -404,8 +400,9 @@ public class UserRegistrationForm extends Form
     }
 
     protected void redirectToNewUserPage(PageState state) {
-        String url = LegacyInitializer.getFullURL
-            (LegacyInitializer.NEWUSER_PAGE_KEY, state.getRequest());
+//        String url = LegacyInitializer.getFullURL
+//            (LegacyInitializer.NEWUSER_PAGE_KEY, state.getRequest());
+        String url = UI.getNewUserPageURL();
         
         ParameterMap map = new ParameterMap();
         map.setParameter(LoginHelper.RETURN_URL_PARAM_NAME,

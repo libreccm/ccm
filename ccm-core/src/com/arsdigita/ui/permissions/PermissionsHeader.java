@@ -21,13 +21,12 @@ package com.arsdigita.ui.permissions;
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.DimensionalNavbar;
 import com.arsdigita.bebop.Label;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Link;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.PrintEvent;
 import com.arsdigita.bebop.event.PrintListener;
 import com.arsdigita.kernel.ACSObject;
-import com.arsdigita.kernel.security.LegacyInitializer;
+import com.arsdigita.ui.UI;
 
 /**
  *
@@ -67,9 +66,10 @@ class PermissionsHeader extends BoxPanel implements PermissionsConstants {
             });
 
         DimensionalNavbar navbar = new DimensionalNavbar();
-        navbar.add(new Link(PERSONAL_SITE.localize()+"", 
-                            "/" + LegacyInitializer.getURL(
-                                LegacyInitializer.WORKSPACE_PAGE_KEY)));
+        navbar.add(new Link(PERSONAL_SITE.localize()+"",
+                            UI.getWorkspaceURL() ));
+               //           "/" + LegacyInitializer.getURL(
+               //               LegacyInitializer.WORKSPACE_PAGE_KEY)));
         navbar.add(new Link(MAIN_SITE.localize()+"", "/"));
         navbar.add(new Link(PERMISSIONS_INDEX.localize()+"", "/permissions/"));
         navbar.add(objectName);

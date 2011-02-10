@@ -33,11 +33,11 @@ import org.apache.log4j.Logger;
  * servlet (mapped to "/someprefix/*") for requests to the CCM
  * webapp.</p>
  *
- * <p>Upon finding an {@link com.arsdigita.web.Application
- * application} at the requested URL, this class sets a request
- * attribute storing the ID of the application and forwards to the
- * servlet associated with it.  If instead no application is found,
- * the request is forwarded to the fallback servlet, if defined.</p>
+ * <p>Upon finding an {@link com.arsdigita.web.Application application} at the
+ * requested URL, this class sets a request attribute storing the ID of the
+ * application and forwards to the servlet associated with it. If instead no
+ * application is found, the request is forwarded to the fallback servlet,
+ * if defined.</p>
  *
  * <p>This servlet may be deployed using web.xml entries like
  * these:</p>

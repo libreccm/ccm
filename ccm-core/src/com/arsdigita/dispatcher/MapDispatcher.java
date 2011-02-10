@@ -233,7 +233,6 @@ public class MapDispatcher implements Dispatcher {
     public void requireTrailingSlash(String url) { }
 
     /**
-     * 
      * Initializes URL-to-Page/Dispatcher/Servlet mappings from a file.
      *
      * Format of the file is XML:
@@ -322,12 +321,14 @@ public class MapDispatcher implements Dispatcher {
             m_buffer = new StringBuffer();
         }
 
+        @Override
         public void characters(char[] ch, int start, int len) {
             for (int i = 0; i < len; i++) {
                 m_buffer.append(ch[start + i]);
             }
         }
 
+        @Override
         public void endElement(String uri, String localName, String qname) {
             if (qname.equals("url")) {
                 m_url = m_buffer.toString().trim();

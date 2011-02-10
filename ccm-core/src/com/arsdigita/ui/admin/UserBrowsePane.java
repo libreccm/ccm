@@ -19,7 +19,6 @@
 package com.arsdigita.ui.admin;
 
 
-import com.arsdigita.ui.util.GlobalizationUtil ;
 
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.BoxPanel;
@@ -35,9 +34,9 @@ import com.arsdigita.bebop.SegmentedPanel;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.Table;
 import com.arsdigita.bebop.TabbedPane;
+// import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionEvent;
-import com.arsdigita.bebop.event.ActionEvent;
-import com.arsdigita.bebop.event.ActionListener;
+// import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
@@ -50,6 +49,7 @@ import com.arsdigita.bebop.table.TableModel;
 import com.arsdigita.bebop.table.TableModelBuilder;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.globalization.GlobalizedMessage;
+import com.arsdigita.ui.UI ;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.web.RedirectSignal;
@@ -59,15 +59,17 @@ import com.arsdigita.kernel.Group;
 import com.arsdigita.kernel.GroupCollection;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.UserAuthentication;
-import com.arsdigita.kernel.security.LegacyInitializer;
+// import com.arsdigita.kernel.security.LegacyInitializer;
 import com.arsdigita.kernel.security.UserContext;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.PersistenceException;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.util.LockableImpl;
 import com.arsdigita.util.UncheckedWrapperException;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -285,8 +287,7 @@ class UserBrowsePane extends SegmentedPanel
                     }
 
                     // Redirect to workspace URL
-                    final String path = LegacyInitializer.getFullURL
-                        (LegacyInitializer.LOGIN_REDIRECT_PAGE_KEY, state.getRequest());
+                    final String path = UI.getUserRedirectURL(state.getRequest());
 
                     final URL url = URL.there(state.getRequest(), path);
 
@@ -324,7 +325,8 @@ class UserBrowsePane extends SegmentedPanel
 					return false;
 				} 
 				// We show the delete link if the user has never published an item
-				// This implicitly checks whether the user is banned - if they are deletable they cannot ever have been banned
+				// This implicitly checks whether the user is banned - if they
+                // are deletable they cannot ever have been banned
 				User u = getUser(s);
 				return (!hasUserPublishedItems(u));
 			}

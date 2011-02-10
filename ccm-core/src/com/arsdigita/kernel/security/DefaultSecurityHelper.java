@@ -18,6 +18,8 @@
  */
 package com.arsdigita.kernel.security;
 
+import com.arsdigita.ui.UI;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -40,13 +42,14 @@ public class DefaultSecurityHelper implements SecurityHelper {
         return req.isSecure();
     }
 
-    private static String[] allowedPages = new String[] {
-        LegacyInitializer.LOGIN_PAGE_KEY,
-        LegacyInitializer.LOGOUT_PAGE_KEY,
-        LegacyInitializer.COOKIES_PAGE_KEY,
-        LegacyInitializer.RECOVER_PAGE_KEY,
-        LegacyInitializer.EXPIRED_PAGE_KEY,
-    };
+//  NOT USED anymore, see method requiresLogin() belows.
+//  private static String[] allowedPages = new String[] {
+//      LegacyInitializer.LOGIN_PAGE_KEY,
+//      LegacyInitializer.LOGOUT_PAGE_KEY,
+//      LegacyInitializer.COOKIES_PAGE_KEY,
+//      LegacyInitializer.RECOVER_PAGE_KEY,
+//      LegacyInitializer.EXPIRED_PAGE_KEY,
+//  };
 
     /**
      * Determines whether the current request requires that the user be
@@ -83,6 +86,7 @@ public class DefaultSecurityHelper implements SecurityHelper {
      * @return the full URL of the login page.
      **/
     public String getLoginURL(HttpServletRequest req) {
-        return LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY, req);
+    //  return LegacyInitializer.getFullURL(LegacyInitializer.LOGIN_PAGE_KEY, req);
+        return UI.getLoginPageURL();
     }
 }

@@ -28,7 +28,12 @@ import javax.servlet.http.HttpServlet;
 import org.apache.log4j.Logger;
 
 /**
+ * The prefixer servlet adds prefixes to chosen classes of requests.
+ * This is useful if you wish to migrate users off the old dispatcher to
+ * the new dispatcher, which uses a prefix for URLs.  The following
+ * snippet assumes your dispatcher is mapped to "/ccm/*".
  *
+ * Used by a web.xml entry. (cf. web.xml-core-optional.in)
  *
  * @author Justin Ross &lt;<a href="mailto:jross@redhat.com">jross@redhat.com</a>&gt;
  * @version $Id: PrefixerServlet.java 287 2005-02-22 00:29:02Z sskracic $

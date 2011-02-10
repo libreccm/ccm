@@ -86,6 +86,7 @@ public class Initializer extends CompoundInitializer {
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
         add(new com.arsdigita.ui.Initializer());
+        add(new com.arsdigita.kernel.Initializer());
         add(new com.arsdigita.kernel.security.Initializer());
         add(new com.arsdigita.portal.Initializer());
         add(new com.arsdigita.search.Initializer());

@@ -27,8 +27,8 @@ import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
 
 /**
- * The parent of all Bebop Link classes, this class represents a URL
- * on a page. It may contain a label, an image, or any other component.
+ * The parent of all Bebop Link classes, this class represents a URL on a page.
+ * It may contain a label, an image, or any other component.
  *
  * <p> The following table lists all Bebop Link classes and suggests
  * when they might be used.
@@ -60,7 +60,9 @@ import com.arsdigita.util.UncheckedWrapperException;
  * </tr>
  * <tr>
  *    <td>{@link ActionLink}</td>
- *    <td>Sets its own control event and runs its own {@link com.arsdigita.bebop.event.ActionListener}s. When the link is clicked, the code in the Listener's <tt>actionPerformed</tt> method runs.</td>
+ *    <td>Sets its own control event and runs its own 
+ * {@link com.arsdigita.bebop.event.ActionListener}s. When the link is clicked,
+ * the code in the Listener's <tt>actionPerformed</tt> method runs.</td>
  * </tr>
  * <tr>
  *    <td>{@link ToggleLink}</td>
@@ -90,16 +92,34 @@ public abstract class BaseLink extends TextStylable
 
     private String m_sConfirmMsg = "";
 
+    /**
+     * Constructor
+     * 
+     * @param child label component, text, image, etc.
+     * @param url
+     */
     public BaseLink(Component child, String url) {
         super();
         m_url = url;
         m_child = child;
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param label as text
+     * @param url
+     */
     public BaseLink(String label, String url) {
         this(new Label(label), url);
     }
 
+    /**
+     * Constructor.
+     * 
+     * @param child
+     * @param l
+     */
     public BaseLink(Component child, PrintListener l) {
         this(child, "");
         try {
@@ -110,10 +130,21 @@ public abstract class BaseLink extends TextStylable
         }
     }
 
+    /**
+     * Constructor.
+     *  
+     * @param label
+     * @param l
+     */
     public BaseLink(String label, PrintListener l) {
         this(new Label(label), l);
     }
 
+    /**
+     * Constructor. 
+     * 
+     * @param l
+     */
     public BaseLink(PrintListener l) {
         this("", l);
     }

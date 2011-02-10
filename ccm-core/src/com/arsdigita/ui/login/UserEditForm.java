@@ -22,7 +22,8 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.PersonName;
 import com.arsdigita.kernel.User;
-import com.arsdigita.kernel.security.LegacyInitializer;
+// import com.arsdigita.kernel.security.LegacyInitializer;
+import com.arsdigita.ui.UI;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.ReturnSignal;
 import com.arsdigita.bebop.ColumnPanel;
@@ -144,8 +145,9 @@ public class UserEditForm extends UserForm
 
         final HttpServletRequest req = state.getRequest();
 
-        final String path = LegacyInitializer.getFullURL
-            (LegacyInitializer.WORKSPACE_PAGE_KEY, req);
+//      final String path = LegacyInitializer.getFullURL
+//          (LegacyInitializer.WORKSPACE_PAGE_KEY, req);
+        final String path = UI.getWorkspaceURL();
 
         final URL fallback = com.arsdigita.web.URL.there(req, path);
 
