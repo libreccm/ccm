@@ -1,0 +1,21 @@
+model com.arsdigita.cms.contenttypes;
+
+import com.arsdigita.cms.*;
+
+object type Image extends ContentPage {
+
+    component ImageAsset[0..1] image   = join ct_images.image_id to cms_images.image_id;
+//    Blob[0..1]         image = ct_images.image BLOB;
+//    BigDecimal[0..1]   width = ct_images.width INTEGER;
+//    BigDecimal[0..1]  height = ct_images.height INTEGER;
+    String[0..1]     caption = ct_images.caption VARCHAR(200);
+    String[0..1] description = ct_images.description VARCHAR(200);
+    String[0..1]      artist = ct_images.artist VARCHAR(200);
+    String[0..1] publishDate = ct_images.publish_date VARCHAR(200);
+    String[0..1]      source = ct_images.source VARCHAR(200);
+    String[0..1]       media = ct_images.media VARCHAR(200);
+    String[0..1]   copyright = ct_images.copyright VARCHAR(200);
+//    String[0..1]    standort = ct_images. VARCHAR(200);
+
+    reference key (ct_images.item_id);
+}
