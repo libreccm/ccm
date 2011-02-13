@@ -23,6 +23,7 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -52,6 +53,7 @@ import java.util.Map;
  * @version $Revision: #4 $ $DateTime: 2004/08/16 18:10:38 $
  **/
 public final class ConcurrentDict {
+    private static final Logger logger = Logger.getLogger(ConcurrentDict.class);
     // We may want to make it possible to specify the bucket size at
     // construction time.  Hardcoding it is good enough for now.
     private static final int N_BUCKETS = 64;
@@ -59,9 +61,11 @@ public final class ConcurrentDict {
     private static final Map[] BUCKETS = new Map[N_BUCKETS];
 
     static {
+        logger.debug("Static initalizer starting...");
         for (int ii=0; ii<N_BUCKETS; ii++) {
             BUCKETS[ii] = new HashMap();
         }
+        logger.debug("Static initalizer finished.");
     }
 
     private final EntrySupplier m_supplier;

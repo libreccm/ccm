@@ -62,8 +62,10 @@ public final class Counter {
 
     private final static DecimalFormat DURATION_FMT = new DecimalFormat();
     static {
+        s_log.debug("Static initalizer starting...");
         DURATION_FMT.setGroupingSize(3);
         DURATION_FMT.setGroupingUsed(true);
+        s_log.debug("Static initalizer finished.");
     }
         
 

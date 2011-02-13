@@ -42,8 +42,10 @@ public class ApplicationNavigationModel implements NavigationModel {
         new GenericNavigationModel();
         
     static {
+        s_log.debug("Static initalizer starting...");
         register(ContentSection.BASE_DATA_OBJECT_TYPE, new CMSNavigationModel());
         register(Navigation.BASE_DATA_OBJECT_TYPE, new DefaultNavigationModel());
+        s_log.debug("Static initalizer finished.");
     }
 
     public ACSObject getObject() {

@@ -23,6 +23,7 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  * A concrete class extending {@link GenericPerson}. Does not add any new
@@ -32,14 +33,17 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter
  */
 public class SciMember extends GenericPerson {
-   
+
+    private static final Logger logger = Logger.getLogger(SciMember.class);
     public static final String BASE_DATA_OBJECT_TYPE =
                                "com.arsdigita.cms.contenttypes.SciMember";
     private static final SciOrganizationConfig s_config =
                                                new SciOrganizationConfig();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer starting...");
     }
 
     public SciMember() {

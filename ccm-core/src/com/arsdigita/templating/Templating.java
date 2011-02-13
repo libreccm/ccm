@@ -17,7 +17,7 @@
  */
 package com.arsdigita.templating;
 
-import com.arsdigita.bebop.Bebop; 
+import com.arsdigita.bebop.Bebop;
 import com.arsdigita.caching.CacheTable;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.util.Assert;
@@ -58,49 +58,47 @@ import org.apache.log4j.Logger;
 public class Templating {
 
     private static final Logger s_log = Logger.getLogger(Templating.class);
-
     // just a tag to assure an implementation exists
 //  public static final Class DEFAULT_PRESENTATION_MANAGER
 //      = SimplePresentationManager.class;
-
     /**
      *  This is the name of the attribute that is set in the request whose
      *  value, if present, is a collection of TransformerExceptions that
      *  can be used to produce a "pretty" error.
      */
     public static final String FANCY_ERROR_COLLECTION = "fancyErrorCollection";
-
     // this was instantiated with hardcoded values, not anymore
     private static CacheTable s_templates = null;
     private static final TemplatingConfig s_config = new TemplatingConfig();
 
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load("ccm-core/templating.properties");
-    }
-    
-    static {
-        Exceptions.registerUnwrapper(
-            TransformerException.class,
-            new ExceptionUnwrapper() {
-                public Throwable unwrap(Throwable t) {
-                    TransformerException ex = (TransformerException)t;
-                    return ex.getCause();
-                }
-            });
-    }
 
-    // now we initiate the CacheTable here
-    static {
+        Exceptions.registerUnwrapper(
+                TransformerException.class,
+                new ExceptionUnwrapper() {
+
+                    public Throwable unwrap(Throwable t) {
+                        TransformerException ex = (TransformerException) t;
+                        return ex.getCause();
+                    }
+                });
+
+        // now we initiate the CacheTable here
+
         // default cache size used to be 50, which is too high I reckon,
         // each template can eat up to 4 megs
         Integer setting = s_config.getCacheSize();
         int cacheSize = (setting == null ? 10 : setting.intValue());
 
         setting = s_config.getCacheAge();
-        int cacheAge = (setting == null ? 60*60*24*3 : setting.intValue());
+        int cacheAge = (setting == null ? 60 * 60 * 24 * 3 : setting.intValue());
 
         s_templates = new CacheTable("templating", cacheSize, cacheAge);
         s_templates.setPurgeAllowed(true);
+
+        s_log.debug("Static initalizer finished...");
     }
 
     /**
@@ -150,7 +148,7 @@ public class Templating {
     public static synchronized XSLTemplate getTemplate(final URL source) {
         return getTemplate(source, false, true);
     }
-        
+
     /**
      * Retrieves an XSL template. If the template is already loaded in the
      * cache, it will be returned.  If the template has been modified since
@@ -184,8 +182,8 @@ public class Templating {
 
         if (template == null) {
             if (s_log.isInfoEnabled()) {
-                s_log.info("The template for URL " + source + " is not " +
-                           "cached; creating and caching it now");
+                s_log.info("The template for URL " + source + " is not "
+                           + "cached; creating and caching it now");
             }
 
             if (fancyErrors) {
@@ -207,8 +205,8 @@ public class Templating {
             // probably on UtilConfig.
 
             if (s_log.isInfoEnabled()) {
-                s_log.info("Template " + template + " has been modified; " +
-                           "recreating it from scratch");
+                s_log.info("Template " + template + " has been modified; "
+                           + "recreating it from scratch");
             }
 
             if (fancyErrors) {
@@ -304,11 +302,11 @@ public class Templating {
         root.addAttribute("version", "1.0");
 
         while (paths.hasNext()) {
-            URL path = (URL)paths.next();
+            URL path = (URL) paths.next();
 
             Element imp = root.newChildElement(
-                "xsl:import",
-                "http://www.w3.org/1999/XSL/Transform");
+                    "xsl:import",
+                    "http://www.w3.org/1999/XSL/Transform");
             imp.addAttribute("href", path.toString());
 
             if (s_log.isInfoEnabled()) {
@@ -338,9 +336,12 @@ public class Templating {
         HttpHost self = Web.getConfig().getHost();
 
         String path = url.getPath();
-        if (self.getName().equals(url.getHost()) &&
-            ((self.getPort() == url.getPort()) ||
-             (url.getPort() == -1 && self.getPort() == 80))) {
+        if (self.getName().equals(url.getHost()) && ((self.getPort() == url.
+                                                      getPort()) || (url.getPort()
+                                                                     == -1
+                                                                     && self.
+                                                                     getPort()
+                                                                        == 80))) {
 
             if (path.startsWith("/resource")) {
                 // A virtual path to the servlet
@@ -352,14 +353,15 @@ public class Templating {
                 return newURL;
             } else {
                 // A real path to disk
-                final String filename = Web.getServletContext().getRealPath(path);
+                final String filename =
+                             Web.getServletContext().getRealPath(path);
                 File file = new File(filename);
                 if (file.exists()) {
                     try {
                         URL newURL = file.toURL();
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug("Transforming resource " +
-                                        url + " to " + newURL);
+                            s_log.debug("Transforming resource " + url + " to "
+                                        + newURL);
                         }
                         return newURL;
                     } catch (MalformedURLException ex) {
@@ -367,7 +369,8 @@ public class Templating {
                     }
                 } else {
                     if (s_log.isDebugEnabled()) {
-                        s_log.debug("File " + filename + " doesn't exist on disk");
+                        s_log.debug("File " + filename
+                                    + " doesn't exist on disk");
                     }
                 }
             }
@@ -382,34 +385,34 @@ public class Templating {
 }
 
 class LoggingErrorListener implements ErrorListener {
-    private static final Logger s_log = 
-        Logger.getLogger(LoggingErrorListener.class);
 
+    private static final Logger s_log =
+                                Logger.getLogger(LoggingErrorListener.class);
     private ArrayList m_errors;
-    
+
     LoggingErrorListener() {
         m_errors = new ArrayList();
     }
-    
+
     public Collection getErrors() {
         return m_errors;
     }
-    
+
     public void warning(TransformerException e) throws TransformerException {
         log(Level.WARN, e);
     }
-    
+
     public void error(TransformerException e) throws TransformerException {
         log(Level.ERROR, e);
     }
-    
+
     public void fatalError(TransformerException e) throws TransformerException {
         log(Level.FATAL, e);
     }
-    
+
     private void log(Level level, TransformerException ex) {
-        s_log.log(level, "Transformer " + level + ": " +
-                  ex.getLocationAsString() + ": " + ex.getMessage(),
+        s_log.log(level, "Transformer " + level + ": "
+                         + ex.getLocationAsString() + ": " + ex.getMessage(),
                   ex);
         m_errors.add(ex);
     }

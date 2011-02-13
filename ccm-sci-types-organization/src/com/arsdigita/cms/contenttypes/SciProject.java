@@ -84,7 +84,9 @@ public class SciProject extends GenericOrganizationalUnit {
     private static final Logger logger = Logger.getLogger(SciProject.class);
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     public SciProject() {

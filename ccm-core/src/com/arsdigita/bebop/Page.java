@@ -109,10 +109,12 @@ public class Page extends BlockStylable implements Container {
     static final Collection CONTROL_EVENT_KEYS;
 
     static {
+        s_log.debug("Static initalizer is starting...");
         CONTROL_EVENT_KEYS = new ArrayList(3);
         CONTROL_EVENT_KEYS.add(SELECTED);
         CONTROL_EVENT_KEYS.add(CONTROL_EVENT);
         CONTROL_EVENT_KEYS.add(CONTROL_VALUE);
+        s_log.debug("Static initalizer finished.");
     }
 
     /**

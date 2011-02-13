@@ -24,6 +24,7 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
 import com.arsdigita.kernel.ACSObject;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 /***
  *
@@ -61,12 +62,15 @@ import java.util.Date;
  **/
 public class DublinCoreItem extends ContentItem {
 
+    private static final Logger logger = Logger.getLogger(DublinCoreItem.class);
     public static final String BASE_DATA_OBJECT_TYPE = 
         "com.arsdigita.london.cms.dublin.DublinCoreItem";
     
     private static final DublinCoreConfig s_config = new DublinCoreConfig();
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
     
     public static final DublinCoreConfig getConfig() {

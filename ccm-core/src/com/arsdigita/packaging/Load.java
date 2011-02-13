@@ -71,6 +71,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.log4j.Logger;
 
 /**
  * PackageTool worker class, implements the "load" command.
@@ -85,9 +86,11 @@ import org.apache.commons.cli.PosixParser;
 
 class Load extends Command {
 
+    private static final Logger logger = Logger.getLogger(Load.class);
     private static final Options OPTIONS = getOptions();
 
     static {
+        logger.debug("Static initalizer starting...");
         OPTIONS.addOption
             (OptionBuilder
              .hasArg(false)
@@ -146,6 +149,7 @@ class Load extends Command {
           .withDescription("Log parameter values as key-value " +
           "pairs in FILE")
           .create());*/
+        logger.debug("Static initalizer finished.");
     }
 
     /**

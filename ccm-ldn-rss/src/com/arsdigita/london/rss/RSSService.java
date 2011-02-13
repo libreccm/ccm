@@ -69,7 +69,9 @@ public class RSSService {
     private static final RSSConfig s_config = new RSSConfig();
     
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
     
     public static RSSConfig getConfig() {

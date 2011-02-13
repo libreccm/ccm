@@ -135,6 +135,7 @@ public class HTTPLoginModule extends MappingLoginModule {
 
     private static PublicKey s_publicKey = null;
     static {
+        s_log.debug("Static initalizer starting...");
         if (HTTPAuth.getConfig().isActive()) {
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Loading public key");
@@ -145,6 +146,7 @@ public class HTTPLoginModule extends MappingLoginModule {
                 s_log.info("HTTP auth is not active");
             }
         }
+        s_log.debug("Static initalizer finished.");
     }
 
     private static BASE64Decoder s_base64Decoder = new BASE64Decoder();

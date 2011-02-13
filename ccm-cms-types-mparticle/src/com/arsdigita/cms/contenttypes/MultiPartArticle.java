@@ -64,7 +64,9 @@ public class MultiPartArticle extends ContentPage {
     private static MultiPartArticleConfig s_config = new MultiPartArticleConfig();
 
     static {
+        s_log.debug("Static initalizer starting...");
 	s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
     
     public static MultiPartArticleConfig getConfig() {

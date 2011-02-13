@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  * Static
@@ -43,6 +44,8 @@ import java.util.Map;
  **/
 
 public class Static extends Expression {
+
+    private static final Logger logger = Logger.getLogger(Static.class);
 
     public final static String versionId = "$Id: Static.java 1130 2006-04-30 13:40:54Z apevec $ by $Author: apevec $, $DateTime: 2004/08/16 18:10:38 $";
 
@@ -55,6 +58,7 @@ public class Static extends Expression {
 
     private static final Collection s_functions = new HashSet();
     static {
+        logger.debug("Static initalizer starting...");
         String[] functions = {
             /* sql standard functions supported by both oracle and postgres.
              * there is an added caveat that the function uses normal function
@@ -70,6 +74,7 @@ public class Static extends Expression {
         for (int i = 0; i < functions.length; i++) {
             s_functions.add(functions[i]);
         }
+        logger.debug("Static initalizer finished.");
     }
 
     private static final boolean isAllowedFunction(String s) {

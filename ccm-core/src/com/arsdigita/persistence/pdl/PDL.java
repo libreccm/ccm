@@ -136,6 +136,7 @@ public class PDL {
         new CommandLine(PDL.class.getName(), null);
 
     static {
+        s_log.debug("Static initalizer starting...");
         CMD.addSwitch(new PathSwitch(
             "-library-path",
             "PDL files appearing in this path will be searched " +
@@ -167,6 +168,7 @@ public class PDL {
         CMD.addSwitch(new BooleanSwitch("-quiet", "sets logging to ERROR and does not complain if no PDL files are found",
                                         Boolean.FALSE));
         CMD.addSwitch(new StringSwitch("-testddl", "no clue", null));
+        s_log.debug("Static initalizer finished.");
     }
 
     /**

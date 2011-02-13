@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  * BaseCheck: Extension of the Check abstract class, which can be used as a
@@ -45,6 +46,7 @@ import java.util.List;
 
 abstract public class BaseCheck extends Check {
 
+    private static final Logger logger = Logger.getLogger(BaseCheck.class);
     public static final String versionId =
             "$Id: BaseCheck.java 736 2005-09-01 10:46:05Z sskracic $" +
             " by $Author: sskracic $, " +
@@ -53,12 +55,14 @@ abstract public class BaseCheck extends Check {
     public static final MessageMap s_messages = new MessageMap();
 
     static {
+        logger.debug("Static initalizer starting...");
         final InputStream in = BaseCheck.class.getResourceAsStream
             ("basecheck.messages_linux");
 
         Assert.exists(in, InputStream.class);
 
         s_messages.load(new InputStreamReader(in));
+        logger.debug("Static initalizer finished.");
     }
 
     public static String message(final String key) {

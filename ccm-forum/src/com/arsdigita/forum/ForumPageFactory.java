@@ -25,6 +25,7 @@ import java.util.Map;
 import com.arsdigita.bebop.Page;
 // import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.util.Assert;
+import org.apache.log4j.Logger;
 
 /**
  * Factory class that enables projects to provide their own page creators. 
@@ -35,38 +36,37 @@ import com.arsdigita.util.Assert;
  */
 public class ForumPageFactory {
 
-	public static final String THREAD_PAGE = "thread";
-	public static final String FORUM_PAGE = "forum";
-	
-	private static Map pageBuilders = new HashMap();
-	
-	static {
-		// default pageBuilders are those provided with this project
-		pageBuilders.put(THREAD_PAGE, new ThreadPageBuilder());
-		pageBuilders.put(FORUM_PAGE, new ForumPageBuilder());
-	}
-	
+    private static final Logger logger = Logger.getLogger(ForumPageFactory.class);
+    public static final String THREAD_PAGE = "thread";
+    public static final String FORUM_PAGE = "forum";
+    private static Map pageBuilders = new HashMap();
+
+    static {
+        logger.debug("Static initalizer starting...");
+        // default pageBuilders are those provided with this project
+        pageBuilders.put(THREAD_PAGE, new ThreadPageBuilder());
+        pageBuilders.put(FORUM_PAGE, new ForumPageBuilder());
+        logger.debug("Static initalizer finished.");
+    }
+
     public static Page getPage(String pageType) {
         Assert.isTrue(pageBuilders.containsKey(pageType),
-                      "Requested page type (" + pageType +
-                      ") does not have a builder registered" );
-		PageBuilder builder = (PageBuilder)pageBuilders.get(pageType);
-		Page page =  builder.buildPage();
-		page.lock();
-		return page;
-		
-		
-	}
-	
-	public static Iterator getPages () {
-		return pageBuilders.keySet().iterator();
-	}
-	
-	
-	public static void registerPageBuilder (String pageType, PageBuilder builder) {
-		pageBuilders.put(pageType, builder);
-		
-	}
-	
+                      "Requested page type (" + pageType
+                      + ") does not have a builder registered");
+        PageBuilder builder = (PageBuilder) pageBuilders.get(pageType);
+        Page page = builder.buildPage();
+        page.lock();
+        return page;
 
+
+    }
+
+    public static Iterator getPages() {
+        return pageBuilders.keySet().iterator();
+    }
+
+    public static void registerPageBuilder(String pageType, PageBuilder builder) {
+        pageBuilders.put(pageType, builder);
+
+    }
 }

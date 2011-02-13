@@ -41,7 +41,9 @@ public class ThemeApplication extends Application {
     public static ThemeConfig s_config = new ThemeConfig();
 
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
 
     public static ThemeConfig getConfig() {

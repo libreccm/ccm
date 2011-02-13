@@ -134,6 +134,7 @@ public class PatternStylesheetResolver implements StylesheetResolver {
     }
 
     static {
+        s_log.debug("Static initalizer starting...");
         registerPatternGenerator
             ("locale", new LocalePatternGenerator());
         registerPatternGenerator
@@ -148,6 +149,7 @@ public class PatternStylesheetResolver implements StylesheetResolver {
             ("webapps", new WebAppPatternGenerator());
         registerPatternGenerator
             ("host", new HostPatternGenerator());
+        s_log.debug("Static initalizer finished.");
     }
 
     private String m_path = null;

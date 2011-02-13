@@ -24,10 +24,8 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.util.Assert;
-
 import java.math.BigDecimal;
-
-
+import org.apache.log4j.Logger;
 
 /**
  * This content type represents a GlossaryItem.
@@ -36,62 +34,63 @@ import java.math.BigDecimal;
  */
 public class GlossaryItem extends ContentPage {
 
+    private static final Logger logger = Logger.getLogger(GlossaryItem.class);
     /** PDL property name for definition */
     public static final String DEFINITION = "definition";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.GlossaryItem";
-    
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contenttypes.GlossaryItem";
     private static GlossaryItemConfig config = new GlossaryItemConfig();
+
     static {
-    	config.load();
+        logger.debug("Static initalizer starting...");
+        config.load();
+        logger.debug("Static initalizer finished.");
     }
+
     public static GlossaryItemConfig getConfig() {
-    	return config;
+        return config;
     }
 
     public GlossaryItem() {
-        this( BASE_DATA_OBJECT_TYPE );
+        this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public GlossaryItem( BigDecimal id )
-        throws DataObjectNotFoundException {
-        this( new OID( BASE_DATA_OBJECT_TYPE, id ) );
+    public GlossaryItem(BigDecimal id)
+            throws DataObjectNotFoundException {
+        this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public GlossaryItem( OID id )
-        throws DataObjectNotFoundException {
-        super( id );
+    public GlossaryItem(OID id)
+            throws DataObjectNotFoundException {
+        super(id);
     }
 
-    public GlossaryItem( DataObject obj ) {
-        super( obj );
+    public GlossaryItem(DataObject obj) {
+        super(obj);
     }
 
-    public GlossaryItem( String type ) {
-        super( type );
+    public GlossaryItem(String type) {
+        super(type);
     }
-
 
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
     /* accessors *****************************************************/
     public String getDefinition() {
-        return (String) get( DEFINITION );
+        return (String) get(DEFINITION);
     }
 
-    public void setDefinition( String definition ) {
-        set( DEFINITION, definition );
+    public void setDefinition(String definition) {
+        set(DEFINITION, definition);
     }
 
     // Search stuff to allow the content type to be searchable
     public String getSearchSummary() {
         return getDefinition();
     }
-
 }

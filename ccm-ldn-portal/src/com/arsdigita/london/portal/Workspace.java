@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.london.portal;
 
 import org.apache.log4j.Logger;
@@ -38,7 +37,7 @@ import com.arsdigita.london.portal.ui.WorkspaceTheme;
 import com.arsdigita.persistence.DataAssociation;
 import com.arsdigita.persistence.DataAssociationCursor;
 import com.arsdigita.persistence.DataCollection;
-import com.arsdigita.persistence.DataObject; 
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.DataQueryDataCollectionAdapter;
 import com.arsdigita.persistence.Filter;
@@ -61,34 +60,29 @@ import java.util.LinkedList;
  */
 public class Workspace extends Application {
 
-	private static final Logger s_log = Logger.getLogger(Workspace.class);
+    private static final Logger s_log = Logger.getLogger(Workspace.class);
+    private static final WorkspaceConfig s_config = new WorkspaceConfig();
 
-	private static final WorkspaceConfig s_config = new WorkspaceConfig();
+    static {
+        s_log.debug("Static initalizer starting...");
+        s_config.load();
+        s_log.debug("Static initalizer finished.");
+    }
 
-	static {
-		s_config.load();
-	}
-
-	public static WorkspaceConfig getConfig() {
-		return s_config;
-	}
-
-	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.portal.Workspace";
-
-	public static final String PARTY = "party";
-
-	public static final String PARTY_ID = PARTY + "." + ACSObject.ID;
-
-	public static final String DEFAULT_LAYOUT = "defaultLayout";
-
-	public static final String PAGES = "pages";
-
-	/**
-	 * store this as a static variable as it cannot change during the lifetime
-	 * of the ccm service
-	 */
-	private static Workspace defaultHomepageWorkspace = null;
-
+    public static WorkspaceConfig getConfig() {
+        return s_config;
+    }
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.london.portal.Workspace";
+    public static final String PARTY = "party";
+    public static final String PARTY_ID = PARTY + "." + ACSObject.ID;
+    public static final String DEFAULT_LAYOUT = "defaultLayout";
+    public static final String PAGES = "pages";
+    /**
+     * store this as a static variable as it cannot change during the lifetime
+     * of the ccm service
+     */
+    private static Workspace defaultHomepageWorkspace = null;
 
     /**
      * Constructor
@@ -110,7 +104,6 @@ public class Workspace extends Application {
     /*
      * public String getContextPath() { return "ccm-ldn-portal"; }
      */
-
     /**
      * 
      * @return ServletPath (constant) probably should be synchron with web.xml
@@ -162,16 +155,17 @@ public class Workspace extends Application {
      * @return
      */
     public static Workspace createWorkspace(String url, String title,
-                                            PageLayout layout, Application parent,
+                                            PageLayout layout,
+                                            Application parent,
                                             boolean isPublic) {
         if (s_log.isDebugEnabled()) {
             s_log.debug("Creating group workspace, isPublic:" + isPublic
-                       + " on " + url + " with parent "
-                       + (parent == null ? "none" : parent.getOID().toString()));
+                        + " on " + url + " with parent "
+                        + (parent == null ? "none" : parent.getOID().toString()));
         }
 
         Workspace workspace = (Workspace) Application.createApplication(
-                              BASE_DATA_OBJECT_TYPE, url, title, parent);
+                BASE_DATA_OBJECT_TYPE, url, title, parent);
         workspace.setupGroups(title, isPublic);
         workspace.setDefaultLayout(layout);
         return workspace;
@@ -188,18 +182,19 @@ public class Workspace extends Application {
      * @return
      */
     public static Workspace createWorkspace(String url, String title,
-			PageLayout layout, Application parent, User owner) {
-		if (s_log.isDebugEnabled()) {
-			s_log.debug("Creating personal workspace for " + owner.getOID()
-					+ " on " + url + " with parent "
-					+ (parent == null ? "none" : parent.getOID().toString()));
-		}
+                                            PageLayout layout,
+                                            Application parent, User owner) {
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Creating personal workspace for " + owner.getOID()
+                        + " on " + url + " with parent "
+                        + (parent == null ? "none" : parent.getOID().toString()));
+        }
 
-		Workspace workspace = (Workspace) Application.createApplication(
-				BASE_DATA_OBJECT_TYPE, url, title, parent);
-		workspace.setParty(owner);
-		workspace.setDefaultLayout(layout);
-		return workspace;
+        Workspace workspace = (Workspace) Application.createApplication(
+                BASE_DATA_OBJECT_TYPE, url, title, parent);
+        workspace.setParty(owner);
+        workspace.setDefaultLayout(layout);
+        return workspace;
     }
 
     /**
@@ -259,150 +254,149 @@ public class Workspace extends Application {
     // super.beforeDelete();
     // Category.clearRootForObject(this);
     // }
-
     // This method wouldn't need to exist if permissioning used
     // the associations rather than direct queries which require
     // the object to be saved
     public void afterSave() {
-		super.afterSave();
+        super.afterSave();
 
-		Party party = getParty();
-		s_log.debug("Party is " + party.getDisplayName() + " for "
-				+ this.getTitle());
+        Party party = getParty();
+        s_log.debug("Party is " + party.getDisplayName() + " for "
+                    + this.getTitle());
 
-		if (party instanceof User) {
-			s_log.debug("Party is a user");
+        if (party instanceof User) {
+            s_log.debug("Party is a user");
 
-			// Personal workspace, so give user full admin
-			PermissionDescriptor admin = new PermissionDescriptor(
-					PrivilegeDescriptor.ADMIN, this, party);
-			PermissionService.grantPermission(admin);
+            // Personal workspace, so give user full admin
+            PermissionDescriptor admin = new PermissionDescriptor(
+                    PrivilegeDescriptor.ADMIN, this, party);
+            PermissionService.grantPermission(admin);
 
-		} else if (party instanceof Group) {
-			s_log.debug("Party is a group");
+        } else if (party instanceof Group) {
+            s_log.debug("Party is a group");
 
-			// Ensure main group has the required permission
-			PermissionDescriptor pd = new PermissionDescriptor(
-					getConfig().getWorkspacePartyPrivilege(), this, party);
-			PermissionService.grantPermission(pd);
+            // Ensure main group has the required permission
+            PermissionDescriptor pd = new PermissionDescriptor(
+                    getConfig().getWorkspacePartyPrivilege(), this, party);
+            PermissionService.grantPermission(pd);
 
-			// Now get (or create) the administrators role & grant it admin
-			Group members = (Group) party;
-			Role admins = members.getRole("Administrators");
-			if (admins == null) {
-				admins = members.createRole("Administrators");
-				admins.save();
-			}
-			admins.grantPermission(this, PrivilegeDescriptor.ADMIN);
-		}
+            // Now get (or create) the administrators role & grant it admin
+            Group members = (Group) party;
+            Role admins = members.getRole("Administrators");
+            if (admins == null) {
+                admins = members.createRole("Administrators");
+                admins.save();
+            }
+            admins.grantPermission(this, PrivilegeDescriptor.ADMIN);
+        }
 
-		// Set permission context for %all pages
-		WorkspacePageCollection pages = getPages();
-		while (pages.next()) {
-			WorkspacePage page = pages.getPage();
-			PermissionService.setContext(page, this);
-		}
+        // Set permission context for %all pages
+        WorkspacePageCollection pages = getPages();
+        while (pages.next()) {
+            WorkspacePage page = pages.getPage();
+            PermissionService.setContext(page, this);
+        }
     }
 
     private void setupGroups(String title, boolean isPublic) {
-		Group members = new Group();
-		members.setName(title);
-		members.save();
-		// set this group as subgroup of workspace application type
-		// although workspace applications can be nested, place all 
-		// member groups directly under main container (rather than reflecting
-		// hierarchical structure) because (a) workspace already manages its
-		// own groups so doesn't need a hierarchy and (b) hierarchy would
-		// mean for a given workspace, role would be on the same level 
-		// as member groups of sub workspaces - messy & confusing
-		getApplicationType().getGroup().addSubgroup(members);
+        Group members = new Group();
+        members.setName(title);
+        members.save();
+        // set this group as subgroup of workspace application type
+        // although workspace applications can be nested, place all
+        // member groups directly under main container (rather than reflecting
+        // hierarchical structure) because (a) workspace already manages its
+        // own groups so doesn't need a hierarchy and (b) hierarchy would
+        // mean for a given workspace, role would be on the same level
+        // as member groups of sub workspaces - messy & confusing
+        getApplicationType().getGroup().addSubgroup(members);
 
-		Role admins = members.createRole("Administrators");
-		admins.save();
+        Role admins = members.createRole("Administrators");
+        admins.save();
 
-		if (isPublic) {
-			Party thePublic;
-			try {
-				thePublic = (Party) DomainObjectFactory.newInstance(new OID(
-						User.BASE_DATA_OBJECT_TYPE,
-						PermissionManager.VIRTUAL_PUBLIC_ID));
-			} catch (DataObjectNotFoundException ex) {
-				throw new UncheckedWrapperException("cannot find the public",
-						ex);
-			}
+        if (isPublic) {
+            Party thePublic;
+            try {
+                thePublic = (Party) DomainObjectFactory.newInstance(new OID(
+                        User.BASE_DATA_OBJECT_TYPE,
+                        PermissionManager.VIRTUAL_PUBLIC_ID));
+            } catch (DataObjectNotFoundException ex) {
+                throw new UncheckedWrapperException("cannot find the public",
+                                                    ex);
+            }
 
-			members.addMemberOrSubgroup(thePublic);
-			members.save();
-		}
+            members.addMemberOrSubgroup(thePublic);
+            members.save();
+        }
 
-		setParty(members);
+        setParty(members);
     }
 
     public static WorkspaceCollection retrieveAll() {
         return retrieveAll(null);
     }
 
-	public static WorkspaceCollection retrieveAll(Application parent) {
-		DataCollection wks = SessionManager.getSession().retrieve(
-				BASE_DATA_OBJECT_TYPE);
-		if (parent != null) {
-			wks.addEqualsFilter("parentResource.id", parent.getID());
-		}
+    public static WorkspaceCollection retrieveAll(Application parent) {
+        DataCollection wks = SessionManager.getSession().retrieve(
+                BASE_DATA_OBJECT_TYPE);
+        if (parent != null) {
+            wks.addEqualsFilter("parentResource.id", parent.getID());
+        }
 
-		return new WorkspaceCollection(wks);
-	}
+        return new WorkspaceCollection(wks);
+    }
 
-	public Workspace retrieveSubworkspaceForParty(Party owner)
-			throws DataObjectNotFoundException {
+    public Workspace retrieveSubworkspaceForParty(Party owner)
+            throws DataObjectNotFoundException {
 
-		DataCollection wks = SessionManager.getSession().retrieve(
-				BASE_DATA_OBJECT_TYPE);
+        DataCollection wks = SessionManager.getSession().retrieve(
+                BASE_DATA_OBJECT_TYPE);
 
-		wks.addEqualsFilter("parentResource.id", getID());
-		wks.addEqualsFilter(PARTY_ID, owner.getID());
+        wks.addEqualsFilter("parentResource.id", getID());
+        wks.addEqualsFilter(PARTY_ID, owner.getID());
 
-		if (wks.next()) {
-			Workspace workspace = (Workspace) Application
-					.retrieveApplication(wks.getDataObject());
+        if (wks.next()) {
+            Workspace workspace = (Workspace) Application.retrieveApplication(wks.
+                    getDataObject());
 
-			wks.close();
+            wks.close();
 
-			return workspace;
-		}
+            return workspace;
+        }
 
-		throw new DataObjectNotFoundException("cannot find workspace for party");
-	}
+        throw new DataObjectNotFoundException("cannot find workspace for party");
+    }
 
-	public void delete() {
-		clearPages();
+    public void delete() {
+        clearPages();
 
-		super.delete();
-	}
+        super.delete();
+    }
 
-	public void clearPages() {
-		WorkspacePageCollection pages = getPages();
-		while (pages.next()) {
-			WorkspacePage page = pages.getPage();
-			page.delete();
-		}
-	}
+    public void clearPages() {
+        WorkspacePageCollection pages = getPages();
+        while (pages.next()) {
+            WorkspacePage page = pages.getPage();
+            page.delete();
+        }
+    }
 
-	public void setDefaultLayout(PageLayout layout) {
-		setAssociation(DEFAULT_LAYOUT, layout);
-	}
+    public void setDefaultLayout(PageLayout layout) {
+        setAssociation(DEFAULT_LAYOUT, layout);
+    }
 
-	public PageLayout getDefaultLayout() {
-		return (PageLayout) DomainObjectFactory
-				.newInstance((DataObject) get(DEFAULT_LAYOUT));
-	}
+    public PageLayout getDefaultLayout() {
+        return (PageLayout) DomainObjectFactory.newInstance((DataObject) get(
+                DEFAULT_LAYOUT));
+    }
 
-	public void setParty(Party party) {
-		setAssociation(PARTY, party);
-	}
+    public void setParty(Party party) {
+        setAssociation(PARTY, party);
+    }
 
-	public Party getParty() {
-		return (Party) DomainObjectFactory.newInstance((DataObject) get(PARTY));
-	}
+    public Party getParty() {
+        return (Party) DomainObjectFactory.newInstance((DataObject) get(PARTY));
+    }
 
     public RoleCollection getRoles() {
         Party party = getParty();
@@ -461,12 +455,12 @@ public class Workspace extends Application {
 
     public PartyCollection getNonParticipants() {
         DataCollection dc =
-            SessionManager.getSession()
-            .retrieve("com.arsdigita.kernel.User");
+                       SessionManager.getSession().retrieve(
+                "com.arsdigita.kernel.User");
         //            .retrieve("com.arsdigita.kernel.Party");
-        Filter f = dc
-            .addNotInSubqueryFilter
-            ("id", "com.arsdigita.london.portal.WorkspaceParticipantIDs");
+        Filter f =
+               dc.addNotInSubqueryFilter("id",
+                                         "com.arsdigita.london.portal.WorkspaceParticipantIDs");
         f.set("workspaceID", getID());
         return new PartyCollection(dc);
     }
@@ -484,8 +478,8 @@ public class Workspace extends Application {
      * alphabetical order.</p>
      **/
     public Iterator getParticipantInitials() {
-        DataQuery query = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.london.portal.WorkspaceParticipantInitials");
+        DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.london.portal.WorkspaceParticipantInitials");
         query.setParameter("workspaceID", getID());
 
         LinkedList result = new LinkedList();
@@ -508,7 +502,7 @@ public class Workspace extends Application {
         Assert.exists(initial);
         Assert.isTrue(initial.length() == 1, "Initial needs length 1");
         Assert.isTrue(initial.equals(initial.toUpperCase()),
-                          "Initial must be uppercase");
+                      "Initial must be uppercase");
 
         //DataAssociationCursor dac =
         //    ((DataAssociation) get("participants")).cursor();
@@ -516,32 +510,33 @@ public class Workspace extends Application {
         //    ("id", "com.arsdigita.london.portal.WorkspaceParticipantsWithInitial");
 
         DataCollection dc =
-            SessionManager.getSession()
-            .retrieve("com.arsdigita.kernel.User");
-        Filter f = dc.addInSubqueryFilter
-            ("id", "com.arsdigita.london.portal.WorkspaceParticipantsWithInitial");
+                       SessionManager.getSession().retrieve(
+                "com.arsdigita.kernel.User");
+        Filter f =
+               dc.addInSubqueryFilter("id",
+                                      "com.arsdigita.london.portal.WorkspaceParticipantsWithInitial");
         f.set("workspaceID", getID());
         f.set("nameInitial", initial);
 
         return new PartyCollection(dc);
     }
 
-	public WorkspacePageCollection getPages() {
-		DataAssociation pages = (DataAssociation) get(PAGES);
-		return new WorkspacePageCollection(pages.cursor());
-	}
+    public WorkspacePageCollection getPages() {
+        DataAssociation pages = (DataAssociation) get(PAGES);
+        return new WorkspacePageCollection(pages.cursor());
+    }
 
-	public void movePageLeft(WorkspacePage workspacePage) {
+    public void movePageLeft(WorkspacePage workspacePage) {
 
         // loop through the pages and look for the previous one
-		WorkspacePageCollection pages = getPages();
-		pages.addOrder(WorkspacePage.SORT_KEY);
-		int i = 0;
+        WorkspacePageCollection pages = getPages();
+        pages.addOrder(WorkspacePage.SORT_KEY);
+        int i = 0;
         WorkspacePage previous = null;
         WorkspacePage current = null;
 
-		while (pages.next()) {
-			current = pages.getPage();
+        while (pages.next()) {
+            current = pages.getPage();
             if (current.equals(workspacePage)) {
                 if (previous == null) {
                     // current is first
@@ -555,19 +550,19 @@ public class Workspace extends Application {
             }
             previous = current;
         }
-	}
+    }
 
-	public void movePageRight(WorkspacePage workspacePage) {
+    public void movePageRight(WorkspacePage workspacePage) {
 
         // loop through the pages and look for the next one
-		WorkspacePageCollection pages = getPages();
-		pages.addOrder(WorkspacePage.SORT_KEY);
-		int i = 0;
+        WorkspacePageCollection pages = getPages();
+        pages.addOrder(WorkspacePage.SORT_KEY);
+        int i = 0;
         WorkspacePage previous = null;
         WorkspacePage current = null;
 
-		while (pages.next()) {
-			current = pages.getPage();
+        while (pages.next()) {
+            current = pages.getPage();
             if (previous != null && previous.equals(workspacePage)) {
                 int currentKey = current.getSortKey();
                 int previousKey = previous.getSortKey();
@@ -577,73 +572,73 @@ public class Workspace extends Application {
             }
             previous = current;
         }
-	}
+    }
 
-	public void removePage(WorkspacePage workspacePage) {
-		WorkspacePageCollection pages = getPages();
-		pages.addOrder(WorkspacePage.SORT_KEY);
-		int i = 0;
-		while (pages.next()) {
-			WorkspacePage page = pages.getPage();
-			if (page.equals(workspacePage)) {
-				page.delete();
-			} else {
-				page.setSortKey(i++);
-			}
-		}
-	}
+    public void removePage(WorkspacePage workspacePage) {
+        WorkspacePageCollection pages = getPages();
+        pages.addOrder(WorkspacePage.SORT_KEY);
+        int i = 0;
+        while (pages.next()) {
+            WorkspacePage page = pages.getPage();
+            if (page.equals(workspacePage)) {
+                page.delete();
+            } else {
+                page.setSortKey(i++);
+            }
+        }
+    }
 
-	public WorkspacePage addPage(String title, String description) {
-		DataAssociationCursor pages = ((DataAssociation) get(PAGES)).cursor();
-		pages.addOrder(WorkspacePage.SORT_KEY + " desc");
-		int max = -1;
-		if (pages.next()) {
-			DataObject dobj = pages.getDataObject();
-			Integer tab = (Integer) dobj.get(WorkspacePage.SORT_KEY);
-			max = tab.intValue();
-			pages.close();
-		}
+    public WorkspacePage addPage(String title, String description) {
+        DataAssociationCursor pages = ((DataAssociation) get(PAGES)).cursor();
+        pages.addOrder(WorkspacePage.SORT_KEY + " desc");
+        int max = -1;
+        if (pages.next()) {
+            DataObject dobj = pages.getDataObject();
+            Integer tab = (Integer) dobj.get(WorkspacePage.SORT_KEY);
+            max = tab.intValue();
+            pages.close();
+        }
 
-		return addPage(title, description, getDefaultLayout(), max + 1);
-	}
+        return addPage(title, description, getDefaultLayout(), max + 1);
+    }
 
-	public WorkspacePage addPage(String title, String description,
-			PageLayout layout, int sortKey) {
-		return WorkspacePage.create(title, description, layout, this, sortKey);
-	}
+    public WorkspacePage addPage(String title, String description,
+                                 PageLayout layout, int sortKey) {
+        return WorkspacePage.create(title, description, layout, this, sortKey);
+    }
 
-	public void setTheme(WorkspaceTheme theme) {
-		set("theme", theme);
-	}
+    public void setTheme(WorkspaceTheme theme) {
+        set("theme", theme);
+    }
 
-	public WorkspaceTheme getTheme() {
-		DataObject dobj;
+    public WorkspaceTheme getTheme() {
+        DataObject dobj;
 
-		dobj = (DataObject) get("theme");
+        dobj = (DataObject) get("theme");
 
-		if (dobj == null)
-			return null;
-		else {
-			WorkspaceTheme theme = new WorkspaceTheme(dobj);
-			return theme;
-		}
-	}
+        if (dobj == null) {
+            return null;
+        } else {
+            WorkspaceTheme theme = new WorkspaceTheme(dobj);
+            return theme;
+        }
+    }
 
-	public static Workspace getCurrentlySelectedWorkspace() {
-		Application current = Web.getContext().getApplication();
-		if (current instanceof Workspace) {
-			return (Workspace) current;
-		}
-		return null;
-	}
-	
+    public static Workspace getCurrentlySelectedWorkspace() {
+        Application current = Web.getContext().getApplication();
+        if (current instanceof Workspace) {
+            return (Workspace) current;
+        }
+        return null;
+    }
+
     public WorkspaceCollection getChildWorkspaces() {
-        DataQuery query = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.london.portal.childWorkspacesForApplicationID");
+        DataQuery query = SessionManager.getSession().retrieveQuery(
+                "com.arsdigita.london.portal.childWorkspacesForApplicationID");
         query.setParameter("applicationID", getID());
 
         DataCollection collection =
-            new DataQueryDataCollectionAdapter(query, "workspace");
+                       new DataQueryDataCollectionAdapter(query, "workspace");
         //collection.addEqualsFilter("isArchived", Boolean.FALSE);
 
         query.close();
@@ -670,93 +665,92 @@ public class Workspace extends Application {
         return applications;
     }
 
-	/**
-	 * Get's the description for a Workspace.
-	 */
+    /**
+     * Get's the description for a Workspace.
+     */
 //	public String getDescription() {
 //		return (String) get("description");
 //	}
-
-	/**
-	 * Set's the description for a Workspace.
-	 */
+    /**
+     * Set's the description for a Workspace.
+     */
 //	public void setDescription(String description) {
 //		set("description", description);
 //	}
+    /**
+     * Sets the user who owns the workspace
+     *
+     * @param user
+     */
+    public void setOwner(User user) {
+        s_log.debug("setOwner called for " + this.getDisplayName());
+        set("owner", user);
+    }
 
-	/**
-	 * Sets the user who owns the workspace
-	 * 
-	 * @param user
-	 */
-	public void setOwner(User user) {
-		s_log.debug("setOwner called for " + this.getDisplayName());
-		set("owner", user);
-	}
+    public User getOwner() {
+        return (User) get("owner");
+    }
 
-	public User getOwner() {
-		return (User) get("owner");
-	}
+    public static Workspace createPersonalWorkspace(final User owner) {
 
-	public static Workspace createPersonalWorkspace(final User owner) {
+        s_log.debug("creating the personal portal for "
+                    + owner.getDisplayName());
 
-		s_log.debug("creating the personal portal for "
-				+ owner.getDisplayName());
+        String url = "" + owner.getID();
+        String title = "Personal Workspace for " + owner.getDisplayName();
+        Application parent = Application.retrieveApplicationForPath(
+                PersonalPortalPage.PERSONAL_PORTAL_PATH);
+        final Workspace workspace = createWorkspace(url, title, parent, false);
 
-		String url = "" + owner.getID();
-		String title = "Personal Workspace for " + owner.getDisplayName();
-		Application parent = Application
-				.retrieveApplicationForPath(PersonalPortalPage.PERSONAL_PORTAL_PATH);
-		final Workspace workspace = createWorkspace(url, title, parent, false);
+        // TODO the setOwner method should probably deal with all the
+        // permissions then later on ownership could be changed
+        Group group = (Group) workspace.getParty();
+        group.addMember(owner);
+        workspace.setOwner(owner);
+        new KernelExcursion() {
 
-		// TODO the setOwner method should probably deal with all the
-		// permissions then later on ownership could be changed
-		Group group = (Group) workspace.getParty();
-		group.addMember(owner);
-		workspace.setOwner(owner);
-		new KernelExcursion() {
-			public void excurse() {
-				setEffectiveParty(Kernel.getSystemParty());
-				PermissionDescriptor pd = new PermissionDescriptor(
-						PrivilegeDescriptor.ADMIN, workspace, owner);
-				PermissionService.grantPermission(pd);
-			}
-		}.run();
-		// check that the user is no longer system user
-		Party party = KernelHelper.getCurrentEffectiveParty();
-		s_log.debug("party after excurse is " + party.getDisplayName());
+            public void excurse() {
+                setEffectiveParty(Kernel.getSystemParty());
+                PermissionDescriptor pd = new PermissionDescriptor(
+                        PrivilegeDescriptor.ADMIN, workspace, owner);
+                PermissionService.grantPermission(pd);
+            }
+        }.run();
+        // check that the user is no longer system user
+        Party party = KernelHelper.getCurrentEffectiveParty();
+        s_log.debug("party after excurse is " + party.getDisplayName());
 
-		Role admins = group.getRole("Administrators");
-		if (admins == null) {
-			admins = group.createRole("Administrators");
-			admins.add(owner);
-			admins.save();
-		}
+        Role admins = group.getRole("Administrators");
+        if (admins == null) {
+            admins = group.createRole("Administrators");
+            admins.add(owner);
+            admins.save();
+        }
 
-		workspace.setDefaultLayout(PageLayout.getDefaultLayout());
+        workspace.setDefaultLayout(PageLayout.getDefaultLayout());
 
         // set the parent app to null
         // so that the base personal portal doesn't appear anywhere
         workspace.setParentApplication(null);
 
-		return workspace;
-	}
+        return workspace;
+    }
 
-	public static Workspace retrievePersonalWorkspace(User owner) {
-		DataCollection personalWorkspaces = SessionManager.getSession()
-				.retrieve(BASE_DATA_OBJECT_TYPE);
-		personalWorkspaces.addEqualsFilter("owner", owner.getID());
+    public static Workspace retrievePersonalWorkspace(User owner) {
+        DataCollection personalWorkspaces = SessionManager.getSession().retrieve(
+                BASE_DATA_OBJECT_TYPE);
+        personalWorkspaces.addEqualsFilter("owner", owner.getID());
 
-		if (personalWorkspaces.next()) {
-			Workspace workspace = (Workspace) Application
-					.retrieveApplication(personalWorkspaces.getDataObject());
-			if (personalWorkspaces.next())
-				s_log.error("more than one personal workspaces for this user!!");
-			personalWorkspaces.close();
+        if (personalWorkspaces.next()) {
+            Workspace workspace = (Workspace) Application.retrieveApplication(personalWorkspaces.
+                    getDataObject());
+            if (personalWorkspaces.next()) {
+                s_log.error("more than one personal workspaces for this user!!");
+            }
+            personalWorkspaces.close();
 
-			return workspace;
-		}
-		return null;
-	}
-
+            return workspace;
+        }
+        return null;
+    }
 }

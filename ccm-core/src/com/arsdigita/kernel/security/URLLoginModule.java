@@ -48,8 +48,10 @@ public class URLLoginModule extends UserLoginModule {
 
     private static Set s_models = new HashSet();
     static {
+        s_log.debug("Static initalizer starting...");
         s_models.add(NORMAL_PARAM);
         s_models.add(SECURE_PARAM);
+        s_log.debug("Static initalizer finished...");
     }
 
     /**

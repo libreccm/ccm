@@ -24,6 +24,7 @@ import com.arsdigita.util.Assert;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import org.apache.log4j.Logger;
 
 /**
  * LibCheck uses the checklist mechanism to perform additional checks for
@@ -37,14 +38,16 @@ import java.io.InputStreamReader;
 
 public class LibCheck extends BaseCheck {
 
-
+    private static final Logger logger = Logger.getLogger(LibCheck.class);
     // Integrating the packaging.MessageMap service class providing a
     // package specific message file by overriding the variable in BaseCheck.
     static {
+        logger.debug("Static initializer starting...");
         final InputStream in = LibCheck.class.getResourceAsStream
             ("libcheck.messages_linux");
         Assert.exists(in, InputStream.class);
         s_messages.load(new InputStreamReader(in));
+        logger.debug("Static initializer finished...");
     }
 
     private boolean checkJAAS() {

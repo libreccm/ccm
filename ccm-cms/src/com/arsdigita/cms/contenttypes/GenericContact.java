@@ -29,6 +29,7 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
+import org.apache.log4j.Logger;
 
 /**
  * This content type represents an basic contact
@@ -37,6 +38,7 @@ import java.util.StringTokenizer;
 public class GenericContact extends ContentPage implements
         RelationAttributeInterface {
 
+    private static final Logger logger = Logger.getLogger(GenericContact.class);
     /** PDL property names */
     public static final String PERSON = "person";
 //    public static final String CONTACT_TYPE = "";
@@ -51,9 +53,11 @@ public class GenericContact extends ContentPage implements
             new GenericContactConfig();
 
     static {
+        logger.debug("Static initializer is starting...");
         s_config.load();
+        logger.debug("Static initializer finished");
     }
-    /** Data object type for tihs domain object */
+    /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
             "com.arsdigita.cms.contenttypes.GenericContact";
 

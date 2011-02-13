@@ -31,6 +31,7 @@ import com.arsdigita.forum.ForumContext;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -46,14 +47,17 @@ import java.util.Iterator;
  */
 public class TopicsList extends SimpleComponent implements Constants {
 
+    private static final Logger logger = Logger.getLogger(TopicsList.class);
     /** List of properties a topic may have. */
     private final static Set s_catProps;
     static {
+        logger.debug("Static initalizer starting...");
         s_catProps = new HashSet();
         s_catProps.add("id");
         s_catProps.add("name");
         s_catProps.add("numThreads");
         s_catProps.add("latestPost");
+        logger.debug("Static initalizer finished.");
     }
     
     /**

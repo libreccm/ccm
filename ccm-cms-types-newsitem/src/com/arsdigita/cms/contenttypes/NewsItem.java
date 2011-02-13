@@ -28,6 +28,7 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  * <p><code>DomainObject</code> class to represent news item <code>ContentType</code>
@@ -57,6 +58,7 @@ import java.util.Date;
  **/
 public class NewsItem extends GenericArticle {
 
+    private static final Logger logger = Logger.getLogger(NewsItem.class);
     /** PDL property name for lead */
     public static final String LEAD = "lead";
     /** PDL property name for news date */
@@ -69,7 +71,9 @@ public class NewsItem extends GenericArticle {
     private static final NewsItemConfig s_config = new NewsItemConfig();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     public static final NewsItemConfig getConfig() {

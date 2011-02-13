@@ -16,6 +16,7 @@
 package com.arsdigita.london.portal.ui;
 
 import com.arsdigita.bebop.Image;
+import org.apache.log4j.Logger;
 
 /**
  * This class contains Images for the various CW icons.  These image
@@ -24,6 +25,8 @@ import com.arsdigita.bebop.Image;
  * they can be used within a list or table cell renderer.
  **/
 public class Icons {
+
+    private static final Logger logger = Logger.getLogger(Icons.class);
 
     public static final Image USER_16;
     public static final Image GROUP_16;
@@ -40,6 +43,7 @@ public class Icons {
     public static final Image TRASH_16;
 
     static {
+        logger.debug("Static initalizer starting...");
         USER_16 = new Image("/packages/workspace/www/assets/User16.gif");
         USER_16.setBorder("0");
         USER_16.lock();
@@ -97,5 +101,6 @@ public class Icons {
         TRASH_16 = new Image("/packages/workspace/www/assets/delete.gif");
         TRASH_16.setBorder("0");
         TRASH_16.lock();
+        logger.debug("Static initalizer finished.");
     }
 };

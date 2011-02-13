@@ -22,20 +22,24 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
 import com.arsdigita.web.Application;
+import org.apache.log4j.Logger;
 
 /**
  * Base class for the search application (module)
  *
  */
 public class Search extends Application {
-    
+
+    private static final Logger logger = Logger.getLogger(Search.class);
     public static final String BASE_DATA_OBJECT_TYPE 
         = "com.arsdigita.london.search.Search";
     
     private static SearchConfig s_config = new SearchConfig();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     public static SearchConfig getConfig() {

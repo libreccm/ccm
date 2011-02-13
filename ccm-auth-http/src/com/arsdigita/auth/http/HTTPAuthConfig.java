@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.auth.http;
 
 import com.arsdigita.util.parameter.Converters;
@@ -43,29 +42,27 @@ import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-
+import org.apache.log4j.Logger;
 
 public class HTTPAuthConfig extends AbstractConfig {
-    
-    static {
-        Converters.set(Inet4AddressRange.class, 
-                       new Inet4AddressRangeConvertor());
-    }
 
+    private static final Logger logger = Logger.getLogger(HTTPAuthConfig.class);
+
+    static {
+        logger.debug("Static initalizer starting...");
+        Converters.set(Inet4AddressRange.class,
+                       new Inet4AddressRangeConvertor());
+        logger.debug("Static initalizer finished.");
+    }
     private BooleanParameter m_isActive;
     private BooleanParameter m_isDebugMode;
-
     private IntegerParameter m_nonceTTL;
-
     private StringParameter m_serverName;
     private IntegerParameter m_serverPort;
-
     private Inet4AddressRangeParameter m_clientIPRange;
-
     private StringParameter m_keyAlias;
     private StringParameter m_keyCypher;
     private StringParameter m_keyPassword;
-
     private StringParameter m_keystorePassword;
     private StringParameter m_keystorePath;
 
@@ -90,11 +87,13 @@ public class HTTPAuthConfig extends AbstractConfig {
                                            // XXX bz108251
                                            //Parameter.REQUIRED,
                                            null);
-        m_serverPort = new IntegerParameter("com.arsdigita.auth.http.server_port",
+        m_serverPort = new IntegerParameter(
+                "com.arsdigita.auth.http.server_port",
                                             Parameter.OPTIONAL,
                                             new Integer(80));
 
-        m_clientIPRange = new Inet4AddressRangeParameter("com.arsdigita.auth.http.client_ip_range",
+        m_clientIPRange = new Inet4AddressRangeParameter(
+                "com.arsdigita.auth.http.client_ip_range",
                                                          Parameter.OPTIONAL,
                                                          // XXX bz108251
                                                          //Parameter.REQUIRED,
@@ -106,19 +105,22 @@ public class HTTPAuthConfig extends AbstractConfig {
         m_keyCypher = new StringParameter("com.arsdigita.auth.http.key_cypher",
                                           Parameter.OPTIONAL,
                                           "RSA");
-        m_keyPassword = new StringParameter("com.arsdigita.auth.http.key_password",
+        m_keyPassword = new StringParameter(
+                "com.arsdigita.auth.http.key_password",
                                             Parameter.OPTIONAL,
                                             // XXX bz108251
                                             //Parameter.REQUIRED,
                                             null);
 
 
-        m_keystorePassword = new StringParameter("com.arsdigita.auth.http.keystore_password",
+        m_keystorePassword = new StringParameter(
+                "com.arsdigita.auth.http.keystore_password",
                                                  Parameter.OPTIONAL,
                                                  // XXX bz108251
                                                  //Parameter.REQUIRED,
                                                  null);
-        m_keystorePath = new StringParameter("com.arsdigita.auth.http.keystore_path",
+        m_keystorePath = new StringParameter(
+                "com.arsdigita.auth.http.keystore_path",
                                              Parameter.OPTIONAL,
                                              // XXX bz108251
                                              //Parameter.REQUIRED,
@@ -153,43 +155,42 @@ public class HTTPAuthConfig extends AbstractConfig {
     }
 
     public final int getNonceTTL() {
-        return ((Integer)get(m_nonceTTL)).intValue();
+        return ((Integer) get(m_nonceTTL)).intValue();
     }
-    
+
     public final String getServerName() {
-        return (String)get(m_serverName);
+        return (String) get(m_serverName);
     }
 
     public final int getServerPort() {
-        return ((Integer)get(m_serverPort)).intValue();
+        return ((Integer) get(m_serverPort)).intValue();
     }
 
     public final Inet4AddressRange getClientIPRange() {
-        return (Inet4AddressRange)get(m_clientIPRange);
+        return (Inet4AddressRange) get(m_clientIPRange);
     }
 
     public final String getKeyAlias() {
-        return (String)get(m_keyAlias);
+        return (String) get(m_keyAlias);
     }
 
     public final String getKeyCypher() {
-        return (String)get(m_keyCypher);
+        return (String) get(m_keyCypher);
     }
 
     public final String getKeyPassword() {
-        return (String)get(m_keyPassword);
+        return (String) get(m_keyPassword);
     }
 
     public final String getKeyStorePassword() {
-        return (String)get(m_keystorePassword);
+        return (String) get(m_keystorePassword);
     }
-    
+
     // Package protected, since we won't neccessarily always
     // store the keystore in a file on disk
     final String getKeyStorePath() {
         return (String) get(m_keystorePath);
     }
-
 
     public final InputStream getKeyStoreStream() {
         String file = getKeyStorePath();
@@ -200,12 +201,12 @@ public class HTTPAuthConfig extends AbstractConfig {
             is = new FileInputStream(file);
         } catch (FileNotFoundException ex) {
             throw new UncheckedWrapperException(
-                "cannot read keystore file " + file, ex);
+                    "cannot read keystore file " + file, ex);
         }
-        
+
         return is;
     }
-    
+
     public final KeyStore getKeyStore() {
         InputStream is = getKeyStoreStream();
         KeyStore store = null;
@@ -215,23 +216,22 @@ public class HTTPAuthConfig extends AbstractConfig {
             store = KeyStore.getInstance("JKS");
         } catch (KeyStoreException ex) {
             throw new UncheckedWrapperException(
-                "cannot get keystore instance JKS", ex);
+                    "cannot get keystore instance JKS", ex);
         }
-        
+
         try {
             store.load(is, getKeyStorePassword().toCharArray());
         } catch (IOException ex) {
             throw new UncheckedWrapperException(
-                "cannot load keystore from " + 
-                getKeyStorePath(), ex);
+                    "cannot load keystore from " + getKeyStorePath(), ex);
         } catch (CertificateException ex) {
             throw new UncheckedWrapperException(
-                "cannot load keystore certificates from " +
-                getKeyStorePath(), ex);
+                    "cannot load keystore certificates from "
+                    + getKeyStorePath(), ex);
         } catch (NoSuchAlgorithmException ex) {
             throw new UncheckedWrapperException(
-                "cannot check integrity of keystore " + 
-                getKeyStorePath(), ex);
+                    "cannot check integrity of keystore " + getKeyStorePath(),
+                    ex);
         }
         return store;
     }
@@ -244,12 +244,12 @@ public class HTTPAuthConfig extends AbstractConfig {
             cert = keystore.getCertificate(getKeyAlias());
         } catch (KeyStoreException ex) {
             throw new UncheckedWrapperException(
-                "cannot get public key from keystore " +
-                getKeyStorePath(), ex);
-        }        
+                    "cannot get public key from keystore " + getKeyStorePath(),
+                    ex);
+        }
 
         Assert.exists(cert, Certificate.class);
-        
+
         return cert.getPublicKey();
     }
 
@@ -258,44 +258,45 @@ public class HTTPAuthConfig extends AbstractConfig {
 
         Key key = null;
         try {
-            key = keystore.getKey(getKeyAlias(), 
+            key = keystore.getKey(getKeyAlias(),
                                   getKeyPassword().toCharArray());
         } catch (KeyStoreException ex) {
             throw new UncheckedWrapperException(
-                "cannot get private key from keystore " +
-                getKeyStorePath(), ex);
+                    "cannot get private key from keystore " + getKeyStorePath(),
+                    ex);
         } catch (NoSuchAlgorithmException ex) {
             throw new UncheckedWrapperException(
-                "cannot get private key from keystore " + 
-                getKeyStorePath(), ex);
+                    "cannot get private key from keystore " + getKeyStorePath(),
+                    ex);
         } catch (UnrecoverableKeyException ex) {
             throw new UncheckedWrapperException(
-                "cannot get private key from keystore " + 
-                getKeyStorePath(), ex);
-        }        
+                    "cannot get private key from keystore " + getKeyStorePath(),
+                    ex);
+        }
 
         Assert.exists(key, Key.class);
-        
-        return (PrivateKey)key;
+
+        return (PrivateKey) key;
     }
 
     private static class Inet4AddressRangeConvertor implements Converter {
+
         public Object convert(Class type,
                               Object value) {
-            return Inet4AddressRange.getByName((String)value);
+            return Inet4AddressRange.getByName((String) value);
         }
     }
 
     private static class Inet4AddressRangeParameter extends AbstractParameter {
+
         public Inet4AddressRangeParameter(final String name) {
             super(name, Inet4AddressRange.class);
         }
-        
+
         public Inet4AddressRangeParameter(final String name,
-                                final int multiplicity,
-                                final Object defaalt) {
+                                          final int multiplicity,
+                                          final Object defaalt) {
             super(name, multiplicity, defaalt, Inet4AddressRange.class);
         }
- 
     }
 }

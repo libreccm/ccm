@@ -189,6 +189,7 @@ public class FolderBrowser extends Table {
         Assert.exists( m_currentFolder.getStateParameter() );
     }
     
+    @Override
     public void register(Page p) {
         super.register(p);
         
@@ -217,6 +218,7 @@ public class FolderBrowser extends Table {
         m_deleteColumn.setVisible(state, canDelete);
     }
     
+    @Override
     public void respond(PageState state) throws ServletException {
         String key = state.getControlEventName();
         String value = state.getControlEventValue();
@@ -407,6 +409,7 @@ public class FolderBrowser extends Table {
             super(true);
         }
         
+        @Override
         public Component getComponent(Table table, PageState state, Object value,
                 boolean isSelected, Object key,
                 int row, int column) {
@@ -438,12 +441,15 @@ public class FolderBrowser extends Table {
     private static class ActionCellRenderer implements TableCellRenderer {
         private static Label s_noAction;
         private static ControlLink s_link;
+        private static final Logger logger = Logger.getLogger(ActionCellRenderer.class);
         
         static {
+            logger.debug("Static initializer is starting...");
             s_noAction = new Label("&nbsp;", false);
             s_noAction.lock();
             s_link = new ControlLink(new Label(globalize("cms.ui.folder.delete")));
             s_link.setConfirmation("Permanently delete this item?"); // XXX G11N ?
+            logger.debug("Static initializer finished.");
         }
         
         public Component getComponent(Table table, PageState state, Object value,

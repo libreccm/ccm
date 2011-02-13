@@ -56,7 +56,9 @@ final class Adapter {
 
     private static final Map s_converters = new HashMap();
     static {
+        s_log.debug("Static initalizer starting...");
         initializeAdapters();
+        s_log.debug("Static initalizer finished.");
     }
     private Adapter() {}
 

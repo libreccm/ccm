@@ -44,9 +44,11 @@ public class QueryEngineRegistry {
         Logger.getLogger(QueryEngineRegistry.class);
 
     static {
+        s_log.debug("Static initalizer starting...");
         registerEngine(IndexerType.NOOP,
                        new FilterType[] {},
                        new NoopQueryEngine());
+        s_log.debug("Static initalizer finished.");
     }
 
     /**

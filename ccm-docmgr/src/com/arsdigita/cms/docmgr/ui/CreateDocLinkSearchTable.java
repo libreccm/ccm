@@ -204,11 +204,14 @@ public class CreateDocLinkSearchTable extends Table implements DMConstants{
      */
     private static class ActionCellRenderer implements TableCellRenderer {
 
+        private final static Logger logger = Logger.getLogger(ActionCellRenderer.class);
         private static ControlLink s_link;
         
         static {
+            logger.debug("Static initalizer starting...");
             s_link = new ControlLink(new Label(DMConstants.FOLDER_NEW_CREATE_LINK));
-            s_link.setConfirmation("Create Link to this Document ?");            
+            s_link.setConfirmation("Create Link to this Document ?");
+            logger.debug("Static initalizer finished.");
         }
 
         public Component getComponent(Table table, PageState state, Object value,

@@ -50,7 +50,9 @@ public class FileAttachment extends FileAsset {
     private static final FileAttachmentConfig s_config = new FileAttachmentConfig();
     
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
 
 

@@ -224,16 +224,20 @@ public final class LoggingProxyFactory implements LoggerConfigurator {
     }
 
     private static class Handler implements InvocationHandler {
+        private static final Logger logger = Logger.getLogger(Handler.class);
         private static final Method s_getProxiedObject;
 
         static {
+            logger.debug("Static initalizer starting...");
             try {
                 s_getProxiedObject = 
                     LoggingProxy.class.getMethod("getProxiedObject",
                                                  new Class[] {});
             } catch (NoSuchMethodException ex) {
+                logger.error("Statis initalizer failed: ", ex);
                 throw new UncheckedWrapperException("failed", ex);
             }
+            logger.debug("Static initalizer finished...");
         }
 
         private Config m_config;

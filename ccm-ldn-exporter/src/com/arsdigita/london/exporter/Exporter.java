@@ -18,14 +18,19 @@
 
 package com.arsdigita.london.exporter;
 
+import org.apache.log4j.Logger;
+
 
 
 public class Exporter {
 
+    private static final Logger logger = Logger.getLogger(Exporter.class);
     private static ExporterConfig s_config = new ExporterConfig();
     
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
     
     public static ExporterConfig getConfig() {

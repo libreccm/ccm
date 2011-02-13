@@ -35,7 +35,10 @@ import org.apache.log4j.Logger;
  */
 public class WrappedError extends Error {
 
+    private static final Logger logger = Logger.getLogger(WrappedError.class);
+
     static {
+        logger.debug("Static initalizer starting...");
         Exceptions.registerUnwrapper(
             WrappedError.class,
             new ExceptionUnwrapper() {
@@ -44,6 +47,7 @@ public class WrappedError extends Error {
                     return ex.getRootCause();
                 }
             });
+            logger.debug("Static initalizer finished.");
     }
 
     Throwable m_rootCause;

@@ -27,6 +27,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import org.apache.log4j.Logger;
 
 /**
  * The Column class is used to keep information about the physical schema in
@@ -39,6 +40,8 @@ import java.util.Set;
 public class Column extends Element {
 
     public final static String versionId = "$Id: Column.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
+    private static final Logger logger = Logger.getLogger(Column.class);
 
     /**
      * The name of this Column.
@@ -353,6 +356,7 @@ public class Column extends Element {
     private static final Map ORACLE = new HashMap();
 
     static {
+        logger.debug("Static initalizer starting...");
         DEFAULT.put(new Integer(Types.ARRAY), "ARRAY");
         DEFAULT.put(new Integer(Types.BIGINT), "BIGINT");
         ORACLE.put(new Integer(Types.BIGINT), "integer");
@@ -389,6 +393,7 @@ public class Column extends Element {
         DEFAULT.put(new Integer(Types.TINYINT), "TINYINT");
         DEFAULT.put(new Integer(Types.VARBINARY), "VARBINARY");
         DEFAULT.put(new Integer(Types.VARCHAR), "VARCHAR");
+        logger.debug("Static initalizer finished.");
     }
 
     private static final String getDatabaseType(int type) {

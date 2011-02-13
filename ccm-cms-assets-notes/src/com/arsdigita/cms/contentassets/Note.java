@@ -45,6 +45,7 @@ public class Note extends ACSObject {
     private static final Logger s_log = Logger.getLogger( Note.class );
 
     static {
+        s_log.debug("Static initalizer is starting...");
         DomainObjectFactory.registerInstantiator(
             BASE_DATA_OBJECT_TYPE,
             new DomainObjectInstantiator() {
@@ -58,6 +59,8 @@ public class Note extends ACSObject {
                 }
             }
         );
+
+        s_log.debug("Static initalizer finished.");
     }
 
     public static final String CONTENT = "content";

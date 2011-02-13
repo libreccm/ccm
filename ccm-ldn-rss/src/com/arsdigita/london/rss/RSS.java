@@ -22,21 +22,25 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 
 import com.arsdigita.web.Application;
+import org.apache.log4j.Logger;
 
 /**
  * Base class of the RSS application (module).
  * 
  */
 public class RSS extends Application {
-    
+
+    private static final Logger logger = Logger.getLogger(RSS.class);
+
     public static final String BASE_DATA_OBJECT_TYPE 
         = "com.arsdigita.london.rss.RSS";
     
-
     private static final RSSConfig s_config = new RSSConfig();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     /**

@@ -28,6 +28,7 @@ import java.sql.Connection;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -43,6 +44,7 @@ import java.io.InputStreamReader;
 
 public class CheckDB extends BaseCheck {
 
+    private static final Logger logger = Logger.getLogger(CheckDB.class);
     public final static String versionId = 
             "$Id: DBCheck.java 736 2005-09-01 10:46:05Z sskracic $" +
             " by $Author: sskracic $, " +
@@ -51,10 +53,12 @@ public class CheckDB extends BaseCheck {
     // Integration of service class packaging.MessageMap.
     // Specifies a package specific message file overriding BaseCheck
     static {
+        logger.debug("Static initalizer starting...");
         final InputStream in = CheckDB.class.getResourceAsStream
             ("checkdb.messages_linux");
         Assert.exists(in, InputStream.class);
         s_messages.load(new InputStreamReader(in));
+        logger.debug("Static initalizer finished.");
     }
 
 

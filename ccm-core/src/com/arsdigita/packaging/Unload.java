@@ -29,6 +29,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.log4j.Logger;
 
 /**
  * Unload
@@ -39,6 +40,7 @@ import org.apache.commons.cli.PosixParser;
 
 class Unload extends Command {
 
+    private static final Logger logger = Logger.getLogger(Unload.class);
     public final static String versionId = 
             "$Id: Unload.java 736 2005-09-01 10:46:05Z sskracic $" +
             " by $Author: sskracic $, " +
@@ -47,20 +49,24 @@ class Unload extends Command {
     private static final Options OPTIONS = new Options();
 
     static {
+        logger.debug("Static initalizer starting...");
         OPTIONS.addOption
             (OptionBuilder
              .hasArg(false)
              .withLongOpt("config")
              .withDescription("Unload configuration")
              .create());
+        logger.debug("Static initalizer finished.");
     }
 
     private static final Set EXCLUDE = new HashSet();
 
     static {
+        logger.debug("Static initalizer starting...");
         EXCLUDE.add("resin.conf");
         EXCLUDE.add("resin.pid");
         EXCLUDE.add("server.xml");
+        logger.debug("Static initalizer finished.");
     }
 
     public Unload() {

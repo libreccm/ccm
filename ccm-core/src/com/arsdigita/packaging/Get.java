@@ -37,6 +37,7 @@ import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.log4j.Logger;
 
 /**
  * Get
@@ -49,37 +50,31 @@ import org.apache.commons.cli.PosixParser;
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Revision: #6 $ $Date: 2004/08/16 $
  **/
-
 class Get extends Command {
 
-    public final static String versionId = 
-            "$Id: Get.java 1324 2006-09-21 22:13:16Z apevec $" +
-            " by $Author: apevec $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
-
+    public static final Logger logger = Logger.getLogger(Get.class);
+    public final static String versionId =
+                               "$Id: Get.java 1324 2006-09-21 22:13:16Z apevec $"
+                               + " by $Author: apevec $, "
+                               + "$DateTime: 2004/08/16 18:10:38 $";
     private static final Options OPTIONS = getOptions();
 
     static {
+        logger.debug("Static initalizer starting...");
         OptionGroup group = new OptionGroup();
-        group.addOption
-            (OptionBuilder
-             .hasArg(false)
-             .withLongOpt("all")
-             .withDescription("Lists all configuration parameters")
-             .create("all"));
-        group.addOption
-            (OptionBuilder
-             .hasArg()
-             .withArgName("PARAMETER")
-             .withLongOpt("value")
-             .withDescription("Prints a scalar value without the key")
-             .create("value"));
+        group.addOption(OptionBuilder.hasArg(false).withLongOpt("all").
+                withDescription("Lists all configuration parameters").create(
+                "all"));
+        group.addOption(OptionBuilder.hasArg().withArgName("PARAMETER").
+                withLongOpt("value").withDescription(
+                "Prints a scalar value without the key").create("value"));
         OPTIONS.addOptionGroup(group);
+        logger.debug("Static initalizer finished.");
     }
 
     public Get() {
-        super("get", "Print one or more values from a CCM " +
-              "configuration database");
+        super("get", "Print one or more values from a CCM "
+                     + "configuration database");
     }
 
     public boolean run(String[] args) {
@@ -107,10 +102,9 @@ class Get extends Command {
 
         String[] names;
         if (line.hasOption("value")) {
-            names = new String[] { line.getOptionValue("value") };
+            names = new String[]{line.getOptionValue("value")};
             if (line.getArgs().length > 0) {
-                System.err.println
-                    ("--value option does not allow parameters");
+                System.err.println("--value option does not allow parameters");
                 return false;
             }
         } else {
@@ -138,10 +132,12 @@ class Get extends Command {
                     parameters.add(param);
                 }
             }
-            if (err) { return false; }
+            if (err) {
+                return false;
+            }
         }
 
-        for (Iterator it = parameters.iterator(); it.hasNext(); ) {
+        for (Iterator it = parameters.iterator(); it.hasNext();) {
             Parameter param = (Parameter) it.next();
             Object value = config.get(param);
             Properties props = new Properties();
@@ -167,19 +163,20 @@ class Get extends Command {
     }
 
     private void write(Properties properties, PrintStream out)
-        throws IOException {
+            throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         properties.store(baos, null);
         BufferedReader reader =
-            new BufferedReader(new StringReader(baos.toString()));
+                       new BufferedReader(new StringReader(baos.toString()));
         while (true) {
             String line = reader.readLine();
-            if (line == null) { return; }
+            if (line == null) {
+                return;
+            }
             if (line.trim().startsWith("#")) {
                 continue;
             }
             out.println(line);
         }
     }
-
 }

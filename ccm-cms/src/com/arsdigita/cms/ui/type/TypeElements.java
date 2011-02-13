@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.type;
 
-
 import com.arsdigita.bebop.BoxPanel;
 import com.arsdigita.bebop.Component;
 import com.arsdigita.bebop.ControlLink;
@@ -45,7 +44,6 @@ import org.apache.log4j.Logger;
 import java.math.BigDecimal;
 import java.util.Iterator;
 
-
 /**
  * This class contains the component to generate a table
  * of elements for a particular content type
@@ -53,8 +51,7 @@ import java.util.Iterator;
 public class TypeElements extends BoxPanel {
 
     private static Logger s_log =
-        Logger.getLogger(TypeElements.class);
-
+                          Logger.getLogger(TypeElements.class);
     private SingleSelectionModel m_types;
     private Table m_elementsTable;
     private TableColumn m_removeColumn;
@@ -91,7 +88,9 @@ public class TypeElements extends BoxPanel {
         try {
             type = new ContentType(typeId);
         } catch (DataObjectNotFoundException e) {
-            UncheckedWrapperException.throwLoggedException(getClass(), "Unable to make content type for id: " + typeId, e);
+            UncheckedWrapperException.throwLoggedException(getClass(), "Unable to make content type for id: "
+                                                                       + typeId,
+                                                           e);
         }
         return type;
     }
@@ -100,20 +99,25 @@ public class TypeElements extends BoxPanel {
      * Produce remove links.
      */
     private static class RemoveCellRenderer implements TableCellRenderer {
+
+        private static final Logger logger = Logger.getLogger(RemoveCellRenderer.class);
         private static Label s_noAction;
         private static ControlLink s_link;
 
         static {
+            logger.debug("Static initializer is starting...");
             s_noAction = new Label("&nbsp;", false);
             s_noAction.lock();
-            s_link = new ControlLink(new Label(GlobalizationUtil.globalize("cms.ui.type.element.delete")));
+            s_link = new ControlLink(new Label(GlobalizationUtil.globalize(
+                    "cms.ui.type.element.delete")));
             s_link.setConfirmation("Permanently remove this element?");
+            logger.debug("Static initalizer finished.");
         }
 
         public Component getComponent(Table table, PageState state, Object value,
                                       boolean isSelected, Object key,
                                       int row, int column) {
-            if ( ((Boolean) value).booleanValue() ) {
+            if (((Boolean) value).booleanValue()) {
                 return s_link;
             } else {
                 return s_noAction;
@@ -123,10 +127,11 @@ public class TypeElements extends BoxPanel {
 
     // Removes an element
     private class ElementRemover extends TableActionAdapter {
+
         public void cellSelected(TableActionEvent e) {
             int col = e.getColumn().intValue();
 
-            if ( m_removeColumn != m_elementsTable.getColumn(col) ) {
+            if (m_removeColumn != m_elementsTable.getColumn(col)) {
                 return;
             }
 
@@ -154,98 +159,101 @@ public class TypeElements extends BoxPanel {
      */
     private Table makeElementsTable() {
 
-        final String[] headers = { "Name", "Element Type", "Multiplicity", "Remove" };
+        final String[] headers = {"Name", "Element Type", "Multiplicity",
+                                  "Remove"};
 
-        TableModelBuilder b = new TableModelBuilder () {
-                private boolean m_locked;
+        TableModelBuilder b = new TableModelBuilder() {
 
-                public TableModel makeModel(final Table t, final PageState s) {
+            private boolean m_locked;
 
-                    return new TableModel() {
+            public TableModel makeModel(final Table t, final PageState s) {
 
-                            DynamicObjectType dot = getDynamicObjectType(s);
+                return new TableModel() {
 
-                            //NOTE: this only gets the non-inherited properties of
-                            //      the object type
+                    DynamicObjectType dot = getDynamicObjectType(s);
+                    //NOTE: this only gets the non-inherited properties of
+                    //      the object type
+                    Iterator declaredProperties = dot.getObjectType().
+                            getDeclaredProperties();
+                    Property currentProperty = null;
 
-                            Iterator declaredProperties = dot.getObjectType().getDeclaredProperties();
-                            Property currentProperty = null;
+                    public int getColumnCount() {
+                        return headers.length;
+                    }
 
-                            public int getColumnCount() {
-                                return headers.length;
-                            }
+                    public boolean nextRow() {
+                        boolean next = declaredProperties.hasNext();
+                        if (next) {
+                            currentProperty =
+                            (Property) declaredProperties.next();
+                        }
+                        return next;
+                    }
 
-                            public boolean nextRow() {
-                                boolean next = declaredProperties.hasNext();
-                                if (next) {
-                                    currentProperty = (Property) declaredProperties.next();
-                                }
-                                return next;
-                            }
+                    public Object getElementAt(int columnIndex) {
+                        if (currentProperty == null) {
+                            throw new IllegalArgumentException();
+                        }
 
-                            public Object getElementAt(int columnIndex) {
-                                if (currentProperty == null) {
-                                    throw new IllegalArgumentException();
-                                }
-
-                                switch (columnIndex) {
-                                case 0:
-                                    return currentProperty.getName();
-                                case 1:
-                                    String dataType = currentProperty.getType().getName();
-                                    if (dataType.equals("String")) {
-                                        return "text";
-                                    } else if (dataType.equals("BigDecimal")) {
-                                        return "number";
-                                    } else if (dataType.equals("Date")) {
-                                        return "date";
-                                    } else {
-                                        return dataType;
-                                    }
-                                case 2:
-                                    if (currentProperty.isNullable()) {
-                                        return "0 or 1";
-                                    } else if (currentProperty.isRequired()) {
-                                        return "1";
-                                    } else if (currentProperty.isCollection()) {
-                                        return "0 to n";
-                                    } else {
-                                        return new Integer(currentProperty.getMultiplicity());
-                                    }
-                                case 3:
-                                    return new Boolean(isRemovable());
-                                default:
-                                    throw new IllegalArgumentException("columnIndex exceeds " +
-                                                                       "number of columns available");
-                                }
-                            }
-
-                            public Object getKeyAt(int columnIndex) {
-                                if (currentProperty == null) {
-                                    throw new IllegalArgumentException();
+                        switch (columnIndex) {
+                            case 0:
+                                return currentProperty.getName();
+                            case 1:
+                                String dataType = currentProperty.getType().
+                                        getName();
+                                if (dataType.equals("String")) {
+                                    return "text";
+                                } else if (dataType.equals("BigDecimal")) {
+                                    return "number";
+                                } else if (dataType.equals("Date")) {
+                                    return "date";
                                 } else {
-                                    //uses the element name as key, unique for each row
-                                    return currentProperty.getName();
+                                    return dataType;
                                 }
-                            }
+                            case 2:
+                                if (currentProperty.isNullable()) {
+                                    return "0 or 1";
+                                } else if (currentProperty.isRequired()) {
+                                    return "1";
+                                } else if (currentProperty.isCollection()) {
+                                    return "0 to n";
+                                } else {
+                                    return new Integer(currentProperty.
+                                            getMultiplicity());
+                                }
+                            case 3:
+                                return new Boolean(isRemovable());
+                            default:
+                                throw new IllegalArgumentException(
+                                        "columnIndex exceeds "
+                                        + "number of columns available");
+                        }
+                    }
 
-                            private boolean isRemovable() {
-                                return true;
-                            }
+                    public Object getKeyAt(int columnIndex) {
+                        if (currentProperty == null) {
+                            throw new IllegalArgumentException();
+                        } else {
+                            //uses the element name as key, unique for each row
+                            return currentProperty.getName();
+                        }
+                    }
 
-                        };
+                    private boolean isRemovable() {
+                        return true;
+                    }
+                };
 
-                }
+            }
 
-                public void lock() {
-                    m_locked = true;
-                }
+            public void lock() {
+                m_locked = true;
+            }
 
-                public boolean isLocked() {
-                    return m_locked;
-                }
-
-            };
+            public boolean isLocked() {
+                return m_locked;
+            }
+        };
 
         Table result = new Table(b, headers);
         CMSContainer ifemptable = new CMSContainer();
@@ -256,5 +264,4 @@ public class TypeElements extends BoxPanel {
         return result;
 
     }
-
 }

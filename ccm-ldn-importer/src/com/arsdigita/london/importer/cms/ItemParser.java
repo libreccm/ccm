@@ -105,6 +105,7 @@ public class ItemParser extends DomainObjectParser {
     private Date m_archiveDate;
 
     static {
+        s_log.debug("Static initalizer starting...");
         s_ignoredProps = new ArrayList();
         s_ignoredProps.add(ID);
         s_ignoredProps.add(OID_ATTR);
@@ -115,6 +116,7 @@ public class ItemParser extends DomainObjectParser {
         s_ignoredProps.add(ARTICLE_ID);
         s_ignoredProps.add(DEFAULT_ANCESTORS);
         s_ignoredProps.add(DO_NOT_SAVE);
+        s_log.debug("Static initalizer finished.");
     }
 
     public ItemParser(File lobDir, DomainObjectMapper mapper) {

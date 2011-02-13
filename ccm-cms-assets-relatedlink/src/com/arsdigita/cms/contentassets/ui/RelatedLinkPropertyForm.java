@@ -49,13 +49,9 @@ import com.arsdigita.util.Assert;
  */
 public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
-    private static boolean isHideAdditionalResourceFields;
+    private static boolean isHideAdditionalResourceFields = ContentSection.getConfig().isHideAdditionalResourceFields();
     private String m_linkListName = "";
-
-    static {
-        isHideAdditionalResourceFields = ContentSection.getConfig().isHideAdditionalResourceFields();
-    }
-
+    
     /**
      * Creates a new form to edit the RelatedLink object specified
      * by the item selection model passed in.

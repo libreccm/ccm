@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.navigation.ui;
 
 import com.arsdigita.london.navigation.NavigationConstants;
@@ -30,54 +29,59 @@ import com.arsdigita.xml.Element;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import org.apache.log4j.Logger;
 
 public class TemplateURLs extends SimpleComponent {
+
+    private static final Logger logger = Logger.getLogger(TemplateURLs.class);
     private static final String[] s_contexts;
 
     // Pull out and pre-populate the template use contexts. Note that this will
     // only be done once per server load, but this is ok because there's no UI
     // for creating contexts.
     static {
+        logger.debug("Static initalizer starting...");
         TemplateContextCollection templates = TemplateContext.retrieveAll();
         LinkedList buffer = new LinkedList();
 
-        while( templates.next() ) {
-            buffer.add( templates.getTemplateContext().getContext() );
+        while (templates.next()) {
+            buffer.add(templates.getTemplateContext().getContext());
         }
 
         s_contexts = new String[buffer.size()];
         Iterator iter = buffer.iterator();
-        for( int i = 0; i < s_contexts.length; i++ ) {
+        for (int i = 0; i < s_contexts.length; i++) {
             s_contexts[i] = iter.next().toString();
         }
+        logger.debug("Static initalizer finished.");
     }
 
     public TemplateURLs() {
         super();
     }
 
-    public void generateXML( PageState ps, Element p ) {
+    public void generateXML(PageState ps, Element p) {
         ContentItem item = CMS.getContext().getContentItem();
-        if( null == item ) return;
+        if (null == item) {
+            return;
+        }
 
         Element container = p.newChildElement(
-            NavigationConstants.NAV_PREFIX + ":templateContexts",
-            NavigationConstants.NAV_NS
-        );
-        container.addAttribute( "type", item.getContentType().getClassName() );
+                NavigationConstants.NAV_PREFIX + ":templateContexts",
+                NavigationConstants.NAV_NS);
+        container.addAttribute("type", item.getContentType().getClassName());
 
         String sectionPath = item.getContentSection().getPath();
         String itemPath = item.getPath();
 
-        for( int i = 0; i < s_contexts.length; i++ ) {
+        for (int i = 0; i < s_contexts.length; i++) {
             Element context = container.newChildElement(
-                NavigationConstants.NAV_PREFIX + ":context",
-                NavigationConstants.NAV_NS
-            );
-            context.addAttribute( "name", s_contexts[i] );
+                    NavigationConstants.NAV_PREFIX + ":context",
+                    NavigationConstants.NAV_NS);
+            context.addAttribute("name", s_contexts[i]);
 
             String path = sectionPath + "/tem_" + s_contexts[i] + '/' + itemPath;
-            context.addAttribute( "path", path );
+            context.addAttribute("path", path);
         }
     }
 }

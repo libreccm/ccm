@@ -56,6 +56,7 @@ import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.toolbox.ui.DataTable;
 import com.arsdigita.bebop.table.TableModel;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -171,10 +172,13 @@ public abstract class ItemTemplatesListing extends TemplatesListing {
 
         // Static is safe since these components will never ever change
         private static ControlLink s_link;
+        private static final Logger logger = Logger.getLogger(AssignCellRenderer.class);
 
         static {
+            logger.debug("Static initializer is starting...");
             s_link = new ControlLink(new Label(GlobalizationUtil.globalize("cms.ui.templates.assign_template")));
             s_link.setClassAttr("assignTemplateLink");
+            logger.debug("Static initializer finished.");
         }
 
         public AssignCellRenderer() {}

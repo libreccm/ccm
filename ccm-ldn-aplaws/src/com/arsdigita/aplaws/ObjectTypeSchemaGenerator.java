@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.aplaws;
 
 import com.arsdigita.xml.Element;
@@ -26,18 +25,16 @@ import com.arsdigita.persistence.metadata.Property;
 import java.util.HashMap;
 import java.util.Stack;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
 
+    private static final Logger logger = Logger.getLogger(ObjectTypeSchemaGenerator.class);
     private boolean m_wrapRoot = false;
     private boolean m_wrapObjects = false;
     private boolean m_wrapAttributes = false;
-
-
-
     private Stack m_history = new Stack();
     private HashMap m_elements = new HashMap();
-    
     // The xs:element
     private Element m_element;
     // The (optional) xs:complexType
@@ -47,41 +44,39 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
     // The (optional property
     private Property m_property;
     private Stack m_properties = new Stack();
-
     private Element m_root;
     private String m_rootName;
-
     public static final String SCHEMA_PREFIX = "xs:";
-
-    public static final String SCHEMA_NS = 
-        "http://www.w3.org/2001/XMLSchema";
-
+    public static final String SCHEMA_NS =
+                               "http://www.w3.org/2001/XMLSchema";
     private static HashMap s_types = new HashMap();
+
     static {
+        logger.debug("Static initalizer starting...");
         s_types.put(String.class, "xs:string");
         s_types.put(Boolean.class, "xs:boolean");
         s_types.put(Integer.class, "xs:integer");
         s_types.put(BigDecimal.class, "xs:double");
+        logger.debug("Static initalizer finished.");
     }
 
     protected static String lookupType(Class klass) {
         if (s_types.containsKey(klass)) {
-            return (String)s_types.get(klass);
+            return (String) s_types.get(klass);
         }
         return "xs:string";
     }
-    
+
     public static void registerType(Class klass, String type) {
         s_types.put(klass, type);
     }
 
-    
     public ObjectTypeSchemaGenerator(String rootName,
                                      String namespace) {
         m_root = new Element(SCHEMA_PREFIX + "schema",
                              SCHEMA_NS);
         m_rootName = rootName;
-        
+
         // Set the namespace for nodes defined by the schema
         m_root.addAttribute("targetNamespace", namespace);
         // Set the default namespace for unqualified nodes
@@ -94,7 +89,6 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
     public Element getRoot() {
         return m_root;
     }
-
 
     /**
      * Determines XML output for root object.
@@ -143,20 +137,23 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
                                                       SCHEMA_NS);
             m_sequence = sequence;
         }
-        
+
         Element parent;
         String name;
         if (m_element == null) {
             if (m_wrapRoot) {
-                Element element = m_root.newChildElement(SCHEMA_PREFIX + "element",
+                Element element = m_root.newChildElement(SCHEMA_PREFIX
+                                                         + "element",
                                                          SCHEMA_NS);
                 element.addAttribute("name", m_rootName);
-                
-                Element type = element.newChildElement(SCHEMA_PREFIX + "complexType",
+
+                Element type = element.newChildElement(SCHEMA_PREFIX
+                                                       + "complexType",
                                                        SCHEMA_NS);
-                Element sequence = type.newChildElement(SCHEMA_PREFIX + "sequence",
+                Element sequence = type.newChildElement(SCHEMA_PREFIX
+                                                        + "sequence",
                                                         SCHEMA_NS);
-                
+
                 parent = sequence;
                 name = nameFromPath(path);
             } else {
@@ -186,17 +183,17 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
 
         Element type = element.newChildElement(SCHEMA_PREFIX + "complexType",
                                                SCHEMA_NS);
-        
+
         Element oid = type.newChildElement(SCHEMA_PREFIX + "attribute",
                                            SCHEMA_NS);
         oid.addAttribute("name", "oid");
         oid.addAttribute("type", "xs:string");
-        
+
         // Add to the path -> element map, not that we use this info yet
         m_elements.put(path, element);
 
         // Preserve context
-        m_history.push(new Element[] { m_element, m_type, m_sequence });
+        m_history.push(new Element[]{m_element, m_type, m_sequence});
 
         m_element = element;
         m_type = type;
@@ -209,7 +206,7 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
      */
     protected void endObject(ObjectType obj,
                              String path) {
-        Element[] saved = (Element[])m_history.pop();
+        Element[] saved = (Element[]) m_history.pop();
         m_element = saved[0];
         m_type = saved[1];
         m_sequence = saved[2];
@@ -223,7 +220,8 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
                                    Property property) {
         if (m_wrapAttributes) {
             if (m_sequence == null) {
-                Element sequence = m_type.newChildElement(SCHEMA_PREFIX + "sequence",
+                Element sequence = m_type.newChildElement(SCHEMA_PREFIX
+                                                          + "sequence",
                                                           SCHEMA_NS);
                 m_sequence = sequence;
             }
@@ -232,7 +230,7 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
                                           SCHEMA_NS);
             element.addAttribute("name", property.getName());
             // XXX pdl type -> xs type mapping
-            element.addAttribute("type",lookupType(property.getJavaClass()));
+            element.addAttribute("type", lookupType(property.getJavaClass()));
 
             if (property.isNullable()) {
                 element.addAttribute("minOccurs", "0");
@@ -240,7 +238,7 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
 
             // Add to element
             m_sequence.addContent(element);
-            
+
             // Add to the path -> element map
             m_elements.put(path, element);
         } else {
@@ -256,7 +254,7 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
 
             // Add to element
             m_type.addContent(element);
-            
+
             // Add to the path -> element map
             m_elements.put(path, element);
         }
@@ -271,26 +269,28 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
                              Property property) {
         if (m_wrapObjects) {
             if (m_sequence == null) {
-                Element sequence = m_type.newChildElement(SCHEMA_PREFIX + "sequence",
+                Element sequence = m_type.newChildElement(SCHEMA_PREFIX
+                                                          + "sequence",
                                                           SCHEMA_NS);
                 m_sequence = sequence;
             }
 
-            Element element = m_sequence.newChildElement(SCHEMA_PREFIX + "element",
+            Element element = m_sequence.newChildElement(SCHEMA_PREFIX
+                                                         + "element",
                                                          SCHEMA_NS);
             element.addAttribute("name", property.getName());
             if (property.isNullable()) {
                 element.addAttribute("minOccurs", "0");
             }
-            
+
             Element type = element.newChildElement(SCHEMA_PREFIX + "complexType",
                                                    SCHEMA_NS);
             Element sequence = type.newChildElement(SCHEMA_PREFIX + "sequence",
                                                     SCHEMA_NS);
-            
+
             // Preserve context
-            m_history.push(new Element[] { m_element, m_type, m_sequence });
-            
+            m_history.push(new Element[]{m_element, m_type, m_sequence});
+
             m_element = element;
             m_type = type;
             m_sequence = sequence;
@@ -307,12 +307,12 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
                            String path,
                            Property property) {
         if (m_wrapObjects) {
-            Element[] saved = (Element[])m_history.pop();
+            Element[] saved = (Element[]) m_history.pop();
             m_element = saved[0];
             m_type = saved[1];
             m_sequence = saved[2];
         }
-        m_property = (Property)m_properties.pop();
+        m_property = (Property) m_properties.pop();
     }
 
     /**
@@ -324,26 +324,28 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
                                     Property property) {
         if (m_wrapObjects) {
             if (m_sequence == null) {
-                Element sequence = m_type.newChildElement(SCHEMA_PREFIX + "sequence",
+                Element sequence = m_type.newChildElement(SCHEMA_PREFIX
+                                                          + "sequence",
                                                           SCHEMA_NS);
                 m_sequence = sequence;
             }
 
-            Element element = m_sequence.newChildElement(SCHEMA_PREFIX + "element",
+            Element element = m_sequence.newChildElement(SCHEMA_PREFIX
+                                                         + "element",
                                                          SCHEMA_NS);
             element.addAttribute("name", property.getName());
             if (property.isNullable()) {
                 element.addAttribute("minOccurs", "0");
             }
-            
+
             Element type = element.newChildElement(SCHEMA_PREFIX + "complexType",
                                                    SCHEMA_NS);
             Element sequence = type.newChildElement(SCHEMA_PREFIX + "sequence",
                                                     SCHEMA_NS);
-            
+
             // Preserve context
-            m_history.push(new Element[] { m_element, m_type, m_sequence });
-   
+            m_history.push(new Element[]{m_element, m_type, m_sequence});
+
             m_element = element;
             m_type = type;
             m_sequence = sequence;
@@ -360,12 +362,11 @@ public class ObjectTypeSchemaGenerator extends ObjectTypeTraversal {
                                   String path,
                                   Property property) {
         if (m_wrapObjects) {
-            Element[] saved = (Element[])m_history.pop();
+            Element[] saved = (Element[]) m_history.pop();
             m_element = saved[0];
             m_type = saved[1];
             m_sequence = saved[2];
         }
-        m_property = (Property)m_properties.pop();
+        m_property = (Property) m_properties.pop();
     }
-    
 }

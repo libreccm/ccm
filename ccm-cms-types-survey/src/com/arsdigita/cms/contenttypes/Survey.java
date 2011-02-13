@@ -20,6 +20,7 @@ import com.arsdigita.kernel.User;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.xml.Element;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  * A survey content type that represents a survey. This is partially based on
@@ -50,9 +51,13 @@ public class Survey extends ContentPage implements XMLGenerator {
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Survey";
     /* Config */
     private static final SurveyConfig s_config = new SurveyConfig();
+    /* Logger to debug to static initializer */
+    private static final Logger logger = Logger.getLogger(Survey.class);
 
     static {
+        logger.debug("Static initializer starting...");
         s_config.load();
+        logger.debug("Static initializer finished.");
     }
 
     public static final SurveyConfig getConfig() {

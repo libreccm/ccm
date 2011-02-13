@@ -60,8 +60,10 @@ public class XHTMLParser implements HTMLParser {
     private final static Set s_emptyTags = new HashSet();
 
     static {
+        s_log.debug("Static initalizer is starting...");
         s_emptyTags.add("br");
         s_emptyTags.add("hr");
+        s_log.debug("Static initalizer finished.");
     }
 
     private final Set m_tags;

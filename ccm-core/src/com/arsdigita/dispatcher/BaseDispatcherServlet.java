@@ -83,58 +83,57 @@ import org.xml.sax.helpers.DefaultHandler;
 public abstract class BaseDispatcherServlet extends HttpServlet
         implements Dispatcher, DispatcherConstants {
 
-    private static final Logger s_log = Logger.getLogger
-        (BaseDispatcherServlet.class);
-
+    private static final Logger s_log = Logger.getLogger(
+            BaseDispatcherServlet.class);
     private final static int NOT_FOUND = 0;
     private final static int STATIC_FILE = 1;
     private final static int JSP_FILE = 2;
-
     private final static String WEB_XML_22_PUBLIC_ID =
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN";
+                                "-//Sun Microsystems, Inc.//DTD Web Application 2.2//EN";
     private final static String WEB_XML_23_PUBLIC_ID =
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN";
-
+                                "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN";
     /**
      * We use a Vector here instead of another collection because
      * Vector is synchronized.
      */
     private static Vector s_listenerList = new Vector();
-
     /**
      * list of active requests
      */
     private static Vector s_activeList = new Vector();
 
     static {
+        s_log.debug("Static initalizer starting...");
         // Add the basic request listeners.
 
         BaseDispatcherServlet.addRequestListener(new RequestListener() {
-                public void requestStarted(RequestEvent re) {
-                    DispatcherHelper.setRequest(re.getRequest());
-                }
 
-                public void requestFinished(RequestEvent re) {
-                    // We could do this:
-                    // DispatcherHelper.setRequest(null);
-                    // but some later RequestListener might want to access
-                    // the request or session.  So we'll just let the
-                    // DispatcherHelper hang on to one stale
-                    // HttpServletRequest (per thread).  The reference will
-                    // be overwritten on the next request, so we keep only
-                    // a small amount of garbage.
-                }
-            });
+            public void requestStarted(RequestEvent re) {
+                DispatcherHelper.setRequest(re.getRequest());
+            }
+
+            public void requestFinished(RequestEvent re) {
+                // We could do this:
+                // DispatcherHelper.setRequest(null);
+                // but some later RequestListener might want to access
+                // the request or session.  So we'll just let the
+                // DispatcherHelper hang on to one stale
+                // HttpServletRequest (per thread).  The reference will
+                // be overwritten on the next request, so we keep only
+                // a small amount of garbage.
+            }
+        });
 
         BaseDispatcherServlet.addRequestListener(new RequestListener() {
-                public void requestStarted(RequestEvent re) {
-                    Kernel.getContext().getTransaction().begin();
-                }
 
-                public void requestFinished(RequestEvent re) {
-                    Kernel.getContext().getTransaction().end();
-                }
-            });
+            public void requestStarted(RequestEvent re) {
+                Kernel.getContext().getTransaction().begin();
+            }
+
+            public void requestFinished(RequestEvent re) {
+                Kernel.getContext().getTransaction().end();
+            }
+        });
 
         //log to DeveloperSupport
 //        BaseDispatcherServlet.addRequestListener(new RequestListener() {
@@ -153,19 +152,18 @@ public abstract class BaseDispatcherServlet extends HttpServlet
          * it depends upon there being at least one DeveloperSupportListener when counting
          * whether to log queries to webdevsupport.
          */
-        com.arsdigita.developersupport.DeveloperSupport.addListener
-            (new com.arsdigita.developersupport.DeveloperSupportListener() {
-                    public void requestStart(Object request) {
-                        s_log.debug("DS: requestStart: " + request);
-                    }
+        com.arsdigita.developersupport.DeveloperSupport.addListener(new com.arsdigita.developersupport.DeveloperSupportListener() {
 
-                    public void requestEnd(Object request) {
-                        s_log.debug("DS: requestEnd: " + request);
-                    }
-                }
-             );
+            public void requestStart(Object request) {
+                s_log.debug("DS: requestStart: " + request);
+            }
+
+            public void requestEnd(Object request) {
+                s_log.debug("DS: requestEnd: " + request);
+            }
+        });
+        s_log.debug("Static initalizer finished.");
     }
-
     private List m_welcomeFiles = new ArrayList();
 
     /**
@@ -177,7 +175,7 @@ public abstract class BaseDispatcherServlet extends HttpServlet
         super.init();
         try {
             File file =
-                new File(getServletContext().getRealPath("/WEB-INF/web.xml"));
+                 new File(getServletContext().getRealPath("/WEB-INF/web.xml"));
             // all we care about is the welcome-file-list element
             SAXParserFactory spf = SAXParserFactory.newInstance();
             spf.setValidating(false);
@@ -220,11 +218,10 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      * @throws com.arsdigita.dispatcher.RedirectException if the dispatcher
      * should redirect the client to the page contained in the exception
      **/
-    protected abstract RequestContext authenticateUser
-        (HttpServletRequest req,
-         HttpServletResponse resp,
-         RequestContext ctx)
-        throws RedirectException;
+    protected abstract RequestContext authenticateUser(HttpServletRequest req,
+                                                       HttpServletResponse resp,
+                                                       RequestContext ctx)
+            throws RedirectException;
 
     /**
      * Called directly by the servlet container when this servlet is invoked
@@ -243,18 +240,17 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      * throws an IOException
      */
     public void service(HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
         if (s_log.isDebugEnabled()) {
-            s_log.debug
-                ("\n*** *** *** *** *** ***\n" +
-                 "Servicing request for URL '" + req.getRequestURI() + "'\n" +
-                 "*** *** *** *** *** ***");
+            s_log.debug("\n*** *** *** *** *** ***\n"
+                        + "Servicing request for URL '" + req.getRequestURI()
+                        + "'\n" + "*** *** *** *** *** ***");
         }
 
         boolean reentrant = true;
         RequestContext reqCtx =
-            DispatcherHelper.getRequestContext(req);
+                       DispatcherHelper.getRequestContext(req);
         boolean finishedNormal = false;
 
         // there are two types of re-entrancy we need to consider:
@@ -307,8 +303,8 @@ public abstract class BaseDispatcherServlet extends HttpServlet
 
                 // need an identifier for this particular request
                 String requestId =
-                    Thread.currentThread().getName() + "|" +
-                    System.currentTimeMillis();
+                       Thread.currentThread().getName() + "|" + System.
+                        currentTimeMillis();
                 req.setAttribute(REENTRANCE_ATTRIBUTE, requestId);
                 s_activeList.add(requestId);
 
@@ -345,8 +341,8 @@ public abstract class BaseDispatcherServlet extends HttpServlet
                     // whole object since it might actually be a
                     // KernelRequestContext with user / session info
                     if (reqCtx instanceof InitialRequestContext) {
-                        ((InitialRequestContext)reqCtx)
-                            .initializeURLFromRequest(req, true);
+                        ((InitialRequestContext) reqCtx).
+                                initializeURLFromRequest(req, true);
                     }
                 }
             }
@@ -382,7 +378,7 @@ public abstract class BaseDispatcherServlet extends HttpServlet
             Throwable rootError;
             do {
                 rootError = t;
-                t = ((ServletException)t).getRootCause();
+                t = ((ServletException) t).getRootCause();
             } while (t instanceof ServletException);
             if (t != null) {
                 rootError = t;
@@ -393,9 +389,9 @@ public abstract class BaseDispatcherServlet extends HttpServlet
                 && (rootError instanceof AbortRequestSignal)) {
                 finishedNormal = true;
             } else if (rootError != null
-                && (rootError instanceof RedirectSignal)) {
+                           && (rootError instanceof RedirectSignal)) {
                 s_log.debug("rethrowing RedirectSignal", rootError);
-                throw (RedirectSignal)rootError;
+                throw (RedirectSignal) rootError;
             } else {
                 s_log.error("error in BaseDispatcherServlet", rootError);
                 throw new ServletException(rootError);
@@ -411,13 +407,14 @@ public abstract class BaseDispatcherServlet extends HttpServlet
                 DeveloperSupport.endStage("BaseDispatcherServlet.service()");
                 // run the request listener events
                 fireFinishedListener(
-                                     new RequestEvent(req, resp, reqCtx, false, finishedNormal));
+                        new RequestEvent(req, resp, reqCtx, false,
+                                         finishedNormal));
                 // at this point, clear the attribute so
                 // a secondary request will work
                 // and remove the request from the list of currently-active
                 // requests
                 Object requestId = req.getAttribute(REENTRANCE_ATTRIBUTE);
-                synchronized(s_activeList) {
+                synchronized (s_activeList) {
                     s_activeList.remove(requestId);
                     s_activeList.notifyAll();
                 }
@@ -438,14 +435,14 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      **/
     private StartRequestRecord startRequest(HttpServletRequest req,
                                             HttpServletResponse resp)
-        throws RedirectException, IOException, ServletException {
+            throws RedirectException, IOException, ServletException {
 
         // turn multipart request into wrapped request
         // to make up for servlet 2.2 brokenness
         req = DispatcherHelper.maybeWrapRequest(req);
 
         RequestContext reqCtx =
-            new InitialRequestContext(req, getServletContext());
+                       new InitialRequestContext(req, getServletContext());
 
         // run the request listener events
         fireStartListener(new RequestEvent(req, resp, reqCtx, true));
@@ -469,12 +466,12 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      * listeners
      */
     protected void fireFinishedListener(RequestEvent evt) {
-        for (int i = 0 ; i < s_listenerList.size(); i++) {
+        for (int i = 0; i < s_listenerList.size(); i++) {
             try {
-                ((RequestListener)s_listenerList.get(i)).requestFinished(evt);
+                ((RequestListener) s_listenerList.get(i)).requestFinished(evt);
             } catch (Exception e) {
-                s_log.error("Error running request finished listener " +
-                            s_listenerList.get(i) + " (#" + i + ")", e);
+                s_log.error("Error running request finished listener " + s_listenerList.
+                        get(i) + " (#" + i + ")", e);
             }
         }
     }
@@ -487,8 +484,8 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      * listeners
      */
     protected void fireStartListener(RequestEvent evt) {
-        for (int i = 0 ; i < s_listenerList.size(); i++) {
-            ((RequestListener)s_listenerList.get(i)).requestStarted(evt);
+        for (int i = 0; i < s_listenerList.size(); i++) {
+            ((RequestListener) s_listenerList.get(i)).requestStarted(evt);
         }
     }
 
@@ -496,6 +493,7 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      * Kludge for returning a typed 2-tuple.
      */
     private class StartRequestRecord {
+
         RequestContext m_reqCtx;
         HttpServletRequest m_req;
 
@@ -517,10 +515,11 @@ public abstract class BaseDispatcherServlet extends HttpServlet
             if (sema != null) {
                 while (s_activeList.indexOf(sema) != -1) {
                     try {
-                        synchronized(s_activeList) {
+                        synchronized (s_activeList) {
                             s_activeList.wait();
                         }
-                    } catch (InterruptedException ie) { }
+                    } catch (InterruptedException ie) {
+                    }
                 }
                 sess.removeAttribute(REDIRECT_SEMAPHORE);
             }
@@ -545,15 +544,15 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      * returns NOT_FOUND otherwise.
      */
     private int concreteFileType(HttpServletRequest req)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
 
 
         String path = DispatcherHelper.getCurrentResourcePath(req);
 
         ServletContext sctx = this.getServletContext();
         File realFile = new File(sctx.getRealPath(path));
-        if (realFile.exists() &&
-            (!realFile.isDirectory() || hasWelcomeFile(realFile))) {
+        if (realFile.exists() && (!realFile.isDirectory() || hasWelcomeFile(
+                                  realFile))) {
             // yup.  Go there, bypass the site map.
             // we have a concrete file so no forwarding to
             // rewrite the request URL is necessary.
@@ -587,7 +586,7 @@ public abstract class BaseDispatcherServlet extends HttpServlet
 
     private boolean trailingSlashRedirect(HttpServletRequest req,
                                           HttpServletResponse resp)
-        throws IOException {
+            throws IOException {
         String path = DispatcherHelper.getCurrentResourcePath(req);
         // first, see if we have an extension
         if (path.lastIndexOf(".") <= path.lastIndexOf("/")) {
@@ -612,13 +611,14 @@ public abstract class BaseDispatcherServlet extends HttpServlet
      * web.xml
      */
     private class WebXMLReader extends DefaultHandler {
+
         StringBuffer m_buffer = new StringBuffer();
 
         public InputSource resolveEntity(String publicId, String systemId)
                 throws SAXException {
             // we don't want to read the web.xml dtd
             if (WEB_XML_22_PUBLIC_ID.equals(publicId)
-                    || WEB_XML_23_PUBLIC_ID.equals(publicId)) {
+                || WEB_XML_23_PUBLIC_ID.equals(publicId)) {
                 StringReader reader = new StringReader(" ");
                 return new InputSource(reader);
             } else {
@@ -645,7 +645,7 @@ public abstract class BaseDispatcherServlet extends HttpServlet
                                String qname) {
             if (qname.equals("welcome-file-list")) {
                 String[] welcomeFiles =
-                    StringUtils.split(m_buffer.toString(), ',');
+                         StringUtils.split(m_buffer.toString(), ',');
                 for (int i = 0; i < welcomeFiles.length; i++) {
                     m_welcomeFiles.add(welcomeFiles[i].trim());
                 }

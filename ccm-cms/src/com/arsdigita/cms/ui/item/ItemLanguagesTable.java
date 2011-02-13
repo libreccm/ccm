@@ -44,6 +44,7 @@ import com.arsdigita.toolbox.ui.DataTable;
 import com.arsdigita.util.LockableImpl;
 
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -115,17 +116,20 @@ public class ItemLanguagesTable extends DataTable {
      * Delete language instance action link.
      */
     private static class ActionCellRenderer implements TableCellRenderer {
+        private static final Logger logger = Logger.getLogger(ActionCellRenderer.class);
         private static Label s_noAction;
         private static Label s_primary;
         private static ControlLink s_link;
 
         static {
+            logger.debug("Static initializer is starting...");
             s_noAction = new Label("&nbsp;", false);
             s_noAction.lock();
             s_primary = new Label(GlobalizationUtil.globalize("cms.ui.primary_instance"), false);
             s_primary.lock();
             s_link = new ControlLink(new Label(GlobalizationUtil.globalize("cms.ui.delete")));
             s_link.setConfirmation("Permanently delete this item?"); // XXX G11N ?
+            logger.debug("Static initalizer finished.");
         }
 
         private ItemSelectionModel m_model;

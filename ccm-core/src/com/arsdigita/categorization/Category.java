@@ -123,7 +123,9 @@ public class Category extends ACSObject {
     private static CategorizationConfig s_config = new CategorizationConfig();
 
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
     // Quasimodo: End
     public static final String ROOT_CATEGORY = "rootCategory";

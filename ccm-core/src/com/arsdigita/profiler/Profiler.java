@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.apache.log4j.Logger;
 
 /**
  * Simple Profiler.
@@ -20,16 +21,19 @@ import java.util.Set;
  * @author Alan Pevec
  */
 public class Profiler {
-    
+
+    private static final Logger logger = Logger.getLogger(Profiler.class);
     private static final Set enabledOperations = new HashSet();
     // TODO add a configuration page under Developer Support
     static {
+        logger.debug("Static initalizer starting...");
         enabledOperations.add("APP");
         enabledOperations.add("FILT");
         enabledOperations.add("CMS");
         enabledOperations.add("XML");
         enabledOperations.add("DB");
         enabledOperations.add("XSLT");
+        logger.debug("Static initalizer finished.");
     }
     
     private static ProfilerConfig config = null;

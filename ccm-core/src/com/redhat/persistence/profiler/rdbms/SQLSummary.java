@@ -27,6 +27,7 @@ import com.redhat.persistence.common.SQLParser;
 import com.redhat.persistence.common.SQLToken;
 import java.io.StringReader;
 import java.util.HashMap;
+import org.apache.log4j.Logger;
 
 /**
  * SQLSummary
@@ -36,6 +37,8 @@ import java.util.HashMap;
  **/
 
 class SQLSummary {
+
+    private static final Logger logger = Logger.getLogger(SQLSummary.class);
 
     private static final HashMap SUMMARIES = new HashMap();
 
@@ -61,10 +64,12 @@ class SQLSummary {
     private static final HashMap TYPES = new HashMap();
 
     static {
+        logger.debug("Static initalizer starting...");
         TYPES.put("select", new Integer(SELECT));
         TYPES.put("insert into", new Integer(INSERT));
         TYPES.put("update", new Integer(UPDATE));
         TYPES.put("delete from", new Integer(DELETE));
+        logger.debug("Static initalizer finished.");
     }
 
     private final int m_type;

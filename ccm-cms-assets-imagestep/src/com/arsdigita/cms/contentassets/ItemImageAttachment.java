@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.cms.contentassets;
 
 import com.arsdigita.cms.ContentItem;
@@ -42,28 +41,28 @@ import org.apache.log4j.Logger;
 public class ItemImageAttachment extends ACSObject implements CustomCopy {
 
     /** PDL property name for contact details */
-    public static final String IMAGE             = "image";
-    public static final String ITEM              = "item";
-    public static final String USE_CONTEXT       = "useContext";
-    public static final String CAPTION           = "caption";
-	public static final String DESCRIPTION           = "description";
-	public static final String TITLE           = "title";
+    public static final String IMAGE = "image";
+    public static final String ITEM = "item";
+    public static final String USE_CONTEXT = "useContext";
+    public static final String CAPTION = "caption";
+    public static final String DESCRIPTION = "description";
+    public static final String TITLE = "title";
     public static final String IMAGE_ATTACHMENTS = "imageAttachments";
-    public static final String ITEM_ATTACHMENTS  = "itemAttachments";
+    public static final String ITEM_ATTACHMENTS = "itemAttachments";
     public static final String IMAGE_LINK = "imageLink";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contentassets.ItemImageAttachment";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contentassets.ItemImageAttachment";
+    private static final Logger s_log = Logger.getLogger(
+            ItemImageAttachment.class);
+    private static final ItemImageAttachmentConfig s_config =
+                                                   new ItemImageAttachmentConfig();
 
-    private static final Logger s_log
-        = Logger.getLogger(ItemImageAttachment.class);
-
-	private static final ItemImageAttachmentConfig s_config = new ItemImageAttachmentConfig();
-
-	 static {
-		s_config.load();
-	 }
+    static {
+        s_log.debug("Static initalizer starting...");
+        s_config.load();
+        s_log.debug("Static initalizer finished.");
+    }
 
     private ItemImageAttachment() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -81,57 +80,60 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         return BASE_DATA_OBJECT_TYPE;
     }
 
-    public ItemImageAttachment( ContentItem item, ReusableImageAsset image ) {
+    public ItemImageAttachment(ContentItem item, ReusableImageAsset image) {
         this();
 
-        set( ITEM, item );
-        set( IMAGE, image );
+        set(ITEM, item);
+        set(IMAGE, image);
     }
 
-    public static ItemImageAttachment retrieve( OID oid ) {
-        return (ItemImageAttachment) DomainObjectFactory.newInstance( oid );
+    public static ItemImageAttachment retrieve(OID oid) {
+        return (ItemImageAttachment) DomainObjectFactory.newInstance(oid);
     }
 
-	public static ItemImageAttachmentConfig getConfig() {
-		return s_config;
-	}
+    public static ItemImageAttachmentConfig getConfig() {
+        return s_config;
+    }
+
     public ReusableImageAsset getImage() {
-        if( s_log.isDebugEnabled() )
-            s_log.debug( "Getting image for " + getOID() );
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Getting image for " + getOID());
+        }
 
-        DataObject dobj = (DataObject) get( IMAGE );
-        Assert.exists( dobj );
+        DataObject dobj = (DataObject) get(IMAGE);
+        Assert.exists(dobj);
 
-        return (ReusableImageAsset) DomainObjectFactory.newInstance( dobj );
+        return (ReusableImageAsset) DomainObjectFactory.newInstance(dobj);
     }
 
-    public void setImage( ReusableImageAsset image ) {
-        Assert.exists( image, ReusableImageAsset.class );
-        set( IMAGE, image );
+    public void setImage(ReusableImageAsset image) {
+        Assert.exists(image, ReusableImageAsset.class);
+        set(IMAGE, image);
     }
 
     public ContentItem getItem() {
-        DataObject dobj = (DataObject) get( ITEM );
-        Assert.exists( dobj );
+        DataObject dobj = (DataObject) get(ITEM);
+        Assert.exists(dobj);
 
-        return (ContentItem) DomainObjectFactory.newInstance( dobj );
+        return (ContentItem) DomainObjectFactory.newInstance(dobj);
     }
 
-    public void setItem( ContentItem item ) {
-        Assert.exists( item, ContentItem.class );
-        set( ITEM, item );
+    public void setItem(ContentItem item) {
+        Assert.exists(item, ContentItem.class);
+        set(ITEM, item);
     }
 
     /** Retrieves links for a content item */
-    public static DataCollection getImageAttachments( ContentItem item ) {
-        Assert.exists( item, ContentItem.class );
+    public static DataCollection getImageAttachments(ContentItem item) {
+        Assert.exists(item, ContentItem.class);
 
-        if( s_log.isDebugEnabled() )
-            s_log.debug("Getting attachments for " + item.getOID() );
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Getting attachments for " + item.getOID());
+        }
 
-        DataCollection attachments = SessionManager.getSession().retrieve
-            ( BASE_DATA_OBJECT_TYPE );
-        attachments.addEqualsFilter( ITEM + ".id", item.getID() );
+        DataCollection attachments = SessionManager.getSession().retrieve(
+                BASE_DATA_OBJECT_TYPE);
+        attachments.addEqualsFilter(ITEM + ".id", item.getID());
 
         return attachments;
     }
@@ -144,52 +146,50 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         return (String) get(USE_CONTEXT);
     }
 
-    public void setCaption( String caption ) {
-        set( CAPTION, caption );
+    public void setCaption(String caption) {
+        set(CAPTION, caption);
     }
 
     public String getCaption() {
-        return (String) get( CAPTION );
+        return (String) get(CAPTION);
     }
 
-	public void setTitle( String title ) {
-		set( TITLE, title );
-	}
+    public void setTitle(String title) {
+        set(TITLE, title);
+    }
 
-	public String getTitle() {
-		return (String) get( TITLE );
-	}
-	
-	public void setDescription( String description) {
-		set( DESCRIPTION, description );
-	}
+    public String getTitle() {
+        return (String) get(TITLE);
+    }
 
-	public String getDescription() {
-		return (String) get( DESCRIPTION );
-	}
+    public void setDescription(String description) {
+        set(DESCRIPTION, description);
+    }
 
+    public String getDescription() {
+        return (String) get(DESCRIPTION);
+    }
 
     /**
      * Automatically publish an unpublished image
      */
-    public boolean copyProperty( final CustomCopy source,
-                                 final Property property,
-                                 final ItemCopier copier ) {
+    public boolean copyProperty(final CustomCopy source,
+                                final Property property,
+                                final ItemCopier copier) {
         String attribute = property.getName();
-        if( ItemCopier.VERSION_COPY == copier.getCopyType() &&
-            IMAGE.equals( attribute ) )
-        {
+        if (ItemCopier.VERSION_COPY == copier.getCopyType() && IMAGE.equals(
+                attribute)) {
             ItemImageAttachment attachment = (ItemImageAttachment) source;
             ReusableImageAsset image = attachment.getImage();
 
             ReusableImageAsset liveImage =
-                (ReusableImageAsset) image.getLiveVersion();
+                               (ReusableImageAsset) image.getLiveVersion();
 
-            if( null == liveImage ) {
+            if (null == liveImage) {
                 liveImage = (ReusableImageAsset) image.createLiveVersion();
             }
 
-            setImage( liveImage );
+            setImage(liveImage);
             return true;
         }
 
@@ -197,31 +197,30 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
     }
 
     // chris gilbert - optional link
+    public Link getLink() {
+        Link link = null;
+        DataObject dobj = (DataObject) get(IMAGE_LINK);
+        if (dobj != null) {
 
-       public Link getLink() {
-                  Link link = null;
-                  DataObject dobj = (DataObject) get( IMAGE_LINK );
-                  if (dobj != null) {
+            link = (Link) DomainObjectFactory.newInstance(dobj);
+        }
+        return link;
+    }
 
-                  link = (Link) DomainObjectFactory.newInstance( dobj );
-                  }
-                  return link;
-          }
+    public void setLink(Link link) {
+        Assert.exists(link, Link.class);
+        set(IMAGE_LINK, link);
+    }
 
-          public void setLink( Link link ) {
-                  Assert.exists( link, Link.class );
-                  set( IMAGE_LINK, link );
-          }
+    public void removeLink() {
+        // when we delete the link, the image still references it in DB
+        // can't make it composite because then image is deleted if we delete
+        // link. Have to set link to null first (I think)
+        DomainObject link = DomainObjectFactory.newInstance((DataObject) get(
+                IMAGE_LINK));
+        set(IMAGE_LINK, null);
+        save();
+        link.delete();
 
-          public void removeLink() {
-                       // when we delete the link, the image still references it in DB
-                       // can't make it composite because then image is deleted if we delete
-                       // link. Have to set link to null first (I think)
-                       DomainObject link = DomainObjectFactory.newInstance((DataObject)get(IMAGE_LINK));
-                       set (IMAGE_LINK, null);
-                       save();
-                       link.delete();
-
-          }
-
+    }
 }

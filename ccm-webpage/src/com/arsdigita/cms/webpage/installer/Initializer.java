@@ -12,7 +12,6 @@
  * rights and limitations under the License.
  *
  */
-
 package com.arsdigita.cms.webpage.installer;
 
 import com.arsdigita.cms.webpage.Webpage;
@@ -55,17 +54,12 @@ import java.util.List;
 import com.arsdigita.util.Assert;
 import com.arsdigita.db.DbHelper;
 
-
 public class Initializer extends CompoundInitializer {
 
     //public static final String CONTENT_SECTION = "contentSection";
-
-    private static Logger s_log = Logger.getLogger
-        (Initializer.class.getName());
-
+    private static Logger s_log = Logger.getLogger(Initializer.class.getName());
 
     //private Configuration m_conf = new Configuration();
-
     public Initializer() {
         final String url = RuntimeConfig.getConfig().getJDBCURL();
         final int database = DbHelper.getDatabaseFromURL(url);
@@ -81,31 +75,29 @@ public class Initializer extends CompoundInitializer {
     //public Configuration getConfiguration() {
     //    return m_conf;
     //}
-
-
+    @Override
     public void init(DomainInitEvent e) {
         super.init(e);
-        
-        e.getFactory().registerInstantiator
-            (Webpage.BASE_DATA_OBJECT_TYPE,
-             new ACSObjectInstantiator() {
-                 public DomainObject doNewInstance(DataObject dataObject) {
-                    return new Webpage(dataObject);
-                 }
-             });
-        
+
+        e.getFactory().registerInstantiator(Webpage.BASE_DATA_OBJECT_TYPE,
+                                            new ACSObjectInstantiator() {
+
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new Webpage(dataObject);
+            }
+        });
+
         startup();
     }
-
-
     // ============================================================
-
-
     private static final WebpageConfig s_config = new WebpageConfig();
 
     // FR: load the parameter values
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
 
     public static WebpageConfig getConfig() {
@@ -121,20 +113,19 @@ public class Initializer extends CompoundInitializer {
         config.setContentSection(section);
 
 
-        TransactionContext txn = SessionManager.getSession()
-            .getTransactionContext();
+        TransactionContext txn = SessionManager.getSession().
+                getTransactionContext();
         txn.beginTxn();
-        
+
         loadWebpagePortlet();
 
         txn.commitTxn();
     }
 
-
     public void shutdown() {
         /* Empty */
     }
-    
+
     private void loadWebpagePortlet() {
         PortletSetup setup = new PortletSetup(s_log);
         setup.setPortletObjectType(WebpagePortlet.BASE_DATA_OBJECT_TYPE);
@@ -142,6 +133,7 @@ public class Initializer extends CompoundInitializer {
         setup.setDescription("Displays a webpage");
         setup.setProfile(PortletType.WIDE_PROFILE);
         setup.setInstantiator(new ACSObjectInstantiator() {
+
             protected DomainObject doNewInstance(DataObject dataObject) {
                 return new WebpagePortlet(dataObject);
             }
@@ -149,23 +141,24 @@ public class Initializer extends CompoundInitializer {
         setup.run();
 
         new ResourceTypeConfig(WebpagePortlet.BASE_DATA_OBJECT_TYPE) {
-            public ResourceConfigFormSection getCreateFormSection
-                (final ResourceType resType, final RequestLocal parentAppRL) {
+
+            public ResourceConfigFormSection getCreateFormSection(
+                    final ResourceType resType, final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
-                    new WebpagePortletEditor(resType, parentAppRL);
-                
+                                                new WebpagePortletEditor(resType,
+                                                                         parentAppRL);
+
                 return config;
             }
-            
-            public ResourceConfigFormSection getModifyFormSection
-                (final RequestLocal application) {
+
+            public ResourceConfigFormSection getModifyFormSection(
+                    final RequestLocal application) {
                 final WebpagePortletEditor config =
-                    new WebpagePortletEditor(application);
-                
+                                           new WebpagePortletEditor(application);
+
                 return config;
             }
         };
 
     }
-    
 }

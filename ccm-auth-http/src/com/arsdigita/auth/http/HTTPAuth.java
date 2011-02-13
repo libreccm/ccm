@@ -22,6 +22,7 @@ import com.arsdigita.web.Application;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -31,10 +32,13 @@ import com.arsdigita.domain.DataObjectNotFoundException;
  */
 public class HTTPAuth extends Application {
 
+    private static final Logger logger = Logger.getLogger(HTTPAuth.class);
     private static HTTPAuthConfig s_config = new HTTPAuthConfig();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     public static HTTPAuthConfig getConfig() {

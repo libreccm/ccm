@@ -80,7 +80,9 @@ public class Forum extends Application {
 
     private static final ForumConfig s_config = new ForumConfig();
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
 
     public static ForumConfig getConfig() {

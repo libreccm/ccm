@@ -249,12 +249,14 @@ public class StringUtils {
 
     private static Map s_entities = new HashMap();
     static {
+        s_log.debug("Static initalizer starting...");
         s_entities.put("fraction12", "&frac12;");
         s_entities.put("fraction14", "&frac14;");
         s_entities.put("fraction34", "&frac34;");
         s_entities.put("copyright", "&copy;");
         s_entities.put("registered", "&reg;");
         s_entities.put("trademark", "<sup>TM</sup>");
+        s_log.debug("Static initalizer finished.");
     }
 
     private static String smartTextInline(String s) {

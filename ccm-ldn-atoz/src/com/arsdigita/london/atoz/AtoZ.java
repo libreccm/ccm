@@ -33,19 +33,23 @@ import com.arsdigita.util.Assert;
 
 import java.util.List;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
 /**
  * Base class of the AtoZ application (module)
  * 
  */
 public class AtoZ extends Application {
-    
+
+    private static final Logger logger = Logger.getLogger(AtoZ.class);
     public static final String BASE_DATA_OBJECT_TYPE 
         = "com.arsdigita.london.atoz.AtoZ";
 
     private static final AtoZConfig s_config = new AtoZConfig();
     static {
+        logger.debug("Static initializer is starting...");
         s_config.load();
+        logger.debug("Static initializer is finished.");
     }
     
     public static final AtoZConfig getConfig() {

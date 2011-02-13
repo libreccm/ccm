@@ -45,12 +45,14 @@ public class PDFConfig extends AbstractConfig {
     private static final PDFConfig s_config = new PDFConfig();
 
     static {
+        s_log.debug("Static initalizer starting...");
         try {
             s_config.load();
         } catch (java.lang.IllegalArgumentException ex) {
             s_log.info("Unable to load PDFConfig. This is not a problem " +
                        "during ccm load, but is a problem at all other times");
         }
+        s_log.debug("Static initalizer finished.");
     }
 
     public PDFConfig() {

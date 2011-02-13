@@ -52,14 +52,13 @@ import java.io.UnsupportedEncodingException;
  * @since ACS 4.5a
  */
 public class Document {
-    public static final String versionId = 
-            "$Id: Document.java 287 2005-02-22 00:29:02Z sskracic $" +
-            " by $Author: sskracic $, " +
-            "$DateTime: 2004/08/16 18:10:38 $";
 
+    public static final String versionId =
+                               "$Id: Document.java 287 2005-02-22 00:29:02Z sskracic $"
+                               + " by $Author: sskracic $, "
+                               + "$DateTime: 2004/08/16 18:10:38 $";
     private static final Logger s_log =
-        Logger.getLogger(Document.class.getName());
-
+                                Logger.getLogger(Document.class.getName());
     /**
      * this is the identity XSL stylesheet.  We need to provide the
      * identity transform as XSL explicitly because the default
@@ -71,43 +70,41 @@ public class Document {
     // to the output doc with <xsl:copy>
     /*
     private final static String identityXSL =
-        "<xsl:stylesheet version=\"1.0\""
-        + " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n"
-        + "<xsl:output method=\"xml\"/>\n"
-        + "<xsl:template match=\"*|@*|text()\">\n"
-        + "  <xsl:copy><xsl:apply-templates select=\"node()|@*\"/></xsl:copy>"
-        + "\n</xsl:template>\n"
-        + "<xsl:template match=\"bebop:structure\" "
-        + " xmlns:bebop=\"http://www.arsdigita.com/bebop/1.0\">\n"
-        + "</xsl:template>\n"
-        + "</xsl:stylesheet>";
-    */
+    "<xsl:stylesheet version=\"1.0\""
+    + " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n"
+    + "<xsl:output method=\"xml\"/>\n"
+    + "<xsl:template match=\"*|@*|text()\">\n"
+    + "  <xsl:copy><xsl:apply-templates select=\"node()|@*\"/></xsl:copy>"
+    + "\n</xsl:template>\n"
+    + "<xsl:template match=\"bebop:structure\" "
+    + " xmlns:bebop=\"http://www.arsdigita.com/bebop/1.0\">\n"
+    + "</xsl:template>\n"
+    + "</xsl:stylesheet>";
+     */
     // Explicitly create elements & attributes to avoid namespace
     // problems
     private final static String identityXSL =
-        "<xsl:stylesheet version=\"1.0\""
-        + " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n"
-        + "<xsl:output method=\"xml\"/>\n"
-        + "<xsl:template match=\"text()|comment()|processing-instruction()\">\n"
-        + "  <xsl:copy/>\n"
-        + "</xsl:template>\n"
-        + "<xsl:template match=\"*\">\n"
-        + "  <xsl:element name=\"{name()}\" namespace=\"{namespace-uri()}\"><xsl:apply-templates select=\"node()|@*\"/></xsl:element>\n"
-        + "</xsl:template>\n"
-        + "<xsl:template match=\"@*\">\n"
-        + "  <xsl:attribute name=\"{name()}\" namespace=\"{namespace-uri()}\"><xsl:value-of select=\".\"/></xsl:attribute>\n"
-        + "</xsl:template>\n"
-        + "<xsl:template match=\"bebop:structure\" "
-        + " xmlns:bebop=\"http://www.arsdigita.com/bebop/1.0\">\n"
-        + "</xsl:template>\n"
-        + "</xsl:stylesheet>";
-
+                                "<xsl:stylesheet version=\"1.0\""
+                                + " xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n"
+                                + "<xsl:output method=\"xml\"/>\n"
+                                + "<xsl:template match=\"text()|comment()|processing-instruction()\">\n"
+                                + "  <xsl:copy/>\n"
+                                + "</xsl:template>\n"
+                                + "<xsl:template match=\"*\">\n"
+                                + "  <xsl:element name=\"{name()}\" namespace=\"{namespace-uri()}\"><xsl:apply-templates select=\"node()|@*\"/></xsl:element>\n"
+                                + "</xsl:template>\n"
+                                + "<xsl:template match=\"@*\">\n"
+                                + "  <xsl:attribute name=\"{name()}\" namespace=\"{namespace-uri()}\"><xsl:value-of select=\".\"/></xsl:attribute>\n"
+                                + "</xsl:template>\n"
+                                + "<xsl:template match=\"bebop:structure\" "
+                                + " xmlns:bebop=\"http://www.arsdigita.com/bebop/1.0\">\n"
+                                + "</xsl:template>\n"
+                                + "</xsl:stylesheet>";
     /**
      * A single <code>DocumentBuilderFactory</code> to use for
      * creating Documents.
      */
     protected static DocumentBuilderFactory s_builder = null;
-
     /**
      * A single <code>DocumentBuilder</code> to use for
      * creating Documents.
@@ -119,21 +116,23 @@ public class Document {
     // instead to achieve independence from a JVM wide configuration.
     // Requires additional modifications in c.ad.util.xml.XML
     static {
+        s_log.debug("Static initalizer starting...");
         s_builder = DocumentBuilderFactory.newInstance();
         s_builder.setNamespaceAware(true);
         s_db = new ThreadLocal() {
-                public Object initialValue() {
-                    try {
-                        return s_builder.newDocumentBuilder();
-                    } catch (ParserConfigurationException pce) {
-                        return null;
-                    }
+
+            public Object initialValue() {
+                try {
+                    return s_builder.newDocumentBuilder();
+                } catch (ParserConfigurationException pce) {
+                    return null;
                 }
-            };
+            }
+        };
+        s_log.debug("Static initalized finished.");
     }
 
     /* Used to build the DOM Documents that this class wraps */
-
     /**
      * The internal DOM document being wrapped.
      */
@@ -142,11 +141,11 @@ public class Document {
     /**
      * Creates a new Document class with no root element.
      */
-    public Document( ) throws ParserConfigurationException {
-        DocumentBuilder db = (DocumentBuilder)s_db.get();
+    public Document() throws ParserConfigurationException {
+        DocumentBuilder db = (DocumentBuilder) s_db.get();
         if (db == null) {
-            throw new ParserConfigurationException
-                ("Unable to create a DocumentBuilder");
+            throw new ParserConfigurationException(
+                    "Unable to create a DocumentBuilder");
         }
         m_document = db.newDocument();
     }
@@ -158,7 +157,7 @@ public class Document {
      * @param doc the org.w3c.dom.Document
      *
      */
-    public Document( org.w3c.dom.Document doc ) {
+    public Document(org.w3c.dom.Document doc) {
         m_document = doc;
     }
 
@@ -167,11 +166,11 @@ public class Document {
      *
      * @param rootNode the element to use as the root node
      */
-    public Document( Element rootNode ) throws ParserConfigurationException {
-        DocumentBuilder db = (DocumentBuilder)s_db.get();
+    public Document(Element rootNode) throws ParserConfigurationException {
+        DocumentBuilder db = (DocumentBuilder) s_db.get();
         if (db == null) {
-            throw new ParserConfigurationException
-                ("Unable to create a DocumentBuilder");
+            throw new ParserConfigurationException(
+                    "Unable to create a DocumentBuilder");
         }
 
         m_document = db.newDocument();
@@ -183,24 +182,23 @@ public class Document {
      *  Creates a document from the passed in string that should
      *  be properly formatted XML
      */
-    public Document( String xmlString ) 
-        throws ParserConfigurationException, org.xml.sax.SAXException {
-        this(new org.xml.sax.InputSource
-             (new java.io.StringReader(xmlString)));
+    public Document(String xmlString)
+            throws ParserConfigurationException, org.xml.sax.SAXException {
+        this(new org.xml.sax.InputSource(new java.io.StringReader(xmlString)));
     }
 
-    public Document( byte[] xmlBytes ) 
-        throws ParserConfigurationException, org.xml.sax.SAXException {
-        this(new org.xml.sax.InputSource
-             (new java.io.ByteArrayInputStream(xmlBytes)));
+    public Document(byte[] xmlBytes)
+            throws ParserConfigurationException, org.xml.sax.SAXException {
+        this(new org.xml.sax.InputSource(new java.io.ByteArrayInputStream(
+                xmlBytes)));
     }
 
-    private Document(org.xml.sax.InputSource inputSource) 
-        throws ParserConfigurationException, org.xml.sax.SAXException {
-        DocumentBuilder db = (DocumentBuilder)s_db.get();
+    private Document(org.xml.sax.InputSource inputSource)
+            throws ParserConfigurationException, org.xml.sax.SAXException {
+        DocumentBuilder db = (DocumentBuilder) s_db.get();
         if (db == null) {
-            throw new ParserConfigurationException
-                ("Unable to create a DocumentBuilder");
+            throw new ParserConfigurationException(
+                    "Unable to create a DocumentBuilder");
         }
 
         org.w3c.dom.Document domDoc;
@@ -218,7 +216,7 @@ public class Document {
      * @param rootNode the element to use as the root node
      * @return this document.
      */
-    public Document setRootElement( Element rootNode ) {
+    public Document setRootElement(Element rootNode) {
         rootNode.importInto(m_document);
         m_document.appendChild(rootNode.getInternalElement());
 
@@ -236,7 +234,7 @@ public class Document {
      * @param ns the element's namespace URI
      * @return The newly created root element.
      */
-    public Element createRootElement( String elt, String ns ) {
+    public Element createRootElement(String elt, String ns) {
         org.w3c.dom.Element root = m_document.createElementNS(ns, elt);
         m_document.appendChild(root);
         Element wrapper = new Element();
@@ -254,7 +252,7 @@ public class Document {
      * @param elt the element name
      * @return The newly created root element.
      */
-    public Element createRootElement( String elt ) {
+    public Element createRootElement(String elt) {
         org.w3c.dom.Element root = m_document.createElement(elt);
         m_document.appendChild(root);
         Element wrapper = new Element();
@@ -273,8 +271,6 @@ public class Document {
         return root;
     }
 
-
-
     /**
      * Not a part of <code>org.jdom.Document</code>, this function returns
      * the internal DOM representation of this document.  This method should
@@ -283,7 +279,7 @@ public class Document {
      *
      * @return this document.
      */
-    public org.w3c.dom.Document getInternalDocument( ) {
+    public org.w3c.dom.Document getInternalDocument() {
         return m_document;
     }
 
@@ -306,9 +302,9 @@ public class Document {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             StreamSource identitySource =
-                new StreamSource(new StringReader(identityXSL));
-            identity = TransformerFactory.newInstance()
-                .newTransformer(identitySource);
+                         new StreamSource(new StringReader(identityXSL));
+            identity = TransformerFactory.newInstance().newTransformer(
+                    identitySource);
             identity.setOutputProperty("method", "xml");
             identity.setOutputProperty("indent", (indent ? "yes" : "no"));
             identity.setOutputProperty("encoding", "UTF-8");

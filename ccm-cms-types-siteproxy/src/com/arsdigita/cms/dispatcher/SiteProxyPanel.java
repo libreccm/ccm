@@ -62,7 +62,9 @@ public class SiteProxyPanel extends ContentPanel {
     private static URLPool s_pool = new URLPool();
 
     static {
+        s_log.debug("Static initalizer starting...");
         URLFetcher.registerService(s_cacheServiceKey, s_pool, s_cache);
+        s_log.debug("Static initalizer finished.");
     };
 
     public SiteProxyPanel() {

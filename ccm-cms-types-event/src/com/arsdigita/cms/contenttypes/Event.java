@@ -95,7 +95,9 @@ public class Event extends GenericArticle {
     private static final EventConfig s_config = new EventConfig();
 
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
 
     public static final EventConfig getConfig() {

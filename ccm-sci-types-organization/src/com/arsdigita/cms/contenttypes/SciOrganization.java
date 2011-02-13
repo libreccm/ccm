@@ -25,6 +25,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  * <p>
@@ -56,10 +57,11 @@ import java.math.BigDecimal;
  * @author Jens Pelzetter
  * @see GenericOrganizationalUnit
  * @see SciDepartment
- * @see SciProject^
+ * @see SciProject
  */
 public class SciOrganization extends GenericOrganizationalUnit {
 
+    private static final Logger logger = Logger.getLogger(SciOrganization.class);
     public static final String ORGANIZATION_SHORT_DESCRIPTION =
                                "organizationShortDescription";
     public static final String ORGANIZATION_DESCRIPTION =
@@ -74,7 +76,9 @@ public class SciOrganization extends GenericOrganizationalUnit {
                                                new SciOrganizationConfig();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     public SciOrganization() {

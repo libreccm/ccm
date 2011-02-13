@@ -67,7 +67,9 @@ public class Crypto {
     public static final String CHARACTER_ENCODING = "UTF-8";
 
     static {
+        s_log.debug("Static initalizer starting...");
         Security.addProvider(new BouncyCastleProvider());
+        s_log.debug("Static initalizer finished");
     }
 
     /**

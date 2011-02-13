@@ -82,6 +82,7 @@ public class HostInit {
     private static final Options OPTIONS = new Options();
 
     static {
+        s_log.debug("Static initalizer starting...");
         OPTIONS.addOption
             (OptionBuilder
              .hasArg()
@@ -109,6 +110,7 @@ public class HostInit {
              .withLongOpt("clean")
              .withDescription("Remove the destination directory before copying files")
              .create());
+        s_log.debug("Static initalizer finsished.");
     }
 
     private static final void err(String msg) {

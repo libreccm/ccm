@@ -15,40 +15,42 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.london.terms;
 
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.web.Application;
 import com.arsdigita.xml.Element;
-
+import org.apache.log4j.Logger;
 
 /**
  * Base class of the ccm-ldn-terms application (module)
  * 
  */
 public class Terms extends Application {
-    
-    public static final String XML_NS = "http://xmlns.redhat.com/london/terms/1.0";
-    public static final String XML_PREFIX = "terms";
 
+    private static final Logger logger = Logger.getLogger(Terms.class);
+    public static final String XML_NS =
+                               "http://xmlns.redhat.com/london/terms/1.0";
+    public static final String XML_PREFIX = "terms";
     private static TermsConfig s_config = new TermsConfig();
+
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
-    
+
     public static TermsConfig getConfig() {
         return s_config;
     }
-    
+
     public Element newElement(String name) {
         return new Element(XML_PREFIX + ":" + name,
                            XML_NS);
     }
-
-    public static final String BASE_DATA_OBJECT_TYPE 
-        = "com.arsdigita.london.terms.Terms";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.london.terms.Terms";
 
     public Terms(DataObject obj) {
         super(obj);
@@ -65,7 +67,6 @@ public class Terms extends Application {
 //  public String getContextPath() {
 //      return "/ccm-ldn-terms";
 //  }
-    
     /**
      * Returns the path name of the location of the applications servlet/JSP.
      *
@@ -98,5 +99,4 @@ public class Terms extends Application {
         // return "/files";
         return "/ccm-ldn-terms/files";
     }
-
 }

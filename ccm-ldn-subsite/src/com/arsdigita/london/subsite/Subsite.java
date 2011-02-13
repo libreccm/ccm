@@ -43,7 +43,9 @@ public class Subsite extends Application {
     private static final SubsiteConfig s_config = new SubsiteConfig();
 
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
         
     private static final SubsiteContext s_context = new SubsiteContext();

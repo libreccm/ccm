@@ -125,7 +125,9 @@ public class ContentSection extends Application {
     private static final CMSConfig s_config = new CMSConfig();
 
     static {
+        s_log.debug("Static initializer starting...");
         s_config.load();
+        s_log.debug("Static initializer finished...");
     }
     // Cached properties
     PageResolver m_pageResolver = null;

@@ -73,10 +73,12 @@ import org.apache.log4j.Logger;
  */
 public class SQLRegressionGenerator {
 
+    private static final Logger logger = Logger.getLogger(SQLRegressionGenerator.class);
     static final CommandLine CMD =
         new CommandLine(PDL.class.getName(), null);
 
     static {
+        logger.debug("Static initalizer starting...");
         CMD.addSwitch(new PathSwitch(
             "-path",
             "PDL files appearing in this path will be processed",
@@ -95,6 +97,7 @@ public class SQLRegressionGenerator {
         CMD.addSwitch(new BooleanSwitch("-quiet", "sets logging to ERROR and does not complain if no PDL files are found",
                                         Boolean.FALSE));
         CMD.addSwitch(new StringSwitch("-database", "target database", null));
+        logger.debug("Static initalizer finished.");
     }
 
     /**

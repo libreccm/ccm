@@ -19,6 +19,10 @@
  */
 package com.arsdigita.cms.scipublications;
 
+import com.arsdigita.bebop.Form;
+import com.arsdigita.bebop.Label;
+import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageFactory;
 import com.arsdigita.categorization.CategorizedCollection;
 import com.arsdigita.categorization.Category;
 import com.arsdigita.cms.ContentBundle;
@@ -29,8 +33,11 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.templating.PresentationManager;
+import com.arsdigita.templating.Templating;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.BaseApplicationServlet;
+import com.arsdigita.xml.Document;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -127,6 +134,25 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             response.getWriter().append("Please choose an application.");
 
             //ToDo: Show a menu?
+        } else if ("hellobebop".equals(path)) {
+            Page page;
+            Form form;
+            Label label;
+
+            page = PageFactory.buildPage("SciPublications",
+                                         "Hello World with Bebop");
+            form = new Form("HelloWorld");
+            label = new Label("Hello World! Created with Bebop.");
+
+            form.add(label);
+            page.add(form);
+
+            page.lock();
+            
+            Document document = page.buildDocument(request, response);
+            PresentationManager presentationManager = Templating.
+                    getPresentationManager();
+            presentationManager.servePage(document, request, response);
         } else if ("export".equals(path)) {
             logger.debug("Export a publication");
 
@@ -413,7 +439,7 @@ public class SciPublicationsServlet extends BaseApplicationServlet {
             response.setHeader("Content-Disposition",
                                String.format(
                     "attachment; filename=publications.%s",
-                                             exporter.getSupportedFormat().
+                    exporter.getSupportedFormat().
                     getFileExtension()));
 
         }

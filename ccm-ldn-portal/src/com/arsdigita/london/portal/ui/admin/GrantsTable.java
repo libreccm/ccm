@@ -125,6 +125,7 @@ abstract class GrantsTable extends Table {
     private static TableCellRenderer[] s_viewCellRenderers;
 
     static {
+        s_log.debug("Static initalizer starting...");
         int n = Grant.s_interestingPrivileges.length;
         s_editCellRenderers = new TableCellRenderer[n];
         s_viewCellRenderers = new TableCellRenderer[n];
@@ -134,6 +135,7 @@ abstract class GrantsTable extends Table {
             s_viewCellRenderers[i] =
                 new ViewPrivilegeCellRenderer(Grant.s_interestingPrivileges[i]);
         }
+        s_log.debug("Static initalizer finished.");
     }
 
     // Per-request label for renderer getComponent calls

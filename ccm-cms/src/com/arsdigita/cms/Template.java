@@ -63,10 +63,12 @@ public class Template extends TextAsset {
     public static final Map SUPPORTED_MIME_TYPES = new HashMap();
 
     static {
+        s_log.debug("Static initalizer is starting...");
         SUPPORTED_MIME_TYPES.put(JSP_MIME_TYPE, 
                                  GlobalizationUtil.globalize("mime_type_jsp"));
         SUPPORTED_MIME_TYPES.put(XSL_MIME_TYPE, 
                                  GlobalizationUtil.globalize("mime_type_xsl"));
+        s_log.debug("Static initalizer finished.");
     }
 
     /**

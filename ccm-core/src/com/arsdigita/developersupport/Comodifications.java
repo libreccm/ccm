@@ -155,9 +155,11 @@ public final class Comodifications {
      * the Proxy class do most of the work for me.
      */
     private static class ListHandler implements InvocationHandler {
+        private static final Logger logger = Logger.getLogger(ListHandler.class);
         private final static Set s_mutators = new HashSet();
 
         static {
+            logger.debug("Static initalizer starting...");
             registerMutator("add", new Class[] {Integer.TYPE, Object.class});
             registerMutator("add", new Class[] {Object.class});
             registerMutator("addAll", new Class[] {Collection.class});
@@ -169,6 +171,7 @@ public final class Comodifications {
             registerMutator("removeAll", new Class[] {Collection.class});
             registerMutator("retainAll", new Class[] {Collection.class});
             registerMutator("set", new Class[] {Integer.TYPE, Object.class});
+            logger.debug("Static initalizer finished.");
         }
 
         private final static Method s_iteratorMethod =

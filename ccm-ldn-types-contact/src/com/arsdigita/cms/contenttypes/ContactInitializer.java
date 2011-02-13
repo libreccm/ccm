@@ -27,6 +27,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 // import com.arsdigita.domain.SimpleDomainObjectTraversalAdapter;
 import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.runtime.DomainInitEvent;
+import org.apache.log4j.Logger;
 // import com.arsdigita.runtime.LegacyInitEvent;
 
 /**
@@ -37,86 +38,91 @@ import com.arsdigita.runtime.DomainInitEvent;
  */
 public class ContactInitializer extends ContentTypeInitializer {
 
-  public ContactInitializer() {
-      super("ccm-ldn-types-contact.pdl.mf", Contact.BASE_DATA_OBJECT_TYPE);
-  }
+    private static final Logger logger = Logger.getLogger(
+            ContactInitializer.class);
 
-  public String[] getStylesheets() {
-      return new String [] {
-          "/static/content-types/com/arsdigita/cms/contenttypes/Contact.xsl",
-      };
-  }
-  
-  public String getTraversalXML() {
-    return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Contact.xml";
-  }
-
-  private static ArrayList phoneTypesList = new ArrayList(10);
-  
-  static {
-    phoneTypesList.add("Office");
-    phoneTypesList.add("Mobile");
-    phoneTypesList.add("Fax");
-    phoneTypesList.add("Home");
-    phoneTypesList.add("Minicom");
-  }
-  
-  /**
-   * Return the statically initialized list of phone types.
-   */
-    public static ArrayList getPhoneTypes(){
-	return phoneTypesList;
+    public ContactInitializer() {
+        super("ccm-ldn-types-contact.pdl.mf", Contact.BASE_DATA_OBJECT_TYPE);
     }
-    
+
+    public String[] getStylesheets() {
+        return new String[]{
+                    "/static/content-types/com/arsdigita/cms/contenttypes/Contact.xsl",};
+    }
+
+    public String getTraversalXML() {
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Contact.xml";
+    }
+    private static ArrayList phoneTypesList = new ArrayList(10);
+
+    static {
+        logger.debug("Static initalizer starting...");
+        phoneTypesList.add("Office");
+        phoneTypesList.add("Mobile");
+        phoneTypesList.add("Fax");
+        phoneTypesList.add("Home");
+        phoneTypesList.add("Minicom");
+        logger.debug("Static initalizer finished.");
+    }
+
+    /**
+     * Return the statically initialized list of phone types.
+     */
+    public static ArrayList getPhoneTypes() {
+        return phoneTypesList;
+    }
+
     // public void init(LegacyInitEvent evt) {
     public void init(DomainInitEvent evt) {
-	super.init(evt);
-	
-	if (ContentSection.getConfig().getHasContactsAuthoringStep()) {
+        super.init(evt);
 
-	    // Add the "Contact"authoring step
-	    AuthoringKitWizard.registerAssetStep(
+        if (ContentSection.getConfig().getHasContactsAuthoringStep()) {
+
+            // Add the "Contact"authoring step
+            AuthoringKitWizard.registerAssetStep(
                     getBaseType(),
                     getAuthoringStep(), getAuthoringStepLabel(),
                     getAuthoringStepDescription(), getAuthoringStepSortKey());
-	    
-	    // and sort out the display	- at the moment this is just the
+
+            // and sort out the display	- at the moment this is just the
             // basic properties, addresses and phones
-	    ContentItemTraversalAdapter associatedContactTraversalAdapter =
+            ContentItemTraversalAdapter associatedContactTraversalAdapter =
                                         new ContentItemTraversalAdapter();
-	    associatedContactTraversalAdapter.addAssociationProperty("/object/phones");
-	    associatedContactTraversalAdapter.addAssociationProperty("/object/contactAddress");
-	    
-	    ContentItemTraversalAdapter.registerAssetAdapter(
+            associatedContactTraversalAdapter.addAssociationProperty(
+                    "/object/phones");
+            associatedContactTraversalAdapter.addAssociationProperty(
+                    "/object/contactAddress");
+
+            ContentItemTraversalAdapter.registerAssetAdapter(
                     "associatedContactForItem",
                     associatedContactTraversalAdapter,
                     "com.arsdigita.cms.dispatcher.SimpleXMLGenerator");
-	}
-	
+        }
+
     }
-    
+
     private int getAuthoringStepSortKey() {
-	// TODO - workout what this does and possibly make it configurable
-	return 1;
+        // TODO - workout what this does and possibly make it configurable
+        return 1;
     }
-    
+
     private GlobalizedMessage getAuthoringStepDescription() {
-	return new GlobalizedMessage(
-            "com.arsdigita.cms.contenttypes.contact_authoring_step_description",
-            "com.arsdigita.cms.contenttypes.ContactResources");
+        return new GlobalizedMessage(
+                "com.arsdigita.cms.contenttypes.contact_authoring_step_description",
+                "com.arsdigita.cms.contenttypes.ContactResources");
     }
-    
+
     private GlobalizedMessage getAuthoringStepLabel() {
-	return new GlobalizedMessage(
+        return new GlobalizedMessage(
                 "com.arsdigita.cms.contenttypes.contact_authoring_step_label",
                 "com.arsdigita.cms.contenttypes.ContactResources");
     }
-    
+
     private Class getAuthoringStep() {
-	return AddContactPropertiesStep.class;
+        return AddContactPropertiesStep.class;
     }
-    
+
     private String getBaseType() {
-	return ContentPage.BASE_DATA_OBJECT_TYPE;
+        return ContentPage.BASE_DATA_OBJECT_TYPE;
     }
 }

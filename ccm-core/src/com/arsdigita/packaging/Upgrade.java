@@ -41,6 +41,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -52,6 +53,7 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 class Upgrade extends Command {
 
+    private static final Logger logger = Logger.getLogger(Upgrade.class);
     private static final Options s_options = getOptions();
 
     private String m_from;
@@ -59,6 +61,7 @@ class Upgrade extends Command {
     private final List m_scripts;
 
     static {
+        logger.debug("Static initalizer starting...");
         s_options.addOption
             (OptionBuilder
              .isRequired()
@@ -79,6 +82,7 @@ class Upgrade extends Command {
              .withLongOpt("parameters")
              .withDescription("Parameters to pass to upgrade scripts")
              .create());
+        logger.debug("Static initalizer finished.");
     }
 
     public Upgrade() {

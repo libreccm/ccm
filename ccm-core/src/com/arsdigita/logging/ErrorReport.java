@@ -63,6 +63,7 @@ public class ErrorReport {
     private static final Logger s_log = Logger.getLogger(ErrorReport.class);
 
     static {
+        s_log.debug("Static initalizer starting...");
         final JavaPropertyReader reader = new JavaPropertyReader
             (System.getProperties());
 
@@ -76,6 +77,7 @@ public class ErrorReport {
         if (dir != null) {
             ErrorReport.initializeAppender(dir);
         }
+        s_log.debug("Static initalizer finished.");
     }
 
     public static void initializeAppender(String directory) {

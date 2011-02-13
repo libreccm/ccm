@@ -35,6 +35,7 @@ import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.PersonName;
+import org.apache.log4j.Logger;
 
 /**
  * This is an advanced servlet error report generator
@@ -44,6 +45,8 @@ import com.arsdigita.kernel.PersonName;
  * (guru meditation) code.
  */
 public class ServletErrorReport extends ErrorReport {
+
+    private static final Logger logger = Logger.getLogger(ServletErrorReport.class);
     /**
      * The name of the Servlet request attribute which will
      * contain the guru meditation code
@@ -52,16 +55,18 @@ public class ServletErrorReport extends ErrorReport {
     public static final String GURU_ERROR_REPORT = "guruErrorReport";
 
     static {
+       logger.debug("Static initalizer starting...");
         Exceptions.registerUnwrapper(
-            ServletException.class,
-            new ExceptionUnwrapper() {
-                public Throwable unwrap(Throwable t) {
-                    ServletException ex = (ServletException)t;
-                    return ex.getRootCause();
-                }
-            });
-    }
+                ServletException.class,
+                new ExceptionUnwrapper() {
 
+                    public Throwable unwrap(Throwable t) {
+                        ServletException ex = (ServletException) t;
+                        return ex.getRootCause();
+                    }
+                });
+        logger.debug("Static initalizer finished.");
+    }
     private HttpServletRequest m_request;
     private HttpServletResponse m_response;
 
@@ -72,7 +77,7 @@ public class ServletErrorReport extends ErrorReport {
 
         m_request = request;
         m_response = response;
-        
+
         // Take great care such that if something goes
         // wrong while creating the error report, we don't
         // let the new exception propagate thus loosing the
@@ -110,11 +115,11 @@ public class ServletErrorReport extends ErrorReport {
     private void addRequest() {
         ArrayList lines = new ArrayList();
 
-        lines.add("Context path: "+ m_request.getContextPath());
-        lines.add("Request URI: "+ m_request.getRequestURI());
-        lines.add("Query string: "+ m_request.getQueryString());
-        lines.add("Method: "+ m_request.getMethod());
-        lines.add("Remote user: "+ m_request.getRemoteUser());
+        lines.add("Context path: " + m_request.getContextPath());
+        lines.add("Request URI: " + m_request.getRequestURI());
+        lines.add("Query string: " + m_request.getQueryString());
+        lines.add("Method: " + m_request.getMethod());
+        lines.add("Remote user: " + m_request.getRemoteUser());
 
         addSection("Request summary", lines);
     }
@@ -127,9 +132,9 @@ public class ServletErrorReport extends ErrorReport {
 
         String lines[] = new String[cookies.length];
 
-        for (int i = 0 ; i < lines.length ;i++) {
-            lines[i] = cookies[i].getName() + ": " + cookies[i].getValue() + 
-                " (expires: " + cookies[i].getMaxAge() + ")";
+        for (int i = 0; i < lines.length; i++) {
+            lines[i] = cookies[i].getName() + ": " + cookies[i].getValue()
+                       + " (expires: " + cookies[i].getMaxAge() + ")";
         }
 
         addSection("Cookies", lines);
@@ -139,14 +144,14 @@ public class ServletErrorReport extends ErrorReport {
         User user;
         Party party = Kernel.getContext().getParty();
 
-        if ( party == null ) {
+        if (party == null) {
             addSection("CCM User", "Party not logged in");
         } else {
             String lines[] = new String[5];
             lines[0] = "Party ID: " + party.getID();
             lines[1] = "Email address: " + party.getPrimaryEmail().toString();
 
-            if ( party instanceof User ) {
+            if (party instanceof User) {
                 user = (User) party;
 
                 PersonName name = null;
@@ -186,9 +191,9 @@ public class ServletErrorReport extends ErrorReport {
 
         Enumeration props = m_request.getAttributeNames();
         while (props.hasMoreElements()) {
-            String key = (String)props.nextElement();
-            if (GURU_ERROR_REPORT.equals(key) ||
-                GURU_MEDITATION_CODE.equals(key)) {
+            String key = (String) props.nextElement();
+            if (GURU_ERROR_REPORT.equals(key)
+                || GURU_MEDITATION_CODE.equals(key)) {
                 continue;
             }
             Object value = m_request.getAttribute(key);
@@ -203,7 +208,7 @@ public class ServletErrorReport extends ErrorReport {
 
         Enumeration props = m_request.getHeaderNames();
         while (props.hasMoreElements()) {
-            String key = (String)props.nextElement();
+            String key = (String) props.nextElement();
             String value = m_request.getHeader(key);
             data.add(key + ": " + value);
         }

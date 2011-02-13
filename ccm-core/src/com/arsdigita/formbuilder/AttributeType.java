@@ -18,13 +18,12 @@
  */
 package com.arsdigita.formbuilder;
 
-
 import com.arsdigita.bebop.event.ParameterListener;
 
 import com.arsdigita.util.UncheckedWrapperException;
 
 import java.util.List;
-
+import org.apache.log4j.Logger;
 
 /**
  * This class contains the attribute data type that are used for form
@@ -36,8 +35,8 @@ import java.util.List;
  */
 public class AttributeType {
 
+    private static final Logger logger = Logger.getLogger(AttributeType.class);
     private Class m_parameterModelClass;
-
     private List m_validationListeners;
 
     public AttributeType(Class parameterModelClass) {
@@ -46,14 +45,12 @@ public class AttributeType {
 
         m_validationListeners = new java.util.ArrayList();
     }
-
     /**
      * Standard attribute types
      */
     public static AttributeType INTEGER;
     public static AttributeType TEXT;
     public static AttributeType DATE;
-
     // The classes of the standard data types
     private static Class s_integerClass;
     private static Class s_textClass;
@@ -61,12 +58,15 @@ public class AttributeType {
 
     // Initialization of the standard attribute types
     static {
-
+        logger.debug("Static initalizer starting...");
         try {
 
-            s_integerClass = Class.forName("com.arsdigita.bebop.parameters.IntegerParameter");
-            s_textClass = Class.forName("com.arsdigita.bebop.parameters.StringParameter");
-            s_dateClass = Class.forName("com.arsdigita.bebop.parameters.DateParameter");
+            s_integerClass = Class.forName(
+                    "com.arsdigita.bebop.parameters.IntegerParameter");
+            s_textClass = Class.forName(
+                    "com.arsdigita.bebop.parameters.StringParameter");
+            s_dateClass = Class.forName(
+                    "com.arsdigita.bebop.parameters.DateParameter");
 
         } catch (ClassNotFoundException e) {
             throw new UncheckedWrapperException(e);
@@ -75,10 +75,10 @@ public class AttributeType {
         INTEGER = new AttributeType(s_integerClass);
         TEXT = new AttributeType(s_textClass);
         DATE = new AttributeType(s_dateClass);
+        logger.debug("Static initalizer finished.");
     }
 
     //*** Attribute Methods
-
     public Class getParameterModelClass() {
         return m_parameterModelClass;
     }

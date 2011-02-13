@@ -22,6 +22,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.list.ListModel;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import org.apache.log4j.Logger;
 
 /**
  * A class that provides a sample set of workflows and tasks. The class
@@ -37,6 +38,7 @@ import java.util.NoSuchElementException;
  */
 public class SampleProcesses {
 
+    private static final Logger logger = Logger.getLogger(SampleProcesses.class);
     private static SampleProcesses m_instance;
 
     /**
@@ -51,6 +53,7 @@ public class SampleProcesses {
 
     // Set up some default task types
     static {
+        logger.debug("Static initalizer starting...");
         Task write = new Task("Write");
         write.setAssignee("Authors");
         Task edit = new Task("Edit");
@@ -68,6 +71,7 @@ public class SampleProcesses {
         m_allTasks.add(approve);
         m_allTasks.add(publish);
         m_allTasks.add(review);
+        logger.debug("Static initalizer finished...");
     }
 
     public synchronized static SampleProcesses getInstance() {

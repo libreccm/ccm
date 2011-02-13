@@ -28,6 +28,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.log4j.Logger;
 
 /**
  * Set
@@ -43,6 +44,7 @@ import org.apache.commons.cli.PosixParser;
 
 class Set extends Command {
 
+    private final static Logger logger = Logger.getLogger(Set.class);
     public final static String versionId = 
             "$Id: Set.java 736 2005-09-01 10:46:05Z sskracic $" +
             " by $Author: sskracic $, " +
@@ -51,12 +53,14 @@ class Set extends Command {
     private static final Options OPTIONS = getOptions();
 
     static {
+        logger.debug("Static initalizer starting...");
         OPTIONS.addOption
             (OptionBuilder
              .hasArg(false)
              .withLongOpt("interactive")
              .withDescription("Interactively edit configuration values")
              .create());
+        logger.debug("Static initalizer finished.");
     }
 
     public Set() {

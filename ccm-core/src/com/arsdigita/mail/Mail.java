@@ -69,9 +69,13 @@ import java.util.Set;
  * @author Ron Henderson 
  * @version $Id: Mail.java 994 2005-11-14 14:29:25Z apevec $
  */
-
 public class Mail implements MessageType {
 
+    /**
+     * Used for logging.
+     */
+    private static final Logger s_log =
+                                Logger.getLogger(Mail.class);
     private static MailConfig s_config;
 
     public static MailConfig getConfig() {
@@ -82,118 +86,92 @@ public class Mail implements MessageType {
         }
         return s_config;
     }
-
     private static final InternetAddress[] EMPTY_ADDRESS_LIST =
-        new InternetAddress[0];
-    
+                                           new InternetAddress[0];
     /**
      * Table of message headers.
      */
     private Hashtable m_headers;
-
     /**
      * Email addresses the message is being sent to.
      */
     private InternetAddress[] m_to;
-
     private InternetAddress[] m_filteredTo = EMPTY_ADDRESS_LIST;
     private InternetAddress[] m_invalidTo = EMPTY_ADDRESS_LIST;
     private static Set s_invalidDomains = new HashSet();
     static {
+        s_log.debug("Static initalizer starting...");
         s_invalidDomains.add("example.com");
+        s_log.debug("Static initalizer finished.");
     }
-
     /**
      * Email address the message is being sent from.
      */
     private InternetAddress m_from;
-
     /**
      * Email address used for replies to this message.
      */
     private InternetAddress[] m_replyTo;
-
     /**
      * Email addresses that the message is being carbon-copied to.
      */
     private InternetAddress[] m_cc;
-
     /**
      * Email addresses that the message is being blind carbon-copied to.
      */
     private InternetAddress[] m_bcc;
-
     /**
      * Message subject.
      */
     private String m_subject;
-
     /**
      * Message body (can be text or HTML).
      */
     private String m_body;
-
     /**
      * Message body alternate (if the body is HTML)
      */
     private String m_alternate;
-
     /**
      * Encoding specification for m_body and m_alternate (optional).
      * Default value (null) implies "us-ascii" encoding.
      */
     private String m_encoding;
-
     /**
      * Message attachments (optional)
      */
     private MimeMultipart m_attachments;
-
     /**
      * Unique identifier for each mail send out.
      */
     private String m_messageID;
-
     /**
      * Session object used to send mail.
      */
     private static Session s_session;
-
     /**
      * SMTP host to connect to.  Only used to override the default for
      * testing purposes.
      */
     private static String s_host;
-
     /**
      * SMTP port to connect to.  Only used to override the default for
      * testing purposes.
      */
     private static String s_port;
-
     // Constants used by Mail
-
     final static String CONTENT_TYPE = "Content-Type";
-    final static String CONTENT_ID   = "Content-ID";
-    final static String MIXED        = "mixed";
-    final static String ALTERNATIVE  = "alternative";
-
+    final static String CONTENT_ID = "Content-ID";
+    final static String MIXED = "mixed";
+    final static String ALTERNATIVE = "alternative";
     /**
      * Disposition of "inline"
      */
-    public final static String INLINE       = javax.mail.Part.INLINE;
-
+    public final static String INLINE = javax.mail.Part.INLINE;
     /**
      * Disposition of "attachment"
      */
-    public final static String ATTACHMENT   = javax.mail.Part.ATTACHMENT;
-
-    /**
-     * Used for logging.
-     */
-
-    private static final Logger s_log =
-        Logger.getLogger(Mail.class);
+    public final static String ATTACHMENT = javax.mail.Part.ATTACHMENT;
 
     /**
      * Default constructor.  Must use the setTo, setSubject (and so on)
@@ -212,8 +190,7 @@ public class Mail implements MessageType {
      */
     public Mail(String to,
                 String from,
-                String subject)
-    {
+                String subject) {
         this(to, from, subject, null);
     }
 
@@ -228,8 +205,7 @@ public class Mail implements MessageType {
     public Mail(String to,
                 String from,
                 String subject,
-                String body)
-    {
+                String body) {
         m_to = (to == null ? EMPTY_ADDRESS_LIST : parseAddressField(to));
         filterRecipients();
         m_from = (from == null ? null : parseAddress(from));
@@ -251,9 +227,8 @@ public class Mail implements MessageType {
                 String from,
                 String subject,
                 String body,
-                String enc)
-    {
-        this(to,from,subject,body);
+                String enc) {
+        this(to, from, subject, body);
         setEncoding(enc);
     }
 
@@ -265,26 +240,22 @@ public class Mail implements MessageType {
      * @param subject the subject for the message
      * @param body the plain text body of the message
      */
-
     public static void send(String to,
                             String from,
                             String subject,
                             String body)
-        throws MessagingException,
-               SendFailedException
-    {
-        Mail msg = new Mail(to,from,subject,body);
+            throws MessagingException,
+                   SendFailedException {
+        Mail msg = new Mail(to, from, subject, body);
         msg.send();
     }
 
     /**
      * Sends the message.
      */
-
     public void send()
-        throws MessagingException,
-               SendFailedException
-    {
+            throws MessagingException,
+                   SendFailedException {
         Transport transport = getSession().getTransport();
         transport.connect();
         send(transport);
@@ -300,11 +271,9 @@ public class Mail implements MessageType {
      * also such returned from the server. Applications might try
      * to catch this and re-schedule sending the mail.
      */
-
     void send(Transport transport)
-        throws MessagingException,
-               SendFailedException
-    {
+            throws MessagingException,
+                   SendFailedException {
         Message msg = null;
         if (m_filteredTo.length > 0) {
             msg = getMessage();
@@ -312,12 +281,12 @@ public class Mail implements MessageType {
             try {
                 transport.sendMessage(msg, msg.getAllRecipients());
             } catch (MessagingException mex) {
-                
+
                 // Close the transport agent and rethrow error for
                 // detailed message.
-                
+
                 transport.close();
-                
+
                 throw new SendFailedException("send failed: ", mex);
             }
         }
@@ -329,8 +298,8 @@ public class Mail implements MessageType {
                 try {
                     ByteArrayOutputStream os = new ByteArrayOutputStream();
                     msg.writeTo(os);
-                    s_log.debug("message sent:\n" + os.toString() +
-                                "\n-- EOT --");
+                    s_log.debug("message sent:\n" + os.toString()
+                                + "\n-- EOT --");
                 } catch (IOException ex) {
                     s_log.error("unable to log message");
                 }
@@ -338,10 +307,10 @@ public class Mail implements MessageType {
                 s_log.debug("no message sent. No valid recipients:\n");
             }
         } else {
-            s_log.info("message sent to <" + Arrays.asList(m_filteredTo) + "> from <" + m_from +
-                       "> subject <" + m_subject + ">");
-            s_log.info("messages filtered for <" + Arrays.asList(m_invalidTo) + "> from <" + m_from +
-                       "> subject <" + m_subject + ">");
+            s_log.info("message sent to <" + Arrays.asList(m_filteredTo)
+                       + "> from <" + m_from + "> subject <" + m_subject + ">");
+            s_log.info("messages filtered for <" + Arrays.asList(m_invalidTo)
+                       + "> from <" + m_from + "> subject <" + m_subject + ">");
         }
     }
 
@@ -413,7 +382,7 @@ public class Mail implements MessageType {
             m_headers = new Hashtable();
         }
 
-        m_headers.put(name,value);
+        m_headers.put(name, value);
     }
 
     /**
@@ -458,7 +427,6 @@ public class Mail implements MessageType {
      *
      * @param enc the requested encoding
      */
-
     public void setEncoding(String enc) {
         m_encoding = enc;
     }
@@ -469,11 +437,9 @@ public class Mail implements MessageType {
      *
      * @return the string value of the character encoding being used
      */
-
     public String getEncoding() {
         return m_encoding;
     }
-
 
     /**
      * Adds an attachment to a message.  This method is private but
@@ -482,10 +448,8 @@ public class Mail implements MessageType {
      *
      * @param part the message part to attach
      */
-
     private void attach(MimeBodyPart part)
-        throws MessagingException
-    {
+            throws MessagingException {
         if (m_attachments == null) {
             m_attachments = new MimeMultipart();
         }
@@ -501,12 +465,10 @@ public class Mail implements MessageType {
      * @param name the name of the attachment
      * @param description a description of the attachment
      */
-
     public void attach(URL url,
                        String name,
                        String description)
-        throws MessagingException
-    {
+            throws MessagingException {
         attach(url, name, description, Mail.ATTACHMENT);
     }
 
@@ -519,13 +481,11 @@ public class Mail implements MessageType {
      * @param description a description of the attachment
      * @param disposition Mail.ATTACHMENT or Mail.INLINE
      */
-
     public void attach(URL url,
                        String name,
                        String description,
                        String disposition)
-        throws MessagingException
-    {
+            throws MessagingException {
         MimeBodyPart part = new MimeBodyPart();
         attach(part);
 
@@ -546,12 +506,10 @@ public class Mail implements MessageType {
      * @param name the name of the attachment
      * @param description a description of the attachment
      */
-
     public void attach(File path,
                        String name,
                        String description)
-        throws MessagingException
-    {
+            throws MessagingException {
         attach(path, name, description, ATTACHMENT);
     }
 
@@ -565,13 +523,11 @@ public class Mail implements MessageType {
      * @param description a description of the attachment
      * @param disposition Mail.ATTACHMENT or Mail.INLINE
      */
-
     public void attach(File path,
                        String name,
                        String description,
                        String disposition)
-        throws MessagingException
-    {
+            throws MessagingException {
         MimeBodyPart part = new MimeBodyPart();
         attach(part);
 
@@ -592,13 +548,11 @@ public class Mail implements MessageType {
      * @param type the MIME type of the attachment
      * @param name the name of the attachment
      */
-
     public void attach(byte[] data,
                        String type,
                        String name)
-        throws MessagingException
-    {
-        attach(data,type,name,null,ATTACHMENT);
+            throws MessagingException {
+        attach(data, type, name, null, ATTACHMENT);
     }
 
     /**
@@ -611,16 +565,14 @@ public class Mail implements MessageType {
      * @param description a description of the attachment
      * @param disposition Mail.ATTACHMENT or Mail.INLINE
      */
-
     public void attach(byte[] data,
                        String type,
                        String name,
                        String description,
                        String disposition)
-        throws MessagingException
-    {
-        ByteArrayDataSource ds = new ByteArrayDataSource(data,type,name);
-        attach(ds,description,disposition);
+            throws MessagingException {
+        ByteArrayDataSource ds = new ByteArrayDataSource(data, type, name);
+        attach(ds, description, disposition);
     }
 
     /**
@@ -631,13 +583,11 @@ public class Mail implements MessageType {
      * @param type the MIME type of the attachment
      * @param name the name of the attachment
      */
-
     public void attach(String data,
                        String type,
                        String name)
-        throws MessagingException
-    {
-        attach(data,type,name,null,ATTACHMENT);
+            throws MessagingException {
+        attach(data, type, name, null, ATTACHMENT);
     }
 
     /**
@@ -650,16 +600,14 @@ public class Mail implements MessageType {
      * @param description a description of the attachment
      * @param disposition Mail.ATTACHMENT or Mail.INLINE
      */
-
     public void attach(String data,
                        String type,
                        String name,
                        String description,
                        String disposition)
-        throws MessagingException
-    {
-        ByteArrayDataSource ds = new ByteArrayDataSource(data,type,name);
-        attach(ds,description,disposition);
+            throws MessagingException {
+        ByteArrayDataSource ds = new ByteArrayDataSource(data, type, name);
+        attach(ds, description, disposition);
     }
 
     /**
@@ -671,13 +619,11 @@ public class Mail implements MessageType {
      * @param type the MIME type of the attachment
      * @param name the name of the attachment
      */
-
     public void attach(ByteArrayInputStream is,
                        String type,
                        String name)
-        throws MessagingException
-    {
-        attach(is,type,name,null,ATTACHMENT);
+            throws MessagingException {
+        attach(is, type, name, null, ATTACHMENT);
     }
 
     /**
@@ -691,15 +637,13 @@ public class Mail implements MessageType {
      * @param description a description of the attachment
      * @param disposition Mail.ATTACHMENT or Mail.INLINE
      */
-
     public void attach(ByteArrayInputStream is,
                        String type,
                        String name,
                        String description,
                        String disposition)
-        throws MessagingException
-    {
-        ByteArrayDataSource ds = new ByteArrayDataSource(is,type,name);
+            throws MessagingException {
+        ByteArrayDataSource ds = new ByteArrayDataSource(is, type, name);
         attach(ds, description, disposition);
     }
 
@@ -713,12 +657,10 @@ public class Mail implements MessageType {
      * @param description  a description of the attachment
      * @param disposition Mail.ATTACHMENT or Mail.INLINE
      */
-
     protected void attach(ByteArrayDataSource dataSource,
                           String description,
                           String disposition)
-        throws MessagingException
-    {
+            throws MessagingException {
         MimeBodyPart part = new MimeBodyPart();
         attach(part);
 
@@ -730,7 +672,6 @@ public class Mail implements MessageType {
         part.setDisposition(disposition);
     }
 
-
     /**
      * Attaches content to a message by supplying a DataHandler. All
      * relevant parameters (MIME type, name, ...) are determined
@@ -738,13 +679,10 @@ public class Mail implements MessageType {
      *
      * @param dh a DataHandler for some piece of content.
      */
-
     public void attach(DataHandler dh)
-        throws MessagingException
-    {
+            throws MessagingException {
         attach(dh, null, ATTACHMENT);
     }
-
 
     /**
      * Attaches content to a message by supplying a DataHandler.  Sets
@@ -754,12 +692,10 @@ public class Mail implements MessageType {
      * @param description a description of the attachment
      * @param disposition Mail.ATTACHMENT or Mail.INLINE
      */
-
     public void attach(DataHandler dh,
                        String description,
                        String disposition)
-        throws MessagingException
-    {
+            throws MessagingException {
         MimeBodyPart part = new MimeBodyPart();
         attach(part);
 
@@ -775,7 +711,6 @@ public class Mail implements MessageType {
      * initializer and any of properties that can be overridden at
      * the package level.
      */
-
     static synchronized Session getSession() {
 
         if (s_session == null) {
@@ -805,10 +740,8 @@ public class Mail implements MessageType {
      * example, to queue a number of messages to send all at once rather
      * than invoke the Mail.send() method for each instance.)
      */
-
     private Message getMessage()
-        throws MessagingException
-    {
+            throws MessagingException {
         // Create the message
         MimeMessage msg = new MimeMessage(getSession());
 
@@ -838,7 +771,7 @@ public class Mail implements MessageType {
         // Encode the subject
         String enc_subj;
         try {
-            enc_subj = MimeUtility.encodeText(m_subject,m_encoding,null);
+            enc_subj = MimeUtility.encodeText(m_subject, m_encoding, null);
         } catch (UnsupportedEncodingException uee) {
             s_log.warn("unable to encode subject: " + uee);
             enc_subj = m_subject;
@@ -849,11 +782,11 @@ public class Mail implements MessageType {
         if (m_headers != null) {
             Enumeration e = m_headers.keys();
             while (e.hasMoreElements()) {
-                String name  = (String) e.nextElement();
+                String name = (String) e.nextElement();
                 String value = (String) m_headers.get(name);
                 String enc_v;
                 try {
-                    enc_v = MimeUtility.encodeText(value,m_encoding,null);
+                    enc_v = MimeUtility.encodeText(value, m_encoding, null);
                 } catch (UnsupportedEncodingException uee) {
                     s_log.warn("unable to encode header element: " + uee);
                     enc_v = value;
@@ -875,7 +808,6 @@ public class Mail implements MessageType {
      * @param host the SMTP host to connect to
      * @param port the port number on that host
      */
-
     synchronized static void setSmtpServer(String host, String port) {
         s_host = host;
         s_port = port;
@@ -883,7 +815,6 @@ public class Mail implements MessageType {
         // invalidate the current session object
         s_session = null;
     }
-
 
     /**
      * Returns the SMTP mail host for debugging and account information.
@@ -893,17 +824,14 @@ public class Mail implements MessageType {
         return s_host;
     }
 
-
     /**
      * Writes the content of the message to the given output stream.
      * Useful for debugging.
      *
      * @param os the output stream to write the message to
      */
-
     public void writeTo(OutputStream os)
-        throws MessagingException
-    {
+            throws MessagingException {
         try {
             getMessage().writeTo(os);
         } catch (IOException ex) {
@@ -919,7 +847,7 @@ public class Mail implements MessageType {
 
         if (str.indexOf(",") != -1) {
             ArrayList a = new ArrayList();
-            StringTokenizer st = new StringTokenizer(str,",",false);
+            StringTokenizer st = new StringTokenizer(str, ",", false);
             while (st.hasMoreTokens()) {
                 a.add(st.nextToken());
             }
@@ -950,7 +878,7 @@ public class Mail implements MessageType {
      * Parses an address.
      */
     private static InternetAddress parseAddress(String str) {
-        String address  = null;
+        String address = null;
         String personal = null;
 
         InternetAddress addr = null;
@@ -960,13 +888,13 @@ public class Mail implements MessageType {
         if (str.indexOf(" ") == -1) {
             address = str;
         } else {
-            int sp   = str.lastIndexOf(" ");
-            personal = str.substring(0,sp);
-            address  = str.substring(sp+1);
+            int sp = str.lastIndexOf(" ");
+            personal = str.substring(0, sp);
+            address = str.substring(sp + 1);
         }
 
         try {
-            addr = new InternetAddress(address,personal);
+            addr = new InternetAddress(address, personal);
         } catch (UnsupportedEncodingException e) {
             s_log.error("unable to parse address: " + str);
         }
@@ -1014,20 +942,18 @@ public class Mail implements MessageType {
     private static void parseHeader(String str, Hashtable headers) {
         str = str.trim();
 
-        int    sp     = str.lastIndexOf(":");
-        String name   = str.substring(0, sp);
-        String value  = (str.substring(sp+1)).trim();
+        int sp = str.lastIndexOf(":");
+        String name = str.substring(0, sp);
+        String value = (str.substring(sp + 1)).trim();
 
-        headers.put(name,value);
+        headers.put(name, value);
     }
 
     /**
      * Utility function to prepare the content of the message.
      */
-
     private Message prepareMessageContent(MimeMessage msg)
-        throws MessagingException
-    {
+            throws MessagingException {
         if (m_alternate == null && m_attachments == null) {
 
             // We have a plain-text message with no attachments.  Use
@@ -1122,12 +1048,14 @@ public class Mail implements MessageType {
                 filtered.add(m_to[i]);
             } else {
                 invalid.add(m_to[i]);
-                s_log.debug("filtering message to non-existent email address " + m_to[i]);
+                s_log.debug("filtering message to non-existent email address "
+                            + m_to[i]);
             }
         }
-        m_filteredTo = (InternetAddress[]) filtered.toArray(new InternetAddress[filtered.size()]);
-        m_invalidTo = (InternetAddress[]) invalid.toArray(new InternetAddress[invalid.size()]);
+        m_filteredTo = (InternetAddress[]) filtered.toArray(new InternetAddress[filtered.
+                size()]);
+        m_invalidTo = (InternetAddress[]) invalid.toArray(new InternetAddress[invalid.
+                size()]);
         return m_filteredTo;
     }
-
 }

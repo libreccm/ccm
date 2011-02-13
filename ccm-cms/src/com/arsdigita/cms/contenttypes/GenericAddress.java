@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
 import com.arsdigita.globalization.LocaleNegotiator;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.ContentPage;
@@ -29,6 +28,7 @@ import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import java.util.Locale;
 import java.util.TreeMap;
+import org.apache.log4j.Logger;
 
 /**
  * <p><code>DomainObject</code> class to represent address <code>ContentType</code>
@@ -44,6 +44,7 @@ import java.util.TreeMap;
  **/
 public class GenericAddress extends ContentPage {
 
+    private static final Logger logger = Logger.getLogger(GenericAddress.class);
     /** PDL property name for address */
     public static final String ADDRESS = "address";
     /** PDL property name for postal code */
@@ -54,18 +55,19 @@ public class GenericAddress extends ContentPage {
     public static final String STATE = "state";
     /** PDL property name for country iso code */
     public static final String ISO_COUNTRY_CODE = "isoCountryCode";
-
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.GenericAddress";
-
+    public static final String BASE_DATA_OBJECT_TYPE =
+                               "com.arsdigita.cms.contenttypes.GenericAddress";
     private static GenericAddressConfig s_config = new GenericAddressConfig();
+
     static {
-	    s_config.load();
+        logger.debug("Static initializer is starting...");
+        s_config.load();
+        logger.debug("Static initializer finished.");
     }
-    public static GenericAddressConfig getConfig()
-    {
-	    return s_config;
+
+    public static GenericAddressConfig getConfig() {
+        return s_config;
     }
 
     /**
@@ -128,7 +130,7 @@ public class GenericAddress extends ContentPage {
      */
     public void beforeSave() {
         super.beforeSave();
-        
+
         Assert.exists(getContentType(), ContentType.class);
     }
 
@@ -175,25 +177,29 @@ public class GenericAddress extends ContentPage {
 
     // Convert the iso country code to country names using the current locale
     public static String getCountryNameFromIsoCode(String isoCountryCode) {
-     
-        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "", null);
+
+        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "",
+                                                                 null);
         java.util.Locale locale = new java.util.Locale("", isoCountryCode);
         return locale.getDisplayCountry(negotiatedLocale.getLocale());
 
     }
-    
+
     // Get a sorted list auf all countries
     public static TreeMap getSortedListOfCountries(Locale inLang) {
-        
-        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "", null);
-        String[] countries = Locale.getISOCountries();
-        TreeMap <String,String> countryNames = new TreeMap<String,String>();
 
-        for(String country : countries) {
-            if(inLang != null) {
-                countryNames.put(new java.util.Locale("", country).getDisplayCountry(inLang), country);
+        LocaleNegotiator negotiatedLocale = new LocaleNegotiator("", "", "",
+                                                                 null);
+        String[] countries = Locale.getISOCountries();
+        TreeMap<String, String> countryNames = new TreeMap<String, String>();
+
+        for (String country : countries) {
+            if (inLang != null) {
+                countryNames.put(new java.util.Locale("", country).
+                        getDisplayCountry(inLang), country);
             } else {
-                countryNames.put(new java.util.Locale("", country).getDisplayCountry(negotiatedLocale.getLocale()), country);
+                countryNames.put(new java.util.Locale("", country).
+                        getDisplayCountry(negotiatedLocale.getLocale()), country);
             }
         }
 

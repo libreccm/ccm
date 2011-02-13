@@ -57,6 +57,7 @@ public class ApplyTemplates {
         "-loop [count] -log [loglevel] -verbose -warmup [count] Stylesheet Input Output "
     );
     static {
+        s_log.debug("Static initalizer starting...");
         s_cmd.addSwitch(new StringSwitch(OPT_LOG, 
                                          "Log4j debug level", 
                                          "warn"));
@@ -69,6 +70,7 @@ public class ApplyTemplates {
         s_cmd.addSwitch(new BooleanSwitch(OPT_VERBOSE, 
                                           "Display progress",
                                           Boolean.FALSE));
+        s_log.debug("Static initalizer finished.");
     }
     
     public final static void main(String[] args) {

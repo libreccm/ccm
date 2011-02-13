@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 /**
  * <p>
@@ -40,15 +41,18 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class CharsetEncodingProvider implements ParameterProvider {
 
+    private static final Logger logger = Logger.getLogger(CharsetEncodingProvider.class);
     private static StringParameter s_encodingParam =
         new StringParameter(Globalization.ENCODING_PARAM_NAME);
 
     private static Set s_models = new HashSet();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_encodingParam.setDefaultValue(Globalization.DEFAULT_ENCODING);
         s_encodingParam.setDefaultOverridesNull(true);
         s_models.add(s_encodingParam);
+        logger.debug("Static initalizer finished...");
     }
 
     public Set getModels() {

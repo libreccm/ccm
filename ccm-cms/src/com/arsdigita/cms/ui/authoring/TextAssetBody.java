@@ -18,7 +18,6 @@
  */
 package com.arsdigita.cms.ui.authoring;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
@@ -67,7 +66,6 @@ import com.arsdigita.mimetypes.converters.ConvertFormat;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.util.UncheckedWrapperException;
 
-
 /**
  * Displays the mime-type and the body of a single {@link TextAsset}. Maintains
  * a form or uploading files into the text body of the asset, and a form for
@@ -88,23 +86,22 @@ import com.arsdigita.util.UncheckedWrapperException;
  * @version $Id: TextAssetBody.java 1949 2009-06-25 08:30:50Z terry $
  */
 public abstract class TextAssetBody extends SecurityPropertyEditor
-    implements Resettable, AuthoringStepComponent, RequestListener {
+        implements Resettable, AuthoringStepComponent, RequestListener {
 
     private static Logger s_log =
-        Logger.getLogger(TextAssetBody.class);
-
+                          Logger.getLogger(TextAssetBody.class);
     private ItemSelectionModel m_assetModel;
-
     public static final String FILE_UPLOAD = "file";
     public static final String TEXT_ENTRY = "text";
-
     private StringParameter m_streamlinedCreationParam;
     private static final String STREAMLINED = "_streamlined";
     private static final String STREAMLINED_DONE = "1";
-    
     private static final CMSConfig s_config = new CMSConfig();
+
     static {
-	    s_config.load();
+        s_log.debug("Static initializer is starting...");
+        s_config.load();
+        s_log.debug("Static initializer finished.");
     }
 
     /**
@@ -114,8 +111,9 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
      *   be responsible for maintaining the current asset
      */
     public TextAssetBody(ItemSelectionModel assetModel) {
-        this(assetModel,null);
+        this(assetModel, null);
     }
+
     /**
      * Construct a new GenericArticleBody component
      *
@@ -125,19 +123,20 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
      *   may use the wizard's methods, such as stepForward and stepBack,
      *   in its process listener.
      */
-    public TextAssetBody(ItemSelectionModel assetModel, AuthoringKitWizard parent) {
+    public TextAssetBody(ItemSelectionModel assetModel,
+                         AuthoringKitWizard parent) {
         super();
         m_assetModel = assetModel;
 
-        m_streamlinedCreationParam = 
-            new StringParameter(parent == null ? "item" :
-                                parent.getContentType().getAssociatedObjectType() + "_body_done");
+        m_streamlinedCreationParam =
+        new StringParameter(parent == null ? "item" : parent.getContentType().
+                getAssociatedObjectType() + "_body_done");
 
         if (!s_config.getHideTextAssetUploadFile()) {
-	        PageFileForm f = getPageFileForm();
-	        addFileWidgets(f);
-	        add(FILE_UPLOAD, "Upload a file", f,
-	            f.getSaveCancelSection().getCancelButton());
+            PageFileForm f = getPageFileForm();
+            addFileWidgets(f);
+            add(FILE_UPLOAD, "Upload a file", f,
+                f.getSaveCancelSection().getCancelButton());
         }
 
         PageTextForm t = new PageTextForm();
@@ -149,7 +148,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         DomainObjectPropertySheet sheet = getBodyPropertySheet(assetModel);
         sheet.add("Text&nbsp;Type:",
                   Asset.MIME_TYPE + "." + MimeType.LABEL);
-        sheet.add((String) GlobalizationUtil.globalize("cms.ui.authoring.body").localize(),  TextAsset.CONTENT);
+        sheet.add((String) GlobalizationUtil.globalize("cms.ui.authoring.body").
+                localize(), TextAsset.CONTENT);
 
         setDisplayComponent(sheet);
 
@@ -157,7 +157,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
     }
 
-    protected DomainObjectPropertySheet getBodyPropertySheet(ItemSelectionModel assetModel) {
+    protected DomainObjectPropertySheet getBodyPropertySheet(
+            ItemSelectionModel assetModel) {
         return new TextAssetBodyPropertySheet(assetModel);
     }
 
@@ -175,7 +176,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
      * @param state represents the current request
      */
     public TextAsset getTextAsset(PageState state) {
-        return (TextAsset)m_assetModel.getSelectedObject(state);
+        return (TextAsset) m_assetModel.getSelectedObject(state);
     }
 
     /**
@@ -189,12 +190,12 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
     // Create a text asset if it does not exist.
     // This should probably be a method in GenericArticle ?
-    protected TextAsset createOrGetTextAsset(ItemSelectionModel assetModel, 
+    protected TextAsset createOrGetTextAsset(ItemSelectionModel assetModel,
                                              PageState s) {
         // Get the text asset or create a new one
         TextAsset t = getTextAsset(s);
 
-        if(t == null) {
+        if (t == null) {
             t = createTextAsset(s);
             assetModel.setSelectedObject(s, t);
         }
@@ -238,8 +239,8 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
      * @param state the PageState
      */
     protected void maybeForwardToNextStep(PageState state) {
-        if (ContentItemPage.isStreamlinedCreationActive(state) &&
-            !STREAMLINED_DONE.equals(state.getValue(m_streamlinedCreationParam))) {
+        if (ContentItemPage.isStreamlinedCreationActive(state) && !STREAMLINED_DONE.
+                equals(state.getValue(m_streamlinedCreationParam))) {
             state.setValue(m_streamlinedCreationParam, STREAMLINED_DONE);
             fireCompletionEvent(state);
         }
@@ -257,7 +258,7 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
             state.setValue(m_streamlinedCreationParam, STREAMLINED_DONE);
         }
     }
-    
+
     /**
      * Open the edit component if the streamlined
      * creation parameter is turned on _and_ the streamlined_creation
@@ -270,14 +271,14 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         //if (getTextAsset(state) != null) {
         //    ComponentAccess ca = (ComponentAccess) getAccessMap().get(TEXT_ENTRY);
 
-            if (ContentItemPage.isStreamlinedCreationActive(state) &&
-                !STREAMLINED_DONE.equals(state.getValue(m_streamlinedCreationParam))) {
-                showComponent(state, TEXT_ENTRY);
-            }
-            //}
-        
+        if (ContentItemPage.isStreamlinedCreationActive(state) && !STREAMLINED_DONE.
+                equals(state.getValue(m_streamlinedCreationParam))) {
+            showComponent(state, TEXT_ENTRY);
+        }
+        //}
+
     }
-    
+
     /**
      *  This is the form that is used to upload files.  This method can
      *  be used so that a subclass can use their own subclass of PageFileForm.
@@ -291,14 +292,13 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
      * widget, auto-guesses mime type
      */
     public class PageFileForm extends Form
-        implements FormProcessListener, FormValidationListener {
+            implements FormProcessListener, FormValidationListener {
 
         private SaveCancelSection m_saveCancelSection;
         private FileUploadSection m_fileUploadSection;
         // Variables saved by validate for processing
         private RequestLocal m_file_upload_content;
         private RequestLocal m_file_upload_usedINSO;
-
         /**
          * The text entry widget
          */
@@ -314,60 +314,59 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         }
 
         protected String getFileUploadContent(PageState state) {
-            return (String)m_file_upload_content.get(state);
+            return (String) m_file_upload_content.get(state);
         }
 
         /**
          * Make sure that files of this type can be uploaded
          */
         private void validateFileType(MimeType mime, boolean textType)
-            throws FormProcessException {
+                throws FormProcessException {
 
-            boolean validType = textType || (
-                                             (mime instanceof TextMimeType) &&
-                                             ((TextMimeType)mime).allowINSOConvert().booleanValue()
-                                             );
+            boolean validType = textType || ((mime instanceof TextMimeType) && ((TextMimeType) mime).
+                                             allowINSOConvert().booleanValue());
 
             if (!validType) {
-                throw new FormProcessException("Cannot load " +
-                                               "files of type " + mime.getMimeType() + " into the article body.");
+                throw new FormProcessException("Cannot load " + "files of type " + mime.
+                        getMimeType() + " into the article body.");
             }
 
             boolean insoWorks = MimeTypeStatus.getMimeTypeStatus().
-                getInsoFilterWorks().intValue() == 1;
+                    getInsoFilterWorks().intValue() == 1;
 
             if (!textType && !insoWorks) {
                 // Can't convert.  inso filter is not working.  Give message.
-                throw new FormProcessException("Could not convert to html " +
-                                               "format because interMedia INSO filter is not installed.");
+                throw new FormProcessException(
+                        "Could not convert to html "
+                        + "format because interMedia INSO filter is not installed.");
             }
         }
-
 
         /**
          * read in the content of the file (in bytes).
          */
         private byte[] readFileBytes(File file) throws FormProcessException {
-            byte [] file_bytes;
+            byte[] file_bytes;
             try {
                 FileInputStream fs = new FileInputStream(file);
                 file_bytes = new byte[fs.available()];
                 fs.read(file_bytes);
                 fs.close();
             } catch (Exception e) {
-                throw new FormProcessException( (String) GlobalizationUtil.globalize("cms.ui.authoring.unable_to_load_file").localize() + e.getMessage());
+                throw new FormProcessException((String) GlobalizationUtil.
+                        globalize("cms.ui.authoring.unable_to_load_file").
+                        localize() + e.getMessage());
             }
             return file_bytes;
         }
-
 
         /**
          * Convert bytes to String, possibly using INSO filter to convert to
          * HTML type
          */
-        private String convertBytes(byte [] file_bytes, boolean text_type,
-                                    boolean [] used_inso)
-            throws FormProcessException {
+        private String convertBytes(byte[] file_bytes, boolean text_type,
+                                    boolean[] used_inso)
+                throws FormProcessException {
             String file_content;
             // If mime type is not text type, try to convert to html
             if (!text_type) {
@@ -376,22 +375,24 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
                     // Converted successfully, flag type should be html
                     used_inso[0] = true;
                 } else {
-                    throw new FormProcessException("Could not convert to html format. " +
-                                                   "interMedia INSO filter conversion failed.");
+                    throw new FormProcessException(
+                            "Could not convert to html format. "
+                            + "interMedia INSO filter conversion failed.");
                 }
             } else {
                 // Text type, no need to convert
-                String enc = Globalization.getDefaultCharset(Kernel.getContext().getLocale());
+                String enc = Globalization.getDefaultCharset(Kernel.getContext().
+                        getLocale());
                 try {
                     file_content = new String(file_bytes, enc);
                 } catch (UnsupportedEncodingException ex) {
-                    throw new UncheckedWrapperException("cannot convert to encoding " + enc, ex);
+                    throw new UncheckedWrapperException("cannot convert to encoding "
+                                                        + enc, ex);
                 }
                 used_inso[0] = false;
             }
             return file_content;
         }
-
 
         /**
          * Extract the contents of the html Body tag.
@@ -399,17 +400,18 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
          * from interfering with page display).
          */
         private String extractHTMLBody(String htmlText)
-            throws FormProcessException {
+                throws FormProcessException {
             String lc = htmlText.toLowerCase();
             int bodyStart = lc.indexOf("<body");
-            int bodyStart_v = lc.indexOf(">",bodyStart);
+            int bodyStart_v = lc.indexOf(">", bodyStart);
             int bodyEnd = lc.indexOf("</body>", bodyStart_v);
             if (bodyStart == -1 || bodyEnd == -1) {
-                final String errMsg = "The file (which should be type "
-                    + "HTML) is missing the <body> or </body> tag.";
+                final String errMsg =
+                             "The file (which should be type "
+                             + "HTML) is missing the <body> or </body> tag.";
                 throw new FormProcessException(errMsg);
             }
-            return htmlText.substring(bodyStart_v+1, bodyEnd);
+            return htmlText.substring(bodyStart_v + 1, bodyEnd);
         }
 
         /**
@@ -424,18 +426,18 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
             // Convert the file to HTML, if possible
             File file = m_fileUploadSection.getFile(e);
-            byte [] file_bytes = readFileBytes(file);
-            boolean [] used_inso = new boolean [1];
+            byte[] file_bytes = readFileBytes(file);
+            boolean[] used_inso = new boolean[1];
             String file_content = convertBytes(file_bytes, textType, used_inso);
 
-            if (TextMimeType.MIME_TEXT_HTML.equals(mime.getMimeType()))
+            if (TextMimeType.MIME_TEXT_HTML.equals(mime.getMimeType())) {
                 file_content = extractHTMLBody(file_content);
+            }
 
             PageState state = e.getPageState();
             m_file_upload_content.set(state, file_content);
             m_file_upload_usedINSO.set(state, new Boolean(used_inso[0]));
         }
-
 
         /**
          * Process file upload.  Must be validated first.
@@ -449,14 +451,15 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
             // Get info created during validation
             String upload_content = (String) m_file_upload_content.get(state);
-            boolean usedINSO = ((Boolean) m_file_upload_usedINSO.get(state))
-                .booleanValue();
+            boolean usedINSO = ((Boolean) m_file_upload_usedINSO.get(state)).
+                    booleanValue();
 
             // Set the mime type
             MimeType mime = m_fileUploadSection.getMimeType(e);
-            if (usedINSO)
+            if (usedINSO) {
                 mime = MimeType.loadMimeType("text/html");
-            if(mime != null) {
+            }
+            if (mime != null) {
                 t.setMimeType(mime);
             }
 
@@ -469,7 +472,9 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
 
             // Save everything
             updateTextAsset(state, t);
-            if(t.isNew() || t.isModified()) t.save();
+            if (t.isNew() || t.isModified()) {
+                t.save();
+            }
 
         }
 
@@ -486,24 +491,23 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         public FileUploadSection getFileUploadSection() {
             return m_fileUploadSection;
         }
-
     }
 
     /**
      * A form for editing the body of the text.
      */
     public class PageTextForm extends Form
-        implements FormInitListener, FormProcessListener, FormSubmissionListener {
+            implements FormInitListener, FormProcessListener,
+                       FormSubmissionListener {
+
         private SingleSelect m_mimeWidget;
         private Label m_mimeLabel;
         private TextArea m_textWidget;
         private SaveCancelSection m_saveCancelSection;
-
         /**
          * The text entry widget
          */
         public static final String TEXT_ENTRY = "text_entry";
-
         /**
          * The mime type widget
          */
@@ -523,7 +527,6 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         }
 
         // These are here so that TemplateBody can set them.
-
         public final void setMimeWidget(final SingleSelect widget) {
             m_mimeWidget = widget;
         }
@@ -544,20 +547,20 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
             PageState state = e.getPageState();
 
 
-            TextAsset t = (TextAsset)m_assetModel.getSelectedObject(state);
-            if(t != null) {
+            TextAsset t = (TextAsset) m_assetModel.getSelectedObject(state);
+            if (t != null) {
                 data.put(TEXT_ENTRY, t.getText());
                 MimeType m = t.getMimeType();
-                if(m != null) {
+                if (m != null) {
                     data.put(MIME_TYPE, m.getMimeType());
                 }
             }
         }
 
         /** Cancels streamlined editing. */
-        public void submitted( FormSectionEvent e ) {
-            if (getSaveCancelSection().getCancelButton()
-                .isSelected( e.getPageState())) {
+        public void submitted(FormSectionEvent e) {
+            if (getSaveCancelSection().getCancelButton().isSelected(e.
+                    getPageState())) {
                 TextAssetBody.this.cancelStreamlinedCreation(e.getPageState());
             }
         }
@@ -570,19 +573,23 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
             TextAsset t = createOrGetTextAsset(m_assetModel, state);
 
             // Set the mime type
-            MimeType m = MimeType.loadMimeType((String)data.get(MIME_TYPE));
+            MimeType m = MimeType.loadMimeType((String) data.get(MIME_TYPE));
             t.setMimeType(m);
 
             // Get the string and normalize it
-            String text = (String)data.get(TEXT_ENTRY);
+            String text = (String) data.get(TEXT_ENTRY);
 
-            if(text == null) text = "";
+            if (text == null) {
+                text = "";
+            }
 
 
-            t.setText((String)data.get(TEXT_ENTRY));
+            t.setText((String) data.get(TEXT_ENTRY));
             // Save everything
             updateTextAsset(state, t);
-            if(t.isNew() || t.isModified()) t.save();
+            if (t.isNew() || t.isModified()) {
+                t.save();
+            }
 
             TextAssetBody.this.maybeForwardToNextStep(e.getPageState());
         }
@@ -593,7 +600,6 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         public SaveCancelSection getSaveCancelSection() {
             return m_saveCancelSection;
         }
-
     }
 
     protected String getDefaultMimeType() {
@@ -604,11 +610,12 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
     protected void addFileWidgets(PageFileForm c) {
 
         c.m_fileUploadSection =
-            new FileUploadSection("Text Type:", "text", getDefaultMimeType());
-        c.m_fileUploadSection.getFileUploadWidget()
-            .addValidationListener(new NotNullValidationListener());
+        new FileUploadSection("Text Type:", "text", getDefaultMimeType());
+        c.m_fileUploadSection.getFileUploadWidget().addValidationListener(
+                new NotNullValidationListener());
         // Default to -guess- because want to use file extension to determine type.
-        c.m_fileUploadSection.getMimeTypeWidget().setDefaultValue(FileUploadSection.GUESS_MIME);
+        c.m_fileUploadSection.getMimeTypeWidget().setDefaultValue(
+                FileUploadSection.GUESS_MIME);
         c.add(c.m_fileUploadSection);
 
         c.m_saveCancelSection = new SaveCancelSection();
@@ -630,20 +637,22 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
     /* overridable method to put together the PageTextForm Component */
     protected void addTextWidgets(PageTextForm c) {
 
-        ColumnPanel panel = (ColumnPanel)c.getPanel();
+        ColumnPanel panel = (ColumnPanel) c.getPanel();
         panel.setBorder(false);
         panel.setPadColor("#FFFFFF");
         panel.setColumnWidth(1, "20%");
         panel.setColumnWidth(2, "80%");
         panel.setWidth("100%");
 
-        c.add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.text_type")));
+        c.add(new Label(
+                GlobalizationUtil.globalize("cms.ui.authoring.text_type")));
         c.m_mimeWidget = new SingleSelect(PageTextForm.MIME_TYPE);
         c.m_mimeWidget.setClassAttr("displayOneOptionAsLabel");
         setMimeTypeOptions(c.m_mimeWidget);
         c.add(c.m_mimeWidget, ColumnPanel.LEFT);
 
-        c.add(new Label(GlobalizationUtil.globalize("cms.ui.authoring.edit_body_text")),
+        c.add(new Label(GlobalizationUtil.globalize(
+                "cms.ui.authoring.edit_body_text")),
               ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
 
         c.m_textWidget = new CMSDHTMLEditor(PageTextForm.TEXT_ENTRY);
@@ -653,18 +662,20 @@ public abstract class TextAssetBody extends SecurityPropertyEditor
         // width, and similar size as htmlarea.
         // could be configurable - unset means default 100% x 400px
         c.m_textWidget.setMetaDataAttribute("width", "575");
-		c.m_textWidget.setMetaDataAttribute("height", "500");
+        c.m_textWidget.setMetaDataAttribute("height", "500");
         c.m_textWidget.setWrap(CMSDHTMLEditor.SOFT);
         c.add(c.m_textWidget, ColumnPanel.LEFT | ColumnPanel.FULL_WIDTH);
 
         c.m_saveCancelSection = new SaveCancelSection();
         c.add(c.m_saveCancelSection, ColumnPanel.FULL_WIDTH);
 
-	// optionally, we clear the text of MSWord tags every time
-	// the text is submitted/saved
-	if (ContentSection.getConfig().getSaveTextCleansWordTags()) {
-	    c.m_saveCancelSection.getSaveButton().setOnClick("wordClean_"+PageTextForm.TEXT_ENTRY+"();");
-	}
+        // optionally, we clear the text of MSWord tags every time
+        // the text is submitted/saved
+        if (ContentSection.getConfig().getSaveTextCleansWordTags()) {
+            c.m_saveCancelSection.getSaveButton().setOnClick("wordClean_"
+                                                             + PageTextForm.TEXT_ENTRY
+                                                             + "();");
+        }
 
         c.addInitListener(c);
         c.addProcessListener(c);

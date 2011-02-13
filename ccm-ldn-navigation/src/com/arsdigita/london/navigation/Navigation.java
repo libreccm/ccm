@@ -27,9 +27,12 @@ import com.arsdigita.web.ParameterMap;
 import com.arsdigita.web.URL;
 import com.arsdigita.web.Web;
 import com.arsdigita.xml.Element;
+import org.apache.log4j.Logger;
 
 
 public class Navigation extends Application {
+
+    private static final Logger logger = Logger.getLogger(Navigation.class);
 
     public static final String NAV_NS =
         "http://ccm.redhat.com/london/navigation";
@@ -42,7 +45,9 @@ public class Navigation extends Application {
     private static NavigationContext s_context = new NavigationContext();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     public static NavigationConfig getConfig() {

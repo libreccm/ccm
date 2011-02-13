@@ -32,6 +32,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 // new versioning
 
@@ -206,6 +207,8 @@ final class DevSupport {
 
     private static class DependenceFormatter implements GraphFormatter {
 
+        private static final Logger logger = Logger.getLogger(DependenceFormatter.class);
+
         private static final String GRAPH_ATTRS =
             GRAPH_ATTRS_HEADER +
             "    edge[style=invis];\n" +
@@ -229,6 +232,7 @@ final class DevSupport {
             private static final Map COLORS = new HashMap();
 
         static {
+            logger.debug("Static initalizer starting...");
             COLORS.put(NodeType.VERSIONED_TYPE,
                        "[fillcolor=Tomato,comment=\"versioned type\"]");
             COLORS.put(NodeType.COVERSIONED_TYPE,
@@ -236,6 +240,7 @@ final class DevSupport {
             COLORS.put(NodeType.RECOVERABLE,
                        "[fillcolor=LemonChiffon,comment=recoverable]");
             COLORS.put(NodeType.UNREACHABLE, "[comment=unreachable]");
+            logger.debug("Static initalizer finished.");
         }
 
         public String graphAttributes(Graph graph) {

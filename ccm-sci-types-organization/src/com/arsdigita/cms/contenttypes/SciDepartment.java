@@ -25,6 +25,7 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  * <p>
@@ -66,6 +67,7 @@ import java.math.BigDecimal;
  */
 public class SciDepartment extends GenericOrganizationalUnit {
 
+    private static final Logger logger = Logger.getLogger(SciDepartment.class);
     public static final String DEPARTMENT_SHORT_DESCRIPTION =
                                "departmentShortDescription";
     public static final String DEPARTMENT_DESCRIPTION = "departmentDescription";
@@ -81,7 +83,9 @@ public class SciDepartment extends GenericOrganizationalUnit {
                                                new SciOrganizationConfig();
 
     static {
+        logger.debug("Static initalizer starting...");
         s_config.load();
+        logger.debug("Static initalizer finished.");
     }
 
     public SciDepartment() {

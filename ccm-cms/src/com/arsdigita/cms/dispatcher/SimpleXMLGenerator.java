@@ -53,13 +53,14 @@ import java.util.Iterator;
  */
 public class SimpleXMLGenerator implements XMLGenerator {
 
-    private static Logger s_log =
+    private static final Logger s_log =
                           Logger.getLogger(SimpleXMLGenerator.class);
     public static final String ADAPTER_CONTEXT = SimpleXMLGenerator.class.
             getName();
 
     // Register general purpose adaptor for all content items
     static {
+        s_log.debug("Static initializer starting...");
         SimpleDomainObjectTraversalAdapter adapter =
                                            new SimpleDomainObjectTraversalAdapter();
         adapter.addAssociationProperty("/object/type");
@@ -69,6 +70,7 @@ public class SimpleXMLGenerator implements XMLGenerator {
                 ContentItem.BASE_DATA_OBJECT_TYPE,
                 adapter,
                 ADAPTER_CONTEXT);
+        s_log.debug("Static initializer finished");
     }
 
     public SimpleXMLGenerator() {

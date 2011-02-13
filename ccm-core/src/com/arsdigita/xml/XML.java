@@ -53,7 +53,9 @@ public class XML {
 
     private static Map s_formatters = new HashMap();
     static {
+        s_log.debug("Static initalizer starting...");
         s_formatters.put(Date.class, new DateTimeFormatter());
+        s_log.debug("Static initalizer finished.");
     }
 
     private XML() {}

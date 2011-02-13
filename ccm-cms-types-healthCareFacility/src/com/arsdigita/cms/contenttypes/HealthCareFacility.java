@@ -62,7 +62,9 @@ public class HealthCareFacility extends GenericOrganization {
      * Called when the class is loaded by the Java class loader.
      */
     static {
+        s_log.debug("Static initalizer starting...");
         s_config.load();
+        s_log.debug("Static initalizer finished.");
     }
     
     /**

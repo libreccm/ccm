@@ -58,6 +58,7 @@ final class ParameterPrinter {
     private static final Options OPTIONS = new Options();
 
     static {
+        s_log.debug("Static initalizer starting...");
         OPTIONS.addOption
             (OptionBuilder
              .hasArg(false)
@@ -77,6 +78,7 @@ final class ParameterPrinter {
              .withArgName("FILE")
              .withDescription("Use list of additional Config classes from FILE")
              .create());
+        s_log.debug("Static initalizer starting...");
     }
 
     private static void writeXML(final PrintWriter out) {

@@ -50,14 +50,18 @@ class BaseAsset extends ResourceHandlerImpl {
 
     private final static String s_defaultName = "File";
 
-    private static final BigDecimalParameter s_assetId;
-    private static final OIDParameter s_oid;
+    private static final BigDecimalParameter s_assetId = new BigDecimalParameter(ASSET_ID);
+    private static final OIDParameter s_oid = new OIDParameter(OID_PARAM);
 
-    static {
+    /*
+     * jensp 2011-02-11: No need for static initalizer block here. Moved
+     * to variable declaration (see above).
+     */
+    /*static {        
         s_assetId = new BigDecimalParameter(ASSET_ID);
         s_oid = new OIDParameter(OID_PARAM);
-        //s_assetId.addParameterListener(new NotNullValidationListener());
-    }
+        //s_assetId.addParameterListener(new NotNullValidationListener());        
+    }*/
 
     private final boolean m_download;
     private String m_disposition;

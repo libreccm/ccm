@@ -55,7 +55,9 @@ public class SessionManager {
 
     private static Set s_beforeFlushProcManagers = new HashSet();
     static {
+        s_log.debug("Static initalizer starting...");
         addBeforeFlushProcManager(Versions.EPM);
+        s_log.debug("Static initalizer finished.");
     }
     private static Set s_afterFlushProcManagers  = new HashSet();
     private static Map s_configurations = new HashMap();
