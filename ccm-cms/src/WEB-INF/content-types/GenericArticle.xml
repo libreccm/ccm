@@ -11,5 +11,18 @@
       classname="com.arsdigita.cms.contenttypes.GenericArticle"
       mode="hidden">
     
+        <ctd:authoring-kit
+            createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
+
+            <ctd:authoring-step
+                labelKey="cms.contenttypes.shared.basic_properties.title"
+                labelBundle="com.arsdigita.cms.CMSResources"
+                descriptionKey="cms.contenttypes.shared.basic_properties.description"
+                descriptionBundle="com.arsdigita.cms.CMSResources"
+                component="com.arsdigita.cms.contenttypes.ui.GenericArticlePropertiesStep"
+                ordering="1"/>
+
+            <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
+        </ctd:authoring-kit>
     </ctd:content-type>
 </ctd:content-types>
