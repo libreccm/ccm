@@ -19,40 +19,50 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.Component;
+import com.arsdigita.bebop.PageState;
+import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.Article;
+import com.arsdigita.cms.contenttypes.GenericArticle;
+import com.arsdigita.domain.DomainObject;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
+import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import java.text.DateFormat;
 
 /**
- * Authoring step to edit the simple attributes of the Article content
+ * Authoring step to edit the simple attributes of the GenericArticle content
  * type (and its subclasses). The attributes edited are 'name', 'title',
- * 'article date', 'location', 'lead', and 'article type'.
+ * 'article date', 'location', and 'article type'.
  * This authoring step replaces
  * the <code>com.arsdigita.ui.authoring.PageEdit</code> step for this type.
  */
-public class ArticlePropertiesStep extends GenericArticlePropertiesStep {
+public class GenericArticlePropertiesStep extends SimpleEditStep {
 
     /** The name of the editing sheet added to this step */
     public static String EDIT_SHEET_NAME = "edit";
+    DomainObjectPropertySheet get;
 
-    public ArticlePropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
+    public GenericArticlePropertiesStep(ItemSelectionModel itemModel, AuthoringKitWizard parent) {
         super(itemModel, parent);
+
+        setDefaultEditKey(EDIT_SHEET_NAME);
+        createEditSheet(itemModel);
+
+        setDisplayComponent(itemModel);
     }
 
-    @Override
     protected void createEditSheet(ItemSelectionModel itemModel) {
         BasicPageForm editSheet;
-        editSheet = new ArticlePropertyForm(itemModel, this);
+        editSheet = new GenericArticlePropertyForm(itemModel, this);
         add(EDIT_SHEET_NAME, "Edit", new WorkflowLockedComponentAccess(editSheet, itemModel), editSheet.getSaveCancelSection().getCancelButton());
     }
 
-    @Override
     protected void setDisplayComponent(ItemSelectionModel itemModel) {
-        setDisplayComponent(getArticlePropertySheet(itemModel));
+        setDisplayComponent(getGenericArticlePropertySheet(itemModel));
     }
 
     /**
@@ -63,11 +73,28 @@ public class ArticlePropertiesStep extends GenericArticlePropertiesStep {
      * @return A component to display the state of the basic properties
      *  of the release
      */
-    public static Component getArticlePropertySheet(ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) getGenericArticlePropertySheet(itemModel);
+    public static Component getGenericArticlePropertySheet(ItemSelectionModel itemModel) {
+        DomainObjectPropertySheet sheet = new DomainObjectPropertySheet(itemModel);
 
-        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.lead"), Article.LEAD);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.name"), GenericArticle.NAME);
+        sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.title"), GenericArticle.TITLE);
+        if (!ContentSection.getConfig().getHideLaunchDate()) {
+            sheet.add(GlobalizationUtil.globalize("cms.contenttypes.ui.launch_date"),
+                    ContentPage.LAUNCH_DATE,
+                    new DomainObjectPropertySheet.AttributeFormatter() {
 
+                        public String format(DomainObject item,
+                                String attribute,
+                                PageState state) {
+                            ContentPage page = (ContentPage) item;
+                            if (page.getLaunchDate() != null) {
+                                return DateFormat.getDateInstance(DateFormat.LONG).format(page.getLaunchDate());
+                            } else {
+                                return (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+                            }
+                        }
+                    });
+        }
         return sheet;
     }
 }

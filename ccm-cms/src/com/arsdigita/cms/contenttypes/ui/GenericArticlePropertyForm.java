@@ -20,32 +20,24 @@ package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.bebop.FormData;
 import com.arsdigita.bebop.FormProcessException;
-import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
-import com.arsdigita.bebop.form.TextArea;
-import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
-import com.arsdigita.bebop.parameters.ParameterModel;
-import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
-import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.Article;
-import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.cms.contenttypes.GenericArticle;
+import com.arsdigita.cms.ui.authoring.BasicPageForm;
 
 /**
  * Form to edit the basic properties of an article. This form can be
  * extended to create forms for Article subclasses.
  */
-public class ArticlePropertyForm extends GenericArticlePropertyForm
+public class GenericArticlePropertyForm extends BasicPageForm
         implements FormProcessListener, FormInitListener, FormSubmissionListener {
 
     private final static org.apache.log4j.Logger s_log =
-            org.apache.log4j.Logger.getLogger(ArticlePropertyForm.class);
-    private ArticlePropertiesStep m_step;
-    public static final String LEAD = "lead";
+            org.apache.log4j.Logger.getLogger(GenericArticlePropertyForm.class);
+    private GenericArticlePropertiesStep m_step;
 
     /**
      * Creates a new form to edit the Article object specified
@@ -53,19 +45,20 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
      * @param itemModel The ItemSelectionModel to use to obtain the
      *    Article to work on
      */
-    public ArticlePropertyForm(ItemSelectionModel itemModel) {
+    public GenericArticlePropertyForm(ItemSelectionModel itemModel) {
         this(itemModel, null);
     }
 
     /**
-     * Creates a new form to edit the Article object specified
+     * Creates a new form to edit the GenericArticle object specified
      * by the item selection model passed in.
      * @param itemModel The ItemSelectionModel to use to obtain the
-     *    Article to work on
-     * @param step The ArticlePropertiesStep which controls this form.
+     *    GenericArticle to work on
+     * @param step The GenericArticlePropertiesStep which controls this form.
      */
-    public ArticlePropertyForm(ItemSelectionModel itemModel, ArticlePropertiesStep step) {
-        super(itemModel, step);
+    public GenericArticlePropertyForm(ItemSelectionModel itemModel, GenericArticlePropertiesStep step) {
+        super(ID, itemModel);
+        m_step = step;
         addSubmissionListener(this);
     }
 
@@ -75,23 +68,6 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
     @Override
     protected void addWidgets() {
         super.addWidgets();
-
-        add(new Label(GlobalizationUtil.globalize("cms.contenttypes.ui.lead")));
-        ParameterModel leadParam = new StringParameter(LEAD);
-
-        if (ContentSection.getConfig().mandatoryDescriptions()) {
-            leadParam.addParameterListener(
-                    new NotEmptyValidationListener(
-                    GlobalizationUtil.globalize(
-                    "cms.contenttypes.ui.description_missing")));
-        }
-        //leadParam
-        //    .addParameterListener( new NotNullValidationListener() );
-        leadParam.addParameterListener(new StringInRangeValidationListener(0, 1000));
-        TextArea lead = new TextArea(leadParam);
-        lead.setCols(40);
-        lead.setRows(5);
-        add(lead);
     }
 
     @Override
@@ -100,17 +76,13 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
     }
 
     /** Form initialisation hook. Fills widgets with data. */
-    @Override
     public void init(FormSectionEvent fse) {
         // Do some initialization hook stuff
         FormData data = fse.getFormData();
-        Article article = (Article) super.initBasicWidgets(fse);
-
-        data.put(LEAD, article.getLead());
+        GenericArticle article = (GenericArticle) super.initBasicWidgets(fse);
     }
 
     /** Cancels streamlined editing. */
-    @Override
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
                 && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
@@ -119,17 +91,15 @@ public class ArticlePropertyForm extends GenericArticlePropertyForm
     }
 
     /** Form processing hook. Saves Event object. */
-    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
 
-        Article article = (Article) super.processBasicWidgets(fse);
+        GenericArticle article = (GenericArticle) super.processBasicWidgets(fse);
 
         // save only if save button was pressed
         if (article != null
                 && getSaveCancelSection().getSaveButton().isSelected(fse.getPageState())) {
 
-            article.setLead((String) data.get(LEAD));
             article.save();
         }
         if (m_step != null) {
