@@ -18,11 +18,18 @@
 
 package com.arsdigita.kernel;
 
+import com.arsdigita.developersupport.DeveloperSupport;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
+import com.arsdigita.kernel.permissions.PermissionManager;
 import com.arsdigita.persistence.DataObject;
+import com.arsdigita.persistence.OID;
+import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
 import com.arsdigita.runtime.GenericInitializer;
+import com.arsdigita.webdevsupport.WebDevSupport;
+
+import java.math.BigDecimal;
 
 import org.apache.log4j.Logger;
 
@@ -123,22 +130,71 @@ public class Initializer extends GenericInitializer {
         URLService.registerFinder(PackageInstance.BASE_DATA_OBJECT_TYPE,
                                   new GenericURLFinder(""));
 
+        if (Kernel.getSystemParty() == null) {
+            final DatabaseTransaction transaction = new DatabaseTransaction();
+
+            transaction.begin();
+
+            setupSystemParty();
+
+            transaction.end();
+        }
         // READ-ONLY operation, during initializing a transaction should not
         // requirred.
         //TransactionContext txn = SessionManager.getSession()
         //                                       .getTransactionContext();
         //txn.beginTxn();
 
-        s_log.debug("Initializing privilege descriptors...");
+        s_log.error("c.ad.kernel.Initializer: Initializing privilege descriptors...");
         // Initialize privilege descriptors used in permissions service
         // Recurring task, reads from database and stores in an internal Map
         // field.
         PrivilegeDescriptor.initialize();
-        s_log.debug("Done.");
+        s_log.error("Done.");
 
         //txn.commitTxn();
 
         s_log.debug("kernel security domain init completed");
+    }
+
+    /**
+     * Implementation of the {@link Initializer#init(ContextInitEvent)}
+     * method.
+     *
+     * @param evt The context init event.
+     */
+    @Override
+    public void init(ContextInitEvent evt) {
+        s_log.debug("kernel context init begin.");
+
+        Boolean active = KernelConfig.getConfig().isWebdevSupportActive();
+        if (Boolean.TRUE.equals(active)) {
+            s_log.debug("Registering webdev listener");
+            DeveloperSupport.addListener(WebDevSupport.getInstance());
+        }
+
+        s_log.debug("kernel context init completed");
+    }
+
+    /**
+     *
+     */
+    // Should this be moved to central position for all Initializers?
+    // E.g. Compound Initializer or at least waf(core) initializer
+        private void setupSystemParty() {
+        Party party;
+
+        party = new Party
+                (new OID(Party.BASE_DATA_OBJECT_TYPE,
+                        new BigDecimal(PermissionManager.SYSTEM_PARTY))) {
+            public String getName() {
+                return "ACS System Party";
+            }
+        };
+
+        party.disconnect();
+
+        Kernel.setSystemParty(party);
     }
 
 }

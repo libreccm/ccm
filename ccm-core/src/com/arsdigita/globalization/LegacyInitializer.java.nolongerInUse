@@ -77,10 +77,10 @@ public class LegacyInitializer implements com.arsdigita.initializer.Initializer 
             getTransactionContext();
         txn.beginTxn();
 
-        if ( ! isLoaded() ) {
-            s_log.info("Globalization Initializer is loading.");
-            load();
-        }
+   //   if ( ! isLoaded() ) {
+   //       s_log.info("Globalization Initializer is loading.");
+   //       load();
+   //   }
         LocaleNegotiator.setApplicationLocaleProvider
             (new ApplicationLocaleProvider());
         LocaleNegotiator.setClientLocaleProvider(new ClientLocaleProvider());

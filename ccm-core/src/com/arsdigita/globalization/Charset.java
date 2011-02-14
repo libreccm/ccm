@@ -39,7 +39,7 @@ import java.math.BigDecimal;
 public class Charset extends DomainObject {
 
     public final static String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.globalization.Charset";
+                               "com.arsdigita.globalization.Charset";
 
     /**
      * <p>

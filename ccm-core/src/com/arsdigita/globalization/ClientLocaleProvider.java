@@ -34,6 +34,10 @@ public class ClientLocaleProvider implements LocaleProvider {
     private String m_targetBundle = "";
     private String m_acceptLanguages = "";
 
+    /**
+     * 
+     * @return
+     */
     public Locale getLocale() {
         ResourceBundle b = null;
         Locale l = null;
@@ -58,9 +62,8 @@ public class ClientLocaleProvider implements LocaleProvider {
                     defaultLocale = Locale.getDefault();
                 }
 
-                b = Globalization.getBundleNoFallback(
-                                                      m_targetBundle, l, defaultLocale
-                                                      );
+                b = Globalization.getBundleNoFallback( m_targetBundle, l,
+                                                       defaultLocale     );
 
                 if (b != null) {
                     break;
@@ -75,11 +78,18 @@ public class ClientLocaleProvider implements LocaleProvider {
         return l;
     }
 
+    /**
+     * 
+     * @param targetBundle
+     */
     public void setTargetBundle(String targetBundle) {
-        m_targetBundle =
-            (targetBundle != null) ? targetBundle : "";
+        m_targetBundle = (targetBundle != null) ? targetBundle : "";
     }
 
+    /**
+     * 
+     * @param acceptLanguages
+     */
     public void setAcceptLanguages(String acceptLanguages) {
         m_acceptLanguages =
             (acceptLanguages != null) ? acceptLanguages : "";

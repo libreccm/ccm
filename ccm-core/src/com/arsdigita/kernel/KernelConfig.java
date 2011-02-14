@@ -25,6 +25,8 @@ import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author Justin Ross
  * @see com.arsdigita.kernel.Kernel
@@ -32,25 +34,55 @@ import java.util.StringTokenizer;
  */
 public final class KernelConfig extends AbstractConfig {
 
-    private final Parameter m_debug;
-    private final Parameter m_permissions;
-    private final EnumerationParameter m_identifier; // email or "screenName"?
-    private final Parameter m_SSO;
-    private final Parameter m_remember;
-    private final Parameter m_secureLogin;
-    private final Parameter m_supportedLanguages;
+    /** A logger instance.  */
+    private static final Logger s_log = Logger.getLogger(KernelConfig.class);
 
-    public KernelConfig() {
-        m_debug = new BooleanParameter
+    /** Singelton config object.  */
+    private static KernelConfig s_conf;
+
+    /**
+     * Gain a KernelConfig object.
+     *
+     * Singelton pattern, don't instantiate a KernelConfig object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized KernelConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new KernelConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+    /**  */
+    private static Parameter m_debug = new BooleanParameter
             ("waf.debug", Parameter.REQUIRED, Boolean.FALSE);
-
-        m_permissions = new BooleanParameter
+    /** Whether WEB development support should be activated (true) or not.   */
+    // Handled in OLD initializer c.ad.webdevsupport.LegacyInitializer
+    private static Parameter m_webdevSupport = new BooleanParameter
+            ("waf.webdev_support", Parameter.REQUIRED, Boolean.FALSE);
+    private final Parameter m_permissions = new BooleanParameter
             ("waf.kernel.data_permission_check_enabled", Parameter.REQUIRED,
              Boolean.TRUE);
-
-        m_identifier = new EnumerationParameter
+    /** User Login by screen name or email address                           */
+    private final EnumerationParameter m_identifier = new EnumerationParameter
             ("waf.kernel.primary_user_identifier", Parameter.REQUIRED,
              "email");
+    private final Parameter m_SSO;
+    private final Parameter m_remember;
+    private final Parameter m_secureLogin = new BooleanParameter
+        	("waf.kernel.secure_login", Parameter.REQUIRED, Boolean.FALSE);
+    /** String containing the supported languages.
+        The first one is considered default.                                 */
+    private final Parameter m_supportedLanguages = new StringParameter
+            ("waf.kernel.supported_languages", Parameter.REQUIRED,
+             "en,de,fr,nl,it,pt,es");
+
+    public KernelConfig() {
+
+        // Add recognised Login user identification to enumeration parameter
         m_identifier.put("email", "email");
         m_identifier.put("screen_name", "screenName");
         
@@ -59,18 +91,10 @@ public final class KernelConfig extends AbstractConfig {
 
         m_remember = new BooleanParameter
             ("waf.kernel.remember_login", Parameter.REQUIRED, Boolean.TRUE);
-        
-        m_secureLogin = new BooleanParameter
-        	("waf.kernel.secure_login", Parameter.REQUIRED, Boolean.FALSE);
 
-        /**
-         * String containing the supported languages. The first one is considered
-         * default.
-         */
-        m_supportedLanguages = new StringParameter
-            ("waf.kernel.supported_languages", Parameter.REQUIRED, "en,de,fr,nl,it,pt,es");
 
         register(m_debug);
+        register(m_webdevSupport);
         register(m_permissions);
         register(m_identifier);
         register(m_SSO);
@@ -81,8 +105,16 @@ public final class KernelConfig extends AbstractConfig {
         loadInfo();
     }
 
+    
     public final boolean isDebugEnabled() {
         return ((Boolean) get(m_debug)).booleanValue();
+    }
+
+    /**
+     * Return true, if WEB developer support should be activated.
+     */
+    public final boolean isWebdevSupportActive() {
+        return ((Boolean) get(m_webdevSupport)).booleanValue();
     }
 
     public final boolean isDataPermissionCheckEnabled() {

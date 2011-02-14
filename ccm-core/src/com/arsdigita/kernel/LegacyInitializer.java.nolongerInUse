@@ -36,6 +36,7 @@ import org.apache.log4j.Logger;
  * @version $Revision: #39 $ $Date: 2004/08/16 $
  * @version $Id: Initializer.java 1169 2006-06-14 13:08:25Z fabrice $
  */
+// BaseInitializer set System Party, required for permission critical actions!
 public class LegacyInitializer extends BaseInitializer {
 
     private static final Logger s_log = Logger.getLogger(LegacyInitializer.class);
@@ -52,18 +53,19 @@ public class LegacyInitializer extends BaseInitializer {
         // setupDomainFactory();
         // setupURLService();
 
-        TransactionContext txn = SessionManager.getSession()
-                                               .getTransactionContext();
-        txn.beginTxn();
+//      TransactionContext txn = SessionManager.getSession()
+//                                             .getTransactionContext();
+//      txn.beginTxn();
 
-        s_log.debug("Initializing privilege descriptors...");
+//      s_log.debug("Initializing privilege descriptors...");
+        s_log.error("kernel LegacyInitializer: Initializing privilege descriptors...");
         // Initialize privilege descriptors used in permissions service
         // Recurring task, reads from database and stores in an internal Map
         // field.
-        PrivilegeDescriptor.initialize();
-        s_log.debug("Done.");
+//      PrivilegeDescriptor.initialize();
+        s_log.error("kernel LegacyInitializer: Done.");
 
-        txn.commitTxn();
+//      txn.commitTxn();
     }
 
     private void setupDomainFactory() {

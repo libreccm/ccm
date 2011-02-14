@@ -33,9 +33,9 @@ import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitEvent;
-import com.arsdigita.runtime.LegacyInitializer;
-import com.arsdigita.runtime.OptionalLegacyInitializer;
+// import com.arsdigita.runtime.LegacyInitEvent;
+// import com.arsdigita.runtime.LegacyInitializer;
+// import com.arsdigita.runtime.OptionalLegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.toolbox.CharsetEncodingProvider;
@@ -63,8 +63,7 @@ import org.apache.log4j.Logger;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: Initializer.java 1547 2007-03-29 14:24:57Z chrisgilbert23 $
- **/
-
+ */
 public class Initializer extends CompoundInitializer {
 
     private static Logger s_log = Logger.getLogger(Initializer.class);
@@ -88,14 +87,15 @@ public class Initializer extends CompoundInitializer {
         add(new com.arsdigita.ui.Initializer());
         add(new com.arsdigita.kernel.Initializer());
         add(new com.arsdigita.kernel.security.Initializer());
+        add(new com.arsdigita.globalization.Initializer());
         add(new com.arsdigita.portal.Initializer());
         add(new com.arsdigita.search.Initializer());
         add(new com.arsdigita.search.lucene.Initializer());
         add(new com.arsdigita.search.intermedia.Initializer());
         add(new com.arsdigita.notification.Initializer());
 
-        add(new LegacyInitializer("com/arsdigita/core/enterprise.init"));
-        add(new OptionalLegacyInitializer("enterprise.init"));
+        // add(new LegacyInitializer("com/arsdigita/core/enterprise.init"));
+        // add(new OptionalLegacyInitializer("enterprise.init"));
     }
 
     /**
@@ -106,7 +106,9 @@ public class Initializer extends CompoundInitializer {
     public final void init(final DomainInitEvent e) {
         super.init(e);
 
-        s_log.info("Running core init(DomainInitEvent) ...");
+        s_log.error("Running core init(DomainInitEvent) ...");
+
+        FactoriesSetup.setupFactories();
 
         e.getFactory().registerInstantiator
             (Host.BASE_DATA_OBJECT_TYPE,
@@ -223,6 +225,16 @@ public class Initializer extends CompoundInitializer {
         // Initialize the the CharsetEncodingProvider internal data structure
         URLRewriter.addParameterProvider(new CharsetEncodingProvider());
 
+
+        // Creates an entry in table web_hosts. Might be considered a loader
+        // task (and is already handled there). But configuration may be
+        // changed so we have to recheck here.
+        Session session = SessionManager.getSession();
+        TransactionContext txn = session.getTransactionContext();
+        txn.beginTxn();
+        CoreLoader.loadHost();
+        txn.commitTxn();
+
         s_log.info("Core init(DomainInitEvent) done");
     }
 
@@ -230,19 +242,19 @@ public class Initializer extends CompoundInitializer {
      * 
      * @param e
      */
-    public final void init(final LegacyInitEvent e) {
-        super.init(e);
+//  public final void init(final LegacyInitEvent e) {
+//      super.init(e);
 
-        s_log.info("Running core init(LegacyInitEvent) ...");
+//      s_log.info("Running core init(LegacyInitEvent) ...");
 
-        Session session = SessionManager.getSession();
-        TransactionContext txn = session.getTransactionContext();
-        txn.beginTxn();
-        CoreLoader.loadHost();
-        txn.commitTxn();
+//      Session session = SessionManager.getSession();
+//      TransactionContext txn = session.getTransactionContext();
+//      txn.beginTxn();
+//      CoreLoader.loadHost();
+//      txn.commitTxn();
 
-        FactoriesSetup.setupFactories();
+//      FactoriesSetup.setupFactories();
 
-        s_log.info("Core init(LegacyInitEvent) done");
-    }
+//      s_log.info("Core init(LegacyInitEvent) done");
+//  }
 }

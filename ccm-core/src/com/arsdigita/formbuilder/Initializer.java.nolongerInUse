@@ -31,9 +31,24 @@ import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.initializer.Configuration;
 import com.arsdigita.initializer.InitializationException;
 
-
-
 import org.apache.log4j.Logger;
+
+
+
+// ////////////////////////////////////////////////////////////////////////
+//
+// This old style Initializer is obviously no longer used (for a long time
+// and several releases. Formbuilder as an own application is deprecated and
+// replaced by content type forms.
+//
+// Removed.
+//
+// It is a loader task (loading package type and instance) and should be
+// handled there it required in the future.
+//
+// ////////////////////////////////////////////////////////////////////////
+
+
 
 /**
  * Registers the formbuilder package type and creates an instance
@@ -43,8 +58,7 @@ import org.apache.log4j.Logger;
  * @version $Id: Initializer.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class Initializer
-
-    implements com.arsdigita.initializer.Initializer {
+       implements com.arsdigita.initializer.Initializer {
 
     private Configuration m_conf = new Configuration();
 

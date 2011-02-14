@@ -21,6 +21,14 @@ package com.arsdigita.auditing;
 import com.arsdigita.initializer.Configuration;
 import com.arsdigita.initializer.InitializationException;
 
+// ////////////////////////////////////////////////////////////////////////////
+//
+// Obviously not used anymore.
+// There is no entry in enterprise.init for this Initializer since several
+// releases.
+//
+// ////////////////////////////////////////////////////////////////////////////
+
 /**
  * Initializer for the auditing service. Currently the only available
  * configuration is AuditingSaveInfoClass, which must implement the

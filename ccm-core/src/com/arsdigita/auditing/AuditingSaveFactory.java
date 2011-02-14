@@ -19,24 +19,27 @@
 package com.arsdigita.auditing;
 
 /**
- * Factory for auditing save information.
- *  <p>
- *    
- *  </p>
+ * Factory for auditing save information, i.e. an implementation of the
+ * AuditingSaveInfo interface.
+ * 
+ * Currently there is only one implementation available: WebAuditingSaveInfo.
+ * Therefore there is no configuration object required.
+ * 
  *
  * @author Joseph Bank 
  * @version 1.0
  */
-
 public class AuditingSaveFactory {
 
     // default to using WebAuditingSaveInfo
 
+    /** Static Auditing save info instance */
     private static ThreadLocal s_proto = new ThreadLocal() {
-            public Object initialValue() {
-                return new WebAuditingSaveInfo();
-            }
-        };
+        @Override
+        public Object initialValue() {
+            return new WebAuditingSaveInfo();
+        }
+    };
 
     /**
      * Sets the prototype object for the factory.

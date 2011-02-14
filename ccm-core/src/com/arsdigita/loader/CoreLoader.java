@@ -19,6 +19,8 @@
 package com.arsdigita.loader;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.globalization.Charset;
+import com.arsdigita.globalization.Locale;
 import com.arsdigita.kernel.EmailAddress;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
@@ -38,6 +40,7 @@ import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.mimetypes.MimeTypeExtension;
 import com.arsdigita.mimetypes.TextMimeType;
 import com.arsdigita.portal.Portal;
+import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.ui.admin.Admin;
 import com.arsdigita.ui.sitemap.SiteMap;
@@ -48,17 +51,27 @@ import com.arsdigita.util.parameter.CSVParameterReader;
 import com.arsdigita.util.parameter.EmailParameter;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.StringParameter;
+import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.servlet.HttpHost;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.web.Host;
 import com.arsdigita.web.Web;
 
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 // import java.util.Locale;
+import java.util.Map;
 
 import javax.mail.internet.InternetAddress;
 
@@ -78,6 +91,7 @@ public class CoreLoader extends PackageLoader {
 
     private StringParameter m_screen = new StringParameter
         ("waf.admin.name.screen", Parameter.OPTIONAL, null) {
+        @Override
         public Object getDefaultValue() {
             String email = getEmail();
             if (email == null) {
@@ -116,6 +130,42 @@ public class CoreLoader extends PackageLoader {
         ("waf.mime.resource", Parameter.OPTIONAL,
          "com/arsdigita/loader/mimetypes.properties");
 
+    /**
+     * Recognized character sets
+     */
+    // In Old Initializer: CHARSETS as List.class
+    //     charsets = {"ISO-8859-1","UTF-8"};
+    private final Parameter m_charsets =
+            new StringArrayParameter(
+                    "waf.globalization.charsets",
+                    Parameter.REQUIRED,
+                    new String[] { "ISO-8859-1","UTF-8" }
+                );
+
+    /**
+     * Each entry in the "locales" list is a 4-tuple of the form
+     *   {language, country, variant, charset}
+     * The charset must be one of the values specified in the "charsets"
+     * parameter above.
+     *
+     * This parameter is only read once in the initial loading step and stored
+     * in the database (g11n_locales). Subsequent modifications will have no effect!
+     *
+     */
+    // In OLD Initializer: LOCALES as List.class
+    private final Parameter m_locales =
+            new StringArrayParameter(
+                    "waf.globalization.locales",
+                    Parameter.REQUIRED,
+                    new String[] {"en: : :UTF-8","en:GB: :UTF-8","en:US: :UTF-8"
+                                 ,"es: : :UTF-8","es:ES: :UTF-8"
+                                 ,"da: : :UTF-8","da:DK: :UTF-8"
+                                 ,"de: : :UTF-8","de:DE: :UTF-8"
+                                 ,"fr: : :UTF-8","fr:FR: :UTF-8"
+                                 ,"ru: : :UTF-8"
+                                 }
+                    );
+
     public CoreLoader() {
         register(m_email);
         register(m_screen);
@@ -126,6 +176,8 @@ public class CoreLoader extends PackageLoader {
         register(m_answer);
         register(m_dispatcher);
         register(m_resource);
+        register(m_charsets);
+        register(m_locales);
 
         loadInfo();
     }
@@ -165,23 +217,70 @@ public class CoreLoader extends PackageLoader {
     private String getResource() {
         return (String) get(m_resource);
     }
+    
+    /**
+     * Retrieve systems recognized character sets.
+     *
+     * @return List of recognized character sets.
+     */
+    private List getCharsets() {
+        String[] charsets =  (String[]) get(m_charsets) ;
+        return (List) Arrays.asList(charsets) ;
+    }
+
+    /**
+     * Retrieve the list of supported locales
+     *
+     */
+    private List getLocales() {
+
+        /** Value of the locales parameter, a string array of
+            4-tuple of locale values (see above)                             */
+        String[] locales = (String[]) get(m_locales) ;
+
+        if (locales != null) {
+            ArrayList localeTupel = new ArrayList();
+            for (int i = 0; i < locales.length ; ++i) {
+                String[] localeSet = StringUtils.split(locales[i],':');
+                localeTupel.add(Arrays.asList(localeSet));
+            }
+            return localeTupel;
+        } else {
+
+            return null;
+
+        }
+    }
 
     public void run(final ScriptContext ctx) {
+        s_log.error("CoreLoader run method started.");
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
+                s_log.error("CoreLoader: Going to init KeyStorage.");
                 KeyStorage.KERNEL_KEY_STORE.init();
+                s_log.error("CoreLoader: Going to execute loadHost().");
                 loadHost();
+                s_log.error("CoreLoader: Going to execute loadSubsite().");
                 loadSubsite(loadKernel());
+                s_log.error("CoreLoader: Going to execute loadBebop().");
                 loadBebop();
+                s_log.error("CoreLoader: Going to execute loadWebDev().");
                 loadWebDev();
+                s_log.error("CoreLoader: Going to execute loadSiteMapAdminApp().");
                 loadSiteMapAdminApp(loadAdminApp());
+                s_log.error("CoreLoader: Going to execute loadPermissionsSiteNode().");
                 loadPermissionsSiteNode();
+                s_log.error("CoreLoader: Going to execute loadPortal().");
                 loadPortal();
+                s_log.error("CoreLoader: Going to execute loadMimeTypes().");
                 loadMimeTypes();
+                s_log.error("CoreLoader: Going to execute loadGlobalization().");
+                loadGlobalization();
             }
         }.run();
+        s_log.error("CoreLoader run method completed.");
     }
 
     /**
@@ -204,7 +303,7 @@ public class CoreLoader extends PackageLoader {
         // the initializer each time the system starts. So it's redundant here.
         // Using initializer code is favourable because it may be conditionally 
         // performed, depending on configuration (Lucene or Intermedia).
-        // But the currently given implementation requires the the loader
+        // But the currently given implementation requires the loader
         // instruction here to let the code initialization time (i.e. at each
         // startup) work properly. If left out here instantiation in
         // c.ad.search.lucene.Initializer (public final static Loader LOADER)
@@ -215,21 +314,30 @@ public class CoreLoader extends PackageLoader {
         //--com.arsdigita.search.lucene.LegacyInitializer.LOADER.load();
     }
 
+    /**
+     * Create Root Site Node
+     * @return root node
+     */
     private SiteNode loadKernel() {
         // Create Root Site Node
+        s_log.error("CoreLoader: Going to execute method loadKernel().");
 
         final SiteNode rootNode = SiteNode.createSiteNode(null, null);
+        s_log.error("loadKernel: creating system administrator.");
         createSystemAdministrator();
 
         // Create Package Types and Instances
+        s_log.error("loadKernel: creating Package Types and Instances.");
         PackageType subsite = PackageType.create
             ("acs-subsite", "ACS Subsite", "ACS Subsites",
              "http://arsdigita.com/acs-subsite/");
         PackageInstance subsiteInstance = subsite.createInstance("Main Site");
 
         // Mount instances.
+        s_log.error("loadKernel: mount Instances.");
         rootNode.mountPackage(subsiteInstance);
 
+        s_log.error("CoreLoader: Going to complete method loadKernel().");
         return rootNode;
     }
 
@@ -237,6 +345,7 @@ public class CoreLoader extends PackageLoader {
     // exists after installation.
 
     private void createSystemAdministrator() {
+        s_log.error("CoreLoader: execution of method createSystemAdministrator().");
         final String DO_NOT_CREATE = "*do not create*";
 
         String emailAddress = getEmail();
@@ -246,6 +355,9 @@ public class CoreLoader extends PackageLoader {
         String password = getPassword();
         String passwordQuestion = getQuestion();
         String passwordAnswer = getAnswer();
+        s_log.error("createSystemAdministrator: EmailAddr: " + emailAddress +
+                    "\n screenName: " + screenName +
+                    "\n givenName: " + givenName );
 
         // Allow not creating system administrator account.
         // (Specified by setting parameter
@@ -263,6 +375,7 @@ public class CoreLoader extends PackageLoader {
 
         // Create the system administrator user.
 
+        s_log.error("createSystemAdministrator(): going to create new User.");
         User sa = new User();
         sa.setPrimaryEmail(new EmailAddress(emailAddress));
         if (screenName != null &&
@@ -273,6 +386,7 @@ public class CoreLoader extends PackageLoader {
         sa.getPersonName().setFamilyName(familyName);
 
         // Save the system administrator's authentication credentials.
+        s_log.error("createSystemAdministrator(): going to save credentials.");
         UserAuthentication auth = UserAuthentication.createForUser(sa);
         auth.setPassword(password);
         auth.setPasswordQuestion(passwordQuestion);
@@ -280,15 +394,19 @@ public class CoreLoader extends PackageLoader {
 
         // Grant the system administrator universal "admin" permission.
 
+        s_log.error("createSystemAdministrator(): going to grant admin perms.");
         PermissionService.grantPermission
             (new UniversalPermissionDescriptor
              (PrivilegeDescriptor.ADMIN, sa));
 
-        s_log.info("Adding administrator: \"" + givenName + " " +
+        s_log.error("Adding administrator: \"" + givenName + " " +
                    familyName + "\" <" + emailAddress + ">");
+        s_log.error("CoreLoader: method createSystemAdministrator() completed.");
+
     }
 
     private void loadSubsite(SiteNode rootNode) {
+        s_log.error("CoreLoader: Going to execute method loadSubsite().");
         String sDispatcher = "";
 
         PackageInstance packageInstance = rootNode.getPackageInstance();
@@ -450,6 +568,64 @@ public class CoreLoader extends PackageLoader {
         } finally {
             try { is.close(); }
             catch (IOException e) { throw new UncheckedWrapperException(e); }
+        }
+    }
+
+    private void loadGlobalization() throws ConfigError {
+        List charsets = (List) getCharsets();
+        if ( charsets == null ) {
+            throw new ConfigError
+                ("You must specify at least one charset in the m_charsets " +
+                 "parameter of the core loader parameter section. " +
+                 "UTF-8 would be a good first choice.");
+        }
+
+        Map charsetMap = new HashMap();
+
+        for (Iterator i=charsets.iterator(); i.hasNext(); ) {
+            String charsetName = (String) i.next();
+            s_log.debug("Dealing with charset name: " + charsetName );
+
+            // Check if this is a valid charset.  Is there a better way to do
+            // this? - vadimn@redhat.com, Mon 2002-07-29 14:47:41 -0400
+            try {
+                new OutputStreamWriter(new ByteArrayOutputStream(), charsetName);
+            } catch (UnsupportedEncodingException ex) {
+                throw new ConfigError
+                    (charsetName + " is not a supported charset");
+            }
+            Charset charset = new Charset();
+            charset.setCharset(charsetName);
+            charset.save();
+            charsetMap.put(charsetName, charset);
+        }
+
+        List locales = (List) getLocales();
+
+        if ( locales == null ) {
+            throw new ConfigError
+                ("You must specify at least one locale in the m_locales " +
+                 "parameter of core loader parameter section. " +
+                 "The \"en\" locale is probably required.");
+        }
+
+        for (Iterator i=locales.iterator(); i.hasNext(); ) {
+            List localeData = (List) i.next();
+            String language    = (String) localeData.get(0);
+            String country     = (String) localeData.get(1);
+            String variant     = (String) localeData.get(2);
+            String charsetName = (String) localeData.get(3);
+            Locale locale = new Locale(language, country, variant);
+
+            Charset defaultCharset = (Charset) charsetMap.get(charsetName);
+            if ( defaultCharset == null ) {
+                throw new ConfigError
+                    ("You must list " + charsetName + " in the \"m_charsets\" " +
+                     "parameter before using it in the \"m_locales\" " +
+                     "\" parameter.");
+            }
+            locale.setDefaultCharset(defaultCharset);
+            locale.save();
         }
     }
 

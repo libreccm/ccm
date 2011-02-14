@@ -36,9 +36,8 @@ import java.util.HashSet;
 public class SimpleDomainObjectTraversalAdapter
         implements DomainObjectTraversalAdapter {
 
-    private static final Logger s_log =
-                                Logger.getLogger(
-            SimpleDomainObjectTraversalAdapter.class);
+    private static final Logger s_log = Logger.getLogger(
+                                     SimpleDomainObjectTraversalAdapter.class);
     /**
      * Rule that indicates the set of properties should be treated
      * as an inclusion list. ie, don't allow any properties except

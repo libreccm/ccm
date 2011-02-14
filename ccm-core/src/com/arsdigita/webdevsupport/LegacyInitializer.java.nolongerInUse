@@ -25,22 +25,30 @@ import com.arsdigita.initializer.InitializationException;
 import com.arsdigita.developersupport.DeveloperSupport;
 import org.apache.log4j.Logger;
 
+
+// ///////////////////////////////////////////////////////////
+//
+// Moved to core initializer
+//
+// ///////////////////////////////////////////////////////////
+
+
 /**
  * Initializer
  *
  * @version $Revision: #17 $ $Date: 2004/08/16 $
  */
 
-public class Initializer extends BaseInitializer {
+public class LegacyInitializer extends BaseInitializer {
 
     private Configuration m_conf = new Configuration();
 
     public final static String ACTIVE = "active";
 
     private static final Logger s_log =
-        Logger.getLogger(Initializer.class);
+        Logger.getLogger(LegacyInitializer.class);
 
-    public Initializer() throws InitializationException {
+    public LegacyInitializer() throws InitializationException {
         m_conf.initParameter(ACTIVE,
                              "Flag to turn on/off developer support",
                              Boolean.class);

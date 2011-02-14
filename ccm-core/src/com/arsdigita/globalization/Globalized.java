@@ -17,10 +17,9 @@
  *
  */
 package com.arsdigita.globalization;
-import java.text.DateFormat;
+// import java.text.DateFormat;
 
 /**
- * 
  * Standard, final constants used by the globalization APIs. This
  * interface is designed to be extended on a package-by-package basis
  * to include package-specific constants. A typical package specific
@@ -42,19 +41,13 @@ import java.text.DateFormat;
  */
 public interface Globalized {
 
-    /**
-     * The default format for displaying dates.
-     */
+    /** The default format for displaying dates.                             */
     public final static int DATE_DISPLAY_FORMAT = java.text.DateFormat.MEDIUM;
 
-    /**
-     * The default format for displaying time.
-     */
+    /** The default format for displaying time.                              */
     public final static int TIME_DISPLAY_FORMAT = java.text.DateFormat.SHORT;
 
-    /**
-     * Override the value of this string for your particular package.
-     */
+    /** Override the value of this string for your particular package.       */
     public final static String BUNDLE_NAME = "com.arsdigita.globalization";
 
 }
