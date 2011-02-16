@@ -135,4 +135,5 @@ public class GenericOrganizationalUnit extends ContentPage {
     public boolean hasPersons() {
         return !this.getPersons().isEmpty();
     }
+   
 }

@@ -37,6 +37,7 @@ import com.arsdigita.cms.contenttypes.AuthorshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -52,14 +53,22 @@ public class PublicationAuthorsTable
     private static final Logger s_log =
                                 Logger.getLogger(PublicationAuthorsTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
+    private final String TABLE_COL_EDIT_ASSOC = "table_col_edit_assoc";
     private final String TABLE_COL_DEL = "table_col_del";
     private final String TABLE_COL_UP = "table_col_up";
     private final String TABLE_COL_DOWN = "table_col_down";
+    public static final String SELECTED_PUBLICATION =
+                               "selected_publication_author_association_publication";
+    public static final String SELECTED_AUTHOR =
+                               "selected_publication_author_association_author";
     private ItemSelectionModel m_itemModel;
+    private SimpleEditStep editStep;
 
-    public PublicationAuthorsTable(ItemSelectionModel itemModel) {
+    public PublicationAuthorsTable(ItemSelectionModel itemModel,
+                                   SimpleEditStep editStep) {
         super();
         m_itemModel = itemModel;
+        this.editStep = editStep;
 
         setEmptyView(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.none")));
@@ -77,15 +86,20 @@ public class PublicationAuthorsTable
         colModel.add(new TableColumn(
                 2,
                 PublicationGlobalizationUtil.globalize(
+                "publications.ui.authors.edit_assoc").localize(),
+                TABLE_COL_EDIT_ASSOC));
+        colModel.add(new TableColumn(
+                3,
+                PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.delete").localize(),
                 TABLE_COL_DEL));
         colModel.add(new TableColumn(
-                3,
+                4,
                 PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.up").localize(),
                 TABLE_COL_UP));
         colModel.add(new TableColumn(
-                4,
+                5,
                 PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.down").localize(),
                 TABLE_COL_DOWN));
@@ -94,9 +108,10 @@ public class PublicationAuthorsTable
                 new PublicationAuthorsTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
-        colModel.get(2).setCellRenderer(new DeleteCellRenderer());
-        colModel.get(3).setCellRenderer(new UpCellRenderer());
-        colModel.get(4).setCellRenderer(new DownCellRenderer());
+        colModel.get(2).setCellRenderer(new EditAssocCellRenderer());
+        colModel.get(3).setCellRenderer(new DeleteCellRenderer());
+        colModel.get(4).setCellRenderer(new UpCellRenderer());
+        colModel.get(5).setCellRenderer(new DownCellRenderer());
 
         s_log.info("Adding table action listener...");
         addTableActionListener(this);
@@ -164,7 +179,7 @@ public class PublicationAuthorsTable
                 case 1:
                     if (m_authorshipCollection.isEditor()) {
                         return (String) PublicationGlobalizationUtil.globalize(
-                                "publications.ui.authors.author.is_editor").
+                                "publications.ui.authors.author.is_editor_true").
                                 localize();
                     } else {
                         return PublicationGlobalizationUtil.globalize(
@@ -172,6 +187,9 @@ public class PublicationAuthorsTable
                                 localize();
                     }
                 case 2:
+                    return PublicationGlobalizationUtil.globalize(
+                            "publications.ui.authors.edit_assoc").localize();
+                case 3:
                     return PublicationGlobalizationUtil.globalize(
                             "publications.ui.authors.author.remove").
                             localize();
@@ -187,6 +205,38 @@ public class PublicationAuthorsTable
     }
 
     private class EditCellRenderer
+            extends LockableImpl
+            implements TableCellRenderer {
+
+        @Override
+        public Component getComponent(Table table,
+                                      PageState state,
+                                      Object value,
+                                      boolean isSelected,
+                                      Object key,
+                                      int row,
+                                      int col) {
+            SecurityManager securityManager =
+                            Utilities.getSecurityManager(state);
+            Publication publication = (Publication) m_itemModel.
+                    getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(
+                    state.getRequest(),
+                    SecurityManager.EDIT_ITEM,
+                    publication);
+
+            if (canEdit) {
+                ControlLink link = new ControlLink(value.toString());
+                return link;
+            } else {
+                Label label = new Label(value.toString());
+                return label;
+            }
+        }
+    }
+
+    private class EditAssocCellRenderer
             extends LockableImpl
             implements TableCellRenderer {
 
@@ -327,6 +377,23 @@ public class PublicationAuthorsTable
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
+        } else if (column.getHeaderKey().toString().equals(
+                TABLE_COL_EDIT_ASSOC)) {
+
+            while(authors.next()) {
+                if (authors.getAuthor().equals(author)) {
+                    break;
+                }
+            }
+
+           ((PublicationAuthorsPropertyStep)editStep).setSelectedAuthor(author);
+           ((PublicationAuthorsPropertyStep)editStep).setSelectedAuthorEditor(
+                    authors.isEditor());
+
+            editStep.showComponent(state,
+                                   PublicationAuthorsPropertyStep.ADD_AUTHOR_SHEET_NAME);
+            
+            authors.close();
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             publication.removeAuthor(author);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {

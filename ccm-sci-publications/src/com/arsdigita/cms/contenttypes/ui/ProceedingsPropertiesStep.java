@@ -49,7 +49,7 @@ public class ProceedingsPropertiesStep
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.organizer_of_conference"),
-                  Proceedings.ORGANIZER_OF_CONFERENCE);
+                  "organizerOfConference.title");
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.name_of_conference"),

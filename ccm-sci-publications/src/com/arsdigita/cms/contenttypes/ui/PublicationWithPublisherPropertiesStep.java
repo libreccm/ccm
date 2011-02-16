@@ -69,7 +69,7 @@ public class PublicationWithPublisherPropertiesStep
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.publisher"),
-                PublicationWithPublisher.PUBLISHER);
+                "publisher.title");
 
         return sheet;
     }

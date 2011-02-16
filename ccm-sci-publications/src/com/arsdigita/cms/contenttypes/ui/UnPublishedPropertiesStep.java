@@ -52,7 +52,7 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.unpublished.organization"),
-                UnPublished.ORGANIZATION);
+                "organization.title");
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.unpublished.number"),

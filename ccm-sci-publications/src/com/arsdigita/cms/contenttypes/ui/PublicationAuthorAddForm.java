@@ -38,6 +38,7 @@ import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.ui.ItemSearchWidget;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
+import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import org.apache.log4j.Logger;
 
 /**
@@ -56,10 +57,15 @@ public class PublicationAuthorAddForm
     //private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "authors";
     private ItemSelectionModel m_itemModel;
+    private SimpleEditStep editStep;
 
-    public PublicationAuthorAddForm(ItemSelectionModel itemModel) {
+    private Label selectedAuthorLabel;
+
+    public PublicationAuthorAddForm(ItemSelectionModel itemModel,
+                                    SimpleEditStep editStep) {
         super("AuthorsEntryForm", itemModel);
         m_itemModel = itemModel;
+        this.editStep = editStep;
     }
 
     @Override
@@ -71,6 +77,9 @@ public class PublicationAuthorAddForm
                 ContentType.findByAssociatedObjectType(GenericPerson.class.
                 getName()));
         add(m_itemSearch);
+
+        selectedAuthorLabel = new Label("");
+        add(selectedAuthorLabel);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.author.is_editor").localize()));
@@ -99,6 +108,29 @@ public class PublicationAuthorAddForm
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
 
+        GenericPerson author;
+        Boolean editor;
+
+        author = ((PublicationAuthorsPropertyStep) editStep).getSelectedAuthor();
+        editor = ((PublicationAuthorsPropertyStep) editStep).
+                isSelectedAuthorEditor();
+
+        if (author == null) {
+            s_log.warn("No author selected.");
+
+            m_itemSearch.setVisible(state, true);
+            selectedAuthorLabel.setVisible(state, false);
+        } else {
+            s_log.warn(String.format("Author is here: %s", author.getFullName()));
+
+            data.put(ITEM_SEARCH, author);
+            data.put(AuthorshipCollection.EDITOR, editor);
+
+            m_itemSearch.setVisible(state, false);
+            selectedAuthorLabel.setLabel(author.getFullName(), state);
+            selectedAuthorLabel.setVisible(state, true);
+        }
+
         setVisible(state, true);
     }
 
@@ -111,9 +143,33 @@ public class PublicationAuthorAddForm
 
         if (!(this.getSaveCancelSection().getCancelButton().
               isSelected(state))) {
-            publication.addAuthor(
-                    (GenericPerson) data.get(ITEM_SEARCH),
-                    (Boolean) data.get(AuthorshipCollection.EDITOR));
+            GenericPerson author;
+            author = ((PublicationAuthorsPropertyStep) editStep).
+                    getSelectedAuthor();
+
+            if (author == null) {
+                publication.addAuthor(
+                        (GenericPerson) data.get(ITEM_SEARCH),
+                        (Boolean) data.get(AuthorshipCollection.EDITOR));
+            } else {
+                AuthorshipCollection authors;
+
+                authors = publication.getAuthors();
+
+                while (authors.next()) {
+                    if (authors.getAuthor().equals(author)) {
+                        break;
+                    }
+                }
+
+                authors.setEditor(
+                        (Boolean) data.get(AuthorshipCollection.EDITOR));
+
+                ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthor(
+                        null);
+                ((PublicationAuthorsPropertyStep) editStep).
+                        setSelectedAuthorEditor(null);
+            }
         }
 
         init(fse);

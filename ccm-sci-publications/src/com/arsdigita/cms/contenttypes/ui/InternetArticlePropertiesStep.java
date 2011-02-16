@@ -51,7 +51,7 @@ public class InternetArticlePropertiesStep extends PublicationPropertiesStep {
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.organization"),
-                InternetArticle.ORGANIZATION);
+                "organization.title");
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number"),

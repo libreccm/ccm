@@ -24,6 +24,7 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 
 /**
  *
@@ -31,7 +32,10 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  */
 public class PublicationAuthorsPropertyStep extends SimpleEditStep {
 
-    private static final String ADD_AUTHOR_SHEET_NAME = "addAuthor";
+    public static final String ADD_AUTHOR_SHEET_NAME = "addAuthor";
+
+    private GenericPerson selectedAuthor;
+    private Boolean selectedAuthorEditor;
 
     public PublicationAuthorsPropertyStep(ItemSelectionModel itemModel,
                                           AuthoringKitWizard parent) {
@@ -44,7 +48,7 @@ public class PublicationAuthorsPropertyStep extends SimpleEditStep {
         super(itemModel, parent, prefix);
 
         BasicItemForm addAuthorSheet =
-                      new PublicationAuthorAddForm(itemModel);
+                      new PublicationAuthorAddForm(itemModel, this);
         add(ADD_AUTHOR_SHEET_NAME,
             (String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.authors.add_author").localize(),
@@ -52,7 +56,23 @@ public class PublicationAuthorsPropertyStep extends SimpleEditStep {
             addAuthorSheet.getSaveCancelSection().getCancelButton());
 
         PublicationAuthorsTable authorsTable = new PublicationAuthorsTable(
-                itemModel);
+                itemModel, this);
         setDisplayComponent(authorsTable);
+    }
+
+    protected GenericPerson getSelectedAuthor() {
+        return selectedAuthor;
+    }
+
+    protected Boolean isSelectedAuthorEditor() {
+        return selectedAuthorEditor;
+    }
+
+    protected void setSelectedAuthor(GenericPerson selectedAuthor) {
+        this.selectedAuthor = selectedAuthor;
+    }
+
+    protected void setSelectedAuthorEditor(Boolean selectedAuthorEditor) {
+        this.selectedAuthorEditor = selectedAuthorEditor;
     }
 }

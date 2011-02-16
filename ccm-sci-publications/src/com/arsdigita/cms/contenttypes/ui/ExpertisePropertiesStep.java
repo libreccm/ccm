@@ -50,7 +50,7 @@ public class ExpertisePropertiesStep extends PublicationPropertiesStep {
                   Expertise.PLACE);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.organization"),
+                "organization.title"),
                   Expertise.ORGANIZATION);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
@@ -58,7 +58,7 @@ public class ExpertisePropertiesStep extends PublicationPropertiesStep {
                   Expertise.NUMBER_OF_PAGES);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.orderer"),
+                "orderer.title"),
                   Expertise.ORDERER);
 
         return sheet;
