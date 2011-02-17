@@ -1889,6 +1889,8 @@ public class DaBInImporter extends Program {
                 personDe.setSurname(personData.getSurname());
                 personDe.setGivenName(personData.getGivenname());
                 personDe.setTitlePre(personData.getTitlePre());
+                personDe.setDescription(String.format("DaBInId={%s}",
+                                                      personData.getDabinId()));
                 personDe.setContentSection(section);
                 personDe.setLifecycle(createLifecycle(personsLifecycle));
                 personDe.save();
@@ -1897,6 +1899,8 @@ public class DaBInImporter extends Program {
                 personEn.setSurname(personData.getSurname());
                 personEn.setTitlePre(personData.getTitlePre());
                 personEn.setGivenName(personData.getGivenname());
+                personEn.setDescription(String.format("DaBInId={%s}",
+                                                      personData.getDabinId()));
                 personEn.setContentSection(section);
                 personEn.setLifecycle(createLifecycle(personsLifecycle));
                 personEn.save();
@@ -2778,8 +2782,9 @@ public class DaBInImporter extends Program {
                     }
 
                     if ("et. al.".equals(author.getSurname())
-                            || "et. al.".equals(author.getGivenName())) {
-                        System.out.printf("\t***WARNING: The publication %s has a author 'et. al.'. It is strongly recommened to name ALL authors of a publication. ");
+                        || "et. al.".equals(author.getGivenName())) {
+                        System.out.printf(
+                                "\t***WARNING: The publication %s has a author 'et. al.'. It is strongly recommened to name ALL authors of a publication. ");
                     }
 
                     RelatedLink myPublication;
@@ -3188,14 +3193,14 @@ public class DaBInImporter extends Program {
         if (publisherData.getName().length() < 3) {
             System.out.printf(
                     "WARNING: The name of the publisher '%s' is very short.",
-                             publisherData.getName());
+                    publisherData.getName());
         }
 
         if ((publisherData.getPlace() == null)
-                || publisherData.getPlace().isEmpty()) {
+            || publisherData.getPlace().isEmpty()) {
             System.out.printf(
                     "WARNING: The publisher '%s' has no place.",
-                             publisherData.getName());
+                    publisherData.getName());
         }
 
         Transaction transaction = new Transaction() {
