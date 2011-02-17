@@ -18,14 +18,12 @@
  */
 package com.arsdigita.cms.contenttypes;
 
-
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ImageAsset;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
-import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -37,10 +35,8 @@ import java.util.Date;
  */
 public class Image extends ContentPage {
 
-
     private final static org.apache.log4j.Logger s_log =
-        org.apache.log4j.Logger.getLogger(GenericArticle.class);
-
+            org.apache.log4j.Logger.getLogger(GenericArticle.class);
     /** PDL property name for lead */
     public static final String IMAGE = "image";
 //    public static final String WIDTH = "width";
@@ -52,37 +48,47 @@ public class Image extends ContentPage {
     public static final String SOURCE = "source";
     public static final String MEDIA = "media";
     public static final String COPYRIGHT = "copyright";
-//    public static final String LEAD = "lead";
-
+    public static final String SITE = "site";
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE
-        = "com.arsdigita.cms.contenttypes.Image";
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Image";
+    private static final ImageConfig s_config = new ImageConfig();
+
+    static {
+        s_log.debug("Static initalizer starting...");
+        s_config.load();
+        s_log.debug("Static initalizer finished.");
+    }
+
+    public static final ImageConfig getConfig() {
+        return s_config;
+    }
+
 
     public Image() {
-        this( BASE_DATA_OBJECT_TYPE );
+        this(BASE_DATA_OBJECT_TYPE);
     }
 
-    public Image( BigDecimal id )
-        throws DataObjectNotFoundException {
-        this( new OID( BASE_DATA_OBJECT_TYPE, id ) );
+    public Image(BigDecimal id)
+            throws DataObjectNotFoundException {
+        this(new OID(BASE_DATA_OBJECT_TYPE, id));
     }
 
-    public Image( OID id )
-        throws DataObjectNotFoundException {
-        super( id );
+    public Image(OID id)
+            throws DataObjectNotFoundException {
+        super(id);
     }
 
-    public Image( DataObject obj ) {
-        super( obj );
+    public Image(DataObject obj) {
+        super(obj);
     }
 
-    public Image( String type ) {
-        super( type );
+    public Image(String type) {
+        super(type);
     }
 
     public ImageAsset getImage() {
         DataObject dobj = (DataObject) get(IMAGE);
-        if(dobj != null) {
+        if (dobj != null) {
             return (ImageAsset) DomainObjectFactory.newInstance(dobj);
         } else {
             return null;
@@ -90,33 +96,8 @@ public class Image extends ContentPage {
     }
 
     public void setImage(ImageAsset image) {
-//        Assert.exists(image, ImageAsset.class);
         set(IMAGE, image);
     }
-
-//    public byte[] getImage() {
-//        return (byte[]) get(IMAGE);
-//    }
-//
-//    public void setImage(byte[] image) {
-//        set(IMAGE, image);
-//    }
-
-//    public BigDecimal getWidth() {
-//        return (BigDecimal) get(WIDTH);
-//    }
-//
-//    public void setWidth(BigDecimal width) {
-//        set(WIDTH, width);
-//    }
-//
-//    public BigDecimal getHeight() {
-//        return (BigDecimal) get(HEIGHT);
-//    }
-//
-//    public void setHeight(BigDecimal height) {
-//        set(HEIGHT, height);
-//    }
 
     public String getCaption() {
         return (String) get(CAPTION);
@@ -176,12 +157,11 @@ public class Image extends ContentPage {
         set(COPYRIGHT, copyright);
     }
 
-//    public String get() {
-//        return (String) get();
-//    }
-//
-//    public void set(String) {
-//        set(,);
-//    }
+    public String getSite() {
+        return (String) get(SITE);
+    }
 
+    public void setSite(String site) {
+        set(SITE, site);
+    }
 }
