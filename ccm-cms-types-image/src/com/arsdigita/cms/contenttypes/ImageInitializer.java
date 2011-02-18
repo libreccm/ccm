@@ -36,4 +36,8 @@ public class ImageInitializer extends ContentTypeInitializer {
     public ImageInitializer() {
         super("ccm-cms-types-image.pdl.mf", ContentPage.BASE_DATA_OBJECT_TYPE);
     }
+
+    public String getTraversalXML() {
+        return "/WEB-INF/traversal-adapters/com/arsdigita/cms/contenttypes/Image.xml";
+    }
 }
