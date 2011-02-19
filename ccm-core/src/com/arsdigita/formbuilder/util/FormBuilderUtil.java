@@ -19,29 +19,19 @@
 package com.arsdigita.formbuilder.util;
 
 
-import com.arsdigita.formbuilder.util.GlobalizationUtil ;
+// import com.arsdigita.formbuilder.util.GlobalizationUtil ;
 
 import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.FormData;
-
-
 import com.arsdigita.formbuilder.PersistentWidget;
 import com.arsdigita.formbuilder.parameters.PersistentParameterListener;
-
+import com.arsdigita.util.UncheckedWrapperException;
 
 import java.util.Iterator;
 
-// Classes needed when when retrieving a Component DataObject
-
-
-
-
-import com.arsdigita.util.UncheckedWrapperException;
-
-// ACS 5 uses Log4J for logging
 import org.apache.log4j.Logger;
 
 
@@ -85,55 +75,9 @@ public class FormBuilderUtil {
         form.add(new TextArea(name));
     }
 
-    /*
-    /**
-     * Return true if testClass implements the interfaceClass interface, false otherwise.
-    public static boolean classImplementsInterface(Class testClass, Class interfaceClass) {
 
-        Class[] classInterfaces = testClass.getInterfaces();
-        for (int i = 0; i < classInterfaces.length; ++i) {
-            if (interfaceClass.getName().equals(classInterfaces[i].getName())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static PersistentComponentFactory instantiateFactory(BigDecimal componentID) {
-
-        Session session = SessionManager.getSession();
-
-        String factoryClassName = null;
-
-        // Retrieve the component DataObject
-        OID oid = new OID("com.arsdigita.formbuilder.Component", componentID);
-        DataObject componentObject = session.retrieve(oid);
-        if (componentObject == null) {
-            throw new RuntimeException("could not retrieve DataObject with id " + oid.toString());
-        }
-
-        // Get the class name of the PersistentComponentFactory from the DataObject
-        factoryClassName = (String)componentObject.get("defaultDomainClass");
-
-        return (PersistentComponentFactory)instantiateObjectOneArg(factoryClassName, componentID);
-    }
-
-    public static ACSObject instantiateObject(BigDecimal id) {
-        s_log.info("instantiate object with id " + id);
-        OID oid = new OID(ACSObject.BASE_DATA_OBJECT_TYPE, id);
-        Session s = SessionManager.getSession();
-        DataObject o = s.retrieve(oid);
-
-        ACSObject obj =
-            (ACSObject)FormBuilderUtil.instantiateObject((String)o.get(ACSObject.DEFAULT_DOMAIN_CLASS),
-                                                         new Class[] { BigDecimal.class },
-                                                         new Object[] { id });
-        return obj;
-    }
-    */
-
-    public static Object invokeMethod(java.lang.reflect.Method method, Object object, Object[] argumentList) {
+    public static Object invokeMethod(java.lang.reflect.Method method,
+                                      Object object, Object[] argumentList) {
 
         try {
             return method.invoke(object, argumentList);
@@ -206,8 +150,8 @@ public class FormBuilderUtil {
     }
 
     /**
-     * Check if an integer argument is in range. The limits are inclusive so that an argument
-     * on the limit is allowed
+     * Check if an integer argument is in range. The limits are inclusive
+     * so that an argument on the limit is allowed
      */
     public static void assertArgumentInRange(int argument,
                                              int lowerLimit,

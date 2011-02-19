@@ -145,12 +145,12 @@ public class Initializer extends GenericInitializer {
         //                                       .getTransactionContext();
         //txn.beginTxn();
 
-        s_log.error("c.ad.kernel.Initializer: Initializing privilege descriptors...");
+        s_log.debug("c.ad.kernel.Initializer: Initializing privilege descriptors...");
         // Initialize privilege descriptors used in permissions service
         // Recurring task, reads from database and stores in an internal Map
         // field.
         PrivilegeDescriptor.initialize();
-        s_log.error("Done.");
+        s_log.debug("Done.");
 
         //txn.commitTxn();
 

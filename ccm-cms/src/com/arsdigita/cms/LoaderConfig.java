@@ -276,6 +276,110 @@ public final class LoaderConfig extends AbstractConfig {
                     new String[] {"/WEB-INF/resources/article-categories.xml",
                                   "/WEB-INF/resources/navigation-categories.xml"}  );
 
+//  private final Parameter
+//          m_widgetTypes = new StringArrayParameter(
+//                  "com.arsdigita.cms.loader.widget_types",
+//                  Parameter.REQUIRED,
+//                  new String[] {"/WEB-INF/resources/article-categories.xml",
+//                                "/WEB-INF/resources/navigation-categories.xml"}  );
+
+
+    /** List of widgets used in applications forms. Each widget is described by
+        application indicator, widget name (singular & plural), model class name
+        and model ui class name. These are really not user or administrator
+        configurabel and therefore not implemented as ccm parameter.          */
+    private static List widgetTypes = Arrays.asList(
+                Arrays.asList("forms-cms", "Checkbox group", "Checkbox groups",
+                    "com.arsdigita.formbuilder.PersistentCheckboxGroup",
+                    "com.arsdigita.formbuilder.ui.editors.CheckboxGroupEditor"),
+                Arrays.asList("forms-cms", "Date field", "Date fields",
+                    "com.arsdigita.formbuilder.PersistentDate",
+                    "com.arsdigita.formbuilder.ui.editors.DateForm"),
+                Arrays.asList("forms-cms", "Hidden field", "Hidden fields",
+                    "com.arsdigita.formbuilder.PersistentHidden",
+                    "com.arsdigita.formbuilder.ui.editors.HiddenForm"),
+                Arrays.asList( "forms-cms", "Hidden ID Generator field",
+                                            "Hidden ID Generator fields",
+                    "com.arsdigita.formbuilder.HiddenIDGenerator",
+                    "com.arsdigita.formbuilder.ui.editors.HiddenIDGeneratorForm"),
+                Arrays.asList("forms-cms", "Multiple select box",
+                                           "Multiple select boxes",
+                    "com.arsdigita.formbuilder.PersistentMultipleSelect",
+                    "com.arsdigita.formbuilder.ui.editors.MultipleSelectEditor"),
+                Arrays.asList("forms-cms", "Password field", "Password fields",
+                    "com.arsdigita.formbuilder.PersistentPassword",
+                    "com.arsdigita.formbuilder.ui.editors.PasswordForm"),
+                Arrays.asList("forms-cms", "Radio group", "Radio groups",
+                    "com.arsdigita.formbuilder.PersistentRadioGroup",
+                    "com.arsdigita.formbuilder.ui.editors.RadioGroupEditor"),
+                Arrays.asList("forms-cms", "Single select box",
+                                           "Single select boxes",
+                    "com.arsdigita.formbuilder.PersistentSingleSelect",
+                    "com.arsdigita.formbuilder.ui.editors.SingleSelectEditor"),
+                Arrays.asList("forms-cms", "Submit button", "Submit buttons",
+                    "com.arsdigita.formbuilder.PersistentSubmit",
+                    "com.arsdigita.formbuilder.ui.editors.SubmitForm"),
+                Arrays.asList("forms-cms", "Text area", "Text areas",
+                    "com.arsdigita.formbuilder.PersistentTextArea",
+                    "com.arsdigita.formbuilder.ui.editors.TextAreaForm"),
+                Arrays.asList("forms-cms", "Text field", "Text fields",
+                    "com.arsdigita.formbuilder.PersistentTextField",
+                    "com.arsdigita.formbuilder.ui.editors.TextFieldForm"),
+                Arrays.asList("forms-cms", "Data Driven Select Box",
+                                           "Data Driven Select Boxes",
+                    "com.arsdigita.formbuilder.DataDrivenSelect",
+                    "com.arsdigita.formbuilder.ui.editors.DataDrivenSelectForm"),
+                Arrays.asList("forms-cms", "Text Description","Text Descriptions",
+                    "com.arsdigita.formbuilder.PersistentText",
+                    "com.arsdigita.formbuilder.ui.editors.TextForm"),
+                Arrays.asList("forms-cms", "Text Heading", "Text Headings",
+                    "com.arsdigita.formbuilder.PersistentHeading",
+                    "com.arsdigita.formbuilder.ui.editors.HeadingForm"),
+                Arrays.asList("forms-cms", "Section Break", "Section Break",
+                    "com.arsdigita.formbuilder.PersistentHorizontalRule",
+                    "com.arsdigita.formbuilder.ui.editors.HorizontalRuleForm"),
+                Arrays.asList("forms-cms", "User Email Field","User Email Fields",
+                    "com.arsdigita.formbuilder.PersistentEmailField",
+                    "com.arsdigita.formbuilder.ui.editors.EmailFieldForm")
+                );
+
+    /** List of process listeners used in applications forms. Each listener is
+        described by application indicator, process name (singular & plural),
+        action class name and action ui class name. These are really not user
+        or administrator configurabel and therefore not implemented as ccm
+        parameter.                                                            */
+        private static List processListenerTypes = Arrays.asList(
+                Arrays.asList("forms-cms", "Confirmation email",
+                                           "Confirmation emails",
+                   "com.arsdigita.formbuilder.actions.ConfirmEmailListener",
+                    "com.arsdigita.formbuilder.ui.editors.ConfirmEmailForm"),
+                Arrays.asList("forms-cms", "URL redirect", "URL redirects",
+                    "com.arsdigita.formbuilder.actions.ConfirmRedirectListener",
+                    "com.arsdigita.formbuilder.ui.editors.ConfirmRedirectForm"),
+                Arrays.asList("forms-cms", "Simple email", "Simple emails",
+                    "com.arsdigita.formbuilder.actions.SimpleEmailListener",
+                    "com.arsdigita.formbuilder.ui.editors.SimpleEmailForm"),
+                Arrays.asList("forms-cms", "Templated email", "Templated emails",
+                    "com.arsdigita.formbuilder.actions.TemplateEmailListener",
+                    "com.arsdigita.formbuilder.ui.editors.TemplateEmailForm"),
+                Arrays.asList( "forms-cms", "Remote Server POST",
+                                            "Remote Server POSTs",
+                    "com.arsdigita.formbuilder.actions.RemoteServerPostListener",
+                    "com.arsdigita.formbuilder.ui.editors.RemoteServerPostForm" ),
+                Arrays.asList( "forms-cms", "XML email", "XML emails",
+                    "com.arsdigita.formbuilder.actions.XMLEmailListener",
+                    "com.arsdigita.formbuilder.ui.editors.XMLEmailForm" )
+                );
+
+
+        private static List dataQueries = Arrays.asList(
+                Arrays.asList("forms-cms",
+                    "com.arsdigita.formbuilder.DataQueryUsers",
+                    "List of all registered users"),
+               Arrays.asList("forms-cms",
+                    "com.arsdigita.formbuilder.DataQueryPackages",
+                    "List of all installed packages")
+                );
 
 //  Currently not a Loader task. There is no way to persist tasks preferences
 //  on a per section base.
@@ -549,6 +653,17 @@ public final class LoaderConfig extends AbstractConfig {
         return Arrays.asList(catFiles);
     }
 
+    public List getWidgetTypes() {
+        return widgetTypes;
+            }
+
+    public List getProcessListenerTypes() {
+        return processListenerTypes;
+            }
+
+    public List getDataQueries() {
+        return dataQueries;
+            }
     /**
      * Retrieve the 
      */

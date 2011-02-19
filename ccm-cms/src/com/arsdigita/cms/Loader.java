@@ -34,6 +34,7 @@ import com.arsdigita.domain.DomainObject;
 // import com.arsdigita.domain.DomainObjectFactory;
 // import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.formbuilder.util.FormbuilderSetup;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
@@ -222,6 +223,12 @@ public class Loader extends PackageLoader {
                 ContentItemPortlet.loadPortletType();
                 //ContentSectionsPortlet.loadPortletType();
                 TaskPortlet.loadPortletType();
+
+                // Loading forms widget into database
+                FormbuilderSetup fbs = new FormbuilderSetup();
+                fbs.setup(s_conf.getWidgetTypes(),
+                          s_conf.getProcessListenerTypes(),
+                          s_conf.getDataQueries());
 
 
             }

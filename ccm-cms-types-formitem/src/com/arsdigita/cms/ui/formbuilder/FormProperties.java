@@ -30,17 +30,17 @@ import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.StringParameter;
-import com.arsdigita.domain.DomainObject;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.formbuilder.FormItem;
-import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
-import com.arsdigita.cms.util.GlobalizationUtil;
-import com.arsdigita.formbuilder.PersistentForm;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.formbuilder.PersistentForm;
+import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
 public class FormProperties extends SimpleEditStep {
 

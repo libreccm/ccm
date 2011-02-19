@@ -170,7 +170,7 @@ public class Initializer extends CompoundInitializer {
         // Old type initializer "com.arsdigita.formbuilder.installer.Initializer"
         // Used to initialize CMS forms using the forms in ccm-core
         // Can be replaced in ccm after ccm-core is migrated to new initializer.
-        add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
+ //     add(new LegacyInitializer("com/arsdigita/cms/enterprise.init"));
 
         s_log.debug("CMS.Initializer.(Constructor) completed");
     }

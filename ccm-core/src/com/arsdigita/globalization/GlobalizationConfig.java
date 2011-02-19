@@ -20,14 +20,8 @@
 package com.arsdigita.globalization;
 
 import com.arsdigita.runtime.AbstractConfig;
-import com.arsdigita.util.StringUtils;
 import com.arsdigita.util.parameter.StringParameter;
-import com.arsdigita.util.parameter.StringArrayParameter;
 import com.arsdigita.util.parameter.Parameter;
-
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 

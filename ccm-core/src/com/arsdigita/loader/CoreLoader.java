@@ -253,34 +253,34 @@ public class CoreLoader extends PackageLoader {
     }
 
     public void run(final ScriptContext ctx) {
-        s_log.error("CoreLoader run method started.");
+        s_log.debug("CoreLoader run method started.");
         new KernelExcursion() {
             public void excurse() {
                 setEffectiveParty(Kernel.getSystemParty());
 
-                s_log.error("CoreLoader: Going to init KeyStorage.");
+                s_log.debug("CoreLoader: Going to init KeyStorage.");
                 KeyStorage.KERNEL_KEY_STORE.init();
-                s_log.error("CoreLoader: Going to execute loadHost().");
+                s_log.debug("CoreLoader: Going to execute loadHost().");
                 loadHost();
-                s_log.error("CoreLoader: Going to execute loadSubsite().");
+                s_log.debug("CoreLoader: Going to execute loadSubsite().");
                 loadSubsite(loadKernel());
-                s_log.error("CoreLoader: Going to execute loadBebop().");
+                s_log.debug("CoreLoader: Going to execute loadBebop().");
                 loadBebop();
-                s_log.error("CoreLoader: Going to execute loadWebDev().");
+                s_log.debug("CoreLoader: Going to execute loadWebDev().");
                 loadWebDev();
-                s_log.error("CoreLoader: Going to execute loadSiteMapAdminApp().");
+                s_log.debug("CoreLoader: Going to execute loadSiteMapAdminApp().");
                 loadSiteMapAdminApp(loadAdminApp());
-                s_log.error("CoreLoader: Going to execute loadPermissionsSiteNode().");
+                s_log.debug("CoreLoader: Going to execute loadPermissionsSiteNode().");
                 loadPermissionsSiteNode();
-                s_log.error("CoreLoader: Going to execute loadPortal().");
+                s_log.debug("CoreLoader: Going to execute loadPortal().");
                 loadPortal();
-                s_log.error("CoreLoader: Going to execute loadMimeTypes().");
+                s_log.debug("CoreLoader: Going to execute loadMimeTypes().");
                 loadMimeTypes();
-                s_log.error("CoreLoader: Going to execute loadGlobalization().");
+                s_log.debug("CoreLoader: Going to execute loadGlobalization().");
                 loadGlobalization();
             }
         }.run();
-        s_log.error("CoreLoader run method completed.");
+        s_log.debug("CoreLoader run method completed.");
     }
 
     /**
@@ -320,24 +320,24 @@ public class CoreLoader extends PackageLoader {
      */
     private SiteNode loadKernel() {
         // Create Root Site Node
-        s_log.error("CoreLoader: Going to execute method loadKernel().");
+        s_log.debug("CoreLoader: Going to execute method loadKernel().");
 
         final SiteNode rootNode = SiteNode.createSiteNode(null, null);
-        s_log.error("loadKernel: creating system administrator.");
+        s_log.debug("loadKernel: creating system administrator.");
         createSystemAdministrator();
 
         // Create Package Types and Instances
-        s_log.error("loadKernel: creating Package Types and Instances.");
+        s_log.debug("loadKernel: creating Package Types and Instances.");
         PackageType subsite = PackageType.create
             ("acs-subsite", "ACS Subsite", "ACS Subsites",
              "http://arsdigita.com/acs-subsite/");
         PackageInstance subsiteInstance = subsite.createInstance("Main Site");
 
         // Mount instances.
-        s_log.error("loadKernel: mount Instances.");
+        s_log.debug("loadKernel: mount Instances.");
         rootNode.mountPackage(subsiteInstance);
 
-        s_log.error("CoreLoader: Going to complete method loadKernel().");
+        s_log.debug("CoreLoader: Going to complete method loadKernel().");
         return rootNode;
     }
 
@@ -345,7 +345,7 @@ public class CoreLoader extends PackageLoader {
     // exists after installation.
 
     private void createSystemAdministrator() {
-        s_log.error("CoreLoader: execution of method createSystemAdministrator().");
+        s_log.debug("CoreLoader: execution of method createSystemAdministrator().");
         final String DO_NOT_CREATE = "*do not create*";
 
         String emailAddress = getEmail();
@@ -355,7 +355,7 @@ public class CoreLoader extends PackageLoader {
         String password = getPassword();
         String passwordQuestion = getQuestion();
         String passwordAnswer = getAnswer();
-        s_log.error("createSystemAdministrator: EmailAddr: " + emailAddress +
+        s_log.debug("createSystemAdministrator: EmailAddr: " + emailAddress +
                     "\n screenName: " + screenName +
                     "\n givenName: " + givenName );
 
@@ -375,7 +375,7 @@ public class CoreLoader extends PackageLoader {
 
         // Create the system administrator user.
 
-        s_log.error("createSystemAdministrator(): going to create new User.");
+        s_log.debug("createSystemAdministrator(): going to create new User.");
         User sa = new User();
         sa.setPrimaryEmail(new EmailAddress(emailAddress));
         if (screenName != null &&
@@ -386,7 +386,7 @@ public class CoreLoader extends PackageLoader {
         sa.getPersonName().setFamilyName(familyName);
 
         // Save the system administrator's authentication credentials.
-        s_log.error("createSystemAdministrator(): going to save credentials.");
+        s_log.debug("createSystemAdministrator(): going to save credentials.");
         UserAuthentication auth = UserAuthentication.createForUser(sa);
         auth.setPassword(password);
         auth.setPasswordQuestion(passwordQuestion);
@@ -394,19 +394,19 @@ public class CoreLoader extends PackageLoader {
 
         // Grant the system administrator universal "admin" permission.
 
-        s_log.error("createSystemAdministrator(): going to grant admin perms.");
+        s_log.debug("createSystemAdministrator(): going to grant admin perms.");
         PermissionService.grantPermission
             (new UniversalPermissionDescriptor
              (PrivilegeDescriptor.ADMIN, sa));
 
-        s_log.error("Adding administrator: \"" + givenName + " " +
+        s_log.debug("Adding administrator: \"" + givenName + " " +
                    familyName + "\" <" + emailAddress + ">");
-        s_log.error("CoreLoader: method createSystemAdministrator() completed.");
+        s_log.debug("CoreLoader: method createSystemAdministrator() completed.");
 
     }
 
     private void loadSubsite(SiteNode rootNode) {
-        s_log.error("CoreLoader: Going to execute method loadSubsite().");
+        s_log.debug("CoreLoader: Going to execute method loadSubsite().");
         String sDispatcher = "";
 
         PackageInstance packageInstance = rootNode.getPackageInstance();

@@ -106,7 +106,7 @@ public class Initializer extends CompoundInitializer {
     public final void init(final DomainInitEvent e) {
         super.init(e);
 
-        s_log.error("Running core init(DomainInitEvent) ...");
+        s_log.debug("Running core init(DomainInitEvent) ...");
 
         FactoriesSetup.setupFactories();
 

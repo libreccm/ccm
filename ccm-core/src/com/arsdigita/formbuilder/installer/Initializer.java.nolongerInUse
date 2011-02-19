@@ -34,6 +34,15 @@ import java.util.List;
 import com.arsdigita.formbuilder.PersistentDataQuery;
 import com.arsdigita.formbuilder.PersistentComponent;
 
+
+// /////////////////////////////////////////////////////////////////
+//
+// REPLACED by formbuilder.util.FormbuilderSetup
+// Not a initializer tast bud a loader task
+//
+// /////////////////////////////////////////////////////////////////
+
+
 /**
  * Initializer
  *
@@ -141,6 +150,7 @@ public class Initializer extends BaseInitializer {
             throws InitializationException {
 
         // If the objects list is not null, load the object list into the database
+        // pboy: Obviously, this is a Loader task.
         if (objects != null) {
 
             // XXX we don't yet delete types which are no longer in the list
