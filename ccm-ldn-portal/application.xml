@@ -9,7 +9,7 @@
     <ccm:requires name="ccm-core" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-cms" version="6.6.0" relation="ge"/>
     <ccm:requires name="ccm-ldn-subsite" version="6.6.0" relation="ge"/>
-    <ccm:requires name="ccm-forum" version="6.6.0" relation="ge"/>
+<!--  <ccm:requires name="ccm-forum" version="6.6.0" relation="ge"/>  -->
     <ccm:requires name="ccm-ldn-navigation" version="6.6.0" relation="ge"/>
     <!--  TEST, workspace portlet relocated
     <ccm:requires name="ccm-ldn-rss" version="6.6.0" relation="ge"/>
