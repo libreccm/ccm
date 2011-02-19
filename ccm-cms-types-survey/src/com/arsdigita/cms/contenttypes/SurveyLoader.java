@@ -6,13 +6,10 @@ import com.arsdigita.cms.contenttypes.AbstractContentTypeLoader;
  * Loader.
  *
  * @author Sören Bernstein
+ * @version $Id: SurveyLoader.java $
  */
 public class SurveyLoader extends AbstractContentTypeLoader {
 
-    public final static String versionId =
-            "$Id: SurveyLoader.java $" +
-            "$Author: quasi $" +
-            "$DateTime: 2010/02/18 $";
     private static final String[] TYPES = {
         "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Survey.xml"
     };

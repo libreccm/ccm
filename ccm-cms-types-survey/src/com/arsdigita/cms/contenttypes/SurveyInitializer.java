@@ -1,5 +1,6 @@
 package com.arsdigita.cms.contenttypes;
 
+import com.arsdigita.formbuilder.util.FormbuilderSetup;
 import com.arsdigita.runtime.DomainInitEvent;
 import java.util.Arrays;
 import java.util.List;
@@ -8,13 +9,10 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Sören Bernstein;
+ * @version $Id: SurveyInitializer.java $
  */
 public class SurveyInitializer extends ContentTypeInitializer {
 
-    public final static String versionId =
-            "$Id: SurveyInitializer.java $" +
-            "$Author: quasi $" +
-            "$DateTime: 2010/02/18 $";
     private static final Logger s_log = Logger.getLogger(SurveyInitializer.class);
 
     public SurveyInitializer() {
@@ -96,6 +94,18 @@ public class SurveyInitializer extends ContentTypeInitializer {
 
         List dataQueries = Arrays.asList();
 
-        new com.arsdigita.formbuilder.installer.Initializer(widgets, processListeners, dataQueries);
+        // new com.arsdigita.formbuilder.installer.Initializer(widgets, processListeners, dataQueries);
+
+        // Loading forms widget into database
+        // It is a loading task and should be moved to loader.
+    //  When invoking from initializer you may eventually need a transactoion.
+    //  TransactionContext txn = SessionManager.getSession()
+    //                                         .getTransactionContext();
+    //  txn.beginTxn();
+        FormbuilderSetup fbs = new FormbuilderSetup();
+        fbs.setup(widgets, processListeners, dataQueries);
+    //  txn.commitTxn();
+
+
     }
 }
