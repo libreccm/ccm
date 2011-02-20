@@ -118,7 +118,7 @@ public class PublicationAuthorAddForm
         if (author == null) {
             s_log.warn("No author selected.");
 
-            m_itemSearch.setVisible(state, true);
+           // m_itemSearch.setVisible(state, true);
             selectedAuthorLabel.setVisible(state, false);
         } else {
             s_log.warn(String.format("Author is here: %s", author.getFullName()));

@@ -52,10 +52,14 @@ public class SeriesEditshipAddForm extends BasicItemForm {
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "editors";
     private ItemSelectionModel m_itemModel;
+    private SeriesEditshipStep editStep;
+    private Label selectedEditorLabel;
 
-    public SeriesEditshipAddForm(ItemSelectionModel itemModel) {
+    public SeriesEditshipAddForm(ItemSelectionModel itemModel,
+                                 SeriesEditshipStep editStep) {
         super("EditorsEntryForm", itemModel);
         m_itemModel = itemModel;
+        this.editStep = editStep;
     }
 
     @Override
@@ -67,6 +71,9 @@ public class SeriesEditshipAddForm extends BasicItemForm {
                 ContentType.findByAssociatedObjectType(GenericPerson.class.
                 getName()));
         add(m_itemSearch);
+
+        selectedEditorLabel = new Label("");
+        add(selectedEditorLabel);
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.editship.from").localize()));
@@ -91,6 +98,26 @@ public class SeriesEditshipAddForm extends BasicItemForm {
         FormData data = fse.getFormData();
         PageState state = fse.getPageState();
 
+        GenericPerson editor;
+        Date from;
+        Date to;
+
+        editor = editStep.getSelectedEditor();
+        from = editStep.getSelectedEditorDateFrom();
+        to = editStep.getSelectedEditorDateTo();
+
+        if (editor == null) {
+            selectedEditorLabel.setVisible(state, false);
+        } else {
+            data.put(ITEM_SEARCH, editor);
+            data.put(EditshipCollection.FROM, from);
+            data.put(EditshipCollection.TO, to);
+
+            m_itemSearch.setVisible(state, false);
+            selectedEditorLabel.setLabel(editor.getFullName(), state);
+            selectedEditorLabel.setVisible(state, true);
+        }
+
         setVisible(state, true);
     }
 
@@ -102,10 +129,32 @@ public class SeriesEditshipAddForm extends BasicItemForm {
                (Series) getItemSelectionModel().getSelectedObject(state);
 
         if (!(this.getSaveCancelSection().
-                getCancelButton().isSelected(state))) {
-            series.addEditor((GenericPerson) data.get(ITEM_SEARCH),
-                    (Date) data.get(EditshipCollection.FROM),
-                    (Date) data.get(EditshipCollection.TO));
+              getCancelButton().isSelected(state))) {
+            GenericPerson editor;
+            editor = ((SeriesEditshipStep) editStep).getSelectedEditor();
+
+            if (editor == null) {
+                series.addEditor((GenericPerson) data.get(ITEM_SEARCH),
+                                 (Date) data.get(EditshipCollection.FROM),
+                                 (Date) data.get(EditshipCollection.TO));
+            } else {
+                EditshipCollection editors;
+
+                editors = series.getEditors();
+
+                while (editors.next()) {
+                    if (editors.getEditor().equals(editor)) {
+                        break;
+                    }
+                }
+
+                editors.setFrom((Date) data.get(EditshipCollection.FROM));
+                editors.setTo((Date) data.get(EditshipCollection.TO));
+
+                editStep.setSelectedEditor(null);
+                editStep.setSelectedEditorDateFrom(null);
+                editStep.setSelectedEditorDateTo(null);
+            }
         }
 
         init(fse);

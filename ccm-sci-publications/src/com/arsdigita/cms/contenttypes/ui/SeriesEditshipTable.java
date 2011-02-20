@@ -35,8 +35,10 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.EditshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.dispatcher.Utilities;
+import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.util.LockableImpl;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
@@ -50,14 +52,18 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     private static final Logger s_log =
                                 Logger.getLogger(SeriesEditshipTable.class);
     private final String TABLE_COL_EDIT = "table_col_edit";
+    private final String TABLE_COL_EDIT_EDITSHIP = "table_col_edit_editship";
     private final String TABLE_COL_DEL = "table_col_del";
     //private final String TABLE_COL_UP = "table_col_up";
     //private final String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel m_itemModel;
+    private SimpleEditStep editStep;
 
-    public SeriesEditshipTable(ItemSelectionModel itemModel) {
+    public SeriesEditshipTable(ItemSelectionModel itemModel,
+                               SimpleEditStep editStep) {
         super();
         m_itemModel = itemModel;
+        this.editStep = editStep;
 
         setEmptyView(
                 new Label(PublicationGlobalizationUtil.globalize(
@@ -80,16 +86,21 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         colModel.add(new TableColumn(
                 3,
                 PublicationGlobalizationUtil.globalize(
+                "publications.ui.series.editship.edit").localize(),
+                TABLE_COL_EDIT_EDITSHIP));
+        colModel.add(new TableColumn(
+                4,
+                PublicationGlobalizationUtil.globalize(
                 "publications.ui.series.editship.remove").localize(),
                 TABLE_COL_DEL));
         /* Just in the case someone want's to sort editships manually..." */
         /* colModel.add(new TableColumn(
-        4,
+        5,
         PublicationGlobalizationUtil.globalize(
         "publications.ui.series.editship.up").localize(),
         TABLE_COL_UP));
         colModel.add(new TableColumn(
-        5,
+        6,
         PublicationGlobalizationUtil.globalize(
         "publications.ui.series.editship.down").localize(),
         TABLE_COL_DOWN));*/
@@ -97,9 +108,10 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         setModelBuilder(new SeriesEditshipTableModelBuilder(itemModel));
 
         colModel.get(0).setCellRenderer(new EditCellRenderer());
-        colModel.get(3).setCellRenderer(new DeleteCellRenderer());
-        //colModel.get(4).setCellRenderer(new UpCellRenderer());
-        //colModel.get(5).setCellRenderer(new DownCellRenderer());
+        colModel.get(3).setCellRenderer(new EditEditshipCellRenderer());
+        colModel.get(4).setCellRenderer(new DeleteCellRenderer());
+        //colModel.get(5).setCellRenderer(new UpCellRenderer());
+        //colModel.get(6).setCellRenderer(new DownCellRenderer());
     }
 
     private class SeriesEditshipTableModelBuilder
@@ -166,6 +178,9 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                     return m_editshipCollection.getTo();
                 case 3:
                     return PublicationGlobalizationUtil.globalize(
+                            "publications.ui.series.editship.edit").localize();
+                case 4:
+                    return PublicationGlobalizationUtil.globalize(
                             "publications.ui.series.editship.remove").
                             localize();
                 default:
@@ -199,6 +214,38 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                     state.getRequest(),
                     SecurityManager.EDIT_ITEM,
                     series);
+
+            if (canEdit) {
+                ControlLink link = new ControlLink(value.toString());
+                return link;
+            } else {
+                Label label = new Label(value.toString());
+                return label;
+            }
+        }
+    }
+
+    private class EditEditshipCellRenderer
+            extends LockableImpl
+            implements TableCellRenderer {
+
+        @Override
+        public Component getComponent(Table table,
+                                      PageState state,
+                                      Object value,
+                                      boolean isSelected,
+                                      Object key,
+                                      int row,
+                                      int col) {
+            SecurityManager securityManager =
+                            Utilities.getSecurityManager(state);
+            Publication publication = (Publication) m_itemModel.
+                    getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(
+                    state.getRequest(),
+                    SecurityManager.EDIT_ITEM,
+                    publication);
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
@@ -312,11 +359,23 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
 
         Series series = (Series) m_itemModel.getSelectedObject(state);
 
-        //EditshipCollection editors = series.getEditors();
+        EditshipCollection editors = series.getEditors();
 
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (TABLE_COL_EDIT.equals(column.getHeaderKey().toString())) {
+        } else if(TABLE_COL_EDIT_EDITSHIP.equals(column.getHeaderKey().toString())) {
+            while(editors.next()) {
+                if(editors.getEditor().equals(editor)) {
+                    break;
+                }
+            }
+
+            ((SeriesEditshipStep)editStep).setSelectedEditor(editor);
+            ((SeriesEditshipStep)editStep).setSelectedEditorDateFrom(editors.getFrom());
+            ((SeriesEditshipStep)editStep).setSelectedEditorDateTo(editors.getTo());
+
+            editStep.showComponent(state, SeriesEditshipStep.ADD_EDITOR_SHEET_NAME);
         } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             series.removeEditor(editor);
         }
