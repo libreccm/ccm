@@ -91,13 +91,13 @@ public class Loader extends PackageLoader {
         m_navigationDomain = new StringParameter(
             "com.arsdigita.aplaws.navigation_domain",
             Parameter.REQUIRED,
-            "GEN-NAV");
+            "DEF-NAV");
         // Registers to the context by adding the parameter to a map of parameters
         register(m_navigationDomain);
 
         /*
          * You may add more catagory domains by adding resources
-         * according the followin schema
+         * according the following schema
          */
        
         /* currently not used

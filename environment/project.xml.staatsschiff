@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<!--    project.xml -ZeS- containing only those modules used for ZeS    -->
+<!--    project.xml -Oxford Handbook - containing only those modules used for it    -->
 
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="aplaws-zes" 
+                    name="aplaws-staatsschiff" 
               prettyName="APLAWS plus" 
                  version="1-1-1" 
-                 release="rc1-697" 
+                 release="753" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -35,46 +35,38 @@
         <ccm:application name="ccm-cms-types-bookmark"/>
 <!--    <ccm:application name="ccm-cms-types-contact"/>              -->
 <!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
-        <ccm:application name="ccm-cms-types-event"/>
-<!--         faqitem could be removed for ZeS, too                   -->
-<!--         2008-06-07 faqitem removed, not used in prod.system     -->
-<!--    <ccm:application name="ccm-cms-types-faqitem"/>              -->
+<!--    <ccm:application name="ccm-cms-types-event"/>                -->
+        <ccm:application name="ccm-cms-types-faqitem"/>              
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
-<!--         glossaryitem could be removed for ZeS, too              -->
-<!--         2008-06-07 glossaryitem removed, not used in prod.sys.  -->
-<!--    <ccm:application name="ccm-cms-types-glossaryitem"/>         -->
+        <ccm:application name="ccm-cms-types-glossaryitem"/>         
 <!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
+        <ccm:application name="ccm-cms-types-image"/>
 <!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
 <!--    <ccm:application name="ccm-cms-types-job"/>                  -->
 <!--    <ccm:application name="ccm-cms-types-legalnotice"/>          -->
-<!--    <ccm:application name="ccm-cms-types-member"/>               -->
 <!--    <ccm:application name="ccm-cms-types-minutes"/>              -->
+<!--    <ccm:application name="ccm-cms-types-member"/>               -->
 <!--    <ccm:application name="ccm-cms-types-motditem"/>             -->
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
-
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
-
-<!--    <ccm:application name="ccm-cms-types-person"/>               -->
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
-<!--    <ccm:application name="ccm-cms-types-researchnetwork"/>      -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
-        <ccm:application name="ccm-cms-types-siteproxy"/>               
-<!--         xmlfeed may not be needed by ZeS, too                   -->
-        <ccm:application name="ccm-cms-types-xmlfeed"/>                       
-
+<!--    <ccm:application name="ccm-cms-types-siteproxy"/>            -->   
+<!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->      
 
 <!--  Applications   -->
 <!--  - - - - -  -   -->
 <!--    <ccm:application name="ccm-auth-http"/>                      -->
 <!--    <ccm:application name="ccm-bookmarks"/>                      -->
-<!--    <ccm:application name="ccm-docmngr"/>                        -->
+<!--    had been temporarily excluded, produces errors in the build process   -->
+<!--    <ccm:application name="ccm-docmgr"/>                         -->
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
-        <ccm:application name="ccm-forum"/>
-        <ccm:application name="ccm-simplesurvey"/>
-        <ccm:application name="ccm-user-preferences"/>
+<!--    <ccm:application name="ccm-forum"/>                          -->
+<!--    <ccm:application name="ccm-simplesurvey"/>                   -->
+<!--    <ccm:application name="ccm-user-preferences"/>               -->
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
 
@@ -85,6 +77,7 @@
 <!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
 <!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
 <!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
+<!--    <ccm:application name="ccm-ldn-image-step"/>                 -->
 <!--    <ccm:application name="ccm-ldn-importer"/>                   -->
         <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-portal"/>
@@ -97,12 +90,9 @@
         <ccm:application name="ccm-ldn-util"/>
 
 
-<!--  ZeS extension  -->
+<!--  gen integration layer  -->
 <!--  - - - - - - -  -->
-<!--    <ccm:application name="ccm-cms-dabinimporter" />
-        <ccm:application name="ccm-sci-types-organization"/>                       
-        <ccm:application name="ccm-sci-publications"/>             -->
-        <ccm:application name="ccm-zes-aplaws"/> 
+        <ccm:application name="ccm-gen-aplaws"/>
 
 
 
