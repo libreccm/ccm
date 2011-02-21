@@ -112,6 +112,8 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
         colModel.get(4).setCellRenderer(new DeleteCellRenderer());
         //colModel.get(5).setCellRenderer(new UpCellRenderer());
         //colModel.get(6).setCellRenderer(new DownCellRenderer());
+
+        addTableActionListener(this);
     }
 
     private class SeriesEditshipTableModelBuilder
@@ -239,13 +241,13 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                                       int col) {
             SecurityManager securityManager =
                             Utilities.getSecurityManager(state);
-            Publication publication = (Publication) m_itemModel.
+            Series series = (Series) m_itemModel.
                     getSelectedObject(state);
 
             boolean canEdit = securityManager.canAccess(
                     state.getRequest(),
                     SecurityManager.EDIT_ITEM,
-                    publication);
+                    series);
 
             if (canEdit) {
                 ControlLink link = new ControlLink(value.toString());
