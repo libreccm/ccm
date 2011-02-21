@@ -31,12 +31,12 @@ public class ImageConfig extends AbstractConfig {
 
     public ImageConfig() {
         m_startYear = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.event.start_year",
+                "com.arsdigita.cms.contenttypes.image.start_year",
                 Parameter.REQUIRED,
                 new Integer(GregorianCalendar.getInstance().get(Calendar.YEAR) - 1));
 
         m_endYearDelta = new IntegerParameter(
-                "com.arsdigita.cms.contenttypes.event.end_year_delta",
+                "com.arsdigita.cms.contenttypes.image.end_year_delta",
                 Parameter.REQUIRED,
                 new Integer(3));
 
