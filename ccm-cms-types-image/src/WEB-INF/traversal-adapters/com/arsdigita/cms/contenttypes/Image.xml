@@ -7,7 +7,9 @@
             <xrd:formatter property="/object/publishDate"
                         class="com.arsdigita.xml.formatters.DateFormatter"/>
             <xrd:associations rule="include">
+                <xrd:property name="/object/thumbnail"/>
                 <xrd:property name="/object/image"/>
+                <xrd:property name="/object/textAsset"/>
             </xrd:associations>
         </xrd:adapter>
     </xrd:context>

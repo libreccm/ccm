@@ -4,15 +4,22 @@ import com.arsdigita.cms.*;
 
 object type Image extends ContentPage {
 
-    component ImageAsset[0..1] image   = join ct_images.image_id to cms_images.image_id;
-    String[0..1]     caption = ct_images.caption VARCHAR(400);
-    String[0..1] description = ct_images.description VARCHAR(2000);
-    String[0..1]      artist = ct_images.artist VARCHAR(200);
-    Date  [0..1] publishDate = ct_images.publish_date DATE;
-    String[0..1]      source = ct_images.source VARCHAR(600);
-    String[0..1]       media = ct_images.media VARCHAR(300);
-    String[0..1]   copyright = ct_images.copyright VARCHAR(400);
-    String[0..1]        site = ct_images.site VARCHAR(500);
+    component ImageAsset[0..1] image     = join ct_images.image_id to cms_images.image_id;
+    component ImageAsset[0..1] thumbnail = join ct_images.thumbnail_id to cms_images.image_id;
+    component TextAsset [0..1] textAsset = join ct_images.text_id to cms_text.text_id;
+
+              BigDecimal[0..1]     width = ct_images.width INTEGER;
+              BigDecimal[0..1]    height = ct_images.height INTEGER;
+
+              String[0..1]     caption   = ct_images.caption VARCHAR(400);
+              String[0..1] description   = ct_images.description VARCHAR(500);
+              String[0..1]      artist   = ct_images.artist VARCHAR(200);
+              Date  [0..1] publishDate   = ct_images.publish_date DATE;
+              String[0..1]      source   = ct_images.source VARCHAR(600);
+              String[0..1]       media   = ct_images.media VARCHAR(300);
+              String[0..1]   copyright   = ct_images.copyright VARCHAR(400);
+              String[0..1]        site   = ct_images.site VARCHAR(500);
+              String[0..1]     license   = ct_images.license VARCHAR(300);
 
     reference key (ct_images.item_id);
 }

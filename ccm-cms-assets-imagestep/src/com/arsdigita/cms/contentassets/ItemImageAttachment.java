@@ -51,17 +51,12 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
     public static final String ITEM_ATTACHMENTS = "itemAttachments";
     public static final String IMAGE_LINK = "imageLink";
     /** Data object type for this domain object */
-    public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contentassets.ItemImageAttachment";
-    private static final Logger s_log = Logger.getLogger(
-            ItemImageAttachment.class);
-    private static final ItemImageAttachmentConfig s_config =
-                                                   new ItemImageAttachmentConfig();
+    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contentassets.ItemImageAttachment";
+    private static final Logger s_log = Logger.getLogger(ItemImageAttachment.class);
+    private static final ItemImageAttachmentConfig s_config = new ItemImageAttachmentConfig();
 
     static {
-        s_log.debug("Static initalizer starting...");
         s_config.load();
-        s_log.debug("Static initalizer finished.");
     }
 
     private ItemImageAttachment() {
@@ -131,8 +126,7 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
             s_log.debug("Getting attachments for " + item.getOID());
         }
 
-        DataCollection attachments = SessionManager.getSession().retrieve(
-                BASE_DATA_OBJECT_TYPE);
+        DataCollection attachments = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
         attachments.addEqualsFilter(ITEM + ".id", item.getID());
 
         return attachments;
@@ -174,16 +168,16 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
      * Automatically publish an unpublished image
      */
     public boolean copyProperty(final CustomCopy source,
-                                final Property property,
-                                final ItemCopier copier) {
+            final Property property,
+            final ItemCopier copier) {
         String attribute = property.getName();
-        if (ItemCopier.VERSION_COPY == copier.getCopyType() && IMAGE.equals(
-                attribute)) {
+        if (ItemCopier.VERSION_COPY == copier.getCopyType()
+                && IMAGE.equals(attribute)) {
             ItemImageAttachment attachment = (ItemImageAttachment) source;
             ReusableImageAsset image = attachment.getImage();
 
             ReusableImageAsset liveImage =
-                               (ReusableImageAsset) image.getLiveVersion();
+                    (ReusableImageAsset) image.getLiveVersion();
 
             if (null == liveImage) {
                 liveImage = (ReusableImageAsset) image.createLiveVersion();
@@ -216,8 +210,7 @@ public class ItemImageAttachment extends ACSObject implements CustomCopy {
         // when we delete the link, the image still references it in DB
         // can't make it composite because then image is deleted if we delete
         // link. Have to set link to null first (I think)
-        DomainObject link = DomainObjectFactory.newInstance((DataObject) get(
-                IMAGE_LINK));
+        DomainObject link = DomainObjectFactory.newInstance((DataObject) get(IMAGE_LINK));
         set(IMAGE_LINK, null);
         save();
         link.delete();

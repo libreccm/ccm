@@ -17,6 +17,13 @@
        descriptionBundle="com.arsdigita.cms.CMSResources"
                component="com.arsdigita.cms.contenttypes.ui.ImagePropertiesStep"/>
 
+            <ctd:authoring-step
+                labelKey="cms.contenttypes.shared.body_text.title"
+             labelBundle="com.arsdigita.cms.CMSResources"
+          descriptionKey="cms.contenttypes.shared.body_text.description"
+       descriptionBundle="com.arsdigita.cms.CMSResources"
+               component="com.arsdigita.cms.contenttypes.ui.ImageTextBody"/>
+
             <ctd:include href="/WEB-INF/content-types/assign-categories-step.xml"/>
         </ctd:authoring-kit>
     </ctd:content-type>

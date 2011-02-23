@@ -20,6 +20,7 @@ package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ImageAsset;
+import com.arsdigita.cms.TextAsset;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataObject;
@@ -36,11 +37,13 @@ import java.util.Date;
 public class Image extends ContentPage {
 
     private final static org.apache.log4j.Logger s_log =
-            org.apache.log4j.Logger.getLogger(GenericArticle.class);
+            org.apache.log4j.Logger.getLogger(Image.class);
     /** PDL property name for lead */
     public static final String IMAGE = "image";
-//    public static final String WIDTH = "width";
-//    public static final String HEIGHT = "height";
+    public static final String THUMBNAIL = "thumbnail";
+    public static final String TEXT_ASSET = "textAsset";
+    public static final String WIDTH = "width";
+    public static final String HEIGHT = "height";
     public static final String CAPTION = "caption";
     public static final String DESCRIPTION = "description";
     public static final String ARTIST = "artist";
@@ -49,6 +52,8 @@ public class Image extends ContentPage {
     public static final String MEDIA = "media";
     public static final String COPYRIGHT = "copyright";
     public static final String SITE = "site";
+    public static final String LICENSE = "license";
+    protected static final int SUMMARY_SIZE = 1024;
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Image";
     private static final ImageConfig s_config = new ImageConfig();
@@ -59,10 +64,9 @@ public class Image extends ContentPage {
         s_log.debug("Static initalizer finished.");
     }
 
-    public static final ImageConfig getConfig() {
+    public static ImageConfig getConfig() {
         return s_config;
     }
-
 
     public Image() {
         this(BASE_DATA_OBJECT_TYPE);
@@ -97,6 +101,9 @@ public class Image extends ContentPage {
 
     public void setImage(ImageAsset image) {
         set(IMAGE, image);
+        setWidth(image.getWidth());
+        setHeight(image.getHeight());
+        setThumbnail();
     }
 
     public String getCaption() {
@@ -105,6 +112,76 @@ public class Image extends ContentPage {
 
     public void setCaption(String caption) {
         set(CAPTION, caption);
+    }
+
+    public ImageAsset getThumbnail() {
+        DataObject dobj = (DataObject) get(THUMBNAIL);
+        if (dobj != null) {
+            return (ImageAsset) DomainObjectFactory.newInstance(dobj);
+        } else {
+            return null;
+        }
+    }
+
+    private void setThumbnail() {
+        try {
+            set(THUMBNAIL, getImage().proportionalResizeToWidth(Image.getConfig().getMaxThumbnailWidth()));
+        } catch (NullPointerException ex) {
+        }
+    }
+
+    public BigDecimal getWidth() {
+        return (BigDecimal) get(WIDTH);
+    }
+
+    private void setWidth(BigDecimal width) {
+        set(WIDTH, width);
+    }
+
+    public BigDecimal getHeight() {
+        return (BigDecimal) get(HEIGHT);
+    }
+
+    private void setHeight(BigDecimal height) {
+        set(HEIGHT, height);
+    }
+
+    /**
+     * Return the text asset for this <code>Image</code>. Could return
+     * null if there is no text body actually associated with the page
+     */
+    public TextAsset getTextAsset() {
+        DataObject text = (DataObject) get(TEXT_ASSET);
+        if (text == null) {
+            return null;
+        } else {
+            return new TextAsset(text);
+        }
+    }
+
+    /**
+     * Pass in a null value to remove the text of this item.
+     * Explicitly call text.delete() to remove the text from the database
+     */
+    public void setTextAsset(TextAsset text) {
+        setAssociation(TEXT_ASSET, text);
+    }
+
+    /**
+     * Return a short summary of the text body for search.
+     * This method is WRONG, because the text body could actually
+     * be extremely large, and doing substring on it is NOT safe
+     */
+    @Override
+    public String getSearchSummary() {
+        TextAsset textAsset = getTextAsset();
+
+        if (textAsset == null) {
+            return "";
+        }
+        return com.arsdigita.util.StringUtils.truncateString(textAsset.getText(),
+                SUMMARY_SIZE,
+                true);
     }
 
     @Override
@@ -163,5 +240,13 @@ public class Image extends ContentPage {
 
     public void setSite(String site) {
         set(SITE, site);
+    }
+
+    public String getLicense() {
+        return (String) get(LICENSE);
+    }
+
+    public void setLicense(String license) {
+        set(LICENSE, license);
     }
 }

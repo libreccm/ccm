@@ -28,6 +28,8 @@ public class ImageConfig extends AbstractConfig {
 
     private final Parameter m_startYear;
     private final Parameter m_endYearDelta;
+    private final Parameter m_maxImageWidth;
+    private final Parameter m_maxThumbnailWidth;
 
     public ImageConfig() {
         m_startYear = new IntegerParameter(
@@ -40,8 +42,20 @@ public class ImageConfig extends AbstractConfig {
                 Parameter.REQUIRED,
                 new Integer(3));
 
+        m_maxImageWidth = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.image.max_image_width",
+                Parameter.REQUIRED,
+                new Integer(600));
+
+        m_maxThumbnailWidth = new IntegerParameter(
+                "com.arsdigita.cms.contenttypes.image.max_thumbnail_width",
+                Parameter.REQUIRED,
+                new Integer(150));
+
         register(m_startYear);
         register(m_endYearDelta);
+        register(m_maxImageWidth);
+        register(m_maxThumbnailWidth);
 
         loadInfo();
     }
@@ -52,5 +66,13 @@ public class ImageConfig extends AbstractConfig {
 
     public final int getEndYearDelta() {
         return ((Integer) get(m_endYearDelta)).intValue();
+    }
+
+    public final int getMaxImageWidth() {
+        return ((Integer) get(m_maxImageWidth)).intValue();
+    }
+
+    public final int getMaxThumbnailWidth() {
+        return ((Integer) get(m_maxThumbnailWidth)).intValue();
     }
 }

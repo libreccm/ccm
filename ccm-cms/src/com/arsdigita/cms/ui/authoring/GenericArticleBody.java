@@ -48,8 +48,8 @@ import com.arsdigita.util.Assert;
  */
 public class GenericArticleBody extends TextAssetBody {
 
-    private AuthoringKitWizard m_parent;
-    private ItemSelectionModel m_itemModel;
+    protected AuthoringKitWizard m_parent;
+    protected ItemSelectionModel m_itemModel;
 
     /**
      * Construct a new GenericArticleBody component
@@ -68,6 +68,7 @@ public class GenericArticleBody extends TextAssetBody {
 
         // Rest the component when it is hidden
         parent.getList().addActionListener(new ActionListener() {
+            @Override
                 public void actionPerformed(ActionEvent e) {
                     PageState state = e.getPageState();
                     reset(state);

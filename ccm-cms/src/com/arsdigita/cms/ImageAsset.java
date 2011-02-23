@@ -30,11 +30,15 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.versioning.VersionedACSObject;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import javax.imageio.ImageIO;
 import org.apache.log4j.Logger;
 
 /**
@@ -54,16 +58,14 @@ import org.apache.log4j.Logger;
 public class ImageAsset extends BinaryAsset {
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.cms.ImageAsset";
-
+            "com.arsdigita.cms.ImageAsset";
     public static final String CONTENT = "content";
     public static final String HEIGHT = "height";
     public static final String WIDTH = "width";
-
     public static final String MIME_JPEG = "image/jpeg";
     public static final String MIME_GIF = "image/gif";
+    private static final Logger s_log = Logger.getLogger(ImageAsset.class);
 
-	private static final Logger s_log = Logger.getLogger(ImageAsset.class);
     /**
      * Default constructor. This creates a new image asset.
      */
@@ -133,6 +135,7 @@ public class ImageAsset extends BinaryAsset {
      *
      * @return the Blob content
      */
+    @Override
     protected byte[] getContent() {
         return (byte[]) get(CONTENT);
     }
@@ -140,6 +143,7 @@ public class ImageAsset extends BinaryAsset {
     /**
      * Sets the Blob content.
      */
+    @Override
     protected void setContent(byte[] content) {
         set(CONTENT, content);
     }
@@ -154,13 +158,13 @@ public class ImageAsset extends BinaryAsset {
      * @param defaultMimeType The default mime type for the file
      */
     public void loadFromFile(String fileName, File file, String defaultMimeType)
-        throws IOException {
+            throws IOException {
 
         // Guess mime type
         MimeType mime = MimeType.guessMimeTypeFromFile(fileName);
 
-        if(mime != null && mime instanceof ImageMimeType) {
-            guessSize(file, (ImageMimeType)mime);
+        if (mime != null && mime instanceof ImageMimeType) {
+            guessSize(file, (ImageMimeType) mime);
         } else {
             // Set default mime type
             mime = MimeType.loadMimeType(defaultMimeType);
@@ -170,12 +174,12 @@ public class ImageAsset extends BinaryAsset {
 
         // Extract the filename
         int i = fileName.lastIndexOf("/");
-        if(i > 0) {
-            fileName = fileName.substring(i+1);
+        if (i > 0) {
+            fileName = fileName.substring(i + 1);
         }
         i = fileName.lastIndexOf("\\");  // DOS-style
-        if(i > 0) {
-            fileName = fileName.substring(i+1);
+        if (i > 0) {
+            fileName = fileName.substring(i + 1);
         }
 
         setName(fileName);
@@ -189,8 +193,9 @@ public class ImageAsset extends BinaryAsset {
      *
      * @param file      The file on the server to write to.
      */
+    @Override
     public void writeToFile(File file)
-        throws IOException {
+            throws IOException {
         FileOutputStream fs = new FileOutputStream(file);
         try {
             fs.write(getContent());
@@ -202,7 +207,6 @@ public class ImageAsset extends BinaryAsset {
         }
     }
 
-
     /**
      * Guess image size by loading it from file. Set the WIDTH and HEIGHT
      * attributes, if possible
@@ -212,11 +216,11 @@ public class ImageAsset extends BinaryAsset {
         ImageSizer sizer = ImageSizerFactory.getImageSizer(mime.getMimeType());
 
         try {
-            if(sizer != null) {
+            if (sizer != null) {
                 Dimension d = sizer.computeImageSize(file);
-                if(d != null) {
-                    width = new BigDecimal((int)d.getWidth());
-                    height = new BigDecimal((int)d.getHeight());
+                if (d != null) {
+                    width = new BigDecimal((int) d.getWidth());
+                    height = new BigDecimal((int) d.getHeight());
                 }
             }
         } catch (IOException ex) {
@@ -234,9 +238,8 @@ public class ImageAsset extends BinaryAsset {
      * @return a collection of ImageAssets
      */
     public static ImageAssetCollection getAllImages() {
-        DataCollection da = SessionManager.getSession().retrieve
-            (BASE_DATA_OBJECT_TYPE);
-	da.addEqualsFilter(VersionedACSObject.IS_DELETED, new Integer(0));
+        DataCollection da = SessionManager.getSession().retrieve(BASE_DATA_OBJECT_TYPE);
+        da.addEqualsFilter(VersionedACSObject.IS_DELETED, new Integer(0));
         return new ImageAssetCollection(da);
     }
 
@@ -249,8 +252,7 @@ public class ImageAsset extends BinaryAsset {
      * @return a collection of images whose name matches the keyword
      */
     public static ImageAssetCollection getImagesByKeyword(
-                                                          String keyword, String context
-                                                          ) {
+            String keyword, String context) {
         ImageAssetCollection c = getAllImages();
         c.addOrder(Asset.NAME);
         Filter f;
@@ -271,4 +273,49 @@ public class ImageAsset extends BinaryAsset {
         return getImagesByKeyword(keyword, ContentItem.DRAFT);
     }
 
+    /**
+     * Resize this ImageAsset proportional to maxThumbnailWidth, if this ImageAsset
+     * is wider then maxThumbnailWidth. Else just return this ImageAsset.
+     *
+     * @param maxThumbnailWidth max image width
+     * @return
+     */
+    public ImageAsset proportionalResizeToWidth(int maxThumbnailWidth) {
+
+        if (this.getWidth().intValue() <= maxThumbnailWidth) {
+
+            return this;
+
+        } else {
+
+            ImageAsset imageAsset = new ImageAsset();
+            imageAsset.setMimeType(this.getMimeType());
+            imageAsset.setName("Scaled" + this.getName());
+
+            ByteArrayInputStream in = new ByteArrayInputStream(this.getContent());
+            try {
+                BufferedImage origImage = ImageIO.read(in);
+
+                ByteArrayOutputStream scaledImageBuffer = new ByteArrayOutputStream();
+
+                java.awt.Image scaledImage = origImage.getScaledInstance(maxThumbnailWidth, -1, java.awt.Image.SCALE_SMOOTH);
+
+                BufferedImage scaledBufImage = new BufferedImage(scaledImage.getWidth(null), scaledImage.getHeight(null), origImage.getType());
+                scaledBufImage.getGraphics().drawImage(scaledImage, 0, 0, null);
+
+                ImageIO.write(scaledBufImage, this.getMimeType().getFileExtension(), scaledImageBuffer);
+
+                imageAsset.setContent(scaledImageBuffer.toByteArray());
+                imageAsset.setWidth(new BigDecimal(scaledImage.getWidth(null)));
+                imageAsset.setHeight(new BigDecimal(scaledImage.getHeight(null)));
+
+            } catch (IOException e) {
+                imageAsset.setContent(this.getContent());
+                imageAsset.setWidth(this.getWidth());
+                imageAsset.setHeight(this.getHeight());
+            }
+
+            return imageAsset;
+        }
+    }
 }

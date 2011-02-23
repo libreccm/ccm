@@ -108,8 +108,12 @@ public class ImagePropertiesStep extends SimpleEditStep {
 
             @Override
             protected ImageAsset getImageAsset(PageState state) {
-                ImageAsset image = ((Image) itemModel.getSelectedItem(state)).getImage();
-                return image;
+                try {
+                    ImageAsset image = ((Image) itemModel.getSelectedItem(state)).getImage().proportionalResizeToWidth(Image.getConfig().getMaxImageWidth());
+                    return image;
+                } catch (NullPointerException ex) {
+                    return null;
+                }
             }
         });
 
@@ -122,6 +126,7 @@ public class ImagePropertiesStep extends SimpleEditStep {
                     ContentPage.LAUNCH_DATE,
                     new DomainObjectPropertySheet.AttributeFormatter() {
 
+                        @Override
                         public String format(DomainObject item,
                                 String attribute,
                                 PageState state) {
@@ -135,12 +140,15 @@ public class ImagePropertiesStep extends SimpleEditStep {
                     });
         }
 
+        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.width"), Image.WIDTH);
+        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.height"), Image.HEIGHT);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.caption"), Image.CAPTION);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.description"), Image.DESCRIPTION);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.artist"), Image.ARTIST);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.publishDate"), Image.PUBLISHDATE,
                 new DomainObjectPropertySheet.AttributeFormatter() {
 
+                    @Override
                     public String format(DomainObject item, String attribute, PageState state) {
                         Image image = (Image) item;
                         if ((image.getPublishDate()) != null) {
@@ -154,6 +162,7 @@ public class ImagePropertiesStep extends SimpleEditStep {
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.media"), Image.MEDIA);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.copyright"), Image.COPYRIGHT);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.site"), Image.SITE);
+        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.license"), Image.LICENSE);
 
         container.add(sheet);
 
@@ -172,6 +181,7 @@ public class ImagePropertiesStep extends SimpleEditStep {
 
     class ImageUploadListerner implements FormProcessListener {
 
+        @Override
         public void process(FormSectionEvent fse) {
             FormData data = fse.getFormData();
             PageState ps = fse.getPageState();
@@ -233,10 +243,12 @@ public class ImagePropertiesStep extends SimpleEditStep {
 
         }
 
+        @Override
         public SaveCancelSection getSaveCancelSection() {
             return m_saveCancel;
         }
 
+        @Override
         public ImageAsset getImage(FormSectionEvent event)
                 throws FormProcessException {
             PageState ps = event.getPageState();
@@ -254,6 +266,7 @@ public class ImagePropertiesStep extends SimpleEditStep {
             }
         }
 
+        @Override
         public Form getForm() {
             return this;
         }

@@ -90,7 +90,7 @@ public class ImagePropertyForm
 
         add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.description")));
         ParameterModel descriptionParam = new StringParameter(Image.DESCRIPTION);
-        descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 2000));
+        descriptionParam.addParameterListener(new StringInRangeValidationListener(0, 500));
         TextArea description = new TextArea(descriptionParam);
         description.setRows(10);
         description.setCols(60);
@@ -133,9 +133,16 @@ public class ImagePropertyForm
         TextField site = new TextField(siteParam);
         add(site);
 
+        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.license")));
+        ParameterModel licenseParam = new StringParameter(Image.LICENSE);
+        licenseParam.addParameterListener(new StringInRangeValidationListener(0, 300));
+        TextField license = new TextField(licenseParam);
+        add(license);
+
     }
 
     /** Form initialisation hook. Fills widgets with data. */
+    @Override
     public void init(FormSectionEvent fse) {
         // Do some initialization hook stuff
         FormData data = fse.getFormData();
@@ -150,6 +157,7 @@ public class ImagePropertyForm
         data.put(Image.MEDIA, image.getMedia());
         data.put(Image.COPYRIGHT, image.getCopyright());
         data.put(Image.SITE, image.getSite());
+        data.put(Image.LICENSE, image.getLicense());
     }
 
     @Override
@@ -158,6 +166,7 @@ public class ImagePropertyForm
     }
 
     /** Cancels streamlined editing. */
+    @Override
     public void submitted(FormSectionEvent fse) {
         if (m_step != null
                 && getSaveCancelSection().getCancelButton().isSelected(fse.getPageState())) {
@@ -166,6 +175,7 @@ public class ImagePropertyForm
     }
 
     /** Form processing hook. Saves Event object. */
+    @Override
     public void process(FormSectionEvent fse) {
         FormData data = fse.getFormData();
         PageState ps = fse.getPageState();
@@ -182,6 +192,7 @@ public class ImagePropertyForm
             image.setMedia((String) data.get(Image.MEDIA));
             image.setCopyright((String) data.get(Image.COPYRIGHT));
             image.setSite((String) data.get(Image.SITE));
+            image.setLicense((String) data.get(Image.LICENSE));
 
             image.save();
         }
