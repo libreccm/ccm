@@ -45,9 +45,14 @@ import com.arsdigita.cms.dispatcher.ItemResolver;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.domain.DataObjectNotFoundException;
-import com.arsdigita.cms.util.GlobalizationUtil;;
+import com.arsdigita.cms.util.GlobalizationUtil;
+
+;
+
 import com.arsdigita.util.LockableImpl;
+
 import java.math.BigDecimal;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -61,15 +66,19 @@ public class GenericOrganizationalUnitContactTable extends Table implements
     private final static Logger s_log = Logger.getLogger(
             GenericOrganizationalUnitContactTable.class);
     private final static String TABLE_COL_EDIT = "table_col_edit";
+    private final static String TABLE_COL_EDIT_ASSOC = "table_col_edit_assoc";
     private final static String TABLE_COL_DEL = "table_col_del";
     private final static String TABLE_COL_UP = "table_col_up";
     private final static String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel m_itemModel;
+    private GenericOrganizationalUnitContactPropertiesStep editStep;
 
     public GenericOrganizationalUnitContactTable(
-            final ItemSelectionModel itemModel) {
+            final ItemSelectionModel itemModel,
+            final GenericOrganizationalUnitContactPropertiesStep editStep) {
         super();
         this.m_itemModel = itemModel;
+        this.editStep = editStep;
 
         setEmptyView(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.contacts.none")));
@@ -87,15 +96,20 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         tabModel.add(new TableColumn(
                 2,
                 ContenttypesGlobalizationUtil.globalize(
+                "cms.contenttypes.ui.genericorgaunit.contact.edit").localize(),
+                TABLE_COL_EDIT_ASSOC));
+        tabModel.add(new TableColumn(
+                3,
+                ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.contact.action").localize(),
                 TABLE_COL_DEL));
         tabModel.add(new TableColumn(
-                3,
+                4,
                 ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.contact.up").localize(),
                 TABLE_COL_UP));
         tabModel.add(new TableColumn(
-                4,
+                5,
                 ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.contact.down").localize(),
                 TABLE_COL_DOWN));
@@ -104,9 +118,10 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                 new GenericOrganizationalUnitTableModelBuilder(itemModel));
 
         tabModel.get(1).setCellRenderer(new EditCellRenderer());
-        tabModel.get(2).setCellRenderer(new DeleteCellRenderer());
-        tabModel.get(3).setCellRenderer(new UpCellRenderer());
-        tabModel.get(4).setCellRenderer(new DownCellRenderer());
+        tabModel.get(2).setCellRenderer(new EditAssocCellRenderer());
+        tabModel.get(3).setCellRenderer(new DeleteCellRenderer());
+        tabModel.get(4).setCellRenderer(new UpCellRenderer());
+        tabModel.get(5).setCellRenderer(new DownCellRenderer());
 
         addTableActionListener(this);
     }
@@ -179,9 +194,10 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                             getLanguage();
                     if (m_contacttypes.size() <= 0) {
                         s_log.warn(String.format("No matching relation "
-                                + "attributes for contact type '%s' found. "
-                                + "Using key as fallback.",
-                                m_contactCollection.getContactType()));
+                                                 + "attributes for contact type '%s' found. "
+                                                 + "Using key as fallback.",
+                                                 m_contactCollection.
+                                getContactType()));
                         return m_contactCollection.getContactType();
                     }
                     if (m_contacttypes.getRelationAttribute(m_contactCollection.
@@ -189,9 +205,8 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                         s_log.debug(String.format(
                                 "No human readable name "
                                 + "found for '%s' for language '%s' Using key.",
-                                                  m_contactCollection.
-                                getContactType(),
-                                                  lang));
+                                m_contactCollection.getContactType(),
+                                lang));
                         return m_contactCollection.getContactType();
                     } else {
                         s_log.debug(String.format(
@@ -208,6 +223,9 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                 case 1:
                     return m_contact.getTitle();
                 case 2:
+                    return GlobalizationUtil.globalize("cms.ui.edit_assoc").
+                            localize();
+                case 3:
                     return GlobalizationUtil.globalize("cms.ui.delete").localize();
                 default:
                     return null;
@@ -255,6 +273,36 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                                                        contact,
                                                        section,
                                                        contact.getVersion()));
+                return link;
+            } else {
+                return new Label(value.toString());
+            }
+        }
+    }
+
+    private class EditAssocCellRenderer
+            extends LockableImpl
+            implements TableCellRenderer {
+
+        public Component getComponent(
+                Table table,
+                PageState state,
+                Object value,
+                boolean isSelected,
+                Object key,
+                int row,
+                int col) {
+            SecurityManager securityManager =
+                            Utilities.getSecurityManager(state);
+            GenericOrganizationalUnit orgaunit =
+                                      (GenericOrganizationalUnit) m_itemModel.
+                    getSelectedObject(state);
+
+            boolean canEdit = securityManager.canAccess(state.getRequest(),
+                                                        SecurityManager.EDIT_ITEM,
+                                                        orgaunit);
+            if (canEdit) {
+                ControlLink link = new ControlLink(value.toString());
                 return link;
             } else {
                 return new Label(value.toString());
@@ -368,6 +416,21 @@ public class GenericOrganizationalUnitContactTable extends Table implements
         TableColumn column = getColumnModel().get(event.getColumn().intValue());
 
         if (column.getHeaderKey().toString().equals(TABLE_COL_EDIT)) {
+        } else if (column.getHeaderKey().toString().equals(
+                TABLE_COL_EDIT_ASSOC)) {
+            while (contacts.next()) {
+                if (contacts.getContact().equals(contact)) {
+                    break;
+                }
+            }
+
+            editStep.setSelectedContact(contact);
+            editStep.setSelectedContactType(contacts.getContactType());
+
+            contacts.close();
+
+            editStep.showComponent(state,
+                                   GenericOrganizationalUnitContactPropertiesStep.ADD_CONTACT_SHEET_NAME);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_DEL)) {
             orgaunit.removeContact(contact);
         } else if (column.getHeaderKey().toString().equals(TABLE_COL_UP)) {

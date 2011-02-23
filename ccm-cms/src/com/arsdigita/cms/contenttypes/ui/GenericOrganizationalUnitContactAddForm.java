@@ -57,10 +57,14 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
     private SaveCancelSection m_saveCancelSection;
     private final String ITEM_SEARCH = "personAddress";
     private ItemSelectionModel m_itemModel;
+    private GenericOrganizationalUnitContactPropertiesStep editStep;
+    private Label selectedContactLabel;
 
-    public GenericOrganizationalUnitContactAddForm(ItemSelectionModel itemModel) {
+    public GenericOrganizationalUnitContactAddForm(ItemSelectionModel itemModel,
+                                                   GenericOrganizationalUnitContactPropertiesStep editStep) {
         super("ContactEntryAddForm", itemModel);
         m_itemModel = itemModel;
+        this.editStep = editStep;
     }
 
     @Override
@@ -70,6 +74,9 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
         m_itemSearch = new ItemSearchWidget(ITEM_SEARCH, ContentType.
                 findByAssociatedObjectType(GenericContact.class.getName()));
         add(m_itemSearch);
+
+        selectedContactLabel = new Label("");
+        add(selectedContactLabel);
 
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.contact.type")));
@@ -94,8 +101,24 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
     }
 
     @Override
-    public void init(FormSectionEvent fse) throws FormProcessException {      
+    public void init(FormSectionEvent fse) throws FormProcessException {
+        FormData data = fse.getFormData();
         PageState state = fse.getPageState();
+
+        GenericContact selectedContact = editStep.getSelectedContact();
+        String selectedContactType = editStep.getSelectedContactType();
+
+        if (selectedContact == null) {
+            selectedContactLabel.setVisible(state, false);
+        } else {
+            data.put(ITEM_SEARCH, selectedContact);
+            data.put(GenericOrganizationalUnitContactCollection.CONTACT_TYPE,
+                     selectedContactType);
+
+            m_itemSearch.setVisible(state, false);
+            selectedContactLabel.setLabel(selectedContact.getTitle(), state);
+            selectedContactLabel.setVisible(state, true);
+        }
 
         setVisible(state, true);
     }
@@ -107,12 +130,36 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
         GenericOrganizationalUnit orgaunit = (GenericOrganizationalUnit) getItemSelectionModel().
                 getSelectedObject(state);
 
+
+
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            orgaunit.addContact((GenericContact) data.get(ITEM_SEARCH),
-                                (String) data.get(
-                    GenericOrganizationalUnit.CONTACT_TYPE));
+            GenericContact selectedContact;
+            selectedContact = editStep.getSelectedContact();
+
+            if (selectedContact == null) {
+                orgaunit.addContact((GenericContact) data.get(ITEM_SEARCH),
+                                    (String) data.get(
+                        GenericOrganizationalUnit.CONTACT_TYPE));
+            } else {
+                GenericOrganizationalUnitContactCollection contacts;
+
+                contacts = orgaunit.getContacts();
+
+                while (contacts.next()) {
+                    if (contacts.getContact().equals(selectedContact)) {
+                        break;
+                    }
+                }
+
+                contacts.setContactType((String) data.get(
+                        GenericOrganizationalUnitContactCollection.CONTACT_TYPE));
+
+                editStep.setSelectedContact(null);
+                editStep.setSelectedContactType(null);
+                contacts.close();
+            }
         }
 
-        //init(fse);
+        init(fse);
     }
 }

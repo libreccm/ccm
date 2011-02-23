@@ -377,6 +377,8 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
             ((SeriesEditshipStep)editStep).setSelectedEditorDateFrom(editors.getFrom());
             ((SeriesEditshipStep)editStep).setSelectedEditorDateTo(editors.getTo());
 
+            editors.close();
+
             editStep.showComponent(state, SeriesEditshipStep.ADD_EDITOR_SHEET_NAME);
         } else if (TABLE_COL_DEL.equals(column.getHeaderKey().toString())) {
             series.removeEditor(editor);

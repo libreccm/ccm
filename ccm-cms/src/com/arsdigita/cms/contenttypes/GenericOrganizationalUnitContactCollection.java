@@ -21,7 +21,6 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
-import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
 /**
@@ -34,30 +33,38 @@ public class GenericOrganizationalUnitContactCollection extends DomainCollection
     private final static Logger s_log =
                                 Logger.getLogger(
             GenericOrganizationalUnitContactCollection.class);
-    public static final String CONTACT_ORDER = "link.contact_order";
-    public static final String CONTACT_TYPE = "link.contact_type";
+    public static final String LINK_CONTACT_ORDER = "link.contact_order";
+    public static final String LINK_CONTACT_TYPE = "link.contact_type";
+    public static final String CONTACT_ORDER = "contact_order";
+    public static final String CONTACT_TYPE = "contact_type";
 
     public GenericOrganizationalUnitContactCollection(
             DataCollection dataCollection) {
         super(dataCollection);
 
-        m_dataCollection.addOrder(CONTACT_ORDER);
+        m_dataCollection.addOrder(LINK_CONTACT_ORDER);
     }
 
     // Get the contact type of the link
     public String getContactType() {
-        return (String) m_dataCollection.get(CONTACT_TYPE);
+        return (String) m_dataCollection.get(LINK_CONTACT_TYPE);
+    }
+
+    public void setContactType(final String contactType) {
+        DataObject link = (DataObject) this.get("link");
+
+        link.set(CONTACT_TYPE, contactType);
     }
 
     // Get the contact order of the link
     public Integer getContactOrder() {
-        return (Integer) m_dataCollection.get(CONTACT_ORDER);
+        return (Integer) m_dataCollection.get(LINK_CONTACT_ORDER);
     }
 
     public void setContactOrder(Integer order) {
         DataObject link = (DataObject) this.get("link");
 
-        link.set(CONTACT_ORDER, order);
+        link.set(LINK_CONTACT_ORDER, order);
     }
 
     /**

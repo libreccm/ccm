@@ -20,6 +20,7 @@
 package com.arsdigita.cms.contenttypes.ui;
 
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericContact;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -34,7 +35,9 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 public class GenericOrganizationalUnitContactPropertiesStep
         extends SimpleEditStep {
 
-    private static String ADD_CONTACT_SHEET_NAME = "addContact";
+    public static final String ADD_CONTACT_SHEET_NAME = "addContact";
+    private GenericContact selectedContact;
+    private String selectedContactType;
 
     public GenericOrganizationalUnitContactPropertiesStep(
             ItemSelectionModel itemModel, AuthoringKitWizard parent) {
@@ -43,12 +46,12 @@ public class GenericOrganizationalUnitContactPropertiesStep
 
     public GenericOrganizationalUnitContactPropertiesStep(
             ItemSelectionModel itemModel, AuthoringKitWizard parent,
-                                                          String prefix) {
+            String prefix) {
         super(itemModel, parent, prefix);
 
-        BasicItemForm addContactSheet = 
-                new GenericOrganizationalUnitContactAddForm(
-                itemModel);
+        BasicItemForm addContactSheet =
+                      new GenericOrganizationalUnitContactAddForm(itemModel,
+                                                                  this);
         add(ADD_CONTACT_SHEET_NAME,
             (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.add_contact").localize(),
@@ -56,7 +59,23 @@ public class GenericOrganizationalUnitContactPropertiesStep
             addContactSheet.getSaveCancelSection().getCancelButton());
 
         GenericOrganizationalUnitContactTable contactsTable = new GenericOrganizationalUnitContactTable(
-                itemModel);
+                itemModel, this);
         setDisplayComponent(contactsTable);
+    }
+
+    public GenericContact getSelectedContact() {
+        return selectedContact;
+    }
+
+    public void setSelectedContact(final GenericContact selectedContact) {
+        this.selectedContact = selectedContact;
+    }
+
+    public String getSelectedContactType() {
+        return selectedContactType;
+    }
+
+    public void setSelectedContactType(final String selectedContactType) {
+        this.selectedContactType = selectedContactType;
     }
 }

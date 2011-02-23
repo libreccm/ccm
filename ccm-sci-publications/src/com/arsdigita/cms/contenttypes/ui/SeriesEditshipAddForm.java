@@ -131,7 +131,7 @@ public class SeriesEditshipAddForm extends BasicItemForm {
         if (!(this.getSaveCancelSection().
               getCancelButton().isSelected(state))) {
             GenericPerson editor;
-            editor = ((SeriesEditshipStep) editStep).getSelectedEditor();
+            editor = editStep.getSelectedEditor();
 
             if (editor == null) {
                 series.addEditor((GenericPerson) data.get(ITEM_SEARCH),
@@ -154,6 +154,7 @@ public class SeriesEditshipAddForm extends BasicItemForm {
                 editStep.setSelectedEditor(null);
                 editStep.setSelectedEditorDateFrom(null);
                 editStep.setSelectedEditorDateTo(null);
+                editors.close();
             }
         }
 
