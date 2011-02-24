@@ -57,7 +57,6 @@ public class ItemImageAttachmentInitializer extends ContentAssetInitializer {
                 protected DomainObject doNewInstance( DataObject obj ) {
                     return new ItemImageAttachment( obj );
                 }
-
                 @Override
                 public DomainObjectInstantiator resolveInstantiator( DataObject obj ) {
                     return this;

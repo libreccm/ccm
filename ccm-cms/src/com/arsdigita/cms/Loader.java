@@ -18,21 +18,12 @@
  */
 package com.arsdigita.cms;
 
-// import com.arsdigita.cms.CMS;
-// import com.arsdigita.cms.installer.ContentSectionSetup;
 import com.arsdigita.cms.contentsection.ContentSectionSetup;
-// import com.arsdigita.cms.installer.PageClassConfigHandler;
 import com.arsdigita.cms.util.Util;
 import com.arsdigita.cms.installer.xml.XMLContentTypeHandler;
-// import com.arsdigita.cms.installer.WorkspaceInstaller;
-//import com.arsdigita.cms.portlet.ContentDirectoryPortlet;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
-//import com.arsdigita.cms.portlet.ContentSectionsPortlet;
 import com.arsdigita.cms.portlet.TaskPortlet;
-
 import com.arsdigita.domain.DomainObject;
-// import com.arsdigita.domain.DomainObjectFactory;
-// import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.formbuilder.util.FormbuilderSetup;
 import com.arsdigita.kernel.ACSObjectInstantiator;
@@ -49,28 +40,14 @@ import com.arsdigita.persistence.DataQuery;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.ScriptContext;
-// import com.arsdigita.util.UncheckedWrapperException;
-//import com.arsdigita.util.parameter.Parameter;
-// import com.arsdigita.util.parameter.BooleanParameter;
-//import com.arsdigita.util.parameter.StringParameter;
-//import com.arsdigita.util.parameter.URLParameter;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
 import com.arsdigita.xml.XML;
 
-// import java.io.IOException;
-// import java.io.InputStream;
-// import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-// import javax.xml.parsers.ParserConfigurationException;
-// import javax.xml.parsers.SAXParser;
-// import javax.xml.parsers.SAXParserFactory;
-
-// import org.xml.sax.InputSource;
-// import org.xml.sax.SAXException;
 
 import org.apache.log4j.Logger;
 

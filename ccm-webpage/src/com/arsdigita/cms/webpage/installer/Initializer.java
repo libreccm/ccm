@@ -22,35 +22,34 @@ import com.arsdigita.cms.webpage.ui.WebpagePortletEditor;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.pdl.ManifestSource;
-import com.arsdigita.persistence.pdl.NameFilter;
+//import com.arsdigita.persistence.pdl.ManifestSource;
+//import com.arsdigita.persistence.pdl.NameFilter;
 
-import com.arsdigita.domain.DataObjectNotFoundException;
+// import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObject;
-import com.arsdigita.domain.DomainObjectFactory;
+//import com.arsdigita.domain.DomainObjectFactory;
 
 import com.arsdigita.bebop.RequestLocal;
 
-import com.arsdigita.portal.Portlet;
+//import com.arsdigita.portal.Portlet;
 import com.arsdigita.portal.PortletSetup;
 import com.arsdigita.portal.PortletType;
 
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.ResourceType;
-import com.arsdigita.kernel.BaseInitializer;
 import com.arsdigita.kernel.ResourceTypeConfig;
-import com.arsdigita.kernel.ui.ResourceConfigComponent;
+// import com.arsdigita.kernel.ui.ResourceConfigComponent;
 import com.arsdigita.kernel.ui.ResourceConfigFormSection;
 
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.PDLInitializer;
+//import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 
 import org.apache.log4j.Logger;
-import com.arsdigita.util.UncheckedWrapperException;
-import java.util.Iterator;
-import java.util.List;
+//import com.arsdigita.util.UncheckedWrapperException;
+//import java.util.Iterator;
+//import java.util.List;
 import com.arsdigita.util.Assert;
 import com.arsdigita.db.DbHelper;
 

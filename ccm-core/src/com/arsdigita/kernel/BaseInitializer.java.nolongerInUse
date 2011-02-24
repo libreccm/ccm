@@ -25,6 +25,15 @@ import com.arsdigita.persistence.OID;
 
 import java.math.BigDecimal;
 
+
+// ////////////////////////////////////////////////////////////////
+//
+// Part of the old initializer system based on enterprise.ini file
+// Deprecated and removed.
+//
+// ////////////////////////////////////////////////////////////////
+
+
 /**
  * Base initializer for all WAF applications. Extend this class to
  * implement your own initializer. Runs each initializer in a

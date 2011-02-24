@@ -107,20 +107,18 @@ public final class CMSConfig extends AbstractConfig {
     public static final synchronized CMSConfig getInstance() {
         if (s_config == null) {
             s_config = new CMSConfig();
-            // deprecated
-            // s_config.require("ccm-core/runtime.properties");
-            // use instead:
-            // read values from the persistent storage
             s_config.load();
         }
 
         return s_config;
     }
+    
     /**
      * Storage (map) for method getAssetStepsToSkip(ContentType type) to store
      * mapping of steps that are deemed irrelevant for the passid in type. 
      */
     private static Map s_skipAssetSteps = null;
+
     /**
      * Item category add form speciofies Subclass of ItemCategoryForm
      * to use for the assign categories step.
