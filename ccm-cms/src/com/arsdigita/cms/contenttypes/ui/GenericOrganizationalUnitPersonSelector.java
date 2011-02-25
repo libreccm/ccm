@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Jens Pelzetter,
+ * Copyright (c) 2011 Jens Pelzetter,
  * for the Center of Social Politics of the University of Bremen
  *
  * This library is free software; you can redistribute it and/or
@@ -19,35 +19,26 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.contenttypes.GenericPerson;
-import com.arsdigita.cms.ItemSelectionModel;
-import com.arsdigita.cms.contenttypes.SciDepartment;
 
 /**
- * Form for adding members to a SciDepartment. This form overwrites 
- * the {@link GenericOrganizationalUnitPersonAddForm#getPersonType()} 
- * to limit the selectable type for adding to {@link SciMember}.
  *
  * @author Jens Pelzetter
- * @see SciDepartment
- * @see SciMember
- * @see GenericOrganizationalUnitPersonAddForm
  */
-public class SciDepartmentMemberAddForm
-        extends GenericOrganizationalUnitPersonAddForm {
+public interface GenericOrganizationalUnitPersonSelector {
 
-    public SciDepartmentMemberAddForm(ItemSelectionModel itemModel,
-            GenericOrganizationalUnitPersonSelector personSelector) {
-        super(itemModel, personSelector);
-    }
+    public GenericPerson getSelectedPerson();
 
-    @Override
-    protected String getPersonType() {
-        return GenericPerson.class.getName();
-    }
+    public void setSelectedPerson(GenericPerson selectedPerson);
 
-    @Override
-    protected String getRoleAttributeName() {
-        return "SciDepartmentRole";
-    }
+    public String getSelectedPersonRole();
+
+    public void setSelectedPersonRole(String selectedPersonRole);
+
+    public String getSelectedPersonStatus();
+
+    public void setSelectedPersonStatus(String selectedPersonStatus);
+
+    public void showEditComponent(PageState state);
 }

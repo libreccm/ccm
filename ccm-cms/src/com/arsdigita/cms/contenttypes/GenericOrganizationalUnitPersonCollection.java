@@ -21,6 +21,7 @@ package com.arsdigita.cms.contenttypes;
 import com.arsdigita.domain.DomainCollection;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
+import com.arsdigita.persistence.DataObject;
 
 /**
  * Collection class for the GenericOrganizationalUnit -> Person relation.
@@ -29,8 +30,10 @@ import com.arsdigita.persistence.DataCollection;
  */
 public class GenericOrganizationalUnitPersonCollection extends DomainCollection {
 
-    public static final String PERSON_ROLE = "link.role_name";
-    public static final String STATUS = "link.status";
+    public static final String LINK_PERSON_ROLE = "link.role_name";
+    public static final String LINK_STATUS = "link.status";
+    public static final String PERSON_ROLE = "role_name";
+    public static final String STATUS = "status";
 
     public GenericOrganizationalUnitPersonCollection(
             DataCollection dataCollection) {
@@ -44,11 +47,23 @@ public class GenericOrganizationalUnitPersonCollection extends DomainCollection 
      * @return
      */
     public String getRoleName() {
-        return (String) m_dataCollection.get(PERSON_ROLE);
+        return (String) m_dataCollection.get(LINK_PERSON_ROLE);
+    }
+
+    public void setRoleName(final String roleName) {
+        DataObject link = (DataObject) this.get("link");
+
+        link.set(PERSON_ROLE, roleName);
     }
 
     public String getStatus() {
-        return (String) m_dataCollection.get(STATUS);
+        return (String) m_dataCollection.get(LINK_STATUS);
+    }
+
+    public void setStatus(final String status) {
+        DataObject link = (DataObject) this.get("link");
+
+        link.set(STATUS, status);
     }
 
     public GenericPerson getPerson() {

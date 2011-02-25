@@ -19,7 +19,9 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.cms.ItemSelectionModel;
+import com.arsdigita.cms.contenttypes.GenericPerson;
 import com.arsdigita.cms.contenttypes.util.ContenttypesGlobalizationUtil;
 import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicItemForm;
@@ -32,9 +34,13 @@ import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
  * @author Jens Pelzetter
  */
 public class GenericOrganizationalUnitPersonPropertiesStep
-        extends SimpleEditStep {
+        extends SimpleEditStep
+        implements GenericOrganizationalUnitPersonSelector {
 
-    private static final String ADD_PERSON_SHEET_NAME = "addPerson";
+    public static final String ADD_PERSON_SHEET_NAME = "addPerson";
+    private GenericPerson selectedPerson;
+    private String selectedPersonRole;
+    private String selectedPersonStatus;
 
     public GenericOrganizationalUnitPersonPropertiesStep(
             ItemSelectionModel itemModel,
@@ -46,10 +52,11 @@ public class GenericOrganizationalUnitPersonPropertiesStep
             ItemSelectionModel itemModel,
             AuthoringKitWizard parent,
             String prefix) {
-         super(itemModel, parent, prefix);
-       
+        super(itemModel, parent, prefix);
+
         BasicItemForm addPersonSheet =
-                      new GenericOrganizationalUnitPersonAddForm(itemModel);
+                      new GenericOrganizationalUnitPersonAddForm(itemModel,
+                                                                 this);
         add(ADD_PERSON_SHEET_NAME,
             (String) ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.add_person").localize(),
@@ -57,7 +64,43 @@ public class GenericOrganizationalUnitPersonPropertiesStep
             addPersonSheet.getSaveCancelSection().getCancelButton());
 
         GenericOrganizationalUnitPersonsTable personsTable = new GenericOrganizationalUnitPersonsTable(
-                itemModel);
+                itemModel,
+                this);
         setDisplayComponent(personsTable);
+    }
+
+    @Override
+    public GenericPerson getSelectedPerson() {
+        return selectedPerson;
+    }
+
+    @Override
+    public void setSelectedPerson(GenericPerson selectedPerson) {
+        this.selectedPerson = selectedPerson;
+    }
+
+    @Override
+    public String getSelectedPersonRole() {
+        return selectedPersonRole;
+    }
+
+    @Override
+    public void setSelectedPersonRole(String selectedPersonRole) {
+        this.selectedPersonRole = selectedPersonRole;
+    }
+
+    @Override
+    public String getSelectedPersonStatus() {
+        return selectedPersonStatus;
+    }
+
+    @Override
+    public void setSelectedPersonStatus(String selectedPersonStatus) {
+        this.selectedPersonStatus = selectedPersonStatus;
+    }
+
+    @Override
+    public void showEditComponent(final PageState state) {
+        showComponent(state, ADD_PERSON_SHEET_NAME);
     }
 }

@@ -27,9 +27,10 @@ import com.arsdigita.cms.ItemSelectionModel;
  */
 public class SciProjectMemberTable
         extends GenericOrganizationalUnitPersonsTable {
-    
-    public SciProjectMemberTable(ItemSelectionModel itemModel) {
-        super(itemModel);
+
+    public SciProjectMemberTable(ItemSelectionModel itemModel,
+                                 GenericOrganizationalUnitPersonSelector personSelector) {
+        super(itemModel, personSelector);
     }
 
     @Override

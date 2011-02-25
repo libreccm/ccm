@@ -35,7 +35,6 @@ import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.SecurityManager;
 import com.arsdigita.cms.contenttypes.EditshipCollection;
 import com.arsdigita.cms.contenttypes.GenericPerson;
-import com.arsdigita.cms.contenttypes.Publication;
 import com.arsdigita.cms.contenttypes.Series;
 import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
@@ -57,13 +56,13 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
     //private final String TABLE_COL_UP = "table_col_up";
     //private final String TABLE_COL_DOWN = "table_col_down";
     private ItemSelectionModel m_itemModel;
-    private SimpleEditStep editStep;
+    private SeriesEditshipStep editStep;
 
     public SeriesEditshipTable(ItemSelectionModel itemModel,
                                SimpleEditStep editStep) {
         super();
         m_itemModel = itemModel;
-        this.editStep = editStep;
+        this.editStep = (SeriesEditshipStep)editStep;
 
         setEmptyView(
                 new Label(PublicationGlobalizationUtil.globalize(
@@ -373,9 +372,9 @@ public class SeriesEditshipTable extends Table implements TableActionListener {
                 }
             }
 
-            ((SeriesEditshipStep)editStep).setSelectedEditor(editor);
-            ((SeriesEditshipStep)editStep).setSelectedEditorDateFrom(editors.getFrom());
-            ((SeriesEditshipStep)editStep).setSelectedEditorDateTo(editors.getTo());
+            editStep.setSelectedEditor(editor);
+            editStep.setSelectedEditorDateFrom(editors.getFrom());
+            editStep.setSelectedEditorDateTo(editors.getTo());
 
             editors.close();
 

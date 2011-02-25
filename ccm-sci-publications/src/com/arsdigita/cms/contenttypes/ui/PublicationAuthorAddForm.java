@@ -26,6 +26,7 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.parameters.BooleanParameter;
@@ -48,7 +49,8 @@ import org.apache.log4j.Logger;
 public class PublicationAuthorAddForm
         extends BasicItemForm
         implements FormProcessListener,
-                   FormInitListener {
+                   FormInitListener,
+                   FormSubmissionListener {
 
     private static final Logger s_log = Logger.getLogger(
             PublicationAuthorAddForm.class);
@@ -58,7 +60,6 @@ public class PublicationAuthorAddForm
     private final String ITEM_SEARCH = "authors";
     private ItemSelectionModel m_itemModel;
     private SimpleEditStep editStep;
-
     private Label selectedAuthorLabel;
 
     public PublicationAuthorAddForm(ItemSelectionModel itemModel,
@@ -66,6 +67,7 @@ public class PublicationAuthorAddForm
         super("AuthorsEntryForm", itemModel);
         m_itemModel = itemModel;
         this.editStep = editStep;
+        addSubmissionListener(this);
     }
 
     @Override
@@ -118,7 +120,7 @@ public class PublicationAuthorAddForm
         if (author == null) {
             s_log.warn("No author selected.");
 
-           // m_itemSearch.setVisible(state, true);
+            m_itemSearch.setVisible(state, true);
             selectedAuthorLabel.setVisible(state, false);
         } else {
             s_log.warn(String.format("Author is here: %s", author.getFullName()));
@@ -169,9 +171,23 @@ public class PublicationAuthorAddForm
                         null);
                 ((PublicationAuthorsPropertyStep) editStep).
                         setSelectedAuthorEditor(null);
+
+                authors.close();
             }
         }
 
         init(fse);
+    }
+
+    public void submitted(FormSectionEvent fse) throws FormProcessException {
+        if (getSaveCancelSection().getCancelButton().isSelected(
+                fse.getPageState())) {
+            ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthor(
+                    null);
+            ((PublicationAuthorsPropertyStep) editStep).setSelectedAuthorEditor(
+                    null);
+
+            init(fse);
+        }
     }
 }

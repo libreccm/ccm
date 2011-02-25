@@ -63,19 +63,16 @@ import org.apache.log4j.Logger;
 public class FormSection extends SimpleComponent implements Container {
 
     private static final Logger s_log = Logger.getLogger(FormSection.class);
-
     /**
      * Underlying <code>FormModel</code> that stores
      * the parameter models for all the widgets in this form section.
      */
     protected FormModel m_formModel;
-
     /**
      * The container to which all children are added. A
      * <code>ColumnPanel</code> by default.
      */
     protected Container m_panel;
-
     /**
      * Contains all the listeners that were added with the various
      * addXXXListener methods.
@@ -85,13 +82,12 @@ public class FormSection extends SimpleComponent implements Container {
      * FormModel.
      */
     private EventListenerList m_listeners;
-
     // Listeners we attach to the FormModel to forward
     // form model events to our listeners with the right source
     private FormSubmissionListener m_forwardSubmission;
-    private FormInitListener       m_forwardInit;
+    private FormInitListener m_forwardInit;
     private FormValidationListener m_forwardValidation;
-    private FormProcessListener    m_forwardProcess;
+    private FormProcessListener m_forwardProcess;
 
     /**
      * Constructs a new form section. Sets the implicit layout Container of
@@ -143,8 +139,7 @@ public class FormSection extends SimpleComponent implements Container {
      */
     public void addSubmissionListener(FormSubmissionListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Adding submission listener " + listener + " to " +
-                        this);
+            s_log.debug("Adding submission listener " + listener + " to " + this);
         }
 
         Assert.exists(listener, "Submission Listener");
@@ -161,8 +156,8 @@ public class FormSection extends SimpleComponent implements Container {
      */
     public void removeSubmissionListener(FormSubmissionListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Removing submission listener " + listener + " from " +
-                        this);
+            s_log.debug("Removing submission listener " + listener + " from "
+                        + this);
         }
 
         Assert.exists(listener, "Submission Listener");
@@ -179,14 +174,15 @@ public class FormSection extends SimpleComponent implements Container {
      * exception.
      */
     protected void fireSubmitted(FormSectionEvent e)
-        throws FormProcessException {
+            throws FormProcessException {
         Assert.exists(e.getFormData(), "FormData");
         FormProcessException delayedException = null;
 
-        Iterator i = m_listeners.getListenerIterator(FormSubmissionListener
-                                                     .class);
+        Iterator i = m_listeners.getListenerIterator(
+                FormSubmissionListener.class);
         while (i.hasNext()) {
-            final FormSubmissionListener listener = (FormSubmissionListener) i.next();
+            final FormSubmissionListener listener = (FormSubmissionListener) i.
+                    next();
 
             if (s_log.isDebugEnabled()) {
                 s_log.debug("Firing submission listener " + listener);
@@ -195,10 +191,11 @@ public class FormSection extends SimpleComponent implements Container {
             try {
                 listener.submitted(e);
             } catch (FormProcessException ex) {
+                s_log.error(ex);
                 delayedException = ex;
             }
         }
-        if ( delayedException != null ) {
+        if (delayedException != null) {
             throw delayedException;
         }
     }
@@ -219,13 +216,14 @@ public class FormSection extends SimpleComponent implements Container {
      */
     protected FormSubmissionListener createSubmissionListener() {
         return new FormSubmissionListener() {
-                public void submitted(FormSectionEvent e)
+
+            public void submitted(FormSectionEvent e)
                     throws FormProcessException {
-                    fireSubmitted(new FormSectionEvent(FormSection.this,
-                                                       e.getPageState(),
-                                                       e.getFormData()));
-                }
-            };
+                fireSubmitted(new FormSectionEvent(FormSection.this,
+                                                   e.getPageState(),
+                                                   e.getFormData()));
+            }
+        };
     }
 
     /**
@@ -258,8 +256,7 @@ public class FormSection extends SimpleComponent implements Container {
      */
     public void removeInitListener(FormInitListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Removing init listener " + listener + " from " +
-                        this);
+            s_log.debug("Removing init listener " + listener + " from " + this);
         }
 
         Assert.exists(listener, "Init Listener");
@@ -297,7 +294,6 @@ public class FormSection extends SimpleComponent implements Container {
         }
     }
 
-
     /**
      * Creates the init listener that forwards init events to this form
      * section.
@@ -307,13 +303,31 @@ public class FormSection extends SimpleComponent implements Container {
      */
     protected FormInitListener createInitListener() {
         return new FormInitListener() {
-                public void init(FormSectionEvent e)
+
+            public void init(FormSectionEvent e)
                     throws FormProcessException {
-                    fireInit(new FormSectionEvent(FormSection.this,
-                                                  e.getPageState(),
-                                                  e.getFormData()));
-                }
-            };
+                fireInit(new FormSectionEvent(FormSection.this,
+                                              e.getPageState(),
+                                              e.getFormData()));
+            }
+        };
+    }
+
+    /**
+     * Creates the cancel listener that forwards cancel events to this form
+     * section
+     *
+     * @return an cancel listener
+     */
+    protected FormCancelListener createCancelListener() {
+        return new FormCancelListener() {
+
+            public void cancel(FormSectionEvent e) throws FormProcessException {
+                fireCancel(new FormSectionEvent(FormSection.this,
+                                                e.getPageState(),
+                                                e.getFormData()));
+            }
+        };
     }
 
     /**
@@ -326,8 +340,7 @@ public class FormSection extends SimpleComponent implements Container {
      * */
     public void addValidationListener(FormValidationListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Adding validation listener " + listener + " to " +
-                        this);
+            s_log.debug("Adding validation listener " + listener + " to " + this);
         }
 
         Assert.exists(listener, "FormValidationListener");
@@ -344,8 +357,8 @@ public class FormSection extends SimpleComponent implements Container {
      */
     public void removeValidationListener(FormValidationListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Removing validation listener " + listener + " from " +
-                        this);
+            s_log.debug("Removing validation listener " + listener + " from "
+                        + this);
         }
 
         Assert.exists(listener, "Validation Listener");
@@ -362,12 +375,12 @@ public class FormSection extends SimpleComponent implements Container {
     protected void fireValidate(FormSectionEvent e) {
         FormData data = e.getFormData();
         Assert.exists(data, "FormData");
-        Iterator i = m_listeners.getListenerIterator(FormValidationListener
-                                                     .class);
+        Iterator i = m_listeners.getListenerIterator(
+                FormValidationListener.class);
         while (i.hasNext()) {
             try {
                 final FormValidationListener listener =
-                    (FormValidationListener) i.next();
+                                             (FormValidationListener) i.next();
 
                 if (s_log.isDebugEnabled()) {
                     s_log.debug("Firing validation listener " + listener);
@@ -375,11 +388,11 @@ public class FormSection extends SimpleComponent implements Container {
 
                 listener.validate(e);
             } catch (FormProcessException fpe) {
+                s_log.error(fpe);
                 data.addError(fpe.getMessage());
             }
         }
     }
-
 
     protected void forwardValidation() {
         if (m_forwardValidation == null) {
@@ -387,7 +400,6 @@ public class FormSection extends SimpleComponent implements Container {
             getModel().addValidationListener(m_forwardValidation);
         }
     }
-
 
     /**
      * Create the validation listener that forwards validation events to this
@@ -398,12 +410,13 @@ public class FormSection extends SimpleComponent implements Container {
      */
     protected FormValidationListener createValidationListener() {
         return new FormValidationListener() {
-                public void validate(FormSectionEvent e) {
-                    fireValidate(new FormSectionEvent(FormSection.this,
-                                                      e.getPageState(),
-                                                      e.getFormData()));
-                }
-            };
+
+            public void validate(FormSectionEvent e) {
+                fireValidate(new FormSectionEvent(FormSection.this,
+                                                  e.getPageState(),
+                                                  e.getFormData()));
+            }
+        };
     }
 
     /**
@@ -437,8 +450,8 @@ public class FormSection extends SimpleComponent implements Container {
      */
     public void removeProcessListener(FormProcessListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Removing process listener " + listener + " from " +
-                        this);
+            s_log.debug("Removing process listener " + listener + " from "
+                        + this);
         }
 
         Assert.exists(listener, "Process Listener");
@@ -447,24 +460,23 @@ public class FormSection extends SimpleComponent implements Container {
         m_listeners.remove(FormProcessListener.class, listener);
     }
 
-
     protected void forwardProcess() {
-        if ( m_forwardProcess == null ) {
+        if (m_forwardProcess == null) {
             m_forwardProcess = createProcessListener();
             getModel().addProcessListener(m_forwardProcess);
         }
     }
 
-
     protected FormProcessListener createProcessListener() {
         return new FormProcessListener() {
-                public void process(FormSectionEvent e)
+
+            public void process(FormSectionEvent e)
                     throws FormProcessException {
-                    fireProcess(new FormSectionEvent(FormSection.this,
-                                                     e.getPageState(),
-                                                     e.getFormData()));
-                }
-            };
+                fireProcess(new FormSectionEvent(FormSection.this,
+                                                 e.getPageState(),
+                                                 e.getFormData()));
+            }
+        };
     }
 
     /**
@@ -476,7 +488,7 @@ public class FormSection extends SimpleComponent implements Container {
      * exception.
      */
     protected void fireProcess(FormSectionEvent e)
-        throws FormProcessException {
+            throws FormProcessException {
         Assert.exists(e.getFormData(), "FormData");
         Iterator i = m_listeners.getListenerIterator(FormProcessListener.class);
         while (i.hasNext()) {
@@ -499,7 +511,7 @@ public class FormSection extends SimpleComponent implements Container {
      * not meaningful.
      */
     public FormData process(PageState data)
-        throws javax.servlet.ServletException {
+            throws javax.servlet.ServletException {
         throw new UnsupportedOperationException();
     }
 
@@ -529,8 +541,7 @@ public class FormSection extends SimpleComponent implements Container {
      */
     public void removeCancelListener(FormCancelListener listener) {
         if (s_log.isDebugEnabled()) {
-            s_log.debug("Removing cancel listener " + listener + " from " +
-                        this);
+            s_log.debug("Removing cancel listener " + listener + " from " + this);
         }
 
         Assert.exists(listener, "Cancel Listener");
@@ -547,7 +558,7 @@ public class FormSection extends SimpleComponent implements Container {
      * exception.
      */
     protected void fireCancel(FormSectionEvent e)
-        throws FormProcessException {
+            throws FormProcessException {
         Assert.exists(e.getFormData(), "FormData");
         Iterator i = m_listeners.getListenerIterator(FormCancelListener.class);
         while (i.hasNext()) {
@@ -593,6 +604,7 @@ public class FormSection extends SimpleComponent implements Container {
         m_panel.lock();
         super.lock();
     }
+
     public void respond(PageState state) throws javax.servlet.ServletException {
         //call listeners here.
         throw new UnsupportedOperationException();
@@ -603,7 +615,7 @@ public class FormSection extends SimpleComponent implements Container {
      *
      * This must not be final, because MetaFrom needs to override it.
      * */
-    public Container getPanel(){
+    public Container getPanel() {
         return m_panel;
     }
 
@@ -629,14 +641,13 @@ public class FormSection extends SimpleComponent implements Container {
      * @param pageState the state of the current page
      * @param parent the node that will be used to write to
      * */
-    public void generateXML(PageState pageState, Element parent)  {
-        if ( isVisible(pageState) ) {
+    public void generateXML(PageState pageState, Element parent) {
+        if (isVisible(pageState)) {
             m_panel.generateXML(pageState, parent);
         }
     }
 
     // Container methods
-
     /**
      * Adds a component to this container.
      *
@@ -696,7 +707,7 @@ public class FormSection extends SimpleComponent implements Container {
      * @return the component at the specified position in this container
      * */
     public Component get(int index) {
-        return (Component)m_panel.get(index);
+        return (Component) m_panel.get(index);
     }
 
     /**

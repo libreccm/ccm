@@ -19,9 +19,11 @@
  */
 package com.arsdigita.cms.contenttypes.ui;
 
-import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.bebop.FormProcessException;
+import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.GenericPerson;
+import com.arsdigita.cms.contenttypes.SciMember;
 import com.arsdigita.cms.contenttypes.SciOrganization;
 
 /**
@@ -35,13 +37,15 @@ import com.arsdigita.cms.contenttypes.SciOrganization;
  * @see GenericPerson
  * @see GenericOrganizationalUnitPersonAddForm
  */
-public class SciOrganizationMemberAddForm 
+public class SciOrganizationMemberAddForm
         extends GenericOrganizationalUnitPersonAddForm {
 
-    public SciOrganizationMemberAddForm(ItemSelectionModel itemModel) {
-        super(itemModel);
+    public SciOrganizationMemberAddForm(
+            ItemSelectionModel itemModel,
+            GenericOrganizationalUnitPersonSelector personSelector) {
+        super(itemModel, personSelector);
     }
-
+  
     @Override
     protected String getPersonType() {
         return GenericPerson.class.getName();

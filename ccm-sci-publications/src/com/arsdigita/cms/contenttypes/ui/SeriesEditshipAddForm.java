@@ -25,6 +25,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.cms.ContentType;
@@ -43,7 +44,9 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class SeriesEditshipAddForm extends BasicItemForm {
+public class SeriesEditshipAddForm
+        extends BasicItemForm
+        implements FormSubmissionListener {
 
     private static final Logger s_log =
                                 Logger.getLogger(SeriesEditshipAddForm.class);
@@ -60,6 +63,7 @@ public class SeriesEditshipAddForm extends BasicItemForm {
         super("EditorsEntryForm", itemModel);
         m_itemModel = itemModel;
         this.editStep = editStep;
+        addSubmissionListener(this);
     }
 
     @Override
@@ -107,6 +111,7 @@ public class SeriesEditshipAddForm extends BasicItemForm {
         to = editStep.getSelectedEditorDateTo();
 
         if (editor == null) {
+            m_itemSearch.setVisible(state, true);
             selectedEditorLabel.setVisible(state, false);
         } else {
             data.put(ITEM_SEARCH, editor);
@@ -159,6 +164,18 @@ public class SeriesEditshipAddForm extends BasicItemForm {
         }
 
         init(fse);
+    }
+
+    public void submitted(FormSectionEvent fse) throws FormProcessException {
+
+        if (getSaveCancelSection().getCancelButton().isSelected(
+                fse.getPageState())) {
+            editStep.setSelectedEditor(null);
+            editStep.setSelectedEditorDateFrom(null);
+            editStep.setSelectedEditorDateTo(null);
+
+            init(fse);
+        }
 
     }
 }

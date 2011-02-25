@@ -32,8 +32,9 @@ public class SciProjectMemberAddForm
         extends GenericOrganizationalUnitPersonAddForm {
 
     public SciProjectMemberAddForm(
-            ItemSelectionModel itemModel) {
-        super(itemModel);
+            ItemSelectionModel itemModel,
+            GenericOrganizationalUnitPersonSelector personSelector) {
+        super(itemModel, personSelector);
     }
 
     @Override

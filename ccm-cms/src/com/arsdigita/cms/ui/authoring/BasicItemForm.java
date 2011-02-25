@@ -26,6 +26,7 @@ import com.arsdigita.bebop.FormSection;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
+import com.arsdigita.bebop.event.FormCancelListener;
 import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
@@ -55,8 +56,10 @@ import java.util.Collection;
  * @author Stanislav Freidin (stas@arsdigita.com)
  * @version $Revision: #13 $ $DateTime: 2004/08/17 23:15:09 $
  **/
-public abstract class BasicItemForm extends FormSection
-        implements FormInitListener, FormProcessListener,
+public abstract class BasicItemForm
+        extends FormSection
+        implements FormInitListener,
+                   FormProcessListener,
                    FormValidationListener {
 
     private static final Logger s_log = Logger.getLogger(BasicItemForm.class);
@@ -201,23 +204,28 @@ public abstract class BasicItemForm extends FormSection
      * Perform form initialization. Children should override this
      * this method to pre-fill the widgets with data, instantiate
      * the content item, etc.
+     * @param e
+     * @throws FormProcessException
      */
     public abstract void init(FormSectionEvent e) throws FormProcessException;
 
     /**
      * Process the form. Children should override this method to save
      * the user's changes to the database.
+     * @param e
+     * @throws FormProcessException
      */
     public abstract void process(FormSectionEvent e) throws FormProcessException;
 
     /**
      * Validate the form. Children should override this method to provide
      * custom form validation.
+     * @param e 
      */
     public void validate(FormSectionEvent e) throws FormProcessException {
         // do nothing
     }
-
+   
     /**
      * Ensure that the name of an item is unique within a folder. A "New
      * item" form should call this method in the validation listener.

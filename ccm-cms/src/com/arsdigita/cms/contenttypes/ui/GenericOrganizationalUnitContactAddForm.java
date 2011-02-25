@@ -25,6 +25,7 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.SaveCancelSection;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
@@ -44,11 +45,13 @@ import com.arsdigita.dispatcher.DispatcherHelper;
 import org.apache.log4j.Logger;
 
 /**
- * Form for addings an related contact to an organization.
+ * Form for adding an related contact to an organization.
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
+public class GenericOrganizationalUnitContactAddForm
+        extends BasicItemForm
+        implements FormSubmissionListener {
 
     private final static Logger s_log = Logger.getLogger(
             GenericOrganizationalUnitContactAddForm.class);
@@ -65,6 +68,7 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
         super("ContactEntryAddForm", itemModel);
         m_itemModel = itemModel;
         this.editStep = editStep;
+        addSubmissionListener(this);
     }
 
     @Override
@@ -161,5 +165,15 @@ public class GenericOrganizationalUnitContactAddForm extends BasicItemForm {
         }
 
         init(fse);
+    }
+
+    public void submitted(FormSectionEvent fse) throws FormProcessException {
+        if (getSaveCancelSection().getCancelButton().isSelected(
+                fse.getPageState())) {
+            editStep.setSelectedContact(null);
+            editStep.setSelectedContactType(null);
+
+            init(fse);
+        }
     }
 }

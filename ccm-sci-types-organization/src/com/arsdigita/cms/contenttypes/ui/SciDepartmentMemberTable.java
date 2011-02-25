@@ -27,13 +27,13 @@ import com.arsdigita.cms.ItemSelectionModel;
  */
 public class SciDepartmentMemberTable extends GenericOrganizationalUnitPersonsTable {
 
-    public SciDepartmentMemberTable(ItemSelectionModel itemModel) {
-        super(itemModel);
+    public SciDepartmentMemberTable(ItemSelectionModel itemModel,
+                                    GenericOrganizationalUnitPersonSelector personSelector) {
+        super(itemModel, personSelector);
     }
 
     @Override
     protected String getRoleAttributeName() {
         return "SciDepartmentRole";
     }
-
 }

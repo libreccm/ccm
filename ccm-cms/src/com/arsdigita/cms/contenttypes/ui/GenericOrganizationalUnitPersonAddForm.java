@@ -24,9 +24,9 @@ import com.arsdigita.bebop.FormProcessException;
 import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.FormSectionEvent;
+import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
-import com.arsdigita.bebop.parameters.NotEmptyValidationListener;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -48,16 +48,23 @@ import org.apache.log4j.Logger;
  *
  * @author Jens Pelzetter
  */
-public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
+public class GenericOrganizationalUnitPersonAddForm
+        extends BasicItemForm
+        implements FormSubmissionListener {
 
     private static final Logger logger = Logger.getLogger(
             GenericOrganizationalUnitPersonAddForm.class);
     private GenericOrganizationalUnitPersonPropertiesStep m_step;
     private ItemSearchWidget m_itemSearch;
     private final String ITEM_SEARCH = "orgaunitPerson";
+    private GenericOrganizationalUnitPersonSelector selector;
+    private Label selectedPersonNameLabel;
 
-    public GenericOrganizationalUnitPersonAddForm(ItemSelectionModel itemModel) {
+    public GenericOrganizationalUnitPersonAddForm(ItemSelectionModel itemModel,
+                                                  GenericOrganizationalUnitPersonSelector selector) {
         super("PersonAddForm", itemModel);
+        this.selector = selector;
+        addSubmissionListener(this);
     }
 
     @Override
@@ -69,6 +76,9 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
         m_itemSearch.getItemField().addValidationListener(
                 new NotNullValidationListener());
         add(this.m_itemSearch);
+
+        selectedPersonNameLabel = new Label("");
+        add(selectedPersonNameLabel);
 
         add(new Label(ContenttypesGlobalizationUtil.globalize(
                 "cms.contenttypes.ui.genericorgaunit.person.role")));
@@ -117,7 +127,31 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
 
     @Override
     public void init(FormSectionEvent fse) {
+        FormData data = fse.getFormData();
         PageState state = fse.getPageState();
+
+        GenericPerson person;
+        String role;
+        String status;
+
+        person = selector.getSelectedPerson();
+        role = selector.getSelectedPersonRole();
+        status = selector.getSelectedPersonStatus();
+
+        if (person == null) {
+            //m_itemSearch.setVisible(state, true);
+            //selectedPersonNameLabel.setVisible(state, false);
+        } else {
+            data.put(ITEM_SEARCH, person);
+            data.put(GenericOrganizationalUnitPersonCollection.PERSON_ROLE,
+                     role);
+            data.put(GenericOrganizationalUnitPersonCollection.STATUS,
+                     status);
+
+            //m_itemSearch.setVisible(state, false);
+            //selectedPersonNameLabel.setVisible(state, true);
+            //selectedPersonNameLabel.setLabel(person.getFullName(), state);
+        }
 
         setVisible(state, true);
     }
@@ -130,21 +164,56 @@ public class GenericOrganizationalUnitPersonAddForm extends BasicItemForm {
                 getSelectedObject(state);
 
         if (this.getSaveCancelSection().getSaveButton().isSelected(state)) {
-            if (data.get(ITEM_SEARCH) == null) {
-                logger.warn("Person to add is null!!!");
-            } else {
+
+            GenericPerson person;
+            person = selector.getSelectedPerson();
+
+            if (person == null) {
                 logger.debug(String.format("Adding person %s",
                                            ((GenericPerson) data.get(ITEM_SEARCH)).
                         getFullName()));
+
+                orga.addPerson((GenericPerson) data.get(ITEM_SEARCH),
+                               (String) data.get(
+                        GenericOrganizationalUnitPersonCollection.PERSON_ROLE),
+                               (String) data.get(
+                        GenericOrganizationalUnitPersonCollection.STATUS));
+            } else {
+                GenericOrganizationalUnitPersonCollection persons;
+
+                persons = orga.getPersons();
+
+                while (persons.next()) {
+                    if (persons.getPerson().equals(person)) {
+                        break;
+                    }
+                }
+
+                persons.setRoleName((String) data.get(
+                        GenericOrganizationalUnitPersonCollection.PERSON_ROLE));
+                persons.setStatus((String) data.get(
+                        GenericOrganizationalUnitPersonCollection.STATUS));
+
+                selector.setSelectedPerson(null);
+                selector.setSelectedPersonRole(null);
+                selector.setSelectedPersonRole(null);
+
+                persons.close();
             }
-            orga.addPerson((GenericPerson) data.get(ITEM_SEARCH),
-                           (String) data.get(
-                    GenericOrganizationalUnitPersonCollection.PERSON_ROLE),
-                           (String) data.get(
-                    GenericOrganizationalUnitPersonCollection.STATUS));
         }
 
         init(fse);
+    }
+
+    public void submitted(FormSectionEvent fse) throws FormProcessException {
+        if (getSaveCancelSection().getCancelButton().isSelected(
+                fse.getPageState())) {
+            selector.setSelectedPerson(null);
+            selector.setSelectedPersonRole(null);
+            selector.setSelectedPersonRole(null);
+
+            init(fse);
+        }
     }
 
     protected String getPersonType() {
