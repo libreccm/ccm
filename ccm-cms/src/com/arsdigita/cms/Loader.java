@@ -79,13 +79,13 @@ import org.apache.log4j.Logger;
  * </ol>
  *
  * <p>Configuration can be modified by configuration parameters before processing,
- * otherwise hardcoded default values take effect. After processing the
+ * otherwise hardcoded default values take effect. After processing, the
  * installation values can not be modified anymore without a fresh installation
  * of the whole system.</p>
  *
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
  * @since ccm-cms version 6.6.0
- * @version $Id: $
+ * @version $Id: Loader.java $
  */
 public class Loader extends PackageLoader {
 

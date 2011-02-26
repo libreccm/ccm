@@ -19,6 +19,7 @@
 package com.arsdigita.simplesurvey;
 
 import com.arsdigita.domain.DomainObject;
+import com.arsdigita.formbuilder.util.FormbuilderSetup;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.Kernel;
 import com.arsdigita.kernel.KernelExcursion;
@@ -28,10 +29,14 @@ import com.arsdigita.runtime.ScriptContext;
 import com.arsdigita.web.Application;
 import com.arsdigita.web.ApplicationSetup;
 import com.arsdigita.web.ApplicationType;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 /**
- * Initial load (non-resurring) at install time for ccm-simplesurvey. Creates
+ * Initial load (non-recurring) at install time for ccm-simplesurvey. Creates
  * application type in database.
  *
  * @author Justin Ross &lt;jross@redhat.com&gt;
@@ -60,6 +65,39 @@ public class Loader extends PackageLoader {
      */
     private void setupSimpleSurveyPackage() {
 
+        /** List of widgets used in survey application forms. Each widget is
+            described by application indicator, widget name (singular & plural),
+            model class name and model ui class name.
+            These are really not user or administrator configurabel and
+            therefore not implemented as ccm parameter.                       */
+        List widgetTypes = Arrays.asList(
+            Arrays.asList(
+                   "Survey", "One line Answer", "One line Answers",
+                   "com.arsdigita.formbuilder.PersistentTextField",
+                   "com.arsdigita.simplesurvey.ui.widgets.OneLineWidgetForm" ),
+            Arrays.asList(
+                   "Survey", "Essay Answer", "Essay Answers",
+                   "com.arsdigita.formbuilder.PersistentTextArea",
+                   "com.arsdigita.simplesurvey.ui.widgets.EssayWidgetForm" ),
+            Arrays.asList(
+                   "Survey", "Date Answer", "Date Answers",
+                   "com.arsdigita.formbuilder.PersistentDate",
+                   "com.arsdigita.simplesurvey.ui.widgets.DateWidgetForm" ),
+            Arrays.asList(
+                   "Survey","Multiple Choice (one or more answers)","Multiple Choices",
+                   "com.arsdigita.formbuilder.PersistentCheckboxGroup",
+                   "com.arsdigita.simplesurvey.ui.widgets.CheckboxEditor" ),
+            Arrays.asList(
+                   "Survey", "Multiple Choice (only one answer)","Single Choices",
+                   "com.arsdigita.formbuilder.PersistentRadioGroup",
+                   "com.arsdigita.simplesurvey.ui.widgets.RadioEditor" ),
+            Arrays.asList(
+                   "Poll", "Multiple Choice (only one answer)","Single Choices",
+                   "com.arsdigita.formbuilder.PersistentRadioGroup",
+                   "com.arsdigita.simplesurvey.ui.widgets.RadioEditor" )
+        );
+
+
         ApplicationSetup setup = new ApplicationSetup(s_log);
         
         setup.setApplicationObjectType(SimpleSurvey.BASE_DATA_OBJECT_TYPE);
@@ -68,10 +106,11 @@ public class Loader extends PackageLoader {
         // setup.setDescription("Simple Survey");
         setup.setDescription("A simple survey application.");
         setup.setInstantiator(new ACSObjectInstantiator() {
-                public DomainObject doNewInstance(DataObject dataObject) {
-                    return new SimpleSurvey(dataObject);
-                }
-            });
+            @Override
+            public DomainObject doNewInstance(DataObject dataObject) {
+                return new SimpleSurvey(dataObject);
+            }
+        });
         ApplicationType type = setup.run();
         type.save();
         
@@ -84,5 +123,11 @@ public class Loader extends PackageLoader {
                                               null);
             app.save();
         }
+
+        // Load the widgets types (i.e. description and class names to be 
+        // instantiated ad runtime) used in survey forms into database.
+        FormbuilderSetup fbs = new FormbuilderSetup();
+        fbs.setup(widgetTypes, null, null);
+
     }
 }

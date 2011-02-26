@@ -66,17 +66,12 @@ public class Initializer extends CompoundInitializer {
     }
 
 
-//     public Configuration getConfiguration() {
-//         return m_conf;
-//     }
-
-
     public void init(DomainInitEvent e) {
-	s_log.warn("Bookmarks app is initializing using .init(DomainInitEvent e)");
-// 	setupDomainFactory();
+	    s_log.info("Bookmarks app is initializing using .init(DomainInitEvent e)");
+        // 	setupDomainFactory();
 
-	      TransactionContext txn = SessionManager.getSession()
-            .getTransactionContext();
+        TransactionContext txn = SessionManager.getSession()
+                                               .getTransactionContext();
         txn.beginTxn();
 	    setupBookmarks();
         txn.commitTxn();

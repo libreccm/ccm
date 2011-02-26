@@ -27,8 +27,8 @@ import com.arsdigita.formbuilder.PersistentProcessListener;
 import com.arsdigita.formbuilder.PersistentDataQuery;
 import com.arsdigita.formbuilder.PersistentComponent;
 //__import com.arsdigita.kernel.BaseInitializer;
-import com.arsdigita.persistence.SessionManager;
-import com.arsdigita.persistence.TransactionContext;
+// import com.arsdigita.persistence.SessionManager;
+// import com.arsdigita.persistence.TransactionContext;
 import com.arsdigita.runtime.ConfigError;
 
 import java.util.Iterator;

@@ -22,7 +22,7 @@ import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
-import com.arsdigita.runtime.LegacyInitializer;
+// import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 
@@ -46,6 +46,6 @@ public class Initializer extends CompoundInitializer {
              ("ccm-simplesurvey.pdl.mf",
               new NameFilter(DbHelper.getDatabaseSuffix(database), "pdl"))));
 
-        add(new LegacyInitializer("com/arsdigita/simplesurvey/enterprise.init"));
+//      add(new LegacyInitializer("com/arsdigita/simplesurvey/enterprise.init"));
     }
 }
