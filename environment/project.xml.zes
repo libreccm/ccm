@@ -8,7 +8,7 @@
                     name="aplaws-zes" 
               prettyName="APLAWS plus" 
                  version="1-1-1" 
-                 release="rc1-697" 
+                 release="rc2-767"
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -29,21 +29,16 @@
 
 <!--   Content Types   -->
 <!--   - - - - - - -    -->
-<!--    <ccm:application name="ccm-cms-types-address"/>              -->
+        <ccm:application name="ccm-cms-types-address"/>
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
         <ccm:application name="ccm-cms-types-article"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
-<!--    <ccm:application name="ccm-cms-types-contact"/>              -->
-<!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
+        <ccm:application name="ccm-cms-types-contact"/>
         <ccm:application name="ccm-cms-types-event"/>
-<!--         faqitem could be removed for ZeS, too                   -->
-<!--         2008-06-07 faqitem removed, not used in prod.system     -->
 <!--    <ccm:application name="ccm-cms-types-faqitem"/>              -->
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
-<!--         glossaryitem could be removed for ZeS, too              -->
-<!--         2008-06-07 glossaryitem removed, not used in prod.sys.  -->
 <!--    <ccm:application name="ccm-cms-types-glossaryitem"/>         -->
 <!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
 <!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
@@ -54,15 +49,11 @@
 <!--    <ccm:application name="ccm-cms-types-motditem"/>             -->
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
-
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
-
-<!--    <ccm:application name="ccm-cms-types-person"/>               -->
+        <ccm:application name="ccm-cms-types-person"/>
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
-<!--    <ccm:application name="ccm-cms-types-researchnetwork"/>      -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
         <ccm:application name="ccm-cms-types-siteproxy"/>               
-<!--         xmlfeed may not be needed by ZeS, too                   -->
         <ccm:application name="ccm-cms-types-xmlfeed"/>                       
 
 
@@ -99,9 +90,9 @@
 
 <!--  ZeS extension  -->
 <!--  - - - - - - -  -->
-<!--    <ccm:application name="ccm-cms-dabinimporter" />
+        <ccm:application name="ccm-cms-dabinimporter" />
         <ccm:application name="ccm-sci-types-organization"/>                       
-        <ccm:application name="ccm-sci-publications"/>             -->
+        <ccm:application name="ccm-sci-publications"/>
         <ccm:application name="ccm-zes-aplaws"/> 
 
 
