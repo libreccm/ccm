@@ -207,8 +207,9 @@ public final class ContentSectionConfig extends AbstractConfig {
      * See contentsection.ContentSectionSetup.registerRoles()
      * In enterprise.init: name roles, List of roles to create.
      *
-     * Not implemented yet! We need a new parameter type "list" which must have
-     * multidimensional capabilities.
+     * ** Not implemented yet! **
+     * We need a new parameter type "list" which must have multidimensional
+     * capabilities.
      */
 //  private final StringParameter
 //          m_staffGroup = new StringParameter(

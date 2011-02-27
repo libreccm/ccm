@@ -349,7 +349,6 @@ public class Loader extends PackageLoader {
         appsetup.setSingleton(true);
         appsetup.setPortalApplication(false);
         appsetup.setInstantiator(new ACSObjectInstantiator() {
-
             @Override
             protected DomainObject doNewInstance(DataObject dataObject) {
                 return new Workspace(dataObject);
@@ -434,7 +433,6 @@ public class Loader extends PackageLoader {
         appsetup.setSingleton(true);
         appsetup.setPortalApplication(false);
         appsetup.setInstantiator(new ACSObjectInstantiator() {
-
             @Override
             protected DomainObject doNewInstance(DataObject dataObject) {
                 return new Service(dataObject);
@@ -481,13 +479,17 @@ public class Loader extends PackageLoader {
         appType.setPortalApplication(false);
         //setup.setDispatcherClass(ContentItemDispatcher.class.getName());
         // contains the xsl to generate the page
-        appType.setInstantiator(new ACSObjectInstantiator() {
 
+        // ApplicationSetup requires an Instantiator which has to be set here
+        // Setting it up in Initializer prior to creating the application type
+        // doesn't work!
+        appType.setInstantiator(new ACSObjectInstantiator() {
             @Override
             public DomainObject doNewInstance(DataObject dataObject) {
                 return new ContentSection(dataObject);
-            }
-        });
+           }
+         });
+
         appType.run();
 
         // Step 3:

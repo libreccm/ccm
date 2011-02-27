@@ -80,7 +80,6 @@ public class FormbuilderSetup {
               throws ConfigError {
 
         // If the objects list is not null, load the object list into the database
-        // pboy: Obviously, this is a Loader task.
         if (objects != null) {
 
             // XXX we don't yet delete types which are no longer in the list

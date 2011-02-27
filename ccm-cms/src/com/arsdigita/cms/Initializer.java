@@ -23,8 +23,6 @@ import com.arsdigita.cms.dispatcher.AssetURLFinder;
 import com.arsdigita.cms.dispatcher.ItemDelegatedURLPatternGenerator;
 import com.arsdigita.cms.dispatcher.ItemTemplatePatternGenerator;
 import com.arsdigita.cms.dispatcher.ItemURLFinder;
-// import com.arsdigita.cms.installer.WorkspaceInstaller;
-// import com.arsdigita.cms.installer.ContentCenterSetup;
 import com.arsdigita.cms.publishToFile.PublishToFileListener;
 import com.arsdigita.cms.publishToFile.QueueManager;
 import com.arsdigita.cms.search.AssetMetadataProvider;
@@ -50,10 +48,6 @@ import com.arsdigita.domain.DomainObjectInstantiator;
 import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.kernel.ACSObjectInstantiator;
 import com.arsdigita.kernel.NoValidURLException;
-// import com.arsdigita.kernel.PackageInstance;
-// import com.arsdigita.kernel.PackageInstanceCollection;
-// import com.arsdigita.kernel.PackageType;
-// import com.arsdigita.kernel.SiteNode;
 import com.arsdigita.kernel.URLFinder;
 import com.arsdigita.kernel.URLFinderNotFoundException;
 import com.arsdigita.kernel.URLService;
@@ -65,7 +59,6 @@ import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 // import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.search.FilterType;
@@ -101,17 +94,11 @@ import org.apache.log4j.Logger;
  */
 public class Initializer extends CompoundInitializer {
 
-
     /** Creates a s_logging category with name = to the full name of class */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
     /** Configuration object for the CMS module     */
     private static final CMSConfig s_conf = CMSConfig.getInstance();
-//  Verursacht aktuell eine Exception "no such context"
-//  Vermutliche Lösung: in config.xml eintragen.
-//  static {            // requirred to actually read the config file!
-//     s_conf.load();
-//  }
 
     /**
      * Constructor, adds db connection information and various sub-initializers
@@ -303,6 +290,7 @@ public class Initializer extends CompoundInitializer {
          f.registerInstantiator
              (CMSTask.BASE_DATA_OBJECT_TYPE,
               new ACSObjectInstantiator() {
+                  @Override
                   public DomainObject doNewInstance(DataObject dataObject) {
                       return new CMSTask(dataObject);
                   }

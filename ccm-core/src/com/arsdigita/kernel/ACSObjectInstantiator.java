@@ -81,18 +81,17 @@ import com.arsdigita.domain.DomainObject       ;
  * on the <code>FooGroup</code> instantiator, which contains a hardcoded call
  * to the constructor for <code>FooGroup</code>.
  *
- * @author Oumi Mehrotra 
- * @version 1.0
- *
  * @see com.arsdigita.domain.DomainObjectInstantiator
  * @see com.arsdigita.domain.DomainObjectFactory
  * @see com.arsdigita.domain.DomainObject
  * @see com.arsdigita.persistence.DataObject
  * @see com.arsdigita.kernel.ACSObject
+ *
+ * @author Oumi Mehrotra
+ * @version 1.0
+ * @version $Id: ACSObjectInstantiator.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class ACSObjectInstantiator extends DomainObjectInstantiator {
-
-    public static final String versionId = "$Id: ACSObjectInstantiator.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     protected boolean m_useReflectionForSubtypes = true;
 

@@ -93,6 +93,8 @@ public final class ContentSectionSetup {
      * Wrapper class to create and configure a content section instance
      * in one step.
      *
+     * Method needs a transaction to proceed successfully.
+     * {@link com.arsdigita.cms.contentsection.Initializer#checkForNewContentSection() }
      */
     public static void setupContentSectionAppInstance(String name,
             List staffGroup,
@@ -265,21 +267,25 @@ public final class ContentSectionSetup {
     public void registerResolvers(String itemResolverClassName,
             String templateResolverClassName) {
 
-        if (itemResolverClassName != null && itemResolverClassName.length() > 0) {
+        if (itemResolverClassName != null
+            && itemResolverClassName.length() > 0) {
             m_section.setItemResolverClass(itemResolverClassName);
             s_log.info("Registering " + itemResolverClassName
                     + " as the item resolver class");
         } else {
-            m_section.setItemResolverClass(ContentSection.getConfig().getDefaultItemResolverClass().getName());
+            m_section.setItemResolverClass(ContentSection.getConfig()
+                     .getDefaultItemResolverClass().getName());
             s_log.info("Registering " + itemResolverClassName
                     + " as the item resolver class");
         }
-        if (templateResolverClassName != null && templateResolverClassName.length() > 0) {
+        if (templateResolverClassName != null
+            && templateResolverClassName.length() > 0) {
             m_section.setTemplateResolverClass(templateResolverClassName);
             s_log.info("Registering " + templateResolverClassName
                     + " as the template resolver class");
         } else {
-            m_section.setTemplateResolverClass(ContentSection.getConfig().getDefaultTemplateResolverClass().getName());
+            m_section.setTemplateResolverClass(ContentSection.getConfig()
+                     .getDefaultTemplateResolverClass().getName());
             s_log.info("Registering " + templateResolverClassName
                     + " as the template resolver class");
         }
@@ -474,7 +480,8 @@ public final class ContentSectionSetup {
         final InputStream stream = loader.getResourceAsStream(filename.substring(1));
 
         if (stream == null) {
-            throw new IllegalStateException((String) GlobalizationUtil.globalize("cms.installer.cannot_find_file").localize() + filename);
+            throw new IllegalStateException((String) GlobalizationUtil.globalize(
+                      "cms.installer.cannot_find_file").localize() + filename);
         }
 
         final BufferedReader input = new BufferedReader(new InputStreamReader(stream));
@@ -501,7 +508,8 @@ public final class ContentSectionSetup {
 
         temp.save();
 
-        TemplateManagerFactory.getInstance().addTemplate(m_section, type, temp, "public");
+        TemplateManagerFactory.getInstance()
+                              .addTemplate(m_section, type, temp, "public");
 
         temp.publish(m_lcd, new Date());
     }

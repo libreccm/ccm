@@ -22,24 +22,20 @@ package com.arsdigita.cms.contentsection;
 
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
-// import com.arsdigita.cms.LoaderConfig;
-//import com.arsdigita.cms.installer.Util;
-// import com.arsdigita.cms.util.GlobalizationUtil;
 import com.arsdigita.cms.workflow.UnfinishedTaskNotifier;
-// import com.arsdigita.domain.DataObjectNotFoundException;
-// import com.arsdigita.persistence.SessionManager;
-// import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.persistence.SessionManager;
+import com.arsdigita.persistence.TransactionContext;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.kernel.ACSObjectInstantiator;
+import com.arsdigita.persistence.DataObject;
 import com.arsdigita.runtime.CompoundInitializer;
-// import com.arsdigita.runtime.ConfigError;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ContextCloseEvent;
 // import com.arsdigita.runtime.DataInitEvent;
 import com.arsdigita.runtime.DomainInitEvent;
-// import com.arsdigita.util.Assert;
 import com.arsdigita.web.Application;
 import com.arsdigita.cms.workflow.CMSTask;
 
-// import java.math.BigDecimal;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -74,8 +70,9 @@ public class Initializer extends CompoundInitializer {
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
     /** Local configuration object ContentSectionConfig containing parameters
-        which may be changed each system startup.  */
-    private static final ContentSectionConfig s_conf = ContentSectionConfig.getInstance();
+        which may be changed each system startup.                             */
+    private static final ContentSectionConfig s_conf = ContentSectionConfig
+                                                       .getInstance();
 
     /** The Timer used to send Unfinished notifications  */
     private static Vector s_unfinishedTimers = new Vector();
@@ -95,12 +92,12 @@ public class Initializer extends CompoundInitializer {
 //  public void init(DataInitEvent evt) {
 //  }
 
-//  Currently nothing to do here. Will be changed in the ongoing migration process
     /**
      * Initializes domain-coupling machinery, usually consisting of
      * registering object instantiators and observers.
      *
      */
+    @Override
     public void init(DomainInitEvent evt) {
         s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
 
@@ -108,37 +105,19 @@ public class Initializer extends CompoundInitializer {
         // An empty implementations prevents this initializer from being executed.
         super.init(evt);
 
-        // Check here weather a new content section has to be created.
-        String newSectionName = s_conf.getNewContentSectionName();
-        if (newSectionName != null && !newSectionName.isEmpty() ) {
-            ContentSectionCollection sections=ContentSection.getAllSections();
-            sections.addEqualsFilter( Application.PRIMARY_URL, 
-                                      "/" + newSectionName + "/" );
-            ContentSection section;
-            if( sections.next() ) {
-                // Section with the configured name already exists
-                s_log.debug( "Content section " + newSectionName +
-                            " already exists, skipping creation task." );
-                section = sections.getContentSection();
-                sections.close();
-            } else {
-                s_log.debug( "Content section " + newSectionName + " in " +
-                            " doesn't exist, creating it." );
-                ContentSectionSetup.setupContentSectionAppInstance
-                                    (newSectionName,
-                                     s_conf.getStuffGroup(),
-                                     s_conf.isPubliclyViewable(),
-                                     s_conf.getItemResolverClass(),
-                                     s_conf.getTemplateResolverClass(),
-                                     s_conf.getContentSectionsContentTypes(),
-                                     s_conf.getUseSectionCategories(),
-                                     s_conf.getCategoryFileList()
-                                    );
-            }
+        /* Register object instantiator for ContentSection                   */
+        evt.getFactory().registerInstantiator
+            (ContentSection.BASE_DATA_OBJECT_TYPE,
+             new ACSObjectInstantiator() {
+                 @Override
+                 public DomainObject doNewInstance(DataObject dobj) {
+                     return new ContentSection(dobj);
+                 }
+             } );
 
-            
-        }
-
+             // whether we have to create an additional (new) content section
+             // specified in config file.
+             checkForNewContentSection();
 
         s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
     }
@@ -155,6 +134,7 @@ public class Initializer extends CompoundInitializer {
      * A delay value of 0 inhibits start of processing.
      * @param evt The context init event.
      */
+    @Override
     public void init(ContextInitEvent evt) {
         s_log.debug("content section ContextInitEvent started");
 
@@ -185,6 +165,7 @@ public class Initializer extends CompoundInitializer {
                 s_unfinishedTimers.addElement(unfinishedTimer);
             }
         }
+        sections.close();
     
         s_log.debug("content section ContextInitEvent completed");
     }
@@ -193,6 +174,7 @@ public class Initializer extends CompoundInitializer {
      * Implementation of the {@link Initializer#init(ContextCloseEvent)}
      * method.
      *
+     * Stops various background threads started during startup process.
      */
     @Override
     public void close(ContextCloseEvent evt) {
@@ -211,6 +193,43 @@ public class Initializer extends CompoundInitializer {
         s_log.debug("content section ContextCloseEvent completed");
     }
 
+    private void checkForNewContentSection() {
+
+        // Check here weather a new content section has to be created.
+        String newSectionName = s_conf.getNewContentSectionName();
+        if (newSectionName != null && !newSectionName.isEmpty() ) {
+            ContentSectionCollection sections=ContentSection.getAllSections();
+            sections.addEqualsFilter( Application.PRIMARY_URL,
+                                      "/" + newSectionName + "/" );
+            ContentSection section;
+            if( sections.next() ) {
+                // Section with the configured name already exists
+                s_log.warn( "Content section " + newSectionName +
+                            " already exists, skipping creation task.\n" +
+                            "You may delete the entry from configuration file.");
+                section = sections.getContentSection();
+                sections.close();
+            } else {
+                s_log.info( "Content section " + newSectionName + " in " +
+                            " doesn't exist, creating it." );
+                TransactionContext txn = SessionManager.getSession()
+                                                       .getTransactionContext();
+                txn.beginTxn();
+                ContentSectionSetup.setupContentSectionAppInstance
+                                    (newSectionName,
+                                     s_conf.getStuffGroup(),
+                                     s_conf.isPubliclyViewable(),
+                                     s_conf.getItemResolverClass(),
+                                     s_conf.getTemplateResolverClass(),
+                                     s_conf.getContentSectionsContentTypes(),
+                                     s_conf.getUseSectionCategories(),
+                                     s_conf.getCategoryFileList()
+                                    );
+                txn.commitTxn();
+            }
+        }
+
+    }
 
     /**
      * Steps through a string array of tasks and associated alert events

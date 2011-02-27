@@ -81,6 +81,7 @@ public class Application extends Resource {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.web.Application";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -171,9 +172,11 @@ public class Application extends Resource {
 	final ApplicationType type =
 			ApplicationType.retrieveApplicationTypeForApplication(typeName);
         if (type == null) {
-            throw new IllegalArgumentException("No ApplicationType found for type name " + typeName);
+            throw new IllegalArgumentException(
+                      "No ApplicationType found for type name " + typeName);
         }
-	return Application.createApplication(type,fragment,title,parent,createContainerGroup);
+	return Application.createApplication(type,fragment,
+                                         title,parent,createContainerGroup);
     }
 
     /** 
@@ -220,7 +223,8 @@ public class Application extends Resource {
                                           final String title,
 					  final Application parent,
 					  final boolean createContainerGroup) {
-	final Application application =	(Application) Resource.createResource(type, title, parent);
+	final Application application =	(Application) Resource.createResource(
+                                                           type, title, parent);
 	if (createContainerGroup) {
 	    s_log.debug("Creating Group for application");
 	    application.createGroup();

@@ -1159,7 +1159,9 @@ public class ContentSection extends Application {
         templates.save();
 
         //create and initialize the content section application
-        ContentSection section = (ContentSection) Application.createApplication(BASE_DATA_OBJECT_TYPE, name, name, null);
+        ContentSection section = (ContentSection) Application
+                                 .createApplication(BASE_DATA_OBJECT_TYPE
+                                                    , name, name, null);
         section.initialize(name,
                 folder,
                 category,

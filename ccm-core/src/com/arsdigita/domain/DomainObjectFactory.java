@@ -70,13 +70,13 @@ import org.apache.log4j.Logger;
  * @author Oumi Mehrotra
  * @version 1.0
  * @version $Id: DomainObjectFactory.java 738 2005-09-01 12:36:52Z sskracic $
- *
  **/
 public class DomainObjectFactory {
 
-    // map of registered instantiators, keyed by data object type.
+    /** map of registered instantiators, keyed by data object type.           */
     private static Map s_instantiators = new HashMap();
 
+    /** private logger instance.                                              */
     private static final Logger s_log = Logger.getLogger(DomainObjectFactory.class);
 
     /**
@@ -261,8 +261,9 @@ public class DomainObjectFactory {
      *
      * @see #registerInstantiator(ObjectType, DomainObjectInstantiator)
      */
-    public static DomainObjectInstantiator registerInstantiator(String dataObjectType,
-                                                                DomainObjectInstantiator instantiator) {
+    public static DomainObjectInstantiator registerInstantiator(
+                                           String dataObjectType,
+                                           DomainObjectInstantiator instantiator) {
         MetadataRoot meta = SessionManager.getMetadataRoot();
 
         ObjectType objectType = meta.getObjectType(dataObjectType);

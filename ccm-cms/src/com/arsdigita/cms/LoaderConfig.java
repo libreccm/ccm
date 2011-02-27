@@ -38,6 +38,7 @@ import org.apache.log4j.Logger;
  * later after the installation step.
  *
  * @author pb
+ * @version $Id: LoaderConfig.java  $
  */
 public final class LoaderConfig extends AbstractConfig {
 
@@ -111,18 +112,18 @@ public final class LoaderConfig extends AbstractConfig {
      * An entry in this list is required by internal content types (see package
      * ccm-cms/src/com/arsdigita/cms/contenttypes)
      */
-    private final Parameter 
-            m_ctDefFiles = new StringArrayParameter(
-                           "com.arsdigita.cms.loader.contenttype_definition_files",
-                           Parameter.REQUIRED,
-                           // Generic*.xml added by Quasi in enterprise.init for
-                           // new generic Basetypes in addition to article
-                           new String[] {"/WEB-INF/content-types/GenericAddress.xml",
-                                         "/WEB-INF/content-types/GenericArticle.xml",
-                                         "/WEB-INF/content-types/GenericContact.xml",
-                                         "/WEB-INF/content-types/GenericOrganizationalUnit.xml",
-                                         "/WEB-INF/content-types/GenericPerson.xml",
-                                         "/WEB-INF/content-types/Template.xml"}
+    private final Parameter m_ctDefFiles =
+            new StringArrayParameter(
+                "com.arsdigita.cms.loader.contenttype_definition_files",
+                Parameter.REQUIRED,
+                // Generic*.xml added by Quasi in enterprise.init for
+                // new generic Basetypes in addition to article
+                new String[] {"/WEB-INF/content-types/GenericAddress.xml",
+                              "/WEB-INF/content-types/GenericArticle.xml",
+                              "/WEB-INF/content-types/GenericContact.xml",
+                              "/WEB-INF/content-types/GenericOrganizationalUnit.xml",
+                              "/WEB-INF/content-types/GenericPerson.xml",
+                              "/WEB-INF/content-types/Template.xml"}
                                                    );
 
     
