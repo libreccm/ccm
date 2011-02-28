@@ -29,16 +29,14 @@ import java.util.Date;
  * Duration and due date can be set at any time after instatantiation.
  *
  * @author Stefan Deusch 
- * @author Khy Huang 
+ * @author Khy Huang
+ * @version $Id: Duration.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class Duration {
-    public static final String versionId = "$Id: Duration.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
-
-    /**
-     * the duration in minutes
-     */
+    /** the duration in minutes                                              */
     private int m_duration = 0;
+    /** Start date                                                           */
     private Date m_startDate = new Date();
 
     /**
@@ -121,7 +119,7 @@ public class Duration {
      * @param minutes the duration in minutes
      *
      **/
-    public void setDuration(int days, int hours, int minutes) {
+    public final void setDuration(int days, int hours, int minutes) {
         setDuration(days*24*60 + hours*60 + minutes);
     }
 
@@ -131,7 +129,7 @@ public class Duration {
      * @param minutes the duration in minutes
      *
      **/
-    public void setDuration(int minutes) {
+    public final void setDuration(int minutes) {
         m_duration = minutes;
     }
 

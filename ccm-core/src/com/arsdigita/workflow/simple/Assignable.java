@@ -30,11 +30,9 @@ import com.arsdigita.kernel.Group;
  * @author Karl GoldStein 
  * @author Khy Huang      
  * @author Stefan Deusch  
- *
- **/
+ * @version $Id: Assignable.java 287 2005-02-22 00:29:02Z sskracic $
+ */
 public interface Assignable {
-
-    public static final String versionId = "$Id: Assignable.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     /**
      * Assigns a user to this task. (persistent operation)

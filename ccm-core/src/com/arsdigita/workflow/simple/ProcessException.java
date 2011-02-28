@@ -21,9 +21,10 @@ package com.arsdigita.workflow.simple;
 /**
  * Standard exception for Process and Task action methods to throw when
  * illegal operations are attempted.
+ *
+ * @version $Id: ProcessException.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class ProcessException extends TaskException {
-    public static final String versionId = "$Id: ProcessException.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     public ProcessException(String s) {
         super(s);

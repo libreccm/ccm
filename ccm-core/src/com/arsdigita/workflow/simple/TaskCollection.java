@@ -30,12 +30,9 @@ import org.apache.log4j.Logger;
  * @author Uday Mathur
  * @author Khy Huang
  * @version 1.0
+ * @version $Id: TaskCollection.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class TaskCollection extends DomainCollection {
-    public static final String versionId =
-        "$Id: TaskCollection.java 287 2005-02-22 00:29:02Z sskracic $" +
-        "$Author: sskracic $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_log = Logger.getLogger(TaskCollection.class);
 

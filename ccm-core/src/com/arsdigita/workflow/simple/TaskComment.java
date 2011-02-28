@@ -41,10 +41,10 @@ import org.apache.log4j.Logger;
  * Must be loaded in full because we don't handle ID.
  *
  * @author Stefan Deusch 
- * @author Khy Huang 
+ * @author Khy Huang
+ * @version $Id: TaskComment.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class TaskComment extends ObservableDomainObject {
-    public static final String versionId = "$Id: TaskComment.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private static final Logger s_cat =
         Logger.getLogger(TaskComment.class.getName());

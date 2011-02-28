@@ -42,7 +42,34 @@ import org.apache.log4j.Logger;
  */
 public final class LoaderConfig extends AbstractConfig {
 
+    /** Local logger instance fpr debug support                               */
     private static final Logger s_log = Logger.getLogger(LoaderConfig.class);
+
+    /** Private Object to hold one's own instance to return to users. */
+    private static LoaderConfig s_conf;
+
+    /**
+     * Returns the singleton configuration record for Loader configuration.
+     *
+     * @return The <code>ContentSectionConfig</code> record; it cannot be null
+     */
+    public static synchronized LoaderConfig getInstance() {
+        if (s_conf == null) {
+            s_conf = new LoaderConfig();
+        /* Currently LoaderConfig does not process parameters stored in a
+         * properties file. In order to do so the class must be added to
+         * ccm-cms.config, a storage file specified and the load() commented
+         * in.
+         * Before it can be used meaningfully, ccm-xxx-aplaws must be enhanced
+         * to be able tp process dynamically e.g. section name and other
+         * parameter values. Currently, section name is hardcoded (content) as
+         * well as creating terms domains etc.
+         */
+        //  s_conf.load();
+        }
+
+        return s_conf;
+    }
 
 //  /**
 //   * The name of the workspace package instance, i.e. URL of the workspace,
@@ -145,7 +172,6 @@ public final class LoaderConfig extends AbstractConfig {
                                    "com.arsdigita.cms.loader.section_name",
                                    Parameter.REQUIRED,
                                    "content");
-                                   //"public");
 
     // Root Folder, set autonomously by ContentSection.create() method
 

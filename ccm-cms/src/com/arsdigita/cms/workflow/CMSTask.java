@@ -51,7 +51,7 @@ import com.arsdigita.web.URL;
 import com.arsdigita.workflow.simple.TaskComment;
 import com.arsdigita.workflow.simple.TaskException;
 import com.arsdigita.workflow.simple.UserTask;
-import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +61,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.log4j.Logger;
 
 /**
  * This class represents a task in the CMS system. This task is
@@ -158,6 +160,7 @@ public class CMSTask extends UserTask {
      * Initialize setting the TaskType to Authoring by default.
      *
      **/
+    @Override
     protected void initialize() {
         super.initialize();
         if (isNew()) {
@@ -213,6 +216,11 @@ public class CMSTask extends UserTask {
             query.close();
         }
     }
+
+    /**
+     *
+     */
+    @Override
     public void enableEvt() {
         super.enableEvt();
         // Remove the record of previously sent "unfinished notifications".
@@ -224,12 +232,18 @@ public class CMSTask extends UserTask {
         oper.execute();
     }
 
+    /** 
+     * 
+     * @param taskTypeID
+     * @return
+     */
     private TaskURLGenerator getURLGenerator(Integer taskTypeID) {
         TaskURLGenerator t = (TaskURLGenerator)
             s_taskURLGeneratorCache.get(taskTypeID);
         if (t == null) {
             Session s = SessionManager.getSession();
-            DataQuery query = s.retrieveQuery("com.arsdigita.cms.workflow.getTaskTypes");
+            DataQuery query = s.retrieveQuery(
+                                    "com.arsdigita.cms.workflow.getTaskTypes");
             query.addEqualsFilter("Id", taskTypeID);
             if (query.next()) {
                 String className = (String)query.get("className");
@@ -251,12 +265,20 @@ public class CMSTask extends UserTask {
         return t;
     }
 
+    /**
+     * 
+     * @param operation
+     * @param sender
+     * @return
+     */
+    @Override
     protected Message generateMessage(String operation, Party sender) {
         ContentItem item = getItem();
         Assert.exists(item, "item associated with this CMSTask");
         
         String authoringURL = getAuthoringURL(item);
-        String fullURL = getTaskType().getURLGenerator(operation, item).generateURL(item.getID(), getID());
+        String fullURL = getTaskType().getURLGenerator(operation, item)
+                                      .generateURL(item.getID(), getID());
         s_log.debug("URL retrieved from generator: " + fullURL);
         if (!fullURL.startsWith("http")) {
 	    // url is not fully qualified
@@ -282,17 +304,22 @@ public class CMSTask extends UserTask {
         if (commenter != null) {
             g11nArgs[7] = commenter.getName();
         } else {
-            g11nArgs[7] = (String) GlobalizationUtil.globalize("cms.ui.unknown").localize();
+            g11nArgs[7] = (String) GlobalizationUtil
+                                   .globalize("cms.ui.unknown").localize();
         }
         g11nArgs[8] = getStartDate();
         g11nArgs[9] = URL.there(authoringURL, null).getURL();
 	//if added to email, allows recipient to identify if the item is in a folder 
 	// they are interested in
         g11nArgs[10] = ((ContentItem)item.getParent()).getPath();
-        String subject = (String) GlobalizationUtil.globalize("cms.ui.workflow.email.subject." + operation,
-                                                     g11nArgs).localize();
-        String body = (String) GlobalizationUtil.globalize("cms.ui.workflow.email.body." + operation,
-                                                           g11nArgs).localize();
+        String subject = (String) GlobalizationUtil
+                                  .globalize("cms.ui.workflow.email.subject."
+                                             + operation,
+                                             g11nArgs).localize();
+        String body = (String) GlobalizationUtil
+                               .globalize("cms.ui.workflow.email.body."
+                                          + operation,
+                                          g11nArgs).localize();
         Message msg = new Message(sender, subject, body);
         msg.save();
         return msg;
@@ -389,30 +416,56 @@ public class CMSTask extends UserTask {
         // default if _ALL - send alert to all task assignees
         String recipients = ALERT_RECIPIENT_ALL;
         if (operation.endsWith(ALERT_RECIPIENT_LASTAUTHOR)) {
-        	operation = operation.substring(0,operation.length() - ALERT_RECIPIENT_LASTAUTHOR.length());
+        	operation = operation.substring(0,
+                                            operation.length() -
+                                            ALERT_RECIPIENT_LASTAUTHOR.length());
         	authorOnlySet.add(operation);
         	recipients = ALERT_RECIPIENT_LASTAUTHOR;
         } else if (operation.endsWith(ALERT_RECIPIENT_ALL)) {
-        	operation = operation.substring(0,operation.length() - ALERT_RECIPIENT_ALL.length());
+        	operation = operation.substring(0,operation.length()
+                                              - ALERT_RECIPIENT_ALL.length());
         }
         operationSet.add(operation);
 
         s_log.info("Added alert for \"" + operation + "\" of " + typeLabel +
-                   " task in section \"" + section.getName() + "\" recipients flag: "+recipients);
+                   " task in section \"" + section.getName() +
+                   "\" recipients flag: "+recipients);
     }
 
+    /**
+     * 
+     * @param section
+     * @param typeLabel
+     * @param operation
+     * @return
+     */
     protected static boolean shouldSendAlert(ContentSection section,
             String typeLabel,
             String operation) {
     	return checkAlertsConfig(section, typeLabel, operation, ALERT_OPERATIONS); 
     }
 
+    /**
+     * 
+     * @param section
+     * @param typeLabel
+     * @param operation
+     * @return
+     */
     protected static boolean shouldSendToAuthorOnly(ContentSection section,
             String typeLabel,
             String operation) {
     	return checkAlertsConfig(section, typeLabel, operation, ALERT_RECIPIENTS); 
     }
 
+    /**
+     * 
+     * @param section
+     * @param typeLabel
+     * @param operation
+     * @param field
+     * @return
+     */
     private static boolean checkAlertsConfig(ContentSection section,
                                              String typeLabel,
                                              String operation,
@@ -440,10 +493,16 @@ public class CMSTask extends UserTask {
         if (operationSet != null) {
             send = operationSet.contains(operation);
         }
-        s_log.debug("operation " + operation + " field " + field + " of task " + typeLabel + "?: " + send);
+        s_log.debug("operation " + operation + " field " + field + " of task "
+                    + typeLabel + "?: " + send);
         return send;
     }
 
+    /**
+     * 
+     * @param operation
+     * @return
+     */
     @Override
     protected boolean sendAlerts(String operation) {
     	ContentSection section = getContentSection();
@@ -475,7 +534,8 @@ public class CMSTask extends UserTask {
     		// XXX lastModifiedUser in audit trail is overwritten on each save  
             // author = item.getLastModifiedUser();
             // workaround: use the latest history record with 'Authored' tag 
-            TransactionCollection hist = Versions.getTaggedTransactions(item.getOID());
+            TransactionCollection hist = Versions
+                                         .getTaggedTransactions(item.getOID());
             while (author == null && hist.next()) {
                 Transaction txn = hist.getTransaction();
                 TagCollection tags = txn.getTags();
@@ -484,13 +544,14 @@ public class CMSTask extends UserTask {
                     if ("Authored".equals(tag)) {
                         author = txn.getUser();
                         if (s_log.isDebugEnabled()) {
-                            s_log.debug("author from hist="+author+" at "+txn.getTimestamp());    
+                            s_log.debug("author from hist="+author+" at "+
+                                        txn.getTimestamp());
                         }
                     }
                 }
             }
-			// bugfix - if author is null above then we break out 
-			// of loop early. If normal exit and so cursor has already closed then the 
+			// bugfix - if author is null above then we break out  of loop
+			// early. If normal exit and so cursor has already closed then the
 			// next line has no effect
 			hist.close();
     		if (author == null) {
@@ -512,8 +573,8 @@ public class CMSTask extends UserTask {
     		return;
     	}
         /* NOTE:
-         * it would be cleaner to simply change getAssignedUsers()
-         * to do what we want; however that is used by cms.ui.workflow.UserTaskComponent
+         * it would be cleaner to simply change getAssignedUsers() to do what
+         * we want; however that is used by cms.ui.workflow.UserTaskComponent
          * and I didn't want to break that.
          * Plus the API doesn't state exactly what getAssignedUsers()
          * is supposed to return, so I decided to leave it alone.
@@ -540,7 +601,8 @@ public class CMSTask extends UserTask {
         
 			uc = User.retrieveAll();
         
-			uc.addFilter("allGroups in :assignedGroups").set("assignedGroups", groups);
+			uc.addFilter("allGroups in :assignedGroups").set("assignedGroups",
+                                                             groups);
        
 			filterUsersAndSendMessage(uc, msg);
 		}

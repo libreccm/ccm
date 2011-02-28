@@ -28,27 +28,64 @@ import com.arsdigita.util.parameter.StringParameter;
  *
  * @author Rafael H. Schloming &lt;rhs@mit.edu&gt;
  * @version $Id: WorkflowConfig.java 287 2005-02-22 00:29:02Z sskracic $
- **/
-
+ */
 public final class WorkflowConfig extends AbstractConfig {
 
+    /** Private Object to hold one's own instance to return to users. */
+    private static WorkflowConfig s_config;
+
+    /**
+     * Returns the singleton configuration record for the workflow 
+     * configuration.
+     *
+     * @return The <code>ContentSectionConfig</code> record; it cannot be null
+     */
+    public static synchronized WorkflowConfig getInstance() {
+        if (s_config == null) {
+            s_config = new WorkflowConfig();
+            s_config.load();
+        }
+
+        return s_config;
+    }
+
+
+// /////////////////////////////////////////////////////////////////////////////
+//
+// Set of parameters controlling workflow alerts.
+//
+// /////////////////////////////////////////////////////////////////////////////
+
+    /** Turn on or off workflow alerts.                                       */
     private BooleanParameter m_alerts = new BooleanParameter
         ("waf.workflow.simple.alerts_enabled", Parameter.OPTIONAL,
          Boolean.TRUE);
 
+    /** Default sender for workflow alerts, e.g. workflow@example.com        */
     private StringParameter m_sender = new StringParameter
         ("waf.workflow.simple.alerts_sender", Parameter.OPTIONAL, null);
 
+    /** 
+     * Constructor
+     */
     public WorkflowConfig() {
         register(m_alerts);
         register(m_sender);
         loadInfo();
     }
 
+    /**
+     * Retrieve whether alerts are to be enabled or not.
+     * @return true if alerts are enabled.
+     */
     public boolean isAlertsEnabled() {
         return get(m_alerts).equals(Boolean.TRUE);
     }
 
+    /**
+     * Retrieve alert senders default mail address.
+     * @return
+     */
     public String getAlertsSender() {
         return (String) get(m_sender);
     }

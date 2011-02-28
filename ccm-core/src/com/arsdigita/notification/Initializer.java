@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2010 pboy (pboy@barkhof.uni-bremen.de) All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -45,11 +45,11 @@ import org.apache.log4j.Logger;
  *
  * @author David Dao
  * @author Peter Boy (pboy@barkhof.uni-bremen.de)
- * @version $Id: $
+ * @version $Id: Initializer.java $
  */
 public class Initializer extends GenericInitializer {
 
-    // Creates a s_logging category with name = to the full name of class
+    /** Creates a s_logging category with name = to the full name of class  */
     public static final Logger s_log = Logger.getLogger(Initializer.class);
 
     // Timer threads.  Each one is started as a daemon.
@@ -86,10 +86,11 @@ public class Initializer extends GenericInitializer {
      *
      * @param evt The context init event.
      **/
+    @Override
     public void init(ContextInitEvent evt) {
         s_log.debug("notification background startup begin.");
 
-        NotificationConfig conf = NotificationConfig.getConfig();
+        NotificationConfig conf = NotificationConfig.getInstance();
         s_log.debug("Notification configuration loaded.");
 
         NotificationRequestManagerTimer.scheduleAtFixedRate(
@@ -119,6 +120,7 @@ public class Initializer extends GenericInitializer {
      * Stops background threads started during initialization so the servlet
      * container can terminate the applications main thread.
      */
+    @Override
     public void close(ContextCloseEvent evt) {
 
         NotificationSimpleQueueTimer.cancel();

@@ -49,10 +49,11 @@ import org.apache.log4j.Logger;
  * Initializes the content section sub-package of the CMS package (module).
  *
  * XXX Reformulate according to the code development!
- * Currently:
- * - creation of additional content sections during restart (comming soon)
+ * This initializer performs:
+ * - check whether to create an additional content sections during restart
  * - initializes alert preferences for each content section
  * - initializes overdue alerts for each content section
+ *
  * In the (hopefully) near future:
  * Content section specific tasks of cms.Initializer will be moved into this
  * Initializer.
@@ -61,15 +62,15 @@ import org.apache.log4j.Logger;
  * @author Daniel Berrange (berrange@redhat.com)
  * @author Michael Pih
  * @author pboy (pb@zes.uni-bremen.de)
- * @version $Id: $
+ * @version $Id: Initializer.java $
  */
 public class Initializer extends CompoundInitializer {
 
 
-    /** Creates a s_logging category with name = to the full name of class */
+    /** Creates a s_logging category with name = to the full name of class    */
     private static Logger s_log = Logger.getLogger(Initializer.class);
 
-    /** Local configuration object ContentSectionConfig containing parameters
+    /** Configuration object ContentSectionConfig containing parameters
         which may be changed each system startup.                             */
     private static final ContentSectionConfig s_conf = ContentSectionConfig
                                                        .getInstance();
@@ -83,7 +84,7 @@ public class Initializer extends CompoundInitializer {
       //final int database = DbHelper.getDatabaseFromURL(url);
     }
 
-//  Currently nothing to do here. Will be changed in the ongoing migration process
+//  Currently nothing to do here. May change during the ongoing migration process
 //  /**
 //   * An empty implementation of {@link Initializer#init(DataInitEvent)}.
 //   *
@@ -96,10 +97,11 @@ public class Initializer extends CompoundInitializer {
      * Initializes domain-coupling machinery, usually consisting of
      * registering object instantiators and observers.
      *
+     * Here additionally checks whether to create a new content section.
      */
     @Override
     public void init(DomainInitEvent evt) {
-        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) invoked");
+        s_log.debug("contentsection.Initializer.init(DomainInitEvent) invoked");
 
         // Recursive invokation of init!
         // An empty implementations prevents this initializer from being executed.
@@ -119,7 +121,7 @@ public class Initializer extends CompoundInitializer {
              // specified in config file.
              checkForNewContentSection();
 
-        s_log.debug("CMS.installer.Initializer.init(DomainInitEvent) completed");
+        s_log.debug("contentsection.Initializer.init(DomainInitEvent) completed");
     }
 
 
@@ -128,8 +130,8 @@ public class Initializer extends CompoundInitializer {
      * method.
      *
      * Steps through all installed content sections and for each section
-     * - initializes the allert preferences
-     * - initializes the scheduler background thread to fire all all alert events.
+     * - initializes the alert preferences
+     * - initializes the scheduler background thread to fire all alert events.
      *
      * A delay value of 0 inhibits start of processing.
      * @param evt The context init event.
@@ -154,6 +156,7 @@ public class Initializer extends CompoundInitializer {
             // file filling a hashmap.
             initializeTaskAlerts(section, s_conf.getTaskAlerts() );
 
+            // create a standard java util timer object
             Timer unfinishedTimer = startNotifierTask(
                                                 section,
                                                 s_conf.getSendOverdueAlerts(),
@@ -182,7 +185,8 @@ public class Initializer extends CompoundInitializer {
 
         Timer unfinishedTimer = null;
         if (s_unfinishedTimers.size() > 0) {
-            for (Enumeration el=s_unfinishedTimers.elements(); el.hasMoreElements(); ) {
+            for (Enumeration el=s_unfinishedTimers.elements();
+                             el.hasMoreElements(); ) {
                 unfinishedTimer = (Timer) el.nextElement();
                 if(unfinishedTimer != null) unfinishedTimer.cancel();
                 unfinishedTimer = null;
@@ -271,12 +275,12 @@ public class Initializer extends CompoundInitializer {
      * @param max
      * @return
      */
-    private final Timer startNotifierTask( ContentSection section,
-                                           Boolean sendOverdue,
-                                           Integer duration,
-                                           Integer alertInterval,
-                                           Integer max
-                                         ) {
+    private Timer startNotifierTask( ContentSection section,
+                                     Boolean sendOverdue,
+                                     Integer duration,
+                                     Integer alertInterval,
+                                     Integer max
+                                   ) {
         Timer unfinished = null;
         if (sendOverdue.booleanValue()) {
             if (duration == null || alertInterval == null || max == null) {

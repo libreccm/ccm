@@ -56,8 +56,6 @@ import org.apache.log4j.Logger;
 //  The module in its complete version (i.e. all method invocations in run()
 //  method commented IN(!) does load all packages into database and
 //  ccm/admin/sitemap lists them appropriately.
-//  Not yet found a way to mount them in the URL tree while initializing.
-//  This is true using the old style application using package / sitenode
 //
 //  Next Try
 //  Refactor using legacy compatible web/Application and ApplicationSetup
@@ -91,11 +89,10 @@ public class Loader extends PackageLoader {
 
     /** Creates a s_logging category with name = full name of class */
     private static final Logger s_log = Logger.getLogger(Loader.class);
-    // Load main CMS configuration file
-    private static final LoaderConfig s_conf = new LoaderConfig();
-//  static {               // requirred to actually read the config file
-//      s_config.load();
-//  }
+
+    /** Loader configuration object, singleton design pattern               */
+    private static final LoaderConfig s_conf = LoaderConfig.getInstance();
+
     /**
      * Constant string used as key for creating CMS (content-section) as a
      * legacy application.
@@ -106,10 +103,12 @@ public class Loader extends PackageLoader {
      */
     private final static String CMS_DISPATCHER_CLASS =
             "com.arsdigita.cms.dispatcher.ContentSectionDispatcher";
-    /**
-     * Stylesheet which has to be assigned as part of a legacy application
-     * creation.
-     */
+
+//  /**
+//   * Stylesheet which has to be assigned as part of a legacy application
+//   * creation.
+//   */
+//  Assigned stylesheets no longer used and base class removed. 
 //  private final static String CMS_STYLESHEET =
 //          "/packages/content-section/xsl/cms.xsl";
 //  /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2011 pboy (pboy@barkhof.uni-bremen.de) All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -27,18 +27,42 @@ import org.apache.log4j.Logger;
 /**
  * NotificationConfig
  *
- * FixMe:
- * invoking load() breaks for some reason the container startup process.
- * As a temporary measure it is disabled and we return constants.
- *
  * @author Peter Boy &lt;pboy@barkhof.uni-bremen.de&gt;
- * @version $Id: $
+ * @version $Id: NotificationConfig.java   $
  */
 public class NotificationConfig extends AbstractConfig {
 
+    /** Private Logger instance.  */
     private static final Logger s_log = Logger.getLogger(NotificationConfig.class);
 
+    /** Private Object to hold one's own instance to return to users. */
     private static NotificationConfig s_conf;
+
+    /**
+     * Returns the singleton configuration record for the content section
+     * environment.
+     *
+     * @return The <code>ContentSectionConfig</code> record; it cannot be null
+     */
+    public static synchronized NotificationConfig getInstance() {
+        if (s_conf == null) {
+            s_conf = new NotificationConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+
+// /////////////////////////////////////////////////////////////////////////////
+//
+// Set of parameters controlling Overdue Task alerts:
+// Currently there is no way to persist it nor to persist on a per section base.
+// Therefore Initializer has to create overdue task alert mechanism using a
+// configuration applied to every content section.
+//
+// /////////////////////////////////////////////////////////////////////////////
+
 
 
     /**
@@ -85,7 +109,7 @@ public class NotificationConfig extends AbstractConfig {
 
     /**
      * Constructor.
-     * Do not use it directly!
+     * Do not use it directly! Singleton design pattern!
      */
     public NotificationConfig() {
         s_log.debug("Executing NotificationConfig Constructor.");
@@ -102,29 +126,6 @@ public class NotificationConfig extends AbstractConfig {
         s_log.debug("Leaving NotificationConfig Constructor.");
     }
     
-    /**
-     * Get a NotificationConfig instance.
-     *
-     * Singelton pattern, don't instantiate a notificationConfig object using
-     * the constructor directly.
-     * @return
-     */
-    static synchronized NotificationConfig getConfig() {
-        s_log.debug("NotificationConfig object requested.");
-        if (s_conf == null) {
-            s_log.debug("Instantiating NotificationConfig object.");
-            s_conf = new NotificationConfig();
-            s_log.debug("Got NotificationConfig object.");
-        //  FixMe:
-        //  invoking load() breaks for some reason the container startup
-        //  process.
-        //  As a temporary measure it is disabled and we return constants.
-        //  s_conf.load();
-            s_log.debug("NotificationConfig object instantiated.");
-        }
-
-        return s_conf;
-    }
 
     /**
      * Retrieve request manager's delay in seconds.

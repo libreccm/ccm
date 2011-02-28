@@ -35,9 +35,6 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.Assert;
 import com.arsdigita.util.UncheckedWrapperException;
-// deprecated
-// use: AbstractConfig#load() instead
-// import com.arsdigita.runtime.RuntimeConfigLoader;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -59,17 +56,11 @@ import org.apache.log4j.Logger;
  **/
 public class UserTask extends Task implements Assignable {
 
-    private static WorkflowConfig CONFIG;
+    /** Private logger instance for log4j.                                   */
+    private static final Logger s_log = Logger.getLogger(UserTask.class);
 
-    private static WorkflowConfig getConfig() {
-        if (CONFIG == null) {
-            CONFIG = new WorkflowConfig();
-            // CONFIG.load(new RuntimeConfigLoader
-            //         ("ccm-core/workflow.properties", false));
-            CONFIG.load();
-        }
-        return CONFIG;
-    }
+    /** Private configuration object, singleton design pattern               */
+    private static final WorkflowConfig s_conf = WorkflowConfig.getInstance();
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.workflow.simple.UserTask";
@@ -96,9 +87,6 @@ public class UserTask extends Task implements Assignable {
     public static final String DISABLE_OP = "disable";
     public static final String ROLLBACK_OP = "rollback";
     public static final String FINISH_OP = "finish";
-
-    private static final Logger s_log =
-        Logger.getLogger(UserTask.class);
 
     /**
      * Constructor for a user task with usage information.
@@ -242,7 +230,7 @@ public class UserTask extends Task implements Assignable {
      * @param duration the duration for this task
      *
      **/
-    public void setDuration(Duration duration) {
+    private void setDuration(Duration duration) {
         setStartDate(duration.getStartDate());
         setDueDate(duration.getDueDate());
         set(DURATION_MINUTES, new BigDecimal(duration.getDuration()));
@@ -956,7 +944,7 @@ public class UserTask extends Task implements Assignable {
     }
 
     public static Party getAlertsSender() {
-        String email = getConfig().getAlertsSender();
+        String email = s_conf.getAlertsSender();
         if (email == null) { return null; }
         PartyCollection parties = Party.retrieveAllParties();
         parties.addEqualsFilter("primaryEmail", email.toLowerCase());
@@ -978,6 +966,6 @@ public class UserTask extends Task implements Assignable {
      * as well.
      **/
     protected boolean sendAlerts(String operation) {
-        return getConfig().isAlertsEnabled();
+        return s_conf.isAlertsEnabled();
     }
 }

@@ -20,9 +20,11 @@ package com.arsdigita.workflow.simple;
 
 /**
  * Encapsulates a task event.
+ *
+ * @version $Id: TaskEvent.java 287 2005-02-22 00:29:02Z sskracic $
  */
 public class TaskEvent {
-    public static final String versionId = "$Id: TaskEvent.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
+
     /**
      * The constructor for a task event should include additional contextual
      * information, possibly the request object.

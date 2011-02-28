@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2004 Red Hat Inc. All Rights Reserved.
+ * Copyright (C) 2009 Peter Boy <pb@zes.uni-bremen.de> All Rights Reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -55,7 +55,7 @@ public final class ContentSectionConfig extends AbstractConfig {
      *
      * @return The <code>ContentSectionConfig</code> record; it cannot be null
      */
-    public static final synchronized ContentSectionConfig getInstance() {
+    public static synchronized ContentSectionConfig getInstance() {
         if (s_config == null) {
             s_config = new ContentSectionConfig();
             s_config.load();

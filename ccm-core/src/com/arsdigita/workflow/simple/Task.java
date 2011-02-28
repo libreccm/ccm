@@ -18,16 +18,6 @@
  */
 package com.arsdigita.workflow.simple;
 
-// duplicate import statements, copy&paste error
-// import com.arsdigita.auditing.AuditedACSObject;
-// import com.arsdigita.domain.DataObjectNotFoundException;
-// import com.arsdigita.kernel.User;
-// import com.arsdigita.persistence.DataAssociation;
-// import com.arsdigita.persistence.DataAssociationCursor;
-// import com.arsdigita.persistence.DataObject;
-// import com.arsdigita.persistence.OID;
-// import com.arsdigita.persistence.SessionManager;
-// import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.auditing.AuditedACSObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.domain.DomainObjectFactory;
@@ -40,7 +30,6 @@ import com.arsdigita.persistence.OID;
 import com.arsdigita.persistence.SessionManager;
 import com.arsdigita.persistence.metadata.ObjectType;
 import com.arsdigita.util.UncheckedWrapperException;
-// import com.arsdigita.workflow.simple.Workflow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -73,12 +62,11 @@ import org.apache.log4j.Logger;
  * @author Uday Mathur
  * @author Khy Huang
  * @author Stefan Deusch
+ * @version $Id: Task.java 1278 2006-07-27 09:09:51Z cgyg9330 $
  **/
 public class Task extends AuditedACSObject implements Cloneable {
-    public static final String versionId =
-        "$Id: Task.java 1278 2006-07-27 09:09:51Z cgyg9330 $" +
-        "$Author: cgyg9330 $" +
-        "$DateTime: 2004/08/16 18:10:38 $";
+
+    private static final Logger s_log = Logger.getLogger(Task.class);
 
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.workflow.simple.Task";
@@ -100,9 +88,6 @@ public class Task extends AuditedACSObject implements Cloneable {
     public final static int FINISHED = 2;
     public final static int DELETED  = 3;
     public final static int INACTIVE = 4;
-
-    private static final Logger s_log =
-        Logger.getLogger(Task.class);
 
     //-------------------- Constructors Section -------------------------------
     /**
@@ -186,6 +171,7 @@ public class Task extends AuditedACSObject implements Cloneable {
      * Initializes a task.
      *
      **/
+    @Override
     protected void initialize() {
         super.initialize();
         if (isNew()) {
@@ -199,13 +185,13 @@ public class Task extends AuditedACSObject implements Cloneable {
 
 
     /**
-     * Sets the label and dDescription for this task.
+     * Sets the label and description for this task.
      *
      * @param label the task label
      * @param description the task description
      *
      **/
-    protected void initAttributes(String label, String description) {
+    protected final void initAttributes(String label, String description) {
         setLabel(label);
         setDescription(description);
     }
@@ -219,6 +205,7 @@ public class Task extends AuditedACSObject implements Cloneable {
      * @return the basic data object type.
      *
      **/
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -969,7 +956,7 @@ public class Task extends AuditedACSObject implements Cloneable {
      * @param state the state to set the task
      *
      */
-    public void setState(int state) {
+    public final void setState(int state) {
         set(TASK_STATE, getStateString(state));
     }
 
@@ -1051,8 +1038,10 @@ public class Task extends AuditedACSObject implements Cloneable {
                 }
             }
         } catch (TaskException taskException) {
-            taskException.printStackTrace();
-            s_log.debug("setting state to be enabled " + getID());
+            if ( s_log.isDebugEnabled() ) {
+                taskException.printStackTrace();
+                 s_log.debug("setting state to be enabled " + getID());
+            }
             setState(ENABLED);
         }
     }
@@ -1157,11 +1146,13 @@ public class Task extends AuditedACSObject implements Cloneable {
         updateState();
     }
 
+    @Override
     public void delete() {
         triggerListenerUpdateState();
         super.delete();
     }
 
+    @Override
     public String getDisplayName() {
         return getLabel();
     }
