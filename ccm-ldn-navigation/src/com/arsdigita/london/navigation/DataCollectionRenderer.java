@@ -50,7 +50,7 @@ import org.apache.log4j.Logger;
 public class DataCollectionRenderer extends LockableImpl {
 
     private static final Logger s_log =
-            Logger.getLogger(DataCollectionRenderer.class);
+                                Logger.getLogger(DataCollectionRenderer.class);
     private ArrayList m_attributes = new ArrayList();
     private ArrayList m_properties = new ArrayList();
     private int m_pageSize = 20;
@@ -61,7 +61,7 @@ public class DataCollectionRenderer extends LockableImpl {
      * {@link SimpleXMLGenerator.ADAPTER_CONTEXT}.
      */
     private String m_specializeObjectsContext =
-            SimpleXMLGenerator.ADAPTER_CONTEXT;
+                   SimpleXMLGenerator.ADAPTER_CONTEXT;
     private boolean m_wrapAttributes = false;
     private boolean m_navItems = true;
 
@@ -123,10 +123,12 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     /**
-     * @pageNumber current page, starting from 1
+     * @param objects 
+     * @param pageNumber current page, starting from 1
+     * @return
      */
     public Element generateXML(DataCollection objects,
-            int pageNumber) {
+                               int pageNumber) {
         Assert.isLocked(this);
 
         // Quasimodo: Begin
@@ -148,7 +150,8 @@ public class DataCollectionRenderer extends LockableImpl {
         }
 
         long objectCount = objects.size();
-        int pageCount = (int) Math.ceil((double) objectCount / (double) m_pageSize);
+        int pageCount = (int) Math.ceil((double) objectCount
+                                        / (double) m_pageSize);
 
         if (pageNumber < 1) {
             pageNumber = 1;
@@ -163,7 +166,8 @@ public class DataCollectionRenderer extends LockableImpl {
         long end = begin + count;
 
         if (count != 0) {
-            objects.setRange(new Integer((int) begin + 1), new Integer((int) end + 1));
+            objects.setRange(new Integer((int) begin + 1),
+                             new Integer((int) end + 1));
         }
 
         Element paginator = Navigation.newElement("paginator");
@@ -187,7 +191,8 @@ public class DataCollectionRenderer extends LockableImpl {
         }
 
         paginator.addAttribute("pageParam", pageParam);
-        paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).toString());
+        paginator.addAttribute("baseURL", URL.there(url.getPathInfo(), map).
+                toString());
         // Quasimodo: End
 
         paginator.addAttribute("pageNumber", new Long(pageNumber).toString());
@@ -218,7 +223,8 @@ public class DataCollectionRenderer extends LockableImpl {
 
             Iterator properties = m_properties.iterator();
             while (properties.hasNext()) {
-                DataCollectionPropertyRenderer property = (DataCollectionPropertyRenderer) properties.next();
+                DataCollectionPropertyRenderer property = (DataCollectionPropertyRenderer) properties.
+                        next();
                 property.render(objects, item);
             }
 
@@ -237,13 +243,13 @@ public class DataCollectionRenderer extends LockableImpl {
 
     protected String getStableURL(DataObject dobj, ACSObject obj) {
         OID oid = new OID((String) dobj.get(ACSObject.OBJECT_TYPE),
-                dobj.get(ACSObject.ID));
+                          dobj.get(ACSObject.ID));
         return Navigation.redirectURL(oid);
     }
 
     private void outputValue(final Element item, final Object value,
-            final String name,
-            final String[] paths, final int depth) {        
+                             final String name,
+                             final String[] paths, final int depth) {
         if (null == value) {
             return;
         }
@@ -274,18 +280,27 @@ public class DataCollectionRenderer extends LockableImpl {
                 Date date = (Date) value;
                 Calendar calDate = Calendar.getInstance();
                 calDate.setTime(date);
-                attribute.addAttribute("year", Integer.toString(calDate.get(Calendar.YEAR)));
-                attribute.addAttribute("month", Integer.toString(calDate.get(Calendar.MONTH) + 1));
-                attribute.addAttribute("day", Integer.toString(calDate.get(Calendar.DAY_OF_MONTH)));
-                attribute.addAttribute("hour", Integer.toString(calDate.get(Calendar.HOUR_OF_DAY)));
-                attribute.addAttribute("minute", Integer.toString(calDate.get(Calendar.MINUTE)));
-                attribute.addAttribute("second", Integer.toString(calDate.get(Calendar.SECOND)));
+                attribute.addAttribute("year", Integer.toString(calDate.get(
+                        Calendar.YEAR)));
+                attribute.addAttribute("month", Integer.toString(calDate.get(
+                        Calendar.MONTH) + 1));
+                attribute.addAttribute("day", Integer.toString(calDate.get(
+                        Calendar.DAY_OF_MONTH)));
+                attribute.addAttribute("hour", Integer.toString(calDate.get(
+                        Calendar.HOUR_OF_DAY)));
+                attribute.addAttribute("minute", Integer.toString(calDate.get(
+                        Calendar.MINUTE)));
+                attribute.addAttribute("second", Integer.toString(calDate.get(
+                        Calendar.SECOND)));
 
                 // Quasimodo: BEGIN
                 // Add attributes for date and time
-                Locale negLocale = com.arsdigita.dispatcher.DispatcherHelper.getNegotiatedLocale();
-                DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM, negLocale);
-                DateFormat timeFormatter = DateFormat.getTimeInstance(DateFormat.SHORT, negLocale);
+                Locale negLocale = com.arsdigita.dispatcher.DispatcherHelper.
+                        getNegotiatedLocale();
+                DateFormat dateFormatter = DateFormat.getDateInstance(
+                        DateFormat.MEDIUM, negLocale);
+                DateFormat timeFormatter = DateFormat.getTimeInstance(
+                        DateFormat.SHORT, negLocale);
                 attribute.addAttribute("date", dateFormatter.format(date));
                 attribute.addAttribute("time", timeFormatter.format(date));
                 // Quasimodo: END
@@ -298,7 +313,7 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     private void valuePersistenceError(PersistenceException ex,
-            String[] paths, int depth) {
+                                       String[] paths, int depth) {
         StringBuffer msg = new StringBuffer();
         msg.append("Attribute ");
         for (int i = 0; i <= depth; i++) {
@@ -317,9 +332,8 @@ public class DataCollectionRenderer extends LockableImpl {
     }
 
     protected void generateItemXML(Element item,
-            DataObject dobj,
-            ACSObject obj,
-            int index) {
-        
+                                   DataObject dobj,
+                                   ACSObject obj,
+                                   int index) {
     }
 }

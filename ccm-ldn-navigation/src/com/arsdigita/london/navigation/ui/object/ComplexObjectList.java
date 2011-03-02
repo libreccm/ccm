@@ -40,7 +40,9 @@ public class ComplexObjectList extends AbstractObjectList {
     public static final String CUSTOM_NAME = "customName";
     protected String m_customName = null;
     protected String m_filter = null;
-    protected HashMap m_filterParameters = new HashMap();
+    protected Map m_filterParameters = new HashMap();
+
+    private Map<String, String> m_customAttributes = new HashMap<String, String>();
     
     public void setCustomName(String name) {
         m_customName = name;
@@ -66,10 +68,19 @@ public class ComplexObjectList extends AbstractObjectList {
         m_filterParameters.put(parameterName, value);
         
     }
+
+    public String getCustomAttribute(final String attribute) {
+        return m_customAttributes.get(attribute);
+    }
+
+    public void addCustomAttribute(final String attribute, final String value) {
+        m_customAttributes.put(attribute, value);
+    }
     
   /* Diese Methode überschreibt die Methode aus der Eltern-Klasse, um
    * die SQL-Filter berücksichtigen zu können
    */
+    @Override
     protected DataCollection getObjects( HttpServletRequest request, HttpServletResponse response ) {
         DataCollection objects = super.getObjects( request, response );
         
@@ -103,6 +114,10 @@ public class ComplexObjectList extends AbstractObjectList {
         
         if (m_customName != null) {
             content.addAttribute(CUSTOM_NAME, m_customName);
+        }
+
+        for(Map.Entry<String, String> attribute : m_customAttributes.entrySet()) {
+            content.addAttribute(attribute.getKey(), attribute.getValue());
         }
         
         content.addContent(generateObjectListXML(request, response));
