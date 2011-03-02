@@ -163,6 +163,10 @@ public class ImagePropertiesStep extends SimpleEditStep {
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.copyright"), Image.COPYRIGHT);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.site"), Image.SITE);
         sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.license"), Image.LICENSE);
+        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.material"), Image.MATERIAL);
+        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.technique"), Image.TECHNIQUE);
+        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origin"), Image.ORIGIN);
+        sheet.add(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origSize"), Image.ORIGSIZE);
 
         container.add(sheet);
 

@@ -139,6 +139,30 @@ public class ImagePropertyForm
         TextField license = new TextField(licenseParam);
         add(license);
 
+        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.material")));
+        ParameterModel materialParam = new StringParameter(Image.MATERIAL);
+        materialParam.addParameterListener(new StringInRangeValidationListener(0, 200));
+        TextField material = new TextField(materialParam);
+        add(material);
+
+        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.technique")));
+        ParameterModel techniqueParam = new StringParameter(Image.TECHNIQUE);
+        techniqueParam.addParameterListener(new StringInRangeValidationListener(0, 200));
+        TextField technique = new TextField(techniqueParam);
+        add(technique);
+
+        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origin")));
+        ParameterModel originParam = new StringParameter(Image.ORIGIN);
+        originParam.addParameterListener(new StringInRangeValidationListener(0, 200));
+        TextField origin = new TextField(originParam);
+        add(origin);
+
+        add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.origSize")));
+        ParameterModel origSizeParam = new StringParameter(Image.ORIGSIZE);
+        origSizeParam.addParameterListener(new StringInRangeValidationListener(0, 100));
+        TextField origSize = new TextField(origSizeParam);
+        add(origSize);
+
     }
 
     /** Form initialisation hook. Fills widgets with data. */
@@ -158,6 +182,10 @@ public class ImagePropertyForm
         data.put(Image.COPYRIGHT, image.getCopyright());
         data.put(Image.SITE, image.getSite());
         data.put(Image.LICENSE, image.getLicense());
+        data.put(Image.MATERIAL, image.getMaterial());
+        data.put(Image.TECHNIQUE, image.getTechnique());
+        data.put(Image.ORIGIN, image.getOrigin());
+        data.put(Image.ORIGSIZE, image.getOriginalSize());
     }
 
     @Override
@@ -193,6 +221,10 @@ public class ImagePropertyForm
             image.setCopyright((String) data.get(Image.COPYRIGHT));
             image.setSite((String) data.get(Image.SITE));
             image.setLicense((String) data.get(Image.LICENSE));
+            image.setMaterial((String) data.get(Image.MATERIAL));
+            image.setTechnique((String) data.get(Image.TECHNIQUE));
+            image.setOrigin((String) data.get(Image.ORIGIN));
+            image.setOriginalSize((String) data.get(Image.ORIGSIZE));
 
             image.save();
         }

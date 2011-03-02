@@ -53,6 +53,11 @@ public class Image extends ContentPage {
     public static final String COPYRIGHT = "copyright";
     public static final String SITE = "site";
     public static final String LICENSE = "license";
+    public static final String MATERIAL = "material";
+    public static final String TECHNIQUE = "technique";
+    public static final String ORIGIN = "origin";
+    public static final String ORIGSIZE = "origSize";
+
     protected static final int SUMMARY_SIZE = 1024;
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.cms.contenttypes.Image";
@@ -249,4 +254,36 @@ public class Image extends ContentPage {
     public void setLicense(String license) {
         set(LICENSE, license);
     }
+
+    public String getMaterial() {
+        return (String) get(MATERIAL);
+    }
+
+    public void setMaterial(String material) {
+        set(MATERIAL, material);
+    }
+    public String getTechnique() {
+        return (String) get(TECHNIQUE);
+    }
+
+    public void setTechnique(String technique) {
+        set(TECHNIQUE, technique);
+    }
+
+    public String getOrigin() {
+        return (String) get(ORIGIN);
+    }
+
+    public void setOrigin(String origin) {
+        set(ORIGIN, origin);
+    }
+
+    public String getOriginalSize() {
+        return (String) get(ORIGSIZE);
+    }
+
+    public void setOriginalSize(String origSize) {
+        set(ORIGSIZE, origSize);
+    }
+
 }
