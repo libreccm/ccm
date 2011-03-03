@@ -237,6 +237,25 @@ public class Loader extends PackageLoader {
                 "Display a MultiPartArticle as index item",
                 "/packages/navigation/templates/mparticle-index.jsp");
 
+
+        template =
+        Template.create(
+                "Specializing list",
+                "Displays a list of items as the ordinary template, but specializes the objects in the list.",
+                "/packages/navigation/templates/SpecializingList.jsp");
+
+        template =
+        Template.create(
+                "SciProject list",
+                "Displays a list of SciProject items, including some attributes.",
+                "/packages/navigation/templates/SciProjectList.jsp");
+
+        template =
+        Template.create(
+                "SciPublication list",
+                "Displays a list of publication items, including some attributes.",
+                "/packages/navigation/templates/SciPublicationList.jsp");
+
     }
 
     /**
