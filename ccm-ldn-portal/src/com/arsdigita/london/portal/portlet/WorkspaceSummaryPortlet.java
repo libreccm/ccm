@@ -61,7 +61,8 @@ public class WorkspaceSummaryPortlet extends AppPortlet {
     }
 
     //public String getZoomURL() {
-    //    return URL.getDispatcherPath() + getParentApplication().getPrimaryURL() + "participants/";
+    //    return URL.getDispatcherPath() + getParentApplication().getPrimaryURL()
+    //                                   + "participants/";
     //}
 
     private static class WorkspaceSummaryPortletRenderer
@@ -86,7 +87,8 @@ public class WorkspaceSummaryPortlet extends AppPortlet {
 
             String description = workspace.getDescription();
             if (description != null) {
-                main.addSegment(new Label(GlobalizationUtil.globalize("cw.workspace.description")), new Label(description,false));
+                main.addSegment(new Label(GlobalizationUtil.globalize(
+                        "cw.workspace.description")), new Label(description,false));
             }
 
             // should be a group
@@ -116,7 +118,8 @@ public class WorkspaceSummaryPortlet extends AppPortlet {
             //searchLink.addURLVars("action", "search");
             //participants.add(searchLink);
 
-            main.addSegment(new Label(GlobalizationUtil.globalize("cw.workspace.participants")), participants);
+            main.addSegment(new Label(GlobalizationUtil.globalize(
+                                   "cw.workspace.participants")), participants);
 
             main.generateXML(ps, parent);
         }

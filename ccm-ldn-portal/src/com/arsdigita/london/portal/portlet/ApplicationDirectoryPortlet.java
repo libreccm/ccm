@@ -27,7 +27,8 @@ import com.arsdigita.portal.Portlet;
  */
 public class ApplicationDirectoryPortlet extends Portlet {
 
-	public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.portal.portlet.ApplicationDirectoryPortlet";
+	public static final String BASE_DATA_OBJECT_TYPE =
+            "com.arsdigita.london.portal.portlet.ApplicationDirectoryPortlet";
 
     public static final String CONTENT = "content";
 

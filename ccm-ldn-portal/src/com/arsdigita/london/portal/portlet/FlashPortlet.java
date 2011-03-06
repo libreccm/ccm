@@ -29,13 +29,15 @@ import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.Portlet;
 
 /**
- * This portlet displays a Flash movie using <a href="http://blog.deconcept.com/swfobject/">SWFObject 1.5</a>.
+ * This portlet displays a Flash movie using
+ * <a href="http://blog.deconcept.com/swfobject/">SWFObject 1.5</a>.
  * 
  * @author <a href="https://sourceforge.net/users/terry_permeance/">terry_permeance</a>
  */
 public class FlashPortlet extends Portlet
 {
-    public static final String BASE_DATA_OBJECT_TYPE = "com.arsdigita.london.portal.portlet.FlashPortlet";
+    public static final String BASE_DATA_OBJECT_TYPE =
+                            "com.arsdigita.london.portal.portlet.FlashPortlet";
 
     public static final String BACKGROUND_COLOUR = "backgroundColour";
 
@@ -96,7 +98,8 @@ public class FlashPortlet extends Portlet
     }
 
     /**
-     * Get the URL parameter name that the SWFObject script will look for when bypassing the detection (optional).
+     * Get the URL parameter name that the SWFObject script will look for when
+     * bypassing the detection (optional).
      * Default is "detectflash".
      * 
      * @return the detect key
@@ -107,7 +110,8 @@ public class FlashPortlet extends Portlet
     }
 
     /**
-     * Set the URL parameter name that the SWFObject script will look for when bypassing the detection (optional).
+     * Set the URL parameter name that the SWFObject script will look for when
+     * bypassing the detection (optional).
      * Default is "detectflash".
      * 
      * @param detectKey
@@ -178,7 +182,8 @@ public class FlashPortlet extends Portlet
         try
         {
             Properties parameters = new Properties();
-            if (this.getParameters() != null && this.getParameters().trim().length() > 1)
+            if (this.getParameters() != null && this.getParameters()
+                                                    .trim().length() > 1)
             {
                 parameters.load(new StringBufferInputStream(this.getParameters()));
             }
@@ -210,12 +215,15 @@ public class FlashPortlet extends Portlet
     }
 
     /**
-     * Set the quality for the Flash movie to play at. If no quality is specified, the default is "high". (optional)
+     * Set the quality for the Flash movie to play at. If no quality is
+     * specified, the default is "high". (optional)
      * 
      * @param quality
      *            the quality to set
      * 
-     * @see <a href="http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_12701&sliceId=2">Flash OBJECT and
+     * @see <a href=
+     * "http://kb.adobe.com/selfservice/viewContent.do?externalId=tn_12701&sliceId=2">
+     * Flash OBJECT and
      *      EMBED tag attributes< /a> documents the legal values for quality
      */
     public void setQuality(String quality)
@@ -224,7 +232,8 @@ public class FlashPortlet extends Portlet
     }
 
     /**
-     * Get the redirect URL for users who don't have the correct plug-in version (optional).
+     * Get the redirect URL for users who don't have the correct plug-in version
+     * (optional).
      * 
      * @return the redirect URL
      */
@@ -234,7 +243,8 @@ public class FlashPortlet extends Portlet
     }
 
     /**
-     * Set the redirect URL for users who don't have the correct plug-in version. (optional).
+     * Set the redirect URL for users who don't have the correct plug-in version.
+     * (optional).
      * 
      * @param redirectUrl
      *            redirect URL to set
@@ -328,7 +338,8 @@ public class FlashPortlet extends Portlet
     }
 
     /**
-     * Get the URL to redirect users who complete the ExpressInstall upgrade (optional).
+     * Get the URL to redirect users who complete the ExpressInstall upgrade
+     * (optional).
      * 
      * @return the express install redirect URL
      */
@@ -338,7 +349,8 @@ public class FlashPortlet extends Portlet
     }
 
     /**
-     * Set the URL to redirect users who complete the ExpressInstall upgrade (optional).
+     * Set the URL to redirect users who complete the ExpressInstall upgrade
+     * (optional).
      * 
      * @param xiRedirectUrl
      *            express install redirect URL to set

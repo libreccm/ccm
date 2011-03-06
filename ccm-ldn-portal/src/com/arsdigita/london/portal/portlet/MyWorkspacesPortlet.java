@@ -107,7 +107,8 @@ class MyWorkspacesPortletRenderer extends AbstractPortletRenderer {
         query.close();
 
         if (isEmpty) {
-            panel.add(new Label(GlobalizationUtil.globalize("cw.workspace.personal.none")));
+            panel.add(new Label(GlobalizationUtil.globalize(
+                                                "cw.workspace.personal.none")));
         }
 
         panel.generateXML(pageState, parent);

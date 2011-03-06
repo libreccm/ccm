@@ -41,17 +41,20 @@ public final class FlashPortletInitializer
      */
     public static void loadPortletType()
     {
-        PortletType type = PortletType.createPortletType("Flash movie", PortletType.WIDE_PROFILE,
+        PortletType type = PortletType.createPortletType(
+                "Flash movie",  PortletType.WIDE_PROFILE,
                 FlashPortlet.BASE_DATA_OBJECT_TYPE);
         type.setDescription("Displays a Flash movie");
     }
 
     /**
-     * Initializes the {@link FlashPortlet} by registering the instantiator and portlet editor.
+     * Initializes the {@link FlashPortlet} by registering the instantiator
+     * and portlet editor.
      */
     public static void initialize()
     {
-        DomainObjectFactory.registerInstantiator(FlashPortlet.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator()
+        DomainObjectFactory.registerInstantiator(
+                FlashPortlet.BASE_DATA_OBJECT_TYPE, new ACSObjectInstantiator()
         {
             public DomainObject doNewInstance(DataObject dataObject)
             {
@@ -61,13 +64,15 @@ public final class FlashPortletInitializer
 
         new ResourceTypeConfig(FlashPortlet.BASE_DATA_OBJECT_TYPE)
         {
-            public ResourceConfigFormSection getCreateFormSection(final ResourceType resType,
+            public ResourceConfigFormSection getCreateFormSection(
+                    final ResourceType resType,
                     final RequestLocal parentAppRL)
             {
                 return new FlashPortletEditor(resType, parentAppRL);
             }
 
-            public ResourceConfigFormSection getModifyFormSection(final RequestLocal application)
+            public ResourceConfigFormSection getModifyFormSection(
+                    final RequestLocal application)
             {
                 return new FlashPortletEditor(application);
             }

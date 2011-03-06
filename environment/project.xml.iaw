@@ -7,8 +7,8 @@
               ccmVersion="6.1" 
                     name="aplaws-iaw" 
               prettyName="APLAWS plus" 
-                 version="1-0-9" 
-                 release="rc-5" 
+                 version="1-1-1" 
+                 release="rc2-780" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -23,6 +23,7 @@
 <!--   Content Assets   -->
 <!--   - - - - - - -    -->
         <ccm:application name="ccm-cms-assets-fileattachment"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>
         <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
@@ -31,19 +32,14 @@
 <!--    <ccm:application name="ccm-cms-types-address"/>              -->
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
         <ccm:application name="ccm-cms-types-article"/>
-        <ccm:application name="ccm-cms-types-baseAddress"/>
-        <ccm:application name="ccm-cms-types-baseContact"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
 <!--    <ccm:application name="ccm-cms-types-contact"/>              -->
 <!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
         <ccm:application name="ccm-cms-types-event"/>
-<!--         faqitem not needed by IAW              -->
 <!--    <ccm:application name="ccm-cms-types-faqitem"/>              -->
         <ccm:application name="ccm-cms-types-filestorageitem"/>
         <ccm:application name="ccm-cms-types-formitem"/>
         <ccm:application name="ccm-cms-types-formsectionitem"/>
-        <ccm:application name="ccm-cms-types-genericorganization"/>
-<!--         glossaryitem not needed by IAW, too              -->
 <!--    <ccm:application name="ccm-cms-types-glossaryitem"/>         -->
 <!--    <ccm:application name="ccm-cms-types-htmlform"/>             -->
 <!--    <ccm:application name="ccm-cms-types-inlinesite"/>           -->
@@ -54,14 +50,11 @@
         <ccm:application name="ccm-cms-types-mparticle"/>
         <ccm:application name="ccm-cms-types-newsitem"/>
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
+<!--    <ccm:application name="ccm-cms-types-person"/>         -->
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
-        <ccm:application name="ccm-cms-types-organizationalunit"/>               
-        <ccm:application name="ccm-cms-types-person"/>               
         <ccm:application name="ccm-cms-types-siteproxy"/>               
-        <ccm:application name="ccm-cms-types-researchnetwork"/>               
-<!--         xmlfeed is not needed by IAW, too                   -->
-<!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->      
+<!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->
 
 <!--  Applications   -->
 <!--  - - - - -  -   -->
@@ -70,8 +63,8 @@
 <!--    temporarily excluded, produces errors in the build process
         <ccm:application name="ccm-docmngr"/>                        -->
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
-        <ccm:application name="ccm-forum"/>
-        <ccm:application name="ccm-simplesurvey"/>
+<!--    <ccm:application name="ccm-forum"/>                          -->
+<!--    <ccm:application name="ccm-simplesurvey"/>                   -->
         <ccm:application name="ccm-user-preferences"/>
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
@@ -83,7 +76,6 @@
 <!--    <ccm:application name="ccm-ldn-dublin"/>                     -->
 <!--    <ccm:application name="ccm-ldn-exporter"/>                   -->
 <!--    <ccm:application name="ccm-ldn-freeform"/>                   -->
-        <ccm:application name="ccm-ldn-image-step"/>
 <!--    <ccm:application name="ccm-ldn-importer"/>                   -->
         <ccm:application name="ccm-ldn-navigation"/>
         <ccm:application name="ccm-ldn-portal"/>
@@ -98,6 +90,10 @@
 
 <!--  IAW extension  -->
 <!--  - - - - - - -  -->
+<!--    <ccm:application name="ccm-cms-dabinimporter" />
+        <ccm:application name="ccm-sci-types-organization"/>
+        <ccm:application name="ccm-sci-publications"/>
+-->
         <ccm:application name="ccm-iaw-aplaws"/>
 
 
