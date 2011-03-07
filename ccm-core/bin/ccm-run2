@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# This script is a wrapper for calling the CCM commandline utilites 
+# used for maintence of a CCM installation.
+
+# Variables for directories.
+# The path are relative to the bin directory of the CCM installation. This
+# means that this script has to be executed from the bin directory. If you
+# want to use this script from another directory, or include it into your 
+# PATH, you have to adjust the paths.
+CCM_LIB_DIR="../lib"
+CCM_HOME_DIR="../.."
+# Path of the lib directory of the Tomcat Server which runs the CCM installation.
+# If the CATALINA_HOME enviroment variable is not set on your system you have
+# to adjust this path to point to the lib directory of your Tomcat installation
+# (if you installed the Tomcat using the package manager of your distribution
+# this is usally /usr/share/tomcat6/lib)
+CATALINA_LIB_DIR="${CATALINA_HOME}/lib"
+
+# Script logic starts here
+echo "checking if all paths are correct..."
+files=$(ls ${CCM_LIB_DIR}/ccm-core*.jar 2> /dev/null | wc -l)
+
+if [ "$files" == "0" ]
+then
+    echo "Error: CCM_LIB_DIR is invalid \(no ccm-core*.jar file\(s\) in CCM_LIB_DIR\)."
+    exit 1
+fi
+
+if [ ! -d ${CCM_HOME_DIR}/__ccm__ ]
+then
+    echo "Error: CCM_HOME_DIR path is invalid \(no __ccm__ directory in CCM_HOME_DIR\)."
+    exit 1
+fi
+
+if [ ! -f ${CATALINA_LIB_DIR}/catalina.jar ]
+then
+    echo "Error: CATALINA_LIB_DIR is invalid \(no catalina.jar in CATALINA_LIB_DIR\)."
+    exit 1
+fi
+
+#Convert to absolute path:
+CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
+
+echo "executing ccm-run"
+java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} $@
