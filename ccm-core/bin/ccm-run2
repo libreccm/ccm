@@ -43,4 +43,4 @@ fi
 CCM_HOME_DIR=`cd ${CCM_HOME_DIR}; pwd`
 
 echo "executing ccm-run"
-java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} $@
+java -cp ${CCM_LIB_DIR}/"*":${CATALINA_LIB_DIR}/"*" -Dccm.home=${CCM_HOME_DIR} "$*"
