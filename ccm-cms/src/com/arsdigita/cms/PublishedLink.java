@@ -350,6 +350,8 @@ class PublishedLink extends DomainObject {
                 set(LINK_ATTRIBUTES, data.toByteArray());
 
             }
+
+            coll.close();
         }
     }
 
