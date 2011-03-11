@@ -69,7 +69,7 @@ public abstract class CompoundContentItemPanel
     /**
      * PageSize for the a paginator
      */
-    private long m_pageSize = 3;
+    private long m_pageSize = 30;
 
     public CompoundContentItemPanel() {
         super();

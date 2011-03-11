@@ -147,10 +147,25 @@ public abstract class SciOrganizationBasePanel
         public int compare(SciProject project1, SciProject project2) {
             int result = 0;
 
-            result = project1.getBegin().compareTo(project2.getBegin());
+            if (project1.getBegin() == null) {
+                return -1;
+            } else if (project2.getBegin() == null) {
+                return 1;
+            } else {
+                result = project1.getBegin().compareTo(project2.getBegin());
+            }
 
             if (result == 0) {
-                result = project1.getEnd().compareTo(project2.getEnd());
+                if (project1.getEnd() == null) {
+                    return -1;
+                } else if (project2.getEnd() == null) {
+                    return 1;
+                } else if ((project1.getEnd() == null) && (project2.getEnd()
+                                                               == null)) {
+                    return 0;
+                } else {
+                    result = project1.getEnd().compareTo(project2.getEnd());
+                }
             }
 
             return result;
@@ -190,11 +205,12 @@ public abstract class SciOrganizationBasePanel
 
         filters = new LinkedList<String>();
         today = new GregorianCalendar();
-        filters.add(String.format("projectend > '%d-%02d-%02d'",
-                                  today.get(java.util.Calendar.YEAR),
-                                  today.get(java.util.Calendar.MONTH)
-                                  + 1,
-                                  today.get(java.util.Calendar.DAY_OF_MONTH)));
+        filters.add(String.format(
+                "(projectbegin IS NOT null) AND (projectend > '%d-%02d-%02d' OR projectend IS null)",
+                today.get(java.util.Calendar.YEAR),
+                today.get(java.util.Calendar.MONTH)
+                + 1,
+                today.get(java.util.Calendar.DAY_OF_MONTH)));
         return filters;
     }
 

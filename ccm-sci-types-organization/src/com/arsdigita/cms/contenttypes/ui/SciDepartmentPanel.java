@@ -224,7 +224,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             members = new LinkedList<MemberListItem>();
             GenericOrganizationalUnitPersonCollection departmentMembers;
             departmentMembers = department.getPersons();
-            for(String filter : filters) {
+            for (String filter : filters) {
                 departmentMembers.addFilter(filter);
             }
 
@@ -268,7 +268,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         } else {
             GenericOrganizationalUnitPersonCollection departmentMembers;
             departmentMembers = department.getPersons();
-            for(String filter : filters) {
+            for (String filter : filters) {
                 departmentMembers.addFilter(filter);
             }
 
@@ -439,13 +439,13 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         if (config.getOrganizationProjectsAllInOne()) {
             if (hasProjects(department, new LinkedList<String>())) {
                 availableData.newChildElement("projects");
-            } else {
-                if (hasProjects(department, getFiltersForOngoingProjects())) {
-                    availableData.newChildElement("projectsOngoing");
-                }
-                if (hasProjects(department, getFiltersForFinishedProjects())) {
-                    availableData.newChildElement("projectsFinished");
-                }
+            }
+        } else {
+            if (hasProjects(department, getFiltersForOngoingProjects())) {
+                availableData.newChildElement("projectsOngoing");
+            }
+            if (hasProjects(department, getFiltersForFinishedProjects())) {
+                availableData.newChildElement("projectsFinished");
             }
         }
 
@@ -460,19 +460,26 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         } else if (SHOW_CONTACTS.equals(show)) {
             generateContactsXML(department, content, state);
         } else if (SHOW_MEMBERS.equals(show)) {
-            generateMembersXML(department, content, state, new LinkedList<String>());
+            generateMembersXML(department, content, state,
+                               new LinkedList<String>());
         } else if (SHOW_MEMBERS_ACTIVE.equals(show)) {
-            generateMembersXML(department, content, state, getFiltersForActiveMembers());
+            generateMembersXML(department, content, state,
+                               getFiltersForActiveMembers());
         } else if (SHOW_MEMBERS_ASSOCIATED.equals(show)) {
-            generateMembersXML(department, content, state, getFiltersForAssociatedMembers());
+            generateMembersXML(department, content, state,
+                               getFiltersForAssociatedMembers());
         } else if (SHOW_MEMBERS_FORMER.equals(show)) {
-            generateMembersXML(department, content, state, getFiltersForFormerMembers());
+            generateMembersXML(department, content, state,
+                               getFiltersForFormerMembers());
         } else if (SHOW_PROJECTS.equals(show)) {
-            generateProjectsXML(department, content, state, new LinkedList<String>());
-        } else if (SHOW_PROJECTS_ONGOING.equals(show)) {            
-            generateProjectsXML(department, content, state, getFiltersForOngoingProjects());
+            generateProjectsXML(department, content, state,
+                                new LinkedList<String>());
+        } else if (SHOW_PROJECTS_ONGOING.equals(show)) {
+            generateProjectsXML(department, content, state,
+                                getFiltersForOngoingProjects());
         } else if (SHOW_PROJECTS_FINISHED.equals(show)) {
-            generateProjectsXML(department, content, state, getFiltersForFinishedProjects());
-        }                
+            generateProjectsXML(department, content, state,
+                                getFiltersForFinishedProjects());
+        }
     }
 }
