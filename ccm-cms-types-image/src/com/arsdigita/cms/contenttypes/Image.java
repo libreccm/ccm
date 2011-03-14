@@ -47,6 +47,8 @@ public class Image extends ContentPage {
     public static final String CAPTION = "caption";
     public static final String DESCRIPTION = "description";
     public static final String ARTIST = "artist";
+    public static final String SKIPDAY= "skipDay";
+    public static final String SKIPMONTH= "skipMonth";
     public static final String PUBLISHDATE = "publishDate";
     public static final String SOURCE = "source";
     public static final String MEDIA = "media";
@@ -205,6 +207,30 @@ public class Image extends ContentPage {
 
     public void setArtist(String artist) {
         set(ARTIST, artist);
+    }
+
+    public Boolean getSkipDay() {
+        try {
+            return ((Boolean) get(SKIPDAY)).booleanValue();
+        } catch (NullPointerException ex) {
+            return Boolean.FALSE;
+        }
+    }
+
+    public void setSkipDay(Boolean skipDay) {
+        set(SKIPDAY, skipDay);
+    }
+
+    public Boolean getSkipMonth() {
+        try {
+            return ((Boolean) get(SKIPMONTH)).booleanValue();
+        } catch (NullPointerException ex) {
+            return Boolean.FALSE;
+        }
+    }
+
+    public void setSkipMonth(Boolean skipMonth) {
+        set(SKIPMONTH, skipMonth);
     }
 
     public Date getPublishDate() {

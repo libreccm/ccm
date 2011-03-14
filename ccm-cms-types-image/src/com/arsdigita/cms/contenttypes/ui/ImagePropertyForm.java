@@ -27,9 +27,13 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSubmissionListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.Date;
+import com.arsdigita.bebop.form.Hidden;
+import com.arsdigita.bebop.form.Option;
+import com.arsdigita.bebop.form.RadioGroup;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.form.TextField;
-import com.arsdigita.bebop.parameters.DateParameter;
+import com.arsdigita.bebop.parameters.BooleanParameter;
+import com.arsdigita.bebop.parameters.IncompleteDateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
 import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
@@ -102,8 +106,18 @@ public class ImagePropertyForm
         TextField artist = new TextField(artistParam);
         add(artist);
 
+        ParameterModel skipDayParam = new BooleanParameter(Image.SKIPDAY);
+        Hidden skipDay = new Hidden(skipDayParam);
+        add(skipDay);
+
+        ParameterModel skipMonthParam = new BooleanParameter(Image.SKIPMONTH);
+        Hidden skipMonth = new Hidden(skipMonthParam);
+        add(skipMonth);
+
         add(new Label(ImageGlobalizationUtil.globalize("cms.contenttypes.ui.image.publishDate")));
-        ParameterModel publishDateParam = new DateParameter(Image.PUBLISHDATE);
+        IncompleteDateParameter publishDateParam = new IncompleteDateParameter(Image.PUBLISHDATE);
+        publishDateParam.allowSkipDay(true);
+        publishDateParam.allowSkipMonth(true);
         Date publishDate = new Date(publishDateParam);
         publishDate.setYearRange(Image.getConfig().getStartYear(),
                 GregorianCalendar.getInstance().get(Calendar.YEAR) + Image.getConfig().getEndYearDelta());
@@ -176,6 +190,8 @@ public class ImagePropertyForm
         data.put(Image.CAPTION, image.getCaption());
         data.put(Image.DESCRIPTION, image.getDescription());
         data.put(Image.ARTIST, image.getArtist());
+        data.put(Image.SKIPDAY, image.getSkipDay());
+        data.put(Image.SKIPMONTH, image.getSkipMonth());
         data.put(Image.PUBLISHDATE, image.getPublishDate());
         data.put(Image.SOURCE, image.getSource());
         data.put(Image.MEDIA, image.getMedia());
@@ -215,6 +231,8 @@ public class ImagePropertyForm
             image.setCaption((String) data.get(Image.CAPTION));
             image.setDescription((String) data.get(Image.DESCRIPTION));
             image.setArtist((String) data.get(Image.ARTIST));
+            image.setSkipDay(((IncompleteDateParameter) data.getParameter(Image.PUBLISHDATE).getModel()).isDaySkipped());
+            image.setSkipMonth(((IncompleteDateParameter) data.getParameter(Image.PUBLISHDATE).getModel()).isMonthSkipped());
             image.setPublishDate((java.util.Date) data.get(Image.PUBLISHDATE));
             image.setSource((String) data.get(Image.SOURCE));
             image.setMedia((String) data.get(Image.MEDIA));

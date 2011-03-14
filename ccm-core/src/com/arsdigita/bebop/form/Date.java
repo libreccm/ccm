@@ -31,6 +31,7 @@ import com.arsdigita.bebop.parameters.ParameterData;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Form;
 import com.arsdigita.bebop.FormData;
+import com.arsdigita.bebop.parameters.IncompleteDateParameter;
 import com.arsdigita.bebop.parameters.NotNullValidationListener;
 // This interface contains the XML element name of this class
 // in a constant which is used when generating XML
@@ -80,6 +81,12 @@ public class Date extends Widget implements BebopConstants {
 
         @Override
         public Object getValue(PageState ps) {
+            ParameterModel model = parent.getParameterModel();
+            if (model instanceof IncompleteDateParameter) {
+                if (((IncompleteDateParameter) model).isYearSkipped()) {
+                    return null;
+                }
+            }
             Object value = parent.getFragmentValue(ps, Calendar.YEAR);
             if (value == null) {
                 Calendar currentTime = GregorianCalendar.getInstance();
@@ -110,6 +117,12 @@ public class Date extends Widget implements BebopConstants {
 
         @Override
         public Object getValue(PageState ps) {
+            ParameterModel model = parent.getParameterModel();
+            if (model instanceof IncompleteDateParameter) {
+                if (((IncompleteDateParameter) model).isMonthSkipped()) {
+                    return null;
+                }
+            }
             return parent.getFragmentValue(ps, Calendar.MONTH);
         }
     }
@@ -134,6 +147,12 @@ public class Date extends Widget implements BebopConstants {
 
         @Override
         public Object getValue(PageState ps) {
+            ParameterModel model = parent.getParameterModel();
+            if (model instanceof IncompleteDateParameter) {
+                if (((IncompleteDateParameter) model).isDaySkipped()) {
+                    return null;
+                }
+            }
             return parent.getFragmentValue(ps, Calendar.DATE);
         }
     }
@@ -182,6 +201,11 @@ public class Date extends Widget implements BebopConstants {
             m_year_end = yearEnd;
 
             m_year.clearOptions();
+            if (this.getParameterModel() instanceof IncompleteDateParameter) {
+                if (((IncompleteDateParameter) this.getParameterModel()).isSkipYearAllowed()) {
+                    m_year.addOption(new Option("", ""));
+                }
+            }
             for (int year = m_year_begin; year <= m_year_end; year += 1) {
                 m_year.addOption(new Option(String.valueOf(year)));
             }
@@ -356,6 +380,11 @@ public class Date extends Widget implements BebopConstants {
 
             m_month.clearOptions();
 
+            if (this.getParameterModel() instanceof IncompleteDateParameter) {
+                if (((IncompleteDateParameter) this.getParameterModel()).isSkipMonthAllowed()) {
+                    m_month.addOption(new Option("", ""));
+                }
+            }
             for (int i = 0; i < months.length; i += 1) {
                 // This check is necessary because
                 // java.text.DateFormatSymbols.getMonths() returns an array

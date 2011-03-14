@@ -37,7 +37,6 @@ public class DateParameter extends ParameterModel {
         super(name);
     }
 
-
     /**
      * This method returns a new Calendar object that is manipulated
      * within transformValue to create a Date Object. This method should
@@ -62,6 +61,7 @@ public class DateParameter extends ParameterModel {
      * <code>SECOND</code> to 0, since they are by default the current
      * time.
      * */
+    @Override
     public Object transformValue(HttpServletRequest request)
         throws IllegalArgumentException {
         Calendar c = null;

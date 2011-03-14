@@ -48,10 +48,13 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
 import com.arsdigita.cms.ui.authoring.BasicPageForm;
 import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DateFormatSymbols;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -152,7 +155,23 @@ public class ImagePropertiesStep extends SimpleEditStep {
                     public String format(DomainObject item, String attribute, PageState state) {
                         Image image = (Image) item;
                         if ((image.getPublishDate()) != null) {
-                            return DateFormat.getDateInstance(DateFormat.LONG).format(image.getPublishDate());
+                            if (image.getSkipDay().booleanValue() == true || image.getSkipMonth().booleanValue() == true) {
+                                String month = "";
+                                if (image.getSkipMonth().booleanValue() == false) {
+                                    Locale locale = DispatcherHelper.getNegotiatedLocale();
+
+                                    if (locale != null) {
+
+                                        DateFormatSymbols dfs = new DateFormatSymbols(locale);
+                                        String[] months = dfs.getMonths();
+                                        month = months[image.getPublishDate().getMonth()] + " ";
+                                    }
+                                }
+                                String year = Integer.toString(image.getPublishDate().getYear() + 1900);
+                                return month + year;
+                            } else {
+                                return DateFormat.getDateInstance(DateFormat.LONG).format(image.getPublishDate());
+                            }
                         } else {
                             return (String) ImageGlobalizationUtil.globalize("cms.ui.unknown").localize();
                         }

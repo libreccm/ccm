@@ -11,19 +11,21 @@ object type Image extends ContentPage {
               BigDecimal[0..1]     width = ct_images.width INTEGER;
               BigDecimal[0..1]    height = ct_images.height INTEGER;
 
-              String[0..1]     caption   = ct_images.caption VARCHAR(400);
-              String[0..1] description   = ct_images.description VARCHAR(500);
-              String[0..1]      artist   = ct_images.artist VARCHAR(200);
-              Date  [0..1] publishDate   = ct_images.publish_date DATE;
-              String[0..1]      source   = ct_images.source VARCHAR(600);
-              String[0..1]       media   = ct_images.media VARCHAR(300);
-              String[0..1]   copyright   = ct_images.copyright VARCHAR(400);
-              String[0..1]        site   = ct_images.site VARCHAR(500);
-              String[0..1]     license   = ct_images.license VARCHAR(300);
-              String[0..1]    material   = ct_images.material VARCHAR(200);
-              String[0..1]   technique   = ct_images.technique VARCHAR(200);
-              String[0..1]      origin   = ct_images.origin VARCHAR(200);
-              String[0..1]    origSize   = ct_images.origSize VARCHAR(100);
+              String [0..1]     caption  = ct_images.caption VARCHAR(400);
+              String [0..1] description  = ct_images.description VARCHAR(500);
+              String [0..1]      artist  = ct_images.artist VARCHAR(200);
+              Date   [0..1] publishDate  = ct_images.publish_date DATE;
+              Boolean[0..1]     skipDay  = ct_images.skip_day;
+              Boolean[0..1]   skipMonth  = ct_images.skip_month;
+              String [0..1]      source  = ct_images.source VARCHAR(600);
+              String [0..1]       media  = ct_images.media VARCHAR(300);
+              String [0..1]   copyright  = ct_images.copyright VARCHAR(400);
+              String [0..1]        site  = ct_images.site VARCHAR(500);
+              String [0..1]     license  = ct_images.license VARCHAR(300);
+              String [0..1]    material  = ct_images.material VARCHAR(200);
+              String [0..1]   technique  = ct_images.technique VARCHAR(200);
+              String [0..1]      origin  = ct_images.origin VARCHAR(200);
+              String [0..1]    origSize  = ct_images.origSize VARCHAR(100);
 
     reference key (ct_images.item_id);
 }
