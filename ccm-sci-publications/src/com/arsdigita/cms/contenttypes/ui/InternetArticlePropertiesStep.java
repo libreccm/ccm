@@ -48,11 +48,7 @@ public class InternetArticlePropertiesStep extends PublicationPropertiesStep {
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.place"),
                 InternetArticle.PLACE);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.organization"),
-                "organization.title");
-
+     
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number"),
                 InternetArticle.NUMBER);
@@ -102,5 +98,14 @@ public class InternetArticlePropertiesStep extends PublicationPropertiesStep {
                 new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.basic_properties").localize()),
                 basicProperties);
+    }
+
+    @Override
+    protected  void addSteps(final ItemSelectionModel itemModel,
+            final AuthoringKitWizard parent) {
+        super.addSteps(itemModel, parent);
+
+        addStep(new InternetArticleOrganizationStep(itemModel, parent),
+                "publications.ui.internetarticle.setOrganization");
     }
 }

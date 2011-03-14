@@ -20,16 +20,20 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author Jens Pelzetter
  */
 public abstract class UnPublished extends Publication {
-
+    
     public static final String PLACE = "place";
     public static final String ORGANIZATION = "organization";
     public static final String NUMBER = "number";
@@ -66,19 +70,39 @@ public abstract class UnPublished extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        DataObject dataObj;
+        DataCollection collection;
 
-        dataObj = (DataObject) get(ORGANIZATION);
+        collection = (DataCollection) get(ORGANIZATION);
 
-        if (dataObj == null) {
+        if (0 == collection.size()) {
             return null;
         } else {
-            return new GenericOrganizationalUnit(dataObj);
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+            collection.close();
+
+            return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(
+                    dobj);
         }
     }
 
-    public void setOrganization(GenericOrganizationalUnit orga) {
-        set(ORGANIZATION, orga);
+    public void setOrganization(final GenericOrganizationalUnit orga) {
+        GenericOrganizationalUnit oldOrga;
+
+        oldOrga = getOrganization();
+
+        if (oldOrga != null) {
+            remove(ORGANIZATION, oldOrga);
+        }
+
+        if (null != orga) {
+            Assert.exists(orga, GenericOrganizationalUnit.class);            
+            DataObject link = add(ORGANIZATION, orga);
+            link.set("orgaOrder", 1);
+            link.save();
+        }
     }
 
     public String getNumber() {

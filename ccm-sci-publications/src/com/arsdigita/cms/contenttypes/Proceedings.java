@@ -20,6 +20,8 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObject;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -68,19 +70,38 @@ public class Proceedings extends PublicationWithPublisher {
     }
 
     public GenericOrganizationalUnit getOrganizerOfConference() {
-        DataObject dataObj;
+        DataCollection collection;
 
-        dataObj = (DataObject) get(ORGANIZER_OF_CONFERENCE);
+        collection = (DataCollection) get(ORGANIZER_OF_CONFERENCE);
 
-        if (dataObj == null) {
+        if (0 == collection.size()) {
             return null;
         } else {
-            return new GenericOrganizationalUnit(dataObj);
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+            collection.close();
+
+            return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(
+                    dobj);
         }
     }
 
     public void setOrganizerOfConference(GenericOrganizationalUnit organizer) {
-        set(ORGANIZER_OF_CONFERENCE, organizer);
+        GenericOrganizationalUnit oldOrga;
+
+        oldOrga = getOrganizerOfConference();
+        if (oldOrga != null) {
+            remove(ORGANIZER_OF_CONFERENCE, oldOrga);
+        }
+
+        if (null != organizer) {
+            Assert.exists(organizer, GenericOrganizationalUnit.class);
+            DataObject link = add(ORGANIZER_OF_CONFERENCE, organizer);
+            link.set("organizerOrder", 1);
+            link.save();
+        }      
     }
 
     public String getNameOfConference() {

@@ -29,7 +29,6 @@ import com.arsdigita.cms.ui.authoring.SimpleEditStep;
 import com.arsdigita.cms.ui.workflow.WorkflowLockedComponentAccess;
 import com.arsdigita.toolbox.ui.DomainObjectPropertySheet;
 
-
 /**
  *
  * @author Jens Pelzetter
@@ -48,19 +47,15 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.unpublished.place"),
-                UnPublished.PLACE);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.unpublished.organization"),
-                "organization.title");
-
+                  UnPublished.PLACE);
+      
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.unpublished.number"),
-                UnPublished.NUMBER);
+                  UnPublished.NUMBER);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.unpublished.number_of_pages"),
-                UnPublished.NUMBER_OF_PAGES);
+                  UnPublished.NUMBER_OF_PAGES);
 
 
 
@@ -77,7 +72,7 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
         BasicPageForm editBasicSheet = new UnPublishedPropertyForm(itemModel,
                                                                    this);
 
-           basicProperties.add(EDIT_SHEET_NAME,
+        basicProperties.add(EDIT_SHEET_NAME,
                             (String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.unpublished.edit_basic_sheet").
                 localize(), new WorkflowLockedComponentAccess(editBasicSheet,
@@ -92,5 +87,15 @@ public class UnPublishedPropertiesStep extends PublicationPropertiesStep {
                 new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.basic_properties").
                 localize()), basicProperties);
+    }
+
+    @Override
+    protected void addSteps(ItemSelectionModel itemModel,
+                            AuthoringKitWizard parent) {
+        super.addSteps(itemModel, parent);
+
+        addStep(new UnPublishedOrganizationStep(itemModel,
+                                                parent),
+                "publications.ui.unpublished.organization");
     }
 }

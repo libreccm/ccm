@@ -20,8 +20,11 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
@@ -68,20 +71,37 @@ public class Expertise extends Publication {
     }
 
     public GenericOrganizationalUnit getOrganization() {
-        DataObject dataObj;
+        DataCollection collection;
 
-        dataObj = (DataObject) get(ORGANIZATION);
+        collection = (DataCollection) get(ORGANIZATION);
 
-        if (dataObj == null) {
+        if (0 == collection.size()) {
             return null;
         } else {
-            return new GenericOrganizationalUnit(dataObj);
-        }
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+            collection.close();
+
+            return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(dobj);
+        }       
     }
 
-    public void setOrganization(GenericOrganizationalUnit orga) {
-        s_log.debug(String.format("Setting organization to %s", orga.toString()));
-        set(ORGANIZATION, orga);
+    public void setOrganization(final GenericOrganizationalUnit orga) {
+        GenericOrganizationalUnit oldOrga;
+
+        oldOrga = getOrganization();
+        if (oldOrga != null) {
+            remove(ORGANIZATION, oldOrga);
+        }
+
+        if (null != orga) {
+            Assert.exists(orga, GenericOrganizationalUnit.class);
+            DataObject link = add(ORGANIZATION, orga);
+            link.set("orgaOrder", 1);
+            link.save();
+        }       
     }
 
     public Integer getNumberOfPages() {
@@ -93,18 +113,36 @@ public class Expertise extends Publication {
     }
 
     public GenericOrganizationalUnit getOrderer() {
-        DataObject dataObj;
+         DataCollection collection;
 
-        dataObj = (DataObject) get(ORDERER);
+        collection = (DataCollection) get(ORDERER);
 
-        if (dataObj == null) {
+        if (0 == collection.size()) {
             return null;
         } else {
-            return new GenericOrganizationalUnit(dataObj);
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+            collection.close();
+
+            return (GenericOrganizationalUnit) DomainObjectFactory.newInstance(dobj);
         }
     }
 
     public void setOrderer(GenericOrganizationalUnit orderer) {
-        set(ORDERER, orderer);
+         GenericOrganizationalUnit oldOrga;
+
+        oldOrga = getOrganization();
+        if (oldOrga != null) {
+            remove(ORDERER, oldOrga);
+        }
+
+        if (null != orderer) {
+            Assert.exists(orderer, GenericOrganizationalUnit.class);
+            DataObject link = add(ORDERER, orderer);
+            link.set("ordererOrder", 1);
+            link.save();
+        }
     }
 }

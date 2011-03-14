@@ -20,16 +20,28 @@
 
 model com.arsdigita.cms.contenttypes;
 
-import com.arsdigita.cms.ContentPage;
+import com.arsdigita.cms.*;
 
 //PDL definition for an unpublished publication (grey literature)
 object type UnPublished extends Publication {
 
-       String[0..1] place = ct_unpublished.place VARCHAR(256);
-       component GenericOrganizationalUnit[0..1] organization = join ct_unpublished.organization_id
-	    				                          to cms_organizationalunits.organizationalunit_id;
+       String[0..1] place = ct_unpublished.place VARCHAR(256);       
        String[0..1] number = ct_unpublished.number VARCHAR(128);
        Integer[0..1] numberOfPages = ct_unpublished.number_of_pages INTEGER;
 
        reference key (ct_unpublished.unpublished_id);
+}
+
+association {
+    UnPublished[0..n] unPublished = join cms_organizationalunits.organizationalunit_id
+                                      to ct_unpublished_organization_map.organization_id,
+                                    join ct_unpublished_organization_map.unpublished_id
+                                      to ct_unpublished.unpublished_id;
+
+    GenericOrganizationalUnit[0..n] organization = join ct_unpublished.unpublished_id
+                                                     to ct_unpublished_organization_map.unpublished_id,
+                                                   join ct_unpublished_organization_map.organization_id
+                                                     to cms_organizationalunits.organizationalunit_id;
+
+   Integer[0..1] orgaOrder = ct_unpublished_organization_map.orga_order INTEGER;
 }

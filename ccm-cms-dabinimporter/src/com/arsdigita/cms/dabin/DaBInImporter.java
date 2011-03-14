@@ -1952,7 +1952,7 @@ public class DaBInImporter extends Program {
                         String.format("kontakt-%s", personEn.getName()));
                 contactEn.setTitle(String.format("Kontakt %s",
                                                  personEn.getTitle()));
-                contactEn.setPerson(personDe, "commonContact");
+                contactEn.setPerson(personEn, "commonContact");
                 String homepage = null;
                 while (contactData.hasMoreTokens()) {
                     String token;
@@ -2983,8 +2983,12 @@ public class DaBInImporter extends Program {
                 workingPaper.setLifecycle(createLifecycle(publicationsLifecycle));
                 workingPaper.setContentSection(publicationsSection);
 
+                if (workingPaperDe != null) {
                 workingPaperDe.setContentSection(publicationsSection);
+                }
+                if (workingPaperEn != null) {
                 workingPaperEn.setContentSection(publicationsSection);
+                }
 
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
                 insertIntoAZFolder(workingPaper, publicationsAlpha);

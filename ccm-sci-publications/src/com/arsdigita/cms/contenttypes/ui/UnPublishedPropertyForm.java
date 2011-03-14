@@ -73,15 +73,7 @@ public class UnPublishedPropertyForm
                        new StringParameter(InternetArticle.PLACE);
         TextField place = new TextField(placeParam);
         add(place);
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.unpublished.organization").localize()));
-        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH,
-                                            ContentType.
-                findByAssociatedObjectType(
-                GenericOrganizationalUnit.class.getName()));
-        add(m_itemSearch);
-
+       
           add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.unpublished.number").localize()));
         ParameterModel numberParam =
@@ -104,8 +96,7 @@ public class UnPublishedPropertyForm
         FormData data = fse.getFormData();
         UnPublished unpublished = (UnPublished) initBasicWidgets(fse);
 
-        data.put(UnPublished.PLACE, unpublished.getPlace());
-        data.put(ITEM_SEARCH, unpublished.getOrganization());
+        data.put(UnPublished.PLACE, unpublished.getPlace());       
         data.put(UnPublished.NUMBER, unpublished.getNumber());
         data.put(UnPublished.NUMBER_OF_PAGES, unpublished.getNumberOfPages());
     }
@@ -119,9 +110,7 @@ public class UnPublishedPropertyForm
 
         if ((unpublished != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            unpublished.setPlace((String) data.get(UnPublished.PLACE));
-            unpublished.setOrganization(
-                    (GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+            unpublished.setPlace((String) data.get(UnPublished.PLACE));       
             unpublished.setNumber((String) data.get(UnPublished.NUMBER));
             unpublished.setNumberOfPages(
                     (Integer) data.get(UnPublished.NUMBER_OF_PAGES));

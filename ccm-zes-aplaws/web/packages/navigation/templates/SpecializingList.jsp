@@ -41,7 +41,6 @@
 
         <define:component name="assignedTerms"
                           classname="com.arsdigita.london.navigation.ui.CategoryIndexAssignedTerms"/>
-        </jsp:scriptlet>
-        <show:all/>
     </define:page>
+    <show:all/>	
 </jsp:root>

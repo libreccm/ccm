@@ -30,10 +30,21 @@ object type PublicationWithPublisher extends Publication {
        Integer[0..1] numberOfVolumes = ct_publication_with_publisher.number_of_volumes INTEGER;
        Integer[0..1] numberOfPages = ct_publication_with_publisher._number_of_pages INTEGER;
        String[0..1] edition = ct_publication_with_publisher.edition VARCHAR(256);
-       component Publisher[0..1] publisher = join ct_publication_with_publisher.publisher_id 
-       		 		 	       to ct_publisher.publisher_id;                                             
-
+                                   
        reference key (ct_publication_with_publisher.publication_with_publisher_id);
+}
 
+association {
+    PublicationWithPublisher[0..n] publication = join ct_publisher.publisher_id
+                                                   to ct_publication_with_publisher_publisher_map.publisher_id,
+                                                 join ct_publication_with_publisher_publisher_map.publication_id
+                                                   to ct_publication_with_publisher.publication_with_publisher_id;
+
+    Publisher[0..n] publisher = join ct_publication_with_publisher.publication_with_publisher_id
+                                  to ct_publication_with_publisher_publisher_map.publication_id,
+                                join ct_publication_with_publisher_publisher_map.publisher_id
+                                  to ct_publisher.publisher_id;
+
+    Integer[0..1] publisherOrder = ct_publication_with_publisher_publisher_map.publisher_order INTEGER;
 }
 

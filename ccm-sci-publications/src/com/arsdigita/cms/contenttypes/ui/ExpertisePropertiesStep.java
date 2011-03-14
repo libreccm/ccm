@@ -48,18 +48,10 @@ public class ExpertisePropertiesStep extends PublicationPropertiesStep {
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.expertise.place"),
                   Expertise.PLACE);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "organization.title"),
-                  Expertise.ORGANIZATION);
-
+   
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.expertise.number_of_pages"),
                   Expertise.NUMBER_OF_PAGES);
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
-                "orderer.title"),
-                  Expertise.ORDERER);
 
         return sheet;
     }
@@ -89,5 +81,16 @@ public class ExpertisePropertiesStep extends PublicationPropertiesStep {
                 new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.basic_properties").
                 localize()), basicProperties);
+    }
+
+    @Override
+    protected void addSteps(ItemSelectionModel itemModel,
+            AuthoringKitWizard parent) {
+        super.addSteps(itemModel, parent);
+
+        addStep(new ExpertiseOrganizationStep(itemModel, parent),
+                "publications.ui.expertise.setOrganization");
+        addStep(new ExpertiseOrdererStep(itemModel, parent),
+                "publications.ui.expertise.setOrderer");
     }
 }

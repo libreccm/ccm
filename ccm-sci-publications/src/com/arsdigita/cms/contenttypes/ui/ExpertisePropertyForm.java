@@ -46,11 +46,7 @@ public class ExpertisePropertyForm
                    FormProcessListener,
                    FormSubmissionListener {
 
-    private ExpertisePropertiesStep m_step;
-    private ItemSearchWidget m_itemSearchOrga;
-    private final String ITEM_SEARCH_ORGA = "organization";
-    private ItemSearchWidget m_itemSearchOrderer;
-    private final String ITEM_SEARCH_ORDERER = "orderer";
+    private ExpertisePropertiesStep m_step;      
     public static final String ID = "ExpertiseEdit";
 
     public ExpertisePropertyForm(ItemSelectionModel itemModel) {
@@ -72,30 +68,14 @@ public class ExpertisePropertyForm
                 "publications.ui.expertise.place").localize()));
         ParameterModel placeParam = new StringParameter(Expertise.PLACE);
         TextField place = new TextField(placeParam);
-        add(place);
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.organization").localize()));
-        m_itemSearchOrga = new ItemSearchWidget(ITEM_SEARCH_ORGA,
-                                                ContentType.
-                findByAssociatedObjectType(
-                GenericOrganizationalUnit.class.getName()));
-        add(m_itemSearchOrga);
+        add(place);     
 
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.expertise.number_of_pages").localize()));
         ParameterModel numberOfPagesParam =
                        new IntegerParameter(Expertise.NUMBER_OF_PAGES);
         TextField numberOfPages = new TextField(numberOfPagesParam);
-        add(numberOfPages);     
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.expertise.orderer").localize()));
-        m_itemSearchOrderer = new ItemSearchWidget(ITEM_SEARCH_ORDERER,
-                                                   ContentType.
-                findByAssociatedObjectType(
-                GenericOrganizationalUnit.class.getName()));
-        add(m_itemSearchOrderer);
+        add(numberOfPages);            
     }
 
     @Override
@@ -105,10 +85,8 @@ public class ExpertisePropertyForm
         FormData data = fse.getFormData();
         Expertise expertise = (Expertise) initBasicWidgets(fse);
 
-        data.put(Expertise.PLACE, expertise.getPlace());
-        data.put(ITEM_SEARCH_ORGA, expertise.getOrganization());
-        data.put(Expertise.NUMBER_OF_PAGES, expertise.getNumberOfPages());       
-        data.put(ITEM_SEARCH_ORDERER, expertise.getOrderer());
+        data.put(Expertise.PLACE, expertise.getPlace());        
+        data.put(Expertise.NUMBER_OF_PAGES, expertise.getNumberOfPages());               
     }
 
     @Override
@@ -120,16 +98,11 @@ public class ExpertisePropertyForm
 
         if ((expertise != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            expertise.setPlace((String) data.get(Expertise.PLACE));
-            expertise.setOrganization(
-                    (GenericOrganizationalUnit) data.get(ITEM_SEARCH_ORGA));
+            expertise.setPlace((String) data.get(Expertise.PLACE));           
             expertise.setNumberOfPages(
-                    (Integer) data.get(Expertise.NUMBER_OF_PAGES));         
-            expertise.setOrderer(
-                    (GenericOrganizationalUnit) data.get(ITEM_SEARCH_ORDERER));
+                    (Integer) data.get(Expertise.NUMBER_OF_PAGES));                     
 
-            expertise.save();
-           
+            expertise.save();           
         }
     }
 }

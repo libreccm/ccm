@@ -24,15 +24,27 @@ import com.arsdigita.cms.ContentPage;
 
 // PDL definition for proceedings
 object type Proceedings extends PublicationWithPublisher {
-
-       component GenericOrganizationalUnit[0..1] organizerOfConference = join ct_proceedings.organizer_id
-       		 				 		       	 to cms_organizationalunits.organizationalunit_id;
+     
        String[0..1] nameOfConference = ct_proceedings.nameOfConference;
        String[0..1] placeOfConference = ct_proceedings.place_of_conference;
        Date[0..1] dateFromOfConference = ct_proceedings.date_from_of_conference DATE;
        Date[0..1] dateToOfConference = ct_proceedings.date_to_of_conference DATE;            
 
        reference key (ct_proceedings.proceedings_id);
+}
+
+association {
+    Proceedings[0..n] proceedingOfConference = join cms_organizationalunits.organizationalunit_id
+                                                 to ct_proceedings_organizer_map.organizer_id,
+                                               join ct_proceedings_organizer_map.proceeding_id
+                                                 to ct_proceedings.proceedings_id;
+
+    GenericOrganizationalUnit[0..n] organizerOfConference = join ct_proceedings.proceedings_id
+                                                              to ct_proceedings_organizer_map.proceeding_id,
+                                                            join ct_proceedings_organizer_map.organizer_id
+                                                              to cms_organizationalunits.organizationalunit_id;
+
+   Integer[0..1] organizerOrder = ct_proceedings_organizer_map.organizer_order INTEGER;
 }
 
 association {

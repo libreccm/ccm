@@ -53,23 +53,19 @@ public class PublicationWithPublisherPropertiesStep
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.volume"),
-                PublicationWithPublisher.VOLUME);
+                  PublicationWithPublisher.VOLUME);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.number_of_volumes"),
-                PublicationWithPublisher.NUMBER_OF_VOLUMES);
+                  PublicationWithPublisher.NUMBER_OF_VOLUMES);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.number_of_pages"),
-                PublicationWithPublisher.NUMBER_OF_PAGES);
-
-         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.edition"),
-                PublicationWithPublisher.EDITION);
+                  PublicationWithPublisher.NUMBER_OF_PAGES);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.publisher"),
-                "publisher.title");
+                "publications.ui.with_publisher.edition"),
+                  PublicationWithPublisher.EDITION);
 
         return sheet;
     }
@@ -101,5 +97,14 @@ public class PublicationWithPublisherPropertiesStep
                 new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.publication.basic_properties").
                 localize()), basicProperties);
+    }
+
+    @Override
+    protected void addSteps(final ItemSelectionModel itemModel,
+                         final AuthoringKitWizard parent) {
+        super.addSteps(itemModel, parent);
+
+        addStep(new PublicationWithPublisherSetPublisherStep(itemModel, parent),
+                "publications.ui.with_publisher.publisher");
     }
 }

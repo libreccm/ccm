@@ -48,10 +48,6 @@ public class ProceedingsPropertiesStep
                 itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer_of_conference"),
-                  "organizerOfConference.title");
-
-        sheet.add(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.name_of_conference"),
                   Proceedings.NAME_OF_CONFERENCE);
 
@@ -102,6 +98,9 @@ public class ProceedingsPropertiesStep
     protected void addSteps(ItemSelectionModel itemModel,
                             AuthoringKitWizard parent) {
         super.addSteps(itemModel, parent);
+
+        addStep(new ProceedingsOrganizerStep(itemModel, parent),
+                "publications.ui.proceedings.organizer");
 
         addStep(new ProceedingsPapersStep(itemModel, parent),
                 "publications.ui.proceedings.papers");

@@ -49,9 +49,7 @@ public class ProceedingsPropertyForm
                    FormInitListener,
                    FormSubmissionListener {
 
-    private ProceedingsPropertiesStep m_step;
-    private ItemSearchWidget m_itemSearch;
-    private final String ITEM_SEARCH = "organizerOfConference";
+    private ProceedingsPropertiesStep m_step;       
     public static final String ID = "proceedingsEdit";
 
     public ProceedingsPropertyForm(ItemSelectionModel itemModel) {
@@ -68,16 +66,7 @@ public class ProceedingsPropertyForm
     @Override
     protected void addWidgets() {
         super.addWidgets();
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.proceedings.organizer_of_conference").
-                localize()));
-        m_itemSearch =
-        new ItemSearchWidget(ITEM_SEARCH,
-                             ContentType.findByAssociatedObjectType(
-                GenericOrganizationalUnit.class.getName()));
-        add(m_itemSearch);
-
+       
         add(new Label(PublicationGlobalizationUtil.globalize(
                 "publications.ui.proceedings.name_of_conference")));
         ParameterModel nameOfConfParam = new StringParameter(
@@ -117,8 +106,7 @@ public class ProceedingsPropertyForm
 
         FormData data = fse.getFormData();
         Proceedings proceedings = (Proceedings) super.initBasicWidgets(fse);
-
-        data.put(ITEM_SEARCH, proceedings.getOrganizerOfConference());
+     
         data.put(Proceedings.NAME_OF_CONFERENCE,
                  proceedings.getNameOfConference());
         data.put(Proceedings.PLACE_OF_CONFERENCE,
@@ -138,9 +126,7 @@ public class ProceedingsPropertyForm
 
 
         if ((proceedings != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
-            proceedings.setOrganizerOfConference(
-                    (GenericOrganizationalUnit) data.get(ITEM_SEARCH));
+                isSelected(fse.getPageState())) {        
             proceedings.setNameOfConference((String) data.get(
                     Proceedings.NAME_OF_CONFERENCE));
             proceedings.setPlaceOfConference((String) data.get(

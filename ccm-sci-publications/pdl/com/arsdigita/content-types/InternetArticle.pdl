@@ -25,14 +25,26 @@ import com.arsdigita.cms.ContentPage;
 // PDL definition for a InternetArticle publication
 object type InternetArticle extends Publication {
 
-       String[0..1] place = ct_internet_article.place VARCHAR(256);
-       component GenericOrganizationalUnit[0..1] organization = join ct_internet_article.organization_id
-	    				                          to cms_organizationalunits.organizationalunit_id;
+       String[0..1] place = ct_internet_article.place VARCHAR(256);    
        String[0..1] number = ct_internet_article.number VARCHAR(128);
        Integer[0..1] numberOfPages = ct_internet_article.number_of_pages INTEGER;
        String[0..1] edition = ct_internet_article.edition VARCHAR(256);
        String[0..1] issn = ct_internet_article.issn VARCHAR(9);
        Date[0..1] publicationDate = ct_internet_article.publicationDate DATE;
 
-       reference key (ct_internet_article.internet_article_Id);       
+       reference key (ct_internet_article.internet_article_id);
+}
+
+association {
+    InternetArticle[0..n] internetArticle = join cms_organizationalunits.organizationalunit_id
+                                      to ct_internet_article_organization_map.organization_id,
+                                    join ct_internet_article_organization_map.internet_article_id
+                                      to ct_internet_article.internet_article_id;
+
+    GenericOrganizationalUnit[0..n] organization = join ct_internet_article.internet_article_id
+                                                     to ct_internet_article_organization_map.internet_article_id,
+                                                   join ct_internet_article_organization_map.organization_id
+                                                     to cms_organizationalunits.organizationalunit_id;
+
+    Integer[0..1] orgaOrder = ct_internet_article_organization_map.orga_order INTEGER;
 }

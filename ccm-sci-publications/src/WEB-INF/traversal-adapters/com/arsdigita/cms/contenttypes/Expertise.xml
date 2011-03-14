@@ -5,13 +5,13 @@
     xsi:schemaLocation="http://rhea.redhat.com/schemas/waf/xml-renderer-rules xml-renderer-rules.xsd">
 
   <xrd:context name="com.arsdigita.cms.dispatcher.SimpleXMLGenerator" >
-    
-    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Proceedings" 
+
+    <xrd:adapter objectType="com.arsdigita.cms.contenttypes.Expertise"
 		 extends="com.arsdigita.cms.contenttypes.PublicationWithPublisher">
-      
+
       <xrd:associations rule="include">
-	<xrd:property name="/object/papers"/>
-        <xrd:property name="/object/organizer"/>
+	<xrd:property name="/object/organization"/>
+        <xrd:property name="/object/orderer"/>
       </xrd:associations>
 
     </xrd:adapter>

@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  *
  */
-
 package com.arsdigita.categorization;
 
 import com.arsdigita.kernel.ACSObject;
@@ -33,15 +32,15 @@ import com.arsdigita.persistence.DataCollection;
  * @author Sören Bernstein (quasimodo) quasi@zes.uni-bremen.de
  **/
 public class CategoryLocalizationCollection extends ACSObjectCollection {
-    
+
     public CategoryLocalizationCollection(Category category) {
         super(category.getLocalizations().getDataCollection());
     }
-    
+
     public CategoryLocalizationCollection(DataCollection dataCollection) {
         super(dataCollection);
     }
-    
+
     /**
      * Returns the locale of the categoryLocalization.
      *
@@ -51,7 +50,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     public String getLocale() {
         return getCategoryLocalization().getLocale();
     }
-    
+
     /**
      * Returns the name of the category.
      *
@@ -61,7 +60,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     public String getName() {
         return getCategoryLocalization().getName();
     }
-    
+
     /**
      * Returns the description.
      *
@@ -71,7 +70,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     public String getDescription() {
         return getCategoryLocalization().getDescription();
     }
-    
+
     /**
      * Returns the URL.
      *
@@ -81,7 +80,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     public String getURL() {
         return getCategoryLocalization().getURL();
     }
-    
+
     /**
      *  Determines the current state of the category.
      *
@@ -92,7 +91,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     public boolean isEnabled() {
         return getCategoryLocalization().isEnabled();
     }
-    
+
     /**
      * Wrapper to <code>getDomainObject()</code> that casts the returned
      * <code>DomainObject</code> as a <code>CategoryLocalization</code>.
@@ -103,7 +102,7 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
     public CategoryLocalization getCategoryLocalization() {
         return (CategoryLocalization) getDomainObject();
     }
-    
+
     @Override
     public ACSObject getACSObject() {
         return getCategoryLocalization();
@@ -115,37 +114,38 @@ public class CategoryLocalizationCollection extends ACSObjectCollection {
      * @return result of the search. If true, the CollectionCursor is set to the position of the requested locale.
      */
     public boolean localizationExists(String locale) {
-        
+
         // Really string comparison using !=  ??
         // && !locale.isEmpty() ?
-        if(!m_dataCollection.isEmpty() && locale != "") {
-        
+        if (!m_dataCollection.isEmpty() && locale != "") {
+
             // First check, if we are already at the right position. This will speed up repeated access for the same locale
-            if(this.getPosition() > 0 && this.getCategoryLocalization().getLocale().equals(locale)) {
+            if (this.getPosition() > 0 && this.getCategoryLocalization().
+                    getLocale().equals(locale)) {
                 return true;
             }
-        
+
             // Nope, so we have to start a search
             this.rewind();
-            while(this.next()) {
-              if(this.getCategoryLocalization().getLocale().equals(locale)) {
+            while (this.next()) {
+                if (this.getCategoryLocalization().getLocale().equals(locale)) {                
                     return true;
                 }
             }
 
         }
-        
+
         // Not found
         return false;
     }
-    
+
     /**
      * Sorts the category collection by the category sort key.
      *
      * @see CategorizedCollection#sort(boolean)
      **/
     public final void sort(boolean ascending) {
-        if ( ascending ) {
+        if (ascending) {
             addOrder("link.sortKey asc");
         } else {
             addOrder("link.sortKey desc");

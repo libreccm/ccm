@@ -20,6 +20,7 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
@@ -150,7 +151,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
             dobj = collection.getDataObject();
             collection.close();
 
-            return new SciDepartment(dobj);
+            return (SciDepartment) DomainObjectFactory.newInstance(dobj);
         }
     }
 
@@ -190,7 +191,7 @@ public class SciDepartment extends GenericOrganizationalUnit {
             dobj = collection.getDataObject();
             collection.close();
 
-            return new SciOrganization(dobj);
+            return (SciOrganization) DomainObjectFactory.newInstance(dobj);
         }
     }
 

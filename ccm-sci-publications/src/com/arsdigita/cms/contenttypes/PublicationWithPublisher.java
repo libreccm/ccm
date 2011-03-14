@@ -20,8 +20,11 @@
 package com.arsdigita.cms.contenttypes;
 
 import com.arsdigita.domain.DataObjectNotFoundException;
+import com.arsdigita.domain.DomainObjectFactory;
+import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
+import com.arsdigita.util.Assert;
 import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 
@@ -137,15 +140,21 @@ public class PublicationWithPublisher extends Publication {
      * @return The publisher of the publication.
      */
     public Publisher getPublisher() {
-        DataObject dataObj;
+        DataCollection collection;
 
-        dataObj = (DataObject) get(PUBLISHER);
+        collection = (DataCollection) get(PUBLISHER);
 
-        if (dataObj == null) {
+        if (0 == collection.size()) {
             return null;
         } else {
-            return new Publisher(dataObj);
-        }
+            DataObject dobj;
+
+            collection.next();
+            dobj = collection.getDataObject();
+            collection.close();
+
+            return (Publisher) DomainObjectFactory.newInstance(dobj);
+        }        
     }
 
     /**
@@ -154,6 +163,18 @@ public class PublicationWithPublisher extends Publication {
      * @param publisher The publisher of the publication.
      */
     public void setPublisher(Publisher publisher) {
-        set(PUBLISHER, publisher);
+        Publisher oldPublisher;
+
+        oldPublisher = getPublisher();
+        if (oldPublisher != null) {
+            remove(PUBLISHER, oldPublisher);
+        }
+
+        if (null != publisher) {
+            Assert.exists(publisher, Publisher.class);
+            DataObject link = add(PUBLISHER, publisher);
+            link.set("publisherOrder", 1);
+            link.save();
+        }        
     }
 }

@@ -50,9 +50,7 @@ public class InternetArticlePropertyForm
                    FormProcessListener,
                    FormSubmissionListener {
 
-    private InternetArticlePropertiesStep m_step;
-    private ItemSearchWidget m_itemSearch;
-    private final String ITEM_SEARCH = "organization";
+    private InternetArticlePropertiesStep m_step; 
     public static final String ID = "InternetArticleEdit";
 
     public InternetArticlePropertyForm(ItemSelectionModel itemModel) {
@@ -76,15 +74,7 @@ public class InternetArticlePropertyForm
                        new StringParameter(InternetArticle.PLACE);
         TextField place = new TextField(placeParam);
         add(place);
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.internetarticle.organization").localize()));
-        m_itemSearch = new ItemSearchWidget(ITEM_SEARCH,
-                                            ContentType.
-                findByAssociatedObjectType(
-                GenericOrganizationalUnit.BASE_DATA_OBJECT_TYPE));
-        add(m_itemSearch);      
-
+     
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.internetarticle.number").localize()));
         ParameterModel numberParam =
@@ -134,8 +124,7 @@ public class InternetArticlePropertyForm
         FormData data = fse.getFormData();
         InternetArticle article = (InternetArticle) initBasicWidgets(fse);
 
-        data.put(InternetArticle.PLACE, article.getPlace());
-        data.put(ITEM_SEARCH, article.getOrganization());     
+        data.put(InternetArticle.PLACE, article.getPlace());        
         data.put(InternetArticle.NUMBER, article.getNumber());
         data.put(InternetArticle.NUMBER_OF_PAGES, article.getNumberOfPages());
         data.put(InternetArticle.EDITION, article.getEdition());
@@ -153,9 +142,7 @@ public class InternetArticlePropertyForm
 
         if ((article != null) && getSaveCancelSection().getSaveButton().
                 isSelected(fse.getPageState())) {
-            article.setPlace((String) data.get(InternetArticle.PLACE));
-            article.setOrganization(
-                    (GenericOrganizationalUnit) data.get(ITEM_SEARCH));            
+            article.setPlace((String) data.get(InternetArticle.PLACE));               
             article.setNumber((String) data.get(InternetArticle.NUMBER));
             article.setNumberOfPages(
                     (Integer) data.get(InternetArticle.NUMBER_OF_PAGES));

@@ -207,7 +207,10 @@ public class GenericOrganizationalUnitContactTable extends Table implements
                                 + "found for '%s' for language '%s' Using key.",
                                 m_contactCollection.getContactType(),
                                 lang));
-                        return m_contactCollection.getContactType();
+                        String contactType =
+                               m_contactCollection.getContactType();
+                        m_contacttypes.close();
+                        return contactType;
                     } else {
                         s_log.debug(String.format(
                                 "Human readable contact type is: \"%s\"...",

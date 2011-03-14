@@ -70,16 +70,7 @@ public class PublicationWithPublisherPropertyForm
     @Override
     protected void addWidgets() {
         super.addWidgets();
-
-        add(new Label((String) PublicationGlobalizationUtil.globalize(
-                "publications.ui.with_publisher.publisher").localize()));
-        m_itemSearch =
-        new ItemSearchWidget(
-                ITEM_SEARCH,
-                ContentType.findByAssociatedObjectType(
-                Publisher.class.getName()));
-        add(m_itemSearch);
-
+       
         add(new Label((String) PublicationGlobalizationUtil.globalize(
                 "publications.ui.with_publisher.isbn").localize()));
         ParameterModel isbnParam = new StringParameter(
@@ -130,8 +121,7 @@ public class PublicationWithPublisherPropertyForm
         PublicationWithPublisher publication =
                                  (PublicationWithPublisher) super.
                 initBasicWidgets(fse);
-
-        data.put(ITEM_SEARCH, publication.getPublisher());
+        
         data.put(PublicationWithPublisher.ISBN, publication.getISBN());
         data.put(PublicationWithPublisher.VOLUME, publication.getVolume());
         data.put(PublicationWithPublisher.NUMBER_OF_VOLUMES,
@@ -152,8 +142,7 @@ public class PublicationWithPublisherPropertyForm
                 processBasicWidgets(fse);
 
         if ((publication != null) && getSaveCancelSection().getSaveButton().
-                isSelected(fse.getPageState())) {
-            publication.setPublisher((Publisher) data.get(ITEM_SEARCH));
+                isSelected(fse.getPageState())) {         
             publication.setISBN((String) data.get(PublicationWithPublisher.ISBN));
 
             publication.setVolume((Integer) data.get(
