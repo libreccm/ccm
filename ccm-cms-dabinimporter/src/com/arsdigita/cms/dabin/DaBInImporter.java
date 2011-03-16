@@ -2240,8 +2240,14 @@ public class DaBInImporter extends Program {
                     && (projectData.getNameEn().length() > 0)) {
                     projectEn = new SciProject();
                     projectEn.setTitle(projectData.getNameEn());
-                    String projectName = DaBInImporter.normalizeString(projectData.
-                            getNameDe());
+                    String projectName;
+                    if (projectData.getNameDe() == null) {
+                        projectName = DaBInImporter.normalizeString(projectData.
+                                getNameEn());
+                    } else {
+                        projectName = DaBInImporter.normalizeString(projectData.
+                                getNameDe());
+                    }
                     if (projectName.length() > 200) {
                         projectName = projectName.substring(0, 200);
                     }
@@ -3646,6 +3652,9 @@ public class DaBInImporter extends Program {
     }
 
     public static String normalizeString(final String str) {
+        if (str == null) {
+            return "null";
+        }
         return str.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").
                 replace(
                 "Ä", "Ae").replace("Ü", "Ue").replace("Ö", "Oe").replace("ß",

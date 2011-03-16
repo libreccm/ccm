@@ -84,7 +84,7 @@ public class PublicationData {
     }
 
     public String getUrl() {
-        if (name.length() < 200) {
+        if (name.length() < 175) {
             return DaBInImporter.normalizeString(name);
         } else {
             System.out.println(
