@@ -2086,11 +2086,13 @@ public class DaBInImporter extends Program {
                 System.out.printf("\tde: %s...", departmentData.getNameDe());
                 departmentDe = new SciDepartment();
                 departmentDe.setTitle(departmentData.getNameDe());
-                departmentDe.setName(departmentData.getNameDe().
-                        replace(",", "").
-                        replace("/", "").
-                        replaceAll("\\s\\s+", " ").
-                        replace(' ', '-').toLowerCase());
+                /*departmentDe.setName(departmentData.getNameDe().
+                replace(",", "").
+                replace("/", "").
+                replaceAll("\\s\\s+", " ").
+                replace(' ', '-').toLowerCase());*/
+                departmentDe.setName(DaBInImporter.normalizeString(departmentData.
+                        getNameDe()));
                 departmentDe.setLanguage("de");
                 departmentDe.setLifecycle(createLifecycle(lifecycle));
                 departmentDe.setContentSection(section);
@@ -2101,11 +2103,13 @@ public class DaBInImporter extends Program {
                                   departmentData.getNameEn());
                 departmentEn = new SciDepartment();
                 departmentEn.setTitle(departmentData.getNameEn());
-                departmentEn.setName(departmentData.getNameEn().
-                        replace(",", "").
-                        replace("/", "").
-                        replaceAll("\\s\\s+", " ").
-                        replace(' ', '-').toLowerCase());
+                /*departmentEn.setName(departmentData.getNameEn().
+                replace(",", "").
+                replace("/", "").
+                replaceAll("\\s\\s+", " ").
+                replace(' ', '-').toLowerCase());*/
+                departmentEn.setName(DaBInImporter.normalizeString(departmentData.
+                        getNameDe()));
                 departmentEn.setLanguage("en");
                 departmentEn.setLifecycle(createLifecycle(lifecycle));
                 departmentEn.setContentSection(section);
@@ -2203,15 +2207,17 @@ public class DaBInImporter extends Program {
                     && (projectData.getNameDe().length() > 0)) {
                     projectDe = new SciProject();
                     projectDe.setTitle(projectData.getNameDe());
-                    String projectNameDe = projectData.getNameDe().
-                            replace(",", "").
-                            replace("/", "").
-                            replaceAll("\\s\\s+", " ").
-                            replace(' ', '-').toLowerCase();
-                    if (projectNameDe.length() > 200) {
-                        projectNameDe = projectNameDe.substring(0, 200);
+                    /*String projectNameDe = projectData.getNameDe().
+                    replace(",", "").
+                    replace("/", "").
+                    replaceAll("\\s\\s+", " ").
+                    replace(' ', '-').toLowerCase();*/
+                    String projectName = DaBInImporter.normalizeString(projectData.
+                            getNameDe());
+                    if (projectName.length() > 200) {
+                        projectName = projectName.substring(0, 200);
                     }
-                    projectDe.setName(projectNameDe);
+                    projectDe.setName(projectName);
                     projectDe.setProjectDescription(projectData.getDescDe());
                     projectDe.setFunding(projectData.getFundingDe());
                     if (projectData.getBegin() != null) {
@@ -2234,15 +2240,12 @@ public class DaBInImporter extends Program {
                     && (projectData.getNameEn().length() > 0)) {
                     projectEn = new SciProject();
                     projectEn.setTitle(projectData.getNameEn());
-                    String projectNameEn = projectData.getNameEn().
-                            replace(",", "").
-                            replace("/", "").
-                            replaceAll("\\s\\s+", " ").
-                            replace(' ', '-').toLowerCase();
-                    if (projectNameEn.length() > 200) {
-                        projectNameEn = projectNameEn.substring(0, 200);
+                    String projectName = DaBInImporter.normalizeString(projectData.
+                            getNameDe());
+                    if (projectName.length() > 200) {
+                        projectName = projectName.substring(0, 200);
                     }
-                    projectEn.setName(projectNameEn);
+                    projectEn.setName(projectName);
                     projectEn.setProjectDescription(projectData.getDescEn());
                     projectEn.setFunding(projectData.getFundingEn());
                     if (projectData.getBegin() != null) {
@@ -2903,16 +2906,13 @@ public class DaBInImporter extends Program {
                                       workingPaperData.getYear());
                     workingPaperDe = new WorkingPaper();
                     workingPaperDe.setTitle(workingPaperData.getTitleDe());
-                    String workingPaperNameDe = workingPaperData.getTitleDe().
-                            replace(",", "").
-                            replace("/", "").
-                            replaceAll("\\s\\s+", " ").
-                            replace(' ', '-').toLowerCase();
-                    if (workingPaperNameDe.length() > 200) {
-                        workingPaperNameDe =
-                        workingPaperNameDe.substring(0, 200);
+                    String workingPaperName = DaBInImporter.normalizeString(
+                            workingPaperData.getTitleDe());
+                    if (workingPaperName.length() > 200) {
+                        workingPaperName =
+                        workingPaperName.substring(0, 200);
                     }
-                    workingPaperDe.setName(workingPaperNameDe);
+                    workingPaperDe.setName(workingPaperName);
                     if (workingPaperData.getDescDe().length() > 8000) {
                         workingPaperDe.setAbstract(workingPaperData.getDescDe().
                                 substring(0, 8000));
@@ -2940,16 +2940,13 @@ public class DaBInImporter extends Program {
                                       workingPaperData.getYear());
                     workingPaperEn = new WorkingPaper();
                     workingPaperEn.setTitle(workingPaperData.getTitleEn());
-                    String workingPaperNameEn = workingPaperData.getTitleEn().
-                            replace(",", "").
-                            replace("/", "").
-                            replaceAll("\\s\\s+", " ").
-                            replace(' ', '-').toLowerCase();
-                    if (workingPaperNameEn.length() > 200) {
-                        workingPaperNameEn =
-                        workingPaperNameEn.substring(0, 200);
+                    String workingPaperName = DaBInImporter.normalizeString(
+                            workingPaperData.getTitleDe());
+                    if (workingPaperName.length() > 200) {
+                        workingPaperName =
+                        workingPaperName.substring(0, 200);
                     }
-                    workingPaperEn.setName(workingPaperNameEn);
+                    workingPaperEn.setName(workingPaperName);
                     if (workingPaperData.getDescEn().length() > 4096) {
                         System.out.println(
                                 "***Warning: Value of DaBIn field abstract too long for abstracts (max: 4096 characters). Truncating.");
@@ -2984,10 +2981,10 @@ public class DaBInImporter extends Program {
                 workingPaper.setContentSection(publicationsSection);
 
                 if (workingPaperDe != null) {
-                workingPaperDe.setContentSection(publicationsSection);
+                    workingPaperDe.setContentSection(publicationsSection);
                 }
                 if (workingPaperEn != null) {
-                workingPaperEn.setContentSection(publicationsSection);
+                    workingPaperEn.setContentSection(publicationsSection);
                 }
 
                 workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
@@ -3219,11 +3216,8 @@ public class DaBInImporter extends Program {
                         getPlace());
                 publisherDe = new Publisher();
                 publisherDe.setTitle(publisherData.getName());
-                publisherDe.setName(publisherData.getName().
-                        replace(",", "").
-                        replace("/", "").
-                        replaceAll("\\s\\s+", " ").
-                        replace(' ', '-').toLowerCase());
+                publisherDe.setName(DaBInImporter.normalizeString(publisherData.
+                        getName()));
                 publisherDe.setPlace(publisherData.getPlace());
                 publisherDe.setLanguage("de");
                 publisherDe.setLifecycle(createLifecycle(publicationsLifecycle));
@@ -3235,11 +3229,8 @@ public class DaBInImporter extends Program {
                         getPlace());
                 publisherEn = new Publisher();
                 publisherEn.setTitle(publisherData.getName());
-                publisherEn.setName(publisherData.getName().
-                        replace(",", "").
-                        replace("/", "").
-                        replaceAll("\\s\\s+", " ").
-                        replace(' ', '-').toLowerCase());
+                publisherEn.setName(DaBInImporter.normalizeString(publisherData.
+                        getName()));
                 publisherEn.setPlace(publisherData.getPlace());
                 publisherEn.setLanguage("en");
                 publisherEn.setLifecycle(createLifecycle(publicationsLifecycle));
@@ -3652,6 +3643,15 @@ public class DaBInImporter extends Program {
         lifecycle.setStartDate(now);
 
         return lifecycle;
+    }
+
+    public static String normalizeString(final String str) {
+        return str.replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").
+                replace(
+                "Ä", "Ae").replace("Ü", "Ue").replace("Ö", "Oe").replace("ß",
+                                                                         "ss").
+                replace(" ", "-").
+                replaceAll("[^a-zA-Z0-9\\-]", "").toLowerCase();
     }
 
     public static void main(String[] args) {

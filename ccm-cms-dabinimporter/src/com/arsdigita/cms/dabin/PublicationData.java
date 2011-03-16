@@ -85,6 +85,15 @@ public class PublicationData {
 
     public String getUrl() {
         if (name.length() < 200) {
+            return DaBInImporter.normalizeString(name);
+        } else {
+            System.out.println(
+                    "\t***WARNING: Title of publication is too long for URL. Triming to title to a length of 200 characters for URL.");
+            return DaBInImporter.normalizeString(name.substring(
+                    0, 200));
+        }
+
+      /*  if (name.length() < 200) {
             return name.replace(",", "").
                     replace("/", "").
                     replaceAll("\\s\\s+", " ").
@@ -97,7 +106,7 @@ public class PublicationData {
                     replace("/", "").
                     replaceAll("\\s\\s+", " ").
                     replace(' ', '-').toLowerCase();
-        }
+        }*/
     }
 
     public String getPublicationDaBInId() {
