@@ -3198,8 +3198,10 @@ public class DaBInImporter extends Program {
             return;
         }
 
-        if (publisherData.getName().length() == 0) {
-            System.out.println("Publisher has no name skiping.");
+        if ((publisherData.getName().length() == 0)
+            || DaBInImporter.normalizeString(publisherData.getName()).length()
+               == 0) {
+            System.out.println("Publisher has no name. Skiping.");
             return;
         }
 
