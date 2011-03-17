@@ -2830,6 +2830,7 @@ public class DaBInImporter extends Program {
                     myPublication.save();
 
                     System.out.println("OK");
+                    i++;
                 }
 
                 if (publicationDe == null) {
@@ -3194,6 +3195,11 @@ public class DaBInImporter extends Program {
                     "Publisher '%s: %s' already exists. Skiping.\n",
                     publisherData.getPlace(),
                     publisherData.getName());
+            return;
+        }
+
+        if (publisherData.getName().length() == 0) {
+            System.out.println("Publisher has no name skiping.");
             return;
         }
 

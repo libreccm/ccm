@@ -90,7 +90,7 @@ public class PublicationData {
             System.out.println(
                     "\t***WARNING: Title of publication is too long for URL. Triming to title to a length of 200 characters for URL.");
             return DaBInImporter.normalizeString(name.substring(
-                    0, 200));
+                    0, 175));
         }
 
       /*  if (name.length() < 200) {
