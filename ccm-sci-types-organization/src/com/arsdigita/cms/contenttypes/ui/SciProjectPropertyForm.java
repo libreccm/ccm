@@ -30,6 +30,7 @@ import com.arsdigita.bebop.form.Date;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.DateParameter;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
@@ -83,6 +84,7 @@ public class SciProjectPropertyForm
         ParameterModel shortDescParam = new StringParameter(
                 SciProject.PROJECT_SHORT_DESCRIPTION);
         TextArea shortDesc = new TextArea(shortDescParam);
+        shortDesc.addValidationListener(new StringInRangeValidationListener(0, 500));
         shortDesc.setCols(75);
         shortDesc.setRows(5);
         add(shortDesc);

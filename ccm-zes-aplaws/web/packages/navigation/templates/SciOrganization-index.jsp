@@ -24,7 +24,7 @@
     <define:component name="greetingItem"
       classname="com.arsdigita.london.navigation.ui.GreetingItem"/>
     <define:component name="sectionXML"
-      classname="com.arsdigita.cms.contenttypes.ui.SciDepartmentPanel"/>
+      classname="com.arsdigita.cms.contenttypes.ui.SciOrganizationPanel"/>
     <jsp:scriptlet>
         com.arsdigita.cms.ContentItem item = (com.arsdigita.cms.ContentItem)((com.arsdigita.london.navigation.ui.GreetingItem) greetingItem).getObject();
         ((com.arsdigita.cms.contenttypes.ui.SciOrganizationPanel) sectionXML).setContentItem(item);

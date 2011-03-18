@@ -27,6 +27,7 @@ import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextArea;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciDepartment;
@@ -64,6 +65,7 @@ public class SciDepartmentPropertyForm
         ParameterModel descParam = new StringParameter(
                 SciDepartment.DEPARTMENT_SHORT_DESCRIPTION);
         TextArea desc = new TextArea(descParam);
+        desc.addValidationListener(new StringInRangeValidationListener(0, 500));
         desc.setCols(75);
         desc.setRows(5);
         add(desc);
