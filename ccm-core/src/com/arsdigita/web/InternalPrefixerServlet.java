@@ -68,6 +68,7 @@ public class InternalPrefixerServlet extends HttpServlet {
 
     private String m_prefix;
 
+    @Override
     public void init()
         throws ServletException {
         ServletConfig conf = getServletConfig();
@@ -79,6 +80,7 @@ public class InternalPrefixerServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void service(HttpServletRequest req,
                            HttpServletResponse resp)
         throws ServletException,

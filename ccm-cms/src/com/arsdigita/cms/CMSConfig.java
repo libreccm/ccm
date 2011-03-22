@@ -174,10 +174,12 @@ public final class CMSConfig extends AbstractConfig {
      * DHTML Editor Configuration for use in CMS module, lists the
      * config object name and Javascript source location for its definition.
      */
-    private final Parameter m_dhtmlEditorConfig = new DHTMLEditorConfigParameter("com.arsdigita.cms.dhtml_editor_config",
-            Parameter.REQUIRED,
-            new DHTMLEditor.Config("XinhaConfig",
-            "/assets/xinha/CCMcmsXinhaConfig.js"));
+    private final Parameter m_dhtmlEditorConfig = 
+            new DHTMLEditorConfigParameter(
+                "com.arsdigita.cms.dhtml_editor_config",
+                Parameter.REQUIRED,
+                new DHTMLEditor.Config("XinhaConfig",
+                "/assets/xinha/CCMcmsXinhaConfig.js"));
     //   previous parameter definition:
     // > DHTMLEditor.Config.STANDARD); <
     //   didn't work because of broken unmarshalling (cf. similiar problem
@@ -192,7 +194,8 @@ public final class CMSConfig extends AbstractConfig {
      * Defines which plugins to use, e.g.TableOperations,CSS
      * Format: [string,string,string]
      */
-    private final Parameter m_dhtmlEditorPlugins = new StringArrayParameter("com.arsdigita.cms.dhtml_editor_plugins",
+    private final Parameter m_dhtmlEditorPlugins = new StringArrayParameter(
+            "com.arsdigita.cms.dhtml_editor_plugins",
             Parameter.OPTIONAL,
             null);
     /**

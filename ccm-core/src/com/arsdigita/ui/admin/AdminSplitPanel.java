@@ -76,6 +76,7 @@ class AdminSplitPanel extends BoxPanel implements ChangeListener {
      * 
      * @param p
      */
+    @Override
     public void register(Page p) {
         Assert.isUnlocked(this);
 
