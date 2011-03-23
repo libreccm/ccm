@@ -4,8 +4,8 @@ import com.arsdigita.cms.util.GlobalizationUtil;
 
 import com.arsdigita.categorization.Category;
 import com.arsdigita.categorization.CategoryCollection;
-import com.arsdigita.cms.ContentBundle;
-import com.arsdigita.cms.ContentItem;
+// import com.arsdigita.cms.ContentBundle;
+// import com.arsdigita.cms.ContentItem;
 import com.arsdigita.cms.ContentPage;
 import com.arsdigita.cms.ContentType;
 import com.arsdigita.cms.Folder;

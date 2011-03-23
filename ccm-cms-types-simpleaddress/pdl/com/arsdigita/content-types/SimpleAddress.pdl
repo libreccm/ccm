@@ -15,7 +15,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
-// $Id: Address.pdl 1597 2007-07-10 16:27:26Z p_boy $
+// $Id: SimpleAddress.pdl 1597 2007-07-10 16:27:26Z p_boy $
 // $DateTime: 2004/08/17 23:15:09 $
 model com.arsdigita.cms.contenttypes;
 
@@ -24,34 +24,34 @@ import com.arsdigita.cms.ContentPage;
 // mapping table for mapping iso country code to country name
 object type IsoCountry {
     // The country iso code
-    String[1..1] isoCode = iso_countries.iso_code CHAR(2);
+    String[1..1] isoCode = ct_simpleaddr_iso_countries.iso_code CHAR(2);
     // The country name
-    String[1..1] countryName = iso_countries.country_name VARCHAR(100);
+    String[1..1] countryName = ct_simpleaddr_iso_countries.country_name VARCHAR(100);
 
     object key (isoCode);
 }
 
 // a simple content type to hold generic address information
-object type Address extends ContentPage {
+object type SimpleAddress extends ContentPage {
     // The street address, flexible enough to handle different formats
-    String[0..1] address = ct_addresses.address VARCHAR(1000);
+    String[0..1] address = ct_simpleaddr_addresses.address VARCHAR(1000);
     // The country iso code
-    IsoCountry[0..1] isoCountryCode = join ct_addresses.iso_country_code 
-                                        to iso_countries.iso_code;
+    IsoCountry[0..1] isoCountryCode = join ct_simpleaddr_addresses.iso_country_code
+                                        to ct_simpleaddr_iso_countries.iso_code;
     // The postal code
-    String[0..1] postalCode = ct_addresses.postal_code VARCHAR(20);
+    String[0..1] postalCode = ct_simpleaddr_addresses.postal_code VARCHAR(20);
     // The phone number
-    String[0..1] phone = ct_addresses.phone VARCHAR(20);
+    String[0..1] phone = ct_simpleaddr_addresses.phone VARCHAR(20);
     // The mobile phone number
-    String[0..1] mobile = ct_addresses.mobile VARCHAR(20);
+    String[0..1] mobile = ct_simpleaddr_addresses.mobile VARCHAR(20);
     // The fax phone number
-    String[0..1] fax = ct_addresses.fax VARCHAR(20);
+    String[0..1] fax = ct_simpleaddr_addresses.fax VARCHAR(20);
     // The email address
-    String[0..1] email = ct_addresses.email VARCHAR(75);
+    String[0..1] email = ct_simpleaddr_addresses.email VARCHAR(75);
     // Notes about the address and address owner
-    String[0..1] notes = ct_addresses.notes CLOB;
+    String[0..1] notes = ct_simpleaddr_addresses.notes CLOB;
     // URI for the address
-    String[0..1] uri = ct_addresses.uri VARCHAR(250);
+    String[0..1] uri = ct_simpleaddr_addresses.uri VARCHAR(250);
 
-    reference key (ct_addresses.address_id);
+    reference key (ct_simpleaddr_addresses.address_id);
 }

@@ -33,13 +33,14 @@ import org.apache.log4j.Logger;
  */
 public class SimpleAddressInitializer extends ContentTypeInitializer {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(SimpleAddressInitializer.class);
 
     /**
      * Constructor
      */
     public SimpleAddressInitializer() {
-        super("ccm-cms-types-oldaddress.pdl.mf",
+        super("ccm-cms-types-simpleaddress.pdl.mf",
               SimpleAddress.BASE_DATA_OBJECT_TYPE);
     }
 
@@ -47,6 +48,7 @@ public class SimpleAddressInitializer extends ContentTypeInitializer {
      * Initializer
      * @param evt
      */
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
         
@@ -56,6 +58,7 @@ public class SimpleAddressInitializer extends ContentTypeInitializer {
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new IsoCountry(dataObject);
                 }
+                @Override
                 public DomainObjectInstantiator resolveInstantiator(DataObject obj) {
                     return this;
                 }
@@ -68,10 +71,13 @@ public class SimpleAddressInitializer extends ContentTypeInitializer {
 
     /**
      * Provides location of the stylesheets assoziated with this content type.
+     * (As of 6.6.x it is really used tp locate the content type stylesheet,
+     * in distinction from location of applications stylesheets.)
      * @return
      */
+    @Override
     public String[] getStylesheets() {
         return new String[] {
-            "/static/content-types/com/arsdigita/cms/contenttypes/Address.xsl" };
+            "/static/content-types/com/arsdigita/cms/contenttypes/SimpleAddress.xsl" };
     }
 }

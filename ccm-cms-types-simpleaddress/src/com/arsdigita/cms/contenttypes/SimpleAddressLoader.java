@@ -31,10 +31,11 @@ import org.apache.log4j.Logger;
  */
 public class SimpleAddressLoader extends AbstractContentTypeLoader {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(SimpleAddressLoader.class);
 
     private static final String[] TYPES = {
-        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/Address.xml"
+        "/WEB-INF/content-types/com/arsdigita/cms/contenttypes/SimpleAddress.xml"
     };
 
     public String[] getTypes() {

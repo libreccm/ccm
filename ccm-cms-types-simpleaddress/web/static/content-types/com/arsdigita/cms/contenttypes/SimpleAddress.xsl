@@ -6,8 +6,9 @@
                 xmlns:cms="http://www.arsdigita.com/cms/1.0"
                 version="1.0">
 
-  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.Address']" mode="cms:CT_graphics"
-    name="cms:CT_graphics_com_arsdigita_cms_contenttypes_Address">
+  <xsl:template match="cms:item[objectType='com.arsdigita.cms.contenttypes.SimpleAddress']"
+                 mode="cms:CT_graphics"
+                 name="cms:CT_graphics_com_arsdigita_cms_contenttypes_SimpleAddress">
     <table width="435" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td class="contentTitle" align="left" valign="top">

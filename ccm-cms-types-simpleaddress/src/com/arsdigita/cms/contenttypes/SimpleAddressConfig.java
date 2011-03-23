@@ -22,25 +22,53 @@ import com.arsdigita.runtime.AbstractConfig;
 import com.arsdigita.util.parameter.Parameter;
 import com.arsdigita.util.parameter.BooleanParameter;
 
-public class SimpleAddressConfig extends AbstractConfig {
-    
-    private final Parameter m_hideCountryCodeSelection;
-    private final Parameter m_hidePostalCode;
+import org.apache.log4j.Logger;
 
+public class SimpleAddressConfig extends AbstractConfig {
+
+    /** A logger instance.  */
+    private static final Logger s_log = Logger.getLogger(SimpleAddressConfig.class);
+
+    /** Singelton config object.  */
+    private static SimpleAddressConfig s_conf;
+
+    /**
+     * Gain a UIConfig object.
+     *
+     * Singelton pattern, don't instantiate a lifecacle object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized SimpleAddressConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new SimpleAddressConfig();
+            s_conf.load();
+        }
+
+        return s_conf;
+    }
+
+    // set of configuration parameters
+    /** Hide the country selection step in authoring form */
+    private final Parameter m_hideCountryCodeSelection =
+            new BooleanParameter(
+			    "cms.contenttypes.simpleaddress.hide_country_code_selection",
+                Parameter.REQUIRED,
+                new Boolean(false));
+    /** Hide the postal code entry step in authoring form */
+    private final Parameter m_hidePostalCode =
+	        new BooleanParameter(
+			    "cms.contenttypes.simpleaddress.hide_postal_code",
+			    Parameter.REQUIRED,
+			    new Boolean(false));
+
+    /** 
+     * Constructor
+     */
     public SimpleAddressConfig() {
-        m_hideCountryCodeSelection = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.address.hide_country_code_selection",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	m_hidePostalCode = new BooleanParameter(
-			"com.arsdigita.cms.contenttypes.address.hide_postal_code",
-			Parameter.REQUIRED,
-			new Boolean(false));
-	
-	
+
         register(m_hideCountryCodeSelection);
-	register(m_hidePostalCode);
+        register(m_hidePostalCode);
 
         loadInfo();
     }

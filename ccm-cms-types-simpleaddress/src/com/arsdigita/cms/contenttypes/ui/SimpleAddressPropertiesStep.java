@@ -35,8 +35,8 @@ import com.arsdigita.cms.contenttypes.util.SimpleAddressGlobalizationUtil;
 import java.text.DateFormat;
 
 /**
- * Authoring step to edit the simple attributes of the SimpleAddress content type (and
- * its subclasses). This authoring step replaces the
+ * Authoring step to edit the simple attributes of the SimpleAddress content type
+ * (and its subclasses). This authoring step replaces the
  * <code>com.arsdigita.ui.authoring.PageEdit</code> step for this type.
  *
  * @author <a href="mailto:dominik@redhat.com">Dominik Kacprzak</a>
@@ -64,8 +64,8 @@ public class SimpleAddressPropertiesStep extends SimpleEditStep {
     }
 
     /**
-     * Returns a component that displays the properties of the SimpleAddress specified
-     * by the ItemSelectionModel passed in.
+     * Returns a component that displays the properties of the SimpleAddress
+     * specified by the ItemSelectionModel passed in.
      *
      * @param itemModel The ItemSelectionModel to use
      * @pre itemModel != null
@@ -95,18 +95,19 @@ public class SimpleAddressPropertiesStep extends SimpleEditStep {
                                  return DateFormat.getDateInstance(DateFormat.LONG)
                                      .format(page.getLaunchDate());
                              } else {
-                                 return (String)SimpleAddressGlobalizationUtil.globalize
-                                        ("cms.ui.unknown").localize();
+                                 return (String)SimpleAddressGlobalizationUtil
+                                         .globalize("cms.ui.unknown").localize();
                              }
                          }
                      });
         }
         sheet.add( (String) SimpleAddressGlobalizationUtil.globalize
-                   ("cms.contenttypes.ui.address.address").localize(), 
+                   ("cms.contenttypes.ui.simpleaddress.address").localize(),
                    SimpleAddress.ADDRESS);
         if (!SimpleAddress.getConfig().getHideCountryCodeSelection()) {
             sheet.add( (String) SimpleAddressGlobalizationUtil.globalize
-                       ("cms.contenttypes.ui.address.iso_country_code").localize(),
+                       ("cms.contenttypes.ui.simpleaddress.iso_country_code")
+                       .localize(),
                        SimpleAddress.ISO_COUNTRY_CODE,
                        new DomainObjectPropertySheet.AttributeFormatter() {
                            public String format( DomainObject item,
@@ -116,7 +117,8 @@ public class SimpleAddressPropertiesStep extends SimpleEditStep {
                               if ( address.getCountryIsoCode() != null ) {
                                   return address.getCountryIsoCode();
                               } else {
-                                  return (String)SimpleAddressGlobalizationUtil.globalize
+                                  return (String)SimpleAddressGlobalizationUtil
+                                                 .globalize
                                          ("cms.ui.unknown").localize();
                               }
                            }
@@ -124,28 +126,28 @@ public class SimpleAddressPropertiesStep extends SimpleEditStep {
         }
         if (!SimpleAddress.getConfig().getHidePostalCode()) {
             sheet.add( (String) SimpleAddressGlobalizationUtil.globalize
-                       ("cms.contenttypes.ui.address.postal_code").localize(), 
+                       ("cms.contenttypes.ui.simpleaddress.postal_code").localize(),
                        SimpleAddress.POSTAL_CODE);
         }
         sheet.add((String) SimpleAddressGlobalizationUtil
-                  .globalize("cms.contenttypes.ui.address.phone").localize(), 
+                  .globalize("cms.contenttypes.ui.simpleaddress.phone").localize(),
                   SimpleAddress.PHONE);
         sheet.add((String) SimpleAddressGlobalizationUtil.globalize
-                  ("cms.contenttypes.ui.address.mobile").localize(), 
+                  ("cms.contenttypes.ui.simpleaddress.mobile").localize(),
                   SimpleAddress.MOBILE);
         sheet.add((String) SimpleAddressGlobalizationUtil.globalize
-                  ("cms.contenttypes.ui.address.fax").localize(), 
+                  ("cms.contenttypes.ui.simpleaddress.fax").localize(),
                   SimpleAddress.FAX);
         sheet.add((String) SimpleAddressGlobalizationUtil.globalize
-                  ("cms.contenttypes.ui.address.email").localize(), 
+                  ("cms.contenttypes.ui.simpleaddress.email").localize(),
                   SimpleAddress.EMAIL);
 
         sheet.add((String) SimpleAddressGlobalizationUtil.globalize
-                  ("cms.contenttypes.ui.address.uri").localize(), 
+                  ("cms.contenttypes.ui.simpleaddress.uri").localize(),
                   SimpleAddress.URI);
 
         sheet.add((String) SimpleAddressGlobalizationUtil.globalize
-                  ("cms.contenttypes.ui.address.notes").localize(), 
+                  ("cms.contenttypes.ui.simpleaddress.notes").localize(),
                   SimpleAddress.NOTES);
 
         return sheet;

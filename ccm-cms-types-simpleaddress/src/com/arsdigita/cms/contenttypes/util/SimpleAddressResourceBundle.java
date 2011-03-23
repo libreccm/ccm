@@ -28,10 +28,11 @@ import com.arsdigita.cms.CMSGlobalized;
  * @author Shashin Shinde <a href="mailto:sshinde@redhat.com">sshinde@redhat.com</a>
  * 
  */
-public class SimpleAddressResourceBundle extends ChainedResourceBundle implements CMSGlobalized {
+public class SimpleAddressResourceBundle extends ChainedResourceBundle
+                                         implements CMSGlobalized {
     
     public final static String ADDRESS_BUNDLE_NAME = 
-        "com.arsdigita.cms.contenttypes.AddressResources";
+        "com.arsdigita.cms.contenttypes.SimpleAddressResources";
 
     public SimpleAddressResourceBundle() {
         super();

@@ -112,11 +112,12 @@ public class SimpleAddressPropertyForm extends BasicPageForm
     /**
      * Adds widgets to the form.
      **/
+    @Override
     protected void addWidgets() {
         super.addWidgets();
         
         add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                 ( "cms.contenttypes.ui.address.address" ).localize() ) );
+                 ( "cms.contenttypes.ui.simpleaddress.address" ).localize() ) );
         ParameterModel addressBodyParam = new StringParameter( ADDRESS );
         addressBodyParam.addParameterListener( new NotNullValidationListener( ) );
 	addressBodyParam.addParameterListener( new StringInRangeValidationListener(0, 1000) );
@@ -127,11 +128,12 @@ public class SimpleAddressPropertyForm extends BasicPageForm
         
         if (!SimpleAddress.getConfig().getHideCountryCodeSelection()) {
             add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                     ( "cms.contenttypes.ui.address.iso_country_code" ).localize() ) );
+                     ( "cms.contenttypes.ui.simpleaddress.iso_country_code" ).localize() ) );
             ParameterModel isoCountryCodeParam = new StringParameter( ISO_COUNTRY_CODE );
             //isoCountryCodeParam.addParameterListener( new NotNullValidationListener( ) );
 	        // Don't assume submission via drop-down menu isoCountryCode
-	        isoCountryCodeParam.addParameterListener( new StringInRangeValidationListener(0, 2) );
+	        isoCountryCodeParam.addParameterListener(
+                                new StringInRangeValidationListener(0, 2) );
             SingleSelect isoCountryCode = new SingleSelect( isoCountryCodeParam );
 
             isoCountryCode.addOption( new Option( "", 
@@ -157,7 +159,8 @@ public class SimpleAddressPropertyForm extends BasicPageForm
                         if (isoCode == null || isoCode.length() == 0) {
                             data.addError(
                                 (String)SimpleAddressGlobalizationUtil.globalize(
-                                    "cms.contenttypes.ui.address.error_iso_country").localize());
+                                    "cms.contenttypes.ui.simpleaddress.error_iso_country")
+                                    .localize());
                         }
                     }});
 
@@ -166,25 +169,27 @@ public class SimpleAddressPropertyForm extends BasicPageForm
                 
         if (!SimpleAddress.getConfig().getHidePostalCode()) {
             add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                     ( "cms.contenttypes.ui.address.postal_code" ).localize() ) );
+                     ( "cms.contenttypes.ui.simpleaddress.postal_code" ).localize() ) );
             ParameterModel postalCodeParam = new StringParameter( POSTAL_CODE );
             //  postalCodeParam.addParameterListener( new NotNullValidationListener( ) );
-     	        postalCodeParam.addParameterListener( new StringInRangeValidationListener(0, 20) );
+     	        postalCodeParam.addParameterListener(
+                                new StringInRangeValidationListener(0, 20) );
             TextField postalCode = new TextField( postalCodeParam );
             postalCode.setMaxLength( 20 );
             add( postalCode );        
         }
         
-        add( new Label( SimpleAddressGlobalizationUtil.globalize( "cms.contenttypes.ui.address.phone" ) ) );
+        add( new Label( SimpleAddressGlobalizationUtil.globalize(
+                                "cms.contenttypes.ui.simpleaddress.phone" ) ) );
         ParameterModel phoneParam = new StringParameter( PHONE );
-	    phoneParam.addParameterListener( new StringInRangeValidationListener(0, 20) );
+	    phoneParam.addParameterListener( new StringInRangeValidationListener(0,20) );
         TextField phone = new TextField( phoneParam );
         phone.setSize(20);
         phone.setMaxLength( 20 );
         add( phone );        
 
         add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                 ( "cms.contenttypes.ui.address.mobile" ).localize() ) );
+                 ( "cms.contenttypes.ui.simpleaddress.mobile" ).localize() ) );
         ParameterModel mobileParam = new StringParameter( MOBILE );
 	    mobileParam.addParameterListener( new StringInRangeValidationListener(0, 20) );
         TextField mobile = new TextField( mobileParam );
@@ -193,7 +198,7 @@ public class SimpleAddressPropertyForm extends BasicPageForm
         add( mobile );
         
         add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                 ( "cms.contenttypes.ui.address.fax" ).localize() ) );
+                 ( "cms.contenttypes.ui.simpleaddress.fax" ).localize() ) );
         ParameterModel faxParam = new StringParameter( FAX );
 	    faxParam.addParameterListener( new StringInRangeValidationListener(0, 20) );
         TextField fax = new TextField( faxParam );
@@ -202,25 +207,28 @@ public class SimpleAddressPropertyForm extends BasicPageForm
         add( fax );
         
         add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                 ( "cms.contenttypes.ui.address.email" ).localize() ) );
+                 ( "cms.contenttypes.ui.simpleaddress.email" ).localize() ) );
         ParameterModel emailParam = new StringParameter( EMAIL );
 	    emailParam.addParameterListener( new StringInRangeValidationListener(0, 75) );
         TextField email = new TextField( emailParam );
         email.setSize(25);
         email.setMaxLength( 75 );
         email.setHint(SimpleAddressGlobalizationUtil.globalize
-                     ( "cms.contenttypes.ui.address.email_hint").localize().toString());
+                     ( "cms.contenttypes.ui.simpleaddress.email_hint")
+                     .localize().toString());
         add( email );
         add(new Label(""));
         add(new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                     ( "cms.contenttypes.ui.address.email_desc" ).localize() ) );
+                     ( "cms.contenttypes.ui.simpleaddress.email_desc" )
+                     .localize() ) );
         
         add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                 ( "cms.contenttypes.ui.address.uri" ).localize() ) );
+                 ( "cms.contenttypes.ui.simpleaddress.uri" ).localize() ) );
         ParameterModel uriParam = new StringParameter( URI );
-	    uriParam.addParameterListener( new StringInRangeValidationListener(0, 250) );
+	    uriParam.addParameterListener( new StringInRangeValidationListener(0,250) );
         TextField uri = new TextField( uriParam );
         uri.addValidationListener(new URLValidationListener(){
+            @Override
 			public void validate(ParameterEvent e)throws FormProcessException{
 				ParameterData d = e.getParameterData();
 				String value = (String)d.getValue();
@@ -233,14 +241,15 @@ public class SimpleAddressPropertyForm extends BasicPageForm
         uri.setSize(30);
         uri.setMaxLength( 250 );
         uri.setHint(SimpleAddressGlobalizationUtil.globalize
-                   ( "cms.contenttypes.ui.address.uri_hint").localize().toString());
+                   ( "cms.contenttypes.ui.simpleaddress.uri_hint")
+                   .localize().toString());
         add( uri );
         add(new Label(""));
         add(new Label((String)SimpleAddressGlobalizationUtil.globalize
-                ( "cms.contenttypes.ui.address.uri_desc" ).localize() ) );
+                ( "cms.contenttypes.ui.simpleaddress.uri_desc" ).localize() ) );
 
         add( new Label( (String)SimpleAddressGlobalizationUtil.globalize
-                 ( "cms.contenttypes.ui.address.notes" ).localize() ) );
+                 ( "cms.contenttypes.ui.simpleaddress.notes" ).localize() ) );
         ParameterModel notesParam = new StringParameter( NOTES );
         TextArea notes = new TextArea( notesParam );
         notes.setRows(8);
@@ -318,7 +327,8 @@ public class SimpleAddressPropertyForm extends BasicPageForm
             address.setEmail( ( String ) data.get( EMAIL ) );
             address.setURI( ( String ) data.get( URI ) );
             address.setNotes( ( String ) data.get( NOTES ) );
-            // address.setNotes( data.get( NOTES )!= "" ? ( String )data.get( NOTES ) : ( String )"dummy" );
+            // address.setNotes( data.get( NOTES )!=
+            //           "" ? ( String )data.get( NOTES ) : ( String )"dummy" );
             address.save();
         }
         if (m_step != null) {

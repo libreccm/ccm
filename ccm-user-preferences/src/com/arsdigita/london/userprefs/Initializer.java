@@ -18,7 +18,6 @@ package com.arsdigita.london.userprefs;
 
 import com.arsdigita.db.DbHelper;
 import com.arsdigita.persistence.pdl.ManifestSource;
-import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;

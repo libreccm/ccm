@@ -33,7 +33,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 public class SimpleAddressGlobalizationUtil {
     
     final public static String BUNDLE_NAME = 
-        "com.arsdigita.cms.contenttypes.util.AddressResourceBundle";
+        "com.arsdigita.cms.contenttypes.util.SimpleAddressResourceBundle";
 
     /**
      *  This returns a globalized message using the type specific bundle,

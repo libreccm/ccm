@@ -24,7 +24,10 @@ import com.arsdigita.domain.DataObjectNotFoundException;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.util.Assert;
+
 import java.math.BigDecimal;
+import org.apache.log4j.Logger;
+
 
 /**
  * <p><code>DomainObject</code> class to represent address <code>ContentType</code>
@@ -41,7 +44,10 @@ import java.math.BigDecimal;
  **/
 public class SimpleAddress extends ContentPage {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger logger = Logger.getLogger(SimpleAddress.class);
+
+    // PDL stuff
     /** PDL property name for address */
     public static final String ADDRESS = "address";
     /** PDL property name for country iso code */
@@ -62,17 +68,12 @@ public class SimpleAddress extends ContentPage {
     public static final String URI = "uri";
     /** Data object type for this domain object */
     public static final String BASE_DATA_OBJECT_TYPE =
-                               "com.arsdigita.cms.contenttypes.Address";
+                               "com.arsdigita.cms.contenttypes.SimpleAddress";
+
     private static final SimpleAddressConfig s_config =
-                                             new SimpleAddressConfig();
+                                             SimpleAddressConfig.getConfig();
 
-    static {
-        logger.debug("Static initalizer starting...");
-        s_config.load();
-        logger.debug("Static initalizer finisheds. .");
-    }
-
-    public static final SimpleAddressConfig getConfig() {
+    public static SimpleAddressConfig getConfig() {
         return s_config;
     }
 
@@ -134,9 +135,9 @@ public class SimpleAddress extends ContentPage {
      * For new content items, sets the associated content type if it
      * has not been already set.
      */
+    @Override
     public void beforeSave() {
         super.beforeSave();
-
         Assert.exists(getContentType(), ContentType.class);
     }
 

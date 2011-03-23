@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ccm:application xmlns:ccm="http://ccm.redhat.com/ccm-project"
-  name="ccm-cms-types-oldaddress"
-  prettyName="Red Hat CCM Content Types"
-  version="6.6.0"
+  name="ccm-cms-types-simpleaddress"
+  prettyName="Simple Address Red Hat CCM Content Type"
+  version="6.6.1"
   release="1"
   webapp="ROOT">
   <ccm:dependencies>
@@ -18,7 +18,14 @@
     <ccm:contact uri="http://www.redhat.com/software/rhea" type="website"/>
     <ccm:contact uri="mailto:rhea@redhat.com" type="support"/>
   </ccm:contacts>
+
   <ccm:description>
-    The old Address Content Type for the Red Hat CCM CMS.
+    Simple Address is the old Address Content Type for the Red Hat CCM CMS
+    (previously named ccm-cms-types-address up to 6.6.0). 
+    
+    The old type is incompatible with the new generic basic content types
+    intoduced with  6.6.1 (table name conflicts etc.). It has been modified
+    so it can be installed in parallel to the new type (ccm-cms-types-address).
   </ccm:description>
+
 </ccm:application>

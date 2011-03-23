@@ -14,9 +14,9 @@
        createComponent="com.arsdigita.cms.ui.authoring.PageCreate">
      
       <ctd:authoring-step 
-                 labelKey="address.authoring.basic_properties.title" 
+                 labelKey="simpleaddress.authoring.basic_properties.title"
               labelBundle="com.arsdigita.cms.contenttypes.SimpleAddressResources"
-           descriptionKey="address.authoring.basic_properties.description" 
+           descriptionKey="simpleaddress.authoring.basic_properties.description"
         descriptionBundle="com.arsdigita.cms.contenttypes.SimpleAddressResources"
                 component="com.arsdigita.cms.contenttypes.ui.SimpleAddressPropertiesStep"
                  ordering="1"/>
