@@ -21,6 +21,7 @@ public class ProjectData {
     private String descEn;
     private String fundingDe;
     private String fundingEn;
+    private String link;
 
     public ProjectData() {
         members = new ArrayList<MembershipData>();
@@ -116,5 +117,13 @@ public class ProjectData {
 
     public void setNameEn(String nameEn) {
         this.nameEn = nameEn;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

@@ -37,6 +37,7 @@ public class SciOrganizationConfig extends AbstractConfig {
     private final Parameter m_projectDescriptionDhtml;
     private final Parameter m_projectFundingHide;
     private final Parameter m_projectFundingDhtml;
+    private final Parameter m_projectFundingVolumeHide;
     private final Parameter m_projectMaterialsHide;
     private final Parameter m_projectMembersAllInOne;
     private final Parameter m_projectMembersMerge;
@@ -148,6 +149,10 @@ public class SciOrganizationConfig extends AbstractConfig {
                 "com.arsdigita.cms.contenttypes.sciproject.funding_dhtml",
                 Parameter.REQUIRED,
                 Boolean.FALSE);
+        m_projectFundingVolumeHide = new BooleanParameter(
+                "com.arsdigita.cms.contenttypes.sciproject.funding_volume_hide",
+                Parameter.REQUIRED,
+                Boolean.FALSE);
         m_projectMaterialsHide = new BooleanParameter(
                 "com.arsdigita.cms.contenttypes.sciproject.materials_hide",
                 Parameter.REQUIRED,
@@ -192,6 +197,7 @@ public class SciOrganizationConfig extends AbstractConfig {
         register(m_projectAddContactHide);
 
         register(m_projectFundingHide);
+        register(m_projectFundingVolumeHide);
         register(m_projectFundingDhtml);
         register(m_projectMaterialsHide);
 
@@ -303,6 +309,10 @@ public class SciOrganizationConfig extends AbstractConfig {
 
     public final boolean getProjectFundingDhtml() {
         return (Boolean) get(m_projectFundingDhtml);
+    }
+
+     public final boolean getProjectFundingVolumeHide() {
+        return (Boolean) get(m_projectFundingVolumeHide);
     }
 
     public final boolean getProjectMaterialsHide() {

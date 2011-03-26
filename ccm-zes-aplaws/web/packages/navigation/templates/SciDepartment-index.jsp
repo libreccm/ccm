@@ -19,7 +19,7 @@
   </jsp:scriptlet>
 
   <define:page name="defaultItemPage" application="navigation"
-    title="Navigation" cache="true">
+    title="Navigation" cache="false">
 
     <define:component name="greetingItem"
       classname="com.arsdigita.london.navigation.ui.GreetingItem"/>

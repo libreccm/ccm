@@ -19,10 +19,10 @@
     }
     </jsp:scriptlet>
 
-    <define:page name="publications"
+    <define:page name="person"
                  application="content"
-                 title="Publications4Homepages"
-                 cache="true">
+                 title="person4Homepages"
+                 cache="false">
 
         <define:component name="personList"
                           classname="com.arsdigita.london.navigation.ui.object.ComplexObjectList"/>
@@ -32,14 +32,15 @@
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).getDefinition().setObjectType("com.arsdigita.cms.contenttypes.GenericPerson");
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).getRenderer().setSpecializeObjects(true);
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).getDefinition().setDescendCategories(true);
+        ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).getDefinition().setExcludeIndexObjects(false);
+	((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).getDefinition().setFilterCategory(false);
+        ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).getRenderer().setPageSize(99999);
         if((request.getParameterMap().get("DaBInId") != null) &amp;&amp; (((String[])request.getParameterMap().get("DaBInId")).length &gt; 0)) {
           String[] params = (String[]) request.getParameterMap().get("DaBInId");
           String dabinid = params[0];
           ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).setSQLFilter(String.format("pageDescription LIKE '%%DaBInId={%s}%%'", dabinid));
-
         }
 
-        ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) personList).getRenderer().setPageSize(99999);
         </jsp:scriptlet>
     </define:page>
 

@@ -45,6 +45,8 @@ import org.apache.log4j.Logger;
  * <dd>A description of the project/<dd>
  * <dt><code>funding</code><dt>
  * <dd>A text about the funding of the project</dd>
+ * <dt><code>fundingVolume</code></dt>
+ * <dd><code>Volume of the funding</code></dt>
  * </dl>
  * <p>
  * Also, the class has some methods the access the associations defined by
@@ -70,6 +72,7 @@ public class SciProject extends GenericOrganizationalUnit {
     public static final String PROJECT_SHORT_DESCRIPTION = "projectShortDesc";
     public static final String PROJECT_DESCRIPTION = "projectDescription";
     public static final String FUNDING = "funding";
+    public static final String FUNDING_VOLUME = "fundingVolume";
     public static final String SUBPROJECTS = "subProjects";
     public static final String SUBPROJECT_ORDER = "subProjectOrder";
     public static final String ORGANIZATIONS = "organization";
@@ -109,7 +112,7 @@ public class SciProject extends GenericOrganizationalUnit {
         super(type);
     }
 
-    public static final SciOrganizationConfig getConfig() {
+    public static SciOrganizationConfig getConfig() {
         return s_config;
     }
 
@@ -151,6 +154,14 @@ public class SciProject extends GenericOrganizationalUnit {
 
     public void setFunding(String funding) {
         set(FUNDING, funding);
+    }
+
+    public String getFundingVolume() {
+        return (String) get(FUNDING_VOLUME);
+    }
+
+    public void setFundingVolume(String fundingVolume) {
+        set(FUNDING_VOLUME, fundingVolume);
     }
 
     public SciProjectSubProjectsCollection getSubProjects() {

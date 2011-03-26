@@ -62,7 +62,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         if (project.getPersons() != null) {
             GenericOrganizationalUnitPersonCollection persons;
             persons = project.getPersons();
-            for(String filter : filters) {
+            for (String filter : filters) {
                 persons.addFilter(filter);
             }
             if (persons.size() > 0) {
@@ -92,10 +92,10 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
     protected boolean hasSubProjects(final SciProject project,
                                      final List<String> filters) {
         if (project.getSubProjects() != null) {
-         
+
             SciProjectSubProjectsCollection subProjects;
             subProjects = project.getSubProjects();
-            for(String filter : filters) {
+            for (String filter : filters) {
                 subProjects.addFilter(filter);
             }
             if (subProjects.size() > 0) {
@@ -111,7 +111,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
                                           final List<String> filters) {
         SciProjectSubProjectsCollection subProjects;
         subProjects = project.getSubProjects();
-        for(String filter : filters) {
+        for (String filter : filters) {
             subProjects.addFilter(filter);
         }
         subProjects.addOrder("begin desc, end desc");
@@ -126,8 +126,10 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         long end = getPaginatorEnd(begin, count);
         pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+        createPaginatorElement(parent, pageNumber, pageCount, begin, end, count, subProjects.
+                size());
         subProjects.setRange((int) begin, (int) end);
-        createPaginatorElement(parent, pageNumber, pageCount, begin, end, count);
+
 
         while (subProjects.next()) {
             SciProject subProject;
@@ -225,7 +227,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
             if (hasMembers(project, getFiltersForActiveMembers())) {
                 availableData.newChildElement("activeMembers");
             }
-            if (hasMembers(project,getFiltersForAssociatedMembers())) {
+            if (hasMembers(project, getFiltersForAssociatedMembers())) {
                 availableData.newChildElement("associatedMembers");
             }
             if (hasMembers(project, getFiltersForFormerMembers())) {
@@ -235,7 +237,7 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
 
         String show = getShowParam(state);
 
-        if (SHOW_DESCRIPTION.equals(show)) {            
+        if (SHOW_DESCRIPTION.equals(show)) {
             Element description = content.newChildElement("description");
             description.setText(project.getProjectDescription());
 
@@ -244,11 +246,14 @@ public class SciProjectPanel extends SciOrganizationBasePanel {
         } else if (SHOW_CONTACTS.equals(show)) {
             generateContactsXML(project, content, state);
         } else if (SHOW_SUBPROJECTS.equals(show)) {
-            generateSubProjectsXML(project, content, state, new LinkedList<String>());
+            generateSubProjectsXML(project, content, state,
+                                   new LinkedList<String>());
         } else if (SHOW_SUBPROJECTS_ONGOING.equals(show)) {
-            generateSubProjectsXML(project, content, state, getFiltersForOngoingProjects());
+            generateSubProjectsXML(project, content, state,
+                                   getFiltersForOngoingProjects());
         } else if (SHOW_SUBPROJECTS_FINISHED.equals(show)) {
-            generateSubProjectsXML(project, content, state, getFiltersForFinishedProjects());
+            generateSubProjectsXML(project, content, state,
+                                   getFiltersForFinishedProjects());
         } else if (SHOW_MEMBERS.equals(show)) {
             generateMembersXML(project, content, state, true, true, true);
         }

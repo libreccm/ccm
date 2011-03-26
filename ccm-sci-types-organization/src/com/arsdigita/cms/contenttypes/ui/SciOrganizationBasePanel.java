@@ -145,30 +145,32 @@ public abstract class SciOrganizationBasePanel
     protected class SciProjectComparator implements Comparator<SciProject> {
 
         public int compare(SciProject project1, SciProject project2) {
-            int result = 0;
+            /*int result = 0;
 
             if (project1.getBegin() == null) {
-                return -1;
+            return -1;
             } else if (project2.getBegin() == null) {
-                return 1;
+            return 1;
             } else {
-                result = project1.getBegin().compareTo(project2.getBegin());
+            result = project1.getBegin().compareTo(project2.getBegin());
             }
 
             if (result == 0) {
-                if (project1.getEnd() == null) {
-                    return -1;
-                } else if (project2.getEnd() == null) {
-                    return 1;
-                } else if ((project1.getEnd() == null) && (project2.getEnd()
-                                                               == null)) {
-                    return 0;
-                } else {
-                    result = project1.getEnd().compareTo(project2.getEnd());
-                }
+            if (project1.getEnd() == null) {
+            return -1;
+            } else if (project2.getEnd() == null) {
+            return 1;
+            } else if ((project1.getEnd() == null) && (project2.getEnd()
+            == null)) {
+            return 0;
+            } else {
+            result = project1.getEnd().compareTo(project2.getEnd());
+            }
             }
 
-            return result;
+            return result;*/
+
+            return project1.getTitle().compareTo(project2.getTitle());
         }
     }
 
@@ -283,7 +285,11 @@ public abstract class SciOrganizationBasePanel
                              final String roleName,
                              final String status,
                              final List<MemberListItem> members) {
-        members.add(new MemberListItem(person, roleName, status));
+        MemberListItem listItem = new MemberListItem(person, roleName, status);
+
+        if (!members.contains(listItem)) {
+            members.add(listItem);
+        }
     }
 
     protected void mergeMembers(
@@ -332,14 +338,13 @@ public abstract class SciOrganizationBasePanel
         long end = getPaginatorEnd(begin, count);
         pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+        createPaginatorElement(
+                parent, pageNumber, pageCount, begin, end, count, membersWithoutDoubles.
+                size());
         List<MemberListItem> membersWithoutDoublesToShow = membersWithoutDoubles.
                 subList((int) begin,
                         (int) end);
 
-        createPaginatorElement(
-                parent, pageNumber, pageCount, begin,
-                end,
-                count);
         Element membersWithoutDoublesElem = parent.newChildElement(
                 "members");
 

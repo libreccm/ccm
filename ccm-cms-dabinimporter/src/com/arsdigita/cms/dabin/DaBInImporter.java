@@ -1211,7 +1211,7 @@ public class DaBInImporter extends Program {
 
                 System.out.printf("%3d of %3d:\n", i + 1, projectsIds.size());
                 result = stmt.executeQuery(String.format(
-                        "SELECT Name, Beschreibung, Finanzierung, Abteilung_Id, Beginn, Ende "
+                        "SELECT Name, Beschreibung, Finanzierung, Abteilung_Id, Beginn, Ende, Link "
                         + "FROM projekt "
                         + "WHERE Projekt_Id = %s AND Sprache = 'DE'",
                         projectsIds.get(i)));
@@ -1228,10 +1228,11 @@ public class DaBInImporter extends Program {
                         data.setEnd(new GregorianCalendar(result.getInt("Ende"),
                                                           11, 31, 23, 59));
                     }
+                    data.setLink(result.getString("Link"));
                 }
 
                 result = stmt.executeQuery(String.format(
-                        "SELECT Name, Beschreibung, Finanzierung, Abteilung_Id, Beginn, Ende "
+                        "SELECT Name, Beschreibung, Finanzierung, Abteilung_Id, Beginn, Ende, Link "
                         + "FROM projekt "
                         + "WHERE Projekt_Id = %s AND Sprache = 'EN'",
                         projectsIds.get(i)));
@@ -1248,6 +1249,7 @@ public class DaBInImporter extends Program {
                         data.setEnd(new GregorianCalendar(result.getInt("Ende"),
                                                           11, 31, 23, 59));
                     }
+                    data.setLink(result.getString("Link"));
                 }
 
                 result = stmt.executeQuery(String.format(
@@ -2226,6 +2228,17 @@ public class DaBInImporter extends Program {
                     if (projectData.getEnd() != null) {
                         projectDe.setEnd(projectData.getEnd().getTime());
                     }
+                    if ((projectData.getLink() != null)
+                        && !projectData.getLink().isEmpty()) {
+                        RelatedLink link = new RelatedLink();
+                        link.setTitle(config.getProperty(
+                                "projects.furtherInfoLink.de",
+                                projectData.getLink()));
+                        link.setTargetType(Link.EXTERNAL_LINK);
+                        link.setTargetURI(projectData.getLink());
+                        link.setLinkOwner(projectDe);
+                    }
+
                     projectDe.setLanguage("de");
                     projectDe.setLifecycle(createLifecycle(projectsLifecycle));
                     projectDe.setContentSection(projectsSection);
@@ -2259,6 +2272,16 @@ public class DaBInImporter extends Program {
                     }
                     if (projectData.getEnd() != null) {
                         projectEn.setEnd(projectData.getEnd().getTime());
+                    }
+                    if ((projectData.getLink() != null)
+                        && !projectData.getLink().isEmpty()) {
+                        RelatedLink link = new RelatedLink();
+                        link.setTitle(config.getProperty(
+                                "projects.furtherInfoLink.en",
+                                projectData.getLink()));
+                        link.setTargetType(Link.EXTERNAL_LINK);
+                        link.setTargetURI(projectData.getLink());
+                        link.setLinkOwner(projectEn);
                     }
                     projectEn.setLanguage("en");
                     projectEn.setLifecycle(createLifecycle(projectsLifecycle));
@@ -2424,7 +2447,9 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.de",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(monographDe);
@@ -2460,7 +2485,9 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.en",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(monographEn);
@@ -2506,12 +2533,18 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.de",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(collectedVolumeDe);
                         }
 
+                        if (publicationData.getBeschreibung() != null) {
+                            collectedVolumeDe.setAbstract(publicationData.
+                                    getBeschreibung());
+                        }
 
                         collectedVolumeDe.save();
 
@@ -2533,10 +2566,17 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.en",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(collectedVolumeEn);
+                        }
+
+                        if (publicationData.getBeschreibung() != null) {
+                            collectedVolumeEn.setAbstract(publicationData.
+                                    getBeschreibung());
                         }
 
                         collectedVolumeEn.save();
@@ -2556,7 +2596,9 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.de",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(articleDe);
@@ -2585,7 +2627,9 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.en",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(articleEn);
@@ -2623,14 +2667,18 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
+                            String titleUrl;
                             if (publicationData.getLink().length() < 200) {
-                                link.setTitle(publicationData.getLink());
+                                titleUrl = publicationData.getLink();
                             } else {
                                 System.out.println(
                                         "\t***WARNING: Link in publication is too long for title. Truncating.");
-                                link.setTitle(publicationData.getLink().
-                                        substring(0, 200));
+                                titleUrl = publicationData.getLink().
+                                        substring(0, 200);
                             }
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.de",
+                                    titleUrl));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(articleDe);
@@ -2659,14 +2707,18 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
+                            String titleUrl;
                             if (publicationData.getLink().length() < 200) {
-                                link.setTitle(publicationData.getLink());
+                                titleUrl = publicationData.getLink();
                             } else {
                                 System.out.println(
                                         "\t***WARNING: Link in publication is too long for title. Truncating.");
-                                link.setTitle(publicationData.getLink().
-                                        substring(0, 200));
+                                titleUrl = publicationData.getLink().
+                                        substring(0, 200);
                             }
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.en",
+                                    titleUrl));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(articleEn);
@@ -2704,7 +2756,9 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.de",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(greyDe);
@@ -2731,7 +2785,9 @@ public class DaBInImporter extends Program {
                         if ((publicationData.getLink() != null)
                             && !publicationData.getLink().isEmpty()) {
                             RelatedLink link = new RelatedLink();
-                            link.setTitle(publicationData.getLink());
+                            link.setTitle(config.getProperty(
+                                    "publications.furtherInfoLink.en",
+                                    publicationData.getLink()));
                             link.setTargetType(Link.EXTERNAL_LINK);
                             link.setTargetURI(publicationData.getLink());
                             link.setLinkOwner(greyEn);
@@ -2849,7 +2905,9 @@ public class DaBInImporter extends Program {
                 if ((publicationData.getAbteilungId() != null)
                     && !publicationData.getAbteilungId().isEmpty()
                     && departmentsMap.containsKey(
-                        publicationData.getAbteilungId())) {
+                        publicationData.getAbteilungId())
+                    && (publicationData.getVisiblity()
+                        != PublicationVisibility.PRIVATE)) {
                     System.out.println(
                             "\tAssigning publication to department...\n");
                     ContentBundle department = departmentsMap.get(publicationData.
@@ -2878,17 +2936,21 @@ public class DaBInImporter extends Program {
                 }
 
                 insertIntoAZFolder(publication, publicationsAlpha);
-                Term term = publicationTerms.get(Integer.toString(((Publication) publication.
-                                                                   getPrimaryInstance()).
-                        getYearOfPublication()));
-                if (term == null) {
-                    term = publicationsTerm;
+                if (publicationData.getVisiblity()
+                    == PublicationVisibility.GLOBAL) {
+                    Term term = publicationTerms.get(Integer.toString(((Publication) publication.
+                                                                       getPrimaryInstance()).
+                            getYearOfPublication()));
+                    if (term == null) {
+                        term = publicationsTerm;
+                    }
+                    term = termsDomain.getTerm(term.getUniqueID());
+                    System.out.printf(
+                            "\tAdding publication to term '%s:%s'...\n", term.
+                            getUniqueID(), term.getName());
+                    term.addObject(publication);
+                    term.save();
                 }
-                term = termsDomain.getTerm(term.getUniqueID());
-                System.out.printf("\tAdding publication to term '%s:%s'...\n", term.
-                        getUniqueID(), term.getName());
-                term.addObject(publication);
-                term.save();
             }
         };
 
@@ -3050,7 +3112,7 @@ public class DaBInImporter extends Program {
                             pdfFileStream.close();
 
                             FileStorageItem fsi = new FileStorageItem();
-                            String title = String.format("Datei %s",
+                            String title = String.format("Datei %s [pdf]",
                                                          ((WorkingPaper) workingPaper.
                                                           getPrimaryInstance()).
                                     getTitle());
@@ -3060,7 +3122,7 @@ public class DaBInImporter extends Program {
                                 fsi.setTitle(title);
                             }
 
-                            String name = String.format("datei_%s.pdf",
+                            String name = String.format("datei_%s-pdf",
                                                         ((WorkingPaper) workingPaper.
                                                          getPrimaryInstance()).
                                     getName());
@@ -3348,10 +3410,10 @@ public class DaBInImporter extends Program {
 
         int colonIndex = normalizedData.indexOf(':');
         if (colonIndex < 0) {
-            publisher.setName(normalizedData.replace(",", "").
-                    replace("/", "").
-                    replaceAll("\\s\\s+", " ").
-                    replace(' ', '-').toLowerCase());
+            publisher.setName(normalizedData);/*.replace(",", "").
+            replace("/", "").
+            replaceAll("\\s\\s+", " ").
+            replace(' ', '-').toLowerCase());*/
         } else {
             String name;
             String place;

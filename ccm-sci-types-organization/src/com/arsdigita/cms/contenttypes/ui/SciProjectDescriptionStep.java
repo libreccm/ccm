@@ -78,9 +78,16 @@ public class SciProjectDescriptionStep extends SimpleEditStep {
         sheet.add(SciOrganizationGlobalizationUtil.globalize(
                 "sciorganization.ui.project.desc"),
                   SciProject.PROJECT_DESCRIPTION);
-        sheet.add(SciOrganizationGlobalizationUtil.globalize(
-                "sciorganization.ui.project.funding"),
-                  SciProject.FUNDING);
+        if (!SciProject.getConfig().getProjectFundingHide()) {
+            sheet.add(SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.funding"),
+                      SciProject.FUNDING);
+        }
+        if (!SciProject.getConfig().getProjectFundingVolumeHide()) {
+            sheet.add(SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.funding_volume"),
+                      SciProject.FUNDING_VOLUME);
+        }
 
         return sheet;
     }

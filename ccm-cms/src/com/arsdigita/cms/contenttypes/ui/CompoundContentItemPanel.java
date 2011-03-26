@@ -205,7 +205,8 @@ public abstract class CompoundContentItemPanel
                                           final long pageCount,
                                           final long begin,
                                           final long end,
-                                          final long count) {
+                                          final long count,
+                                          final long size) {
         Element paginator;
         paginator =
         parent.newChildElement("nav:paginator",
@@ -236,7 +237,7 @@ public abstract class CompoundContentItemPanel
         paginator.addAttribute("pageSize", Long.toString(m_pageSize));
         paginator.addAttribute("objectBegin", Long.toString(begin + 1));
         paginator.addAttribute("objectEnd", Long.toString(end));
-        paginator.addAttribute("objectCount", Long.toString(count + 1));
+        paginator.addAttribute("objectCount", Long.toString(size));
     }
 
     /**

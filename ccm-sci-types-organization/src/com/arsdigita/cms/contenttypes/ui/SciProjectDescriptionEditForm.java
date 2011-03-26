@@ -27,7 +27,9 @@ import com.arsdigita.bebop.event.FormInitListener;
 import com.arsdigita.bebop.event.FormProcessListener;
 import com.arsdigita.bebop.event.FormSectionEvent;
 import com.arsdigita.bebop.form.TextArea;
+import com.arsdigita.bebop.form.TextField;
 import com.arsdigita.bebop.parameters.ParameterModel;
+import com.arsdigita.bebop.parameters.StringInRangeValidationListener;
 import com.arsdigita.bebop.parameters.StringParameter;
 import com.arsdigita.cms.ItemSelectionModel;
 import com.arsdigita.cms.contenttypes.SciProject;
@@ -79,6 +81,16 @@ public class SciProjectDescriptionEditForm
             funding.setRows(8);
             add(funding);
         }
+
+        if (!SciProject.getConfig().getProjectFundingVolumeHide()) {
+             add(new Label(SciOrganizationGlobalizationUtil.globalize(
+                    "sciorganization.ui.project.funding_volume")));
+             ParameterModel fundingVolumeParam = new StringParameter(SciProject.FUNDING_VOLUME);
+             TextField fundingVolume = new TextField(fundingVolumeParam);
+             fundingVolume.addValidationListener(new StringInRangeValidationListener(
+                     0, 128));
+             add(fundingVolume);
+        }
     }
 
     @Override
@@ -93,6 +105,10 @@ public class SciProjectDescriptionEditForm
                  project.getProjectDescription());
         if (!SciProject.getConfig().getProjectFundingHide()) {
             data.put(SciProject.FUNDING, project.getFunding());
+        }
+
+        if (!SciProject.getConfig().getProjectFundingVolumeHide()) {
+            data.put(SciProject.FUNDING_VOLUME, project.getFundingVolume());
         }
 
         setVisible(state, true);
@@ -113,6 +129,10 @@ public class SciProjectDescriptionEditForm
             if (!SciProject.getConfig().getProjectFundingHide()) {
                 project.setFunding((String) data.get(
                         SciProject.FUNDING));
+            }
+            if (!SciProject.getConfig().getProjectFundingVolumeHide()) {
+                project.setFundingVolume((String) data.get(
+                        SciProject.FUNDING_VOLUME));
             }
 
             project.save();

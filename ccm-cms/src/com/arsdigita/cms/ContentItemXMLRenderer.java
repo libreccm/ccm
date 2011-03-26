@@ -11,6 +11,7 @@ import com.arsdigita.domain.DomainObjectTraversalAdapter;
 import com.arsdigita.domain.DomainObjectXMLRenderer;
 import com.arsdigita.persistence.metadata.Property;
 import com.arsdigita.xml.Element;
+import org.apache.log4j.Logger;
 
 /**
  * This is a special ContentItemXMLRenderer for CMS to get a more transparent
@@ -26,6 +27,7 @@ import com.arsdigita.xml.Element;
  */
 public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
 
+    private static final Logger logger = Logger.getLogger(ContentItemXMLRenderer.class);
     private String m_propertyName = "";
     private String m_keyName = "";
     private String m_relationAttribute = "";
@@ -96,6 +98,7 @@ public class ContentItemXMLRenderer extends DomainObjectXMLRenderer {
             // Replace value of the property defined in RELATION_ATTRIBUTES string
             // of the primary domain object with the localized String.
             if (!key.isEmpty()) {
+                logger.debug(String.format("Getting relation attribute value for key '%s' of relation attribute '%s'", key, m_relationAttribute));
                 RelationAttributeCollection relationAttributeCollection = new RelationAttributeCollection(m_relationAttribute, key);
                 relationAttributeCollection.addLanguageFilter(DispatcherHelper.getNegotiatedLocale().getLanguage());
                 Element element = newElement(m_element, m_keyName);

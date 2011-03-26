@@ -214,7 +214,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                                           final PageState state) {
         SciOrganizationDepartmentsCollection departments;
         departments = orga.getDepartments();
-        departments.addOrder("departmentOrder asc");
+        departments.addOrder("link.departmentOrder asc");
 
         long pageNumber = getPageNumber(state);
 
@@ -226,9 +226,10 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         long end = getPaginatorEnd(begin, count);
         pageNumber = normalizePageNumber(pageCount, pageNumber);
 
-        departments.setRange((int) begin, (int) end);
         createPaginatorElement(
-                parent, pageNumber, pageCount, begin, end, count);
+                parent, pageNumber, pageCount, begin, end, count, departments.
+                size());
+        departments.setRange((int) begin, (int) end);
 
         while (departments.next()) {
             SciDepartment department;
@@ -258,7 +259,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
 
             GenericOrganizationalUnitPersonCollection heads;
             heads = department.getPersons();
-            heads.addFilter("role_name = 'head'");
+            heads.addFilter("link.role_name = 'head'");
             heads.addOrder("surname asc, givenname asc");
 
             if (heads.size() > 0) {
@@ -356,7 +357,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         } else {
             GenericOrganizationalUnitPersonCollection orgaMembers;
             orgaMembers = orga.getPersons();
-            for(String filter : filters) {
+            for (String filter : filters) {
                 orgaMembers.addFilter(filter);
             }
             List<MemberListItem> members = new LinkedList<MemberListItem>();
@@ -442,17 +443,15 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            createPaginatorElement(
+                    parent, pageNumber, pageCount, begin, end, count, projectsWithoutDoubles.
+                    size());
             List<SciProject> projectsWithoutDoublesToShow = projectsWithoutDoubles.
                     subList((int) begin,
                             (int) end);
 
-            createPaginatorElement(
-                    parent, pageNumber, pageCount, begin,
-                    end,
-                    count);
-
             Element projectsWithoutDoublesElem = parent.newChildElement(
-                    "projectsWithoutDoubles");
+                    "projects");
             for (SciProject project : projectsWithoutDoublesToShow) {
                 generateProjectXML(project, projectsWithoutDoublesElem, state);
             }
@@ -482,13 +481,11 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            createPaginatorElement(
+                    parent, pageNumber, pageCount, begin, end, count, projects.
+                    size());
             List<SciProject> projectsToShow = projects.subList((int) begin,
                                                                (int) end);
-
-            createPaginatorElement(
-                    parent, pageNumber, pageCount, begin,
-                    end,
-                    count);
 
             Element projectsElem = parent.newChildElement("projects");
             for (SciProject project : projectsToShow) {
@@ -502,7 +499,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
                             Element element,
                             PageState state) {
         Element content = generateBaseXML(item, element, state);
-      
+
         Element availableData = content.newChildElement("availableData");
 
         SciOrganization orga = (SciOrganization) item;
@@ -578,7 +575,7 @@ public class SciOrganizationPanel extends SciOrganizationBasePanel {
         } else if (SHOW_PROJECTS_ONGOING.equals(show)) {
             generateProjectsXML(
                     orga, content, state, getFiltersForOngoingProjects());
-        } else if (SHOW_PROJECTS_FINISHED.equals(show)) {           
+        } else if (SHOW_PROJECTS_FINISHED.equals(show)) {
             generateProjectsXML(
                     orga, content, state, getFiltersForFinishedProjects());
         }

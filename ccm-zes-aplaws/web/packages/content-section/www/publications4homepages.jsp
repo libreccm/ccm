@@ -32,10 +32,12 @@
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().setObjectType("com.arsdigita.cms.contenttypes.Publication");
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getRenderer().setSpecializeObjects(true);
         ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().setDescendCategories(true);        
+        ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().setExcludeIndexObjects(false);
+	((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).getDefinition().setFilterCategory(false);
         if((request.getParameterMap().get("DaBInId") != null) &amp;&amp; (((String[])request.getParameterMap().get("DaBInId")).length &gt; 0)) {
           String[] params = (String[]) request.getParameterMap().get("DaBInId");
           String dabinid = params[0];          
-          ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).setSQLFilter(String.format("authors.pageDescription LIKE '%%DaBInId={%s%%'", dabinid));
+          ((com.arsdigita.london.navigation.ui.object.ComplexObjectList) publicationList).setSQLFilter(String.format("authors.pageDescription LIKE '%%DaBInId={%s}%%'", dabinid));
           
         } 
 

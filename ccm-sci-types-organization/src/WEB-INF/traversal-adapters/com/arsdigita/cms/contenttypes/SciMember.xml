@@ -12,6 +12,7 @@
                 <xrd:property name="/object/contacts"/>
                 <xrd:property name="/object/contacts/contactentries"/>
                 <xrd:property name="/object/contacts/address"/>
+		<xrd:property name="/object/organizationalunit"/>
             </xrd:associations>
 
         </xrd:adapter>

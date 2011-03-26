@@ -132,7 +132,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
                                              final PageState state) {
         SciDepartmentSubDepartmentsCollection subDepartments;
         subDepartments = department.getSubDepartments();
-        subDepartments.addOrder("departmentOrder asc");
+        subDepartments.addOrder("link.subDepartmentOrder asc");
 
         long pageNumber = getPageNumber(state);
 
@@ -144,23 +144,24 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         long end = getPaginatorEnd(begin, count);
         pageNumber = normalizePageNumber(pageCount, pageNumber);
 
-        subDepartments.setRange((int) begin, (int) end);
         createPaginatorElement(
-                parent, pageNumber, pageCount, begin, end, count);
+                parent, pageNumber, pageCount, begin, end, count, subDepartments.
+                size());
+        subDepartments.setRange((int) begin, (int) end);
 
         while (subDepartments.next()) {
             SciDepartment subDepartment;
             subDepartment = subDepartments.getSubDepartment();
 
             Element subDepartmentElem = subDepartmentsElem.newChildElement(
-                    "subDepartment");
+                    "department");
             subDepartmentElem.addAttribute("order", Integer.toString(subDepartments.
                     getSubDepartmentOrder()));
             subDepartmentElem.addAttribute("oid", subDepartment.getOID().
                     toString());
 
             Element title = subDepartmentElem.newChildElement("title");
-            title.setText(department.getTitle());
+            title.setText(subDepartment.getTitle());
 
             if ((subDepartment.getAddendum() != null)
                 && !(subDepartment.getAddendum().isEmpty())) {
@@ -177,7 +178,7 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
 
             GenericOrganizationalUnitPersonCollection heads;
             heads = subDepartment.getPersons();
-            heads.addFilter(("role_name = 'head'"));
+            heads.addFilter(("link.role_name = 'head'"));
             heads.addOrder("surname asc, givenname asc");
 
             if (heads.size() > 0) {
@@ -249,13 +250,13 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+
+            createPaginatorElement(
+                    parent, pageNumber, pageCount, begin, end, count, members.
+                    size());
             List<MemberListItem> membersToShow = members.subList((int) begin,
                                                                  (int) end);
 
-            createPaginatorElement(
-                    parent, pageNumber, pageCount, begin,
-                    end,
-                    count);
             Element membersElem = parent.newChildElement("members");
 
             for (MemberListItem memberItem : membersToShow) {
@@ -293,11 +294,11 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            createPaginatorElement(
+                    parent, pageNumber, pageCount, begin, end, count, members.
+                    size());
             List<MemberListItem> membersToShow = members.subList((int) begin,
                                                                  (int) end);
-            createPaginatorElement(
-                    parent, pageNumber, pageCount, begin, end,
-                    count);
 
             for (MemberListItem memberItem : membersToShow) {
                 generateMemberXML(memberItem.getMember(),
@@ -344,13 +345,13 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            createPaginatorElement(
+                    parent, pageNumber, pageCount, begin, end, count, projects.
+                    size());
             List<SciProject> projectsToShow = projects.subList((int) begin,
                                                                (int) end);
 
-            createPaginatorElement(
-                    parent, pageNumber, pageCount, begin,
-                    end,
-                    count);
+
 
             Element projectsElem = parent.newChildElement("projects");
             for (SciProject project : projectsToShow) {
@@ -382,13 +383,11 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
             long end = getPaginatorEnd(begin, count);
             pageNumber = normalizePageNumber(pageCount, pageNumber);
 
+            createPaginatorElement(
+                    parent, pageNumber, pageCount, begin, end, count, projects.
+                    size());
             List<SciProject> projectsToShow = projects.subList((int) begin,
                                                                (int) end);
-
-            createPaginatorElement(
-                    parent, pageNumber, pageCount, begin,
-                    end,
-                    count);
 
             Element projectsElem = parent.newChildElement("projects");
             for (SciProject project : projectsToShow) {
@@ -480,6 +479,8 @@ public class SciDepartmentPanel extends SciOrganizationBasePanel {
         } else if (SHOW_PROJECTS_FINISHED.equals(show)) {
             generateProjectsXML(department, content, state,
                                 getFiltersForFinishedProjects());
+        } else if (SHOW_SUBDEPARTMENTS.equals(show)) {
+            generateSubDepartmentsXML(department, content, state);
         }
     }
 }

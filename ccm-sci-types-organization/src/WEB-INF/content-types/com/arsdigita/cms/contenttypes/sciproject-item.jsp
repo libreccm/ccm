@@ -12,7 +12,7 @@
     </jsp:declaration>
 
     <define:page name="itemPage" application="content-section"
-                 title="APLAWS" cache="true">
+                 title="APLAWS" cache="false">
 
         <define:component name="categoryPath"
                           classname="com.arsdigita.london.navigation.ui.category.Path"/>

@@ -10,6 +10,7 @@ object type SciProject extends GenericOrganizationalUnit {
     String[0..1] projectShortDesc = ct_sciorga_projects.shortdesc VARCHAR(500);
     String[0..1] projectDescription = ct_sciorga_projects.description CLOB;
     String[0..1] funding = ct_sciorga_projects.funding CLOB;
+    String[0..1] fundingVolume = ct_sciorga_projects.funding_volume VARCHAR(128);
     
     reference key ( ct_sciorga_projects.project_id );
 }
