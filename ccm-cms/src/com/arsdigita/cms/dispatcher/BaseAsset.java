@@ -44,12 +44,9 @@ import javax.servlet.ServletException;
 class BaseAsset extends ResourceHandlerImpl {
 
     private static final Logger s_log = Logger.getLogger(BaseAsset.class);
-
     public final static String ASSET_ID = "asset_id";
     public static final String OID_PARAM = "oid";
-
     private final static String s_defaultName = "File";
-
     private static final BigDecimalParameter s_assetId = new BigDecimalParameter(ASSET_ID);
     private static final OIDParameter s_oid = new OIDParameter(OID_PARAM);
 
@@ -58,11 +55,10 @@ class BaseAsset extends ResourceHandlerImpl {
      * to variable declaration (see above).
      */
     /*static {        
-        s_assetId = new BigDecimalParameter(ASSET_ID);
-        s_oid = new OIDParameter(OID_PARAM);
-        //s_assetId.addParameterListener(new NotNullValidationListener());        
+    s_assetId = new BigDecimalParameter(ASSET_ID);
+    s_oid = new OIDParameter(OID_PARAM);
+    //s_assetId.addParameterListener(new NotNullValidationListener());
     }*/
-
     private final boolean m_download;
     private String m_disposition;
 
@@ -81,21 +77,23 @@ class BaseAsset extends ResourceHandlerImpl {
      * Content-Disposition in HTTP.
      */
     protected void setFilenameHeader(HttpServletResponse response,
-                                   BinaryAsset asset) {
+            BinaryAsset asset) {
         String filename = asset.getName();
-        if (filename == null) { filename = s_defaultName; }
+        if (filename == null) {
+            filename = s_defaultName;
+        }
 
 
         // quote the file name to deal with any special 
         // characters in the name of the file
-        StringBuffer disposition = new StringBuffer(m_disposition);
+        StringBuilder disposition = new StringBuilder(m_disposition);
         disposition.append('"').append(filename).append('"');
 
         response.setHeader("Content-Disposition", disposition.toString());
     }
 
     private void setHeaders(HttpServletResponse response,
-                              BinaryAsset asset) {
+            BinaryAsset asset) {
         setFilenameHeader(response, asset);
 
         Long contentLength = new Long(asset.getSize());
@@ -113,7 +111,7 @@ class BaseAsset extends ResourceHandlerImpl {
 
         // PDFs need to be cached for a different amount of time to avoid issues with IE6 - see ticket #20266
         if (mimeType != null && mimeType.getMimeType().equals("application/pdf")) {
-            DispatcherHelper.cacheForWorld(response,30);
+            DispatcherHelper.cacheForWorld(response, 30);
         } else {
             // Default caching for all other types
             DispatcherHelper.cacheForWorld(response);
@@ -121,7 +119,7 @@ class BaseAsset extends ResourceHandlerImpl {
     }
 
     private void send(HttpServletResponse response,
-                        BinaryAsset asset) throws IOException {
+            BinaryAsset asset) throws IOException {
         // Stream the blob.
         OutputStream out = response.getOutputStream();
         try {
@@ -131,27 +129,28 @@ class BaseAsset extends ResourceHandlerImpl {
         }
     }
 
+    @Override
     public final void dispatch(HttpServletRequest request,
-                               HttpServletResponse response,
-                               RequestContext actx) 
-        throws IOException, ServletException {
+            HttpServletResponse response,
+            RequestContext actx)
+            throws IOException, ServletException {
 
         // Fetch and validate the asset ID
         OID oid = null;
         BigDecimal assetId = null;
         try {
-            oid = (OID)s_oid.transformValue(request);
+            oid = (OID) s_oid.transformValue(request);
             assetId = (BigDecimal) s_assetId.transformValue(request);
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     e.toString());
             return;
         }
-        if ( assetId == null && oid == null ) {
+        if (assetId == null && oid == null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "either " + ASSET_ID + " or " + OID_PARAM + " is required.");
             return;
-        } else if ( assetId != null && oid != null ) {
+        } else if (assetId != null && oid != null) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,
                     "either " + ASSET_ID + " or " + OID_PARAM + " is required.");
             return;
@@ -162,8 +161,7 @@ class BaseAsset extends ResourceHandlerImpl {
 
         BinaryAsset asset = null;
         try {
-            Asset a = (Asset)
-                DomainObjectFactory.newInstance(oid);
+            Asset a = (Asset) DomainObjectFactory.newInstance(oid);
 
             if (a instanceof BinaryAsset) {
                 asset = (BinaryAsset) a;
@@ -182,7 +180,7 @@ class BaseAsset extends ResourceHandlerImpl {
 
         if (asset == null) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND,
-                               "No asset with ID " + assetId);
+                    "No asset with ID " + assetId);
             return;
         }
 

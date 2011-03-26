@@ -8,6 +8,10 @@
     <page-class>com.arsdigita.cms.dispatcher.StreamImage</page-class>
   </url-mapping>
   <url-mapping>
+    <url>download/image/</url>
+    <page-class>com.arsdigita.cms.dispatcher.DownloadImage</page-class>
+  </url-mapping>
+  <url-mapping>
     <url>stream/asset/</url>
     <page-class>com.arsdigita.cms.dispatcher.StreamAsset</page-class>
   </url-mapping>

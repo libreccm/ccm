@@ -20,7 +20,6 @@ package com.arsdigita.cms.dispatcher;
 
 import org.apache.log4j.Logger;
 
-
 /**
  * A servlet used for downloading DPAssets.
  *
@@ -30,7 +29,6 @@ import org.apache.log4j.Logger;
 public class DownloadAsset extends BaseAsset {
 
     private static Logger s_log = Logger.getLogger(DownloadAsset.class);
-
     public final static String ASSET_ID = BaseAsset.ASSET_ID;
 
     public DownloadAsset() {

@@ -24,7 +24,6 @@ import org.apache.log4j.Logger;
 
 import com.arsdigita.cms.BinaryAsset;
 
-
 /**
  * A resource handler which streams out a blob from the database.
  *
@@ -35,7 +34,6 @@ import com.arsdigita.cms.BinaryAsset;
 public class StreamAsset extends BaseAsset {
 
     private static final Logger s_log = Logger.getLogger(StreamAsset.class);
-
     public final static String ASSET_ID = BaseAsset.ASSET_ID;
 
     public StreamAsset() {
