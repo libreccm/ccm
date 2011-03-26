@@ -18,7 +18,7 @@
  */
 package com.arsdigita.xml.formatters;
 
-import com.arsdigita.kernel.Kernel;
+import com.arsdigita.dispatcher.DispatcherHelper;
 import com.arsdigita.xml.Formatter;
 import java.util.Locale;
 import java.util.Date;
@@ -28,6 +28,9 @@ import java.text.DateFormat;
  * An alternate formatter for java.util.Date objects,
  * outputing the date in 'medium' format. The time
  * is ommitted.
+ *
+ * @author unkknown
+ * @author Sören Bernstein
  */
 public class DateFormatter implements Formatter {
     
@@ -41,20 +44,12 @@ public class DateFormatter implements Formatter {
 		return m_config;
 	}
 	
+    @Override
     public String format(Object value) {
         Date date = (Date)value;
         
-        Locale locale;
+        Locale locale = DispatcherHelper.getNegotiatedLocale();
 
-        if (getConfig().getLocale() != null) {
-        	locale = new Locale(m_config.getLocale());
-        } else {
-        	locale = Kernel.getContext().getLocale();
-        }
-
-        if (locale == null) {
-            locale = Locale.ENGLISH;
-        }
         DateFormat format = DateFormat.getDateInstance
             (DateFormat.MEDIUM, locale);
         

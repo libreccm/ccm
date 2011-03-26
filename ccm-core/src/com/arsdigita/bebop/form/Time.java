@@ -250,7 +250,7 @@ public class Time extends Widget implements BebopConstants {
     /** The XML tag for this derived class of Widget. */
     @Override
     protected String getElementTag() {
-        return "BEBOP_TIME";
+        return BEBOP_TIME;
     }
 
     @Override
