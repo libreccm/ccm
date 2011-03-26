@@ -50,7 +50,7 @@ import com.arsdigita.util.Assert;
 public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
     private static boolean isHideAdditionalResourceFields = ContentSection.getConfig().isHideAdditionalResourceFields();
-    private String m_linkListName = "";
+    private String m_linkListName;
     
     /**
      * Creates a new form to edit the RelatedLink object specified
@@ -186,7 +186,7 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
             MimeType mType = MimeType.loadMimeType(typeName);
             rl.setResourceType(mType);
         }
-        rl.setLinkListName(data.getString(RelatedLink.LINK_LIST_NAME));
+        rl.setLinkListName((String) data.get(RelatedLink.LINK_LIST_NAME));
         super.setLinkProperties(link, fse);
     }
 }

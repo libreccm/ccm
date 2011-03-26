@@ -48,7 +48,8 @@ data operation swapRelatedLinkWithNextInGroup {
         and 2 = (select count(*) from cms_links l, cms_related_links r
                  where l.link_id=r.related_link_id
                  and (link_order = :linkOrder or link_order = :nextLinkOrder)
-                 and owner_id = :ownerID)
+                 and owner_id = :ownerID
+                 and r.link_list_name = :linkListName)
     }
 }
 

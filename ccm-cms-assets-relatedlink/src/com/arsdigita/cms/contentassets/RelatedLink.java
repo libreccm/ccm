@@ -215,18 +215,22 @@ public class RelatedLink extends Link  {
      * Swaps this <code>RelatedLink</code> with the next one,
      * according to the linkOrder
      */
+    @Override
     public void swapWithNext() {
         swapWithNext("com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
-                     "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup");
+                     "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
+                     this.getLinkListName());
     }
 
     /**
      * Swaps this <code>RelatedLink</code> with the previous one,
      * according to the linkOrder
      */
+    @Override
     public void swapWithPrevious() {
         swapWithPrevious("com.arsdigita.cms.contentassets.allRelatedLinkOrderForItem",
-                         "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup");
+                         "com.arsdigita.cms.contentassets.swapRelatedLinkWithNextInGroup",
+                         this.getLinkListName());
     }
 
     /**
@@ -239,6 +243,7 @@ public class RelatedLink extends Link  {
      * @param queryName name of the DataQuery to use
      * @return the DataQuery
      */
+    @Override
     protected DataQuery getSwapQuery(String queryName) {
         DataQuery query = super.getSwapQuery(queryName);
         query.setParameter("ownerID", getLinkOwner().getID());
@@ -255,6 +260,7 @@ public class RelatedLink extends Link  {
      *
      * @return the DataOperation used to swap the sort keys.
      */
+    @Override
     protected DataOperation getSwapOperation(String operationName) {
         DataOperation operation = super.getSwapOperation(operationName);
         operation.setParameter("ownerID", getLinkOwner().getID());
@@ -270,6 +276,7 @@ public class RelatedLink extends Link  {
      * null. This implementation sorts all RelatedLinks owned by this
      * RelatedLink's "linkOwner" by title.
      */
+    @Override
     protected void alphabetize() {
         Session session = SessionManager.getSession();
         DataCollection links = session.retrieve(BASE_DATA_OBJECT_TYPE);
@@ -314,6 +321,7 @@ public class RelatedLink extends Link  {
         
     }
 
+    @Override
     public void beforeSave() {
         super.beforeSave();
         if (getOrder() == null) {

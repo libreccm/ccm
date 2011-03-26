@@ -36,7 +36,7 @@ public class RelatedLinkTableModelBuilder extends LinkTableModelBuilder {
         Logger.getLogger(RelatedLinkTableModelBuilder.class);
 
     private ItemSelectionModel m_itemModel;
-    private String m_linkListName = "";
+    private String m_linkListName;
 
     /**
      * Constructor. Creates a <code>LinkTableModelBuilder</code> given an
@@ -58,6 +58,7 @@ public class RelatedLinkTableModelBuilder extends LinkTableModelBuilder {
      * @param s The <code>PageState</code> for the current request
      * @return The DataCollection of RelatedLinks
      */
+    @Override
     public DataCollection getLinks(PageState s) {
         Assert.isTrue(m_itemModel.isSelected(s), "item selected");
         ContentItem item = m_itemModel.getSelectedItem(s);

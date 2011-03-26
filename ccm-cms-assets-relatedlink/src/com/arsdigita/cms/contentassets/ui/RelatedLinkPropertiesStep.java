@@ -29,7 +29,7 @@ import com.arsdigita.cms.contenttypes.ui.LinkTable;
  */
 public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
 
-    protected String m_linkListName = "";
+    protected static String s_linkListName = "genericLink";
     protected ContentType m_contentType = null;
 
     /**
@@ -68,9 +68,9 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
         LinkTable table;
         if (ContentSection.getConfig().isHideAdditionalResourceFields()) {
         	table = new LinkTable(getItemSelectionModel(), getLinkSelectionModel());
-        	table.setModelBuilder(new RelatedLinkTableModelBuilder(getItemSelectionModel(), m_linkListName));
+        	table.setModelBuilder(new RelatedLinkTableModelBuilder(getItemSelectionModel(), s_linkListName));
         } else {
-        	table = new RelatedLinkTable(getItemSelectionModel(), getLinkSelectionModel(), m_linkListName);
+        	table = new RelatedLinkTable(getItemSelectionModel(), getLinkSelectionModel(), s_linkListName);
         }
       
         container.add(table);
@@ -86,7 +86,7 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
     protected FormSection getEditSheet() {
         return new RelatedLinkPropertyForm(getItemSelectionModel(), 
                                            getLinkSelectionModel(),
-                                           m_linkListName,
+                                           s_linkListName,
                                            m_contentType);
     }
 }
