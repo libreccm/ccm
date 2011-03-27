@@ -1,0 +1,5 @@
+Place holder file to make sure the directory is created and copied with the
+appropriate permissions.
+
+Dir packages, a container for files which are shared among several CCM packages,
+especially provided by core (e.g. bebop).

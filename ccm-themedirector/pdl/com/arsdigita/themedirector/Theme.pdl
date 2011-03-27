@@ -1,0 +1,47 @@
+//
+// Copyright (C) 2001-2004 Red Hat Inc. All Rights Reserved.
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public License
+// as published by the Free Software Foundation; either version 2.1 of
+// the License, or (at your option) any later version.
+// 
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+model com.arsdigita.themedirector;
+
+import com.arsdigita.web.Application;
+import com.arsdigita.kernel.ACSObject;
+import com.arsdigita.kernel.Party;
+
+object type ThemeDirector extends Application {
+    Theme[0..1] defaultTheme = join theme_director.default_theme_id
+                               to   theme_themes.theme_id;
+
+    reference key (theme_director.application_id);
+}
+
+// This represents a collection of files that can be used to
+// style certain sections of a web site.
+object type Theme extends ACSObject {
+    String[1..1] title = theme_themes.title VARCHAR(700);
+    // this holds a reference to the directory holding the files.
+    // This is rooted at /__ccm__/themes/.  Therefore, if you have
+    // a "holiday" theme, the value of this column will be 'holiday'
+    // so the files will be located at /__ccm__/themes/holiday
+    unique String[1..1] url = theme_themes.url VARCHAR(700);
+    String[0..1] description = theme_themes.description VARCHAR(4000);
+
+    Date lastPublishedDate = theme_themes.last_published_date TIMESTAMP;
+    Party lastPublishedUser = join theme_themes.last_published_user_id 
+                                to parties.party_id;
+
+    reference key (theme_themes.theme_id);
+}

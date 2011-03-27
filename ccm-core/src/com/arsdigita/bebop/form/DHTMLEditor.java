@@ -33,11 +33,11 @@ import com.arsdigita.xml.Element;
  * Displays and manages a WYSIWYG HTML editor that takes advantage of
  * DHTML scripting features.
  * This class can use:
- * - <a href="http://www.xonha.org>Xinha</a>
+ * - <a href="http://www.xinha.org>Xinha</a>
  * - <a href="http://www.fckeditor.net">FCKeditor</a>
  * - HTMLarea for backwards compatibility, development discontinued
  * Editor is choosen based on the config parameter waf.bebop.dhtml_editor,
- * default is "Xinha", which is the successor of HTNLarea
+ * default is "Xinha", which is the successor of HTMLarea
  *
  * @author Jim Parsons
  * @author Richard Li
@@ -218,6 +218,7 @@ public class DHTMLEditor extends TextArea {
     /**
      *      Sets the <tt>ROWS</tt> attribute for the <tt>TEXTAREA</tt> tag.
      */
+    @Override
     public void setRows(int rows) {
         setAttribute("rows", String.valueOf(rows));
     }
@@ -225,6 +226,7 @@ public class DHTMLEditor extends TextArea {
     /**
      *      Sets the <tt>COLS</tt> attribute for the <tt>TEXTAREA</tt> tag.
      */
+    @Override
     public void setCols(int cols) {
         setAttribute("cols", String.valueOf(cols));
     }
@@ -232,6 +234,7 @@ public class DHTMLEditor extends TextArea {
     /**
      *      Sets the <tt>COLS</tt> attribute for the <tt>TEXTAREA</tt> tag.
      */
+    @Override
     public void setWrap(int wrap) {
         String wrapString = null;
 
@@ -258,6 +261,7 @@ public class DHTMLEditor extends TextArea {
      * @return The tag to be used for the top level DOM element
      * generated for this type of Widget.
      */
+    @Override
     protected String getElementTag() {
         return Bebop.getConfig().getDHTMLEditor();
     }
@@ -268,6 +272,7 @@ public class DHTMLEditor extends TextArea {
      * <p><code>&lt;bebop:dhtmleditor name=... value=... [onXXX=...]/>
      *  </code>
      */
+    @Override
     public void generateWidget( PageState state, Element parent ) {
         String value = getParameterData(state).marshal();
         Element editor = parent.newChildElement(getElementTag(), BEBOP_XML_NS);

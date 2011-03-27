@@ -6,10 +6,10 @@
 <ccm:project   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
                xmlns:ccm="http://ccm.redhat.com/ccm-project" 
               ccmVersion="6.1" 
-                    name="aplaws-gen" 
+                    name="aplaws-nsh" 
               prettyName="APLAWS plus NSH" 
-                 version="1-0-9" 
-                 release="rc-3" 
+                 version="1-1-1" 
+                 release="r796" 
                   webxml="web.xml-aplaws" 
                   webapp="ROOT" 
       xsi:schemaLocation="http://ccm.redhat.com/ccm-project file:tools-ng/common/xsd/project.xsd">
@@ -20,6 +20,9 @@
 
 
 <ccm:build>
+<!-- included modules are the same as for 1.0.9 as a intermediate version. New modules will be
+     added  later  -->
+
 <!--   Main apps   -->
 <!--   - - - - -   -->
         <ccm:application name="ccm-core"/>
@@ -27,15 +30,15 @@
         <ccm:application name="ccm-cms"/>
 
         <ccm:application name="ccm-cms-assets-fileattachment"/>
-        <ccm:application name="ccm-cms-assets-imagestep"/>
+        <ccm:application name="ccm-cms-assets-imagestep"/>  <!-- previously ldn-image-step -->
         <ccm:application name="ccm-cms-assets-notes"/>
         <ccm:application name="ccm-cms-assets-relatedlink"/>
 
-<!--    <ccm:application name="ccm-cms-types-address"/>              -->
+<!--    <ccm:application name="ccm-cms-types-address"/>  now simpleaddress -->
 <!--    <ccm:application name="ccm-cms-types-agenda"/>               -->
         <ccm:application name="ccm-cms-types-article"/>
         <ccm:application name="ccm-cms-types-bookmark"/>
-        <ccm:application name="ccm-cms-types-contact"/>
+<!--    <ccm:application name="ccm-cms-types-contact"/>              -->
 <!--    <ccm:application name="ccm-cms-types-esdservice"/>           -->
         <ccm:application name="ccm-cms-types-event"/>
         <ccm:application name="ccm-cms-types-faqitem"/>
@@ -54,7 +57,9 @@
 <!--    <ccm:application name="ccm-cms-types-organization"/>         -->
 <!--    <ccm:application name="ccm-cms-types-pressrelease"/>         -->
 <!--    <ccm:application name="ccm-cms-types-service"/>              -->
-<!-- Fuer OpenCCM aktivieren:                                        -->
+<!-- simpleadddress is the old types-address. Included for backwards
+     compatibility to be able to transfer data to new type member or person  -->
+        <ccm:application name="ccm-cms-types-simpleaddress"/>  
 <!--    <ccm:application name="ccm-cms-types-siteproxy"/>            -->
 <!--    <ccm:application name="ccm-cms-types-xmlfeed"/>              -->
 
@@ -69,6 +74,7 @@
         <ccm:application name="ccm-forum"/>
         <ccm:application name="ccm-forum-categorised"/>
 <!--    <ccm:application name="ccm-simplesurvey"/>                   -->
+        <ccm:application name="ccm-themedirector"/>
         <ccm:application name="ccm-user-preferences"/>
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
@@ -89,7 +95,6 @@
         <ccm:application name="ccm-ldn-shortcuts"/>
         <ccm:application name="ccm-ldn-subsite"/>                    
         <ccm:application name="ccm-ldn-terms"/>
-        <ccm:application name="ccm-ldn-theme"/>
         <ccm:application name="ccm-ldn-util"/>
 
 

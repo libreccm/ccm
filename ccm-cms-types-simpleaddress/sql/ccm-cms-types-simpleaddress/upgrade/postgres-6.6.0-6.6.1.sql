@@ -1,5 +1,5 @@
 --
--- Copyright (C) 2008 Peter Boy All Rights Reserved.
+-- Copyright (C) 2011 Peter Boy All Rights Reserved.
 --
 -- This library is free software; you can redistribute it and/or
 -- modify it under the terms of the GNU Lesser General Public License

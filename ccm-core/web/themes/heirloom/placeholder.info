@@ -1,0 +1,5 @@
+Place holder file to make sure the directory is created and copied with the
+appropriate permissions.
+
+Heirloom, a container for the built-in theme of the previous Red Hat CCM.
+Serves still as a fallback for various newer themes if nothing else is working.
