@@ -55,6 +55,7 @@ public class ItemSearchPage extends CMSPage {
     private TabbedPane m_tabbedPane;
     private ItemSearchBrowsePane m_browse;
     private ItemSearchPopup m_search;
+//    private ItemSearchCreateItemPane m_create;
     private BigDecimalParameter m_sectionId;
     private static final CMSConfig s_conf = CMSConfig.getInstance();
     public static final String CONTENT_SECTION = "section_id";
@@ -75,6 +76,7 @@ public class ItemSearchPage extends CMSPage {
 
         m_browse = getBrowsePane();
         m_search = getSearchPane();
+//        m_create = getCreatePane();
 
         m_tabbedPane = createTabbedPane();
         m_tabbedPane.setIdAttr("page-body");
@@ -106,6 +108,14 @@ public class ItemSearchPage extends CMSPage {
         return m_search;
     }
 
+//    protected ItemSearchCreateItemPane getCreatePane() {
+//        if(m_create == null) {
+//            m_create = new ItemSearchCreateItemPane();
+//        }
+//
+//        return m_create;
+//    }
+
     /**
      * Created the TabbedPane to use for this page. Sets the class
      * attribute for this tabbed pane. The default implementation uses a
@@ -123,6 +133,7 @@ public class ItemSearchPage extends CMSPage {
 
         addToPane(pane, "browse", getBrowsePane());
         addToPane(pane, "search", getSearchPane());
+//        addToPane(pane, "create", getCreatePane());
 
         if(s_conf.getItemSearchDefaultTab().equals("browse")) {
             pane.setDefaultPane(m_browse);
@@ -175,6 +186,7 @@ public class ItemSearchPage extends CMSPage {
             throws IOException, ServletException {
         new CMSExcursion() {
 
+            @Override
             public void excurse()
                     throws IOException, ServletException {
                 ContentSection section = null;

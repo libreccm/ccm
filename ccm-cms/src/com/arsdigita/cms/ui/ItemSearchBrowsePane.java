@@ -24,7 +24,10 @@ import com.arsdigita.bebop.Label;
 import com.arsdigita.bebop.Page;
 import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.Resettable;
+import com.arsdigita.bebop.SingleSelectionModel;
 import com.arsdigita.bebop.Tree;
+import com.arsdigita.bebop.event.ActionEvent;
+import com.arsdigita.bebop.event.ActionListener;
 import com.arsdigita.bebop.event.ChangeEvent;
 import com.arsdigita.bebop.event.ChangeListener;
 import com.arsdigita.bebop.event.FormInitListener;
@@ -36,6 +39,8 @@ import com.arsdigita.bebop.event.TreeExpansionListener;
 import com.arsdigita.bebop.form.Option;
 import com.arsdigita.bebop.form.SingleSelect;
 import com.arsdigita.bebop.form.Submit;
+import com.arsdigita.cms.SecurityManager;
+import com.arsdigita.cms.dispatcher.Utilities;
 import com.arsdigita.domain.DomainObjectFactory;
 import com.arsdigita.persistence.OID;
 import com.arsdigita.toolbox.ui.OIDParameter;
@@ -44,10 +49,12 @@ import com.arsdigita.cms.CMS;
 import com.arsdigita.cms.ContentSection;
 import com.arsdigita.cms.ContentSectionCollection;
 import com.arsdigita.cms.Folder;
-import com.arsdigita.cms.ui.CMSContainer;
+import com.arsdigita.cms.ui.authoring.NewItemForm;
+import com.arsdigita.cms.ui.folder.FolderRequestLocal;
 import com.arsdigita.cms.ui.folder.FolderSelectionModel;
 import com.arsdigita.cms.ui.folder.FolderTreeModelBuilder;
 import com.arsdigita.cms.util.GlobalizationUtil;
+import com.arsdigita.util.Assert;
 
 import java.math.BigDecimal;
 
@@ -67,11 +74,15 @@ public class ItemSearchBrowsePane extends CMSContainer
     private static final Logger s_log =
             Logger.getLogger(ItemSearchBrowsePane.class);
     private FolderSelectionModel m_folderSel;
+    private FolderRequestLocal m_folder;
     private Tree m_tree;
     private ItemSearchFolderBrowser m_browser;
     private SingleSelect m_section;
+//    private NewItemForm m_newItem;
+    private SingleSelectionModel m_typeSel;
 
     public ItemSearchBrowsePane() {
+
         setClassAttr("sidebarNavPanel");
         setAttribute("navbar-title", GlobalizationUtil.globalize("cms.ui.folder_browser").localize().toString());
 
@@ -99,6 +110,7 @@ public class ItemSearchBrowsePane extends CMSContainer
         });
         m_folderSel = createFolderSelectionModel();
         m_folderSel.addChangeListener(this);
+        m_folder = new FolderRequestLocal(m_folderSel);
 
         if (!linksOnlyInSameSubsite) {
             // The client should be able to pick between the subsites
@@ -119,7 +131,21 @@ public class ItemSearchBrowsePane extends CMSContainer
         container.add(m_browser);
         container.add(m_browser.getPaginator());
 
+//        m_newItem = new SectionNewItemForm("newItem");
+//        m_newItem.addProcessListener(this);
+//        container.add(m_newItem);
+
         add(container);
+    }
+
+    @Override
+    public boolean isVisible(PageState s) {
+        // Always expand root node
+        if (m_tree.isCollapsed(getRootFolder(s).getID().toString(), s)) {
+            m_tree.expand(getRootFolder(s).getID().toString(), s);
+        }
+
+        return super.isVisible(s);
     }
 
     private Form getSectionForm() {
@@ -137,6 +163,7 @@ public class ItemSearchBrowsePane extends CMSContainer
 
         sectionForm.addInitListener(new FormInitListener() {
 
+            @Override
             public void init(FormSectionEvent ev) {
                 PageState ps = ev.getPageState();
 
@@ -178,6 +205,7 @@ public class ItemSearchBrowsePane extends CMSContainer
         }
     }
 
+    @Override
     public void register(Page p) {
         super.register(p);
         p.addComponentStateParam(this, m_folderSel.getStateParameter());
@@ -186,8 +214,46 @@ public class ItemSearchBrowsePane extends CMSContainer
         if (m_section != null) {
             p.addComponentStateParam(this, m_section.getParameterModel());
         }
+
+        // Save the state of the new item component
+//        p.addComponentStateParam(this, m_typeSel.getStateParameter());
+
+        p.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final PageState state = e.getPageState();
+
+                if (state.isVisibleOnPage(ItemSearchBrowsePane.this)) {
+                    showHideSegments(state);
+                }
+            }
+        });
     }
 
+    /**
+     * Show/hide segments based on access checks.
+     *
+     * @param state The page state
+     * @pre ( state != null )
+     */
+    private void showHideSegments(PageState state) {
+        SecurityManager sm = Utilities.getSecurityManager(state);
+        Folder folder = m_folder.getFolder(state);
+        Assert.exists(folder);
+
+        // MP: This should be checked on the current folder instead of just
+        //     the content section.
+//        boolean newItem =
+//                sm.canAccess(state.getRequest(), SecurityManager.NEW_ITEM, folder);
+//
+//        if (!newItem) {
+            browseMode(state);
+//        }
+//        m_newItem.setVisible(state, newItem);
+    }
+
+    @Override
     public void reset(PageState s) {
         //m_browser.reset(s);
     }
@@ -220,15 +286,18 @@ public class ItemSearchBrowsePane extends CMSContainer
     }
 
     // Implement TreeExpansionListener
+    @Override
     public void treeCollapsed(TreeExpansionEvent e) {
         PageState s = e.getPageState();
         m_folderSel.setSelectedKey(s, e.getNodeKey());
     }
 
+    @Override
     public void treeExpanded(TreeExpansionEvent e) {
         return;
     }
 
+    @Override
     public void stateChanged(ChangeEvent e) {
         PageState s = e.getPageState();
         Folder current = (Folder) m_folderSel.getSelectedObject(s);
@@ -242,32 +311,43 @@ public class ItemSearchBrowsePane extends CMSContainer
         //m_browser.setPermissionLinkVis(s);
     }
 
+    @Override
     public void process(FormSectionEvent e) {
-        /*
         PageState s = e.getPageState();
-        if ( e.getSource() == m_browser.getManipulator().getItemView() ) {
-        // Hide everything except for the flat item list
-        m_tree.setVisible(s, false);
-        } else if ( e.getSource() == m_browser.getManipulator().getTargetSelector() ) {
-        m_tree.setVisible(s, true);
-        }
-         */
+        final Object source = e.getSource();
+//        if (source == m_newItem) {
+//            BigDecimal typeID = m_newItem.getTypeID(s);
+//            m_typeSel.setSelectedKey(s, typeID);
+//            newItemMode(s);
+//        } else {
+            browseMode(s);
+//        }
     }
 
+    @Override
     public void submitted(FormSectionEvent e) {
-        /*
         PageState s = e.getPageState();
-        if ( e.getSource() == m_browser.getManipulator().getTargetSelector() ) {
-        if ( ! m_browser.getManipulator().getTargetSelector().isVisible(s) ) {
-        m_tree.setVisible(s, true);
-        }
-        }
-         */
+        final Object source = e.getSource();
+//        if (source == m_newItem) {
+//            BigDecimal typeID = m_newItem.getTypeID(s);
+//            m_typeSel.setSelectedKey(s, typeID);
+//            //newItemMode(s);
+//        }
+    }
+
+    private void browseMode(PageState s) {
+//        m_browseSeg.setVisible(s, true);
+//        m_typeSel.clearSelection(s);
+    }
+
+    private void newItemMode(PageState s) {
+//        m_newItemSeg.setVisible(s, true);
     }
 
     private FolderSelectionModel createFolderSelectionModel() {
         return new FolderSelectionModel("folder") {
 
+            @Override
             protected BigDecimal getRootFolderID(PageState ps) {
                 Folder root = getRootFolder(ps);
 
@@ -277,5 +357,17 @@ public class ItemSearchBrowsePane extends CMSContainer
                 return root.getID();
             }
         };
+    }
+
+    private static class SectionNewItemForm extends NewItemForm {
+
+        public SectionNewItemForm(String name) {
+            super(name);
+        }
+
+        @Override
+        public ContentSection getContentSection(PageState s) {
+            return CMS.getContext().getContentSection();
+        }
     }
 }

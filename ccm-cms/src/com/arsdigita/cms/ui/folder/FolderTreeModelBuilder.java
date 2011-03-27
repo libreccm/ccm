@@ -71,6 +71,7 @@ public class FolderTreeModelBuilder extends LockableImpl
      * @return a tree model that lists the hierarchy of folders underneath the
      * folder returnedby {@link #getRoot getRoot}.
      */
+    @Override
     public com.arsdigita.bebop.tree.TreeModel makeModel(final Tree t, PageState s) {
         return new DataQueryTreeModel(getRoot(s).getID(),
                 "com.arsdigita.cms.getRootFolder",
@@ -81,7 +82,7 @@ public class FolderTreeModelBuilder extends LockableImpl
                 String nodeKey = node.getKey().toString();
 
                 // Always expand root node
-                if (nodeKey.equals(getRoot(data).getKey().toString())/* && t.isCollapsed(nodeKey, data)*/) {
+                if (nodeKey.equals(getRoot(data).getKey().toString()) && t.isCollapsed(nodeKey, data)) {
                     t.expand(nodeKey, data);
                 }
 
@@ -187,6 +188,7 @@ public class FolderTreeModelBuilder extends LockableImpl
                     new String[]{"id", "name", "nchild"});
         }
 
+        @Override
         public Object next() {
             BigDecimal id = new BigDecimal(0);
             try {
@@ -205,10 +207,12 @@ public class FolderTreeModelBuilder extends LockableImpl
             return new DataQueryTreeNode(id, name, count.intValue() > 0);
         }
 
+        @Override
         public void remove() {
             throw new UnsupportedOperationException("cannot remove nodes via iterator");
         }
 
+        @Override
         public boolean hasNext() {
             return m_nodes.next();
         }
