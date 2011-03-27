@@ -33,9 +33,9 @@ public class SimpleAddressConfig extends AbstractConfig {
     private static SimpleAddressConfig s_conf;
 
     /**
-     * Gain a UIConfig object.
+     * Gain a SimpleAddressConfig object.
      *
-     * Singelton pattern, don't instantiate a lifecacle object using the
+     * Singelton pattern, don't instantiate a config object using the
      * constructor directly!
      * @return
      */
