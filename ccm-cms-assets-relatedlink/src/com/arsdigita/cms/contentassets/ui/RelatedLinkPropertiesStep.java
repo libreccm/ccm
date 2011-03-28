@@ -30,7 +30,7 @@ import com.arsdigita.cms.contenttypes.ui.LinkTable;
 public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
 
     protected static String s_linkListName = "genericLink";
-    protected ContentType m_contentType = null;
+    protected static ContentType s_contentType = null;
 
     /**
      * Constructor. Creates a <code>RelatedLinkPropertiesStep</code> given an
@@ -87,7 +87,7 @@ public class RelatedLinkPropertiesStep extends LinkPropertiesStep {
         return new RelatedLinkPropertyForm(getItemSelectionModel(), 
                                            getLinkSelectionModel(),
                                            s_linkListName,
-                                           m_contentType);
+                                           s_contentType);
     }
 }
 
