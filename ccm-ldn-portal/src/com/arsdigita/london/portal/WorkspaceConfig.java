@@ -34,58 +34,82 @@ import org.apache.log4j.Logger;
 
 public class WorkspaceConfig extends AbstractConfig {
 
+    /** A logger instance.  */
 	private static final Logger s_log = Logger.getLogger(WorkspaceConfig.class);
 
-	private ResourceParameter m_adapters;
+    /** Singelton config object.  */
+    private static WorkspaceConfig s_conf;
 
-	private StringParameter m_defaultLayout;
+    /**
+     * Gain a WorkspaceConfig object.
+     *
+     * Singelton pattern, don't instantiate a config object using the
+     * constructor directly!
+     * @return
+     */
+    public static synchronized WorkspaceConfig getConfig() {
+        if (s_conf == null) {
+            s_conf = new WorkspaceConfig();
+            s_conf.load();
+        }
 
-	private BooleanParameter m_createUserWorkspaces;
+        return s_conf;
+    }
 
-	private Parameter m_excludedPortletTypes;
 
-	private Parameter m_adminPortletTypes;
+    // set of configuration parameters
+    /** File with rules for configuring information in generated XML         */
+    private final Parameter m_adapters =
+            new ResourceParameter(
+                    "com.arsdigita.london.portal.traversal_adapters",
+                    Parameter.REQUIRED,
+                    "/WEB-INF/resources/portal-adapters.xml");
 
-    private BooleanParameter m_htmlPortletWysiwygEditor;
+    /** Default column layout for workspace portals                          */
+    private final Parameter m_defaultLayout =
+            new StringParameter(
+                    "com.arsdigita.london.portal.default_layout",
+                    Parameter.REQUIRED, PageLayout.FORMAT_THREE_COLUMNS);
 
-	private StringParameter m_workspacePartyPrivilege;
+    /** Whether non-admin users should have their own custom workspaces      */
+    private final Parameter m_createUserWorkspaces =
+            new BooleanParameter(
+                    "com.arsdigita.portal.create_user_workspaces",
+                    Parameter.REQUIRED, Boolean.TRUE);
 
-	private BooleanParameter m_checkWorkspaceReadPermissions;
+    /** Types not to be included in the drop down list of portlets to add to a page*/
+    private final Parameter m_excludedPortletTypes =
+            new StringArrayParameter(
+                    "com.arsdigita.london.portal.excluded_portlet_types",
+                    Parameter.OPTIONAL, new String[0]);
+
+    /** Types only available to administrator of homepage, or subsite frontpage*/
+    private final Parameter m_adminPortletTypes =
+            new StringArrayParameter(
+                    "com.arsdigita.london.portal.admin_only_portlet_types",
+                    Parameter.OPTIONAL, new String[0]);
+
+    /** Whether to use editor specified by waf.bebop.dhtml_editor for editing 
+        freeform html portlet*/
+    private final Parameter m_htmlPortletWysiwygEditor =
+            new BooleanParameter(
+                    "com.arsdigita.london.portal.portlet.freeform_html_editor",
+                    Parameter.REQUIRED, Boolean.FALSE);
+
+	/** Which privilege ("read" or "edit") is granted to the workspace party. */
+    private final Parameter m_workspacePartyPrivilege =
+            new StringParameter(
+                    "com.arsdigita.london.portal.workspacePartyPrivilege",
+                    Parameter.OPTIONAL, "read");
+
+	/** Whether READ permissions will be checked when viewing workspaces. 
+        By default we don't, which is odd.                                   */
+    private final Parameter m_checkWorkspaceReadPermissions =
+            new BooleanParameter(
+                    "com.arsdigita.london.portal.checkWorkspaceReadPermissions",
+                    Parameter.OPTIONAL, Boolean.FALSE);
 
 	public WorkspaceConfig() {
-
-		m_adapters = new ResourceParameter(
-			"com.arsdigita.london.portal.traversal_adapters",
-			Parameter.REQUIRED,
-			"/WEB-INF/resources/portal-adapters.xml");
-
-		m_defaultLayout = new StringParameter(
-				"com.arsdigita.london.portal.default_layout",
-				Parameter.REQUIRED, PageLayout.FORMAT_THREE_COLUMNS);
-
-		m_createUserWorkspaces = new BooleanParameter(
-				"com.arsdigita.portal.create_user_workspaces",
-				Parameter.REQUIRED, Boolean.TRUE);
-
-		m_excludedPortletTypes = new StringArrayParameter(
-				"com.arsdigita.london.portal.excluded_portlet_types",
-				Parameter.OPTIONAL, new String[0]);
-
-		m_adminPortletTypes = new StringArrayParameter(
-				"com.arsdigita.london.portal.admin_only_portlet_types",
-				Parameter.OPTIONAL, new String[0]);
-
-        m_htmlPortletWysiwygEditor = new BooleanParameter(
-                "com.arsdigita.london.portal.portlet.freeform_html.wysiwyg_editor",
-                Parameter.REQUIRED, Boolean.FALSE);
-
-		m_workspacePartyPrivilege = new StringParameter(
-				"com.arsdigita.london.portal.workspacePartyPrivilege",
-				Parameter.OPTIONAL, "read");
-
-		m_checkWorkspaceReadPermissions = new BooleanParameter(
-				"com.arsdigita.london.portal.checkWorkspaceReadPermissions",
-				Parameter.OPTIONAL, Boolean.FALSE);
 
 		register(m_adapters);
 		register(m_defaultLayout);

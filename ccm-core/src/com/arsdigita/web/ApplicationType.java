@@ -122,7 +122,7 @@ public class ApplicationType extends ResourceType {
     // (to be honest I can't remember the problem that was 
     // causing, but it did cause a problem in some 
     // circumstances)
-    // Method overwrtes a (overwritable) method provided by the super class to
+    // Method overwrites a (overwritable) method provided by the super class to
     // process a created (empty) data object.
     @Override
     public void initialize() {

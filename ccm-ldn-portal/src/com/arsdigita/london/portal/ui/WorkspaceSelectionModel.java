@@ -19,25 +19,49 @@ import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.RequestLocal;
 import com.arsdigita.london.portal.Workspace;
 
+/**
+ * 
+ * 
+ */
 public abstract class WorkspaceSelectionModel {
 
-	private RequestLocal m_workspace;
+	/** Workspace. Bound to the current HTTP request. */
+    private RequestLocal m_workspace;
 
-	public WorkspaceSelectionModel() {
+	/**
+     * Constructor.
+     */
+    public WorkspaceSelectionModel() {
 		m_workspace = new RequestLocal() {
+            @Override
 			public Object initialValue(PageState state) {
 				return getDefaultWorkspace(state);
 			}
 		};
 	}
 
-	protected abstract Workspace getDefaultWorkspace(PageState state);
+	/**
+     * 
+     * @param state
+     * @return
+     */
+    protected abstract Workspace getDefaultWorkspace(PageState state);
 
-	public Workspace getSelectedWorkspace(PageState state) {
+	/**
+     * 
+     * @param state
+     * @return
+     */
+    public Workspace getSelectedWorkspace(PageState state) {
 		return (Workspace) m_workspace.get(state);
 	}
 
-	public void setSelectedWorkspace(PageState state, Workspace workspace) {
+	/**
+     * 
+     * @param state
+     * @param workspace
+     */
+    public void setSelectedWorkspace(PageState state, Workspace workspace) {
 		m_workspace.set(state, workspace);
 	}
 }

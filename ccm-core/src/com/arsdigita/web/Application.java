@@ -102,68 +102,78 @@ public class Application extends Resource {
     }
 
     /**
-     * Create (new style / legacy free) application without parent, and without
-     * an associated container group
+     * Convenient class for creation of a new style / legacy free application
+     * just based on its type and title,
+     * without parent, no explicit URL fragment, no associated container group
      */
     public static Application createRootApplication(final ApplicationType type,
                                                     final String title) {
-	return Application.createRootApplication(type, title, false);
+        return Application.createRootApplication(type, title, false);
     }
 
     /**
-     * Create (new style / legacy free) application without parent and with
-     * an associated container group
+     * Convenient class for creation of a new style / legacy free application
+     * just based on its type and title and whether to associate a container
+     * group,
+     * without parent and without an explicit URL fragment
      */
-    public static Application createRootApplication(final ApplicationType type,
-						    final String title,
-						    final boolean createContainerGroup) {
+    public static Application createRootApplication(
+                                           final ApplicationType type,
+                                           final String title,
+                                           final boolean createContainerGroup) {
         if (Assert.isEnabled()) {
             Assert.exists(type, ApplicationType.class);
             Assert.exists(title, String.class);
             Assert.isTrue(type.m_legacyFree);
         }
 
-	return Application.make(type, null, title, null, createContainerGroup);
+        return Application.make(type, null, title, null, createContainerGroup);
     }
 
+    /** 
+     * Wrapper class to create a new application using a limited set of parameters,
+     * here: createContainerGroup is false.
+     * 
+     * @param type
+     * @param fragment URL fragment of the application
+     * @param title  
+     * @param parent parent Application
+     * @return
+     */
     public static Application createApplication(final ApplicationType type,
                                                 final String fragment,
                                                 final String title,
                                                 final Application parent) {
-	s_log.debug("Create Application");
-	return Application.createApplication(type,fragment,title,parent,false);
-    }
-
-    public static Application createApplication(final ApplicationType type,
-						final String fragment,
-						final String title,
-						final Application parent,
-						final boolean createContainerGroup) {
-        if (Assert.isEnabled()) {
-            Assert.exists(type, ApplicationType.class);
-            Assert.exists(fragment, String.class);
-            Assert.exists(title, String.class);
-            Assert.isTrue(!fragment.equals(""),
-                         "The URL fragment must not be the empty string");
-        }
-
-        if (type.m_legacyFree) {
-	    return Application.make(type,fragment,title,parent,createContainerGroup);
-        } else {
-	    s_log.debug("Creating legacy compatible app");
-	    return Application.legacyMake(type,fragment,title,parent,createContainerGroup);
-        }
+        s_log.debug("Create Application");
+        return Application.createApplication(type,fragment,title,parent,false);
     }
 
     // For convenience.
+    /**
+     * 
+     * @param typeName
+     * @param fragment URL fragment of the application
+     * @param title
+     * @param parent
+     * @return
+     */
     public static Application createApplication(final String typeName,
                                                 final String fragment,
                                                 final String title,
                                                 final Application parent) {
 
-	return Application.createApplication(typeName,fragment,title,parent,false);
+        return Application.createApplication(typeName,fragment,title,parent,false);
     }
 
+    /** 
+     * 
+     * @param typeName
+     * @param fragment
+     * @param title
+     * @param parent
+     * @param createContainerGroup
+     * @return
+     */
     public static Application createApplication(final String typeName,
 						final String fragment,
 						final String title,
@@ -179,8 +189,44 @@ public class Application extends Resource {
                                          title,parent,createContainerGroup);
     }
 
-    /** 
+    /**
+     * Prepares the actual creation of an application either as a legacy free or
+     * as a legacy compatible type, depending on the style of its applicationType.
+     * (A legacy compatible app creates the corresponding entries in deprecated
+     * kernel Package and Sitenode stuff as well, in parallel.)
      * 
+     * @param type  application class (class name)
+     * @param fragment URL fragment og the application
+     * @param title
+     * @param parent parent application
+     * @param createContainerGroup
+     * @return
+     */
+    public static Application createApplication(
+                                        final ApplicationType type,
+				                		final String fragment,
+						                final String title,
+						                final Application parent,
+					                	final boolean createContainerGroup) {
+        if (Assert.isEnabled()) {
+            Assert.exists(type, ApplicationType.class);
+            Assert.exists(fragment, String.class);
+            Assert.exists(title, String.class);
+            Assert.isTrue(!fragment.equals(""),
+                         "The URL fragment must not be the empty string");
+        }
+
+        if (type.m_legacyFree) {
+            return Application.make(type,fragment,title,parent,createContainerGroup);
+        } else {
+            s_log.debug("Creating legacy compatible app");
+            return Application.legacyMake(type,fragment,title,parent,createContainerGroup);
+        }
+    }
+
+    /** 
+     * Creates (makes) a legacy free application.
+     *
      * @param type   application type
      * @param fragment last part of the applications URL
      * @param title descriptive name 
@@ -217,7 +263,16 @@ public class Application extends Resource {
         return app;
     }
 
-    // Actually does the work.
+    /**
+     * Creates (makes) a legacy compatible application (using deprecated kernel
+     * packageType and sitenode stuff).
+     * @param type
+     * @param fragment
+     * @param title
+     * @param parent
+     * @param createContainerGroup
+     * @return
+     */
     private static Application legacyMake(final ApplicationType type,
                                           final String fragment,
                                           final String title,

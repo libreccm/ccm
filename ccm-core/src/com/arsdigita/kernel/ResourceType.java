@@ -62,6 +62,7 @@ public class ResourceType extends DomainObject {
     public static final String BASE_DATA_OBJECT_TYPE =
         "com.arsdigita.kernel.ResourceType";
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -336,13 +337,13 @@ public class ResourceType extends DomainObject {
 
     static final Map s_configMap = Collections.synchronizedMap(new HashMap());
 
-    public static final void registerResourceTypeConfig
+    public static void registerResourceTypeConfig
             (final String resourceObjectType,
              final ResourceTypeConfig config) {
         s_configMap.put(resourceObjectType, config);
     }
 
-    public static final Iterator getConfigs() {
+    public static Iterator getConfigs() {
         return s_configMap.entrySet().iterator();
     }
 

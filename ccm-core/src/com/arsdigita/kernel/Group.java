@@ -43,10 +43,9 @@ import java.util.Iterator;
  * Represents a group.
  *
  * @version 1.0
+ * @version $Id: Group.java 287 2005-02-22 00:29:02Z sskracic $
  **/
 public class Group extends Party {
-
-    public static final String versionId = "$Id: Group.java 287 2005-02-22 00:29:02Z sskracic $ by $Author: sskracic $, $DateTime: 2004/08/16 18:10:38 $";
 
     private Collection m_roles = new ArrayList();
 

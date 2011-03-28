@@ -87,6 +87,7 @@ public class Initializer extends CompoundInitializer {
      * 
      * @param e
      */
+    @Override
     public void init(DomainInitEvent e) {
 
         super.init(e);
@@ -97,6 +98,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator(
                 Workspace.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
+                    @Override
                     public DomainObject doNewInstance(DataObject dataObject) {
                         return new Workspace(dataObject);
                     }
@@ -105,6 +107,7 @@ public class Initializer extends CompoundInitializer {
 	e.getFactory().registerInstantiator(
                 WorkspacePage.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
+                    @Override
                     public DomainObject doNewInstance(DataObject dataObject) {
                         return new WorkspacePage(dataObject);
                     }
@@ -187,6 +190,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator(
                 WorkspaceNavigatorPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
+                    @Override
                     public DomainObject doNewInstance(DataObject dataObject) {
                         return new WorkspaceNavigatorPortlet(dataObject);
                     }
@@ -195,6 +199,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator(
                 WorkspaceSummaryPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
+                    @Override
                     public DomainObject doNewInstance(DataObject dataObject) {
                         return new WorkspaceSummaryPortlet(dataObject);
                     }
@@ -244,6 +249,7 @@ public class Initializer extends CompoundInitializer {
                     return config;
                 }
 
+                @Override
                 public ResourceConfigFormSection getModifyFormSection(
                             final RequestLocal application) {
                     final RSSFeedPortletEditorForm config =
@@ -251,6 +257,7 @@ public class Initializer extends CompoundInitializer {
                     return config;
                 }
 
+                @Override
                 public ResourceConfigComponent getCreateComponent(
                             final ResourceType resType,
                             final RequestLocal parentAppRL) {
@@ -268,6 +275,7 @@ public class Initializer extends CompoundInitializer {
         };
 
         new ResourceTypeConfig(FreeformHTMLPortlet.BASE_DATA_OBJECT_TYPE) {
+                @Override
                 public ResourceConfigFormSection getCreateFormSection(
                             final ResourceType resType,
                             final RequestLocal parentAppRL) {
@@ -276,6 +284,7 @@ public class Initializer extends CompoundInitializer {
                     return config;
                 }
 
+                @Override
                 public ResourceConfigFormSection getModifyFormSection(
                             final RequestLocal application) {
                     final FreeformHTMLPortletEditor config =

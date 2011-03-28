@@ -53,21 +53,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * Workspace domain class, a workspace represents an area containing 0...n portals
- * each arranged as a pane of page. Each portal (or pane) manages a number of portlets.
- * 
+ * Workspace domain class.
+ * A workspace represents an area containing 0...n portals each arranged
+ * as a pane of page. Each portal (or pane) manages a number of portlets.
  * 
  */
 public class Workspace extends Application {
 
+    /** Private logger instance for debugging purpose  */
     private static final Logger s_log = Logger.getLogger(Workspace.class);
-    private static final WorkspaceConfig s_config = new WorkspaceConfig();
 
-    static {
-        s_log.debug("Static initalizer starting...");
-        s_config.load();
-        s_log.debug("Static initalizer finished.");
-    }
+    private static final WorkspaceConfig s_config = WorkspaceConfig.getConfig();
 
     public static WorkspaceConfig getConfig() {
         return s_config;
@@ -78,6 +74,7 @@ public class Workspace extends Application {
     public static final String PARTY_ID = PARTY + "." + ACSObject.ID;
     public static final String DEFAULT_LAYOUT = "defaultLayout";
     public static final String PAGES = "pages";
+
     /**
      * store this as a static variable as it cannot change during the lifetime
      * of the ccm service
@@ -115,12 +112,15 @@ public class Workspace extends Application {
     }
 
     /**
-     * Wrapper class to handle a limited set of parameters, 
+     * Wrapper class to create a new workspace using a limited set of parameters,
      * here: page layout is set to default layout.
+     *
+     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the
+     * process of application creation uses it as createGroupContainer
      *  
      * @param url
      * @param title
-     * @param parent
+     * @param parent  parent application
      * @param isPublic
      * @return
      */
@@ -131,6 +131,8 @@ public class Workspace extends Application {
     }
 
     /**
+     * Wrapper class to create a new workspace using a limited set of parameters,
+     * here: page layout is set to default layout.
      * 
      * @param url
      * @param title
@@ -146,12 +148,15 @@ public class Workspace extends Application {
 
     /**
      * Does the real work to create a workspace in the storage (db)
+     *
+     * NOTE: Parameter isPublic may be a misnomer, the actual usage of it in the
+     * process of application creation uses it as createGroupContainer
      * 
      * @param url
      * @param title
      * @param layout
      * @param parent
-     * @param isPublic
+     * @param isPublic whether to create a workspace group
      * @return
      */
     public static Workspace createWorkspace(String url, String title,
@@ -198,8 +203,7 @@ public class Workspace extends Application {
     }
 
     /**
-     *
-     * retrieve the workspace that is created during loading of the
+     * Retrieve the workspace that is created during loading of the
      * ccm-ldn-portal application and is set as the defaultworkspace for the
      * site.
      *
@@ -207,7 +211,7 @@ public class Workspace extends Application {
      * case, ccm-ldn-portal hasn't been loaded and so I don't know how you are
      * invoking this method!)
      *
-     * @return
+     * @return default workspace instance (created during load)
      */
     public static Workspace getDefaultHomepageWorkspace() {
 

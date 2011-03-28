@@ -114,6 +114,7 @@ public class Loader extends PackageLoader {
      */
     private void createApplication(String url, Boolean isPublic, String title) {
 
+        // First create an application type for portal Workspace
         ApplicationType type = setupWorkspaceType();
 
         if (url != null) {
@@ -151,6 +152,9 @@ public class Loader extends PackageLoader {
      *
      * No localization here because it is an invariant configuration.
      *
+     * Creates an entry in table application_types and a corresponding entry in
+     * apm_package_types
+     *
      * @return
      */
     private ApplicationType setupWorkspaceType() {
@@ -165,7 +169,10 @@ public class Loader extends PackageLoader {
     }
 
     /**
+     * Setup WorkspacePage type.
      *
+     * Creates an entry for class (=type) c.ad.ldn.portal.WorkspacePage in
+     * table application_types, but not in apm_package_types.
      * @return
      */
     private ResourceType setupWorkspacePageType() {

@@ -29,7 +29,7 @@ import com.arsdigita.persistence.DataCollection;
 import com.arsdigita.persistence.SessionManager;
 
 /**
- *  Attempts to create new term in the proper terms domain
+ * Attempts to create new term in the proper terms domain
  * whenever a new category is created through CMS interface.
  */
 public class TermCategoryListener implements CategoryListener {
