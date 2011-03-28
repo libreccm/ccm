@@ -112,24 +112,16 @@ public class DaBInImporter extends Program {
     private Folder personsRootFolder;
     private Folder projectsRootFolder;
     private Folder publicationsRootFolder;
-    private Folder authors;
-    private Map<Character, Folder> authorsAlpha;
-    private Folder contacts;
-    private Map<Character, Folder> contactsAlpha;
+    private Folder authors; 
+    private Folder contacts;   
     private Folder departments;
-    private Folder members;
-    private Map<Character, Folder> membersAlpha;
+    private Folder members;    
     private Folder organization;
-    private Folder persons;
-    private Map<Character, Folder> personsAlpha;
-    private Folder projects;
-    private Map<Character, Folder> projectsAlpha;
-    private Folder publications;
-    private Map<Character, Folder> publicationsAlpha;
-    private Folder publishers;
-    private Map<Character, Folder> publishersAlpha;
-    private Folder files;
-    private Map<Character, Folder> filesAlpha;
+    private Folder persons;   
+    private Folder projects;   
+    private Folder publications;    
+    private Folder publishers;    
+    private Folder files;    
     private Map<String, ContentBundle> departmentsMap;
     private Map<String, ContentBundle> personsMap;
     private Map<String, ContentBundle> projectsMap;
@@ -143,9 +135,7 @@ public class DaBInImporter extends Program {
     private Address officeAddress;
     private Domain termsDomain;
     private Term publicationsTerm;
-    private Map<String, Term> publicationTerms;
-    private Term workingPapersTerm;
-    private Map<String, Term> workingPaperTerms;
+    private Term workingPapersTerm;    
     private Term currentProjectsTerm;
     private Term finishedProjectsTerm;
 
@@ -157,23 +147,13 @@ public class DaBInImporter extends Program {
         super("DaBInImporter",
               "0.1.0",
               "configFile",
-              startup);
-        authorsAlpha = new HashMap<Character, Folder>(27);
-        membersAlpha = new HashMap<Character, Folder>(27);
-        personsAlpha = new HashMap<Character, Folder>(27);
-        contactsAlpha = new HashMap<Character, Folder>(27);
-        projectsAlpha = new HashMap<Character, Folder>(27);
-        publicationsAlpha = new HashMap<Character, Folder>(27);
-        publishersAlpha = new HashMap<Character, Folder>(27);
-        filesAlpha = new HashMap<Character, Folder>(27);
+              startup);      
         departmentsMap = new HashMap<String, ContentBundle>();
         personsMap = new HashMap<String, ContentBundle>();
         projectsMap = new HashMap<String, ContentBundle>();
         publishersMap = new HashMap<PublisherData, ContentBundle>();
         publicationMap = new HashMap<String, ContentBundle>();
-        workingPaperMap = new HashMap<String, ContentBundle>();
-        publicationTerms = new HashMap<String, Term>(30);
-        workingPaperTerms = new HashMap<String, Term>(30);
+        workingPaperMap = new HashMap<String, ContentBundle>();     
     }
 
     @Override
@@ -279,403 +259,27 @@ public class DaBInImporter extends Program {
         projectsRootFolder = projectsSection.getRootFolder();
         publicationsRootFolder = publicationsSection.getRootFolder();
 
-        authors = createFolder(personsRootFolder, "autoren", "Autoren");
-        folder = createFolder(authors, "09", "0-9");
-        authorsAlpha.put('0', folder);
-        folder = createFolder(authors, "ab", "A-B");
-        authorsAlpha.put('a', folder);
-        authorsAlpha.put('b', folder);
-        folder = createFolder(authors, "cd", "C-D");
-        authorsAlpha.put('c', folder);
-        authorsAlpha.put('d', folder);
-        folder = createFolder(authors, "ef", "E-F");
-        authorsAlpha.put('e', folder);
-        authorsAlpha.put('f', folder);
-        folder = createFolder(authors, "gh", "G-H");
-        authorsAlpha.put('g', folder);
-        authorsAlpha.put('h', folder);
-        folder = createFolder(authors, "ij", "I-J");
-        authorsAlpha.put('i', folder);
-        authorsAlpha.put('j', folder);
-        folder = createFolder(authors, "kl", "K-L");
-        authorsAlpha.put('k', folder);
-        authorsAlpha.put('l', folder);
-        folder = createFolder(authors, "mn", "M-N");
-        authorsAlpha.put('m', folder);
-        authorsAlpha.put('n', folder);
-        folder = createFolder(authors, "op", "O-P");
-        authorsAlpha.put('o', folder);
-        authorsAlpha.put('p', folder);
-        folder = createFolder(authors, "qr", "Q-R");
-        authorsAlpha.put('q', folder);
-        authorsAlpha.put('r', folder);
-        folder = createFolder(authors, "st", "S-T");
-        authorsAlpha.put('s', folder);
-        authorsAlpha.put('t', folder);
-        folder = createFolder(authors, "uv", "U-V");
-        authorsAlpha.put('u', folder);
-        authorsAlpha.put('v', folder);
-        folder = createFolder(authors, "wxzy", "W-Z");
-        authorsAlpha.put('w', folder);
-        authorsAlpha.put('x', folder);
-        authorsAlpha.put('y', folder);
-        authorsAlpha.put('z', folder);
+        authors = createFolder(personsRootFolder, "autoren", "Autoren");  
 
         contacts = createFolder(personsRootFolder, "kontaktdaten",
-                                "Kontaktdaten");
-        folder = createFolder(contacts, "09", "0-9");
-        contactsAlpha.put('0', folder);
-        folder = createFolder(contacts, "ab", "A-B");
-        contactsAlpha.put('a', folder);
-        contactsAlpha.put('b', folder);
-        folder = createFolder(contacts, "cd", "C-D");
-        contactsAlpha.put('c', folder);
-        contactsAlpha.put('d', folder);
-        folder = createFolder(contacts, "ef", "E-F");
-        contactsAlpha.put('e', folder);
-        contactsAlpha.put('f', folder);
-        folder = createFolder(contacts, "gh", "G-H");
-        contactsAlpha.put('g', folder);
-        contactsAlpha.put('h', folder);
-        folder = createFolder(contacts, "ij", "I-J");
-        contactsAlpha.put('i', folder);
-        contactsAlpha.put('j', folder);
-        folder = createFolder(contacts, "kl", "K-L");
-        contactsAlpha.put('k', folder);
-        contactsAlpha.put('l', folder);
-        folder = createFolder(contacts, "mn", "M-N");
-        contactsAlpha.put('m', folder);
-        contactsAlpha.put('n', folder);
-        folder = createFolder(contacts, "op", "O-P");
-        contactsAlpha.put('o', folder);
-        contactsAlpha.put('p', folder);
-        folder = createFolder(contacts, "qr", "Q-R");
-        contactsAlpha.put('q', folder);
-        contactsAlpha.put('r', folder);
-        folder = createFolder(contacts, "st", "S-T");
-        contactsAlpha.put('s', folder);
-        contactsAlpha.put('t', folder);
-        folder = createFolder(contacts, "uv", "U-V");
-        contactsAlpha.put('u', folder);
-        contactsAlpha.put('v', folder);
-        folder = createFolder(contacts, "wxzy", "W-Z");
-        contactsAlpha.put('w', folder);
-        contactsAlpha.put('x', folder);
-        contactsAlpha.put('y', folder);
-        contactsAlpha.put('z', folder);
+                                "Kontaktdaten");        
 
         departments = createFolder(root, "abteilungen", "Abteilungen");
 
-        members = createFolder(personsRootFolder, "mitglieder", "Mitglieder");
-        folder = createFolder(members, "09", "0-9");
-        membersAlpha.put('0', folder);
-        folder = createFolder(members, "ab", "A-B");
-        membersAlpha.put('a', folder);
-        membersAlpha.put('b', folder);
-        folder = createFolder(members, "cd", "C-D");
-        membersAlpha.put('c', folder);
-        membersAlpha.put('d', folder);
-        folder = createFolder(members, "ef", "E-F");
-        membersAlpha.put('e', folder);
-        membersAlpha.put('f', folder);
-        folder = createFolder(members, "gh", "G-H");
-        membersAlpha.put('g', folder);
-        membersAlpha.put('h', folder);
-        folder = createFolder(members, "ij", "I-J");
-        membersAlpha.put('i', folder);
-        membersAlpha.put('j', folder);
-        folder = createFolder(members, "kl", "K-L");
-        membersAlpha.put('k', folder);
-        membersAlpha.put('l', folder);
-        folder = createFolder(members, "mn", "M-N");
-        membersAlpha.put('m', folder);
-        membersAlpha.put('n', folder);
-        folder = createFolder(members, "op", "O-P");
-        membersAlpha.put('o', folder);
-        membersAlpha.put('p', folder);
-        folder = createFolder(members, "qr", "Q-R");
-        membersAlpha.put('q', folder);
-        membersAlpha.put('r', folder);
-        folder = createFolder(members, "st", "S-T");
-        membersAlpha.put('s', folder);
-        membersAlpha.put('t', folder);
-        folder = createFolder(members, "uv", "U-V");
-        membersAlpha.put('u', folder);
-        membersAlpha.put('v', folder);
-        folder = createFolder(members, "wxzy", "W-Z");
-        membersAlpha.put('w', folder);
-        membersAlpha.put('x', folder);
-        membersAlpha.put('y', folder);
-        membersAlpha.put('z', folder);
+        members = createFolder(personsRootFolder, "mitglieder", "Mitglieder");        
 
         organization = createFolder(root, "organisationen", "Organisation(en)");
 
         persons = createFolder(personsRootFolder, "personen", "Personen");
-        folder = createFolder(persons, "09", "0-9");
-        personsAlpha.put('0', folder);
-        folder = createFolder(persons, "ab", "A-B");
-        personsAlpha.put('a', folder);
-        personsAlpha.put('b', folder);
-        folder = createFolder(persons, "cd", "C-D");
-        personsAlpha.put('c', folder);
-        personsAlpha.put('d', folder);
-        folder = createFolder(persons, "ef", "E-F");
-        personsAlpha.put('e', folder);
-        personsAlpha.put('f', folder);
-        folder = createFolder(persons, "gh", "G-H");
-        personsAlpha.put('g', folder);
-        personsAlpha.put('h', folder);
-        folder = createFolder(persons, "ij", "I-J");
-        personsAlpha.put('i', folder);
-        personsAlpha.put('j', folder);
-        folder = createFolder(persons, "kl", "K-L");
-        personsAlpha.put('k', folder);
-        personsAlpha.put('l', folder);
-        folder = createFolder(persons, "mn", "M-N");
-        personsAlpha.put('m', folder);
-        personsAlpha.put('n', folder);
-        folder = createFolder(persons, "op", "O-P");
-        personsAlpha.put('o', folder);
-        personsAlpha.put('p', folder);
-        folder = createFolder(persons, "qr", "Q-R");
-        personsAlpha.put('q', folder);
-        personsAlpha.put('r', folder);
-        folder = createFolder(persons, "st", "S-T");
-        personsAlpha.put('s', folder);
-        personsAlpha.put('t', folder);
-        folder = createFolder(persons, "uv", "U-V");
-        personsAlpha.put('u', folder);
-        personsAlpha.put('v', folder);
-        folder = createFolder(persons, "wxzy", "W-Z");
-        personsAlpha.put('w', folder);
-        personsAlpha.put('x', folder);
-        personsAlpha.put('y', folder);
-        personsAlpha.put('z', folder);
-
+        
         projects = createFolder(projectsRootFolder, "projekte", "Projekte");
-        folder = createFolder(projects, "09", "0-9");
-        projectsAlpha.put('0', folder);
-        folder = createFolder(projects, "a", "A");
-        projectsAlpha.put('a', folder);
-        folder = createFolder(projects, "b", "B");
-        projectsAlpha.put('b', folder);
-        folder = createFolder(projects, "c", "C");
-        projectsAlpha.put('c', folder);
-        folder = createFolder(projects, "d", "D");
-        projectsAlpha.put('d', folder);
-        folder = createFolder(projects, "e", "E");
-        projectsAlpha.put('e', folder);
-        folder = createFolder(projects, "f", "F");
-        projectsAlpha.put('f', folder);
-        folder = createFolder(projects, "g", "G");
-        projectsAlpha.put('g', folder);
-        folder = createFolder(projects, "h", "H");
-        projectsAlpha.put('h', folder);
-        folder = createFolder(projects, "i", "I");
-        projectsAlpha.put('i', folder);
-        folder = createFolder(projects, "j", "J");
-        projectsAlpha.put('j', folder);
-        folder = createFolder(projects, "k", "K");
-        projectsAlpha.put('k', folder);
-        folder = createFolder(projects, "l", "L");
-        projectsAlpha.put('l', folder);
-        folder = createFolder(projects, "m", "M");
-        projectsAlpha.put('m', folder);
-        folder = createFolder(projects, "n", "N");
-        projectsAlpha.put('n', folder);
-        folder = createFolder(projects, "o", "O");
-        projectsAlpha.put('o', folder);
-        folder = createFolder(projects, "p", "P");
-        projectsAlpha.put('p', folder);
-        folder = createFolder(projects, "q", "Q");
-        projectsAlpha.put('q', folder);
-        folder = createFolder(projects, "r", "R");
-        projectsAlpha.put('r', folder);
-        folder = createFolder(projects, "s", "S");
-        projectsAlpha.put('s', folder);
-        folder = createFolder(projects, "t", "T");
-        projectsAlpha.put('t', folder);
-        folder = createFolder(projects, "u", "U");
-        projectsAlpha.put('u', folder);
-        folder = createFolder(projects, "v", "V");
-        projectsAlpha.put('v', folder);
-        folder = createFolder(projects, "w", "W");
-        projectsAlpha.put('w', folder);
-        folder = createFolder(projects, "x", "X");
-        projectsAlpha.put('x', folder);
-        folder = createFolder(projects, "y", "Y");
-        projectsAlpha.put('y', folder);
-        folder = createFolder(projects, "z", "Z");
-        projectsAlpha.put('z', folder);
 
         publishers = createFolder(publicationsRootFolder, "verlage", "Verlage");
-        folder = createFolder(publishers, "09", "0-9");
-        publishersAlpha.put('0', folder);
-        folder = createFolder(publishers, "a", "A");
-        publishersAlpha.put('a', folder);
-        folder = createFolder(publishers, "b", "B");
-        publishersAlpha.put('b', folder);
-        folder = createFolder(publishers, "c", "C");
-        publishersAlpha.put('c', folder);
-        folder = createFolder(publishers, "d", "D");
-        publishersAlpha.put('d', folder);
-        folder = createFolder(publishers, "e", "E");
-        publishersAlpha.put('e', folder);
-        folder = createFolder(publishers, "f", "F");
-        publishersAlpha.put('f', folder);
-        folder = createFolder(publishers, "g", "G");
-        publishersAlpha.put('g', folder);
-        folder = createFolder(publishers, "h", "H");
-        publishersAlpha.put('h', folder);
-        folder = createFolder(publishers, "i", "I");
-        publishersAlpha.put('i', folder);
-        folder = createFolder(publishers, "j", "J");
-        publishersAlpha.put('j', folder);
-        folder = createFolder(publishers, "k", "K");
-        publishersAlpha.put('k', folder);
-        folder = createFolder(publishers, "l", "L");
-        publishersAlpha.put('l', folder);
-        folder = createFolder(publishers, "m", "M");
-        publishersAlpha.put('m', folder);
-        folder = createFolder(publishers, "n", "N");
-        publishersAlpha.put('n', folder);
-        folder = createFolder(publishers, "o", "O");
-        publishersAlpha.put('o', folder);
-        folder = createFolder(publishers, "p", "P");
-        publishersAlpha.put('p', folder);
-        folder = createFolder(publishers, "q", "Q");
-        publishersAlpha.put('q', folder);
-        folder = createFolder(publishers, "r", "R");
-        publishersAlpha.put('r', folder);
-        folder = createFolder(publishers, "s", "S");
-        publishersAlpha.put('s', folder);
-        folder = createFolder(publishers, "t", "T");
-        publishersAlpha.put('t', folder);
-        folder = createFolder(publishers, "u", "U");
-        publishersAlpha.put('u', folder);
-        folder = createFolder(publishers, "v", "V");
-        publishersAlpha.put('v', folder);
-        folder = createFolder(publishers, "w", "W");
-        publishersAlpha.put('w', folder);
-        folder = createFolder(publishers, "x", "X");
-        publishersAlpha.put('x', folder);
-        folder = createFolder(publishers, "y", "Y");
-        publishersAlpha.put('y', folder);
-        folder = createFolder(publishers, "z", "Z");
-        publishersAlpha.put('z', folder);
 
         publications = createFolder(publicationsRootFolder, "publikationen",
                                     "Publikationen");
-        folder = createFolder(publications, "09", "0-9");
-        publicationsAlpha.put('0', folder);
-        folder = createFolder(publications, "a", "A");
-        publicationsAlpha.put('a', folder);
-        folder = createFolder(publications, "b", "B");
-        publicationsAlpha.put('b', folder);
-        folder = createFolder(publications, "c", "C");
-        publicationsAlpha.put('c', folder);
-        folder = createFolder(publications, "d", "D");
-        publicationsAlpha.put('d', folder);
-        folder = createFolder(publications, "e", "E");
-        publicationsAlpha.put('e', folder);
-        folder = createFolder(publications, "f", "F");
-        publicationsAlpha.put('f', folder);
-        folder = createFolder(publications, "g", "G");
-        publicationsAlpha.put('g', folder);
-        folder = createFolder(publications, "h", "H");
-        publicationsAlpha.put('h', folder);
-        folder = createFolder(publications, "i", "I");
-        publicationsAlpha.put('i', folder);
-        folder = createFolder(publications, "j", "J");
-        publicationsAlpha.put('j', folder);
-        folder = createFolder(publications, "k", "K");
-        publicationsAlpha.put('k', folder);
-        folder = createFolder(publications, "l", "L");
-        publicationsAlpha.put('l', folder);
-        folder = createFolder(publications, "m", "M");
-        publicationsAlpha.put('m', folder);
-        folder = createFolder(publications, "n", "N");
-        publicationsAlpha.put('n', folder);
-        folder = createFolder(publications, "o", "O");
-        publicationsAlpha.put('o', folder);
-        folder = createFolder(publications, "p", "P");
-        publicationsAlpha.put('p', folder);
-        folder = createFolder(publications, "q", "Q");
-        publicationsAlpha.put('q', folder);
-        folder = createFolder(publications, "r", "R");
-        publicationsAlpha.put('r', folder);
-        folder = createFolder(publications, "s", "S");
-        publicationsAlpha.put('s', folder);
-        folder = createFolder(publications, "t", "T");
-        publicationsAlpha.put('t', folder);
-        folder = createFolder(publications, "u", "U");
-        publicationsAlpha.put('u', folder);
-        folder = createFolder(publications, "v", "V");
-        publicationsAlpha.put('v', folder);
-        folder = createFolder(publications, "w", "W");
-        publicationsAlpha.put('w', folder);
-        folder = createFolder(publications, "x", "X");
-        publicationsAlpha.put('x', folder);
-        folder = createFolder(publications, "y", "Y");
-        publicationsAlpha.put('y', folder);
-        folder = createFolder(publications, "z", "Z");
-        publicationsAlpha.put('z', folder);
 
         files = createFolder(publicationsRootFolder, "dateien", "Dateien");
-        folder = createFolder(files, "09", "0-9");
-        filesAlpha.put('0', folder);
-        folder = createFolder(files, "a", "A");
-        filesAlpha.put('a', folder);
-        folder = createFolder(files, "b", "B");
-        filesAlpha.put('b', folder);
-        folder = createFolder(files, "c", "C");
-        filesAlpha.put('c', folder);
-        folder = createFolder(files, "d", "D");
-        filesAlpha.put('d', folder);
-        folder = createFolder(files, "e", "E");
-        filesAlpha.put('e', folder);
-        folder = createFolder(files, "f", "F");
-        filesAlpha.put('f', folder);
-        folder = createFolder(files, "g", "G");
-        filesAlpha.put('g', folder);
-        folder = createFolder(files, "h", "H");
-        filesAlpha.put('h', folder);
-        folder = createFolder(files, "i", "I");
-        filesAlpha.put('i', folder);
-        folder = createFolder(files, "j", "J");
-        filesAlpha.put('j', folder);
-        folder = createFolder(files, "k", "K");
-        filesAlpha.put('k', folder);
-        folder = createFolder(files, "l", "L");
-        filesAlpha.put('l', folder);
-        folder = createFolder(files, "m", "M");
-        filesAlpha.put('m', folder);
-        folder = createFolder(files, "n", "N");
-        filesAlpha.put('n', folder);
-        folder = createFolder(files, "o", "O");
-        filesAlpha.put('o', folder);
-        folder = createFolder(files, "p", "P");
-        filesAlpha.put('p', folder);
-        folder = createFolder(files, "q", "Q");
-        filesAlpha.put('q', folder);
-        folder = createFolder(files, "r", "R");
-        filesAlpha.put('r', folder);
-        folder = createFolder(files, "s", "S");
-        filesAlpha.put('s', folder);
-        folder = createFolder(files, "t", "T");
-        filesAlpha.put('t', folder);
-        folder = createFolder(files, "u", "U");
-        filesAlpha.put('u', folder);
-        folder = createFolder(files, "v", "V");
-        filesAlpha.put('v', folder);
-        folder = createFolder(files, "w", "W");
-        filesAlpha.put('w', folder);
-        folder = createFolder(files, "x", "X");
-        filesAlpha.put('x', folder);
-        folder = createFolder(files, "y", "Y");
-        filesAlpha.put('y', folder);
-        folder = createFolder(files, "z", "Z");
-        filesAlpha.put('z', folder);
 
         /*
          * Create the catgories/terms for publications and projects.
@@ -689,17 +293,13 @@ public class DaBInImporter extends Program {
             System.out.println("Terms for publications...");
             String publicationsTermPath = (String) config.get(
                     "terms.publications");
-            publicationsTerm = checkTermPath(publicationsTermPath);
-            publicationTerms = checkYearTerms(publicationsTerm,
-                                              getPublicationYears());
+            publicationsTerm = checkTermPath(publicationsTermPath);           
 
             System.out.println("Terms for working papers...");
             String workingPapersTermPath =
                    (String) config.get("terms.workingpapers");
             workingPapersTerm = checkTermPath(workingPapersTermPath);
-            workingPaperTerms = checkYearTerms(workingPapersTerm,
-                                               getWorkingPaperYears());
-
+            
             System.out.println("Term for current projects...");
             String currentProjectsTermPath = (String) config.get(
                     "terms.projects.current");
@@ -1918,23 +1518,21 @@ public class DaBInImporter extends Program {
 
                 personDe.setContentSection(section);
                 personEn.setContentSection(section);
-
-                char letter;
-                letter = personData.getSurname().toLowerCase().charAt(0);
-                Map<Character, Folder> folders = null;
-                switch (type) {
+                
+                Folder folder = null;
+                switch(type) {
                     case MEMBER:
-                        folders = membersAlpha;
+                        folder = members;
                         break;
                     case AUTHOR:
-                        folders = authorsAlpha;
+                        folder = authors;
                         break;
                     case OTHER:
-                        folders = personsAlpha;
+                        folder = persons;
                         break;
                 }
 
-                insertIntoAZFolder(person, letter, folders);
+                folder.addItem(person);
 
                 StringTokenizer contactData = new StringTokenizer(
                         personData.getContactData(),
@@ -2039,13 +1637,10 @@ public class DaBInImporter extends Program {
                     ContentBundle contactBundle = new ContentBundle(contactDe);
                     contactBundle.addInstance(contactEn);
                     contactBundle.setContentSection(personsSection);
-                    insertIntoAZFolder(contactBundle,
-                                       personDe.getSurname().charAt(0),
-                                       contactsAlpha);
-
+                    contacts.addItem(contactBundle);
+                
                     contactDe.setContentSection(personsSection);
                     contactEn.setContentSection(personsSection);
-
 
                     if (homepage != null) {
                         RelatedLink homepageLinkDe;
@@ -2087,12 +1682,7 @@ public class DaBInImporter extends Program {
 
                 System.out.printf("\tde: %s...", departmentData.getNameDe());
                 departmentDe = new SciDepartment();
-                departmentDe.setTitle(departmentData.getNameDe());
-                /*departmentDe.setName(departmentData.getNameDe().
-                replace(",", "").
-                replace("/", "").
-                replaceAll("\\s\\s+", " ").
-                replace(' ', '-').toLowerCase());*/
+                departmentDe.setTitle(departmentData.getNameDe());               
                 departmentDe.setName(DaBInImporter.normalizeString(departmentData.
                         getNameDe()));
                 departmentDe.setLanguage("de");
@@ -2104,12 +1694,7 @@ public class DaBInImporter extends Program {
                 System.out.printf("\ten: %s...",
                                   departmentData.getNameEn());
                 departmentEn = new SciDepartment();
-                departmentEn.setTitle(departmentData.getNameEn());
-                /*departmentEn.setName(departmentData.getNameEn().
-                replace(",", "").
-                replace("/", "").
-                replaceAll("\\s\\s+", " ").
-                replace(' ', '-').toLowerCase());*/
+                departmentEn.setTitle(departmentData.getNameEn());              
                 departmentEn.setName(DaBInImporter.normalizeString(departmentData.
                         getNameDe()));
                 departmentEn.setLanguage("en");
@@ -2208,12 +1793,7 @@ public class DaBInImporter extends Program {
                 if ((projectData.getNameDe() != null)
                     && (projectData.getNameDe().length() > 0)) {
                     projectDe = new SciProject();
-                    projectDe.setTitle(projectData.getNameDe());
-                    /*String projectNameDe = projectData.getNameDe().
-                    replace(",", "").
-                    replace("/", "").
-                    replaceAll("\\s\\s+", " ").
-                    replace(' ', '-').toLowerCase();*/
+                    projectDe.setTitle(projectData.getNameDe());              
                     String projectName = DaBInImporter.normalizeString(projectData.
                             getNameDe());
                     if (projectName.length() > 200) {
@@ -2375,8 +1955,8 @@ public class DaBInImporter extends Program {
                     System.out.println("OK");
                     i++;
                 }
-
-                insertIntoAZFolder(project, projectsAlpha);
+            
+                projects.addItem(project);
 
                 //Assign to term/category
                 Calendar today = new GregorianCalendar();
@@ -2934,16 +2514,11 @@ public class DaBInImporter extends Program {
                         pubLink.save();
                     }
                 }
-
-                insertIntoAZFolder(publication, publicationsAlpha);
+            
+                publications.addItem(publication);
                 if (publicationData.getVisiblity()
                     == PublicationVisibility.GLOBAL) {
-                    Term term = publicationTerms.get(Integer.toString(((Publication) publication.
-                                                                       getPrimaryInstance()).
-                            getYearOfPublication()));
-                    if (term == null) {
-                        term = publicationsTerm;
-                    }
+                    Term term = publicationsTerm;
                     term = termsDomain.getTerm(term.getUniqueID());
                     System.out.printf(
                             "\tAdding publication to term '%s:%s'...\n", term.
@@ -3056,19 +2631,11 @@ public class DaBInImporter extends Program {
                     workingPaperEn.setContentSection(publicationsSection);
                 }
 
-                workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);
-                insertIntoAZFolder(workingPaper, publicationsAlpha);
+                workingPaperMap.put(workingPaperData.getDabinId(), workingPaper);               
+                publications.addItem(workingPaper);
                 WorkingPaper primary = (WorkingPaper) workingPaper.
-                        getPrimaryInstance();
-                String yearStr =
-                       Integer.toString(primary.getYearOfPublication());
-                Term term = workingPaperTerms.get(yearStr);
-                if (term == null) {
-                    System.out.printf(
-                            "***WARNING: Term for year '%s' not found. Using basic term.",
-                            yearStr);
-                    term = workingPapersTerm;
-                }
+                        getPrimaryInstance();                
+                Term term = workingPapersTerm;//s.get(yearStr);                
                 term = termsDomain.getTerm(term.getUniqueID());
                 System.out.printf("\tAdding project to term '%s:%s'...\n", term.
                         getUniqueID(), term.getName());
@@ -3162,10 +2729,8 @@ public class DaBInImporter extends Program {
                             download.setTargetType(Link.INTERNAL_LINK);
                             download.setTargetItem(fsi);
                             download.setLinkOwner(workingPaperEn);
-
-                            char letter = workingPaperDe.getName().toLowerCase().
-                                    charAt(0);
-                            insertIntoAZFolder(bundle, letter, filesAlpha);
+                          
+                            files.addItem(bundle);
                         }
                     } catch (IOException ex) {
                         System.out.println(
@@ -3322,8 +2887,8 @@ public class DaBInImporter extends Program {
 
                 publisherDe.setContentSection(publicationsSection);
                 publisherEn.setContentSection(publicationsSection);
-
-                insertIntoAZFolder(publisher, publishersAlpha);
+                
+                publishers.addItem(publisher);
                 publishersMap.put(publisherData, publisher);
                 System.out.println("OK");
             }
@@ -3546,29 +3111,7 @@ public class DaBInImporter extends Program {
         publicationData.setPagesFrom(pagesFrom);
         publicationData.setPagesTo(pagesTo);
     }
-
-    private void insertIntoAZFolder(final ContentBundle bundle,
-                                    final Map<Character, Folder> folders) {
-        Character letter;
-
-        letter = bundle.getPrimaryInstance().getName().toLowerCase().charAt(0);
-
-        insertIntoAZFolder(bundle, letter, folders);
-    }
-
-    private void insertIntoAZFolder(final ContentBundle bundle,
-                                    final Character letter,
-                                    final Map<Character, Folder> folders) {
-        Folder folder;
-
-        folder = folders.get(letter);
-        if (folder == null) {
-            folder = folders.get('0');
-        }
-
-        folder.addItem(bundle);
-    }
-
+  
     private Term checkTermPath(final String path) {
         StringTokenizer pathTokenizer = new StringTokenizer(path, "/");
 
@@ -3604,32 +3147,7 @@ public class DaBInImporter extends Program {
 
         return term;
     }
-
-    private Map<String, Term> checkYearTerms(final Term parent,
-                                             final List<String> years) {
-        String parentId = parent.getUniqueID();
-        Map<String, Term> yearTerms = new HashMap<String, Term>();
-
-        for (String year : years) {
-            String yearTermId = String.format("%s%s", parentId, year);
-            Term term;
-            try {
-                term = termsDomain.getTerm(yearTermId);
-            } catch (DataObjectNotFoundException ex) {
-                System.out.printf(
-                        "Term for year '%s' in term '%s' does not exist. Creating.\n",
-                        year,
-                        parent.getName());
-                createTerm(yearTermId, year, termsDomain, parent);
-                term = termsDomain.getTerm(yearTermId);
-            }
-
-            yearTerms.put(year, term);
-        }
-
-        return yearTerms;
-    }
-
+ 
     private void createTerm(final String uniqueId,
                             final String name,
                             final Domain domain,
@@ -3652,63 +3170,6 @@ public class DaBInImporter extends Program {
         };
 
         transaction.run();
-    }
-
-    private List<String> getPublicationYears() {
-        List<String> years = new ArrayList<String>();
-
-        try {
-            Statement stmt = connection.createStatement(
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-
-            ResultSet result = stmt.executeQuery(
-                    "SELECT Jahr FROM publikation GROUP BY Jahr");
-
-            while (result.next()) {
-                String year = result.getString(1);
-                if (year.length() > 4) {
-                    years.add(year.substring(0, 4));
-                } else {
-                    years.add(year);
-                }
-            }
-        } catch (SQLException ex) {
-            System.err.println("Query for publication years failed.");
-            ex.printStackTrace(System.err);
-        }
-
-        return years;
-    }
-
-    private List<String> getWorkingPaperYears() {
-        List<String> years = new ArrayList<String>();
-
-        try {
-            Statement stmt = connection.createStatement(
-                    ResultSet.TYPE_SCROLL_INSENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-
-            ResultSet result = stmt.executeQuery(
-                    "SELECT Jahr FROM arbeitspapier GROUP BY Jahr");
-
-            while (result.next()) {
-                while (result.next()) {
-                    String year = result.getString(1);
-                    if (year.length() > 4) {
-                        years.add(year.substring(0, 4));
-                    } else {
-                        years.add(year);
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            System.err.println(
-                    "Query for publication years of working papers failed.");
-            ex.printStackTrace(System.err);
-        }
-
-        return years;
     }
 
     private Lifecycle createLifecycle(final LifecycleDefinition def) {

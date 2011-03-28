@@ -30,8 +30,8 @@ import com.arsdigita.cms.ui.authoring.AuthoringKitWizard;
  */
 public class SciProjectPublicationsStep extends RelatedLinkPropertiesStep {
 
-    protected String m_linkListName = "SciProjectPublications";
-    protected ContentType m_contentType = ContentType.findByAssociatedObjectType(
+    protected static String s_linkListName = "SciProjectPublications";
+    protected static ContentType s_contentType = ContentType.findByAssociatedObjectType(
             "com.arsdigita.cms.contenttypes.Publication");
 
     public SciProjectPublicationsStep(ItemSelectionModel itemModel,

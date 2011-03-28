@@ -36,6 +36,7 @@ import com.arsdigita.globalization.GlobalizedMessage;
 import com.arsdigita.mimetypes.MimeType;
 import com.arsdigita.mimetypes.MimeTypeCollection;
 import com.arsdigita.util.Assert;
+import org.apache.log4j.Logger;
 
 /**
  * Form to edit the basic properties of a RelatedLink. This form
@@ -49,6 +50,7 @@ import com.arsdigita.util.Assert;
  */
 public class RelatedLinkPropertyForm extends LinkPropertyForm {
 
+    private static final Logger logger = Logger.getLogger(RelatedLinkPropertyForm.class);
     private static boolean isHideAdditionalResourceFields = ContentSection.getConfig().isHideAdditionalResourceFields();
     private String m_linkListName;
     
@@ -70,6 +72,7 @@ public class RelatedLinkPropertyForm extends LinkPropertyForm {
             LinkSelectionModel link, String linkListName, ContentType contentType) {
 
         super(itemModel, link, contentType);
+        logger.debug(String.format("linkListName = %s", linkListName));
         m_linkListName = linkListName;
     }
 
