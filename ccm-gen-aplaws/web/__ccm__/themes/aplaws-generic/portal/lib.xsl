@@ -29,7 +29,7 @@
     </xsl:variable>
     
     <a href="{@url}" title="{$title}">
-      <img src="/STATIC/portal/{@name}.gif"  border="1" alt="{$title}"/>
+      <img src="{$theme-prefix}/portal/{@name}.gif"  border="1" alt="{$title}"/>
     </a>
   </xsl:template>
   

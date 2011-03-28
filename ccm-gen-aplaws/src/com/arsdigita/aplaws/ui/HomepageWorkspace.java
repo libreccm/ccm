@@ -29,11 +29,20 @@ import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.Party;
-import com.arsdigita.kernel.Kernel;
+
+import com.arsdigita.kernel.Kernel;import org.apache.log4j.Logger;
 
 
+/** 
+ * 
+ * 
+ */
 public class HomepageWorkspace extends SimpleContainer {
     
+    /** Private logger instance for debugging  */
+    private static Logger s_log = Logger.getLogger(
+                                  HomepageWorkspace.class);
+
     private HomepagePortalSelectionModel m_model;
     private ActionLink m_reset;
     private ActionLink m_browse;
@@ -47,10 +56,19 @@ public class HomepageWorkspace extends SimpleContainer {
     public HomepageWorkspace() {
         super("portal:homepageWorkspace", PortalConstants.PORTAL_XML_NS);
         m_customizable = false;
+
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("Constructor HomepageWorkspace finished. " );
+        }
+
     }
     
     public void setModel(HomepagePortalSelectionModel model) {
         m_model = model;
+
+        if (s_log.isDebugEnabled()) {
+            s_log.debug("setModel: " + m_model );
+        }
     }
     
     public void setCustomizable(boolean customizable) {

@@ -46,7 +46,7 @@
                   </xsl:variable>
                   
                   <a href="{@url}" title="{$title}">
-                    <img src="/STATIC/portal/{@name}.gif" border="0" alt="{$title}"/>
+                    <img src="{$here}/{@name}.gif" border="0" alt="{$title}"/>
                   </a>
                 </th>
               </xsl:for-each>
@@ -151,16 +151,16 @@
       <xsl:when test="@isSelected = 'false'">
         <td class="tab-label">
           <a href="{@moveLeftAction}">
-            <img src="/STATIC/portal/moveLeft.gif" border="0" style="margin-left: 5px"/>
+            <img src="{$here}/moveLeft.gif" border="0" style="margin-left: 5px"/>
           </a>
           <a href="{@moveRightAction}">
-            <img src="/STATIC/portal/moveRight.gif" border="0" style="margin-left: 5px"/>
+            <img src="{$here}/moveRight.gif" border="0" style="margin-left: 5px"/>
           </a>
           <a href="{@selectAction}">
             <xsl:value-of select="title"/>
           </a>
           <a href="{@deleteAction}" onclick="return confirm('Are you sure you want to delete this pane')">
-            <img src="/STATIC/portal/delete.gif" border="0" style="margin-left: 5px"/>
+            <img src="{$here}/delete.gif" border="0" style="margin-left: 5px"/>
           </a>
         </td>
         <td class="tab-end"/>
@@ -172,12 +172,12 @@
             <tr>
               <td>
                 <a href="{@moveLeftAction}">
-                  <img src="/STATIC/portal/moveLeft.gif" border="0" style="margin-left: 5px"/>
+                  <img src="{$here}/moveLeft.gif" border="0" style="margin-left: 5px"/>
                 </a>
               </td>
               <td>
                 <a href="{@moveRightAction}">
-                  <img src="/STATIC/portal/moveRight.gif" border="0" style="margin-left: 5px"/>
+                  <img src="{$here}/moveRight.gif" border="0" style="margin-left: 5px"/>
                 </a>
               </td>
               <td>
@@ -185,7 +185,7 @@
               </td>
               <td>
                 <a href="{@deleteAction}" onclick="return confirm('Are you sure you want to delete this pane')">
-                  <img src="/STATIC/portal/delete.gif" border="0" style="margin-left: 5px"/>
+                  <img src="{$here}/delete.gif" border="0" style="margin-left: 5px"/>
                 </a>
               </td>
             </tr>
@@ -197,14 +197,14 @@
       <xsl:otherwise>
         <td class="current-tab-label">
           <a href="{@moveLeftAction}">
-            <img src="/STATIC/portal/moveLeft.gif" border="0" style="margin-left: 5px"/>
+            <img src="{$here}/moveLeft.gif" border="0" style="margin-left: 5px"/>
           </a>
           <a href="{@moveRightAction}">
-            <img src="/STATIC/portal/moveRight.gif" border="0" style="margin-left: 5px"/>
+            <img src="{$here}/moveRight.gif" border="0" style="margin-left: 5px"/>
           </a>
           <xsl:value-of select="title"/>
           <a href="{@deleteAction}" onclick="return confirm('Are you sure you want to delete this pane')">
-            <img src="/STATIC/portal/delete.gif" border="0" style="margin-left: 5px"/>
+            <img src="{$here}/delete.gif" border="0" style="margin-left: 5px"/>
           </a>
         </td>
         <td class="current-tab-end"/>

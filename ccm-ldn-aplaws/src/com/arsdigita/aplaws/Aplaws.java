@@ -15,7 +15,6 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
-
 package com.arsdigita.aplaws;
 
 import org.apache.log4j.Logger;
@@ -28,15 +27,13 @@ import org.apache.log4j.Logger;
  */
 public class Aplaws {
 
+    /** A logger instance.  */
     private static final Logger LOG = Logger.getLogger(Aplaws.class);
+    /** APLAWS configuration object*/
+    private static AplawsConfig aplawsConfig = AplawsConfig.getConfig();
 
-    private static AplawsConfig aplawsConfig = new AplawsConfig();
 
-    static {
-        aplawsConfig.load();
-    }
-
-    public static final AplawsConfig getAplawsConfig() {
+    public static AplawsConfig getAplawsConfig() {
         return aplawsConfig;
     }
 }

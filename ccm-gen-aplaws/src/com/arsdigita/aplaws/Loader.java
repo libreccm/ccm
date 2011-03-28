@@ -79,6 +79,9 @@ public class Loader extends PackageLoader {
     // private StringParameter m_subjectDomain;
     // private StringParameter m_rssDomain;
 
+    /**
+     * Constructor 
+     */
     public Loader() {
         
         // Es werden stumpf mehrere Kategorisierungsdomains fuer TERMS 
@@ -182,7 +185,7 @@ public class Loader extends PackageLoader {
               .retrieveApplicationForPath("/portal/");
         portal.setDefaultLayout(PageLayout
               .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));
-    }   // run method
+    }   // end run method
 
 //  public void registerServicesTemplate(String appURL) {
 //      Application app = Application.retrieveApplicationForPath(appURL);

@@ -20,17 +20,20 @@ package com.arsdigita.aplaws;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Central entry point for the APLAWS integration and configuration module.
+ *
+ * Here: ccm-gen-aplaws generic bundle!
+ * Provides just a handle into config file.
+ * @version "$Id: Aplaws.java 1297 2006-08-25 18:17:50Z apevec $
+ */
 public class Aplaws {
-    public static final String versionId =
-        "$Id: Aplaws.java 1297 2006-08-25 18:17:50Z apevec $";
 
+    /** A logger instance.  */
     private static final Logger LOG = Logger.getLogger(Aplaws.class);
 
-    private static AplawsConfig aplawsConfig = new AplawsConfig();
-
-    static {
-        aplawsConfig.load();
-    }
+    /** APLAWS configuration object*/
+    private static AplawsConfig aplawsConfig = AplawsConfig.getConfig();
 
     public static final AplawsConfig getAplawsConfig() {
         return aplawsConfig;

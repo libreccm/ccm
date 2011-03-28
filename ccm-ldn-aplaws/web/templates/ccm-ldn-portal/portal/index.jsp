@@ -5,7 +5,7 @@
 
     <jsp:directive.page
         import="com.arsdigita.dispatcher.DispatcherHelper,
-		com.arsdigita.aplaws.ui.*"/>
+		        com.arsdigita.aplaws.ui.*" />
 
     <jsp:scriptlet>
         DispatcherHelper.cacheForWorld(response,900);
