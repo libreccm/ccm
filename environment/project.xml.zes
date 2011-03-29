@@ -65,6 +65,7 @@
 <!--    <ccm:application name="ccm-formbuilder-pdf"/>                -->
         <ccm:application name="ccm-forum"/>
         <ccm:application name="ccm-simplesurvey"/>
+        <ccm:application name="ccm-themedirector"/>
         <ccm:application name="ccm-user-preferences"/>
 <!--    <ccm:application name="ccm-weblog"/>                         -->
 <!--    <ccm:application name="ccm-webpage"/>                        -->
@@ -84,7 +85,6 @@
         <ccm:application name="ccm-ldn-shortcuts"/>
         <ccm:application name="ccm-ldn-subsite"/>                    
         <ccm:application name="ccm-ldn-terms"/>
-        <ccm:application name="ccm-ldn-theme"/>
         <ccm:application name="ccm-ldn-util"/>
 
 

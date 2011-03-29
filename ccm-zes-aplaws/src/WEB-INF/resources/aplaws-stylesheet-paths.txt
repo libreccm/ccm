@@ -35,3 +35,7 @@ http://::host::/resource/ROOT/__ccm__/themes/aplaws-generic/::application::-::ur
 # Global default, from application's own web app
 http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::-::locale::.xsl
 http://::host::/resource/::webapp::/__ccm__/apps/::application::/xsl/::url::.xsl
+
+# Global default, from application's own web app - relocated version >= 6.6.1
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::-::locale::.xsl
+http://::host::/resource/::webapp::/themes/heirloom/apps/::application::/xsl/::url::.xsl
