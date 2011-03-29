@@ -106,6 +106,7 @@ public class Workspace extends Application {
      * @return ServletPath (constant) probably should be synchron with web.xml
      *                     entry
      */
+    @Override
     public String getServletPath() {
         // return "/files";
         return "/ccm-ldn-portal/files";
@@ -238,6 +239,7 @@ public class Workspace extends Application {
 
     }
 
+    @Override
     public void beforeSave() {
         // If no permissions are configured, then setup empty groups
         if (get(PARTY) == null) {
@@ -261,6 +263,7 @@ public class Workspace extends Application {
     // This method wouldn't need to exist if permissioning used
     // the associations rather than direct queries which require
     // the object to be saved
+    @Override
     public void afterSave() {
         super.afterSave();
 
@@ -371,6 +374,7 @@ public class Workspace extends Application {
         throw new DataObjectNotFoundException("cannot find workspace for party");
     }
 
+    @Override
     public void delete() {
         clearPages();
 

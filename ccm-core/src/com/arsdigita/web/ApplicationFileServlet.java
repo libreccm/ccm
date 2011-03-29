@@ -98,26 +98,29 @@ import org.apache.log4j.Logger;
  */
 public class ApplicationFileServlet extends BaseApplicationServlet {
 
+    /** Logger instance for debugging */
     private static Logger s_log = Logger.getLogger(ApplicationFileServlet.class);
 
     private String m_templatePath;
     private ApplicationFileResolver m_resolver;
     
     /**
-     * 
+     * Servlet Standard Initializer.
      * @param config
      * @throws ServletException
      */
+    @Override
     public void init(ServletConfig config)
         throws ServletException {
         super.init(config);
         
+        // init-param named template-path from ~/WEB-INF/web.xml
         m_templatePath = config.getInitParameter("template-path");
         Assert.exists(m_templatePath, String.class);
         Assert.isTrue(m_templatePath.startsWith("/"),
                      "template-path starts with '/'");
         Assert.isTrue(!m_templatePath.endsWith("/"),
-                     "template-path does not end with '/'");
+                     "template-path must not end with '/'");
 
         
         String resolverName = config.getInitParameter("file-resolver");

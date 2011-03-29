@@ -44,6 +44,7 @@ public class Initializer extends CompoundInitializer {
      * 
      * @param evt
      */
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
 

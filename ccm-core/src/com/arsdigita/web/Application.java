@@ -79,7 +79,7 @@ public class Application extends Resource {
     private static final String SLASH = "/";
 
     public static final String BASE_DATA_OBJECT_TYPE =
-        "com.arsdigita.web.Application";
+                               "com.arsdigita.web.Application";
 
     @Override
     protected String getBaseDataObjectType() {

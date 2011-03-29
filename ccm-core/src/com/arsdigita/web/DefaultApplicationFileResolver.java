@@ -34,14 +34,22 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
     private static Logger s_log = 
         Logger.getLogger(DefaultApplicationFileResolver.class);
 
+    /**
+     * 
+     * @param templatePath
+     * @param sreq
+     * @param sresp
+     * @param app
+     * @return
+     */
     public RequestDispatcher resolve(String templatePath,
                                      HttpServletRequest sreq,
                                      HttpServletResponse sresp,
                                      Application app) {
         // XXX proper list of dependent & customization webapps to search
         String[] webapps = new String[] {
-            app.getContextPath(), "ROOT"
-        };
+                                         app.getContextPath(), "ROOT"
+                                        };
         String pathInfo = sreq.getPathInfo();
 
         if (s_log.isDebugEnabled()) {
@@ -61,8 +69,8 @@ public class DefaultApplicationFileResolver implements ApplicationFileResolver {
                     }
 
                     RequestDispatcher rd = Web.findResourceDispatcher(
-                        webapps,
-                        path + WELCOME_FILES[i]);
+                                                   webapps,
+                                                   path + WELCOME_FILES[i]);
                     if (rd != null) {
                         if (s_log.isDebugEnabled()) {
                             s_log.debug("Got dispatcher " + rd);
