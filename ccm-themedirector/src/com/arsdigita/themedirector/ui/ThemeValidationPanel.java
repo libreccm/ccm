@@ -44,7 +44,6 @@ import com.arsdigita.templating.XSLTemplate;
 import com.arsdigita.templating.WrappedTransformerException;
 import javax.xml.transform.ErrorListener;
 
-import org.apache.log4j.Logger;
 import javax.xml.transform.TransformerException;
 
 import org.apache.log4j.Logger;
@@ -272,6 +271,7 @@ class ThemeValidationPanel extends GridPanel implements ThemeDirectorConstants {
                 (GlobalizationUtil.globalize("themes.validation_errors"));
         }
 
+        @Override
         public void generateXML(PageState state, Element p) {
             if ( isVisible(state) ) {
 

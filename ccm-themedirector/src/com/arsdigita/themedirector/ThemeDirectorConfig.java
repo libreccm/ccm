@@ -69,7 +69,6 @@ public class ThemeDirectorConfig extends AbstractConfig {
             new StringParameter
                 ("themedirector.default_theme_path",
                  Parameter.OPTIONAL, "/themes/master/");
-            //   Parameter.OPTIONAL, "/__ccm__/themes/default/");
 
     /** Servlet context path containing the theme.                           */
     private final Parameter m_defaultThemeContext =

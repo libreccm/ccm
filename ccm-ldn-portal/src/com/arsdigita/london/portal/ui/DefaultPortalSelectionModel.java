@@ -35,7 +35,7 @@ public class DefaultPortalSelectionModel extends ACSObjectSelectionModel
 	}
 
 	public DefaultPortalSelectionModel(WorkspaceSelectionModel workspace,
-			BigDecimalParameter param) {
+			                           BigDecimalParameter param) {
 		super(WorkspacePage.class.getName(),
 				WorkspacePage.BASE_DATA_OBJECT_TYPE, param);
 
@@ -50,6 +50,7 @@ public class DefaultPortalSelectionModel extends ACSObjectSelectionModel
 		return m_workspace.getSelectedWorkspace(state);
 	}
 
+    @Override
 	public Object getSelectedKey(PageState state) {
 		BigDecimal key = (BigDecimal) super.getSelectedKey(state);
 		if (key == null) {
@@ -59,6 +60,7 @@ public class DefaultPortalSelectionModel extends ACSObjectSelectionModel
 		return super.getSelectedKey(state);
 	}
 
+    @Override
 	public DomainObject getSelectedObject(PageState state) {
 		BigDecimal key = (BigDecimal) super.getSelectedKey(state);
 		if (key == null) {

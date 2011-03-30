@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+<web-app      xmlns="http://java.sun.com/xml/ns/j2ee"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+                     http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+            version="2.4">
 
     <!-- module ccm-ldn-portal  -  servlet definitions BEGIN  -->
     <servlet>
-        <servlet-name>files</servlet-name>
-        <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
-        <init-param>
-            <param-name>template-path</param-name>
-            <param-value>/templates/ccm-ldn-portal</param-value>
-        </init-param>
-    </servlet>
-    <servlet>
+<!--        <servlet-name>files</servlet-name>        -->
         <servlet-name>portal-files</servlet-name>
         <servlet-class>com.arsdigita.web.ApplicationFileServlet</servlet-class>
         <init-param>
@@ -19,6 +15,7 @@
             <param-value>/templates/ccm-ldn-portal</param-value>
         </init-param>
     </servlet>
+
     <servlet>
         <servlet-name>portlet-type-xsl</servlet-name>
         <servlet-class>com.arsdigita.dispatcher.PortletTypeXSLServlet</servlet-class>
@@ -27,13 +24,10 @@
 
     <!-- module ccm-ldn-portal  -  servlet mappings BEGIN  -->
     <servlet-mapping>
-        <servlet-name>files</servlet-name>
-        <url-pattern>/files/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>portal-files</servlet-name>
         <url-pattern>/ccm-ldn-portal/files/*</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>portlet-type-xsl</servlet-name>
         <url-pattern>/__ccm__/servlet/portlet-type/*</url-pattern>

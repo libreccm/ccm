@@ -145,9 +145,9 @@ public class WorkspaceConfig extends AbstractConfig {
 		return Arrays.asList(adminTypes);
 	}
 
-        public boolean useWysiwygEditor() {
-                return ((Boolean) get(m_htmlPortletWysiwygEditor)).booleanValue();
-        }
+    public boolean useWysiwygEditor() {
+        return ((Boolean) get(m_htmlPortletWysiwygEditor)).booleanValue();
+    }
 
     private PrivilegeDescriptor workspacePartyPrivilegeDescriptor = null;
 
@@ -172,7 +172,7 @@ public class WorkspaceConfig extends AbstractConfig {
 		return workspacePartyPrivilegeDescriptor;
 	}
 
-	public boolean getCheckWorkspaceReadPermissions() {
-		return ((Boolean) get(m_checkWorkspaceReadPermissions)).booleanValue();
-	}
+    public boolean getCheckWorkspaceReadPermissions() {
+        return ((Boolean) get(m_checkWorkspaceReadPermissions)).booleanValue();
+    }
 }

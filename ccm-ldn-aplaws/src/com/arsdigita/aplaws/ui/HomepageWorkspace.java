@@ -18,18 +18,18 @@ package com.arsdigita.aplaws.ui;
 import com.arsdigita.bebop.SimpleContainer;
 import com.arsdigita.bebop.ActionLink;
 import com.arsdigita.bebop.Page;
+import com.arsdigita.bebop.PageState;
 import com.arsdigita.bebop.event.ActionEvent;
 import com.arsdigita.bebop.event.ActionListener;
-import com.arsdigita.london.portal.ui.PersistentPortal;
-import com.arsdigita.london.portal.Workspace;
-import com.arsdigita.bebop.PageState;
-import com.arsdigita.xml.Element;
-import com.arsdigita.london.portal.ui.PortalConstants;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.Kernel;
+import com.arsdigita.london.portal.ui.PersistentPortal;
+import com.arsdigita.london.portal.ui.PortalConstants;
+import com.arsdigita.london.portal.Workspace;
+import com.arsdigita.xml.Element;
 
 
 public class HomepageWorkspace extends SimpleContainer {
@@ -121,6 +121,7 @@ public class HomepageWorkspace extends SimpleContainer {
         m_editor.setVisible(state, !browse);
     }
 
+    @Override
     public void register(Page page) {
         super.register(page);
         
@@ -131,6 +132,7 @@ public class HomepageWorkspace extends SimpleContainer {
         page.setVisibleDefault(m_editor, false);
     }
 
+    @Override
     public void generateXML(PageState state,
                             Element parent) {
         Party party = Kernel.getContext().getParty();

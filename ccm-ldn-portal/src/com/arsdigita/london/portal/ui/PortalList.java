@@ -32,6 +32,10 @@ import com.arsdigita.util.UncheckedWrapperException;
 import com.arsdigita.xml.Element;
 import com.arsdigita.xml.XML;
 
+/**
+ * 
+ * 
+ */
 public abstract class PortalList extends SimpleContainer {
 
 	private WorkspaceSelectionModel m_workspace;
@@ -40,12 +44,22 @@ public abstract class PortalList extends SimpleContainer {
 
 	private Map m_actions = new HashMap();
 
-	public PortalList(PortalSelectionModel portal) {
+	/**
+     * Constructor.
+     * 
+     * @param portal
+     */
+    public PortalList(PortalSelectionModel portal) {
 		this(null, portal);
 	}
 
-	public PortalList(WorkspaceSelectionModel workspace,
-			PortalSelectionModel portal) {
+	/**
+     * Constructor
+     * @param workspace
+     * @param portal
+     */
+    public PortalList(WorkspaceSelectionModel workspace,
+                      PortalSelectionModel portal) {
 		super("portal:portalList", PortalConstants.PORTAL_XML_NS);
 
 		m_workspace = workspace;
@@ -85,6 +99,12 @@ public abstract class PortalList extends SimpleContainer {
 		return m_workspace.getSelectedWorkspace(state);
 	}
 
+    /**
+     *
+     * @param state
+     * @param parent
+     */
+    @Override
 	public void generateXML(PageState state, Element parent) {
 		if (!isVisible(state)) {
 			return;
@@ -97,7 +117,12 @@ public abstract class PortalList extends SimpleContainer {
 		generatePortalListXML(state, content);
 	}
 
-	protected void generatePortalListXML(PageState state, Element parent) {
+	/**
+     * 
+     * @param state
+     * @param parent
+     */
+    protected void generatePortalListXML(PageState state, Element parent) {
 		WorkspacePage current = m_portal.getSelectedPortal(state);
 
 		Workspace workspace = getSelectedWorkspace(state);

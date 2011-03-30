@@ -102,7 +102,7 @@ public class ApproveThemeActionListener implements ThemeDirectorConstants, Actio
             // but before we do that, we copy is_deleted flag from
             // development to published files
             DataOperation op = SessionManager.getSession().retrieveDataOperation(
-                "com.arsdigita.london.theme.bulkFileUpdate");
+                "com.arsdigita.themedirector.bulkFileUpdate");
             op.setParameter("themeID", theme.getID());
             op.setParameter("timestamp", new Date());
             op.execute();

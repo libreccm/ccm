@@ -42,13 +42,20 @@ public class DefaultWorkspace extends WorkspaceComponent implements
 	private static final Logger s_log = Logger
 			.getLogger(DefaultWorkspace.class);
 
-	public DefaultWorkspace() {
+	/**
+     * Constructor
+     */
+    public DefaultWorkspace() {
 		super(new DefaultWorkspaceSelectionModel());
 
 		addCustomizeListener(this);
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	/**
+     * 
+     * @param e
+     */
+    public void actionPerformed(ActionEvent e) {
 		PageState state = e.getPageState();
 
 		Workspace workspace = getWorkspaceModel().getSelectedWorkspace(state);

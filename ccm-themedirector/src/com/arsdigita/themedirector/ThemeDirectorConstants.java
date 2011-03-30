@@ -30,7 +30,8 @@ public interface ThemeDirectorConstants {
     public final static String DEV_DIR_STUB = "devel-themedir";
     // TODO: it would be nice if this value in com.arsdigita.web.URL
     // was public
-    public final static String CCM_PREFIX = "__ccm__";
+    // public final static String CCM_PREFIX = "__ccm__";
+    public final static String CCM_PREFIX = "themes";
     public final static String WEB_APP_NAME = "ROOT";
 
     // The location of the sync jsp used to sync up the multiple servers.

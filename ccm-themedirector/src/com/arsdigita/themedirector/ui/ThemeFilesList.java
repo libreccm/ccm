@@ -63,10 +63,12 @@ class ThemeFilesList extends SimpleContainer implements ThemeDirectorConstants {
         add(heading);
     }
 
+    @Override
     public void register(Page page) {
         page.addRequestListener(new FileRemovalRequestListener());
     }
 
+    @Override
     public void generateChildrenXML(PageState state, Element root) {
         super.generateChildrenXML(state, root);
         File currentRoot = new File(Web.getServletContext().getRealPath("/"));

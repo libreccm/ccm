@@ -20,6 +20,12 @@ import com.arsdigita.bebop.parameters.BigDecimalParameter;
 import com.arsdigita.kernel.ui.ACSObjectSelectionModel;
 import com.arsdigita.portal.Portlet;
 
+/**
+ * .
+ * 
+ * ACSObjectSelectionModel loads a subclass of an ACSObject from the database.
+ *
+ */
 public class PortletSelectionModel extends ACSObjectSelectionModel {
 
 	public PortletSelectionModel(BigDecimalParameter p) {
