@@ -66,6 +66,10 @@ import java.util.Set;
 public class Loader extends PackageLoader {
 
     private static final Logger s_log = Logger.getLogger(Loader.class);
+
+    // Name of files containing an initial category tree(s).
+    // Files are stored as part of the jar, so classloader can find them.
+    // ToDo: relocate files user accessible outside the jar.
     private static final String[] categoryFiles = new String[]{
         "WEB-INF/aplaws/zes-nav-domain-1.00.xml",
         "WEB-INF/aplaws/zes-nav-hierarchy-1.00.xml"
@@ -77,8 +81,11 @@ public class Loader extends PackageLoader {
     // private StringParameter m_subjectDomain;
     // private StringParameter m_rssDomain;
 
+    /**
+     * Constructor 
+     */
     public Loader() {
-
+        
         // Es werden stumpf mehrere Kategorisierungsdomains fuer TERMS 
         // definiert und dann über xml Dateien gefüllt:
         // navigationDomain f. Navigation
@@ -90,39 +97,41 @@ public class Loader extends PackageLoader {
                 "com.arsdigita.aplaws.navigation_domain",
                 Parameter.REQUIRED,
                 "ZES-NAV");
+        // Registers to the context by adding the parameter to a map of parameters
         register(m_navigationDomain);
 
         /*
          * You may add more catagory domains by adding resources
-         * according the followin schema
+         * according the following schema
          */
 
         /* currently not used
         m_subjectDomain = new StringParameter(
-        "com.arsdigita.aplaws.subject_domain",
-        Parameter.REQUIRED,
-        "LGCL");
+            "com.arsdigita.aplaws.subject_domain",
+            Parameter.REQUIRED,
+            "LGCL");
         register(m_subjectDomain);
          */
 
         /* currently not used
         m_interactionDomain = new StringParameter(
-        "com.arsdigita.aplaws.subject_domain",
-        Parameter.REQUIRED,
-        "LGIL");
+            "com.arsdigita.aplaws.subject_domain",
+            Parameter.REQUIRED,
+            "LGIL");
         register(m_interactionDomain);
          */
-
+        
         /* currently not used
         m_rssDomain = new StringParameter(
-        "com.arsdigita.aplaws.rss_domain",
-        Parameter.REQUIRED,
-        "APLAWS-RSS");
+            "com.arsdigita.aplaws.rss_domain",
+            Parameter.REQUIRED,
+            "APLAWS-RSS");
         register(m_rssDomain);
          */
 
 
     }
+
 
     public void run(final ScriptContext ctx) {
 
@@ -172,11 +181,11 @@ public class Loader extends PackageLoader {
         registerNavigationTemplates();
 
         // Switch /portal/ to use 1 column layout for funky aplaws stuff.
-        Workspace portal = (Workspace) Application.retrieveApplicationForPath(
-                "/portal/");
-        portal.setDefaultLayout(PageLayout.findLayoutByFormat(
-                PageLayout.FORMAT_ONE_COLUMN));
-    }
+        Workspace portal = (Workspace)Application
+              .retrieveApplicationForPath("/portal/");
+        portal.setDefaultLayout(PageLayout
+              .findLayoutByFormat(PageLayout.FORMAT_ONE_COLUMN));
+    }   // end run method
 
 //  public void registerServicesTemplate(String appURL) {
 //      Application app = Application.retrieveApplicationForPath(appURL);
@@ -194,6 +203,7 @@ public class Loader extends PackageLoader {
 //                           Template.DEFAULT_DISPATCHER_CONTEXT, 
 //                           Template.DEFAULT_USE_CONTEXT );
 //  }
+    
     /**
      * Use Package com.arsdigita.london.navigation to add additional
      * templates (JSP page - index page) for use in navigation.

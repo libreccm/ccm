@@ -256,6 +256,7 @@ public class SimpleContainer extends BlockStylable implements Container {
      * @see #setTag(String)
      * @see #setNamespace(String)
      */
+    @Override
     public void generateXML(PageState state, Element p) {
         if ( isVisible(state) ) {
             Element parent = generateParent(p);

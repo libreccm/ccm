@@ -23,7 +23,7 @@
     <define:component name="categoryMenu"
       classname="com.arsdigita.london.navigation.ui.category.Menu"/>
     <define:component name="categoryNav"
-      classname="com.arsdigita.london.navigation.ui.category.Hierarchy">
+                      classname="com.arsdigita.london.navigation.ui.category.Hierarchy">
       <jsp:scriptlet>
         ((com.arsdigita.london.navigation.ui.category.Hierarchy) categoryNav).setShowItems(false);
       </jsp:scriptlet>

@@ -51,7 +51,7 @@ public class HomepageWorkspaceSelectionModel {
     private RequestLocal m_custom = new RequestLocal();
 
     private static Logger s_log = Logger.getLogger
-        (HomepageWorkspaceSelectionModel.class.getName());
+                          (HomepageWorkspaceSelectionModel.class.getName());
 
     public WorkspacePage getPortal(PageState state,
                                    int column) {

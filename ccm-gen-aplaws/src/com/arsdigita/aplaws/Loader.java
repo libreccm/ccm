@@ -102,7 +102,7 @@ public class Loader extends PackageLoader {
          * You may add more catagory domains by adding resources
          * according the following schema
          */
-       
+
         /* currently not used
         m_subjectDomain = new StringParameter(
             "com.arsdigita.aplaws.subject_domain",
@@ -110,7 +110,7 @@ public class Loader extends PackageLoader {
             "LGCL");
         register(m_subjectDomain);
          */
-        
+
         /* currently not used
         m_interactionDomain = new StringParameter(
             "com.arsdigita.aplaws.subject_domain",
@@ -126,7 +126,7 @@ public class Loader extends PackageLoader {
             "APLAWS-RSS");
         register(m_rssDomain);
          */
-        
+
 
     }
 
@@ -142,12 +142,11 @@ public class Loader extends PackageLoader {
             if (s_log.isInfoEnabled()) {
                 s_log.info("Process " + file);
             }
-            parser.parse(Thread.currentThread().getContextClassLoader
-                         ().getResourceAsStream
-                         (file));
+            parser.parse(Thread.currentThread().getContextClassLoader().
+                    getResourceAsStream(file));
         }
 
-        String navigationKey = (String)get(m_navigationDomain);
+        String navigationKey = (String) get(m_navigationDomain);
         registerDomain(navigationKey, "/navigation/", null);
         registerDomain(navigationKey, "/content/", null);
         registerDomain(navigationKey, "/portal/", null);
@@ -175,7 +174,7 @@ public class Loader extends PackageLoader {
         // registerDomain(interactionKey, "/content/", "interaction");
 
 
-        
+
         // register new / addidional JSP templates (index pages) in Navigation
         // registerServicesTemplate("/services/");  wird nicht gebraucht
         registerNavigationTemplates();

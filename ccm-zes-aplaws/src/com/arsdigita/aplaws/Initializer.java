@@ -39,6 +39,12 @@ public class Initializer extends CompoundInitializer {
         (Initializer.class.getName());
 
 
+    /**
+     * Package Implementation of  {@link Initializer#init(DomainInitEvent)}. 
+     * 
+     * @param evt
+     */
+    @Override
     public void init(DomainInitEvent evt) {
         super.init(evt);
 

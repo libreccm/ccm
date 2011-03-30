@@ -13,7 +13,7 @@
 
   <define:page name="sitemapPage" application="navigation"
     title="APLAWS" cache="true">
- 
+
     <jsp:scriptlet>
       sitemapPage.setClassAttr("sitemapPage");
     </jsp:scriptlet>
