@@ -41,12 +41,8 @@ public class TextFilter implements Filter {
         if ((value == null) || value.isEmpty()) {
             return null;
         } else {
-            /*return String.format("(lower(%s) LIKE lower('%%%s%%'))",
-                                 property, value);*/
-            
-            return String.format("(lower(%s) LIKE lower('%%%s%%')) OR (lower(%s) LIKE lower('%%%s%%'))",
-            property, value,
-            property, firstToUpper(value));
+            return String.format("(lower(%s) LIKE lower('%%%s%%'))",
+                                 property, value);
         }
     }
 
@@ -62,9 +58,10 @@ public class TextFilter implements Filter {
 
     @Override
     public Element getXml() {
-        Element textFilter ;
+        Element textFilter;
 
-        textFilter = new Element("textFilter");
+        textFilter = new Element("filter");
+        textFilter.addAttribute("type", "text");
 
         textFilter.addAttribute("label", label);
         if ((value != null) && !value.isEmpty()) {

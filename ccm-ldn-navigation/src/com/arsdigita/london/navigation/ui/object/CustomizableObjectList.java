@@ -276,12 +276,7 @@ public class CustomizableObjectList extends ComplexObjectList {
             content.addAttribute(attribute.getKey(), attribute.getValue());
         }
 
-        Element filterElems = content.newChildElement("filters");
-        for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
-            filterElems.addContent(filterEntry.getValue().getXml());
-        }
-
-        //Look for values for the filters and the sort fields in the HTTP
+         //Look for values for the filters and the sort fields in the HTTP
         //request. We are not using the Bebop parameters for two reasons:
         //- They have to be registered very early, so we can't add new parameters
         //  from a JSP.
@@ -309,7 +304,14 @@ public class CustomizableObjectList extends ComplexObjectList {
             sortBy = new ArrayList<String>(sortFields.values()).get(0);
         }
 
-        Element sortFieldElems = content.newChildElement("sortFields");
+        Element controls = content.newChildElement("controls");
+
+        Element filterElems = controls.newChildElement("filters");
+        for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
+            filterElems.addContent(filterEntry.getValue().getXml());
+        }
+       
+        Element sortFieldElems = controls.newChildElement("sortFields");
         sortFieldElems.addAttribute("sortBy", sortByKey);
         for (Map.Entry<String, String> sortField : sortFields.entrySet()) {
             Element sortFieldElem = sortFieldElems.newChildElement("sortField");

@@ -85,7 +85,8 @@ public class SelectFilter implements Filter {
 
         options = getOptions();
 
-        filter = new Element("selectFilter");
+        filter = new Element("filter");
+        filter.addAttribute("type", "select");
 
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {
@@ -102,7 +103,7 @@ public class SelectFilter implements Filter {
 
         if (allOption) {
             optionElem = filter.newChildElement("option");
-            optionElem.addAttribute(label, ALL);
+            optionElem.addAttribute("label", ALL);
         }
 
         for (String optionStr : options) {

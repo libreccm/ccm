@@ -118,7 +118,8 @@ public class CompareFilter implements Filter {
         Element filter;
         String selected;
 
-        filter = new Element("compareFilter");
+        filter = new Element("filter");
+        filter.addAttribute("type", "compare");
 
         if ((value == null) || value.isEmpty()) {
             if (allOptionIsDefault) {

@@ -44,7 +44,7 @@ public class ProceedingsPropertiesStep
 
     public static Component getProceedingsPropertySheet(
             ItemSelectionModel itemModel) {
-        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) getPublicationPropertySheet(
+        DomainObjectPropertySheet sheet = (DomainObjectPropertySheet) getPublicationWithPublisherPropertySheet(
                 itemModel);
 
         sheet.add(PublicationGlobalizationUtil.globalize(
