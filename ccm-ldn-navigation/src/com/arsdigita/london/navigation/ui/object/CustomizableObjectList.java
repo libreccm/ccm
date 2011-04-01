@@ -51,27 +51,27 @@ import org.apache.log4j.Logger;
  * {@code
  * ...
  * <define:component name="itemList"
-                           classname="com.arsdigita.london.navigation.ui.object.CustomizableObjectList"/>
+classname="com.arsdigita.london.navigation.ui.object.CustomizableObjectList"/>
  * ...
  *   <jsp:scriptlet>
-      CustomizableObjectList objList = (CustomizableObjectList) itemList;
-      objList.setDefinition(new CMSDataCollectionDefinition());
-      objList.setRenderer(new CMSDataCollectionRenderer());
-      objList.getDefinition().setObjectType("com.arsdigita.cms.contenttypes.Publication");
-      objList.getDefinition().setDescendCategories(false);
-      objList.addTextFilter("title", "title");
-      objList.addTextFilter("authors.surname", "author");
-      objList.addSelectFilter("yearOfPublication", "year", true, true, true, true);
-      objList.addSortField("title", "title asc");
-      objList.addSortField("yearAsc", "yearOfPublication asc");
-      objList.addSortField("yearDesc", "yearOfPublication desc");
-      objList.addSortField("authors", "authors.surname asc, authors.givenname asc");
-      objList.getDefinition().addOrder(objList.getOrder(request.getParameter("sort")));
+CustomizableObjectList objList = (CustomizableObjectList) itemList;
+objList.setDefinition(new CMSDataCollectionDefinition());
+objList.setRenderer(new CMSDataCollectionRenderer());
+objList.getDefinition().setObjectType("com.arsdigita.cms.contenttypes.Publication");
+objList.getDefinition().setDescendCategories(false);
+objList.addTextFilter("title", "title");
+objList.addTextFilter("authors.surname", "author");
+objList.addSelectFilter("yearOfPublication", "year", true, true, true, true);
+objList.addSortField("title", "title asc");
+objList.addSortField("yearAsc", "yearOfPublication asc");
+objList.addSortField("yearDesc", "yearOfPublication desc");
+objList.addSortField("authors", "authors.surname asc, authors.givenname asc");
+objList.getDefinition().addOrder(objList.getOrder(request.getParameter("sort")));
 
-      objList.getRenderer().setPageSize(20);
-      objList.getRenderer().setSpecializeObjects(true);
+objList.getRenderer().setPageSize(20);
+objList.getRenderer().setSpecializeObjects(true);
 
-      </jsp:scriptlet>
+</jsp:scriptlet>
  * ...
  * }
  * </pre>
@@ -99,17 +99,15 @@ public class CustomizableObjectList extends ComplexObjectList {
      * preserve the insertation order.
      *
      */
-    private final Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+    private final Map<String, Filter> filters =
+                                      new LinkedHashMap<String, Filter>();
     /**
      * The available sort fields. We use an {@link LinkedHashMap} here to
      * preserve the insertation order.
      *
      */
-    private final Map<String, String> sortFields = new LinkedHashMap<String, String>();
-    /**
-     * Sort by which property?
-     */
-    private String sortBy = null;
+    private final Map<String, String> sortFields =
+                                      new LinkedHashMap<String, String>();
 
     /**
      * Adds a new text filter to the list.
@@ -276,7 +274,7 @@ public class CustomizableObjectList extends ComplexObjectList {
             content.addAttribute(attribute.getKey(), attribute.getValue());
         }
 
-         //Look for values for the filters and the sort fields in the HTTP
+        //Look for values for the filters and the sort fields in the HTTP
         //request. We are not using the Bebop parameters for two reasons:
         //- They have to be registered very early, so we can't add new parameters
         //  from a JSP.
@@ -295,13 +293,8 @@ public class CustomizableObjectList extends ComplexObjectList {
         //collection (if it is a valid value). If no sort parameter is found,
         //use the first sort field as default.
         String sortByKey = request.getParameter("sort");
-        sortBy = sortFields.get(sortByKey);
-        if (((sortBy == null)
-             || sortBy.isEmpty()
-             || !sortFields.containsKey(sortBy))
-            && !sortFields.isEmpty()) {
+        if (!sortFields.containsKey(sortByKey)) {
             sortByKey = new ArrayList<String>(sortFields.keySet()).get(0);
-            sortBy = new ArrayList<String>(sortFields.values()).get(0);
         }
 
         Element controls = content.newChildElement("controls");
@@ -310,7 +303,7 @@ public class CustomizableObjectList extends ComplexObjectList {
         for (Map.Entry<String, Filter> filterEntry : filters.entrySet()) {
             filterElems.addContent(filterEntry.getValue().getXml());
         }
-       
+
         Element sortFieldElems = controls.newChildElement("sortFields");
         sortFieldElems.addAttribute("sortBy", sortByKey);
         for (Map.Entry<String, String> sortField : sortFields.entrySet()) {

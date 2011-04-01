@@ -140,7 +140,7 @@ public class CompareFilter implements Filter {
             Element option;
 
             option = filter.newChildElement("option");
-            option.addAttribute(label, ALL);
+            option.addAttribute("label", ALL);
         }
 
         Element option;
