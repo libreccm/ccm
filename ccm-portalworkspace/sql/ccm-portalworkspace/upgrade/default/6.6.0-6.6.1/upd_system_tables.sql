@@ -21,6 +21,8 @@
 
 alter table init_requirements drop constraint init_requirements_init_f_cmmdn ;
 
+alter table init_requirements drop constraint init_require_requ_init_f_i6rgg ;
+
 update inits
    set class_name=replace(class_name,'london.portal', 'portalworkspace')
  where class_name like '%london.portal%' ;
