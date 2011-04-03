@@ -172,8 +172,7 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
 
     /**
      *  This provides a way for child classes to look for the resource
-     *  in multiple places.  By default, it only looks in the 
-     *  ServletContext
+     *  in multiple places.  By default, it only looks in the ServletContext
      */
     protected InputStream getResourceAsStream(String line, 
                                               String possibleServletContext) {
@@ -196,7 +195,8 @@ public abstract class ManifestReader implements ThemeDirectorConstants {
                 stream = Web.getServletContext().getContext(ROOT_WEBAPP_PATH)
                     .getResourceAsStream(line);                
                 if (stream != null) {
-                    setActualContext(line, Web.getServletContext().getContext(ROOT_WEBAPP_PATH));
+                    setActualContext(line, Web.getServletContext()
+                                              .getContext(ROOT_WEBAPP_PATH));
                 }
             } else {
                 setActualContext(line, Web.getServletContext());

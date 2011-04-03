@@ -24,32 +24,34 @@ package com.arsdigita.themedirector;
  */
 public interface ThemeDirectorConstants {
 
-//  public final static String PROD_DIR_STUB = "themes-prod";
-//  public final static String DEV_DIR_STUB = "themes-dev";
+    /** Name of the base directory for all themes (usually themes)  */
+    public final static String THEMES_DIR = "themes";
+    /** Name of the directory for production themes (sub-dir of THEMES_DIR)  */
     public final static String PROD_DIR_STUB = "published-themedir";
+    /** Name of the directory for themes under development (sub-dir of THEMES_DIR)  */
     public final static String DEV_DIR_STUB = "devel-themedir";
-    // TODO: it would be nice if this value in com.arsdigita.web.URL
-    // was public
-    // public final static String CCM_PREFIX = "__ccm__";
-    public final static String CCM_PREFIX = "themes";
-    public final static String WEB_APP_NAME = "ROOT";
 
-    // The location of the sync jsp used to sync up the multiple servers.
+    public final static String PROD_THEMES_BASE_DIR =
+        THEMES_DIR + "/" + PROD_DIR_STUB+ "/";
+    public final static String DEV_THEMES_BASE_DIR =
+        THEMES_DIR + "/" + DEV_DIR_STUB + "/";
+
+ // ccm-themedirector (formerly ccm-ldn-theme) is no longer installed in its
+ // own web context (ROOT or ccm-ldn-theme/ccm-themedirector) so it is not
+ // needed anymore. We we want to install it in its own context again, we 
+ // should find a way to determin the context from a central configuration.
+ // public final static String WEB_APP_NAME = "ROOT";
+
+    /** The location of the sync jsp used to sync up the multiple servers.  */
     public final static String SYNC_JSP = "sync-theme.jsp";
 
-    //  This can be used to find the root webapp directory that is used
-    //  by default for most of the applications in WAF
+    /** This can be used to find the root webapp directory that is used
+        by default for most of the applications in CCM                      */
     public final static String ROOT_WEBAPP_PATH = "/ROOT";
 
-    public final static String PROD_THEMES_BASE_DIR = 
-    //  CCM_PREFIX + "/" + PROD_DIR_STUB+ "/";
-        "themes" + "/" + PROD_DIR_STUB+ "/";
-    public final static String DEV_THEMES_BASE_DIR = 
-    //  CCM_PREFIX + "/" + DEV_DIR_STUB + "/";
-        "themes" + "/" + DEV_DIR_STUB + "/";
     public static final String THEME_XML_PREFIX = "theme:";
     public final static String XML_NS = 
-        "http://ccm.redhat.com/theme/1.0";
+        "http://ccm.redhat.com/themedirector/1.0";
 
     public final static String PREVIEW_PREFIX = "/theme";
 

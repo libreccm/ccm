@@ -2,7 +2,7 @@
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:bebop="http://www.arsdigita.com/bebop/1.0"
-  xmlns:theme="http://ccm.redhat.com/london/theme/1.0"
+  xmlns:theme="http://ccm.redhat.com/themedirector/1.0"
   version="1.0">
 
   <!-- IMPORT DEFINITIONS ccm-ldn-theme installed as separate web application

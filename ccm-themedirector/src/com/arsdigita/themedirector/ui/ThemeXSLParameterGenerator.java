@@ -45,6 +45,7 @@ public class ThemeXSLParameterGenerator implements XSLParameterGenerator,
      *  stylesheets 
      */
     public String generateValue(HttpServletRequest request) {
+
         String themeURL = 
             InternalThemePrefixerServlet.getThemePreviewURL(request);
 
@@ -74,12 +75,14 @@ public class ThemeXSLParameterGenerator implements XSLParameterGenerator,
 
         if (themeURL != null) {
         //  modified as ccm-ldn-theme is no longer installed in its own context
-        //  return "/" + WEB_APP_NAME + "/" + CCM_PREFIX + "/" +
-            return "/" + CCM_PREFIX + "/" +
+        //  return "/" + WEB_APP_NAME + "/" + THEMES_DIR + "/" +
+        //  If we want to install it as a separate web application again we
+        //  should find a way to determin the name from a central configuration
+            return "/" + THEMES_DIR + "/" +
                 Web.getContext().getRequestURL().getContextPath() +
                 baseDir + themeURL;
         } else {
-            // this means that there is not theme associated with the
+            // this means that there is no theme associated with the
             // given subsite, so we return the default theme
             themeURL = 
                 ThemeDirector.getConfig().getDefaultThemeContext() +

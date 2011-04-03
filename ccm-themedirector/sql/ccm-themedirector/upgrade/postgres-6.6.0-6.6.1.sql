@@ -21,7 +21,7 @@
 
 begin;
 
-\i default/6.3.0-6.3.1/upd_theme_app_table.sql
-\i default/6.3.0-6.3.1/upd_system_tables.sql
+\i default/6.6.0-6.6.1/upd_theme_app_table.sql
+\i default/6.6.0-6.6.1/upd_system_tables.sql
 
 commit;
