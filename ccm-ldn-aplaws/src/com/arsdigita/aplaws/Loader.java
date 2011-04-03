@@ -42,8 +42,8 @@ import com.arsdigita.london.navigation.Template;
 import com.arsdigita.london.navigation.TemplateMapping;
 import com.arsdigita.london.terms.Domain;
 import com.arsdigita.london.terms.importer.Parser;
-import com.arsdigita.london.portal.PageLayout;
-import com.arsdigita.london.portal.Workspace;
+import com.arsdigita.portalworkspace.PageLayout;
+import com.arsdigita.portalworkspace.Workspace;
 
 import java.net.URL;
 import java.net.MalformedURLException;

@@ -43,7 +43,6 @@ import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.ContextInitEvent;
 import com.arsdigita.runtime.ContextCloseEvent;
 import com.arsdigita.runtime.DomainInitEvent;
-// import com.arsdigita.runtime.LegacyInitEvent;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.search.MetadataProviderRegistry;
@@ -77,12 +76,14 @@ public class Initializer extends CompoundInitializer {
      * 
      * @param e
      */
+    @Override
     public void init(DomainInitEvent e) {
         super.init(e);
         
         e.getFactory().registerInstantiator(
             Forum.BASE_DATA_OBJECT_TYPE,
             new ACSObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     return new Forum(dataObject);
                 }
@@ -90,6 +91,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator(
             Post.BASE_DATA_OBJECT_TYPE,
 	    new ACSObjectInstantiator() {
+            @Override
 	        public DomainObject doNewInstance(DataObject dataObject) {
                     return new Post(dataObject);
                 }
@@ -98,6 +100,7 @@ public class Initializer extends CompoundInitializer {
 	e.getFactory().registerInstantiator(
             PostFileAttachment.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
+                @Override
                 protected DomainObject doNewInstance(DataObject dataObject) {
                     return new PostFileAttachment(dataObject);
                 }
@@ -137,6 +140,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator(
             ForumSubscription.BASE_DATA_OBJECT_TYPE,
             new ACSObjectInstantiator() {
+                @Override
                 public DomainObject doNewInstance(DataObject dataObject) {
                     if (((Boolean)dataObject.get("isModerationAlert"))
                         .booleanValue()) {
@@ -162,6 +166,7 @@ public class Initializer extends CompoundInitializer {
                                   new PostFileAttachmentURLFinder());
 
         new ResourceTypeConfig(RecentPostingsPortlet.BASE_DATA_OBJECT_TYPE) {
+            @Override
             public ResourceConfigFormSection getCreateFormSection
                 (final ResourceType resType, final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =

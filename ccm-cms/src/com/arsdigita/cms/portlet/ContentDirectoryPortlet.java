@@ -69,10 +69,10 @@ public class ContentDirectoryPortlet extends Portlet {
     public static void loadPortletType()
     {
         PortletType type = PortletType
-                .createPortletType("Content Directory",
+                .createPortletType("CMS Content Directory",
                                    PortletType.WIDE_PROFILE,
                                    ContentDirectoryPortlet.BASE_DATA_OBJECT_TYPE);
-        type.setDescription("Displays the content directory categories");
+        type.setDescription("Displays the CMS content directory categories");
         s_log.info("Loading portlet type " + type);
     }
 
@@ -89,6 +89,7 @@ public class ContentDirectoryPortlet extends Portlet {
         DomainObjectFactory.registerInstantiator(BASE_DATA_OBJECT_TYPE,
                                                  new ACSObjectInstantiator()
         {
+            @Override
             public DomainObject doNewInstance(DataObject dataObject)
             {
                 return new ContentDirectoryPortlet(dataObject);

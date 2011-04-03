@@ -103,6 +103,7 @@ public class ContentItemPortletRenderer extends AbstractPortletRenderer {
                 SimpleXMLGenerator.ADAPTER_CONTEXT);
     }
     
+    @Override
     public String getCacheKey(PageState state) {
         ContentItem item = m_portlet.getContentItem();
         if( null == item ) {
@@ -119,6 +120,7 @@ public class ContentItemPortletRenderer extends AbstractPortletRenderer {
     // For a given cache key a contnet item is *never* dirty,
     // since upon republishing of a live item, the item_id
     // changes!
+    @Override
     public boolean isDirty(PageState state) {
         return false;
     }

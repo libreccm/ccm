@@ -29,7 +29,7 @@ import com.arsdigita.kernel.User;
 import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PermissionService;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
-import com.arsdigita.london.portal.WorkspacePage;
+import com.arsdigita.portalworkspace.WorkspacePage;
 import com.arsdigita.london.util.UrlUtil;
 import com.arsdigita.persistence.DataObject;
 import com.arsdigita.portal.Portal;

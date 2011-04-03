@@ -21,7 +21,9 @@ package com.arsdigita.cms;
 import com.arsdigita.cms.contentsection.ContentSectionSetup;
 import com.arsdigita.cms.util.Util;
 import com.arsdigita.cms.installer.xml.XMLContentTypeHandler;
+import com.arsdigita.cms.portlet.ContentDirectoryPortlet;
 import com.arsdigita.cms.portlet.ContentItemPortlet;
+import com.arsdigita.cms.portlet.ContentSectionsPortlet;
 import com.arsdigita.cms.portlet.TaskPortlet;
 import com.arsdigita.domain.DomainObject;
 import com.arsdigita.domain.DataObjectNotFoundException;
@@ -195,9 +197,9 @@ public class Loader extends PackageLoader {
                 // Loading CMS portlets
                 // Used to be step 7 (last step) in former enterprise.init
                 s_log.debug("CMS.loader going to load portlets");
-                //ContentDirectoryPortlet.loadPortletType();
+                ContentDirectoryPortlet.loadPortletType();
                 ContentItemPortlet.loadPortletType();
-                //ContentSectionsPortlet.loadPortletType();
+                ContentSectionsPortlet.loadPortletType();
                 TaskPortlet.loadPortletType();
 
                 // Loading forms widget into database

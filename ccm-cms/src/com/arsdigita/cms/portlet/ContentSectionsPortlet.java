@@ -52,6 +52,7 @@ public class ContentSectionsPortlet extends Portlet {
      * Retrieve the base data object type (i.e. fully qualified class name).
      * @return
      */
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }
@@ -60,6 +61,7 @@ public class ContentSectionsPortlet extends Portlet {
      * 
      * @return
      */
+    @Override
     protected AbstractPortletRenderer doGetPortletRenderer() {
         return new ContentSectionsPortletRenderer(this);
     }
@@ -95,6 +97,7 @@ public class ContentSectionsPortlet extends Portlet {
         DomainObjectFactory.registerInstantiator(BASE_DATA_OBJECT_TYPE,
                                                  new ACSObjectInstantiator()
         {
+            @Override
             public DomainObject doNewInstance(DataObject dataObject)
             {
                 return new ContentItemPortlet(dataObject);
@@ -118,6 +121,7 @@ public class ContentSectionsPortlet extends Portlet {
         setup.setProfile(PortletType.WIDE_PROFILE);
 
         setup.setInstantiator(new ACSObjectInstantiator() {
+            @Override
             protected DomainObject doNewInstance(DataObject dataObject) {
                 return new ContentSectionsPortlet(dataObject);
             }

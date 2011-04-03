@@ -93,8 +93,9 @@ public class NavigationTreePortlet extends Portlet
     {
         new ResourceTypeConfig(BASE_DATA_OBJECT_TYPE)
         {
-            public ResourceConfigFormSection getCreateFormSection(final ResourceType resType,
-                    final RequestLocal parentAppRL)
+            public ResourceConfigFormSection getCreateFormSection(
+                                                final ResourceType resType,
+                                                final RequestLocal parentAppRL)
             {
                 return new NavigationTreePortletEditor(resType, parentAppRL);
             }

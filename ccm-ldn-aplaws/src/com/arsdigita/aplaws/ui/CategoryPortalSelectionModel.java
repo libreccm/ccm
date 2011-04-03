@@ -30,8 +30,8 @@ import com.arsdigita.categorization.Category;
 import com.arsdigita.util.Assert;
 import com.arsdigita.bebop.PageState;
 
-import com.arsdigita.london.portal.Workspace;
-import com.arsdigita.london.portal.ui.WorkspaceSelectionModel;
+import com.arsdigita.portalworkspace.Workspace;
+import com.arsdigita.portalworkspace.ui.WorkspaceSelectionModel;
 
 public class CategoryPortalSelectionModel extends WorkspaceSelectionModel {
 

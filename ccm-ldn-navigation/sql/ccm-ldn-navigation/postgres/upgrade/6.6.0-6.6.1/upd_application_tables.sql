@@ -20,6 +20,9 @@
 -- NavigationTreePortlet has been moved from ccm-ldn-portal (where it existed as
 -- NavigationDirectoryPortlet) to ccm-ldn-navigation because it depends on
 -- navigation and was misplaced there (generating horizontal dependencies).
+-- At the time of this update both ccm-ldn-portal and ccm-ldn-navigation must
+-- be installed because of those horizontal dependencies. So existence of
+-- ccm-ldn-navigatgion can be taken granted for now.
 
 
 update application_types
@@ -29,4 +32,11 @@ update application_types
              'Displays a tree of navigation categories' )
     where object_type
         like 'com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet' ;
+
+update applications
+    set (title,description) =
+            ('Navigation Tree',
+             'Displays a tree of navigation categories' )
+    where title
+        like 'Navigation Directory' ;
 

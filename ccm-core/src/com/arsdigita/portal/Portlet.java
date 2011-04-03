@@ -64,6 +64,7 @@ public class Portlet extends Resource {
         "com.arsdigita.portal.Portlet";
     private static Logger s_log = Logger.getLogger(Portlet.class);
 
+    @Override
     protected String getBaseDataObjectType() {
         return BASE_DATA_OBJECT_TYPE;
     }

@@ -49,7 +49,8 @@ public class ContentDirectoryPortletRenderer extends AbstractPortletRenderer {
         element.addAttribute("id",getIdAttr());
 
         DataQuery categories = SessionManager.getSession().retrieveQuery
-            ("com.arsdigita.london.portal.portlet.getContentDirectory");
+            ("com.arsdigita.portal.portlet.getContentDirectory");
+//          ("com.arsdigita.london.portal.portlet.getContentDirectory");
 
         while (categories.next()) {
             BigDecimal categoryID = (BigDecimal) categories.get("categoryID");

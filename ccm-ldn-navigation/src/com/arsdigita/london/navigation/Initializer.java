@@ -74,8 +74,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-// same package
-// import com.arsdigita.london.navigation.Template;
 import com.arsdigita.domain.xml.TraversalHandler;
 import com.arsdigita.xml.XML;
 
@@ -125,6 +123,7 @@ public class Initializer extends CompoundInitializer {
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new Template(dataObject);
                  }
+                 @Override
                  public DomainObjectInstantiator
                      resolveInstantiator(DataObject obj) {
                      return this;
@@ -134,6 +133,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator
             (Navigation.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
+                 @Override
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new Navigation(dataObject);
                  }
@@ -145,6 +145,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator
             (ItemListPortlet.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
+                 @Override
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new ItemListPortlet(dataObject);
                  }
@@ -153,6 +154,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator
             (ObjectListPortlet.BASE_DATA_OBJECT_TYPE,
              new ACSObjectInstantiator() {
+                 @Override
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new ObjectListPortlet(dataObject);
                  }
@@ -164,6 +166,7 @@ public class Initializer extends CompoundInitializer {
                  public DomainObject doNewInstance(DataObject dataObject) {
                      return new TemplateMapping(dataObject);
                  }
+                 @Override
                  public DomainObjectInstantiator
                      resolveInstantiator(DataObject obj) {
                      return this;
@@ -173,6 +176,7 @@ public class Initializer extends CompoundInitializer {
 
 
         new ResourceTypeConfig(ObjectListPortlet.BASE_DATA_OBJECT_TYPE) {
+            @Override
             public ResourceConfigFormSection getCreateFormSection
                 (final ResourceType resType, final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
@@ -181,6 +185,7 @@ public class Initializer extends CompoundInitializer {
                 return config;
             }
             
+            @Override
             public ResourceConfigFormSection getModifyFormSection
                 (final RequestLocal application) {
                 final ObjectListPortletEditor config =
@@ -191,6 +196,7 @@ public class Initializer extends CompoundInitializer {
         };
 
         new ResourceTypeConfig(ItemListPortlet.BASE_DATA_OBJECT_TYPE) {
+            @Override
             public ResourceConfigFormSection getCreateFormSection
                 (final ResourceType resType, final RequestLocal parentAppRL) {
                 final ResourceConfigFormSection config =
@@ -199,6 +205,7 @@ public class Initializer extends CompoundInitializer {
                 return config;
             }
             
+            @Override
             public ResourceConfigFormSection getModifyFormSection
                 (final RequestLocal application) {
                 final ItemListPortletEditor config =

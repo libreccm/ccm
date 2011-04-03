@@ -75,14 +75,14 @@ public class Initializer extends CompoundInitializer {
 
         // ContentDirectoryPortlet, currently not used.
         // Portlet of the same name is active in ccm-ldn-portal
-        //loadContentDirectoryPortlet();
-        //ContentDirectoryPortlet.initPortlet();
+        // ContentDirectoryPortlet();
+        ContentDirectoryPortlet.initPortlet();
 
         // ContentItemPortlet
         ContentItemPortlet.initPortlet();
 
         // ContentSectionsPortlet
-        //ContentSectionsPortlet.initPortlet();
+        ContentSectionsPortlet.initPortlet();
 
         // TaskPortlet
         TaskPortlet.initPortlet();

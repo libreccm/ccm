@@ -26,9 +26,9 @@ import com.arsdigita.kernel.permissions.PermissionDescriptor;
 import com.arsdigita.kernel.permissions.PrivilegeDescriptor;
 import com.arsdigita.kernel.Party;
 import com.arsdigita.kernel.Kernel;
-import com.arsdigita.london.portal.ui.PersistentPortal;
-import com.arsdigita.london.portal.ui.PortalConstants;
-import com.arsdigita.london.portal.Workspace;
+import com.arsdigita.portalworkspace.ui.PersistentPortal;
+import com.arsdigita.portalworkspace.ui.PortalConstants;
+import com.arsdigita.portalworkspace.Workspace;
 import com.arsdigita.xml.Element;
 
 
