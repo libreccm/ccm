@@ -25,5 +25,6 @@
 @@ default/6.6.0-6.6.1/ren_table_workspace_themes.sql
 @@ default/6.6.0-6.6.1/ren_table_themeapplications.sql
 
-
 @@ default/6.6.0-6.6.1/add_constraints.sql
+
+@@ default/6.6.0-6.6.1/upd_system_tables.sql
