@@ -28,37 +28,10 @@ import com.arsdigita.persistence.pdl.ManifestSource;
 import com.arsdigita.persistence.pdl.NameFilter;
 import com.arsdigita.runtime.CompoundInitializer;
 import com.arsdigita.runtime.DomainInitEvent;
-import com.arsdigita.runtime.LegacyInitializer;
+// import com.arsdigita.runtime.LegacyInitializer;
 import com.arsdigita.runtime.PDLInitializer;
 import com.arsdigita.runtime.RuntimeConfig;
 import com.arsdigita.london.rss.portlet.WorkspaceDirectoryPortlet;
-
-// import com.arsdigita.bebop.RequestLocal;
-// import com.arsdigita.domain.DomainObjectInstantiator;
-// import com.arsdigita.domain.xml.TraversalHandler;
-// import com.arsdigita.kernel.ResourceType;
-// import com.arsdigita.kernel.ResourceTypeConfig;
-// import com.arsdigita.kernel.ui.ResourceConfigComponent;
-// import com.arsdigita.kernel.ui.ResourceConfigFormSection;
-// import com.arsdigita.london.navigation.ApplicationNavigationModel;
-// import com.arsdigita.london.navigation.DefaultNavigationModel;
-// import com.arsdigita.london.portal.portlet.ApplicationDirectoryPortlet;
-// import com.arsdigita.london.portal.portlet.ContentDirectoryPortlet;
-// import com.arsdigita.london.portal.portlet.FlashPortletInitializer;
-// import com.arsdigita.london.portal.portlet.FreeformHTMLPortlet;
-// import com.arsdigita.london.portal.portlet.LoginPortlet;
-// import com.arsdigita.london.portal.portlet.NavigationDirectoryPortlet;
-// import com.arsdigita.london.portal.portlet.RSSFeedPortlet;
-// import com.arsdigita.london.portal.portlet.TimeOfDayPortlet;
-// import com.arsdigita.london.portal.portlet.MyWorkspacesPortlet;
-// import com.arsdigita.london.portal.portlet.WorkspaceNavigatorPortlet;
-// import com.arsdigita.london.portal.portlet.WorkspaceSummaryPortlet;
-// import com.arsdigita.london.portal.ui.admin.WorkspaceConfigFormSection;
-// import com.arsdigita.london.portal.ui.portlet.ContentDirectoryPortletEditor;
-// import com.arsdigita.london.portal.ui.portlet.FreeformHTMLPortletEditor;
-// import com.arsdigita.london.portal.ui.portlet.RSSFeedPortletEditor;
-// import com.arsdigita.london.portal.ui.portlet.RSSFeedPortletEditorForm;
-// import com.arsdigita.xml.XML;
 
 
 
@@ -86,6 +59,7 @@ public class Initializer extends CompoundInitializer {
      *
      * @param e
      */
+    @Override
     public void init(DomainInitEvent e) {
 
         super.init(e);
@@ -94,6 +68,7 @@ public class Initializer extends CompoundInitializer {
         e.getFactory().registerInstantiator(
                 WorkspaceDirectoryPortlet.BASE_DATA_OBJECT_TYPE,
                 new ACSObjectInstantiator() {
+                    @Override
                     public DomainObject doNewInstance(DataObject dataObject) {
                         return new WorkspaceDirectoryPortlet(dataObject);
                     }
